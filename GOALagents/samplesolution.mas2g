@@ -1,0 +1,18 @@
+environment{
+	% insert a proper environment reference on the next line.
+	env = "BW4T2/BW4TClient.jar" .
+	% insert proper initialization parameters and values on the next line, or remove it.
+	init = [ map="Random", clientip ="localhost", clientport="2000", serverip = "localhost", serverport = "8000", agentcount = "3", humancount = "0", launchgui = "false", goal = "true"] .
+
+}
+
+agentfiles{
+	% insert (list of) agent file references below.
+	"youragent.goal" [name = filename] .
+}
+
+launchpolicy{
+	% insert appropriate launch rules for your environment and agents below.
+	when entity@env do launch * : filename .
+}
+

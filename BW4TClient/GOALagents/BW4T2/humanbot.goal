@@ -1,0 +1,78 @@
+init module {
+	knowledge {
+		#import "messageTranslation".
+	}
+	
+	beliefs{
+	}
+
+	goals{
+	}
+
+	actionspec{	
+		goTo(X, Y) {
+            pre{ true }
+			post{ }
+		}
+		
+		% after goto we change state to unknown so that we 
+		% must receive a state update before proceeding.
+		goTo(NavPoint) {
+            pre{ true }
+			post{  }
+		}
+		
+		goToBlock(Block) {
+			pre {true}
+			post{}
+		}
+		
+		pickUp{
+		    pre { true }
+			post {  }
+		}
+		
+		putDown {
+			pre { true }
+			post { true }
+		}
+	}
+}
+
+main module{
+	
+	program{
+		% Perform actions that are performed on GUI
+		if bel(performGoTo(X,Y)) then goTo(X,Y) + delete(performGoTo(X,Y)).
+		if bel(performGoTo(NavPoint)) then goTo(NavPoint) + delete(performGoTo(NavPoint)).
+		if bel(performGoToBlock(Block)) then goToBlock(Block) + delete(performGoToBlock(Block)).
+		if bel(performPickUp) then pickUp + delete(performPickUp).
+		if bel(performPutDown) then putDown + delete(performPutDown).
+		if bel(performSendMessage(all, Message)) then send(allother, Message) + delete(performSendMessage(all, Message)).
+		
+	}
+}
+
+#import "message.mod2g".
+
+event module{
+	program{
+		if bel(true) then message.
+		
+		forall bel(received(Agt, Msg)) do delete(received(Agt,Msg)).
+		
+		% we need to copy percepts to beliefbase because we 
+		% may not be able to handle it right away and perceptbase is volatile.		
+		if bel(percept(goTo(X,Y))) then insert(performGoTo(X,Y)).
+		
+		if bel(percept(goTo(NavPoint))) then insert(performGoTo(NavPoint)).
+		
+		if bel(percept(goToBlock(Block))) then insert(performGoToBlock(Block)).
+		
+		if bel(percept(pickUp)) then insert(performPickUp).
+		
+		if bel(percept(putDown)) then insert(performPutDown).
+		
+		if bel(percept(sendMessage(Receiver, Message))) then insert(performSendMessage(Receiver, Message)).
+	}
+}

@@ -1,0 +1,13 @@
+module message[exit=always] {
+	program {		
+		% we still need to translate these messages.
+		if bel(received(Agt,Mess), translate(Agt,Mess,Transl)) 
+			then sendToGUI(Agt,Transl)+delete(received(Agt,Mess)).
+	}
+	actionspec {
+		sendToGUI(Sender,Message) {
+			pre { true }
+			post { }
+		}	
+	} 
+}

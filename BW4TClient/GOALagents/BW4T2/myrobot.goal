@@ -1,0 +1,110 @@
+init module {
+	knowledge{
+		% insert knowledge here, if any, or remove section.
+	}
+	
+	beliefs{
+		% insert initial beliefs here, if any, or remove section.
+		state(arrived).
+	}
+	
+	goals{
+		% insert initial goals here, if any, or remove section.
+	}
+	
+	program {
+        % insert one-time rules here, or remove section
+    }
+	
+	actionspec{
+		% insert global action specification here, if any, or remove section.
+		
+		% after goto we change state to unknown so that we 
+		% must receive a state update before proceeding.
+		goTo(X, Y) {
+            pre{ (state(arrived); state(collided)) }
+			post{ state(unknown) }
+		}
+		
+		goToNavPoint(NavPoint) {
+            pre{ state(arrived) }
+			post{ state(unknown) }
+		}
+		
+		pickUp(Block) {
+		    pre { not(holding(Block)) }
+			post { true }
+		}
+		
+		putDown {
+			pre { holding(Block), color(Block, C) }
+			post { not(holding(Block), color(Block, C)) }
+		}
+	}
+}
+	
+main module{
+	program{
+		% insert action rules here.
+		if bel(sequence([C|T])) then adopt(dropOff(C)).
+		if goal(dropOff(C)), bel(sequence([X|T]), C \= X) then drop(dropOff(C)).
+	
+		% I'm holding a correct block, let's drop it off
+		%if goal(dropOff(C)), bel(robot(Me), holding(Block), color(Block, C), dropZone(D), at(D, X, Y), at(Me, MyX, MyY), (X \= MyX ; Y \= MyY)) then goTo(X, Y).
+		%if goal(dropOff(C)), bel(robot(Me), holding(Block), color(Block, C), dropZone(D), at(D, X, Y), at(Me, X, Y)) then putDown.
+		
+		% I don't know a block of the requested color, go to another room.
+		%if goal(dropOff(C)), bel(not(color(Block, C)), robot(Me), at(Me, MyX, MyY), room(R), at(R, X, Y), (X \= MyX ; Y \= MyY)) then goTo(X, Y).	
+		
+		if bel(navpoint(Id, Name, X,Y,Neighbours)) then goToNavPoint(Id).
+		
+		% I want to commit to picking up a block.
+		if goal(dropOff(C)), bel(color(Block, C), at(Block, BlockX, BlockY), robot(Me)) then blockPicker(Me, Block).
+	}		
+}
+
+module blockPicker(Me,Block)[focus=new, exit=nogoals] {
+
+	goals {
+	  holding(Block).
+	}
+	
+	program {
+	   if bel(at(Block, X, Y), at(Me, MyX, MyY), (X \= MyX ; Y \= MyY)) then goTo(X, Y).
+	   if bel(at(Block, X, Y), at(Me, X, Y)) then pickUp(Block).
+	}	
+}
+
+event module{
+	program{
+		% keep block percepts only while we see the blocks, to avoid
+		% going to a block while not in the room. Obviously this
+		% is a simple hack.
+		forall bel(block(X)) do delete(block(X)).
+		forall bel(percept(block(B))) do insert(block(B)).
+		
+		forall bel(percept(room(R))) do insert(room(R)).
+		forall bel(percept(dropZone(D))) do insert(dropZone(D)).
+		forall bel(percept(navpoint(Id,Name,X,Y,Neighbours))) do insert(navpoint(Id,Name,X,Y,Neighbours)).
+		if bel(percept(robot(R))) then insert (robot(R)).
+		
+		if bel(percept(state(X)), state(Y)) then insert(not(state(Y)), state(X)).
+
+		forall bel(percept(at(Id, X, Y))) do {
+			if bel(at(Id, OtherX, OtherY), (X \= OtherX ; Y \= OtherY)) then delete(at(Id, OtherX, OtherY)).
+			if bel(true) then insert(at(Id, X, Y)).
+		}
+		
+		if bel(percept(sequence(Seq))) then {
+			if bel(sequence(OtherSeq)) then delete(sequence(OtherSeq)).
+			if bel(true) then insert(sequence(Seq)).
+		}
+		
+		forall bel(percept(color(Id, C))) do insert(color(Id, C)).
+		
+		if bel(holding(B)) then delete(holding(B)).
+		if bel(percept(holding(B))) then insert(holding(B)).
+	}
+}
+
+% insert additional modules, if any, here.

@@ -1,0 +1,123 @@
+init module {
+	knowledge{
+		#import "messageTranslation".
+	}
+	
+	beliefs{
+		state(unknown).
+	}
+	
+	goals{
+		% insert initial goals here, if any, or remove section.
+	}
+	
+	program {
+        % insert one-time rules here, or remove section
+    }
+	
+	actionspec{	
+		goTo(X, Y) {
+            pre{ (state(arrived); state(collided)) }
+			post{ }
+		}
+		
+		% after goto we change state to unknown so that we 
+		% must receive a state update before proceeding.
+		goTo(NavPoint) {
+            pre{ (state(arrived); state(collided)) }
+			post{ }
+		}
+		
+		goToBlock(Block){
+			pre{ (state(arrived); state(collided)) }
+			post{ }
+		}
+		
+		pickUp {
+		    pre { not(holding(_)), atBlock(Block) }
+			post { }
+		}
+		
+		putDown {
+			pre { holding(Block) }
+			post { not(holding(Block)) }
+		}
+	}
+}
+
+main module{
+	program [order=random] {
+		
+		% random walk to rooms.		
+		if bel(place(R)) then goTo(R).
+		
+		% go to a block if we can see it.
+		if bel(color(Block,_)) then goToBlock(Block).
+		
+		% pick up block if we can.
+		if bel(true) then pickUp.
+		
+		%drop any block that we have when we get to the dropzone. 
+		
+		if bel(holding(_), place(R), R=='DropZone') then goTo(R).
+		
+		% if we have a box, the color was deleted already.
+		if bel(in(SomeRoom), SomeRoom=='DropZone', holding(Block)) then putDown.
+	}
+}
+
+event module{
+	program{		
+		forall bel(received(Agt, Msg)) do delete(received(Agt,Msg)).
+		
+		% keep block percepts only while we see the blocks, to avoid
+		% going to a block while not in the room. Obviously this
+		% is a simple hack.
+		forall bel(block(X)) do delete(block(X)).
+		forall bel(percept(block(B))) do insert(block(B)).
+		forall bel(percept(place(R))) do insert(place(R)).
+		
+		if bel(percept(player(R))) then insert (player(R)).
+		
+		if bel(percept(location(Id,X,Y))) then {
+			if bel(location(Id,OtherX,OtherY)) then delete(location(Id,OtherX,OtherY)).
+			if bel(true) then insert(location(Id,X,Y)).
+		}
+		
+		if bel(percept(at(Place))) then insert(at(Place)).
+		if bel(percept(not(at(Place))), at(Place)) then delete(at(Place)).
+		
+		if bel(percept(atBlock(Block))) then {
+			if bel(atBlock(OtherBlock)) then delete(atBlock(OtherBlock)).
+			if bel(true) then insert(atBlock(Block)).
+		}
+		
+		if bel(percept(not(atBlock(Block))), atBlock(Block)) then delete(atBlock(Block)).
+		
+		if bel(percept(state(X)), state(Y)) then insert(not(state(Y)), state(X)).
+
+		forall bel(percept(at(Id, X, Y))) do {
+			if bel(at(Id, OtherX, OtherY), (X \= OtherX ; Y \= OtherY)) then delete(at(Id, OtherX, OtherY)).
+			if bel(true) then insert(at(Id, X, Y)).
+		}		
+		
+		forall bel(percept(in(Room))) do {
+			if bel(in(OtherRoom)) then delete(in(OtherRoom)).
+			if bel(true) then insert(in(Room)).
+		}
+		
+		if bel(percept(not(in(Room))), in(Room)) then delete(in(Room)).
+		
+		if bel(percept(sequence(Seq))) then {
+			if bel(sequence(OtherSeq)) then delete(sequence(OtherSeq)).
+			if bel(true) then insert(sequence(Seq)).
+		}
+		
+		% update the color percepts.
+		forall bel(percept(not(color(Id,C)))) do delete(color(Id,C)).
+		forall bel(percept(color(Id, C))) do insert(color(Id,C)).
+		
+		if bel(percept(holding(B)), not(holding(B))) then insert(holding(B)).
+	}
+}
+

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="all" name="Create BW4TRemoteEnvironment Jar">
+	
+	<property name="goalenvdir" value="../GOAL/GOALagents/BW4T2/BW4T2/"/>
+	
+    <target name="create_jar">
+		<delete file="BW4TClient/environments/BW4TClient.jar"/>
+        <jar destfile="BW4TClient/environments/BW4TClient.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="nl.tudelft.bw4t.client.BW4TRemoteEnvironment"/>
+                <attribute name="Class-Path" value=". eis-0.3.jar"/>
+            </manifest>
+            <fileset dir="bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="dep/bw4tmap.jar"/>
+            
+        </jar>
+    </target>
+    
+    <!-- TODO fix warnings on EIS and BW4Tmap. #2976. It's safe to ignore them --> 
+    <target name="javadoc">
+		<javadoc packagenames="nl.tudelft.bw4t.message.*"
+           sourcepath="src"
+           destdir="doc/javadoc"
+           defaultexcludes="yes"
+           author="true"
+           version="true"
+           use="true"
+           windowtitle="Blocksworld Client">
+    		<doctitle><![CDATA[<h1>Test</h1>]]></doctitle>
+    	</javadoc>
+    </target>
+	
+	<target name = "create_zip" depends = "javadoc">
+			<delete file="BW4TClient.zip"/>
+			<zip destfile="BW4TClient.zip" basedir="." excludes="**">   
+    			   <zipfileset dir="BW4TClient/environments" includes="**"/>			
+    			   <zipfileset dir="doc" includes="javadoc/**"/>
+    			   <zipfileset dir="." includes="src/nl/tudelft/bw4t/agent/TestAgent.java"/>
+			</zip>
+			<condition property="cancopy">
+				 <available file="${goalenvdir}" />
+			</condition>
+			<antcall target="copyenv"/>
+			<antcall target="warnnocopy"/>
+	</target>	
+	
+	<target name="all" depends="create_jar, create_zip">
+	</target>
+	
+	<target name="copyenv" if="cancopy">
+		  <copy file="BW4TClient/environments/BW4TClient.jar" todir="${goalenvdir}"/>
+		  <copy file="doc/BW4T2_Specification.pdf" tofile="${goalenvdir}/BW4T2_Specification.pdf"/>
+		  <copy file="doc/InstructionsGoal.pdf" tofile="${goalenvdir}/BW4T2_Instructions.pdf"/>
+	</target>
+
+	<target name="warnnocopy" unless="cancopy">
+		<echo>WARNING. The GOAL project environments directory needs updating</echo>
+		<echo>but is not available in your workspace</echo>
+	</target>
+	
+</project>

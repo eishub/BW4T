@@ -1,0 +1,18 @@
+environment{
+	"BW4TClient.jar" .
+	% insert proper initialization parameters and values on the next line, or remove it.
+	init [  clientip ="localhost", clientport="2000", serverip = "localhost", serverport = "8000", agentcount = "2", humancount = "0", launchgui = "false", goal = "true"] .
+}
+
+agentfiles{
+	% insert (list of) agent file references below.
+	"demorobot.goal".
+	"humanbot.goal".
+}
+
+launchpolicy{
+	% insert appropriate launch rules for your environment and agents below.
+	when [type=human]@env do launch *:humanbot. 
+	when [type=bot]@env do launch *:demorobot.
+}
+

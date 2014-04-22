@@ -1,0 +1,16 @@
+environment{
+"BW4TClient.jar" .
+	% insert proper initialization parameters and values on the next line, or remove it.
+	init [ map = "environments/maps/Map1", clientip ="localhost", clientport="2000", serverip = "localhost", serverport = "8000", agentcount = "1", humancount = "0", launchgui = "false", goal = "true"] .
+}
+
+agentfiles{
+	% insert (list of) agent file references below.
+	"robot.goal" [name = robot] .
+}
+
+launchpolicy{
+	% insert appropriate launch rules for your environment and agents below.
+	when entity@env do launch robot : robot .
+}
+

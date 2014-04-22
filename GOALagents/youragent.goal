@@ -1,0 +1,122 @@
+% Wouter 21jan2013
+init module {
+	knowledge{
+		% insert knowledge here, if any, or remove section.
+		next(Color) :- sequenceIndex(N), sequence(Seq), nth0(N,Seq,Color).
+		holdingGoodColor :- holding(BlockId), seen(BlockId,Color,_), next(Color).
+		sequenceComplete :- sequenceIndex(N), sequence(Seq), length(Seq,N).
+	}
+	
+	beliefs{
+		% seen(BlockId,Color,Room) as just as color but with additional Room info
+		% checked('RoomB1').
+		% inRoom('Blue','RoomB1'). % where are blocks? 
+		sequenceIndex(0). % onChange (no neg).
+		state(arrived). % onChange (no neg).
+	}
+	
+	goals {
+		sequenceComplete.
+	}
+	
+	actionspec{	
+		% after goto we change state to traveling immediately,
+		% to prevent repeated goTo which would prevent the robot
+		% from going anywhere
+		goTo(Zone) {
+            pre{ (state(collided); state(arrived)) }
+			post{ state(traveling) }
+		}
+		
+		goToBlock(Block) {
+			pre {(state(collided); state(arrived))}
+			post{ state(traveling)}
+		}
+		
+		pickUp{
+		    pre { true }
+			post {  }
+		}
+		
+		putDown {
+			pre { holding(X) }
+			post { true }
+		}
+	}
+}
+	
+main module{
+	program{
+		if bel(not(holding(Color))) then getBlock.
+		if bel(holding(Color)) then deliverBlock.
+	}
+}
+
+% we hold a block. Deliver it.
+module deliverBlock {
+	program {
+		if bel(holdingGoodColor) then {
+			if bel(in('DropZone')) then putDown.
+			if bel(true) then goTo('DropZone').
+		}
+		if bel(not(holdingGoodColor)) then {
+			if bel(in(Room), Room \='DropZone') then putDown.
+			if bel(place(X)) then goTo(X). 
+			% go to some place, hope it's a room.		
+			% could be optimized a lot: check with others,
+			% remember which already were visited, 
+			% don't visit corridors all the time,
+			% visit nearby rooms intead of criss-crossing...	
+		}
+	}
+}
+
+% get block
+module getBlock {
+	program { %order=linear
+		% can pickup the block?
+		if bel(next(Color), color(BlockId,Color), atBlock(BlockId)) then pickUp .
+		% can we see a good block?
+		if bel(next(Color), color(BlockId,Color)) then goToBlock(BlockId).
+		% no. Did we see that block before? TODO refresh seen/3 if we re-enter the room.
+		if bel(next(Color), seen(Block,Color,Room)) then goTo(Room).
+		% pick random room. To be improved? Remember visited rooms?
+		if bel(place(Room)) then goTo(Room).
+	}
+}
+
+
+% update the beliefs according to percepts.
+event module{
+	program{
+		
+		forall bel(not(at(_)), percept(at(Place))) do insert(at(Place)).
+		forall bel(at(OldPlace), percept(at(Place))) do insert(not(at(OldPlace)),at(Place)).
+		
+		forall bel(percept(not(holding(X)))) do delete(holding(X)).
+		forall bel(percept(holding(X))) do insert(holding(X)).
+
+		forall bel(percept(not(in(X)))) do delete(in(X)).
+		forall bel(percept(in(X))) do insert(in(X)).
+		
+		forall bel(percept(state(X)), state(Old)) do insert(not(state(Old)), state(X)).
+		
+		% update color percept. Always first remove the old percepts
+		forall bel(color(Block,Color)) do delete(color(Block,Color)).
+		% reload the latest color percepts and add seen percepts
+		forall bel(in(Room), percept(color(Block,Color))) do insert(color(Block,Color), seen(Block,Color,Room)).
+		% and delete colors we saw before in this room but not there anymore
+		forall bel(percept(in(Room)), seen(Block,Color,Room), not(color(Block,Color))) 
+		do delete(seen(Block,Color,Room)).
+
+		forall bel(sequenceIndex(Old), percept(sequenceIndex(New))) do
+		insert(not(sequenceIndex(Old)), sequenceIndex(New)).
+		
+		forall bel(percept(sequence(List))) do insert(sequence(List)).
+		
+		forall bel(percept(not(atBlock(X)))) do delete(atBlock(X)).
+		forall bel(percept(atBlock(New))) do insert(atBlock(New)).
+		
+		forall bel(percept(place(X))) do insert(place(X)).
+	}
+}

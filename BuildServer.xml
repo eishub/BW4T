@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="all" name="Create BW4T2 Server and installation files">
+	
+	<property name="goalenvdir" value="../GOAL/GOALagents/BW4T2/BW4T2"/>
+	
+	<defaultexcludes add="*.xml"/>
+	<defaultexcludes add="*.log*"/>
+	<defaultexcludes add="*.settings"/>
+		
+    <target name="create_jar">
+		<delete file="BW4TServer/BW4TServer.jar"/>
+        <jar destfile="BW4TServer/BW4TServer.jar" filesetmanifest="mergewithoutmain">
+            <fileset dir="bin" includes="**"/>
+            <!-- <fileset dir="bin" includes="nl/tudelft/bw4t/server/*"/>
+        	<fileset dir="bin" includes="nl/tudelft/bw4t/client/*"/>
+        	<fileset dir="bin" includes="nl/tudelft/bw4t/map/*"/>
+            <fileset dir="bin" includes="nl/tudelft/bw4t/BW4TBuilder*"/> -->
+            <zipfileset excludes="META-INF/*.SF" src="../GOAL/dep/eis-0.3.jar"/>
+        	<zipfileset excludes="META-INF/*.SF" src="dep/jgrapht-jdk1.6.jar"/>
+        	<zipfileset excludes="META-INF/*.SF" src="dep/javolution-5.5.1.jar"/>
+        	<zipfileset excludes="META-INF/*.SF" src="dep/saf.core.ui.jar"/>
+        	<zipfileset excludes="META-INF/*.SF" src="dep/saf.core.v3d.jar"/>
+        	<zipfileset excludes="META-INF/*.SF" src="dep/bw4tmap.jar"/>
+        	
+        </jar>
+    	
+		<condition property="cancopy">
+			 <available file="${goalenvdir}" />
+		</condition>
+		<antcall target="copyenv"/>
+		<antcall target="warnnocopy"/>
+        	
+    </target>
+	
+	<target name = "create_zip">
+			<delete file="BW4TServer/BW4TServer.zip"/>
+			<zip destfile="BW4TServer.zip"
+    			   basedir="BW4TServer"
+				excludes="*.xml *.log *.settings"
+			/>
+	</target>	
+
+	
+	<target name="all" depends="create_jar, create_zip">
+	</target>
+	
+
+	<target name="copyenv" if="cancopy">
+		  <copy todir="${goalenvdir}/BW4TServer">
+		  	<fileset dir="BW4TServer"/>
+		  </copy>
+	</target>
+
+	<target name="warnnocopy" unless="cancopy">
+		<echo>WARNING. The GOAL project environments directory needs updating</echo>
+		<echo>but is not available in your workspace</echo>
+	</target>
+
+</project>

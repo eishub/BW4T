@@ -1,0 +1,128 @@
+init module {
+	knowledge{
+		
+		% list of all rooms in the BW4T environment, needed for the lack of a room percept
+		% note that the names of the rooms are strings and not variables
+		rooms(['RoomA1','RoomA2','RoomA3','RoomB1','RoomB2','RoomB3','RoomC1','RoomC2','RoomC3']).
+	
+		% room(X) is true if 'X' is a room
+		room(X):- rooms(L), member(X,L).
+		
+		% Assignment 3.3: insert a predicate "nextColorInSeq(Color)"
+				
+	}
+	
+	
+	beliefs{
+		
+		state(unknown).	
+	}
+	
+		
+	actionspec{	
+		
+		% an action is only executed if its precondition is true
+		
+		% after execution of the goTo action, the agent will be traveling to
+		%     "Location" in the BW4T environment
+		
+		goTo(Location) {
+            pre { (state(arrived); state(collided)) }
+			post { true }
+		}
+			
+		% Assignment 3.4.a: insert a specification for the goToBlock(Block) action
+		
+		% Assignment 3.4.b: insert a specification for the pickUp action
+		
+		% Assignment 3.4.c: insert a specification for the putDown action
+	}
+}
+
+
+main module{
+	program {
+				
+		if bel(place(Place), room(Place)) then adopt(in(Place)).
+		if a-goal(in(Place)) then goTo(Place).
+		
+		% Assignment 3.6: improve the two lines of code above such that the agent 
+		%    checks the rooms in a more efficient way (not checking the same room 
+		%    twice).
+		
+		% Assignment 3.7: insert code that lets the agent deliver a block when it 
+		%    knows about a block that can be delivered. Make use of the goals:
+		%    delivered(Pos), in(Room) and atBlock(Block).	
+		
+		
+		% Assignment 4.2: implement dealing with unexpected block removal
+		
+		% Assignment 4.3: implement dealing with unexpected block delivery
+		
+		% Assignment 4.5.a: insert send-actions to implement the communication
+		%    of your choice (may be implemented here or in the event module)
+		
+	}
+}
+
+event module{
+	program{
+		
+		%%%%% percepts sent at the beginning of a session %%%%%%%%%%%%%%
+		
+		forall bel(percept(place(R))) do insert(place(R)).
+		
+		% Assignment 3.2.a: insert rules for percepts sent at the beginning of a 
+		%     session
+		
+		
+		
+		
+		%%%%% percepts sent on change %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+		
+		if bel(not(at(_)), percept(at(Place))) then insert(at(Place)).
+		if bel(at(OldPlace), percept(at(Place))) then insert(not(at(OldPlace)),at(Place)).
+
+		if bel(not(state(_)), percept(state(State))) then insert(state(State)).		
+		if bel(state(OldState), percept(state(State)) ) then insert(not(state(OldState)), state(State)).
+				
+		% Assignment 3.2.b: insert rules for percepts sent on change
+		
+		
+		
+		
+		%%%%%%%%%%%%%%%%%% received message processing %%%%%%%%%%%%%%%%%%%%
+		
+		% Assignment 4.5.b insert one or more rule(s) for messages sent by other 
+		%     agents. The following rule is an example of how to process a message 
+		%     containing a block ID:
+		
+		forall bel(received(Sender, block(Id))) do insert(block(Id)) + delete(received(Sender, block(Id))).
+		
+				
+	}
+}	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%% answers to questions %%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	% Assignment 3.1: explain the BW4T robot's behavior based on the initial agent 
+	%     program
+	
+	% Assignment 3.4: explain when an agent adopts and drops goals
+	
+	
+	
+	% Assignment 4.1: explain what happens if the agent is part of a team, and give 
+	%     suggestions  for how the team's performance can be improved
+	
+	% Assignment 4.4: give your preferred communication type and explain your choice
+	
+	% Assignment 4.6: explain the effects of your preferred communication type
+
+
+	
+	
+
+

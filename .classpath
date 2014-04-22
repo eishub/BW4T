@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GOAL"/>
+	<classpathentry kind="lib" path="dep/saf.core.ui.jar"/>
+	<classpathentry kind="lib" path="dep/jgrapht-jdk1.6.jar"/>
+	<classpathentry kind="lib" path="/GOAL/dep/eis-0.3.jar"/>
+	<classpathentry kind="lib" path="dep/repast.simphony.bin_and_src.jar"/>
+	<classpathentry kind="lib" path="dep/saf.core.v3d.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="dep/bw4tmap.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
