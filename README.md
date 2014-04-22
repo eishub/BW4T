@@ -17,15 +17,15 @@ A copy of the bin directory in `BW4TServer/` is *required*. If you change the bi
 
 **Main Class**:
 
-    `nl.tudelft.bw4t.server.BW4TEnvironment`
+    nl.tudelft.bw4t.server.BW4TEnvironment
 
 **Arguments**: 
 
-    `-scenario BW4TServer/BW4T.rs -map BW4TServer/maps/Map1 -serverip localhost -serverport 8000`
+    -scenario BW4TServer/BW4T.rs -map BW4TServer/maps/Map1 -serverip localhost -serverport 8000
 
 **VM Args**: 
 
-    `-Xmx500M -Xss20M`
+    -Xmx500M -Xss20M
 
 ### Setting up the Class Path
 
