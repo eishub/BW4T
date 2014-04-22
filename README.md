@@ -15,11 +15,17 @@ A copy of the bin directory in `BW4TServer/` is *required*. If you change the bi
 
 ### Running the server in Eclipse
 
-**Main Class**: `nl.tudelft.bw4t.server.BW4TEnvironment`
+**Main Class**:
 
-**Arguments**: `-scenario BW4TServer/BW4T.rs -map BW4TServer/maps/Map1 -serverip localhost -serverport 8000`
+    `nl.tudelft.bw4t.server.BW4TEnvironment`
 
-**VM Args**: `-Xmx500M -Xss20M`
+**Arguments**: 
+
+    `-scenario BW4TServer/BW4T.rs -map BW4TServer/maps/Map1 -serverip localhost -serverport 8000`
+
+**VM Args**: 
+
+    `-Xmx500M -Xss20M`
 
 ### Setting up the Class Path
 
@@ -32,7 +38,7 @@ A copy of the bin directory in `BW4TServer/` is *required*. If you change the bi
  * Add `Repast-Simphony-2.0/eclipse/plugins/repast.simphony.runtime_2.0.1/bin` directory using the *"advanced"* button.
 
 ### Download Notice
-Originally there was approximately 2.3GB in executables in the repository under a directory called `downloads`. In order to avoid this, I will simply post the links here. Download the ones which are suited to you operating system.
+Originally there was approximately 2.3GB in executables in the repository under a directory called `downloads`. In order to avoid this, I will simply post the links here.
 
 #### Repast Symphony 2 Beta
 http://sourceforge.net/projects/repast/files/Repast%20Simphony/Repast%20Simphony%202.0%20beta/
