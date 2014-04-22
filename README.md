@@ -14,10 +14,12 @@ The source can be built normally to the `bin/` directory (made in the root of th
 A copy of the bin directory in `BW4TServer/` is *required*. If you change the bin (e.g., by changing the source), you must (manually) copy the new bin into `BW4TServer/`
 
 ### Running the server in Eclipse
-**Main Class**: nl.tudelft.bw4t.server.BW4TEnvironment
-**Arguments**: -scenario BW4TServer/BW4T.rs -map BW4TServer/maps/Map1 -serverip localhost -serverport 8000
-**VM Args**: -Xmx500M -Xss20M
 
+**Main Class**: `nl.tudelft.bw4t.server.BW4TEnvironment`
+
+**Arguments**: `-scenario BW4TServer/BW4T.rs -map BW4TServer/maps/Map1 -serverip localhost -serverport 8000`
+
+**VM Args**: `-Xmx500M -Xss20M`
 
 ### Setting up the Class Path
 
