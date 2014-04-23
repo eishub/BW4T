@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="dep/bw4tmap.jar"/>
+	<classpathentry kind="lib" path="dep/cglib-nodep-3.1.jar"/>
+	<classpathentry kind="lib" path="dep/collections-generic-4.01.jar"/>
+	<classpathentry kind="lib" path="dep/colt.jar"/>
+	<classpathentry kind="lib" path="dep/commons-cli-1.2.jar"/>
+	<classpathentry kind="lib" path="dep/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="dep/concurrent.jar"/>
+	<classpathentry kind="lib" path="dep/eis-0.3.jar"/>
+	<classpathentry kind="lib" path="dep/javassist-3.15.0.GA.jar"/>
+	<classpathentry kind="lib" path="dep/javolution-5.5.1.jar"/>
+	<classpathentry kind="lib" path="dep/jgrapht-jdk1.6.jar"/>
+	<classpathentry kind="lib" path="dep/jpf-boot.jar"/>
+	<classpathentry kind="lib" path="dep/jpf.jar"/>
+	<classpathentry kind="lib" path="dep/log4j-1.2.16.jar"/>
+	<classpathentry kind="lib" path="dep/repast.simphony.bin_and_src.jar"/>
+	<classpathentry kind="lib" path="dep/repast.simphony.scenario_2.0.1.jar"/>
+	<classpathentry kind="lib" path="dep/saf.core.runtime.jar"/>
+	<classpathentry kind="lib" path="dep/saf.core.ui.jar"/>
+	<classpathentry kind="lib" path="dep/saf.core.v3d.jar"/>
+	<classpathentry kind="lib" path="dep/xmlpull-1.1.3.1.jar"/>
+	<classpathentry kind="lib" path="dep/xpp3_min-1.1.4c.jar"/>
+	<classpathentry kind="lib" path="dep/xstream-1.5.0-20131127.212802-1.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GOAL"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
