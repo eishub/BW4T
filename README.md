@@ -1,4 +1,4 @@
-# Setting up Eclipse
+## Setting up Eclipse
 ### Download Eclipse if it's not already installed.
 Download Eclipse IDE for Java Developers from [Eclipse.org](https://www.eclipse.org/downloads/)
 
@@ -30,7 +30,11 @@ Name: RepastSimphony
 
 Location:`http://mirror.anl.gov/repastsimphony`
 
-# GitHub
+Search and install the following package:
+
+- Repast Simphony 
+
+## Setting up Git and Eclipse with the GitHub repository
 
 ### Download a Git client if it's not already installed.
 Download a Git for you operating system. If you prefer to use a Graphical User Interface, you can check out software such as [SourceTree](http://www.sourcetreeapp.com/) from *Atlassian* or use Eclipse's built in Git client.
