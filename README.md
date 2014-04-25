@@ -1,48 +1,49 @@
-# BlocksWorld for Teams (BW4T)
-### Table of Contents  
-[Building](#building)  
-[Running the server in Eclipse](#running-the-server-in-eclipse)  
-[Setting up the Class Path](#setting-up-the-class-path)  
-[Download Notice](#download-notice)  
+# Setting up Eclipse
+### Download Eclipse if it's not already installed.
+Download Eclipse IDE for Java Developers from [Eclipse.org](https://www.eclipse.org/downloads/)
 
-### Building
-This project has a few special building requirements.
+### Installing Plugins in Eclipse
+#### From the default **Kepler Update Site** download:
+*Help -> Install New Software*
 
-The `src` directory contains both client and server code.
-The source can be built normally to the `bin/` directory (made in the root of this project by Eclipse).
+Search and install the following packages:
 
-A copy of the bin directory in `BW4TServer/` is *required*. If you change the bin (e.g., by changing the source), you must (manually) copy the new bin into `BW4TServer/`
+ - GMF Tooling 3.1.0
+ - GMF Tooling Runtime Extensions 3.1.0
 
-### Running the server in Eclipse
+#### Add the **Groovy Update Site**:
+*Help -> Install New Software -> Add...* 
 
-**Main Class**:
+Name: Groovy Update Site
 
-    `nl.tudelft.bw4t.server.BW4TEnvironment`
+Location:`http://dist.springsource.org/release/GRECLIPSE/e4.3/`
 
-**Arguments**: 
+Search and install the following packages:
 
-    `-scenario BW4TServer/BW4T.rs -map BW4TServer/maps/Map1 -serverip localhost -serverport 8000`
+- Extra Groovy Compilers
+- Groovy-Eclipse
 
-**VM Args**: 
+#### Add the **Repast Simphony Update Site**:
+*Help -> Install New Software -> Add...* 
 
-    `-Xmx500M -Xss20M`
+Name: RepastSimphony
 
-### Setting up the Class Path
+Location:`http://mirror.anl.gov/repastsimphony`
 
-#### For Repast Symphony 2 Beta:
- * Add `repast.simphony.bin_and_src_2.0.0/repast.simphony.bin_and_src.jar`
+# GitHub
 
-#### For Repast Symphony 2 Final:
- * Add the `BW4TServer.jar`
- * Add all jars in `/Volumes/apps/Repast-Simphony-2.0/eclipse/plugins/repast.simphony.runtime_2.0.1/lib`
- * Add `Repast-Simphony-2.0/eclipse/plugins/repast.simphony.runtime_2.0.1/bin` directory using the *"advanced"* button.
+### Download a Git client if it's not already installed.
+Download a Git for you operating system. If you prefer to use a Graphical User Interface, you can check out software such as [SourceTree](http://www.sourcetreeapp.com/) from *Atlassian* or use Eclipse's built in Git client.
 
-### Download Notice
-Originally there was approximately 2.3GB in executables in the repository under a directory called `downloads`. In order to avoid this, I will simply post the links here.
+### Set up a SSH-key for GitHub
+https://help.github.com/articles/generating-ssh-keys
 
-#### Repast Symphony 2 Beta
-http://sourceforge.net/projects/repast/files/Repast%20Simphony/Repast%20Simphony%202.0%20beta/
+### Clone the Repository
 
-#### Repast Symphony 2 Final
-http://sourceforge.net/projects/repast/files/Repast%20Simphony/Repast%20Simphony%202.0/
+     git clone git@github.com:MartinRogalla/BW4T.git
 
+Now open Eclipse and right-click in the package explorer area. Click *Import -> As Git Project* and choose "*Existing local repository*". Then add the directory in which you cloned the BW4T repository. Click next and choose "Import existing projects".
+
+If everything went correctly, you shouldn't see any errors in the *Problems Dialog* (*Window -> Show View -> Problems*).
+
+You can now simply press run, and if everything went correctly you should *BW4T* starting up.
