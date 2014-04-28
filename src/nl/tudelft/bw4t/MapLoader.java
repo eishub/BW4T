@@ -87,7 +87,7 @@ public final class MapLoader {
 		 */
 		AbstractMap<String, List<BlockColor>> roomblocks = new HashMap<String, List<BlockColor>>();
 		Random random = new Random();
-		location = "/home/archos/Notes/tmp/bw4t/BW4T3/BW4TServer/maps/" + location;
+		location = System.getProperty("user.dir") + "/BW4TServer/maps/" + location;
 		map = NewMap.create(new FileInputStream(new File(location)));
 
 		ContinuousSpace<Object> space = createSpace(context, (int) map
