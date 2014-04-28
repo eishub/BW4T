@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="all" name="Create BW4T2 Server and installation files">
+<project default="all" name="Create BW4T3 Server and installation files">
 
 	<defaultexcludes add="*.xml"/>
 	<defaultexcludes add="*.log*"/>
 	<defaultexcludes add="*.settings"/>
+	
+	<target name="copy_bin">
+		<delete dir="BW4TServer/bin"/>
+		<mkdir dir="BW4TServer/bin"/>
+		<copy todir="BW4TServer/bin">
+			<fileset dir="bin" includes="**/*.class" />
+		</copy>
+	</target>
 		
     <target name="create_jar">
 		<delete file="BW4TServer/BW4TServer.jar"/>
@@ -32,7 +40,7 @@
 	</target>
 
 	
-	<target name="all" depends="create_jar, create_zip">
+	<target name="all" depends="create_jar, copy_bin, create_zip">
 	</target>
 
 </project>
