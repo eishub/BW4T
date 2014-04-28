@@ -11,4 +11,4 @@ RepastCore=$RepastPlugins/repast.simphony.core_2.1.0
 RunOptions="-scenario BW4T.rs -map Random -serverip localhost -serverport 8000"
 
 # Do not edit the following line, as it will likely break your set-up
-java -cp BW4TServer.jar\:$RepastCore/lib/\*\:$RepastRuntime/lib/\*\:$RepastRuntime/bin\:$RepastBinSrc/repast.simphony.bin_and_src.jar nl.tudelft.bw4t.server.BW4TEnvironment $RunOptions
+java -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -cp BW4TServer.jar\:$RepastCore/lib/\*\:$RepastRuntime/lib/\*\:$RepastRuntime/bin\:$RepastBinSrc/repast.simphony.bin_and_src.jar nl.tudelft.bw4t.server.BW4TEnvironment $RunOptions
