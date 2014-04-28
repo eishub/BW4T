@@ -1,0 +1,14 @@
+#!/bin/bash
+# Change the following path to the eclipse plugins folder on your system
+RepastPlugins=~/.eclipse/org.eclipse.platform_4.3.2_1473617060_linux_gtk_x86_64/plugins/
+
+# You probably shouldn't update the following directories
+RepastRuntime=$RepastPlugins/repast.simphony.runtime_2.1.0
+RepastBinSrc=$RepastPlugins/repast.simphony.bin_and_src_2.1.0
+RepastCore=$RepastPlugins/repast.simphony.core_2.1.0
+
+# Change the run options on the following line
+RunOptions="-scenario BW4T.rs -map Random -serverip localhost -serverport 8000"
+
+# Do not edit the following line, as it will likely break your set-up
+java -cp BW4TServer.jar\:$RepastCore/lib/\*\:$RepastRuntime/lib/\*\:$RepastRuntime/bin\:$RepastBinSrc/repast.simphony.bin_and_src.jar nl.tudelft.bw4t.server.BW4TEnvironment $RunOptions

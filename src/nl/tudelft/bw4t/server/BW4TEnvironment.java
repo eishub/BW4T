@@ -81,7 +81,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		this.mapName = mapLocation;
 		this.serverIP = serverIP;
 		this.serverPort = serverPort;
-		this.scenarioLocation = System.getProperty("user.dir") + "/BW4TServer/" + scenarioLocation;
+		this.scenarioLocation = System.getProperty("user.dir")  + "/" + scenarioLocation;
 		System.out.println(this.scenarioLocation);
 		launchAll();
 	}
@@ -221,7 +221,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 */
 	private void launchRepast() throws IOException, ScenarioLoadException,
 			JAXBException {
-		theMap = NewMap.create(new FileInputStream(new File(System.getProperty("user.dir") + "/BW4TServer/maps/" + this.mapName)));
+		theMap = NewMap.create(new FileInputStream(new File(System.getProperty("user.dir") + "/maps/" + this.mapName)));
 		stepper = new Stepper(scenarioLocation, this);
 		System.out.println(scenarioLocation);
 		new Thread(stepper).start();
