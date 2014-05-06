@@ -1,2 +1,19 @@
 \chapter{Introduction}
 \section{Design Goals}
+For this project we were given a large codebase. This codebase had grown complex and convoluted and the task for us was refactor it to reduce complexity, make it more manageable and give it a Plugin Architecture. \\
+On further inspection, however, it was revealed that an exact Plugin Architecture wasn't precisely what the product owner wanted, it was nevertheless clear that a modular design that can easily be expanded or modified was desired. \\
+To this end the goal is to have most if not all core parts of the environment and agents built using interfaces, thus allowing easy addition of new elements in the environment or agent behaviour by creating a new class utilising one of these interfaces, similarly these classes could then later be easily removed without causing parts of the system to start malfunctioning or breaking entirely.
+
+For the refactoring of the code a number of tasks need to be completed:
+\begin{itemize}
+\item
+\textbf{Clean code} - There is a lot of unused code present, due to the complexity of the codebase it can be hard to tell which pieces of code are unused.
+\item
+\textbf{Fully utilize Repast} - Repast is a library that has been imported to act as the environment for the agents to act in, however due to some missing functionality and unfamiliary with Repast at the initial time of implementation Repast isn't properly utilized, many things that have been implemented manually can also be handled by Repast.
+\item
+\textbf{Improve Javadoc} - Javadoc's are sometimes lacking in information or occasionally not present at all.
+\item
+\textbf{Remove code duplication} - There are a number of instances of code duplication present in the code which can make future updates harder to manage.
+\item
+\textbf{Unit Tests} - There are currently no Uni Tests present in the codebase, these should be added to confirm that the code is still working as it should after changes have been made.
+\end{itemize}
