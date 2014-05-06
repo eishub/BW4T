@@ -243,7 +243,7 @@
     %% Create a purple empty page without margins.
     \clearpage%
     \newgeometry{margin=0pt}%
-    \pagecolor{tudelft-purple}%
+    \pagecolor{white}%
     \thispagestyle{empty}%
     %% We need the this to perform coordinate calculations in TikZ.
     \usetikzlibrary{calc}%
