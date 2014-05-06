@@ -9,4 +9,5 @@
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="nl.tudelft.bw4t.server.BW4TEnvironment"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-scenario ./BW4T.rs -map Random -serverip localhost -serverport 8000"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="BlocksWorldForTeam2"/>
+<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:BlocksWorldForTeam2/BW4TServer}"/>
 </launchConfiguration>
