@@ -1,7 +1,7 @@
 environment{
 	env = "../../environments/BW4TClient.jar" .
 	% insert proper initialization parameters and values on the next line, or remove it.
-	init = [ clientip ="localhost", clientport="2000", serverip = "localhost", serverport = "8000", agentcount = "2", humancount = "1", launchgui = "false", goal = "true"] .
+	init = [conf= "blabla.conf", map = "SuperRandom", clientip ="localhost", clientport="2000", serverip = "localhost", serverport = "8000", agentcount = "8", humancount = "1", launchgui = "false", goal = "true"] .
 }
 
 agentfiles{
