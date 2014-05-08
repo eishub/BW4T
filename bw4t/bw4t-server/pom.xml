@@ -6,5 +6,5 @@
     <version>3.0.1-SNAPSHOT</version>
   </parent>
   <groupId>nl.tudelft.bw4t</groupId>
-  <artifactId>client</artifactId>
+  <artifactId>bw4t-server</artifactId>
 </project>

@@ -5,9 +5,12 @@
   <version>3.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
-  	<module>client</module>
-  	<module>server</module>
+  	<module>bw4t-client</module>
+  	<module>bw4t-server</module>
   </modules>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
 
 	<build>
 		<pluginManagement>
