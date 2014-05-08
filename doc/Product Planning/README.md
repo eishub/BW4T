@@ -1,8 +1,16 @@
 # Product Planning
 **TOC**
+
 1. Introduction
 2. Product 
+    1. High-level product backlog (set of epics aligned with the product vision) 
+    2. Roadmap (major release schedule, release goals) 
 3. Product backlog (first version with estimates and prioritized user stories) 
+    1. User stories of features 
+    2. User stories of defects (if applicable) 
+    3. User stories of technical improvements (if applicable) 
+    4. User stories of know-how acquisition 
+    5. Initial release plan (milestones, MRFs per release)
 4. Definition of Done (backlog items, sprints, releases) 
 5. Glossary
 
