@@ -12,8 +12,7 @@
     4. User stories of know-how acquisition 
     5. Initial release plan (milestones, MRFs per release)
 4. Definition of Done (backlog items, sprints, releases) 
-5. Glossary
-
+5. Glossary (Alphabetical list of terms in a particular domain of knowledge with the definitions for those terms.)
 
 ## Organisation
 Keep .tex files of standalone articles in the root of the folder.
