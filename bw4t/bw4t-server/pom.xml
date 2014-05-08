@@ -8,6 +8,14 @@
 	</parent>
 	<groupId>nl.tudelft.bw4t</groupId>
 	<artifactId>bw4t-server</artifactId>
+	<repositories>
+		<repository>
+			<id>local-project-libraries</id>
+			<name>Local project libraries</name>
+			<url>file://${project.basedir}/.repo</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
 
 	<build>
 		<pluginManagement>
@@ -24,5 +32,14 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>apleis</groupId>
+			<artifactId>eis</artifactId>
+			<version>0.3</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
 
 </project>
