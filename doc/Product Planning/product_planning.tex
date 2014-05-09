@@ -1,10 +1,18 @@
 \documentclass{article}
 \usepackage{a4wide}
 
+\usepackage[acronym,toc]{glossaries}
+\makeglossaries
+\usepackage{imakeidx}
+\makeindex
+
+\input{glossary/glossary}
+
 \begin{document}
 \title{A Search and Rescue Mission\\
 \normalsize Product Planning}
 
+\author{}
 %\author{Daniel Swaab\\dswaab\\4237455 \and Valentine Mairet\\vmairet\\4141784 \and Xander Zonneveld\\xzonneveld\\1509608 \and Ruben Starmans\\rstarmans\\4141792 \and Calvin Wong Loi Sing\\cwongloising\\4076699 \and Martin Jorn Rogalla\\mrogalla\\4173635 \and Jan Giesenberg\\jgiesenberg\\4174720 \and Wendy Bolier\\wbolier\\4133633 \and Joost Rothweiler\\jrothweiler\\4246551 \and Joop Au\'{e}\\jaue\\4139534 \and Katia Asmoredjo\\kasmoredjo\\4091760 \and Sander Liebens\\sliebens\\4207750 \and Tim van Rossum\\trvanrossum\\4246306 \and Arun Malhoe\\amalhoe\\4148703 \and Seu Man To\\sto\\4064976 \and Nick Feddes\\nfeddes\\4229770 \and Sille Kamoen\\skamoen\\1534866 \and Shirley de Wit\\shirleydewit\\4249259 \and Tom Peeters\\tompeeters\\4176510}
 \maketitle
 \begin{tabular}{cccc}
@@ -48,15 +56,14 @@ skamoen & shirleydewit & tompeeters &\\
 
 \subsection{User stories of defects}
 \subsection{User stories of technical improvements}
+\input{user_stories/user_stories_improvements}
 \subsection{User stories of know-how acquisition}
 
 
 \section{Definition of Done}
 
+\printglossaries
 
-\section{Glossary}
-\bibliographystyle{plain}
-\bibliography{bib/ref}
-\addcontentsline{toc}{section}{References}
+\addcontentsline{toc}{section}{Glossary}
 
 \end{document}
