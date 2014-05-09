@@ -7,7 +7,6 @@
 \makeindex
 
 \input{glossary/glossary}
-
 \begin{document}
 
 %% Use Roman numerals for the page numbers of the title pages and table of
@@ -22,43 +21,42 @@
 %% Include an optional title page.
 \input{title}
 
-
-
 \pagebreak
-\section*{Abstract}
+\chapter*{Abstract}
 \input{abstract/abstract}
 
 \pagebreak
 \tableofcontents
 \pagebreak
-\section{Introduction}
+
+\chapter{Introduction}
 \input{product_planning_files/introduction}
 
-\section{Product}
-\subsection{High-level product backlog}
+\chapter{Product}
+\section{High-level product backlog}
 \input{product_planning_files/highlevelbacklog}
 
-\subsection{Roadmap}
+\section{Roadmap}
 \input{product_planning_files/roadmap}
 
-\section{Product backlog}
-\subsection{User stories of features}
+\chapter{Product backlog}
+\section{User stories of features}
 \input{user_stories/user_stories_features}
 
-\subsection{User stories of technical improvements}
+\section{User stories of technical improvements}
 \input{user_stories/user_stories_improvements}
 
-\subsection{User stories of know-how acquisition}
+\section{User stories of know-how acquisition}
 \input{user_stories/user_stories_know-how}
 
-\subsection{Initial Release Plan}
+\section{Initial Release Plan}
 \input{Initial_Release_Plan/initial_release_plan}
 
-\section{Definition of Done}
+\chapter{Definition of Done}
 \input{product_planning_files/definition-of-done}
 
 \printglossaries
 
-\addcontentsline{toc}{section}{Glossary}
+\addcontentsline{toc}{chapter}{Glossary}
 
 \end{document}
