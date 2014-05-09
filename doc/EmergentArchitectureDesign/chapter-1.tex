@@ -1,11 +1,17 @@
 \chapter{Introduction}
 \section{Design Goals}
-For this project we were given a large codebase. This codebase had grown complex and convoluted and the task for us was refactor it to reduce complexity, make it more manageable and give it a Plugin Architecture. \\
-On further inspection, however, it was revealed that an exact Plugin Architecture wasn't precisely what the product owner wanted, it was nevertheless clear that a modular design that can easily be expanded or modified was desired. \\
-To this end the goal is to have most if not all core parts of the environment and agents built using interfaces, thus allowing easy addition of new elements in the environment or agent behaviour by creating a new class utilising one of these interfaces, similarly these classes could then later be easily removed without causing parts of the system to start malfunctioning or breaking entirely.
+For this project we were given a large codebase. This codebase had grown complex and convoluted and the task for us was to refactor it to reduce complexity, make it more manageable and give it a Plugin Architecture. \\
+On further inspection, however, it was revealed that an exact Plugin Architecture wasn't precisely what the product owner wanted, but simply a modular design that can easily be expanded or modified was desired. \\
+To this end the goal is to have most if not all core parts of the environment and agents built using interfaces, thus allowing easy addition of new elements in the environment or agent behaviour by creating a new class utilising one of these interfaces, similarly these classes could then later be easily removed without causing parts of the system to start malfunctioning or breaking entirely. \\
 
 For the refactoring of the code a number of tasks need to be completed:
 \begin{itemize}
+\item
+\textbf{Split up codebase into multiple structures} - Currently the Client and Server and GUI all share the same codebase, this makes it hard to keep a proper overview as it isn't always clear at a glance which class belongs to which structure, and some are even shared entirely. We want to split these structures into individual projects to make them easier to work with.
+\item
+\textbf{Convert to Maven project} - There are currently no Unit Tests present in the codebase, therefore in addition to splitting the codebase we wish to turn these seperate projects into Maven projects including Unit Tests so we can easily verify that the codebases are still working correctly after having made changes.
+\item
+\textbf{Improve and add to the GUI} - There is much room for improvement for the GUI. We want to make it more user-friendly in addition to adding a whole new GUI for the creation of maps via an easy to use drag-and-drop system.
 \item
 \textbf{Clean code} - There is a lot of unused code present, due to the complexity of the codebase it can be hard to tell which pieces of code are unused.
 \item
@@ -14,6 +20,4 @@ For the refactoring of the code a number of tasks need to be completed:
 \textbf{Improve Javadoc} - Javadoc's are sometimes lacking in information or occasionally not present at all.
 \item
 \textbf{Remove code duplication} - There are a number of instances of code duplication present in the code which can make future updates harder to manage.
-\item
-\textbf{Unit Tests} - There are currently no Uni Tests present in the codebase, these should be added to confirm that the code is still working as it should after changes have been made.
 \end{itemize}
