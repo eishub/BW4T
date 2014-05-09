@@ -1,1 +1,12 @@
 \section{Persistent Data Management}
+  In the Blocks World for Teams project there is no need to use databases. \\
+  The only persistent data are log files and Environment files.\\ \\
+  At this moment, the log files are raw dumps of the actions a bot (might be human, might be agent).
+  These actions vary from walking to a spot in the map to picking up an item. \\
+  There is not much to do with these log files. Finding something the bot has done is a heavy task as you first need to
+  restructure the file and seek through all the lines. \\
+  In the future, these log files might be used to reconstruct events of a bot.
+  Then you could launch the log file into the client, which will run the bot according to the lines in the log file. \\
+  This could become very useful if you want to analyse why a bot made some decision,
+  or why it did NOT do what you expected it would do. \\ \\
+  The map files are
