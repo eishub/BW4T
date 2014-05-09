@@ -4,9 +4,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Collection;
 
-import eis.exceptions.EntityException;
-import eis.iilang.EnvironmentState;
-
 /**
  * This is a listener at the client side that allows the server to do callback
  * to the client
