@@ -1,5 +1,5 @@
-\documentclass{article}
-\usepackage{a4wide}
+\documentclass[oneside]{tudelft-report}
+
 
 \usepackage[acronym,toc]{glossaries}
 \makeglossaries
@@ -9,39 +9,21 @@
 \input{glossary/glossary}
 
 \begin{document}
+
 %% Use Roman numerals for the page numbers of the title pages and table of
 %% contents.
 \frontmatter
 
-\title{A Search and Rescue Mission\\
-\normalsize{Product Planning}
-
-\author{}
-%\author{Daniel Swaab\\dswaab\\4237455 \and Valentine Mairet\\vmairet\\4141784 \and Xander Zonneveld\\xzonneveld\\1509608 \and Ruben Starmans\\rstarmans\\4141792 \and Calvin Wong Loi Sing\\cwongloising\\4076699 \and Martin Jorn Rogalla\\mrogalla\\4173635 \and Jan Giesenberg\\jgiesenberg\\4174720 \and Wendy Bolier\\wbolier\\4133633 \and Joost Rothweiler\\jrothweiler\\4246551 \and Joop Au\'{e}\\jaue\\4139534 \and Katia Asmoredjo\\kasmoredjo\\4091760 \and Sander Liebens\\sliebens\\4207750 \and Tim van Rossum\\trvanrossum\\4246306 \and Arun Malhoe\\amalhoe\\4148703 \and Seu Man To\\sto\\4064976 \and Nick Feddes\\nfeddes\\4229770 \and Sille Kamoen\\skamoen\\1534866 \and Shirley de Wit\\shirleydewit\\4249259 \and Tom Peeters\\tompeeters\\4176510}
+\title[Blocks World for Teams]{Emergent Architecture\\ Design}
+\author{BW4T~Context~Project}
 \affiliation{Delft University of Technology}
 \makecover
-\maketitle
-\begin{tabular}{cccc}
-Daniel Swaab & Valentine Mairet & Xander Zonneveld & Ruben Starmans\\
-dswaab & vmairet & xzonneveld & rstarmans\\
-4237455 & 4141784 & 1509608 & 4141792\\
-&&&\\
-Calvin Wong Loi Sing & Martin Jorn Rogalla & Jan Giesenberg & Wendy Bolier\\
-cwongloising & mrogalla & jgiesenberg & wbolier\\
-4076699 & 4173635 & 4174720 & 4133633\\
-&&&\\
-Joost Rothweiler & Joop Au\'{e} & Katia Asmoredjo & Sander Liebens\\
-jrothweiler & jaue & kasmoredjo & sliebens\\
-4246551 & 4139534 & 4091760 & 4207750\\
-&&&\\
-Tim van Rossum & Arun Malhoe & Seu Man To & Nick Feddes\\
-trvanrossum & amalhoe & sto & nfeddes\\
-4246306 & 4148703 & 4064976 & 4229770\\
-&&&\\
-Sille Kamoen & Shirley de Wit & Tom Peeters &\\
-skamoen & shirleydewit & tompeeters &\\
-1534866 & 4249259 & 4176510 &
-\end{tabular}
+
+%% Include an optional title page.
+\input{title}
+
+
+
 \pagebreak
 \section*{Abstract}
 
@@ -62,11 +44,15 @@ skamoen & shirleydewit & tompeeters &\\
 
 \subsection{User stories of defects}
 \subsection{User stories of technical improvements}
-\input{user_stories/user_stories_improvements}
+%\input{user_stories/user_stories_improvements}
 \subsection{User stories of know-how acquisition}
-\input{user_stories/user-stories-know-how}
+%\input{user_stories/user-stories-know-how}
 \subsection{Initial Release Plan}
-\input{initial_release_plan}
+<<<<<<< HEAD
+%\input{initial_release_plan}
+=======
+\input{Initial_Release_Plan/initial_release_plan}
+>>>>>>> upstream/product_planning
 
 
 \section{Definition of Done}
