@@ -9,4 +9,19 @@
   Then you could launch the log file into the client, which will run the bot according to the lines in the log file. \\
   This could become very useful if you want to analyse why a bot made some decision,
   or why it did NOT do what you expected it would do. \\ \\
-  The map files are
+  The map files are big XML files, which consist of a decleration of the map. \\
+  The XML file needs to contain at least the following: \\
+  \begin{itemize}
+  \item The area of the map (in x and y value).
+  \item The bot entities (including a starting position in x and y).
+  \item The zones (including the name of the zone, the colour of the boxes inside, its neighbouring zones
+    and an x and y value).
+  \item But also the goal sequence (containing six colours).
+  \item Whether this sequence has to be random (boolean).
+  \item Whether multiple bots are allowed in one room (boolean).
+  \item And whether a random number of blocks is in the rooms (boolean).
+  \end{itemize}
+  
+  These XML files have to be very precise for the server to set up an environment. The MapEditor, we would like to construct,
+  is going to create such XML files with only drag and drop actions, so that maps become more realistic
+  then just rooms in a row. We could have a centered room, which is surrounded by others, or one room bigger than the other.
