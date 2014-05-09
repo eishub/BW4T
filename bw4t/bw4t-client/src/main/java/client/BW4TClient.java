@@ -30,7 +30,7 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientInterfa
 	
 	protected BW4TClient(BW4TRemoteEnvironment parent) throws RemoteException, 
 				MalformedURLException, NotBoundException {
-		this.parent = parent
+		this.parent = parent;
 		
 	}
 	
