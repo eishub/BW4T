@@ -42,7 +42,7 @@
 			<groupId>apleis</groupId>
 			<artifactId>eis</artifactId>
 			<version>0.3</version>
-			<scope>compile</scope>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 
