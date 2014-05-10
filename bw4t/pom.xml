@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>nl.tudelft</groupId>
   <artifactId>bw4t</artifactId>
-  <version>3.0.1-SNAPSHOT</version>
+  <version>3.0.1</version>
   <packaging>pom</packaging>
   <modules>
   	<module>bw4t-client</module>
@@ -11,6 +11,13 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+  <repositories>
+		<repository>
+		  <id>central</id>
+		  <name>Maven Central</name>
+		  <url>http://repo1.maven.org/maven2</url>
+		</repository>
+	</repositories>
 
 	<build>
 		<pluginManagement>
