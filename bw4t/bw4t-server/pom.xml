@@ -14,11 +14,6 @@
 		  <name>Maven Central</name>
 		  <url>http://repo1.maven.org/maven2</url>
 		</repository>
-		<repository>
-			<id>local-project-libraries</id>
-			<name>Local project libraries</name>
-			<url>file:${project.basedir}/.repository/</url>
-		</repository>
 	</repositories>
 
 	<build>
@@ -42,7 +37,8 @@
 			<groupId>apleis</groupId>
 			<artifactId>eis</artifactId>
 			<version>0.3</version>
-			<scope>runtime</scope>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/.repository/apleis/eis/0.3/eis-0.3.jar</systemPath>
 		</dependency>
 	</dependencies>
 
