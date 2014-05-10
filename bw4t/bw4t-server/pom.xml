@@ -8,6 +8,7 @@
 	</parent>
 	<groupId>nl.tudelft.bw4t</groupId>
 	<artifactId>bw4t-server</artifactId>
+	<packaging>jar</packaging>
 	<repositories>
 		<repository>
 		  <id>central</id>
