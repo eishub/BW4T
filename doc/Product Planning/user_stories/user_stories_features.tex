@@ -1,0 +1,111 @@
+\begin{description}
+	\item[Story 1.1:] Configuration Files\\
+	As a user\\
+	I want to make configuration files\\
+	So that I can easily load configurations
+
+	\begin{description}
+		\item[Scenario 1.1.1:] Maps\\
+		Given the user has launched the GUI\\
+		And the user has created the map they wanted\\
+		When the user presses the create map button\\
+		Then a configuration file should be created and usable
+		% Are these not acceptance criteria? 
+		
+		\item[Scenario 1.1.2:] Bots\\
+		Given the user has launched the GUI\\
+		And the user has specified how many bots\\
+		When the user presses the create map button\\
+		Then a configuration file should be created and usable
+
+		\item[Scenario 1.1.3:] Human\\
+		Given the user has launched the GUI\\
+		And the user has specified which bot is human controlled\\
+		When the user presses the create map button\\
+		Then a configuration file should be created and usable
+	\end{description}
+\end{description}
+
+\begin{description}
+	\item[Story 1.2:] Human Player GUI\\
+	As a user \\
+	I want to control the bot\\
+	So that I can tell the bot what to do
+
+	\begin{description}
+		\item[Scenario 1.2.1:] Control\\
+		Given the human player GUI has started\\
+		When the user clicks a command\\
+		Then the bot executes that command and the GUI shows this as feedback
+
+		\item[Scenario 1.2.2:] Message\\
+		Given the human player GUI has started\\
+		When an e-partner message has been sent\\
+		Then the GUI should show this message
+
+		\item[Scenario 1.2.3:] Visual Feedback\\
+		Given the human player GUI has started\\
+		When an event has occurred that limits or extends the bots commands\\
+		Then the list of possible commands in the GUI should be updated
+		\end{description}
+	\end{description}
+
+\begin{description}
+	\item[Story 1.3:] E-Partner\\
+	As a user\\
+	I want to be able to use my E-Partner\\
+	So that I can assist bots and use the E-Partner as my assistant
+
+	\begin{description}
+		\item[Scenario 1.3.1:] Control\\
+		Given the user holds the E-Partner\\
+		When the user executes an action to move the block representing the E-Partner\\
+		Then the block moves in the given direction
+		
+		\item[Scenario 1.3.2:] Communication\\
+		Given the user holds the E-Partner\\
+		When the user types in a message to send to another E-Partner\\
+		And the user clicks to send the message\\
+		Then the typed message is sent
+	\end{description}
+\end{description}
+
+\begin{description}
+	\item[Story 1.4:] Simulation\\
+	As a user\\
+	I want to create simulation conditions\\
+	So that I can easily create specific scenarios
+	%When the user selects a handicap. For example: gripper, colorblind, size, speed, ability to walk, 
+	
+	\begin{description}
+		\item[Scenario 1.4.1:] Gripper Handicap\\
+		Given the handicap GUI has started before the simulation run\\
+		When the user unchecks the ability for a bot to use its gripper\\
+		Then when the simulation runs the bot should not be able to use its gripper
+
+		\item[Scenario 1.4.2:] Colorblind Handicap\\
+		Given the handicap GUI has started before the simulation run\\
+		When the user unchecks the ability for a bot to see colors\\
+		Then when the simulation runs the bot should not be able to differentiate between colors
+
+		\item[Scenario 1.4.3:] Bot size\\
+		Given the handicap GUI has started before the simulation run\\
+		When the user changes the size of a bot\\
+		Then when the simulation runs the bot should have that size and its restrictions
+
+		\item[Scenario 1.4.4:] Bot speed\\
+		Given the handicap GUI has started before the simulation run\\
+		When the user changes the speed of a bot\\
+		Then when the simulation runs the bot should have that speed
+
+		\item[Scenario 1.4.5:] Ability to walk\\
+		Given the handicap GUI has started before the simulation run\\
+		When the user unchecks the ability for a bot to walk\\
+		Then when the simulation runs the bot should not be able to use its gripper
+
+		\item[Scenario 1.4.6:] Physical aspects\\
+		Given the handicap GUI has started before the simulation run\\
+		When the user checks the physical aspects of a bot\\
+		Then when the simulation runs this bot can only continue its path as long as it does not collide with other bots who have the physical aspects checked as well
+	\end{description}
+\end{description}

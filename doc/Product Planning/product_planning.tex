@@ -1,16 +1,69 @@
-\documentclass{article}
-\usepackage{a4wide}
+\documentclass[oneside]{tudelft-report}
 
+
+\usepackage[acronym,toc]{glossaries}
+\makeglossaries
+\usepackage{imakeidx}
+\makeindex
+
+\input{glossary/glossary}
 \begin{document}
 
-\title{Product Planning}
+%% Use Roman numerals for the page numbers of the title pages and table of
+%% contents.
+\frontmatter
 
-\author{persona \and personb }
-\maketitle
+\title[Blocks World for Teams]{Product Planning}
+\author{BW4T~Context~Project}
+\affiliation{Delft University of Technology}
+\makecover
 
+%% Include an optional title page.
+\input{title}
 
+\pagebreak
+\chapter*{Abstract}
+\input{abstract/abstract}
 
-\bibliographystyle{plain}
-\bibliography{bib/ref}
+\pagebreak
+\tableofcontents
+\pagebreak
+
+\setcounter{chapter}{2}
+
+\chapter{Introduction}
+\input{product_planning_files/introduction}
+
+\chapter{Product}
+\section{High-level product backlog}
+\input{product_planning_files/highlevelbacklog}
+
+\section{Roadmap}
+\input{product_planning_files/roadmap}
+
+\setcounter{chapter}{3}
+\setcounter{section}{0}
+
+\chapter{Product backlog}
+\section{User stories of features}
+\input{user_stories/user_stories_features}
+
+\section{User stories of technical improvements}
+\input{user_stories/user_stories_improvements}
+
+\section{User stories of know-how acquisition}
+\input{user_stories/user_stories_know-how}
+
+\section{Initial Release Plan}
+\input{Initial_Release_Plan/Initial_Release_Plan}
+
+\setcounter{chapter}{4}
+
+\chapter{Definition of Done}
+\input{product_planning_files/definition-of-done}
+
+\printglossaries
+
+\addcontentsline{toc}{chapter}{Glossary}
 
 \end{document}
