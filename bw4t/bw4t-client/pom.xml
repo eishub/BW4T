@@ -30,6 +30,7 @@
 			<groupId>nl.tudelft.bw4t</groupId>
 			<artifactId>bw4t-server</artifactId>
 			<version>3.0.1</version>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 
