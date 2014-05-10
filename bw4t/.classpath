@@ -11,10 +11,5 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="bw4t-server/.repo/apleis/eis/0.3/eis-0.3.jar" sourcepath="bw4t-server/.repo/apleis/eis/0.3/eis-0.3-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/BW4T/bw4t-server/.repo/apleis/eis/0.3/eis-0.3-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
