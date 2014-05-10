@@ -4,16 +4,20 @@
 	<parent>
 		<groupId>nl.tudelft</groupId>
 		<artifactId>bw4t</artifactId>
-		<version>3.0.1-SNAPSHOT</version>
+		<version>3.0.1</version>
 	</parent>
 	<groupId>nl.tudelft.bw4t</groupId>
 	<artifactId>bw4t-server</artifactId>
 	<repositories>
 		<repository>
+		  <id>central</id>
+		  <name>Maven Central</name>
+		  <url>http://repo1.maven.org/maven2</url>
+		</repository>
+		<repository>
 			<id>local-project-libraries</id>
 			<name>Local project libraries</name>
-			<url>file://${project.basedir}/.repo</url>
-			<layout>default</layout>
+			<url>file:${project.basedir}/.repo/</url>
 		</repository>
 	</repositories>
 
