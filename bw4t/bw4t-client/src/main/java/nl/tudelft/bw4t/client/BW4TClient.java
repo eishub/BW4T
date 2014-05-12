@@ -23,82 +23,84 @@ import eis.iilang.EnvironmentState;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
 
-
-
 /**
  * The BW4TClient which connects to the BW4TServer.
  */
 public final class BW4TClient implements BW4TClientInterface {
-	
+
 	private BW4TServerInterface server;
 	private final String clientIp, clientPort;
 	private final String serverIp, serverPort;
 	private String address, bindAddress;
-	
+
 	/**
 	 * the map that the server uses.
 	 */
 	private NewMap map;
 
-    /**
-     * Constructor is not used but is needed to secure non-creation of this
-     * class.
-     */
-    public BW4TClient(String clientIp, String clientPort, String serverIp, String serverPort) {
-    	this.clientIp = clientIp;
-    	this.clientPort = clientPort;
-    	this.serverIp = serverIp;
-    	this.serverPort = serverPort;
+	/**
+	 * Constructor is not used but is needed to secure non-creation of this
+	 * class.
+	 */
+	public BW4TClient(String clientIp, String clientPort, String serverIp,
+			String serverPort) {
+		this.clientIp = clientIp;
+		this.clientPort = clientPort;
+		this.serverIp = serverIp;
+		this.serverPort = serverPort;
 
-    }
-    
-    /**
-     * The main method running the client and setting up the connection to the
-     * BW4T Server.
-     */
-    
-    public void connectServer() throws RemoteException, MalformedURLException, NotBoundException {
-    	// Launch the client and bind it
-    	bindAddress = "rmi://" + clientIp + ":" + clientPort
-    			+ "/BW4TClient";
-    	try {
-    		LocateRegistry.createRegistry(Integer.parseInt(clientPort));
-    	} catch (Exception e) {
-    		System.out.println("Registry already created");
-    	}
-    	Naming.rebind(bindAddress, this);
-    	System.out.println("BW4TClient bound");
-    	
-    	address = "rmi://" + serverIp + ":" + serverPort
-				+ "/BW4TServer";
-    	System.out.println(address);
-    	try {
-            server = (BW4TServerInterface) Naming.lookup(address);
-            System.out.println(server.say());
-        } catch (MalformedURLException | RemoteException
-                | NotBoundException e) {
-        	e.printStackTrace();
-        	//throw new NoEnvironmentException("Failed to connect " + address, e);
-        }
-    }
+	}
 
-    /**
-     * TODO: Better name for this method....
-     * 
+	/**
+	 * The main method running the client and setting up the connection to the
+	 * BW4T Server.
+	 * 
+	 * @throws RemoteException
+	 *             if remote registry could not be contacted
+	 * @throws MalformedURLException
+	 *             if the remote name is not an appropriately formatted URL
+	 */
+	public void connectServer() throws RemoteException, MalformedURLException,
+			NotBoundException {
+		// Launch the client and bind it
+		bindAddress = "rmi://" + clientIp + ":" + clientPort + "/BW4TClient";
+		try {
+			LocateRegistry.createRegistry(Integer.parseInt(clientPort));
+		} catch (Exception e) {
+			System.out.println("Registry already created");
+		}
+		Naming.rebind(bindAddress, this);
+		System.out.println("BW4TClient bound");
+
+		address = "rmi://" + serverIp + ":" + serverPort + "/BW4TServer";
+		System.out.println(address);
+		try {
+			server = (BW4TServerInterface) Naming.lookup(address);
+			System.out.println(server.say());
+		} catch (MalformedURLException | RemoteException | NotBoundException e) {
+			e.printStackTrace();
+			// throw new NoEnvironmentException("Failed to connect " + address,
+			// e);
+		}
+	}
+
+	/**
+	 * TODO: Better name for this method....
+	 * 
 	 * Register our client with the server. Provided separately, of run
 	 * 
-	 * @param initParameters
-	 * @throws RemoteException
+	 * @param agentCount	the number of computer controlled robots
+	 * @param humanCount the number of computer controlled robots
+	 * @throws RemoteException if an exception occurs while trying to register with th server
 	 */
-     
-	public void register(int agentCount, int humanCount)
-			throws RemoteException {
+	public void register(int agentCount, int humanCount) throws RemoteException {
 
 		server.registerClient(this, agentCount, humanCount);
 	}
 
 	/**
-	 * TODO: handle exceptions + make sure all entities and agents have been unbound before kill
+	 * TODO: handle exceptions + make sure all entities and agents have been
+	 * unbound before kill
 	 * 
 	 * kill the client interface. kill at this moment does not kill the server,
 	 * it just disconnects the client. Make sure all entities and agents have
@@ -110,11 +112,11 @@ public final class BW4TClient implements BW4TClientInterface {
 	 */
 	public void kill() throws RemoteException, MalformedURLException,
 			NotBoundException {
-		
-	//	while(!getAgents().isEmpty()){
-			
-	//	}
-		
+
+		// while(!getAgents().isEmpty()){
+
+		// }
+
 		server.unregisterClient(this);
 		Naming.unbind(bindAddress);
 		UnicastRemoteObject.unexportObject(this, true);

@@ -313,7 +313,7 @@ public interface BW4TServerInterface extends Remote {
 			throws RemoteException, ManagementException;
 
 	/**
-	 * * reset the server, following the requirements for {@link BatchRunner}.
+	 * reset the server, following the requirements for BatchRunner.
 	 * This means that no new entities are created, but the old ones are left
 	 * connected.
 	 * 
