@@ -161,13 +161,8 @@ public class BW4TServer extends UnicastRemoteObject implements
 	@Override
 	public Percept performEntityAction(String entity, Action action)
 			throws RemoteException {
-
-		try {
-			return BW4TEnvironment.getInstance().performClientAction(entity,
-					action);
-		} catch (ActException e) {
-			throw new RemoteException("action failed", e);
-		}
+	    return BW4TEnvironment.getInstance().performClientAction(entity,
+                action);
 	}
 	
 	/**

@@ -1,0 +1,86 @@
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: product_vision.aux
+The style file: tudelft-report.bst
+Illegal, another \bibstyle command---line 21 of file product_vision.aux
+ : \bibstyle
+ :          {apa}
+I'm skipping whatever remains of this command
+Illegal, another \bibstyle command---line 55 of file product_vision.aux
+ : \bibstyle
+ :          {apacite}
+I'm skipping whatever remains of this command
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Database file #1: product_vision.bib
+Warning--entry type for "context" isn't style-file defined
+--line 4 of file product_vision.bib
+Warning--entry type for "Pelsmaeker" isn't style-file defined
+--line 31 of file product_vision.bib
+Name 1 in "Harbers, Maaike, and M. Bradshaw, Jeffrey and Johnson, Matthew and Feltovich, Paul and van den Bosch, Karel and Meyer, John-Jules" has a comma at the end for entry humanagent
+while executing---line 3233 of file tudelft-report.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+merlin.mbs apsrev4-1.bst 2010-07-25 4.21a (PWD, AO, DPC) hacked
+Control: key (0) 
+Control: author (72) initials jnrlst
+Control: editor formatted (1) identically to author
+Control: production of article title (0) allowed
+Control: page (0) single
+Control: year (1) truncated
+Control: production of eprint (0) enabled
+Warning--empty year in context
+Name 1 in "Harbers, Maaike, and M. Bradshaw, Jeffrey and Johnson, Matthew and Feltovich, Paul and van den Bosch, Karel and Meyer, John-Jules" has a comma at the end for entry humanagent
+while executing---line 3439 of file tudelft-report.bst
+Name 1 in "Harbers, Maaike, and M. Bradshaw, Jeffrey and Johnson, Matthew and Feltovich, Paul and van den Bosch, Karel and Meyer, John-Jules" has a comma at the end for entry humanagent
+while executing---line 3439 of file tudelft-report.bst
+Name 1 in "Harbers, Maaike, and M. Bradshaw, Jeffrey and Johnson, Matthew and Feltovich, Paul and van den Bosch, Karel and Meyer, John-Jules" has a comma at the end for entry humanagent
+while executing---line 3439 of file tudelft-report.bst
+Name 1 in "Harbers, Maaike, and M. Bradshaw, Jeffrey and Johnson, Matthew and Feltovich, Paul and van den Bosch, Karel and Meyer, John-Jules" has a comma at the end for entry humanagent
+while executing---line 3439 of file tudelft-report.bst
+You've used 9 entries,
+            5847 wiz_defined-function locations,
+            1637 strings with 16738 characters,
+and the built_in function-call counts, 8916 in all, are:
+= -- 532
+> -- 270
+< -- 54
++ -- 88
+- -- 66
+* -- 1481
+:= -- 877
+add.period$ -- 17
+call.type$ -- 9
+change.case$ -- 47
+chr.to.int$ -- 9
+cite$ -- 10
+duplicate$ -- 826
+empty$ -- 619
+format.name$ -- 157
+if$ -- 1703
+int.to.chr$ -- 1
+int.to.str$ -- 17
+missing$ -- 86
+newline$ -- 79
+num.names$ -- 27
+pop$ -- 317
+preamble$ -- 1
+purify$ -- 44
+quote$ -- 0
+skip$ -- 294
+stack$ -- 0
+substring$ -- 168
+swap$ -- 800
+text.length$ -- 35
+text.prefix$ -- 0
+top$ -- 8
+type$ -- 132
+warning$ -- 1
+while$ -- 21
+width$ -- 0
+write$ -- 120
+(There were 7 error messages)
