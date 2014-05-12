@@ -1,6 +1,9 @@
 package nl.tudelft.bw4t.scenariogui;
 
 import java.util.LinkedList;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * This class holds the possible options that can be specified
@@ -10,7 +13,11 @@ import java.util.LinkedList;
  * @author Nick
  *
  */
-public class ClientConfig {
+@XmlRootElement
+public class BW4TClientConfig {
+	
+	/** The file in which the configs in this class will be stored: */
+	private String outputFile;
 	
 	private String clientIp;
 	private int clientPort;
@@ -21,12 +28,28 @@ public class ClientConfig {
 	private String agentClass;
 	
 	private String mapFile;
-	private LinkedList<BotConfig> bots = new LinkedList<BotConfig>();
 	
+    @XmlElementWrapper(name = "botlist")
+    @XmlElement(name = "bot")
+   	private LinkedList<BotConfig> bots = new LinkedList<BotConfig>();
+	
+	/**
+	 * Gets the location to store the XML version of this file in.
+	 * @return The path of the file to store this object in as XML.
+	 */
+	public String getFileLocation() {
+		return outputFile;
+	}
+
+	public void setFileLocation(String fileLocation) {
+		this.outputFile = fileLocation;
+	}
+
 	public String getClientIp() {
 		return clientIp;
 	}
-	
+
+    @XmlElement
 	public void setClientIp(String clientIp) {
 		this.clientIp = clientIp;
 	}
@@ -34,7 +57,8 @@ public class ClientConfig {
 	public int getClientPort() {
 		return clientPort;
 	}
-	
+
+    @XmlElement
 	public void setClientPort(int clientPort) {
 		this.clientPort = clientPort;
 	}
@@ -42,7 +66,8 @@ public class ClientConfig {
 	public String getServerIp() {
 		return serverIp;
 	}
-	
+
+    @XmlElement
 	public void setServerIp(String serverIp) {
 		this.serverIp = serverIp;
 	}
@@ -50,7 +75,8 @@ public class ClientConfig {
 	public int getServerPort() {
 		return serverPort;
 	}
-	
+
+    @XmlElement
 	public void setServerPort(int serverPort) {
 		this.serverPort = serverPort;
 	}
@@ -58,7 +84,8 @@ public class ClientConfig {
 	public boolean isLaunchGui() {
 		return launchGui;
 	}
-	
+
+    @XmlElement
 	public void setLaunchGui(boolean launchGui) {
 		this.launchGui = launchGui;
 	}
@@ -66,7 +93,8 @@ public class ClientConfig {
 	public boolean isUseGoal() {
 		return useGoal;
 	}
-	
+
+    @XmlElement
 	public void setUseGoal(boolean useGoal) {
 		this.useGoal = useGoal;
 	}
@@ -74,7 +102,8 @@ public class ClientConfig {
 	public String getAgentClass() {
 		return agentClass;
 	}
-	
+
+    @XmlElement
 	public void setAgentClass(String agentClass) {
 		this.agentClass = agentClass;
 	}
@@ -83,8 +112,17 @@ public class ClientConfig {
 		return mapFile;
 	}
 
+    @XmlElement
 	public void setMapFile(String mapFile) {
 		this.mapFile = mapFile;
+	}
+
+	public LinkedList<BotConfig> getBots() {
+		return bots;
+	}
+
+	public void setBots(LinkedList<BotConfig> bots) {
+		this.bots = bots;
 	}
 	
 }
