@@ -1,10 +1,8 @@
 package nl.tudelft.bw4t.server;
 
 import java.net.MalformedURLException;
-import java.rmi.AccessException;
 import java.rmi.Naming;
 import java.rmi.NoSuchObjectException;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -431,6 +429,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 *             if something unexpected happens when attempting to add or
 	 *             remove an entity.
 	 */
+	@Override
 	public void notifyNewEntity(String entity) {
 		for (BW4TClientInterface client : clientWaitingForAgent.keySet()) {
 			try {
@@ -457,5 +456,23 @@ public class BW4TServer extends UnicastRemoteObject implements
 			System.err.println("server disconnect RMI failed" + e);
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void notifyFreeEntity(String entity, Collection<String> agents) {
+		
+		
+	}
+
+	@Override
+	public void handleStateChange(EnvironmentState newState) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void notifyDeletedEntity(String entity, Collection<String> agents) {
+		// TODO Auto-generated method stub
+		
 	}
 }
