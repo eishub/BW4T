@@ -47,8 +47,10 @@ public class NewMap implements Serializable {
 	 * Constructor that creates a map from an inputstream that contains XML.
 	 * 
 	 * @param instream
-	 * @return NewMap
+	 *            the stream containing the map to be parsed
+	 * @return the map object created from the stream
 	 * @throws JAXBException
+	 *             the given stream contains non-conforming xml
 	 */
 	public static NewMap create(InputStream instream) throws JAXBException {
 		JAXBContext context = JAXBContext.newInstance(NewMap.class);
@@ -98,7 +100,8 @@ public class NewMap implements Serializable {
 	 * Get zones of given type
 	 * 
 	 * @param type
-	 *            {@link EntityType}.
+	 *            {@link EntityType}
+	 * @return the list of zone of the requested type
 	 */
 	public List<Zone> getZones(Zone.Type type) {
 		List<Zone> list = new ArrayList<Zone>();
@@ -131,6 +134,7 @@ public class NewMap implements Serializable {
 	 * Blocks to be added to the map only, but not to the sequence.
 	 * 
 	 * @param randomBlocks
+	 *            the number of random blocks to be added
 	 */
 	public void setRandomBlocks(Integer randomBlocks) {
 		this.randomBlocks = randomBlocks;
@@ -164,6 +168,7 @@ public class NewMap implements Serializable {
 	 * Number of blocks to be added to the sequence AND to the map.
 	 * 
 	 * @param randomSequence
+	 *            Number of blocks to be added to the sequence AND to the map
 	 */
 	public void setRandomSequence(Integer randomSequence) {
 		this.randomSequence = randomSequence;

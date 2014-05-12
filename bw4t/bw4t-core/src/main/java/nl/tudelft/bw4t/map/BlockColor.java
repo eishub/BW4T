@@ -25,7 +25,7 @@ public enum BlockColor implements Serializable {
 	/**
 	 * Get the letter for this color.
 	 * 
-	 * @return
+	 * @return the first letter of this color
 	 */
 	public Character getLetter() {
 		return name.charAt(0);
