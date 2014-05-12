@@ -2,7 +2,6 @@ package nl.tudelft.bw4t.server.environment;
 
 import java.util.LinkedList;
 
-import nl.tudelft.bw4t.BW4TBuilder;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.server.BW4TLogger;
 import nl.tudelft.bw4t.server.RobotEntityInterface;

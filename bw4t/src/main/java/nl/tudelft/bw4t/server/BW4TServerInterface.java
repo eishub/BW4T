@@ -6,8 +6,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 
-import repast.simphony.batch.BatchRunner;
-import nl.tudelft.bw4t.client.BW4TClient;
+import nl.tudelft.bw4t.client.BW4TClientInterface;
 import eis.EnvironmentInterfaceStandard;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
@@ -46,7 +45,7 @@ public interface BW4TServerInterface extends Remote {
 	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 */
-	void registerClient(BW4TClient client, int agentCount, int humanCount)
+	void registerClient(BW4TClientInterface client, int agentCount, int humanCount)
 			throws RemoteException;
 	
 	/**
@@ -76,7 +75,7 @@ public interface BW4TServerInterface extends Remote {
 	 * @param client
 	 * @throws RemoteException
 	 */
-	void unregisterClient(BW4TClient client) throws RemoteException;
+	void unregisterClient(BW4TClientInterface client) throws RemoteException;
 	
 	/**
 	 * Called when a client wants to perform an entity action
