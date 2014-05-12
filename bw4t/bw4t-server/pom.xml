@@ -41,6 +41,11 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/.repository/apleis/eis/0.3/eis-0.3.jar</systemPath>
 		</dependency>
+		<dependency>
+			<groupId>nl.tudelft.bw4t</groupId>
+			<artifactId>bw4t-client</artifactId>
+			<version>3.0.1</version>
+		</dependency>
 	</dependencies>
 
   <reporting>
