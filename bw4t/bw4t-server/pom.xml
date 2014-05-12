@@ -3,8 +3,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>nl.tudelft</groupId>
-		<artifactId>bw4t</artifactId>
-		<version>3.0.1</version>
+	<artifactId>bw4t</artifactId>
+	<version>3.0.1</version>
 	</parent>
 	<groupId>nl.tudelft.bw4t</groupId>
 	<artifactId>bw4t-server</artifactId>
@@ -15,6 +15,17 @@
 		  <name>Maven Central</name>
 		  <url>http://repo1.maven.org/maven2</url>
 		</repository>
+		<repository>
+	        <id>martin-private-dependency-repository</id>
+	        <url>https://martinrogalla.com/bw4t/dependency/</url>
+	        <releases>
+	            <enabled>true</enabled>
+	            <updatePolicy>always</updatePolicy>
+	        </releases>
+	        <snapshots>
+	            <enabled>false</enabled>
+	        </snapshots>
+        </repository>
 	</repositories>
 
 	<build>
@@ -38,8 +49,6 @@
 			<groupId>apleis</groupId>
 			<artifactId>eis</artifactId>
 			<version>0.3</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/.repository/apleis/eis/0.3/eis-0.3.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>nl.tudelft.bw4t</groupId>
