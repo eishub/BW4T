@@ -325,4 +325,12 @@ public interface BW4TServerInterface extends Remote {
 			throws RemoteException, ManagementException;
 
 	
+	/**
+	 * TODO: methods from RemoteEnvironment
+	 */
+	void notifyFreeEntity(String entity, Collection<String> agents);
+	void handleStateChange(EnvironmentState newState);
+	void notifyNewEntity(String entity);
+	void notifyDeletedEntity(String entity, Collection<String> agents);
+	
 }
