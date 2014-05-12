@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.server.environment;
 
+import nl.tudelft.bw4t.map.NewMap;
 import eis.eis2java.environment.AbstractEnvironment;
 import eis.iilang.Action;
 
@@ -13,6 +14,38 @@ public class BW4TEnvironment extends AbstractEnvironment {
      * Serial, generated.
      */
     private static final long serialVersionUID = 7979540741572302941L;
+
+    /**
+     * Instance of the environment
+     */
+    private static BW4TEnvironment instance;
+    
+    /**
+     * The map used in the environment
+     */
+    private static NewMap theMap;
+    
+	/**
+	 * Get the instance of this environment
+	 * 
+	 * @return the instance
+	 */
+	public static BW4TEnvironment getInstance() {
+		if (instance == null) {
+			throw new IllegalStateException(
+					"BW4TEnvironment has not been initialized");
+		}
+		return instance;
+	}
+	
+	/**
+	 * get the current {@link NewMap}
+	 * 
+	 * @return the {@link NewMap}
+	 */
+	public static NewMap getMap() {
+		return theMap;
+	}
 
     /**
      * No idea... should still be implemented.
