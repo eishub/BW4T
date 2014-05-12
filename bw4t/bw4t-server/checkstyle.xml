@@ -5,122 +5,96 @@
     This configuration file was written by the eclipse-cs plugin configuration editor
 -->
 <!--
-    Checkstyle-Configuration: BW4T Coding Standards
+    Checkstyle-Configuration: BW4T Checkstyle configuration
     Description: none
 -->
 <module name="Checker">
   <property name="severity" value="warning"/>
   <module name="TreeWalker">
-    <property name="tabWidth" value="4"/>
-    <module name="FileContentsHolder"/>
     <module name="JavadocMethod">
-      <property name="scope" value="package"/>
       <property name="suppressLoadErrors" value="true"/>
     </module>
     <module name="JavadocType"/>
-    <module name="JavadocVariable">
-      <property name="severity" value="ignore"/>
-      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
-    </module>
-    <module name="JavadocStyle"/>
+    <module name="JavadocVariable"/>
+    <module name="AbstractClassName"/>
     <module name="ConstantName"/>
-    <module name="LocalFinalVariableName"/>
-    <module name="LocalVariableName"/>
     <module name="MemberName"/>
-    <module name="MethodName">
-      <property name="format" value="^[a-z][a-zA-Z0-9_]*$"/>
-    </module>
+    <module name="MethodName"/>
     <module name="PackageName"/>
-    <module name="ParameterName"/>
     <module name="StaticVariableName"/>
-    <module name="TypeName"/>
     <module name="AvoidStarImport"/>
     <module name="IllegalImport"/>
-    <module name="RedundantImport"/>
+    <module name="ImportOrder"/>
     <module name="UnusedImports"/>
-    <module name="LineLength">
-      <property name="max" value="100"/>
-    </module>
     <module name="MethodLength">
-      <property name="max" value="30"/>
+      <property name="countEmpty" value="false"/>
+      <property name="tokens" value="METHOD_DEF"/>
     </module>
     <module name="ParameterNumber"/>
-    <module name="EmptyForIteratorPad"/>
-    <module name="MethodParamPad"/>
-    <module name="NoWhitespaceAfter">
-      <property name="tokens" value="BNOT,DEC,DOT,INC,LNOT,UNARY_MINUS,UNARY_PLUS"/>
-    </module>
-    <module name="NoWhitespaceBefore"/>
+    <module name="MethodCount"/>
+    <module name="GenericWhitespace"/>
     <module name="OperatorWrap"/>
-    <module name="ParenPad"/>
-    <module name="TypecastParenPad"/>
+    <module name="MethodParamPad"/>
     <module name="WhitespaceAfter"/>
     <module name="WhitespaceAround"/>
-    <module name="ModifierOrder"/>
+    <module name="NoWhitespaceAfter"/>
+    <module name="NoWhitespaceBefore"/>
+    <module name="ParenPad"/>
     <module name="RedundantModifier"/>
-    <module name="AvoidNestedBlocks"/>
-    <module name="EmptyBlock"/>
-    <module name="LeftCurly"/>
-    <module name="NeedBraces"/>
-    <module name="RightCurly">
-      <property name="severity" value="ignore"/>
-      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    <module name="EmptyBlock">
+      <property name="tokens" value="LITERAL_DO,LITERAL_ELSE,LITERAL_FINALLY,LITERAL_IF,LITERAL_FOR,LITERAL_TRY,LITERAL_WHILE,STATIC_INIT"/>
     </module>
-    <module name="AvoidInlineConditionals"/>
+    <module name="LineLength">
+      <property name="max" value="120"/>
+    </module>
+    <module name="LeftCurly">
+      <property name="maxLineLength" value="120"/>
+    </module>
+    <module name="CovariantEquals"/>
+    <module name="DefaultComesLast"/>
+    <module name="DeclarationOrder">
+      <property name="ignoreModifiers" value="true"/>
+    </module>
     <module name="EmptyStatement"/>
-    <module name="EqualsHashCode"/>
-    <module name="HiddenField">
-      <property name="severity" value="ignore"/>
-      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
-    </module>
-    <module name="IllegalInstantiation"/>
+    <module name="HiddenField"/>
+    <module name="IllegalCatch"/>
+    <module name="IllegalThrows"/>
     <module name="InnerAssignment"/>
-    <module name="MagicNumber"/>
+    <module name="JUnitTestCase"/>
     <module name="MissingSwitchDefault"/>
+    <module name="MultipleStringLiterals"/>
+    <module name="NoClone"/>
+    <module name="PackageDeclaration"/>
     <module name="RedundantThrows">
       <property name="suppressLoadErrors" value="true"/>
     </module>
     <module name="SimplifyBooleanExpression"/>
     <module name="SimplifyBooleanReturn"/>
-    <module name="DesignForExtension">
-      <property name="severity" value="ignore"/>
-      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
-    </module>
+    <module name="StringLiteralEquality"/>
+    <module name="SuperFinalize"/>
+    <module name="OneStatementPerLine"/>
     <module name="FinalClass"/>
     <module name="HideUtilityClassConstructor"/>
-    <module name="InterfaceIsType"/>
-    <module name="VisibilityModifier"/>
+    <module name="VisibilityModifier">
+      <property name="protectedAllowed" value="true"/>
+    </module>
+    <module name="BooleanExpressionComplexity">
+      <property name="max" value="5"/>
+    </module>
+    <module name="CyclomaticComplexity"/>
     <module name="ArrayTypeStyle"/>
-    <module name="FinalParameters">
-      <property name="severity" value="ignore"/>
-      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
-    </module>
-    <module name="TodoComment">
-      <property name="severity" value="ignore"/>
-      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
-    </module>
+    <module name="TrailingComment"/>
+    <module name="UncommentedMain"/>
     <module name="UpperEll"/>
-    <module name="FallThrough"/>
-    <module name="MethodLength">
-      <property name="max" value="30"/>
+    <module name="MissingDeprecated"/>
+    <module name="MissingOverride"/>
+    <module name="RightCurly">
+      <property name="option" value="alone"/>
+      <property name="tokens" value="LITERAL_FINALLY,LITERAL_IF,LITERAL_ELSE"/>
+    </module>
+    <module name="RightCurly">
+      <property name="tokens" value="LITERAL_TRY,LITERAL_CATCH"/>
     </module>
   </module>
-  <module name="NewlineAtEndOfFile">
-    <property name="severity" value="ignore"/>
-    <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
-  </module>
-  <module name="Translation"/>
-  <module name="FileLength"/>
-  <module name="FileTabCharacter">
-    <property name="severity" value="ignore"/>
-    <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
-  </module>
-  <module name="RegexpSingleline">
-    <property name="severity" value="ignore"/>
-    <property name="format" value="\s+$"/>
-    <property name="message" value="Line has trailing spaces."/>
-    <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
-  </module>
-  <module name="SuppressionCommentFilter"/>
-  <module name="SuppressWithNearbyCommentFilter"/>
+  <module name="NewlineAtEndOfFile"/>
 </module>
