@@ -1,19 +1,16 @@
 \documentclass[oneside]{tudelft-report}
-%TODO BIB
 
 \usepackage{fullpage}
 \usepackage{hyperref}
-\usepackage{apacite}
+\usepackage{{apacite}
 \usepackage{url}
 \usepackage{graphicx}
 \bibliographystyle{unsrt}
 \usepackage[acronym]{glossaries}
-\makeglossaries
 \usepackage{imakeidx}
 \makeindex
 
 
-\input{glossary/glossary}
 \begin{document}
 
 %% Use Roman numerals for the page numbers of the title pages and table of
@@ -41,9 +38,10 @@ Given the BW4T environment, we have been assigned the task to enhance this softw
 %TODO CONTENTS
 \chapter{Customer}
 
+\section{Usage}
 Blocks World For Teams (BW4T) \cite{bw4t} is an environment used to test joint activity, by simulating a Multi Agent System (MAS). A MAS is a system in which multiple agents work together as a team to reach a unified goal. The BW4T even has support for the mixed human-agent coordination simulation. The BW4T environment simulates a simplification of a real time rescue operation. The context Coordinated Teams: A Search and Rescue Mission \cite{context} describes rescue missions with situations unsuitable for humans. For there missions the need for robots is growing. BW4T adresses this issue and now is used mostly for research purposes as to understand and improve the coordination of human-agent teams \cite{humanagent}. Thus it will be used to measure the competence of those teams and help improve the interactions of the team members. Additionally the environment will also be used for educational purposes, to teach students the concept of MAS. This gives the students an insight on how to work with agents and how to use them in diverse missions.
 
-
+\section{Target Customers}
 Research groups will buy our product in the name of their university. Several researchers of such a research group will be the main users of the product. They will develop human-agent teams for a variety of scenarios in order to test their effectiveness. This environment will be developed just for that. As stated earlier the BW4T environment will also be used for teaching \cite{lecture}. However this will be less important for the development because the students will only learn certain aspects of the overall system. 
 
 In the future, the BW4T (or an enhanced version of it), might be used by actual rescue teams who need to use one or more robots in their missions. They will have the need to extensively test their team before they will actually use it in the field. They can start testing their teams with a product like the one we are building. However more development is necessary to make the system advanced enough to be used with real life robots. Also this would require a standard to be written for the interfaces between agents, in order to be able to coordinate them. 
@@ -74,9 +72,7 @@ The project of improving the current Blocks World For Teams environment will tak
 Every project has its own expenses which are paid out of a budget. We as a group of students working on a research project do not have an actual budget to pay certain things like server costs from. But since we work for a university they can possibly provide us if we need anything. Thus keeping the cost low or even keeping it to zero.
 
 
-\printglossaries
 
-\addcontentsline{toc}{chapter}{Glossary}
 
 \clearpage
 \bibliographystyle{apacite}
