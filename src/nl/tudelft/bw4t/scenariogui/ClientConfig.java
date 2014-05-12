@@ -12,6 +12,9 @@ import java.util.LinkedList;
  */
 public class ClientConfig {
 	
+	/** The file in which the configs in this class will be stored: */
+	private String outputFile;
+	
 	private String clientIp;
 	private int clientPort;
 	private String serverIp;
@@ -22,6 +25,18 @@ public class ClientConfig {
 	
 	private String mapFile;
 	private LinkedList<BotConfig> bots = new LinkedList<BotConfig>();
+	
+	/**
+	 * Gets the location to store the XML version of this file in.
+	 * @return The path of the file to store this object in as XML.
+	 */
+	public String getFileLocation() {
+		return outputFile;
+	}
+
+	public void setFileLocation(String fileLocation) {
+		this.outputFile = fileLocation;
+	}
 	
 	public String getClientIp() {
 		return clientIp;
@@ -85,6 +100,14 @@ public class ClientConfig {
 
 	public void setMapFile(String mapFile) {
 		this.mapFile = mapFile;
+	}
+
+	public LinkedList<BotConfig> getBots() {
+		return bots;
+	}
+
+	public void setBots(LinkedList<BotConfig> bots) {
+		this.bots = bots;
 	}
 	
 }
