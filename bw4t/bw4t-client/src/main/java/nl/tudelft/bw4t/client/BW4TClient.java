@@ -34,6 +34,11 @@ public final class BW4TClient implements BW4TClientInterface {
 	private final String clientIp, clientPort;
 	private final String serverIp, serverPort;
 	private String address, bindAddress;
+	
+	/**
+	 * the map that the server uses.
+	 */
+	private NewMap map;
 
     /**
      * Constructor is not used but is needed to secure non-creation of this
@@ -73,7 +78,7 @@ public final class BW4TClient implements BW4TClientInterface {
         } catch (MalformedURLException | RemoteException
                 | NotBoundException e) {
         	e.printStackTrace();
-        	throw new NoEnvironmentException("Failed to connect " + address, e);
+        	//throw new NoEnvironmentException("Failed to connect " + address, e);
         }
     }
 
@@ -462,7 +467,7 @@ public final class BW4TClient implements BW4TClientInterface {
 	@Override
 	public void handleNewEntity(String entity) throws RemoteException,
 			EntityException {
-		parent.notifyNewEntity(entity);
+		server.notifyNewEntity(entity);
 	}
 
 	/**
@@ -471,7 +476,7 @@ public final class BW4TClient implements BW4TClientInterface {
 	@Override
 	public void handleFreeEntity(String entity, Collection<String> agents)
 			throws RemoteException {
-		parent.notifyFreeEntity(entity, agents);
+		server.notifyFreeEntity(entity, agents);
 	}
 
 	/**
@@ -480,7 +485,7 @@ public final class BW4TClient implements BW4TClientInterface {
 	@Override
 	public void handleDeletedEntity(String entity, Collection<String> agents)
 			throws RemoteException {
-		parent.notifyDeletedEntity(entity, agents);
+		server.notifyDeletedEntity(entity, agents);
 	}
 
 	/**
@@ -489,7 +494,7 @@ public final class BW4TClient implements BW4TClientInterface {
 	@Override
 	public void handleStateChange(EnvironmentState newState)
 			throws RemoteException {
-		parent.handleStateChange(newState);
+		server.handleStateChange(newState);
 	}
 
 	@Override
