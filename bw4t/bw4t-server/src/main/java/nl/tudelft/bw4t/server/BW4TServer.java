@@ -15,6 +15,8 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 
+import nl.tudelft.bw4t.client.BW4TClientInterface;
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
@@ -24,8 +26,8 @@ import eis.iilang.Action;
 import eis.iilang.EnvironmentState;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
-import nl.tudelft.bw4t.client.BW4TClient;
-import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+
+
 
 /**
  * The BW4TServer, to which the client can connect to.
@@ -46,11 +48,11 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * Hashmaps to track which clients are connected
 	 * TODO: explain difference
 	 */
-    private final HashMap<BW4TClient, Integer> clientWaitingForAgent;
+    private final HashMap<BW4TClientInterface, Integer> clientWaitingForAgent;
 	/**
 	 * Hashmaps to track which clients are connected (2)
 	 */
-	private final HashMap<BW4TClient, Integer> clientWaitingForHuman;
+	private final HashMap<BW4TClientInterface, Integer> clientWaitingForHuman;
 
 	/**
 	 * ip and port of the server.
@@ -66,8 +68,8 @@ public class BW4TServer extends UnicastRemoteObject implements
 			throws RemoteException, MalformedURLException {
 		super();
         message = msg;
-        clientWaitingForAgent = new HashMap<BW4TClient, Integer>();
-		clientWaitingForHuman = new HashMap<BW4TClient, Integer>();
+        clientWaitingForAgent = new HashMap<BW4TClientInterface, Integer>();
+		clientWaitingForHuman = new HashMap<BW4TClientInterface, Integer>();
 		Registry registry;
 		try {
 			registry = LocateRegistry.createRegistry(Integer
@@ -120,7 +122,7 @@ public class BW4TServer extends UnicastRemoteObject implements
     }
 
 	@Override
-	public void registerClient(BW4TClient client, int agentCount, int humanCount) throws RemoteException {
+	public void registerClient(BW4TClientInterface client, int agentCount, int humanCount) throws RemoteException {
 		System.out.println("registerClient " + client);
 		clientWaitingForAgent.put(client, new Integer(agentCount));
 		clientWaitingForHuman.put(client, new Integer(humanCount));
@@ -149,7 +151,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * Method to remove client from server list.
 	 */
 	@Override
-	public void unregisterClient(BW4TClient client) {
+	public void unregisterClient(BW4TClientInterface client) {
 		clientWaitingForAgent.remove(client);
 		clientWaitingForHuman.remove(client);
 
@@ -179,7 +181,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * @param entity
 	 * @throws EntityException
 	 */
-	private void notifyFreeEntity(BW4TClient client, String entity)
+	private void notifyFreeEntity(BW4TClientInterface client, String entity)
 			throws EntityException {
 		String type = BW4TEnvironment.getInstance().getType(entity);
 
@@ -323,7 +325,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * @param client
 	 * @param e
 	 */
-	private void reportClientProblem(BW4TClient client, Exception e) {
+	private void reportClientProblem(BW4TClientInterface client, Exception e) {
 		System.out.println("issue with client " + client + ":" + e);
 		e.printStackTrace();
 	}
@@ -430,7 +432,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 *             remove an entity.
 	 */
 	public void notifyNewEntity(String entity) {
-		for (BW4TClient client : clientWaitingForAgent.keySet()) {
+		for (BW4TClientInterface client : clientWaitingForAgent.keySet()) {
 			try {
 				notifyFreeEntity(client, entity);
 			} catch (EntityException e) {

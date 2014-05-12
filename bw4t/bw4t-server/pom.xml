@@ -15,17 +15,6 @@
 		  <name>Maven Central</name>
 		  <url>http://repo1.maven.org/maven2</url>
 		</repository>
-		<repository>
-	        <id>martin-private-dependency-repository</id>
-	        <url>https://martinrogalla.com/bw4t/dependency/</url>
-	        <releases>
-	            <enabled>true</enabled>
-	            <updatePolicy>always</updatePolicy>
-	        </releases>
-	        <snapshots>
-	            <enabled>false</enabled>
-	        </snapshots>
-        </repository>
 	</repositories>
 
 	<build>
@@ -46,13 +35,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>apleis</groupId>
-			<artifactId>eis</artifactId>
-			<version>0.3</version>
-		</dependency>
-		<dependency>
-			<groupId>nl.tudelft.bw4t</groupId>
-			<artifactId>bw4t-client</artifactId>
+			<groupId>nl.tudelft</groupId>
+			<artifactId>bw4t</artifactId>
 			<version>3.0.1</version>
 		</dependency>
 	</dependencies>

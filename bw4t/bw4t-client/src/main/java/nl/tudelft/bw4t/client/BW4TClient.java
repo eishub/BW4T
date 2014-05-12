@@ -10,8 +10,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 
-import javax.jws.soap.InitParam;
-
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.server.BW4TServerInterface;
 import eis.EnvironmentInterfaceStandard;
@@ -22,9 +20,10 @@ import eis.exceptions.NoEnvironmentException;
 import eis.exceptions.RelationException;
 import eis.iilang.Action;
 import eis.iilang.EnvironmentState;
-import eis.iilang.Identifier;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
+
+
 
 /**
  * The BW4TClient which connects to the BW4TServer.
@@ -32,8 +31,8 @@ import eis.iilang.Percept;
 public final class BW4TClient implements BW4TClientInterface {
 	
 	private BW4TServerInterface server;
-	private String clientIp, clientPort;
-	private String serverIp, serverPort;
+	private final String clientIp, clientPort;
+	private final String serverIp, serverPort;
 	private String address, bindAddress;
 
     /**
