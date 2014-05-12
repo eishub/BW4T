@@ -4,24 +4,19 @@
 	<parent>
 		<groupId>nl.tudelft</groupId>
 		<artifactId>bw4t</artifactId>
-	<version>3.0.1</version>
+		<version>3.0.1</version>
+		<relativePath>..</relativePath>
 	</parent>
 	<groupId>nl.tudelft.bw4t</groupId>
 	<artifactId>bw4t-client</artifactId>
-    <repositories>
-	<repository>
-        <id>martin-private-dependency-repository</id>
-        <url>https://martinrogalla.com/bw4t/dependency/</url>
-        <releases>
-            <enabled>true</enabled>
-            <updatePolicy>always</updatePolicy>
-        </releases>
-        <snapshots>
-            <enabled>false</enabled>
-        </snapshots>
-    </repository>
+	<repositories>
+		<repository>
+			<id>martin-private-dependency-repository</id>
+			<name>Martin Dependency</name>
+			<url>https://martinrogalla.com/bw4t/dependency/</url>
+		</repository>
 	</repositories>
-	
+
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -40,8 +35,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>nl.tudelft</groupId>
-            <artifactId>bw4t</artifactId>
+			<groupId>nl.tudelft.bw4t.core</groupId>
+			<artifactId>bw4t-core</artifactId>
 			<version>3.0.1</version>
 		</dependency>
 	</dependencies>
