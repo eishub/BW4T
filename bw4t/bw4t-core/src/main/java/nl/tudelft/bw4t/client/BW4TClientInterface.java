@@ -13,12 +13,8 @@ import eis.iilang.EnvironmentState;
  * to the client.
  * 
  * @author wouter
- * @modified Sander & Shirley 
- * 
  */
-
-public interface BW4TClientInterface extends Remote{
-	
+public interface BW4TClientInterface extends Remote {
 
 	/**
 	 * Called by server when a new entity is available at the server
@@ -82,5 +78,5 @@ public interface BW4TClientInterface extends Remote{
 	 *            is the map that is used in the server.
 	 */
 	void useMap(NewMap theMap) throws RemoteException;
-	
+
 }

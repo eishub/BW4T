@@ -25,28 +25,25 @@ import eis.iilang.EnvironmentState;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
 
-
-
 /**
  * The BW4TServer, to which the client can connect to.
  */
 public class BW4TServer extends UnicastRemoteObject implements
-        BW4TServerInterface {
-
-    /**
-     * The serial, generated.
-     */
-    private static final long serialVersionUID = -7313583479222142380L;
-    /**
-     * The message which is going to be sent towards the client.
-     */
-    private final String message;
+		BW4TServerInterface {
 
 	/**
-	 * Hashmaps to track which clients are connected
-	 * TODO: explain difference
+	 * The serial, generated.
 	 */
-    private final HashMap<BW4TClientInterface, Integer> clientWaitingForAgent;
+	private static final long serialVersionUID = -7313583479222142380L;
+	/**
+	 * The message which is going to be sent towards the client.
+	 */
+	private final String message;
+
+	/**
+	 * Hashmaps to track which clients are connected TODO: explain difference
+	 */
+	private final HashMap<BW4TClientInterface, Integer> clientWaitingForAgent;
 	/**
 	 * Hashmaps to track which clients are connected (2)
 	 */
@@ -55,18 +52,21 @@ public class BW4TServer extends UnicastRemoteObject implements
 	/**
 	 * ip and port of the server.
 	 */
-	private final String servername; 
-	
-    /**
-     * The constructor, which creates the server object.
-     * @param msg The message that should be said.
-     * @throws RemoteException If anything goes wrong with the set up.
-     */
+	private final String servername;
+
+	/**
+	 * The constructor, which creates the server object.
+	 * 
+	 * @param msg
+	 *            The message that should be said.
+	 * @throws RemoteException
+	 *             If anything goes wrong with the set up.
+	 */
 	public BW4TServer(String serverIp, String serverPort, String msg)
 			throws RemoteException, MalformedURLException {
 		super();
-        message = msg;
-        clientWaitingForAgent = new HashMap<BW4TClientInterface, Integer>();
+		message = msg;
+		clientWaitingForAgent = new HashMap<BW4TClientInterface, Integer>();
 		clientWaitingForHuman = new HashMap<BW4TClientInterface, Integer>();
 		Registry registry;
 		try {
@@ -78,49 +78,54 @@ public class BW4TServer extends UnicastRemoteObject implements
 		}
 		servername = "rmi://" + serverIp + ":" + serverPort + "/BW4TServer";
 		Naming.rebind(servername, this);
-    }
+	}
 
-    /**
-     * Method which says the message towards the client.
-     * @return message The message being said.
-     */
-    @Override
+	/**
+	 * Method which says the message towards the client.
+	 * 
+	 * @return message The message being said.
+	 */
+	@Override
 	public final String say() {
 
-        return message;
-    }
+		return message;
+	}
 
-    /**
-     * The main method launching the BW4TServer.
-     * @param args Optional Arguments, not used.
-     * @throws RemoteException If something goes wrong during initialization.
-     */
-    public static void main(final String[] args) throws RemoteException {
-        String servername;
-        String serverIp = "127.0.0.1";
-        String serverPort = "8989";
-        @SuppressWarnings("unused")
-        Registry registry;
-        try {
-            registry = LocateRegistry.createRegistry(Integer
-                    .parseInt(serverPort));
-        } catch (RemoteException e) {
-            System.out.println("Registry is already running. Reconnecting.");
-            registry = LocateRegistry.getRegistry(Integer.parseInt(serverPort));
-        }
-        servername = "rmi://" + serverIp + ":" + serverPort + "/BW4TServer";
-        try {
-            Naming.rebind(servername, new BW4TServer(serverIp,serverPort,
-                    "Hello Client! Welcome to the BW4TServer."));
-        } catch (RemoteException | MalformedURLException e) {
-            e.printStackTrace();
-        }
-        System.out
-                .println("BW4TServer is ready to accept incoming connections.");
-    }
+	/**
+	 * The main method launching the BW4TServer.
+	 * 
+	 * @param args
+	 *            Optional Arguments, not used.
+	 * @throws RemoteException
+	 *             If something goes wrong during initialization.
+	 */
+	public static void main(final String[] args) throws RemoteException {
+		String servername;
+		String serverIp = "127.0.0.1";
+		String serverPort = "8989";
+		@SuppressWarnings("unused")
+		Registry registry;
+		try {
+			registry = LocateRegistry.createRegistry(Integer
+					.parseInt(serverPort));
+		} catch (RemoteException e) {
+			System.out.println("Registry is already running. Reconnecting.");
+			registry = LocateRegistry.getRegistry(Integer.parseInt(serverPort));
+		}
+		servername = "rmi://" + serverIp + ":" + serverPort + "/BW4TServer";
+		try {
+			Naming.rebind(servername, new BW4TServer(serverIp, serverPort,
+					"Hello Client! Welcome to the BW4TServer."));
+		} catch (RemoteException | MalformedURLException e) {
+			e.printStackTrace();
+		}
+		System.out
+				.println("BW4TServer is ready to accept incoming connections.");
+	}
 
 	@Override
-	public void registerClient(BW4TClientInterface client, int agentCount, int humanCount) throws RemoteException {
+	public void registerClient(BW4TClientInterface client, int agentCount,
+			int humanCount) throws RemoteException {
 		System.out.println("registerClient " + client);
 		clientWaitingForAgent.put(client, new Integer(agentCount));
 		clientWaitingForHuman.put(client, new Integer(humanCount));
@@ -142,9 +147,9 @@ public class BW4TServer extends UnicastRemoteObject implements
 				reportClientProblem(client, e);
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * Method to remove client from server list.
 	 */
@@ -154,17 +159,17 @@ public class BW4TServer extends UnicastRemoteObject implements
 		clientWaitingForHuman.remove(client);
 
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public Percept performEntityAction(String entity, Action action)
 			throws RemoteException {
-	    return BW4TEnvironment.getInstance().performClientAction(entity,
-                action);
+		return BW4TEnvironment.getInstance()
+				.performClientAction(entity, action);
 	}
-	
+
 	/**
 	 * Notify given client of a new free entity, if the new entity is of
 	 * interest for that client. Note, we use this both when an entity is new
@@ -208,21 +213,20 @@ public class BW4TServer extends UnicastRemoteObject implements
 			}
 		}
 	}
-	
+
 	/**
-	 * {@inheritDoc}
-	 * TODO: object is cast to an interface
+	 * {@inheritDoc} TODO: object is cast to an interface
 	 */
 	@Override
 	public void associateEntity(final String agentId, final String entityId)
 			throws RelationException {
 		BW4TEnvironment.getInstance().associateEntity(agentId, entityId);
 
-		((RobotEntityInterface) BW4TEnvironment.getInstance().getEntity(entityId))
-				.connect();
+		((RobotEntityInterface) BW4TEnvironment.getInstance().getEntity(
+				entityId)).connect();
 
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -231,7 +235,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 			AgentException {
 		BW4TEnvironment.getInstance().registerAgent(agentId);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -239,7 +243,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 	public void unregisterAgent(String agent) throws AgentException {
 		BW4TEnvironment.getInstance().unregisterAgent(agent);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -248,7 +252,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 			throws RemoteException {
 		return BW4TEnvironment.getInstance().getAllPerceptsFrom(entity);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -257,7 +261,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 			throws RemoteException, AgentException {
 		return BW4TEnvironment.getInstance().getAssociatedEntities(agent);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -265,7 +269,6 @@ public class BW4TServer extends UnicastRemoteObject implements
 	public Collection<String> getEntities() throws RemoteException {
 		return BW4TEnvironment.getInstance().getEntities();
 	}
-	
 
 	/**
 	 * {@inheritDoc}
@@ -275,7 +278,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 			RelationException, EntityException {
 		BW4TEnvironment.getInstance().freeEntity(entity);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -324,14 +327,13 @@ public class BW4TServer extends UnicastRemoteObject implements
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * instance GetState() comes from EIS package.
+	 * {@inheritDoc} instance GetState() comes from EIS package.
 	 */
 	@Override
 	public EnvironmentState getState() throws RemoteException {
 		return BW4TEnvironment.getInstance().getState();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -341,7 +343,6 @@ public class BW4TServer extends UnicastRemoteObject implements
 		return BW4TEnvironment.getInstance().getType(entity);
 	}
 
-	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -349,7 +350,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 	public Collection<String> getFreeEntities() throws RemoteException {
 		return BW4TEnvironment.getInstance().getFreeEntities();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -367,7 +368,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 		return BW4TEnvironment.getInstance().queryEntityProperty(entity,
 				property);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -375,7 +376,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 	public boolean isSupportedByEnvironment(Action arg0) throws RemoteException {
 		return BW4TEnvironment.getInstance().isSupportedByEnvironment(arg0);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -391,7 +392,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 	public void requestPause() throws RemoteException, ManagementException {
 		BW4TEnvironment.getInstance().pause();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -400,7 +401,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 			throws RemoteException, ManagementException {
 		BW4TEnvironment.getInstance().init(parameters);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -409,20 +410,14 @@ public class BW4TServer extends UnicastRemoteObject implements
 			throws RemoteException, ManagementException {
 		throw new ManagementException("not implemented.");
 	}
-	
+
 	/**
 	 * Notifies connected clients of new entities on a first come first server
-	 * basis All clients should notify server of how many entities they expect
+	 * basis. All clients should notify server of how many entities they expect.
 	 * The server moves on when expectations of a client have been fulfilled
 	 * 
 	 * @param entity
-	 *            , the new entity
-	 * @throws RemoteException
-	 *             if an exception occurs during the execution of a remote
-	 *             object call
-	 * @throws EntityException
-	 *             if something unexpected happens when attempting to add or
-	 *             remove an entity.
+	 *            the new entity
 	 */
 	@Override
 	public void notifyNewEntity(String entity) {
@@ -439,13 +434,10 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * Stop the RMI service. Used in total reset of env, eg when loading new
 	 * map.
 	 * 
-	 * @throws NotBoundException
-	 * @throws RemoteException
-	 * @throws AccessException
 	 */
 	public void takeDown() {
 		try {
-			// registry.unbind(servername); //throws for unknown reason.
+			//registry.unbind(servername); //throws for unknown reason.
 			UnicastRemoteObject.unexportObject(this, true);
 		} catch (NoSuchObjectException e) {
 			System.err.println("server disconnect RMI failed" + e);
@@ -455,19 +447,18 @@ public class BW4TServer extends UnicastRemoteObject implements
 
 	@Override
 	public void notifyFreeEntity(String entity, Collection<String> agents) {
-		
-		
+
 	}
 
 	@Override
 	public void handleStateChange(EnvironmentState newState) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void notifyDeletedEntity(String entity, Collection<String> agents) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
