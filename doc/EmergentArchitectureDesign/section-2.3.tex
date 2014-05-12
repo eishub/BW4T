@@ -1,27 +1,21 @@
 \section{Persistent Data Management}
-  In the Blocks World for Teams project there is no need to use databases. \\
-  The only persistent data are log files and Environment files.\\ \\
-  At this moment, the log files are raw dumps of the actions a bot (might be human, might be agent).
-  These actions vary from walking to a spot in the map to picking up an item. \\
-  There is not much to do with these log files. Finding something the bot has done is a heavy task as you first need to
-  restructure the file and seek through all the lines. \\
-  In the future, these log files might be used to reconstruct events of a bot.
-  Then you could launch the log file into the client, which will run the bot according to the lines in the log file. \\
-  This could become very useful if you want to analyse why a bot made some decision,
-  or why it did NOT do what you expected it would do. \\ \\
-  The map files are big XML files, which consist of a decleration of the map. \\
-  The XML file needs to contain at least the following: \\
-  \begin{itemize}
-  \item The area of the map (in x and y value).
-  \item The bot entities (including a starting position in x and y).
-  \item The zones (including the name of the zone, the colour of the boxes inside, its neighbouring zones
-    and an x and y value).
-  \item But also the goal sequence (containing six colours).
-  \item Whether this sequence has to be random (boolean).
-  \item Whether multiple bots are allowed in one room (boolean).
-  \item And whether a random number of blocks is in the rooms (boolean).
-  \end{itemize}
-  
-  These XML files have to be very precise for the server to set up an environment. The MapEditor, we would like to construct,
-  is going to create such XML files with only drag and drop actions, so that maps become more realistic
-  then just rooms in a row. We could have a centered room, which is surrounded by others, or one room bigger than the other.
+In the Blocks World for Teams project there is no need to use databases as log and map files are the only persistent data.\\
+
+At this moment, the log files are raw dumps of the actions a bot (might be human, might be agent). These actions vary from walking to a spot in the map to interacting with an item. \\
+Currently, there is little use for these log files, finding something the bot has done is an arduous task as they are large and poorly organised seek through all the lines. \\
+In the future, these log files might be used to reconstruct a series of actions or events. Then you could feed the log file to the client, which will run the bot according to the lines in the log file. \\
+This could become very useful if you want to analyse why a bot made certain decisions, or why it did not do what you expected it to do. \\
+
+The map files are fairly large XML files, which consist of a decleration of the map. \\
+The XML file needs to contain at least the following:
+\begin{itemize}
+\item The size of the map (an x and y value)
+\item The bot entities (including an (x,y) starting position)
+\item The zones (including the name of the zone, the colour of the boxes inside, its neighbouring zones and an (x,y) value)
+\item The sequence of coloured blocks to be collected (or alternatively set to be random via a seperate boolean)
+\item Whether multiple bots are allowed in one room (boolean)
+\item Whether the number of blocks in the rooms are randomized or not (boolean)
+\end{itemize}
+
+Because these XML files can be rather difficult to write by hand, there is currently a tool which creates a map for you according to certain parameters. This tool will however always generate the maps in a grid formation, with all rooms being the same size, which results in the maps always looking rather similar. \\
+The map editor which we would like to construct is going to create such XML files with only drag and drop actions, so that maps become more realistic as any shape is possible, not just grid formations.
