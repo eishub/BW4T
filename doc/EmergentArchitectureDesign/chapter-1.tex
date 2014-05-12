@@ -7,7 +7,7 @@ To this end the goal is to have most if not all core parts of the environment an
 For the refactoring of the code a number of tasks need to be completed:
 \begin{itemize}
 \item
-\textbf{Split up codebase into multiple structures} - Currently the Client and Server and GUI all share the same codebase, this makes it hard to keep a proper overview as it isn't always clear at a glance which class belongs to which structure, and some are even shared entirely. We want to split these structures into individual projects to make them easier to work with.
+\textbf{Split up codebase into Client and Server} - Currently the Client and Server share the same codebase, this makes it hard to keep a proper overview as it isn't always clear at a glance which class belongs to which structure, and some classes are even shared entirely. We want to split these structures into individual projects to make them easier to work with.
 \item
 \textbf{Convert to Maven project} - There are currently no Unit Tests present in the codebase, therefore in addition to splitting the codebase we wish to turn these seperate projects into Maven projects including Unit Tests so we can easily verify that the codebases are still working correctly after having made changes.
 \item
