@@ -33,7 +33,7 @@ public abstract class Handicap extends Robot {
 	 */
 	private static final double MIN_MOVE_DISTANCE = .001;
 	/** The distance which it can reach with its arm to pick up a block. */
-	private static final double ARM_DISTANCE = 1;
+	protected static final double ARM_DISTANCE = 1;
 	/** The width and height of the robot */
 	public final static int SIZE = 2;
 
@@ -41,9 +41,9 @@ public abstract class Handicap extends Robot {
 	private final String name;
 
 	/** The location to which the robot wants to travel. */
-	private NdPoint targetLocation;
+	protected NdPoint targetLocation;
 	/** The block the robot is holding, null if none. */
-	private Block holding;
+	protected Block holding;
 
 	/**
 	 * set to true if we have to cancel a motion due to a collision. A collision
