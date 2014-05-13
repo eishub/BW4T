@@ -1,4 +1,4 @@
-package tudelft.bw4t.gui.panel;
+package nl.tudelft.bw4t.gui.panel;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;

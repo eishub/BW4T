@@ -2,9 +2,10 @@ package nl.tudelft.bw4t;
 
 import javax.swing.*;
 
-import tudelft.bw4t.gui.panel.BotPanel;
-import tudelft.bw4t.gui.panel.ConfigurationPanel;
-import tudelft.bw4t.gui.panel.MainPanel;
+import nl.tudelft.bw4t.gui.panel.BotPanel;
+import nl.tudelft.bw4t.gui.panel.ConfigurationPanel;
+import nl.tudelft.bw4t.gui.panel.MainPanel;
+
 
 import java.awt.*;
 

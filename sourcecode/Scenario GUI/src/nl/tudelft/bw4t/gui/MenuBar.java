@@ -1,4 +1,4 @@
-package tudelft.bw4t.gui;
+package nl.tudelft.bw4t.gui;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
