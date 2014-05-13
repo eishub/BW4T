@@ -137,7 +137,7 @@ public class Robot extends BoundedMoveableObject {
 			return true;
 		else
 			return false;
-	}
+	}//wendyyyy
 
 	/**
 	 * Pick up a block
