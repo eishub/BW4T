@@ -38,7 +38,7 @@ public class MainPanel extends JPanel {
         c.weighty = 1;
         c.gridx = 0;
         c.gridy = 0;
-     //   this.add(configurationPanel, c);
+        this.add(configurationPanel, c);
 
         c.fill = GridBagConstraints.NONE;
         c.weightx = 0.8;
