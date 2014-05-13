@@ -19,7 +19,6 @@ public class ScenarioEditor extends JFrame {
         setSize(width, height);
         setTitle(windowName);
 
-
         // Setting the location relative to null centers the frame.
         setLocationRelativeTo(null);
 
@@ -29,8 +28,8 @@ public class ScenarioEditor extends JFrame {
         // Attach the menu bar.
         setJMenuBar(new MenuBar());
 
-        MainPanel panel = new MainPanel(new ConfigurationPanel(), new ConfigurationPanel());
-
+        // Attach the MainPanel that consists of the configuration and the botpanel.
+        MainPanel panel = new MainPanel(new ConfigurationPanel(), new BotPanel());
         setActivePane(panel);
 
         setLookAndFeel();
