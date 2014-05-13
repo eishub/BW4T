@@ -22,6 +22,12 @@ public class Block extends BoundedMoveableObject {
 	private final BlockColor colorId;
 	private final Color color;
 	private Robot heldBy;
+	
+	/**
+	 * Valentine
+	 * This registers the block type.
+	 */
+	private String type;
 
 	/**
 	 * Creates a new block with the given color.
@@ -89,5 +95,13 @@ public class Block extends BoundedMoveableObject {
 	public boolean isFree() {
 		return getHeldBy() == null;
 	}
-
+	
+	/**
+	 * Valentine
+	 * This method returns the block type.
+	 */
+	public String getType()
+	{
+		return this.type;
+	}
 }

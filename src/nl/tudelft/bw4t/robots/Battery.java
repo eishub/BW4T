@@ -12,58 +12,62 @@ public class Battery
 	 * 
 	 * A battery has a current capacity.
 	 * 
-	 * A battery has a power value, 
-	 * which represents how much the battery increases or decreases per tick.
+	 * A battery has a discharge rate, 
+	 * which represents how much the battery decreases per tick.
 	 */
 	private int max;
 	private int current;
-	private int powerval;
+	private int drate;
 	
-	public Battery(int m, int c, int pv)
+	public Battery(int m, int c, int dr)
 	{
-		max = m;
-		current = c;
-		powerval = pv;
+		this.max = m;
+		this.current = c;
+		this.drate = dr;
 	}
 	
 	public int getCurrentCapacity()
 	{
-		return current;
+		return this.current;
 	}
 	
 	/**
 	 * If the charging of the battery exceeds the max capacity, 
 	 * the current capacity is set to the max capacity.
 	 */
-	public void increment()
+	public void recharge()
 	{
-		int temp = current + powerval;
+		/*
+		int temp = this.current + this.drate;
 		
-		if (temp > max)
+		if (temp > this.max)
 		{
-			current = max;
+			this.current = this.max;
 		}
 		else
 		{
-			current = temp;
+			this.current = temp;
 		}
+		*/
+		
+		this.current = this.max;
 	}
 	
 	/**
 	 * If the emptying of the battery falls below 0, 
 	 * the current capacity is set to 0.
 	 */
-	public void decrement()
+	public void discharge()
 	{
-		int temp = current - powerval;
+		int temp = this.current - this.drate;
 		
 		if (temp < 0)
 		{
-			current = 0;
+			this.current = 0;
 		}
 		else
 		{
-			current = temp;
+			this.current = temp;
 		}
 	}
 }

@@ -146,6 +146,16 @@ public class Robot extends BoundedMoveableObject {
 	 */
 	public boolean canPickUp(Block b) {
 		double distance = distanceTo(b.getLocation());
+		
+		/**
+		 * Valentine
+		 * The robot is next to a charging station.
+		 * The robot charges.
+		 */
+		if (b.getType().equals("chargingstation"))
+		{
+			this.battery.recharge();
+		}
 
 		if (distance <= ARM_DISTANCE && b.isFree())
 			return true;
@@ -441,6 +451,12 @@ public class Robot extends BoundedMoveableObject {
 					// Move the robot to the new position using the displacement
 					moveByDisplacement(displacement[0], displacement[1]);
 					BW4TLogger.getInstance().logMoving(name);
+					
+					/**
+					 * Valentine
+					 * The robot's battery discharges when it moves.
+					 */
+					this.battery.discharge();
 				} catch (SpatialException e) {
 					collided = true;
 					stopRobot();
