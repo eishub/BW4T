@@ -1,14 +1,15 @@
 package nl.tudelft.bw4t;
 
 import javax.swing.*;
+import java.awt.*;
 
 import nl.tudelft.bw4t.gui.panel.BotPanel;
 import nl.tudelft.bw4t.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.gui.panel.MainPanel;
+import nl.tudelft.bw4t.gui.MenuBar;
 
 
 
-import java.awt.*;
 
 /**
  *
@@ -16,8 +17,8 @@ import java.awt.*;
 public class ScenarioEditor extends JFrame {
 
     private String windowName = "Scenario Editor";
-    private int width = 1000;
-    private int height = 700;
+    private int width = 1024;
+    private int height = 640;
 
     /**
      * Create the scenario editor frame, which will then hold the panels with specific functions.
@@ -33,11 +34,11 @@ public class ScenarioEditor extends JFrame {
         setLayout(null);
 
         // Attach the menu bar.
-        //setJMenuBar(new MenuBar());
+        setJMenuBar(new MenuBar());
 
         // Attach the MainPanel that consists of the configuration and the botpanel.
-        MainPanel panel = new MainPanel(new ConfigurationPanel(), new BotPanel());
-        setActivePane(panel);
+        MainPanel mPanel = new MainPanel(new ConfigurationPanel(), new BotPanel());
+        setActivePane(mPanel);
 
         setLookAndFeel();
 
