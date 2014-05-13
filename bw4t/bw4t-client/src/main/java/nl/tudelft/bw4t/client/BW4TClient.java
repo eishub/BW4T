@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.server.BW4TServerInterface;
 import eis.EnvironmentInterfaceStandard;
+import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
 import eis.exceptions.ManagementException;
@@ -133,9 +134,10 @@ public final class BW4TClient implements BW4TClientInterface {
 	 * @throws RemoteException
 	 *             if an exception occurs during the execution of a remote
 	 *             object call
+	 * @throws ActException 
 	 */
 	public Percept performEntityAction(String entity, Action action)
-			throws RemoteException {
+			throws RemoteException, ActException {
 		return server.performEntityAction(entity, action);
 	}
 
@@ -347,15 +349,12 @@ public final class BW4TClient implements BW4TClientInterface {
 	 * @param entity
 	 *            , the entity for which to get its type
 	 * @return the type of the entity
-	 * @throws RemoteException
-	 *             , if an exception occurs during the execution of a remote
-	 *             object call
 	 * @throws EntityException
 	 *             , if something unexpected happens when attempting to add or
 	 *             remove an entity.
+	 * @throws RemoteException 
 	 */
-	public String getType(String entity) throws RemoteException,
-			EntityException {
+	public String getType(String entity) throws EntityException, RemoteException {
 		return server.getType(entity);
 	}
 
