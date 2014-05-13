@@ -4,41 +4,48 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created on 13-5-2014.
+ *
  * MainPanel which serves as the content pane for the ScenarioEditor frame. Creates a 1/3 - 2/3 division,
  * the former for the ConfigurationPanel, and the latter the BotPanel
+ * @since 13-05-2014
+ * @author Joop Aué
  */
 public class MainPanel extends JPanel {
 
     private JPanel configurationPanel;
     private JPanel botPanel;
-
+    private GridBagLayout gbl;
+    
     public MainPanel(JPanel configurationPanel, JPanel botPanel) {
-        setLayout(new GridBagLayout());
-        setConfigurationPanel(configurationPanel);
-        setBotPanel(botPanel);
+        gbl = new GridBagLayout();
+    	this.setLayout(gbl);
+        this.setConfigurationPanel(configurationPanel);
+        this.setBotPanel(botPanel);
 
-        drawPanel();
+        this.drawPanel();
     }
 
     public void drawPanel() {
         GridBagConstraints c = new GridBagConstraints();
-
-        c.fill = GridBagConstraints.HORIZONTAL;
+        
+        configurationPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        botPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        
+        c.insets = new Insets(10,10,10,10); 
+        c.fill = GridBagConstraints.NONE;
         c.anchor = GridBagConstraints.NORTHWEST;
-        c.weightx = 0.3;
+        c.weightx = 0.2;
         c.weighty = 1;
         c.gridx = 0;
         c.gridy = 0;
-        add(configurationPanel, c);
+     //   this.add(configurationPanel, c);
 
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.7;
+        c.fill = GridBagConstraints.NONE;
+        c.weightx = 0.8;
         c.weighty = 1;
         c.gridx = 1;
         c.gridy = 0;
-        c.gridwidth = 2;
-        add(botPanel, c);
+        this.add(botPanel, c);
     }
 
     public JPanel getConfigurationPanel() {
