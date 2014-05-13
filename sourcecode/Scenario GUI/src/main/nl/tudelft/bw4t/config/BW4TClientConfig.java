@@ -30,9 +30,9 @@ public class BW4TClientConfig {
 	
 	private String mapFile;
 	
-    @XmlElementWrapper(name = "botlist")
-    @XmlElement(name = "bot")
-   	private LinkedList<BotConfig> bots = new LinkedList<BotConfig>();
+//    @XmlElementWrapper(name = "botlist")
+//    @XmlElement(name = "bot")
+//   	private LinkedList<BotConfig> bots = new LinkedList<BotConfig>();
 	
 	/**
 	 * Gets the location to store the XML version of this file in.
@@ -118,12 +118,12 @@ public class BW4TClientConfig {
 		this.mapFile = mapFile;
 	}
 
-	public LinkedList<BotConfig> getBots() {
-		return bots;
-	}
-
-	public void setBots(LinkedList<BotConfig> bots) {
-		this.bots = bots;
-	}
+//	public LinkedList<BotConfig> getBots() {
+//		return bots;
+//	}
+//
+//	public void setBots(LinkedList<BotConfig> bots) {
+//		this.bots = bots;
+//	}
 	
 }
