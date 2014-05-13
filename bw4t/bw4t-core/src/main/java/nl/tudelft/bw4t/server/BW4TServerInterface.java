@@ -8,6 +8,7 @@ import java.util.LinkedList;
 
 import nl.tudelft.bw4t.client.BW4TClientInterface;
 import eis.EnvironmentInterfaceStandard;
+import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
 import eis.exceptions.ManagementException;
@@ -91,9 +92,10 @@ public interface BW4TServerInterface extends Remote {
 	 * @throws RemoteException
 	 *             if an exception occurs during the execution of a remote
 	 *             object call
+	 * @throws ActException 
 	 */
 	public Percept performEntityAction(String entity, Action action)
-			throws RemoteException;
+			throws RemoteException, ActException;
 
 	/**
 	 * Called when a client wants to associate an agent to an entity
