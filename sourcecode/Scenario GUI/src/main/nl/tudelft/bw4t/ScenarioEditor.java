@@ -7,6 +7,7 @@ import nl.tudelft.bw4t.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.gui.panel.MainPanel;
 
 
+
 import java.awt.*;
 
 /**
