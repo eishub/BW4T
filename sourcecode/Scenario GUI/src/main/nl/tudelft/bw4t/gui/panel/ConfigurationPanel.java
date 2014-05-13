@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.io.File;
 
-public class ConfigurationPanel extends JPanel {
+public class ConfigurationPanel extends JPanel implements ActionListener {
     
     private JLabel lConfig = new JLabel("Configuration");
     private JLabel lClient = new JLabel("Client");
@@ -38,6 +38,9 @@ public class ConfigurationPanel extends JPanel {
     private JButton openFile1 = new JButton("Open File");
     private JButton openFile2 = new JButton("Open File");
     
+    private JFileChooser chooser1 = new JFileChooser();
+    private JFileChooser chooser2 = new JFileChooser();
+    
     public ConfigurationPanel() {
         setLayout(new GridLayout(0, 4));
         setVisible(true);
@@ -64,8 +67,30 @@ public class ConfigurationPanel extends JPanel {
         add(lAgent); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
         add(tfFile1); add(openFile1); add(new JLabel(" ")); add(new JLabel(" "));
         
+        openFile1.addActionListener(this);
+        
         //add Map file section
         add(lMap); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
         add(tfFile2); add(openFile2); add(new JLabel(" ")); add(new JLabel(" "));
+        
+        openFile2.addActionListener(this);
+    }
+    
+    public void actionPerformed(ActionEvent e) {	
+    	if(e.getSource() == openFile1) {
+    		int returnVal = chooser1.showOpenDialog(getParent());
+    		
+    		if(returnVal == JFileChooser.APPROVE_OPTION) {
+    			File file = chooser1.getSelectedFile();
+    			tfFile1.setText(file.getPath());
+    		}
+    	} else if(e.getSource() == openFile2) {
+    		int returnVal = chooser2.showOpenDialog(getParent());
+    		
+    		if(returnVal == JFileChooser.APPROVE_OPTION) {
+    			File file = chooser2.getSelectedFile();
+    			tfFile2.setText(file.getPath());
+    		}
+    	}
     }
 }
