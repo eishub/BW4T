@@ -29,7 +29,10 @@ public class XMLManager {
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 			jaxbMarshaller.marshal(xmlObject, file);
-			jaxbMarshaller.marshal(xmlObject, System.out);
+			
+			//Can be used to print the file during debugging:
+			//jaxbMarshaller.marshal(xmlObject, System.out);
+			
 			return true;
 		} catch (JAXBException e) {
 			e.printStackTrace();
