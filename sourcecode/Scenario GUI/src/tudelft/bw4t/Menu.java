@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui;
+package tudelft.bw4t;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -51,7 +51,7 @@ public class Menu {
 		file.add(fileExit);
 		
 		fileExit.addActionListener(new ActionListener() {
-			@Override
+			//@Override
 			public void actionPerformed(ActionEvent event) {
 				System.exit(0);
 			}

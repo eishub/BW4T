@@ -1,16 +1,17 @@
-package nl.tudelft.bw4t.scenariogui;
+package nl.tudelft.bw4t.config;
 
 import java.util.LinkedList;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+
 /**
  * This class holds the possible options that can be specified
  * in the Scenario GUI and is meant to be directly convertible
  * to XML and constructible from XML.
  * 
- * @author Nick
+ * @author Nick / Calvin
  *
  */
 @XmlRootElement
