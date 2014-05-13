@@ -2,10 +2,9 @@ package nl.tudelft.bw4t.gui.panel;
 
 import java.awt.*;
 import javax.swing.*;
-/**
- *
- * @author smto
- */
+import java.awt.event.*;
+import java.io.File;
+
 public class ConfigurationPanel extends JPanel {
     
     private JLabel lConfig = new JLabel("Configuration");
@@ -25,6 +24,8 @@ public class ConfigurationPanel extends JPanel {
     private JTextField tfPort1 = new JTextField(20);
     private JTextField tfIP2 = new JTextField(20);
     private JTextField tfPort2 = new JTextField(20);
+    private JTextField tfFile1 = new JTextField(100);
+    private JTextField tfFile2 = new JTextField(100);
     
     CheckboxGroup group1 = new CheckboxGroup();
     private Checkbox cbYes1 = new Checkbox("Yes", true, group1);
@@ -33,6 +34,9 @@ public class ConfigurationPanel extends JPanel {
     CheckboxGroup group2 = new CheckboxGroup();
     private Checkbox cbYes2 = new Checkbox("Yes", true, group2);
     private Checkbox cbNo2 = new Checkbox("No", false, group2);
+    
+    private JButton openFile1 = new JButton("Open File");
+    private JButton openFile2 = new JButton("Open File");
     
     public ConfigurationPanel() {
         setLayout(new GridLayout(0, 4));
@@ -58,15 +62,10 @@ public class ConfigurationPanel extends JPanel {
         
         //add Agent class section
         add(lAgent); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
-        
-        /*JFileChooser agentChooser = new JFileChooser();
-        int returnVal = agentChooser.showOpenDialog(parent);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-           System.out.println("File: " +
-                agentChooser.getSelectedFile().getName());
-        }*/
-        
+        add(tfFile1); add(openFile1); add(new JLabel(" ")); add(new JLabel(" "));
         
         //add Map file section
+        add(lMap); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
+        add(tfFile2); add(openFile2); add(new JLabel(" ")); add(new JLabel(" "));
     }
 }
