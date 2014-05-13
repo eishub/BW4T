@@ -18,6 +18,7 @@ import java.util.Set;
 
 import nl.tudelft.bw4t.client.BW4TClientInterface;
 import nl.tudelft.bw4t.environment.BW4TEnvironment;
+import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
 import eis.exceptions.ManagementException;
@@ -164,10 +165,11 @@ public class BW4TServer extends UnicastRemoteObject implements
 
 	/**
 	 * {@inheritDoc}
+	 * @throws ActException 
 	 */
 	@Override
 	public Percept performEntityAction(String entity, Action action)
-			throws RemoteException {
+			throws RemoteException, ActException {
 		return BW4TEnvironment.getInstance()
 				.performClientAction(entity, action);
 	}

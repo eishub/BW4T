@@ -256,7 +256,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 *         complete
 	 */
 	@Override
-	protected boolean isSupportedByEnvironment(Action arg0) {
+	public boolean isSupportedByEnvironment(Action arg0) {
 
 		return !getEntities().isEmpty();
 	}
