@@ -1,9 +1,11 @@
 package nl.tudelft.bw4t.server;
 
 import java.net.MalformedURLException;
+import java.rmi.ConnectException;
 import java.rmi.Naming;
 import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
+import java.rmi.UnmarshalException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -12,10 +14,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Set;
 
 import nl.tudelft.bw4t.client.BW4TClientInterface;
-import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
-import eis.exceptions.ActException;
+import nl.tudelft.bw4t.environment.BW4TEnvironment;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
 import eis.exceptions.ManagementException;
@@ -454,6 +456,36 @@ public class BW4TServer extends UnicastRemoteObject implements
 	public void handleStateChange(EnvironmentState newState) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	/**
+	 * notify all clients of state change. If connection fails, this will modify
+	 * client hashmaps. Therefore callers should not iterate directly over the
+	 * clientWaitingForAgent and clientWaitingForHuman arrays.
+	 * 
+	 * @param newState
+	 * @throws RemoteException
+	 */
+	public void notifyStateChange(EnvironmentState newState) {
+		// duplicate the set before iteration, since we may call
+		// unregisterClient.
+		Set<BW4TClientInterface> clients = new HashSet<BW4TClientInterface>(
+				clientWaitingForAgent.keySet());
+		for (BW4TClientInterface client : clients) {
+			try {
+				client.handleStateChange(newState);
+			} catch (ConnectException e) {
+				reportClientProblem(client, e);
+				unregisterClient(client);
+			} catch (UnmarshalException e) {
+				reportClientProblem(client, e);
+				unregisterClient(client);
+			} catch (RemoteException e) {
+				reportClientProblem(client, e);
+				unregisterClient(client);
+			}
+
+		}
 	}
 
 	@Override
