@@ -125,6 +125,19 @@ public class Robot extends BoundedMoveableObject {
 	public Block isHolding() {
 		return holding;
 	}
+	
+	/**
+	 * Wendy.
+	 * If the battery is less than 10%, the bot should go to the nearest charging station.
+	 */
+	 public void goCharge() {
+		 if(battery.getCurrentCapacity() < 0.10)
+		 {
+			 chargingstation = 
+			 setTargetLocation(chargingstation.getLocation());
+		 }
+	 }
+	
 
 	/**
 	 * Sets the location to which the robot should move. This also clears the
