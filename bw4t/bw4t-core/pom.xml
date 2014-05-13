@@ -10,4 +10,16 @@
 	<groupId>nl.tudelft.bw4t.core</groupId>
 	<artifactId>bw4t-core</artifactId>
 	<name>bw4t-core</name>
+	<dependencies>
+		<dependency>
+			<groupId>repast.simphony</groupId>
+			<artifactId>scenario</artifactId>
+			<version>2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>repast.simphony</groupId>
+			<artifactId>bin_and_src</artifactId>
+			<version>2.1</version>
+		</dependency>
+	</dependencies>
 </project>

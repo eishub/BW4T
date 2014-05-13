@@ -88,5 +88,9 @@ public interface BW4TClientInterface extends Remote {
 	 *             object call
 	 */
 	void useMap(NewMap theMap) throws RemoteException;
-
+	
+	/**
+	 * Newly added
+	 */
+	public String getType(String entity) throws EntityException, RemoteException;
 }
