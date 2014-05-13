@@ -1,7 +1,6 @@
 package nl.tudelft.bw4t.robots;
 
 import java.util.List;
-
 import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.doors.Door;
@@ -133,8 +132,8 @@ public class Robot extends BoundedMoveableObject {
 	 public void goCharge() {
 		 if(battery.getCurrentCapacity() < 0.10)
 		 {
-			 chargingstation = 
-			 setTargetLocation(chargingstation.getLocation());
+			 //chargingstation = 
+			 //setTargetLocation(chargingstation.getLocation());
 		 }
 	 }
 	
