@@ -86,6 +86,7 @@ public class BW4TClientConfigTest {
         assertEquals(mapFile, config.getMapFile());
     }
 
+    /*
     @Test
     public void testBotStorage() {
         java.util.LinkedList bots = new LinkedList<BotConfig>();
@@ -95,7 +96,7 @@ public class BW4TClientConfigTest {
         config.setBots(bots);
         assertEquals(bots, config.getBots());
     }
-
+    */
 
 
 }
