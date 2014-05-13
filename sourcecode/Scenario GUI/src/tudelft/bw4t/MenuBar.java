@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui;
+package tudelft.bw4t;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -39,7 +39,7 @@ public class MenuBar extends JMenuBar {
         file.add(fileExit);
 
         fileExit.addActionListener(new ActionListener() {
-            @Override
+            //@Override
             public void actionPerformed(ActionEvent event) {
                 System.exit(0);
             }

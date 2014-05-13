@@ -1,4 +1,4 @@
-package nl.tudelft.config;
+package nl.tudelft.bw4t.config;
 
 import java.util.LinkedList;
 import javax.xml.bind.annotation.XmlElement;

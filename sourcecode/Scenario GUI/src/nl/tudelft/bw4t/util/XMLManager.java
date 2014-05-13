@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui;
+package nl.tudelft.bw4t.util;
 
 import java.io.File;
 
@@ -27,10 +27,7 @@ public class XMLManager {
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(xmlObject.getClass());
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-
-			// output pretty printed
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
 			jaxbMarshaller.marshal(xmlObject, file);
 			jaxbMarshaller.marshal(xmlObject, System.out);
 			return true;

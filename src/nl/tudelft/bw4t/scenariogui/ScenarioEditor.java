@@ -26,7 +26,7 @@ public class ScenarioEditor extends JFrame {
         setLayout(null);
 
         // Attach the menu bar.
-        setJMenuBar(new MenuBar());
+        //setJMenuBar(new MenuBar());
 
         // Attach the MainPanel that consists of the configuration and the botpanel.
         MainPanel panel = new MainPanel(new ConfigurationPanel(), new BotPanel());

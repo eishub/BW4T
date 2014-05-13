@@ -1,4 +1,4 @@
-package nl.tudelft;
+package tudelft.bw4t;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
