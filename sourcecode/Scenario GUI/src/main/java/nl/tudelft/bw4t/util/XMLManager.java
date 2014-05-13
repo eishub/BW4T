@@ -10,12 +10,12 @@ import javax.xml.bind.Unmarshaller;
 /**
  * Used for storing classes in XML format and constructing
  * Java objects from the XML files.
- * 
+ *
  * @author Nick
  *
  */
 public class XMLManager {
-	
+
 	/**
 	 * Constructs an XML file from the specified Java object.
 	 * @param filePath The location to store the XML file in.
@@ -29,17 +29,17 @@ public class XMLManager {
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 			jaxbMarshaller.marshal(xmlObject, file);
-			
+
 			//Can be used to print the file during debugging:
 			//jaxbMarshaller.marshal(xmlObject, System.out);
-			
+
 			return true;
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Constructs a Java object from an XML file.
 	 * @param filePath The location of the XML file.

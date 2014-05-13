@@ -6,9 +6,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 /**
- *
+ * The Menubar class extends JMenuBar. Used in the ScenarioEditor Frame.
  */
 public class MenuBar extends JMenuBar {
+
+    /**
+     * Construct a menu bar for the Scenario Editor.
+     */
     public MenuBar() {
         JMenu file;
         JMenuItem fileNew, fileOpen, fileSave, fileExit;

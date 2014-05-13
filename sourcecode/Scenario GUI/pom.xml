@@ -4,6 +4,10 @@
     <groupId>Scenario-GUI</groupId>
     <artifactId>Scenario-GUI</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <scm>
+        <developerConnection>scm:git@github.com:MartinRogalla/BW4T.git</developerConnection>
+        <url>https://github.com/MartinRogalla/BW4T/tree/scenario_gui</url>
+    </scm>
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
         <plugins>
@@ -15,7 +19,32 @@
                     <target/>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
+
     </build>
     <dependencies>
         <dependency>
@@ -35,6 +64,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
                 <configuration>
+                    <check/>
                     <formats>
                         <format>html</format>
                         <format>xml</format>

@@ -15,11 +15,16 @@ import java.awt.*;
 public class MainPanel extends JPanel {
 
     private ConfigurationPanel configurationPanel;
-    private JPanel botPanel;
+    private BotPanel botPanel;
     private Controller controller;
     private GridBagLayout gbl;
-    
-    public MainPanel(ConfigurationPanel configurationPanel, JPanel botPanel) {
+
+    /**
+     * Create a MainPanel consisting of a ConfigurationPanel and a BotPanel
+     * @param configurationPanel The configuration panel
+     * @param botPanel The bot panel
+     */
+    public MainPanel(ConfigurationPanel configurationPanel, BotPanel botPanel) {
         gbl = new GridBagLayout();
     	this.setLayout(gbl);
         this.setConfigurationPanel(configurationPanel);
@@ -33,6 +38,10 @@ public class MainPanel extends JPanel {
         controller = new Controller(this);
     }
 
+    /**
+     * Draw the two panels unto the main panel.
+     * These will have black borders around them.
+     */
     public void drawPanel() {
         GridBagConstraints c = new GridBagConstraints();
         
@@ -56,22 +65,43 @@ public class MainPanel extends JPanel {
         //this.add(botPanel, c);
     }
 
+    /**
+     * Returns the configuration panel used by the MainPanel.
+     * @return The configuration panel object.
+     */
     public ConfigurationPanel getConfigurationPanel() {
         return configurationPanel;
     }
 
+    /**
+     * Set the configuration panel used by the MainPanel.
+     * @param configurationPanel The configuration panel object to be used.
+     */
     public void setConfigurationPanel(ConfigurationPanel configurationPanel) {
         this.configurationPanel = configurationPanel;
     }
 
-    public JPanel getBotPanel() {
+
+    /**
+     * Returns the bot panel used by the MainPanel
+     * @return The bot panel object.
+     */
+    public BotPanel getBotPanel() {
         return botPanel;
     }
 
-    public void setBotPanel(JPanel botPanel) {
+    /**
+     * Set the bot panel used by the MainPanel.
+     * @param botPanel The bot panel object to be used.
+     */
+    public void setBotPanel(BotPanel botPanel) {
         this.botPanel = botPanel;
     }
 
+    /**
+     * Returns the controller object being used to handle all events on the GUI.
+     * @return The Controller used.
+     */
     public Controller getController() {
         return controller;
     }
