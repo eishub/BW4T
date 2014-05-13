@@ -21,7 +21,7 @@ public class BotPanel extends JPanel implements ActionListener {
     
     private JPanel botCountInfo = new JPanel();
     private JPanel botOptions = new JPanel();
-    private JTable botTable;
+    private DefaultTableModel botList;
     private JScrollPane botScrollPane;
     
     private JButton newBot = new JButton("New bot");
@@ -91,7 +91,7 @@ public class BotPanel extends JPanel implements ActionListener {
     
     private void createBotTablePanel(){
         JTable botTable = new JTable();
-        DefaultTableModel botInfo = new DefaultTableModel(){
+        botList = new DefaultTableModel(){
             @Override
             public boolean isCellEditable(int row, int column){
                 //make all cells not editable
@@ -99,9 +99,9 @@ public class BotPanel extends JPanel implements ActionListener {
             }
         };
         
-        botTable.setModel(botInfo);
-        botInfo.addColumn("Bot");
-        botInfo.addColumn("Type");
+        botTable.setModel(botList);
+        botList.addColumn("Bot");
+        botList.addColumn("Type");
         
         botScrollPane = new JScrollPane(botTable);
     }
@@ -141,5 +141,10 @@ public class BotPanel extends JPanel implements ActionListener {
         
         //throw new UnsupportedOperationException("Not supported yet.");
     }
+    
+    /*public void addBot(String botName, String botType){
+    	String[] botEntry = {botName, botType};
+    	botList.addRow(botEntry);
+    }*/
     
 }
