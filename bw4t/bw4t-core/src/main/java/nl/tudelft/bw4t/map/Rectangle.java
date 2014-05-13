@@ -24,7 +24,9 @@ public class Rectangle implements Serializable {
 	 * @param y
 	 *            CENTER y
 	 * @param w
+	 *            width of the rectangle
 	 * @param h
+	 *            height of the rectangle
 	 */
 	public Rectangle(double x, double y, double w, double h) {
 		setWidth(w);
@@ -55,9 +57,12 @@ public class Rectangle implements Serializable {
 		return rectangle.getWidth();
 	}
 
-	/*
+	/**
 	 * Set new width. Moves the left side such that center remains at same
-	 * place..
+	 * place.
+	 * 
+	 * @param w
+	 *            the width of the rectangle
 	 */
 	public void setWidth(double w) {
 		double oldwidth = getWidth();
@@ -73,6 +78,7 @@ public class Rectangle implements Serializable {
 	 * Set new height.
 	 * 
 	 * @param h
+	 *            the height of the rectangle
 	 */
 	public void setHeight(double h) {
 		double oldheight = getHeight();
