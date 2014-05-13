@@ -33,7 +33,7 @@ public final class BW4TClient implements BW4TClientInterface {
 	private final String serverIp, serverPort;
 	private String address, bindAddress;
 
-	/**
+	/** TODO when changing NewMap, also make changes here
 	 * the map that the server uses.
 	 */
 	private NewMap map;
@@ -223,6 +223,8 @@ public final class BW4TClient implements BW4TClientInterface {
 	}
 
 	/**
+	 * TODO test what this does, does it also freeAgent?
+	 * 
 	 * Unregister an agent on the server
 	 * 
 	 * @param agent
@@ -272,6 +274,8 @@ public final class BW4TClient implements BW4TClientInterface {
 	}
 
 	/**
+	 * TODO test what this does, difference with unregister
+	 * 
 	 * Free an agent on the server
 	 * 
 	 * @param agent
@@ -398,6 +402,12 @@ public final class BW4TClient implements BW4TClientInterface {
 		return server.queryEntityProperty(entity, property);
 	}
 
+	/** TODO comments
+	 * 
+	 * @param arg0
+	 * @return
+	 * @throws RemoteException
+	 */
 	public boolean isSupportedByEnvironment(Action arg0) throws RemoteException {
 		return server.isSupportedByEnvironment(arg0);
 	}
@@ -499,11 +509,13 @@ public final class BW4TClient implements BW4TClientInterface {
 		server.handleStateChange(newState);
 	}
 
+	// TODO when changing NewMap, also make changes here
 	@Override
 	public void useMap(NewMap newMap) {
 		map = newMap;
 	}
 
+	// TODO when changing NewMap, also make changes here
 	public NewMap getMap() {
 		return map;
 	}
