@@ -20,7 +20,7 @@ public class XMLManager {
 	 * Constructs an XML file from the specified Java object.
 	 * @param filePath The location to store the XML file in.
 	 * @param xmlObject The object to convert into an XML file.
-	 * @return Whether the output XML file was succesfully generated.
+	 * @return Whether the output XML file was successfully generated.
 	 */
 	public static boolean toXML(String filePath, Object xmlObject) {
 		File file = new File(filePath);
