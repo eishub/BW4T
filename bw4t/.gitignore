@@ -1,4 +1,5 @@
 .settings/
+.classpath
 target/
 bin/
 bw4t-client/target/
