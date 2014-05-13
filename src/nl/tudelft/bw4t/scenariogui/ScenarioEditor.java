@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.scenariogui;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  *
@@ -28,6 +29,10 @@ public class ScenarioEditor extends JFrame {
         // Attach the menu bar.
         setJMenuBar(new MenuBar());
 
+        MainPanel panel = new MainPanel(new ConfigurationPanel(), new ConfigurationPanel());
+
+        setActivePane(panel);
+
         setLookAndFeel();
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -35,10 +40,10 @@ public class ScenarioEditor extends JFrame {
     }
 
     /* This is about how a panel would be "started" on the JFrame.
+    */
     protected void setActivePane(JPanel panel) {
-        setContentPane(panel)
+        setContentPane(panel);
     }
-     */
 
     /*
      *  Function to set the look and feel of the frame to the default look and feel of the system.
