@@ -21,20 +21,25 @@
 			<artifactId>bin_and_src</artifactId>
 			<version>2.1</version>
 		</dependency>
-    <dependency>
-      <groupId>saf.core</groupId>
-      <artifactId>runtime</artifactId>
-      <version>1.0</version>
-    </dependency>
-    <dependency>
-        <groupId>saf.core</groupId>
-        <artifactId>ui</artifactId>
-        <version>1.0</version>
-    </dependency>
-    <dependency>
-        <groupId>saf.core</groupId>
-        <artifactId>v3d</artifactId>
-        <version>1.0</version>
-    </dependency>
+		<dependency>
+			<groupId>saf.core</groupId>
+			<artifactId>runtime</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>saf.core</groupId>
+			<artifactId>ui</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>saf.core</groupId>
+			<artifactId>v3d</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+            <groupId>org.javabits.jgrapht</groupId>
+            <artifactId>jgrapht-core</artifactId>
+            <version>0.9.1</version>
+        </dependency>
 	</dependencies>
 </project>
