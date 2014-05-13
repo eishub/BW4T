@@ -2,6 +2,7 @@ package nl.tudelft.bw4t.handicaps;
 
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.doors.Door;
+import nl.tudelft.bw4t.robots.Robot;
 import nl.tudelft.bw4t.zone.DropZone;
 import nl.tudelft.bw4t.zone.Room;
 import nl.tudelft.bw4t.zone.Zone;
@@ -11,58 +12,45 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 
 public class MovingHandicap extends Handicap {
-
+	private Robot r;
+	/**
+	 * Constructor without previously defined robot.
+	 * @param name Name of robot.
+	 * @param space Space in which the robot operates.
+	 * @param context Context in which the robot operates.
+	 * @param oneBotPerZone True if there is a max of 1 robot per zone.
+	 */
 	public MovingHandicap(String name, ContinuousSpace<Object> space,
 			Context<Object> context, boolean oneBotPerZone) {
 		super(name, space, context, oneBotPerZone);
-		// TODO Auto-generated constructor stub
+		r = new Robot(name, space, context, oneBotPerZone);
 	}
-
+	/**
+	 * Constructor with previously defined robot.
+	 * @param name Name of robot.
+	 * @param space Space in which the robot operates.
+	 * @param context Context in which the robot operates.
+	 * @param oneBotPerZone True if there is a max of 1 robot per zone.
+	 * @param r The previously defined robot.
+	 */
+	public MovingHandicap(String name, ContinuousSpace<Object> space,
+			Context<Object> context, boolean oneBotPerZone, Robot r) {
+		super(name, space, context, oneBotPerZone);
+		this.r = r;
+	}
 	@Override
 	public boolean canPickUp(Block b) {
-		double distance = distanceTo(b.getLocation());
-
-		if (distance <= ARM_DISTANCE && b.isFree())
-			return true;
-		else
-			return false;
+		return r.canPickUp(b);
 	}
 
 	@Override
 	public void pickUp(Block b) {
-		drop();
-		holding = b;
-		b.setHeldBy(this);
-		b.removeFromContext();
+		r.pickUp(b);
 	}
 
 	@Override
 	public void drop() {
-		if (holding != null) {
-			// First check if dropped in dropzone, then it won't need to be
-			// added to the context again
-			DropZone dropZone = (DropZone) context.getObjects(DropZone.class)
-					.get(0);
-			if (!dropZone.dropped(holding, this)) {
-				// bot was not in the dropzone.. Are we in a room?
-				Zone ourzone = getZone();
-				if (ourzone instanceof Room) {
-					// We are in a room so can drop the block
-					holding.setHeldBy(null);
-					holding.addToContext();
-					// Slightly jitter the location where the box is
-					// dropped
-					double x = ourzone.getLocation().getX();
-					double y = ourzone.getLocation().getY();
-					holding.moveTo(RandomHelper.nextDoubleFromTo(x - 5, x + 5),
-							RandomHelper.nextDoubleFromTo(y - 5, y + 5));
-					holding = null;
-					return;
-
-				}
-			}
-			holding = null;
-		}
+		r.drop();
 	}
 
 	@Override
@@ -84,6 +72,20 @@ public class MovingHandicap extends Handicap {
 	@Override
 	public synchronized void setTargetLocation(NdPoint targetLocation) {
 		this.targetLocation = null;
+	}
+	/** 
+	 * Returns currently used robot.
+	 * @return The robot this class wraps around.
+	 */
+	public Robot getRobot() {
+		return r;
+	}
+	/**
+	 * Sets a different robot.
+	 * @param r The robot.
+	 */
+	public void setRobot(Robot r) {
+		this.r = r;
 	}
 
 }
