@@ -2,8 +2,11 @@ package nl.tudelft.bw4t.gui.panel;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -14,12 +17,18 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Katia
  */
-public class BotPanel extends JPanel {
+public class BotPanel extends JPanel implements ActionListener {
     
     private JPanel content = new JPanel();
     private JPanel botCountInfo = new JPanel();
     private JPanel botOptions = new JPanel();
     private JScrollPane botTable;
+    
+    private JButton newBot = new JButton("New bot");
+    private JButton modifyBot = new JButton("Modify bot");
+    private JButton renameBot = new JButton("Rename bot");
+    private JButton duplicateBot = new JButton("Duplicate bot");
+    private JButton deleteBot = new JButton("Delete bot");
     
     public BotPanel(){
         content.setLayout(new BorderLayout(5, 5));
@@ -31,12 +40,6 @@ public class BotPanel extends JPanel {
         content.add(botCountInfo, BorderLayout.NORTH);
         content.add(botOptions, BorderLayout.EAST);
         content.add(botTable, BorderLayout.CENTER);
-        
-        
-        /*for(int i = 0; i < 30; i++){
-            String[] testRow = {"bot" + i, "type" + i};
-            botTable.addRow(testRow);
-        }*/
         
         add(content);
     }
@@ -71,11 +74,11 @@ public class BotPanel extends JPanel {
         JPanel rightBotPanel = new JPanel();
         rightBotPanel.setLayout(new GridLayout(5, 2));
         
-        JButton newBot = new JButton("New bot");
-        JButton modifyBot = new JButton("Modify bot");
-        JButton renameBot = new JButton("Rename bot");
-        JButton duplicateBot = new JButton("Duplicate bot");
-        JButton deleteBot = new JButton("Delete bot");
+        newBot.addActionListener(this);
+        modifyBot.addActionListener(this);
+        renameBot.addActionListener(this);
+        duplicateBot.addActionListener(this);
+        deleteBot.addActionListener(this);
         
         rightBotPanel.add(newBot);
         rightBotPanel.add(new JLabel(""));
@@ -107,6 +110,26 @@ public class BotPanel extends JPanel {
         botInfo.addColumn("Type");
         
         botTable = new JScrollPane(table);
+    }
+
+    public void actionPerformed(ActionEvent ae) {
+        if(ae.getSource() == newBot){
+            System.out.println("Go to Bot Store");
+        }
+        
+        if(ae.getSource() == modifyBot){
+            System.out.println("Got to Bot Store");
+        }
+        
+        if(ae.getSource() == renameBot){}
+        
+        if(ae.getSource() == duplicateBot){}
+        
+        if(ae.getSource() == deleteBot){
+            JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this bot?", "", JOptionPane.YES_NO_OPTION);
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
