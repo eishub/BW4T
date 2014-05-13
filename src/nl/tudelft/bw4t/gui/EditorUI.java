@@ -3,6 +3,22 @@
  * and open the template in the editor.
  */
 package nl.tudelft.bw4t.gui;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JSlider;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.SwingConstants;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  *
@@ -28,31 +44,44 @@ public class EditorUI extends javax.swing.JFrame {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        buttonGroup2 = new javax.swing.ButtonGroup();
-        buttonGroup3 = new javax.swing.ButtonGroup();
         sizeSlider = new javax.swing.JSlider();
+        sizeSlider.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseReleased(MouseEvent arg0) {
+        		calculateBatteryUse();
+        	}
+        });
+
+
         applyButton = new javax.swing.JButton();
         sizeLabel = new javax.swing.JLabel();
+        sizeLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
         speedSlider = new javax.swing.JSlider();
+        speedSlider.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseReleased(MouseEvent e) {
+        		calculateBatteryUse();
+        	}
+        });
+        speedSlider.setMaximum(75);
+        speedSlider.setMinimum(25);
         SpeedLabel = new javax.swing.JLabel();
+        SpeedLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
         botTitleLabel = new javax.swing.JLabel();
-        sizeSpeedSeparator = new javax.swing.JSeparator();
-        verticalSeparator = new javax.swing.JSeparator();
+        botTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titleSizeSeparator = new javax.swing.JSeparator();
         gripperCheckbox = new javax.swing.JCheckBox();
-        colourblindCheckbox = new javax.swing.JCheckBox();
+        colorblindCheckbox = new javax.swing.JCheckBox();
         walkingCheckbox = new javax.swing.JCheckBox();
         jumpingCheckbox = new javax.swing.JCheckBox();
         checkablesLabel = new javax.swing.JLabel();
-        buttonCheckSeparator = new javax.swing.JSeparator();
         resetButton = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox();
+        botTypeSelector = new javax.swing.JComboBox();
 
         jScrollPane2.setViewportView(jTextPane1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("TestGUI");
+        setTitle("BotStore");
 
         sizeSlider.setMajorTickSpacing(1);
         sizeSlider.setMaximum(5);
@@ -66,40 +95,31 @@ public class EditorUI extends javax.swing.JFrame {
 
         applyButton.setText("Apply");
 
-        sizeLabel.setText("Size ");
+        sizeLabel.setText("Size (2 is default)");
 
         speedSlider.setMajorTickSpacing(5);
-        speedSlider.setMaximum(75);
-        speedSlider.setMinimum(25);
         speedSlider.setPaintLabels(true);
         speedSlider.setPaintTicks(true);
         speedSlider.setSnapToTicks(true);
         speedSlider.setToolTipText("");
 
-        SpeedLabel.setText("Speed (percentage)");
+        SpeedLabel.setText("Speed (50 is default)");
 
         botTitleLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        botTitleLabel.setText("    Bot X");
-
-        verticalSeparator.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        botTitleLabel.setText("Bot X");
 
         gripperCheckbox.setSelected(true);
         gripperCheckbox.setText("Gripper enabled");
 
-        colourblindCheckbox.setText("Colour blindness enabled");
+        colorblindCheckbox.setText("Color blindness enabled");
 
         walkingCheckbox.setSelected(true);
         walkingCheckbox.setText("Walking enabled");
-        walkingCheckbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                walkingCheckboxActionPerformed(evt);
-            }
-        });
 
         jumpingCheckbox.setSelected(true);
         jumpingCheckbox.setText("Jumping enabled");
 
-        checkablesLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        checkablesLabel.setFont(new Font("Tahoma", Font.PLAIN, 24)); // NOI18N
         checkablesLabel.setText("Checkables");
 
         resetButton.setText("Reset");
@@ -108,122 +128,169 @@ public class EditorUI extends javax.swing.JFrame {
                 resetButtonMouseClicked(evt);
             }
         });
-        resetButton.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                resetButtonKeyPressed(evt);
-            }
-        });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Humanoid (Nao)", "Humanoid (Asimo)", "Wheeled (Lego Mindstorm)", "Wheeled (Wall-e)" }));
-        jComboBox1.setToolTipText("");
+        botTypeSelector.setModel(new DefaultComboBoxModel(new String[] {"Regular Agent", "E-Partner", "Human User"}));
+        botTypeSelector.setToolTipText("");
+        
+        batterySlider = new JSlider();
+        batterySlider.setValue(0);
+        batterySlider.setToolTipText("");
+        batterySlider.setSnapToTicks(true);
+        batterySlider.setPaintTicks(true);
+        batterySlider.setPaintLabels(true);
+        batterySlider.setMajorTickSpacing(10);
+        
+        lblBatteryCapacity = new JLabel();
+        lblBatteryCapacity.setFont(new Font("Tahoma", Font.BOLD, 13));
+        lblBatteryCapacity.setText("Battery Capacity (0 is infinity)");
+        
+        batteryUseLabel = new JLabel("Average Battery use:");
+        
+        batteryUseValueLabel = new JLabel("0.9");
+        
+        perTickLabel = new JLabel("per tick");
+        perTickLabel.setFont(new Font("Tahoma", Font.ITALIC, 13));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(sizeSpeedSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
-                        .addComponent(titleSizeSeparator)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(64, 64, 64)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(botTitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(138, 138, 138)
-                        .addComponent(sizeLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(sizeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(98, 98, 98)
-                        .addComponent(SpeedLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addComponent(speedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addComponent(verticalSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(colourblindCheckbox)
-                    .addComponent(gripperCheckbox)
-                    .addComponent(walkingCheckbox)
-                    .addComponent(jumpingCheckbox)
-                    .addComponent(checkablesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonCheckSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(resetButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(applyButton)))
-                .addContainerGap())
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        						.addGroup(layout.createSequentialGroup()
+        							.addComponent(titleSizeSeparator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        							.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        								.addGroup(layout.createSequentialGroup()
+        									.addGap(18)
+        									.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+        										.addGroup(layout.createSequentialGroup()
+        											.addPreferredGap(ComponentPlacement.RELATED)
+        											.addComponent(botTitleLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        										.addComponent(speedSlider, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        										.addComponent(batterySlider, GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+        										.addComponent(sizeSlider, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        								.addGroup(layout.createSequentialGroup()
+        									.addGap(77)
+        									.addComponent(sizeLabel))))
+        						.addGroup(layout.createSequentialGroup()
+        							.addGap(58)
+        							.addComponent(botTypeSelector, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE)))
+        					.addGap(64)
+        					.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        						.addGroup(layout.createSequentialGroup()
+        							.addComponent(resetButton)
+        							.addPreferredGap(ComponentPlacement.RELATED)
+        							.addComponent(applyButton))
+        						.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        							.addComponent(gripperCheckbox)
+        							.addComponent(colorblindCheckbox)
+        							.addComponent(walkingCheckbox)
+        							.addComponent(checkablesLabel)
+        							.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        								.addComponent(jumpingCheckbox)
+        								.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        									.addGroup(layout.createSequentialGroup()
+        										.addComponent(batteryUseValueLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+        										.addPreferredGap(ComponentPlacement.RELATED)
+        										.addComponent(perTickLabel))
+        									.addComponent(batteryUseLabel))))))
+        				.addGroup(layout.createSequentialGroup()
+        					.addGap(38)
+        					.addComponent(lblBatteryCapacity))
+        				.addGroup(layout.createSequentialGroup()
+        					.addGap(67)
+        					.addComponent(SpeedLabel)))
+        			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(verticalSeparator)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(botTitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(19, 19, 19)
-                        .addComponent(titleSizeSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(sizeLabel)
-                        .addGap(18, 18, 18)
-                        .addComponent(sizeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(sizeSpeedSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(SpeedLabel)
-                        .addGap(18, 18, 18)
-                        .addComponent(speedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(checkablesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47)
-                        .addComponent(gripperCheckbox)
-                        .addGap(18, 18, 18)
-                        .addComponent(colourblindCheckbox)
-                        .addGap(18, 18, 18)
-                        .addComponent(walkingCheckbox)
-                        .addGap(18, 18, 18)
-                        .addComponent(jumpingCheckbox)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonCheckSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(applyButton)
-                            .addComponent(resetButton))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addGap(134)
+        					.addComponent(titleSizeSeparator, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE))
+        				.addGroup(layout.createSequentialGroup()
+        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        						.addGroup(layout.createSequentialGroup()
+        							.addGap(8)
+        							.addComponent(botTitleLabel, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
+        							.addGap(18)
+        							.addComponent(botTypeSelector, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        							.addGap(18)
+        							.addComponent(sizeLabel)
+        							.addGap(2)
+        							.addComponent(sizeSlider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        							.addPreferredGap(ComponentPlacement.UNRELATED)
+        							.addComponent(SpeedLabel))
+        						.addGroup(layout.createSequentialGroup()
+        							.addGap(27)
+        							.addComponent(checkablesLabel, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+        							.addGap(18)
+        							.addComponent(gripperCheckbox)
+        							.addPreferredGap(ComponentPlacement.UNRELATED)
+        							.addComponent(colorblindCheckbox)
+        							.addPreferredGap(ComponentPlacement.UNRELATED)
+        							.addComponent(walkingCheckbox)
+        							.addPreferredGap(ComponentPlacement.UNRELATED)
+        							.addComponent(jumpingCheckbox)))
+        					.addGap(1)
+        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        						.addGroup(layout.createSequentialGroup()
+        							.addComponent(batteryUseLabel)
+        							.addPreferredGap(ComponentPlacement.RELATED)
+        							.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        								.addComponent(batteryUseValueLabel)
+        								.addComponent(perTickLabel))
+        							.addPreferredGap(ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+        							.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        								.addComponent(applyButton)
+        								.addComponent(resetButton)))
+        						.addGroup(layout.createSequentialGroup()
+        							.addComponent(speedSlider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        							.addGap(18)
+        							.addComponent(lblBatteryCapacity)
+        							.addGap(2)
+        							.addComponent(batterySlider, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)))))
+        			.addContainerGap())
         );
+        getContentPane().setLayout(layout);
 
         getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void walkingCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_walkingCheckboxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_walkingCheckboxActionPerformed
 
-    private void resetButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_resetButtonKeyPressed
-        
-        
-    }//GEN-LAST:event_resetButtonKeyPressed
 
+    /**
+     * @param evt
+     * This method resets all the checkboxes, sliders and average battery use to default values.
+     */
     private void resetButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetButtonMouseClicked
         speedSlider.setValue(50);
         sizeSlider.setValue(2);
+        batterySlider.setValue(0);
         gripperCheckbox.setSelected(true);
-        colourblindCheckbox.setSelected(false);
+        colorblindCheckbox.setSelected(false);
         jumpingCheckbox.setSelected(true);
         walkingCheckbox.setSelected(true);
+        botTypeSelector.setSelectedIndex(0);
+        calculateBatteryUse();
     }//GEN-LAST:event_resetButtonMouseClicked
+    
+    /**
+     * This method should recalculate the average battery use per tick.
+     * After calculation, it should update the batteryUseValueLabel label in this GUI.
+     */
+    private void calculateBatteryUse() {
+    	int speed = speedSlider.getValue();
+    	int size = sizeSlider.getValue();
+    	// Calculate average battery use result
+    	double res = 0.01*speed + 0.2*size;
+    	// Set label
+    	batteryUseValueLabel.setText(String.valueOf(res));
+    }
 
     /**
      * @param args the command line arguments
@@ -263,24 +330,23 @@ public class EditorUI extends javax.swing.JFrame {
     private javax.swing.JLabel SpeedLabel;
     private javax.swing.JButton applyButton;
     private javax.swing.JLabel botTitleLabel;
-    private javax.swing.JSeparator buttonCheckSeparator;
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.ButtonGroup buttonGroup2;
-    private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JLabel checkablesLabel;
-    private javax.swing.JCheckBox colourblindCheckbox;
+    private javax.swing.JCheckBox colorblindCheckbox;
     private javax.swing.JCheckBox gripperCheckbox;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox botTypeSelector;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JCheckBox jumpingCheckbox;
     private javax.swing.JButton resetButton;
     private javax.swing.JLabel sizeLabel;
     private javax.swing.JSlider sizeSlider;
-    private javax.swing.JSeparator sizeSpeedSeparator;
     private javax.swing.JSlider speedSlider;
     private javax.swing.JSeparator titleSizeSeparator;
-    private javax.swing.JSeparator verticalSeparator;
     private javax.swing.JCheckBox walkingCheckbox;
+    private JSlider batterySlider;
+    private JLabel lblBatteryCapacity;
+    private JLabel batteryUseLabel;
+    private JLabel batteryUseValueLabel;
+    private JLabel perTickLabel;
     // End of variables declaration//GEN-END:variables
 }
