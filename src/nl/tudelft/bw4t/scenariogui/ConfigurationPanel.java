@@ -1,4 +1,4 @@
-package scenariogui;
+package nl.tudelft.bw4t.scenariogui;
 
 import java.awt.*;
 import javax.swing.*;
@@ -7,11 +7,6 @@ import javax.swing.*;
  * @author smto
  */
 public class ConfigurationPanel extends JPanel {
-    
-    private JPanel pClient;
-    private JPanel pServer;
-    private JPanel pGoal;
-    private JPanel pGUI;
     
     private JLabel lConfig = new JLabel("Configuration");
     private JLabel lClient = new JLabel("Client");
@@ -40,48 +35,38 @@ public class ConfigurationPanel extends JPanel {
     private Checkbox cbNo2 = new Checkbox("No", false, group2);
     
     public ConfigurationPanel() {
-        setLayout(new GridLayout(13, 1));
+        setLayout(new GridLayout(0, 4));
+        setVisible(true);
         
-        pClient = new JPanel(new GridLayout(1, 4));
-        pServer = new JPanel(new GridLayout(1, 4));
-        pGoal = new JPanel(new GridLayout(1, 2));
-        pGUI = new JPanel(new GridLayout(1, 2));
-        
-        add(lConfig);
+        add(lConfig); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
         
         //add Client section
-        pClient.add(lIP1);
-        pClient.add(tfIP1);
-        pClient.add(lPort1);
-        pClient.add(tfPort1);
-        
-        add(lClient);
-        add(pClient);
+        add(lClient); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
+        add(lIP1); add(tfIP1); add(lPort1); add(tfPort1);
         
         //add Server section
-        pServer.add(lIP2);
-        pServer.add(tfIP2);
-        pServer.add(lPort2);
-        pServer.add(tfPort2);
-        
-        add(lServer);
-        add(pServer);
+        add(lServer); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
+        add(lIP2); add(tfIP2); add(lPort2); add(tfPort2);
         
         //add Use Goal section
-        pGoal.add(cbYes1);
-        pGoal.add(cbNo1);
-        
-        add(lGoal);
-        add(pGoal);
+        add(lGoal); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
+        add(cbYes1); add(cbNo1); add(new JLabel(" ")); add(new JLabel(" "));
         
         //add Launch GUI section
-        pGUI.add(cbYes2);
-        pGUI.add(cbNo2);
-        
-        add(lGUI);
-        add(pGUI);
+        add(lGUI); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
+        add(cbYes2); add(cbNo2); add(new JLabel(" ")); add(new JLabel(" "));
         
         //add Agent class section
+        add(lAgent); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
+        
+        /*JFileChooser agentChooser = new JFileChooser();
+        int returnVal = agentChooser.showOpenDialog(parent);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+           System.out.println("File: " +
+                agentChooser.getSelectedFile().getName());
+        }*/
+        
+        
         //add Map file section
     }
 }
