@@ -1,4 +1,5 @@
 .settings/
 target/
+bin/
 bw4t-client/target/
 bw4t-server/target/
