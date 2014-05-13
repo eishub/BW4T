@@ -19,7 +19,6 @@ import javax.swing.table.DefaultTableModel;
  */
 public class BotPanel extends JPanel implements ActionListener {
     
-    private JPanel content = new JPanel();
     private JPanel botCountInfo = new JPanel();
     private JPanel botOptions = new JPanel();
     private JScrollPane botTable;
@@ -31,17 +30,16 @@ public class BotPanel extends JPanel implements ActionListener {
     private JButton deleteBot = new JButton("Delete bot");
     
     public BotPanel(){
-        content.setLayout(new BorderLayout(5, 5));
+        setLayout(new BorderLayout(5, 5));
         
         createBotCountPanel();
         createBotOptionPanel();
         createBotTablePanel();
         
-        content.add(botCountInfo, BorderLayout.NORTH);
-        content.add(botOptions, BorderLayout.EAST);
-        content.add(botTable, BorderLayout.CENTER);
         
-        add(content);
+        add(botCountInfo, BorderLayout.NORTH);
+        add(botOptions, BorderLayout.EAST);
+        add(botTable, BorderLayout.CENTER);
     }
     
     private void createBotCountPanel(){
@@ -69,10 +67,10 @@ public class BotPanel extends JPanel implements ActionListener {
     }
     
     private void createBotOptionPanel(){
-        botOptions.setLayout(new GridLayout(3, 1));
+    	botOptions.setLayout(new GridLayout(15, 2));
         
-        JPanel rightBotPanel = new JPanel();
-        rightBotPanel.setLayout(new GridLayout(5, 2));
+        //JPanel rightBotPanel = new JPanel();
+        //rightBotPanel.setLayout(new GridLayout(5, 2));
         
         newBot.addActionListener(this);
         modifyBot.addActionListener(this);
@@ -80,19 +78,17 @@ public class BotPanel extends JPanel implements ActionListener {
         duplicateBot.addActionListener(this);
         deleteBot.addActionListener(this);
         
-        rightBotPanel.add(newBot);
-        rightBotPanel.add(new JLabel(""));
-        rightBotPanel.add(modifyBot);
-        rightBotPanel.add(new JLabel(""));
-        rightBotPanel.add(renameBot);
-        rightBotPanel.add(new JTextField(20));
-        rightBotPanel.add(duplicateBot);
-        rightBotPanel.add(new JTextField(5));
-        rightBotPanel.add(deleteBot);
-        
-        botOptions.add(rightBotPanel);
+        botOptions.add(newBot);
         botOptions.add(new JLabel(""));
+        botOptions.add(modifyBot);
         botOptions.add(new JLabel(""));
+        botOptions.add(new JTextField(20));
+        botOptions.add(renameBot);
+        botOptions.add(new JLabel(""));
+        botOptions.add(new JTextField(5));
+        botOptions.add(duplicateBot);
+        botOptions.add(new JLabel(""));
+        botOptions.add(deleteBot);
     }
     
     private void createBotTablePanel(){
