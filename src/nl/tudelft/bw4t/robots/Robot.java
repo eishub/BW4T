@@ -212,7 +212,7 @@ public class Robot extends BoundedMoveableObject {
 		super.moveTo(x, y);
 	}
 
-	enum MoveType {
+	public enum MoveType {
 		/**
 		 * start and end point are in same room/corridor
 		 */
