@@ -1,6 +1,12 @@
-package tudelft.bw4t;
+package nl.tudelft.bw4t;
 
 import javax.swing.*;
+
+import tudelft.bw4t.gui.panel.BotPanel;
+import tudelft.bw4t.gui.panel.ConfigurationPanel;
+import tudelft.bw4t.gui.panel.MainPanel;
+
+import java.awt.*;
 
 /**
  *
@@ -18,7 +24,6 @@ public class ScenarioEditor extends JFrame {
         setSize(width, height);
         setTitle(windowName);
 
-
         // Setting the location relative to null centers the frame.
         setLocationRelativeTo(null);
 
@@ -26,7 +31,11 @@ public class ScenarioEditor extends JFrame {
         setLayout(null);
 
         // Attach the menu bar.
-        setJMenuBar(new MenuBar());
+        //setJMenuBar(new MenuBar());
+
+        // Attach the MainPanel that consists of the configuration and the botpanel.
+        MainPanel panel = new MainPanel(new ConfigurationPanel(), new BotPanel());
+        setActivePane(panel);
 
         setLookAndFeel();
 
@@ -35,10 +44,10 @@ public class ScenarioEditor extends JFrame {
     }
 
     /* This is about how a panel would be "started" on the JFrame.
+    */
     protected void setActivePane(JPanel panel) {
-        setContentPane(panel)
+        setContentPane(panel);
     }
-     */
 
     /*
      *  Function to set the look and feel of the frame to the default look and feel of the system.

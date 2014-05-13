@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui;
+package tudelft.bw4t.gui.panel;
 
 import javax.swing.*;
 import java.awt.*;
