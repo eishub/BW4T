@@ -55,12 +55,20 @@ public class Robot extends BoundedMoveableObject {
 	 * is caused by an attempt to move into or out of a room
 	 */
 	private boolean collided = false;
+	
 
 	/**
 	 * set to true when {@link #connect()} is called.
 	 */
 	private boolean connected = false;
 	private boolean oneBotPerZone;
+	
+	/**
+	 * Valentine
+	 * a robot has a battery
+	 * a battery has a power value of how much the capacity should increment or decrement.
+	 */
+	private Battery battery;
 
 	/**
 	 * Creates a new robot.
@@ -81,6 +89,12 @@ public class Robot extends BoundedMoveableObject {
 		this.name = name;
 		this.oneBotPerZone = oneBotPerZone;
 		setSize(SIZE, SIZE);
+		
+		/**
+		 * Valentine
+		 * This is where the battery value will be fetched from the Bot Store GUI. 
+		 */
+		this.battery = new Battery(Integer.MAX_VALUE, Integer.MAX_VALUE, 0);
 	}
 
 	/**
@@ -137,7 +151,7 @@ public class Robot extends BoundedMoveableObject {
 			return true;
 		else
 			return false;
-	}//wendyyyy
+	}
 
 	/**
 	 * Pick up a block
