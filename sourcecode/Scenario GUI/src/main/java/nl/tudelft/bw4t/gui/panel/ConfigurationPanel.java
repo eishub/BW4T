@@ -321,7 +321,10 @@ public class ConfigurationPanel extends JPanel {
      * @return The use of GOAL.
      */
     public boolean useGoal(){
-    	return goalYes.isEnabled();
+    	if(goalCheckBox.getSelectedCheckbox() == goalYes)
+    		return true;
+    	else
+    		return false;
     }
     
     /**
@@ -340,7 +343,10 @@ public class ConfigurationPanel extends JPanel {
      * @return The use of a GUI.
      */
     public boolean useGui(){
-    	return guiYes.isEnabled();
+    	if(guiCheckBox.getSelectedCheckbox() == guiYes)
+    		return true;
+    	else
+    		return false;
     }
     
     /**
