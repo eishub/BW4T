@@ -18,20 +18,18 @@ public class ScenarioEditor extends JFrame {
     /** The name of the window, as displayed in the title */
     private String windowName = "Scenario Editor";
     /** The window width */
-    private int width = 800;
+    private int width;
     /** The window height */
-    private int height = 600;
+    private int height;
 
     /**
      * Create the scenario editor frame, which will then hold the panels with specific functions.
      */
     public ScenarioEditor() {
-        setSize(width, height);
+    //    setSize(width, height);
         setTitle(windowName);
 
-        // Setting the location relative to null centers the frame.
-        setLocationRelativeTo(null);
-
+        
         setResizable(false);
         setLayout(null);
 
@@ -45,9 +43,16 @@ public class ScenarioEditor extends JFrame {
         setLookAndFeel();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
+        
+        //Gives window its size by inner components
         pack();
-
+        
+        //Set size for the centering of the frame
+        width = this.getWidth();
+        height = this.getHeight();
+        // Setting the location relative to null centers the frame.
+        setLocationRelativeTo(null);
+        
         setVisible(true);
     }
 

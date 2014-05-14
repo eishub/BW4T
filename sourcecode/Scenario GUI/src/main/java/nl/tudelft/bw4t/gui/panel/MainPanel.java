@@ -3,6 +3,10 @@ package nl.tudelft.bw4t.gui.panel;
 import nl.tudelft.bw4t.controller.Controller;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+
 import java.awt.*;
 
 /**
@@ -10,7 +14,7 @@ import java.awt.*;
  * MainPanel which serves as the content pane for the ScenarioEditor frame. Creates a 1/3 - 2/3 division,
  * the former for the ConfigurationPanel, and the latter the BotPanel
  * @since 13-05-2014
- * @author Joop Au�
+ * @author Joop Aue
  */
 public class MainPanel extends JPanel {
 
@@ -45,13 +49,15 @@ public class MainPanel extends JPanel {
     public void drawPanel() {
         GridBagConstraints c = new GridBagConstraints();
         
-        //configurationPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        //botPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        
+        
+      //  configurationPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+      //  botPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         
         c.insets = new Insets(10,10,10,10); 
         c.fill = GridBagConstraints.NONE;
         c.anchor = GridBagConstraints.NORTHWEST;
-        c.weightx = 0.2;
+        c.weightx = 0.1;
         c.weighty = 1;
         c.gridx = 0;
         c.gridy = 0;

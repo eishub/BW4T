@@ -1,7 +1,11 @@
 package nl.tudelft.bw4t.gui.panel;
 
 import java.awt.*;
+
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 
 /**
  * The ConfigurationPanel class represents the left pane of the MainPanel.
@@ -40,8 +44,14 @@ public class ConfigurationPanel extends JPanel {
         c = new GridBagConstraints();
 
         c.fill = GridBagConstraints.HORIZONTAL;
-
-        showConfigLabel();
+        
+        Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+        TitledBorder title = BorderFactory.createTitledBorder(loweredetched, "Configuration");
+        title.setTitleJustification(TitledBorder.LEFT);
+        title.setTitleFont(new Font("Sans-Serif", Font.BOLD, 16));
+        setBorder(title);
+        
+        //showConfigLabel();
         showClientOptions();
         showServerOptions();
         showGoalOptions();
@@ -65,7 +75,7 @@ public class ConfigurationPanel extends JPanel {
      * Show the client config options in the panel.
      */
     private void showClientOptions(){
-        c.insets = new Insets(10, 0, 0, 0);
+        c.insets = new Insets(8, 8, 0, 0);
 
         c.gridx = 0;
         c.gridy += 1;
@@ -74,7 +84,7 @@ public class ConfigurationPanel extends JPanel {
         client.setFont(new Font("Sans-Serif", Font.BOLD, 14));
     	add(client, c);
 
-        c.insets = new Insets(0,0,0,0);
+        c.insets = new Insets(0,8,0,0);
 
         c.weightx = 0.5;
         c.gridx = 0;
@@ -101,7 +111,7 @@ public class ConfigurationPanel extends JPanel {
      * Show the serer config options in the panel.
      */
     private void showServerOptions(){
-        c.insets = new Insets(10, 0, 0, 0);
+        c.insets = new Insets(8, 8, 0, 0);
 
         c.gridx = 0;
         c.gridy += 1;
@@ -110,7 +120,7 @@ public class ConfigurationPanel extends JPanel {
         server.setFont(new Font("Sans-Serif", Font.BOLD, 14));
         add(server, c);
 
-        c.insets = new Insets(0,0,0,0);
+        c.insets = new Insets(0,8,0,0);
 
         c.weightx = 0.5;
         c.gridx = 0;
@@ -137,7 +147,7 @@ public class ConfigurationPanel extends JPanel {
      * Show the option to use GOAL in the panel.
      */
     private void showGoalOptions(){
-        c.insets = new Insets(10, 0, 0, 0);
+        c.insets = new Insets(8, 8, 0, 0);
 
         c.gridx = 0;
         c.gridy += 1;
@@ -146,7 +156,7 @@ public class ConfigurationPanel extends JPanel {
         goal.setFont(new Font("Sans-Serif", Font.BOLD, 14));
         add(goal, c);
 
-        c.insets = new Insets(0,0,0,0);
+        c.insets = new Insets(0,8,0,0);
 
         c.gridx = 0;
         c.gridy += 1;
@@ -160,7 +170,7 @@ public class ConfigurationPanel extends JPanel {
      * Show the option to use a GUI in the panel.
      */
     private void showGuiOptions(){
-        c.insets = new Insets(10, 0, 0, 0);
+        c.insets = new Insets(8, 8, 0, 0);
 
         c.gridx = 0;
         c.gridy += 1;
@@ -169,7 +179,7 @@ public class ConfigurationPanel extends JPanel {
         gui.setFont(new Font("Sans-Serif", Font.BOLD, 14));
         add(gui, c);
 
-        c.insets = new Insets(0,0,0,0);
+        c.insets = new Insets(0,8,0,0);
 
         c.gridx = 0;
         c.gridy += 1;
@@ -183,7 +193,7 @@ public class ConfigurationPanel extends JPanel {
      * Show the option to add an agent class in the panel.
      */
     private void showAgentOptions(){
-        c.insets = new Insets(10, 0, 0, 0);
+        c.insets = new Insets(8, 8, 0, 0);
 
         c.gridx = 0;
         c.gridy += 1;
@@ -192,7 +202,7 @@ public class ConfigurationPanel extends JPanel {
         agent.setFont(new Font("Sans-Serif", Font.BOLD, 14));
         add(agent, c);
 
-        c.insets = new Insets(4,0,0,0);
+        c.insets = new Insets(4,8,0,8);
 
         c.gridx = 0;
         c.gridwidth = 2;
@@ -211,7 +221,7 @@ public class ConfigurationPanel extends JPanel {
      * Show the options to add a map file in the panel.
      */
     private void showMapOptions(){
-        c.insets = new Insets(10, 0, 0, 0);
+        c.insets = new Insets(8,8, 0, 0);
 
         c.gridx = 0;
         c.gridy += 1;
@@ -220,7 +230,7 @@ public class ConfigurationPanel extends JPanel {
         map.setFont(new Font("Sans-Serif", Font.BOLD, 14));
         add(map, c);
 
-        c.insets = new Insets(4,0,0,0);
+        c.insets = new Insets(4,8,8,8);
 
         c.gridx = 0;
         c.gridwidth = 2;

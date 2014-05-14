@@ -1,7 +1,12 @@
 package nl.tudelft.bw4t.gui.panel;
 
 import java.awt.*;
+
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -34,7 +39,13 @@ public class BotPanel extends JPanel {
      */
     public BotPanel() {
         setLayout(new BorderLayout(5, 5));
-
+       
+        Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+        TitledBorder title = BorderFactory.createTitledBorder(loweredetched, "Bot Panel");
+        title.setTitleJustification(TitledBorder.LEFT);
+        title.setTitleFont(new Font("Sans-Serif", Font.BOLD, 16));
+        setBorder(title);
+             
         createBotCountPanel();
         createBotOptionPanel();
         createBotTablePanel();
