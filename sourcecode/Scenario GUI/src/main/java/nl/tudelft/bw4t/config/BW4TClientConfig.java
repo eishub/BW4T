@@ -43,9 +43,9 @@ public class BW4TClientConfig {
 	public BW4TClientConfig(MainPanel mainPanel, String outputFile) {
 		ConfigurationPanel configPanel = mainPanel.getConfigurationPanel();
 		clientIp = configPanel.getClientIP();
-		//clientPort = configPanel.getClientPort();
+		clientPort = configPanel.getClientPort();
 		serverIp = configPanel.getServerIP();
-		//serverPort = configPanel.getServerPort();
+		serverPort = configPanel.getServerPort();
 		launchGui = configPanel.useGui();
 		useGoal = configPanel.useGoal();
 		agentClass = configPanel.getAgentClassFile();
