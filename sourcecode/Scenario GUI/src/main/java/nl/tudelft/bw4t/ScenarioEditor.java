@@ -18,9 +18,9 @@ public class ScenarioEditor extends JFrame {
     /** The name of the window, as displayed in the title */
     private String windowName = "Scenario Editor";
     /** The window width */
-    private int width = 1024;
+    private int width = 800;
     /** The window height */
-    private int height = 640;
+    private int height = 600;
 
     /**
      * Create the scenario editor frame, which will then hold the panels with specific functions.
