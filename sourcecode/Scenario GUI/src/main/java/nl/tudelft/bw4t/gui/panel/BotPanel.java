@@ -190,7 +190,6 @@ public class BotPanel extends JPanel {
      * @return An int indicating the option selected by the user
      */
     protected int showConfirmDialog(Component parent, String text, String title, int optionType) {
-        System.out.println("much create");
         return JOptionPane.showConfirmDialog(parent, text, title, optionType);
     }
 
