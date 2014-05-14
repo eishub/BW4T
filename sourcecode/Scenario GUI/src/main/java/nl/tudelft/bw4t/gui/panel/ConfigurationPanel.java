@@ -7,6 +7,8 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import nl.tudelft.bw4t.util.Format;
+
 /**
  * The ConfigurationPanel class represents the left pane of the MainPanel.
  * It shows the options the user can configure.
@@ -16,8 +18,14 @@ public class ConfigurationPanel extends JPanel {
 
     private JTextField clientIP = new JTextField("127.0.0.1", 15);
     private JTextField clientPort = new JTextField("9000", 6);
+    {
+    	Format.addIntegerDocumentFilterForTextField(clientPort);
+    }
     private JTextField serverIP = new JTextField("127.0.0.1", 15);
     private JTextField serverPort = new JTextField("9000", 6);
+    {
+    	Format.addIntegerDocumentFilterForTextField(serverPort);
+    }
     private JTextField agentClassFileTextField = new JTextField();
     private JTextField mapFileTextField = new JTextField();
     
@@ -256,8 +264,8 @@ public class ConfigurationPanel extends JPanel {
      * Returns the client port.
      * @return The client port.
      */
-    public String getClientPort(){
-    	return clientPort.getText();
+    public int getClientPort(){
+    	return Integer.parseInt(clientPort.getText());
     }
     
     /**
@@ -272,8 +280,8 @@ public class ConfigurationPanel extends JPanel {
      * Returns the server port.
      * @return The server port.
      */
-    public String getServerPort(){
-    	return serverPort.getText();
+    public int getServerPort(){
+    	return Integer.parseInt(serverPort.getText());
     }
     
     /**

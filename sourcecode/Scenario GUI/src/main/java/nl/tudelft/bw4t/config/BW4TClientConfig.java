@@ -5,6 +5,10 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import nl.tudelft.bw4t.gui.panel.BotPanel;
+import nl.tudelft.bw4t.gui.panel.ConfigurationPanel;
+import nl.tudelft.bw4t.gui.panel.MainPanel;
+
 
 /**
  * This class holds the possible options that can be specified
@@ -30,9 +34,25 @@ public class BW4TClientConfig {
 	
 	private String mapFile;
 	
-//    @XmlElementWrapper(name = "botlist")
-//    @XmlElement(name = "bot")
-//   	private LinkedList<BotConfig> bots = new LinkedList<BotConfig>();
+//  @XmlElementWrapper(name = "botlist")
+//  @XmlElement(name = "bot")
+// 	private LinkedList<BotConfig> bots = new LinkedList<BotConfig>();
+	
+	public BW4TClientConfig() {}
+	
+	public BW4TClientConfig(MainPanel mainPanel, String outputFile) {
+		ConfigurationPanel configPanel = mainPanel.getConfigurationPanel();
+		clientIp = configPanel.getClientIP();
+		//clientPort = configPanel.getClientPort();
+		serverIp = configPanel.getServerIP();
+		//serverPort = configPanel.getServerPort();
+		launchGui = configPanel.useGui();
+		useGoal = configPanel.useGoal();
+		agentClass = configPanel.getAgentClassFile();
+		BotPanel botPanel = mainPanel.getBotPanel();
+		//TODO: read out bot panel and add each BotConfig to the list of bots //botPanel.getTable().;
+		this.outputFile = outputFile;
+	}
 	
 	/**
 	 * Gets the location to store the XML version of this file in.
