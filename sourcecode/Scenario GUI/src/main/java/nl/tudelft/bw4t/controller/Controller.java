@@ -266,7 +266,7 @@ class MenuOptions implements ActionListener {
 			//TODO
 		} else if (e.getSource() == view.getMenuItemFileSave()) {
         	JFileChooser fileChooser = new JFileChooser();
-        	if (fileChooser.showOpenDialog(view) == JFileChooser.APPROVE_OPTION) {
+        	if (fileChooser.showOpenDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
         		File file = fileChooser.getSelectedFile();
                 try {
         			new BW4TClientConfig((MainPanel) (controller.getMainView()).getContentPane(), file.getAbsolutePath()).toXML();
