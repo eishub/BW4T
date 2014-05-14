@@ -122,57 +122,49 @@ public class BotPanel extends JPanel {
     	botList.addRow(botEntry);
     }*/
     
+    /**
+     * Executes action that needs to happen when the "New bot" button is pressed.
+     * TODO Open BotStore window
+     */
     public void addNewAction(){
     	System.out.println("Go to Bot Store");
     }
     
+    /**
+     * Executes action that needs to happen when the "Modify bot" button is pressed.
+     * TODO Open BotStore window
+     */
     public void modifyAction(){
     	System.out.println("Go to Bot Store");
     }
     
+    /**
+     * Executes action that needs to happen when the "Rename bot" button is pressed.
+     * TODO Save name change
+     */
     public void renameAction(){
     	if(newBotName.getText().length() == 0){
     		JOptionPane.showMessageDialog(null,  "Please enter a name.");
     	} else {}
     }
     
+    /**
+     * Executes action that needs to happen when the "Duplicate bot" button is pressed.
+     * TODO Create new bot(s) and add to table
+     */
     public void duplicateAction(){
     	if(duplicateAmount.getText().length() == 0){
     		JOptionPane.showMessageDialog(null, "Amount not specified.");
     	} else {}
     }
     
+    /**
+     * Executes action that needs to happen when the "Delete bot" button is pressed.
+     * TODO Delete bot from table
+     */
     public void deleteAction(){
     	JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this bot?", "", JOptionPane.YES_NO_OPTION);
     }
-    /*
-    public void actionPerformed(ActionEvent ae) {
-        if(ae.getSource() == newBot){
-            System.out.println("Go to Bot Store");
-        }
-        
-        if(ae.getSource() == modifyBot){
-            System.out.println("Go to Bot Store");
-        }
-        
-        if(ae.getSource() == renameBot){
-        	if(newBotName.getText().length() == 0){
-        		JOptionPane.showMessageDialog(null,  "Please enter a name.");
-        	} else {}
-        }
-        
-        if(ae.getSource() == duplicateBot){
-        	if(duplicateAmount.getText().length() == 0){
-        		JOptionPane.showMessageDialog(null, "Amount not specified.");
-        	} else {}
-        }
-        
-        if(ae.getSource() == deleteBot){
-            JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this bot?", "", JOptionPane.YES_NO_OPTION);
-        }
-        
-        //throw new UnsupportedOperationException("Not supported yet.");
-    }*/
     
     /**
      * Returns the table with the list of bots.
