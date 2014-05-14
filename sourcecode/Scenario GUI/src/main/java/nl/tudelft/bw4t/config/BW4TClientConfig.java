@@ -53,6 +53,7 @@ public class BW4TClientConfig {
 		launchGui = configPanel.useGui();
 		useGoal = configPanel.useGoal();
 		agentClass = configPanel.getAgentClassFile();
+		mapFile = configPanel.getMapFile();
 		BotPanel botPanel = mainPanel.getBotPanel();
 		//TODO: read out bot panel and add each BotConfig to the list of bots //botPanel.getTable().;
 		this.outputFile = outputFile;

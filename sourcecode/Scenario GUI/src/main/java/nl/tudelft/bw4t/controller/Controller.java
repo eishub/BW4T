@@ -247,7 +247,7 @@ class DeleteBot implements ActionListener {
 /**
  * Handles the menu options.
  * 
- * @author Nick
+ * @author Nick, Xander
  *
  */
 class MenuOptions implements ActionListener {
@@ -287,7 +287,7 @@ class MenuOptions implements ActionListener {
 					
 					// Fill the bot panel
 					BotPanel botPanel = controller.getMainView().getMainPanel().getBotPanel();
-					
+					//TODO: fill botPanel
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				} catch (JAXBException e1) {
