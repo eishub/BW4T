@@ -2,85 +2,81 @@ package nl.tudelft.bw4t.gui.panel;
 
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;
-import java.io.File;
 
 /**
- * The ConfigurationPanel class represents the left pane of the MainPanel
- * @author sto
+ * The ConfigurationPanel class represents the left pane of the MainPanel.
+ * It shows the options the user can configure.
  */
 public class ConfigurationPanel extends JPanel {
-
-
-    private String agentClassFile = "";
-    private String mapFile = "";
+	
+    private JTextField clientIP = new JTextField();
+    private JTextField clientPort = new JTextField();
+    private JTextField serverIP = new JTextField();
+    private JTextField serverPort = new JTextField();
+    private JTextField agentClassFileTextField = new JTextField();
+    private JTextField mapFileTextField = new JTextField();
     
-    private JLabel lConfig = new JLabel("Configuration");
-    private JLabel lClient = new JLabel("Client");
-    private JLabel lServer = new JLabel("Server");
-    private JLabel lGoal = new JLabel("Use Goal");
-    private JLabel lGUI= new JLabel("Launch GUI");
-    private JLabel lAgent = new JLabel("Agent class");
-    private JLabel lMap = new JLabel("Map file");
+    CheckboxGroup goalCheckBox = new CheckboxGroup();
+    private Checkbox goalYes = new Checkbox("Yes", true, goalCheckBox);
+    private Checkbox goalNo = new Checkbox("No", false, goalCheckBox);
     
-    private JLabel lIP1 = new JLabel("IP");
-    private JLabel lPort1 = new JLabel("Port");
-    private JLabel lIP2 = new JLabel("IP");
-    private JLabel lPort2 = new JLabel("Port");
-    
-    private JTextField tfIP1 = new JTextField(20);
-    private JTextField tfPort1 = new JTextField(20);
-    private JTextField tfIP2 = new JTextField(20);
-    private JTextField tfPort2 = new JTextField(20);
-    private JTextField tfAgentClassFile = new JTextField(100);
-    private JTextField tfMapFile = new JTextField(100);
-    
-    CheckboxGroup group1 = new CheckboxGroup();
-    private Checkbox cbYes1 = new Checkbox("Yes", true, group1);
-    private Checkbox cbNo1 = new Checkbox("No", false, group1);
-    
-    CheckboxGroup group2 = new CheckboxGroup();
-    private Checkbox cbYes2 = new Checkbox("Yes", true, group2);
-    private Checkbox cbNo2 = new Checkbox("No", false, group2);
+    CheckboxGroup guiCheckBox = new CheckboxGroup();
+    private Checkbox guiYes = new Checkbox("Yes", true, guiCheckBox);
+    private Checkbox guiNo = new Checkbox("No", false, guiCheckBox);
 
     private JButton chooseAgentFile = new JButton("Open File");
     private JButton chooseMapFile = new JButton("Open File");
     
     protected JFileChooser fileChooser = new JFileChooser();
-    private JFileChooser chooser2 = new JFileChooser();
     
     /**
-     * Creates a ConfigurationPanel object
+     * Create a ConfigurationPanel object.
      */
     public ConfigurationPanel() {
         setLayout(new GridLayout(0, 4));
-        setVisible(true);
         
-        add(lConfig); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
+        showConfigLabel();
+        showClientOptions();
+        showServerOptions();
+        showGoalOptions();
+        showGuiOptions();
+        showAgentOptions();
+        showMapOptions();
         
-        //add Client section
-        add(lClient); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
-        add(lIP1); add(tfIP1); add(lPort1); add(tfPort1);
-        
-        //add Server section
-        add(lServer); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
-        add(lIP2); add(tfIP2); add(lPort2); add(tfPort2);
-        
-        //add Use Goal section
-        add(lGoal); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
-        add(cbYes1); add(cbNo1); add(new JLabel(" ")); add(new JLabel(" "));
-        
-        //add Launch GUI section
-        add(lGUI); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
-        add(cbYes2); add(cbNo2); add(new JLabel(" ")); add(new JLabel(" "));
-        
-        //add Agent class section
-        add(lAgent); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
-        add(tfAgentClassFile); add(chooseAgentFile); add(new JLabel(" ")); add(new JLabel(" "));
-        
-        //add Map file section
-        add(lMap); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
-        add(tfMapFile); add(chooseMapFile); add(new JLabel(" ")); add(new JLabel(" "));
+    }
+    
+    private void showConfigLabel(){
+    	add(new JLabel("Configuration")); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
+    }
+    
+    private void showClientOptions(){
+    	add(new JLabel("Client")); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
+        add(new JLabel("IP")); add(clientIP); add(new JLabel("Port")); add(clientPort);
+    }
+    
+    private void showServerOptions(){
+        add(new JLabel("Server")); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
+        add(new JLabel("IP")); add(serverIP); add(new JLabel("Port")); add(serverPort);
+    }
+    
+    private void showGoalOptions(){
+        add(new JLabel("Use GOAL")); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
+        add(goalYes); add(goalNo); add(new JLabel(" ")); add(new JLabel(" "));
+    }
+    
+    private void showGuiOptions(){
+        add(new JLabel("Launch GUI")); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
+        add(guiYes); add(guiNo); add(new JLabel(" ")); add(new JLabel(" "));
+    }
+    
+    private void showAgentOptions(){
+        add(new JLabel("Agent class")); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
+        add(agentClassFileTextField); add(chooseAgentFile); add(new JLabel(" ")); add(new JLabel(" "));
+    }
+    
+    private void showMapOptions(){
+        add(new JLabel("Map file")); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
+        add(mapFileTextField); add(chooseMapFile); add(new JLabel(" ")); add(new JLabel(" "));
     }
 
     /**
@@ -104,7 +100,7 @@ public class ConfigurationPanel extends JPanel {
      * @return The path of the Agent Class file
      */
     public String getAgentClassFile() {
-        return tfAgentClassFile.getText();
+        return agentClassFileTextField.getText();
     }
 
     /**
@@ -112,7 +108,7 @@ public class ConfigurationPanel extends JPanel {
      * @param agentClassFile The path of the Agent Class file
      */
     public void setAgentClassFile(String agentClassFile) {
-        this.tfAgentClassFile.setText(agentClassFile);
+        this.agentClassFileTextField.setText(agentClassFile);
     }
 
     /**
@@ -120,7 +116,7 @@ public class ConfigurationPanel extends JPanel {
      * @return The path to the Map file
      */
     public String getMapFile() {
-        return tfMapFile.getText();
+        return mapFileTextField.getText();
     }
 
     /**
@@ -128,7 +124,7 @@ public class ConfigurationPanel extends JPanel {
      * @param mapFile The path of the Map file
      */
     public void setMapFile(String mapFile) {
-        this.tfMapFile.setText(mapFile);
+        this.mapFileTextField.setText(mapFile);
     }
 
     /**
