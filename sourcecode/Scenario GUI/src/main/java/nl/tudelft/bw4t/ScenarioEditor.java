@@ -45,6 +45,9 @@ public class ScenarioEditor extends JFrame {
         setLookAndFeel();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        pack();
+
         setVisible(true);
     }
 
