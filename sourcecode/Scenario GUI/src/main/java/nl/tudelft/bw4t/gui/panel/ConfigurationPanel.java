@@ -5,6 +5,10 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.io.File;
 
+/**
+ * The ConfigurationPanel class represents the left pane of the MainPanel
+ * @author sto
+ */
 public class ConfigurationPanel extends JPanel {
 
 
@@ -45,6 +49,9 @@ public class ConfigurationPanel extends JPanel {
     protected JFileChooser fileChooser = new JFileChooser();
     private JFileChooser chooser2 = new JFileChooser();
     
+    /**
+     * Creates a ConfigurationPanel object
+     */
     public ConfigurationPanel() {
         setLayout(new GridLayout(0, 4));
         setVisible(true);
@@ -76,30 +83,58 @@ public class ConfigurationPanel extends JPanel {
         add(tfMapFile); add(chooseMapFile); add(new JLabel(" ")); add(new JLabel(" "));
     }
 
+    /**
+     * Returns the button to choose an agent file
+     * @return The button to choose an agent file
+     */
     public JButton getChooseAgentFile() {
         return chooseAgentFile;
     }
 
+    /**
+     * Returns the button to choose a map file
+     * @return The button to choose a map file
+     */
     public JButton getChooseMapFile() {
         return chooseMapFile;
     }
 
+    /**
+     * Returns the path of the Agent Class file
+     * @return The path of the Agent Class file
+     */
     public String getAgentClassFile() {
         return tfAgentClassFile.getText();
     }
 
+    /**
+     * Sets the value of the text field to the path of the Agent Class file
+     * @param agentClassFile The path of the Agent Class file
+     */
     public void setAgentClassFile(String agentClassFile) {
         this.tfAgentClassFile.setText(agentClassFile);
     }
 
+    /**
+     * Returns the path to the Map file
+     * @return The path to the Map file
+     */
     public String getMapFile() {
         return tfMapFile.getText();
     }
 
+    /**
+     * Sets the value of the text field to the path of the Map file
+     * @param mapFile The path of the Map file
+     */
     public void setMapFile(String mapFile) {
         this.tfMapFile.setText(mapFile);
     }
 
+    /**
+     * Returns a File Chooser
+     * @return A File Chooser
+     */
     public JFileChooser getFileChooser() {
         return fileChooser;
     }
