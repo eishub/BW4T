@@ -1,7 +1,6 @@
 package nl.tudelft.bw4t;
 
 import javax.swing.*;
-import java.awt.*;
 
 import nl.tudelft.bw4t.gui.panel.BotPanel;
 import nl.tudelft.bw4t.gui.panel.ConfigurationPanel;
@@ -16,8 +15,11 @@ import nl.tudelft.bw4t.gui.MenuBar;
  */
 public class ScenarioEditor extends JFrame {
 
+    /** The name of the window, as displayed in the title */
     private String windowName = "Scenario Editor";
+    /** The window width */
     private int width = 1024;
+    /** The window height */
     private int height = 640;
 
     /**
@@ -42,18 +44,33 @@ public class ScenarioEditor extends JFrame {
 
         setLookAndFeel();
 
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
     }
 
-    /* This is about how a panel would be "started" on the JFrame.
-    */
+    /**
+     * Set the content pane to the given panel. This changes which panel is shown in the frame.
+     * @param panel The panel to be shown.
+     */
     protected void setActivePane(JPanel panel) {
         setContentPane(panel);
     }
 
-    /*
+    /**
+     * Return the currently active content pane.
+     * @return The JPanel that is currently the active content pane.
+     */
+    protected JPanel getActivePane() {
+        /* Type cast it to JPanel since it cannot be anything other than a JPanel due to the type check
+         * in the setActivePane method.
+         */
+        return (JPanel)getContentPane();
+    }
+
+    /**
      *  Function to set the look and feel of the frame to the default look and feel of the system.
+     *  Throws exceptions which are passed over since the failure to set the look and feel is not
+     *  considered harmful.
      */
     private void setLookAndFeel() {
         try {
@@ -70,6 +87,10 @@ public class ScenarioEditor extends JFrame {
         }
     }
 
+    /**
+     * Main function to start the ScenarioEditor.
+     * @param args No arguments are required.
+     */
     public static void main(String[] args) {
         new ScenarioEditor();
     }
