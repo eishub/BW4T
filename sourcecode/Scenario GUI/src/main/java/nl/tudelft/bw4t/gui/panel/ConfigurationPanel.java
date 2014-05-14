@@ -8,11 +8,12 @@ import javax.swing.*;
  * It shows the options the user can configure.
  */
 public class ConfigurationPanel extends JPanel {
-	
-    private JTextField clientIP = new JTextField();
-    private JTextField clientPort = new JTextField();
-    private JTextField serverIP = new JTextField();
-    private JTextField serverPort = new JTextField();
+
+
+    private JTextField clientIP = new JTextField("127.0.0.1", 15);
+    private JTextField clientPort = new JTextField("9000", 6);
+    private JTextField serverIP = new JTextField("127.0.0.1", 15);
+    private JTextField serverPort = new JTextField("9000", 6);
     private JTextField agentClassFileTextField = new JTextField();
     private JTextField mapFileTextField = new JTextField();
     
@@ -28,13 +29,18 @@ public class ConfigurationPanel extends JPanel {
     private JButton chooseMapFile = new JButton("Open File");
     
     protected JFileChooser fileChooser = new JFileChooser();
-    
+
+    private GridBagConstraints c;
+
     /**
      * Create a ConfigurationPanel object.
      */
     public ConfigurationPanel() {
-        setLayout(new GridLayout(0, 4));
-        
+        setLayout(new GridBagLayout());
+        c = new GridBagConstraints();
+
+        c.fill = GridBagConstraints.HORIZONTAL;
+
         showConfigLabel();
         showClientOptions();
         showServerOptions();
@@ -49,55 +55,183 @@ public class ConfigurationPanel extends JPanel {
      * Show the "Configuration" label in the panel.
      */
     private void showConfigLabel(){
-    	add(new JLabel("Configuration")); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
+        c.gridx = 0;
+        c.gridy = 0;
+        c.weightx  = 1;
+    	add(new JLabel("Configuration"), c);
     }
     
     /**
      * Show the client config options in the panel.
      */
     private void showClientOptions(){
-    	add(new JLabel("Client")); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
-        add(new JLabel("IP")); add(clientIP); add(new JLabel("Port")); add(clientPort);
+        c.insets = new Insets(10, 0, 0, 0);
+
+        c.gridx = 0;
+        c.gridy += 1;
+
+        JLabel client = new JLabel("Client");
+        client.setFont(new Font("Sans-Serif", Font.BOLD, 14));
+    	add(client, c);
+
+        c.insets = new Insets(0,0,0,0);
+
+        c.weightx = 0.5;
+        c.gridx = 0;
+        c.gridy += 1;
+        add(new JLabel("IP"), c);
+
+        c.gridx = 1;
+        c.weightx = 2;
+        c.weighty = 1;
+        add(clientIP, c);
+
+        c.weightx = 0.5;
+        c.gridx = 0;
+        c.gridy += 1;
+        add(new JLabel("Port"), c);
+
+        c.gridx = 1;
+        c.weightx = 2;
+        c.weighty = 1;
+        add(clientPort, c);
     }
     
     /**
      * Show the serer config options in the panel.
      */
     private void showServerOptions(){
-        add(new JLabel("Server")); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
-        add(new JLabel("IP")); add(serverIP); add(new JLabel("Port")); add(serverPort);
+        c.insets = new Insets(10, 0, 0, 0);
+
+        c.gridx = 0;
+        c.gridy += 1;
+
+        JLabel server = new JLabel("Server");
+        server.setFont(new Font("Sans-Serif", Font.BOLD, 14));
+        add(server, c);
+
+        c.insets = new Insets(0,0,0,0);
+
+        c.weightx = 0.5;
+        c.gridx = 0;
+        c.gridy += 1;
+        add(new JLabel("IP"), c);
+
+        c.gridx = 1;
+        c.weightx = 2;
+        c.weighty = 1;
+        add(serverIP, c);
+
+        c.weightx = 0.5;
+        c.gridx = 0;
+        c.gridy += 1;
+        add(new JLabel("Port"), c);
+
+        c.gridx = 1;
+        c.weightx = 2;
+        c.weighty = 1;
+        add(serverPort, c);
     }
     
     /**
      * Show the option to use GOAL in the panel.
      */
     private void showGoalOptions(){
-        add(new JLabel("Use GOAL")); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
-        add(goalYes); add(goalNo); add(new JLabel(" ")); add(new JLabel(" "));
+        c.insets = new Insets(10, 0, 0, 0);
+
+        c.gridx = 0;
+        c.gridy += 1;
+
+        JLabel goal = new JLabel("Use GOAL");
+        goal.setFont(new Font("Sans-Serif", Font.BOLD, 14));
+        add(goal, c);
+
+        c.insets = new Insets(0,0,0,0);
+
+        c.gridx = 0;
+        c.gridy += 1;
+        add(goalYes, c);
+
+        c.gridx = 1;
+        add(goalNo, c);
     }
     
     /**
      * Show the option to use a GUI in the panel.
      */
     private void showGuiOptions(){
-        add(new JLabel("Launch GUI")); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
-        add(guiYes); add(guiNo); add(new JLabel(" ")); add(new JLabel(" "));
+        c.insets = new Insets(10, 0, 0, 0);
+
+        c.gridx = 0;
+        c.gridy += 1;
+
+        JLabel gui = new JLabel("Launch GUI");
+        gui.setFont(new Font("Sans-Serif", Font.BOLD, 14));
+        add(gui, c);
+
+        c.insets = new Insets(0,0,0,0);
+
+        c.gridx = 0;
+        c.gridy += 1;
+        add(guiYes, c);
+
+        c.gridx = 1;
+        add(guiNo, c);
     }
     
     /**
      * Show the option to add an agent class in the panel.
      */
     private void showAgentOptions(){
-        add(new JLabel("Agent class")); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
-        add(agentClassFileTextField); add(chooseAgentFile); add(new JLabel(" ")); add(new JLabel(" "));
+        c.insets = new Insets(10, 0, 0, 0);
+
+        c.gridx = 0;
+        c.gridy += 1;
+
+        JLabel agent = new JLabel("Agent Class File");
+        agent.setFont(new Font("Sans-Serif", Font.BOLD, 14));
+        add(agent, c);
+
+        c.insets = new Insets(4,0,0,0);
+
+        c.gridx = 0;
+        c.gridwidth = 2;
+        c.gridy += 1;
+        add(agentClassFileTextField, c);
+
+        agentClassFileTextField.setPreferredSize(chooseAgentFile.getPreferredSize());
+
+        c.gridx = 2;
+        c.gridwidth = 1;
+        add(chooseAgentFile, c);
+
     }
     
     /**
      * Show the options to add a map file in the panel.
      */
     private void showMapOptions(){
-        add(new JLabel("Map file")); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
-        add(mapFileTextField); add(chooseMapFile); add(new JLabel(" ")); add(new JLabel(" "));
+        c.insets = new Insets(10, 0, 0, 0);
+
+        c.gridx = 0;
+        c.gridy += 1;
+
+        JLabel map = new JLabel("Map File");
+        map.setFont(new Font("Sans-Serif", Font.BOLD, 14));
+        add(map, c);
+
+        c.insets = new Insets(4,0,0,0);
+
+        c.gridx = 0;
+        c.gridwidth = 2;
+        c.gridy += 1;
+        add(mapFileTextField, c);
+
+        mapFileTextField.setPreferredSize(chooseMapFile.getPreferredSize());
+
+        c.gridx = 2;
+        c.gridwidth = 1;
+        add(chooseMapFile, c);
     }
     
     /**
