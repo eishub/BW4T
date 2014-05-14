@@ -264,7 +264,23 @@ class MenuOptions implements ActionListener {
 		if (e.getSource() == view.getMenuItemFileExit()) {
 			System.exit(0);
 		} else if (e.getSource() == view.getMenuItemFileNew()) {
-			//TODO
+			//TODO: save first
+			
+			// Fill the config panel
+			ConfigurationPanel configPanel = controller.getMainView().getMainPanel().getConfigurationPanel();
+			
+			configPanel.setClientIP("127.0.0.1");
+			configPanel.setClientPort("9000");
+			configPanel.setServerIP("127.0.0.1");
+			configPanel.setServerPort("9000");
+			configPanel.setUseGui(true);
+			configPanel.setUseGoal(true);
+			configPanel.setAgentClassFile("");
+			configPanel.setMapFile("");
+			
+			// Fill the bot panel
+			BotPanel botPanel = controller.getMainView().getMainPanel().getBotPanel();
+			//TODO: fill botPanel
 		} else if (e.getSource() == view.getMenuItemFileOpen()) {
 			JFileChooser fileChooser = new JFileChooser();
         	if (fileChooser.showOpenDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
