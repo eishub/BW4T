@@ -78,6 +78,31 @@ public class ConfigurationPanel extends JPanel {
         add(new JLabel("Map file")); add(new JLabel(" ")); add(new JLabel(" ")); add(new JLabel(" "));
         add(mapFileTextField); add(chooseMapFile); add(new JLabel(" ")); add(new JLabel(" "));
     }
+    
+
+    public String getClientIP(){
+    	return clientIP.getText();
+    }
+    
+    public String getClientPort(){
+    	return clientPort.getText();
+    }
+    
+    public String getServerIP(){
+    	return serverIP.getText();
+    }
+    
+    public String getServerPort(){
+    	return serverPort.getText();
+    }
+    
+    public boolean useGoal(){
+    	return goalYes.isEnabled();
+    }
+    
+    public boolean useGui(){
+    	return guiYes.isEnabled();
+    }
 
     /**
      * Returns the button to choose an agent file
