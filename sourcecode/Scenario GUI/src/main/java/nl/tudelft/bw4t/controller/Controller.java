@@ -264,11 +264,15 @@ class MenuOptions implements ActionListener {
 		if (e.getSource() == view.getMenuItemFileExit()) {
 			System.exit(0);
 		} else if (e.getSource() == view.getMenuItemFileNew()) {
-			//TODO: save first
+			// Check if user wants to save current configuration
+			int response = JOptionPane.showConfirmDialog(null, "Do you want to save the current configuration?", "", JOptionPane.YES_NO_OPTION);
+
+	        if (response == JOptionPane.YES_OPTION) {
+	            saveFile();
+	        }
 			
-			// Fill the config panel
+			// Reset the config panel
 			ConfigurationPanel configPanel = controller.getMainView().getMainPanel().getConfigurationPanel();
-			
 			configPanel.setClientIP("127.0.0.1");
 			configPanel.setClientPort("9000");
 			configPanel.setServerIP("127.0.0.1");
@@ -278,10 +282,18 @@ class MenuOptions implements ActionListener {
 			configPanel.setAgentClassFile("");
 			configPanel.setMapFile("");
 			
-			// Fill the bot panel
+			// Reset the bot panel
 			BotPanel botPanel = controller.getMainView().getMainPanel().getBotPanel();
-			//TODO: fill botPanel
+			//TODO reset botPanel
 		} else if (e.getSource() == view.getMenuItemFileOpen()) {
+			// Check if user wants to save current configuration
+			int response = JOptionPane.showConfirmDialog(null, "Do you want to save the current configuration?", "", JOptionPane.YES_NO_OPTION);
+
+	        if (response == JOptionPane.YES_OPTION) {
+	            saveFile();
+	        }
+			
+	        // Open configuration file
 			JFileChooser fileChooser = new JFileChooser();
         	if (fileChooser.showOpenDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
         		File file = fileChooser.getSelectedFile();
@@ -291,7 +303,6 @@ class MenuOptions implements ActionListener {
 										
 					// Fill the config panel
 					ConfigurationPanel configPanel = controller.getMainView().getMainPanel().getConfigurationPanel();
-					
 					configPanel.setClientIP(temp.getClientIp());
 					configPanel.setClientPort(""+temp.getClientPort());
 					configPanel.setServerIP(temp.getServerIp());
@@ -303,7 +314,7 @@ class MenuOptions implements ActionListener {
 					
 					// Fill the bot panel
 					BotPanel botPanel = controller.getMainView().getMainPanel().getBotPanel();
-					//TODO: fill botPanel
+					//TODO fill botPanel
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				} catch (JAXBException e1) {
@@ -312,18 +323,22 @@ class MenuOptions implements ActionListener {
         		
         	}
 		} else if (e.getSource() == view.getMenuItemFileSave()) {
-        	JFileChooser fileChooser = new JFileChooser();
-        	if (fileChooser.showSaveDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
-        		File file = fileChooser.getSelectedFile();
-                try {
-        			new BW4TClientConfig((MainPanel) (controller.getMainView()).getContentPane(), file.getAbsolutePath()).toXML();
-        		} catch (FileNotFoundException e1) {
-        			e1.printStackTrace();
-        		} catch (JAXBException e1) {
-        			e1.printStackTrace();
-        		}
-        	}
+        	saveFile();
 		}
+	}
+	
+	public void saveFile() {
+		JFileChooser fileChooser = new JFileChooser();
+    	if (fileChooser.showSaveDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
+    		File file = fileChooser.getSelectedFile();
+            try {
+    			new BW4TClientConfig((MainPanel) (controller.getMainView()).getContentPane(), file.getAbsolutePath()).toXML();
+    		} catch (FileNotFoundException e1) {
+    			e1.printStackTrace();
+    		} catch (JAXBException e1) {
+    			e1.printStackTrace();
+    		}
+    	}
 	}
 	
 }
