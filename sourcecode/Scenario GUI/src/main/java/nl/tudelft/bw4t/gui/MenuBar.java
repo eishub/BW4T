@@ -14,17 +14,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 /**
- * The Menubar class extends JMenuBar. Used in the ScenarioEditor Frame.
+ * The MenuBar class extends JMenuBar. Used in the ScenarioEditor Frame.
  */
 public class MenuBar extends JMenuBar {
+	
+	/** The items in the menu: */
+	private JMenuItem fileNew, fileOpen, fileSave, fileExit;
 
     /**
      * Construct a menu bar for the Scenario Editor.
      */
     public MenuBar() {
         JMenu file;
-        JMenuItem fileNew, fileOpen, fileSave, fileExit;
-
 
         // Build the menu.
         file = new JMenu("File");
@@ -43,36 +44,29 @@ public class MenuBar extends JMenuBar {
         fileSave = new JMenuItem("Save");
         fileSave.setToolTipText("Save configuration file");
         file.add(fileSave);
-        
-        // Example of how to save:
-//        fileSave.addActionListener(new ActionListener() {
-//            //@Override
-//            public void actionPerformed(ActionEvent event) {
-//            	JFileChooser fileChooser = new JFileChooser();
-//            	if (fileChooser.showOpenDialog(MenuBar.this) == JFileChooser.APPROVE_OPTION) {
-//            		File file = fileChooser.getSelectedFile();
-//	                try {
-//	        			new BW4TClientConfig((MainPanel) ((ScenarioEditor) getParent()).getContentPane(), file.getAbsolutePath()).toXML();
-//	        		} catch (FileNotFoundException e) {
-//	        			e.printStackTrace();
-//	        		} catch (JAXBException e) {
-//	        			e.printStackTrace();
-//	        		}
-//            	}
-//            }
-//        });
 
         file.addSeparator();
 
         fileExit = new JMenuItem("Exit");
         fileExit.setToolTipText("Exit application");
         file.add(fileExit);
-
-        fileExit.addActionListener(new ActionListener() {
-            //@Override
-            public void actionPerformed(ActionEvent event) {
-                System.exit(0);
-            }
-        });
+        
     }
+
+	public JMenuItem getMenuItemFileNew() {
+		return fileNew;
+	}
+
+	public JMenuItem getMenuItemFileOpen() {
+		return fileOpen;
+	}
+
+	public JMenuItem getMenuItemFileSave() {
+		return fileSave;
+	}
+
+	public JMenuItem getMenuItemFileExit() {
+		return fileExit;
+	}
+
 }

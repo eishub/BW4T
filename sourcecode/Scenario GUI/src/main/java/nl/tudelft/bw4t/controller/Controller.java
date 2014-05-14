@@ -1,13 +1,17 @@
 package nl.tudelft.bw4t.controller;
 
 import nl.tudelft.bw4t.ScenarioEditor;
+import nl.tudelft.bw4t.config.BW4TClientConfig;
+import nl.tudelft.bw4t.gui.MenuBar;
 import nl.tudelft.bw4t.gui.panel.MainPanel;
 
 import javax.swing.*;
+import javax.xml.bind.JAXBException;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 
 /**
  * The Controller class is in charge of all events that happen on the GUI. It delegates all events
@@ -57,6 +61,14 @@ public class Controller {
         getMainView().getMainPanel().getBotPanel().getDeleteBot().addActionListener(
         		new DeleteBot(getMainView().getMainPanel())
         );
+        
+        /** Adds the listeners for the items in the MenuBar: */
+        MenuOptions menuOptions = new MenuOptions(getMainView().getTopMenuBar(), this);
+        getMainView().getTopMenuBar().getMenuItemFileExit().addActionListener(menuOptions);
+        getMainView().getTopMenuBar().getMenuItemFileNew().addActionListener(menuOptions);
+        getMainView().getTopMenuBar().getMenuItemFileOpen().addActionListener(menuOptions);
+        getMainView().getTopMenuBar().getMenuItemFileSave().addActionListener(menuOptions);
+        
     }
 
     /**
@@ -228,3 +240,44 @@ class DeleteBot implements ActionListener {
 	}
 	
 }
+
+/**
+ * Handles the menu options.
+ * 
+ * @author Nick
+ *
+ */
+class MenuOptions implements ActionListener {
+	
+	private MenuBar view;
+	private Controller controller;
+	
+	public MenuOptions(MenuBar view, Controller mainView) {
+		this.view = view;
+		this.controller = mainView;
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == view.getMenuItemFileExit()) {
+			System.exit(0);
+		} else if (e.getSource() == view.getMenuItemFileNew()) {
+			//TODO
+		} else if (e.getSource() == view.getMenuItemFileOpen()) {
+			//TODO
+		} else if (e.getSource() == view.getMenuItemFileSave()) {
+        	JFileChooser fileChooser = new JFileChooser();
+        	if (fileChooser.showOpenDialog(view) == JFileChooser.APPROVE_OPTION) {
+        		File file = fileChooser.getSelectedFile();
+                try {
+        			new BW4TClientConfig((MainPanel) (controller.getMainView()).getContentPane(), file.getAbsolutePath()).toXML();
+        		} catch (FileNotFoundException e1) {
+        			e1.printStackTrace();
+        		} catch (JAXBException e1) {
+        			e1.printStackTrace();
+        		}
+        	}
+		}
+	}
+	
+}
+
