@@ -1,9 +1,17 @@
 package nl.tudelft.bw4t.gui;
 
 import javax.swing.*;
+import javax.xml.bind.JAXBException;
+
+import nl.tudelft.bw4t.ScenarioEditor;
+import nl.tudelft.bw4t.config.BW4TClientConfig;
+import nl.tudelft.bw4t.gui.panel.MainPanel;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 /**
  * The Menubar class extends JMenuBar. Used in the ScenarioEditor Frame.
@@ -35,6 +43,24 @@ public class MenuBar extends JMenuBar {
         fileSave = new JMenuItem("Save");
         fileSave.setToolTipText("Save configuration file");
         file.add(fileSave);
+        
+        // Example of how to save:
+//        fileSave.addActionListener(new ActionListener() {
+//            //@Override
+//            public void actionPerformed(ActionEvent event) {
+//            	JFileChooser fileChooser = new JFileChooser();
+//            	if (fileChooser.showOpenDialog(MenuBar.this) == JFileChooser.APPROVE_OPTION) {
+//            		File file = fileChooser.getSelectedFile();
+//	                try {
+//	        			new BW4TClientConfig((MainPanel) ((ScenarioEditor) getParent()).getContentPane(), file.getAbsolutePath()).toXML();
+//	        		} catch (FileNotFoundException e) {
+//	        			e.printStackTrace();
+//	        		} catch (JAXBException e) {
+//	        			e.printStackTrace();
+//	        		}
+//            	}
+//            }
+//        });
 
         file.addSeparator();
 

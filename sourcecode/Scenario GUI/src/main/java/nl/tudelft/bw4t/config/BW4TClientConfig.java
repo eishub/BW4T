@@ -1,6 +1,9 @@
 package nl.tudelft.bw4t.config;
 
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
+
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -8,6 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import nl.tudelft.bw4t.gui.panel.BotPanel;
 import nl.tudelft.bw4t.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.gui.panel.MainPanel;
+import nl.tudelft.bw4t.util.XMLManager;
 
 
 /**
@@ -52,6 +56,10 @@ public class BW4TClientConfig {
 		BotPanel botPanel = mainPanel.getBotPanel();
 		//TODO: read out bot panel and add each BotConfig to the list of bots //botPanel.getTable().;
 		this.outputFile = outputFile;
+	}
+	
+	public void toXML() throws FileNotFoundException, JAXBException {
+		XMLManager.toXML(outputFile, this);
 	}
 	
 	/**

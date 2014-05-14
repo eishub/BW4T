@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.controller;
 
+import nl.tudelft.bw4t.ScenarioEditor;
 import nl.tudelft.bw4t.gui.panel.MainPanel;
 
 import javax.swing.*;
@@ -16,53 +17,53 @@ import java.io.File;
 public class Controller {
 
     /** The view being controlled */
-    private MainPanel view;
+    private ScenarioEditor view;
 
     /**
      * Create a controller object.
      * @param view The parent view, used to call relevant functions by the event listeners.
      */
-    public Controller(MainPanel view) {
+    public Controller(ScenarioEditor view) {
         this.view = view;
 
         /** Create the action listeners for the ConfigurationPanel. */
 
         /** Listener for the agent file chooser */
-        getMainView().getConfigurationPanel().getChooseAgentFile().addActionListener(
-                new ChooseAgentFileListener(getMainView())
+        getMainView().getMainPanel().getConfigurationPanel().getChooseAgentFile().addActionListener(
+                new ChooseAgentFileListener(getMainView().getMainPanel())
         );
 
-        getMainView().getConfigurationPanel().getChooseMapFile().addActionListener(
-                new ChooseMapFileListener(getMainView())
+        getMainView().getMainPanel().getConfigurationPanel().getChooseMapFile().addActionListener(
+                new ChooseMapFileListener(getMainView().getMainPanel())
         );
         
         /** Listeners for the bot option buttons. */
-        getMainView().getBotPanel().getNewBot().addActionListener(
-        		new AddNewBot(getMainView())
+        getMainView().getMainPanel().getBotPanel().getNewBot().addActionListener(
+        		new AddNewBot(getMainView().getMainPanel())
         );
         
-        getMainView().getBotPanel().getModifyBot().addActionListener(
-        		new ModifyBot(getMainView())
+        getMainView().getMainPanel().getBotPanel().getModifyBot().addActionListener(
+        		new ModifyBot(getMainView().getMainPanel())
         );
         
-        getMainView().getBotPanel().getRenameBot().addActionListener(
-        		new RenameBot(getMainView())
+        getMainView().getMainPanel().getBotPanel().getRenameBot().addActionListener(
+        		new RenameBot(getMainView().getMainPanel())
         );
         
-        getMainView().getBotPanel().getDuplicateBot().addActionListener(
-        		new DuplicateBot(getMainView())
+        getMainView().getMainPanel().getBotPanel().getDuplicateBot().addActionListener(
+        		new DuplicateBot(getMainView().getMainPanel())
         );
         
-        getMainView().getBotPanel().getDeleteBot().addActionListener(
-        		new DeleteBot(getMainView())
+        getMainView().getMainPanel().getBotPanel().getDeleteBot().addActionListener(
+        		new DeleteBot(getMainView().getMainPanel())
         );
     }
 
     /**
      * Return the view being controlled.
-     * @return The MainPanel being controlled.
+     * @return The JFrame being controlled.
      */
-    public MainPanel getMainView() {
+    public ScenarioEditor getMainView() {
         return view;
     }
 }

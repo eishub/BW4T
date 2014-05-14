@@ -2,6 +2,7 @@ package nl.tudelft.bw4t;
 
 import javax.swing.*;
 
+import nl.tudelft.bw4t.controller.Controller;
 import nl.tudelft.bw4t.gui.panel.BotPanel;
 import nl.tudelft.bw4t.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.gui.panel.MainPanel;
@@ -21,6 +22,19 @@ public class ScenarioEditor extends JFrame {
     private int width;
     /** The window height */
     private int height;
+    
+    private MainPanel mPanel;
+    private MenuBar menuBar;
+    
+    private Controller controller;
+    
+    /**
+     * Main function to start the ScenarioEditor.
+     * @param args No arguments are required.
+     */
+    public static void main(String[] args) {
+        new ScenarioEditor();
+    }
 
     /**
      * Create the scenario editor frame, which will then hold the panels with specific functions.
@@ -28,16 +42,15 @@ public class ScenarioEditor extends JFrame {
     public ScenarioEditor() {
     //    setSize(width, height);
         setTitle(windowName);
-
         
         setResizable(false);
         setLayout(null);
 
         // Attach the menu bar.
-        setJMenuBar(new MenuBar());
+        setJMenuBar(menuBar = new MenuBar());
 
         // Attach the MainPanel that consists of the configuration and the botpanel.
-        MainPanel mPanel = new MainPanel(new ConfigurationPanel(), new BotPanel());
+        mPanel = new MainPanel(new ConfigurationPanel(), new BotPanel());
         setActivePane(mPanel);
 
         setLookAndFeel();
@@ -53,6 +66,7 @@ public class ScenarioEditor extends JFrame {
         // Setting the location relative to null centers the frame.
         setLocationRelativeTo(null);
         
+        controller = new Controller(this);
         setVisible(true);
     }
 
@@ -74,6 +88,22 @@ public class ScenarioEditor extends JFrame {
          */
         return (JPanel)getContentPane();
     }
+    
+    /**
+     * Returns the main panel.
+     * @return The main panel.
+     */
+    public MainPanel getMainPanel() {
+    	return mPanel;
+    }
+    
+    /**
+     * Returns the menu bar.
+     * @return The menu bar.
+     */
+    public MenuBar getTopMenuBar() {
+    	return menuBar;
+    }
 
     /**
      *  Function to set the look and feel of the frame to the default look and feel of the system.
@@ -94,12 +124,13 @@ public class ScenarioEditor extends JFrame {
             // pass
         }
     }
-
+    
     /**
-     * Main function to start the ScenarioEditor.
-     * @param args No arguments are required.
+     * Returns the controller object being used to handle all events on the GUI.
+     * @return The Controller used.
      */
-    public static void main(String[] args) {
-        new ScenarioEditor();
+    public Controller getController() {
+        return controller;
     }
+    
 }

@@ -20,7 +20,6 @@ public class MainPanel extends JPanel {
 
     private ConfigurationPanel configurationPanel;
     private BotPanel botPanel;
-    private Controller controller;
     private GridBagLayout gbl;
 
     /**
@@ -38,8 +37,6 @@ public class MainPanel extends JPanel {
 
         this.configurationPanel = configurationPanel;
         this.botPanel = botPanel;
-
-        controller = new Controller(this);
     }
 
     /**
@@ -104,11 +101,4 @@ public class MainPanel extends JPanel {
         this.botPanel = botPanel;
     }
 
-    /**
-     * Returns the controller object being used to handle all events on the GUI.
-     * @return The Controller used.
-     */
-    public Controller getController() {
-        return controller;
-    }
 }
