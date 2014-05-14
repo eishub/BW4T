@@ -262,9 +262,18 @@ class MenuOptions implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == view.getMenuItemFileExit()) {
+			// Check if user wants to save current configuration
+			//TODO check if current config is the same as default config
+			int response = JOptionPane.showConfirmDialog(null, "Do you want to save the current configuration?", "", JOptionPane.YES_NO_OPTION);
+	
+	        if (response == JOptionPane.YES_OPTION) {
+	            saveFile();
+	        }
+	        
 			System.exit(0);
 		} else if (e.getSource() == view.getMenuItemFileNew()) {
 			// Check if user wants to save current configuration
+			//TODO check if current config is the same as default config
 			int response = JOptionPane.showConfirmDialog(null, "Do you want to save the current configuration?", "", JOptionPane.YES_NO_OPTION);
 
 	        if (response == JOptionPane.YES_OPTION) {
@@ -287,6 +296,7 @@ class MenuOptions implements ActionListener {
 			//TODO reset botPanel
 		} else if (e.getSource() == view.getMenuItemFileOpen()) {
 			// Check if user wants to save current configuration
+			//TODO check if current config is the same as default config
 			int response = JOptionPane.showConfirmDialog(null, "Do you want to save the current configuration?", "", JOptionPane.YES_NO_OPTION);
 
 	        if (response == JOptionPane.YES_OPTION) {
