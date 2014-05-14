@@ -145,6 +145,11 @@ public class RobotEntity implements RobotEntityInt {
 	 * Percepts for the location of rooms and the dropzone and the blocks Send
 	 * on change
 	 */
+	
+	/**
+	 * Valentine
+	 * This method should be changed as well to get the locations of all charging stations.
+	 */
 	@AsPercept(name = "position", multiplePercepts = true, filter = Filter.Type.ON_CHANGE)
 	public List<ObjectInformation> getLocations() {
 		List<ObjectInformation> objects = new ArrayList<ObjectInformation>();

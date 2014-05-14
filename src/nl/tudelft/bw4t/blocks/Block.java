@@ -39,6 +39,12 @@ public class Block extends BoundedMoveableObject {
 	 * @param context
 	 *            The context in which the block will be present.
 	 */
+	
+	/**
+	 * Valentine
+	 * TODO
+	 * The constructor should have a String type parameter that declares the type of block.
+	 */
 	public Block(BlockColor colorId, ContinuousSpace<Object> space,
 			Context<Object> context) {
 		super(space, context);

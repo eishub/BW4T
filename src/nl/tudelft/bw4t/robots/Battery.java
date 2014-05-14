@@ -17,18 +17,23 @@ public class Battery
 	 */
 	private int max;
 	private int current;
-	private int drate;
+	private int dRate;
 	
 	public Battery(int m, int c, int dr)
 	{
 		this.max = m;
 		this.current = c;
-		this.drate = dr;
+		this.dRate = dr;
 	}
 	
 	public int getCurrentCapacity()
 	{
 		return this.current;
+	}
+	
+	public int getPercentage()
+	{
+		return (this.current * 100) / this.max;
 	}
 	
 	/**
@@ -59,7 +64,7 @@ public class Battery
 	 */
 	public void discharge()
 	{
-		int temp = this.current - this.drate;
+		int temp = this.current - this.dRate;
 		
 		if (temp < 0)
 		{

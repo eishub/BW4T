@@ -6,6 +6,7 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import nl.tudelft.bw4t.BoundedMoveableObject;
+import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.util.PathPlanner;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.Zone;
@@ -34,6 +35,12 @@ public class NavigatingRobot extends Robot {
 	 * currnetMove is null, it's done.
 	 */
 	NdPoint currentMove = null;
+	
+	/**
+	 * Valentine
+	 * This saves the last charging station the robot has seen.
+	 */
+	private Block cStation;
 
 	/**
 	 * 
@@ -161,6 +168,21 @@ public class NavigatingRobot extends Robot {
 			return State.ARRIVED;
 		}
 		return State.TRAVELING;
+	}
+	
+	/**
+	 * Valentine
+	 * This getter returns the last charging station seen.
+	 * This setter updates the last charging station seen.
+	 */
+	public Block getChargingStation()
+	{
+		return this.cStation;
+	}
+	
+	public void setChargingStation(Block b)
+	{
+		this.cStation = b;
 	}
 
 }
