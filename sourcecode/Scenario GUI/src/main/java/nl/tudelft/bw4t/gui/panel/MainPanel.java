@@ -45,8 +45,8 @@ public class MainPanel extends JPanel {
     public void drawPanel() {
         GridBagConstraints c = new GridBagConstraints();
         
-        configurationPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        botPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        //configurationPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        //botPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         
         c.insets = new Insets(10,10,10,10); 
         c.fill = GridBagConstraints.NONE;
