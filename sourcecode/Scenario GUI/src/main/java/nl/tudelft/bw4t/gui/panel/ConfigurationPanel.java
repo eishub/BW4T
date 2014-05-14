@@ -259,6 +259,14 @@ public class ConfigurationPanel extends JPanel {
     public String getClientIP(){
     	return clientIP.getText();
     }
+
+    /**
+     * Sets the value of the text field of the client IP
+     * @param clientIP The IP of the client
+     */
+    public void setClientIP(String clientIP) {
+        this.clientIP.setText(clientIP);
+    }
     
     /**
      * Returns the client port.
@@ -266,6 +274,14 @@ public class ConfigurationPanel extends JPanel {
      */
     public int getClientPort(){
     	return Integer.parseInt(clientPort.getText());
+    }
+
+    /**
+     * Sets the value of the text field of the client port
+     * @param clientPort The port of the client
+     */
+    public void setClientPort(String clientPort) {
+        this.clientPort.setText(clientPort);
     }
     
     /**
@@ -275,6 +291,14 @@ public class ConfigurationPanel extends JPanel {
     public String getServerIP(){
     	return serverIP.getText();
     }
+
+    /**
+     * Sets the value of the text field of the server IP
+     * @param serverIP The IP of the server
+     */
+    public void setServerIP(String serverIP) {
+        this.serverIP.setText(serverIP);
+    }
     
     /**
      * Returns the server port.
@@ -282,6 +306,14 @@ public class ConfigurationPanel extends JPanel {
      */
     public int getServerPort(){
     	return Integer.parseInt(serverPort.getText());
+    }
+
+    /**
+     * Sets the value of the text field of the server port
+     * @param serverPort The port of the server
+     */
+    public void setServerPort(String serverPort) {
+        this.clientPort.setText(serverPort);
     }
     
     /**
@@ -293,11 +325,33 @@ public class ConfigurationPanel extends JPanel {
     }
     
     /**
+     * Sets if GOAL needs to be used.
+     * @param The use of GOAL.
+     */
+    public void setUseGoal(Boolean useGoal){
+    	if(useGoal)
+    		goalCheckBox.setSelectedCheckbox(goalYes);
+    	else
+    		goalCheckBox.setSelectedCheckbox(goalNo);
+    }
+    
+    /**
      * Returns if a GUI needs to be displayed.
      * @return The use of a GUI.
      */
     public boolean useGui(){
     	return guiYes.isEnabled();
+    }
+    
+    /**
+     * Sets if GOAL needs to be used.
+     * @param The use of GOAL.
+     */
+    public void setUseGui(Boolean useGui){
+    	if(useGui)
+    		guiCheckBox.setSelectedCheckbox(guiYes);
+    	else
+    		goalCheckBox.setSelectedCheckbox(guiNo);
     }
 
     /**

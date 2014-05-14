@@ -3,7 +3,10 @@ package nl.tudelft.bw4t.controller;
 import nl.tudelft.bw4t.ScenarioEditor;
 import nl.tudelft.bw4t.config.BW4TClientConfig;
 import nl.tudelft.bw4t.gui.MenuBar;
+import nl.tudelft.bw4t.gui.panel.BotPanel;
+import nl.tudelft.bw4t.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.gui.panel.MainPanel;
+import nl.tudelft.bw4t.util.XMLManager;
 
 import javax.swing.*;
 import javax.xml.bind.JAXBException;
@@ -263,10 +266,38 @@ class MenuOptions implements ActionListener {
 		} else if (e.getSource() == view.getMenuItemFileNew()) {
 			//TODO
 		} else if (e.getSource() == view.getMenuItemFileOpen()) {
-			//TODO
+			JFileChooser fileChooser = new JFileChooser();
+        	if (fileChooser.showOpenDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
+        		File file = fileChooser.getSelectedFile();
+        		
+        		try {
+					BW4TClientConfig temp = BW4TClientConfig.fromXML(file.getAbsolutePath());
+										
+					// Fill the config panel
+					ConfigurationPanel configPanel = controller.getMainView().getMainPanel().getConfigurationPanel();
+					
+					configPanel.setClientIP(temp.getClientIp());
+					configPanel.setClientPort(""+temp.getClientPort());
+					configPanel.setServerIP(temp.getServerIp());
+					configPanel.setServerPort(""+temp.getServerPort());
+					configPanel.setUseGui(temp.isLaunchGui());
+					configPanel.setUseGoal(temp.isUseGoal());
+					configPanel.setAgentClassFile(temp.getAgentClass());
+					configPanel.setMapFile(temp.getMapFile());
+					
+					// Fill the bot panel
+					BotPanel botPanel = controller.getMainView().getMainPanel().getBotPanel();
+					
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (JAXBException e1) {
+					e1.printStackTrace();
+				}
+        		
+        	}
 		} else if (e.getSource() == view.getMenuItemFileSave()) {
         	JFileChooser fileChooser = new JFileChooser();
-        	if (fileChooser.showOpenDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
+        	if (fileChooser.showSaveDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
         		File file = fileChooser.getSelectedFile();
                 try {
         			new BW4TClientConfig((MainPanel) (controller.getMainView()).getContentPane(), file.getAbsolutePath()).toXML();

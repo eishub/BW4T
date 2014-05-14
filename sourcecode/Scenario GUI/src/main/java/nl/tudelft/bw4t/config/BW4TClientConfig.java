@@ -62,6 +62,11 @@ public class BW4TClientConfig {
 		XMLManager.toXML(outputFile, this);
 	}
 	
+	public static BW4TClientConfig fromXML(String inputFile) throws FileNotFoundException, JAXBException {
+		return (BW4TClientConfig) XMLManager.fromXML(inputFile, BW4TClientConfig.class);
+		
+	}
+	
 	/**
 	 * Gets the location to store the XML version of this file in.
 	 * @return The path of the file to store this object in as XML.
