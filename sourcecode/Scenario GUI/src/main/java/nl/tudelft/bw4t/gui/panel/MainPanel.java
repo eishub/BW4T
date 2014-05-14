@@ -62,7 +62,7 @@ public class MainPanel extends JPanel {
         c.weighty = 1;
         c.gridx = 1;
         c.gridy = 0;
-        //this.add(botPanel, c);
+        this.add(botPanel, c);
     }
 
     /**
