@@ -40,7 +40,7 @@ public class Robot extends BoundedMoveableObject {
 	/** The distance which it can reach with its arm to pick up a block. */
 	private static final double ARM_DISTANCE = 1;
 	/** The width and height of the robot */
-	public final static int SIZE = 2;
+	public static int SIZE = 2;
 
 	/** The name of the robot */
 	private final String name;
@@ -464,5 +464,24 @@ public class Robot extends BoundedMoveableObject {
 
 	public boolean isConnected() {
 		return connected;
+	}
+	
+	/**
+	 * @author Wendy
+	 * @return SIZE
+	 */
+	
+	public int getSize() {
+		return SIZE;
+	}
+	
+	/**
+	 * @author Wendy
+	 * @param n
+	 * Set the size to n
+	 */
+	
+	public void setSize(int n) {
+		SIZE = n;
 	}
 }
