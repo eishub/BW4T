@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.gui.panel;
 
+import nl.tudelft.bw4t.ScenarioEditor;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -17,7 +18,6 @@ import static org.mockito.Mockito.*;
  */
 public class BotPanelTest {
 
-    private MainPanel panel;
     private BotPanel botPanel;
     private BotPanel spyBotPanel;
 
@@ -27,7 +27,9 @@ public class BotPanelTest {
         botPanel = new BotPanel();
         spyBotPanel = spy(botPanel);
 
-        panel = new MainPanel(new ConfigurationPanel(), spyBotPanel);
+        ConfigurationPanel config = new ConfigurationPanel();
+        /* The editor itself isn't used. It's simple so the BotPanel gets handled by a controller. */
+        new ScenarioEditor(config, spyBotPanel);
     }
 
     @Test

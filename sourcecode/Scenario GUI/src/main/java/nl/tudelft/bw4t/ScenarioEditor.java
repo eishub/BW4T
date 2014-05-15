@@ -42,7 +42,7 @@ public class ScenarioEditor extends JFrame {
     public ScenarioEditor() {
     //    setSize(width, height);
         setTitle(windowName);
-        
+
         setResizable(false);
         setLayout(null);
 
@@ -68,6 +68,21 @@ public class ScenarioEditor extends JFrame {
         
         controller = new Controller(this);
         setVisible(true);
+    }
+
+    /**
+     * Constructor where the panels are passed through as arguments. Useful for testing when the panels
+     * have to be mocked or spied upon.
+     * @param configurationPanel The ConfigurationPanel object used in the frame.
+     * @param botPanel The BotPanel to be used in the frame.
+     */
+    public ScenarioEditor(ConfigurationPanel configurationPanel, BotPanel botPanel) {
+        this();
+        mPanel.setConfigurationPanel(configurationPanel);
+        mPanel.setBotPanel(botPanel);
+
+        // Recreate the controller.
+        controller = new Controller(this);
     }
 
     /**

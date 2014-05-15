@@ -7,6 +7,7 @@ import org.junit.Test;
 import nl.tudelft.bw4t.config.BW4TClientConfig;
 
 import javax.xml.bind.JAXBException;
+import java.io.File;
 import java.io.FileNotFoundException;
 
 public class XMLManagerTest {
@@ -31,7 +32,6 @@ public class XMLManagerTest {
 		 * object from the XML file: */
 		BW4TClientConfig config2 = (BW4TClientConfig) XMLManager.fromXML(FILE_PATH, BW4TClientConfig.class);
 		assertTrue(config2.getClientIp().equals(ip));
-		
 	}
 
 }
