@@ -19,10 +19,7 @@ public class FormatTest {
     @Test
     public void testFormatCorrect() {
         JTextField field = new JTextField();
-        {
-            Format.addIntegerDocumentFilterForTextField(field);
-        }
-
+        Format.addIntegerDocumentFilterForTextField(field);
         field.setText(numbersValid);
         assertEquals(numbersValid, field.getText());
     }
@@ -30,10 +27,7 @@ public class FormatTest {
     @Test
     public void testFormatIncorrect() {
         JTextField field = new JTextField();
-        {
-            Format.addIntegerDocumentFilterForTextField(field);
-        }
-
+        Format.addIntegerDocumentFilterForTextField(field);
         field.setText(numbersInvalid);
         assertEquals(numbersCorrected, field.getText());
     }
@@ -41,10 +35,7 @@ public class FormatTest {
     @Test
     public void testInsertStringFormatCorrect()throws BadLocationException {
         JTextField field = new JTextField();
-        {
-            Format.addIntegerDocumentFilterForTextField(field);
-        }
-
+        Format.addIntegerDocumentFilterForTextField(field);
         field.getDocument().insertString(0, numbersValid, null);
         assertEquals(numbersValid, field.getText());
     }
@@ -52,10 +43,7 @@ public class FormatTest {
     @Test
     public void testInsertStringFormatIncorrect()throws BadLocationException {
         JTextField field = new JTextField();
-        {
-            Format.addIntegerDocumentFilterForTextField(field);
-        }
-
+        Format.addIntegerDocumentFilterForTextField(field);
         field.getDocument().insertString(0, numbersInvalid, null);
         assertEquals(numbersCorrected, field.getText());
     }

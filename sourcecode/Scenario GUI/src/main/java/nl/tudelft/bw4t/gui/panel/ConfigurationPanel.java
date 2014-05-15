@@ -467,6 +467,8 @@ public class ConfigurationPanel extends JPanel {
     	if(!this.getMapFile().equals(DEFAULT_VALUES.MAP_FILE.getValue()) && isDefault)
     		isDefault = false;
     	
+    	//TODO: check if the bot list is empty (since that is default too)
+    	
     	return isDefault;
     }
 }
