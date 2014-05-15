@@ -384,7 +384,7 @@ public class ConfigurationPanel extends JPanel {
     	if(useGui)
     		guiCheckBox.setSelectedCheckbox(guiYes);
     	else
-    		goalCheckBox.setSelectedCheckbox(guiNo);
+    		guiCheckBox.setSelectedCheckbox(guiNo);
     }
 
     /**
