@@ -57,10 +57,19 @@ public class BW4TClientConfig {
 		this.outputFile = outputFile;
 	}
 	
+	/**
+	 * Converts Java Object into XML file
+	 */
 	public void toXML() throws FileNotFoundException, JAXBException {
 		XMLManager.toXML(outputFile, this);
 	}
 	
+	/**
+	 * Construct Java Object from XML file
+	 * @param The XML file location
+	 * @throws FileNotFoundException
+	 * @throws JAXBException
+	 */
 	public static BW4TClientConfig fromXML(String inputFile) throws FileNotFoundException, JAXBException {
 		return (BW4TClientConfig) XMLManager.fromXML(inputFile, BW4TClientConfig.class);
 		
@@ -74,77 +83,144 @@ public class BW4TClientConfig {
 		return outputFile;
 	}
 
+	/**
+	 * Sets the location to store the XML version of this file in.
+	 * @param The path of the file to store this object in as XML.
+	 */
 	public void setFileLocation(String fileLocation) {
 		this.outputFile = fileLocation;
 	}
 
+	/**
+	 * Gets the clientIP.
+	 * @return The clientIP.
+	 */
 	public String getClientIp() {
 		return clientIp;
 	}
 
+	/**
+	 * Sets the clientIP.
+	 * @param The clientIP.
+	 */
     @XmlElement
 	public void setClientIp(String clientIp) {
 		this.clientIp = clientIp;
 	}
-	
+
+    /**
+	 * Gets the clientPort.
+	 * @return The clientPort.
+	 */
 	public int getClientPort() {
 		return clientPort;
 	}
 
+    /**
+	 * Sets the clientPort.
+	 * @param The clientPort.
+	 */
     @XmlElement
 	public void setClientPort(int clientPort) {
 		this.clientPort = clientPort;
 	}
-	
+
+    /**
+	 * Gets the serverIP.
+	 * @return The serverIP.
+	 */
 	public String getServerIp() {
 		return serverIp;
 	}
 
+    /**
+	 * Sets the serverIP.
+	 * @param The serverIP.
+	 */
     @XmlElement
 	public void setServerIp(String serverIp) {
 		this.serverIp = serverIp;
 	}
-	
+
+    /**
+	 * Gets the serverPort.
+	 * @return The serverPort.
+	 */
 	public int getServerPort() {
 		return serverPort;
 	}
 
+    /**
+	 * Sets the serverPort.
+	 * @param The serverPort.
+	 */
     @XmlElement
 	public void setServerPort(int serverPort) {
 		this.serverPort = serverPort;
 	}
-	
+
+    /**
+	 * Gets if GUI should be launched.
+	 * @return if a GUI should be launched.
+	 */
 	public boolean isLaunchGui() {
 		return launchGui;
 	}
 
+    /**
+	 * Sets if a GUI should be launched.
+	 * @param If a GUI should be launched.
+	 */
     @XmlElement
 	public void setLaunchGui(boolean launchGui) {
 		this.launchGui = launchGui;
 	}
-	
+    /**
+	 * Gets if Goal should be used.
+	 * @return if Goal should be used.
+	 */
 	public boolean isUseGoal() {
 		return useGoal;
 	}
 
+    /**
+	 * Sets if GOAL should be used.
+	 * @param If GOAL should be used.
+	 */
     @XmlElement
 	public void setUseGoal(boolean useGoal) {
 		this.useGoal = useGoal;
 	}
-	
+
+    /**
+	 * Gets the AgentClassFile.
+	 * @return The AgentClassFile.
+	 */
 	public String getAgentClass() {
 		return agentClass;
 	}
 
+    /**
+	 * Sets the AgentClassFile.
+	 * @param The AgentClassFile.
+	 */
     @XmlElement
 	public void setAgentClass(String agentClass) {
 		this.agentClass = agentClass;
 	}
 
+    /**
+	 * Gets the MapFile.
+	 * @return The MapFile.
+	 */
 	public String getMapFile() {
 		return mapFile;
 	}
 
+    /**
+	 * Sets the MapFile.
+	 * @return The MapFile.
+	 */
     @XmlElement
 	public void setMapFile(String mapFile) {
 		this.mapFile = mapFile;
