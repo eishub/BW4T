@@ -57,12 +57,12 @@ public class ConfigurationPanel extends JPanel {
     private JTextField mapFileTextField = new JTextField(DEFAULT_VALUES.MAP_FILE.getValue());
     
     CheckboxGroup goalCheckBox = new CheckboxGroup();
-    private Checkbox goalYes = new Checkbox("Yes", true, goalCheckBox);
-    private Checkbox goalNo = new Checkbox("No", false, goalCheckBox);
+    private Checkbox goalYes = new Checkbox("Yes", DEFAULT_VALUES.USE_GOAL.getBooleanValue(), goalCheckBox);
+    private Checkbox goalNo = new Checkbox("No", !DEFAULT_VALUES.USE_GOAL.getBooleanValue(), goalCheckBox);
     
     CheckboxGroup guiCheckBox = new CheckboxGroup();
-    private Checkbox guiYes = new Checkbox("Yes", true, guiCheckBox);
-    private Checkbox guiNo = new Checkbox("No", false, guiCheckBox);
+    private Checkbox guiYes = new Checkbox("Yes", DEFAULT_VALUES.USE_GUI.getBooleanValue(), guiCheckBox);
+    private Checkbox guiNo = new Checkbox("No", !DEFAULT_VALUES.USE_GUI.getBooleanValue(), guiCheckBox);
 
     private JButton chooseAgentFile = new JButton("Open File");
     private JButton chooseMapFile = new JButton("Open File");
@@ -466,6 +466,8 @@ public class ConfigurationPanel extends JPanel {
     		isDefault = false;
     	if(!this.getMapFile().equals(DEFAULT_VALUES.MAP_FILE.getValue()) && isDefault)
     		isDefault = false;
+    	
+    	//TODO: check if the bot list is empty (since that is default too)
     	
     	return isDefault;
     }

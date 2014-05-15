@@ -32,6 +32,11 @@ public class XMLManagerTest {
 		 * object from the XML file: */
 		BW4TClientConfig config2 = (BW4TClientConfig) XMLManager.fromXML(FILE_PATH, BW4TClientConfig.class);
 		assertTrue(config2.getClientIp().equals(ip));
+		
+		if (!new File(FILE_PATH).delete())
+			System.out.println("Test file could not be deleted, please delete it manually.");
+
+		
 	}
 
 }
