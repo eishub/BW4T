@@ -64,20 +64,24 @@ public class Battery
 	}
 	
 	/**
+	 * If the battery is infinite, DO NOT DISCHARGE IT.
 	 * If the emptying of the battery falls below 0, 
 	 * the current capacity is set to 0.
 	 */
 	public void discharge()
 	{
-		int temp = this.current - this.dRate;
-		
-		if (temp < 0)
+		if (this.max != Integer.MAX_VALUE)
 		{
-			this.current = 0;
-		}
-		else
-		{
-			this.current = temp;
+			int temp = this.current - this.dRate;
+			
+			if (temp < 0)
+			{
+				this.current = 0;
+			}
+			else
+			{
+				this.current = temp;
+			}
 		}
 	}
 }
