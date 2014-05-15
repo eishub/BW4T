@@ -288,14 +288,14 @@ class MenuOptions implements ActionListener {
 			}
 			
 			// Reset the config panel
-			configPanel.setClientIP("127.0.0.1");
-			configPanel.setClientPort("9000");
-			configPanel.setServerIP("127.0.0.1");
-			configPanel.setServerPort("9000");
-			configPanel.setUseGui(true);
-			configPanel.setUseGoal(true);
-			configPanel.setAgentClassFile("");
-			configPanel.setMapFile("");
+			configPanel.setClientIP(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_IP.getValue());
+			configPanel.setClientPort(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_PORT.getValue());
+			configPanel.setServerIP(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_IP.getValue());
+			configPanel.setServerPort(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_PORT.getValue());
+			configPanel.setUseGui(ConfigurationPanel.DEFAULT_VALUES.USE_GUI.getBooleanValue());
+			configPanel.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
+			configPanel.setAgentClassFile(ConfigurationPanel.DEFAULT_VALUES.AGENT_CLASS.getValue());
+			configPanel.setMapFile(ConfigurationPanel.DEFAULT_VALUES.MAP_FILE.getValue());
 			
 			// Reset the bot panel
 			//TODO reset botPanel

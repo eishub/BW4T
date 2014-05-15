@@ -14,28 +14,55 @@ import nl.tudelft.bw4t.util.Format;
  * It shows the options the user can configure.
  */
 public class ConfigurationPanel extends JPanel {
+	
+	public static enum DEFAULT_VALUES {
+		DEFAULT_IP("127.0.0.1"),
+		DEFAULT_PORT("9000"),
+		USE_GUI("true"),
+		USE_GOAL("true"),
+		AGENT_CLASS(""),
+		MAP_FILE("");
+		
+		String value;
+		
+		DEFAULT_VALUES(String value) {
+			this.value = value;
+		}
+		
+		public String getValue() {
+			return value;
+		}
+		
+		public int getIntValue() {
+			return Integer.parseInt(value);
+		}
+		
+		public boolean getBooleanValue() {
+			return Boolean.parseBoolean(value);
+		}
+		
+	}
 
-
-    private JTextField clientIP = new JTextField("127.0.0.1", 15);
-    private JTextField clientPort = new JTextField("9000", 6);
+    private JTextField clientIP = new JTextField(DEFAULT_VALUES.DEFAULT_IP.getValue(), 15);
+    private JTextField clientPort = new JTextField(DEFAULT_VALUES.DEFAULT_PORT.getValue(), 6);
     {
     	Format.addIntegerDocumentFilterForTextField(clientPort);
     }
-    private JTextField serverIP = new JTextField("127.0.0.1", 15);
-    private JTextField serverPort = new JTextField("9000", 6);
+    private JTextField serverIP = new JTextField(DEFAULT_VALUES.DEFAULT_IP.getValue(), 15);
+    private JTextField serverPort = new JTextField(DEFAULT_VALUES.DEFAULT_PORT.getValue(), 6);
     {
     	Format.addIntegerDocumentFilterForTextField(serverPort);
     }
-    private JTextField agentClassFileTextField = new JTextField();
-    private JTextField mapFileTextField = new JTextField();
+    private JTextField agentClassFileTextField = new JTextField(DEFAULT_VALUES.AGENT_CLASS.getValue());
+    private JTextField mapFileTextField = new JTextField(DEFAULT_VALUES.MAP_FILE.getValue());
     
     CheckboxGroup goalCheckBox = new CheckboxGroup();
-    private Checkbox goalYes = new Checkbox("Yes", true, goalCheckBox);
-    private Checkbox goalNo = new Checkbox("No", false, goalCheckBox);
+    private Checkbox goalYes = new Checkbox("Yes", DEFAULT_VALUES.USE_GOAL.getBooleanValue(), goalCheckBox);
+    private Checkbox goalNo = new Checkbox("No", !DEFAULT_VALUES.USE_GOAL.getBooleanValue(), goalCheckBox);
     
     CheckboxGroup guiCheckBox = new CheckboxGroup();
-    private Checkbox guiYes = new Checkbox("Yes", true, guiCheckBox);
-    private Checkbox guiNo = new Checkbox("No", false, guiCheckBox);
+    private Checkbox guiYes = new Checkbox("Yes", DEFAULT_VALUES.USE_GUI.getBooleanValue(), guiCheckBox);
+    private Checkbox guiNo = new Checkbox("No", !DEFAULT_VALUES.USE_GUI.getBooleanValue(), guiCheckBox);
 
     private JButton chooseAgentFile = new JButton("Open File");
     private JButton chooseMapFile = new JButton("Open File");
@@ -423,21 +450,21 @@ public class ConfigurationPanel extends JPanel {
     public boolean isDefault() {
     	boolean isDefault = true;
     	
-    	if(!this.getClientIP().equals("127.0.0.1") && isDefault)
+    	if(!this.getClientIP().equals(DEFAULT_VALUES.DEFAULT_IP.getValue()) && isDefault)
     		isDefault = false;
-    	if(this.getClientPort() != 9000 && isDefault)
+    	if(this.getClientPort() != DEFAULT_VALUES.DEFAULT_PORT.getIntValue() && isDefault)
     		isDefault = false;
-    	if(!this.getServerIP().equals("127.0.0.1") && isDefault)
+    	if(!this.getServerIP().equals(DEFAULT_VALUES.DEFAULT_IP.getValue()) && isDefault)
     		isDefault = false;
-    	if(this.getServerPort() != 9000 && isDefault)
+    	if(this.getServerPort() != DEFAULT_VALUES.DEFAULT_PORT.getIntValue() && isDefault)
     		isDefault = false;
-    	if(!this.useGui() && isDefault)
+    	if(this.useGui() != DEFAULT_VALUES.USE_GUI.getBooleanValue() && isDefault)
     		isDefault = false;
-    	if(!this.useGoal() && isDefault)
+    	if(this.useGoal() != DEFAULT_VALUES.USE_GOAL.getBooleanValue() && isDefault)
     		isDefault = false;
-    	if(!this.getAgentClassFile().equals("") && isDefault)
+    	if(!this.getAgentClassFile().equals(DEFAULT_VALUES.AGENT_CLASS.getValue()) && isDefault)
     		isDefault = false;
-    	if(!this.getMapFile().equals("") && isDefault)
+    	if(!this.getMapFile().equals(DEFAULT_VALUES.MAP_FILE.getValue()) && isDefault)
     		isDefault = false;
     	
     	return isDefault;

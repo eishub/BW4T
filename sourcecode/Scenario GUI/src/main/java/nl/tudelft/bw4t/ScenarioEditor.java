@@ -40,9 +40,10 @@ public class ScenarioEditor extends JFrame {
      * Create the scenario editor frame, which will then hold the panels with specific functions.
      */
     public ScenarioEditor() {
+    	setLookAndFeel();
     //    setSize(width, height);
         setTitle(windowName);
-        
+
         setResizable(false);
         setLayout(null);
 
@@ -53,7 +54,7 @@ public class ScenarioEditor extends JFrame {
         mPanel = new MainPanel(new ConfigurationPanel(), new BotPanel());
         setActivePane(mPanel);
 
-        setLookAndFeel();
+        
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
@@ -68,6 +69,21 @@ public class ScenarioEditor extends JFrame {
         
         controller = new Controller(this);
         setVisible(true);
+    }
+
+    /**
+     * Constructor where the panels are passed through as arguments. Useful for testing when the panels
+     * have to be mocked or spied upon.
+     * @param configurationPanel The ConfigurationPanel object used in the frame.
+     * @param botPanel The BotPanel to be used in the frame.
+     */
+    public ScenarioEditor(ConfigurationPanel configurationPanel, BotPanel botPanel) {
+        this();
+        mPanel.setConfigurationPanel(configurationPanel);
+        mPanel.setBotPanel(botPanel);
+
+        // Recreate the controller.
+        controller = new Controller(this);
     }
 
     /**
