@@ -50,4 +50,4 @@ Now open Eclipse and right-click in the package explorer area. Click *Import -> 
 
 If everything went correctly, you shouldn't see any errors in the *Problems Dialog* (*Window -> Show View -> Problems*).
 
-You can now simply press run, and if everything went correctly you should *BW4T* starting up.
+You can now simply press run, and if everything went correctly you should *BW4T* starting up..
