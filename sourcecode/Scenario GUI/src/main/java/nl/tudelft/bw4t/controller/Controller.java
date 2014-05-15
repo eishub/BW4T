@@ -261,27 +261,33 @@ class MenuOptions implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		ConfigurationPanel configPanel = controller.getMainView().getMainPanel().getConfigurationPanel();
+		BotPanel botPanel = controller.getMainView().getMainPanel().getBotPanel();
+		
 		if (e.getSource() == view.getMenuItemFileExit()) {
-			// Check if user wants to save current configuration
-			//TODO check if current config is the same as default config
-			int response = JOptionPane.showConfirmDialog(null, "Do you want to save the current configuration?", "", JOptionPane.YES_NO_OPTION);
-	
-	        if (response == JOptionPane.YES_OPTION) {
-	            saveFile();
-	        }
+			// Check if current config is different to default config
+			if(!configPanel.isDefault()) {
+				// Check if user wants to save current configuration
+				int response = JOptionPane.showConfirmDialog(null, "Do you want to save the current configuration?", "", JOptionPane.YES_NO_OPTION);
+		
+		        if (response == JOptionPane.YES_OPTION) {
+		            saveFile();
+		        }
+			}
 	        
 			System.exit(0);
 		} else if (e.getSource() == view.getMenuItemFileNew()) {
-			// Check if user wants to save current configuration
-			//TODO check if current config is the same as default config
-			int response = JOptionPane.showConfirmDialog(null, "Do you want to save the current configuration?", "", JOptionPane.YES_NO_OPTION);
-
-	        if (response == JOptionPane.YES_OPTION) {
-	            saveFile();
-	        }
+			// Check if current config is different to default config
+			if(!configPanel.isDefault()) {
+				// Check if user wants to save current configuration
+				int response = JOptionPane.showConfirmDialog(null, "Do you want to save the current configuration?", "", JOptionPane.YES_NO_OPTION);
+		
+		        if (response == JOptionPane.YES_OPTION) {
+		            saveFile();
+		        }
+			}
 			
 			// Reset the config panel
-			ConfigurationPanel configPanel = controller.getMainView().getMainPanel().getConfigurationPanel();
 			configPanel.setClientIP("127.0.0.1");
 			configPanel.setClientPort("9000");
 			configPanel.setServerIP("127.0.0.1");
@@ -292,16 +298,17 @@ class MenuOptions implements ActionListener {
 			configPanel.setMapFile("");
 			
 			// Reset the bot panel
-			BotPanel botPanel = controller.getMainView().getMainPanel().getBotPanel();
 			//TODO reset botPanel
 		} else if (e.getSource() == view.getMenuItemFileOpen()) {
-			// Check if user wants to save current configuration
-			//TODO check if current config is the same as default config
-			int response = JOptionPane.showConfirmDialog(null, "Do you want to save the current configuration?", "", JOptionPane.YES_NO_OPTION);
-
-	        if (response == JOptionPane.YES_OPTION) {
-	            saveFile();
-	        }
+			// Check if current config is different to default config
+			if(!configPanel.isDefault()) {
+				// Check if user wants to save current configuration
+				int response = JOptionPane.showConfirmDialog(null, "Do you want to save the current configuration?", "", JOptionPane.YES_NO_OPTION);
+		
+		        if (response == JOptionPane.YES_OPTION) {
+		            saveFile();
+		        }
+			}
 			
 	        // Open configuration file
 			JFileChooser fileChooser = new JFileChooser();
@@ -312,7 +319,6 @@ class MenuOptions implements ActionListener {
 					BW4TClientConfig temp = BW4TClientConfig.fromXML(file.getAbsolutePath());
 										
 					// Fill the config panel
-					ConfigurationPanel configPanel = controller.getMainView().getMainPanel().getConfigurationPanel();
 					configPanel.setClientIP(temp.getClientIp());
 					configPanel.setClientPort(""+temp.getClientPort());
 					configPanel.setServerIP(temp.getServerIp());
@@ -323,7 +329,6 @@ class MenuOptions implements ActionListener {
 					configPanel.setMapFile(temp.getMapFile());
 					
 					// Fill the bot panel
-					BotPanel botPanel = controller.getMainView().getMainPanel().getBotPanel();
 					//TODO fill botPanel
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();

@@ -40,6 +40,7 @@ public class ScenarioEditor extends JFrame {
      * Create the scenario editor frame, which will then hold the panels with specific functions.
      */
     public ScenarioEditor() {
+    	setLookAndFeel();
     //    setSize(width, height);
         setTitle(windowName);
 
@@ -53,7 +54,7 @@ public class ScenarioEditor extends JFrame {
         mPanel = new MainPanel(new ConfigurationPanel(), new BotPanel());
         setActivePane(mPanel);
 
-        setLookAndFeel();
+        
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         

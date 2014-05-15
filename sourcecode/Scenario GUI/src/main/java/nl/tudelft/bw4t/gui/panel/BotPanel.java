@@ -61,6 +61,8 @@ public class BotPanel extends JPanel {
      */
     private void createBotCountPanel() {
         botCountInfo.setLayout(new GridLayout(1, 6));
+        Border margin = BorderFactory.createEmptyBorder(8, 8, 8, 8);
+        botCountInfo.setBorder(margin);
 
         JLabel botLabel = new JLabel("Bots");
         JTextField botCount = new JTextField();
@@ -88,6 +90,8 @@ public class BotPanel extends JPanel {
      */
     private void createBotOptionPanel() {
         botOptions.setLayout(new GridLayout(15, 2));
+        Border margin = BorderFactory.createEmptyBorder(8, 8, 8, 8);
+        botOptions.setBorder(margin);
 
         botOptions.add(newBot);
         botOptions.add(new JLabel(""));
@@ -120,6 +124,8 @@ public class BotPanel extends JPanel {
         botList.addColumn("Type");
 
         botScrollPane = new JScrollPane(botTable);
+        Border margin = BorderFactory.createEmptyBorder(0, 8, 8, 0);
+        botScrollPane.setBorder(margin);
     }
         
     /*public void addBot(String botName, String botType){
