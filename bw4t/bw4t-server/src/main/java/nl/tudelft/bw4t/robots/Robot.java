@@ -5,6 +5,7 @@ import java.util.List;
 import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.doors.Door;
+import nl.tudelft.bw4t.map.Constants;
 import nl.tudelft.bw4t.server.BW4TLogger;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.Corridor;
@@ -39,8 +40,6 @@ public class Robot extends BoundedMoveableObject {
 	private static final double MIN_MOVE_DISTANCE = .001;
 	/** The distance which it can reach with its arm to pick up a block. */
 	private static final double ARM_DISTANCE = 1;
-	/** The width and height of the robot */
-	public final static int SIZE = 2;
 
 	/** The name of the robot */
 	private final String name;
@@ -80,7 +79,7 @@ public class Robot extends BoundedMoveableObject {
 
 		this.name = name;
 		this.oneBotPerZone = oneBotPerZone;
-		setSize(SIZE, SIZE);
+		setSize(Constants.ROBOT_SIZE, Constants.ROBOT_SIZE);
 	}
 
 	/**

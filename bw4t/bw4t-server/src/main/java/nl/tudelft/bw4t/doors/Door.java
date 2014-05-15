@@ -3,6 +3,7 @@ package nl.tudelft.bw4t.doors;
 import java.awt.Color;
 
 import nl.tudelft.bw4t.BoundedMoveableObject;
+import nl.tudelft.bw4t.map.Constants;
 import nl.tudelft.bw4t.map.Door.Orientation;
 import nl.tudelft.bw4t.zone.Room;
 import repast.simphony.context.Context;
@@ -30,10 +31,6 @@ public class Door extends BoundedMoveableObject {
 	 * connected. Unconnected doors are always open.
 	 */
 	private Room roomBehindTheDoor = null;
-
-	/** width of doors. */
-	public static final int DOOR_THICKNESS = 1;
-	public static final int DOOR_WIDTH = 4;
 
 	/**
 	 * Creates a new door.
@@ -73,14 +70,15 @@ public class Door extends BoundedMoveableObject {
 	 *            is {@link Orientation} of the door.
 	 */
 	public void setPos(double x, double y, Orientation ori) {
-		int width = DOOR_THICKNESS;
-		int height = DOOR_THICKNESS;
+		int width = Constants.DOOR_THICKNESS;
+		int height = Constants.DOOR_THICKNESS;
 		switch (ori) {
 		case HORIZONTAL:
-			width = DOOR_WIDTH;
+			width = Constants.DOOR_WIDTH;
 			break;
+		default:
 		case VERTICAL:
-			height = DOOR_WIDTH;
+			height = Constants.DOOR_WIDTH;
 			break;
 		}
 		setSize(width, height);
