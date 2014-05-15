@@ -13,14 +13,15 @@ import eis.iilang.EnvironmentState;
  * to the client.
  * 
  * @author wouter
+ * 
  */
-public interface BW4TClientInterface extends Remote {
+public interface BW4TClientActions extends Remote {
 
 	/**
-	 * Called by server when a new entity is available at the server.
+	 * Called by server when a new entity is available at the server
 	 * 
 	 * @param entity
-	 *            the id of the new entity
+	 *            , the id of the new entity
 	 * @throws RemoteException
 	 *             if an exception occurs during the execution of a remote
 	 *             object call
@@ -31,13 +32,10 @@ public interface BW4TClientInterface extends Remote {
 	void handleNewEntity(String entity) throws RemoteException, EntityException;
 
 	/**
-	 * Called by server when an entity is freed at the server.
+	 * Called by server when an entity is freed at the server
 	 * 
 	 * @param entity
-	 *            the id of the free entity
-	 * @param agents
-	 *            the agents that need to be notified of the release of the
-	 *            entity
+	 *            , the id of the free entity
 	 * @throws RemoteException
 	 *             if an exception occurs during the execution of a remote
 	 *             object call
@@ -50,10 +48,7 @@ public interface BW4TClientInterface extends Remote {
 	 * Called by server when an entity is deleted at the server
 	 * 
 	 * @param entity
-	 *            the id of the deleted entity
-	 * @param agents
-	 *            the agents that need to be notified of the deletion of the
-	 *            entity
+	 *            , the id of the deleted entity
 	 * @throws RemoteException
 	 *             if an exception occurs during the execution of a remote
 	 *             object call
@@ -82,15 +77,6 @@ public interface BW4TClientInterface extends Remote {
 	 * 
 	 * @param theMap
 	 *            is the map that is used in the server.
-	 * 
-	 * @throws RemoteException
-	 *             if an exception occurs during the execution of a remote
-	 *             object call
 	 */
 	void useMap(NewMap theMap) throws RemoteException;
-	
-	/**
-	 * Newly added
-	 */
-	public String getType(String entity) throws EntityException, RemoteException;
 }

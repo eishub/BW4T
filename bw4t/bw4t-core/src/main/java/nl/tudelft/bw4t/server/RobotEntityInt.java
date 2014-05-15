@@ -7,7 +7,7 @@ package nl.tudelft.bw4t.server;
  * can't load that class here because of access restrictions to repast classes.
  */
 
-public interface RobotEntityInterface {
+public interface RobotEntityInt {
 	/**
 	 * To be called when a new perception cycle starts. This allows the entity
 	 * to 'lock' the current repast state so that percepts are coherent.

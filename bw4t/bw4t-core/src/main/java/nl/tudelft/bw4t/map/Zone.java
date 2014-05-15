@@ -95,7 +95,7 @@ public class Zone implements Serializable {
 	 * XmlIDREF annotation indicates XML serializer to use only the IDs and not
 	 * the full elements in the list
 	 * 
-	 * @return a list of all neighbouring zones
+	 * @return
 	 */
 	@XmlIDREF
 	public List<Zone> getNeighbours() {

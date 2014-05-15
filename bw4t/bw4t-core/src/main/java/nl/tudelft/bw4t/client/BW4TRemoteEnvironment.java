@@ -61,7 +61,7 @@ import eis.iilang.Percept;
 public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
 
 	// env is in KILLED mode if client=null. init sets client.
-	private BW4TClientInterface client = null;
+	private BW4TClient client = null;
 
 	private Map<String, Parameter> initParameters;
 

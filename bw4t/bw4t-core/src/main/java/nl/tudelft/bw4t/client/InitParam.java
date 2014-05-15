@@ -1,6 +1,6 @@
 package nl.tudelft.bw4t.client;
 
-//import nl.tudelft.bw4t.server.BW4TEnvironment;
+import nl.tudelft.bw4t.server.BW4TEnvironment;
 
 /**
  * Available init parameters and default values for {@link BW4TEnvironment}.
