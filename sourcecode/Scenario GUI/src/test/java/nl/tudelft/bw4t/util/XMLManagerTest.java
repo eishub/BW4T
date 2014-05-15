@@ -2,13 +2,14 @@ package nl.tudelft.bw4t.util;
 
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
+import java.io.File;
+import java.io.FileNotFoundException;
+
+import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.config.BW4TClientConfig;
 
-import javax.xml.bind.JAXBException;
-import java.io.File;
-import java.io.FileNotFoundException;
+import org.junit.Test;
 
 public class XMLManagerTest {
 	

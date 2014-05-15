@@ -1,19 +1,20 @@
 package nl.tudelft.bw4t.config;
 
-import nl.tudelft.bw4t.gui.panel.BotPanel;
-import nl.tudelft.bw4t.gui.panel.ConfigurationPanel;
-import nl.tudelft.bw4t.gui.panel.MainPanel;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import javax.xml.bind.JAXBException;
-import java.io.FileNotFoundException;
-import java.util.LinkedList;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.io.FileNotFoundException;
+
+import javax.xml.bind.JAXBException;
+
+import nl.tudelft.bw4t.gui.panel.BotPanel;
+import nl.tudelft.bw4t.gui.panel.ConfigurationPanel;
+import nl.tudelft.bw4t.gui.panel.MainPanel;
+
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * Created by Calvin on 12-5-2014.

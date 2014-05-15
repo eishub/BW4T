@@ -1,11 +1,11 @@
 package nl.tudelft.bw4t;
 
+import static org.junit.Assert.assertEquals;
 import nl.tudelft.bw4t.gui.panel.BotPanel;
 import nl.tudelft.bw4t.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.gui.panel.MainPanel;
+
 import org.junit.Test;
-import javax.swing.*;
-import static org.junit.Assert.assertEquals;
 
 /**
  * Created on 15-05-2014

@@ -1,11 +1,11 @@
 package nl.tudelft.bw4t.util;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import org.junit.Test;
 
-import javax.swing.*;
+import javax.swing.JTextField;
 import javax.swing.text.BadLocationException;
+
+import org.junit.Test;
 
 /**
  * Created by on 15-5-2014.

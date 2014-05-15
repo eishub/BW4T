@@ -1,21 +1,18 @@
 package nl.tudelft.bw4t.gui.panel;
 
-import nl.tudelft.bw4t.ScenarioEditor;
-import org.junit.*;
-
-import java.awt.event.ActionEvent;
-import java.io.File;
-import java.util.LinkedList;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-import nl.tudelft.bw4t.gui.panel.MainPanel;
+import java.io.File;
 
-import javax.swing.*;
+import javax.swing.JFileChooser;
 
-import static org.mockito.Mockito.*;
+import nl.tudelft.bw4t.ScenarioEditor;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Created on 13/05/2014.
