@@ -12,7 +12,7 @@ import nl.tudelft.bw4t.gui.MenuBar;
 
 
 /**
- *
+ * The ScenarioEditor class serves as the Frame for the MenuBar and MainPanel
  */
 public class ScenarioEditor extends JFrame {
 
