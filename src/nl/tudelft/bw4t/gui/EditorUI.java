@@ -19,6 +19,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  *
@@ -70,7 +72,15 @@ public class EditorUI extends javax.swing.JFrame {
         botTitleLabel = new javax.swing.JLabel();
         botTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titleSizeSeparator = new javax.swing.JSeparator();
+        
         gripperCheckbox = new javax.swing.JCheckBox();
+        gripperCheckbox.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		if(!gripperCheckbox.isSelected()){
+        			//setHasGripper(true);
+        		}
+        	}
+        });
         colorblindCheckbox = new javax.swing.JCheckBox();
         walkingCheckbox = new javax.swing.JCheckBox();
         jumpingCheckbox = new javax.swing.JCheckBox();
