@@ -1,17 +1,10 @@
 package nl.tudelft.bw4t.gui;
 
-import javax.swing.*;
-import javax.xml.bind.JAXBException;
-
-import nl.tudelft.bw4t.ScenarioEditor;
-import nl.tudelft.bw4t.config.BW4TClientConfig;
-import nl.tudelft.bw4t.gui.panel.MainPanel;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.FileNotFoundException;
+
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 /**
  * The MenuBar class extends JMenuBar. Used in the ScenarioEditor Frame.

@@ -1,11 +1,23 @@
 package nl.tudelft.bw4t.gui.panel;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.GridLayout;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 

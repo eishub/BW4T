@@ -1,13 +1,10 @@
 package nl.tudelft.bw4t.gui.panel;
 
-import nl.tudelft.bw4t.controller.Controller;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
-import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
-
-import java.awt.*;
+import javax.swing.JPanel;
 
 /**
  *

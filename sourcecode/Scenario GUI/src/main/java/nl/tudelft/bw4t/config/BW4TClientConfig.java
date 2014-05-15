@@ -1,11 +1,9 @@
 package nl.tudelft.bw4t.config;
 
 import java.io.FileNotFoundException;
-import java.util.LinkedList;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import nl.tudelft.bw4t.gui.panel.BotPanel;

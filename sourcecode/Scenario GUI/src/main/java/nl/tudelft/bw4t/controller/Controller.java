@@ -1,20 +1,20 @@
 package nl.tudelft.bw4t.controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.xml.bind.JAXBException;
+
 import nl.tudelft.bw4t.ScenarioEditor;
 import nl.tudelft.bw4t.config.BW4TClientConfig;
 import nl.tudelft.bw4t.gui.MenuBar;
 import nl.tudelft.bw4t.gui.panel.BotPanel;
 import nl.tudelft.bw4t.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.gui.panel.MainPanel;
-import nl.tudelft.bw4t.util.XMLManager;
-
-import javax.swing.*;
-import javax.xml.bind.JAXBException;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileNotFoundException;
 
 /**
  * The Controller class is in charge of all events that happen on the GUI. It delegates all events
