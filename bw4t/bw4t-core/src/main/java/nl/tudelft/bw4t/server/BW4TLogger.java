@@ -94,9 +94,10 @@ public class BW4TLogger {
 	}
 
 	/**
-	 * get the logger instance.
+	 * get the logger instance
 	 * 
 	 * @return the BW4TLogger
+	 * @throws IOException
 	 */
 	public synchronized static BW4TLogger getInstance() {
 		if (theLogger == null) {
@@ -124,8 +125,9 @@ public class BW4TLogger {
 	 * them and a newline at the end. If there are 0 items in the list, nothing
 	 * is written to the log file.
 	 * 
-	 * @param items
-	 *            are the texts to be appended to log file.
+	 * @param text
+	 *            is text to be appended to log file.
+	 * @throws IOException
 	 */
 	public void log(String[] items) {
 		log(Arrays.asList(items));
@@ -136,8 +138,8 @@ public class BW4TLogger {
 	 * them and a newline at the end. If there are 0 items in the list, nothing
 	 * is written to the log file.
 	 * 
-	 * @param items
-	 *            are the texts to be appended to log file.
+	 * @param text
+	 *            is text to be appended to log file.
 	 */
 	public synchronized void log(List<String> items) {
 
@@ -166,7 +168,7 @@ public class BW4TLogger {
 	/**
 	 * write the team info to log file.
 	 * 
-	 * @param nAgents
+	 * @param nAgent
 	 *            is number of agents in team
 	 * @param nHumans
 	 *            is number of humans in the team

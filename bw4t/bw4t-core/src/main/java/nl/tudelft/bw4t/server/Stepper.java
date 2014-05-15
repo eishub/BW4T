@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.environment;
+package nl.tudelft.bw4t.server;
 
 import java.io.File;
 

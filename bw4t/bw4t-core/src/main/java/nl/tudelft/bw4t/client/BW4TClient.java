@@ -11,9 +11,8 @@ import java.util.HashSet;
 import java.util.LinkedList;
 
 import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.server.BW4TServerInterface;
+import nl.tudelft.bw4t.server.BW4TServerActions;
 import eis.EnvironmentInterfaceStandard;
-import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
 import eis.exceptions.ManagementException;
@@ -21,88 +20,146 @@ import eis.exceptions.NoEnvironmentException;
 import eis.exceptions.RelationException;
 import eis.iilang.Action;
 import eis.iilang.EnvironmentState;
+import eis.iilang.Identifier;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
 
 /**
- * The BW4TClient which connects to the BW4TServer.
+ * A client remote object that can be registered to a BW4TServer. This object
+ * lives at the client side.
+ * <p>
+ * This object is a listener for server events, and forwards them to the owner:
+ * the {@link BW4TRemoteEnvironment}.
+ * 
+ * @author trens
+ * @author W.Pasman 8feb2012 changed to make this an explicit child of a
+ *         {@link BW4TRemoteEnvironment}.
+ * @modified W.Pasman 13feb2012 added start and pause calls.
+ * 
  */
-public final class BW4TClient implements BW4TClientInterface {
+public class BW4TClient extends UnicastRemoteObject implements
+		BW4TClientActions {
 
-	private BW4TServerInterface server;
-	private final String clientIp, clientPort;
-	private final String serverIp, serverPort;
-	private String address, bindAddress;
+	private static final long serialVersionUID = 4060908402879332038L;
 
-	/** TODO when changing NewMap, also make changes here
+	/**
+	 * The parent that we serve.
+	 */
+	private BW4TRemoteEnvironment parent;
+
+	private String bindAddress;
+
+	private BW4TServerActions server;
+
+	/**
 	 * the map that the server uses.
 	 */
 	private NewMap map;
 
 	/**
-	 * Constructor is not used but is needed to secure non-creation of this
-	 * class.
+	 * Create a listener for the server.
+	 * 
+	 * @param parent
+	 *            is the parent {@link BW4TRemoteEnvironment}
+	 * @throws RemoteException
+	 *             if an exception occurs during the execution of a remote
+	 *             object call
+	 * @throws NotBoundException
+	 * @throws MalformedURLException
 	 */
-	public BW4TClient(String clientIp, String clientPort, String serverIp,
-			String serverPort) {
-		this.clientIp = clientIp;
-		this.clientPort = clientPort;
-		this.serverIp = serverIp;
-		this.serverPort = serverPort;
-
+	protected BW4TClient(BW4TRemoteEnvironment parent) throws RemoteException,
+			MalformedURLException, NotBoundException {
+		this.parent = parent;
 	}
 
 	/**
-	 * The main method running the client and setting up the connection to the
-	 * BW4T Server.
+	 * run the client. This is provided as separate function from the
+	 * constructor, because the parent (BW4TEnvironment) needs to do some setup
+	 * with the given constructor, before it is really ready to handle callbacks
+	 * from the server.
 	 * 
-	 * @throws RemoteException
-	 *             if remote registry could not be contacted
+	 * 
+	 * @param parameters
+	 *            the set of initialization parameters as Map<String,Parameter>.
+	 *            Should contain values for the following keys:
+	 *            <ul>
+	 *            <li>clientip
+	 *            <li>clientport
+	 *            <li>serverip
+	 *            <li>serverport
+	 *            <li>agentcount
+	 *            <li>humancount
+	 *            <li>goal
+	 *            </ul>
+	 *            Note, these are not all init parameters available to
+	 *            BW4TRemoteEnvironment, these are just the ones needed to
+	 *            launch this client class.
 	 * @throws MalformedURLException
-	 *             if the remote name is not an appropriately formatted URL
+	 * @throws RemoteException
+	 * @throws NotBoundException
 	 */
-	public void connectServer() throws RemoteException, MalformedURLException,
-			NotBoundException {
+	public void connectServer(java.util.Map<String, Parameter> initParameters)
+			throws RemoteException, MalformedURLException, NotBoundException {
+
+		// Get all necessary parameters from initialization arguments
+		Parameter clientIp = initParameters.get(InitParam.CLIENTIP.nameLower());
+		String clientIpString = ((Identifier) clientIp).getValue();
+
+		Parameter clientPort = initParameters.get(InitParam.CLIENTPORT
+				.nameLower());
+		String clientPortString = ((Identifier) clientPort).getValue();
+
+		Parameter serverIp = initParameters.get(InitParam.SERVERIP.nameLower());
+		String serverIpString = ((Identifier) serverIp).getValue();
+
+		Parameter serverPort = initParameters.get(InitParam.SERVERPORT
+				.nameLower());
+		String serverPortString = ((Identifier) serverPort).getValue();
+
 		// Launch the client and bind it
-		bindAddress = "rmi://" + clientIp + ":" + clientPort + "/BW4TClient";
+		bindAddress = "rmi://" + clientIpString + ":" + clientPortString
+				+ "/BW4TClient";
 		try {
-			LocateRegistry.createRegistry(Integer.parseInt(clientPort));
+			LocateRegistry.createRegistry(Integer.parseInt(clientPortString));
 		} catch (Exception e) {
 			System.out.println("Registry already created");
 		}
 		Naming.rebind(bindAddress, this);
 		System.out.println("BW4TClient bound");
 
-		address = "rmi://" + serverIp + ":" + serverPort + "/BW4TServer";
-		System.out.println(address);
+		// Register the client to the server
+		String address = "//" + serverIpString + ":" + serverPortString
+				+ "/BW4TServer";
 		try {
-			server = (BW4TServerInterface) Naming.lookup(address);
-			System.out.println(server.say());
-		} catch (MalformedURLException | RemoteException | NotBoundException e) {
-			e.printStackTrace();
-			// throw new NoEnvironmentException("Failed to connect " + address,
-			// e);
+			server = (BW4TServerActions) Naming.lookup(address);
+		} catch (Exception e) {
+			throw new NoEnvironmentException("Failed to connect " + address, e);
 		}
+
 	}
 
 	/**
-	 * TODO: Better name for this method....
-	 * 
 	 * Register our client with the server. Provided separately, of run
 	 * 
-	 * @param agentCount	the number of computer controlled robots
-	 * @param humanCount the number of computer controlled robots
-	 * @throws RemoteException if an exception occurs while trying to register with th server
+	 * @param initParameters
+	 * @throws RemoteException
 	 */
-	public void register(int agentCount, int humanCount) throws RemoteException {
+	public void register(java.util.Map<String, Parameter> initParameters)
+			throws RemoteException {
+		Parameter agentCount = initParameters.get(InitParam.AGENTCOUNT
+				.nameLower());
+		int agentCountInt = Integer.parseInt(((Identifier) agentCount)
+				.getValue());
 
-		server.registerClient(this, agentCount, humanCount);
+		Parameter humanCount = initParameters.get(InitParam.HUMANCOUNT
+				.nameLower());
+		int humanCountInt = Integer.parseInt(((Identifier) humanCount)
+				.getValue());
+
+		server.registerClient(this, agentCountInt, humanCountInt);
 	}
 
 	/**
-	 * TODO: handle exceptions + make sure all entities and agents have been
-	 * unbound before kill
-	 * 
 	 * kill the client interface. kill at this moment does not kill the server,
 	 * it just disconnects the client. Make sure all entities and agents have
 	 * been unbound before doing this.
@@ -113,11 +170,6 @@ public final class BW4TClient implements BW4TClientInterface {
 	 */
 	public void kill() throws RemoteException, MalformedURLException,
 			NotBoundException {
-
-		// while(!getAgents().isEmpty()){
-
-		// }
-
 		server.unregisterClient(this);
 		Naming.unbind(bindAddress);
 		UnicastRemoteObject.unexportObject(this, true);
@@ -134,11 +186,30 @@ public final class BW4TClient implements BW4TClientInterface {
 	 * @throws RemoteException
 	 *             if an exception occurs during the execution of a remote
 	 *             object call
-	 * @throws ActException 
 	 */
 	public Percept performEntityAction(String entity, Action action)
-			throws RemoteException, ActException {
+			throws RemoteException {
 		return server.performEntityAction(entity, action);
+	}
+
+	/**
+	 * 
+	 * @param serverIP
+	 *            , the ip address of the server
+	 * @param serverPort
+	 *            , the port where the server is listening
+	 * @param expectedCount
+	 *            , the amount of entities the client wants to receive
+	 * @throws RemoteException
+	 *             if an exception occurs during the execution of a remote
+	 *             object call
+	 * @throws MalformedURLException
+	 *             if the given url could not be parsed
+	 * @throws NotBoundException
+	 *             if the server was not bound at the given address
+	 */
+	protected void connectToServer(int agentCount, int humanCount)
+			throws RemoteException, MalformedURLException, NotBoundException {
 	}
 
 	/**
@@ -225,8 +296,6 @@ public final class BW4TClient implements BW4TClientInterface {
 	}
 
 	/**
-	 * TODO test what this does, does it also freeAgent?
-	 * 
 	 * Unregister an agent on the server
 	 * 
 	 * @param agent
@@ -276,8 +345,6 @@ public final class BW4TClient implements BW4TClientInterface {
 	}
 
 	/**
-	 * TODO test what this does, difference with unregister
-	 * 
 	 * Free an agent on the server
 	 * 
 	 * @param agent
@@ -349,12 +416,15 @@ public final class BW4TClient implements BW4TClientInterface {
 	 * @param entity
 	 *            , the entity for which to get its type
 	 * @return the type of the entity
+	 * @throws RemoteException
+	 *             , if an exception occurs during the execution of a remote
+	 *             object call
 	 * @throws EntityException
 	 *             , if something unexpected happens when attempting to add or
 	 *             remove an entity.
-	 * @throws RemoteException 
 	 */
-	public String getType(String entity) throws EntityException, RemoteException {
+	public String getType(String entity) throws RemoteException,
+			EntityException {
 		return server.getType(entity);
 	}
 
@@ -401,12 +471,6 @@ public final class BW4TClient implements BW4TClientInterface {
 		return server.queryEntityProperty(entity, property);
 	}
 
-	/** TODO comments
-	 * 
-	 * @param arg0
-	 * @return
-	 * @throws RemoteException
-	 */
 	public boolean isSupportedByEnvironment(Action arg0) throws RemoteException {
 		return server.isSupportedByEnvironment(arg0);
 	}
@@ -478,7 +542,7 @@ public final class BW4TClient implements BW4TClientInterface {
 	@Override
 	public void handleNewEntity(String entity) throws RemoteException,
 			EntityException {
-		server.notifyNewEntity(entity);
+		parent.notifyNewEntity(entity);
 	}
 
 	/**
@@ -487,7 +551,7 @@ public final class BW4TClient implements BW4TClientInterface {
 	@Override
 	public void handleFreeEntity(String entity, Collection<String> agents)
 			throws RemoteException {
-		server.notifyFreeEntity(entity, agents);
+		parent.notifyFreeEntity(entity, agents);
 	}
 
 	/**
@@ -496,7 +560,7 @@ public final class BW4TClient implements BW4TClientInterface {
 	@Override
 	public void handleDeletedEntity(String entity, Collection<String> agents)
 			throws RemoteException {
-		server.notifyDeletedEntity(entity, agents);
+		parent.notifyDeletedEntity(entity, agents);
 	}
 
 	/**
@@ -505,17 +569,16 @@ public final class BW4TClient implements BW4TClientInterface {
 	@Override
 	public void handleStateChange(EnvironmentState newState)
 			throws RemoteException {
-		server.handleStateChange(newState);
+		parent.handleStateChange(newState);
 	}
 
-	// TODO when changing NewMap, also make changes here
 	@Override
 	public void useMap(NewMap newMap) {
 		map = newMap;
 	}
 
-	// TODO when changing NewMap, also make changes here
 	public NewMap getMap() {
 		return map;
 	}
+
 }
