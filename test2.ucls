@@ -1,0 +1,1075 @@
+<class-diagram version="1.0.11" icons="true" automaticImage="PNG" always-add-relationships="false" 
+  generalizations="true" realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.visualizations.RoomStyle" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/visualizations/RoomStyle.java" 
+    binary="false">    
+    <position height="102" width="160" x="10383" y="570"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="2" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.eis.translators.ObjectInformationTranslator" 
+    project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/eis/translators/ObjectInformationTranslator.java" binary="false">    
+    <position height="119" width="334" x="262" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="3" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.zone.Corridor" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/zone/Corridor.java" binary="false">    
+    <position height="85" width="368" x="9531" y="1613"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="4" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.util.ZoneLocator" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/util/ZoneLocator.java" binary="false">    
+    <position height="187" width="263" x="636" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="5" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.util.RoomLocator" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/util/RoomLocator.java" binary="false">    
+    <position height="119" width="261" x="939" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="6" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.visualizations.DropZoneStyle" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/visualizations/DropZoneStyle.java" 
+    binary="false">    
+    <position height="153" width="234" x="11506" y="570"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <component id="7" corner="BOTTOM_RIGHT" language="java" name="src" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src" binary="false">    
+    <position height="42" width="135" x="1240" y="61"/>    
+    <display autosize="true" stereotype="true"/>  
+  </component>  
+  <class id="8" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.eis.translators.BlockWithColorTranslator" 
+    project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/eis/translators/BlockWithColorTranslator.java" binary="false">    
+    <position height="119" width="296" x="1415" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="9" corner="BOTTOM_RIGHT" language="java" 
+    name="nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer.RoomInfo" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/visualizations/BW4TClientMapRenderer.java" binary="false">    
+    <position height="408" width="288" x="11049" y="2911"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <package id="10" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.util" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/util" binary="false">    
+    <position height="54" width="150" x="1751" y="61"/>    
+    <display autosize="true" stereotype="true"/>  
+  </package>  
+  <interface id="11" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.client.BW4TClientActions" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/client/BW4TClientActions.java" 
+    binary="false">    
+    <position height="153" width="319" x="10331" y="2911"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <class id="12" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.server.BW4TLogger" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/server/BW4TLogger.java" binary="false">    
+    <position height="459" width="287" x="9576" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="13" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.visualizations.DoorStyle" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/visualizations/DoorStyle.java" 
+    binary="false">    
+    <position height="102" width="160" x="11780" y="570"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="14" corner="BOTTOM_RIGHT" language="java" 
+    name="nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer.PutdownActionListener" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/visualizations/BW4TClientMapRenderer.java" binary="false">    
+    <position height="102" width="221" x="11419" y="2911"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <package id="15" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.visualizations" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/visualizations" binary="false">    
+    <position height="54" width="225" x="2210" y="61"/>    
+    <display autosize="true" stereotype="true"/>  
+  </package>  
+  <class id="16" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.doors.Door" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/doors/Door.java" binary="false">    
+    <position height="221" width="318" x="9173" y="570"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <package id="17" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.eis.translators" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/eis/translators" binary="false">    
+    <position height="54" width="229" x="1941" y="61"/>    
+    <display autosize="true" stereotype="true"/>  
+  </package>  
+  <class id="18" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.visualizations.ServerMapRenderer" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/visualizations/ServerMapRenderer.java" 
+    binary="false">    
+    <position height="459" width="311" x="7620" y="2911"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="19" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.robots.Robot" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/robots/Robot.java" binary="false">    
+    <position height="578" width="412" x="9939" y="1613"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="20" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.robots.NavigatingRobot" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/robots/NavigatingRobot.java" 
+    binary="false">    
+    <position height="221" width="471" x="8306" y="2911"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="21" corner="BOTTOM_RIGHT" language="java" 
+    name="nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer.MessageSenderActionListener" 
+    project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/visualizations/BW4TClientMapRenderer.java" binary="false">    
+    <position height="102" width="298" x="10690" y="2911"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <interface id="22" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.server.RobotEntityInt" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/server/RobotEntityInt.java" 
+    binary="false">    
+    <position height="102" width="200" x="8780" y="1613"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <class id="23" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.zone.DropZone" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/zone/DropZone.java" binary="false">    
+    <position height="204" width="378" x="8817" y="2911"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="24" corner="BOTTOM_RIGHT" language="java" 
+    name="nl.tudelft.bw4t.eis.translators.BoundedMovableObjectTranslator" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/eis/translators/BoundedMovableObjectTranslator.java" binary="false">    
+    <position height="119" width="376" x="2475" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="25" corner="BOTTOM_RIGHT" language="java" 
+    name="nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer.PickUpActionListener" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/visualizations/BW4TClientMapRenderer.java" binary="false">    
+    <position height="102" width="221" x="11680" y="2911"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="26" corner="BOTTOM_RIGHT" language="java" 
+    name="nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer.DropZoneInfo" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/visualizations/BW4TClientMapRenderer.java" binary="false">    
+    <position height="85" width="271" x="11358" y="3427"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="27" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.server.BW4TServer" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/server/BW4TServer.java" binary="false">    
+    <position height="680" width="394" x="8346" y="1613"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="28" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.client.BW4TClient" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/client/BW4TClient.java" binary="false">    
+    <position height="680" width="339" x="10391" y="1613"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="29" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.zone.Zone" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/zone/Zone.java" binary="false">    
+    <position height="237" width="351" x="9531" y="570"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="30" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.visualizations.ControlPanel" 
+    project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/visualizations/ServerContextDisplay.java" binary="false">    
+    <position height="85" width="230" x="7701" y="570"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="31" corner="BOTTOM_RIGHT" language="java" 
+    name="nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer.DoorInfo" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/visualizations/BW4TClientMapRenderer.java" binary="false">    
+    <position height="221" width="243" x="11039" y="3427"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="32" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer" 
+    project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/visualizations/BW4TClientMapRenderer.java" binary="false">    
+    <position height="1258" width="512" x="11379" y="1613"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="33" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.BW4TBuilder" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/BW4TBuilder.java" binary="false">    
+    <position height="119" width="261" x="2891" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="34" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.server.BW4TEnvironment" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/server/BW4TEnvironment.java" 
+    binary="false">    
+    <position height="714" width="414" x="7971" y="570"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="35" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.util.PathPlanner" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/util/PathPlanner.java" binary="false">    
+    <position height="102" width="277" x="3192" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="36" corner="BOTTOM_RIGHT" language="java" 
+    name="nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer.GotoPositionActionListener" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/visualizations/BW4TClientMapRenderer.java" binary="false">    
+    <position height="119" width="221" x="11941" y="2911"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <package id="37" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.robots" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/robots" binary="false">    
+    <position height="54" width="174" x="3509" y="61"/>    
+    <display autosize="true" stereotype="true"/>  
+  </package>  
+  <class id="38" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.BoundedMoveableObject" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/BoundedMoveableObject.java" 
+    binary="false">    
+    <position height="373" width="434" x="9913" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="39" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.eis.translators.ZoneTranslator" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/eis/translators/ZoneTranslator.java" 
+    binary="false">    
+    <position height="119" width="261" x="3723" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="40" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.message.MessageType" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/message/MessageType.java" 
+    binary="false">    
+    <position height="799" width="269" x="10641" y="3756"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="41" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.agent.HumanAgent" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/agent/HumanAgent.java" binary="false">    
+    <position height="102" width="297" x="13248" y="2911"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="42" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.visualizations.MapSelector" 
+    project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/visualizations/ServerContextDisplay.java" binary="false">    
+    <position height="102" width="229" x="4024" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="43" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.client.BW4TRemoteEnvironment" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/client/BW4TRemoteEnvironment.java" 
+    binary="false">    
+    <position height="1003" width="862" x="10583" y="570"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="44" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.blocks.Block" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/blocks/Block.java" binary="false">    
+    <position height="238" width="390" x="9953" y="570"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="45" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.agent.TestAgent" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/agent/TestAgent.java" binary="false">    
+    <position height="204" width="280" x="12959" y="570"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="46" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.message.BW4TMessage" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/message/BW4TMessage.java" 
+    binary="false">    
+    <position height="289" width="358" x="10641" y="3427"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="47" corner="BOTTOM_RIGHT" language="java" 
+    name="nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer.GoToRoomActionListener" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/visualizations/BW4TClientMapRenderer.java" binary="false">    
+    <position height="119" width="221" x="12202" y="2911"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <package id="48" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.doors" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/doors" binary="false">    
+    <position height="54" width="169" x="4293" y="61"/>    
+    <display autosize="true" stereotype="true"/>  
+  </package>  
+  <interface id="49" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.agent.ActionInterface" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/agent/ActionInterface.java" 
+    binary="false">    
+    <position height="170" width="266" x="13279" y="570"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <class id="50" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.zone.BlocksRoom" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/zone/BlocksRoom.java" binary="false">    
+    <position height="119" width="397" x="9235" y="2911"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <interface id="51" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.server.BW4TServerActions" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/server/BW4TServerActions.java" 
+    binary="false">    
+    <position height="476" width="339" x="9672" y="2911"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <package id="52" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.agent" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/agent" binary="false">    
+    <position height="54" width="168" x="4502" y="61"/>    
+    <display autosize="true" stereotype="true"/>  
+  </package>  
+  <class id="53" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.eis.ObjectInformation" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/eis/ObjectInformation.java" 
+    binary="false">    
+    <position height="204" width="241" x="5076" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="54" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.message.MessageTranslator" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/message/MessageTranslator.java" 
+    binary="false">    
+    <position height="187" width="326" x="4710" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="55" corner="BOTTOM_RIGHT" language="java" 
+    name="nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer.GoToBlockActionListener" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/visualizations/BW4TClientMapRenderer.java" binary="false">    
+    <position height="119" width="221" x="12463" y="2911"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="56" corner="BOTTOM_RIGHT" language="java" 
+    name="nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer.ChatListMouseListener" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/visualizations/BW4TClientMapRenderer.java" binary="false">    
+    <position height="170" width="222" x="12724" y="2911"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="57" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.RendererMapLoader" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/RendererMapLoader.java" binary="false">    
+    <position height="187" width="357" x="5357" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="58" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.server.BW4TRunner" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/server/BW4TRunner.java" binary="false">    
+    <position height="374" width="295" x="7971" y="2911"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="59" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.visualizations.BlockStyle" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/visualizations/BlockStyle.java" 
+    binary="false">    
+    <position height="102" width="160" x="11980" y="570"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="60" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.BW4TEnvironmentListener" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/BW4TEnvironmentListener.java" 
+    binary="false">    
+    <position height="187" width="337" x="11403" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="61" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.visualizations.BoundedMoveableObjectStyle" 
+    project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/visualizations/BoundedMoveableObjectStyle.java" binary="false">    
+    <position height="356" width="301" x="11780" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="62" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.eis.BlockColor" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/eis/BlockColor.java" binary="false">    
+    <position height="136" width="157" x="10387" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="63" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.client.InitParam" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/client/InitParam.java" binary="false">    
+    <position height="289" width="177" x="5969" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </enumeration>  
+  <package id="64" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.server" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/server" binary="false">    
+    <position height="54" width="175" x="5754" y="61"/>    
+    <display autosize="true" stereotype="true"/>  
+  </package>  
+  <package id="65" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.client" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/client" binary="false">    
+    <position height="54" width="167" x="6186" y="61"/>    
+    <display autosize="true" stereotype="true"/>  
+  </package>  
+  <class id="66" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.eis.translators.PointTranslator" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/eis/translators/PointTranslator.java" 
+    binary="false">    
+    <position height="119" width="279" x="6393" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="67" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.server.AgentRecord" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/server/AgentRecord.java" binary="false">    
+    <position height="357" width="374" x="8759" y="570"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="68" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.client.BW4TClientSettings" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/client/BW4TClientSettings.java" 
+    binary="false">    
+    <position height="169" width="457" x="6712" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <package id="69" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.zone" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/zone" binary="false">    
+    <position height="54" width="163" x="7209" y="61"/>    
+    <display autosize="true" stereotype="true"/>  
+  </package>  
+  <class id="70" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.visualizations.RobotStyle" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/visualizations/RobotStyle.java" 
+    binary="false">    
+    <position height="136" width="213" x="12180" y="570"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <package id="71" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.eis" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/eis" binary="false">    
+    <position height="54" width="149" x="7412" y="61"/>    
+    <display autosize="true" stereotype="true"/>  
+  </package>  
+  <class id="72" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.server.Stepper" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/server/Stepper.java" binary="false">    
+    <position height="255" width="235" x="7971" y="1613"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="73" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.zone.Room" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/zone/Room.java" binary="false">    
+    <position height="152" width="390" x="9101" y="1613"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="74" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.agent.BW4TAgent" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/agent/BW4TAgent.java" binary="false">    
+    <position height="357" width="291" x="12919" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="75" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.robots.Robot.MoveType" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/robots/Robot.java" binary="false">    
+    <position height="238" width="240" x="10051" y="2911"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="76" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.util.Id2Object" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/util/Id2Object.java" binary="false">    
+    <position height="102" width="362" x="7937" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="77" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.eis.translators.ColorTranslator" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/eis/translators/ColorTranslator.java" 
+    binary="false">    
+    <position height="119" width="296" x="7601" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <package id="78" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.blocks" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/blocks" binary="false">    
+    <position height="54" width="174" x="8339" y="61"/>    
+    <display autosize="true" stereotype="true"/>  
+  </package>  
+  <package id="79" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t" binary="false">    
+    <position height="54" width="124" x="8553" y="61"/>    
+    <display autosize="true" stereotype="true"/>  
+  </package>  
+  <package id="80" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.message" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/message" binary="false">    
+    <position height="54" width="191" x="8717" y="61"/>    
+    <display autosize="true" stereotype="true"/>  
+  </package>  
+  <class id="81" corner="BOTTOM_RIGHT" language="java" 
+    name="nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer.TeamListMouseListener" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/visualizations/BW4TClientMapRenderer.java" binary="false">    
+    <position height="170" width="222" x="12986" y="2911"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="82" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.MapLoader" project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/MapLoader.java" binary="false">    
+    <position height="323" width="588" x="8948" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="83" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.robots.NavigatingRobot.State" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/robots/NavigatingRobot.java" 
+    binary="false">    
+    <position height="136" width="142" x="8306" y="3427"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="84" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.visualizations.ServerContextDisplay" 
+    project="BlocksWorldForTeam2" 
+    file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/visualizations/ServerContextDisplay.java" binary="false">    
+    <position height="102" width="201" x="7701" y="1613"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="85" corner="BOTTOM_RIGHT" language="java" name="nl.tudelft.bw4t.eis.RobotEntity" 
+    project="BlocksWorldForTeam2" file="/BlocksWorldForTeam2/src/nl/tudelft/bw4t/eis/RobotEntity.java" binary="false">    
+    <position height="612" width="284" x="8435" y="570"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <association id="86">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="87" name="server"/>      
+      <multiplicity id="88" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="51" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="89">    
+    <end type="SOURCE" refId="34" navigable="false">      
+      <attribute id="90" name="server"/>      
+      <multiplicity id="91" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="92">    
+    <bendpoint x="11388" y="2911"/>    
+    <end type="SOURCE" refId="32" navigable="false">      
+      <attribute id="93" name="dropZone"/>      
+      <multiplicity id="94" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="95">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="96" name="doors"/>      
+      <multiplicity id="97" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="31" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="98">    
+    <end type="SOURCE" refId="84" navigable="false">      
+      <attribute id="99" name="myRenderer"/>      
+      <multiplicity id="100" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="101">    
+    <end type="SOURCE" refId="32" navigable="false">      
+      <attribute id="102" name="humanAgent"/>      
+      <multiplicity id="103" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="41" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="104">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="61"/>  
+  </generalization>  
+  <generalization id="105">    
+    <end type="SOURCE" refId="59"/>    
+    <end type="TARGET" refId="61"/>  
+  </generalization>  
+  <association id="106">    
+    <end type="SOURCE" refId="43" navigable="false">      
+      <attribute id="107" name="client"/>      
+      <multiplicity id="108" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="109">    
+    <end type="SOURCE" refId="60" navigable="false">      
+      <attribute id="110" name="environment"/>      
+      <multiplicity id="111" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="43" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="112">    
+    <bendpoint x="11018" y="2911"/>    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="31"/>  
+  </nesting>  
+  <association id="113">    
+    <end type="SOURCE" refId="43" navigable="false">      
+      <attribute id="114" name="entityToGUI"/>      
+      <multiplicity id="115" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="116">    
+    <end type="SOURCE" refId="34" navigable="false">      
+      <attribute id="117" name="contextDisplay"/>      
+      <multiplicity id="118" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="84" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="119">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="38"/>  
+  </generalization>  
+  <nesting id="120">    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="47"/>  
+  </nesting>  
+  <association id="121">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="122" name="roomBehindTheDoor"/>      
+      <multiplicity id="123" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="73" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="124">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="75"/>  
+  </nesting>  
+  <generalization id="125">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="73"/>  
+  </generalization>  
+  <generalization id="126">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="61"/>  
+  </generalization>  
+  <generalization id="127">    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <realization id="128">    
+    <end type="SOURCE" refId="85"/>    
+    <end type="TARGET" refId="22"/>  
+  </realization>  
+  <association id="129">    
+    <bendpoint x="8315" y="1613"/>    
+    <end type="SOURCE" refId="85" navigable="false">      
+      <attribute id="130" name="ourRobot"/>      
+      <multiplicity id="131" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="132">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="133" name="parent"/>      
+      <multiplicity id="134" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="43" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="135">    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="81"/>  
+  </nesting>  
+  <association id="136">    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="137" name="message"/>      
+      <multiplicity id="138" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="46" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="139">    
+    <end type="SOURCE" refId="34" navigable="false">      
+      <attribute id="140" name="stepper"/>      
+      <multiplicity id="141" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="72" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="142">    
+    <end type="SOURCE" refId="45"/>    
+    <end type="TARGET" refId="74"/>  
+  </generalization>  
+  <association id="143">    
+    <end type="SOURCE" refId="46" navigable="false">      
+      <attribute id="144" name="type"/>      
+      <multiplicity id="145" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="40" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="146">    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="36"/>  
+  </nesting>  
+  <generalization id="147">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="38"/>  
+  </generalization>  
+  <association id="148">    
+    <end type="SOURCE" refId="62" navigable="false">      
+      <attribute id="149" name="block"/>      
+      <multiplicity id="150" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="44" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="151">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="152" name="theLogger"/>      
+      <multiplicity id="153" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="154">    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="14"/>  
+  </nesting>  
+  <association id="155">    
+    <end type="SOURCE" refId="72" navigable="false">      
+      <attribute id="156" name="runner"/>      
+      <multiplicity id="157" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="58" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="158">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="159" name="agentRecords"/>      
+      <multiplicity id="160" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="67" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="161">    
+    <bendpoint x="9922" y="570"/>    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="38"/>  
+  </generalization>  
+  <association id="162">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="163" name="holding"/>      
+      <multiplicity id="164" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="44" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="165">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="83"/>  
+  </nesting>  
+  <association id="166">    
+    <end type="SOURCE" refId="34" navigable="false">      
+      <attribute id="167" name="instance"/>      
+      <multiplicity id="168" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="34" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="169">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="29"/>  
+  </generalization>  
+  <association id="170">    
+    <end type="SOURCE" refId="74" navigable="false">      
+      <attribute id="171" name="bw4tenv"/>      
+      <multiplicity id="172" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="43" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="173">    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="55"/>  
+  </nesting>  
+  <association id="174">    
+    <end type="SOURCE" refId="32" navigable="false">      
+      <attribute id="175" name="rooms"/>      
+      <multiplicity id="176" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="177">    
+    <bendpoint x="12928" y="1613"/>    
+    <bendpoint x="12928" y="570"/>    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="74"/>  
+  </generalization>  
+  <association id="178">    
+    <bendpoint x="11475" y="570"/>    
+    <end type="SOURCE" refId="60" navigable="false">      
+      <attribute id="179" name="agentData"/>      
+      <multiplicity id="180" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="181">    
+    <end type="SOURCE" refId="44"/>    
+    <end type="TARGET" refId="38"/>  
+  </generalization>  
+  <nesting id="182">    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="9"/>  
+  </nesting>  
+  <realization id="183">    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="11"/>  
+  </realization>  
+  <generalization id="184">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="19"/>  
+  </generalization>  
+  <generalization id="185">    
+    <end type="SOURCE" refId="70"/>    
+    <end type="TARGET" refId="61"/>  
+  </generalization>  
+  <nesting id="186">    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="25"/>  
+  </nesting>  
+  <association id="187">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="188" name="neighbours"/>      
+      <multiplicity id="189" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="190">    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="56"/>  
+  </nesting>  
+  <generalization id="191">    
+    <end type="SOURCE" refId="73"/>    
+    <end type="TARGET" refId="29"/>  
+  </generalization>  
+  <realization id="192">    
+    <end type="SOURCE" refId="74"/>    
+    <end type="TARGET" refId="49"/>  
+  </realization>  
+  <association id="193">    
+    <end type="SOURCE" refId="44" navigable="false">      
+      <attribute id="194" name="heldBy"/>      
+      <multiplicity id="195" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="196">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="51"/>  
+  </realization>  
+  <association id="197">    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="198" name="displayer"/>      
+      <multiplicity id="199" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="84" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="200">    
+    <end type="SOURCE" refId="32" navigable="false">      
+      <attribute id="201" name="environment"/>      
+      <multiplicity id="202" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="43" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="203">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="61"/>  
+  </generalization>  
+  <nesting id="204">    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="21"/>  
+  </nesting>  
+  <association id="205">    
+    <end type="SOURCE" refId="85" navigable="false">      
+      <attribute id="206" name="ourRobotRoom"/>      
+      <multiplicity id="207" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="73" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="208">    
+    <end type="SOURCE" refId="50"/>    
+    <end type="TARGET" refId="73"/>  
+  </generalization>  
+  <nesting id="209">    
+    <bendpoint x="11367" y="2911"/>    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="26"/>  
+  </nesting>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+    visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true"/>    
+    <operations public="true" package="true" protected="true" private="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
