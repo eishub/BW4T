@@ -148,7 +148,7 @@ public class RobotEntity implements RobotEntityInt {
 	
 	/**
 	 * Valentine
-	 * This method should be changed as well to get the locations of all charging stations.
+	 * This method should be changed as well to get the locations of all charging zones.
 	 */
 	@AsPercept(name = "position", multiplePercepts = true, filter = Filter.Type.ON_CHANGE)
 	public List<ObjectInformation> getLocations() {
@@ -408,6 +408,26 @@ public class RobotEntity implements RobotEntityInt {
 	@AsPercept(name = "state", filter = Filter.Type.ON_CHANGE)
 	public String getState() {
 		return ourRobot.getState().toString().toLowerCase();
+	}
+	
+	/**
+	 * Valentine
+	 * Percept the robot's battery.
+	 */
+	@AsPercept(name = "battery", filter = Filter.Type.ON_CHANGE)
+	public int shouldRecharge()
+	{
+		return ourRobot.getBatteryPercentage();
+	}
+	
+	/**
+	 * Valentine
+	 * Percept the robot's battery discharge rate.
+	 */
+	@AsPercept(name = "batteryDischargeRate", filter = Filter.Type.ON_CHANGE)
+	public int getDischargeRate()
+	{
+		return ourRobot.getDischargeRate();
 	}
 
 	/**

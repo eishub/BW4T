@@ -31,6 +31,11 @@ public class Battery
 		return this.current;
 	}
 	
+	public int getDischargeRate()
+	{
+		return this.dRate;
+	}
+	
 	public int getPercentage()
 	{
 		return (this.current * 100) / this.max;

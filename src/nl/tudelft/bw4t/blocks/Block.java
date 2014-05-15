@@ -22,12 +22,6 @@ public class Block extends BoundedMoveableObject {
 	private final BlockColor colorId;
 	private final Color color;
 	private Robot heldBy;
-	
-	/**
-	 * Valentine
-	 * This registers the block type.
-	 */
-	private String type;
 
 	/**
 	 * Creates a new block with the given color.
@@ -38,12 +32,6 @@ public class Block extends BoundedMoveableObject {
 	 *            The space the block will be in.
 	 * @param context
 	 *            The context in which the block will be present.
-	 */
-	
-	/**
-	 * Valentine
-	 * TODO
-	 * The constructor should have a String type parameter that declares the type of block.
 	 */
 	public Block(BlockColor colorId, ContinuousSpace<Object> space,
 			Context<Object> context) {
@@ -100,14 +88,5 @@ public class Block extends BoundedMoveableObject {
 	 */
 	public boolean isFree() {
 		return getHeldBy() == null;
-	}
-	
-	/**
-	 * Valentine
-	 * This method returns the block type.
-	 */
-	public String getType()
-	{
-		return this.type;
 	}
 }

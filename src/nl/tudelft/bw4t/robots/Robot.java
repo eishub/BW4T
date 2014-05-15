@@ -145,17 +145,6 @@ public class Robot extends BoundedMoveableObject {
 	 */
 	public boolean canPickUp(Block b) {
 		double distance = distanceTo(b.getLocation());
-		
-		/**
-		 * Valentine
-		 * The robot is next to a charging station.
-		 * The robot charges.
-		 */
-		if (b.getType().equals("chargingstation"))
-		{
-			this.battery.recharge();
-		}
-
 		if (distance <= ARM_DISTANCE && b.isFree())
 			return true;
 		else
@@ -497,10 +486,33 @@ public class Robot extends BoundedMoveableObject {
 	
 	/**
 	 * Valentine
-	 * This method checks if the battery of the robot is low.
+	 * This method returns the battery percentage.
 	 */
-	public boolean batteryIsLow()
+	public int getBatteryPercentage()
 	{
-		return (this.battery.getPercentage() <= 15);
+		return this.battery.getPercentage();
+	}
+	
+	/**
+	 * Valentine
+	 * @return discharge rate of battery.
+	 */
+	public int getDischargeRate()
+	{
+		return this.battery.getDischargeRate();
+	}
+	
+	
+	/**
+	 * Valentine
+	 * The robot is in a charging zone.
+	 * The robot charges.
+	 */
+	public void recharge()
+	{
+		if (this.getZone().getName().equals("chargingzone"))
+		{
+			this.battery.recharge();
+		}
 	}
 }
