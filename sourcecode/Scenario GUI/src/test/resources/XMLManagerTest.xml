@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<bw4TClientConfig>
-    <clientIp>133.130.48.45</clientIp>
-    <clientPort>0</clientPort>
-    <launchGui>false</launchGui>
-    <serverPort>0</serverPort>
-    <useGoal>false</useGoal>
-</bw4TClientConfig>
