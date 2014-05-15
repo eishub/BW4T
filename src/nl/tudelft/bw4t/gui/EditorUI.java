@@ -33,6 +33,7 @@ public class EditorUI extends javax.swing.JFrame {
      */
     public EditorUI() {
         initComponents();
+        setResizable(false);
     }
 
     /**
@@ -77,8 +78,9 @@ public class EditorUI extends javax.swing.JFrame {
         gripperCheckbox.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
         		if(!gripperCheckbox.isSelected()){
-        			//setHasGripper(true);
+        			//robot.setGripper(false);
         		}
+        		//else robot.setGripper(true);
         	}
         });
         colorblindCheckbox = new javax.swing.JCheckBox();
