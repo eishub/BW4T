@@ -2,12 +2,15 @@ package nl.tudelft.bw4t.gui;
 
 import java.awt.event.KeyEvent;
 
+import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 /**
  * The MenuBar class extends JMenuBar. Used in the ScenarioEditor Frame.
+ * 
+ * @author Xander
  */
 public class MenuBar extends JMenuBar {
 	
@@ -45,19 +48,35 @@ public class MenuBar extends JMenuBar {
         file.add(fileExit);
         
     }
-
+    
+    /**
+     * Returns the JMenuItem to start a new file
+     * @return The JMenuItem to start a new file
+     */
 	public JMenuItem getMenuItemFileNew() {
 		return fileNew;
 	}
-
+    
+    /**
+     * Returns the JMenuItem to start a open a file
+     * @return The JMenuItem to start a open a file
+     */
 	public JMenuItem getMenuItemFileOpen() {
 		return fileOpen;
 	}
 
+    /**
+     * Returns the JMenuItem to start a save a file
+     * @return The JMenuItem to start a save a file
+     */
 	public JMenuItem getMenuItemFileSave() {
 		return fileSave;
 	}
 
+    /**
+     * Returns the JMenuItem to exit the program
+     * @return The JMenuItem to exit the program
+     */
 	public JMenuItem getMenuItemFileExit() {
 		return fileExit;
 	}
