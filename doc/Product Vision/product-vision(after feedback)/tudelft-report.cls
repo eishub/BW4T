@@ -50,7 +50,7 @@
     \fi
 \fi
 \RequirePackage{metalogo}
-\RequirePackage[numbers,sort&compress]{natbib}
+\RequirePackage[sort&compress]{natbib}
 \RequirePackage{tikz}
 \RequirePackage[noindentafter]{titlesec}
 \RequirePackage{titletoc}
