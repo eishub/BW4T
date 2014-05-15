@@ -8,7 +8,7 @@ ease of use.
 \section{Design Goals}
 For this project we were given a large codebase. This codebase had grown
 complex and convoluted. The task for us was to refactor the code to reduce
-complexity, make it more manageable and give it a plugin architecture. \\ On
+complexity, make it more manageable and give it a \gls{pluginarch}. \\ On
 further inspection, however, it was revealed that an exact plugin architecture
 wasn't precisely what the product owner wanted. By analyzing the product
 owner's final goals, we decided that a modular design which can be easily
@@ -30,13 +30,13 @@ For the refactoring of the code a number of tasks need to be completed:
   some classes are even shared entirely. We want to split these structures into
   individual projects to make them easier to work with.
   \item
-  \textbf{Convert to Maven project} - There are currently no Unit Tests present
+  \textbf{Convert to \Gls{maven} project} - There are currently no \gls{unittest} present
   in the codebase, therefore in addition to splitting the codebase we wish to
   turn these separate projects into Maven projects including Unit Tests so we can
   easily verify that the codebases are still working correctly after having made
   changes.
   \item
-  \textbf{Improve and add to the GUI} - There is much room for improvement for
+  \textbf{Improve and add to the \gls{gui}} - There is much room for improvement for
   the GUI. We want to make it more user-friendly in addition to adding a whole
   new GUI for the creation of maps via an easy to use drag-and-drop system.
   \item
@@ -50,7 +50,7 @@ For the refactoring of the code a number of tasks need to be completed:
   Repast isn't properly utilized, many things that have been implemented manually
   can also be handled by Repast.
   \item
-  \textbf{Improve Javadoc} - Javadoc's are sometimes lacking in information or
+  \textbf{Improve \gls{javadoc}} - Javadoc's are sometimes lacking in information or
   occasionally not present at all.
   \item
   \textbf{Remove code duplication} - There are a number of instances of code
