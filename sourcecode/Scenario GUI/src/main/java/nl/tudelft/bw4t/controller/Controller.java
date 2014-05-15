@@ -252,6 +252,9 @@ class DeleteBot implements ActionListener {
 	
 }
 
+/**
+ * Handles the event of the menu.
+ */
 abstract class MenuOption implements ActionListener {
 
     protected MenuBar view;
@@ -279,6 +282,9 @@ abstract class MenuOption implements ActionListener {
     abstract public void actionPerformed(ActionEvent e);
 }
 
+/**
+ * Handles the event to open a file.
+ */
 class MenuOptionOpen extends MenuOption {
 
     public MenuOptionOpen(MenuBar view, Controller mainView) {
@@ -329,7 +335,9 @@ class MenuOptionOpen extends MenuOption {
     }
 }
 
-
+/**
+ * Handles the event to exit the program.
+ */
 class MenuOptionExit extends MenuOption {
 
     public MenuOptionExit(MenuBar view, Controller mainView) {
@@ -353,7 +361,9 @@ class MenuOptionExit extends MenuOption {
     }
 }
 
-
+/**
+ * Handles the event to save a file.
+ */
 class MenuOptionSave extends MenuOption {
 
     public MenuOptionSave(MenuBar view, Controller mainView) {
@@ -365,6 +375,9 @@ class MenuOptionSave extends MenuOption {
     }
 }
 
+/**
+ * Handles the event to start a new file.
+ */
 class MenuOptionNew extends MenuOption {
 
     public MenuOptionNew(MenuBar view, Controller mainView) {
