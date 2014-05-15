@@ -313,7 +313,7 @@ public class ConfigurationPanel extends JPanel {
      * @param serverPort The port of the server
      */
     public void setServerPort(String serverPort) {
-        this.clientPort.setText(serverPort);
+        this.serverPort.setText(serverPort);
     }
     
     /**
@@ -414,5 +414,32 @@ public class ConfigurationPanel extends JPanel {
      */
     public JFileChooser getFileChooser() {
         return fileChooser;
+    }
+
+    /**
+     * Returns if changes has been made to the default configuration
+     * @return whether changes have been made
+     */
+    public boolean isDefault() {
+    	boolean isDefault = true;
+    	
+    	if(!this.getClientIP().equals("127.0.0.1") && isDefault)
+    		isDefault = false;
+    	if(this.getClientPort() != 9000 && isDefault)
+    		isDefault = false;
+    	if(!this.getServerIP().equals("127.0.0.1") && isDefault)
+    		isDefault = false;
+    	if(this.getServerPort() != 9000 && isDefault)
+    		isDefault = false;
+    	if(!this.useGui() && isDefault)
+    		isDefault = false;
+    	if(!this.useGoal() && isDefault)
+    		isDefault = false;
+    	if(!this.getAgentClassFile().equals("") && isDefault)
+    		isDefault = false;
+    	if(!this.getMapFile().equals("") && isDefault)
+    		isDefault = false;
+    	
+    	return isDefault;
     }
 }
