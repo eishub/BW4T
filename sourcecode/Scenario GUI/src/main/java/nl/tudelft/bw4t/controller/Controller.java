@@ -66,11 +66,19 @@ public class Controller {
         );
         
         /** Adds the listeners for the items in the MenuBar: */
-        MenuOptions menuOptions = new MenuOptions(getMainView().getTopMenuBar(), this);
-        getMainView().getTopMenuBar().getMenuItemFileExit().addActionListener(menuOptions);
-        getMainView().getTopMenuBar().getMenuItemFileNew().addActionListener(menuOptions);
-        getMainView().getTopMenuBar().getMenuItemFileOpen().addActionListener(menuOptions);
-        getMainView().getTopMenuBar().getMenuItemFileSave().addActionListener(menuOptions);
+        getMainView().getTopMenuBar().getMenuItemFileExit().addActionListener(
+                new MenuOptionExit(getMainView().getTopMenuBar(), this)
+        );
+
+        getMainView().getTopMenuBar().getMenuItemFileNew().addActionListener(
+                new MenuOptionNew(getMainView().getTopMenuBar(), this)
+        );
+        getMainView().getTopMenuBar().getMenuItemFileOpen().addActionListener(
+                new MenuOptionOpen(getMainView().getTopMenuBar(), this)
+        );
+        getMainView().getTopMenuBar().getMenuItemFileSave().addActionListener(
+                new MenuOptionSave(getMainView().getTopMenuBar(), this)
+        );
         
     }
 
@@ -244,117 +252,149 @@ class DeleteBot implements ActionListener {
 	
 }
 
-/**
- * Handles the menu options.
- * 
- * @author Nick, Xander
- *
- */
-class MenuOptions implements ActionListener {
-	
-	private MenuBar view;
-	private Controller controller;
-	
-	public MenuOptions(MenuBar view, Controller mainView) {
-		this.view = view;
-		this.controller = mainView;
-	}
+abstract class MenuOption implements ActionListener {
 
-	public void actionPerformed(ActionEvent e) {
-		ConfigurationPanel configPanel = controller.getMainView().getMainPanel().getConfigurationPanel();
-		BotPanel botPanel = controller.getMainView().getMainPanel().getBotPanel();
-		
-		if (e.getSource() == view.getMenuItemFileExit()) {
-			// Check if current config is different to default config
-			if(!configPanel.isDefault()) {
-				// Check if user wants to save current configuration
-				int response = JOptionPane.showConfirmDialog(null, "Do you want to save the current configuration?", "", JOptionPane.YES_NO_OPTION);
-		
-		        if (response == JOptionPane.YES_OPTION) {
-		            saveFile();
-		        }
-			}
-	        
-			System.exit(0);
-		} else if (e.getSource() == view.getMenuItemFileNew()) {
-			// Check if current config is different to default config
-			if(!configPanel.isDefault()) {
-				// Check if user wants to save current configuration
-				int response = JOptionPane.showConfirmDialog(null, "Do you want to save the current configuration?", "", JOptionPane.YES_NO_OPTION);
-		
-		        if (response == JOptionPane.YES_OPTION) {
-		            saveFile();
-		        }
-			}
-			
-			// Reset the config panel
-			configPanel.setClientIP(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_IP.getValue());
-			configPanel.setClientPort(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_PORT.getValue());
-			configPanel.setServerIP(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_IP.getValue());
-			configPanel.setServerPort(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_PORT.getValue());
-			configPanel.setUseGui(ConfigurationPanel.DEFAULT_VALUES.USE_GUI.getBooleanValue());
-			configPanel.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
-			configPanel.setAgentClassFile(ConfigurationPanel.DEFAULT_VALUES.AGENT_CLASS.getValue());
-			configPanel.setMapFile(ConfigurationPanel.DEFAULT_VALUES.MAP_FILE.getValue());
-			
-			// Reset the bot panel
-			//TODO reset botPanel
-		} else if (e.getSource() == view.getMenuItemFileOpen()) {
-			// Check if current config is different to default config
-			if(!configPanel.isDefault()) {
-				// Check if user wants to save current configuration
-				int response = JOptionPane.showConfirmDialog(null, "Do you want to save the current configuration?", "", JOptionPane.YES_NO_OPTION);
-		
-		        if (response == JOptionPane.YES_OPTION) {
-		            saveFile();
-		        }
-			}
-			
-	        // Open configuration file
-			JFileChooser fileChooser = new JFileChooser();
-        	if (fileChooser.showOpenDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
-        		File file = fileChooser.getSelectedFile();
-        		
-        		try {
-					BW4TClientConfig temp = BW4TClientConfig.fromXML(file.getAbsolutePath());
-										
-					// Fill the config panel
-					configPanel.setClientIP(temp.getClientIp());
-					configPanel.setClientPort(""+temp.getClientPort());
-					configPanel.setServerIP(temp.getServerIp());
-					configPanel.setServerPort(""+temp.getServerPort());
-					configPanel.setUseGui(temp.isLaunchGui());
-					configPanel.setUseGoal(temp.isUseGoal());
-					configPanel.setAgentClassFile(temp.getAgentClass());
-					configPanel.setMapFile(temp.getMapFile());
-					
-					// Fill the bot panel
-					//TODO fill botPanel
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-				} catch (JAXBException e1) {
-					e1.printStackTrace();
-				}
-        		
-        	}
-		} else if (e.getSource() == view.getMenuItemFileSave()) {
-        	saveFile();
-		}
-	}
-	
-	public void saveFile() {
-		JFileChooser fileChooser = new JFileChooser();
-    	if (fileChooser.showSaveDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
-    		File file = fileChooser.getSelectedFile();
+    protected MenuBar view;
+    protected Controller controller;
+
+    public MenuOption(MenuBar view, Controller mainView) {
+        this.view = view;
+        this.controller = mainView;
+    }
+
+    public void saveFile() {
+        JFileChooser fileChooser = new JFileChooser();
+        if (fileChooser.showSaveDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
             try {
-    			new BW4TClientConfig((MainPanel) (controller.getMainView()).getContentPane(), file.getAbsolutePath()).toXML();
-    		} catch (FileNotFoundException e1) {
-    			e1.printStackTrace();
-    		} catch (JAXBException e1) {
-    			e1.printStackTrace();
-    		}
-    	}
-	}
-	
+                new BW4TClientConfig((MainPanel) (controller.getMainView()).getContentPane(), file.getAbsolutePath()).toXML();
+            } catch (FileNotFoundException e1) {
+                e1.printStackTrace();
+            } catch (JAXBException e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+
+    abstract public void actionPerformed(ActionEvent e);
 }
 
+class MenuOptionOpen extends MenuOption {
+
+    public MenuOptionOpen(MenuBar view, Controller mainView) {
+        super(view, mainView);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        ConfigurationPanel configPanel = super.controller.getMainView().getMainPanel().getConfigurationPanel();
+        BotPanel botPanel = super.controller.getMainView().getMainPanel().getBotPanel();
+
+        // Check if current config is different to default config
+        if(!configPanel.isDefault()) {
+            // Check if user wants to save current configuration
+            int response = JOptionPane.showConfirmDialog(null, "Do you want to save the current configuration?", "", JOptionPane.YES_NO_OPTION);
+
+            if (response == JOptionPane.YES_OPTION) {
+                saveFile();
+            }
+        }
+
+        // Open configuration file
+        JFileChooser fileChooser = new JFileChooser();
+        if (fileChooser.showOpenDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+
+            try {
+                BW4TClientConfig temp = BW4TClientConfig.fromXML(file.getAbsolutePath());
+
+                // Fill the config panel
+                configPanel.setClientIP(temp.getClientIp());
+                configPanel.setClientPort(""+temp.getClientPort());
+                configPanel.setServerIP(temp.getServerIp());
+                configPanel.setServerPort(""+temp.getServerPort());
+                configPanel.setUseGui(temp.isLaunchGui());
+                configPanel.setUseGoal(temp.isUseGoal());
+                configPanel.setAgentClassFile(temp.getAgentClass());
+                configPanel.setMapFile(temp.getMapFile());
+
+                // Fill the bot panel
+                //TODO fill botPanel
+            } catch (FileNotFoundException e1) {
+                e1.printStackTrace();
+            } catch (JAXBException e1) {
+                e1.printStackTrace();
+            }
+
+        }
+    }
+}
+
+
+class MenuOptionExit extends MenuOption {
+
+    public MenuOptionExit(MenuBar view, Controller mainView) {
+        super(view, mainView);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        ConfigurationPanel configPanel = super.controller.getMainView().getMainPanel().getConfigurationPanel();
+
+        // Check if current config is different to default config
+        if(!configPanel.isDefault()) {
+            // Check if user wants to save current configuration
+            int response = JOptionPane.showConfirmDialog(null, "Do you want to save the current configuration?", "", JOptionPane.YES_NO_OPTION);
+
+            if (response == JOptionPane.YES_OPTION) {
+                saveFile();
+            }
+        }
+
+        System.exit(0);
+    }
+}
+
+
+class MenuOptionSave extends MenuOption {
+
+    public MenuOptionSave(MenuBar view, Controller mainView) {
+        super(view, mainView);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        saveFile();
+    }
+}
+
+class MenuOptionNew extends MenuOption {
+
+    public MenuOptionNew(MenuBar view, Controller mainView) {
+        super(view, mainView);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        ConfigurationPanel configPanel = super.controller.getMainView().getMainPanel().getConfigurationPanel();
+
+        // Check if current config is different to default config
+        if(!configPanel.isDefault()) {
+            // Check if user wants to save current configuration
+            int response = JOptionPane.showConfirmDialog(null, "Do you want to save the current configuration?", "", JOptionPane.YES_NO_OPTION);
+
+            if (response == JOptionPane.YES_OPTION) {
+                saveFile();
+            }
+        }
+
+        // Reset the config panel
+        configPanel.setClientIP(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_IP.getValue());
+        configPanel.setClientPort(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_PORT.getValue());
+        configPanel.setServerIP(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_IP.getValue());
+        configPanel.setServerPort(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_PORT.getValue());
+        configPanel.setUseGui(ConfigurationPanel.DEFAULT_VALUES.USE_GUI.getBooleanValue());
+        configPanel.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
+        configPanel.setAgentClassFile(ConfigurationPanel.DEFAULT_VALUES.AGENT_CLASS.getValue());
+        configPanel.setMapFile(ConfigurationPanel.DEFAULT_VALUES.MAP_FILE.getValue());
+
+        // Reset the bot panel
+        //TODO reset botPanel
+    }
+}
