@@ -16,7 +16,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import nl.tudelft.bw4t.BW4TEnvironmentListener;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer;
-import nl.tudelft.bw4t.visualizations.ServerContextDisplay;
 import eis.AgentListener;
 import eis.EnvironmentInterfaceStandard;
 import eis.EnvironmentListener;

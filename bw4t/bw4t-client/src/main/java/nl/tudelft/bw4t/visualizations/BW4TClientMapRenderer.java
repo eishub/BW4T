@@ -36,15 +36,14 @@ import javax.swing.border.BevelBorder;
 
 import nl.tudelft.bw4t.RendererMapLoader;
 import nl.tudelft.bw4t.agent.HumanAgent;
-import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.client.BW4TClientSettings;
 import nl.tudelft.bw4t.client.BW4TRemoteEnvironment;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.ColorTranslator;
+import nl.tudelft.bw4t.map.Constants;
 import nl.tudelft.bw4t.message.BW4TMessage;
 import nl.tudelft.bw4t.message.MessageTranslator;
 import nl.tudelft.bw4t.message.MessageType;
-import nl.tudelft.bw4t.robots.Robot;
 import eis.exceptions.NoEnvironmentException;
 import eis.exceptions.PerceiveException;
 import eis.iilang.Function;
@@ -437,7 +436,7 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 					g2d.setColor(allBlocks.get(box).getColor());
 					g2d.fill(transformRectangle(new Rectangle2D.Double(
 							objectPositions.get(box).getX(), objectPositions
-									.get(box).getY(), Block.SIZE, Block.SIZE)));
+									.get(box).getY(), Constants.BLOCK_SIZE, Constants.BLOCK_SIZE)));
 				}
 			}
 		}
@@ -454,7 +453,7 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 		g2d.setColor(entityColor);
 
 		g2d.fill(transformRectangle(new Rectangle2D.Double(entityLocation[0],
-				entityLocation[1], Robot.SIZE, Robot.SIZE)));
+				entityLocation[1], Constants.ROBOT_SIZE, Constants.ROBOT_SIZE)));
 	}
 
 	/**
@@ -743,7 +742,7 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 				for (Long boxID : visibleBlocks) {
 					Shape boxBoundaries = transformRectangle(new Rectangle2D.Double(
 							objectPositions.get(boxID).getX(), objectPositions
-									.get(boxID).getY(), Block.SIZE, Block.SIZE));
+									.get(boxID).getY(), Constants.BLOCK_SIZE, Constants.BLOCK_SIZE));
 					if (boxBoundaries.contains(new Point(selectedLocation[0],
 							selectedLocation[1]))) {
 						if (closeToBox(boxID)) {
