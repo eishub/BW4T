@@ -331,7 +331,7 @@ public class ConfigurationPanel extends JPanel {
      * Sets if GOAL needs to be used.
      * @param The use of GOAL.
      */
-    public void setUseGoal(Boolean useGoal){
+    public void setUseGoal(boolean useGoal){
     	if(useGoal)
     		goalCheckBox.setSelectedCheckbox(goalYes);
     	else
@@ -353,7 +353,7 @@ public class ConfigurationPanel extends JPanel {
      * Sets if GOAL needs to be used.
      * @param The use of GOAL.
      */
-    public void setUseGui(Boolean useGui){
+    public void setUseGui(boolean useGui){
     	if(useGui)
     		guiCheckBox.setSelectedCheckbox(guiYes);
     	else
