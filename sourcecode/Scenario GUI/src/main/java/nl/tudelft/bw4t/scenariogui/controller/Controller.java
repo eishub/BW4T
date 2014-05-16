@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.controller;
+package nl.tudelft.bw4t.scenariogui.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,12 +9,12 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.ScenarioEditor;
-import nl.tudelft.bw4t.config.BW4TClientConfig;
-import nl.tudelft.bw4t.gui.MenuBar;
-import nl.tudelft.bw4t.gui.panel.BotPanel;
-import nl.tudelft.bw4t.gui.panel.ConfigurationPanel;
-import nl.tudelft.bw4t.gui.panel.MainPanel;
+import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
+import nl.tudelft.bw4t.scenariogui.gui.panel.BotPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
  * The Controller class is in charge of all events that happen on the GUI. It delegates all events

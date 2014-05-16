@@ -1,9 +1,11 @@
-package nl.tudelft.bw4t;
+package nl.tudelft.bw4t.scenariogui;
 
 import static org.junit.Assert.assertEquals;
-import nl.tudelft.bw4t.gui.panel.BotPanel;
-import nl.tudelft.bw4t.gui.panel.ConfigurationPanel;
-import nl.tudelft.bw4t.gui.panel.MainPanel;
+
+import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.gui.panel.BotPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.gui.panel;
+package nl.tudelft.bw4t.scenariogui.gui.panel;
 
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
@@ -17,7 +17,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-import nl.tudelft.bw4t.util.Format;
+import nl.tudelft.bw4t.scenariogui.util.Format;
 
 /**
  * The ConfigurationPanel class represents the left pane of the MainPanel.

@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.util;
+package nl.tudelft.bw4t.scenariogui.util;
 
 import static org.junit.Assert.assertEquals;
 

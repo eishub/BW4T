@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.config;
+package nl.tudelft.bw4t.scenariogui.config;
 
 public class BotConfigTest {
 	

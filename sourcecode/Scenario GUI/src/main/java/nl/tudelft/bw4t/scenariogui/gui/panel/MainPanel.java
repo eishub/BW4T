@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.gui.panel;
+package nl.tudelft.bw4t.scenariogui.gui.panel;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
