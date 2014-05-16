@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.gui.panel;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -136,7 +137,7 @@ public class BotPanel extends JPanel {
         botList.addColumn("Type");
 
         botScrollPane = new JScrollPane(botTable);
-        Border margin = BorderFactory.createEmptyBorder(0, 8, 8, 0);
+        Border margin = BorderFactory.createLineBorder(Color.lightGray);//Border margin = BorderFactory.createEmptyBorder(0, 8, 8, 0);
         botScrollPane.setBorder(margin);
     }
         

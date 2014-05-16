@@ -79,6 +79,9 @@ public class Controller {
         getMainView().getTopMenuBar().getMenuItemFileSave().addActionListener(
                 new MenuOptionSave(getMainView().getTopMenuBar(), this)
         );
+        getMainView().getTopMenuBar().getMenuItemFileSaveAs().addActionListener(
+                new MenuOptionSaveAs(getMainView().getTopMenuBar(), this)
+        );
         
     }
 
@@ -264,18 +267,28 @@ abstract class MenuOption implements ActionListener {
         this.view = view;
         this.controller = mainView;
     }
-
+    
     public void saveFile() {
-        JFileChooser fileChooser = new JFileChooser();
-        if (fileChooser.showSaveDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            try {
-                new BW4TClientConfig((MainPanel) (controller.getMainView()).getContentPane(), file.getAbsolutePath()).toXML();
-            } catch (FileNotFoundException e1) {
-                e1.printStackTrace();
-            } catch (JAXBException e1) {
-                e1.printStackTrace();
-            }
+    	saveFile(!view.hasLastFileLocation());
+    }
+
+    public void saveFile(boolean saveAs) {
+    	String path = view.getLastFileLocation();
+    	if (saveAs || !view.hasLastFileLocation()) {
+	        JFileChooser fileChooser = new JFileChooser();
+	        if (fileChooser.showSaveDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
+	            File file = fileChooser.getSelectedFile();
+	            path = file.getAbsolutePath();
+	        } else
+	        	return;
+    	}
+        try {
+            new BW4TClientConfig((MainPanel) (controller.getMainView()).getContentPane(), path).toXML();
+        	view.setLastFileLocation(path);
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        } catch (JAXBException e1) {
+            e1.printStackTrace();
         }
     }
 
@@ -372,6 +385,20 @@ class MenuOptionSave extends MenuOption {
 
     public void actionPerformed(ActionEvent e) {
         saveFile();
+    }
+}
+
+/**
+ * Handles the event to save at a chosen location.
+ */
+class MenuOptionSaveAs extends MenuOption {
+
+    public MenuOptionSaveAs(MenuBar view, Controller mainView) {
+        super(view, mainView);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        saveFile(true);
     }
 }
 
