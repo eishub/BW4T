@@ -273,29 +273,23 @@ abstract class MenuOption implements ActionListener {
     }
 
     public void saveFile(boolean saveAs) {
-    	if (!saveAs && view.hasLastFileLocation()) {
-            try {
-                new BW4TClientConfig((MainPanel) (controller.getMainView()).getContentPane(), view.getLastFileLocation()).toXML();
-            } catch (FileNotFoundException e1) {
-                e1.printStackTrace();
-            } catch (JAXBException e1) {
-                e1.printStackTrace();
-            }
-    	} else {
+    	String path = view.getLastFileLocation();
+    	if (saveAs || !view.hasLastFileLocation()) {
 	        JFileChooser fileChooser = new JFileChooser();
 	        if (fileChooser.showSaveDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
 	            File file = fileChooser.getSelectedFile();
-	            try {
-	            	String path = file.getAbsolutePath();
-	                new BW4TClientConfig((MainPanel) (controller.getMainView()).getContentPane(), path).toXML();
-	            	view.setLastFileLocation(path);
-	            } catch (FileNotFoundException e1) {
-	                e1.printStackTrace();
-	            } catch (JAXBException e1) {
-	                e1.printStackTrace();
-	            }
-	        }
+	            path = file.getAbsolutePath();
+	        } else
+	        	return;
     	}
+        try {
+            new BW4TClientConfig((MainPanel) (controller.getMainView()).getContentPane(), path).toXML();
+        	view.setLastFileLocation(path);
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        } catch (JAXBException e1) {
+            e1.printStackTrace();
+        }
     }
 
     abstract public void actionPerformed(ActionEvent e);
