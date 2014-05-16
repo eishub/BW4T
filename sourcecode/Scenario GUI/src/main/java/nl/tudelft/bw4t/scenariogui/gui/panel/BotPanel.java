@@ -3,10 +3,12 @@ package nl.tudelft.bw4t.scenariogui.gui.panel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -32,8 +34,11 @@ public class BotPanel extends JPanel {
 
     private JPanel botCountInfo = new JPanel();
     private JPanel botOptions = new JPanel();
+    private JPanel entityLists = new JPanel();
     private DefaultTableModel botList;
     private JScrollPane botScrollPane;
+    private DefaultTableModel epartnerList;
+    private JScrollPane epartnerScrollPane;
 
     private JButton newBot = new JButton("New bot");
     private JButton modifyBot = new JButton("Modify bot");
@@ -59,15 +64,13 @@ public class BotPanel extends JPanel {
         title.setTitleFont(new Font("Sans-Serif", Font.BOLD, 16));
         setBorder(title);
              
-        createBotCountPanel();
+        //createBotCountPanel();
         createBotOptionPanel();
         createBotTablePanel();
 
-
-        add(botCountInfo, BorderLayout.NORTH);
         add(botOptions, BorderLayout.EAST);
-        add(botScrollPane, BorderLayout.CENTER);
-        add(new JLabel("   "), BorderLayout.WEST);	//margin
+        add(entityLists, BorderLayout.CENTER);
+        add(new JLabel("    "), BorderLayout.WEST); //margin
     }
 
     /**
@@ -124,6 +127,8 @@ public class BotPanel extends JPanel {
      * Create the panel that shows the list of bots.
      */
     private void createBotTablePanel() {
+        entityLists.setLayout(new BorderLayout(5, 5));
+        
         JTable botTable = new JTable();
         botList = new DefaultTableModel() {
             @Override
@@ -134,12 +139,33 @@ public class BotPanel extends JPanel {
         };
 
         botTable.setModel(botList);
-        botList.addColumn("Bot");
-        botList.addColumn("Type");
+        botList.addColumn("Robot");
+        botList.addColumn("Controller");
+        botTable.getColumnModel().getColumn(0).setPreferredWidth(200);
+        botTable.getColumnModel().getColumn(1).setPreferredWidth(100);
 
+        JTable epartnerTable = new JTable();
+        epartnerList = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                //make all cells not editable
+                return false;
+            }
+        };
+
+        epartnerTable.setModel(epartnerList);
+        epartnerList.addColumn("E-partner");
+        epartnerTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+        
         botScrollPane = new JScrollPane(botTable);
+        botScrollPane.setPreferredSize(new Dimension(300, 300));
+        epartnerScrollPane = new JScrollPane(epartnerTable);
+        epartnerScrollPane.setPreferredSize(new Dimension(200, 300));
+        
+        entityLists.add(botScrollPane, BorderLayout.WEST);
+        entityLists.add(epartnerScrollPane, BorderLayout.EAST);
     }
-
+        
     /**
      * Executes action that needs to happen when the "New bot" button is pressed.
      * TODO Open BotStore window
