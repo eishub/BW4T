@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.gui.panel;
+package nl.tudelft.bw4t.scenariogui.gui.panel;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
@@ -13,7 +13,7 @@ import java.awt.Component;
 
 import javax.swing.JOptionPane;
 
-import nl.tudelft.bw4t.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 
 import org.junit.Before;
 import org.junit.Test;

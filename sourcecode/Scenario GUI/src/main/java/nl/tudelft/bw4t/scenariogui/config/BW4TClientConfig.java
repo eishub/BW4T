@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.config;
+package nl.tudelft.bw4t.scenariogui.config;
 
 import java.io.FileNotFoundException;
 
@@ -6,10 +6,10 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import nl.tudelft.bw4t.gui.panel.BotPanel;
-import nl.tudelft.bw4t.gui.panel.ConfigurationPanel;
-import nl.tudelft.bw4t.gui.panel.MainPanel;
-import nl.tudelft.bw4t.util.XMLManager;
+import nl.tudelft.bw4t.scenariogui.gui.panel.BotPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
+import nl.tudelft.bw4t.scenariogui.util.XMLManager;
 
 
 /**

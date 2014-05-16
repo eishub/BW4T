@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.util;
+package nl.tudelft.bw4t.scenariogui.util;
 
 import static org.junit.Assert.assertTrue;
 
@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.config.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
 
 import org.junit.Test;
 

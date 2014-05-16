@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.util;
+package nl.tudelft.bw4t.scenariogui.util;
 
 import javax.swing.JTextField;
 import javax.swing.text.AbstractDocument;

@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.config;
+package nl.tudelft.bw4t.scenariogui.config;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -8,9 +8,9 @@ import java.io.FileNotFoundException;
 
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.gui.panel.BotPanel;
-import nl.tudelft.bw4t.gui.panel.ConfigurationPanel;
-import nl.tudelft.bw4t.gui.panel.MainPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.BotPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;

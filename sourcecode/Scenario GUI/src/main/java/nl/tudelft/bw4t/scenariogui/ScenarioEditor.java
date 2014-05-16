@@ -1,12 +1,12 @@
-package nl.tudelft.bw4t;
+package nl.tudelft.bw4t.scenariogui;
 
 import javax.swing.*;
 
-import nl.tudelft.bw4t.controller.Controller;
-import nl.tudelft.bw4t.gui.panel.BotPanel;
-import nl.tudelft.bw4t.gui.panel.ConfigurationPanel;
-import nl.tudelft.bw4t.gui.panel.MainPanel;
-import nl.tudelft.bw4t.gui.MenuBar;
+import nl.tudelft.bw4t.scenariogui.controller.Controller;
+import nl.tudelft.bw4t.scenariogui.gui.panel.BotPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
+import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 
 
 
