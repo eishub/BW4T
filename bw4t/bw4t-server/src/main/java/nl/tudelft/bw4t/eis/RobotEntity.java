@@ -516,7 +516,7 @@ public class RobotEntity implements RobotEntityInt {
 			parameters[1] = Translator.getInstance().translate2Parameter(
 					message)[0];
 		} catch (TranslationException e) {
-			new ActException("translating of message failed:" + message, e);
+			throw new ActException("translating of message failed:" + message, e);
 		}
 
 		// Send to all other entities (except self)
