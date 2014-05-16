@@ -54,7 +54,7 @@ public class BotPanel extends JPanel {
         setLayout(new BorderLayout(5, 5));
        
         Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
-        TitledBorder title = BorderFactory.createTitledBorder(loweredetched, "Bot Panel");
+        TitledBorder title = BorderFactory.createTitledBorder(loweredetched, "Entities");
         title.setTitleJustification(TitledBorder.LEFT);
         title.setTitleFont(new Font("Sans-Serif", Font.BOLD, 16));
         setBorder(title);
@@ -137,14 +137,9 @@ public class BotPanel extends JPanel {
         botList.addColumn("Type");
 
         botScrollPane = new JScrollPane(botTable);
-        Border margin = BorderFactory.createLineBorder(Color.lightGray);//Border margin = BorderFactory.createEmptyBorder(0, 8, 8, 0);
+        Border margin = BorderFactory.createEmptyBorder(0, 8, 8, 0);
         botScrollPane.setBorder(margin);
     }
-        
-    /*public void addBot(String botName, String botType){
-        String[] botEntry = {botName, botType};
-    	botList.addRow(botEntry);
-    }*/
 
     /**
      * Executes action that needs to happen when the "New bot" button is pressed.
