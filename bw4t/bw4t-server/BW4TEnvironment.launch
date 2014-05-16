@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<stringAttribute key="bad_container_name" value="\BW4TServer"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
 <listEntry value="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/BW4TEnvironment.java"/>
 </listAttribute>
@@ -11,5 +12,5 @@
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-scenario BW4T.rs -map Random -serverip localhost -serverport 8000"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="bw4t-server"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:bw4t/bw4t-server/target/classes}"/>
+<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:bw4t-server/target/classes}"/>
 </launchConfiguration>
