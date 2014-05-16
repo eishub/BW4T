@@ -68,7 +68,8 @@ public class BW4TLogger {
 		reset();
 		try {
 			System.out.println("creating log file");
-			logFile = File.createTempFile("BW4T", ".txt", new File("../log/"));
+			System.out.println((new File(System.getProperty("user.dir")+ "/log/")).getAbsolutePath());
+			logFile = File.createTempFile("BW4T", ".txt", new File(System.getProperty("user.dir")+ "/log/"));
 			writer = new FileWriter(logFile);
 			ArrayList<String> info = new ArrayList<String>();
 			info.add("logcreationtime " + System.currentTimeMillis());
