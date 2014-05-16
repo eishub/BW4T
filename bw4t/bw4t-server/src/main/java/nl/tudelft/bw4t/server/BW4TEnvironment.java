@@ -20,9 +20,11 @@ import repast.simphony.scenario.ScenarioLoadException;
 import eis.eis2java.environment.AbstractEnvironment;
 import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
+import eis.exceptions.EntityException;
 import eis.exceptions.ManagementException;
 import eis.exceptions.NoEnvironmentException;
 import eis.exceptions.PerceiveException;
+import eis.exceptions.RelationException;
 import eis.iilang.Action;
 import eis.iilang.EnvironmentState;
 import eis.iilang.Identifier;
@@ -43,6 +45,8 @@ import eis.iilang.Percept;
  */
 public class BW4TEnvironment extends AbstractEnvironment {
 
+	public static final String VERSION = "@PROJECT_VERSION@";
+
 	private static final long serialVersionUID = -279637264069930353L;
 	private static BW4TEnvironment instance;
 
@@ -50,8 +54,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	private BW4TServer server;
 	private boolean mapFullyLoaded;
 	private Stepper stepper;
-	private String serverIP;
-	private String serverPort;
 	private String scenarioLocation;
 	private Context context;
 	private static NewMap theMap;
@@ -73,15 +75,15 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @throws ScenarioLoadException
 	 * @throws JAXBException
 	 */
-	private BW4TEnvironment(String scenarioLocation, String mapLocation,
-			String serverIP, String serverPort) throws IOException,
-			ManagementException, ScenarioLoadException, JAXBException {
+	BW4TEnvironment(BW4TServer server2, String scenarioLocation,
+			String mapLocation) throws IOException, ManagementException,
+			ScenarioLoadException, JAXBException {
 		super();
 		instance = this;
+		this.server = server2;
 		this.mapName = mapLocation;
-		this.serverIP = serverIP;
-		this.serverPort = serverPort;
-		this.scenarioLocation = System.getProperty("user.dir")  + "/" + scenarioLocation;
+		this.scenarioLocation = System.getProperty("user.dir") + "/"
+				+ scenarioLocation;
 		System.out.println(this.scenarioLocation);
 		launchAll();
 	}
@@ -96,7 +98,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 */
 	private void launchAll() throws IOException, ManagementException,
 			ScenarioLoadException, JAXBException {
-		launchServer(serverIP, serverPort);
+		launchServer();
 		setState(EnvironmentState.RUNNING);
 		launchRepast();
 	}
@@ -136,7 +138,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		for (String entity : this.getEntities()) {
 			try {
 				this.deleteEntity(entity);
-			} catch (Exception e) {
+			} catch (EntityException | RelationException e) {
 				System.err.println("Failure deleting entity " + entity);
 				e.printStackTrace();
 			}
@@ -201,9 +203,10 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @throws ManagementException
 	 * @throws MalformedURLException
 	 */
-	private void launchServer(String serverIp, String serverPort)
-			throws RemoteException, ManagementException, MalformedURLException {
-		server = new BW4TServer(serverIp, serverPort);
+	private void launchServer() throws RemoteException, ManagementException,
+			MalformedURLException {
+		if (server == null)
+			server = Launcher.getInstance().setupRemoteServer();
 		setState(EnvironmentState.INITIALIZING);
 		System.out.println("BW4TServer bound");
 	}
@@ -221,7 +224,8 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 */
 	private void launchRepast() throws IOException, ScenarioLoadException,
 			JAXBException {
-		theMap = NewMap.create(new FileInputStream(new File(System.getProperty("user.dir") + "/maps/" + this.mapName)));
+		theMap = NewMap.create(new FileInputStream(new File(System
+				.getProperty("user.dir") + "/maps/" + this.mapName)));
 		stepper = new Stepper(scenarioLocation, this);
 		System.out.println(scenarioLocation);
 		new Thread(stepper).start();
@@ -286,55 +290,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	public boolean isStateTransitionValid(EnvironmentState oldState,
 			EnvironmentState newState) {
 		return true;
-	}
-
-	/**
-	 * Runs the server environment and launches repast. Should be used for both
-	 * GOAL and Java.
-	 * 
-	 * @param args
-	 *            , the initialization parameters
-	 * @throws IOException
-	 * @throws ManagementException
-	 * @throws ScenarioLoadException
-	 * @throws JAXBException
-	 */
-	public static void main(String[] args) throws IOException,
-			ManagementException, ScenarioLoadException, JAXBException {
-		String scenario = "";
-		scenario = findArgument(args, scenario, "-scenario");
-		String map = "";
-		map = findArgument(args, map, "-map");
-		String serverIp = "localhost";
-		serverIp = findArgument(args, serverIp, "-serverip");
-		String serverPort = "8080";
-		serverPort = findArgument(args, serverPort, "-serverport");
-
-		BW4TEnvironment environment = new BW4TEnvironment(scenario, map,
-				serverIp, serverPort);
-		// main just exits but we continue to run because GUI is open.
-	}
-
-	/**
-	 * Find a certain argument in the string array and return its setting
-	 * 
-	 * @param args
-	 *            , the string array containing all the arguments
-	 * @param result
-	 *            , where to save the result
-	 * @param checkFor
-	 *            , what to check for
-	 * @return the result
-	 */
-	private static String findArgument(String[] args, String result,
-			String checkFor) {
-		for (int i = 0; i < args.length - 1; i++) {
-			if (args[i].equalsIgnoreCase(checkFor)) {
-				result = args[i + 1];
-				break;
-			}
-		}
-		return result;
 	}
 
 	/**
