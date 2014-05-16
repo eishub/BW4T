@@ -32,30 +32,30 @@ import repast.simphony.scenario.ScenarioLoadException;
  */
 public class BW4TRunner extends AbstractRunner {
 	private RunEnvironmentBuilder runEnvironmentBuilder;
-	protected Controller controller;
-	protected boolean pause = false;
+	protected Controller bw4tController;
+	protected boolean pauseRunner = false;
 	protected Object monitor = new Object();
 	protected SweeperProducer producer;
 	private ISchedule schedule;
 
 	public BW4TRunner() {
 		runEnvironmentBuilder = new DefaultRunEnvironmentBuilder(this, true);
-		controller = new DefaultController(runEnvironmentBuilder);
-		controller.setScheduleRunner(this);
+		bw4tController = new DefaultController(runEnvironmentBuilder);
+		bw4tController.setScheduleRunner(this);
 	}
 
 	public void load(File scenarioDir) throws ScenarioLoadException {
 		if (scenarioDir.exists()) {
 			BatchScenarioLoader loader = new BatchScenarioLoader(scenarioDir);
 			ControllerRegistry registry = loader.load(runEnvironmentBuilder);
-			controller.setControllerRegistry(registry);
+			bw4tController.setControllerRegistry(registry);
 		} else {
 			System.out.println("Scenario not found");
 			return;
 		}
 
-		controller.batchInitialize();
-		controller.runParameterSetters(null);
+		bw4tController.batchInitialize();
+		bw4tController.runParameterSetters(null);
 	}
 
 	public void runInitialize() {
@@ -104,18 +104,18 @@ public class BW4TRunner extends AbstractRunner {
 				return this;
 			}
 		};
-		controller.runInitialize(params);
+		bw4tController.runInitialize(params);
 		schedule = RunState.getInstance().getScheduleRegistry()
 				.getModelSchedule();
 		fireStartedMessage();
 	}
 
 	public void cleanUpRun() {
-		controller.runCleanup();
+		bw4tController.runCleanup();
 	}
 
 	public void cleanUpBatch() {
-		controller.batchCleanup();
+		bw4tController.batchCleanup();
 	}
 
 	// returns the tick count of the next scheduled item
