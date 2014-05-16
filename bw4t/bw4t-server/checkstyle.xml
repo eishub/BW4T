@@ -84,7 +84,9 @@
     <module name="CyclomaticComplexity"/>
     <module name="ArrayTypeStyle"/>
     <module name="TrailingComment"/>
-    <module name="UncommentedMain"/>
+    <module name="UncommentedMain">
+    	<property name="excludedClasses" value="Launcher"/>
+    </module>
     <module name="UpperEll"/>
     <module name="MissingDeprecated"/>
     <module name="MissingOverride"/>
