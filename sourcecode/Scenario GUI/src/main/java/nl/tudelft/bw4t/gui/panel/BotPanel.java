@@ -137,7 +137,7 @@ public class BotPanel extends JPanel {
         botList.addColumn("Type");
 
         botScrollPane = new JScrollPane(botTable);
-        Border margin = BorderFactory.createLineBorder(Color.black);//Border margin = BorderFactory.createEmptyBorder(0, 8, 8, 0);
+        Border margin = BorderFactory.createLineBorder(Color.lightGray);//Border margin = BorderFactory.createEmptyBorder(0, 8, 8, 0);
         botScrollPane.setBorder(margin);
     }
         
