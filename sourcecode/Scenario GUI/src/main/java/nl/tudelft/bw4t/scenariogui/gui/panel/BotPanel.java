@@ -67,6 +67,7 @@ public class BotPanel extends JPanel {
         add(botCountInfo, BorderLayout.NORTH);
         add(botOptions, BorderLayout.EAST);
         add(botScrollPane, BorderLayout.CENTER);
+        add(new JLabel("   "), BorderLayout.WEST);	//margin
     }
 
     /**
@@ -137,8 +138,6 @@ public class BotPanel extends JPanel {
         botList.addColumn("Type");
 
         botScrollPane = new JScrollPane(botTable);
-        Border margin = BorderFactory.createEmptyBorder(0, 8, 8, 0);
-        botScrollPane.setBorder(margin);
     }
 
     /**
