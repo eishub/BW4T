@@ -50,9 +50,11 @@ public class Stepper implements Runnable {
 						}
 						runner.step();
 					}
+					System.out.println("Checkpoint1");
 					Thread.sleep(loopDelay);
 				}
 				runner.stop();
+				System.out.println("Checkpoint2");
 				runner.cleanUpRun();
 			}
 			// runner.cleanUpBatch();
@@ -62,7 +64,7 @@ public class Stepper implements Runnable {
 		}
 		running = false;
 		runner = null;
-
+		System.out.println("Checkpoint3");
 	}
 
 	/**

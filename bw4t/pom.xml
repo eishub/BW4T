@@ -37,14 +37,14 @@
 						<target>1.7</target>
 					</configuration>
 				</plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-eclipse-plugin</artifactId>
-          <configuration>
-              <downloadSources>true</downloadSources>
-              <downloadJavadocs>true</downloadJavadocs>
-          </configuration>
-        </plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-eclipse-plugin</artifactId>
+					<configuration>
+						<downloadSources>true</downloadSources>
+						<downloadJavadocs>true</downloadJavadocs>
+					</configuration>
+				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
@@ -72,6 +72,28 @@
 						<configLocation>${basedir}/checkstyle.xml</configLocation>
 						<includeTestSourceDirectory> true </includeTestSourceDirectory>
 					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>com.github.goldin</groupId>
+					<artifactId>copy-maven-plugin</artifactId>
+					<version>0.2.5</version>
+					<executions>
+						<execution>
+							<id>create-archive</id>
+							<phase>package</phase>
+							<goals>
+								<goal>copy</goal>
+							</goals>
+							<configuration>
+								<resources>
+									<resource>
+										<targetPath>${project.basedir}/bw4t-server/target/classes/bin/nl</targetPath>
+										<directory>${project.basedir}/bw4t-server/target/classes/nl</directory>
+									</resource>
+								</resources>
+							</configuration>
+						</execution>
+					</executions>
 				</plugin>
 			</plugins>
 		</pluginManagement>
