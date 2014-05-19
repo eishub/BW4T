@@ -83,18 +83,6 @@ public class BW4TClientConfigTest {
     }
 
     @Test
-    public void testAgentClass() {
-        String agentClass = "gangsta-agent.java";
-        config.setAgentClass(agentClass);
-
-        String mapFile = "banana.map";
-        config.setMapFile(mapFile);
-
-        assertEquals(agentClass, config.getAgentClass());
-        assertEquals(mapFile, config.getMapFile());
-    }
-
-    @Test
     public void testSaveIntegrity() throws FileNotFoundException, JAXBException {
         MainPanel panel = new MainPanel(new ConfigurationPanel(), new BotPanel());
 
