@@ -105,21 +105,24 @@ public class Launcher {
 	 */
 	private void setupDirectoryStructure() {
 		boolean success = true;
+		
+		File userDir = new File(System.getProperty("user.dir"));
+		
 		File mapsFolder = new File(System.getProperty("user.dir") + "/maps");
 		if (!mapsFolder.exists()) {
 			success &= mapsFolder.mkdir();
-			success &= FileUtils.copyResourcesRecursively(this.getClass().getResource("/setup/maps"), mapsFolder);
+			success &= FileUtils.copyResourcesRecursively(this.getClass().getResource("/setup/maps"), userDir);
 		}
 		File scenarioFolder = new File(System.getProperty("user.dir") + "/BW4T.rs");
 		if (!scenarioFolder.exists()) {
 			success &= scenarioFolder.mkdir();
-			success &= FileUtils.copyResourcesRecursively(this.getClass().getResource("/setup/BW4T.rs"), scenarioFolder);
+			success &= FileUtils.copyResourcesRecursively(this.getClass().getResource("/setup/BW4T.rs"), userDir);
 		}
 		File logsFolder = new File(System.getProperty("user.dir") + "/logs");
 		if (!logsFolder.exists()) {
 			success &= logsFolder.mkdir();
 		}
-		File binFolder = new File(System.getProperty("user.dir") + "/bin/nl/tudelft/bw4t");
+		File binFolder = new File(System.getProperty("user.dir") + "/bin/nl/tudelft");
 		if (!binFolder.exists()) {
 			success &= binFolder.mkdirs();
 			success &= FileUtils.copyResourcesRecursively(this.getClass().getResource("/nl/tudelft/bw4t"), binFolder);
@@ -127,7 +130,7 @@ public class Launcher {
 		if (!success) {
 			throw new LauncherException("Could not generate neccessary directories and files,"
 					+ " please copy the following folders from the jar file "
-					+ "(some are in the setup folder): /logs , /BW4T.rs , /maps and /nl");
+					+ "(some are in the setup and bin folder): /logs , /BW4T.rs , /maps and /nl");
 		}
 	}
 
