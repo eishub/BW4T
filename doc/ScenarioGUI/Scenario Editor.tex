@@ -16,26 +16,28 @@
 This document describes how to make use of the Scenario Editor (Figure 1). When you open the editor, you see two main parts:
 \begin{enumerate}
 \item The Configuration panel, which is used to create, open and save configuration files.
-\item The Bot panel, where a list of the bots is being displayed. Here you can create, modify, rename, duplicate and delete bots. At the top of this panel is indicated how many bots, e-partners and humans are currently created.
+\item The Entity panel, where a list of the bots and a list of e-partners are being displayed. Here you can create, modify, rename and delete bots and e-partners.
 \end{enumerate}
 
 \begin{figure}
 \includegraphics{editor.png}
-\caption{The Scenario Editor}
+\caption{Scenario Editor}
 \end{figure}
 
 \section{General use}
 At the top of the editor you can see a $File$ menu. If you click on that, you get the options to create a new configuration, save your configuration, open a configuration and to exit the editor.
 
-On the left side of the editor you can configure a scenario as you like. The Client IP, the Client Port, the Server IP and the Server Port should already contain the default values. You can change them if you need to. You can also indicate whether you want to make use of GOAL and/or open a GUI. If you have an Agent class file or a Map file you want to use, you can import them by selecting the $Open$ $file$ buttons at the right sections.
+On the left side of the editor you can configure a scenario as you like. The Client IP, the Client Port, the Server IP and the Server Port should already contain the default values. You can change them if you need to. You can also indicate whether you want to make use of GOAL and/or open a GUI. If you have a Map file you want to use, you can import it by selecting the $Open$ $file$ buttons at the right section.
 
-On the right side of the editor you can create, modify, rename, duplicate and delete bots. There also is a list of bots that are created, and on top of the list there is an indication of how many bots, e-partners and humans there are.
+On the right side of the editor you can create, modify, rename and delete bots. There also are a list of bots and a list of e-partners that are created, and on below each list there is an indication of how many bots or e-partners are created.
 \pagebreak
 \section{Configuration Panel}
 A picture of the configuration panel can be found in figure 2.
 \begin{figure}
+\begin{center}
 \includegraphics{config.png}
-\caption{The Configuration Panel}
+\end{center}
+\caption{Configuration Panel}
 \end{figure}
 \subsection{New configuration file}
 To create a new configuration file, select $File$ $\to$ $New$ in the menu bar. You will now get a new configuration with the default values. Creating a new configuration will reset all previous changes you have made, so make sure you save your configuration first if you want to want to keep it.
@@ -46,24 +48,39 @@ To save your configuration file, select $File$ $\to$ $Save$ in the menu bar. A s
 \subsection{Open configuration file}
 To open an existing configuration file, select $File$ $\to$ $Open$ in the menu bar. A screen will pop up where you can select the folder where the configuration file is saved to. Once you have selected the right folder, select the file and click the $Open$ button.
 \pagebreak
-\section{Bot Panel}
-A picture of the configuration panel can be found in figure 3.
+\section{Entity Panel}
+The entity panel exists of 2 parts; the top part shows the bot options and the bottom part shows the e-partner options. A picture of the entity panel can be found in figure 3.
 \begin{figure}
+\begin{center}
 \includegraphics{bot.png}
-\caption{The Bot Panel}
+\end{center}
+\caption{Entity Panel}
 \end{figure}
 \subsection{Create new bot}
-To create a new bot, click the $New$ $bot$ button. The Bot Store will open in a new window where you can create your bot.
+To create a new bot, click the $New$ $Bot$ button. A new bot will appear in the list.%The Bot Store will open in a new window where you can create your bot.
 
 \subsection{Modify bot}
-To modify a bot, select the bot you want to modify in the bot list and click the $Modify$ $bot$ button. The bot store will open in a new window where you can modify your bot.
+To modify a bot, select the bot you want to modify in the bot list and click the $Modify$ $Bot$ button. The bot store will open in a new window where you can modify your bot.
+
+\subsection{Change controller type}
+To change how a bot is controlled, you can either use the $Modify$ $Bot$ button, or you can change it in the scenario editor. To change the controller type in the scenario editor, select the bot you want to change and double click. You should now be able to enter a new controller.
 
 \subsection{Rename bot}
-To rename a bot, select the bot you want to rename in the list with bots. Enter the new name in the textfield above the $Rename$ $bot$ button and click the $Rename$ $bot$ button.
-
-\subsection{Duplicate bot}
-To duplicate a bot, select the bot you want to duplicate in the list with bots. Enter the number of times you want to duplicate the bot in the box above the $Duplicate$ $bot$ button and click the $Duplicate$ $bot$ button.
+To rename a bot, you can either use the $Modify$ $Bot$ button, or you can change it in the scenario editor. To rename in the scenario editor, select the bot you want to rename in the list with bots. Double click the bot's name and enter a new name. %Enter the new name in the textfield above the $Rename$ $bot$ button and click the $Rename$ $bot$ button.
 
 \subsection{Delete bot}
-To delete a bot, select the bot you want to delete in the list with bots and click the $Delete$ $bot$ button.
+To delete a bot, select the bot you want to delete in the list with bots and click the $Delete$ $Bot$ button.
+
+\subsection{Create new e-partner}
+To create a new e-partner, click the $New$ $E-partner$ button. A new e-partner will appear in the list.%The Bot Store will open in a new window where you can create your bot.
+
+\subsection{Modify e-partner}
+To modify an e-partner, select the e-partner you want to modify in the e-partner list and click the $Modify$ $E-partner$ button. A new window will open where you can modify the e-partner.
+
+\subsection{Rename e-partner}
+To rename an e-partner, select the e-partner you want to rename in the list with e-partners. Double click the e-partner's name and enter a new name. %Enter the new name in the textfield above the $Rename$ $bot$ button and click the $Rename$ $bot$ button.
+
+\subsection{Delete e-partner}
+To delete an e-partner, select the e-partner you want to delete in the list with e-partner and click the $Delete$ $E-partner$ button.
+
 \end{document}
