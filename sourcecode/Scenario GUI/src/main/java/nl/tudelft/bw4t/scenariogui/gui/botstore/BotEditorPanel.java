@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.gui;
+package nl.tudelft.bw4t.scenariogui.gui.botstore;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;

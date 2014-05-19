@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.gui;
+package nl.tudelft.bw4t.scenariogui.gui.botstore;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -28,7 +28,7 @@ public class BotEditor extends JFrame{
 		bPanel = new BotEditorPanel();
 		setContentPane(bPanel);
 		
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		
 		pack();
 		
@@ -59,9 +59,5 @@ public class BotEditor extends JFrame{
             // pass
         }
     }
-	
-	public static void main(String[] args){
-		new BotEditor();
-		
-	}
+
 }
