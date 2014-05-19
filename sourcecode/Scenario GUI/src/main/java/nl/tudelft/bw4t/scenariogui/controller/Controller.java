@@ -154,7 +154,7 @@ class RenameBot implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		view.getBotPanel().renameAction();
+		//view.getBotPanel().renameAction();
 	}
 	
 }
