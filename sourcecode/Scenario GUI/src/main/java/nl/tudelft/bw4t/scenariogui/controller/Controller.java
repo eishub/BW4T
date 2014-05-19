@@ -35,11 +35,7 @@ public class Controller {
 
         /** Create the action listeners for the ConfigurationPanel. */
 
-        /** Listener for the agent file chooser */
-        getMainView().getMainPanel().getConfigurationPanel().getChooseAgentFile().addActionListener(
-                new ChooseAgentFileListener(getMainView().getMainPanel())
-        );
-
+        /** Listener for the map file chooser */
         getMainView().getMainPanel().getConfigurationPanel().getChooseMapFile().addActionListener(
                 new ChooseMapFileListener(getMainView().getMainPanel())
         );
@@ -70,35 +66,6 @@ public class Controller {
      */
     public ScenarioEditor getMainView() {
         return view;
-    }
-}
-
-/**
- * Handles the event to choose an agent file.
- */
-class ChooseAgentFileListener implements ActionListener {
-
-    private MainPanel view;
-
-    /**
-     * Create a ChooseAgentFileListener event handler.
-     * @param view The parent view.
-     */
-    public ChooseAgentFileListener(MainPanel view) {
-        this.view = view;
-    }
-
-    public void actionPerformed(ActionEvent actionEvent) {
-        /** Create a file chooser, opening at the last path location saved in the configuration panel */
-        JFileChooser fc = view.getConfigurationPanel().getFileChooser();
-
-
-        int returnVal = fc.showOpenDialog(view);
-
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fc.getSelectedFile();
-            view.getConfigurationPanel().setAgentClassFile(file.getPath());
-        }
     }
 }
 
@@ -305,14 +272,13 @@ class MenuOptionOpen extends MenuOption {
             try {
                 BW4TClientConfig temp = BW4TClientConfig.fromXML(file.getAbsolutePath());
 
-                // Fill the config panel
+                // Fill the configuration panel
                 configPanel.setClientIP(temp.getClientIp());
                 configPanel.setClientPort(""+temp.getClientPort());
                 configPanel.setServerIP(temp.getServerIp());
                 configPanel.setServerPort(""+temp.getServerPort());
                 configPanel.setUseGui(temp.isLaunchGui());
                 configPanel.setUseGoal(temp.isUseGoal());
-                configPanel.setAgentClassFile(temp.getAgentClass());
                 configPanel.setMapFile(temp.getMapFile());
 
                 // Fill the bot panel
@@ -410,7 +376,6 @@ class MenuOptionNew extends MenuOption {
         configPanel.setServerPort(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_PORT.getValue());
         configPanel.setUseGui(ConfigurationPanel.DEFAULT_VALUES.USE_GUI.getBooleanValue());
         configPanel.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
-        configPanel.setAgentClassFile(ConfigurationPanel.DEFAULT_VALUES.AGENT_CLASS.getValue());
         configPanel.setMapFile(ConfigurationPanel.DEFAULT_VALUES.MAP_FILE.getValue());
 
         // Reset the bot panel

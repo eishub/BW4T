@@ -30,7 +30,6 @@ public class ConfigurationPanel extends JPanel {
 		DEFAULT_PORT("9000"),
 		USE_GUI("true"),
 		USE_GOAL("true"),
-		AGENT_CLASS(""),
 		MAP_FILE("");
 		
 		String value;
@@ -63,7 +62,6 @@ public class ConfigurationPanel extends JPanel {
     {
     	Format.addIntegerDocumentFilterForTextField(serverPort);
     }
-    private JTextField agentClassFileTextField = new JTextField(DEFAULT_VALUES.AGENT_CLASS.getValue());
     private JTextField mapFileTextField = new JTextField(DEFAULT_VALUES.MAP_FILE.getValue());
     
     CheckboxGroup goalCheckBox = new CheckboxGroup();
@@ -74,7 +72,6 @@ public class ConfigurationPanel extends JPanel {
     private Checkbox guiYes = new Checkbox("Yes", DEFAULT_VALUES.USE_GUI.getBooleanValue(), guiCheckBox);
     private Checkbox guiNo = new Checkbox("No", !DEFAULT_VALUES.USE_GUI.getBooleanValue(), guiCheckBox);
 
-    private JButton chooseAgentFile = new JButton("Open File");
     private JButton chooseMapFile = new JButton("Open File");
     
     protected JFileChooser fileChooser = new JFileChooser();
@@ -101,7 +98,6 @@ public class ConfigurationPanel extends JPanel {
         showServerOptions();
         showGoalOptions();
         showGuiOptions();
-        showAgentOptions();
         showMapOptions();
         
     }
@@ -117,7 +113,7 @@ public class ConfigurationPanel extends JPanel {
     }
     
     /**
-     * Show the client config options in the panel.
+     * Show the client configuration options in the panel.
      */
     private void showClientOptions(){
         c.insets = new Insets(8, 8, 0, 0);
@@ -153,7 +149,7 @@ public class ConfigurationPanel extends JPanel {
     }
     
     /**
-     * Show the serer config options in the panel.
+     * Show the server configuration options in the panel.
      */
     private void showServerOptions(){
         c.insets = new Insets(8, 8, 0, 0);
@@ -232,34 +228,6 @@ public class ConfigurationPanel extends JPanel {
 
         c.gridx = 1;
         add(guiNo, c);
-    }
-    
-    /**
-     * Show the option to add an agent class in the panel.
-     */
-    private void showAgentOptions(){
-        c.insets = new Insets(8, 8, 0, 0);
-
-        c.gridx = 0;
-        c.gridy += 1;
-
-        JLabel agent = new JLabel("Agent Class File");
-        agent.setFont(new Font("Sans-Serif", Font.BOLD, 14));
-        add(agent, c);
-
-        c.insets = new Insets(4,8,0,8);
-
-        c.gridx = 0;
-        c.gridwidth = 2;
-        c.gridy += 1;
-        add(agentClassFileTextField, c);
-
-        agentClassFileTextField.setPreferredSize(chooseAgentFile.getPreferredSize());
-
-        c.gridx = 2;
-        c.gridwidth = 1;
-        add(chooseAgentFile, c);
-
     }
     
     /**
@@ -398,35 +366,11 @@ public class ConfigurationPanel extends JPanel {
     }
 
     /**
-     * Returns the button to choose an agent file
-     * @return The button to choose an agent file
-     */
-    public JButton getChooseAgentFile() {
-        return chooseAgentFile;
-    }
-
-    /**
      * Returns the button to choose a map file
      * @return The button to choose a map file
      */
     public JButton getChooseMapFile() {
         return chooseMapFile;
-    }
-
-    /**
-     * Returns the path of the Agent Class file
-     * @return The path of the Agent Class file
-     */
-    public String getAgentClassFile() {
-        return agentClassFileTextField.getText();
-    }
-
-    /**
-     * Sets the value of the text field to the path of the Agent Class file
-     * @param agentClassFile The path of the Agent Class file
-     */
-    public void setAgentClassFile(String agentClassFile) {
-        this.agentClassFileTextField.setText(agentClassFile);
     }
 
     /**
@@ -471,8 +415,6 @@ public class ConfigurationPanel extends JPanel {
     	if(this.useGui() != DEFAULT_VALUES.USE_GUI.getBooleanValue() && isDefault)
     		isDefault = false;
     	if(this.useGoal() != DEFAULT_VALUES.USE_GOAL.getBooleanValue() && isDefault)
-    		isDefault = false;
-    	if(!this.getAgentClassFile().equals(DEFAULT_VALUES.AGENT_CLASS.getValue()) && isDefault)
     		isDefault = false;
     	if(!this.getMapFile().equals(DEFAULT_VALUES.MAP_FILE.getValue()) && isDefault)
     		isDefault = false;
