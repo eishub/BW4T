@@ -1,10 +1,22 @@
-package nl.tudelft.bw4t.scenariogui.gui.botstore;
-
-
-import javax.swing.*;
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package nl.tudelft.bw4t.gui;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JSlider;
+import javax.swing.JLabel;
 import java.awt.Font;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.SwingConstants;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +34,6 @@ public class EditorUI extends javax.swing.JFrame {
     public EditorUI() {
         initComponents();
         setResizable(false);
-        setVisible(true);
     }
 
     /**
@@ -38,10 +49,10 @@ public class EditorUI extends javax.swing.JFrame {
         jTextPane1 = new javax.swing.JTextPane();
         sizeSlider = new javax.swing.JSlider();
         sizeSlider.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent arg0) {
-                calculateBatteryUse();
-            }
+        	@Override
+        	public void mouseReleased(MouseEvent arg0) {
+        		calculateBatteryUse();
+        	}
         });
 
 
@@ -50,10 +61,10 @@ public class EditorUI extends javax.swing.JFrame {
         sizeLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
         speedSlider = new javax.swing.JSlider();
         speedSlider.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                calculateBatteryUse();
-            }
+        	@Override
+        	public void mouseReleased(MouseEvent e) {
+        		calculateBatteryUse();
+        	}
         });
         speedSlider.setMaximum(75);
         speedSlider.setMinimum(25);
@@ -62,15 +73,15 @@ public class EditorUI extends javax.swing.JFrame {
         botTitleLabel = new javax.swing.JLabel();
         botTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titleSizeSeparator = new javax.swing.JSeparator();
-
+        
         gripperCheckbox = new javax.swing.JCheckBox();
         gripperCheckbox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                if(!gripperCheckbox.isSelected()){
-                    //robot.setGripper(false);
-                }
-                //else robot.setGripper(true);
-            }
+        	public void actionPerformed(ActionEvent arg0) {
+        		if(!gripperCheckbox.isSelected()){
+        			//robot.setGripper(false);
+        		}
+        		//else robot.setGripper(true);
+        	}
         });
         colorblindCheckbox = new javax.swing.JCheckBox();
         walkingCheckbox = new javax.swing.JCheckBox();
@@ -81,7 +92,7 @@ public class EditorUI extends javax.swing.JFrame {
 
         jScrollPane2.setViewportView(jTextPane1);
 
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BotStore");
 
         sizeSlider.setMajorTickSpacing(1);
@@ -132,7 +143,7 @@ public class EditorUI extends javax.swing.JFrame {
 
         botTypeSelector.setModel(new DefaultComboBoxModel(new String[] {"Regular Agent", "E-Partner", "Human User"}));
         botTypeSelector.setToolTipText("");
-
+        
         batterySlider = new JSlider();
         batterySlider.setValue(0);
         batterySlider.setToolTipText("");
@@ -140,120 +151,120 @@ public class EditorUI extends javax.swing.JFrame {
         batterySlider.setPaintTicks(true);
         batterySlider.setPaintLabels(true);
         batterySlider.setMajorTickSpacing(10);
-
+        
         lblBatteryCapacity = new JLabel();
         lblBatteryCapacity.setFont(new Font("Tahoma", Font.BOLD, 13));
         lblBatteryCapacity.setText("Battery Capacity (0 is infinity)");
-
+        
         batteryUseLabel = new JLabel("Average Battery use:");
-
+        
         batteryUseValueLabel = new JLabel("0.9");
-
+        
         perTickLabel = new JLabel("per tick");
         perTickLabel.setFont(new Font("Tahoma", Font.ITALIC, 13));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         layout.setHorizontalGroup(
-                layout.createParallelGroup(Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(titleSizeSeparator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                                .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                                                                        .addGroup(layout.createSequentialGroup()
-                                                                                .addGap(18)
-                                                                                .addGroup(layout.createParallelGroup(Alignment.LEADING, false)
-                                                                                        .addGroup(layout.createSequentialGroup()
-                                                                                                .addPreferredGap(ComponentPlacement.RELATED)
-                                                                                                .addComponent(botTitleLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                                                        .addComponent(speedSlider, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                                        .addComponent(batterySlider, GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
-                                                                                        .addComponent(sizeSlider, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                                                        .addGroup(layout.createSequentialGroup()
-                                                                                .addGap(77)
-                                                                                .addComponent(sizeLabel))))
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addGap(58)
-                                                                .addComponent(botTypeSelector, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE)))
-                                                .addGap(64)
-                                                .addGroup(layout.createParallelGroup(Alignment.TRAILING)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(resetButton)
-                                                                .addPreferredGap(ComponentPlacement.RELATED)
-                                                                .addComponent(applyButton))
-                                                        .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                                                                .addComponent(gripperCheckbox)
-                                                                .addComponent(colorblindCheckbox)
-                                                                .addComponent(walkingCheckbox)
-                                                                .addComponent(checkablesLabel)
-                                                                .addGroup(layout.createParallelGroup(Alignment.TRAILING)
-                                                                        .addComponent(jumpingCheckbox)
-                                                                        .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                                                                                .addGroup(layout.createSequentialGroup()
-                                                                                        .addComponent(batteryUseValueLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-                                                                                        .addPreferredGap(ComponentPlacement.RELATED)
-                                                                                        .addComponent(perTickLabel))
-                                                                                .addComponent(batteryUseLabel))))))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(38)
-                                                .addComponent(lblBatteryCapacity))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(67)
-                                                .addComponent(SpeedLabel)))
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        						.addGroup(layout.createSequentialGroup()
+        							.addComponent(titleSizeSeparator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        							.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        								.addGroup(layout.createSequentialGroup()
+        									.addGap(18)
+        									.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+        										.addGroup(layout.createSequentialGroup()
+        											.addPreferredGap(ComponentPlacement.RELATED)
+        											.addComponent(botTitleLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        										.addComponent(speedSlider, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        										.addComponent(batterySlider, GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+        										.addComponent(sizeSlider, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        								.addGroup(layout.createSequentialGroup()
+        									.addGap(77)
+        									.addComponent(sizeLabel))))
+        						.addGroup(layout.createSequentialGroup()
+        							.addGap(58)
+        							.addComponent(botTypeSelector, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE)))
+        					.addGap(64)
+        					.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        						.addGroup(layout.createSequentialGroup()
+        							.addComponent(resetButton)
+        							.addPreferredGap(ComponentPlacement.RELATED)
+        							.addComponent(applyButton))
+        						.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        							.addComponent(gripperCheckbox)
+        							.addComponent(colorblindCheckbox)
+        							.addComponent(walkingCheckbox)
+        							.addComponent(checkablesLabel)
+        							.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        								.addComponent(jumpingCheckbox)
+        								.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        									.addGroup(layout.createSequentialGroup()
+        										.addComponent(batteryUseValueLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+        										.addPreferredGap(ComponentPlacement.RELATED)
+        										.addComponent(perTickLabel))
+        									.addComponent(batteryUseLabel))))))
+        				.addGroup(layout.createSequentialGroup()
+        					.addGap(38)
+        					.addComponent(lblBatteryCapacity))
+        				.addGroup(layout.createSequentialGroup()
+        					.addGap(67)
+        					.addComponent(SpeedLabel)))
+        			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(134)
-                                                .addComponent(titleSizeSeparator, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addGap(8)
-                                                                .addComponent(botTitleLabel, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(18)
-                                                                .addComponent(botTypeSelector, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(18)
-                                                                .addComponent(sizeLabel)
-                                                                .addGap(2)
-                                                                .addComponent(sizeSlider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(ComponentPlacement.UNRELATED)
-                                                                .addComponent(SpeedLabel))
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addGap(27)
-                                                                .addComponent(checkablesLabel, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(18)
-                                                                .addComponent(gripperCheckbox)
-                                                                .addPreferredGap(ComponentPlacement.UNRELATED)
-                                                                .addComponent(colorblindCheckbox)
-                                                                .addPreferredGap(ComponentPlacement.UNRELATED)
-                                                                .addComponent(walkingCheckbox)
-                                                                .addPreferredGap(ComponentPlacement.UNRELATED)
-                                                                .addComponent(jumpingCheckbox)))
-                                                .addGap(1)
-                                                .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(batteryUseLabel)
-                                                                .addPreferredGap(ComponentPlacement.RELATED)
-                                                                .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-                                                                        .addComponent(batteryUseValueLabel)
-                                                                        .addComponent(perTickLabel))
-                                                                .addPreferredGap(ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
-                                                                .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-                                                                        .addComponent(applyButton)
-                                                                        .addComponent(resetButton)))
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(speedSlider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(18)
-                                                                .addComponent(lblBatteryCapacity)
-                                                                .addGap(2)
-                                                                .addComponent(batterySlider, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)))))
-                                .addContainerGap())
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addGap(134)
+        					.addComponent(titleSizeSeparator, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE))
+        				.addGroup(layout.createSequentialGroup()
+        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        						.addGroup(layout.createSequentialGroup()
+        							.addGap(8)
+        							.addComponent(botTitleLabel, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
+        							.addGap(18)
+        							.addComponent(botTypeSelector, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        							.addGap(18)
+        							.addComponent(sizeLabel)
+        							.addGap(2)
+        							.addComponent(sizeSlider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        							.addPreferredGap(ComponentPlacement.UNRELATED)
+        							.addComponent(SpeedLabel))
+        						.addGroup(layout.createSequentialGroup()
+        							.addGap(27)
+        							.addComponent(checkablesLabel, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+        							.addGap(18)
+        							.addComponent(gripperCheckbox)
+        							.addPreferredGap(ComponentPlacement.UNRELATED)
+        							.addComponent(colorblindCheckbox)
+        							.addPreferredGap(ComponentPlacement.UNRELATED)
+        							.addComponent(walkingCheckbox)
+        							.addPreferredGap(ComponentPlacement.UNRELATED)
+        							.addComponent(jumpingCheckbox)))
+        					.addGap(1)
+        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        						.addGroup(layout.createSequentialGroup()
+        							.addComponent(batteryUseLabel)
+        							.addPreferredGap(ComponentPlacement.RELATED)
+        							.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        								.addComponent(batteryUseValueLabel)
+        								.addComponent(perTickLabel))
+        							.addPreferredGap(ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+        							.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        								.addComponent(applyButton)
+        								.addComponent(resetButton)))
+        						.addGroup(layout.createSequentialGroup()
+        							.addComponent(speedSlider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        							.addGap(18)
+        							.addComponent(lblBatteryCapacity)
+        							.addGap(2)
+        							.addComponent(batterySlider, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)))))
+        			.addContainerGap())
         );
         getContentPane().setLayout(layout);
 
@@ -279,54 +290,20 @@ public class EditorUI extends javax.swing.JFrame {
         botTypeSelector.setSelectedIndex(0);
         calculateBatteryUse();
     }//GEN-LAST:event_resetButtonMouseClicked
-
+    
     /**
      * This method should recalculate the average battery use per tick.
      * After calculation, it should update the batteryUseValueLabel label in this GUI.
      */
     private void calculateBatteryUse() {
-        int speed = speedSlider.getValue();
-        int size = sizeSlider.getValue();
-        // Calculate average battery use result
-        double res = 0.01*speed + 0.2*size;
-        // Set label
-        batteryUseValueLabel.setText(String.valueOf(res));
+    	int speed = speedSlider.getValue();
+    	int size = sizeSlider.getValue();
+    	// Calculate average battery use result
+    	double res = 0.01*speed + 0.2*size;
+    	// Set label
+    	batteryUseValueLabel.setText(String.valueOf(res));
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    private static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditorUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditorUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditorUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditorUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-               // new EditorUI().setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel SpeedLabel;
     private javax.swing.JButton applyButton;
