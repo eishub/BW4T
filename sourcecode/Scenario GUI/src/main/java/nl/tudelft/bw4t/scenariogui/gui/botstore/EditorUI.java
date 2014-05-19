@@ -1,14 +1,10 @@
 package nl.tudelft.bw4t.scenariogui.gui.botstore;
 
 
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JSlider;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
@@ -85,7 +81,7 @@ public class EditorUI extends javax.swing.JFrame {
 
         jScrollPane2.setViewportView(jTextPane1);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("BotStore");
 
         sizeSlider.setMajorTickSpacing(1);
