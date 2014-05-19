@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -58,6 +59,12 @@ public class ServerContextDisplay extends JFrame {
 	 */
 	public ServerContextDisplay(Context context) throws InstantiationException,
 			IllegalAccessException, FileNotFoundException {
+	    try {
+	        UIManager.setLookAndFeel(
+	          UIManager.getSystemLookAndFeelClassName());
+	        } catch (Exception e) {
+	          e.printStackTrace();
+	      }
 		setTitle("BW4T");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
@@ -180,7 +187,7 @@ class MapSelector extends JPanel {
 	/**
 	 * get list of available map names.
 	 * 
-	 * @return vector with all availabel map names in the Maps directory.
+	 * @return vector with all available map names in the Maps directory.
 	 * @throws FileNotFoundException
 	 */
 	private Vector<String> getMaps() throws FileNotFoundException {
