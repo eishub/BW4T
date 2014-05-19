@@ -1,8 +1,5 @@
 package nl.tudelft.bw4t.scenariogui.gui.panel;
 
-import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditor;
-import nl.tudelft.bw4t.scenariogui.gui.botstore.EditorUI;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -66,45 +63,16 @@ public class BotPanel extends JPanel {
         title.setTitleJustification(TitledBorder.LEFT);
         title.setTitleFont(new Font("Sans-Serif", Font.BOLD, 16));
         setBorder(title);
-             
-        //createBotCountPanel();
+
         createBotOptionPanel();
         createBotTablePanel();
 
         add(botOptions, BorderLayout.EAST);
         add(entityLists, BorderLayout.CENTER);
-        add(new JLabel("    "), BorderLayout.WEST); //margin
+        add(new JLabel("  "), BorderLayout.WEST); //margin
+        add(new JLabel("  "), BorderLayout.SOUTH); //margin
     }
-
-    /**
-     * Create the panel that shows the current bot count.
-     */
-    private void createBotCountPanel() {
-        botCountInfo.setLayout(new GridLayout(1, 6));
-        Border margin = BorderFactory.createEmptyBorder(8, 8, 8, 8);
-        botCountInfo.setBorder(margin);
-
-        JLabel botLabel = new JLabel("Bots");
-        JTextField botCount = new JTextField();
-        botCount.setText("0");
-        botCount.setEditable(false);
-        JLabel epartnerLabel = new JLabel("E-partners");
-        JTextField epartnerCount = new JTextField();
-        epartnerCount.setText("0");
-        epartnerCount.setEditable(false);
-        JLabel humanLabel = new JLabel("Humans");
-        JTextField humanCount = new JTextField();
-        humanCount.setText("0");
-        humanCount.setEditable(false);
-
-        botCountInfo.add(botLabel);
-        botCountInfo.add(botCount);
-        botCountInfo.add(epartnerLabel);
-        botCountInfo.add(epartnerCount);
-        botCountInfo.add(humanLabel);
-        botCountInfo.add(humanCount);
-    }
-
+    
     /**
      * Create the panel that shows the actions that can be done.
      */
@@ -175,7 +143,6 @@ public class BotPanel extends JPanel {
      */
     public void addNewAction() {
         System.out.println("Go to Bot Store");
-        new BotEditor();
     }
 
     /**
@@ -184,7 +151,6 @@ public class BotPanel extends JPanel {
      */
     public void modifyAction() {
         System.out.println("Go to Bot Store");
-        new BotEditor();
     }
 
     /**
