@@ -44,27 +44,6 @@ public class Controller {
                 new ChooseMapFileListener(getMainView().getMainPanel())
         );
         
-        /** Listeners for the bot option buttons. */
-        getMainView().getMainPanel().getBotPanel().getNewBot().addActionListener(
-        		new AddNewBot(getMainView().getMainPanel())
-        );
-        
-        getMainView().getMainPanel().getBotPanel().getModifyBot().addActionListener(
-        		new ModifyBot(getMainView().getMainPanel())
-        );
-        
-        getMainView().getMainPanel().getBotPanel().getRenameBot().addActionListener(
-        		new RenameBot(getMainView().getMainPanel())
-        );
-        
-        getMainView().getMainPanel().getBotPanel().getDuplicateBot().addActionListener(
-        		new DuplicateBot(getMainView().getMainPanel())
-        );
-        
-        getMainView().getMainPanel().getBotPanel().getDeleteBot().addActionListener(
-        		new DeleteBot(getMainView().getMainPanel())
-        );
-        
         /** Adds the listeners for the items in the MenuBar: */
         getMainView().getTopMenuBar().getMenuItemFileExit().addActionListener(
                 new MenuOptionExit(getMainView().getTopMenuBar(), this)

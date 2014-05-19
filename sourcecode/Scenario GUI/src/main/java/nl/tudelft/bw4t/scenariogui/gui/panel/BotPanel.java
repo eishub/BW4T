@@ -40,12 +40,6 @@ public class BotPanel extends JPanel {
     private DefaultTableModel epartnerList;
     private JScrollPane epartnerScrollPane;
 
-    private JButton newBot = new JButton("New bot");
-    private JButton modifyBot = new JButton("Modify bot");
-    private JButton renameBot = new JButton("Rename bot");
-    private JButton duplicateBot = new JButton("Duplicate bot");
-    private JButton deleteBot = new JButton("Delete bot");
-
     private JTextField newBotName = new JTextField();
 
     /* Initial value 1, maximum 100, minimum 1, steps of 1 */
@@ -109,18 +103,6 @@ public class BotPanel extends JPanel {
         botOptions.setLayout(new GridLayout(15, 2));
         Border margin = BorderFactory.createEmptyBorder(8, 8, 8, 8);
         botOptions.setBorder(margin);
-
-        botOptions.add(newBot);
-        botOptions.add(new JLabel(""));
-        botOptions.add(modifyBot);
-        botOptions.add(new JLabel(""));
-        botOptions.add(newBotName);
-        botOptions.add(renameBot);
-        botOptions.add(new JLabel(""));
-        botOptions.add(duplicateAmount);
-        botOptions.add(duplicateBot);
-        botOptions.add(new JLabel(""));
-        botOptions.add(deleteBot);
     }
 
     /**
@@ -230,7 +212,6 @@ public class BotPanel extends JPanel {
         JOptionPane.showMessageDialog(parent, text);
     }
 
-
     /**
      * @param parent     Determines the Frame in which the dialog is displayed; if null, or if the parentComponent has no Frame, a default Frame is used
      * @param text       The text to display
@@ -250,52 +231,6 @@ public class BotPanel extends JPanel {
      */
     public DefaultTableModel getTable() {
         return botList;
-    }
-
-    /**
-     * Returns the button to create a new bot.
-     *
-     * @return The button to create a new bot.
-     */
-    public JButton getNewBot() {
-        return newBot;
-    }
-
-
-    /**
-     * Returns the button to modify a bot.
-     *
-     * @return The button to modify a bot.
-     */
-    public JButton getModifyBot() {
-        return modifyBot;
-    }
-
-    /**
-     * Returns the button to rename a bot.
-     *
-     * @return The button to rename a bot.
-     */
-    public JButton getRenameBot() {
-        return renameBot;
-    }
-
-    /**
-     * Returns the button to duplicate a bot.
-     *
-     * @return The button to duplicate a bot.
-     */
-    public JButton getDuplicateBot() {
-        return duplicateBot;
-    }
-
-    /**
-     * Returns the button to delete a bot.
-     *
-     * @return The button to delete a bot.
-     */
-    public JButton getDeleteBot() {
-        return deleteBot;
     }
 
     /**
