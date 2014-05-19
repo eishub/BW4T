@@ -9,8 +9,8 @@ import java.rmi.RemoteException;
 
 import javax.xml.bind.JAXBException;
 
+import nl.tudelft.bw4t.startup.LauncherException;
 import nl.tudelft.bw4t.util.FileUtils;
-
 import repast.simphony.scenario.ScenarioLoadException;
 
 /**
