@@ -41,29 +41,10 @@ public class ConfigurationPanelTest {
     }
 
     @Test
-    public void testSetAgentFile() {
-        editor.getMainPanel().getConfigurationPanel().setAgentClassFile(filePath);
-
-        assertEquals(filePath, editor.getMainPanel().getConfigurationPanel().getAgentClassFile());
-    }
-
-    @Test
     public void testSetMapFile() {
         editor.getMainPanel().getConfigurationPanel().setMapFile(filePath);
 
         assertEquals(filePath, editor.getMainPanel().getConfigurationPanel().getMapFile());
-    }
-
-    @Test
-    public void testAgentFileAction() {
-        // Setup the mocks behaviour.
-        when(fileChooser.showOpenDialog(editor.getMainPanel())).thenReturn(JFileChooser.APPROVE_OPTION);
-        when(fileChooser.getSelectedFile()).thenReturn(new File(filePath));
-
-        // Trigger the event.
-        editor.getMainPanel().getConfigurationPanel().getChooseAgentFile().doClick();
-
-        assertEquals(filePath, editor.getMainPanel().getConfigurationPanel().getAgentClassFile());
     }
 
     @Test
@@ -79,21 +60,6 @@ public class ConfigurationPanelTest {
     }
 
     // Test the if clause, in case the return of JFileChooser is not APPROVE_OPTION
-
-    @Test
-    public void testAgentFileActionBranch() {
-        // Setup the mocks behaviour.
-        when(fileChooser.showOpenDialog(editor.getMainPanel())).thenReturn(1);
-        when(fileChooser.getSelectedFile()).thenReturn(new File(filePath));
-
-        // Original value
-        String startURI = editor.getMainPanel().getConfigurationPanel().getAgentClassFile();
-
-        // Trigger the event.
-        editor.getMainPanel().getConfigurationPanel().getChooseAgentFile().doClick();
-
-        assertEquals(startURI, editor.getMainPanel().getConfigurationPanel().getAgentClassFile());
-    }
 
     @Test
     public void testMapFileActionBranch() {

@@ -26,11 +26,12 @@ import nl.tudelft.bw4t.scenariogui.util.Format;
 public class ConfigurationPanel extends JPanel {
 	
 	public static enum DEFAULT_VALUES {
-		DEFAULT_IP("127.0.0.1"),
-		DEFAULT_PORT("9000"),
+		DEFAULT_SERVER_IP("localhost"),
+		DEFAULT_CLIENT_IP("localhost"),
+		DEFAULT_SERVER_PORT("8000"),
+		DEFAULT_CLIENT_PORT("2000"),
 		USE_GUI("true"),
 		USE_GOAL("true"),
-		AGENT_CLASS(""),
 		MAP_FILE("");
 		
 		String value;
@@ -53,17 +54,16 @@ public class ConfigurationPanel extends JPanel {
 		
 	}
 
-    private JTextField clientIP = new JTextField(DEFAULT_VALUES.DEFAULT_IP.getValue(), 15);
-    private JTextField clientPort = new JTextField(DEFAULT_VALUES.DEFAULT_PORT.getValue(), 6);
+    private JTextField clientIP = new JTextField(DEFAULT_VALUES.DEFAULT_CLIENT_IP.getValue(), 15);
+    private JTextField clientPort = new JTextField(DEFAULT_VALUES.DEFAULT_CLIENT_PORT.getValue(), 6);
     {
     	Format.addIntegerDocumentFilterForTextField(clientPort);
     }
-    private JTextField serverIP = new JTextField(DEFAULT_VALUES.DEFAULT_IP.getValue(), 15);
-    private JTextField serverPort = new JTextField(DEFAULT_VALUES.DEFAULT_PORT.getValue(), 6);
+    private JTextField serverIP = new JTextField(DEFAULT_VALUES.DEFAULT_SERVER_IP.getValue(), 15);
+    private JTextField serverPort = new JTextField(DEFAULT_VALUES.DEFAULT_SERVER_PORT.getValue(), 6);
     {
     	Format.addIntegerDocumentFilterForTextField(serverPort);
     }
-    private JTextField agentClassFileTextField = new JTextField(DEFAULT_VALUES.AGENT_CLASS.getValue());
     private JTextField mapFileTextField = new JTextField(DEFAULT_VALUES.MAP_FILE.getValue());
     
     CheckboxGroup goalCheckBox = new CheckboxGroup();
@@ -74,7 +74,6 @@ public class ConfigurationPanel extends JPanel {
     private Checkbox guiYes = new Checkbox("Yes", DEFAULT_VALUES.USE_GUI.getBooleanValue(), guiCheckBox);
     private Checkbox guiNo = new Checkbox("No", !DEFAULT_VALUES.USE_GUI.getBooleanValue(), guiCheckBox);
 
-    private JButton chooseAgentFile = new JButton("Open File");
     private JButton chooseMapFile = new JButton("Open File");
     
     protected JFileChooser fileChooser = new JFileChooser();
@@ -101,7 +100,6 @@ public class ConfigurationPanel extends JPanel {
         showServerOptions();
         showGoalOptions();
         showGuiOptions();
-        showAgentOptions();
         showMapOptions();
         
     }
@@ -117,7 +115,7 @@ public class ConfigurationPanel extends JPanel {
     }
     
     /**
-     * Show the client config options in the panel.
+     * Show the client configuration options in the panel.
      */
     private void showClientOptions(){
         c.insets = new Insets(8, 8, 0, 0);
@@ -153,7 +151,7 @@ public class ConfigurationPanel extends JPanel {
     }
     
     /**
-     * Show the serer config options in the panel.
+     * Show the server configuration options in the panel.
      */
     private void showServerOptions(){
         c.insets = new Insets(8, 8, 0, 0);
@@ -232,34 +230,6 @@ public class ConfigurationPanel extends JPanel {
 
         c.gridx = 1;
         add(guiNo, c);
-    }
-    
-    /**
-     * Show the option to add an agent class in the panel.
-     */
-    private void showAgentOptions(){
-        c.insets = new Insets(8, 8, 0, 0);
-
-        c.gridx = 0;
-        c.gridy += 1;
-
-        JLabel agent = new JLabel("Agent Class File");
-        agent.setFont(new Font("Sans-Serif", Font.BOLD, 14));
-        add(agent, c);
-
-        c.insets = new Insets(4,8,0,8);
-
-        c.gridx = 0;
-        c.gridwidth = 2;
-        c.gridy += 1;
-        add(agentClassFileTextField, c);
-
-        agentClassFileTextField.setPreferredSize(chooseAgentFile.getPreferredSize());
-
-        c.gridx = 2;
-        c.gridwidth = 1;
-        add(chooseAgentFile, c);
-
     }
     
     /**
@@ -398,35 +368,11 @@ public class ConfigurationPanel extends JPanel {
     }
 
     /**
-     * Returns the button to choose an agent file
-     * @return The button to choose an agent file
-     */
-    public JButton getChooseAgentFile() {
-        return chooseAgentFile;
-    }
-
-    /**
      * Returns the button to choose a map file
      * @return The button to choose a map file
      */
     public JButton getChooseMapFile() {
         return chooseMapFile;
-    }
-
-    /**
-     * Returns the path of the Agent Class file
-     * @return The path of the Agent Class file
-     */
-    public String getAgentClassFile() {
-        return agentClassFileTextField.getText();
-    }
-
-    /**
-     * Sets the value of the text field to the path of the Agent Class file
-     * @param agentClassFile The path of the Agent Class file
-     */
-    public void setAgentClassFile(String agentClassFile) {
-        this.agentClassFileTextField.setText(agentClassFile);
     }
 
     /**
@@ -460,19 +406,17 @@ public class ConfigurationPanel extends JPanel {
     public boolean isDefault() {
     	boolean isDefault = true;
     	
-    	if(!this.getClientIP().equals(DEFAULT_VALUES.DEFAULT_IP.getValue()) && isDefault)
+    	if(!this.getClientIP().equals(DEFAULT_VALUES.DEFAULT_CLIENT_IP.getValue()) && isDefault)
     		isDefault = false;
-    	if(this.getClientPort() != DEFAULT_VALUES.DEFAULT_PORT.getIntValue() && isDefault)
+    	if(this.getClientPort() != DEFAULT_VALUES.DEFAULT_CLIENT_PORT.getIntValue() && isDefault)
     		isDefault = false;
-    	if(!this.getServerIP().equals(DEFAULT_VALUES.DEFAULT_IP.getValue()) && isDefault)
+    	if(!this.getServerIP().equals(DEFAULT_VALUES.DEFAULT_SERVER_IP.getValue()) && isDefault)
     		isDefault = false;
-    	if(this.getServerPort() != DEFAULT_VALUES.DEFAULT_PORT.getIntValue() && isDefault)
+    	if(this.getServerPort() != DEFAULT_VALUES.DEFAULT_SERVER_PORT.getIntValue() && isDefault)
     		isDefault = false;
     	if(this.useGui() != DEFAULT_VALUES.USE_GUI.getBooleanValue() && isDefault)
     		isDefault = false;
     	if(this.useGoal() != DEFAULT_VALUES.USE_GOAL.getBooleanValue() && isDefault)
-    		isDefault = false;
-    	if(!this.getAgentClassFile().equals(DEFAULT_VALUES.AGENT_CLASS.getValue()) && isDefault)
     		isDefault = false;
     	if(!this.getMapFile().equals(DEFAULT_VALUES.MAP_FILE.getValue()) && isDefault)
     		isDefault = false;

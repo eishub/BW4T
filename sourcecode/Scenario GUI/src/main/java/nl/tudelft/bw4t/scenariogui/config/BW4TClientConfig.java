@@ -32,8 +32,6 @@ public class BW4TClientConfig {
 	private int serverPort;
 	private boolean launchGui;
 	private boolean useGoal;
-	private String agentClass;
-	
 	private String mapFile;
 	
 //  @XmlElementWrapper(name = "botlist")
@@ -50,7 +48,6 @@ public class BW4TClientConfig {
 		serverPort = configPanel.getServerPort();
 		launchGui = configPanel.useGui();
 		useGoal = configPanel.useGoal();
-		agentClass = configPanel.getAgentClassFile();
 		mapFile = configPanel.getMapFile();
 		BotPanel botPanel = mainPanel.getBotPanel();
 		//TODO: read out bot panel and add each BotConfig to the list of bots //botPanel.getTable().;
@@ -191,24 +188,7 @@ public class BW4TClientConfig {
 	public void setUseGoal(boolean useGoal) {
 		this.useGoal = useGoal;
 	}
-
-    /**
-	 * Gets the AgentClassFile.
-	 * @return The AgentClassFile.
-	 */
-	public String getAgentClass() {
-		return agentClass;
-	}
-
-    /**
-	 * Sets the AgentClassFile.
-	 * @param The AgentClassFile.
-	 */
-    @XmlElement
-	public void setAgentClass(String agentClass) {
-		this.agentClass = agentClass;
-	}
-
+    
     /**
 	 * Gets the MapFile.
 	 * @return The MapFile.
