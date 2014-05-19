@@ -278,7 +278,7 @@ class MenuOptionOpen extends MenuOption {
                 configPanel.setServerIP(temp.getServerIp());
                 configPanel.setServerPort(""+temp.getServerPort());
                 configPanel.setUseGui(temp.isLaunchGui());
-                configPanel.setUseGoal(temp.isUseGoal());
+//                configPanel.setUseGoal(temp.isUseGoal());
                 configPanel.setMapFile(temp.getMapFile());
 
                 // Fill the bot panel
@@ -375,7 +375,7 @@ class MenuOptionNew extends MenuOption {
         configPanel.setServerIP(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_SERVER_IP.getValue());
         configPanel.setServerPort(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_SERVER_PORT.getValue());
         configPanel.setUseGui(ConfigurationPanel.DEFAULT_VALUES.USE_GUI.getBooleanValue());
-        configPanel.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
+//        configPanel.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
         configPanel.setMapFile(ConfigurationPanel.DEFAULT_VALUES.MAP_FILE.getValue());
 
         // Reset the bot panel
