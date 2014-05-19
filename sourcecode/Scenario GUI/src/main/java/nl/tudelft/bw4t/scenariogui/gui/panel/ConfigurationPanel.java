@@ -26,8 +26,10 @@ import nl.tudelft.bw4t.scenariogui.util.Format;
 public class ConfigurationPanel extends JPanel {
 	
 	public static enum DEFAULT_VALUES {
-		DEFAULT_IP("127.0.0.1"),
-		DEFAULT_PORT("9000"),
+		DEFAULT_SERVER_IP("localhost"),
+		DEFAULT_CLIENT_IP("localhost"),
+		DEFAULT_SERVER_PORT("8000"),
+		DEFAULT_CLIENT_PORT("2000"),
 		USE_GUI("true"),
 		USE_GOAL("true"),
 		AGENT_CLASS(""),
@@ -53,13 +55,13 @@ public class ConfigurationPanel extends JPanel {
 		
 	}
 
-    private JTextField clientIP = new JTextField(DEFAULT_VALUES.DEFAULT_IP.getValue(), 15);
-    private JTextField clientPort = new JTextField(DEFAULT_VALUES.DEFAULT_PORT.getValue(), 6);
+    private JTextField clientIP = new JTextField(DEFAULT_VALUES.DEFAULT_CLIENT_IP.getValue(), 15);
+    private JTextField clientPort = new JTextField(DEFAULT_VALUES.DEFAULT_CLIENT_PORT.getValue(), 6);
     {
     	Format.addIntegerDocumentFilterForTextField(clientPort);
     }
-    private JTextField serverIP = new JTextField(DEFAULT_VALUES.DEFAULT_IP.getValue(), 15);
-    private JTextField serverPort = new JTextField(DEFAULT_VALUES.DEFAULT_PORT.getValue(), 6);
+    private JTextField serverIP = new JTextField(DEFAULT_VALUES.DEFAULT_SERVER_IP.getValue(), 15);
+    private JTextField serverPort = new JTextField(DEFAULT_VALUES.DEFAULT_SERVER_PORT.getValue(), 6);
     {
     	Format.addIntegerDocumentFilterForTextField(serverPort);
     }
@@ -460,13 +462,13 @@ public class ConfigurationPanel extends JPanel {
     public boolean isDefault() {
     	boolean isDefault = true;
     	
-    	if(!this.getClientIP().equals(DEFAULT_VALUES.DEFAULT_IP.getValue()) && isDefault)
+    	if(!this.getClientIP().equals(DEFAULT_VALUES.DEFAULT_CLIENT_IP.getValue()) && isDefault)
     		isDefault = false;
-    	if(this.getClientPort() != DEFAULT_VALUES.DEFAULT_PORT.getIntValue() && isDefault)
+    	if(this.getClientPort() != DEFAULT_VALUES.DEFAULT_CLIENT_PORT.getIntValue() && isDefault)
     		isDefault = false;
-    	if(!this.getServerIP().equals(DEFAULT_VALUES.DEFAULT_IP.getValue()) && isDefault)
+    	if(!this.getServerIP().equals(DEFAULT_VALUES.DEFAULT_SERVER_IP.getValue()) && isDefault)
     		isDefault = false;
-    	if(this.getServerPort() != DEFAULT_VALUES.DEFAULT_PORT.getIntValue() && isDefault)
+    	if(this.getServerPort() != DEFAULT_VALUES.DEFAULT_SERVER_PORT.getIntValue() && isDefault)
     		isDefault = false;
     	if(this.useGui() != DEFAULT_VALUES.USE_GUI.getBooleanValue() && isDefault)
     		isDefault = false;
