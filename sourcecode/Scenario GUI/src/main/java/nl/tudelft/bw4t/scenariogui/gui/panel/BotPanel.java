@@ -1,5 +1,8 @@
 package nl.tudelft.bw4t.scenariogui.gui.panel;
 
+import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditor;
+import nl.tudelft.bw4t.scenariogui.gui.botstore.EditorUI;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -154,6 +157,7 @@ public class BotPanel extends JPanel {
      */
     public void addNewAction() {
         System.out.println("Go to Bot Store");
+        new BotEditor();
     }
 
     /**
@@ -162,6 +166,7 @@ public class BotPanel extends JPanel {
      */
     public void modifyAction() {
         System.out.println("Go to Bot Store");
+        new BotEditor();
     }
 
     /**
