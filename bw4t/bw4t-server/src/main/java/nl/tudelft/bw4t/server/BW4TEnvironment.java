@@ -51,7 +51,11 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	private static BW4TEnvironment instance;
 
 	private static String mapName;
-	private BW4TServer server;
+	public static void setMapName(String mapName) {
+        BW4TEnvironment.mapName = mapName;
+    }
+
+    private BW4TServer server;
 	private boolean mapFullyLoaded;
 	private Stepper stepper;
 	private String scenarioLocation;
@@ -82,8 +86,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		instance = this;
 		this.server = server2;
 		this.mapName = mapLocation;
-		this.scenarioLocation = System.getProperty("user.dir") + "/"
-				+ scenarioLocation;
+		this.scenarioLocation = System.getProperty("user.dir") + "/" + scenarioLocation;
 		System.out.println(this.scenarioLocation);
 		launchAll();
 	}
@@ -175,7 +178,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 		Parameter map = parameters.get("map");
 		if (map != null) {
-			mapName = ((Identifier) map).getValue();
+			BW4TEnvironment.setMapName(((Identifier) map).getValue());
 		}
 		try {
 			launchRepast();
@@ -224,8 +227,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 */
 	private void launchRepast() throws IOException, ScenarioLoadException,
 			JAXBException {
-		theMap = NewMap.create(new FileInputStream(new File(System
-				.getProperty("user.dir") + "/maps/" + this.mapName)));
+		theMap = NewMap.create(new FileInputStream(new File(System.getProperty("user.dir") + "/maps/" + BW4TEnvironment.mapName)));
 		stepper = new Stepper(scenarioLocation, this);
 		System.out.println(scenarioLocation);
 		new Thread(stepper).start();
@@ -389,9 +391,9 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	public void reset(Map<String, Parameter> parameters)
 			throws ManagementException {
 		try {
-			this.mapName = ((Identifier) parameters.get("map")).getValue();
-			if (this.mapName == null) {
-				this.mapName = "Random";
+			BW4TEnvironment.setMapName(((Identifier) parameters.get("map")).getValue());
+			if (BW4TEnvironment.mapName == null) {
+			    BW4TEnvironment.setMapName("Random");
 			}
 			// this.mapLocation = "Maps/" + this.mapLocation;
 			reset();
