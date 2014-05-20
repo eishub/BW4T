@@ -283,32 +283,6 @@ public class EntityPanel extends JPanel {
     }
 
     /**
-     * Executes action that needs to happen when the "Rename bot" button is
-     * pressed. TODO Save name change
-     */
-    /*
-     * public void renameAction() { if (newBotName.getText().length() == 0) {
-     * showMessageDialog(null, "Please enter a name."); } else {
-     * System.out.println("Name set to " + newBotName.getText()); } }
-     */
-
-    /**
-     * Executes action that needs to happen when the "Duplicate bot" button is
-     * pressed. TODO Create new bot(s) and add to table
-     */
-    public final void duplicateAction() {
-        int count = (Integer) duplicateAmount.getValue();
-        int response = showConfirmDialog(null,
-                "Are you sure you want to duplicate this bot " + count
-                        + " times?", "Duplicate Bot Confirmation",
-                JOptionPane.YES_NO_OPTION);
-
-        if (response == JOptionPane.YES_OPTION) {
-            System.out.println("Bot duplicated " + count + " times.");
-        }
-    }
-
-    /**
      * Executes action that needs to happen when the "Delete bot" button is
      * pressed. TODO Delete bot from table
      */

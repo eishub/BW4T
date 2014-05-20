@@ -5,7 +5,6 @@ import java.io.File;
 import javax.swing.JFileChooser;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -122,24 +121,24 @@ public class ConfigurationPanelTest {
     public void testGetOldValues() {
         assertTrue(editor.getMainPanel().getConfigurationPanel()
                 .getOldValues().equals(editor.getMainPanel()
-                .getConfigurationPanel()
-                .getCurrentValues()));
+                        .getConfigurationPanel()
+                        .getCurrentValues()));
 
         //check when values change
         editor.getMainPanel().getConfigurationPanel().setClientIP("Other IP");
 
         assertFalse(editor.getMainPanel().getConfigurationPanel()
                 .getOldValues().equals(editor.getMainPanel()
-                .getConfigurationPanel()
-                .getCurrentValues()));
+                        .getConfigurationPanel()
+                        .getCurrentValues()));
 
         //update values
         editor.getMainPanel().getConfigurationPanel().updateOldValues();
 
         assertTrue(editor.getMainPanel().getConfigurationPanel()
                 .getOldValues().equals(editor.getMainPanel()
-                .getConfigurationPanel()
-                .getCurrentValues()));
+                        .getConfigurationPanel()
+                        .getCurrentValues()));
     }
 
 }
