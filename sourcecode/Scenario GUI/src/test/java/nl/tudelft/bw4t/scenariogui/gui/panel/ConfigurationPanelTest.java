@@ -19,9 +19,12 @@ import org.junit.Test;
  */
 public class ConfigurationPanelTest {
 
+    /** The main GUI. */
     private ScenarioEditor editor;
+    /** The file used to save the file in. */
     private final String filePath = "testpath.temp";
 
+    /** The file chooser object. */
     private JFileChooser fileChooser;
 
     @Before
@@ -35,46 +38,65 @@ public class ConfigurationPanelTest {
         editor.getMainPanel().getConfigurationPanel().fileChooser = fileChooser;
     }
 
+    /**
+     * Deletes the file after having used it.
+     */
     @After
-    public void tearDown() {
+    public final void tearDown() {
         new File(filePath).delete();
     }
 
+    /**
+     * Tests the setMapFile method.
+     */
     @Test
-    public void testSetMapFile() {
+    public final void testSetMapFile() {
         editor.getMainPanel().getConfigurationPanel().setMapFile(filePath);
 
-        assertEquals(filePath, editor.getMainPanel().getConfigurationPanel().getMapFile());
+        assertEquals(filePath, editor.getMainPanel().getConfigurationPanel()
+                .getMapFile());
     }
 
+    /**
+     * Tests the choosing of a map file.
+     */
     @Test
-    public void testMapFileAction() {
+    public final void testMapFileAction() {
         // Setup the mocks behaviour.
-        when(fileChooser.showOpenDialog(editor.getMainPanel())).thenReturn(JFileChooser.APPROVE_OPTION);
+        when(fileChooser.showOpenDialog(editor.getMainPanel())).thenReturn(
+                JFileChooser.APPROVE_OPTION);
         when(fileChooser.getSelectedFile()).thenReturn(new File(filePath));
 
         // Trigger the event.
-        editor.getMainPanel().getConfigurationPanel().getChooseMapFile().doClick();
+        editor.getMainPanel().getConfigurationPanel().getChooseMapFile()
+                .doClick();
 
-        assertEquals(filePath, editor.getMainPanel().getConfigurationPanel().getMapFile());
+        assertEquals(filePath, editor.getMainPanel().getConfigurationPanel()
+                .getMapFile());
     }
 
-    // Test the if clause, in case the return of JFileChooser is not APPROVE_OPTION
+    // Test the if clause, in case the return of JFileChooser is not
+    // APPROVE_OPTION
 
+    /**
+     * Tests whether the map file can be selected.
+     */
     @Test
-    public void testMapFileActionBranch() {
+    public final void testMapFileActionBranch() {
         // Setup the mocks behaviour.
         when(fileChooser.showOpenDialog(editor.getMainPanel())).thenReturn(1);
         when(fileChooser.getSelectedFile()).thenReturn(new File("ss"));
 
         // Original value
-        String startURI = editor.getMainPanel().getConfigurationPanel().getMapFile();
+        String startURI = editor.getMainPanel().getConfigurationPanel()
+                .getMapFile();
 
         // Trigger the event.
-        editor.getMainPanel().getConfigurationPanel().getChooseMapFile().doClick();
+        editor.getMainPanel().getConfigurationPanel().getChooseMapFile()
+                .doClick();
 
-        assertEquals(startURI, editor.getMainPanel().getConfigurationPanel().getMapFile());
+        assertEquals(startURI, editor.getMainPanel().getConfigurationPanel()
+                .getMapFile());
     }
-
 
 }

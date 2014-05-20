@@ -21,54 +21,75 @@ import org.junit.Test;
  */
 public class BW4TClientConfigTest {
 
+    /** The custom config object used in this test. */
     private static BW4TClientConfig config;
-    private static final String FILE_PATH = System.getProperty("user.dir") + "/src/test/resources/XMLSaveTest.xml";
 
+    /** The path of the file to save the config file in. */
+    private static final String FILE_PATH = System.getProperty("user.dir")
+            + "/src/test/resources/XMLSaveTest.xml";
 
+    /**
+     * Setting up the client config.
+     */
     @BeforeClass
     public static void testSetup() {
         config = new BW4TClientConfig();
     }
 
+    /**
+     * Breaks down the object (not used atm).
+     */
     @AfterClass
     public static void testCleanup() {
 
     }
 
+    /**
+     * Tests whether the setFileLocation method works.
+     */
     @Test
-    public void testFileLocation() {
+    public final void testFileLocation() {
         String filename = "testname/gui.xml";
         config.setFileLocation(filename);
 
         assertEquals(filename, config.getFileLocation());
     }
 
+    /**
+     * Tests the set client and port methods.
+     */
     @Test
-    public void testClientConfig() {
+    public final void testClientConfig() {
         String ip = "127.0.0.1";
         config.setClientIp(ip);
 
-        int port = 8000;
+        int port = 2;
         config.setClientPort(port);
 
         assertEquals(ip, config.getClientIp());
         assertEquals(port, config.getClientPort());
     }
 
+    /**
+     * Tests the set server and port methods.
+     */
     @Test
-    public void testServerConfig() {
+    public final void testServerConfig() {
         String ip = "8.8.8.8";
         config.setServerIp(ip);
 
-        int port = 9000;
+        int port = 2 + 2;
         config.setServerPort(port);
 
         assertEquals(ip, config.getServerIp());
         assertEquals(port, config.getServerPort());
     }
 
+    /**
+     * Tests whether the set gui and set goal methods work.
+     */
     @Test
-    public void testCheckboxes() {
+    public final void testCheckboxes() {
         config.setLaunchGui(true);
         config.setUseGoal(true);
 
@@ -82,9 +103,17 @@ public class BW4TClientConfigTest {
         assertFalse(config.isLaunchGui());
     }
 
+    /**
+     * Tests whether the fields stay the same after saving
+     * and then loading them from xml.
+     * @throws FileNotFoundException When the file could not be found.
+     * @throws JAXBException If there was an error with the xml loader.
+     */
     @Test
-    public void testSaveIntegrity() throws FileNotFoundException, JAXBException {
-        MainPanel panel = new MainPanel(new ConfigurationPanel(), new BotPanel());
+    public final void testSaveIntegrity() throws FileNotFoundException,
+            JAXBException {
+        MainPanel panel = new MainPanel(new ConfigurationPanel(),
+                new BotPanel());
 
         // Set some dummy changes.
 
@@ -100,21 +129,20 @@ public class BW4TClientConfigTest {
 
         // Now we load from the file.
 
-        BW4TClientConfig loadedConfiguration = BW4TClientConfig.fromXML(FILE_PATH);
+        BW4TClientConfig loadedConfiguration = BW4TClientConfig
+                .fromXML(FILE_PATH);
 
-        assertEquals(panel.getConfigurationPanel().getClientIP(), loadedConfiguration.getClientIp());
-        assertEquals(panel.getConfigurationPanel().getClientPort(), loadedConfiguration.getClientPort());
+        assertEquals(panel.getConfigurationPanel().getClientIP(),
+                loadedConfiguration.getClientIp());
+        assertEquals(panel.getConfigurationPanel().getClientPort(),
+                loadedConfiguration.getClientPort());
     }
 
     /*
-    @Test
-    public void testBotStorage() {
-        java.util.LinkedList bots = new LinkedList<BotConfig>();
-        bots.add(new BotConfig());
-        bots.add(new BotConfigTest());
-
-        config.setBots(bots);
-        assertEquals(bots, config.getBots());
-    }
-    */
+     * @Test public void testBotStorage() { java.util.LinkedList bots = new
+     * LinkedList<BotConfig>(); bots.add(new BotConfig()); bots.add(new
+     * BotConfigTest());
+     * 
+     * config.setBots(bots); assertEquals(bots, config.getBots()); }
+     */
 }
