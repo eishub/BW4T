@@ -7,18 +7,15 @@ import java.io.FileNotFoundException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
-import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
-import nl.tudelft.bw4t.scenariogui.util.XMLManager;
 
 /**
  * The Controller class is in charge of all events that happen on the GUI.
@@ -42,7 +39,8 @@ public class Controller {
         /** Create the action listeners for the ConfigurationPanel. */
 
         /** Listener for the map file chooser */
-        getMainView().getMainPanel().getConfigurationPanel().getChooseMapFile().addActionListener(
+        getMainView().getMainPanel().getConfigurationPanel().getChooseMapFile()
+            .addActionListener(
                 new ChooseMapFileListener(getMainView().getMainPanel())
         );
 
@@ -91,6 +89,10 @@ class ChooseMapFileListener implements ActionListener {
         this.view = newView;
     }
 
+    /**
+     * Invoked when the .
+     * @param actionEvent 
+     */
     public void actionPerformed(ActionEvent actionEvent) {
         /**
          * Create a file chooser, opening at the last path location saved in the
@@ -325,11 +327,12 @@ class MenuOptionOpen extends MenuOption {
                 // Fill the bot panel
                 //TODO fill botPanel
             } catch (JAXBException e1) {
-            	ScenarioEditor.handleException(e1, "Error: Opening the XML has failed.");
-    		} catch (FileNotFoundException e1) {
-    			ScenarioEditor.handleException(e1, "Error: No file has been found.");
-    		}
-
+                ScenarioEditor.handleException(
+                        e1, "Error: Opening the XML has failed.");
+            } catch (FileNotFoundException e1) {
+                ScenarioEditor.handleException(
+                        e1, "Error: No file has been found.");
+            }
         }
     }
 }
@@ -370,7 +373,7 @@ class MenuOptionExit extends MenuOption {
  */
 class MenuOptionSave extends MenuOption {
 
-    public MenuOptionSave(MenuBar view, Controller mainView) {
+    public MenuOptionSave(final MenuBar view, final Controller mainView) {
         super(view, mainView);
     }
 
@@ -384,7 +387,7 @@ class MenuOptionSave extends MenuOption {
  */
 class MenuOptionSaveAs extends MenuOption {
 
-    public MenuOptionSaveAs(MenuBar view, Controller mainView) {
+    public MenuOptionSaveAs(final MenuBar view, final Controller mainView) {
         super(view, mainView);
     }
 
@@ -398,7 +401,7 @@ class MenuOptionSaveAs extends MenuOption {
  */
 class MenuOptionNew extends MenuOption {
 
-    public MenuOptionNew(MenuBar view, Controller mainView) {
+    public MenuOptionNew(final MenuBar view, final Controller mainView) {
         super(view, mainView);
     }
 
@@ -406,7 +409,7 @@ class MenuOptionNew extends MenuOption {
         ConfigurationPanel configPanel = super.controller.getMainView().getMainPanel().getConfigurationPanel();
 
         // Check if current config is different to default config
-        if(!configPanel.isDefault()) {
+        if (!configPanel.isDefault()) {
             // Check if user wants to save current configuration
             int response = JOptionPane.showConfirmDialog(null, "Do you want to save the current configuration?", "", JOptionPane.YES_NO_OPTION);
 
@@ -416,13 +419,27 @@ class MenuOptionNew extends MenuOption {
         }
 
         // Reset the config panel
-        configPanel.setClientIP(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_CLIENT_IP.getValue());
-        configPanel.setClientPort(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_CLIENT_PORT.getValue());
-        configPanel.setServerIP(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_SERVER_IP.getValue());
-        configPanel.setServerPort(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_SERVER_PORT.getValue());
-        configPanel.setUseGui(ConfigurationPanel.DEFAULT_VALUES.USE_GUI.getBooleanValue());
-//        configPanel.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
-        configPanel.setMapFile(ConfigurationPanel.DEFAULT_VALUES.MAP_FILE.getValue());
+        configPanel.setClientIP(
+                ConfigurationPanel.DEFAULT_VALUES.
+                DEFAULT_CLIENT_IP.getValue());
+        configPanel.setClientPort(
+                ConfigurationPanel.DEFAULT_VALUES.
+                DEFAULT_CLIENT_PORT.getValue());
+        configPanel.setServerIP(
+                ConfigurationPanel.DEFAULT_VALUES.
+                DEFAULT_SERVER_IP.getValue());
+        configPanel.setServerPort(
+                ConfigurationPanel.DEFAULT_VALUES.
+                DEFAULT_SERVER_PORT.getValue());
+        configPanel.setUseGui(
+                ConfigurationPanel.DEFAULT_VALUES.
+                USE_GUI.getBooleanValue());
+//        configPanel.setUseGoal(
+//                ConfigurationPanel.DEFAULT_VALUES.
+//                USE_GOAL.getBooleanValue());
+        configPanel.setMapFile(
+                ConfigurationPanel.DEFAULT_VALUES.
+                MAP_FILE.getValue());
 
         // Reset the bot panel
         //TODO reset botPanel
