@@ -419,26 +419,19 @@ class MenuOptionNew extends MenuOption {
         }
 
         // Reset the config panel
-        configPanel.setClientIP(
-                ConfigurationPanel.DEFAULT_VALUES.
+        configPanel.setClientIP(ConfigurationPanel.DEFAULT_VALUES.
                 DEFAULT_CLIENT_IP.getValue());
-        configPanel.setClientPort(
-                ConfigurationPanel.DEFAULT_VALUES.
+        configPanel.setClientPort(ConfigurationPanel.DEFAULT_VALUES.
                 DEFAULT_CLIENT_PORT.getValue());
-        configPanel.setServerIP(
-                ConfigurationPanel.DEFAULT_VALUES.
+        configPanel.setServerIP(ConfigurationPanel.DEFAULT_VALUES.
                 DEFAULT_SERVER_IP.getValue());
-        configPanel.setServerPort(
-                ConfigurationPanel.DEFAULT_VALUES.
+        configPanel.setServerPort(ConfigurationPanel.DEFAULT_VALUES.
                 DEFAULT_SERVER_PORT.getValue());
-        configPanel.setUseGui(
-                ConfigurationPanel.DEFAULT_VALUES.
+        configPanel.setUseGui(ConfigurationPanel.DEFAULT_VALUES.
                 USE_GUI.getBooleanValue());
-//        configPanel.setUseGoal(
-//                ConfigurationPanel.DEFAULT_VALUES.
-//                USE_GOAL.getBooleanValue());
-        configPanel.setMapFile(
-                ConfigurationPanel.DEFAULT_VALUES.
+//        configPanel.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.
+            //USE_GOAL.getBooleanValue());
+        configPanel.setMapFile(ConfigurationPanel.DEFAULT_VALUES.
                 MAP_FILE.getValue());
 
         // Reset the bot panel

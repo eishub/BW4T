@@ -1,6 +1,5 @@
 package nl.tudelft.bw4t.scenariogui.util;
 
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -18,8 +17,12 @@ public final class FileFilters {
     public static FileNameExtensionFilter xmlFilter() {
         return new FileNameExtensionFilter("xml files (*.xml)", "xml");
     }
-    
+
+    /**
+     * Returns an extension filter for the map files.
+     * @return an extension filter for the map files.
+     */
     public static FileNameExtensionFilter mapFilter() {
-    	return new FileNameExtensionFilter("MAP file", "map");
+        return new FileNameExtensionFilter("MAP file", "map");
     }
 }

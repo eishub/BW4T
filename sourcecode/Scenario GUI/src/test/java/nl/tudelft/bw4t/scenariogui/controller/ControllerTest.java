@@ -2,11 +2,8 @@ package nl.tudelft.bw4t.scenariogui.controller;
 
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.io.File;
 
 import javax.swing.JFileChooser;
