@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.scenariogui.gui.panel.BotPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
@@ -110,10 +110,10 @@ public class BW4TClientConfigTest {
      * @throws JAXBException If there was an error with the xml loader.
      */
     @Test
-    public final void testSaveIntegrity() throws FileNotFoundException,
-            JAXBException {
-        MainPanel panel = new MainPanel(new ConfigurationPanel(),
-                new BotPanel());
+    public final void testSaveIntegrity()
+            throws FileNotFoundException, JAXBException {
+        MainPanel panel = new MainPanel(
+                new ConfigurationPanel(), new EntityPanel());
 
         // Set some dummy changes.
 
@@ -142,7 +142,7 @@ public class BW4TClientConfigTest {
      * @Test public void testBotStorage() { java.util.LinkedList bots = new
      * LinkedList<BotConfig>(); bots.add(new BotConfig()); bots.add(new
      * BotConfigTest());
-     * 
+     *
      * config.setBots(bots); assertEquals(bots, config.getBots()); }
      */
 }

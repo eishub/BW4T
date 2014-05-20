@@ -9,27 +9,25 @@ import org.junit.Before;
 /**
  * Created on 14-5-2014.
  */
-public class BotPanelTest {
+public class EntityPanelTest {
 
-    /** The bot panel of the GUI. */
-    private BotPanel botPanel;
-    /** A spy object of the bot panal of the GUI. */
-    private BotPanel spyBotPanel;
+    /** The entity panel of the GUI. */
+    private EntityPanel entityPanel;
+    /** A spy object of the entity panel of the GUI. */
+    private EntityPanel spyEntityPanel;
 
     /**
      * Initializes the panel and GUI.
      */
     @Before
     public final void setUp() {
-        botPanel = new BotPanel();
-        spyBotPanel = spy(botPanel);
+        entityPanel = new EntityPanel();
+        spyEntityPanel = spy(entityPanel);
 
         ConfigurationPanel config = new ConfigurationPanel();
-        /*
-         * The editor itself isn't used. It's simple so the BotPanel gets
-         * handled by a controller.
-         */
-        new ScenarioEditor(config, spyBotPanel);
+        /* The editor itself isn't used. It's simple so the BotPanel
+         * gets handled by a controller. */
+        new ScenarioEditor(config, spyEntityPanel);
     }
 
     /*

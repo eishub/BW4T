@@ -7,15 +7,17 @@ import java.io.FileNotFoundException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
-import nl.tudelft.bw4t.scenariogui.gui.panel.BotPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
+import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 
 /**
  * The Controller class is in charge of all events that happen on the GUI. It delegates all events
@@ -88,11 +90,17 @@ class ChooseMapFileListener implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         /** Create a file chooser, opening at the last path location saved in the configuration panel */
         JFileChooser fc = view.getConfigurationPanel().getFileChooser();
+        /** Create a file name extension filter to filter on MAP files */
+        FileFilter filter = new FileNameExtensionFilter("MAP file", "map");
+    	fc.setFileFilter(filter);
 
         int returnVal = fc.showOpenDialog(view);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fc.getSelectedFile();
+        File file = fc.getSelectedFile();
+        /** Makes sure only files with the right extension are accepted */
+        if (returnVal == JFileChooser.APPROVE_OPTION && file.getName().endsWith(".map")) {
             view.getConfigurationPanel().setMapFile(file.getPath());
+        } else if(returnVal == JFileChooser.APPROVE_OPTION && !file.getName().endsWith(".map")) {
+        	JOptionPane.showMessageDialog(view, "This is not a valid file.");
         }
     }
 }
@@ -113,7 +121,7 @@ class AddNewBot implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		view.getBotPanel().addNewAction();
+		view.getEntityPanel().addNewAction();
 	}
 }
 
@@ -133,7 +141,7 @@ class ModifyBot implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		view.getBotPanel().modifyAction();
+		view.getEntityPanel().modifyAction();
 	}
 }
 
@@ -173,7 +181,7 @@ class DuplicateBot implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		view.getBotPanel().duplicateAction();
+		view.getEntityPanel().duplicateAction();
 	}
 }
 
@@ -193,7 +201,7 @@ class DeleteBot implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		view.getBotPanel().deleteAction();
+		view.getEntityPanel().deleteAction();
 	}
 }
 
@@ -223,10 +231,11 @@ abstract class MenuOption implements ActionListener {
     		currentFileChooser = new JFileChooser();
     		
     		/** Adds an xml filter for the file chooser: */
-    		currentFileChooser.setFileFilter(new FileNameExtensionFilter("xml files (*.xml)", "xml"));
+    		currentFileChooser.setFileFilter(FileFilters.XMLFilter());
     		
 	        if (currentFileChooser.showSaveDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
 	            File file = currentFileChooser.getSelectedFile();
+
 	            path = file.getAbsolutePath();
 	        } else
 	        	return;
@@ -234,11 +243,11 @@ abstract class MenuOption implements ActionListener {
         try {
             new BW4TClientConfig((MainPanel) (controller.getMainView()).getContentPane(), path).toXML();
         	view.setLastFileLocation(path);
-        } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
-        } catch (JAXBException e1) {
-            e1.printStackTrace();
-        }
+        } catch (JAXBException e) {
+        	ScenarioEditor.handleException(e, "Error: Saving to XML has failed.");
+		} catch (FileNotFoundException e) {
+			ScenarioEditor.handleException(e, "Error: No file has been found.");
+		}
     }
 
     abstract public void actionPerformed(ActionEvent e);
@@ -255,7 +264,7 @@ class MenuOptionOpen extends MenuOption {
 
     public void actionPerformed(ActionEvent e) {
         ConfigurationPanel configPanel = super.controller.getMainView().getMainPanel().getConfigurationPanel();
-        BotPanel botPanel = super.controller.getMainView().getMainPanel().getBotPanel();
+        EntityPanel entityPanel = super.controller.getMainView().getMainPanel().getEntityPanel();
 
         // Check if current config is different to default config
         if(!configPanel.isDefault()) {
@@ -269,6 +278,8 @@ class MenuOptionOpen extends MenuOption {
 
         // Open configuration file
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(FileFilters.XMLFilter());
+
         if (fileChooser.showOpenDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
 
@@ -286,11 +297,11 @@ class MenuOptionOpen extends MenuOption {
 
                 // Fill the bot panel
                 //TODO fill botPanel
-            } catch (FileNotFoundException e1) {
-                e1.printStackTrace();
             } catch (JAXBException e1) {
-                e1.printStackTrace();
-            }
+            	ScenarioEditor.handleException(e1, "Error: Saving to XML has failed.");
+    		} catch (FileNotFoundException e1) {
+    			ScenarioEditor.handleException(e1, "Error: No file has been found.");
+    		}
 
         }
     }
