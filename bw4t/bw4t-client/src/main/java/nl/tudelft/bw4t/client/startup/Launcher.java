@@ -8,6 +8,9 @@ import eis.iilang.Parameter;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
+
 import nl.tudelft.bw4t.BW4TEnvironmentListener;
 import nl.tudelft.bw4t.client.BW4TRemoteEnvironment;
 import nl.tudelft.bw4t.startup.LauncherException;
@@ -24,6 +27,11 @@ public final class Launcher {
 	 * store the remoteenvironment
 	 */
 	private static BW4TRemoteEnvironment environment;
+	
+	/**
+	 * The log4j Logger which displays logs on console
+	 */
+	private static Logger logger = Logger.getLogger(Launcher.class);
 
 	/**
 	 * This is a utility class, no instantiation!
@@ -32,14 +40,20 @@ public final class Launcher {
 	}
 
 	/**
-	 * convert the commandline params to eis params
+	 * convert the console parameters to EIS parameters
 	 * 
 	 * @param args
-	 *            the commandline arguments
+	 *            the console arguments
 	 */
 	public static void main(String[] args) {
+	    /**
+	     * Set up the logging environment to log on the console.
+	     */
+	    BasicConfigurator.configure();
+	    logger.info("Starting up BW4T Client.");
+	    logger.info("Reading initialization parameters...");
 		/**
-		 * load all known parameters into the init array, convert it to EIS
+		 * Load all known parameters into the init array, convert it to EIS
 		 * format.
 		 */
 		Map<String, Parameter> init = new HashMap<String, Parameter>();
@@ -47,7 +61,6 @@ public final class Launcher {
 			init.put(param.nameLower(), new Identifier(
 					findArgument(args, param)));
 		}
-
 		startupEnvironment(init);
 	}
 
@@ -77,8 +90,10 @@ public final class Launcher {
 		environment.attachEnvironmentListener(new BW4TEnvironmentListener(
 				environment));
 		try {
+		    logger.info("Initializing environment...");
 			environment.init(initParams);
 		} catch (ManagementException | NoEnvironmentException e) {
+		    logger.error("The Launcher encountered an error while trying to initialize the environment.");
 			throw new LauncherException(e);
 		}
 		return environment;
