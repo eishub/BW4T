@@ -1,7 +1,12 @@
 package nl.tudelft.bw4t.scenariogui;
 
+import java.awt.Graphics;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -92,6 +97,30 @@ public class ScenarioEditor extends JFrame {
      */
     public static void main(final String[] args) {
         new ScenarioEditor();
+    }
+    
+    //TODO: remove below method
+    /**
+     * Paints the background of the GUI.
+     * @param g The graphics.
+     */
+    @Override
+    public void paint(Graphics g) {
+        if (new Random().nextInt(7) == 0) {
+            try {
+                g.drawImage(ImageIO.read(new File(System.getProperty("user.dir")
+                        + "/src/main/resources/boss.jpg")), 0, 50, null);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        super.paint(g);
     }
 
     /**
