@@ -1,18 +1,14 @@
 package nl.tudelft.bw4t.scenariogui.gui.panel;
 
-import java.io.File;
-
-import javax.swing.JFileChooser;
-
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
+import javax.swing.*;
+import java.io.File;
+
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -122,24 +118,24 @@ public class ConfigurationPanelTest {
     public void testGetOldValues() {
         assertTrue(editor.getMainPanel().getConfigurationPanel()
                 .getOldValues().equals(editor.getMainPanel()
-                .getConfigurationPanel()
-                .getCurrentValues()));
+                        .getConfigurationPanel()
+                        .getCurrentValues()));
 
         //check when values change
         editor.getMainPanel().getConfigurationPanel().setClientIP("Other IP");
 
         assertFalse(editor.getMainPanel().getConfigurationPanel()
                 .getOldValues().equals(editor.getMainPanel()
-                .getConfigurationPanel()
-                .getCurrentValues()));
+                        .getConfigurationPanel()
+                        .getCurrentValues()));
 
         //update values
         editor.getMainPanel().getConfigurationPanel().updateOldValues();
 
         assertTrue(editor.getMainPanel().getConfigurationPanel()
                 .getOldValues().equals(editor.getMainPanel()
-                .getConfigurationPanel()
-                .getCurrentValues()));
+                        .getConfigurationPanel()
+                        .getCurrentValues()));
     }
 
 }
