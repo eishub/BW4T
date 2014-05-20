@@ -1,8 +1,5 @@
 package nl.tudelft.bw4t.scenariogui.controller;
 
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.spy;
-
 import java.awt.event.ActionListener;
 import java.io.File;
 
@@ -14,6 +11,9 @@ import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 
 import org.junit.Ignore;
 import org.junit.Test;
+
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.spy;
 
 /**
  * Tests the controller class. It's near impossible to get the save button.

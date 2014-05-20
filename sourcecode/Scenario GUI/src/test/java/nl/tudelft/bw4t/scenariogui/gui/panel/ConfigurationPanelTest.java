@@ -1,9 +1,5 @@
 package nl.tudelft.bw4t.scenariogui.gui.panel;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import java.io.File;
 
 import javax.swing.JFileChooser;
@@ -13,6 +9,10 @@ import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Created on 13/05/2014.
