@@ -15,6 +15,7 @@ import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.BotPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
+import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 
 /**
  * The Controller class is in charge of all events that happen on the GUI. It delegates all events
@@ -217,6 +218,7 @@ abstract class MenuOption implements ActionListener {
     	String path = view.getLastFileLocation();
     	if (saveAs || !view.hasLastFileLocation()) {
 	        JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileFilter(FileFilters.XMLFilter());
 	        if (fileChooser.showSaveDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
 	            File file = fileChooser.getSelectedFile();
 	            path = file.getAbsolutePath();
@@ -261,6 +263,8 @@ class MenuOptionOpen extends MenuOption {
 
         // Open configuration file
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(FileFilters.XMLFilter());
+
         if (fileChooser.showOpenDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
 
