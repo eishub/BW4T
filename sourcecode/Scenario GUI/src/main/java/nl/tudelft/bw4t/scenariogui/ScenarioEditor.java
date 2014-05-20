@@ -76,7 +76,6 @@ public class ScenarioEditor extends JFrame {
      * @param configurationPanel The ConfigurationPanel object used in the frame
      * @param entityPanel The EntityPanel object used in the frame
      */
-
     public ScenarioEditor(final ConfigurationPanel configurationPanel, final EntityPanel entityPanel) {
         this();
         mPanel.setConfigurationPanel(configurationPanel);
@@ -89,8 +88,7 @@ public class ScenarioEditor extends JFrame {
     /**
      * Main function to start the ScenarioEditor.
      *
-     * @param args
-     *            No arguments are required.
+     * @param args No arguments are required.
      */
     public static void main(final String[] args) {
         new ScenarioEditor();
@@ -124,8 +122,7 @@ public class ScenarioEditor extends JFrame {
      * Set the content pane to the given panel. This changes which panel is
      * shown in the frame.
      *
-     * @param panel
-     *            The panel to be shown.
+     * @param panel the panel to be shown.
      */
     protected final void setActivePane(final JPanel panel) {
         setContentPane(panel);
@@ -192,11 +189,8 @@ public class ScenarioEditor extends JFrame {
 
     /**
      *
-     * @param e
-     *            contains the exception thrown by a method
-     * @param s
-     *            is a description that is specific for the place the error
-     *            occured.
+     * @param e contains the exception thrown by a method
+     * @param s is a description that is specific for the place the error occurred.
      */
     public static void handleException(final Exception e, final String s) {
         if (e instanceof FileNotFoundException) {
@@ -222,10 +216,8 @@ public class ScenarioEditor extends JFrame {
 
     /**
      *
-     * @param e
-     *            contains the exception to print
-     * @param s
-     *            is a description of the error e that will be shown.
+     * @param e contains the exception to print
+     * @param s is a description of the error e that will be shown.
      */
     public static void showDialog(final Exception e, final String s) {
 
