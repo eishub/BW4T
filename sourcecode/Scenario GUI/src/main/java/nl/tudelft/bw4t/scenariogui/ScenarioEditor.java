@@ -8,7 +8,7 @@ import javax.swing.WindowConstants;
 
 import nl.tudelft.bw4t.scenariogui.controller.Controller;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
-import nl.tudelft.bw4t.scenariogui.gui.panel.BotPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
@@ -54,7 +54,7 @@ public class ScenarioEditor extends JFrame {
         setJMenuBar(menuBar);
 
         // Attach the MainPanel, consisting of the configuration- and botpanel.
-        mPanel = new MainPanel(new ConfigurationPanel(), new BotPanel());
+        mPanel = new MainPanel(new ConfigurationPanel(), new EntityPanel());
         setActivePane(mPanel);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -75,11 +75,12 @@ public class ScenarioEditor extends JFrame {
      * @param configurationPanel The ConfigurationPanel object used in the frame
      * @param botPanel The BotPanel to be used in the frame
      */
+
     public ScenarioEditor(final ConfigurationPanel configurationPanel,
-            final BotPanel botPanel) {
+            final EntityPanel entityPanel) {
         this();
         mPanel.setConfigurationPanel(configurationPanel);
-        mPanel.setBotPanel(botPanel);
+        mPanel.setEntityPanel(entityPanel);
 
         // Recreate the controller.
         controller = new Controller(this);

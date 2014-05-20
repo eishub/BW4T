@@ -13,7 +13,7 @@ import javax.xml.bind.JAXBException;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
-import nl.tudelft.bw4t.scenariogui.gui.panel.BotPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
@@ -114,7 +114,7 @@ class AddNewBot implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		view.getBotPanel().addNewAction();
+		view.getEntityPanel().addNewAction();
 	}
 }
 
@@ -134,7 +134,7 @@ class ModifyBot implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		view.getBotPanel().modifyAction();
+		view.getEntityPanel().modifyAction();
 	}
 }
 
@@ -174,7 +174,7 @@ class DuplicateBot implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		view.getBotPanel().duplicateAction();
+		view.getEntityPanel().duplicateAction();
 	}
 }
 
@@ -194,7 +194,7 @@ class DeleteBot implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		view.getBotPanel().deleteAction();
+		view.getEntityPanel().deleteAction();
 	}
 }
 
@@ -257,7 +257,7 @@ class MenuOptionOpen extends MenuOption {
 
     public void actionPerformed(ActionEvent e) {
         ConfigurationPanel configPanel = super.controller.getMainView().getMainPanel().getConfigurationPanel();
-        BotPanel botPanel = super.controller.getMainView().getMainPanel().getBotPanel();
+        EntityPanel entityPanel = super.controller.getMainView().getMainPanel().getEntityPanel();
 
         // Check if current config is different to default config
         if(!configPanel.isDefault()) {

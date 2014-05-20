@@ -9,31 +9,31 @@ import javax.swing.JPanel;
 /**
  *
  * MainPanel which serves as the content pane for the ScenarioEditor frame. Creates a 1/3 - 2/3 division,
- * the former for the ConfigurationPanel, and the latter the BotPanel
+ * the former for the ConfigurationPanel, and the latter the EntityPanel
  * @since 13-05-2014
  * @author Joop Aue
  */
 public class MainPanel extends JPanel {
 
     private ConfigurationPanel configurationPanel;
-    private BotPanel botPanel;
+    private EntityPanel entityPanel;
     private GridBagLayout gbl;
 
     /**
-     * Create a MainPanel consisting of a ConfigurationPanel and a BotPanel
+     * Create a MainPanel consisting of a ConfigurationPanel and a EntityPanel
      * @param configurationPanel The configuration panel
-     * @param botPanel The bot panel
+     * @param entityPanel The entity panel
      */
-    public MainPanel(ConfigurationPanel configurationPanel, BotPanel botPanel) {
+    public MainPanel(ConfigurationPanel configurationPanel, EntityPanel entityPanel) {
         gbl = new GridBagLayout();
     	this.setLayout(gbl);
         this.setConfigurationPanel(configurationPanel);
-        this.setBotPanel(botPanel);
+        this.setEntityPanel(entityPanel);
 
         this.drawPanel();
 
         this.configurationPanel = configurationPanel;
-        this.botPanel = botPanel;
+        this.entityPanel = entityPanel;
     }
 
     /**
@@ -62,7 +62,7 @@ public class MainPanel extends JPanel {
         c.weighty = 1;
         c.gridx = 1;
         c.gridy = 0;
-        this.add(botPanel, c);
+        this.add(entityPanel, c);
     }
 
     /**
@@ -83,19 +83,19 @@ public class MainPanel extends JPanel {
 
 
     /**
-     * Returns the bot panel used by the MainPanel
-     * @return The bot panel object.
+     * Returns the entity panel used by the MainPanel
+     * @return The entity panel object.
      */
-    public BotPanel getBotPanel() {
-        return botPanel;
+    public EntityPanel getEntityPanel() {
+        return entityPanel;
     }
 
     /**
      * Set the bot panel used by the MainPanel.
      * @param botPanel The bot panel object to be used.
      */
-    public void setBotPanel(BotPanel botPanel) {
-        this.botPanel = botPanel;
+    public void setEntityPanel(EntityPanel entityPanel) {
+        this.entityPanel = entityPanel;
     }
 
 }
