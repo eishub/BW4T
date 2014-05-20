@@ -37,8 +37,9 @@ public final class XMLManager {
     public static void toXML(final String filePath, final Object xmlObject)
             throws JAXBException, FileNotFoundException {
         String filePath2 = filePath;
-        if (!filePath2.endsWith(".xml")) {
-            filePath2 += ".xml";
+        String extension = ".xml";
+        if (!filePath2.endsWith(extension)) {
+            filePath2 += extension;
         }
 
         File file = new File(filePath2);

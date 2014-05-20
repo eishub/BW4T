@@ -31,17 +31,7 @@ public class ScenarioEditor extends JFrame {
     private MenuBar menuBar;
     /** The <code>Controller</code> containing all the ActionEvents. */
     private Controller controller;
-
-    /**
-     * Main function to start the ScenarioEditor.
-     *
-     * @param args
-     *            No arguments are required.
-     */
-    public static void main(final String[] args) {
-        new ScenarioEditor();
-    }
-
+    
     /**
      * Create the scenario editor frame, which will then hold the panels with
      * specific functions.
@@ -92,6 +82,16 @@ public class ScenarioEditor extends JFrame {
 
         // Recreate the controller.
         controller = new Controller(this);
+    }
+
+    /**
+     * Main function to start the ScenarioEditor.
+     *
+     * @param args
+     *            No arguments are required.
+     */
+    public static void main(final String[] args) {
+        new ScenarioEditor();
     }
 
     /**

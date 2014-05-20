@@ -4,6 +4,7 @@ import java.awt.Component;
 
 import javax.swing.JOptionPane;
 
+
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 
 import org.junit.Before;
@@ -111,7 +112,8 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteBotConfirmDelete() {
-        doReturn(JOptionPane.YES_OPTION).when(spyEntityPanel).showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
+        doReturn(JOptionPane.YES_OPTION).when(spyEntityPanel).
+            showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
 
         spyEntityPanel.getDeleteBotButton().doClick();
         verify(spyEntityPanel, times(1)).deleteBotAction();
@@ -125,7 +127,8 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteBotDeclineDelete() {
-        doReturn(JOptionPane.NO_OPTION).when(spyEntityPanel).showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
+        doReturn(JOptionPane.NO_OPTION).when(spyEntityPanel).
+            showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
 
         spyEntityPanel.getDeleteBotButton().doClick();
         verify(spyEntityPanel, times(1)).deleteBotAction();

@@ -75,7 +75,7 @@ public class BW4TClientConfigTest {
      */
     @Test
     public final void testServerConfig() {
-        String ip = "8.8.8.8";
+        String ip = "8.8.8.9";
         config.setServerIp(ip);
 
         int port = 2 + 2;
