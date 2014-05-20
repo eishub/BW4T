@@ -2,6 +2,8 @@ package nl.tudelft.bw4t.server;
 
 import java.io.File;
 
+import org.apache.log4j.Logger;
+
 import repast.simphony.batch.BatchScenarioLoader;
 import repast.simphony.engine.controller.Controller;
 import repast.simphony.engine.controller.DefaultController;
@@ -31,6 +33,12 @@ import repast.simphony.scenario.ScenarioLoadException;
  * 
  */
 public class BW4TRunner extends AbstractRunner {
+	
+	/**
+	 * The log4j logger, logs to the console.
+	 */
+	private static Logger logger = Logger.getLogger(Launcher.class);
+	
 	private RunEnvironmentBuilder runEnvironmentBuilder;
 	protected Controller bw4tController;
 	protected boolean pauseRunner = false;
@@ -50,7 +58,7 @@ public class BW4TRunner extends AbstractRunner {
 			ControllerRegistry registry = loader.load(runEnvironmentBuilder);
 			bw4tController.setControllerRegistry(registry);
 		} else {
-			System.out.println("Scenario not found");
+			logger.error("Scenario was not found.");
 			return;
 		}
 
