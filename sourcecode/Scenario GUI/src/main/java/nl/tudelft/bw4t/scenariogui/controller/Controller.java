@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
@@ -87,11 +89,17 @@ class ChooseMapFileListener implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         /** Create a file chooser, opening at the last path location saved in the configuration panel */
         JFileChooser fc = view.getConfigurationPanel().getFileChooser();
+        /** Create a file name extension filter to filter on MAP files */
+        FileFilter filter = new FileNameExtensionFilter("MAP file", "map");
+    	fc.setFileFilter(filter);
 
         int returnVal = fc.showOpenDialog(view);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fc.getSelectedFile();
+        File file = fc.getSelectedFile();
+        /** Makes sure only files with the right extension are accepted */
+        if (returnVal == JFileChooser.APPROVE_OPTION && file.getName().endsWith(".map")) {
             view.getConfigurationPanel().setMapFile(file.getPath());
+        } else if(returnVal == JFileChooser.APPROVE_OPTION && !file.getName().endsWith(".map")) {
+        	JOptionPane.showMessageDialog(view, "This is not a valid file.");
         }
     }
 }
