@@ -5,6 +5,8 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 
+import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+
 /**
  * This class serves as frame for the BotEditorPanel
  * @author Arun
@@ -49,15 +51,15 @@ public class BotEditor extends JFrame{
         try {
             UIManager.setLookAndFeel(
                     UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException e) {
-            // pass
+        }catch (ClassNotFoundException e) {
+        	ScenarioEditor.handleException(e, "Error: Class has not been found");
         } catch (InstantiationException e) {
-            // pass
-        } catch (IllegalAccessException e) {
-            // pass
-        } catch (UnsupportedLookAndFeelException e) {
-            // pass
-        }
+        	ScenarioEditor.handleException(e, "Error: Instantiaton could not be done");
+		} catch (IllegalAccessException e) {
+			ScenarioEditor.handleException(e, "Error: Illegal Access");
+		} catch (UnsupportedLookAndFeelException e) {
+			ScenarioEditor.handleException(e, "Error: Unsupported LookAndFeel");
+		} 
     }
 
 }

@@ -12,43 +12,67 @@ import javax.swing.text.DocumentFilter;
  * @author Nick
  *
  */
-public class Format {
+public final class Format {
 
-	private static DocumentFilter intDocumentFilter = new IntegerDocumentFilter();
+    /** Prevents this class from being instantiated. */
+    private Format() {
+    }
 
-	private static class IntegerDocumentFilter extends DocumentFilter {
+    /** The document filter used. */
+    private static DocumentFilter intDocumentFilter =
+            new IntegerDocumentFilter();
 
-		@Override
-		public void insertString(FilterBypass fb, int off, String str, AttributeSet attr) throws BadLocationException {
-		    // remove non-digits
-		    fb.insertString(off, str.replaceAll("\\D++", ""), attr);
-		}
+    /**
+     * The class for filtering a document so it only has integers.
+     */
+    private static class IntegerDocumentFilter extends DocumentFilter {
 
-		/**
-		 * Deletes the region of text from <code>off</code> to
-         * <code>off + len</code>, and replaces it with
-         *  <code>str</code>.
-		 *
-		 * @param fb FilterBypass to circumvent calling back into the Document to change it.
-		 * @param off Offset, location in document.
-		 * @param len Length of text to delete.
-		 * @param str Text to insert, null indicates no text to insert.
-		 * @param attr AttributeSet indicating attributes of inserted text, null is legal.
-		 * @throws BadLocationException Reports bad locations within a document model.
-		 */
-		@Override
-		public void replace(FilterBypass fb, int off, int len, String str, AttributeSet attr) throws BadLocationException {
-		    // remove non-digits
-		    fb.replace(off, len, str.replaceAll("\\D++", ""), attr);
-		}
-	}
+        @Override
+        public void insertString(final FilterBypass fb, final int off,
+                final String str,
+                final AttributeSet attr) throws BadLocationException {
+            // remove non-digits
+            fb.insertString(off, str.replaceAll("\\D++", ""), attr);
+        }
 
-	/**
-	 * Adds a filter to the text field that only allows numerical input.
-	 * @param txt The text field.
-	 */
-	public static void addIntegerDocumentFilterForTextField(JTextField txt) {
-		((AbstractDocument) txt.getDocument()).setDocumentFilter(intDocumentFilter);
-	}
+        /**
+         * Deletes the region of text from <code>off</code> to
+         * <code>off + len</code>, and replaces it with <code>str</code>.
+         *
+         * @param fb
+         *            FilterBypass to circumvent calling back into the Document
+         *            to change it.
+         * @param off
+         *            Offset, location in document.
+         * @param len
+         *            Length of text to delete.
+         * @param str
+         *            Text to insert, null indicates no text to insert.
+         * @param attr
+         *            AttributeSet indicating attributes of inserted text, null
+         *            is legal.
+         * @throws BadLocationException
+         *             Reports bad locations within a document model.
+         */
+        @Override
+        public void replace(final FilterBypass fb, final int off, final int len,
+                final String str,
+                final AttributeSet attr) throws BadLocationException {
+            // remove non-digits
+            fb.replace(off, len, str.replaceAll("\\D++", ""), attr);
+        }
+    }
+
+    /**
+     * Adds a filter to the text field that only allows numerical input.
+     *
+     * @param txt
+     *            The text field.
+     */
+    public static void addIntegerDocumentFilterForTextField(
+            final JTextField txt) {
+        ((AbstractDocument) txt.getDocument())
+                .setDocumentFilter(intDocumentFilter);
+    }
 
 }
