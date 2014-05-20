@@ -73,7 +73,7 @@ public class Launcher {
 		paramScenario = findArgument(args, "-scenario", "./BW4T.rs");
 		paramMap = findArgument(args, "-map", "Random");
 		paramServerIp = findArgument(args, "-serverip", "localhost");
-		paramServerPort = Integer.parseInt(findArgument(args, "-serverport", "8080"));
+		paramServerPort = Integer.parseInt(findArgument(args, "-serverport", "8000"));
 		paramServerMsg = findArgument(args, "-msg", "Hello I am an BW4T Server version " + BW4TEnvironment.VERSION
 				+ ".");
 	}
@@ -189,11 +189,11 @@ public class Launcher {
 	/**
 	 * set the launcher instance to the global field
 	 * 
-	 * @param instance
+	 * @param inst
 	 *            the instance to be used to startup the environment
 	 */
-	private static void setInstance(Launcher instance) {
-		Launcher.instance = instance;
+	private static void setInstance(Launcher inst) {
+		Launcher.instance = inst;
 	}
 
 }

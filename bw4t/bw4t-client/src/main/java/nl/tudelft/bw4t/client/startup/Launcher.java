@@ -1,18 +1,42 @@
 package nl.tudelft.bw4t.client.startup;
 
+import eis.exceptions.ManagementException;
+import eis.exceptions.NoEnvironmentException;
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import nl.tudelft.bw4t.BW4TEnvironmentListener;
 import nl.tudelft.bw4t.client.BW4TRemoteEnvironment;
 import nl.tudelft.bw4t.startup.LauncherException;
-import eis.exceptions.ManagementException;
-import eis.exceptions.NoEnvironmentException;
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
 
-public class Launcher {
+/**
+ * This class is used to startup the remote environment to interact with the
+ * server
+ * 
+ * @author Jan Giesenberg
+ */
+public final class Launcher {
 
+	/**
+	 * store the remoteenvironment
+	 */
+	private static BW4TRemoteEnvironment environment;
+
+	/**
+	 * This is a utility class, no instanciation!
+	 */
+	private Launcher() {
+	}
+
+	/**
+	 * convert the commandline params to eis params
+	 * 
+	 * @param args
+	 *            the commandline arguments
+	 */
 	public static void main(String[] args) {
 		/**
 		 * load all known parameters into the init array, convert it to EIS
@@ -23,14 +47,41 @@ public class Launcher {
 			init.put(param.nameLower(), new Identifier(
 					findArgument(args, param)));
 		}
-		BW4TRemoteEnvironment env = new BW4TRemoteEnvironment();
-		env.attachEnvironmentListener(new BW4TEnvironmentListener(env));
+
+		startupEnvironment(init);
+	}
+
+	/**
+	 * get the environment for the client
+	 * 
+	 * @return the remote environment
+	 */
+	public static BW4TRemoteEnvironment getEnvironment() {
+		return environment;
+	}
+
+	/**
+	 * Start the remote environment, connect to the server
+	 * 
+	 * @param initParams
+	 *            the parameters to be given to the environment
+	 *            {@link BW4TRemoteEnvironment#init(Map)}
+	 * @return the created environment
+	 */
+	public static BW4TRemoteEnvironment startupEnvironment(
+			Map<String, Parameter> initParams) {
+		if (environment != null) {
+			return environment;
+		}
+		environment = new BW4TRemoteEnvironment();
+		environment.attachEnvironmentListener(new BW4TEnvironmentListener(
+				environment));
 		try {
-			env.init(init);
+			environment.init(initParams);
 		} catch (ManagementException | NoEnvironmentException e) {
 			throw new LauncherException(e);
 		}
-
+		return environment;
 	}
 
 	/**
