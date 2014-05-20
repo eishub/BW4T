@@ -245,33 +245,33 @@ abstract class MenuOption implements ActionListener {
     }
 
     public void saveFile(boolean saveAs) {
-    	String path = view.getLastFileLocation();
-    	if (saveAs || !view.hasLastFileLocation()) {
-    		currentFileChooser = new JFileChooser();
+        String path = view.getLastFileLocation();
+        if (saveAs || !view.hasLastFileLocation()) {
+            currentFileChooser = new JFileChooser();
 
-    		/** Adds an xml filter for the file chooser: */
-    		currentFileChooser.setFileFilter(FileFilters.xmlFilter());
+            /** Adds an xml filter for the file chooser: */
+            currentFileChooser.setFileFilter(FileFilters.xmlFilter());
 
-    	    if (currentFileChooser.showSaveDialog(
-    	            controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
-	            File file = currentFileChooser.getSelectedFile();
+            if (currentFileChooser.showSaveDialog(controller.getMainView())
+                    == JFileChooser.APPROVE_OPTION) {
+                File file = currentFileChooser.getSelectedFile();
 
-	            path = file.getAbsolutePath();
-	        } else {
-	        	return;
-	        }
-    	}
+                path = file.getAbsolutePath();
+            } else {
+                return;
+            }
+        }
         try {
-            new BW4TClientConfig(
-                    (MainPanel) (controller.getMainView()).getContentPane(), path).toXML();
-        	view.setLastFileLocation(path);
+            new BW4TClientConfig((MainPanel)
+                    (controller.getMainView()).getContentPane(), path).toXML();
+            view.setLastFileLocation(path);
         } catch (JAXBException e) {
-        	ScenarioEditor.handleException(
-        	        e, "Error: Saving to XML has failed.");
-		} catch (FileNotFoundException e) {
-			ScenarioEditor.handleException(
-			        e, "Error: No file has been found.");
-		}
+            ScenarioEditor.handleException(
+                    e, "Error: Saving to XML has failed.");
+        } catch (FileNotFoundException e) {
+            ScenarioEditor.handleException(
+                    e, "Error: No file has been found.");
+        }
     }
 
     public abstract void actionPerformed(ActionEvent e);
