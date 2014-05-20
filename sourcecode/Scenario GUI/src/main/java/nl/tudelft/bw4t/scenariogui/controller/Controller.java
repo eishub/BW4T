@@ -18,6 +18,7 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
+import nl.tudelft.bw4t.scenariogui.util.XMLManager;
 
 /**
  * The Controller class is in charge of all events that happen on the GUI. It delegates all events
@@ -91,9 +92,7 @@ class ChooseMapFileListener implements ActionListener {
         /** Create a file chooser, opening at the last path location saved in the configuration panel */
         JFileChooser fc = view.getConfigurationPanel().getFileChooser();
         /** Create a file name extension filter to filter on MAP files */
-        FileFilter filter = new FileNameExtensionFilter("MAP file", "map");
-    	fc.setFileFilter(filter);
-
+        
         int returnVal = fc.showOpenDialog(view);
         File file = fc.getSelectedFile();
         /** Makes sure only files with the right extension are accepted */
