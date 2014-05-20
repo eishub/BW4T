@@ -458,7 +458,7 @@
     <position height="-1" width="-1" x="1454" y="1067"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
@@ -760,549 +760,545 @@
     <display autosize="false" stereotype="true" accessors="true"/>  
   </package>  
   <association id="90">    
-    <end type="SOURCE" refId="75" navigable="false">      
-      <attribute id="91" name="renderOptions"/>      
+    <end type="SOURCE" refId="87" navigable="false">      
+      <attribute id="91" name="holding"/>      
       <multiplicity id="92" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="44" navigable="true"/>    
+    <end type="TARGET" refId="83" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="93">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="94" name="agentData"/>      
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="94" name="entityToGUI"/>      
       <multiplicity id="95" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="96">    
-    <end type="SOURCE" refId="78" navigable="false">      
-      <attribute id="97" name="map"/>      
+    <end type="SOURCE" refId="84" navigable="false">      
+      <attribute id="97" name="roomBehindTheDoor"/>      
       <multiplicity id="98" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="35" navigable="true"/>    
+    <end type="TARGET" refId="75" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <dependency id="99">    
-    <end type="SOURCE" refId="53"/>    
-    <end type="TARGET" refId="61"/>  
-  </dependency>  
-  <association id="100">    
+  <association id="99">    
     <end type="SOURCE" refId="48" navigable="false">      
-      <attribute id="101" name="renderOptions"/>      
-      <multiplicity id="102" minimum="0" maximum="1"/>    
+      <attribute id="100" name="renderOptions"/>      
+      <multiplicity id="101" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="44" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <generalization id="102">    
+    <end type="SOURCE" refId="75"/>    
+    <end type="TARGET" refId="76"/>  
+  </generalization>  
   <association id="103">    
-    <end type="SOURCE" refId="83" navigable="false">      
-      <attribute id="104" name="heldBy"/>      
+    <end type="SOURCE" refId="63" navigable="false">      
+      <attribute id="104" name="runner"/>      
       <multiplicity id="105" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="87" navigable="true"/>    
+    <end type="TARGET" refId="56" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="106">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="8"/>  
-  </nesting>  
-  <nesting id="107">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="6"/>  
-  </nesting>  
-  <realization id="108">    
-    <end type="SOURCE" refId="17"/>    
-    <end type="TARGET" refId="18"/>  
-  </realization>  
-  <nesting id="109">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="13"/>  
-  </nesting>  
-  <nesting id="110">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="10"/>  
-  </nesting>  
-  <association id="111">    
-    <end type="SOURCE" refId="35" navigable="false">      
-      <attribute id="112" name="area"/>      
-      <multiplicity id="113" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="46" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="114">    
-    <end type="SOURCE" refId="76" navigable="false">      
-      <attribute id="115" name="neighbours"/>      
-      <multiplicity id="116" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="76" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="117">    
-    <end type="SOURCE" refId="53" navigable="false">      
-      <attribute id="118" name="server"/>      
-      <multiplicity id="119" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="52" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="120">    
-    <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="121" name="type"/>      
-      <multiplicity id="122" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="123">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="124" name="environment"/>      
-      <multiplicity id="125" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="28" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="126">    
-    <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="127" name="bw4tenv"/>      
-      <multiplicity id="128" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="28" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="129">    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="130" name="message"/>      
-      <multiplicity id="131" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="132">    
-    <end type="SOURCE" refId="20"/>    
-    <end type="TARGET" refId="17"/>  
-  </generalization>  
-  <association id="133">    
+  <association id="106">    
     <end type="SOURCE" refId="21" navigable="false">      
-      <attribute id="134" name="server"/>      
-      <multiplicity id="135" minimum="0" maximum="1"/>    
+      <attribute id="107" name="server"/>      
+      <multiplicity id="108" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="42" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="136">    
-    <end type="SOURCE" refId="84"/>    
-    <end type="TARGET" refId="80"/>  
-  </generalization>  
-  <nesting id="137">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="27"/>  
-  </nesting>  
-  <association id="138">    
-    <end type="SOURCE" refId="28" navigable="false">      
-      <attribute id="139" name="entityToGUI"/>      
-      <multiplicity id="140" minimum="0" maximum="2147483647"/>    
+  <association id="109">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="110" name="dropZone"/>      
+      <multiplicity id="111" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
+    <end type="TARGET" refId="27" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="141">    
-    <end type="SOURCE" refId="83"/>    
-    <end type="TARGET" refId="80"/>  
+  <generalization id="112">    
+    <end type="SOURCE" refId="51"/>    
+    <end type="TARGET" refId="60"/>  
   </generalization>  
-  <generalization id="142">    
-    <end type="SOURCE" refId="73"/>    
-    <end type="TARGET" refId="75"/>  
-  </generalization>  
-  <association id="143">    
+  <association id="113">    
+    <end type="SOURCE" refId="48" navigable="false">      
+      <attribute id="114" name="doors"/>      
+      <multiplicity id="115" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="40" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="116">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="144" name="rooms"/>      
-      <multiplicity id="145" minimum="0" maximum="2147483647"/>    
+      <attribute id="117" name="rooms"/>      
+      <multiplicity id="118" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="30" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="146">    
-    <end type="SOURCE" refId="87" navigable="false">      
-      <attribute id="147" name="holding"/>      
-      <multiplicity id="148" minimum="0" maximum="1"/>    
+  <association id="119">    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="120" name="parent"/>      
+      <multiplicity id="121" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="83" navigable="true"/>    
+    <end type="TARGET" refId="28" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="149">    
-    <end type="SOURCE" refId="61" navigable="false">      
-      <attribute id="150" name="agentRecords"/>      
-      <multiplicity id="151" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="64" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="152">    
-    <end type="SOURCE" refId="48" navigable="false">      
-      <attribute id="153" name="blocks"/>      
-      <multiplicity id="154" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="36" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="155">    
-    <end type="SOURCE" refId="40" navigable="false">      
-      <attribute id="156" name="orientation"/>      
-      <multiplicity id="157" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="45" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="158">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="24"/>  
-  </nesting>  
-  <association id="159">    
+  <association id="122">    
     <end type="SOURCE" refId="35" navigable="false">      
-      <attribute id="160" name="entities"/>      
-      <multiplicity id="161" minimum="0" maximum="2147483647"/>    
+      <attribute id="123" name="entities"/>      
+      <multiplicity id="124" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="41" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="162">    
-    <end type="SOURCE" refId="87"/>    
-    <end type="TARGET" refId="88"/>  
-  </nesting>  
-  <association id="163">    
-    <end type="SOURCE" refId="30" navigable="false">      
-      <attribute id="164" name="doors"/>      
-      <multiplicity id="165" minimum="0" maximum="2147483647"/>    
+  <association id="125">    
+    <end type="SOURCE" refId="48" navigable="false">      
+      <attribute id="126" name="blocks"/>      
+      <multiplicity id="127" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
+    <end type="TARGET" refId="36" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="166">    
-    <end type="SOURCE" refId="28" navigable="false">      
-      <attribute id="167" name="client"/>      
-      <multiplicity id="168" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="21" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="169">    
+  <association id="128">    
     <end type="SOURCE" refId="53" navigable="false">      
-      <attribute id="170" name="stepper"/>      
-      <multiplicity id="171" minimum="0" maximum="1"/>    
+      <attribute id="129" name="instance"/>      
+      <multiplicity id="130" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="63" navigable="true"/>    
+    <end type="TARGET" refId="53" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="172">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="9"/>  
-  </nesting>  
-  <dependency id="173">    
-    <end type="SOURCE" refId="78"/>    
-    <end type="TARGET" refId="61"/>  
-  </dependency>  
-  <nesting id="174">    
-    <end type="SOURCE" refId="85"/>    
-    <end type="TARGET" refId="86"/>  
-  </nesting>  
-  <nesting id="175">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="1"/>  
-  </nesting>  
-  <association id="176">    
-    <end type="SOURCE" refId="41" navigable="false">      
-      <attribute id="177" name="position"/>      
-      <multiplicity id="178" minimum="0" maximum="1"/>    
+  <association id="131">    
+    <end type="SOURCE" refId="53" navigable="false">      
+      <attribute id="132" name="theMap"/>      
+      <multiplicity id="133" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="134">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="135" name="message"/>      
+      <multiplicity id="136" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="137">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="138" name="bw4tenv"/>      
+      <multiplicity id="139" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="140">    
+    <end type="SOURCE" refId="78" navigable="false">      
+      <attribute id="141" name="map"/>      
+      <multiplicity id="142" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="143">    
+    <end type="SOURCE" refId="61" navigable="false">      
+      <attribute id="144" name="agentRecords"/>      
+      <multiplicity id="145" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="146">    
+    <end type="SOURCE" refId="87"/>    
+    <end type="TARGET" refId="80"/>  
+  </generalization>  
+  <association id="147">    
+    <end type="SOURCE" refId="40" navigable="false">      
+      <attribute id="148" name="position"/>      
+      <multiplicity id="149" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="46" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="179">    
+  <nesting id="150">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="1"/>  
+  </nesting>  
+  <dependency id="151">    
+    <end type="SOURCE" refId="61"/>    
+    <end type="TARGET" refId="36"/>  
+  </dependency>  
+  <association id="152">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="153" name="type"/>      
+      <multiplicity id="154" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="155">    
+    <end type="SOURCE" refId="84"/>    
+    <end type="TARGET" refId="80"/>  
+  </generalization>  
+  <association id="156">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="157" name="sequence"/>      
+      <multiplicity id="158" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="159">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="13"/>  
+  </nesting>  
+  <association id="160">    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="161" name="type"/>      
+      <multiplicity id="162" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="163">    
+    <end type="SOURCE" refId="35" navigable="false">      
+      <attribute id="164" name="area"/>      
+      <multiplicity id="165" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="46" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="166">    
     <end type="SOURCE" refId="48" navigable="false">      
-      <attribute id="180" name="neighbours"/>      
-      <multiplicity id="181" minimum="0" maximum="2147483647"/>    
+      <attribute id="167" name="type"/>      
+      <multiplicity id="168" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="43" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="169">    
+    <end type="SOURCE" refId="40"/>    
+    <end type="TARGET" refId="45"/>  
+  </nesting>  
+  <nesting id="170">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="30"/>  
+  </nesting>  
+  <association id="171">    
+    <end type="SOURCE" refId="48" navigable="false">      
+      <attribute id="172" name="boundingbox"/>      
+      <multiplicity id="173" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="174">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="17"/>  
+  </generalization>  
+  <association id="175">    
+    <end type="SOURCE" refId="35" navigable="false">      
+      <attribute id="176" name="sequence"/>      
+      <multiplicity id="177" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="178">    
+    <end type="SOURCE" refId="53" navigable="false">      
+      <attribute id="179" name="contextDisplay"/>      
+      <multiplicity id="180" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="58" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="181">    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="182" name="position"/>      
+      <multiplicity id="183" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="46" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="184">    
+    <end type="SOURCE" refId="83"/>    
+    <end type="TARGET" refId="80"/>  
+  </generalization>  
+  <realization id="185">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="18"/>  
+  </realization>  
+  <generalization id="186">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <association id="187">    
+    <end type="SOURCE" refId="35" navigable="false">      
+      <attribute id="188" name="zones"/>      
+      <multiplicity id="189" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="48" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="182">    
-    <end type="SOURCE" refId="21"/>    
-    <end type="TARGET" refId="33"/>  
-  </realization>  
-  <association id="183">    
-    <end type="SOURCE" refId="35" navigable="false">      
-      <attribute id="184" name="sequence"/>      
-      <multiplicity id="185" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="36" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="186">    
-    <end type="SOURCE" refId="76"/>    
-    <end type="TARGET" refId="80"/>  
+  <generalization id="190">    
+    <end type="SOURCE" refId="85"/>    
+    <end type="TARGET" refId="87"/>  
   </generalization>  
-  <association id="187">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="188" name="sequence"/>      
-      <multiplicity id="189" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="36" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="190">    
-    <end type="SOURCE" refId="71"/>    
-    <end type="TARGET" refId="61"/>  
-  </dependency>  
-  <generalization id="191">    
-    <end type="SOURCE" refId="66"/>    
+  <nesting id="191">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="9"/>  
+  </nesting>  
+  <nesting id="192">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="38"/>  
+  </nesting>  
+  <nesting id="193">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="6"/>  
+  </nesting>  
+  <generalization id="194">    
+    <end type="SOURCE" refId="62"/>    
     <end type="TARGET" refId="60"/>  
   </generalization>  
-  <generalization id="192">    
+  <association id="195">    
+    <end type="SOURCE" refId="53" navigable="false">      
+      <attribute id="196" name="stepper"/>      
+      <multiplicity id="197" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="63" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="198">    
     <end type="SOURCE" refId="2"/>    
     <end type="TARGET" refId="17"/>  
   </generalization>  
-  <association id="193">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="194" name="humanAgent"/>      
-      <multiplicity id="195" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="196">    
-    <end type="SOURCE" refId="51"/>    
-    <end type="TARGET" refId="60"/>  
-  </generalization>  
-  <nesting id="197">    
+  <nesting id="199">    
     <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="14"/>  
+    <end type="TARGET" refId="10"/>  
   </nesting>  
-  <generalization id="198">    
-    <end type="SOURCE" refId="72"/>    
-    <end type="TARGET" refId="76"/>  
-  </generalization>  
-  <generalization id="199">    
-    <end type="SOURCE" refId="59"/>    
-    <end type="TARGET" refId="60"/>  
-  </generalization>  
   <association id="200">    
-    <end type="SOURCE" refId="21" navigable="false">      
-      <attribute id="201" name="parent"/>      
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="201" name="environment"/>      
       <multiplicity id="202" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="28" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="203">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="30"/>  
-  </nesting>  
-  <nesting id="204">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="23"/>  
-  </nesting>  
-  <generalization id="205">    
-    <end type="SOURCE" refId="75"/>    
-    <end type="TARGET" refId="76"/>  
-  </generalization>  
-  <generalization id="206">    
-    <end type="SOURCE" refId="57"/>    
-    <end type="TARGET" refId="60"/>  
-  </generalization>  
-  <association id="207">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="208" name="allBlocks"/>      
-      <multiplicity id="209" minimum="0" maximum="2147483647"/>    
+  <association id="203">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="204" name="client"/>      
+      <multiplicity id="205" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="36" navigable="true"/>    
+    <end type="TARGET" refId="21" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="210">    
-    <end type="SOURCE" refId="21" navigable="false">      
-      <attribute id="211" name="map"/>      
-      <multiplicity id="212" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="35" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="213">    
-    <end type="SOURCE" refId="40"/>    
-    <end type="TARGET" refId="45"/>  
-  </nesting>  
-  <association id="214">    
-    <end type="SOURCE" refId="48" navigable="false">      
-      <attribute id="215" name="doors"/>      
-      <multiplicity id="216" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="40" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="217">    
-    <end type="SOURCE" refId="83" navigable="false">      
-      <attribute id="218" name="colorId"/>      
-      <multiplicity id="219" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="36" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="220">    
-    <end type="SOURCE" refId="87"/>    
+  <dependency id="206">    
+    <end type="SOURCE" refId="71"/>    
     <end type="TARGET" refId="61"/>  
   </dependency>  
-  <association id="221">    
-    <end type="SOURCE" refId="53" navigable="false">      
-      <attribute id="222" name="instance"/>      
-      <multiplicity id="223" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="53" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="224">    
-    <end type="SOURCE" refId="35" navigable="false">      
-      <attribute id="225" name="zones"/>      
-      <multiplicity id="226" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="48" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="227">    
-    <end type="SOURCE" refId="85"/>    
-    <end type="TARGET" refId="87"/>  
-  </generalization>  
-  <generalization id="228">    
-    <end type="SOURCE" refId="62"/>    
-    <end type="TARGET" refId="60"/>  
-  </generalization>  
-  <nesting id="229">    
-    <end type="SOURCE" refId="48"/>    
-    <end type="TARGET" refId="43"/>  
-  </nesting>  
-  <association id="230">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="231" name="environment"/>      
-      <multiplicity id="232" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="28" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="233">    
-    <end type="SOURCE" refId="48" navigable="false">      
-      <attribute id="234" name="type"/>      
-      <multiplicity id="235" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="43" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="236">    
-    <end type="SOURCE" refId="41"/>    
-    <end type="TARGET" refId="38"/>  
-  </nesting>  
-  <association id="237">    
-    <end type="SOURCE" refId="61" navigable="false">      
-      <attribute id="238" name="theLogger"/>      
-      <multiplicity id="239" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="61" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="240">    
-    <end type="SOURCE" refId="61"/>    
-    <end type="TARGET" refId="36"/>  
-  </dependency>  
-  <association id="241">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="242" name="dropZone"/>      
-      <multiplicity id="243" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="27" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="244">    
-    <end type="SOURCE" refId="84" navigable="false">      
-      <attribute id="245" name="roomBehindTheDoor"/>      
-      <multiplicity id="246" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="75" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="247">    
+  <association id="207">    
     <end type="SOURCE" refId="58" navigable="false">      
-      <attribute id="248" name="myRenderer"/>      
-      <multiplicity id="249" minimum="0" maximum="1"/>    
+      <attribute id="208" name="myRenderer"/>      
+      <multiplicity id="209" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="65" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="250">    
-    <end type="SOURCE" refId="71"/>    
-    <end type="TARGET" refId="75"/>  
-  </generalization>  
-  <generalization id="251">    
-    <end type="SOURCE" refId="27"/>    
-    <end type="TARGET" refId="30"/>  
-  </generalization>  
-  <association id="252">    
+  <nesting id="210">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="23"/>  
+  </nesting>  
+  <nesting id="211">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="8"/>  
+  </nesting>  
+  <association id="212">    
     <end type="SOURCE" refId="53" navigable="false">      
-      <attribute id="253" name="theMap"/>      
-      <multiplicity id="254" minimum="0" maximum="1"/>    
+      <attribute id="213" name="server"/>      
+      <multiplicity id="214" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="52" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="215">    
+    <end type="SOURCE" refId="85"/>    
+    <end type="TARGET" refId="86"/>  
+  </nesting>  
+  <association id="216">    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="217" name="map"/>      
+      <multiplicity id="218" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="35" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="255">    
-    <end type="SOURCE" refId="87"/>    
-    <end type="TARGET" refId="80"/>  
-  </generalization>  
-  <association id="256">    
-    <end type="SOURCE" refId="48" navigable="false">      
-      <attribute id="257" name="boundingbox"/>      
-      <multiplicity id="258" minimum="0" maximum="1"/>    
+  <nesting id="219">    
+    <end type="SOURCE" refId="48"/>    
+    <end type="TARGET" refId="43"/>  
+  </nesting>  
+  <association id="220">    
+    <end type="SOURCE" refId="75" navigable="false">      
+      <attribute id="221" name="renderOptions"/>      
+      <multiplicity id="222" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="39" navigable="true"/>    
+    <end type="TARGET" refId="44" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="259">    
-    <end type="SOURCE" refId="63" navigable="false">      
-      <attribute id="260" name="runner"/>      
-      <multiplicity id="261" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="56" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="262">    
-    <end type="SOURCE" refId="53" navigable="false">      
-      <attribute id="263" name="contextDisplay"/>      
-      <multiplicity id="264" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="58" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="265">    
-    <end type="SOURCE" refId="40" navigable="false">      
-      <attribute id="266" name="position"/>      
-      <multiplicity id="267" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="46" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="268">    
-    <end type="SOURCE" refId="41" navigable="false">      
-      <attribute id="269" name="type"/>      
-      <multiplicity id="270" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="38" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="271">    
+  <association id="223">    
     <end type="SOURCE" refId="71" navigable="false">      
-      <attribute id="272" name="sequence"/>      
-      <multiplicity id="273" minimum="0" maximum="2147483647"/>    
+      <attribute id="224" name="sequence"/>      
+      <multiplicity id="225" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="36" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <association id="226">    
+    <end type="SOURCE" refId="48" navigable="false">      
+      <attribute id="227" name="neighbours"/>      
+      <multiplicity id="228" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="48" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="229">    
+    <end type="SOURCE" refId="76"/>    
+    <end type="TARGET" refId="80"/>  
+  </generalization>  
+  <association id="230">    
+    <end type="SOURCE" refId="83" navigable="false">      
+      <attribute id="231" name="colorId"/>      
+      <multiplicity id="232" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="233">    
+    <end type="SOURCE" refId="53"/>    
+    <end type="TARGET" refId="61"/>  
+  </dependency>  
+  <nesting id="234">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="27"/>  
+  </nesting>  
+  <association id="235">    
+    <end type="SOURCE" refId="61" navigable="false">      
+      <attribute id="236" name="theLogger"/>      
+      <multiplicity id="237" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="61" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="238">    
+    <end type="SOURCE" refId="76" navigable="false">      
+      <attribute id="239" name="neighbours"/>      
+      <multiplicity id="240" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="76" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="241">    
+    <end type="SOURCE" refId="73"/>    
+    <end type="TARGET" refId="75"/>  
+  </generalization>  
+  <generalization id="242">    
+    <end type="SOURCE" refId="72"/>    
+    <end type="TARGET" refId="76"/>  
+  </generalization>  
+  <generalization id="243">    
+    <end type="SOURCE" refId="71"/>    
+    <end type="TARGET" refId="75"/>  
+  </generalization>  
+  <association id="244">    
+    <end type="SOURCE" refId="40" navigable="false">      
+      <attribute id="245" name="orientation"/>      
+      <multiplicity id="246" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="45" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="247">    
+    <end type="SOURCE" refId="57"/>    
+    <end type="TARGET" refId="60"/>  
+  </generalization>  
+  <nesting id="248">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="24"/>  
+  </nesting>  
+  <dependency id="249">    
+    <end type="SOURCE" refId="87"/>    
+    <end type="TARGET" refId="61"/>  
+  </dependency>  
+  <nesting id="250">    
+    <end type="SOURCE" refId="87"/>    
+    <end type="TARGET" refId="88"/>  
+  </nesting>  
+  <realization id="251">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="33"/>  
+  </realization>  
+  <association id="252">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="253" name="allBlocks"/>      
+      <multiplicity id="254" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="255">    
+    <end type="SOURCE" refId="83" navigable="false">      
+      <attribute id="256" name="heldBy"/>      
+      <multiplicity id="257" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="87" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="258">    
+    <end type="SOURCE" refId="66"/>    
+    <end type="TARGET" refId="60"/>  
+  </generalization>  
+  <association id="259">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="260" name="humanAgent"/>      
+      <multiplicity id="261" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="262">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="263" name="agentData"/>      
+      <multiplicity id="264" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="265">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="266" name="environment"/>      
+      <multiplicity id="267" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="268">    
+    <end type="SOURCE" refId="59"/>    
+    <end type="TARGET" refId="60"/>  
+  </generalization>  
+  <association id="269">    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="270" name="doors"/>      
+      <multiplicity id="271" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="272">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="14"/>  
+  </nesting>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     accessors="true" visibility="true">    
     <attributes public="true" package="false" protected="false" private="false" static="false"/>    
