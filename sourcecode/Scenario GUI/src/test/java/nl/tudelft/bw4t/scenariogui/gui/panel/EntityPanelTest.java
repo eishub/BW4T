@@ -23,20 +23,20 @@ import org.mockito.Mockito;
 /**
  * Created on 14-5-2014.
  */
-public class BotPanelTest {
+public class EntityPanelTest {
 
-    private BotPanel botPanel;
-    private BotPanel spyBotPanel;
+    private EntityPanel entityPanel;
+    private EntityPanel spyEntityPanel;
 
 
     @Before
     public void setUp() {
-        botPanel = new BotPanel();
-        spyBotPanel = spy(botPanel);
+        entityPanel = new EntityPanel();
+        spyEntityPanel = spy(entityPanel);
 
         ConfigurationPanel config = new ConfigurationPanel();
         /* The editor itself isn't used. It's simple so the BotPanel gets handled by a controller. */
-        new ScenarioEditor(config, spyBotPanel);
+        new ScenarioEditor(config, spyEntityPanel);
     }
 
   /*  @Test

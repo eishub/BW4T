@@ -13,9 +13,10 @@ import javax.xml.bind.JAXBException;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
-import nl.tudelft.bw4t.scenariogui.gui.panel.BotPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
+import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 
 /**
  * The Controller class is in charge of all events that happen on the GUI. It delegates all events
@@ -113,7 +114,7 @@ class AddNewBot implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		view.getBotPanel().addNewAction();
+		view.getEntityPanel().addNewAction();
 	}
 }
 
@@ -133,7 +134,7 @@ class ModifyBot implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		view.getBotPanel().modifyAction();
+		view.getEntityPanel().modifyAction();
 	}
 }
 
@@ -173,7 +174,7 @@ class DuplicateBot implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		view.getBotPanel().duplicateAction();
+		view.getEntityPanel().duplicateAction();
 	}
 }
 
@@ -193,7 +194,7 @@ class DeleteBot implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		view.getBotPanel().deleteAction();
+		view.getEntityPanel().deleteAction();
 	}
 }
 
@@ -223,10 +224,11 @@ abstract class MenuOption implements ActionListener {
     		currentFileChooser = new JFileChooser();
     		
     		/** Adds an xml filter for the file chooser: */
-    		currentFileChooser.setFileFilter(new FileNameExtensionFilter("xml files (*.xml)", "xml"));
+    		currentFileChooser.setFileFilter(FileFilters.XMLFilter());
     		
 	        if (currentFileChooser.showSaveDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
 	            File file = currentFileChooser.getSelectedFile();
+
 	            path = file.getAbsolutePath();
 	        } else
 	        	return;
@@ -255,7 +257,7 @@ class MenuOptionOpen extends MenuOption {
 
     public void actionPerformed(ActionEvent e) {
         ConfigurationPanel configPanel = super.controller.getMainView().getMainPanel().getConfigurationPanel();
-        BotPanel botPanel = super.controller.getMainView().getMainPanel().getBotPanel();
+        EntityPanel entityPanel = super.controller.getMainView().getMainPanel().getEntityPanel();
 
         // Check if current config is different to default config
         if(!configPanel.isDefault()) {
@@ -269,6 +271,8 @@ class MenuOptionOpen extends MenuOption {
 
         // Open configuration file
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(FileFilters.XMLFilter());
+
         if (fileChooser.showOpenDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
 
