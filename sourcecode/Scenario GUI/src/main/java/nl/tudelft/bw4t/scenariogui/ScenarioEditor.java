@@ -1,7 +1,12 @@
 package nl.tudelft.bw4t.scenariogui;
 
+import java.awt.Graphics;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -68,14 +73,10 @@ public class ScenarioEditor extends JFrame {
      * Constructor where the panels are passed through as arguments. Useful for
      * testing when the panels have to be mocked or spied upon.
      *
-     * @param configurationPanel
-     *            The ConfigurationPanel object used in the frame
-     * @param entityPanel
-     *            The EntityPanel object used in the frame
+     * @param configurationPanel The ConfigurationPanel object used in the frame
+     * @param entityPanel The EntityPanel object used in the frame
      */
-
-    public ScenarioEditor(final ConfigurationPanel configurationPanel,
-            final EntityPanel entityPanel) {
+    public ScenarioEditor(final ConfigurationPanel configurationPanel, final EntityPanel entityPanel) {
         this();
         mPanel.setConfigurationPanel(configurationPanel);
         mPanel.setEntityPanel(entityPanel);
@@ -87,19 +88,41 @@ public class ScenarioEditor extends JFrame {
     /**
      * Main function to start the ScenarioEditor.
      *
-     * @param args
-     *            No arguments are required.
+     * @param args No arguments are required.
      */
     public static void main(final String[] args) {
         new ScenarioEditor();
+    }
+    
+    //TODO: remove below method
+    /**
+     * Paints the background of the GUI.
+     * @param g The graphics.
+     */
+    @Override
+    public void paint(Graphics g) {
+        if (new Random().nextInt(7) == 0) {
+            try {
+                g.drawImage(ImageIO.read(new File(System.getProperty("user.dir")
+                        + "/src/main/resources/boss.jpg")), 0, 50, null);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        super.paint(g);
     }
 
     /**
      * Set the content pane to the given panel. This changes which panel is
      * shown in the frame.
      *
-     * @param panel
-     *            The panel to be shown.
+     * @param panel the panel to be shown.
      */
     protected final void setActivePane(final JPanel panel) {
         setContentPane(panel);
@@ -166,11 +189,8 @@ public class ScenarioEditor extends JFrame {
 
     /**
      *
-     * @param e
-     *            contains the exception thrown by a method
-     * @param s
-     *            is a description that is specific for the place the error
-     *            occured.
+     * @param e contains the exception thrown by a method
+     * @param s is a description that is specific for the place the error occurred.
      */
     public static void handleException(final Exception e, final String s) {
         if (e instanceof FileNotFoundException) {
@@ -196,10 +216,8 @@ public class ScenarioEditor extends JFrame {
 
     /**
      *
-     * @param e
-     *            contains the exception to print
-     * @param s
-     *            is a description of the error e that will be shown.
+     * @param e contains the exception to print
+     * @param s is a description of the error e that will be shown.
      */
     public static void showDialog(final Exception e, final String s) {
 

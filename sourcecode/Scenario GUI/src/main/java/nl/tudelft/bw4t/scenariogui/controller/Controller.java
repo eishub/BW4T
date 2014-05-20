@@ -34,7 +34,7 @@ public class Controller {
     public static final String CONFIRM_SAVE_TXT = "Do you want to save the current configuration?";
 
     /**
-     * Create a controller object.
+     * Create a controller object to control all ActionEvents.
      * @param newView used to call relevant functions by the event listeners.
      */
     public Controller(final ScenarioEditor newView) {
@@ -43,8 +43,7 @@ public class Controller {
         /** Create the action listeners for the ConfigurationPanel. */
 
         /** Listener for the map file chooser */
-        getMainView().getMainPanel().getConfigurationPanel().getChooseMapFile()
-            .addActionListener(
+        getMainView().getMainPanel().getConfigurationPanel().getChooseMapFile().addActionListener(
                 new ChooseMapFileListener(getMainView().getMainPanel())
         );
 
@@ -109,7 +108,7 @@ class ChooseMapFileListener implements ActionListener {
     private MainPanel view;
 
     /**
-     * Create a ChooseMapFileListener event handler.
+     * Create a <code>ChooseMapFileListener</code> event handler.
      *
      * @param newView The parent view.
      */
@@ -119,7 +118,7 @@ class ChooseMapFileListener implements ActionListener {
 
     /**
      * Listens to the map file chooser.
-     * @param actionEvent The event.
+     * @param actionEvent is the event.
      */
     public void actionPerformed(final ActionEvent actionEvent) {
         /**
@@ -133,14 +132,11 @@ class ChooseMapFileListener implements ActionListener {
         File file = fc.getSelectedFile();
         String mapExtension = ".map";
         /** Makes sure only files with the right extension are accepted */
-        if (returnVal == JFileChooser.APPROVE_OPTION
-                && file.getName().endsWith(mapExtension)) {
+        if (returnVal == JFileChooser.APPROVE_OPTION && file.getName().endsWith(mapExtension)) {
             view.getConfigurationPanel().setMapFile(file.getPath());
         }
-        else if (returnVal == JFileChooser.APPROVE_OPTION
-                && !file.getName().endsWith(mapExtension)) {
-            JOptionPane.showMessageDialog(view,
-                    "This is not a valid file.");
+        else if (returnVal == JFileChooser.APPROVE_OPTION && !file.getName().endsWith(mapExtension)) {
+            JOptionPane.showMessageDialog(view, "This is not a valid file.");
         }
     }
 }
@@ -359,8 +355,7 @@ abstract class AbstractMenuOptionFactory implements ActionListener {
             /** Adds an xml filter for the file chooser: */
             currentFileChooser.setFileFilter(FileFilters.xmlFilter());
 
-            if (currentFileChooser.showSaveDialog(getController().getMainView())
-                    == JFileChooser.APPROVE_OPTION) {
+            if (currentFileChooser.showSaveDialog(getController().getMainView()) == JFileChooser.APPROVE_OPTION) {
                 File file = currentFileChooser.getSelectedFile();
 
                 path = file.getAbsolutePath();
@@ -375,9 +370,7 @@ abstract class AbstractMenuOptionFactory implements ActionListener {
             }
         }
         try {
-            new BW4TClientConfig((MainPanel)
-                    (getController().getMainView()).getContentPane(),
-                    path).toXML();
+            new BW4TClientConfig((MainPanel) (getController().getMainView()).getContentPane(), path).toXML();
             view.setLastFileLocation(path);
         } catch (JAXBException e) {
             ScenarioEditor.handleException(
@@ -431,10 +424,8 @@ class MenuOptionOpen extends AbstractMenuOptionFactory {
      * @param e The action event.
      */
     public void actionPerformed(final ActionEvent e) {
-        ConfigurationPanel configPanel = super.getController().
-                getMainView().getMainPanel().getConfigurationPanel();
-        EntityPanel entityPanel = super.getController().
-                getMainView().getMainPanel().getEntityPanel();
+        ConfigurationPanel configPanel = super.getController().getMainView().getMainPanel().getConfigurationPanel();
+        EntityPanel entityPanel = super.getController().getMainView().getMainPanel().getEntityPanel();
 
         // Check if current config is different from last saved config
         if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())) {
@@ -455,13 +446,11 @@ class MenuOptionOpen extends AbstractMenuOptionFactory {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(FileFilters.xmlFilter());
 
-        if (fileChooser.showOpenDialog(getController().getMainView())
-                == JFileChooser.APPROVE_OPTION) {
+        if (fileChooser.showOpenDialog(getController().getMainView()) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
 
             try {
-                BW4TClientConfig temp = BW4TClientConfig.fromXML(
-                        file.getAbsolutePath());
+                BW4TClientConfig temp = BW4TClientConfig.fromXML(file.getAbsolutePath());
 
                 // Fill the configuration panel
                 configPanel.setClientIP(temp.getClientIp());
@@ -475,14 +464,11 @@ class MenuOptionOpen extends AbstractMenuOptionFactory {
                 // Fill the bot panel
                 //TODO fill botPanel
             } catch (JAXBException e1) {
-                ScenarioEditor.handleException(
-                        e1, "Error: Opening the XML has failed.");
+                ScenarioEditor.handleException(e1, "Error: Opening the XML has failed.");
             } catch (FileNotFoundException e1) {
-                ScenarioEditor.handleException(
-                        e1, "Error: No file has been found. ");
+                ScenarioEditor.handleException(e1, "Error: No file has been found. ");
             }
         }
-
         super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
     }
 }
@@ -506,9 +492,7 @@ class MenuOptionExit extends AbstractMenuOptionFactory {
      * @param e The action event.
      */
     public void actionPerformed(final ActionEvent e) {
-        ConfigurationPanel configPanel =
-                super.getController().getMainView().getMainPanel().
-                getConfigurationPanel();
+        ConfigurationPanel configPanel = super.getController().getMainView().getMainPanel().getConfigurationPanel();
 
         // Check if current config is different from last saved config
         if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())) {
@@ -596,14 +580,15 @@ class MenuOptionNew extends AbstractMenuOptionFactory {
      * @param e The action event.
      */
     public void actionPerformed(final ActionEvent e) {
-        ConfigurationPanel configPanel = super.getController().getMainView().
-                getMainPanel().getConfigurationPanel();
+        ConfigurationPanel configPanel = super.getController().getMainView().getMainPanel().getConfigurationPanel();
 
         // Check if current config is different from last saved config
         if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())) {
             // Check if user wants to save current configuration
-            int response = JOptionPane.showConfirmDialog(null,
-                    Controller.CONFIRM_SAVE_TXT, "",
+            int response = JOptionPane.showConfirmDialog(
+                    null,
+                    Controller.CONFIRM_SAVE_TXT,
+                    "",
                     JOptionPane.YES_NO_OPTION);
 
             if (response == JOptionPane.YES_OPTION) {
@@ -613,20 +598,13 @@ class MenuOptionNew extends AbstractMenuOptionFactory {
         }
 
         // Reset the config panel
-        configPanel.setClientIP(ConfigurationPanel.DEFAULT_VALUES.
-                DEFAULT_CLIENT_IP.getValue());
-        configPanel.setClientPort(ConfigurationPanel.DEFAULT_VALUES.
-                DEFAULT_CLIENT_PORT.getValue());
-        configPanel.setServerIP(ConfigurationPanel.DEFAULT_VALUES.
-                DEFAULT_SERVER_IP.getValue());
-        configPanel.setServerPort(ConfigurationPanel.DEFAULT_VALUES.
-                DEFAULT_SERVER_PORT.getValue());
-        configPanel.setUseGui(ConfigurationPanel.DEFAULT_VALUES.
-                USE_GUI.getBooleanValue());
-//        configPanel.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.
-            //USE_GOAL.getBooleanValue());
-        configPanel.setMapFile(ConfigurationPanel.DEFAULT_VALUES.
-                MAP_FILE.getValue());
+        configPanel.setClientIP(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_CLIENT_IP.getValue());
+        configPanel.setClientPort(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_CLIENT_PORT.getValue());
+        configPanel.setServerIP(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_SERVER_IP.getValue());
+        configPanel.setServerPort(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_SERVER_PORT.getValue());
+        configPanel.setUseGui(ConfigurationPanel.DEFAULT_VALUES.USE_GUI.getBooleanValue());
+//        configPanel.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
+        configPanel.setMapFile(ConfigurationPanel.DEFAULT_VALUES.MAP_FILE.getValue());
         
         super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
 
