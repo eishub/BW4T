@@ -19,9 +19,13 @@ import java.awt.*;
  */
 public class EntityPanelTest {
 
-    /** The entity panel of the GUI. */
+    /**
+     * The entity panel of the GUI.
+     */
     private EntityPanel entityPanel;
-    /** A spy object of the entity panel of the GUI. */
+    /**
+     * A spy object of the entity panel of the GUI.
+     */
     private EntityPanel spyEntityPanel;
 
     /**
@@ -39,11 +43,15 @@ public class EntityPanelTest {
     }
 
     /**
+     * <<<<<<< HEAD
      * Test if the count of bots is correct after adding a bot
      * to the table.
+     * =======
+     * Tests the bot count panel.
+     * >>>>>>> upstream/scenario_gui_main_panel
      */
     @Test
-    public void testBotCount() {
+    public final void testBotCount() {
         Object[] data = {"D1", "D2", "D3"};
 
         spyEntityPanel.getBotTable().addRow(data);
@@ -53,11 +61,15 @@ public class EntityPanelTest {
     }
 
     /**
+     * <<<<<<< HEAD
      * Test if the count of epartners is correct after adding
      * an epartner to the table.
+     * =======
+     * Tests the e-partner count panel.
+     * >>>>>>> upstream/scenario_gui_main_panel
      */
     @Test
-    public void testEPartnerCount() {
+    public final void testEPartnerCount() {
         Object[] data = {"D1", "D2", "D3"};
 
         spyEntityPanel.getEPartnerTable().addRow(data);
@@ -70,11 +82,11 @@ public class EntityPanelTest {
      * Test if a bot is succesfully added when the add
      * bot button is clicked.
      */
-     @Test
-     public void testAddNewBot() {
-         spyEntityPanel.getNewBotButton().doClick();
-         verify(spyEntityPanel, times(1)).addBotAction();
-         //TODO: Verify if the bot has been actually added.
+    @Test
+    public void testAddNewBot() {
+        spyEntityPanel.getNewBotButton().doClick();
+        verify(spyEntityPanel, times(1)).addBotAction();
+        //TODO: Verify if the bot has been actually added.
     }
 
     /**
@@ -115,5 +127,4 @@ public class EntityPanelTest {
         verify(spyEntityPanel, times(1)).deleteBotAction();
         //TODO: Verify if the bot has NOT been removed.
     }
-
 }

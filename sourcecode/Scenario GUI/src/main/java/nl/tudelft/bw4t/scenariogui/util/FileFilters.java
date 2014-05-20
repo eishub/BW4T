@@ -17,4 +17,12 @@ public final class FileFilters {
     public static FileNameExtensionFilter xmlFilter() {
         return new FileNameExtensionFilter("xml files (*.xml)", "xml");
     }
+
+    /**
+     * Returns an extension filter for the map files.
+     * @return an extension filter for the map files.
+     */
+    public static FileNameExtensionFilter mapFilter() {
+        return new FileNameExtensionFilter("MAP file", "map");
+    }
 }
