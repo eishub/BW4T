@@ -1,0 +1,11 @@
+logcreationtime 1400575377972
+sequence	 G	 O	 P	 P	 Y	 W
+room	RoomC2	B	Y
+room	RoomC3	P	O	G	R	B
+room	RoomC1	B	P	W
+room	RoomA1
+room	RoomB2	Y	Y	G	G
+room	RoomB1	O	W	G	G	O	O	Y
+room	RoomB3	G	P
+room	RoomA3	B	B
+room	RoomA2	P	P	W
