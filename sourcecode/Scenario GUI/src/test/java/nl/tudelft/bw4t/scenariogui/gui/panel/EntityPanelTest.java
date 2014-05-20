@@ -1,10 +1,12 @@
 package nl.tudelft.bw4t.scenariogui.gui.panel;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.spy;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 
 import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Created on 14-5-2014.
@@ -28,6 +30,26 @@ public class EntityPanelTest {
         /* The editor itself isn't used. It's simple so the BotPanel
          * gets handled by a controller. */
         new ScenarioEditor(config, spyEntityPanel);
+    }
+
+    @Test
+    public void testBotCount() {
+        Object[] data = {"D1", "D2", "D3"};
+
+        spyEntityPanel.getBotTable().addRow(data);
+        spyEntityPanel.updateEntitiesCount();
+
+        assertEquals(spyEntityPanel.getBotCount(), 1);
+    }
+
+    @Test
+    public void testEPartnerCount() {
+        Object[] data = {"D1", "D2", "D3"};
+
+        spyEntityPanel.getEPartnerTable().addRow(data);
+        spyEntityPanel.updateEntitiesCount();
+
+        assertEquals(spyEntityPanel.getEPartnerCount(), 1);
     }
 
     /*

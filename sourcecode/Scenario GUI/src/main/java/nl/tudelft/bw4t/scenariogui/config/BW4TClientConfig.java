@@ -136,6 +136,7 @@ public class BW4TClientConfig {
      *
      * @param newClientIp The clientIP.
      */
+
     @XmlElement
     public final void setClientIp(final String newClientIp) {
         this.clientIp = newClientIp;
