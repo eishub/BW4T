@@ -1,11 +1,9 @@
 package nl.tudelft.bw4t.scenariogui;
 
 import java.io.FileNotFoundException;
-
-import javax.swing.*;
 import javax.xml.bind.JAXBException;
-
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -17,7 +15,6 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
-
 /**
  * The ScenarioEditor class serves as the Frame for the MenuBar and MainPanel.
  */
@@ -27,7 +24,7 @@ public class ScenarioEditor extends JFrame {
     private static final long serialVersionUID = 3291131921268747169L;
     /** The name of the window, as displayed in the title. */
     private String windowName = "Scenario Editor";
-    /** The <code>MainPanel</code> serving as the content pane.*/
+    /** The <code>MainPanel</code> serving as the content pane. */
     private MainPanel mPanel;
     /** The <code>MenuBar</code> at the top of the screen. */
     private MenuBar menuBar;
@@ -36,19 +33,21 @@ public class ScenarioEditor extends JFrame {
 
     /**
      * Main function to start the ScenarioEditor.
-     * @param args No arguments are required.
+     *
+     * @param args
+     *            No arguments are required.
      */
     public static void main(final String[] args) {
         new ScenarioEditor();
     }
 
     /**
-     * Create the scenario editor frame,
-     * which will then hold the panels with specific functions.
+     * Create the scenario editor frame, which will then hold the panels with
+     * specific functions.
      */
     public ScenarioEditor() {
         setLookAndFeel();
-//      setSize(width, height);
+        // setSize(width, height);
         setTitle(windowName);
 
         setResizable(false);
@@ -64,7 +63,7 @@ public class ScenarioEditor extends JFrame {
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        //Gives window its size by inner components
+        // Gives window its size by inner components
         pack();
 
         // Setting the location relative to null centers the frame.
@@ -75,10 +74,13 @@ public class ScenarioEditor extends JFrame {
     }
 
     /**
-     * Constructor where the panels are passed through as arguments.
-     * Useful for testing when the panels have to be mocked or spied upon.
-     * @param configurationPanel The ConfigurationPanel object used in the frame
-     * @param botPanel The BotPanel to be used in the frame
+     * Constructor where the panels are passed through as arguments. Useful for
+     * testing when the panels have to be mocked or spied upon.
+     *
+     * @param configurationPanel
+     *            The ConfigurationPanel object used in the frame
+     * @param entityPanel
+     *            The EntityPanel object used in the frame
      */
 
     public ScenarioEditor(final ConfigurationPanel configurationPanel,
@@ -92,9 +94,11 @@ public class ScenarioEditor extends JFrame {
     }
 
     /**
-     * Set the content pane to the given panel.
-     * This changes which panel is shown in the frame.
-     * @param panel The panel to be shown.
+     * Set the content pane to the given panel. This changes which panel is
+     * shown in the frame.
+     *
+     * @param panel
+     *            The panel to be shown.
      */
     protected final void setActivePane(final JPanel panel) {
         setContentPane(panel);
@@ -102,18 +106,20 @@ public class ScenarioEditor extends JFrame {
 
     /**
      * Return the currently active content pane.
+     *
      * @return The JPanel that is currently the active content pane.
      */
     protected final JPanel getActivePane() {
         /*
-         * Type cast it to JPanel since it cannot be anything other than
-         * a JPanel due to the type check in the setActivePane method.
+         * Type cast it to JPanel since it cannot be anything other than a
+         * JPanel due to the type check in the setActivePane method.
          */
         return (JPanel) getContentPane();
     }
 
     /**
      * Returns the main panel.
+     *
      * @return The main panel.
      */
     public final MainPanel getMainPanel() {
@@ -122,6 +128,7 @@ public class ScenarioEditor extends JFrame {
 
     /**
      * Returns the menu bar.
+     *
      * @return The menu bar.
      */
     public final MenuBar getTopMenuBar() {
@@ -129,67 +136,72 @@ public class ScenarioEditor extends JFrame {
     }
 
     /**
-     *  Function to set the look and feel of the frame to the default look and feel of the system.
-     *  Throws exceptions which are passed over since the failure to set the look and feel is not
-     *  considered harmful.
+     * Function to set the look and feel of the frame to the default look and
+     * feel of the system. Throws exceptions which are passed over since the
+     * failure to set the look and feel is not considered harmful.
      */
     private void setLookAndFeel() {
         try {
-            UIManager.setLookAndFeel(
-                    UIManager.getSystemLookAndFeelClassName());
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException e) {
-        	handleException(e, "Error: Class has not been found");
+            handleException(e, "Error: Class has not been found");
         } catch (InstantiationException e) {
-        	handleException(e, "Error: Instantiaton could not be done");
-		} catch (IllegalAccessException e) {
-			handleException(e, "Error: Illegal Access");
-		} catch (UnsupportedLookAndFeelException e) {
-			handleException(e, "Error: Unsupported LookAndFeel");
-		} 
+            handleException(e, "Error: Instantiaton could not be done");
+        } catch (IllegalAccessException e) {
+            handleException(e, "Error: Illegal Access");
+        } catch (UnsupportedLookAndFeelException e) {
+            handleException(e, "Error: Unsupported LookAndFeel");
+        }
     }
 
     /**
      * Returns the controller object being used to handle all events on the GUI.
+     *
      * @return The Controller used.
      */
     public final Controller getController() {
         return controller;
     }
-    
-	/**
-	 * 
-	 * @param e contains the exception thrown by a method
-	 * @param s is a description that is specific for the place the error occured
-	 */
-    public static void handleException(Exception e, String s){
-    	if (e instanceof FileNotFoundException) {
-			showDialog(e,s);			
-		}
-    	if (e instanceof JAXBException) {
-			showDialog(e,s);			
-		}
-    	if (e instanceof ClassNotFoundException) {
-			showDialog(e,s);				
-		}
-    	if (e instanceof InstantiationException) {
-			showDialog(e,s);				
-		}
-    	if (e instanceof IllegalAccessException) {
-			showDialog(e,s);				
-		}
-    	if (e instanceof UnsupportedLookAndFeelException) {
-			showDialog(e,s);				
-		}
-    
-    }
-    
+
     /**
-     * 
-     * @param e contains the exception to print
-     * @param s is a description of the error e that will be shown.
+     *
+     * @param e
+     *            contains the exception thrown by a method
+     * @param s
+     *            is a description that is specific for the place the error
+     *            occured.
      */
-    public static void showDialog(Exception e, String s){
-    	
-    	JOptionPane.showMessageDialog(null, s + "\n" + e.toString());
+    public static void handleException(final Exception e, final String s) {
+        if (e instanceof FileNotFoundException) {
+            showDialog(e, s);
+        }
+        if (e instanceof JAXBException) {
+            showDialog(e, s);
+        }
+        if (e instanceof ClassNotFoundException) {
+            showDialog(e, s);
+        }
+        if (e instanceof InstantiationException) {
+            showDialog(e, s);
+        }
+        if (e instanceof IllegalAccessException) {
+            showDialog(e, s);
+        }
+        if (e instanceof UnsupportedLookAndFeelException) {
+            showDialog(e, s);
+        }
+
+    }
+
+    /**
+     *
+     * @param e
+     *            contains the exception to print
+     * @param s
+     *            is a description of the error e that will be shown.
+     */
+    public static void showDialog(final Exception e, final String s) {
+
+        JOptionPane.showMessageDialog(null, s + "\n" + e.toString());
     }
 }

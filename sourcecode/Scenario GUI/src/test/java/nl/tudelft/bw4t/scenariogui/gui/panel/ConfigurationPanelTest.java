@@ -25,20 +25,24 @@ public class ConfigurationPanelTest {
     private final String filePath = "testpath.xml";
     /** The file that has to be opened. */
     private final String filePathMap = "test.map";
-    /** The selected file that cannot be opened */
+    /** The selected file that cannot be opened. */
     private final String fileMapFail = "test.fail";
     /** The file chooser object. */
     private JFileChooser fileChooser;
 
+    /**
+     * Initialized the variables.
+     */
     @Before
-    public void setUp() {
+    public final void setUp() {
         // Mock the JFileChooser
         fileChooser = mock(JFileChooser.class);
 
         editor = new ScenarioEditor();
 
         // Set the fileChooser used to the mocked one.
-        editor.getMainPanel().getConfigurationPanel().fileChooser = fileChooser;
+        editor.getMainPanel().getConfigurationPanel()
+            .setFileChooser(fileChooser);
     }
 
     /**
@@ -77,16 +81,16 @@ public class ConfigurationPanelTest {
         assertEquals(filePathMap, editor.getMainPanel().getConfigurationPanel()
                 .getMapFile());
     }
-    
+
     // Test the if clause, in case the return of JFileChooser is not
     // APPROVE_OPTION
-    
+
     /**
      * Tests the choosing of a map file (the file is not a MAP file).
      */
     @Test
     public final void testMapFileActionFail() {
-    	// Setup the mocks behaviour.
+        // Setup the mocks behaviour.
         when(fileChooser.showOpenDialog(editor.getMainPanel())).thenReturn(
                 JFileChooser.APPROVE_OPTION);
         when(fileChooser.getSelectedFile()).thenReturn(new File(fileMapFail));
