@@ -182,58 +182,6 @@ class ModifyBot implements ActionListener {
     }
 }
 
-/**
- * Handles the event to rename a bot.
- */
-class RenameBot implements ActionListener {
-
-    /** The <code>MainPanel</code> serving as the content pane.*/
-    private MainPanel view;
-
-    /**
-     * Create an RenameBot event handler.
-     *
-     * @param newView The parent view.
-     */
-    public RenameBot(final MainPanel newView) {
-        this.view = newView;
-    }
-
-    /**
-     * Gets called when a rename button is pressed.
-     * @param ae The action event.
-     */
-    public void actionPerformed(final ActionEvent ae) {
-        // view.getBotPanel().renameAction();
-    }
-}
-
-/**
- * Handles the event to duplicate a bot.
- */
-class DuplicateBot implements ActionListener {
-
-    /** The <code>MainPanel</code> serving as the content pane.*/
-    private MainPanel view;
-
-    /**
-     * Create an DuplicateBot event handler.
-     *
-     * @param newView The parent view.
-     */
-    public DuplicateBot(final MainPanel newView) {
-        this.view = newView;
-    }
-
-    /**
-     * Gets called when the duplicate thingie is pressed.
-     * @param ae The action event.
-     */
-    public void actionPerformed(final ActionEvent ae) {
-        view.getEntityPanel().modifyBotAction();
-    }
-
-}
 
 /**
  * Handles the event to delete a bot.
