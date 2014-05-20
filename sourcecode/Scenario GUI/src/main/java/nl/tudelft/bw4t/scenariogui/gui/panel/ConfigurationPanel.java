@@ -66,9 +66,9 @@ public class ConfigurationPanel extends JPanel {
     }
     private JTextField mapFileTextField = new JTextField(DEFAULT_VALUES.MAP_FILE.getValue());
     
-    CheckboxGroup goalCheckBox = new CheckboxGroup();
-    private Checkbox goalYes = new Checkbox("Yes", DEFAULT_VALUES.USE_GOAL.getBooleanValue(), goalCheckBox);
-    private Checkbox goalNo = new Checkbox("No", !DEFAULT_VALUES.USE_GOAL.getBooleanValue(), goalCheckBox);
+//    CheckboxGroup goalCheckBox = new CheckboxGroup();
+//    private Checkbox goalYes = new Checkbox("Yes", DEFAULT_VALUES.USE_GOAL.getBooleanValue(), goalCheckBox);
+//    private Checkbox goalNo = new Checkbox("No", !DEFAULT_VALUES.USE_GOAL.getBooleanValue(), goalCheckBox);
     
     CheckboxGroup guiCheckBox = new CheckboxGroup();
     private Checkbox guiYes = new Checkbox("Yes", DEFAULT_VALUES.USE_GUI.getBooleanValue(), guiCheckBox);
@@ -98,7 +98,7 @@ public class ConfigurationPanel extends JPanel {
         //showConfigLabel();
         showClientOptions();
         showServerOptions();
-        showGoalOptions();
+//        showGoalOptions();
         showGuiOptions();
         showMapOptions();
         
@@ -189,25 +189,25 @@ public class ConfigurationPanel extends JPanel {
     /**
      * Show the option to use GOAL in the panel.
      */
-    private void showGoalOptions() {
-        c.insets = new Insets(8, 8, 0, 0);
-
-        c.gridx = 0;
-        c.gridy += 1;
-
-        JLabel goal = new JLabel("Use GOAL");
-        goal.setFont(new Font("Sans-Serif", Font.BOLD, 14));
-        add(goal, c);
-
-        c.insets = new Insets(0, 8, 0, 0);
-
-        c.gridx = 0;
-        c.gridy += 1;
-        add(goalYes, c);
-
-        c.gridx = 1;
-        add(goalNo, c);
-    }
+//    private void showGoalOptions(){
+//        c.insets = new Insets(8, 8, 0, 0);
+//
+//        c.gridx = 0;
+//        c.gridy += 1;
+//
+//        JLabel goal = new JLabel("Use GOAL");
+//        goal.setFont(new Font("Sans-Serif", Font.BOLD, 14));
+//        add(goal, c);
+//
+//        c.insets = new Insets(0,8,0,0);
+//
+//        c.gridx = 0;
+//        c.gridy += 1;
+//        add(goalYes, c);
+//
+//        c.gridx = 1;
+//        add(goalNo, c);
+//    }
     
     /**
      * Show the option to use a GUI in the panel.
@@ -327,23 +327,23 @@ public class ConfigurationPanel extends JPanel {
      * Returns if GOAL needs to be used.
      * @return The use of GOAL.
      */
-    public boolean useGoal() {
-    	if(goalCheckBox.getSelectedCheckbox() == goalYes)
-    		return true;
-    	else
-    		return false;
-    }
+//    public boolean useGoal(){
+//    	if(goalCheckBox.getSelectedCheckbox() == goalYes)
+//    		return true;
+//    	else
+//    		return false;
+//    }
     
     /**
      * Sets if GOAL needs to be used.
      * @param The use of GOAL.
      */
-    public void setUseGoal(boolean useGoal) {
-    	if(useGoal)
-    		goalCheckBox.setSelectedCheckbox(goalYes);
-    	else
-    		goalCheckBox.setSelectedCheckbox(goalNo);
-    }
+//    public void setUseGoal(boolean useGoal){
+//    	if(useGoal)
+//    		goalCheckBox.setSelectedCheckbox(goalYes);
+//    	else
+//    		goalCheckBox.setSelectedCheckbox(goalNo);
+//    }
     
     /**
      * Returns if a GUI needs to be displayed.
@@ -416,8 +416,8 @@ public class ConfigurationPanel extends JPanel {
     		isDefault = false;
     	if(this.useGui() != DEFAULT_VALUES.USE_GUI.getBooleanValue() && isDefault)
     		isDefault = false;
-    	if(this.useGoal() != DEFAULT_VALUES.USE_GOAL.getBooleanValue() && isDefault)
-    		isDefault = false;
+//    	if(this.useGoal() != DEFAULT_VALUES.USE_GOAL.getBooleanValue() && isDefault)
+//    		isDefault = false;
     	if(!this.getMapFile().equals(DEFAULT_VALUES.MAP_FILE.getValue()) && isDefault)
     		isDefault = false;
     	

@@ -25,6 +25,10 @@ public class XMLManager {
      * @throws java.io.FileNotFoundException Thrown if the given XML file has not been found.
      */
     public static void toXML(String filePath, Object xmlObject) throws JAXBException, FileNotFoundException {
+        if(!filePath.endsWith(".xml")) {
+            filePath += ".xml";
+        }
+
         File file = new File(filePath);
         JAXBContext jaxbContext = JAXBContext.newInstance(xmlObject.getClass());
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();

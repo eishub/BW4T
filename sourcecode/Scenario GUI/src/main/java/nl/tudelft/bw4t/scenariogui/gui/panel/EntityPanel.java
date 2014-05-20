@@ -18,55 +18,55 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * The BotPanel class represents right pane of the MainPanel.
- * It shows a list of bots and the actions that are possible to edit bots.
+ * The EntityPanel class represents right pane of the MainPanel.
+ * It shows a list of bots and a list of e-partners and the actions
+ * that are possible to edit bots and e-partners.
  *
  * @author Katia
  */
-public class BotPanel extends JPanel {
+public class EntityPanel extends JPanel {
 
     private JPanel botOptions = new JPanel();
-    
+
     private JPanel botToolbar = new JPanel();
     private JPanel botPane = new JPanel();
     private JPanel botCounter = new JPanel();
     private DefaultTableModel botList;
     private JScrollPane botScrollPane;
     private JTextField botCountField = new JTextField();
-    
+
     private JButton newBot = new JButton("New Bot");
     private JButton modifyBot = new JButton("Modify Bot");
     private JButton deleteBot = new JButton("Delete Bot");
-    
+
     private JPanel epartnerToolbar = new JPanel();
     private JPanel epartnerPane = new JPanel();
     private JPanel epartnerCounter = new JPanel();
     private DefaultTableModel epartnerList;
     private JScrollPane epartnerScrollPane;
     private JTextField epartnerCountField = new JTextField();
-    
+
     private JButton newEpartner = new JButton("New E-partner");
     private JButton modifyEpartner = new JButton("Modify E-partner");
     private JButton deleteEpartner = new JButton("Delete E-partner");
-    
+
 
     /* Initial value 1, maximum 100, minimum 1, steps of 1 */
     private SpinnerModel model = new SpinnerNumberModel(1, 1, 100, 1);
     private JSpinner duplicateAmount = new JSpinner(model);
 
     /**
-     * Create a BotPanel object.
+     * Create a EntityPanel object.
      */
-    public BotPanel() {
+    public EntityPanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        
+
         Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
         TitledBorder title = BorderFactory.createTitledBorder(loweredetched, "Entities");
         title.setTitleJustification(TitledBorder.LEFT);
@@ -76,13 +76,13 @@ public class BotPanel extends JPanel {
         createBotOptionPanel();
         createBotPane();
         createEpartnerPane();
-        
+
         add(botPane);
         add(new JLabel("  "));
         add(epartnerPane);
 
     }
-    
+
     /**
      * Create the panel that shows the actions that can be done.
      */
@@ -91,18 +91,18 @@ public class BotPanel extends JPanel {
         Border margin = BorderFactory.createEmptyBorder(8, 8, 8, 8);
         botOptions.setBorder(margin);
     }
-    
+
     /**
      * Create the panel in which the bot list and options will be.
      */
     private void createBotPane(){
-    	botPane.setLayout(new BorderLayout());
-    	
-    	createBotToolbar();
-    	createBotTable();
-    	createBotCounter();
-    	
-    	botPane.add(botToolbar, BorderLayout.NORTH);
+        botPane.setLayout(new BorderLayout());
+
+        createBotToolbar();
+        createBotTable();
+        createBotCounter();
+
+        botPane.add(botToolbar, BorderLayout.NORTH);
     	botPane.add(botScrollPane, BorderLayout.CENTER);
     	botPane.add(botCounter, BorderLayout.SOUTH);
     }
@@ -110,21 +110,21 @@ public class BotPanel extends JPanel {
     /**
      * Create the toolbar for the bots.
      */
-    private void createBotToolbar(){
+    private void createBotToolbar() {
     	botToolbar.setLayout(new GridLayout(1, 0));
-    	
+
     	botToolbar.add(newBot);
     	botToolbar.add(new JLabel());
     	botToolbar.add(modifyBot);
     	botToolbar.add(new JLabel());
     	botToolbar.add(deleteBot);
     }
-    
+
     /**
-     * Create the table that shows the list of bots.
+     * Create the table that contains the list of bots.
      */
     private void createBotTable() {
-        
+
         JTable botTable = new JTable();
         botList = new DefaultTableModel() {
             @Override
@@ -138,17 +138,17 @@ public class BotPanel extends JPanel {
         botList.addColumn("Bot");
         botList.addColumn("Controller");
         botList.addColumn("Nr");
-        
+
         botScrollPane = new JScrollPane(botTable);
         botScrollPane.setPreferredSize(new Dimension(500, 200));
     }
-    
+
     /**
      * Create a bot counter.
      */
-    private void createBotCounter(){
+    private void createBotCounter() {
     	botCounter.setLayout(new GridLayout(1, 0));
-    	
+
     	botCounter.add(new JLabel());
     	botCounter.add(new JLabel());
     	botCounter.add(new JLabel());
@@ -156,40 +156,40 @@ public class BotPanel extends JPanel {
     	botCountField.setEditable(false);
     	botCounter.add(botCountField);
     }
-    
+
     /**
      * Create the panel in which the e-partner list and toolbar will be.
      */
-    private void createEpartnerPane(){
+    private void createEpartnerPane() {
     	epartnerPane.setLayout(new BorderLayout());
-    	
+
     	createEpartnerToolbar();
     	createEpartnerTable();
     	createEpartnerCounter();
-    	
+
     	epartnerPane.add(epartnerToolbar, BorderLayout.NORTH);
     	epartnerPane.add(epartnerScrollPane, BorderLayout.CENTER);
     	epartnerPane.add(epartnerCounter, BorderLayout.SOUTH);
     }
-    
+
     /**
      * Create the toolbar for the e-partners.
      */
     private void createEpartnerToolbar(){
     	epartnerToolbar.setLayout(new GridLayout(1, 0));
-    	
+
     	epartnerToolbar.add(newEpartner);
     	epartnerToolbar.add(new JLabel());
     	epartnerToolbar.add(modifyEpartner);
     	epartnerToolbar.add(new JLabel());
     	epartnerToolbar.add(deleteEpartner);
     }
-    
+
     /**
-     * Create the panel that shows the list of e-partners.
+     * Create the table that contains the list of e-partners.
      */
-    private void createEpartnerTable(){
-    	
+    private void createEpartnerTable() {
+
         JTable epartnerTable = new JTable();
         epartnerList = new DefaultTableModel() {
             @Override
@@ -202,17 +202,17 @@ public class BotPanel extends JPanel {
         epartnerTable.setModel(epartnerList);
         epartnerList.addColumn("E-partner");
         epartnerList.addColumn("Nr");
-        
+
         epartnerScrollPane = new JScrollPane(epartnerTable);
         epartnerScrollPane.setPreferredSize(new Dimension(500, 200));
     }
-    
+
     /**
      * Create a e-partner counter.
      */
-    private void createEpartnerCounter(){
+    private void createEpartnerCounter() {
     	epartnerCounter.setLayout(new GridLayout(1, 0));
-    	
+
     	epartnerCounter.add(new JLabel());
     	epartnerCounter.add(new JLabel());
     	epartnerCounter.add(new JLabel());
@@ -220,9 +220,10 @@ public class BotPanel extends JPanel {
     	epartnerCountField.setEditable(false);
     	epartnerCounter.add(epartnerCountField);
     }
-        
+
     /**
-     * Executes action that needs to happen when the "New bot" button is pressed.
+     * Executes action that needs to happen when the "New bot" button is
+     * pressed.
      * TODO Open BotStore window
      */
     public void addNewAction() {
@@ -230,7 +231,8 @@ public class BotPanel extends JPanel {
     }
 
     /**
-     * Executes action that needs to happen when the "Modify bot" button is pressed.
+     * Executes action that needs to happen when the "Modify bot" button is
+     * pressed.
      * TODO Open BotStore window
      */
     public void modifyAction() {
@@ -238,7 +240,8 @@ public class BotPanel extends JPanel {
     }
 
     /**
-     * Executes action that needs to happen when the "Rename bot" button is pressed.
+     * Executes action that needs to happen when the "Rename bot" button is
+     * pressed.
      * TODO Save name change
      */
     /*public void renameAction() {
@@ -250,12 +253,14 @@ public class BotPanel extends JPanel {
     }*/
 
     /**
-     * Executes action that needs to happen when the "Duplicate bot" button is pressed.
+     * Executes action that needs to happen when the "Duplicate bot" button is
+     * pressed.
      * TODO Create new bot(s) and add to table
      */
     public void duplicateAction() {
         int count = (Integer) duplicateAmount.getValue();
-        int response = showConfirmDialog(null, "Are you sure you want to duplicate this bot " + count + " times?",
+        int response = showConfirmDialog(null,
+        		"Are you sure you want to duplicate this bot " + count + " times?",
                 "Duplicate Bot Confirmation", JOptionPane.YES_NO_OPTION);
 
         if (response == JOptionPane.YES_OPTION) {
@@ -264,11 +269,14 @@ public class BotPanel extends JPanel {
     }
 
     /**
-     * Executes action that needs to happen when the "Delete bot" button is pressed.
+     * Executes action that needs to happen when the "Delete bot" button is
+     * pressed.
      * TODO Delete bot from table
      */
     public void deleteAction() {
-        int response = showConfirmDialog(null, "Are you sure you want to delete this bot?", "", JOptionPane.YES_NO_OPTION);
+        int response = showConfirmDialog(null,
+        		"Are you sure you want to delete this bot?", "",
+        		JOptionPane.YES_NO_OPTION);
 
         if (response == JOptionPane.YES_OPTION) {
             System.out.println("Bot deleted");
@@ -276,9 +284,11 @@ public class BotPanel extends JPanel {
     }
 
     /**
-     * Create a pop up message with the the given text. The user has to press OK to continue.
+     * Create a pop up message with the the given text.
+     * The user has to press OK to continue.
      *
-     * @param parent The parent component who's frame is to be used. If null then a frame is created.
+     * @param parent The parent component who's frame is to be used.
+     * If null then a frame is created.
      * @param text   The text to be displayed in the message dialog.
      */
     protected void showMessageDialog(Component parent, String text) {
@@ -286,11 +296,13 @@ public class BotPanel extends JPanel {
     }
 
     /**
-     * @param parent     Determines the Frame in which the dialog is displayed; if null, or if the parentComponent has no Frame, a default Frame is used
+     * @param parent     Determines the Frame in which the dialog is displayed;
+     * if null, or if the parentComponent has no Frame, a default Frame is used
      * @param text       The text to display
      * @param title      The title for the dialog
-     * @param optionType An int designating the options available on the dialog: JOptionPane.YES_NO_OPTIONS,
-     *                   JOptionPane.YES_NO_CANCEL_OPTION or JOptionPane.OK_CANCEL_OPTION,
+     * @param optionType An int designating the options available on the dialog:
+     * JOptionPane.YES_NO_OPTIONS, JOptionPane.YES_NO_CANCEL_OPTION or
+     * JOptionPane.OK_CANCEL_OPTION,
      * @return An int indicating the option selected by the user
      */
     protected int showConfirmDialog(Component parent, String text, String title, int optionType) {
@@ -325,7 +337,7 @@ public class BotPanel extends JPanel {
     }*/
 
     /**
-     * Return the JSpinner which users can use to select the amount of duplicates.
+     * Return the JSpinner users can use to select the amount of duplicates.
      *
      * @return The JSpinner counting the duplicate amount.
      */

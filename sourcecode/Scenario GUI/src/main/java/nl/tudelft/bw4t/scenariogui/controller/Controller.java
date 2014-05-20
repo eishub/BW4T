@@ -14,9 +14,10 @@ import javax.xml.bind.JAXBException;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
-import nl.tudelft.bw4t.scenariogui.gui.panel.BotPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
+import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 
 /**
  * The Controller class is in charge of all events that happen on the GUI. It delegates all events
@@ -120,7 +121,7 @@ class AddNewBot implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		view.getBotPanel().addNewAction();
+		view.getEntityPanel().addNewAction();
 	}
 }
 
@@ -140,7 +141,7 @@ class ModifyBot implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		view.getBotPanel().modifyAction();
+		view.getEntityPanel().modifyAction();
 	}
 }
 
@@ -180,7 +181,7 @@ class DuplicateBot implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		view.getBotPanel().duplicateAction();
+		view.getEntityPanel().duplicateAction();
 	}
 }
 
@@ -200,7 +201,7 @@ class DeleteBot implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		view.getBotPanel().deleteAction();
+		view.getEntityPanel().deleteAction();
 	}
 }
 
@@ -211,6 +212,9 @@ abstract class MenuOption implements ActionListener {
 
     protected MenuBar view;
     protected Controller controller;
+    
+    //made a variable for this so we can call it during testing
+    public JFileChooser currentFileChooser;
 
     public MenuOption(MenuBar view, Controller mainView) {
         this.view = view;
@@ -224,9 +228,14 @@ abstract class MenuOption implements ActionListener {
     public void saveFile(boolean saveAs) {
     	String path = view.getLastFileLocation();
     	if (saveAs || !view.hasLastFileLocation()) {
-	        JFileChooser fileChooser = new JFileChooser();
-	        if (fileChooser.showSaveDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
-	            File file = fileChooser.getSelectedFile();
+    		currentFileChooser = new JFileChooser();
+    		
+    		/** Adds an xml filter for the file chooser: */
+    		currentFileChooser.setFileFilter(FileFilters.XMLFilter());
+    		
+	        if (currentFileChooser.showSaveDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
+	            File file = currentFileChooser.getSelectedFile();
+
 	            path = file.getAbsolutePath();
 	        } else
 	        	return;
@@ -255,7 +264,7 @@ class MenuOptionOpen extends MenuOption {
 
     public void actionPerformed(ActionEvent e) {
         ConfigurationPanel configPanel = super.controller.getMainView().getMainPanel().getConfigurationPanel();
-        BotPanel botPanel = super.controller.getMainView().getMainPanel().getBotPanel();
+        EntityPanel entityPanel = super.controller.getMainView().getMainPanel().getEntityPanel();
 
         // Check if current config is different to default config
         if(!configPanel.isDefault()) {
@@ -269,6 +278,8 @@ class MenuOptionOpen extends MenuOption {
 
         // Open configuration file
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(FileFilters.XMLFilter());
+
         if (fileChooser.showOpenDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
 
@@ -281,7 +292,7 @@ class MenuOptionOpen extends MenuOption {
                 configPanel.setServerIP(temp.getServerIp());
                 configPanel.setServerPort("" + temp.getServerPort());
                 configPanel.setUseGui(temp.isLaunchGui());
-                configPanel.setUseGoal(temp.isUseGoal());
+//                configPanel.setUseGoal(temp.isUseGoal());
                 configPanel.setMapFile(temp.getMapFile());
 
                 // Fill the bot panel
@@ -378,7 +389,7 @@ class MenuOptionNew extends MenuOption {
         configPanel.setServerIP(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_SERVER_IP.getValue());
         configPanel.setServerPort(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_SERVER_PORT.getValue());
         configPanel.setUseGui(ConfigurationPanel.DEFAULT_VALUES.USE_GUI.getBooleanValue());
-        configPanel.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
+//        configPanel.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
         configPanel.setMapFile(ConfigurationPanel.DEFAULT_VALUES.MAP_FILE.getValue());
 
         // Reset the bot panel
