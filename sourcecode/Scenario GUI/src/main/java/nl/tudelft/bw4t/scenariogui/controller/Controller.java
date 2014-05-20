@@ -326,7 +326,7 @@ class MenuOptionOpen extends MenuOption {
                 // Fill the bot panel
                 //TODO fill botPanel
             } catch (JAXBException e1) {
-            	ScenarioEditor.handleException(e1, "Error: Saving to XML has failed.");
+            	ScenarioEditor.handleException(e1, "Error: Opening the XML has failed.");
     		} catch (FileNotFoundException e1) {
     			ScenarioEditor.handleException(e1, "Error: No file has been found.");
     		}
