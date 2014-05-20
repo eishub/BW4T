@@ -1,11 +1,9 @@
 package nl.tudelft.bw4t.scenariogui;
 
 import java.io.FileNotFoundException;
-
-import javax.swing.*;
 import javax.xml.bind.JAXBException;
-
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -78,7 +76,7 @@ public class ScenarioEditor extends JFrame {
      * Constructor where the panels are passed through as arguments.
      * Useful for testing when the panels have to be mocked or spied upon.
      * @param configurationPanel The ConfigurationPanel object used in the frame
-     * @param botPanel The BotPanel to be used in the frame
+     * @param entityPanel The EntityPanel object used in the frame
      */
 
     public ScenarioEditor(final ConfigurationPanel configurationPanel,
@@ -129,23 +127,24 @@ public class ScenarioEditor extends JFrame {
     }
 
     /**
-     *  Function to set the look and feel of the frame to the default look and feel of the system.
-     *  Throws exceptions which are passed over since the failure to set the look and feel is not
-     *  considered harmful.
+     *  Function to set the look and feel of the frame to
+     *  the default look and feel of the system.
+     *  Throws exceptions which are passed over since
+     *  the failure to set the look and feel is not considered harmful.
      */
     private void setLookAndFeel() {
         try {
             UIManager.setLookAndFeel(
                     UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException e) {
-        	handleException(e, "Error: Class has not been found");
+            handleException(e, "Error: Class has not been found");
         } catch (InstantiationException e) {
-        	handleException(e, "Error: Instantiaton could not be done");
-		} catch (IllegalAccessException e) {
-			handleException(e, "Error: Illegal Access");
-		} catch (UnsupportedLookAndFeelException e) {
-			handleException(e, "Error: Unsupported LookAndFeel");
-		} 
+            handleException(e, "Error: Instantiaton could not be done");
+        } catch (IllegalAccessException e) {
+            handleException(e, "Error: Illegal Access");
+        } catch (UnsupportedLookAndFeelException e) {
+            handleException(e, "Error: Unsupported LookAndFeel");
+        }
     }
 
     /**
@@ -155,41 +154,42 @@ public class ScenarioEditor extends JFrame {
     public final Controller getController() {
         return controller;
     }
-    
-	/**
-	 * 
-	 * @param e contains the exception thrown by a method
-	 * @param s is a description that is specific for the place the error occured
-	 */
-    public static void handleException(Exception e, String s){
-    	if (e instanceof FileNotFoundException) {
-			showDialog(e,s);			
-		}
+
+    /**
+    *
+    * @param e contains the exception thrown by a method
+    * @param s is a description that is specific for the place
+    * the error occured.
+    */
+    public static void handleException(final Exception e, final String s) {
+        if (e instanceof FileNotFoundException) {
+            showDialog(e, s);
+        }
     	if (e instanceof JAXBException) {
-			showDialog(e,s);			
+    	    showDialog(e, s);
 		}
     	if (e instanceof ClassNotFoundException) {
-			showDialog(e,s);				
+    	    showDialog(e, s);
 		}
     	if (e instanceof InstantiationException) {
-			showDialog(e,s);				
+    	    showDialog(e, s);
 		}
     	if (e instanceof IllegalAccessException) {
-			showDialog(e,s);				
+    	    showDialog(e, s);
 		}
     	if (e instanceof UnsupportedLookAndFeelException) {
-			showDialog(e,s);				
+    	    showDialog(e, s);
 		}
-    
+
     }
-    
+
     /**
-     * 
+     *
      * @param e contains the exception to print
      * @param s is a description of the error e that will be shown.
      */
-    public static void showDialog(Exception e, String s){
-    	
+    public static void showDialog(final Exception e, final String s) {
+
     	JOptionPane.showMessageDialog(null, s + "\n" + e.toString());
     }
 }
