@@ -13,26 +13,29 @@ import javax.swing.text.DocumentFilter;
  *
  */
 public final class Format {
+    
+    /** The document filter used. */
+    private static DocumentFilter intDocumentFilter =
+            new IntegerDocumentFilter();
 
     /** Prevents this class from being instantiated. */
     private Format() {
     }
-
-    /** The document filter used. */
-    private static DocumentFilter intDocumentFilter =
-            new IntegerDocumentFilter();
 
     /**
      * The class for filtering a document so it only has integers.
      */
     private static class IntegerDocumentFilter extends DocumentFilter {
 
+        /** The digit regex used. */
+        private static final String DIGIT_REGEX = "\\D++";
+        
         @Override
         public void insertString(final FilterBypass fb, final int off,
                 final String str,
                 final AttributeSet attr) throws BadLocationException {
             // remove non-digits
-            fb.insertString(off, str.replaceAll("\\D++", ""), attr);
+            fb.insertString(off, str.replaceAll(DIGIT_REGEX, ""), attr);
         }
 
         /**
@@ -59,7 +62,7 @@ public final class Format {
                 final String str,
                 final AttributeSet attr) throws BadLocationException {
             // remove non-digits
-            fb.replace(off, len, str.replaceAll("\\D++", ""), attr);
+            fb.replace(off, len, str.replaceAll(DIGIT_REGEX, ""), attr);
         }
     }
 

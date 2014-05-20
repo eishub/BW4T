@@ -1,9 +1,8 @@
 package nl.tudelft.bw4t.scenariogui;
 
 import static org.junit.Assert.assertEquals;
-
-import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 import org.junit.Test;

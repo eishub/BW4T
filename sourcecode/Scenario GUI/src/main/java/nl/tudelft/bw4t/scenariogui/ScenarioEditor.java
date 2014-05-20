@@ -1,18 +1,19 @@
 package nl.tudelft.bw4t.scenariogui;
 
 import java.io.FileNotFoundException;
-import javax.xml.bind.JAXBException;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
+import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.controller.Controller;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
-import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
@@ -30,17 +31,7 @@ public class ScenarioEditor extends JFrame {
     private MenuBar menuBar;
     /** The <code>Controller</code> containing all the ActionEvents. */
     private Controller controller;
-
-    /**
-     * Main function to start the ScenarioEditor.
-     *
-     * @param args
-     *            No arguments are required.
-     */
-    public static void main(final String[] args) {
-        new ScenarioEditor();
-    }
-
+    
     /**
      * Create the scenario editor frame, which will then hold the panels with
      * specific functions.
@@ -91,6 +82,16 @@ public class ScenarioEditor extends JFrame {
 
         // Recreate the controller.
         controller = new Controller(this);
+    }
+
+    /**
+     * Main function to start the ScenarioEditor.
+     *
+     * @param args
+     *            No arguments are required.
+     */
+    public static void main(final String[] args) {
+        new ScenarioEditor();
     }
 
     /**
