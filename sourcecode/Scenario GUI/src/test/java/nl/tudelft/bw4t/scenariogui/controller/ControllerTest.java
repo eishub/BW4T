@@ -44,15 +44,12 @@ public class ControllerTest {
      */
     @Test
     public final void testSaveAfterHavingSavedBefore() {
-        // set the last file location,
-        // so the quick save is
-        // possible
+        // set the last file location, so the quick save is possible
         getMenu().setLastFileLocation(FILE_PATH); 
         // press save (open dialogue)
         getMenu().getMenuItemFileSave().doClick();
-        // verify(getSave(), times(1)).saveFile(false); //check if method with
-        // proper parameters was called
-        // check if the file to be saved was saved
+        // verify(getSave(), times(1)).saveFile(false);
+        // check if method with proper parameters was called check if the file to be saved was saved
         checkFileCreated();
     }
 
@@ -64,17 +61,13 @@ public class ControllerTest {
     public final void testSave() {
         for (int i = 0; i < 2; i++) {
             if (i == 0) {
-                // confirm save as
-                // dialogue when it
-                // opens
+                // confirm save as dialogue when it opens
                 awaitAndPressConfirmOnSaveAsDialogue();
             }
-            // press save (open
-            // dialogue)
+            // press save (open dialogue)
             getMenu().getMenuItemFileSave().doClick();
-            // verify(getSave(), times(1)).saveFile(i == 0); //check if method
-            // with proper parameters was called
-            // check if the file to be saved was saved
+            // verify(getSave(), times(1)).saveFile(i == 0);
+            //check if method with proper parameters was called check if the file to be saved was saved
             checkFileCreated();
         }
     }
@@ -86,15 +79,12 @@ public class ControllerTest {
     @Ignore
     public final void testSaveAs() {
         for (int i = 0; i < 2; i++) {
-            // confirm save as dialogue
-            // when it opens
+            // confirm save as dialogue when it opens
             awaitAndPressConfirmOnSaveAsDialogue();
-            // press save as (open
-            // dialogue)
+            // press save as (open dialogue)
             getMenu().getMenuItemFileSaveAs().doClick();
-            // verify(getSaveAs(), times(1)).saveFile(true); //check if method
-            // with proper parameters was called
-            // checks if the file to be saved was saved
+            // verify(getSaveAs(), times(1)).saveFile(true);
+            //check if method with proper parameters was called checks if the file to be saved was saved
             checkFileCreated();
         }
     }
