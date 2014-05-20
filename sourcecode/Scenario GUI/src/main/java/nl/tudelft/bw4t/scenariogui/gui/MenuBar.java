@@ -8,15 +8,18 @@ import javax.swing.JMenuItem;
 
 /**
  * The MenuBar class extends JMenuBar. Used in the ScenarioEditor Frame.
- * 
+ *
  * @author Xander
  */
 public class MenuBar extends JMenuBar {
-	
-	private String lastFileLocation;
-	
-	/** The items in the menu: */
-	private JMenuItem fileNew, fileOpen, fileSave, fileSaveAs, fileExit;
+
+    /** Randomly generated serial version. */
+    private static final long serialVersionUID = -7693079154027274860L;
+    /** The last known file location used to save the configuration. */
+    private String lastFileLocation;
+
+    /** The items in the menu. */
+    private JMenuItem fileNew, fileOpen, fileSave, fileSaveAs, fileExit;
 
     /**
      * Construct a menu bar for the Scenario Editor.
@@ -41,7 +44,7 @@ public class MenuBar extends JMenuBar {
         fileSave = new JMenuItem("Save");
         fileSave.setToolTipText("Save configuration file");
         file.add(fileSave);
-        
+
         fileSaveAs = new JMenuItem("Save As..");
         fileSaveAs.setToolTipText("Save configuration file");
         file.add(fileSaveAs);
@@ -51,59 +54,77 @@ public class MenuBar extends JMenuBar {
         fileExit = new JMenuItem("Exit");
         fileExit.setToolTipText("Exit application");
         file.add(fileExit);
-        
+
     }
-    
-    /**
-     * Returns the JMenuItem to start a new file
-     * @return The JMenuItem to start a new file
-     */
-	public JMenuItem getMenuItemFileNew() {
-		return fileNew;
-	}
-    
-    /**
-     * Returns the JMenuItem to start a open a file
-     * @return The JMenuItem to start a open a file
-     */
-	public JMenuItem getMenuItemFileOpen() {
-		return fileOpen;
-	}
 
     /**
-     * Returns the JMenuItem to start a save a file
-     * @return The JMenuItem to start a save a file
+     * JMenuItem to start a new configuration with the default values filled in.
+     * @return The JMenuItem to start a new configuration
      */
-	public JMenuItem getMenuItemFileSave() {
-		return fileSave;
-	}
-	
-    /**
-     * Returns the JMenuItem to save a file at a chosen location.
-     * @return The JMenuItem to save a file at a chosen location.
-     */
-	public JMenuItem getMenuItemFileSaveAs() {
-		return fileSaveAs;
-	}
+    public final JMenuItem getMenuItemFileNew() {
+        return fileNew;
+    }
 
     /**
-     * Returns the JMenuItem to exit the program
+     * JMenuItem to open a configuration from a file.
+     * @return The JMenuItem to open a file
+     */
+    public final JMenuItem getMenuItemFileOpen() {
+        return fileOpen;
+    }
+
+    /**
+     * JMenuItem used to save the configuration
+     * to a file at a new file location.
+     *
+     * @return The JMenuItem to start a save a file at a new file location
+     */
+    public final JMenuItem getMenuItemFileSave() {
+        return fileSave;
+    }
+
+    /**
+     * JMenuItem used to save the configuration to a file at a chosen location.
+     * @return The JMenuItem to save a file at a chosen location
+     */
+    public final JMenuItem getMenuItemFileSaveAs() {
+        return fileSaveAs;
+    }
+
+    /**
+     * JMenuItem used to exit the program.
      * @return The JMenuItem to exit the program
      */
-	public JMenuItem getMenuItemFileExit() {
-		return fileExit;
-	}
+    public final JMenuItem getMenuItemFileExit() {
+        return fileExit;
+    }
 
-	public String getLastFileLocation() {
-		return lastFileLocation;
-	}
-	
-	public boolean hasLastFileLocation() {
-		return lastFileLocation != null;
-	}
+    /**
+     * Variable to get the file location used to save the configuration
+     * immediately instead of having to browse to the same location again.
+     *
+     * @return the last know file location
+     */
+    public final String getLastFileLocation() {
+        return lastFileLocation;
+    }
 
-	public void setLastFileLocation(String lastFileLocation) {
-		this.lastFileLocation = lastFileLocation;
-	}
+    /**
+     * hasLastFileLocation checks if the current configuration has a
+     * known file location which can be used.
+     * @return if this configuration has a known file location
+     */
+    public final boolean hasLastFileLocation() {
+        return lastFileLocation != null;
+    }
 
+    /**
+     * Variable to save the file location used to save the configuration
+     * immediately instead of having to browse to the same location again.
+     *
+     * @param fileLocation is the last used file location
+     */
+    public final void setLastFileLocation(final String fileLocation) {
+        this.lastFileLocation = fileLocation;
+    }
 }
