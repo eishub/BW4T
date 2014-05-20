@@ -35,11 +35,11 @@ public enum InitParam {
 	/**
 	 * Number of human bots (is this to connect GUIs?)
 	 */
-	HUMANCOUNT("1"),
+	HUMANCOUNT("0"),
 	/**
 	 * The java agent class to load when new entities appear.
 	 */
-	AGENTCLASS("nl.tudelft.bw4t.agent.BW4TAgent"),
+	AGENTCLASS("nl.tudelft.bw4t.agent.TestAgent"),
 	/**
 	 * are we connected with GOAL?
 	 */
