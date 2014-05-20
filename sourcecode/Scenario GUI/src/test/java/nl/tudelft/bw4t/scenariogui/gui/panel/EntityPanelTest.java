@@ -4,18 +4,19 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.doReturn;
+
+import java.awt.Component;
+
+import javax.swing.JOptionPane;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * Created on 14-5-2014.
@@ -55,7 +56,7 @@ public class EntityPanelTest {
      */
     @Test
     public final void testBotCount() {
-        Object[] data = {"D1", "D2", "D3"};
+        Object[] data = {"d1", "d2", "d3"};
 
         spyEntityPanel.getBotTable().addRow(data);
         spyEntityPanel.updateEntitiesCount();

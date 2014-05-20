@@ -31,6 +31,9 @@ import javax.swing.table.DefaultTableModel;
  * @author Katia
  */
 public class EntityPanel extends JPanel {
+    
+    /** The number column. */
+    private static final String NUMBER_COLUMN = "Nr";
 
     /** The bot options. */
     private JPanel botOptions = new JPanel();
@@ -177,7 +180,7 @@ public class EntityPanel extends JPanel {
         botTable.setModel(botList);
         botList.addColumn("Bot");
         botList.addColumn("Controller");
-        botList.addColumn("Nr");
+        botList.addColumn(NUMBER_COLUMN);
 
         botScrollPane = new JScrollPane(botTable);
         botScrollPane.setPreferredSize(new Dimension(
@@ -242,7 +245,7 @@ public class EntityPanel extends JPanel {
 
         epartnerTable.setModel(epartnerList);
         epartnerList.addColumn("E-partner");
-        epartnerList.addColumn("Nr");
+        epartnerList.addColumn(NUMBER_COLUMN);
 
         epartnerScrollPane = new JScrollPane(epartnerTable);
         epartnerScrollPane.setPreferredSize(new Dimension(
@@ -268,7 +271,7 @@ public class EntityPanel extends JPanel {
      * pressed. TODO Open BotStore window
      */
     public void addBotAction() {
-        System.out.println("Go to Bot Store");
+        System.out.println("Go to Bot Store (add)");
     }
 
     /**
@@ -276,7 +279,7 @@ public class EntityPanel extends JPanel {
      * pressed. TODO Open BotStore window
      */
     public void modifyBotAction() {
-        System.out.println("Go to Bot Store");
+        System.out.println("Go to Bot Store (modify)");
     }
 
     /**
