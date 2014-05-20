@@ -72,13 +72,16 @@ public class FileUtils {
 	public static boolean copyJarResourcesRecursively(final JarURLConnection jarConnection, final File destDir) throws IOException {
 
 		final JarFile jarFile = jarConnection.getJarFile();
+		final String entryName = jarConnection.getEntryName();
+		String entryNameParent = entryName.substring(0, entryName.lastIndexOf('/') + 1);
+		
+		System.out.println(entryNameParent);
 
 		for (final Enumeration<JarEntry> e = jarFile.entries(); e
 				.hasMoreElements();) {
 			final JarEntry entry = e.nextElement();
-			if (entry.getName().startsWith(jarConnection.getEntryName())) {
-				final String filename = FileUtils.removeStart(entry.getName(), //
-						jarConnection.getEntryName());
+			if (entry.getName().startsWith(entryName)) {
+				final String filename = FileUtils.removeStart(entry.getName(), entryNameParent);
 
 				final File f = new File(destDir, filename);
 				if (!entry.isDirectory()) {
