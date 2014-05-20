@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
@@ -203,6 +204,9 @@ abstract class MenuOption implements ActionListener {
 
     protected MenuBar view;
     protected Controller controller;
+    
+    //made a variable for this so we can call it during testing
+    public JFileChooser currentFileChooser;
 
     public MenuOption(MenuBar view, Controller mainView) {
         this.view = view;
@@ -216,9 +220,13 @@ abstract class MenuOption implements ActionListener {
     public void saveFile(boolean saveAs) {
     	String path = view.getLastFileLocation();
     	if (saveAs || !view.hasLastFileLocation()) {
-	        JFileChooser fileChooser = new JFileChooser();
-	        if (fileChooser.showSaveDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
-	            File file = fileChooser.getSelectedFile();
+    		currentFileChooser = new JFileChooser();
+    		
+    		/** Adds an xml filter for the file chooser: */
+    		currentFileChooser.setFileFilter(new FileNameExtensionFilter("xml files (*.xml)", "xml"));
+    		
+	        if (currentFileChooser.showSaveDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
+	            File file = currentFileChooser.getSelectedFile();
 	            path = file.getAbsolutePath();
 	        } else
 	        	return;
@@ -273,7 +281,7 @@ class MenuOptionOpen extends MenuOption {
                 configPanel.setServerIP(temp.getServerIp());
                 configPanel.setServerPort("" + temp.getServerPort());
                 configPanel.setUseGui(temp.isLaunchGui());
-                configPanel.setUseGoal(temp.isUseGoal());
+//                configPanel.setUseGoal(temp.isUseGoal());
                 configPanel.setMapFile(temp.getMapFile());
 
                 // Fill the bot panel
@@ -370,7 +378,7 @@ class MenuOptionNew extends MenuOption {
         configPanel.setServerIP(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_SERVER_IP.getValue());
         configPanel.setServerPort(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_SERVER_PORT.getValue());
         configPanel.setUseGui(ConfigurationPanel.DEFAULT_VALUES.USE_GUI.getBooleanValue());
-        configPanel.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
+//        configPanel.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
         configPanel.setMapFile(ConfigurationPanel.DEFAULT_VALUES.MAP_FILE.getValue());
 
         // Reset the bot panel
