@@ -22,8 +22,8 @@ public class ConfigurationPanelTest {
     /** The main GUI. */
     private ScenarioEditor editor;
     /** The file used to save the file in. */
-    private final String filePath = "testpath.temp";
-
+    private final String filePath = "testpath.xml";
+    private final String filePathMap = "test.map";
     /** The file chooser object. */
     private JFileChooser fileChooser;
 
@@ -65,13 +65,13 @@ public class ConfigurationPanelTest {
         // Setup the mocks behaviour.
         when(fileChooser.showOpenDialog(editor.getMainPanel())).thenReturn(
                 JFileChooser.APPROVE_OPTION);
-        when(fileChooser.getSelectedFile()).thenReturn(new File(filePath));
+        when(fileChooser.getSelectedFile()).thenReturn(new File(filePathMap));
 
         // Trigger the event.
         editor.getMainPanel().getConfigurationPanel().getChooseMapFile()
                 .doClick();
 
-        assertEquals(filePath, editor.getMainPanel().getConfigurationPanel()
+        assertEquals(filePathMap, editor.getMainPanel().getConfigurationPanel()
                 .getMapFile());
     }
 
