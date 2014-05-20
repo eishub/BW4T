@@ -100,10 +100,6 @@ class ChooseMapFileListener implements ActionListener {
         this.view = newView;
     }
 
-    /**
-     * Invoked when the .
-     * @param actionEvent 
-     */
     public void actionPerformed(ActionEvent actionEvent) {
         /**
          * Create a file chooser, opening at the last path location saved in the
