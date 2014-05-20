@@ -62,7 +62,7 @@ public class EntityPanel extends JPanel {
     private JSpinner duplicateAmount = new JSpinner(model);
 
     /**
-     * Create a EntityPanel object.
+     * Create an EntityPanel object.
      */
     public EntityPanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -158,7 +158,7 @@ public class EntityPanel extends JPanel {
     }
 
     /**
-     * Create the panel in which the e-partner list and toolbar will be.
+     * Create the panel in which the E-partner list and toolbar will be.
      */
     private void createEpartnerPane() {
     	epartnerPane.setLayout(new BorderLayout());
@@ -173,7 +173,7 @@ public class EntityPanel extends JPanel {
     }
 
     /**
-     * Create the toolbar for the e-partners.
+     * Create the toolbar for the E-partners.
      */
     private void createEpartnerToolbar(){
     	epartnerToolbar.setLayout(new GridLayout(1, 0));
@@ -186,7 +186,7 @@ public class EntityPanel extends JPanel {
     }
 
     /**
-     * Create the table that contains the list of e-partners.
+     * Create the table that contains the list of E-partners.
      */
     private void createEpartnerTable() {
 
@@ -208,7 +208,7 @@ public class EntityPanel extends JPanel {
     }
 
     /**
-     * Create a e-partner counter.
+     * Create a E-partner counter.
      */
     private void createEpartnerCounter() {
     	epartnerCounter.setLayout(new GridLayout(1, 0));
@@ -282,6 +282,39 @@ public class EntityPanel extends JPanel {
             System.out.println("Bot deleted");
         }
     }
+    
+    /**
+     * Executes action that needs to happen when the "New E-partner" button is
+     * pressed.
+     * TODO Open BotStore window
+     */
+    public void addEPartnerAction() {
+        System.out.println("Go to Bot Store to add new E-Partner");
+    }
+
+    /**
+     * Executes action that needs to happen when the "Modify E-partner" button is
+     * pressed.
+     * TODO Open BotStore window
+     */
+    public void modifyEPartnerAction() {
+        System.out.println("Go to Bot Store to modify an E-Partner");
+    }
+
+    /**
+     * Executes action that needs to happen when the "Delete E-partner" button is
+     * pressed.
+     * TODO Delete E-partner from table
+     */
+    public void deleteEPartnerAction() {
+        int response = showConfirmDialog(null,
+        		"Are you sure you want to delete this E-partner?", "",
+        		JOptionPane.YES_NO_OPTION);
+
+        if (response == JOptionPane.YES_OPTION) {
+            System.out.println("E-partner deleted");
+        }
+    }
 
     /**
      * Create a pop up message with the the given text.
@@ -319,11 +352,13 @@ public class EntityPanel extends JPanel {
     }
 
     /**
-     * Returns the table with the list of epartners
+     * Returns the table with the list of E-partners
      *
-     * @return The table that contains the epartners
+     * @return The table that contains the E-partners
      */
-    public DefaultTableModel getEPartnerTable() { return epartnerList; }
+    public DefaultTableModel getEPartnerTable() {
+    	return epartnerList;
+    }
 
     /**
      * Returns the new bot name
@@ -377,6 +412,30 @@ public class EntityPanel extends JPanel {
      */
     public int getEPartnerCount() {
         return epartnerList.getRowCount();
+    }
+    
+    /**
+     * Returns the button to create a new E-partner.
+     * @return The button to create a new E-partner.
+     */
+    public JButton getNewEPartnerButton() {
+    	return newEpartner;
+    }
+    
+    /**
+     * Returns the button to delete an E-partner.
+     * @return The button to delete an E-partner.
+     */
+    public JButton getDeleteEPartnerButton() {
+    	return deleteEpartner;
+    }
+    
+    /**
+     * Returns the button to modify an E-partner.
+     * @return The button to modify an E-partner.
+     */
+    public JButton getModifyEPartnerButton() {
+    	return modifyEpartner;
     }
 }
 
