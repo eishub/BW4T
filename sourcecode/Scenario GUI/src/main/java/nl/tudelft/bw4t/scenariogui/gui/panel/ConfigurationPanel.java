@@ -158,6 +158,24 @@ public class ConfigurationPanel extends JPanel {
     /** The small font size used. */
     private static final int FONT_SIZE_SMALL = 14;
 
+    /** The old client IP. */
+    private String oldClientIP = clientIP.getText();
+
+    /** The old client port. */
+    private String oldClientPort = clientPort.getText();
+
+    /** The old server IP. */
+    private String oldServerIP = serverIP.getText();
+
+    /** The old server port. */
+    private String oldServerPort = serverPort.getText();
+
+    /** The old checked box. */
+    private Checkbox oldGui = guiCheckBox.getSelectedCheckbox();
+
+    /** The old map file. */
+    private String oldMapFile = mapFileTextField.getText();
+
     /**
      * Create a ConfigurationPanel object.
      */
@@ -548,5 +566,49 @@ public class ConfigurationPanel extends JPanel {
         // TODO: check if the bot list is empty (since that is default too)
 
         return isDefault;
+    }
+
+    /**
+     * Returns the values that have been saved previously.
+     * @return The values that have been saved previously.
+     */
+    public String getOldValues() {
+        return this.oldClientIP + this.oldClientPort
+                + this.oldServerIP + this.oldServerPort + this.oldGui
+                + this.oldMapFile;
+    }
+
+    /**
+     * Updates the "old" values after a file has been saved.
+     */
+    public void updateOldValues() {
+        this.oldClientIP = clientIP.getText();
+
+        /** The old client port. */
+        this.oldClientPort = clientPort.getText();
+
+        /** The old server IP. */
+        this.oldServerIP = serverIP.getText();
+
+        /** The old server port. */
+        this.oldServerPort = serverPort.getText();
+
+        /** The old checked box. */
+        this.oldGui = guiCheckBox.getSelectedCheckbox();
+
+        /** The old map file. */
+        this.oldMapFile = mapFileTextField.getText();
+    }
+
+    /**
+     * Returns the current values.
+     * @return The current values.
+     */
+    public String getCurrentValues() {
+        return this.clientIP.getText()
+                + this.clientPort.getText()
+                + this.serverIP.getText() + this.serverPort.getText()
+                + this.guiCheckBox.getSelectedCheckbox()
+                + this.mapFileTextField.getText();
     }
 }

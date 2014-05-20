@@ -11,6 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -111,6 +113,33 @@ public class ConfigurationPanelTest {
 
         assertEquals(startURI, editor.getMainPanel().getConfigurationPanel()
                 .getMapFile());
+    }
+
+    /**
+     * Tests whether the old values are updated correctly.
+     */
+    @Test
+    public void testGetOldValues() {
+        assertTrue(editor.getMainPanel().getConfigurationPanel()
+                .getOldValues().equals(editor.getMainPanel()
+                .getConfigurationPanel()
+                .getCurrentValues()));
+
+        //check when values change
+        editor.getMainPanel().getConfigurationPanel().setClientIP("Other IP");
+
+        assertFalse(editor.getMainPanel().getConfigurationPanel()
+                .getOldValues().equals(editor.getMainPanel()
+                .getConfigurationPanel()
+                .getCurrentValues()));
+
+        //update values
+        editor.getMainPanel().getConfigurationPanel().updateOldValues();
+
+        assertTrue(editor.getMainPanel().getConfigurationPanel()
+                .getOldValues().equals(editor.getMainPanel()
+                .getConfigurationPanel()
+                .getCurrentValues()));
     }
 
 }
