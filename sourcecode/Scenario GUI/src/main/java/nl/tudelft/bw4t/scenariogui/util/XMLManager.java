@@ -36,13 +36,8 @@ public final class XMLManager {
      */
     public static void toXML(final String filePath, final Object xmlObject)
             throws JAXBException, FileNotFoundException {
-        String filePath2 = filePath;
-        String extension = ".xml";
-        if (!filePath2.endsWith(extension)) {
-            filePath2 += extension;
-        }
 
-        File file = new File(filePath2);
+        File file = new File(filePath);
         JAXBContext jaxbContext = JAXBContext.newInstance(xmlObject.getClass());
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);

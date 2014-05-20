@@ -364,6 +364,11 @@ abstract class AbstractMenuOptionFactory implements ActionListener {
                 File file = currentFileChooser.getSelectedFile();
 
                 path = file.getAbsolutePath();
+
+                String extension = ".xml";
+                if (!path.endsWith(extension)) {
+                    path += extension;
+                }
             }
             else {
                 return;
