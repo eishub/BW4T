@@ -63,13 +63,16 @@ public class Controller {
         );
 
         /** Adds the listeners for the EntitiesPanel */
-        getMainView().getMainPanel().getEntityPanel().getNewBotButton().addActionListener(
+        getMainView().getMainPanel().getEntityPanel().getNewBotButton().
+            addActionListener(
                 new AddNewBot(getMainView().getMainPanel())
         );
-        getMainView().getMainPanel().getEntityPanel().getModifyBotButton().addActionListener(
+        getMainView().getMainPanel().getEntityPanel().getModifyBotButton().
+            addActionListener(
                 new ModifyBot(getMainView().getMainPanel())
         );
-        getMainView().getMainPanel().getEntityPanel().getDeleteBotButton().addActionListener(
+        getMainView().getMainPanel().getEntityPanel().getDeleteBotButton().
+            addActionListener(
                 new DeleteBot(getMainView().getMainPanel())
         );
     }
@@ -150,7 +153,7 @@ class AddNewBot implements ActionListener {
     public void actionPerformed(final ActionEvent ae) {
         view.getEntityPanel().addBotAction();
     }
-    
+
 }
 
 /**
