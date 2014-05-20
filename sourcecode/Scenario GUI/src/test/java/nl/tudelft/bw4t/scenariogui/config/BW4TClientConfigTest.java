@@ -1,20 +1,20 @@
 package nl.tudelft.bw4t.scenariogui.config;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import java.io.FileNotFoundException;
 
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Calvin on 12-5-2014.
@@ -75,7 +75,7 @@ public class BW4TClientConfigTest {
      */
     @Test
     public final void testServerConfig() {
-        String ip = "8.8.8.8";
+        String ip = "8.8.8.9";
         config.setServerIp(ip);
 
         int port = 2 + 2;

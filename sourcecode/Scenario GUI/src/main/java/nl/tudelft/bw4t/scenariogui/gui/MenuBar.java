@@ -29,7 +29,8 @@ public class MenuBar extends JMenuBar {
 
         // Build the menu.
         file = new JMenu("File");
-        file.setMnemonic(KeyEvent.VK_F); // Bind alt+f to menu
+        // Bind alt+f to menu
+        file.setMnemonic(KeyEvent.VK_F);
         add(file);
 
         // Create the menu items.
@@ -41,12 +42,13 @@ public class MenuBar extends JMenuBar {
         fileOpen.setToolTipText("Open configuration file");
         file.add(fileOpen);
 
+        String toolTipText = "Save configuration file";
         fileSave = new JMenuItem("Save");
-        fileSave.setToolTipText("Save configuration file");
+        fileSave.setToolTipText(toolTipText);
         file.add(fileSave);
 
         fileSaveAs = new JMenuItem("Save As..");
-        fileSaveAs.setToolTipText("Save configuration file");
+        fileSaveAs.setToolTipText(toolTipText);
         file.add(fileSaveAs);
 
         file.addSeparator();

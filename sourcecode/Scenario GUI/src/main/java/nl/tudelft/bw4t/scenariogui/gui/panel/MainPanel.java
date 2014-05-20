@@ -16,7 +16,16 @@ import javax.swing.JPanel;
  * @author Joop Aue
  */
 public class MainPanel extends JPanel {
+    
+    /** The inset used. */
+    private static final int INSET = 10;
+    /** The weights used. */
+    private static final double WEIGHT_1 = 0.1;
+    /** The bigger weight used. */
+    private static final double WEIGHT_2 = 0.8;
 
+    /** Randomly generated serial version. */
+    private static final long serialVersionUID = 475250876795906302L;
     /** The configuration panel. */
     private ConfigurationPanel configurationPanel;
     /** The entity panel. */
@@ -44,11 +53,7 @@ public class MainPanel extends JPanel {
         this.configurationPanel = newConfigurationPanel;
         this.entityPanel = newEntityPanel;
     }
-
-    /** The inset used. */
-    private static final int INSET = 10;
-    /** The weights used. */
-    private static final double WEIGHT_1 = 0.1, WEIGHT_2 = 0.8;
+    
     /**
      * Draw the two panels unto the main panel. These will have black borders
      * around them.
