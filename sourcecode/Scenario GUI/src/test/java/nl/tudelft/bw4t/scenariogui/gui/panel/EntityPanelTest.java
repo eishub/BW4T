@@ -1,12 +1,18 @@
 package nl.tudelft.bw4t.scenariogui.gui.panel;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.spy;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created on 14-5-2014.
@@ -32,6 +38,10 @@ public class EntityPanelTest {
         new ScenarioEditor(config, spyEntityPanel);
     }
 
+    /**
+     * Test if the count of bots is correct after adding a bot
+     * to the table.
+     */
     @Test
     public void testBotCount() {
         Object[] data = {"D1", "D2", "D3"};
@@ -42,6 +52,10 @@ public class EntityPanelTest {
         assertEquals(spyEntityPanel.getBotCount(), 1);
     }
 
+    /**
+     * Test if the count of epartners is correct after adding
+     * an epartner to the table.
+     */
     @Test
     public void testEPartnerCount() {
         Object[] data = {"D1", "D2", "D3"};
@@ -52,86 +66,54 @@ public class EntityPanelTest {
         assertEquals(spyEntityPanel.getEPartnerCount(), 1);
     }
 
-    /*
-     * @Test public void testAddNewBot() { spyBotPanel.getNewBot().doClick();
-     * verify(spyBotPanel, times(1)).addNewAction();
-     * has actually been added. }
-     *
-     * @Test public void testModifyBot() { spyBotPanel.getModifyBot().doClick();
-     * verify(spyBotPanel, times(1)).modifyAction(); //TODO: Verify if the bot
-     * has actually been modified. }
-     *
-     * @Test public void testRenameBotInvalid() {
-     * Mockito.doNothing().when(spyBotPanel
-     * ).showMessageDialog((java.awt.Component) any(), anyString());
-     *
-     * spyBotPanel.getRenameBot().doClick(); verify(spyBotPanel,
-     * times(1)).renameAction(); verify(spyBotPanel,
-     * times(1)).showMessageDialog((java.awt.Component) any(), anyString()); }
+    /**
+     * Test if a bot is succesfully added when the add
+     * bot button is clicked.
      */
-    /*
-     * @Test public void testRenameBotValid() {
-     * Mockito.doNothing().when(spyBotPanel
-     * ).showMessageDialog((java.awt.Component) any(), anyString());
-     *
-     * String botname = "Quandesha";
-     * spyBotPanel.setNewBotNameLabelText(botname);
-     *
-     * spyBotPanel.getRenameBot().doClick(); verify(spyBotPanel,
-     * times(1)).renameAction();
-     */
-    /* Make sure no message dialog is created since nothing went wrong */
-    /*
-     * verify(spyBotPanel, times(0)).showMessageDialog((java.awt.Component)
-     * any(), anyString());
-     *
-     * assertEquals(botname, spyBotPanel.getNewBotNameLabelText()); //TODO:
-     * Check if the name of the bot itself was actually changed. }
-     */
+     @Test
+     public void testAddNewBot() {
+         spyEntityPanel.getNewBotButton().doClick();
+         verify(spyEntityPanel, times(1)).addBotAction();
+         //TODO: Verify if the bot has been actually added.
+    }
 
-    /*
-     * @Test public void testDuplicateBotYes() {
-     * doReturn(JOptionPane.YES_OPTION).when(spyBotPanel)
-     * .showConfirmDialog((Component) any(), anyString(), anyString(),
-     * anyInt());
-     *
-     * spyBotPanel.getDuplicateBot().doClick(); verify(spyBotPanel,
-     * times(1)).duplicateAction(); verify(spyBotPanel,
-     * times(1)).showConfirmDialog((java.awt.Component) any(), anyString(),
-     * anyString(), anyInt()); //TODO: Test if actually duplicated }
-     *
-     * @Test public void testDuplicateBotNo() {
-     * doReturn(JOptionPane.NO_OPTION).when(spyBotPanel)
-     * .showConfirmDialog((Component) any(), anyString(), anyString(),
-     * anyInt());
-     *
-     * spyBotPanel.getDuplicateBot().doClick(); verify(spyBotPanel,
-     * times(1)).duplicateAction(); verify(spyBotPanel,
-     * times(1)).showConfirmDialog((java.awt.Component) any(), anyString(),
-     * anyString(), anyInt());
-     *
-     * //TODO: Test if NOT duplicated }
-     *
-     * @Test public void testDeleteBotYes() {
-     * doReturn(JOptionPane.YES_OPTION).when(spyBotPanel)
-     * .showConfirmDialog((Component) any(), anyString(), anyString(),
-     * anyInt());
-     *
-     * spyBotPanel.getDeleteBot().doClick(); verify(spyBotPanel,
-     * times(1)).deleteAction(); verify(spyBotPanel,
-     * times(1)).showConfirmDialog((java.awt.Component) any(), anyString(),
-     * anyString(), anyInt()); //TODO: Test if actually deleted }
-     *
-     * @Test public void testDeleteBotNo() {
-     * doReturn(JOptionPane.NO_OPTION).when(spyBotPanel)
-     * .showConfirmDialog((Component) any(), anyString(), anyString(),
-     * anyInt());
-     *
-     * spyBotPanel.getDeleteBot().doClick(); verify(spyBotPanel,
-     * times(1)).deleteAction(); verify(spyBotPanel,
-     * times(1)).showConfirmDialog((java.awt.Component) any(), anyString(),
-     * anyString(), anyInt());
-     *
-     * //TODO: Test if not deleted }
+    /**
+     * Test if a bot is succesfully modified when the
+     * modify bot button is clicked.
      */
+    @Test
+    public void testModifyBot() {
+        spyEntityPanel.getModifyBotButton().doClick();
+        verify(spyEntityPanel, times(1)).modifyBotAction();
+        //TODO: Verify if the bot has actually been modified.
+    }
+
+    /**
+     * Test if a bot is actually deleted when the
+     * delete bot is clicked, and the YES option is
+     * chosen on the subsequently shown confirmation dialog.
+     */
+    @Test
+    public void testDeleteBotConfirmDelete() {
+        doReturn(JOptionPane.YES_OPTION).when(spyEntityPanel).showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
+
+        spyEntityPanel.getDeleteBotButton().doClick();
+        verify(spyEntityPanel, times(1)).deleteBotAction();
+        //TODO: Verify if the bot has actually been modified.
+    }
+
+    /**
+     * Test if a bot is not deleted when the
+     * delete bot is clicked, and the NO option is
+     * chosen on the subsequently shown confirmation dialog.
+     */
+    @Test
+    public void testDeleteBotDeclineDelete() {
+        doReturn(JOptionPane.NO_OPTION).when(spyEntityPanel).showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
+
+        spyEntityPanel.getDeleteBotButton().doClick();
+        verify(spyEntityPanel, times(1)).deleteBotAction();
+        //TODO: Verify if the bot has NOT been removed.
+    }
+
 }

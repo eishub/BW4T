@@ -226,7 +226,7 @@ public class EntityPanel extends JPanel {
      * pressed.
      * TODO Open BotStore window
      */
-    public void addNewAction() {
+    public void addBotAction() {
         System.out.println("Go to Bot Store");
     }
 
@@ -235,7 +235,7 @@ public class EntityPanel extends JPanel {
      * pressed.
      * TODO Open BotStore window
      */
-    public void modifyAction() {
+    public void modifyBotAction() {
         System.out.println("Go to Bot Store");
     }
 
@@ -273,7 +273,7 @@ public class EntityPanel extends JPanel {
      * pressed.
      * TODO Delete bot from table
      */
-    public void deleteAction() {
+    public void deleteBotAction() {
         int response = showConfirmDialog(null,
         		"Are you sure you want to delete this bot?", "",
         		JOptionPane.YES_NO_OPTION);
@@ -377,6 +377,30 @@ public class EntityPanel extends JPanel {
      */
     public int getEPartnerCount() {
         return epartnerList.getRowCount();
+    }
+
+    /**
+     * Returns the button to add a bot.
+     * @return The add bot button.
+     */
+    public JButton getNewBotButton() {
+        return newBot;
+    }
+
+    /**
+     * Returns the button to modify a bot.
+     * @return The modify bot button.
+     */
+    public JButton getModifyBotButton() {
+        return modifyBot;
+    }
+
+    /**
+     * Returns the button to delete a bot.
+     * @return The delete bot button.
+     */
+    public JButton getDeleteBotButton() {
+        return deleteBot;
     }
 }
 

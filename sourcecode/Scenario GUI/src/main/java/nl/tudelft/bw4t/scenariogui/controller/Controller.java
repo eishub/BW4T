@@ -60,6 +60,18 @@ public class Controller {
         getMainView().getTopMenuBar().getMenuItemFileSaveAs().addActionListener(
                 new MenuOptionSaveAs(getMainView().getTopMenuBar(), this)
         );
+
+        /** Adds the listeners for the EntitiesPanel */
+        getMainView().getMainPanel().getEntityPanel().getNewBotButton().addActionListener(
+                new AddNewBot(getMainView().getMainPanel())
+        );
+        getMainView().getMainPanel().getEntityPanel().getModifyBotButton().addActionListener(
+                new ModifyBot(getMainView().getMainPanel())
+        );
+        getMainView().getMainPanel().getEntityPanel().getDeleteBotButton().addActionListener(
+                new DeleteBot(getMainView().getMainPanel())
+        );
+
         
     }
 
@@ -121,7 +133,7 @@ class AddNewBot implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		view.getEntityPanel().addNewAction();
+		view.getEntityPanel().addBotAction();
 	}
 }
 
@@ -141,49 +153,10 @@ class ModifyBot implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		view.getEntityPanel().modifyAction();
+		view.getEntityPanel().modifyBotAction();
 	}
 }
 
-/**
- * Handles the event to rename a bot.
- */
-class RenameBot implements ActionListener {
-
-	private MainPanel view;
-
-	/**
-	 * Create an RenameBot event handler.
-	 * @param view The parent view.
-	 */
-	public RenameBot(MainPanel view) {
-		this.view = view;
-	}
-
-	public void actionPerformed(ActionEvent ae) {
-		//view.getBotPanel().renameAction();
-	}
-}
-
-/**
- * Handles the event to duplicate a bot.
- */
-class DuplicateBot implements ActionListener {
-
-	private MainPanel view;
-
-	/**
-	 * Create an DuplicateBot event handler.
-	 * @param view The parent view.
-	 */
-	public DuplicateBot(MainPanel view) {
-		this.view = view;
-	}
-
-	public void actionPerformed(ActionEvent ae) {
-		view.getEntityPanel().duplicateAction();
-	}
-}
 
 /**
  * Handles the event to delete a bot.
@@ -201,7 +174,7 @@ class DeleteBot implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		view.getEntityPanel().deleteAction();
+		view.getEntityPanel().deleteBotAction();
 	}
 }
 
