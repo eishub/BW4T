@@ -585,7 +585,11 @@ class MenuOptionNew extends AbstractMenuOptionFactory {
         // Check if current config is different from last saved config
         if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())) {
             // Check if user wants to save current configuration
-            int response = JOptionPane.showConfirmDialog(null, Controller.CONFIRM_SAVE_TXT, "", JOptionPane.YES_NO_OPTION);
+            int response = JOptionPane.showConfirmDialog(
+                    null,
+                    Controller.CONFIRM_SAVE_TXT,
+                    "",
+                    JOptionPane.YES_NO_OPTION);
 
             if (response == JOptionPane.YES_OPTION) {
                 saveFile();

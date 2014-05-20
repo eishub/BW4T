@@ -68,14 +68,11 @@ public class ScenarioEditor extends JFrame {
      * Constructor where the panels are passed through as arguments. Useful for
      * testing when the panels have to be mocked or spied upon.
      *
-     * @param configurationPanel
-     *            The ConfigurationPanel object used in the frame
-     * @param entityPanel
-     *            The EntityPanel object used in the frame
+     * @param configurationPanel The ConfigurationPanel object used in the frame
+     * @param entityPanel The EntityPanel object used in the frame
      */
 
-    public ScenarioEditor(final ConfigurationPanel configurationPanel,
-            final EntityPanel entityPanel) {
+    public ScenarioEditor(final ConfigurationPanel configurationPanel, final EntityPanel entityPanel) {
         this();
         mPanel.setConfigurationPanel(configurationPanel);
         mPanel.setEntityPanel(entityPanel);
