@@ -74,8 +74,6 @@ public class FileUtils {
 		final JarFile jarFile = jarConnection.getJarFile();
 		final String entryName = jarConnection.getEntryName();
 		String entryNameParent = entryName.substring(0, entryName.lastIndexOf('/') + 1);
-		
-		System.out.println(entryNameParent);
 
 		for (final Enumeration<JarEntry> e = jarFile.entries(); e
 				.hasMoreElements();) {
