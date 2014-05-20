@@ -1,20 +1,5 @@
 package nl.tudelft.bw4t.client;
 
-import java.net.MalformedURLException;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.server.UnicastRemoteObject;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
-
-import org.apache.log4j.Logger;
-
-import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.server.BW4TServerActions;
-import eis.EnvironmentInterfaceStandard;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
 import eis.exceptions.ManagementException;
@@ -26,6 +11,22 @@ import eis.iilang.Identifier;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedList;
+
+import nl.tudelft.bw4t.client.startup.InitParam;
+import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.server.BW4TServerActions;
+
+import org.apache.log4j.Logger;
+
 /**
  * A client remote object that can be registered to a BW4TServer. This object
  * lives at the client side.
@@ -36,7 +37,7 @@ import eis.iilang.Percept;
  * @author trens
  * @author W.Pasman 8feb2012 changed to make this an explicit child of a
  *         {@link BW4TRemoteEnvironment}.
- * @modified W.Pasman 13feb2012 added start and pause calls.
+ * @author W.Pasman 13feb2012 added start and pause calls.
  * 
  */
 public class BW4TClient extends UnicastRemoteObject implements

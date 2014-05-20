@@ -34,12 +34,16 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
+
+import org.apache.log4j.Logger;
 
 import nl.tudelft.bw4t.RendererMapLoader;
 import nl.tudelft.bw4t.agent.HumanAgent;
 import nl.tudelft.bw4t.client.BW4TClientSettings;
 import nl.tudelft.bw4t.client.BW4TRemoteEnvironment;
+import nl.tudelft.bw4t.client.startup.Launcher;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.ColorTranslator;
 import nl.tudelft.bw4t.map.Constants;
@@ -107,6 +111,11 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 	private Double[] entityLocation = new Double[] { 0., 0., 0., 0. };
 	private HashMap<Long, Point2D.Double> objectPositions = new HashMap<Long, Point2D.Double>();
 	private ArrayList<String> otherPlayers;
+	
+	/**
+     * The log4j Logger which displays logs on console
+     */
+    private static Logger logger = Logger.getLogger(BW4TClientMapRenderer.class);
 
 	private ArrayList<Long> visibleBlocks = new ArrayList<Long>();
 	private HashMap<Long, BlockColor> allBlocks = new HashMap<Long, BlockColor>();
@@ -138,7 +147,7 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 	private JPopupMenu jPopupMenu;
 	private Integer[] selectedLocation;
 	private boolean goal;
-	private LinkedList<Percept> toBePerformedAction; // see general class doc
+	private LinkedList<Percept> toBePerformedAction;
 
 	private boolean humanPlayer;
 
@@ -192,8 +201,9 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 	 *            , whether a human is supposed to control this panel
 	 * @throws IOException
 	 */
-	private void init(String entityId, boolean humanPlayer) throws IOException {
+	private void init(final String entityId, boolean humanPlayer) throws IOException {
 		// Initialize variables
+	    logger.debug("Initializing agent window for entity: " + entityId);
 		rooms = new ArrayList<RoomInfo>();
 		sequence = new ArrayList<BlockColor>();
 		chatHistory = new ArrayList<ArrayList<String>>();
@@ -212,6 +222,12 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 		RendererMapLoader.loadMap(environment.getMap(), this);
 
 		// Initialize graphics
+		try {
+            UIManager.setLookAndFeel(
+              UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception e) {
+              e.printStackTrace();
+          }
 		jFrame = new JFrame(entityId);
 		jFrame.setSize(worldX * scale + 10, worldY * scale + 250);
         jFrame.setLocation(BW4TClientSettings.getX(), BW4TClientSettings.getY());
@@ -221,13 +237,14 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
         jFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 JFrame frame = (JFrame) e.getSource();
+                logger.info("Exit request received from the Window Manager to close Window of entity: " + entityId);
                     try {
                         environment.freeAgent(humanAgent.getAgentId());
                         environment.unregisterAgent(humanAgent.getAgentId());
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             }
         });
 

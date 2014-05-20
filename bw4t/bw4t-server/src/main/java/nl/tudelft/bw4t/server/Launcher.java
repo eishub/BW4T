@@ -9,8 +9,8 @@ import java.rmi.RemoteException;
 
 import javax.xml.bind.JAXBException;
 
+import nl.tudelft.bw4t.startup.LauncherException;
 import nl.tudelft.bw4t.util.FileUtils;
-
 import repast.simphony.scenario.ScenarioLoadException;
 
 /**
@@ -108,21 +108,21 @@ public class Launcher {
 		
 		File userDir = new File(System.getProperty("user.dir"));
 		
-		File mapsFolder = new File(System.getProperty("user.dir") + "/maps");
+		File mapsFolder = new File(userDir.getAbsolutePath() + "/maps");
 		if (!mapsFolder.exists()) {
 			success &= mapsFolder.mkdir();
 			success &= FileUtils.copyResourcesRecursively(this.getClass().getResource("/setup/maps"), userDir);
 		}
-		File scenarioFolder = new File(System.getProperty("user.dir") + "/BW4T.rs");
+		File scenarioFolder = new File(userDir.getAbsolutePath() + "/BW4T.rs");
 		if (!scenarioFolder.exists()) {
 			success &= scenarioFolder.mkdir();
 			success &= FileUtils.copyResourcesRecursively(this.getClass().getResource("/setup/BW4T.rs"), userDir);
 		}
-		File logsFolder = new File(System.getProperty("user.dir") + "/logs");
+		File logsFolder = new File(userDir.getAbsolutePath() + "/log");
 		if (!logsFolder.exists()) {
 			success &= logsFolder.mkdir();
 		}
-		File binFolder = new File(System.getProperty("user.dir") + "/bin/nl/tudelft");
+		File binFolder = new File(userDir.getAbsolutePath() + "/bin/nl/tudelft");
 		if (!binFolder.exists()) {
 			success &= binFolder.mkdirs();
 			success &= FileUtils.copyResourcesRecursively(this.getClass().getResource("/nl/tudelft/bw4t"), binFolder);
@@ -189,11 +189,11 @@ public class Launcher {
 	/**
 	 * set the launcher instance to the global field
 	 * 
-	 * @param instance
+	 * @param inst
 	 *            the instance to be used to startup the environment
 	 */
-	private static void setInstance(Launcher instance) {
-		Launcher.instance = instance;
+	private static void setInstance(Launcher inst) {
+		Launcher.instance = inst;
 	}
 
 }

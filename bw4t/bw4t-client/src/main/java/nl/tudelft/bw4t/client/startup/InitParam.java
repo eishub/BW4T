@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.client;
+package nl.tudelft.bw4t.client.startup;
 
 
 /**
@@ -6,7 +6,7 @@ package nl.tudelft.bw4t.client;
  * 
  * @author W.Pasman 20mar13
  */
-enum InitParam {
+public enum InitParam {
 	/**
 	 * our ip. Passed to server so server must be able to find us with this ip.
 	 */
@@ -35,11 +35,11 @@ enum InitParam {
 	/**
 	 * Number of human bots (is this to connect GUIs?)
 	 */
-	HUMANCOUNT("1"),
+	HUMANCOUNT("0"),
 	/**
 	 * The java agent class to load when new entities appear.
 	 */
-	AGENTCLASS("nl.tudelft.bw4t.agent.BW4TAgent"),
+	AGENTCLASS("nl.tudelft.bw4t.agent.TestAgent"),
 	/**
 	 * are we connected with GOAL?
 	 */

@@ -109,7 +109,6 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerActions
 	public void unregisterClient(BW4TClientActions client) {
 		clientWaitingForAgent.remove(client);
 		clientWaitingForHuman.remove(client);
-
 	}
 
 	/**

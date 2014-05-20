@@ -14,6 +14,7 @@ import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 import nl.tudelft.bw4t.BW4TEnvironmentListener;
+import nl.tudelft.bw4t.client.startup.InitParam;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer;
 import eis.AgentListener;
@@ -351,54 +352,6 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
 	 */
 	protected boolean isSupportedByType(Action arg0, String arg1) {
 		return true;
-	}
-
-	/**
-	 * Main method used for launching java agents
-	 * 
-	 * @param args
-	 *            the initialization parameters as input in the program
-	 *            arguments. See {@link InitParam}.
-	 * @throws ManagementException
-	 *             if initialization of client fails.
-	 */
-	public static void main(String[] args) throws ManagementException {
-		/**
-		 * load all known parameters into the init array, convert it to EIS
-		 * format.
-		 */
-	    BasicConfigurator.configure();
-	    logger.info("Initializing BW4T Client.");
-		Map<String, Parameter> init = new HashMap<String, Parameter>();
-		for (InitParam param : InitParam.values()) {
-			init.put(param.nameLower(), new Identifier(
-					findArgument(args, param)));
-		}
-		BW4TRemoteEnvironment env = new BW4TRemoteEnvironment();
-		logger.info("Setting up the Remote Environment.");
-		env.attachEnvironmentListener(new BW4TEnvironmentListener(env));
-		env.init(init);
-	}
-
-	/**
-	 * Find a certain argument in the string array and return its setting
-	 * 
-	 * @param args
-	 *            , the string array containing all the arguments
-	 * @param param
-	 *            the parameter to look for. The name of the parameter in lower
-	 *            case and prefixed with "-" should be in the list, and the next
-	 *            element in the array then should contain the value.
-	 * @return the value for the parameter. Returns default value if not in the
-	 *         array.
-	 */
-	private static String findArgument(String[] args, InitParam param) {
-		for (int i = 0; i < args.length - 1; i++) {
-			if (args[i].equalsIgnoreCase("-" + param.nameLower())) {
-				return args[i + 1];
-			}
-		}
-		return param.getDefaultValue();
 	}
 
 	/**
