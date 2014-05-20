@@ -4,7 +4,10 @@ import java.io.IOException;
 
 import javax.xml.bind.JAXBException;
 
+import org.apache.log4j.Logger;
+
 import nl.tudelft.bw4t.server.BW4TEnvironment;
+import nl.tudelft.bw4t.server.Launcher;
 import nl.tudelft.bw4t.server.Stepper;
 import repast.simphony.context.Context;
 import repast.simphony.dataLoader.ContextBuilder;
@@ -25,6 +28,10 @@ import repast.simphony.engine.environment.RunListener;
  *           singleton stuff.
  */
 public class BW4TBuilder implements ContextBuilder<Object> {
+	/**
+	 * The log4j logger, logs to the console.
+	 */
+	private static Logger logger = Logger.getLogger(Launcher.class);
 
 	/** Matches the ID in context.xml and scenario.xml */
 	private static final String CONTEXT_ID = "BW4T";
@@ -34,7 +41,6 @@ public class BW4TBuilder implements ContextBuilder<Object> {
 
 	@Override
 	public Context<Object> build(Context<Object> context) {
-		// System.out.println("Repast now loading map");
 		context.setId(CONTEXT_ID);
 		try {
 			MapLoader.loadMap(BW4TEnvironment.getInstance().getMapLocation(),
@@ -45,16 +51,9 @@ public class BW4TBuilder implements ContextBuilder<Object> {
 			 * started immediately after publishing.
 			 */
 			BW4TEnvironment.getInstance().setContext(context);
-		} catch (IOException e) {
-			System.out.println("failure to load the map "
-					+ BW4TEnvironment.getInstance().getMapLocation());
-			e.printStackTrace();
-		} catch (JAXBException e) {
-			System.out.println("failure to load the map "
-					+ BW4TEnvironment.getInstance().getMapLocation());
-			e.printStackTrace();
+		} catch (IOException | JAXBException e) {
+			logger.error("Could not load the map: " + BW4TEnvironment.getInstance().getMapLocation());
 		}
-		// System.out.println("Repast loadmap complete");
 		return context;
 	}
 }

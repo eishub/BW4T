@@ -18,6 +18,7 @@ import nl.tudelft.bw4t.robots.NavigatingRobot;
 import nl.tudelft.bw4t.robots.Robot;
 import nl.tudelft.bw4t.server.BW4TEnvironment;
 import nl.tudelft.bw4t.server.BW4TLogger;
+import nl.tudelft.bw4t.server.Launcher;
 import nl.tudelft.bw4t.server.RobotEntityInt;
 import nl.tudelft.bw4t.util.RoomLocator;
 import nl.tudelft.bw4t.util.ZoneLocator;
@@ -27,6 +28,7 @@ import nl.tudelft.bw4t.zone.DropZone;
 import nl.tudelft.bw4t.zone.Room;
 import nl.tudelft.bw4t.zone.Zone;
 
+import org.apache.log4j.Logger;
 import org.omg.CORBA.Environment;
 
 import repast.simphony.context.Context;
@@ -68,6 +70,11 @@ public class RobotEntity implements RobotEntityInt {
 		translator.registerJava2ParameterTranslator(new ColorTranslator());
 
 	}
+	
+	/**
+	 * The log4j logger, logs to the console.
+	 */
+	private static Logger logger = Logger.getLogger(RobotEntity.class);
 
 	private final NavigatingRobot ourRobot;
 	private final Context<Object> context;
@@ -284,7 +291,7 @@ public class RobotEntity implements RobotEntityInt {
 					result.addAll(env.getAssociatedEntities(agt));
 				}
 			} catch (AgentException e) {
-				System.out.println("ignoring a 'player' percept problem: " + e);
+				logger.error("Ignoring an Agent's percept problem:" + e);
 			}
 		}
 		return result;
