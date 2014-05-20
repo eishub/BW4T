@@ -1,3 +1,3 @@
 .classpath
 target/
-test/resources/XMLSaveTest.xml
+src/test/resources/XMLSaveTest.xml
