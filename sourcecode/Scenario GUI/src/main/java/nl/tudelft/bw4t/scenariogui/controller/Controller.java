@@ -40,7 +40,7 @@ public class Controller {
         getMainView().getMainPanel().getConfigurationPanel().getChooseMapFile().addActionListener(
                 new ChooseMapFileListener(getMainView().getMainPanel())
         );
-        
+
         /** Adds the listeners for the items in the MenuBar: */
         getMainView().getTopMenuBar().getMenuItemFileExit().addActionListener(
                 new MenuOptionExit(getMainView().getTopMenuBar(), this)
@@ -101,84 +101,80 @@ class ChooseMapFileListener implements ActionListener {
  * Handles the event to create a new bot.
  */
 class AddNewBot implements ActionListener {
-	
+
 	private MainPanel view;
-	
+
 	/**
 	 * Create an AddNewBot event handler.
 	 * @param view The parent view.
 	 */
-	public AddNewBot(MainPanel view){
+	public AddNewBot(MainPanel view) {
 		this.view = view;
 	}
 
 	public void actionPerformed(ActionEvent ae) {
 		view.getBotPanel().addNewAction();
 	}
-	
 }
 
 /**
  * Handles the event to modify a bot.
  */
 class ModifyBot implements ActionListener {
-	
+
 	private MainPanel view;
-	
+
 	/**
 	 * Create an ModifyBot event handler.
 	 * @param view The parent view.
 	 */
-	public ModifyBot(MainPanel view){
+	public ModifyBot(MainPanel view) {
 		this.view = view;
 	}
 
 	public void actionPerformed(ActionEvent ae) {
 		view.getBotPanel().modifyAction();
 	}
-	
 }
 
 /**
  * Handles the event to rename a bot.
  */
 class RenameBot implements ActionListener {
-	
+
 	private MainPanel view;
-	
+
 	/**
 	 * Create an RenameBot event handler.
 	 * @param view The parent view.
 	 */
-	public RenameBot(MainPanel view){
+	public RenameBot(MainPanel view) {
 		this.view = view;
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		view.getBotPanel().renameAction();
+		//view.getBotPanel().renameAction();
 	}
-	
 }
 
 /**
  * Handles the event to duplicate a bot.
  */
 class DuplicateBot implements ActionListener {
-	
+
 	private MainPanel view;
-	
+
 	/**
 	 * Create an DuplicateBot event handler.
 	 * @param view The parent view.
 	 */
-	public DuplicateBot(MainPanel view){
+	public DuplicateBot(MainPanel view) {
 		this.view = view;
 	}
 
 	public void actionPerformed(ActionEvent ae) {
 		view.getBotPanel().duplicateAction();
 	}
-	
 }
 
 /**
@@ -192,14 +188,13 @@ class DeleteBot implements ActionListener {
 	 * Create an DeleteBot event handler.
 	 * @param view The parent view.
 	 */
-	public DeleteBot(MainPanel view){
+	public DeleteBot(MainPanel view) {
 		this.view = view;
 	}
 
 	public void actionPerformed(ActionEvent ae) {
 		view.getBotPanel().deleteAction();
 	}
-	
 }
 
 /**
@@ -282,9 +277,9 @@ class MenuOptionOpen extends MenuOption {
 
                 // Fill the configuration panel
                 configPanel.setClientIP(temp.getClientIp());
-                configPanel.setClientPort(""+temp.getClientPort());
+                configPanel.setClientPort("" + temp.getClientPort());
                 configPanel.setServerIP(temp.getServerIp());
-                configPanel.setServerPort(""+temp.getServerPort());
+                configPanel.setServerPort("" + temp.getServerPort());
                 configPanel.setUseGui(temp.isLaunchGui());
 //                configPanel.setUseGoal(temp.isUseGoal());
                 configPanel.setMapFile(temp.getMapFile());

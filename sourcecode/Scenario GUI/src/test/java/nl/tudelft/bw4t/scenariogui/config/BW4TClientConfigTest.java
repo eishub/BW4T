@@ -117,6 +117,4 @@ public class BW4TClientConfigTest {
         assertEquals(bots, config.getBots());
     }
     */
-
-
 }
