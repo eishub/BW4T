@@ -382,7 +382,7 @@ public class EntityPanel extends JPanel {
      *            or JOptionPane.OK_CANCEL_OPTION,
      * @return An int indicating the option selected by the user
      */
-    protected final int showConfirmDialog(final Component parent,
+    protected int showConfirmDialog(final Component parent,
             final String text,
             final String title, final int optionType) {
         return JOptionPane.showConfirmDialog(parent, text, title, optionType);
