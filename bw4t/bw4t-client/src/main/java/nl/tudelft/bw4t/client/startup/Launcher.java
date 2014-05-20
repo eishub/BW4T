@@ -26,7 +26,7 @@ public final class Launcher {
 	private static BW4TRemoteEnvironment environment;
 
 	/**
-	 * This is a utility class, no instanciation!
+	 * This is a utility class, no instantiation!
 	 */
 	private Launcher() {
 	}

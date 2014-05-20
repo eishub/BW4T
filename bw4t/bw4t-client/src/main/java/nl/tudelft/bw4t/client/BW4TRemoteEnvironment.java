@@ -34,6 +34,9 @@ import eis.iilang.Identifier;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
+
 /**
  * A remote BW4TEnvironment that delegates all actions towards the central
  * BW4TEnvironment, through RMI. This is the "Client", the connector for goal.
@@ -68,6 +71,8 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
 	private Vector<EnvironmentListener> environmentListeners = new Vector<EnvironmentListener>();
 
 	private HashMap<String, BW4TClientMapRenderer> entityToGUI = new HashMap<String, BW4TClientMapRenderer>();
+	
+	private static Logger logger = Logger.getLogger(BW4TRemoteEnvironment.class);
 
 	private boolean connectedToGoal = false;
 
@@ -104,13 +109,9 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
 	 *            is the list of agents that were associated
 	 */
 	protected void notifyFreeEntity(String entity, Collection<String> agents) {
-
 		for (EnvironmentListener listener : environmentListeners) {
-
 			listener.handleFreeEntity(entity, agents);
-
 		}
-
 	}
 
 	/**
@@ -120,13 +121,9 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
 	 *            is the new entity.
 	 */
 	protected void notifyNewEntity(String entity) {
-
 		for (EnvironmentListener listener : environmentListeners) {
-
 			listener.handleNewEntity(entity);
-
 		}
-
 	}
 
 	/**
@@ -136,16 +133,11 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
 	 *            is the deleted entity.
 	 */
 	protected void notifyDeletedEntity(String entity, Collection<String> agents) {
-
 		if (entityToGUI.get(entity) != null)
 			entityToGUI.get(entity).getFrame().dispose();
-
 		for (EnvironmentListener listener : environmentListeners) {
-
 			listener.handleDeletedEntity(entity, agents);
-
 		}
-
 	}
 
 	/**
@@ -174,7 +166,6 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
 		} catch (RemoteException e) {
 			throw EnvironmentSuddenDeath(e);
 		}
-
 	}
 
 	@Override
@@ -204,7 +195,8 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
 	 *            is the exception from which we detected the death.
 	 */
 	private NoEnvironmentException EnvironmentSuddenDeath(Exception e) {
-		System.out.println("Environment died unexpectedly");
+		//System.out.println("Environment died unexpectedly");
+	    this.logger.error("The BW4T Server disconnected unexpectedly.");
 		// e.printStackTrace(); DEBUG
 		handleStateChange(EnvironmentState.KILLED);
 		if (e instanceof NoEnvironmentException) {
@@ -283,14 +275,12 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
 	public void init(Map<String, Parameter> parameters)
 			throws ManagementException, NoEnvironmentException {
 		this.initParameters = parameters;
-
 		Parameter goal = initParameters.get(InitParam.GOAL.nameLower());
 		connectedToGoal = Boolean.parseBoolean(((Identifier) goal).getValue());
-
 		try {
-			client = new BW4TClient(this);
+		    logger.info("Connecting to BW4T Server.");
+		    client = new BW4TClient(this);
 			client.connectServer(initParameters);
-
 			/**
 			 * First init server, if we have parameters for it. #2425
 			 */
@@ -298,13 +288,15 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
 			if (!(serverparams.isEmpty())) {
 				client.initServer(parameters);
 			}
-
 			client.register(initParameters);
 		} catch (RemoteException e) {
+		    logger.info("Unable to access the remote environment.");
 			throw new NoEnvironmentException("can't access environment", e);
 		} catch (MalformedURLException e) {
+		    logger.info("The URL provided to connect to the remote environment is invalid..");
 			throw new NoEnvironmentException("can't access environment", e);
 		} catch (NotBoundException e) {
+		    logger.info("Unable to bind to the remote environment.");
 			throw new NoEnvironmentException("can't access environment", e);
 		}
 	}
@@ -360,52 +352,6 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
 	 */
 	protected boolean isSupportedByType(Action arg0, String arg1) {
 		return true;
-	}
-
-	/**
-	 * Main method used for launching java agents
-	 * 
-	 * @param args
-	 *            the initialization parameters as input in the program
-	 *            arguments. See {@link InitParam}.
-	 * @throws ManagementException
-	 *             if initialization of client fails.
-	 */
-	public static void main(String[] args) throws ManagementException {
-		/**
-		 * load all known parameters into the init array, convert it to EIS
-		 * format.
-		 */
-		Map<String, Parameter> init = new HashMap<String, Parameter>();
-		for (InitParam param : InitParam.values()) {
-			init.put(param.nameLower(), new Identifier(
-					findArgument(args, param)));
-		}
-		BW4TRemoteEnvironment env = new BW4TRemoteEnvironment();
-		env.attachEnvironmentListener(new BW4TEnvironmentListener(env));
-		env.init(init);
-
-	}
-
-	/**
-	 * Find a certain argument in the string array and return its setting
-	 * 
-	 * @param args
-	 *            , the string array containing all the arguments
-	 * @param param
-	 *            the parameter to look for. The name of the parameter in lower
-	 *            case and prefixed with "-" should be in the list, and the next
-	 *            element in the array then should contain the value.
-	 * @return the value for the parameter. Returns default value if not in the
-	 *         array.
-	 */
-	private static String findArgument(String[] args, InitParam param) {
-		for (int i = 0; i < args.length - 1; i++) {
-			if (args[i].equalsIgnoreCase("-" + param.nameLower())) {
-				return args[i + 1];
-			}
-		}
-		return param.getDefaultValue();
 	}
 
 	/**
