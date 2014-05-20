@@ -157,7 +157,8 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteEPartnerConfirmDelete() {
-        doReturn(JOptionPane.YES_OPTION).when(spyEntityPanel).showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
+        doReturn(JOptionPane.YES_OPTION).when(spyEntityPanel)
+            .showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
 
         spyEntityPanel.getDeleteEPartnerButton().doClick();
         verify(spyEntityPanel, times(1)).deleteEPartnerAction();
@@ -171,7 +172,8 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteEPartnerDeclineDelete() {
-        doReturn(JOptionPane.NO_OPTION).when(spyEntityPanel).showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
+        doReturn(JOptionPane.NO_OPTION).when(spyEntityPanel)
+            .showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
 
         spyEntityPanel.getDeleteEPartnerButton().doClick();
         verify(spyEntityPanel, times(1)).deleteEPartnerAction();

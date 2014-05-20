@@ -293,6 +293,10 @@ class AddNewEPartner implements ActionListener {
         this.view = newView;
     }
 
+    /**
+     * 
+     * @param ae The action 
+     */
 	public void actionPerformed(ActionEvent ae) {
 		view.getEntityPanel().addEPartnerAction();
 	}
@@ -314,6 +318,10 @@ class ModifyEPartner implements ActionListener {
         this.view = newView;
     }
 
+    /**
+     * Gets called when the e-partner is modified.
+     * @param ae The action event.
+     */
 	public void actionPerformed(ActionEvent ae) {
 		view.getEntityPanel().modifyEPartnerAction();
 	}
@@ -329,12 +337,16 @@ class DeleteEPartner implements ActionListener {
 	
 	/**
 	 * Create an DeleteEPartner event handler.
-	 * @param view The parent view.
+	 * @param newView The parent view.
 	 */
-	public DeleteEPartner(MainPanel view) {
-		this.view = view;
+	public DeleteEPartner(MainPanel newView) {
+		this.view = newView;
 	}
 
+	/**
+	 * Gets called when an e-partner is deleted.
+	 * @param ae The action event.
+	 */
 	public void actionPerformed(ActionEvent ae) {
 		view.getEntityPanel().deleteEPartnerAction();
 	}
