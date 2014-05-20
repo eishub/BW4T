@@ -21,21 +21,23 @@ import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 import nl.tudelft.bw4t.scenariogui.util.XMLManager;
 
 /**
- * The Controller class is in charge of all events that happen on the GUI. It delegates all events
- * to classes implementing ActionListener, sending the view along as an argument.
+ * The Controller class is in charge of all events that happen on the GUI.
+ * It delegates all events to classes implementing ActionListener,
+ * sending the view along as an argument.
+ *
  * @author Calvin
  */
 public class Controller {
 
-    /** The view being controlled */
+    /** The view being controlled. */
     private ScenarioEditor view;
 
     /**
      * Create a controller object.
-     * @param view The parent view, used to call relevant functions by the event listeners.
+     * @param newView used to call relevant functions by the event listeners.
      */
-    public Controller(ScenarioEditor view) {
-        this.view = view;
+    public Controller(final ScenarioEditor newView) {
+        this.view = newView;
 
         /** Create the action listeners for the ConfigurationPanel. */
 
@@ -61,14 +63,13 @@ public class Controller {
         getMainView().getTopMenuBar().getMenuItemFileSaveAs().addActionListener(
                 new MenuOptionSaveAs(getMainView().getTopMenuBar(), this)
         );
-        
     }
 
     /**
      * Return the view being controlled.
      * @return The JFrame being controlled.
      */
-    public ScenarioEditor getMainView() {
+    public final ScenarioEditor getMainView() {
         return view;
     }
 }
@@ -78,28 +79,36 @@ public class Controller {
  */
 class ChooseMapFileListener implements ActionListener {
 
+    /** The <code>MainPanel</code> serving as the content pane.*/
     private MainPanel view;
 
     /**
      * Create a ChooseMapFileListener event handler.
-     * @param view The parent view.
+     *
+     * @param newView The parent view.
      */
-    public ChooseMapFileListener(MainPanel view) {
-        this.view = view;
+    public ChooseMapFileListener(final MainPanel newView) {
+        this.view = newView;
     }
 
     public void actionPerformed(ActionEvent actionEvent) {
-        /** Create a file chooser, opening at the last path location saved in the configuration panel */
+        /**
+         * Create a file chooser, opening at the last path location saved in the
+         * configuration panel
+         */
         JFileChooser fc = view.getConfigurationPanel().getFileChooser();
         /** Create a file name extension filter to filter on MAP files */
-        
+
         int returnVal = fc.showOpenDialog(view);
         File file = fc.getSelectedFile();
         /** Makes sure only files with the right extension are accepted */
-        if (returnVal == JFileChooser.APPROVE_OPTION && file.getName().endsWith(".map")) {
+        if (returnVal == JFileChooser.APPROVE_OPTION
+                && file.getName().endsWith(".map")) {
             view.getConfigurationPanel().setMapFile(file.getPath());
-        } else if(returnVal == JFileChooser.APPROVE_OPTION && !file.getName().endsWith(".map")) {
-        	JOptionPane.showMessageDialog(view, "This is not a valid file.");
+        } else if (returnVal == JFileChooser.APPROVE_OPTION
+                && !file.getName().endsWith(".map")) {
+            JOptionPane.showMessageDialog(view,
+                    "This is not a valid file.");
         }
     }
 }
@@ -109,19 +118,21 @@ class ChooseMapFileListener implements ActionListener {
  */
 class AddNewBot implements ActionListener {
 
-	private MainPanel view;
+    /** The <code>MainPanel</code> serving as the content pane.*/
+    private MainPanel view;
 
-	/**
-	 * Create an AddNewBot event handler.
-	 * @param view The parent view.
-	 */
-	public AddNewBot(MainPanel view) {
-		this.view = view;
-	}
+    /**
+     * Create an AddNewBot event handler.
+     *
+     * @param newView The parent view.
+     */
+    public AddNewBot(final MainPanel newView) {
+        this.view = newView;
+    }
 
-	public void actionPerformed(ActionEvent ae) {
-		view.getEntityPanel().addNewAction();
-	}
+    public void actionPerformed(ActionEvent ae) {
+        view.getEntityPanel().addNewAction();
+    }
 }
 
 /**
@@ -129,19 +140,21 @@ class AddNewBot implements ActionListener {
  */
 class ModifyBot implements ActionListener {
 
-	private MainPanel view;
+    /** The <code>MainPanel</code> serving as the content pane.*/
+    private MainPanel view;
 
-	/**
-	 * Create an ModifyBot event handler.
-	 * @param view The parent view.
-	 */
-	public ModifyBot(MainPanel view) {
-		this.view = view;
-	}
+    /**
+     * Create an ModifyBot event handler.
+     *
+     * @param newView The parent view.
+     */
+    public ModifyBot(final MainPanel newView) {
+        this.view = newView;
+    }
 
-	public void actionPerformed(ActionEvent ae) {
-		view.getEntityPanel().modifyAction();
-	}
+    public void actionPerformed(ActionEvent ae) {
+        view.getEntityPanel().modifyAction();
+    }
 }
 
 /**
@@ -149,19 +162,21 @@ class ModifyBot implements ActionListener {
  */
 class RenameBot implements ActionListener {
 
-	private MainPanel view;
+    /** The <code>MainPanel</code> serving as the content pane.*/
+    private MainPanel view;
 
-	/**
-	 * Create an RenameBot event handler.
-	 * @param view The parent view.
-	 */
-	public RenameBot(MainPanel view) {
-		this.view = view;
-	}
+    /**
+     * Create an RenameBot event handler.
+     *
+     * @param newView The parent view.
+     */
+    public RenameBot(final MainPanel newView) {
+        this.view = newView;
+    }
 
-	public void actionPerformed(ActionEvent ae) {
-		//view.getBotPanel().renameAction();
-	}
+    public void actionPerformed(ActionEvent ae) {
+        // view.getBotPanel().renameAction();
+    }
 }
 
 /**
@@ -169,39 +184,43 @@ class RenameBot implements ActionListener {
  */
 class DuplicateBot implements ActionListener {
 
-	private MainPanel view;
+    /** The <code>MainPanel</code> serving as the content pane.*/
+    private MainPanel view;
 
-	/**
-	 * Create an DuplicateBot event handler.
-	 * @param view The parent view.
-	 */
-	public DuplicateBot(MainPanel view) {
-		this.view = view;
-	}
+    /**
+     * Create an DuplicateBot event handler.
+     *
+     * @param newView The parent view.
+     */
+    public DuplicateBot(final MainPanel newView) {
+        this.view = newView;
+    }
 
-	public void actionPerformed(ActionEvent ae) {
-		view.getEntityPanel().duplicateAction();
-	}
+    public void actionPerformed(ActionEvent ae) {
+        view.getEntityPanel().duplicateAction();
+    }
 }
 
 /**
  * Handles the event to delete a bot.
  */
 class DeleteBot implements ActionListener {
-	
-	private MainPanel view;
-	
-	/**
-	 * Create an DeleteBot event handler.
-	 * @param view The parent view.
-	 */
-	public DeleteBot(MainPanel view) {
-		this.view = view;
-	}
 
-	public void actionPerformed(ActionEvent ae) {
-		view.getEntityPanel().deleteAction();
-	}
+    /** The <code>MainPanel</code> serving as the content pane.*/
+    private MainPanel view;
+
+    /**
+     * Create an DeleteBot event handler.
+     *
+     * @param newView The parent view.
+     */
+    public DeleteBot(final MainPanel newView) {
+        this.view = newView;
+    }
+
+    public void actionPerformed(ActionEvent ae) {
+        view.getEntityPanel().deleteAction();
+    }
 }
 
 /**
@@ -211,45 +230,50 @@ abstract class MenuOption implements ActionListener {
 
     protected MenuBar view;
     protected Controller controller;
-    
+
     //made a variable for this so we can call it during testing
     public JFileChooser currentFileChooser;
 
-    public MenuOption(MenuBar view, Controller mainView) {
-        this.view = view;
+    public MenuOption(final MenuBar newView, final Controller mainView) {
+        this.view = newView;
         this.controller = mainView;
     }
-    
+
     public void saveFile() {
-    	saveFile(!view.hasLastFileLocation());
+        saveFile(!view.hasLastFileLocation());
     }
 
     public void saveFile(boolean saveAs) {
     	String path = view.getLastFileLocation();
     	if (saveAs || !view.hasLastFileLocation()) {
     		currentFileChooser = new JFileChooser();
-    		
+
     		/** Adds an xml filter for the file chooser: */
     		currentFileChooser.setFileFilter(FileFilters.xmlFilter());
-    		
-	        if (currentFileChooser.showSaveDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
+
+    	    if (currentFileChooser.showSaveDialog(
+    	            controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
 	            File file = currentFileChooser.getSelectedFile();
 
 	            path = file.getAbsolutePath();
-	        } else
+	        } else {
 	        	return;
+	        }
     	}
         try {
-            new BW4TClientConfig((MainPanel) (controller.getMainView()).getContentPane(), path).toXML();
+            new BW4TClientConfig(
+                    (MainPanel) (controller.getMainView()).getContentPane(), path).toXML();
         	view.setLastFileLocation(path);
         } catch (JAXBException e) {
-        	ScenarioEditor.handleException(e, "Error: Saving to XML has failed.");
+        	ScenarioEditor.handleException(
+        	        e, "Error: Saving to XML has failed.");
 		} catch (FileNotFoundException e) {
-			ScenarioEditor.handleException(e, "Error: No file has been found.");
+			ScenarioEditor.handleException(
+			        e, "Error: No file has been found.");
 		}
     }
 
-    abstract public void actionPerformed(ActionEvent e);
+    public abstract void actionPerformed(ActionEvent e);
 }
 
 /**
@@ -257,7 +281,7 @@ abstract class MenuOption implements ActionListener {
  */
 class MenuOptionOpen extends MenuOption {
 
-    public MenuOptionOpen(MenuBar view, Controller mainView) {
+    public MenuOptionOpen(final MenuBar view, final Controller mainView) {
         super(view, mainView);
     }
 
@@ -266,9 +290,13 @@ class MenuOptionOpen extends MenuOption {
         EntityPanel entityPanel = super.controller.getMainView().getMainPanel().getEntityPanel();
 
         // Check if current config is different to default config
-        if(!configPanel.isDefault()) {
+        if (!configPanel.isDefault()) {
             // Check if user wants to save current configuration
-            int response = JOptionPane.showConfirmDialog(null, "Do you want to save the current configuration?", "", JOptionPane.YES_NO_OPTION);
+            int response = JOptionPane.showConfirmDialog(
+                    null,
+                    "Do you want to save the current configuration?",
+                    "",
+                    JOptionPane.YES_NO_OPTION);
 
             if (response == JOptionPane.YES_OPTION) {
                 saveFile();
@@ -297,7 +325,7 @@ class MenuOptionOpen extends MenuOption {
                 // Fill the bot panel
                 //TODO fill botPanel
             } catch (JAXBException e1) {
-            	ScenarioEditor.handleException(e1, "Error: Saving to XML has failed.");
+            	ScenarioEditor.handleException(e1, "Error: Opening the XML has failed.");
     		} catch (FileNotFoundException e1) {
     			ScenarioEditor.handleException(e1, "Error: No file has been found.");
     		}
@@ -311,17 +339,22 @@ class MenuOptionOpen extends MenuOption {
  */
 class MenuOptionExit extends MenuOption {
 
-    public MenuOptionExit(MenuBar view, Controller mainView) {
+    public MenuOptionExit(final MenuBar view, final Controller mainView) {
         super(view, mainView);
     }
 
     public void actionPerformed(ActionEvent e) {
-        ConfigurationPanel configPanel = super.controller.getMainView().getMainPanel().getConfigurationPanel();
+        ConfigurationPanel configPanel =
+                super.controller.getMainView().getMainPanel().getConfigurationPanel();
 
         // Check if current config is different to default config
-        if(!configPanel.isDefault()) {
+        if (!configPanel.isDefault()) {
             // Check if user wants to save current configuration
-            int response = JOptionPane.showConfirmDialog(null, "Do you want to save the current configuration?", "", JOptionPane.YES_NO_OPTION);
+            int response = JOptionPane.showConfirmDialog(
+                    null,
+                    "Do you want to save the current configuration?",
+                    "",
+                    JOptionPane.YES_NO_OPTION);
 
             if (response == JOptionPane.YES_OPTION) {
                 saveFile();
