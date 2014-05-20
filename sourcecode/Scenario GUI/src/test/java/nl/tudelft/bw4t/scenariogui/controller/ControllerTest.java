@@ -1,8 +1,5 @@
 package nl.tudelft.bw4t.scenariogui.controller;
 
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.spy;
-
 import java.awt.event.ActionListener;
 import java.io.File;
 
@@ -14,6 +11,9 @@ import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 
 import org.junit.Ignore;
 import org.junit.Test;
+
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.spy;
 
 /**
  * Tests the controller class. It's near impossible to get the save button.
@@ -44,13 +44,16 @@ public class ControllerTest {
      */
     @Test
     public final void testSaveAfterHavingSavedBefore() {
-        getMenu().setLastFileLocation(FILE_PATH); // set the last file location,
-                                                  // so the quick save is
-                                                  // possible
-        getMenu().getMenuItemFileSave().doClick(); // press save (open dialogue)
+        // set the last file location,
+        // so the quick save is
+        // possible
+        getMenu().setLastFileLocation(FILE_PATH); 
+        // press save (open dialogue)
+        getMenu().getMenuItemFileSave().doClick();
         // verify(getSave(), times(1)).saveFile(false); //check if method with
         // proper parameters was called
-        checkFileCreated(); // check if the file to be saved was saved
+        // check if the file to be saved was saved
+        checkFileCreated();
     }
 
     /**
@@ -61,15 +64,18 @@ public class ControllerTest {
     public final void testSave() {
         for (int i = 0; i < 2; i++) {
             if (i == 0) {
-                awaitAndPressConfirmOnSaveAsDialogue(); // confirm save as
-                                                        // dialogue when it
-                                                        // opens
+                // confirm save as
+                // dialogue when it
+                // opens
+                awaitAndPressConfirmOnSaveAsDialogue();
             }
-            getMenu().getMenuItemFileSave().doClick(); // press save (open
-                                                       // dialogue)
+            // press save (open
+            // dialogue)
+            getMenu().getMenuItemFileSave().doClick();
             // verify(getSave(), times(1)).saveFile(i == 0); //check if method
             // with proper parameters was called
-            checkFileCreated(); // check if the file to be saved was saved
+            // check if the file to be saved was saved
+            checkFileCreated();
         }
     }
 
@@ -80,13 +86,16 @@ public class ControllerTest {
     @Ignore
     public final void testSaveAs() {
         for (int i = 0; i < 2; i++) {
-            awaitAndPressConfirmOnSaveAsDialogue(); // confirm save as dialogue
-                                                    // when it opens
-            getMenu().getMenuItemFileSaveAs().doClick(); // press save as (open
-                                                         // dialogue)
+            // confirm save as dialogue
+            // when it opens
+            awaitAndPressConfirmOnSaveAsDialogue();
+            // press save as (open
+            // dialogue)
+            getMenu().getMenuItemFileSaveAs().doClick();
             // verify(getSaveAs(), times(1)).saveFile(true); //check if method
             // with proper parameters was called
-            checkFileCreated(); // checks if the file to be saved was saved
+            // checks if the file to be saved was saved
+            checkFileCreated();
         }
     }
 
@@ -127,7 +136,8 @@ public class ControllerTest {
         File f = new File(FILE_PATH);
         if (f.exists()) {
             f.delete();
-        } else {
+        }
+        else {
             fail("File was not created as it should have.");
         }
     }
@@ -143,14 +153,15 @@ public class ControllerTest {
                 while (true) {
                     JFileChooser fc = ((MenuOptionSaveAs) getListener(getMenu()
                             .getMenuItemFileSaveAs(),
-                            MenuOptionSaveAs.class)).currentFileChooser;
+                            MenuOptionSaveAs.class)).getCurrentFileChooser();
                     if (fc != null) {
                         System.out.println("Not null! Executing..");
                         fc.setSelectedFile(new File(FILE_PATH));
                         fc.approveSelection();
                         System.out.println("..done!!");
                         break;
-                    } else {
+                    }
+                    else {
                         System.out.println("Is still null.");
 //                        try {
 //                            Thread.sleep(1000);

@@ -31,6 +31,9 @@ import javax.swing.table.DefaultTableModel;
  * @author Katia
  */
 public class EntityPanel extends JPanel {
+    
+    /** The number column. */
+    private static final String NUMBER_COLUMN = "Nr";
 
     /** The bot options. */
     private JPanel botOptions = new JPanel();
@@ -86,6 +89,16 @@ public class EntityPanel extends JPanel {
     /** The font size. */
     private static final int FONT_SIZE = 16;
 
+    /** The amount of rows in the grid for the bot option panel. */
+    private static final int BOT_OPTION_PANEL_GRID_ROWS_AMT = 15;
+    /** The margin width. */
+    private static final int BOT_OPTION_PANEL_MARGIN_WIDTH = 8;
+
+    /** The width of the scroll pane. */
+    private static final int SCROLL_PANE_WIDTH = 500;
+    /** The height of the scroll pane. */
+    private static final int SCROLL_PANE_HEIGHT = 200;
+
     /**
      * Create an EntityPanel object.
      */
@@ -110,10 +123,6 @@ public class EntityPanel extends JPanel {
 
     }
 
-    /** The amount of rows in the grid for the bot option panel. */
-    private static final int BOT_OPTION_PANEL_GRID_ROWS_AMT = 15;
-    /** The margin width. */
-    private static final int BOT_OPTION_PANEL_MARGIN_WIDTH = 8;
 
     /**
      * Create the panel that shows the actions that can be done.
@@ -154,8 +163,6 @@ public class EntityPanel extends JPanel {
         botToolbar.add(deleteBot);
     }
 
-    /** The width and height of the scroll pane. */
-    private static final int SCROLL_PANE_WIDTH = 500, SCROLL_PANE_HEIGHT = 200;
     /**
      * Create the table that contains the list of bots.
      */
@@ -173,7 +180,7 @@ public class EntityPanel extends JPanel {
         botTable.setModel(botList);
         botList.addColumn("Bot");
         botList.addColumn("Controller");
-        botList.addColumn("Nr");
+        botList.addColumn(NUMBER_COLUMN);
 
         botScrollPane = new JScrollPane(botTable);
         botScrollPane.setPreferredSize(new Dimension(
@@ -238,7 +245,7 @@ public class EntityPanel extends JPanel {
 
         epartnerTable.setModel(epartnerList);
         epartnerList.addColumn("E-partner");
-        epartnerList.addColumn("Nr");
+        epartnerList.addColumn(NUMBER_COLUMN);
 
         epartnerScrollPane = new JScrollPane(epartnerTable);
         epartnerScrollPane.setPreferredSize(new Dimension(
@@ -264,7 +271,7 @@ public class EntityPanel extends JPanel {
      * pressed. TODO Open BotStore window
      */
     public void addBotAction() {
-        System.out.println("Go to Bot Store");
+        System.out.println("Go to Bot Store (add)");
     }
 
     /**
@@ -272,7 +279,7 @@ public class EntityPanel extends JPanel {
      * pressed. TODO Open BotStore window
      */
     public void modifyBotAction() {
-        System.out.println("Go to Bot Store");
+        System.out.println("Go to Bot Store (modify)");
     }
 
     /**
@@ -378,7 +385,7 @@ public class EntityPanel extends JPanel {
      *            or JOptionPane.OK_CANCEL_OPTION,
      * @return An int indicating the option selected by the user
      */
-    protected final int showConfirmDialog(final Component parent,
+    protected int showConfirmDialog(final Component parent,
             final String text,
             final String title, final int optionType) {
         return JOptionPane.showConfirmDialog(parent, text, title, optionType);
