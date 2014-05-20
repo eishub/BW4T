@@ -86,7 +86,7 @@ public class MainPanel extends JPanel {
      * Returns the entity panel used by the MainPanel
      * @return The entity panel object.
      */
-    public EntityPanel getBotPanel() {
+    public EntityPanel getEntityPanel() {
         return entityPanel;
     }
 
