@@ -51,8 +51,8 @@ public class XMLManagerTest {
 
         if (!new File(FILE_PATH).delete()) {
             System.out.println(
-                    "Test file could not be deleted, " +
-                    "please delete it manually.");
+                    "Test file could not be deleted, "
+                    + "please delete it manually.");
         }
 
     }
