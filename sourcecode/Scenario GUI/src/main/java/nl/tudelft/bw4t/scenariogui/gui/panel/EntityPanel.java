@@ -86,6 +86,16 @@ public class EntityPanel extends JPanel {
     /** The font size. */
     private static final int FONT_SIZE = 16;
 
+    /** The amount of rows in the grid for the bot option panel. */
+    private static final int BOT_OPTION_PANEL_GRID_ROWS_AMT = 15;
+    /** The margin width. */
+    private static final int BOT_OPTION_PANEL_MARGIN_WIDTH = 8;
+
+    /** The width of the scroll pane. */
+    private static final int SCROLL_PANE_WIDTH = 500;
+    /** The height of the scroll pane. */
+    private static final int SCROLL_PANE_HEIGHT = 200;
+
     /**
      * Create an EntityPanel object.
      */
@@ -110,10 +120,6 @@ public class EntityPanel extends JPanel {
 
     }
 
-    /** The amount of rows in the grid for the bot option panel. */
-    private static final int BOT_OPTION_PANEL_GRID_ROWS_AMT = 15;
-    /** The margin width. */
-    private static final int BOT_OPTION_PANEL_MARGIN_WIDTH = 8;
 
     /**
      * Create the panel that shows the actions that can be done.
@@ -154,8 +160,6 @@ public class EntityPanel extends JPanel {
         botToolbar.add(deleteBot);
     }
 
-    /** The width and height of the scroll pane. */
-    private static final int SCROLL_PANE_WIDTH = 500, SCROLL_PANE_HEIGHT = 200;
     /**
      * Create the table that contains the list of bots.
      */
