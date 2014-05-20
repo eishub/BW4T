@@ -73,7 +73,7 @@ public class Launcher {
 		paramScenario = findArgument(args, "-scenario", "./BW4T.rs");
 		paramMap = findArgument(args, "-map", "Random");
 		paramServerIp = findArgument(args, "-serverip", "localhost");
-		paramServerPort = Integer.parseInt(findArgument(args, "-serverport", "8080"));
+		paramServerPort = Integer.parseInt(findArgument(args, "-serverport", "8000"));
 		paramServerMsg = findArgument(args, "-msg", "Hello I am an BW4T Server version " + BW4TEnvironment.VERSION
 				+ ".");
 	}
