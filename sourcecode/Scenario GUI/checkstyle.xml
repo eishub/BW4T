@@ -85,7 +85,7 @@
     <module name="ArrayTypeStyle"/>
     <module name="TrailingComment"/>
     <module name="UncommentedMain">
-    	<property name="excludedClasses" value="Launcher"/>
+    	<property name="excludedClasses" value="ScenarioEditor"/>
     </module>
     <module name="UpperEll"/>
     <module name="MissingDeprecated"/>
