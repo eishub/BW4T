@@ -43,12 +43,8 @@ public class EntityPanelTest {
     }
 
     /**
-     * <<<<<<< HEAD
      * Test if the count of bots is correct after adding a bot
      * to the table.
-     * =======
-     * Tests the bot count panel.
-     * >>>>>>> upstream/scenario_gui_main_panel
      */
     @Test
     public final void testBotCount() {
@@ -61,12 +57,8 @@ public class EntityPanelTest {
     }
 
     /**
-     * <<<<<<< HEAD
-     * Test if the count of epartners is correct after adding
-     * an epartner to the table.
-     * =======
-     * Tests the e-partner count panel.
-     * >>>>>>> upstream/scenario_gui_main_panel
+     * Test if the count of E-partners is correct after adding
+     * an E-partner to the table.
      */
     @Test
     public final void testEPartnerCount() {
@@ -79,7 +71,7 @@ public class EntityPanelTest {
     }
 
     /**
-     * Test if a bot is succesfully added when the add
+     * Test if a bot is successfully added when the add
      * bot button is clicked.
      */
     @Test
@@ -90,7 +82,7 @@ public class EntityPanelTest {
     }
 
     /**
-     * Test if a bot is succesfully modified when the
+     * Test if a bot is successfully modified when the
      * modify bot button is clicked.
      */
     @Test
@@ -126,5 +118,55 @@ public class EntityPanelTest {
         spyEntityPanel.getDeleteBotButton().doClick();
         verify(spyEntityPanel, times(1)).deleteBotAction();
         //TODO: Verify if the bot has NOT been removed.
+    }
+    
+    /**
+     * Test if an E-partner is successfully added when the add
+     * E-partner button is clicked.
+     */
+    @Test
+    public void testAddEPartner() {
+        spyEntityPanel.getNewEPartnerButton().doClick();
+        verify(spyEntityPanel, times(1)).addEPartnerAction();
+        //TODO: Verify if the E-partner has actually been added.
+    }
+    
+    /**
+     * Test if an E-partner is successfully modified when the
+     * modify E-partner button is clicked.
+     */
+    @Test
+    public void testModifyEPartner() {
+        spyEntityPanel.getModifyEPartnerButton().doClick();
+        verify(spyEntityPanel, times(1)).modifyEPartnerAction();
+        //TODO: Verify if the E-partner has actually been modified.
+    }
+    
+    /**
+     * Test if an E-partner is actually deleted when the
+     * delete E-partner is clicked, and the YES option is
+     * chosen on the subsequently shown confirmation dialog.
+     */
+    @Test
+    public void testDeleteEPartnerConfirmDelete() {
+        doReturn(JOptionPane.YES_OPTION).when(spyEntityPanel).showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
+
+        spyEntityPanel.getDeleteEPartnerButton().doClick();
+        verify(spyEntityPanel, times(1)).deleteEPartnerAction();
+        //TODO: Verify if the E-partner has actually been modified.
+    }
+
+    /**
+     * Test if a E-partner is not deleted when the
+     * delete E-partner is clicked, and the NO option is
+     * chosen on the subsequently shown confirmation dialog.
+     */
+    @Test
+    public void testDeleteEPartnerDeclineDelete() {
+        doReturn(JOptionPane.NO_OPTION).when(spyEntityPanel).showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
+
+        spyEntityPanel.getDeleteEPartnerButton().doClick();
+        verify(spyEntityPanel, times(1)).deleteEPartnerAction();
+        //TODO: Verify if the E-partner has NOT been removed.
     }
 }

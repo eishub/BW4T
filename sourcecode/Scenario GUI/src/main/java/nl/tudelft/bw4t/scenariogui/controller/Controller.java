@@ -72,6 +72,16 @@ public class Controller {
         getMainView().getMainPanel().getEntityPanel().getDeleteBotButton().addActionListener(
                 new DeleteBot(getMainView().getMainPanel())
         );
+        
+        getMainView().getMainPanel().getEntityPanel().getNewEPartnerButton().addActionListener(
+        		new AddNewEPartner(getMainView().getMainPanel())
+        );
+        getMainView().getMainPanel().getEntityPanel().getModifyEPartnerButton().addActionListener(
+                new ModifyEPartner(getMainView().getMainPanel())
+        );
+        getMainView().getMainPanel().getEntityPanel().getDeleteEPartnerButton().addActionListener(
+                new DeleteEPartner(getMainView().getMainPanel())
+        );
     }
 
     /**
@@ -184,6 +194,69 @@ class DeleteBot implements ActionListener {
 
 	public void actionPerformed(ActionEvent ae) {
 		view.getEntityPanel().deleteBotAction();
+	}
+}
+
+/**
+ * Handles the event to create a new E-partner.
+ */
+class AddNewEPartner implements ActionListener {
+
+    /** The <code>MainPanel</code> serving as the content pane.*/
+    private MainPanel view;
+
+    /**
+     * Create an AddNewEpartner event handler.
+     * @param newView The parent view.
+     */
+    public AddNewEPartner(final MainPanel newView) {
+        this.view = newView;
+    }
+
+	public void actionPerformed(ActionEvent ae) {
+		view.getEntityPanel().addEPartnerAction();
+	}
+}
+
+/**
+ * Handles the event to modify an E-partner.
+ */
+class ModifyEPartner implements ActionListener {
+
+    /** The <code>MainPanel</code> serving as the content pane.*/
+    private MainPanel view;
+
+    /**
+     * Create an ModifyEPartner event handler.
+     * @param newView The parent view.
+     */
+    public ModifyEPartner(final MainPanel newView) {
+        this.view = newView;
+    }
+
+	public void actionPerformed(ActionEvent ae) {
+		view.getEntityPanel().modifyEPartnerAction();
+	}
+}
+
+/**
+ * Handles the event to delete an E-partner.
+ */
+class DeleteEPartner implements ActionListener {
+
+    /** The <code>MainPanel</code> serving as the content pane.*/
+	private MainPanel view;
+	
+	/**
+	 * Create an DeleteEPartner event handler.
+	 * @param view The parent view.
+	 */
+	public DeleteEPartner(MainPanel view) {
+		this.view = view;
+	}
+
+	public void actionPerformed(ActionEvent ae) {
+		view.getEntityPanel().deleteEPartnerAction();
 	}
 }
 
