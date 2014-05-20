@@ -10,6 +10,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
+
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.server.BW4TServerActions;
 import eis.EnvironmentInterfaceStandard;
@@ -50,6 +53,8 @@ public class BW4TClient extends UnicastRemoteObject implements
 	private String bindAddress;
 
 	private BW4TServerActions server;
+	
+	private static Logger logger = Logger.getLogger(BW4TClient.class);
 
 	/**
 	 * the map that the server uses.
@@ -125,7 +130,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 			System.out.println("Registry already created");
 		}
 		Naming.rebind(bindAddress, this);
-		System.out.println("BW4TClient bound");
+		BW4TClient.logger.info("The BW4T Client is bound to: " + bindAddress);
 
 		// Register the client to the server
 		String address = "//" + serverIpString + ":" + serverPortString
@@ -133,6 +138,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 		try {
 			server = (BW4TServerActions) Naming.lookup(address);
 		} catch (Exception e) {
+		    this.logger.error("The BW4T Client failed to connect to the server: " + address );
 			throw new NoEnvironmentException("Failed to connect " + address, e);
 		}
 
@@ -157,6 +163,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 				.getValue());
 
 		server.registerClient(this, agentCountInt, humanCountInt);
+		this.logger.info("Registered " + agentCountInt + " automated agent(s) and " + humanCountInt + " human agent(s).");
 	}
 
 	/**

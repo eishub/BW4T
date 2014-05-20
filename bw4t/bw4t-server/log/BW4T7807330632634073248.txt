@@ -1,0 +1,12 @@
+logcreationtime 1400575043555
+sequence	 G	 B	 Y	 Y	 O	 P
+room	RoomC2	B
+room	RoomC3	G	B	P
+room	RoomC1	B	Y	W
+room	RoomA1	Y	B
+room	RoomB2	P	R	O	O	G
+room	RoomB1	B	O
+room	RoomB3	Y	O	B	B	O	R
+room	RoomA3	O
+room	RoomA2	O	Y	G	P	R
+action 	1400575123632	Bot2	goTo(21.0,62.0)

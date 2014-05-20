@@ -1,0 +1,26 @@
+logcreationtime 1400574246180
+sequence	 R	 Y	 Y	 W	 B	 O
+room	RoomC2	O	G	W	W	B	B
+room	RoomC3	R	W
+room	RoomC1	W	P	P	G
+room	RoomA1	R	R	R	B	G
+room	RoomB2	B	O	W
+room	RoomB1	P	Y	O
+room	RoomB3	Y
+room	RoomA3	Y	R
+room	RoomA2	Y	O
+action 	1400574270411	Bot2	goTo(RoomB1)
+action 	1400574274658	Bot2	goToBlock(59)
+action 	1400574276460	Bot2	goTo(17.0,24.0)
+action 	1400574278324	Bot2	goTo(33.0,27.0)
+action 	1400574280843	Bot2	goTo(RoomC3)
+action 	1400574282027	Bot2	goTo(DropZone)
+action 	1400574284076	Bot2	goTo(RoomC3)
+action 	1400574286578	Bot2	goTo(RoomC3)
+action 	1400574288300	Bot2	goToBlock(44)
+action 	1400574290267	Bot2	pickUp
+action 	1400574291259	Bot2	putDown
+action 	1400574292731	Bot2	goToBlock(44)
+action 	1400574294074	Bot2	pickUp
+action 	1400574295436	Bot2	goTo(35.0,46.0)
+action 	1400574297315	Bot2	goTo(DropZone)

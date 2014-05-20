@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
@@ -212,8 +213,8 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 		jFrame.setSize(worldX * scale + 10, worldY * scale + 250);
 		jFrame.setLocation(BW4TClientSettings.getX(), BW4TClientSettings.getY());
 		jFrame.setLocation(BW4TClientSettings.getX(), BW4TClientSettings.getY());
-		jFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		jFrame.setResizable(false);
+		jFrame.setResizable(true);
+		WindowEvent closingEvent = new WindowEvent(jFrame, WindowEvent.WINDOW_CLOSING);
 
 		JPanel jPanel = new JPanel(new BorderLayout());
 
