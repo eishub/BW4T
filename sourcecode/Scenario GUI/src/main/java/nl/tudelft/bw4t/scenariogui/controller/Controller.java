@@ -436,8 +436,8 @@ class MenuOptionOpen extends AbstractMenuOptionFactory {
         EntityPanel entityPanel = super.getController().
                 getMainView().getMainPanel().getEntityPanel();
 
-        // Check if current config is different to default config
-        if (!configPanel.isDefault()) {
+        // Check if current config is different from last saved config
+        if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())) {
             // Check if user wants to save current configuration
             int response = JOptionPane.showConfirmDialog(
                     null,
@@ -447,6 +447,7 @@ class MenuOptionOpen extends AbstractMenuOptionFactory {
 
             if (response == JOptionPane.YES_OPTION) {
                 saveFile();
+                super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
             }
         }
 
@@ -481,6 +482,8 @@ class MenuOptionOpen extends AbstractMenuOptionFactory {
                         e1, "Error: No file has been found. ");
             }
         }
+
+        super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
     }
 }
 
@@ -507,8 +510,8 @@ class MenuOptionExit extends AbstractMenuOptionFactory {
                 super.getController().getMainView().getMainPanel().
                 getConfigurationPanel();
 
-        // Check if current config is different to default config
-        if (!configPanel.isDefault()) {
+        // Check if current config is different from last saved config
+        if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())) {
             // Check if user wants to save current configuration
             int response = JOptionPane.showConfirmDialog(
                     null,
@@ -518,6 +521,7 @@ class MenuOptionExit extends AbstractMenuOptionFactory {
 
             if (response == JOptionPane.YES_OPTION) {
                 saveFile();
+                super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
             }
         }
 
@@ -545,6 +549,7 @@ class MenuOptionSave extends AbstractMenuOptionFactory {
      */
     public void actionPerformed(final ActionEvent e) {
         saveFile();
+        super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
     }
 }
 
@@ -568,6 +573,7 @@ class MenuOptionSaveAs extends AbstractMenuOptionFactory {
      */
     public void actionPerformed(final ActionEvent e) {
         saveFile(true);
+        super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
     }
 }
 
@@ -593,8 +599,8 @@ class MenuOptionNew extends AbstractMenuOptionFactory {
         ConfigurationPanel configPanel = super.getController().getMainView().
                 getMainPanel().getConfigurationPanel();
 
-        // Check if current config is different to default config
-        if (!configPanel.isDefault()) {
+        // Check if current config is different from last saved config
+        if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())) {
             // Check if user wants to save current configuration
             int response = JOptionPane.showConfirmDialog(null,
                     Controller.CONFIRM_SAVE_TXT, "",
@@ -602,6 +608,7 @@ class MenuOptionNew extends AbstractMenuOptionFactory {
 
             if (response == JOptionPane.YES_OPTION) {
                 saveFile();
+                super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
             }
         }
 
@@ -620,6 +627,8 @@ class MenuOptionNew extends AbstractMenuOptionFactory {
             //USE_GOAL.getBooleanValue());
         configPanel.setMapFile(ConfigurationPanel.DEFAULT_VALUES.
                 MAP_FILE.getValue());
+        
+        super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
 
         // Reset the bot panel
         //TODO reset botPanel
