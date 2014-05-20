@@ -6,7 +6,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import nl.tudelft.bw4t.scenariogui.gui.panel.BotPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 import nl.tudelft.bw4t.scenariogui.util.XMLManager;
@@ -49,7 +49,7 @@ public class BW4TClientConfig {
 		launchGui = configPanel.useGui();
 		useGoal = configPanel.useGoal();
 		mapFile = configPanel.getMapFile();
-		BotPanel botPanel = mainPanel.getBotPanel();
+		EntityPanel entityPanel = mainPanel.getEntityPanel();
 		//TODO: read out bot panel and add each BotConfig to the list of bots //botPanel.getTable().;
 		this.outputFile = outputFile;
 	}
