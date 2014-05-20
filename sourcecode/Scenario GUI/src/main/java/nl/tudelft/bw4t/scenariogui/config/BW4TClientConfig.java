@@ -47,7 +47,7 @@ public class BW4TClientConfig {
 		serverIp = configPanel.getServerIP();
 		serverPort = configPanel.getServerPort();
 		launchGui = configPanel.useGui();
-		useGoal = configPanel.useGoal();
+		useGoal = ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue();//configPanel.useGoal();
 		mapFile = configPanel.getMapFile();
 		BotPanel botPanel = mainPanel.getBotPanel();
 		//TODO: read out bot panel and add each BotConfig to the list of bots //botPanel.getTable().;
