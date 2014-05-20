@@ -17,6 +17,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 import nl.tudelft.bw4t.scenariogui.util.Format;
 
 /**
@@ -131,8 +132,8 @@ public class ConfigurationPanel extends JPanel {
     /** The button to open a file chooser. */
     private JButton chooseMapFile = new JButton("Open File");
 
-    /** A file chooser (to for instance select a map). */
-    private JFileChooser fileChooser = new JFileChooser();
+	/** A file chooser (to for instance select a map). */
+    protected JFileChooser fileChooser;
 
     /** The gridbag constraints. */
     private GridBagConstraints c;
@@ -144,6 +145,8 @@ public class ConfigurationPanel extends JPanel {
      * Create a ConfigurationPanel object.
      */
     public ConfigurationPanel() {
+    	fileChooser = new JFileChooser();
+    	fileChooser.setFileFilter(FileFilters.mapFilter());
         setLayout(new GridBagLayout());
         c = new GridBagConstraints();
 
