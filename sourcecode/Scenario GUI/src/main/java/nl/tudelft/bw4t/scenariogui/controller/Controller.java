@@ -406,7 +406,7 @@ class MenuOptionNew extends MenuOption {
         ConfigurationPanel configPanel = super.controller.getMainView().getMainPanel().getConfigurationPanel();
 
         // Check if current config is different to default config
-        if(!configPanel.isDefault()) {
+        if (!configPanel.isDefault()) {
             // Check if user wants to save current configuration
             int response = JOptionPane.showConfirmDialog(null, "Do you want to save the current configuration?", "", JOptionPane.YES_NO_OPTION);
 
@@ -416,13 +416,20 @@ class MenuOptionNew extends MenuOption {
         }
 
         // Reset the config panel
-        configPanel.setClientIP(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_CLIENT_IP.getValue());
-        configPanel.setClientPort(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_CLIENT_PORT.getValue());
-        configPanel.setServerIP(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_SERVER_IP.getValue());
-        configPanel.setServerPort(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_SERVER_PORT.getValue());
-        configPanel.setUseGui(ConfigurationPanel.DEFAULT_VALUES.USE_GUI.getBooleanValue());
-//        configPanel.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
-        configPanel.setMapFile(ConfigurationPanel.DEFAULT_VALUES.MAP_FILE.getValue());
+        configPanel.setClientIP(ConfigurationPanel.DEFAULT_VALUES.
+                DEFAULT_CLIENT_IP.getValue());
+        configPanel.setClientPort(ConfigurationPanel.DEFAULT_VALUES.
+                DEFAULT_CLIENT_PORT.getValue());
+        configPanel.setServerIP(ConfigurationPanel.DEFAULT_VALUES.
+                DEFAULT_SERVER_IP.getValue());
+        configPanel.setServerPort(ConfigurationPanel.DEFAULT_VALUES.
+                DEFAULT_SERVER_PORT.getValue());
+        configPanel.setUseGui(ConfigurationPanel.DEFAULT_VALUES.
+                USE_GUI.getBooleanValue());
+//        configPanel.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.
+            //USE_GOAL.getBooleanValue());
+        configPanel.setMapFile(ConfigurationPanel.DEFAULT_VALUES.
+                MAP_FILE.getValue());
 
         // Reset the bot panel
         //TODO reset botPanel

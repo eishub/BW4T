@@ -32,8 +32,11 @@ public class EntityPanelTest {
         new ScenarioEditor(config, spyEntityPanel);
     }
 
+    /**
+     * Tests the bot count panel.
+     */
     @Test
-    public void testBotCount() {
+    public final void testBotCount() {
         Object[] data = {"D1", "D2", "D3"};
 
         spyEntityPanel.getBotTable().addRow(data);
@@ -42,8 +45,11 @@ public class EntityPanelTest {
         assertEquals(spyEntityPanel.getBotCount(), 1);
     }
 
+    /**
+     * Tests the e-partner count panel.
+     */
     @Test
-    public void testEPartnerCount() {
+    public final void testEPartnerCount() {
         Object[] data = {"D1", "D2", "D3"};
 
         spyEntityPanel.getEPartnerTable().addRow(data);

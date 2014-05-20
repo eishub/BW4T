@@ -132,8 +132,8 @@ public class ConfigurationPanel extends JPanel {
     /** The button to open a file chooser. */
     private JButton chooseMapFile = new JButton("Open File");
 
-	/** A file chooser (to for instance select a map). */
-    protected JFileChooser fileChooser;
+    /** A file chooser (to for instance select a map). */
+    private JFileChooser fileChooser;
 
     /** The gridbag constraints. */
     private GridBagConstraints c;
@@ -145,8 +145,8 @@ public class ConfigurationPanel extends JPanel {
      * Create a ConfigurationPanel object.
      */
     public ConfigurationPanel() {
-    	fileChooser = new JFileChooser();
-    	fileChooser.setFileFilter(FileFilters.mapFilter());
+        fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(FileFilters.mapFilter());
         setLayout(new GridBagLayout());
         c = new GridBagConstraints();
 
