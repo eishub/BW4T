@@ -492,6 +492,14 @@ public class ConfigurationPanel extends JPanel {
     }
 
     /**
+     * Sets the new file chooser.
+     * @param newFileChooser The new file chooser.
+     */
+    public final void setFileChooser(final JFileChooser newFileChooser) {
+        fileChooser = newFileChooser;
+    }
+
+    /**
      * Returns if changes has been made to the default configuration.
      *
      * @return whether changes have been made.
