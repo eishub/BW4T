@@ -231,7 +231,7 @@ abstract class MenuOption implements ActionListener {
     		currentFileChooser = new JFileChooser();
     		
     		/** Adds an xml filter for the file chooser: */
-    		currentFileChooser.setFileFilter(FileFilters.XMLFilter());
+    		currentFileChooser.setFileFilter(FileFilters.xmlFilter());
     		
 	        if (currentFileChooser.showSaveDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
 	            File file = currentFileChooser.getSelectedFile();
@@ -278,7 +278,7 @@ class MenuOptionOpen extends MenuOption {
 
         // Open configuration file
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(FileFilters.XMLFilter());
+        fileChooser.setFileFilter(FileFilters.xmlFilter());
 
         if (fileChooser.showOpenDialog(controller.getMainView()) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
