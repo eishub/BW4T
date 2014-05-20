@@ -239,8 +239,7 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
                 JFrame frame = (JFrame) e.getSource();
                 logger.info("Exit request received from the Window Manager to close Window of entity: " + entityId);
                     try {
-                        //environment.freeAgent(entityId);
-                        environment.unregisterAgent(entityId);
+                        environment.kill();
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }

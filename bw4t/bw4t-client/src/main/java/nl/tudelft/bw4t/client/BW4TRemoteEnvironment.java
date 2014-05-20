@@ -72,7 +72,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
 
 	private HashMap<String, BW4TClientMapRenderer> entityToGUI = new HashMap<String, BW4TClientMapRenderer>();
 	
-	private static Logger logger = Logger.getLogger(BW4TRemoteEnvironment.class);
+	private Logger logger = Logger.getLogger(BW4TRemoteEnvironment.class);
 
 	private boolean connectedToGoal = false;
 
@@ -133,6 +133,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
 	 *            is the deleted entity.
 	 */
 	protected void notifyDeletedEntity(String entity, Collection<String> agents) {
+	    logger.debug("Notifying all listeners about an entity that has been deleted.");
 		if (entityToGUI.get(entity) != null)
 			entityToGUI.get(entity).getFrame().dispose();
 		for (EnvironmentListener listener : environmentListeners) {
@@ -195,9 +196,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
 	 *            is the exception from which we detected the death.
 	 */
 	private NoEnvironmentException EnvironmentSuddenDeath(Exception e) {
-		//System.out.println("Environment died unexpectedly");
 	    this.logger.error("The BW4T Server disconnected unexpectedly.");
-		// e.printStackTrace(); DEBUG
 		handleStateChange(EnvironmentState.KILLED);
 		if (e instanceof NoEnvironmentException) {
 			return (NoEnvironmentException) e;
@@ -281,23 +280,17 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
 		    logger.info("Connecting to BW4T Server.");
 		    client = new BW4TClient(this);
 			client.connectServer(initParameters);
-			/**
-			 * First init server, if we have parameters for it. #2425
-			 */
 			Map<String, Parameter> serverparams = extractServerParameters(parameters);
 			if (!(serverparams.isEmpty())) {
 				client.initServer(parameters);
 			}
 			client.register(initParameters);
 		} catch (RemoteException e) {
-		    logger.info("Unable to access the remote environment.");
-			throw new NoEnvironmentException("can't access environment", e);
+		    logger.error("Unable to access the remote environment.");
 		} catch (MalformedURLException e) {
-		    logger.info("The URL provided to connect to the remote environment is invalid..");
-			throw new NoEnvironmentException("can't access environment", e);
+		    logger.error("The URL provided to connect to the remote environment is invalid..");
 		} catch (NotBoundException e) {
-		    logger.info("Unable to bind to the remote environment.");
-			throw new NoEnvironmentException("can't access environment", e);
+		    logger.error("Unable to bind to the remote environment.");
 		}
 	}
 
@@ -558,7 +551,9 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
 		for (String agentname : allAgents) {
 			try {
 				unregisterAgent(agentname); // frees up entities as well.
-			} catch (AgentException e) {
+				freeEntity(agentname);
+				freeAgent(agentname);
+			} catch (AgentException | RelationException | EntityException e) {
 				throw new ManagementException(
 						"kill failed because agent could not be freed", e);
 			}
@@ -618,19 +613,12 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
 	 * {@inheritDoc}
 	 */
 	public void detachAgentListener(String agent, AgentListener listener) {
-
 		if (localAgents.contains(agent) == false)
 			return;
-
 		HashSet<AgentListener> listeners = agentsToAgentListeners.get(agent);
-
 		if (listeners == null || listeners.contains(agent) == false)
 			return;
-
 		listeners.remove(listener);
-
-		// agentsToAgentListeners.put(agent,listeners);
-
 	}
 
 	/**
@@ -644,6 +632,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
 	@Override
 	public void unregisterAgent(String agent) throws AgentException {
 		try {
+		    logger.debug("Unregistering agent: " + agent);
 			localAgents.remove(agent);
 			client.unregisterAgent(agent);
 		} catch (RemoteException e) {
@@ -914,6 +903,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
 	public EnvironmentState getState() {
 		if (client != null) {
 			try {
+			    logger.debug("Getting the environment state: "+ client.getState());
 				return client.getState();
 			} catch (RemoteException e) {
 				System.out
