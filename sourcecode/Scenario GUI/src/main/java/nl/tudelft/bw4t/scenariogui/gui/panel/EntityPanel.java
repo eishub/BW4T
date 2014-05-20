@@ -31,7 +31,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Katia
  */
 public class EntityPanel extends JPanel {
-    
+
     /** The number column. */
     private static final String NUMBER_COLUMN = "Nr";
 
@@ -45,6 +45,8 @@ public class EntityPanel extends JPanel {
     private JPanel botCounter = new JPanel();
     /** The list of bots. */
     private DefaultTableModel botList;
+    /** The GUI element for the table */
+    private JTable botTable;
     /** The scrollpane of the bot list. */
     private JScrollPane botScrollPane;
     /** The bot count field. */
@@ -168,7 +170,7 @@ public class EntityPanel extends JPanel {
      */
     private void createBotTable() {
 
-        JTable botTable = new JTable();
+        botTable = new JTable();
         botList = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(final int row, final int column) {
@@ -268,10 +270,11 @@ public class EntityPanel extends JPanel {
 
     /**
      * Executes action that needs to happen when the "New bot" button is
-     * pressed. TODO Open BotStore window
+     * pressed.
      */
     public void addBotAction() {
-        System.out.println("Go to Bot Store (add)");
+        Object[] newBotObject = {"Unnamed Bot", "No Controller", 1};
+        getBotTableModel().addRow(newBotObject);
     }
 
     /**
@@ -284,18 +287,26 @@ public class EntityPanel extends JPanel {
 
     /**
      * Executes action that needs to happen when the "Delete bot" button is
-     * pressed. TODO Delete bot from table
+     * pressed.
      */
     public void deleteBotAction() {
+        int row = getSelectedBotRow();
+        System.out.println(row);
+
+        if (row == -1) {
+            return;
+        }
+
         int response = showConfirmDialog(null,
                 "Are you sure you want to delete this bot?", "",
                 JOptionPane.YES_NO_OPTION);
 
         if (response == JOptionPane.YES_OPTION) {
-            System.out.println("Bot deleted");
+            getBotTableModel().removeRow(row);
         }
+
     }
-    
+
     /**
      * Executes action that needs to happen when the "New E-partner" button is
      * pressed.
@@ -370,7 +381,16 @@ public class EntityPanel extends JPanel {
      *
      * @return The table that contains the bots.
      */
-    public final DefaultTableModel getBotTable() {
+    public final JTable getBotTable() {
+        return botTable;
+    }
+
+    /**
+     * Returns the table model with the list of bots.
+     *
+     * @return The table model that contains the bots.
+     */
+    public final DefaultTableModel getBotTableModel() {
         return botList;
     }
 
@@ -437,7 +457,7 @@ public class EntityPanel extends JPanel {
     public final int getEPartnerCount() {
         return epartnerList.getRowCount();
     }
-    
+
     /**
      * Returns the button to create a new E-partner.
      * @return The button to create a new E-partner.
@@ -445,7 +465,7 @@ public class EntityPanel extends JPanel {
     public JButton getNewEPartnerButton() {
     	return newEpartner;
     }
-    
+
     /**
      * Returns the button to delete an E-partner.
      * @return The button to delete an E-partner.
@@ -453,7 +473,7 @@ public class EntityPanel extends JPanel {
     public JButton getDeleteEPartnerButton() {
     	return deleteEpartner;
     }
-    
+
     /**
      * Returns the button to modify an E-partner.
      * @return The button to modify an E-partner.
@@ -484,5 +504,13 @@ public class EntityPanel extends JPanel {
      */
     public JButton getDeleteBotButton() {
         return deleteBot;
+    }
+
+    /**
+     * Returns the selected row in the bot table.
+     * @return The selected row.
+     */
+    public final int getSelectedBotRow() {
+        return botTable.getSelectedRow();
     }
 }

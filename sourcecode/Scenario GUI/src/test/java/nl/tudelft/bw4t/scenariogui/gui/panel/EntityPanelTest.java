@@ -56,7 +56,7 @@ public class EntityPanelTest {
     public final void testBotCount() {
         Object[] data = {"d1", "d2", "d3"};
 
-        spyEntityPanel.getBotTable().addRow(data);
+        spyEntityPanel.getBotTableModel().addRow(data);
         spyEntityPanel.updateEntitiesCount();
 
         assertEquals(spyEntityPanel.getBotCount(), 1);
@@ -84,7 +84,7 @@ public class EntityPanelTest {
     public void testAddNewBot() {
         spyEntityPanel.getNewBotButton().doClick();
         verify(spyEntityPanel, times(1)).addBotAction();
-        //TODO: Verify if the bot has been actually added.
+        assertEquals(spyEntityPanel.getBotCount(), 1);
     }
 
     /**
@@ -108,9 +108,18 @@ public class EntityPanelTest {
         doReturn(JOptionPane.YES_OPTION).when(spyEntityPanel).
             showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
 
+        /* Add a bot to the list */
+        spyEntityPanel.getNewBotButton().doClick();
+
+        /* Select that bot */
+        spyEntityPanel.getBotTable().selectAll();
+
+        /* Attempt to delete it */
         spyEntityPanel.getDeleteBotButton().doClick();
         verify(spyEntityPanel, times(1)).deleteBotAction();
-        //TODO: Verify if the bot has actually been modified.
+
+        /* check if the bot count is zero */
+        assertEquals(spyEntityPanel.getBotCount(), 0);
     }
 
     /**
@@ -123,9 +132,40 @@ public class EntityPanelTest {
         doReturn(JOptionPane.NO_OPTION).when(spyEntityPanel).
             showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
 
+
+        /* Add a bot to the list */
+        spyEntityPanel.getNewBotButton().doClick();
+
+        /* Select that bot */
+        spyEntityPanel.getBotTable().selectAll();
+
+        /* Attempt to delete it */
         spyEntityPanel.getDeleteBotButton().doClick();
         verify(spyEntityPanel, times(1)).deleteBotAction();
-        //TODO: Verify if the bot has NOT been removed.
+
+        /* check if the bot count is still 1. */
+        assertEquals(spyEntityPanel.getBotCount(), 1);
+    }
+
+
+    /**
+     * Test if a bot is not deleted when the
+     * delete bot is clicked, while no row is selected.
+     */
+    @Test
+    public void testDeleteBotNoSelection() {
+        doReturn(JOptionPane.NO_OPTION).when(spyEntityPanel).
+                showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
+
+        /* Add a bot to the list */
+        spyEntityPanel.getNewBotButton().doClick();
+
+        /* Attempt to delete it */
+        spyEntityPanel.getDeleteBotButton().doClick();
+        verify(spyEntityPanel, times(1)).deleteBotAction();
+
+        /* check if the bot count is still 1. */
+        assertEquals(spyEntityPanel.getBotCount(), 1);
     }
     
     /**
