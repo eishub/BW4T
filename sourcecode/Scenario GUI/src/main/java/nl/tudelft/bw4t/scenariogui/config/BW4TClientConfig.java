@@ -50,7 +50,7 @@ public class BW4TClientConfig {
 		useGoal = ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue();//configPanel.useGoal();
 		mapFile = configPanel.getMapFile();
 		EntityPanel entityPanel = mainPanel.getEntityPanel();
-		//TODO: read out bot panel and add each BotConfig to the list of bots //botPanel.getTable().;
+		//TODO: read out bot panel and add each BotConfig to the list of bots //botPanel.getBotTable().;
 		this.outputFile = outputFile;
 	}
 

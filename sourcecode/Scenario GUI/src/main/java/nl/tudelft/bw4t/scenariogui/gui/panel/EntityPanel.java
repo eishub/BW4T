@@ -314,9 +314,16 @@ public class EntityPanel extends JPanel {
      *
      * @return The table that contains the bots.
      */
-    public DefaultTableModel getTable() {
+    public DefaultTableModel getBotTable() {
         return botList;
     }
+
+    /**
+     * Returns the table with the list of epartners
+     *
+     * @return The table that contains the epartners
+     */
+    public DefaultTableModel getEPartnerTable() { return epartnerList; }
 
     /**
      * Returns the new bot name
@@ -343,6 +350,33 @@ public class EntityPanel extends JPanel {
      */
     public JSpinner getDuplicateAmount() {
         return duplicateAmount;
+    }
+
+    /**
+     * Updates the entities count on the EntityPanel
+     */
+    public void updateEntitiesCount() {
+        Integer bots = botList.getRowCount();
+        Integer epartners = epartnerList.getRowCount();
+
+        botCountField.setText(bots.toString());
+        epartnerCountField.setText(epartners.toString());
+    }
+
+    /**
+     * Returns the amount of bots.
+     * @return The amount of bots.
+     */
+    public int getBotCount() {
+        return botList.getRowCount();
+    }
+
+    /**
+     * Returns the amount of epartners.
+     * @return The amount of epartners.
+     */
+    public int getEPartnerCount() {
+        return epartnerList.getRowCount();
     }
 }
 
