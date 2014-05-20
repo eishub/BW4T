@@ -61,6 +61,17 @@ public class Controller {
         getMainView().getTopMenuBar().getMenuItemFileSaveAs().addActionListener(
                 new MenuOptionSaveAs(getMainView().getTopMenuBar(), this)
         );
+
+        /** Adds the listeners for the EntitiesPanel */
+        getMainView().getMainPanel().getEntityPanel().getNewBotButton().addActionListener(
+                new AddNewBot(getMainView().getMainPanel())
+        );
+        getMainView().getMainPanel().getEntityPanel().getModifyBotButton().addActionListener(
+                new ModifyBot(getMainView().getMainPanel())
+        );
+        getMainView().getMainPanel().getEntityPanel().getDeleteBotButton().addActionListener(
+                new DeleteBot(getMainView().getMainPanel())
+        );
     }
 
     /**
@@ -137,8 +148,9 @@ class AddNewBot implements ActionListener {
      * @param ae The action event.
      */
     public void actionPerformed(final ActionEvent ae) {
-        view.getEntityPanel().addNewAction();
+        view.getEntityPanel().addBotAction();
     }
+    
 }
 
 /**
@@ -163,7 +175,7 @@ class ModifyBot implements ActionListener {
      * @param ae The action.
      */
     public void actionPerformed(final ActionEvent ae) {
-        view.getEntityPanel().modifyAction();
+        view.getEntityPanel().modifyBotAction();
     }
 }
 
@@ -215,8 +227,9 @@ class DuplicateBot implements ActionListener {
      * @param ae The action event.
      */
     public void actionPerformed(final ActionEvent ae) {
-        view.getEntityPanel().duplicateAction();
+        view.getEntityPanel().modifyBotAction();
     }
+
 }
 
 /**
@@ -241,7 +254,7 @@ class DeleteBot implements ActionListener {
      * @param ae The action event.
      */
     public void actionPerformed(final ActionEvent ae) {
-        view.getEntityPanel().deleteAction();
+        view.getEntityPanel().deleteBotAction();
     }
 }
 

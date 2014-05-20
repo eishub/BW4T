@@ -17,6 +17,8 @@ import javax.swing.JPanel;
  */
 public class MainPanel extends JPanel {
 
+    /** Randomly generated serial version. */
+    private static final long serialVersionUID = 475250876795906302L;
     /** The configuration panel. */
     private ConfigurationPanel configurationPanel;
     /** The entity panel. */
