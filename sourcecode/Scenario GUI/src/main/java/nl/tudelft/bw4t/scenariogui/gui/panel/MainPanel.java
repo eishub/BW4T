@@ -48,7 +48,7 @@ public class MainPanel extends JPanel {
       //  configurationPanel.setBorder(BorderFactory.createLineBorder(Color.black));
       //  botPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         
-        c.insets = new Insets(10,10,10,10); 
+        c.insets = new Insets(10, 10, 10, 10); 
         c.fill = GridBagConstraints.NONE;
         c.anchor = GridBagConstraints.NORTHWEST;
         c.weightx = 0.1;

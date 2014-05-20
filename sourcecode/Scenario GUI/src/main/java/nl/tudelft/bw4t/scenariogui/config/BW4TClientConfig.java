@@ -16,16 +16,16 @@ import nl.tudelft.bw4t.scenariogui.util.XMLManager;
  * This class holds the possible options that can be specified
  * in the Scenario GUI and is meant to be directly convertible
  * to XML and constructible from XML.
- * 
+ *
  * @author Nick / Calvin
  *
  */
 @XmlRootElement
 public class BW4TClientConfig {
-	
+
 	/** The file in which the configs in this class will be stored: */
 	private String outputFile;
-	
+
 	private String clientIp;
 	private int clientPort;
 	private String serverIp;
@@ -33,13 +33,13 @@ public class BW4TClientConfig {
 	private boolean launchGui;
 	private boolean useGoal;
 	private String mapFile;
-	
+
 //  @XmlElementWrapper(name = "botlist")
 //  @XmlElement(name = "bot")
 // 	private LinkedList<BotConfig> bots = new LinkedList<BotConfig>();
-	
-	public BW4TClientConfig() {}
-	
+
+	public BW4TClientConfig() { }
+
 	public BW4TClientConfig(MainPanel mainPanel, String outputFile) {
 		ConfigurationPanel configPanel = mainPanel.getConfigurationPanel();
 		clientIp = configPanel.getClientIP();
@@ -53,25 +53,29 @@ public class BW4TClientConfig {
 		//TODO: read out bot panel and add each BotConfig to the list of bots //botPanel.getTable().;
 		this.outputFile = outputFile;
 	}
-	
+
 	/**
-	 * Converts Java Object into XML file
+	 * Converts Java Object into XML file.
+	 *
+	 * @throws FileNotFoundException Signals that an attempt to open the file denoted by a specified pathname has failed.
+	 * @throws JAXBException Root exception class for all JAXB exceptions.
 	 */
-	public void toXML() throws FileNotFoundException, JAXBException {
+	public final void toXML() throws FileNotFoundException, JAXBException {
 		XMLManager.toXML(outputFile, this);
 	}
-	
+
 	/**
-	 * Construct Java Object from XML file
-	 * @param The XML file location
-	 * @throws FileNotFoundException
-	 * @throws JAXBException
+	 * Construct Java Object from XML file.
+	 *
+	 * @param inputFile The file location of the XML-file
+	 * @return The BW4TClientConfig object
+	 * @throws FileNotFoundException Signals that an attempt to open the file denoted by a specified pathname has failed.
+	 * @throws JAXBException Root exception class for all JAXB exceptions.
 	 */
 	public static BW4TClientConfig fromXML(String inputFile) throws FileNotFoundException, JAXBException {
 		return (BW4TClientConfig) XMLManager.fromXML(inputFile, BW4TClientConfig.class);
-		
 	}
-	
+
 	/**
 	 * Gets the location to store the XML version of this file in.
 	 * @return The path of the file to store this object in as XML.
@@ -82,7 +86,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Sets the location to store the XML version of this file in.
-	 * @param The path of the file to store this object in as XML.
+	 * @param fileLocation The path of the file to store this object in as XML.
 	 */
 	public void setFileLocation(String fileLocation) {
 		this.outputFile = fileLocation;
@@ -98,7 +102,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Sets the clientIP.
-	 * @param The clientIP.
+	 * @param clientIp The clientIP.
 	 */
     @XmlElement
 	public void setClientIp(String clientIp) {
@@ -115,7 +119,7 @@ public class BW4TClientConfig {
 
     /**
 	 * Sets the clientPort.
-	 * @param The clientPort.
+	 * @param clientPort The clientPort.
 	 */
     @XmlElement
 	public void setClientPort(int clientPort) {
@@ -132,7 +136,7 @@ public class BW4TClientConfig {
 
     /**
 	 * Sets the serverIP.
-	 * @param The serverIP.
+	 * @param serverIp The serverIP.
 	 */
     @XmlElement
 	public void setServerIp(String serverIp) {
@@ -149,7 +153,7 @@ public class BW4TClientConfig {
 
     /**
 	 * Sets the serverPort.
-	 * @param The serverPort.
+	 * @param serverPort The serverPort.
 	 */
     @XmlElement
 	public void setServerPort(int serverPort) {
@@ -166,7 +170,7 @@ public class BW4TClientConfig {
 
     /**
 	 * Sets if a GUI should be launched.
-	 * @param If a GUI should be launched.
+	 * @param launchGui Boolean indicating if a GUI should be launched.
 	 */
     @XmlElement
 	public void setLaunchGui(boolean launchGui) {
@@ -182,16 +186,16 @@ public class BW4TClientConfig {
 
     /**
 	 * Sets if GOAL should be used.
-	 * @param If GOAL should be used.
+	 * @param useGoal Boolean indicating if GOAL should be used.
 	 */
     @XmlElement
 	public void setUseGoal(boolean useGoal) {
 		this.useGoal = useGoal;
 	}
-    
+
     /**
-	 * Gets the MapFile.
-	 * @return The MapFile.
+	 * Gets location of the MapFile.
+	 * @return mapFile The MapFile location.
 	 */
 	public String getMapFile() {
 		return mapFile;
@@ -199,7 +203,7 @@ public class BW4TClientConfig {
 
     /**
 	 * Sets the MapFile.
-	 * @return The MapFile.
+	 * @param mapFile The MapFile location.
 	 */
     @XmlElement
 	public void setMapFile(String mapFile) {
@@ -213,5 +217,4 @@ public class BW4TClientConfig {
 //	public void setBots(LinkedList<BotConfig> bots) {
 //		this.bots = bots;
 //	}
-	
 }

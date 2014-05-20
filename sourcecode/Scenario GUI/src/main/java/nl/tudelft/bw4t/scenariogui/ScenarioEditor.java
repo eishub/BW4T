@@ -1,12 +1,16 @@
 package nl.tudelft.bw4t.scenariogui;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
 
 import nl.tudelft.bw4t.scenariogui.controller.Controller;
+import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.BotPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
-import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 
 
 
