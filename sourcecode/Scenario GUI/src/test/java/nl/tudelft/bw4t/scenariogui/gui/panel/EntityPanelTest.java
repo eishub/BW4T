@@ -1,5 +1,15 @@
 package nl.tudelft.bw4t.scenariogui.gui.panel;
 
+import java.awt.Component;
+
+import javax.swing.JOptionPane;
+
+
+import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
@@ -9,14 +19,6 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import java.awt.Component;
-
-import javax.swing.JOptionPane;
-
-import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Created on 14-5-2014.

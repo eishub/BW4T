@@ -28,6 +28,10 @@ public class Controller {
 
     /** The view being controlled. */
     private ScenarioEditor view;
+    
+    /** The text shown on the dialog when asked whether or not to save
+     * the current configuration. */
+    public static final String CONFIRM_SAVE_TXT = "Do you want to save the current configuration?";
 
     /**
      * Create a controller object.
@@ -117,12 +121,14 @@ class ChooseMapFileListener implements ActionListener {
 
         int returnVal = fc.showOpenDialog(view);
         File file = fc.getSelectedFile();
+        String mapExtension = ".map";
         /** Makes sure only files with the right extension are accepted */
         if (returnVal == JFileChooser.APPROVE_OPTION
-                && file.getName().endsWith(".map")) {
+                && file.getName().endsWith(mapExtension)) {
             view.getConfigurationPanel().setMapFile(file.getPath());
-        } else if (returnVal == JFileChooser.APPROVE_OPTION
-                && !file.getName().endsWith(".map")) {
+        }
+        else if (returnVal == JFileChooser.APPROVE_OPTION
+                && !file.getName().endsWith(mapExtension)) {
             JOptionPane.showMessageDialog(view,
                     "This is not a valid file.");
         }
@@ -264,7 +270,7 @@ class DeleteBot implements ActionListener {
 /**
  * Handles the event of the menu.
  */
-abstract class MenuOption implements ActionListener {
+abstract class AbstractMenuOptionFactory implements ActionListener {
 
     /** The menu bar as view. */
     private MenuBar view;
@@ -274,6 +280,16 @@ abstract class MenuOption implements ActionListener {
     //made a variable for this so we can call it during testing
     /** The file chooser. */
     private JFileChooser currentFileChooser;
+    
+    /**
+     * Constructs a menu option object.
+     * @param newView The new view.
+     * @param mainView The main view controller.
+     */
+    public AbstractMenuOptionFactory(final MenuBar newView, final Controller mainView) {
+        this.view = newView;
+        this.setController(mainView);
+    }
 
     /**
      * Gets the current file chooser.
@@ -289,16 +305,6 @@ abstract class MenuOption implements ActionListener {
      */
     public void setCurrentFileChooser(final JFileChooser newFileChooser) {
         currentFileChooser = newFileChooser;
-    }
-
-    /**
-     * Constructs a menu option object.
-     * @param newView The new view.
-     * @param mainView The main view controller.
-     */
-    public MenuOption(final MenuBar newView, final Controller mainView) {
-        this.view = newView;
-        this.setController(mainView);
     }
 
     /**
@@ -325,7 +331,8 @@ abstract class MenuOption implements ActionListener {
                 File file = currentFileChooser.getSelectedFile();
 
                 path = file.getAbsolutePath();
-            } else {
+            }
+            else {
                 return;
             }
         }
@@ -370,7 +377,7 @@ abstract class MenuOption implements ActionListener {
 /**
  * Handles the event to open a file.
  */
-class MenuOptionOpen extends MenuOption {
+class MenuOptionOpen extends AbstractMenuOptionFactory {
 
     /**
      * Constructs a new menu option open object.
@@ -396,7 +403,7 @@ class MenuOptionOpen extends MenuOption {
             // Check if user wants to save current configuration
             int response = JOptionPane.showConfirmDialog(
                     null,
-                    "Do you want to save the current configuration?",
+                    Controller.CONFIRM_SAVE_TXT,
                     "",
                     JOptionPane.YES_NO_OPTION);
 
@@ -433,7 +440,7 @@ class MenuOptionOpen extends MenuOption {
                         e1, "Error: Opening the XML has failed.");
             } catch (FileNotFoundException e1) {
                 ScenarioEditor.handleException(
-                        e1, "Error: No file has been found.");
+                        e1, "Error: No file has been found. ");
             }
         }
     }
@@ -442,7 +449,7 @@ class MenuOptionOpen extends MenuOption {
 /**
  * Handles the event to exit the program.
  */
-class MenuOptionExit extends MenuOption {
+class MenuOptionExit extends AbstractMenuOptionFactory {
 
     /**
      * Constructs a new menu option exit object.
@@ -467,7 +474,7 @@ class MenuOptionExit extends MenuOption {
             // Check if user wants to save current configuration
             int response = JOptionPane.showConfirmDialog(
                     null,
-                    "Do you want to save the current configuration?",
+                    Controller.CONFIRM_SAVE_TXT,
                     "",
                     JOptionPane.YES_NO_OPTION);
 
@@ -483,7 +490,7 @@ class MenuOptionExit extends MenuOption {
 /**
  * Handles the event to save a file.
  */
-class MenuOptionSave extends MenuOption {
+class MenuOptionSave extends AbstractMenuOptionFactory {
 
     /**
      * Constructs a new menu option save object.
@@ -506,7 +513,7 @@ class MenuOptionSave extends MenuOption {
 /**
  * Handles the event to save at a chosen location.
  */
-class MenuOptionSaveAs extends MenuOption {
+class MenuOptionSaveAs extends AbstractMenuOptionFactory {
 
     /**
      * Constructs a new menu option save as object.
@@ -529,7 +536,7 @@ class MenuOptionSaveAs extends MenuOption {
 /**
  * Handles the event to start a new file.
  */
-class MenuOptionNew extends MenuOption {
+class MenuOptionNew extends AbstractMenuOptionFactory {
 
     /**
      * Constructs a new menu option new object.
@@ -552,7 +559,7 @@ class MenuOptionNew extends MenuOption {
         if (!configPanel.isDefault()) {
             // Check if user wants to save current configuration
             int response = JOptionPane.showConfirmDialog(null,
-                    "Do you want to save the current configuration?", "",
+                    Controller.CONFIRM_SAVE_TXT, "",
                     JOptionPane.YES_NO_OPTION);
 
             if (response == JOptionPane.YES_OPTION) {

@@ -25,6 +25,20 @@ import nl.tudelft.bw4t.scenariogui.util.Format;
  * shows the options the user can configure.
  */
 public class ConfigurationPanel extends JPanel {
+    
+    /** Localhost. */
+    private static final String LOCALHOST = "localhost";
+    /** True. */
+    private static final String TRUE = "true";
+    
+    /** The font name. */
+    private static final String FONT_NAME = "Sans-Serif";
+    
+    /** The insets used. */
+    private static final int INSET = 8;
+
+    /** The weight used for the grid bag constraints. */
+    private static final double GRID_BAG_CONSTRAINTS_WEIGHT = 0.5;
 
     /**
      * The default values for in the GUI.
@@ -33,17 +47,17 @@ public class ConfigurationPanel extends JPanel {
      */
     public static enum DEFAULT_VALUES {
         /** The default server ip. */
-        DEFAULT_SERVER_IP("localhost"),
+        DEFAULT_SERVER_IP(LOCALHOST),
         /** The default client ip. */
-        DEFAULT_CLIENT_IP("localhost"),
+        DEFAULT_CLIENT_IP(LOCALHOST),
         /** The default server port. */
         DEFAULT_SERVER_PORT("8000"),
         /** The default client port. */
         DEFAULT_CLIENT_PORT("2000"),
         /** Whether to use a GUI's for the client on default. */
-        USE_GUI("true"),
+        USE_GUI(TRUE),
         /** Whether the goal is used on default. */
-        USE_GOAL("true"),
+        USE_GOAL(TRUE),
         /** The default location of the map file. */
         MAP_FILE("");
 
@@ -84,9 +98,10 @@ public class ConfigurationPanel extends JPanel {
 
     }
 
-    /** The column size of the text fields. */
-    private static final int TEXT_FIELD_COLUMN_SIZE_BIG = 15,
-            TEXT_FIELD_COLUMN_SIZE_SMALL = 6;
+    /** The column size of the big text fields. */
+    private static final int TEXT_FIELD_COLUMN_SIZE_BIG = 15;
+    /** The column size of the small text fields. */
+    private static final int TEXT_FIELD_COLUMN_SIZE_SMALL = 6;
 
     /** The text field holding the client ip. */
     private JTextField clientIP = new JTextField(
@@ -138,8 +153,10 @@ public class ConfigurationPanel extends JPanel {
     /** The gridbag constraints. */
     private GridBagConstraints c;
 
-    /** The font size used. */
-    private static final int FONT_SIZE = 16, FONT_SIZE_SMALL = 14;
+    /** The normal font size used. */
+    private static final int FONT_SIZE = 16;
+    /** The small font size used. */
+    private static final int FONT_SIZE_SMALL = 14;
 
     /**
      * Create a ConfigurationPanel object.
@@ -155,9 +172,9 @@ public class ConfigurationPanel extends JPanel {
         Border loweredetched = BorderFactory
                 .createEtchedBorder(EtchedBorder.LOWERED);
         TitledBorder title = BorderFactory.createTitledBorder(loweredetched,
-                "Configuration");
+                "Configuration ");
         title.setTitleJustification(TitledBorder.LEFT);
-        title.setTitleFont(new Font("Sans-Serif", Font.BOLD, FONT_SIZE));
+        title.setTitleFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE));
         setBorder(title);
 
         // showConfigLabel();
@@ -179,12 +196,6 @@ public class ConfigurationPanel extends JPanel {
         add(new JLabel("Configuration"), c);
     }
 
-    /** The insets used. */
-    private static final int INSET = 8;
-
-    /** The weight used for the grid bag constraints. */
-    private static final double GRID_BAG_CONSTRAINTS_WEIGHT = 0.5;
-
     /**
      * Show the client configuration options in the panel.
      */
@@ -195,7 +206,7 @@ public class ConfigurationPanel extends JPanel {
         c.gridy += 1;
 
         JLabel client = new JLabel("Client");
-        client.setFont(new Font("Sans-Serif", Font.BOLD, FONT_SIZE_SMALL));
+        client.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE_SMALL));
         add(client, c);
 
         c.insets = new Insets(0, INSET, 0, 0);
@@ -203,7 +214,7 @@ public class ConfigurationPanel extends JPanel {
         c.weightx = GRID_BAG_CONSTRAINTS_WEIGHT;
         c.gridx = 0;
         c.gridy += 1;
-        add(new JLabel("IP"), c);
+        add(new JLabel("IP "), c);
 
         c.gridx = 1;
         c.weightx = 2;
@@ -213,7 +224,7 @@ public class ConfigurationPanel extends JPanel {
         c.weightx = GRID_BAG_CONSTRAINTS_WEIGHT;
         c.gridx = 0;
         c.gridy += 1;
-        add(new JLabel("Port"), c);
+        add(new JLabel("Port "), c);
 
         c.gridx = 1;
         c.weightx = 2;
@@ -231,7 +242,7 @@ public class ConfigurationPanel extends JPanel {
         c.gridy += 1;
 
         JLabel server = new JLabel("Server");
-        server.setFont(new Font("Sans-Serif", Font.BOLD, FONT_SIZE_SMALL));
+        server.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE_SMALL));
         add(server, c);
 
         c.insets = new Insets(0, INSET, 0, 0);
@@ -267,7 +278,7 @@ public class ConfigurationPanel extends JPanel {
     // c.gridy += 1;
     //
     // JLabel goal = new JLabel("Use GOAL");
-    // goal.setFont(new Font("Sans-Serif", Font.BOLD, FONT_SIZE_SMALL));
+    // goal.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE_SMALL));
     // add(goal, c);
     //
     // c.insets = new Insets(0,8,0,0);
@@ -290,7 +301,7 @@ public class ConfigurationPanel extends JPanel {
         c.gridy += 1;
 
         JLabel gui = new JLabel("Launch GUI");
-        gui.setFont(new Font("Sans-Serif", Font.BOLD, FONT_SIZE_SMALL));
+        gui.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE_SMALL));
         add(gui, c);
 
         c.insets = new Insets(0, INSET, 0, 0);
@@ -313,7 +324,7 @@ public class ConfigurationPanel extends JPanel {
         c.gridy += 1;
 
         JLabel map = new JLabel("Map File");
-        map.setFont(new Font("Sans-Serif", Font.BOLD, FONT_SIZE_SMALL));
+        map.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE_SMALL));
         add(map, c);
 
         c.insets = new Insets(INSET / 2, INSET, INSET, INSET);
@@ -449,7 +460,8 @@ public class ConfigurationPanel extends JPanel {
     public final void setUseGui(final boolean useGui) {
         if (useGui) {
             guiCheckBox.setSelectedCheckbox(guiYes);
-        } else {
+        }
+        else {
             guiCheckBox.setSelectedCheckbox(guiNo);
         }
     }
@@ -508,27 +520,28 @@ public class ConfigurationPanel extends JPanel {
         boolean isDefault = true;
 
         if (!this.getClientIP().equals(
-                DEFAULT_VALUES.DEFAULT_CLIENT_IP.getValue())
-                && isDefault) {
+                DEFAULT_VALUES.DEFAULT_CLIENT_IP.getValue())) {
             isDefault = false;
-        } else if (this.getClientPort() != DEFAULT_VALUES.DEFAULT_CLIENT_PORT
-                .getIntValue() && isDefault) {
+        }
+        else if (this.getClientPort() != DEFAULT_VALUES.DEFAULT_CLIENT_PORT
+                .getIntValue()) {
             isDefault = false;
-        } else if (!this.getServerIP().equals(
-                DEFAULT_VALUES.DEFAULT_SERVER_IP.getValue())
-                && isDefault) {
+        }
+        else if (!this.getServerIP().equals(
+                DEFAULT_VALUES.DEFAULT_SERVER_IP.getValue())) {
             isDefault = false;
-        } else if (this.getServerPort() != DEFAULT_VALUES.DEFAULT_SERVER_PORT
-                .getIntValue() && isDefault) {
+        }
+        else if (this.getServerPort() != DEFAULT_VALUES.DEFAULT_SERVER_PORT
+                .getIntValue()) {
             isDefault = false;
-        } else if (this.useGui() != DEFAULT_VALUES.USE_GUI.getBooleanValue()
-                && isDefault) {
+        }
+        else if (this.useGui() != DEFAULT_VALUES.USE_GUI.getBooleanValue()) {
             isDefault = false;
         // if(this.useGoal() != DEFAULT_VALUES.USE_GOAL.getBooleanValue() &&
         // isDefault)
         // isDefault = false;
-        } else if (!this.getMapFile().equals(DEFAULT_VALUES.MAP_FILE.getValue())
-                && isDefault) {
+        }
+        else if (!this.getMapFile().equals(DEFAULT_VALUES.MAP_FILE.getValue())) {
             isDefault = false;
         }
 
