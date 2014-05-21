@@ -96,7 +96,7 @@ public class RendererMapLoader {
 			height = Constants.DOOR_WIDTH;
 			break;
 		}
-
+		
 		renderer.addDoor(x, y, width, height, roomname);
 
 	}
