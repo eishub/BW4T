@@ -6,7 +6,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <scm>
         <developerConnection>scm:git@github.com:MartinRogalla/BW4T.git</developerConnection>
-        <url>https://github.com/MartinRogalla/BW4T/tree/scenario_gui</url>
+        <url>https://github.com/MartinRogalla/BW4T/tree/scenario_gui_main_panel</url>
     </scm>
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
