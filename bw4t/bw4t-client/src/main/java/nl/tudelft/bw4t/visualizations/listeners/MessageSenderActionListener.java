@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import nl.tudelft.bw4t.message.BW4TMessage;
 import nl.tudelft.bw4t.message.MessageTranslator;
 import nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer;
+import nl.tudelft.bw4t.visualizations.data.EnvironmentDatabase;
 import eis.iilang.Identifier;
 import eis.iilang.Percept;
 
@@ -39,9 +40,9 @@ public class MessageSenderActionListener implements ActionListener {
             LinkedList<Percept> percepts = new LinkedList<Percept>();
             Percept percept = new Percept("sendMessage", new Identifier(
                     "all"), MessageTranslator.translateMessage(message,
-                            bw4tClientMapRenderer.getEntityId()));
+                            bw4tClientMapRenderer.getEnvironmentDatabase().getEntityId()));
             percepts.add(percept);
-            bw4tClientMapRenderer.setToBePerformedAction(percepts);
+            bw4tClientMapRenderer.getEnvironmentDatabase().setToBePerformedAction(percepts);
         }
     }
 }

@@ -36,7 +36,7 @@ public class PickUpActionListener implements ActionListener {
             LinkedList<Percept> percepts = new LinkedList<Percept>();
             Percept percept = new Percept("pickUp");
             percepts.add(percept);
-            bw4tClientMapRenderer.setToBePerformedAction(percepts);
+            bw4tClientMapRenderer.getEnvironmentDatabase().setToBePerformedAction(percepts);
         }
     }
 }

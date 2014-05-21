@@ -40,7 +40,7 @@ public class GotoPositionActionListener implements ActionListener {
             Percept percept = new Percept("goTo", new Numeral(
                     position.getX()), new Numeral(position.getY()));
             percepts.add(percept);
-            bw4tClientMapRenderer.setToBePerformedAction(percepts);
+            bw4tClientMapRenderer.getEnvironmentDatabase().setToBePerformedAction(percepts);
         }
     }
 }

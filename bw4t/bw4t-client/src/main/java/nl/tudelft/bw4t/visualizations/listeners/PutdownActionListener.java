@@ -35,7 +35,7 @@ public class PutdownActionListener implements ActionListener {
             LinkedList<Percept> percepts = new LinkedList<Percept>();
             Percept percept = new Percept("putDown");
             percepts.add(percept);
-            bw4tClientMapRenderer.setToBePerformedAction(percepts);
+            bw4tClientMapRenderer.getEnvironmentDatabase().setToBePerformedAction(percepts);
         }
     }
 }
