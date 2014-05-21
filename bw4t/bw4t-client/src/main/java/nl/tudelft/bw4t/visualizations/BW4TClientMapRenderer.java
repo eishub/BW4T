@@ -50,6 +50,17 @@ import nl.tudelft.bw4t.map.Constants;
 import nl.tudelft.bw4t.message.BW4TMessage;
 import nl.tudelft.bw4t.message.MessageTranslator;
 import nl.tudelft.bw4t.message.MessageType;
+import nl.tudelft.bw4t.visualizations.data.DoorInfo;
+import nl.tudelft.bw4t.visualizations.data.DropZoneInfo;
+import nl.tudelft.bw4t.visualizations.data.RoomInfo;
+import nl.tudelft.bw4t.visualizations.listeners.ChatListMouseListener;
+import nl.tudelft.bw4t.visualizations.listeners.GoToBlockActionListener;
+import nl.tudelft.bw4t.visualizations.listeners.GoToRoomActionListener;
+import nl.tudelft.bw4t.visualizations.listeners.GotoPositionActionListener;
+import nl.tudelft.bw4t.visualizations.listeners.MessageSenderActionListener;
+import nl.tudelft.bw4t.visualizations.listeners.PickUpActionListener;
+import nl.tudelft.bw4t.visualizations.listeners.PutdownActionListener;
+import nl.tudelft.bw4t.visualizations.listeners.TeamListMouseListener;
 import eis.exceptions.AgentException;
 import eis.exceptions.NoEnvironmentException;
 import eis.exceptions.PerceiveException;
@@ -91,10 +102,7 @@ import eis.iilang.Percept;
  * {@link BW4TRemoteEnvironment#getAllPerceptsFromEntity(String)} at every call,
  * and merged into the regular percepts. So user mouse clicks are stored there
  * until it's time for perceiving.
- * 
- * @author T.Rens
- * 
- * 
+
  */
 public class BW4TClientMapRenderer extends JPanel implements Runnable,
 		MouseListener {
@@ -171,9 +179,9 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 			boolean goal, boolean humanPlayer) throws IOException {
 		environment = env;
 		init(entityId, humanPlayer);
-		this.goal = goal;
+		this.setGoal(goal);
 		this.humanPlayer = humanPlayer;
-		toBePerformedAction = new LinkedList<Percept>();
+		setToBePerformedAction(new LinkedList<Percept>());
 	}
 
 	/**
@@ -188,7 +196,7 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 	public BW4TClientMapRenderer(BW4TRemoteEnvironment env, String entityId,
 			HumanAgent humanAgent) throws IOException {
 		environment = env;
-		this.humanAgent = humanAgent;
+		this.setHumanAgent(humanAgent);
 		this.humanPlayer = true;
 		init(entityId, true);
 	}
@@ -204,6 +212,7 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 	private void init(final String entityId, boolean humanPlayer) throws IOException {
 		// Initialize variables
 	    logger.debug("Initializing agent window for entity: " + entityId);
+	    
 		rooms = new ArrayList<RoomInfo>();
 		sequence = new ArrayList<BlockColor>();
 		chatHistory = new ArrayList<ArrayList<String>>();
@@ -211,13 +220,13 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 		objectPositions = new HashMap<Long, Point2D.Double>();
 		otherPlayers = new ArrayList<String>();
 
-		this.entityId = entityId;
+		this.setEntityId(entityId);
 
 		buttonPanel = new JPanel();
 		buttonPanel.setBackground(Color.BLACK);
 		JButton jButton = new JButton("all");
 		buttonPanel.add(jButton);
-		jButton.addMouseListener(new TeamListMouseListener());
+		jButton.addMouseListener(new TeamListMouseListener(this));
 
 		RendererMapLoader.loadMap(environment.getMap(), this);
 
@@ -256,8 +265,8 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 				.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		chatPanel.setFocusable(false);
 
-		chatSession.setFocusable(false);
-		chatPane = new JScrollPane(chatSession);
+		getChatSession().setFocusable(false);
+		chatPane = new JScrollPane(getChatSession());
 		chatPanel.add(chatPane);
 		chatPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		chatPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -273,10 +282,10 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 
 		// Initialize mouse listeners for human controller
 		if (humanPlayer) {
-			jPopupMenu = new JPopupMenu();
+			setjPopupMenu(new JPopupMenu());
 			addMouseListener(this);
 
-			chatSession.addMouseListener(new ChatListMouseListener());
+			getChatSession().addMouseListener(new ChatListMouseListener(this));
 		}
 
 		jFrame.setVisible(true);
@@ -293,9 +302,9 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 	 *            , the Id of the player to be added
 	 */
 	public void addPlayer(String playerId) {
-		if (!playerId.equals(entityId)) {
+		if (!playerId.equals(getEntityId())) {
 			JButton button = new JButton(playerId);
-			button.addMouseListener(new TeamListMouseListener());
+			button.addMouseListener(new TeamListMouseListener(this));
 			buttonPanel.add(button);
 		}
 	}
@@ -536,7 +545,7 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 			if (humanPlayer) {
 				LinkedList<Percept> percepts;
 				try {
-					percepts = environment.getAllPerceptsFromEntity(entityId
+					percepts = environment.getAllPerceptsFromEntity(getEntityId()
 							+ "gui");
 					if (percepts != null) {
 						processPercepts(percepts);
@@ -703,8 +712,8 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 				String sender = ((Identifier) iterator.next()).getValue();
 				String message = ((Identifier) iterator.next()).getValue();
 
-				chatSession.append(sender + " : " + message + "\n");
-				chatSession.setCaretPosition(chatSession.getDocument()
+				getChatSession().append(sender + " : " + message + "\n");
+				getChatSession().setCaretPosition(getChatSession().getDocument()
 						.getLength());
 
 				ArrayList<String> newMessage = new ArrayList<String>();
@@ -758,7 +767,7 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 			if (colorBounds.contains(new Point(selectedLocation[0],
 					selectedLocation[1]))) {
 				buildPopUpMenuForGoalColor(color);
-				jPopupMenu.show(this, selectedLocation[0], selectedLocation[1]);
+				getjPopupMenu().show(this, selectedLocation[0], selectedLocation[1]);
 				return;
 			}
 			startPosX += 20;
@@ -779,18 +788,18 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 							selectedLocation[1]))) {
 						if (closeToBox(boxID)) {
 							buildPopUpMenuForBeingAtBlock(boxID, room);
-							jPopupMenu.show(this, selectedLocation[0],
+							getjPopupMenu().show(this, selectedLocation[0],
 									selectedLocation[1]);
 						} else {
 							buildPopUpMenuForBlock(boxID, room);
-							jPopupMenu.show(this, selectedLocation[0],
+							getjPopupMenu().show(this, selectedLocation[0],
 									selectedLocation[1]);
 						}
 						return;
 					}
 				}
 				buildPopUpMenuRoom(room);
-				jPopupMenu.show(this, selectedLocation[0], selectedLocation[1]);
+				getjPopupMenu().show(this, selectedLocation[0], selectedLocation[1]);
 				return;
 			}
 		}
@@ -802,36 +811,36 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 		if (dropZoneBoundaries.contains(new Point(selectedLocation[0],
 				selectedLocation[1]))) {
 			buildPopUpMenuRoom(dropZone);
-			jPopupMenu.show(this, selectedLocation[0], selectedLocation[1]);
+			getjPopupMenu().show(this, selectedLocation[0], selectedLocation[1]);
 			return;
 		}
 
 		// Otherwise it is a hallway
 		buildPopUpMenuForHallway();
-		jPopupMenu.show(this, selectedLocation[0], selectedLocation[1]);
+		getjPopupMenu().show(this, selectedLocation[0], selectedLocation[1]);
 	}
 
 	/**
 	 * Builds a pop up menu for when the player clicked on a hallway
 	 */
 	public void buildPopUpMenuForHallway() {
-		jPopupMenu.removeAll();
+		getjPopupMenu().removeAll();
 
 		// Robot commands
 		addSectionTitleToPopupMenu("Command my robot to: ");
 
 		JMenuItem menuItem = new JMenuItem("Go to here");
 		menuItem.addActionListener(new GotoPositionActionListener(new Point(
-				selectedLocation[0] / scale, selectedLocation[1] / scale)));
-		jPopupMenu.add(menuItem);
+				selectedLocation[0] / scale, selectedLocation[1] / scale),this));
+		getjPopupMenu().add(menuItem);
 
 		if (holdingID != Long.MAX_VALUE) {
 			menuItem = new JMenuItem("Put down box");
-			menuItem.addActionListener(new PutdownActionListener());
-			jPopupMenu.add(menuItem);
+			menuItem.addActionListener(new PutdownActionListener(this));
+			getjPopupMenu().add(menuItem);
 		}
 
-		jPopupMenu.addSeparator();
+		getjPopupMenu().addSeparator();
 
 		addSectionTitleToPopupMenu("Tell: ");
 
@@ -860,21 +869,21 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 						new BW4TMessage(MessageType.hasColor, label,
 								ColorTranslator
 										.translate2ColorString(entityColor),
-								null)));
+								null),this));
 				submenu.add(menuItem);
 			}
 		}
 
-		jPopupMenu.addSeparator();
+		getjPopupMenu().addSeparator();
 		menuItem = new JMenuItem("Close menu");
-		jPopupMenu.add(menuItem);
+		getjPopupMenu().add(menuItem);
 	}
 
 	/**
 	 * Build the pop up menu for sending chat messages to all players
 	 */
 	public void buildPopUpMenuForChat() {
-		jPopupMenu.removeAll();
+		getjPopupMenu().removeAll();
 
 		addSectionTitleToPopupMenu("Answer:");
 
@@ -890,9 +899,9 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 		addMenuItemToPopupMenu(new BW4TMessage(MessageType.farAway));
 		addMenuItemToPopupMenu(new BW4TMessage(MessageType.delayed));
 
-		jPopupMenu.addSeparator();
+		getjPopupMenu().addSeparator();
 		JMenuItem menuItem = new JMenuItem("Close menu");
-		jPopupMenu.add(menuItem);
+		getjPopupMenu().add(menuItem);
 
 	}
 
@@ -903,21 +912,21 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 	 *            , the color that was clicked
 	 */
 	public void buildPopUpMenuForGoalColor(BlockColor color) {
-		jPopupMenu.removeAll();
+		getjPopupMenu().removeAll();
 
 		JMenuItem menuItem = new JMenuItem(color.getName());
-		jPopupMenu.add(menuItem);
-		jPopupMenu.addSeparator();
+		getjPopupMenu().add(menuItem);
+		getjPopupMenu().addSeparator();
 
 		addSectionTitleToPopupMenu("Command my robot to:");
 
 		if (holdingID != Long.MAX_VALUE) {
 			menuItem = new JMenuItem("Put down block");
-			menuItem.addActionListener(new PutdownActionListener());
-			jPopupMenu.add(menuItem);
+			menuItem.addActionListener(new PutdownActionListener(this));
+			getjPopupMenu().add(menuItem);
 		}
 
-		jPopupMenu.addSeparator();
+		getjPopupMenu().addSeparator();
 
 		addSectionTitleToPopupMenu("Tell: ");
 
@@ -942,12 +951,12 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 				menuItem = new JMenuItem(Long.toString(room.getId()));
 				menuItem.addActionListener(new MessageSenderActionListener(
 						new BW4TMessage(MessageType.hasColorFromRoom, label,
-								color.getName(), null)));
+								color.getName(), null),this));
 				submenu.add(menuItem);
 			}
 		}
 
-		jPopupMenu.addSeparator();
+		getjPopupMenu().addSeparator();
 		addSectionTitleToPopupMenu("Ask: ");
 
 		addMenuItemToPopupMenu(new BW4TMessage(MessageType.whereIsColor, null,
@@ -957,9 +966,9 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 		addMenuItemToPopupMenu(new BW4TMessage(MessageType.whereShouldIGo));
 		addMenuItemToPopupMenu(new BW4TMessage(MessageType.whatColorShouldIGet));
 
-		jPopupMenu.addSeparator();
+		getjPopupMenu().addSeparator();
 		menuItem = new JMenuItem("Close menu");
-		jPopupMenu.add(menuItem);
+		getjPopupMenu().add(menuItem);
 	}
 
 	/**
@@ -972,18 +981,18 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 	private void buildPopUpMenuForBeingAtBlock(Long boxID, RoomInfo room) {
 		String label = findLabelForRoom(room);
 
-		jPopupMenu.removeAll();
+		getjPopupMenu().removeAll();
 
 		// Robot commands
 		addSectionTitleToPopupMenu("Command my robot to:");
 
 		JMenuItem menuItem = new JMenuItem("Pick up " + allBlocks.get(boxID)
 				+ " block");
-		menuItem.addActionListener(new PickUpActionListener());
-		jPopupMenu.add(menuItem);
+		menuItem.addActionListener(new PickUpActionListener(this));
+		getjPopupMenu().add(menuItem);
 
 		// Message sending
-		jPopupMenu.addSeparator();
+		getjPopupMenu().addSeparator();
 		addSectionTitleToPopupMenu("Tell: ");
 		addMenuItemToPopupMenu(new BW4TMessage(MessageType.roomContains, label,
 				allBlocks.get(boxID).getName(), null));
@@ -992,9 +1001,9 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 		addMenuItemToPopupMenu(new BW4TMessage(MessageType.atBox, null,
 				allBlocks.get(boxID).getName(), null));
 
-		jPopupMenu.addSeparator();
+		getjPopupMenu().addSeparator();
 		menuItem = new JMenuItem("Close menu");
-		jPopupMenu.add(menuItem);
+		getjPopupMenu().add(menuItem);
 	}
 
 	/**
@@ -1006,27 +1015,27 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 	private void buildPopUpMenuForBlock(Long boxID, RoomInfo room) {
 		String label = findLabelForRoom(room);
 
-		jPopupMenu.removeAll();
+		getjPopupMenu().removeAll();
 
 		// Robot commands
 		addSectionTitleToPopupMenu("Command my robot to:");
 
 		JMenuItem menuItem = new JMenuItem("Go to " + allBlocks.get(boxID)
 				+ " block");
-		menuItem.addActionListener(new GoToBlockActionListener(boxID));
-		jPopupMenu.add(menuItem);
+		menuItem.addActionListener(new GoToBlockActionListener(boxID,this));
+		getjPopupMenu().add(menuItem);
 
 		// Message sending
-		jPopupMenu.addSeparator();
+		getjPopupMenu().addSeparator();
 		addSectionTitleToPopupMenu("Tell: ");
 		addMenuItemToPopupMenu(new BW4TMessage(MessageType.roomContains, label,
 				allBlocks.get(boxID).getName(), null));
 		addMenuItemToPopupMenu(new BW4TMessage(MessageType.amGettingColor,
 				label, allBlocks.get(boxID).getName(), null));
 
-		jPopupMenu.addSeparator();
+		getjPopupMenu().addSeparator();
 		menuItem = new JMenuItem("Close menu");
-		jPopupMenu.add(menuItem);
+		getjPopupMenu().add(menuItem);
 	}
 
 	/**
@@ -1037,22 +1046,22 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 	 */
 	private void buildPopUpMenuRoom(RoomInfo room) {
 		String label = findLabelForRoom(room);
-		jPopupMenu.removeAll();
+		getjPopupMenu().removeAll();
 
 		// Robot commands
 		addSectionTitleToPopupMenu("Command my robot to: ");
 
 		JMenuItem menuItem = new JMenuItem("Go to " + label);
-		menuItem.addActionListener(new GoToRoomActionListener(label));
-		jPopupMenu.add(menuItem);
+		menuItem.addActionListener(new GoToRoomActionListener(label,this));
+		getjPopupMenu().add(menuItem);
 
 		if (holdingID != Long.MAX_VALUE) {
 			menuItem = new JMenuItem("Put down box");
-			menuItem.addActionListener(new PutdownActionListener());
-			jPopupMenu.add(menuItem);
+			menuItem.addActionListener(new PutdownActionListener(this));
+			getjPopupMenu().add(menuItem);
 		}
 
-		jPopupMenu.addSeparator();
+		getjPopupMenu().addSeparator();
 
 		// Message sending
 		addSectionTitleToPopupMenu("Tell: ");
@@ -1066,7 +1075,7 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 			menuItem = new JMenuItem(color);
 			menuItem.addActionListener(new MessageSenderActionListener(
 					new BW4TMessage(MessageType.roomContains, label, color,
-							null)));
+							null),this));
 			submenu.add(menuItem);
 		}
 
@@ -1080,7 +1089,7 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 				menuItem = new JMenuItem(color);
 				menuItem.addActionListener(new MessageSenderActionListener(
 						new BW4TMessage(MessageType.roomContainsAmount, label,
-								color, i)));
+								color, i),this));
 				submenuColor.add(menuItem);
 			}
 		}
@@ -1094,7 +1103,7 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 			menuItem = new JMenuItem("" + otherPlayers.get(i));
 			menuItem.addActionListener(new MessageSenderActionListener(
 					new BW4TMessage(MessageType.checked, label, null,
-							otherPlayers.get(i))));
+							otherPlayers.get(i)),this));
 			submenu.add(menuItem);
 		}
 
@@ -1125,7 +1134,7 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 						new BW4TMessage(MessageType.hasColor, labelT,
 								ColorTranslator
 										.translate2ColorString(entityColor),
-								null)));
+								null),this));
 				submenu.add(menuItem);
 			}
 		}
@@ -1140,9 +1149,9 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 		addMenuItemToPopupMenu(new BW4TMessage(MessageType.whoIsInRoom, label,
 				null, null));
 
-		jPopupMenu.addSeparator();
+		getjPopupMenu().addSeparator();
 		menuItem = new JMenuItem("Close menu");
-		jPopupMenu.add(menuItem);
+		getjPopupMenu().add(menuItem);
 	}
 
 	/**
@@ -1153,7 +1162,7 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 	 *            , the playerId that the request should be sent to
 	 */
 	public void buildPopUpMenuForRequests(String playerId) {
-		jPopupMenu.removeAll();
+		getjPopupMenu().removeAll();
 		addSectionTitleToPopupMenu("Request:");
 
 		// Check if the playerId is a specific player
@@ -1170,7 +1179,7 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 			String label = findLabelForRoom(room);
 			JMenuItem menuItem = new JMenuItem(label);
 			menuItem.addActionListener(new MessageSenderActionListener(
-					new BW4TMessage(MessageType.goToRoom, label, null, receiver)));
+					new BW4TMessage(MessageType.goToRoom, label, null, receiver),this));
 			submenu.add(menuItem);
 		}
 
@@ -1180,7 +1189,7 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 			JMenuItem menuItem = new JMenuItem(color);
 			menuItem.addActionListener(new MessageSenderActionListener(
 					new BW4TMessage(MessageType.findColor, null, color,
-							receiver)));
+							receiver),this));
 			submenu.add(menuItem);
 		}
 
@@ -1195,7 +1204,7 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 				JMenuItem menuItem = new JMenuItem(label);
 				menuItem.addActionListener(new MessageSenderActionListener(
 						new BW4TMessage(MessageType.getColorFromRoom, label,
-								color, receiver)));
+								color, receiver),this));
 				submenu2.add(menuItem);
 			}
 		}
@@ -1206,9 +1215,9 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 		addMenuItemToPopupMenu(new BW4TMessage(MessageType.willYouBeLong, null,
 				null, receiver));
 
-		jPopupMenu.addSeparator();
+		getjPopupMenu().addSeparator();
 		JMenuItem menuItem = new JMenuItem("Close menu");
-		jPopupMenu.add(menuItem);
+		getjPopupMenu().add(menuItem);
 	}
 
 	/**
@@ -1220,7 +1229,7 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 	 */
 	public JMenu addSubMenuToPopupMenu(String text) {
 		JMenu menu = new JMenu(text);
-		jPopupMenu.add(menu);
+		getjPopupMenu().add(menu);
 
 		return menu;
 	}
@@ -1234,7 +1243,7 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 	public void addSectionTitleToPopupMenu(String title) {
 		JMenuItem menuItem = new JMenuItem(title);
 		menuItem.setEnabled(false);
-		jPopupMenu.add(menuItem);
+		getjPopupMenu().add(menuItem);
 	}
 
 	/**
@@ -1246,197 +1255,11 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 	public void addMenuItemToPopupMenu(BW4TMessage message) {
 		JMenuItem menuItem = new JMenuItem(
 				MessageTranslator.translateMessage(message));
-		menuItem.addActionListener(new MessageSenderActionListener(message));
-		jPopupMenu.add(menuItem);
+		menuItem.addActionListener(new MessageSenderActionListener(message,this));
+		getjPopupMenu().add(menuItem);
 	}
 
-	/**
-	 * ActionListener that sends a message when the connected menu item is
-	 * pressed.
-	 * 
-	 * @author trens
-	 * 
-	 */
-	private class MessageSenderActionListener implements ActionListener {
-		private BW4TMessage message;
 
-		public MessageSenderActionListener(BW4TMessage message) {
-			this.message = message;
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (!goal)
-				try {
-					humanAgent.sendMessage("all", message);
-				} catch (Exception e1) {
-					// Also catch NoServerException. Nothing we can do really.
-					e1.printStackTrace();
-				}
-			else {
-				LinkedList<Percept> percepts = new LinkedList<Percept>();
-				Percept percept = new Percept("sendMessage", new Identifier(
-						"all"), MessageTranslator.translateMessage(message,
-						entityId));
-				percepts.add(percept);
-				toBePerformedAction = percepts;
-			}
-		}
-	}
-
-	/**
-	 * ActionListener that performs the goTo action when that command is pressed
-	 * in the pop up menu
-	 * 
-	 * @author trens
-	 * 
-	 */
-	private class GoToBlockActionListener implements ActionListener {
-		private long id;
-
-		public GoToBlockActionListener(long id) {
-			this.id = id;
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (!goal)
-				try {
-					humanAgent.goToBlock(id);
-				} catch (Exception e1) {
-					// Also catch NoServerException. Nothing we can do really.
-					e1.printStackTrace();
-				}
-			else {
-				LinkedList<Percept> percepts = new LinkedList<Percept>();
-				Percept percept = new Percept("goToBlock", new Numeral(id));
-				percepts.add(percept);
-				toBePerformedAction = percepts;
-			}
-
-		}
-	}
-
-	/**
-	 * ActionListener that performs the goTo action when that command is pressed
-	 * in the pop up menu
-	 * 
-	 * @author trens
-	 * 
-	 */
-	private class GoToRoomActionListener implements ActionListener {
-		private String id;
-
-		public GoToRoomActionListener(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (!goal)
-				try {
-					humanAgent.goTo(id);
-				} catch (Exception e1) {
-					// Also catch NoServerException. Nothing we can do really.
-					e1.printStackTrace();
-				}
-			else {
-				LinkedList<Percept> percepts = new LinkedList<Percept>();
-				Percept percept = new Percept("goTo", new Identifier(id));
-				percepts.add(percept);
-				toBePerformedAction = percepts;
-			}
-
-		}
-	}
-
-	/**
-	 * ActionListener that performs the goTo action when that command is pressed
-	 * in the pop up menu
-	 * 
-	 * @author trens
-	 * 
-	 */
-	private class GotoPositionActionListener implements ActionListener {
-		private Point position;
-
-		public GotoPositionActionListener(Point position) {
-			this.position = position;
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (!goal)
-				try {
-					humanAgent.goTo(position.getX(), position.getY());
-				} catch (Exception e1) {
-					// Also catch NoServerException. Nothing we can do really.
-					e1.printStackTrace();
-				}
-			else {
-				LinkedList<Percept> percepts = new LinkedList<Percept>();
-				Percept percept = new Percept("goTo", new Numeral(
-						position.getX()), new Numeral(position.getY()));
-				percepts.add(percept);
-				toBePerformedAction = percepts;
-			}
-		}
-	}
-
-	/**
-	 * ActionListener that performs the pick up action when that command is
-	 * pressed in the pop up menu
-	 * 
-	 * @author trens
-	 * 
-	 */
-	private class PickUpActionListener implements ActionListener {
-		public PickUpActionListener() {
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (!goal)
-				try {
-					humanAgent.pickUp();
-				} catch (Exception e1) {
-					// Also catch NoServerException. Nothing we can do really.
-					e1.printStackTrace();
-				}
-			else {
-				LinkedList<Percept> percepts = new LinkedList<Percept>();
-				Percept percept = new Percept("pickUp");
-				percepts.add(percept);
-				toBePerformedAction = percepts;
-			}
-		}
-	}
-
-	/**
-	 * ActionListener that performs the put down action when that command is
-	 * pressed in the pop up menu
-	 * 
-	 * @author trens
-	 * 
-	 */
-	private class PutdownActionListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (!goal)
-				try {
-					humanAgent.putDown();
-				} catch (Exception e1) {
-					// Also catch NoServerException. Nothing we can do really.
-					e1.printStackTrace();
-				}
-			else {
-				LinkedList<Percept> percepts = new LinkedList<Percept>();
-				Percept percept = new Percept("putDown");
-				percepts.add(percept);
-				toBePerformedAction = percepts;
-			}
-		}
-	}
 
 	/**
 	 * Method to determine if the player is close to a box (within 0.5 of the
@@ -1456,191 +1279,6 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 			return true;
 		else
 			return false;
-	}
-
-	/**
-	 * Helper class to store information about rooms
-	 * 
-	 * @author trens
-	 * 
-	 */
-	private class RoomInfo {
-		private double x, y, width, height;
-		private long id;
-		private String name;
-		private ArrayList<DoorInfo> doors;
-		private boolean occupied;
-
-		public RoomInfo(double x2, double y2, double width2, double height2,
-				String name) {
-			this.x = x2;
-			this.y = y2;
-			this.width = width2;
-			this.height = height2;
-			this.name = name;
-			doors = new ArrayList<DoorInfo>();
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public double getX() {
-			return x;
-		}
-
-		public double getY() {
-			return y;
-		}
-
-		public double getWidth() {
-			return width;
-		}
-
-		public double getHeight() {
-			return height;
-		}
-
-		public long getId() {
-			return id;
-		}
-
-		public void setId(long id) {
-			this.id = id;
-		}
-
-		public void addDoor(DoorInfo door) {
-			doors.add(door);
-		}
-
-		public ArrayList<DoorInfo> getDoors() {
-			return doors;
-		}
-
-		@SuppressWarnings("unused")
-		public boolean isOccupied() {
-			return occupied;
-		}
-
-		@SuppressWarnings("unused")
-		public void setOccupied(boolean occupied) {
-			this.occupied = occupied;
-		}
-
-		public String toString() {
-			return "Room[" + id + "," + x + "," + y + "]";
-		}
-	}
-
-	/**
-	 * Helper class to store information about the drop zone
-	 * 
-	 * @author trens
-	 * 
-	 */
-	private class DropZoneInfo extends RoomInfo {
-		public DropZoneInfo(double x, double y, double width, double height) {
-			super(x, y, width, height, "DropZone");
-		}
-	}
-
-	/**
-	 * Helper method to store information about doors
-	 * 
-	 * @author trens
-	 * 
-	 */
-	private class DoorInfo {
-		private double x, y, width, height;
-
-		public DoorInfo(double x, double y, double width, double height) {
-			this.x = x;
-			this.y = y;
-			this.width = width;
-			this.height = height;
-		}
-
-		public double getX() {
-			return x;
-		}
-
-		public double getY() {
-			return y;
-		}
-
-		public double getWidth() {
-			return width;
-		}
-
-		public double getHeight() {
-			return height;
-		}
-	}
-
-	/**
-	 * Listens for mouse events on the chat text area and builds a pop up menu
-	 * accordingly
-	 * 
-	 * @author trens
-	 * 
-	 */
-	private class ChatListMouseListener implements MouseListener {
-		@Override
-		public void mouseClicked(MouseEvent e) {
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			buildPopUpMenuForChat();
-			jPopupMenu.show(chatSession, e.getX(), e.getY());
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent arg0) {
-		}
-
-		@Override
-		public void mouseExited(MouseEvent arg0) {
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent arg0) {
-		}
-	}
-
-	/**
-	 * Listens for mouse events on the player buttons and builds a pop up menu
-	 * accordingly
-	 * 
-	 * @author trens
-	 * 
-	 */
-	private class TeamListMouseListener implements MouseListener {
-		@Override
-		public void mouseClicked(MouseEvent e) {
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			Object value = e.getSource();
-			if (value != null) {
-				String playerId = ((JButton) value).getText();
-				buildPopUpMenuForRequests(playerId);
-				jPopupMenu.show((JButton) value, e.getX(), e.getY());
-			}
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent arg0) {
-		}
-
-		@Override
-		public void mouseExited(MouseEvent arg0) {
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent arg0) {
-		}
 	}
 
 	/**
@@ -1671,8 +1309,8 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 		String sender = ((Identifier) parameters.get(0)).getValue();
 		String message = ((Identifier) parameters.get(1)).getValue();
 
-		chatSession.append(sender + " : " + message + "\n");
-		chatSession.setCaretPosition(chatSession.getDocument().getLength());
+		getChatSession().append(sender + " : " + message + "\n");
+		getChatSession().setCaretPosition(getChatSession().getDocument().getLength());
 
 		return null;
 	}
@@ -1715,4 +1353,44 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 	public void setStop() {
 		stop = true;
 	}
+
+    public HumanAgent getHumanAgent() {
+        return humanAgent;
+    }
+
+    public void setHumanAgent(HumanAgent humanAgent) {
+        this.humanAgent = humanAgent;
+    }
+
+    public void setToBePerformedAction(LinkedList<Percept> toBePerformedAction) {
+        this.toBePerformedAction = toBePerformedAction;
+    }
+
+    public JTextArea getChatSession() {
+        return chatSession;
+    }
+
+    public boolean isGoal() {
+        return goal;
+    }
+
+    public void setGoal(boolean goal) {
+        this.goal = goal;
+    }
+
+    public String getEntityId() {
+        return entityId;
+    }
+
+    public void setEntityId(String entityId) {
+        this.entityId = entityId;
+    }
+
+    public JPopupMenu getjPopupMenu() {
+        return jPopupMenu;
+    }
+
+    public void setjPopupMenu(JPopupMenu jPopupMenu) {
+        this.jPopupMenu = jPopupMenu;
+    }
 }
