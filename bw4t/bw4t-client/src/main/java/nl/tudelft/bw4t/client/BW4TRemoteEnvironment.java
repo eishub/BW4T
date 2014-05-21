@@ -167,7 +167,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
     @Override
     public LinkedList<String> getAgents() {
         try {
-            return client.getAgents();
+            return (LinkedList<String>) client.getAgents();
         } catch (RemoteException e) {
             throw EnvironmentSuddenDeath(e);
         }
@@ -177,7 +177,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
     public HashSet<String> getAssociatedEntities(String agent)
             throws AgentException {
         try {
-            return client.getAssociatedEntities(agent);
+            return (HashSet<String>) client.getAssociatedEntities(agent);
         } catch (RemoteException e) {
             throw EnvironmentSuddenDeath(e);
         }
@@ -462,16 +462,16 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
                     .getValue().equals("true");
             if (connectedToGoal && !entity.contains("gui")
                     && getType(entity).equals("human")) {
-                return entityToGUI.get(entity).getToBePerformedAction();
+                return (LinkedList<Percept>) entityToGUI.get(entity).getToBePerformedAction();
             } else if (entity.contains("gui")
                     && getType(entity.replace("gui", "")).equals("human")) {
-                return client.getAllPerceptsFromEntity(entity
+                return (LinkedList<Percept>) client.getAllPerceptsFromEntity(entity
                         .replace("gui", ""));
             } else if (launchGui) {
                 if (entityToGUI.get(entity) == null) {
                     return null;
                 }
-                LinkedList<Percept> percepts = client
+                LinkedList<Percept> percepts = (LinkedList<Percept>) client
                         .getAllPerceptsFromEntity(entity);
                 BW4TClientGUI tempEntity;
                 if (percepts != null) {
@@ -480,7 +480,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
                 }
                 return percepts;
             } else {
-                return client.getAllPerceptsFromEntity(entity);
+                return (LinkedList<Percept>) client.getAllPerceptsFromEntity(entity);
             }
         } catch (RemoteException e) {
             throw EnvironmentSuddenDeath(e);
