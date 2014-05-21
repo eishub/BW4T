@@ -326,9 +326,10 @@ public class EntityPanel extends JPanel {
     public void modifyEPartnerAction() {
     	int row = getSelectedEPartnerRow();
     	
-    	if(row == -1) {
+    	if (row == -1) {
     		JOptionPane.showMessageDialog(null, "Please select the E-partner you want to modify.");
-    	} else {
+    	}
+    	else {
     		System.out.println("Go to Bot Store to modify an E-Partner");
     	}
     }
