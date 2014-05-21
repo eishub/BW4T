@@ -1,16 +1,16 @@
-package nl.tudelft.bw4t.visualizations.menu;
+package nl.tudelft.bw4t.client.gui.menu;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
+import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
+import nl.tudelft.bw4t.client.gui.data.structures.RoomInfo;
+import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
+import nl.tudelft.bw4t.client.gui.operations.MapOperations;
 import nl.tudelft.bw4t.map.ColorTranslator;
 import nl.tudelft.bw4t.message.BW4TMessage;
 import nl.tudelft.bw4t.message.MessageType;
-import nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer;
-import nl.tudelft.bw4t.visualizations.BasicOperations;
-import nl.tudelft.bw4t.visualizations.data.BW4TClientMapRendererData;
-import nl.tudelft.bw4t.visualizations.data.RoomInfo;
-import nl.tudelft.bw4t.visualizations.listeners.MessageSenderActionListener;
 
 public class PlayerMenu {
     /**
@@ -20,8 +20,8 @@ public class PlayerMenu {
      * @param playerId
      *            , the playerId that the request should be sent to
      */
-    public static void buildPopUpMenuForRequests(String playerId, BW4TClientMapRenderer bw4tClientMapRenderer) {
-        BW4TClientMapRendererData data = bw4tClientMapRenderer.getData();
+    public static void buildPopUpMenuForRequests(String playerId, BW4TClientGUI bw4tClientMapRenderer) {
+        BW4TClientInfo data = bw4tClientMapRenderer.getBW4TClientInfo();
         data.jPopupMenu.removeAll();
         BasicMenuOperations.addSectionTitleToPopupMenu("Request:",
                 data.jPopupMenu);
@@ -37,7 +37,7 @@ public class PlayerMenu {
         JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu(receiver + " go to room", data.jPopupMenu);
 
         for (RoomInfo room : data.environmentDatabase.getRooms()) {
-            String label = BasicOperations.findLabelForRoom(room, data);
+            String label = MapOperations.findLabelForRoom(room, data);
             JMenuItem menuItem = new JMenuItem(label);
             menuItem.addActionListener(new MessageSenderActionListener(
                     new BW4TMessage(MessageType.goToRoom, label, null, receiver),
@@ -62,7 +62,7 @@ public class PlayerMenu {
             submenu.add(submenu2);
 
             for (RoomInfo room : data.environmentDatabase.getRooms()) {
-                String label = BasicOperations.findLabelForRoom(room, data);
+                String label = MapOperations.findLabelForRoom(room, data);
                 JMenuItem menuItem = new JMenuItem(label);
                 menuItem.addActionListener(new MessageSenderActionListener(
                         new BW4TMessage(MessageType.getColorFromRoom, label,

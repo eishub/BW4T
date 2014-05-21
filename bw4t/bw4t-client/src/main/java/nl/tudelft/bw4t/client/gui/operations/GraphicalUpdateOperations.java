@@ -1,6 +1,10 @@
-package nl.tudelft.bw4t.visualizations.data;
+package nl.tudelft.bw4t.client.gui.operations;
 
-import nl.tudelft.bw4t.visualizations.VisualizerSettings;
+import nl.tudelft.bw4t.client.gui.VisualizerSettings;
+import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
+import nl.tudelft.bw4t.client.gui.data.structures.DoorInfo;
+import nl.tudelft.bw4t.client.gui.data.structures.DropZoneInfo;
+import nl.tudelft.bw4t.client.gui.data.structures.RoomInfo;
 
 public class GraphicalUpdateOperations {
     /**
@@ -18,9 +22,8 @@ public class GraphicalUpdateOperations {
      *            name of room in which door is placed
      */
     public static void addDoor(double x, double y, double width, double height,
-            String roomname, BW4TClientMapRendererData data) {
-        DoorInfo info = new DoorInfo(x, y, width, height,
-                data.environmentDatabase);
+            String roomname, BW4TClientInfo data) {
+        DoorInfo info = new DoorInfo(x, y, width, height);
         for (RoomInfo room : data.environmentDatabase.getRooms()) {
             if (room.getName().equals(roomname)) {
                 room.addDoor(info);
@@ -50,7 +53,7 @@ public class GraphicalUpdateOperations {
      *            and height)
      */
     public static void addRoom(double x, double y, double width, double height,
-            String name, BW4TClientMapRendererData data) {
+            String name, BW4TClientInfo data) {
         data.environmentDatabase.getRooms().add(
                 new RoomInfo(x, y, width, height, name));
     }
@@ -60,7 +63,7 @@ public class GraphicalUpdateOperations {
      *            , add a representation of the dropzone (Integer[4] with x, y,
      *            width and height)
      */
-    public static void addDropZone(Integer[] dropZone, BW4TClientMapRendererData data) {
+    public static void addDropZone(Integer[] dropZone, BW4TClientInfo data) {
         data.environmentDatabase.setDropZone(new DropZoneInfo(dropZone[0],
                 dropZone[1], dropZone[2], dropZone[3]));
     }

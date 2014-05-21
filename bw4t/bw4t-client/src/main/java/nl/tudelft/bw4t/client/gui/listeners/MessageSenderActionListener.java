@@ -1,14 +1,12 @@
-package nl.tudelft.bw4t.visualizations.listeners;
+package nl.tudelft.bw4t.client.gui.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
+import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
 import nl.tudelft.bw4t.message.BW4TMessage;
 import nl.tudelft.bw4t.message.MessageTranslator;
-import nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer;
-import nl.tudelft.bw4t.visualizations.data.BW4TClientMapRendererData;
-import nl.tudelft.bw4t.visualizations.data.EnvironmentDatabase;
 import eis.iilang.Identifier;
 import eis.iilang.Percept;
 
@@ -21,9 +19,9 @@ import eis.iilang.Percept;
  */
 public class MessageSenderActionListener implements ActionListener {
     private BW4TMessage message;
-    private BW4TClientMapRendererData bw4tClientMapRendererData;
+    private BW4TClientInfo bw4tClientMapRendererData;
 
-    public MessageSenderActionListener(BW4TMessage message, BW4TClientMapRendererData bw4tClientMapRendererData) {
+    public MessageSenderActionListener(BW4TMessage message, BW4TClientInfo bw4tClientMapRendererData) {
         this.message = message;
         this.bw4tClientMapRendererData = bw4tClientMapRendererData;
     }

@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.visualizations.data;
+package nl.tudelft.bw4t.client.gui.data.structures;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -8,13 +8,13 @@ import javax.swing.JTextArea;
 
 import nl.tudelft.bw4t.agent.HumanAgent;
 import nl.tudelft.bw4t.client.BW4TRemoteEnvironment;
+import nl.tudelft.bw4t.client.gui.data.EnvironmentDatabase;
 
-public class BW4TClientMapRendererData {
+public class BW4TClientInfo {
     /**
      * Data needed for updating the graphical representation of the world
      */
     public EnvironmentDatabase environmentDatabase;
-    public PerceptsInfo perceptsInfo;
     public boolean stop;
     public JFrame jFrame;
     public JPanel buttonPanel;
@@ -33,7 +33,7 @@ public class BW4TClientMapRendererData {
      */
     public BW4TRemoteEnvironment environment;
 
-    public BW4TClientMapRendererData(JTextArea chatSession) {
+    public BW4TClientInfo(JTextArea chatSession) {
         this.chatSession = chatSession;
     }
 }

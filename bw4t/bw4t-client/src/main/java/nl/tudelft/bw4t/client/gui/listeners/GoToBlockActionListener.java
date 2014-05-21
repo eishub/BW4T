@@ -1,12 +1,10 @@
-package nl.tudelft.bw4t.visualizations.listeners;
+package nl.tudelft.bw4t.client.gui.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
-import nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer;
-import nl.tudelft.bw4t.visualizations.data.BW4TClientMapRendererData;
-
+import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
 import eis.iilang.Numeral;
 import eis.iilang.Percept;
 
@@ -20,24 +18,23 @@ import eis.iilang.Percept;
  */
 public class GoToBlockActionListener implements ActionListener {
     private long boxID;
-    private BW4TClientMapRenderer bw4tClientMapRenderer;
+    private BW4TClientInfo bw4tClientInfo;
 
     public GoToBlockActionListener(long id) {
         
     }
 
     public GoToBlockActionListener(Long boxID,
-            BW4TClientMapRenderer bw4tClientMapRenderer) {
+            BW4TClientInfo bw4tClientInfo) {
         this.boxID = boxID;
-        this.bw4tClientMapRenderer = bw4tClientMapRenderer;
+        this.bw4tClientInfo = bw4tClientInfo;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        BW4TClientMapRendererData data = bw4tClientMapRenderer.getData();
-        if (!data.goal)
+        if (!bw4tClientInfo.goal)
             try {
-                data.humanAgent.goToBlock(boxID);
+                bw4tClientInfo.humanAgent.goToBlock(boxID);
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
@@ -45,7 +42,7 @@ public class GoToBlockActionListener implements ActionListener {
             LinkedList<Percept> percepts = new LinkedList<Percept>();
             Percept percept = new Percept("goToBlock", new Numeral(boxID));
             percepts.add(percept);
-            data.environmentDatabase.setToBePerformedAction(percepts);
+            bw4tClientInfo.environmentDatabase.setToBePerformedAction(percepts);
         }
 
     }

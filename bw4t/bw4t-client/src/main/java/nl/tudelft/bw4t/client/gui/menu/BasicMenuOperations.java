@@ -1,18 +1,18 @@
-package nl.tudelft.bw4t.visualizations.menu;
+package nl.tudelft.bw4t.client.gui.menu;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
+import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
+import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
 import nl.tudelft.bw4t.message.BW4TMessage;
 import nl.tudelft.bw4t.message.MessageTranslator;
-import nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer;
-import nl.tudelft.bw4t.visualizations.data.BW4TClientMapRendererData;
-import nl.tudelft.bw4t.visualizations.listeners.MessageSenderActionListener;
 
 public class BasicMenuOperations {
-    BW4TClientMapRenderer bw4tClientMapRenderer;
-    public BasicMenuOperations(BW4TClientMapRenderer bw4tClientMapRenderer) {
+    BW4TClientGUI bw4tClientMapRenderer;
+    public BasicMenuOperations(BW4TClientGUI bw4tClientMapRenderer) {
         this.bw4tClientMapRenderer = bw4tClientMapRenderer;
     }
     /**
@@ -21,7 +21,7 @@ public class BasicMenuOperations {
      * @param message
      *            , the message that this item represents
      */
-    public static void addMenuItemToPopupMenu(BW4TMessage message, BW4TClientMapRendererData bw4tClientMapRendererData) {
+    public static void addMenuItemToPopupMenu(BW4TMessage message, BW4TClientInfo bw4tClientMapRendererData) {
         JMenuItem menuItem = new JMenuItem(
                 MessageTranslator.translateMessage(message));
         menuItem.addActionListener(new MessageSenderActionListener(message, bw4tClientMapRendererData));

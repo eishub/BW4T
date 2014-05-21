@@ -13,12 +13,13 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
-import nl.tudelft.bw4t.BW4TEnvironmentListener;
+import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
+import nl.tudelft.bw4t.client.gui.operations.ProcessingOperations;
 import nl.tudelft.bw4t.client.startup.InitParam;
 import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer;
-import nl.tudelft.bw4t.visualizations.data.PerceptsInfo;
-import nl.tudelft.bw4t.visualizations.data.PerceptsInfo;
+
+import org.apache.log4j.Logger;
+
 import eis.AgentListener;
 import eis.EnvironmentInterfaceStandard;
 import eis.EnvironmentListener;
@@ -35,9 +36,6 @@ import eis.iilang.EnvironmentState;
 import eis.iilang.Identifier;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
-
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
 
 /**
  * A remote BW4TEnvironment that delegates all actions towards the central
@@ -67,7 +65,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
 
     private Vector<EnvironmentListener> environmentListeners = new Vector<EnvironmentListener>();
 
-    private HashMap<String, BW4TClientMapRenderer> entityToGUI = new HashMap<String, BW4TClientMapRenderer>();
+    private HashMap<String, BW4TClientGUI> entityToGUI = new HashMap<String, BW4TClientGUI>();
 
     private Logger logger = Logger.getLogger(BW4TRemoteEnvironment.class);
 
@@ -132,7 +130,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
     protected void notifyDeletedEntity(String entity, Collection<String> agents) {
         logger.debug("Notifying all listeners about an entity that has been deleted.");
         if (entityToGUI.get(entity) != null)
-            entityToGUI.get(entity).getData().jFrame.dispose();
+            entityToGUI.get(entity).getBW4TClientInfo().jFrame.dispose();
         for (EnvironmentListener listener : environmentListeners) {
             listener.handleDeletedEntity(entity, agents);
         }
@@ -236,21 +234,21 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
         try {
             if (connectedToGoal && getType(entityId).equals("human")) {
                 client.associateEntity(agentId, entityId);
-                BW4TClientMapRenderer renderer = new BW4TClientMapRenderer(
+                BW4TClientGUI renderer = new BW4TClientGUI(
                         this, entityId, true, true);
                 entityToGUI.put(entityId, renderer);
             } else if (connectedToGoal
                     && ((Identifier) initParameters.get(InitParam.LAUNCHGUI
                             .nameLower())).getValue().equals("true")) {
                 client.associateEntity(agentId, entityId);
-                BW4TClientMapRenderer renderer = new BW4TClientMapRenderer(
+                BW4TClientGUI renderer = new BW4TClientGUI(
                         this, entityId, true, false);
                 entityToGUI.put(entityId, renderer);
             } else if (getType(entityId).equals("bot")
                     && ((Identifier) initParameters.get(InitParam.LAUNCHGUI
                             .nameLower())).getValue().equals("true")) {
                 client.associateEntity(agentId, entityId);
-                BW4TClientMapRenderer renderer = new BW4TClientMapRenderer(
+                BW4TClientGUI renderer = new BW4TClientGUI(
                         this, entityId, false, false);
                 entityToGUI.put(entityId, renderer);
             } else {
@@ -475,14 +473,10 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
                 }
                 LinkedList<Percept> percepts = client
                         .getAllPerceptsFromEntity(entity);
-                BW4TClientMapRenderer tempEntity;
-                PerceptsInfo perceptsInfo;
+                BW4TClientGUI tempEntity;
                 if (percepts != null) {
                     tempEntity = entityToGUI.get(entity);
-                    perceptsInfo = new PerceptsInfo(
-                            tempEntity.getData().environmentDatabase,
-                            tempEntity.getData().chatSession);
-                    perceptsInfo.processPercepts(percepts);
+                    ProcessingOperations.processPercepts(percepts, tempEntity.getBW4TClientInfo());
                 }
                 return percepts;
             } else {
@@ -545,9 +539,9 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
     @Override
     public void kill() throws ManagementException {
 
-        for (BW4TClientMapRenderer renderer : entityToGUI.values()) {
+        for (BW4TClientGUI renderer : entityToGUI.values()) {
             if (renderer != null) {
-                renderer.getData().stop = true;
+                renderer.getBW4TClientInfo().stop = true;
             }
         }
         // copy list, the localAgents list is going to be changes by removing
