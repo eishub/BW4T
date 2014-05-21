@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
 import nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer;
+import nl.tudelft.bw4t.visualizations.data.BW4TClientMapRendererData;
 
 import eis.iilang.Percept;
 
@@ -25,9 +26,10 @@ public class PickUpActionListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!bw4tClientMapRenderer.isGoal())
+        BW4TClientMapRendererData data = bw4tClientMapRenderer.getData();
+        if (!data.goal)
             try {
-                bw4tClientMapRenderer.getHumanAgent().pickUp();
+                data.humanAgent.pickUp();
             } catch (Exception e1) {
                 // Also catch NoServerException. Nothing we can do really.
                 e1.printStackTrace();
@@ -36,7 +38,7 @@ public class PickUpActionListener implements ActionListener {
             LinkedList<Percept> percepts = new LinkedList<Percept>();
             Percept percept = new Percept("pickUp");
             percepts.add(percept);
-            bw4tClientMapRenderer.getEnvironmentDatabase().setToBePerformedAction(percepts);
+            data.environmentDatabase.setToBePerformedAction(percepts);
         }
     }
 }

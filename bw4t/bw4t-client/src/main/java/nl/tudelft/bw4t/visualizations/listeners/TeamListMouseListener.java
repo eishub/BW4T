@@ -6,6 +6,7 @@ import java.awt.event.MouseListener;
 import javax.swing.JButton;
 
 import nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer;
+import nl.tudelft.bw4t.visualizations.menu.PlayerMenu;
 
 /**
  * Listens for mouse events on the player buttons and builds a pop up menu
@@ -26,8 +27,8 @@ public class TeamListMouseListener implements MouseListener {
         Object value = e.getSource();
         if (value != null) {
             String playerId = ((JButton) value).getText();
-            clientRenderer.buildPopUpMenuForRequests(playerId);
-            clientRenderer.getjPopupMenu().show((JButton) value, e.getX(), e.getY());
+            PlayerMenu.buildPopUpMenuForRequests(playerId, clientRenderer);
+            clientRenderer.getData().jPopupMenu.show((JButton) value, e.getX(), e.getY());
         }
     }
 

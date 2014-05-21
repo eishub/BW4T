@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
 import nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer;
+import nl.tudelft.bw4t.visualizations.data.BW4TClientMapRendererData;
 
 import eis.iilang.Numeral;
 import eis.iilang.Percept;
@@ -28,9 +29,10 @@ public class GotoPositionActionListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!bw4tClientMapRenderer.isGoal())
+        BW4TClientMapRendererData data = bw4tClientMapRenderer.getData();
+        if (!data.goal)
             try {
-                bw4tClientMapRenderer.getHumanAgent().goTo(position.getX(), position.getY());
+                data.humanAgent.goTo(position.getX(), position.getY());
             } catch (Exception e1) {
                 // Also catch NoServerException. Nothing we can do really.
                 e1.printStackTrace();
@@ -40,7 +42,7 @@ public class GotoPositionActionListener implements ActionListener {
             Percept percept = new Percept("goTo", new Numeral(
                     position.getX()), new Numeral(position.getY()));
             percepts.add(percept);
-            bw4tClientMapRenderer.getEnvironmentDatabase().setToBePerformedAction(percepts);
+            data.environmentDatabase.setToBePerformedAction(percepts);
         }
     }
 }
