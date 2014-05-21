@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import nl.tudelft.bw4t.message.BW4TMessage;
 import nl.tudelft.bw4t.message.MessageTranslator;
 import nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer;
+import nl.tudelft.bw4t.visualizations.data.BW4TClientMapRendererData;
 import nl.tudelft.bw4t.visualizations.data.EnvironmentDatabase;
 import eis.iilang.Identifier;
 import eis.iilang.Percept;
@@ -20,18 +21,18 @@ import eis.iilang.Percept;
  */
 public class MessageSenderActionListener implements ActionListener {
     private BW4TMessage message;
-    private BW4TClientMapRenderer bw4tClientMapRenderer;
+    private BW4TClientMapRendererData bw4tClientMapRendererData;
 
-    public MessageSenderActionListener(BW4TMessage message, BW4TClientMapRenderer bw4tClientMapRenderer) {
+    public MessageSenderActionListener(BW4TMessage message, BW4TClientMapRendererData bw4tClientMapRendererData) {
         this.message = message;
-        this.bw4tClientMapRenderer = bw4tClientMapRenderer;
+        this.bw4tClientMapRendererData = bw4tClientMapRendererData;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!bw4tClientMapRenderer.isGoal())
+        if (!bw4tClientMapRendererData.goal)
             try {
-                bw4tClientMapRenderer.getHumanAgent().sendMessage("all", message);
+                bw4tClientMapRendererData.humanAgent.sendMessage("all", message);
             } catch (Exception e1) {
                 // Also catch NoServerException. Nothing we can do really.
                 e1.printStackTrace();
@@ -40,9 +41,9 @@ public class MessageSenderActionListener implements ActionListener {
             LinkedList<Percept> percepts = new LinkedList<Percept>();
             Percept percept = new Percept("sendMessage", new Identifier(
                     "all"), MessageTranslator.translateMessage(message,
-                            bw4tClientMapRenderer.getEnvironmentDatabase().getEntityId()));
+                            bw4tClientMapRendererData.environmentDatabase.getEntityId()));
             percepts.add(percept);
-            bw4tClientMapRenderer.getEnvironmentDatabase().setToBePerformedAction(percepts);
+            bw4tClientMapRendererData.environmentDatabase.setToBePerformedAction(percepts);
         }
     }
 }

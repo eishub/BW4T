@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer;
+import nl.tudelft.bw4t.visualizations.menu.ChatMenu;
 
 /**
  * Listens for mouse events on the chat text area and builds a pop up menu
@@ -26,8 +27,8 @@ public class ChatListMouseListener implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        bw4tClientMapRenderer.buildPopUpMenuForChat();
-        bw4tClientMapRenderer.getjPopupMenu().show(bw4tClientMapRenderer.getChatSession(), e.getX(), e.getY());
+        ChatMenu.buildPopUpMenuForChat(bw4tClientMapRenderer);
+        bw4tClientMapRenderer.getData().jPopupMenu.show(bw4tClientMapRenderer.getData().chatSession, e.getX(), e.getY());
     }
 
     @Override

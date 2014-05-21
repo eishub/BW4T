@@ -10,6 +10,7 @@ import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.map.Rectangle;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer;
+import nl.tudelft.bw4t.visualizations.data.GraphicalUpdateOperations;
 
 /**
  * This class is loads maps into the {@link BW4TClientMapRenderer}.
@@ -33,7 +34,7 @@ public class RendererMapLoader {
 			throws IOException {
 
 		Point size = map.getArea();
-		renderer.setWorldDimensions((int) size.getX(), (int) size.getY());
+		GraphicalUpdateOperations.setWorldDimensions((int) size.getX(), (int) size.getY());
 
 		createDropZone(map.getZone("DropZone").getBoundingbox(), renderer);
 		for (Zone navpt : map.getZones()) {
@@ -97,7 +98,7 @@ public class RendererMapLoader {
 			break;
 		}
 		
-		renderer.addDoor(x, y, width, height, roomname);
+		GraphicalUpdateOperations.addDoor(x, y, width, height, roomname, renderer.getData());
 
 	}
 
@@ -111,8 +112,8 @@ public class RendererMapLoader {
 	 */
 	private static void createRoom(Zone room, BW4TClientMapRenderer renderer) {
 		Rectangle rect = room.getBoundingbox();
-		renderer.addRoom(rect.getX(), rect.getY(), rect.getWidth(),
-				rect.getHeight(), room.getName());
+		GraphicalUpdateOperations.addRoom(rect.getX(), rect.getY(), rect.getWidth(),
+				rect.getHeight(), room.getName(),renderer.getData());
 	}
 
 	/**
@@ -125,9 +126,9 @@ public class RendererMapLoader {
 	 */
 	private static void createDropZone(Rectangle dropzone,
 			BW4TClientMapRenderer renderer) {
-		renderer.addDropZone(new Integer[] { (int) dropzone.getX(),
+	    GraphicalUpdateOperations.addDropZone(new Integer[] { (int) dropzone.getX(),
 				(int) dropzone.getY(), (int) dropzone.getWidth(),
-				(int) dropzone.getHeight() });
+				(int) dropzone.getHeight() }, renderer.getData());
 	}
 
 	/**

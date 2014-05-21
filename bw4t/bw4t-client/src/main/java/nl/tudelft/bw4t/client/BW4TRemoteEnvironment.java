@@ -132,7 +132,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
     protected void notifyDeletedEntity(String entity, Collection<String> agents) {
         logger.debug("Notifying all listeners about an entity that has been deleted.");
         if (entityToGUI.get(entity) != null)
-            entityToGUI.get(entity).getFrame().dispose();
+            entityToGUI.get(entity).getData().jFrame.dispose();
         for (EnvironmentListener listener : environmentListeners) {
             listener.handleDeletedEntity(entity, agents);
         }
@@ -480,8 +480,8 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
                 if (percepts != null) {
                     tempEntity = entityToGUI.get(entity);
                     perceptsInfo = new PerceptsInfo(
-                            tempEntity.getEnvironmentDatabase(),
-                            tempEntity.getChatSession());
+                            tempEntity.getData().environmentDatabase,
+                            tempEntity.getData().chatSession);
                     perceptsInfo.processPercepts(percepts);
                 }
                 return percepts;
@@ -547,7 +547,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
 
         for (BW4TClientMapRenderer renderer : entityToGUI.values()) {
             if (renderer != null) {
-                renderer.setStop();
+                renderer.getData().stop = true;
             }
         }
         // copy list, the localAgents list is going to be changes by removing

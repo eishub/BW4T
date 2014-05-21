@@ -58,8 +58,8 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
 				if (agentB.getName().equals(agent)) {
 					agentB.setKilled();
 					if (agentData.get(agentB) != null) {
-						agentData.get(agentB).setStop();
-						agentData.get(agentB).getFrame().dispose();
+						agentData.get(agentB).getData().stop = true;
+						agentData.get(agentB).getData().jFrame.dispose();
 					}
 					agentData.remove(agentB);
 					return;
