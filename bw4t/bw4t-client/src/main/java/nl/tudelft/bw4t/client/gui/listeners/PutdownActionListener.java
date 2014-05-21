@@ -1,12 +1,10 @@
-package nl.tudelft.bw4t.visualizations.listeners;
+package nl.tudelft.bw4t.client.gui.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
-import nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer;
-import nl.tudelft.bw4t.visualizations.data.BW4TClientMapRendererData;
-
+import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
 import eis.iilang.Percept;
 
 /**
@@ -17,18 +15,17 @@ import eis.iilang.Percept;
  * 
  */
 public class PutdownActionListener implements ActionListener {
-    private BW4TClientMapRenderer bw4tClientMapRenderer;
+    private BW4TClientInfo bw4tClientInfo;
     
-    public PutdownActionListener(BW4TClientMapRenderer bw4tClientMapRenderer) {
-        this.bw4tClientMapRenderer = bw4tClientMapRenderer;
+    public PutdownActionListener(BW4TClientInfo bw4tClientInfo) {
+        this.bw4tClientInfo = bw4tClientInfo;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {        
-        BW4TClientMapRendererData data = bw4tClientMapRenderer.getData();
-        if (!data.goal)
+        if (!bw4tClientInfo.goal)
             try {
-                data.humanAgent.putDown();
+                bw4tClientInfo.humanAgent.putDown();
             } catch (Exception e1) {
                 // Also catch NoServerException. Nothing we can do really.
                 e1.printStackTrace();
@@ -37,7 +34,7 @@ public class PutdownActionListener implements ActionListener {
             LinkedList<Percept> percepts = new LinkedList<Percept>();
             Percept percept = new Percept("putDown");
             percepts.add(percept);
-            data.environmentDatabase.setToBePerformedAction(percepts);
+            bw4tClientInfo.environmentDatabase.setToBePerformedAction(percepts);
         }
     }
 }

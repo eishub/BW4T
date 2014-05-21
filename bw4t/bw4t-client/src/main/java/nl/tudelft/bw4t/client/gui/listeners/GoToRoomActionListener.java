@@ -1,12 +1,11 @@
-package nl.tudelft.bw4t.visualizations.listeners;
+package nl.tudelft.bw4t.client.gui.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
-import nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer;
-import nl.tudelft.bw4t.visualizations.data.BW4TClientMapRendererData;
-
+import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
+import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
 import eis.iilang.Identifier;
 import eis.iilang.Percept;
 
@@ -19,16 +18,16 @@ import eis.iilang.Percept;
  */
 public class GoToRoomActionListener implements ActionListener {
     private String id;
-    private BW4TClientMapRenderer bw4tClientMapRenderer;
+    private BW4TClientGUI bw4tClientMapRenderer;
 
-    public GoToRoomActionListener(String id, BW4TClientMapRenderer bw4tClientMapRenderer) {
+    public GoToRoomActionListener(String id, BW4TClientGUI bw4tClientMapRenderer) {
         this.id = id;
         this.bw4tClientMapRenderer = bw4tClientMapRenderer;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        BW4TClientMapRendererData data = bw4tClientMapRenderer.getData();
+        BW4TClientInfo data = bw4tClientMapRenderer.getBW4TClientInfo();
         if (!data.goal)
             try {
                 data.humanAgent.goTo(id);

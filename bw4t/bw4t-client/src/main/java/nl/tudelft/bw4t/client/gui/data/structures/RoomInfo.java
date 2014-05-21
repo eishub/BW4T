@@ -1,8 +1,6 @@
-package nl.tudelft.bw4t.visualizations.data;
+package nl.tudelft.bw4t.client.gui.data.structures;
 
 import java.util.ArrayList;
-
-import nl.tudelft.bw4t.visualizations.data.DoorInfo;
 
 /**
  * Helper class to store information about rooms

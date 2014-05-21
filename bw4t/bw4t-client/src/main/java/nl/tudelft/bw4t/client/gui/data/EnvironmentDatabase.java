@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.visualizations.data;
+package nl.tudelft.bw4t.client.gui.data;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -7,9 +7,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import eis.iilang.Percept;
-
+import nl.tudelft.bw4t.client.gui.data.structures.DropZoneInfo;
+import nl.tudelft.bw4t.client.gui.data.structures.RoomInfo;
 import nl.tudelft.bw4t.map.BlockColor;
+import eis.iilang.Percept;
 
 public class EnvironmentDatabase {
     private ArrayList<RoomInfo> rooms;
@@ -24,7 +25,7 @@ public class EnvironmentDatabase {
     private HashMap<String, Point> roomLabels;
     private int sequenceIndex;
     private Color entityColor = Color.BLACK;
-    private long holdingID = Long.MAX_VALUE;
+    private long holdingID;
     private String entityId;
     private Double[] entityLocation = new Double[] { 0., 0., 0., 0. };
     /**
@@ -43,8 +44,8 @@ public class EnvironmentDatabase {
         setAllBlocks(new HashMap<Long, BlockColor>());
         setRoomLabels(new HashMap<String, Point>());
         setEntityColor(Color.BLACK);
-        setHoldingID(Long.MAX_VALUE);
         setToBePerformedAction(new LinkedList<Percept>());
+        setHoldingID(Long.MAX_VALUE);
     }
 
     public String getEntityId() {

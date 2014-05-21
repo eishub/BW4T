@@ -1,8 +1,5 @@
-package nl.tudelft.bw4t.visualizations;
+package nl.tudelft.bw4t.client.gui.operations;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Shape;
@@ -12,19 +9,18 @@ import java.util.HashMap;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
+import nl.tudelft.bw4t.client.gui.VisualizerSettings;
+import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
+import nl.tudelft.bw4t.client.gui.data.structures.RoomInfo;
+import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
+import nl.tudelft.bw4t.client.gui.listeners.PutdownActionListener;
+import nl.tudelft.bw4t.client.gui.menu.BasicMenuOperations;
 import nl.tudelft.bw4t.map.BlockColor;
-import nl.tudelft.bw4t.map.Constants;
 import nl.tudelft.bw4t.message.BW4TMessage;
 import nl.tudelft.bw4t.message.MessageType;
-import nl.tudelft.bw4t.visualizations.data.BW4TClientMapRendererData;
-import nl.tudelft.bw4t.visualizations.data.DoorInfo;
-import nl.tudelft.bw4t.visualizations.data.DropZoneInfo;
-import nl.tudelft.bw4t.visualizations.data.RoomInfo;
-import nl.tudelft.bw4t.visualizations.listeners.MessageSenderActionListener;
-import nl.tudelft.bw4t.visualizations.listeners.PutdownActionListener;
-import nl.tudelft.bw4t.visualizations.menu.BasicMenuOperations;
 
-public class BasicOperations {
+public class MapOperations {
     /**
      * Build the pop up menu for clicking on a group goal color
      * 
@@ -32,75 +28,75 @@ public class BasicOperations {
      *            , the color that was clicked
      */
     public static void buildPopUpMenuForGoalColor(BlockColor color,
-            BW4TClientMapRenderer bw4tClientMapRenderer) {
-        BW4TClientMapRendererData data = bw4tClientMapRenderer.getData();
-        long holdingID = data.environmentDatabase.getHoldingID();
+            BW4TClientGUI bw4tClientMapRenderer) {
+        BW4TClientInfo bw4tClientInfo = bw4tClientMapRenderer.getBW4TClientInfo();
+        long holdingID = bw4tClientInfo.environmentDatabase.getHoldingID();
 
-        data.jPopupMenu.removeAll();
+        bw4tClientInfo.jPopupMenu.removeAll();
 
         JMenuItem menuItem = new JMenuItem(color.getName());
-        data.jPopupMenu.add(menuItem);
-        data.jPopupMenu.addSeparator();
+        bw4tClientInfo.jPopupMenu.add(menuItem);
+        bw4tClientInfo.jPopupMenu.addSeparator();
 
         BasicMenuOperations.addSectionTitleToPopupMenu("Command my robot to:",
-                data.jPopupMenu);
+                bw4tClientInfo.jPopupMenu);
 
         if (holdingID != Long.MAX_VALUE) {
             menuItem = new JMenuItem("Put down block");
             menuItem.addActionListener(new PutdownActionListener(
-                    bw4tClientMapRenderer));
-            data.jPopupMenu.add(menuItem);
+                    bw4tClientInfo));
+            bw4tClientInfo.jPopupMenu.add(menuItem);
         }
 
-        data.jPopupMenu.addSeparator();
+        bw4tClientInfo.jPopupMenu.addSeparator();
 
         BasicMenuOperations.addSectionTitleToPopupMenu("Tell: ",
-                data.jPopupMenu);
+                bw4tClientInfo.jPopupMenu);
 
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-                MessageType.lookingFor, null, color.getName(), null), data);
+                MessageType.lookingFor, null, color.getName(), null), bw4tClientInfo);
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-                MessageType.willGetColor, null, color.getName(), null), data);
+                MessageType.willGetColor, null, color.getName(), null), bw4tClientInfo);
         BasicMenuOperations
                 .addMenuItemToPopupMenu(new BW4TMessage(
                         MessageType.droppedOffBlock, null, color.getName(),
-                        null), data);
+                        null), bw4tClientInfo);
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-                MessageType.weNeed, null, color.getName(), null), data);
+                MessageType.weNeed, null, color.getName(), null), bw4tClientInfo);
 
         if (holdingID != Long.MAX_VALUE) {
             BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-                    MessageType.hasColor, null, color.getName(), null), data);
+                    MessageType.hasColor, null, color.getName(), null), bw4tClientInfo);
 
             JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu(
-                    "I have a " + color + " block from room", data.jPopupMenu);
+                    "I have a " + color + " block from room", bw4tClientInfo.jPopupMenu);
 
-            for (RoomInfo room : data.environmentDatabase.getRooms()) {
-                String label = findLabelForRoom(room, data);
+            for (RoomInfo room : bw4tClientInfo.environmentDatabase.getRooms()) {
+                String label = findLabelForRoom(room, bw4tClientInfo);
                 menuItem = new JMenuItem(Long.toString(room.getId()));
                 menuItem.addActionListener(new MessageSenderActionListener(
                         new BW4TMessage(MessageType.hasColorFromRoom, label,
-                                color.getName(), null), data));
+                                color.getName(), null), bw4tClientInfo));
                 submenu.add(menuItem);
             }
         }
 
-        data.jPopupMenu.addSeparator();
+        bw4tClientInfo.jPopupMenu.addSeparator();
         BasicMenuOperations
-                .addSectionTitleToPopupMenu("Ask: ", data.jPopupMenu);
+                .addSectionTitleToPopupMenu("Ask: ", bw4tClientInfo.jPopupMenu);
 
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-                MessageType.whereIsColor, null, color.getName(), null), data);
+                MessageType.whereIsColor, null, color.getName(), null), bw4tClientInfo);
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-                MessageType.whoHasABlock, null, color.getName(), null), data);
+                MessageType.whoHasABlock, null, color.getName(), null), bw4tClientInfo);
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-                MessageType.whereShouldIGo), data);
+                MessageType.whereShouldIGo), bw4tClientInfo);
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-                MessageType.whatColorShouldIGet), data);
+                MessageType.whatColorShouldIGet), bw4tClientInfo);
 
-        data.jPopupMenu.addSeparator();
+        bw4tClientInfo.jPopupMenu.addSeparator();
         menuItem = new JMenuItem("Close menu");
-        data.jPopupMenu.add(menuItem);
+        bw4tClientInfo.jPopupMenu.add(menuItem);
     }
 
     /**
@@ -111,7 +107,7 @@ public class BasicOperations {
      * @return the label
      */
     public static String findLabelForRoom(RoomInfo room,
-            BW4TClientMapRendererData data) {
+            BW4TClientInfo data) {
         HashMap<String, Point> roomLabels = data.environmentDatabase
                 .getRoomLabels();
         for (String label : roomLabels.keySet()) {
@@ -150,7 +146,7 @@ public class BasicOperations {
      *            , the box that should be checked
      * @return true if close to the box, false if not
      */
-    public static boolean closeToBox(Long boxID, BW4TClientMapRendererData data) {
+    public static boolean closeToBox(Long boxID, BW4TClientInfo data) {
         HashMap<Long, java.awt.geom.Point2D.Double> objectPositions = data.environmentDatabase
                 .getObjectPositions();
         double minX = objectPositions.get(boxID).getX() - 0.5;

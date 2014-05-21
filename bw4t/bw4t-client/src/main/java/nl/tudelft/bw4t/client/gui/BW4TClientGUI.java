@@ -1,21 +1,14 @@
-package nl.tudelft.bw4t.visualizations;
+package nl.tudelft.bw4t.client.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.Shape;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.geom.Rectangle2D;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 import javax.swing.BorderFactory;
@@ -23,8 +16,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -33,35 +24,19 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 
-import org.apache.log4j.Logger;
-
 import nl.tudelft.bw4t.RendererMapLoader;
 import nl.tudelft.bw4t.agent.HumanAgent;
 import nl.tudelft.bw4t.client.BW4TClientSettings;
 import nl.tudelft.bw4t.client.BW4TRemoteEnvironment;
-import nl.tudelft.bw4t.map.BlockColor;
-import nl.tudelft.bw4t.map.ColorTranslator;
-import nl.tudelft.bw4t.map.Constants;
-import nl.tudelft.bw4t.message.BW4TMessage;
-import nl.tudelft.bw4t.message.MessageTranslator;
-import nl.tudelft.bw4t.message.MessageType;
-import nl.tudelft.bw4t.visualizations.data.BW4TClientMapRendererData;
-import nl.tudelft.bw4t.visualizations.data.DataProcessing;
-import nl.tudelft.bw4t.visualizations.data.DoorInfo;
-import nl.tudelft.bw4t.visualizations.data.DropZoneInfo;
-import nl.tudelft.bw4t.visualizations.data.EnvironmentDatabase;
-import nl.tudelft.bw4t.visualizations.data.PerceptsInfo;
-import nl.tudelft.bw4t.visualizations.data.RoomInfo;
-import nl.tudelft.bw4t.visualizations.listeners.ChatListMouseListener;
-import nl.tudelft.bw4t.visualizations.listeners.GoToBlockActionListener;
-import nl.tudelft.bw4t.visualizations.listeners.GoToRoomActionListener;
-import nl.tudelft.bw4t.visualizations.listeners.GotoPositionActionListener;
-import nl.tudelft.bw4t.visualizations.listeners.MessageSenderActionListener;
-import nl.tudelft.bw4t.visualizations.listeners.PickUpActionListener;
-import nl.tudelft.bw4t.visualizations.listeners.PutdownActionListener;
-import nl.tudelft.bw4t.visualizations.listeners.TeamListMouseListener;
-import nl.tudelft.bw4t.visualizations.menu.ActionPopUpMenu;
-import nl.tudelft.bw4t.visualizations.menu.BasicMenuOperations;
+import nl.tudelft.bw4t.client.gui.data.EnvironmentDatabase;
+import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
+import nl.tudelft.bw4t.client.gui.listeners.ChatListMouseListener;
+import nl.tudelft.bw4t.client.gui.listeners.TeamListMouseListener;
+import nl.tudelft.bw4t.client.gui.menu.ActionPopUpMenu;
+import nl.tudelft.bw4t.client.gui.operations.ProcessingOperations;
+
+import org.apache.log4j.Logger;
+
 import eis.exceptions.NoEnvironmentException;
 import eis.exceptions.PerceiveException;
 import eis.iilang.Identifier;
@@ -98,20 +73,17 @@ import eis.iilang.Percept;
  * and merged into the regular percepts. So user mouse clicks are stored there
  * until it's time for perceiving.
  */
-public class BW4TClientMapRenderer extends JPanel implements Runnable,
-        MouseListener {
+public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
     private static final long serialVersionUID = 2938950289045953493L;
     /**
      * The log4j Logger which displays logs on console
      */
-    private static Logger logger = Logger
-            .getLogger(BW4TClientMapRenderer.class);
+    private static Logger logger = Logger.getLogger(BW4TClientGUI.class);
 
-    private BW4TClientMapRendererData data = new BW4TClientMapRendererData(
-            new JTextArea(8, 1));
+    private BW4TClientInfo bw4tClientInfo = new BW4TClientInfo(new JTextArea(8, 1));
 
-    public BW4TClientMapRendererData getData() {
-        return data;
+    public BW4TClientInfo getBW4TClientInfo() {
+        return bw4tClientInfo;
     }
 
     /**
@@ -124,12 +96,12 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
      * @throws IOException
      *             if map can't be loaded.
      */
-    public BW4TClientMapRenderer(BW4TRemoteEnvironment env, String entityId,
+    public BW4TClientGUI(BW4TRemoteEnvironment env, String entityId,
             boolean goal, boolean humanPlayer) throws IOException {
-        data.environment = env;
+        bw4tClientInfo.environment = env;
         init(entityId, humanPlayer);
-        this.data.goal = goal;
-        this.data.humanPlayer = humanPlayer;
+        this.bw4tClientInfo.goal = goal;
+        this.bw4tClientInfo.humanPlayer = humanPlayer;
     }
 
     /**
@@ -140,11 +112,11 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
      * @throws IOException
      *             if map can't be loaded.
      */
-    public BW4TClientMapRenderer(BW4TRemoteEnvironment env, String entityId,
+    public BW4TClientGUI(BW4TRemoteEnvironment env, String entityId,
             HumanAgent humanAgent) throws IOException {
-        data.environment = env;
-        data.humanAgent = humanAgent;
-        this.data.humanPlayer = true;
+        bw4tClientInfo.environment = env;
+        bw4tClientInfo.humanAgent = humanAgent;
+        this.bw4tClientInfo.humanPlayer = true;
         init(entityId, true);
     }
 
@@ -165,40 +137,38 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
         // Initialize variables
         logger.debug("Initializing agent window for entity: " + entityId);
 
-        data.environmentDatabase = new EnvironmentDatabase();
-        data.perceptsInfo = new PerceptsInfo(data.environmentDatabase,
-                data.chatSession);
+        bw4tClientInfo.environmentDatabase = new EnvironmentDatabase();
 
-        data.environmentDatabase.setEntityId(entityId);
+        bw4tClientInfo.environmentDatabase.setEntityId(entityId);
 
-        data.buttonPanel = new JPanel();
+        bw4tClientInfo.buttonPanel = new JPanel();
         // buttonPanel.setBackground(Color.BLACK);
         JButton jButton = new JButton("all");
-        data.buttonPanel.add(jButton);
+        bw4tClientInfo.buttonPanel.add(jButton);
         jButton.addMouseListener(new TeamListMouseListener(this));
 
-        RendererMapLoader.loadMap(data.environment.getMap(), this);
+        RendererMapLoader.loadMap(bw4tClientInfo.environment.getMap(), this);
 
         // Initialize graphics
 
-        data.jFrame = new JFrame(entityId);
-        data.jFrame.setSize(VisualizerSettings.worldX
+        bw4tClientInfo.jFrame = new JFrame(entityId);
+        bw4tClientInfo.jFrame.setSize(VisualizerSettings.worldX
                 * VisualizerSettings.scale + 10, VisualizerSettings.worldY
                 * VisualizerSettings.scale + 250);
-        data.jFrame.setLocation(BW4TClientSettings.getX(),
+        bw4tClientInfo.jFrame.setLocation(BW4TClientSettings.getX(),
                 BW4TClientSettings.getY());
-        data.jFrame.setLocation(BW4TClientSettings.getX(),
+        bw4tClientInfo.jFrame.setLocation(BW4TClientSettings.getX(),
                 BW4TClientSettings.getY());
-        data.jFrame.setResizable(true);
-        data.jFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        data.jFrame.addWindowListener(new WindowAdapter() {
+        bw4tClientInfo.jFrame.setResizable(true);
+        bw4tClientInfo.jFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        bw4tClientInfo.jFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                JFrame frame = (JFrame) e.getSource();
+                //JFrame frame = (JFrame) e.getSource();
                 logger.info("Exit request received from the Window Manager to close Window of entity: "
                         + entityId);
-                data.stop = true;
+                bw4tClientInfo.stop = true;
                 try {
-                    data.environment.kill();
+                    bw4tClientInfo.environment.kill();
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
@@ -214,32 +184,32 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
                 .setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         chatPanel.setFocusable(false);
 
-        data.chatSession.setFocusable(false);
-        data.chatPane = new JScrollPane(data.chatSession);
-        chatPanel.add(data.chatPane);
-        data.chatPane
+        bw4tClientInfo.chatSession.setFocusable(false);
+        bw4tClientInfo.chatPane = new JScrollPane(bw4tClientInfo.chatSession);
+        chatPanel.add(bw4tClientInfo.chatPane);
+        bw4tClientInfo.chatPane
                 .setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        data.chatPane
+        bw4tClientInfo.chatPane
                 .setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        data.chatPane.setEnabled(true);
-        data.chatPane.setFocusable(false);
-        data.chatPane.setColumnHeaderView(new JLabel("Chat Session:"));
+        bw4tClientInfo.chatPane.setEnabled(true);
+        bw4tClientInfo.chatPane.setFocusable(false);
+        bw4tClientInfo.chatPane.setColumnHeaderView(new JLabel("Chat Session:"));
 
-        jPanel.add(data.buttonPanel, BorderLayout.NORTH);
+        jPanel.add(bw4tClientInfo.buttonPanel, BorderLayout.NORTH);
         jPanel.add(this, BorderLayout.CENTER);
-        jPanel.add(data.chatPane, BorderLayout.SOUTH);
+        jPanel.add(bw4tClientInfo.chatPane, BorderLayout.SOUTH);
 
-        data.jFrame.add(jPanel);
+        bw4tClientInfo.jFrame.add(jPanel);
 
         // Initialize mouse listeners for human controller
         if (humanPlayer) {
-            this.data.jPopupMenu = new JPopupMenu();
+            this.bw4tClientInfo.jPopupMenu = new JPopupMenu();
             addMouseListener(this);
 
-            data.chatSession.addMouseListener(new ChatListMouseListener(this));
+            bw4tClientInfo.chatSession.addMouseListener(new ChatListMouseListener(bw4tClientInfo));
         }
 
-        data.jFrame.setVisible(true);
+        bw4tClientInfo.jFrame.setVisible(true);
         // Start repainting graphics
         Thread paintThread = new Thread(this);
         paintThread.start();
@@ -253,10 +223,10 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
      *            , the Id of the player to be added
      */
     public void addPlayer(String playerId) {
-        if (!playerId.equals(data.environmentDatabase.getEntityId())) {
+        if (!playerId.equals(bw4tClientInfo.environmentDatabase.getEntityId())) {
             JButton button = new JButton(playerId);
             button.addMouseListener(new TeamListMouseListener(this));
-            data.buttonPanel.add(button);
+            bw4tClientInfo.buttonPanel.add(button);
         }
     }
 
@@ -270,12 +240,12 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        DataProcessing.processRooms(g2d, data);
-        DataProcessing.processLabels(g2d, data);
-        DataProcessing.processDropZone(g2d, data);
-        DataProcessing.processBlocks(g2d, data);
-        DataProcessing.processEntity(g2d, data);
-        DataProcessing.processSequence(g2d, data);
+        ProcessingOperations.processRooms(g2d, bw4tClientInfo);
+        ProcessingOperations.processLabels(g2d, bw4tClientInfo);
+        ProcessingOperations.processDropZone(g2d, bw4tClientInfo);
+        ProcessingOperations.processBlocks(g2d, bw4tClientInfo);
+        ProcessingOperations.processEntity(g2d, bw4tClientInfo);
+        ProcessingOperations.processSequence(g2d, bw4tClientInfo);
     }
 
     /**
@@ -283,21 +253,21 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
      */
     @Override
     public void run() {
-        while (!data.stop) {
-            if (data.humanPlayer) {
+        while (!bw4tClientInfo.stop) {
+            if (bw4tClientInfo.humanPlayer) {
                 LinkedList<Percept> percepts;
                 try {
-                    percepts = data.environment
-                            .getAllPerceptsFromEntity(data.environmentDatabase
+                    percepts = bw4tClientInfo.environment
+                            .getAllPerceptsFromEntity(bw4tClientInfo.environmentDatabase
                                     .getEntityId() + "gui");
                     if (percepts != null) {
-                        data.perceptsInfo.processPercepts(percepts);
+                        ProcessingOperations.processPercepts(percepts, bw4tClientInfo);
                     }
                 } catch (PerceiveException e) {
                     e.printStackTrace();
                 } catch (NoEnvironmentException e) {
                     e.printStackTrace();
-                    data.stop = true; // stop and exit, can't handle this.
+                    bw4tClientInfo.stop = true; // stop and exit, can't handle this.
                 }
             }
             SwingUtilities.invokeLater(new Runnable() {
@@ -315,9 +285,9 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
         }
 
         System.out.println("stopped BW4T renderer");
-        BW4TClientSettings.setWindowParams(data.jFrame.getX(),
-                data.jFrame.getY());
-        data.jFrame.setVisible(false);
+        BW4TClientSettings.setWindowParams(bw4tClientInfo.jFrame.getX(),
+                bw4tClientInfo.jFrame.getY());
+        bw4tClientInfo.jFrame.setVisible(false);
     }
 
     @Override
@@ -339,7 +309,7 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
 
         int mouseY = e.getY();
 
-        data.selectedLocation = new Integer[] { mouseX, mouseY };
+        bw4tClientInfo.selectedLocation = new Integer[] { mouseX, mouseY };
 
         ActionPopUpMenu.buildPopUpMenu(this);
     }
@@ -356,9 +326,9 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
      * @return a percept containing the next action to be performed
      */
     public LinkedList<Percept> getToBePerformedAction() {
-        LinkedList<Percept> toBePerformedActionClone = (LinkedList<Percept>) data.environmentDatabase
+        LinkedList<Percept> toBePerformedActionClone = (LinkedList<Percept>) bw4tClientInfo.environmentDatabase
                 .getToBePerformedAction().clone();
-        data.environmentDatabase
+        bw4tClientInfo.environmentDatabase
                 .setToBePerformedAction(new LinkedList<Percept>());
         return toBePerformedActionClone;
     }
@@ -377,8 +347,8 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
         String sender = ((Identifier) parameters.get(0)).getValue();
         String message = ((Identifier) parameters.get(1)).getValue();
 
-        data.chatSession.append(sender + " : " + message + "\n");
-        data.chatSession.setCaretPosition(data.chatSession.getDocument()
+        bw4tClientInfo.chatSession.append(sender + " : " + message + "\n");
+        bw4tClientInfo.chatSession.setCaretPosition(bw4tClientInfo.chatSession.getDocument()
                 .getLength());
 
         return null;
@@ -394,6 +364,6 @@ public class BW4TClientMapRenderer extends JPanel implements Runnable,
      *            , the point
      */
     public void addLabel(String label, Point point) {
-        data.environmentDatabase.getRoomLabels().put(label, point);
+        bw4tClientInfo.environmentDatabase.getRoomLabels().put(label, point);
     }
 }

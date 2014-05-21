@@ -1,4 +1,5 @@
-package nl.tudelft.bw4t.visualizations.data;
+package nl.tudelft.bw4t.client.gui.data.structures;
+
 
 /**
  * Helper method to store information about doors
@@ -6,14 +7,12 @@ package nl.tudelft.bw4t.visualizations.data;
  */
 public class DoorInfo {
     private double x, y, width, height;
-    private EnvironmentDatabase environmentDatabase;
 
-    public DoorInfo(double x, double y, double width, double height, EnvironmentDatabase environmentDatabase) {
+    public DoorInfo(double x, double y, double width, double height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.environmentDatabase = environmentDatabase;
     }
 
     public double getX() {

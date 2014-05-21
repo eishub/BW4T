@@ -2,6 +2,8 @@ package nl.tudelft.bw4t;
 
 import java.io.IOException;
 
+import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
+import nl.tudelft.bw4t.client.gui.operations.GraphicalUpdateOperations;
 import nl.tudelft.bw4t.map.Constants;
 import nl.tudelft.bw4t.map.Door.Orientation;
 import nl.tudelft.bw4t.map.Entity;
@@ -9,11 +11,9 @@ import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.map.Rectangle;
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer;
-import nl.tudelft.bw4t.visualizations.data.GraphicalUpdateOperations;
 
 /**
- * This class is loads maps into the {@link BW4TClientMapRenderer}.
+ * This class is loads maps into the {@link BW4TClientGUI}.
  * 
  * @author W.Pasman
  * 
@@ -30,7 +30,7 @@ public class RendererMapLoader {
 	 * @throws IOException
 	 *             when reading the file produces errors
 	 */
-	public static void loadMap(NewMap map, BW4TClientMapRenderer renderer)
+	public static void loadMap(NewMap map, BW4TClientGUI renderer)
 			throws IOException {
 
 		Point size = map.getArea();
@@ -65,7 +65,7 @@ public class RendererMapLoader {
 	 * @param renderer
 	 *            , the BW4TRenderer
 	 */
-	private static void createPlayer(Entity args, BW4TClientMapRenderer renderer) {
+	private static void createPlayer(Entity args, BW4TClientGUI renderer) {
 		String playerId = args.getName();
 		renderer.addPlayer(playerId);
 	}
@@ -78,10 +78,10 @@ public class RendererMapLoader {
 	 * @param roomname
 	 *            the name of the room in the {@link NewMap}
 	 * @param renderer
-	 *            the {@link BW4TClientMapRenderer}.
+	 *            the {@link BW4TClientGUI}.
 	 */
 	private static void createDoor(nl.tudelft.bw4t.map.Door doorargs,
-			String roomname, BW4TClientMapRenderer renderer) {
+			String roomname, BW4TClientGUI renderer) {
 		double x = doorargs.getPosition().getX();
 		double y = doorargs.getPosition().getY();
 
@@ -98,7 +98,7 @@ public class RendererMapLoader {
 			break;
 		}
 		
-		GraphicalUpdateOperations.addDoor(x, y, width, height, roomname, renderer.getData());
+		GraphicalUpdateOperations.addDoor(x, y, width, height, roomname, renderer.getBW4TClientInfo());
 
 	}
 
@@ -108,12 +108,12 @@ public class RendererMapLoader {
 	 * @param room
 	 *            the room {@link Zone}
 	 * @param renderer
-	 *            the {@link BW4TClientMapRenderer}.
+	 *            the {@link BW4TClientGUI}.
 	 */
-	private static void createRoom(Zone room, BW4TClientMapRenderer renderer) {
+	private static void createRoom(Zone room, BW4TClientGUI renderer) {
 		Rectangle rect = room.getBoundingbox();
 		GraphicalUpdateOperations.addRoom(rect.getX(), rect.getY(), rect.getWidth(),
-				rect.getHeight(), room.getName(),renderer.getData());
+				rect.getHeight(), room.getName(),renderer.getBW4TClientInfo());
 	}
 
 	/**
@@ -125,10 +125,10 @@ public class RendererMapLoader {
 	 *            , the BW4TRenderer
 	 */
 	private static void createDropZone(Rectangle dropzone,
-			BW4TClientMapRenderer renderer) {
+			BW4TClientGUI renderer) {
 	    GraphicalUpdateOperations.addDropZone(new Integer[] { (int) dropzone.getX(),
 				(int) dropzone.getY(), (int) dropzone.getWidth(),
-				(int) dropzone.getHeight() }, renderer.getData());
+				(int) dropzone.getHeight() }, renderer.getBW4TClientInfo());
 	}
 
 	/**
@@ -140,7 +140,7 @@ public class RendererMapLoader {
 	 *            , the BW4TRenderer
 	 */
 	private static void createNavPointLabel(Zone args,
-			BW4TClientMapRenderer renderer) {
+			BW4TClientGUI renderer) {
 		String label = args.getName();
 		int x = (int) args.getBoundingbox().getX();
 		int y = (int) args.getBoundingbox().getY();

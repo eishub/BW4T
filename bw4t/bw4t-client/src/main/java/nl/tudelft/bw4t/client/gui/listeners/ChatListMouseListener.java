@@ -1,10 +1,10 @@
-package nl.tudelft.bw4t.visualizations.listeners;
+package nl.tudelft.bw4t.client.gui.listeners;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer;
-import nl.tudelft.bw4t.visualizations.menu.ChatMenu;
+import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
+import nl.tudelft.bw4t.client.gui.menu.ChatMenu;
 
 /**
  * Listens for mouse events on the chat text area and builds a pop up menu
@@ -15,10 +15,10 @@ import nl.tudelft.bw4t.visualizations.menu.ChatMenu;
  */
 public class ChatListMouseListener implements MouseListener {
     
-    private BW4TClientMapRenderer bw4tClientMapRenderer;
+    private BW4TClientInfo bw4tClientInfo;
     
-    public ChatListMouseListener(BW4TClientMapRenderer bw4tClientMapRenderer) {
-        this.bw4tClientMapRenderer = bw4tClientMapRenderer;
+    public ChatListMouseListener(BW4TClientInfo bw4tClientInfo) {
+        this.bw4tClientInfo = bw4tClientInfo;
     }
 
     @Override
@@ -27,8 +27,8 @@ public class ChatListMouseListener implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        ChatMenu.buildPopUpMenuForChat(bw4tClientMapRenderer);
-        bw4tClientMapRenderer.getData().jPopupMenu.show(bw4tClientMapRenderer.getData().chatSession, e.getX(), e.getY());
+        ChatMenu.buildPopUpMenuForChat(bw4tClientInfo);
+        bw4tClientInfo.jPopupMenu.show(bw4tClientInfo.chatSession, e.getX(), e.getY());
     }
 
     @Override

@@ -1,16 +1,5 @@
 package nl.tudelft.bw4t.client;
 
-import eis.exceptions.AgentException;
-import eis.exceptions.EntityException;
-import eis.exceptions.ManagementException;
-import eis.exceptions.NoEnvironmentException;
-import eis.exceptions.RelationException;
-import eis.iilang.Action;
-import eis.iilang.EnvironmentState;
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
-
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -26,6 +15,18 @@ import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.server.BW4TServerActions;
 
 import org.apache.log4j.Logger;
+
+import eis.EnvironmentInterfaceStandard;
+import eis.exceptions.AgentException;
+import eis.exceptions.EntityException;
+import eis.exceptions.ManagementException;
+import eis.exceptions.NoEnvironmentException;
+import eis.exceptions.RelationException;
+import eis.iilang.Action;
+import eis.iilang.EnvironmentState;
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
+import eis.iilang.Percept;
 
 /**
  * A client remote object that can be registered to a BW4TServer. This object
