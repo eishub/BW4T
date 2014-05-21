@@ -380,6 +380,14 @@ abstract class AbstractMenuOptionFactory implements ActionListener {
                     e, "Error: No file has been found.");
         }
     }
+    
+    /**
+     * Returns the MenuBar
+     * @return The MenuBar
+     */
+    public MenuBar getMenuView() {
+    	return this.view;
+    }
 
     /**
      * Gets called when the button associated with this action
@@ -606,7 +614,12 @@ class MenuOptionNew extends AbstractMenuOptionFactory {
 //        configPanel.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
         configPanel.setMapFile(ConfigurationPanel.DEFAULT_VALUES.MAP_FILE.getValue());
         
+        //save the dafault values as the "old" values
         super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
+        
+        //set last file location to null so that the previous saved file won't get
+        //overwritten when the new config is saved.
+        super.getMenuView().setLastFileLocation(null);
 
         // Reset the bot panel
         //TODO reset botPanel
