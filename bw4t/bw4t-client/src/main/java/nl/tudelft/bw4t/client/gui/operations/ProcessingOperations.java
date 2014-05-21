@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import nl.tudelft.bw4t.client.gui.VisualizerSettings;
 import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
@@ -195,7 +196,7 @@ public class ProcessingOperations {
      * @param percepts
      *            , a list of all received percepts
      */
-    public static void processPercepts(LinkedList<Percept> percepts, BW4TClientInfo data) {
+    public static void processPercepts(List<Percept> percepts, BW4TClientInfo data) {
 
         // first process the not percepts.
         for (Percept percept : percepts) {

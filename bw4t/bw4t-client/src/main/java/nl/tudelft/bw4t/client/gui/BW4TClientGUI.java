@@ -10,6 +10,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -78,9 +79,10 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
     /**
      * The log4j Logger which displays logs on console
      */
-    private static Logger logger = Logger.getLogger(BW4TClientGUI.class);
+    private final static Logger LOGGER = Logger.getLogger(BW4TClientGUI.class);
 
-    private BW4TClientInfo bw4tClientInfo = new BW4TClientInfo(new JTextArea(8, 1));
+    private BW4TClientInfo bw4tClientInfo = new BW4TClientInfo(new JTextArea(8,
+            1));
 
     public BW4TClientInfo getBW4TClientInfo() {
         return bw4tClientInfo;
@@ -132,17 +134,16 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(
+                    "Could not properly set the Native Look and Feel for the BW4T Client",
+                    e);
         }
         // Initialize variables
-        logger.debug("Initializing agent window for entity: " + entityId);
-
+        LOGGER.debug("Initializing agent window for entity: " + entityId);
         bw4tClientInfo.environmentDatabase = new EnvironmentDatabase();
-
         bw4tClientInfo.environmentDatabase.setEntityId(entityId);
-
         bw4tClientInfo.buttonPanel = new JPanel();
-        // buttonPanel.setBackground(Color.BLACK);
+
         JButton jButton = new JButton("all");
         bw4tClientInfo.buttonPanel.add(jButton);
         jButton.addMouseListener(new TeamListMouseListener(this));
@@ -160,17 +161,18 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
         bw4tClientInfo.jFrame.setLocation(BW4TClientSettings.getX(),
                 BW4TClientSettings.getY());
         bw4tClientInfo.jFrame.setResizable(true);
-        bw4tClientInfo.jFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        bw4tClientInfo.jFrame
+                .setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         bw4tClientInfo.jFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                //JFrame frame = (JFrame) e.getSource();
-                logger.info("Exit request received from the Window Manager to close Window of entity: "
+                LOGGER.info("Exit request received from the Window Manager to close Window of entity: "
                         + entityId);
                 bw4tClientInfo.stop = true;
                 try {
                     bw4tClientInfo.environment.kill();
                 } catch (Exception e1) {
-                    e1.printStackTrace();
+                    LOGGER.error("Could not correctly kill the environment.",
+                            e1);
                 }
             }
         });
@@ -193,7 +195,8 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
                 .setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         bw4tClientInfo.chatPane.setEnabled(true);
         bw4tClientInfo.chatPane.setFocusable(false);
-        bw4tClientInfo.chatPane.setColumnHeaderView(new JLabel("Chat Session:"));
+        bw4tClientInfo.chatPane
+                .setColumnHeaderView(new JLabel("Chat Session:"));
 
         jPanel.add(bw4tClientInfo.buttonPanel, BorderLayout.NORTH);
         jPanel.add(this, BorderLayout.CENTER);
@@ -206,7 +209,8 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
             this.bw4tClientInfo.jPopupMenu = new JPopupMenu();
             addMouseListener(this);
 
-            bw4tClientInfo.chatSession.addMouseListener(new ChatListMouseListener(bw4tClientInfo));
+            bw4tClientInfo.chatSession
+                    .addMouseListener(new ChatListMouseListener(bw4tClientInfo));
         }
 
         bw4tClientInfo.jFrame.setVisible(true);
@@ -255,19 +259,24 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
     public void run() {
         while (!bw4tClientInfo.stop) {
             if (bw4tClientInfo.humanPlayer) {
-                LinkedList<Percept> percepts;
+                List<Percept> percepts;
                 try {
                     percepts = bw4tClientInfo.environment
                             .getAllPerceptsFromEntity(bw4tClientInfo.environmentDatabase
                                     .getEntityId() + "gui");
                     if (percepts != null) {
-                        ProcessingOperations.processPercepts(percepts, bw4tClientInfo);
+                        ProcessingOperations.processPercepts(percepts,
+                                bw4tClientInfo);
                     }
                 } catch (PerceiveException e) {
-                    e.printStackTrace();
+                    LOGGER.error(
+                            "Could not correctly poll the percepts from the environment.",
+                            e);
                 } catch (NoEnvironmentException e) {
-                    e.printStackTrace();
-                    bw4tClientInfo.stop = true; // stop and exit, can't handle this.
+                    LOGGER.error(
+                            "Could not correctly poll the percepts from the environment. No connection could be made to the environment",
+                            e);
+                    bw4tClientInfo.stop = true;
                 }
             }
             SwingUtilities.invokeLater(new Runnable() {
@@ -280,11 +289,11 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
-                System.err.println("ignoring interupted rendering delay");
+                LOGGER.error("The system ignored the interrupted rendering delay.", e);
             }
         }
 
-        System.out.println("stopped BW4T renderer");
+        LOGGER.info("Stopped the BW4T Client Renderer.");
         BW4TClientSettings.setWindowParams(bw4tClientInfo.jFrame.getX(),
                 bw4tClientInfo.jFrame.getY());
         bw4tClientInfo.jFrame.setVisible(false);
@@ -325,8 +334,8 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
      * 
      * @return a percept containing the next action to be performed
      */
-    public LinkedList<Percept> getToBePerformedAction() {
-        LinkedList<Percept> toBePerformedActionClone = (LinkedList<Percept>) bw4tClientInfo.environmentDatabase
+    public List<Percept> getToBePerformedAction() {
+        List<Percept> toBePerformedActionClone = (LinkedList<Percept>) bw4tClientInfo.environmentDatabase
                 .getToBePerformedAction().clone();
         bw4tClientInfo.environmentDatabase
                 .setToBePerformedAction(new LinkedList<Percept>());
@@ -343,13 +352,13 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
      *            message itself.
      * @return a null percept as no real percept should be returned
      */
-    public Percept sendToGUI(LinkedList<Parameter> parameters) {
+    public Percept sendToGUI(List<Parameter> parameters) {
         String sender = ((Identifier) parameters.get(0)).getValue();
         String message = ((Identifier) parameters.get(1)).getValue();
 
         bw4tClientInfo.chatSession.append(sender + " : " + message + "\n");
-        bw4tClientInfo.chatSession.setCaretPosition(bw4tClientInfo.chatSession.getDocument()
-                .getLength());
+        bw4tClientInfo.chatSession.setCaretPosition(bw4tClientInfo.chatSession
+                .getDocument().getLength());
 
         return null;
     }
