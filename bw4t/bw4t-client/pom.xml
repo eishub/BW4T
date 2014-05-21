@@ -39,7 +39,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>nl.tudelft.bw4t.client.BW4TRemoteEnvironment</mainClass>
+							<mainClass>nl.tudelft.bw4t.client.startup.Launcher</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>

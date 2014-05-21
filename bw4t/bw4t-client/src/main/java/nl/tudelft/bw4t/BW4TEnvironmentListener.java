@@ -9,7 +9,7 @@ import java.util.HashMap;
 import nl.tudelft.bw4t.agent.BW4TAgent;
 import nl.tudelft.bw4t.agent.HumanAgent;
 import nl.tudelft.bw4t.client.BW4TRemoteEnvironment;
-import nl.tudelft.bw4t.visualizations.BW4TClientMapRenderer;
+import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import eis.EnvironmentListener;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
@@ -35,7 +35,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
 	 * This map associates agents with a renderer. I suppose agents not having a
 	 * renderer do not end up in this list.
 	 */
-	private HashMap<BW4TAgent, BW4TClientMapRenderer> agentData = new HashMap<BW4TAgent, BW4TClientMapRenderer>();
+	private HashMap<BW4TAgent, BW4TClientGUI> agentData = new HashMap<BW4TAgent, BW4TClientGUI>();
 
 	private BW4TRemoteEnvironment environment;
 
@@ -58,8 +58,8 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
 				if (agentB.getName().equals(agent)) {
 					agentB.setKilled();
 					if (agentData.get(agentB) != null) {
-						agentData.get(agentB).setStop();
-						agentData.get(agentB).getFrame().dispose();
+						agentData.get(agentB).getBW4TClientInfo().stop = true;
+						agentData.get(agentB).getBW4TClientInfo().jFrame.dispose();
 					}
 					agentData.remove(agentB);
 					return;
@@ -125,8 +125,8 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
 			agent.registerEntity(entityId);
 			environment.registerAgent(agent.getAgentId());
 			environment.associateEntity(agent.getAgentId(), entityId);
-			BW4TClientMapRenderer renderer;
-			renderer = new BW4TClientMapRenderer(environment, entityId, agent);
+			BW4TClientGUI renderer;
+			renderer = new BW4TClientGUI(environment, entityId, agent);
 
 			agent.start();
 			agentCount++;
@@ -140,12 +140,9 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
 			if (agentClass != null) {
 				agentClassName = agentClass.getValue();
 			}
-			Class<? extends BW4TAgent> c = (Class<? extends BW4TAgent>) Class
-					.forName(agentClassName);
-			Class[] types = new Class[] { String.class,
-					BW4TRemoteEnvironment.class };
-			Constructor<BW4TAgent> cons = (Constructor<BW4TAgent>) c
-					.getConstructor(types);
+			Class<? extends BW4TAgent> c = Class.forName(agentClassName).asSubclass(BW4TAgent.class);
+			Class[] types = new Class[] { String.class, BW4TRemoteEnvironment.class };
+			Constructor<BW4TAgent> cons = (Constructor<BW4TAgent>) c.getConstructor(types);
 			// we use the entityId as name for the agent as well. #2761
 			Object[] args = new Object[] { entityId, environment };
 			BW4TAgent agent = cons.newInstance(args);
