@@ -357,6 +357,11 @@ abstract class AbstractMenuOptionFactory implements ActionListener {
 
             if (currentFileChooser.showSaveDialog(getController().getMainView()) == JFileChooser.APPROVE_OPTION) {
                 File file = currentFileChooser.getSelectedFile();
+                String openedFile = currentFileChooser.getSelectedFile().toString();
+                
+    	        //set last file location to the opened file so that the previous saved file won't get
+    	        //overwritten when the new config is saved.
+    	        view.setLastFileLocation(openedFile);
 
                 path = file.getAbsolutePath();
 
@@ -456,6 +461,7 @@ class MenuOptionOpen extends AbstractMenuOptionFactory {
 
         if (fileChooser.showOpenDialog(getController().getMainView()) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
+            String openedFile = fileChooser.getSelectedFile().toString();
 
             try {
                 BW4TClientConfig temp = BW4TClientConfig.fromXML(file.getAbsolutePath());
@@ -476,6 +482,10 @@ class MenuOptionOpen extends AbstractMenuOptionFactory {
             } catch (FileNotFoundException e1) {
                 ScenarioEditor.handleException(e1, "Error: No file has been found. ");
             }
+            
+	        //set last file location to the opened file so that the previous saved file won't get
+	        //overwritten when the new config is saved.
+	        super.getMenuView().setLastFileLocation(openedFile);
         }
         super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
     }
@@ -614,7 +624,7 @@ class MenuOptionNew extends AbstractMenuOptionFactory {
 //        configPanel.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
         configPanel.setMapFile(ConfigurationPanel.DEFAULT_VALUES.MAP_FILE.getValue());
         
-        //save the dafault values as the "old" values
+        //save the default values as the "old" values
         super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
         
         //set last file location to null so that the previous saved file won't get
