@@ -65,7 +65,7 @@ public class Controller {
                 new MenuOptionSaveAs(getMainView().getTopMenuBar(), this)
         );
 
-        /** Adds the listeners for the EntitiesPanel */
+        /** Adds the listeners for the EntityPanel */
         getMainView().getMainPanel().getEntityPanel().getNewBotButton().
             addActionListener(
                 new AddNewBot(getMainView().getMainPanel())
@@ -87,6 +87,9 @@ public class Controller {
         );
         getMainView().getMainPanel().getEntityPanel().getDeleteEPartnerButton().addActionListener(
                 new DeleteEPartner(getMainView().getMainPanel())
+        );
+        getMainView().getMainPanel().getEntityPanel().getDropDownButton().addActionListener(
+        		new BotDropDownButton(getMainView().getMainPanel())
         );
     }
 
@@ -166,6 +169,24 @@ class AddNewBot implements ActionListener {
         view.getEntityPanel().addBotAction();
     }
 
+}
+
+/**
+ * Handles the event to show the dropdown menu with the standard bots.
+ */
+class BotDropDownButton implements ActionListener {
+	
+	/** The <code>MainPanel</code> serving as the content pane. */
+	private MainPanel view;
+	
+	public BotDropDownButton(MainPanel newView) {
+		this.view = newView;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent ae) {
+		view.getEntityPanel().showBotDropDown();
+	}
 }
 
 /**
