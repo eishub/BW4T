@@ -47,10 +47,9 @@ import eis.iilang.Percept;
 
 /**
  * Render the current state of the world at a fixed rate (10 times per second,
- * see run()) for a client. It connects to the given
- * {@link RemoteEnvironment} on behalf of a given eis entityId. This allows
- * fetching the latest percepts and uses these percepts to track the world
- * state.
+ * see run()) for a client. It connects to the given {@link RemoteEnvironment}
+ * on behalf of a given eis entityId. This allows fetching the latest percepts
+ * and uses these percepts to track the world state.
  * <p>
  * It is possible to set up this renderer as a human GUI as well. In that case,
  * a human can click with the mouse in the GUI. His actions create GOAL
@@ -64,16 +63,16 @@ import eis.iilang.Percept;
  * <li>putDown(). User asked to do the put down action.
  * </ul>
  * <p>
- * {@link RemoteEnvironment#getAllPerceptsFromEntity(String)} is called by
- * the {@link #run()} repaint scheduler only if we are representing a
- * HumanPlayer. Otherwise the getAllPercepts is done by the agent and we assume
+ * {@link RemoteEnvironment#getAllPerceptsFromEntity(String)} is called by the
+ * {@link #run()} repaint scheduler only if we are representing a HumanPlayer.
+ * Otherwise the getAllPercepts is done by the agent and we assume
  * processPercepts is called by the {@link RemoteEnvironment} when the agent
  * asked for getAllPercepts.
  * <p>
  * The BW4TRenderer has a list {@link #toBePerformedAction} which is polled by
- * {@link RemoteEnvironment#getAllPerceptsFromEntity(String)} at every call,
- * and merged into the regular percepts. So user mouse clicks are stored there
- * until it's time for perceiving.
+ * {@link RemoteEnvironment#getAllPerceptsFromEntity(String)} at every call, and
+ * merged into the regular percepts. So user mouse clicks are stored there until
+ * it's time for perceiving.
  */
 public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
     private static final long serialVersionUID = 2938950289045953493L;
@@ -99,8 +98,8 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
      * @throws IOException
      *             if map can't be loaded.
      */
-    public BW4TClientGUI(RemoteEnvironment env, String entityId,
-            boolean goal, boolean humanPlayer) throws IOException {
+    public BW4TClientGUI(RemoteEnvironment env, String entityId, boolean goal,
+            boolean humanPlayer) throws IOException {
         bw4tClientInfo.environment = env;
         init(entityId, humanPlayer);
         this.bw4tClientInfo.goal = goal;
@@ -149,7 +148,8 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
         bw4tClientInfo.buttonPanel.add(jButton);
         jButton.addMouseListener(new TeamListMouseListener(this));
 
-        RendererMapLoader.loadMap(bw4tClientInfo.environment.getData().getClient().getMap(), this);
+        RendererMapLoader.loadMap(bw4tClientInfo.environment.getData()
+                .getClient().getMap(), this);
 
         // Initialize graphics
 
@@ -262,8 +262,9 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
             if (bw4tClientInfo.humanPlayer) {
                 List<Percept> percepts;
                 try {
-                    percepts = PerceptsHandler.getAllPerceptsFromEntity(bw4tClientInfo.environmentDatabase
-                                    .getEntityId() + "gui", bw4tClientInfo.environment);
+                    percepts = PerceptsHandler.getAllPerceptsFromEntity(
+                            bw4tClientInfo.environmentDatabase.getEntityId()
+                                    + "gui", bw4tClientInfo.environment);
                     if (percepts != null) {
                         ProcessingOperations.processPercepts(percepts,
                                 bw4tClientInfo);
@@ -289,7 +290,9 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
-                LOGGER.error("The system ignored the interrupted rendering delay.", e);
+                LOGGER.error(
+                        "The system ignored the interrupted rendering delay.",
+                        e);
             }
         }
 

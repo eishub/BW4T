@@ -10,8 +10,7 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 
 /**
- * Represents a block in the environment that can be picked up by a
- * {@link Robot}.
+ * Represents a block in the environment that can be picked up by a {@link Robot}.
  * 
  * @author Lennard de Rijk
  */
@@ -33,8 +32,7 @@ public class Block extends BoundedMoveableObject {
 	 * @param context
 	 *            The context in which the block will be present.
 	 */
-	public Block(BlockColor colorId, ContinuousSpace<Object> space,
-			Context<Object> context) {
+	public Block(BlockColor colorId, ContinuousSpace<Object> space, Context<Object> context) {
 		super(space, context);
 		this.colorId = colorId;
 		this.color = colorId.getColor();
@@ -60,7 +58,8 @@ public class Block extends BoundedMoveableObject {
 	public NdPoint getLocation() {
 		if (heldBy != null) {
 			return heldBy.getLocation();
-		} else {
+		}
+		else {
 			return super.getLocation();
 		}
 	}
@@ -76,8 +75,7 @@ public class Block extends BoundedMoveableObject {
 	 * Sets the {@link Robot} that is holding this block.
 	 * 
 	 * @param heldBy
-	 *            The Robot that is holding this Block, use null to release the
-	 *            block.
+	 *            The Robot that is holding this Block, use null to release the block.
 	 */
 	public void setHeldBy(Robot heldBy) {
 		this.heldBy = heldBy;

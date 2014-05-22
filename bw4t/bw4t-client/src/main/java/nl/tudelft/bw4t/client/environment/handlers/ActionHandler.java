@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-
 import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
@@ -24,9 +23,9 @@ public class ActionHandler {
      * @throws ActException
      * @throws AgentException
      */
-    public static Map<String, Percept> performAction1(String agent, Action action,
-            RemoteEnvironment remoteEnvironment, String... entities)
-            throws ActException, AgentException {
+    public static Map<String, Percept> performAction1(String agent,
+            Action action, RemoteEnvironment remoteEnvironment,
+            String... entities) throws ActException, AgentException {
         // FIXME this function is way too long.
         // 1. unregistered agents cannot act
         if (!remoteEnvironment.getAgents().contains(agent)) {
@@ -34,7 +33,8 @@ public class ActionHandler {
         }
         // get the associated entities
         Set<String> associatedEntities;
-        associatedEntities = (HashSet<String>) remoteEnvironment.getAssociatedEntities(agent);
+        associatedEntities = (HashSet<String>) remoteEnvironment
+                .getAssociatedEntities(agent);
         // 2. no associated entity/ies -> trivial reject
         if (associatedEntities == null || associatedEntities.isEmpty()) {
             throw new ActException(ActException.NOENTITIES);
@@ -88,7 +88,8 @@ public class ActionHandler {
             // actexceptions and others
             // TODO how is ensured that this method is called? ambiguity?
             try {
-                Percept p = remoteEnvironment.performEntityAction(entity, action);
+                Percept p = remoteEnvironment.performEntityAction(entity,
+                        action);
                 if (p != null) {
                     // workaround for #2270
                     ret.put(entity, p);

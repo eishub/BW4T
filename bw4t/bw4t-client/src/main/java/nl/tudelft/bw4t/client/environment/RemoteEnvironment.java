@@ -12,13 +12,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
 import nl.tudelft.bw4t.client.BW4TClient;
 import nl.tudelft.bw4t.client.environment.handlers.ActionHandler;
 import nl.tudelft.bw4t.client.environment.handlers.PerceptsHandler;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
-import nl.tudelft.bw4t.client.gui.operations.ProcessingOperations;
 import nl.tudelft.bw4t.client.startup.InitParam;
+
 import org.apache.log4j.Logger;
+
 import eis.AgentListener;
 import eis.EnvironmentInterfaceStandard;
 import eis.EnvironmentListener;
@@ -346,7 +348,8 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
         if (entities.length == 0) {
             for (String entity : associatedEntities) {
                 // get all percepts
-                List<Percept> all = PerceptsHandler.getAllPerceptsFromEntity(entity, this);
+                List<Percept> all = PerceptsHandler.getAllPerceptsFromEntity(
+                        entity, this);
                 // add annonation
                 for (Percept p : all) {
                     p.setSource(entity);
@@ -362,7 +365,8 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
                             + agent + "\".");
                 }
                 // get all percepts
-                List<Percept> all = PerceptsHandler.getAllPerceptsFromEntity(entity, this);
+                List<Percept> all = PerceptsHandler.getAllPerceptsFromEntity(
+                        entity, this);
                 // add annonation
                 for (Percept p : all) {
                     p.setSource(entity);
@@ -373,8 +377,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
         }
         return ret;
     }
-
-
 
     /**
      * Check if an action is supported by an entity, is not used so returns true
@@ -658,8 +660,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
             throw e1;
         }
     }
-
-
 
     /**
      * Used to get the current state of the environment

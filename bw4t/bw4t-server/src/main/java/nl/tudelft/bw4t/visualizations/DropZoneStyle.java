@@ -27,7 +27,6 @@ public class DropZoneStyle extends BoundedMoveableObjectStyle<DropZone> {
 		if (dropZone.getSequence().isEmpty()) {
 			return super.getLabelColor(dropZone);
 		}
-		return ColorTranslator.translate2Color(dropZone.getSequence().get(0)
-				.toString());
+		return ColorTranslator.translate2Color(dropZone.getSequence().get(0).toString());
 	}
 }

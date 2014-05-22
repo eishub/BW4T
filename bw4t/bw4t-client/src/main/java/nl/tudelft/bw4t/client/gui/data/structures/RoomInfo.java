@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 /**
  * Helper class to store information about rooms
- * 
  */
 public class RoomInfo {
     private double x, y, width, height;

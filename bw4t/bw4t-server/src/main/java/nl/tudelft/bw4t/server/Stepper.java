@@ -9,14 +9,14 @@ import eis.eis2java.environment.AbstractEnvironment;
 import eis.iilang.EnvironmentState;
 
 /**
- * Stepper is the thread that schedules the bot stepping according to the
- * environment run mode and the loopDelay setting.
+ * Stepper is the thread that schedules the bot stepping according to the environment run mode and the loopDelay
+ * setting.
  * 
  * @author W.Pasman 12mar13
  * 
  */
 public class Stepper implements Runnable {
-	
+
 	/**
 	 * The log4j logger, logs to the console.
 	 */
@@ -31,8 +31,7 @@ public class Stepper implements Runnable {
 	public final static int MIN_DELAY = 10;
 	public final static int MAX_DELAY = 200;
 
-	public Stepper(String scenario, AbstractEnvironment envi)
-			throws ScenarioLoadException {
+	public Stepper(String scenario, AbstractEnvironment envi) throws ScenarioLoadException {
 		scenarioLocation = scenario;
 		environment = envi;
 		runner = new BW4TRunner();
@@ -46,9 +45,8 @@ public class Stepper implements Runnable {
 			while (running) {
 				while (runner.getActionCount() > 0 && running) {
 					/*
-					 * note: busy-wait since we have to be prepared to be killed
-					 * also if env is in pause mode. The sleep avoid sucking
-					 * CPU.
+					 * note: busy-wait since we have to be prepared to be killed also if env is in pause mode. The sleep
+					 * avoid sucking CPU.
 					 */
 					if (environment.getState() == EnvironmentState.RUNNING) {
 						if (runner.getModelActionCount() == 0) {
@@ -62,7 +60,7 @@ public class Stepper implements Runnable {
 				runner.cleanUpRun();
 			}
 		} catch (Exception e) {
-			logger.error("An internal error occurred while running the stepper: "+ e.getMessage());
+			logger.error("An internal error occurred while running the stepper: " + e.getMessage());
 		}
 		running = false;
 		runner = null;
@@ -85,21 +83,18 @@ public class Stepper implements Runnable {
 	 * set new delay value. Lower is faster animation speed.
 	 * 
 	 * @param value
-	 *            the value for the delay. Should be at least {@link #MIN_DELAY}
-	 *            .
+	 *            the value for the delay. Should be at least {@link #MIN_DELAY} .
 	 */
 	public void setDelay(int value) {
 		if (value < MIN_DELAY) {
-			throw new IllegalArgumentException("speed should be >=10 but got "
-					+ value);
+			throw new IllegalArgumentException("speed should be >=10 but got " + value);
 		}
 		loopDelay = value;
 
 	}
 
 	/**
-	 * Call this only after EnvironmentState=KILLED. This function returns only
-	 * after the stepper thread stopped.
+	 * Call this only after EnvironmentState=KILLED. This function returns only after the stepper thread stopped.
 	 */
 	public void terminate() {
 		running = false;

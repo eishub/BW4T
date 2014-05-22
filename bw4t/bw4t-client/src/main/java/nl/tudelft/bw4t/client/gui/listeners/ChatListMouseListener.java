@@ -11,12 +11,11 @@ import nl.tudelft.bw4t.client.gui.menu.ChatMenu;
  * accordingly
  * 
  * @author trens
- * 
  */
 public class ChatListMouseListener implements MouseListener {
-    
+
     private BW4TClientInfo bw4tClientInfo;
-    
+
     public ChatListMouseListener(BW4TClientInfo bw4tClientInfo) {
         this.bw4tClientInfo = bw4tClientInfo;
     }
@@ -28,7 +27,8 @@ public class ChatListMouseListener implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         ChatMenu.buildPopUpMenuForChat(bw4tClientInfo);
-        bw4tClientInfo.jPopupMenu.show(bw4tClientInfo.chatSession, e.getX(), e.getY());
+        bw4tClientInfo.jPopupMenu.show(bw4tClientInfo.chatSession, e.getX(),
+                e.getY());
     }
 
     @Override

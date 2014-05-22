@@ -30,7 +30,7 @@ public class Launcher {
 	 * The Bw4tEnvironment at the core of this server.
 	 */
 	private static BW4TEnvironment environment;
-	
+
 	/**
 	 * The log4j logger, logs to the console.
 	 */
@@ -71,11 +71,11 @@ public class Launcher {
 	 */
 	protected Launcher(final String[] args) {
 		/**
-	     * Set up the logging environment to log on the console.
-	     */
-	    BasicConfigurator.configure();
-	    Launcher.logger.info("Starting up BW4T Server.");
-	    Launcher.logger.info("Reading console arguments...");
+		 * Set up the logging environment to log on the console.
+		 */
+		BasicConfigurator.configure();
+		Launcher.logger.info("Starting up BW4T Server.");
+		Launcher.logger.info("Reading console arguments...");
 		readParameters(args);
 		Launcher.logger.info("Setting up correct directory structure.");
 		setupDirectoryStructure();
@@ -126,9 +126,9 @@ public class Launcher {
 	 */
 	private void setupDirectoryStructure() {
 		boolean success = true;
-		
+
 		File userDir = new File(System.getProperty("user.dir"));
-		
+
 		File mapsFolder = new File(userDir.getAbsolutePath() + "/maps");
 		if (!mapsFolder.exists()) {
 			success &= mapsFolder.mkdir();

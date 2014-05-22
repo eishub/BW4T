@@ -20,7 +20,8 @@ public class PlayerMenu {
      * @param playerId
      *            , the playerId that the request should be sent to
      */
-    public static void buildPopUpMenuForRequests(String playerId, BW4TClientGUI bw4tClientMapRenderer) {
+    public static void buildPopUpMenuForRequests(String playerId,
+            BW4TClientGUI bw4tClientMapRenderer) {
         BW4TClientInfo data = bw4tClientMapRenderer.getBW4TClientInfo();
         data.jPopupMenu.removeAll();
         BasicMenuOperations.addSectionTitleToPopupMenu("Request:",
@@ -31,10 +32,11 @@ public class PlayerMenu {
         if (!playerId.equalsIgnoreCase("all"))
             receiver = playerId;
 
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.putDown, null, null,
-                receiver), data);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
+                MessageType.putDown, null, null, receiver), data);
 
-        JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu(receiver + " go to room", data.jPopupMenu);
+        JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu(receiver
+                + " go to room", data.jPopupMenu);
 
         for (RoomInfo room : data.environmentDatabase.getRooms()) {
             String label = MapOperations.findLabelForRoom(room, data);
@@ -45,7 +47,8 @@ public class PlayerMenu {
             submenu.add(menuItem);
         }
 
-        submenu = BasicMenuOperations.addSubMenuToPopupMenu(receiver + " find a color", data.jPopupMenu);
+        submenu = BasicMenuOperations.addSubMenuToPopupMenu(receiver
+                + " find a color", data.jPopupMenu);
 
         for (String color : ColorTranslator.getAllColors()) {
             JMenuItem menuItem = new JMenuItem(color);
@@ -55,7 +58,8 @@ public class PlayerMenu {
             submenu.add(menuItem);
         }
 
-        submenu = BasicMenuOperations.addSubMenuToPopupMenu(receiver + " get the color from room", data.jPopupMenu);
+        submenu = BasicMenuOperations.addSubMenuToPopupMenu(receiver
+                + " get the color from room", data.jPopupMenu);
 
         for (String color : ColorTranslator.getAllColors()) {
             JMenu submenu2 = new JMenu(color);
@@ -72,10 +76,10 @@ public class PlayerMenu {
         }
 
         BasicMenuOperations.addSectionTitleToPopupMenu("Ask:", data.jPopupMenu);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.areYouClose, null,
-                null, receiver), data);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.willYouBeLong, null,
-                null, receiver), data);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
+                MessageType.areYouClose, null, null, receiver), data);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
+                MessageType.willYouBeLong, null, null, receiver), data);
 
         data.jPopupMenu.addSeparator();
         JMenuItem menuItem = new JMenuItem("Close menu");

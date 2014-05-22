@@ -1,9 +1,7 @@
 package nl.tudelft.bw4t.client.gui.data.structures;
 
-
 /**
  * Helper method to store information about doors
- * 
  */
 public class DoorInfo {
     private double x, y, width, height;

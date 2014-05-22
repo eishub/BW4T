@@ -49,28 +49,23 @@ import eis.iilang.Parameter;
  * EIS entity for a {@link Robot}.
  * 
  * @author Lennard de Rijk
- * @modified W.Pasman #2318 #2291 "lock" robot position at start of perception
- *           cycle.
- * @modified W.Pasman #2326 robots are injected into EIS only after their entity
- *           has been connected with an agent.
+ * @modified W.Pasman #2318 #2291 "lock" robot position at start of perception cycle.
+ * @modified W.Pasman #2326 robots are injected into EIS only after their entity has been connected with an agent.
  */
 public class RobotEntity implements RobotEntityInt {
 
 	static {
 		// Register our translators.
 		Translator translator = Translator.getInstance();
-		translator
-				.registerJava2ParameterTranslator(new BlockWithColorTranslator());
-		translator
-				.registerJava2ParameterTranslator(new BoundedMovableObjectTranslator());
+		translator.registerJava2ParameterTranslator(new BlockWithColorTranslator());
+		translator.registerJava2ParameterTranslator(new BoundedMovableObjectTranslator());
 		translator.registerJava2ParameterTranslator(new ZoneTranslator());
 		translator.registerJava2ParameterTranslator(new PointTranslator());
-		translator
-				.registerJava2ParameterTranslator(new ObjectInformationTranslator());
+		translator.registerJava2ParameterTranslator(new ObjectInformationTranslator());
 		translator.registerJava2ParameterTranslator(new ColorTranslator());
 
 	}
-	
+
 	/**
 	 * The log4j logger, logs to the console.
 	 */
@@ -80,25 +75,21 @@ public class RobotEntity implements RobotEntityInt {
 	private final Context<Object> context;
 
 	/**
-	 * Here we store data that needs to be locked for a perception cycle. See
-	 * {@link #initializePerceptionCycle()}.
+	 * Here we store data that needs to be locked for a perception cycle. See {@link #initializePerceptionCycle()}.
 	 */
 	private Point2D ourRobotLocation;
 	private Room ourRobotRoom;
 
 	/**
-	 * each item in messages is a list with two items: the sender and the
-	 * messagetext.
+	 * each item in messages is a list with two items: the sender and the messagetext.
 	 */
 	private ArrayList<ArrayList<String>> messages;
 
 	/**
-	 * Creates a new {@link RobotEntity} that can be launched by an EIS
-	 * compatible {@link Environment}.
+	 * Creates a new {@link RobotEntity} that can be launched by an EIS compatible {@link Environment}.
 	 * 
 	 * @param robot
-	 *            The {@link Robot} that this entity can put up for controlling
-	 *            in EIS.
+	 *            The {@link Robot} that this entity can put up for controlling in EIS.
 	 */
 	public RobotEntity(NavigatingRobot robot) {
 		this.ourRobot = robot;
@@ -107,27 +98,23 @@ public class RobotEntity implements RobotEntityInt {
 	}
 
 	/**
-	 * Connect robot to repast (to be called when an agent is connected to this
-	 * entity)
+	 * Connect robot to repast (to be called when an agent is connected to this entity)
 	 */
 	public void connect() {
 		ourRobot.connect();
 	}
 
 	/**
-	 * This function should be called before perception cycle is started, so
-	 * that we can lock the relevant data from the environment.
+	 * This function should be called before perception cycle is started, so that we can lock the relevant data from the
+	 * environment.
 	 */
 	public void initializePerceptionCycle() {
-		ourRobotLocation = new Point2D.Double(ourRobot.getLocation().getX(),
-				ourRobot.getLocation().getY());
-		ourRobotRoom = RoomLocator.getRoomAt(ourRobotLocation.getX(),
-				ourRobotLocation.getY());
+		ourRobotLocation = new Point2D.Double(ourRobot.getLocation().getX(), ourRobot.getLocation().getY());
+		ourRobotRoom = RoomLocator.getRoomAt(ourRobotLocation.getX(), ourRobotLocation.getY());
 	}
 
 	/**
-	 * @return All blocks that are visible to the robot, excluding the one the
-	 *         robot is holding
+	 * @return All blocks that are visible to the robot, excluding the one the robot is holding
 	 */
 	private Set<Block> getVisibleBlocks() {
 		Set<Block> blocks = new HashSet<Block>();
@@ -137,8 +124,7 @@ public class RobotEntity implements RobotEntityInt {
 			Iterable<Object> allBlocks = context.getObjects(Block.class);
 			for (Object b : allBlocks) {
 				Block aBlock = (Block) b;
-				Double p = new Point2D.Double(aBlock.getLocation().getX(),
-						aBlock.getLocation().getY());
+				Double p = new Point2D.Double(aBlock.getLocation().getX(), aBlock.getLocation().getY());
 				if (ourRobotRoom.getBoundingBox().contains(p)) {
 					blocks.add(aBlock);
 				}
@@ -149,44 +135,38 @@ public class RobotEntity implements RobotEntityInt {
 	}
 
 	/**
-	 * Percepts for the location of rooms and the dropzone and the blocks Send
-	 * on change
+	 * Percepts for the location of rooms and the dropzone and the blocks Send on change
 	 */
 	@AsPercept(name = "position", multiplePercepts = true, filter = Filter.Type.ON_CHANGE)
 	public List<ObjectInformation> getLocations() {
 		List<ObjectInformation> objects = new ArrayList<ObjectInformation>();
 
 		// Add the dropzone
-		DropZone dropZone = (DropZone) context.getObjects(DropZone.class)
-				.get(0);
-		objects.add(new ObjectInformation(dropZone.getLocation().getX(),
-				dropZone.getLocation().getY(), dropZone.getId()));
+		DropZone dropZone = (DropZone) context.getObjects(DropZone.class).get(0);
+		objects.add(new ObjectInformation(dropZone.getLocation().getX(), dropZone.getLocation().getY(), dropZone
+				.getId()));
 
 		// Add rooms
 		IndexedIterable<Object> allRooms = context.getObjects(BlocksRoom.class);
 		for (Object object : allRooms) {
 			Room r = (Room) object;
-			objects.add(new ObjectInformation(r.getLocation().getX(), r
-					.getLocation().getY(), r.getId()));
+			objects.add(new ObjectInformation(r.getLocation().getX(), r.getLocation().getY(), r.getId()));
 		}
 
 		// Add blocks
 		for (Block block : getVisibleBlocks()) {
-			objects.add(new ObjectInformation(block.getLocation().getX(), block
-					.getLocation().getY(), block.getId()));
+			objects.add(new ObjectInformation(block.getLocation().getX(), block.getLocation().getY(), block.getId()));
 		}
 
 		// #2830 add robots own position
-		objects.add(new ObjectInformation(ourRobotLocation.getX(),
-				ourRobotLocation.getY(), ourRobot.getId()));
+		objects.add(new ObjectInformation(ourRobotLocation.getX(), ourRobotLocation.getY(), ourRobot.getId()));
 
 		return objects;
 	}
 
 	/**
-	 * Percept for navpoints the robot is at. Send on change. If robot is in a
-	 * {@link Zone}, that zone name is returned. If not, the nearest
-	 * {@link Corridor} name is returned.
+	 * Percept for navpoints the robot is at. Send on change. If robot is in a {@link Zone}, that zone name is returned.
+	 * If not, the nearest {@link Corridor} name is returned.
 	 * 
 	 * @return a list of blockID
 	 * @throws PerceiveException
@@ -219,7 +199,8 @@ public class RobotEntity implements RobotEntityInt {
 				if (ourRobot.isHolding() == null) {
 					result.add(b.getId());
 					return result;
-				} else if (!ourRobot.isHolding().equals(b)) {
+				}
+				else if (!ourRobot.isHolding().equals(b)) {
 					result.add(b.getId());
 					return result;
 				}
@@ -229,8 +210,7 @@ public class RobotEntity implements RobotEntityInt {
 	}
 
 	/**
-	 * Percept for the room that the player is in, null if not in a room. Send
-	 * on change
+	 * Percept for the room that the player is in, null if not in a room. Send on change
 	 */
 	@AsPercept(name = "in", multiplePercepts = false, filter = Filter.Type.ON_CHANGE_NEG)
 	public String getRoom() {
@@ -246,8 +226,7 @@ public class RobotEntity implements RobotEntityInt {
 	 */
 	@AsPercept(name = "location", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
 	public Point2D getLocation() {
-		return new Point2D.Double(ourRobotLocation.getX(),
-				ourRobotLocation.getY());
+		return new Point2D.Double(ourRobotLocation.getX(), ourRobotLocation.getY());
 	}
 
 	/**
@@ -273,8 +252,7 @@ public class RobotEntity implements RobotEntityInt {
 	}
 
 	/**
-	 * The names of other players Send at the beginning. We are assuming that
-	 * each agent controls one entity.
+	 * The names of other players Send at the beginning. We are assuming that each agent controls one entity.
 	 * 
 	 * @return the names of the other players
 	 */
@@ -308,8 +286,7 @@ public class RobotEntity implements RobotEntityInt {
 	}
 
 	/**
-	 * Percept for the colors of all blocks that are visible. Send always. They
-	 * are visible only when inside a room.
+	 * Percept for the colors of all blocks that are visible. Send always. They are visible only when inside a room.
 	 */
 	@AsPercept(name = "color", multiplePercepts = true, filter = Filter.Type.ALWAYS)
 	public List<BlockColor> getColor() {
@@ -324,8 +301,7 @@ public class RobotEntity implements RobotEntityInt {
 	}
 
 	/**
-	 * Percept if the robot is holding something. Send if it becomes true, and
-	 * send negated if it becomes false again.
+	 * Percept if the robot is holding something. Send if it becomes true, and send negated if it becomes false again.
 	 */
 	@AsPercept(name = "holding", filter = Filter.Type.ON_CHANGE_NEG)
 	public Long getHolding() {
@@ -334,13 +310,11 @@ public class RobotEntity implements RobotEntityInt {
 	}
 
 	/**
-	 * The sequence in which the blocks should be returned. Send at the
-	 * beginning
+	 * The sequence in which the blocks should be returned. Send at the beginning
 	 */
 	@AsPercept(name = "sequence", filter = Filter.Type.ONCE)
 	public List<nl.tudelft.bw4t.map.BlockColor> getSequence() {
-		DropZone dropZone = (DropZone) context.getObjects(DropZone.class)
-				.get(0);
+		DropZone dropZone = (DropZone) context.getObjects(DropZone.class).get(0);
 		return dropZone.getSequence();
 	}
 
@@ -349,14 +323,12 @@ public class RobotEntity implements RobotEntityInt {
 	 */
 	@AsPercept(name = "sequenceIndex", filter = Filter.Type.ON_CHANGE)
 	public Integer getSequenceIndex() {
-		DropZone dropZone = (DropZone) context.getObjects(DropZone.class)
-				.get(0);
+		DropZone dropZone = (DropZone) context.getObjects(DropZone.class).get(0);
 		return dropZone.getSequenceIndex();
 	}
 
 	/**
-	 * occupied percept, tells which rooms are occupied by robot. Send if true
-	 * and send negated if no longer true
+	 * occupied percept, tells which rooms are occupied by robot. Send if true and send negated if no longer true
 	 * 
 	 * @return list of occupied room IDs
 	 */
@@ -375,8 +347,7 @@ public class RobotEntity implements RobotEntityInt {
 	}
 
 	/**
-	 * navpoint percept, tells which {@link Zone}s there are in the world and
-	 * their neighbours. Send at the beginning
+	 * navpoint percept, tells which {@link Zone}s there are in the world and their neighbours. Send at the beginning
 	 * 
 	 * @return list of navpoints
 	 */
@@ -404,8 +375,7 @@ public class RobotEntity implements RobotEntityInt {
 	}
 
 	/**
-	 * The current state of the robot. See {@link NavigatingRobot#State}. Send
-	 * on change
+	 * The current state of the robot. See {@link NavigatingRobot#State}. Send on change
 	 */
 	@AsPercept(name = "state", filter = Filter.Type.ON_CHANGE)
 	public String getState() {
@@ -426,12 +396,11 @@ public class RobotEntity implements RobotEntityInt {
 	}
 
 	/**
-	 * Instructs the robot to move to the given object. Only works if we are in
-	 * the room containing the block - the block must be visible.
+	 * Instructs the robot to move to the given object. Only works if we are in the room containing the block - the
+	 * block must be visible.
 	 * 
 	 * @param targetid
-	 *            is the target object id. This can be the id of any object in
-	 *            the map (not a free x,y location)
+	 *            is the target object id. This can be the id of any object in the map (not a free x,y location)
 	 * @throws IllegalArgumentException
 	 *             if no block of given id visible
 	 */
@@ -443,8 +412,7 @@ public class RobotEntity implements RobotEntityInt {
 				target = b;
 		}
 		if (target == null) {
-			throw new IllegalArgumentException("there is no block with id="
-					+ targetid + " in the room");
+			throw new IllegalArgumentException("there is no block with id=" + targetid + " in the room");
 		}
 
 		ourRobot.setTarget(target);
@@ -488,11 +456,11 @@ public class RobotEntity implements RobotEntityInt {
 		// Pick up closest block in canPickUp list
 		if (canPickUp.size() == 0) {
 			return;
-		} else {
+		}
+		else {
 			nearest = canPickUp.get(0);
 			for (int i = 1; i < canPickUp.size(); i++) {
-				if (ourRobot.distanceTo(nearest) > ourRobot
-						.distanceTo(canPickUp.get(i))) {
+				if (ourRobot.distanceTo(nearest) > ourRobot.distanceTo(canPickUp.get(i))) {
 					nearest = canPickUp.get(i);
 				}
 			}
@@ -506,22 +474,18 @@ public class RobotEntity implements RobotEntityInt {
 	 * @param message
 	 *            , the message that should be sent
 	 * @param receiver
-	 *            , the receiver of the message (can be all or the id of another
-	 *            robot
+	 *            , the receiver of the message (can be all or the id of another robot
 	 * @throws ActException
 	 *             if the action fails
 	 */
 	@AsAction(name = "sendMessage")
-	public void sendMessage(String receiver, String message)
-			throws ActException {
+	public void sendMessage(String receiver, String message) throws ActException {
 		BW4TLogger.getInstance().logSentMessageAction(ourRobot.getName());
 		// Translate the message into parameters
 		Parameter[] parameters = new Parameter[2];
 		try {
-			parameters[0] = Translator.getInstance().translate2Parameter(
-					ourRobot.getName())[0];
-			parameters[1] = Translator.getInstance().translate2Parameter(
-					message)[0];
+			parameters[0] = Translator.getInstance().translate2Parameter(ourRobot.getName())[0];
+			parameters[1] = Translator.getInstance().translate2Parameter(message)[0];
 		} catch (TranslationException e) {
 			throw new ActException("translating of message failed:" + message, e);
 		}
@@ -530,21 +494,18 @@ public class RobotEntity implements RobotEntityInt {
 		if (receiver.equals("all")) {
 			for (String entity : BW4TEnvironment.getInstance().getEntities()) {
 				if (!entity.equals(ourRobot.getName())) {
-					BW4TEnvironment.getInstance().performClientAction(entity,
-							new Action("receiveMessage", parameters));
+					BW4TEnvironment.getInstance().performClientAction(entity, new Action("receiveMessage", parameters));
 				}
 			}
 		}
 		// Send to a single entity
 		else {
-			BW4TEnvironment.getInstance().performClientAction(receiver,
-					new Action("receiveMessage", parameters));
+			BW4TEnvironment.getInstance().performClientAction(receiver, new Action("receiveMessage", parameters));
 		}
 	}
 
 	/**
-	 * Instructs the robot to receive a certain message, should only be used
-	 * internally in the server environment
+	 * Instructs the robot to receive a certain message, should only be used internally in the server environment
 	 * 
 	 * @param message
 	 *            , the message to be received
@@ -576,8 +537,7 @@ public class RobotEntity implements RobotEntityInt {
 	 */
 	@AsAction(name = "checkSequenceDone")
 	public boolean checkSequenceDone() {
-		DropZone dropzone = (DropZone) context.getObjects(DropZone.class)
-				.get(0);
+		DropZone dropzone = (DropZone) context.getObjects(DropZone.class).get(0);
 		if (dropzone == null) {
 			return false;
 		}

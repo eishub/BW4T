@@ -11,12 +11,10 @@ import eis.iilang.Parameter;
  * 
  * @author Lennard de Rijk
  */
-public class BoundedMovableObjectTranslator implements
-		Java2Parameter<BoundedMoveableObject> {
+public class BoundedMovableObjectTranslator implements Java2Parameter<BoundedMoveableObject> {
 
 	@Override
-	public Parameter[] translate(BoundedMoveableObject object)
-			throws TranslationException {
+	public Parameter[] translate(BoundedMoveableObject object) throws TranslationException {
 		// at(id, x, y)
 		Parameter[] params = new Parameter[3];
 		params[0] = new Numeral(object.getId());
