@@ -14,7 +14,8 @@
         <sonar.projectName>ScenarioEditor</sonar.projectName>
         <sonar.projectVersion>0.0.1-SNAPSHOT</sonar.projectVersion>
         <sonar.language>java</sonar.language>
-        <sonar.sources>src</sonar.sources>
+        <sonar.sources>src/main</sonar.sources>
+        <sonar.tests>src/test</sonar.tests>
     </properties>
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
