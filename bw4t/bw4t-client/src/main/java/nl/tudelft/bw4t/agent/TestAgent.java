@@ -2,8 +2,13 @@ package nl.tudelft.bw4t.agent;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
-import nl.tudelft.bw4t.client.BW4TRemoteEnvironment;
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.client.environment.handlers.PerceptsHandler;
+
+import org.apache.log4j.Logger;
+
 import eis.exceptions.ActException;
 import eis.exceptions.NoEnvironmentException;
 import eis.exceptions.PerceiveException;
@@ -13,73 +18,81 @@ import eis.iilang.Percept;
 
 public class TestAgent extends BW4TAgent {
 
-	private ArrayList<String> places;
-	private String state = "arrived";
+    private List<String> places;
+    private String state = "arrived";
 
-	public TestAgent(String agentId, BW4TRemoteEnvironment env) {
-		super(agentId, env);
-		places = new ArrayList<String>();
-	}
+    /**
+     * The log4j Logger which displays logs on console
+     */
+    private final static Logger LOGGER = Logger.getLogger(TestAgent.class);
 
-	@Override
-	public void run() {
-		try {
-			while (!environmentKilled) {
-				percepts();
-				action();
-				Thread.sleep(200);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    public TestAgent(String agentId, RemoteEnvironment env) {
+        super(agentId, env);
+        places = new ArrayList<String>();
+    }
 
-	/**
-	 * get percepts
-	 */
-	private void percepts() {
-		try {
-			LinkedList<Percept> percepts = getEnvironment()
-					.getAllPerceptsFromEntity(entityId);
-			if (percepts != null)
-				processPercepts(percepts);
-		} catch (PerceiveException e) {
-			e.printStackTrace();
-		} catch (NoEnvironmentException e) {
-			e.printStackTrace();
-		}
-	}
+    @Override
+    public void run() {
+        try {
+            while (!environmentKilled) {
+                percepts();
+                action();
+                Thread.sleep(200);
+            }
+        } catch (Exception e) {
+            LOGGER.error("The Agent could not succesfully complete its run.", e);
+        }
+    }
 
-	int nextDestination = 0;
+    /**
+     * get percepts
+     */
+    private void percepts() {
+        try {
+            List<Percept> percepts = PerceptsHandler.getAllPerceptsFromEntity(
+                    entityId, getEnvironment());
+            if (percepts != null) {
+                processPercepts(percepts);
+            }
+        } catch (PerceiveException e) {
+            LOGGER.error("Could not poll the percepts from the environment.", e);
+        } catch (NoEnvironmentException e) {
+            LOGGER.error(
+                    "Could not poll the percepts from the environment. No environment was found.",
+                    e);
+        }
+    }
 
-	/**
-	 * do next action - only if we're not already busy
-	 * 
-	 * @throws ActException
-	 */
-	private void action() throws ActException {
-		if (!state.equals("traveling") && places.size() > 0) {
-			goTo(places.get(nextDestination));
-			nextDestination++;
-			if (nextDestination == places.size()) {
-				nextDestination = 0;
-			}
-		}
-	}
+    int nextDestination = 0;
 
-	public void processPercepts(LinkedList<Percept> percepts) {
-		for (Percept percept : percepts) {
-			String name = percept.getName();
+    /**
+     * do next action - only if we're not already busy
+     * 
+     * @throws ActException
+     */
+    private void action() throws ActException {
+        if (!state.equals("traveling") && places.size() > 0) {
+            goTo(places.get(nextDestination));
+            nextDestination++;
+            if (nextDestination == places.size()) {
+                nextDestination = 0;
+            }
+        }
+    }
 
-			if (name.equals("place")) {
-				LinkedList<Parameter> parameters = percept.getParameters();
-				places.add(((Identifier) parameters.get(0)).getValue());
-			} else if (name.equals("state")) {
-				LinkedList<Parameter> parameters = percept.getParameters();
-				state = ((Identifier) parameters.get(0)).getValue();
-			} else if (name.equals("player")) {
-				System.out.println(percept);
-			}
-		}
-	}
+    public void processPercepts(List<Percept> percepts) {
+        for (Percept percept : percepts) {
+            String name = percept.getName();
+
+            if ("place".equals(name)) {
+                LinkedList<Parameter> parameters = percept.getParameters();
+                places.add(((Identifier) parameters.get(0)).getValue());
+            } else if ("state".equals(name)) {
+                LinkedList<Parameter> parameters = percept.getParameters();
+                state = ((Identifier) parameters.get(0)).getValue();
+            } else if ("player".equals(name)) {
+                LOGGER.info(percept);
+            }
+        }
+    }
 }

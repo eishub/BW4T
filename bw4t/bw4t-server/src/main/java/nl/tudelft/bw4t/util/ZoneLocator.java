@@ -28,8 +28,7 @@ public class ZoneLocator {
 	public static Zone getZoneAt(double x, double y) {
 		Point2D location = new Point2D.Double(x, y);
 
-		Iterable<Object> zones = BW4TEnvironment.getInstance().getContext()
-				.getObjects(Zone.class);
+		Iterable<Object> zones = BW4TEnvironment.getInstance().getContext().getObjects(Zone.class);
 		for (Object r : zones) {
 			Zone zone = (Zone) r;
 
@@ -51,8 +50,7 @@ public class ZoneLocator {
 	public static List<Zone> getZonesAt(double x, double y) {
 		Point2D location = new Point2D.Double(x, y);
 		List<Zone> zones = new ArrayList<Zone>();
-		Iterable<Object> zoneit = BW4TEnvironment.getInstance().getContext()
-				.getObjects(Zone.class);
+		Iterable<Object> zoneit = BW4TEnvironment.getInstance().getContext().getObjects(Zone.class);
 		for (Object r : zoneit) {
 			Zone zone = (Zone) r;
 
@@ -73,8 +71,7 @@ public class ZoneLocator {
 	 */
 	public static Zone getZone(String name) {
 
-		Iterable<Object> zones = BW4TEnvironment.getInstance().getContext()
-				.getObjects(Zone.class);
+		Iterable<Object> zones = BW4TEnvironment.getInstance().getContext().getObjects(Zone.class);
 		for (Object r : zones) {
 			Zone zone = (Zone) r;
 
@@ -87,8 +84,7 @@ public class ZoneLocator {
 	}
 
 	/**
-	 * Get zone at given location. If there are multiple zones at given
-	 * location, the result is one of these.
+	 * Get zone at given location. If there are multiple zones at given location, the result is one of these.
 	 * 
 	 * @param location
 	 * @return
@@ -99,9 +95,8 @@ public class ZoneLocator {
 	}
 
 	/**
-	 * Find the {@link Zone} that is nearest to given point. If point is in a
-	 * zone, we always return that zone. If point is not in a zone, we return
-	 * the nearest Corridor.
+	 * Find the {@link Zone} that is nearest to given point. If point is in a zone, we always return that zone. If point
+	 * is not in a zone, we return the nearest Corridor.
 	 * 
 	 * @param location
 	 *            the location for which nearby Zone is needed
@@ -117,26 +112,22 @@ public class ZoneLocator {
 	}
 
 	/**
-	 * Find the {@link Corridor} that is nearest to given point. It is assumed
-	 * that the point is NOT inside a zone. See also
-	 * {@link #getNearestZone(NdPoint)}
+	 * Find the {@link Corridor} that is nearest to given point. It is assumed that the point is NOT inside a zone. See
+	 * also {@link #getNearestZone(NdPoint)}
 	 * 
 	 * @param location
 	 *            the location for which nearby navpoint is needed
-	 * @return nearest Corridor. Null if there are no Corridors available
-	 *         (should never happen?).
+	 * @return nearest Corridor. Null if there are no Corridors available (should never happen?).
 	 */
 
 	private static Corridor getNearestCorridorZone(NdPoint location) {
-		Iterable<Object> corridors = BW4TEnvironment.getInstance().getContext()
-				.getObjects(Corridor.class);
+		Iterable<Object> corridors = BW4TEnvironment.getInstance().getContext().getObjects(Corridor.class);
 		Corridor nearest = null;
 		double nearestdist = Double.MAX_VALUE;
 
 		for (Object o : corridors) {
 			Corridor corridor = (Corridor) o;
-			Point2D p = new Point2D.Double(corridor.getLocation().getX(),
-					corridor.getLocation().getY());
+			Point2D p = new Point2D.Double(corridor.getLocation().getX(), corridor.getLocation().getY());
 			double dist = corridor.distanceTo(location);
 
 			if (dist < nearestdist) {

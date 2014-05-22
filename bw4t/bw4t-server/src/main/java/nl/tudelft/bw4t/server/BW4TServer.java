@@ -18,6 +18,8 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import nl.tudelft.bw4t.client.BW4TClientActions;
 import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
@@ -37,6 +39,11 @@ import eis.iilang.Percept;
  * @Modified W.Pasman feb2012 added unregisterClient, and moved doc to interface.
  */
 public class BW4TServer extends UnicastRemoteObject implements BW4TServerActions {
+
+	/**
+	 * The log4j logger, logs to the console.
+	 */
+	private static Logger logger = Logger.getLogger(Launcher.class);
 
 	private static final long serialVersionUID = -3459272460308988888L;
 	private HashMap<BW4TClientActions, Integer> clientWaitingForAgent;
@@ -65,7 +72,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerActions
 		try {
 			registry = LocateRegistry.createRegistry(Integer.parseInt(serverPort));
 		} catch (RemoteException e) {
-			System.out.println("registry is already running. Reconnecting.");
+			logger.warn("Registry is already running. Reconnecting.");
 			registry = LocateRegistry.getRegistry(Integer.parseInt(serverPort));
 		}
 		servername = "rmi://" + serverIp + ":" + serverPort + "/BW4TServer";
@@ -82,7 +89,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerActions
 	 */
 	@Override
 	public void registerClient(BW4TClientActions client, int agentCount, int humanCount) throws RemoteException {
-		System.out.println("registerClient " + client);
+		logger.info("Registering client: " + client);
 		clientWaitingForAgent.put(client, new Integer(agentCount));
 		clientWaitingForHuman.put(client, new Integer(humanCount));
 
@@ -94,7 +101,6 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerActions
 
 		// #2013 late-listening pattern... partial implement.
 		((BW4TClientActions) client).handleStateChange(getState());
-		// System.out.println("late=listening: " + getFreeEntities());
 		for (String entity : getFreeEntities()) {
 			try {
 				notifyFreeEntity(client, entity);
@@ -109,7 +115,6 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerActions
 	public void unregisterClient(BW4TClientActions client) {
 		clientWaitingForAgent.remove(client);
 		clientWaitingForHuman.remove(client);
-
 	}
 
 	/**
@@ -156,7 +161,16 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerActions
 	 */
 	@Override
 	public void unregisterAgent(String agent) throws AgentException {
-		BW4TEnvironment.getInstance().unregisterAgent(agent);
+		BW4TEnvironment env = BW4TEnvironment.getInstance();
+		Set<String> ents = env.getAssociatedEntities(agent);
+		for (String entity : ents) {
+			try {
+				BW4TEnvironment.getInstance().deleteEntity(entity);
+			} catch (EntityException | RelationException e) {
+				throw new AgentException("failed to delete entity", e);
+			}
+		}
+		env.unregisterAgent(agent);
 	}
 
 	/**
@@ -325,8 +339,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerActions
 	 * @param e
 	 */
 	private void reportClientProblem(BW4TClientActions client, Exception e) {
-		System.out.println("issue with client " + client + ":" + e);
-		e.printStackTrace();
+		logger.warn("Problems detected with client " + client + ":" + e.getMessage());
 	}
 
 	/**

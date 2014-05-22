@@ -20,8 +20,7 @@ public class AgentRecord {
 	/** accumulated milliseconds of standing still */
 	private Long totalStandingStillMillis = 0L;
 	/**
-	 * current time stamp where agent stopped moving. If 0, the agent is moving
-	 * now.
+	 * current time stamp where agent stopped moving. If 0, the agent is moving now.
 	 */
 	private Long currentStandingStillMillis = System.currentTimeMillis();
 
@@ -46,8 +45,7 @@ public class AgentRecord {
 	}
 
 	/**
-	 * this informs the record that the agent is standing still now. If called
-	 * multiple times, the first time is used.
+	 * this informs the record that the agent is standing still now. If called multiple times, the first time is used.
 	 */
 	public void setStoppedMoving() {
 		if (currentStandingStillMillis == 0) {
@@ -63,8 +61,7 @@ public class AgentRecord {
 	}
 
 	/**
-	 * This informs the record that the agent is moving now. If called multiple
-	 * times, the first time is used.
+	 * This informs the record that the agent is moving now. If called multiple times, the first time is used.
 	 */
 	public void setStartedMoving() {
 		if (currentStandingStillMillis != 0L) {
@@ -82,9 +79,8 @@ public class AgentRecord {
 	}
 
 	/**
-	 * Convert this record to a summary list for in the log file. The list is a
-	 * number of lines for in the log, each element of the top list having a
-	 * list of items for one log line.
+	 * Convert this record to a summary list for in the log file. The list is a number of lines for in the log, each
+	 * element of the top list having a list of items for one log line.
 	 * 
 	 * @return
 	 */
@@ -95,8 +91,7 @@ public class AgentRecord {
 		summaries.add(summary("gooddrops", "" + goodDrops));
 		summaries.add(summary("wrongdrops", "" + wrongDrops));
 		summaries.add(summary("nmessage", "" + nMessages));
-		summaries.add(summary("idletime", "" + (float) totalStandingStillMillis
-				/ 1000.));
+		summaries.add(summary("idletime", "" + (float) totalStandingStillMillis / 1000.));
 		summaries.add(summary("nroomsentered", "" + nRoomsEntered));
 
 		return summaries;

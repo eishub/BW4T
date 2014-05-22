@@ -32,8 +32,7 @@ public abstract class Room extends Zone {
 	 * @param context
 	 *            The context in which the room should be placed.
 	 */
-	public Room(Color color, nl.tudelft.bw4t.map.Zone roomzone,
-			ContinuousSpace<Object> space, Context<Object> context) {
+	public Room(Color color, nl.tudelft.bw4t.map.Zone roomzone, ContinuousSpace<Object> space, Context<Object> context) {
 		super(roomzone, space, context);
 		this.color = color;
 		this.renderOptions = roomzone.getRenderOptions();
