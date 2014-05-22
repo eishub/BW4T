@@ -296,7 +296,6 @@ class DeleteEPartner implements ActionListener {
 	}
 }
 
-
 /**
  * Handles the event to open a file.
  */
@@ -342,6 +341,7 @@ class MenuOptionOpen extends AbstractMenuOption {
 
         if (fileChooser.showOpenDialog(getController().getMainView()) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
+            String openedFile = fileChooser.getSelectedFile().toString();
 
             try {
                 BW4TClientConfig temp = BW4TClientConfig.fromXML(file.getAbsolutePath());
@@ -362,6 +362,10 @@ class MenuOptionOpen extends AbstractMenuOption {
             } catch (FileNotFoundException e1) {
                 ScenarioEditor.handleException(e1, "Error: No file has been found. ");
             }
+            
+	        //set last file location to the opened file so that the previous saved file won't get
+	        //overwritten when the new config is saved.
+	        super.getMenuView().setLastFileLocation(openedFile);
         }
         super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
     }
@@ -500,7 +504,7 @@ class MenuOptionNew extends AbstractMenuOption {
 //        configPanel.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
         configPanel.setMapFile(ConfigurationPanel.DEFAULT_VALUES.MAP_FILE.getValue());
         
-        //save the dafault values as the "old" values
+        //save the default values as the "old" values
         super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
         
         //set last file location to null so that the previous saved file won't get

@@ -133,8 +133,10 @@ public class MenuBarTest {
 
         // Finally make sure the confirmation dialog was called.
         verify(yesMockOption, times(1)).showConfirmDialog((Component) any(), anyObject(), anyString(), anyInt(), anyInt());
-        // And the file dialog twice for saving and opening
-        verify(filechooser, times(2)).getSelectedFile();
+        // And the file dialog  for saving and opening
+        verify(filechooser, times(1)).showOpenDialog((Component) any());
+        verify(filechooser, times(1)).showSaveDialog((Component) any());
+
     }
 
     /**
