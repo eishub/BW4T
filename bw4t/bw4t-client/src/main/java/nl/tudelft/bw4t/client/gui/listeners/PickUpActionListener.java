@@ -5,10 +5,11 @@ import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
+
+import org.apache.log4j.Logger;
+
 import eis.iilang.Percept;
 
 /**

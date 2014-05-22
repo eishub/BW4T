@@ -11,17 +11,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
-
 import nl.tudelft.bw4t.client.BW4TClient;
+import nl.tudelft.bw4t.client.environment.handlers.ActionHandler;
+import nl.tudelft.bw4t.client.environment.handlers.PerceptsHandler;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.operations.ProcessingOperations;
 import nl.tudelft.bw4t.client.startup.InitParam;
-import nl.tudelft.bw4t.map.NewMap;
-
 import org.apache.log4j.Logger;
-
 import eis.AgentListener;
 import eis.EnvironmentInterfaceStandard;
 import eis.EnvironmentListener;
@@ -59,10 +56,8 @@ import eis.iilang.Percept;
  *           design.
  */
 public class RemoteEnvironment implements EnvironmentInterfaceStandard {
-
-    private final static Logger LOGGER = Logger
+    private static final Logger LOGGER = Logger
             .getLogger(RemoteEnvironment.class);
-
     private RemoteEnvironmentData data = new RemoteEnvironmentData(null,
             new LinkedList<EnvironmentListener>(),
             new HashMap<String, BW4TClientGUI>(), false,
@@ -80,49 +75,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
      */
     public Map<String, Parameter> getInitParameters() {
         return data.getInitParameters();
-    }
-
-    /**
-     * Notifies all listeners about an entity that is free.
-     * 
-     * @param entity
-     *            is the free entity.
-     * @param agents
-     *            is the list of agents that were associated
-     */
-    public void notifyFreeEntity(String entity, Collection<String> agents) {
-        for (EnvironmentListener listener : data.getEnvironmentListeners()) {
-            listener.handleFreeEntity(entity, agents);
-        }
-    }
-
-    /**
-     * Notifies all listeners about an entity that has been newly created.
-     * 
-     * @param entity
-     *            is the new entity.
-     */
-    public void notifyNewEntity(String entity) {
-        for (EnvironmentListener listener : data.getEnvironmentListeners()) {
-            listener.handleNewEntity(entity);
-        }
-    }
-
-    /**
-     * Notifies all listeners about an entity that has been deleted.
-     * 
-     * @param entity
-     *            is the deleted entity.
-     */
-    public void notifyDeletedEntity(String entity, Collection<String> agents) {
-        LOGGER.debug("Notifying all listeners about an entity that has been deleted.");
-        if (data.getEntityToGUI().get(entity) != null) {
-            data.getEntityToGUI().get(entity).getBW4TClientInfo().jFrame
-                    .dispose();
-        }
-        for (EnvironmentListener listener : data.getEnvironmentListeners()) {
-            listener.handleDeletedEntity(entity, agents);
-        }
     }
 
     /**
@@ -180,8 +132,8 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
      * @param e
      *            is the exception from which we detected the death.
      */
-    private NoEnvironmentException environmentSuddenDeath(Exception e) {
-        this.LOGGER.error("The BW4T Server disconnected unexpectedly.");
+    public NoEnvironmentException environmentSuddenDeath(Exception e) {
+        LOGGER.error("The BW4T Server disconnected unexpectedly.");
         handleStateChange(EnvironmentState.KILLED);
         if (e instanceof NoEnvironmentException) {
             return (NoEnvironmentException) e;
@@ -213,7 +165,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
         } else {
             return data.getClient().performEntityAction(entity, action);
         }
-
     }
 
     /**
@@ -316,7 +267,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
      * 
      * @return the result
      */
-    protected boolean isSupportedByEnvironment(Action arg0) throws ActException {
+    public boolean isSupportedByEnvironment(Action arg0) throws ActException {
         try {
             return data.getClient().isSupportedByEnvironment(arg0);
         } catch (RemoteException e) {
@@ -331,7 +282,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
      * 
      * @return the result
      */
-    protected boolean isSupportedByType(Action arg0, String arg1) {
+    public boolean isSupportedByType(Action arg0, String arg1) {
         return true;
     }
 
@@ -363,7 +314,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
     public Map<String, Collection<Percept>> getAllPercepts(String agent,
             String... entities) throws PerceiveException,
             NoEnvironmentException {
-
         // fail if the environment does not run
         EnvironmentState state = getState();
         if (state == EnvironmentState.KILLED) {
@@ -377,7 +327,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
             throw new PerceiveException("Agent \"" + agent
                     + "\" is not registered.");
         }
-
         // get the associated entities
         Set<String> associatedEntities;
         try {
@@ -386,52 +335,38 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
             throw new PerceiveException(
                     "can't get associated entities of agent " + agent, e);
         }
-
         // fail if there are no associated entities
         if (associatedEntities == null || associatedEntities.isEmpty()) {
             throw new PerceiveException("Agent \"" + agent
                     + "\" has no associated entities.");
         }
-
         // return value
         Map<String, Collection<Percept>> ret = new HashMap();
-
         // gather all percepts
         if (entities.length == 0) {
-
             for (String entity : associatedEntities) {
-
                 // get all percepts
-                List<Percept> all = getAllPerceptsFromEntity(entity);
-
+                List<Percept> all = PerceptsHandler.getAllPerceptsFromEntity(entity, this);
                 // add annonation
                 for (Percept p : all) {
                     p.setSource(entity);
                 }
-
                 // done
                 ret.put(entity, all);
-
             }
-
         } else {
-
             for (String entity : entities) {
-
                 if (!associatedEntities.contains(entity)) {
                     throw new PerceiveException("Entity \"" + entity
                             + "\" has not been associated with the agent \""
                             + agent + "\".");
                 }
-
                 // get all percepts
-                List<Percept> all = getAllPerceptsFromEntity(entity);
-
+                List<Percept> all = PerceptsHandler.getAllPerceptsFromEntity(entity, this);
                 // add annonation
                 for (Percept p : all) {
                     p.setSource(entity);
                 }
-
                 // done
                 ret.put(entity, all);
             }
@@ -439,54 +374,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
         return ret;
     }
 
-    /**
-     * Get all percepts for a certain entity, is passed through the server
-     * 
-     * @param entity
-     *            , the entity for which all percepts should be gotten
-     * @return the list of received percepts, null if an exception occurred
-     * @throws PerceiveException
-     *             , NoEnvironmentException if the attempt to perform an action
-     *             or to retrieve percepts has failed.
-     */
-    public List<Percept> getAllPerceptsFromEntity(String entity)
-            throws PerceiveException {
 
-        try {
-            boolean launchGui = "true".equals(((Identifier) data
-                    .getInitParameters().get("launchgui")).getValue());
-            if (data.isConnectedToGoal() && !"gui".contains(entity)
-                    && "human".equals(getType(entity))) {
-                return (LinkedList<Percept>) data.getEntityToGUI().get(entity)
-                        .getToBePerformedAction();
-            } else if (entity.contains("gui")
-                    && "human".equals(getType(entity.replace("gui", "")))) {
-                return (LinkedList<Percept>) data.getClient()
-                        .getAllPerceptsFromEntity(entity.replace("gui", ""));
-            } else if (launchGui) {
-                if (data.getEntityToGUI().get(entity) == null) {
-                    return null;
-                }
-                List<Percept> percepts = (LinkedList<Percept>) data.getClient()
-                        .getAllPerceptsFromEntity(entity);
-                BW4TClientGUI tempEntity;
-                if (percepts != null) {
-                    tempEntity = data.getEntityToGUI().get(entity);
-                    ProcessingOperations.processPercepts(percepts,
-                            tempEntity.getBW4TClientInfo());
-                }
-                return percepts;
-            } else {
-                return (LinkedList<Percept>) data.getClient()
-                        .getAllPerceptsFromEntity(entity);
-            }
-        } catch (RemoteException e) {
-            throw environmentSuddenDeath(e);
-        } catch (EntityException e) {
-            throw new PerceiveException("getAllPerceptsFromEntity failed for "
-                    + entity, e);
-        }
-    }
 
     /**
      * Check if an action is supported by an entity, is not used so returns true
@@ -496,7 +384,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
      * @param entity
      *            , the entity
      */
-    protected boolean isSupportedByEntity(Action action, String entity) {
+    public boolean isSupportedByEntity(Action action, String entity) {
         return true;
     }
 
@@ -536,7 +424,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
      */
     @Override
     public void kill() throws ManagementException {
-
         for (BW4TClientGUI renderer : data.getEntityToGUI().values()) {
             if (renderer != null) {
                 renderer.getBW4TClientInfo().stop = true;
@@ -566,50 +453,39 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
     /*
      * Listener functionality. Attaching, detaching, notifying listeners.
      */
-
     /**
      * {@inheritDoc}
      */
     public void attachEnvironmentListener(EnvironmentListener listener) {
-
         if (!data.getEnvironmentListeners().contains(listener)) {
             data.getEnvironmentListeners().add(listener);
         }
-
     }
 
     /**
      * {@inheritDoc}
      */
     public void detachEnvironmentListener(EnvironmentListener listener) {
-
         if (data.getEnvironmentListeners().contains(listener)) {
             data.getEnvironmentListeners().remove(listener);
         }
-
     }
 
     /**
      * {@inheritDoc}
      */
     public void attachAgentListener(String agent, AgentListener listener) {
-
         if (!data.getLocalAgents().contains(agent)) {
             return;
         }
-
         Set<AgentListener> listeners = data.getAgentsToAgentListeners().get(
                 agent);
-
         if (listeners == null) {
             listeners = new HashSet<AgentListener>();
         }
-
         listeners.add(listener);
-
         data.getAgentsToAgentListeners().put(agent,
                 (HashSet<AgentListener>) listeners);
-
     }
 
     /**
@@ -772,7 +648,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
     public Map<String, Percept> performAction(String agent, Action action,
             String... entities) throws ActException {
         try {
-            return performAction1(agent, action, entities);
+            return ActionHandler.performAction1(agent, action, this, entities);
         } catch (ActException e) {
             throw e;
         } catch (Exception e) {
@@ -783,118 +659,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
         }
     }
 
-    /**
-     * Internal version that can fully throw exceptions
-     * 
-     * @param agent
-     * @param action
-     * @param entities
-     * @return
-     * @throws ActException
-     * @throws AgentException
-     */
-    private Map<String, Percept> performAction1(String agent, Action action,
-            String... entities) throws ActException, AgentException {
-        // FIXME this function is way too long.
 
-        // 1. unregistered agents cannot act
-        if (!getAgents().contains(agent)) {
-            throw new ActException(ActException.NOTREGISTERED);
-        }
-
-        // get the associated entities
-        Set<String> associatedEntities;
-        associatedEntities = (HashSet<String>) getAssociatedEntities(agent);
-
-        // 2. no associated entity/ies -> trivial reject
-        if (associatedEntities == null || associatedEntities.isEmpty()) {
-            throw new ActException(ActException.NOENTITIES);
-        }
-
-        // entities that should perform the action
-        Set<String> targetEntities = null;
-        if (entities.length == 0) {
-
-            targetEntities = associatedEntities;
-
-        } else {
-
-            targetEntities = new HashSet<String>();
-
-            for (String entity : entities) {
-
-                // 3. provided wrong entity
-                if (!associatedEntities.contains(entity)) {
-                    throw new ActException(ActException.WRONGENTITY);
-                }
-
-                targetEntities.add(entity);
-
-            }
-
-        }
-
-        // 4. action could be not supported by the environment
-        if (!isSupportedByEnvironment(action)) {
-            throw new ActException(ActException.NOTSUPPORTEDBYENVIRONMENT);
-        }
-
-        // 5. action could be not supported by the type of the entities
-        for (String entity : entities) {
-
-            String type;
-            try {
-                type = getType(entity);
-            } catch (EntityException e) {
-                throw new ActException("can't get entity type", e);
-            }
-
-            if (!isSupportedByType(action, type)) {
-                throw new ActException(ActException.NOTSUPPORTEDBYTYPE);
-            }
-
-        }
-
-        // 6. action could be not supported by the entities themselves
-        for (String entity : entities) {
-
-            String type;
-            try {
-                type = getType(entity);
-            } catch (EntityException e) {
-                throw new ActException("can't get entity type", e);
-            }
-
-            if (!isSupportedByEntity(action, type)) {
-                throw new ActException(ActException.NOTSUPPORTEDBYENTITY);
-            }
-
-        }
-
-        Map<String, Percept> ret = new HashMap<String, Percept>();
-
-        // 6. action could be not supported by the entities themselves
-        for (String entity : targetEntities) {
-
-            // TODO catch and rethrow exceptions //differentiate between
-            // actexceptions and others
-            // TODO how is ensured that this method is called? ambiguity?
-
-            try {
-                Percept p = this.performEntityAction(entity, action);
-                if (p != null) {
-                    // workaround for #2270
-                    ret.put(entity, p);
-                }
-            } catch (Exception e) {
-                throw new ActException(ActException.FAILURE,
-                        "performAction failed:", e);
-            }
-
-        }
-
-        return ret;
-    }
 
     /**
      * Used to get the current state of the environment
@@ -977,7 +742,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
     }
 
     /**
-     * This is called from the server, via the BW4Tclient.
+     * This is called from the server, via the BW4T Client.
      * 
      * @param newState
      */
@@ -997,5 +762,4 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
     public void reset(Map<String, Parameter> params) throws ManagementException {
         data.getClient().resetServer(params);
     }
-
 }

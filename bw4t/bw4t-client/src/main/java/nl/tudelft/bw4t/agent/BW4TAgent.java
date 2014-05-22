@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.LinkedList;
 
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.client.environment.handlers.PerceptsHandler;
 import nl.tudelft.bw4t.message.BW4TMessage;
 import nl.tudelft.bw4t.message.MessageTranslator;
 import eis.eis2java.translation.Translator;
@@ -217,7 +218,7 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	 */
 	public LinkedList<Percept> getPercepts() throws PerceiveException,
 			NoEnvironmentException {
-		return (LinkedList<Percept>) bw4tenv.getAllPerceptsFromEntity(entityId);
+		return (LinkedList<Percept>) PerceptsHandler.getAllPerceptsFromEntity(entityId, bw4tenv);
 	}
 
 	public void setKilled() {
