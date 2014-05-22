@@ -1,12 +1,7 @@
 package nl.tudelft.bw4t.scenariogui;
 
-import java.awt.Graphics;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Random;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -26,17 +21,27 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  */
 public class ScenarioEditor extends JFrame {
 
-    /** Randomly generated serial version. */
+    /**
+     * Randomly generated serial version.
+     */
     private static final long serialVersionUID = 3291131921268747169L;
-    /** The name of the window, as displayed in the title. */
+    /**
+     * The name of the window, as displayed in the title.
+     */
     private String windowName = "Scenario Editor";
-    /** The <code>MainPanel</code> serving as the content pane. */
+    /**
+     * The <code>MainPanel</code> serving as the content pane.
+     */
     private MainPanel mPanel;
-    /** The <code>MenuBar</code> at the top of the screen. */
+    /**
+     * The <code>MenuBar</code> at the top of the screen.
+     */
     private MenuBar menuBar;
-    /** The <code>Controller</code> containing all the ActionEvents. */
+    /**
+     * The <code>Controller</code> containing all the ActionEvents.
+     */
     private Controller controller;
-    
+
     /**
      * Create the scenario editor frame, which will then hold the panels with
      * specific functions.
@@ -74,7 +79,7 @@ public class ScenarioEditor extends JFrame {
      * testing when the panels have to be mocked or spied upon.
      *
      * @param configurationPanel The ConfigurationPanel object used in the frame
-     * @param entityPanel The EntityPanel object used in the frame
+     * @param entityPanel        The EntityPanel object used in the frame
      */
     public ScenarioEditor(final ConfigurationPanel configurationPanel, final EntityPanel entityPanel) {
         this();
@@ -93,7 +98,6 @@ public class ScenarioEditor extends JFrame {
     public static void main(final String[] args) {
         new ScenarioEditor();
     }
-    
 
 
     /**
@@ -166,7 +170,6 @@ public class ScenarioEditor extends JFrame {
     }
 
     /**
-     *
      * @param e contains the exception thrown by a method
      * @param s is a description that is specific for the place the error occurred.
      */
@@ -193,7 +196,6 @@ public class ScenarioEditor extends JFrame {
     }
 
     /**
-     *
      * @param e contains the exception to print
      * @param s is a description of the error e that will be shown.
      */

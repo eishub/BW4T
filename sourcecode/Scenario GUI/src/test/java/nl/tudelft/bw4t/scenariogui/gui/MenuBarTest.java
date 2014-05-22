@@ -21,7 +21,11 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created on 21-5-2014.
@@ -41,17 +45,18 @@ public class MenuBarTest {
     private JFileChooser filechooser;
 
     /**
+     * The base directory of all files used in the test.
+     */
+    private static final String BASE = System.getProperty("user.dir") + "/src/test/resources/";
+    /**
      * The path of the xml file used to test the open button.
      */
-    private static final String FILE_OPEN_PATH = System.getProperty("user.dir")
-            + "/src/test/resources/open.xml";
+    private static final String FILE_OPEN_PATH = BASE + "open.xml";
 
     /**
      * The path of the xml file used to save dummy data
      */
-    private static final String FILE_SAVE_PATH = System.getProperty("user.dir")
-            + "/src/test/resources/dummy.xml";
-
+    private static final String FILE_SAVE_PATH = BASE + "dummy.xml";
     /**
      * Setup the testing environment by creating the scenario editor and
      * assigning the editor attribute to a spy object of the ScenarioEditor.
@@ -73,8 +78,10 @@ public class MenuBarTest {
 
     /**
      * Test if the open button works.
-     * @throws FileNotFoundException
-     * @throws JAXBException
+     *
+     * @throws FileNotFoundException File not found exception
+     * @throws JAXBException JAXBException, also called in some cases when a file is not found
+     * by JAXB itself.
      */
     @Test
     public void testOpenButton() throws FileNotFoundException, JAXBException {
@@ -95,9 +102,11 @@ public class MenuBarTest {
     }
 
     /**
-     *  Test if the open button works after changing the defaults and clicking yes on the prompt.
-     * @throws FileNotFoundException
-     * @throws JAXBException
+     * Test if the open button works after changing the defaults and clicking yes on the prompt.
+     *
+     * @throws FileNotFoundException File not found exception
+     * @throws JAXBException JAXBException, also called in some cases when a file is not found
+     * by JAXB itself.
      */
     @Test
     public void testOpenButtonNonDefaultYes() throws FileNotFoundException, JAXBException {
@@ -117,7 +126,7 @@ public class MenuBarTest {
         option.setOptionPrompt(yesMockOption);
 
         // Change the defaults
-        editor.getMainPanel().getConfigurationPanel().setClientIP("randomval");
+        editor.getMainPanel().getConfigurationPanel().setClientIP("randomvalue");
 
         editor.getTopMenuBar().getMenuItemFileOpen().doClick();
 
@@ -132,7 +141,8 @@ public class MenuBarTest {
         assertEquals(editor.getMainPanel().getConfigurationPanel().getServerPort(), temp.getServerPort());
 
         // Finally make sure the confirmation dialog was called.
-        verify(yesMockOption, times(1)).showConfirmDialog((Component) any(), anyObject(), anyString(), anyInt(), anyInt());
+        verify(yesMockOption, times(1))
+                .showConfirmDialog((Component) any(), anyObject(), anyString(), anyInt(), anyInt());
         // And the file dialog  for saving and opening
         verify(filechooser, times(1)).showOpenDialog((Component) any());
         verify(filechooser, times(1)).showSaveDialog((Component) any());
@@ -140,9 +150,11 @@ public class MenuBarTest {
     }
 
     /**
-     *  Test if the open button works after changing the defaults and clicking yes on the prompt.
-     * @throws FileNotFoundException
-     * @throws JAXBException
+     * Test if the open button works after changing the defaults and clicking yes on the prompt.
+     *
+     * @throws FileNotFoundException File not found exception
+     * @throws JAXBException JAXBException, also called in some cases when a file is not found
+     * by JAXB itself.
      */
     @Test
     public void testOpenButtonNonDefaultNo() throws FileNotFoundException, JAXBException {
@@ -178,11 +190,12 @@ public class MenuBarTest {
         assertEquals(editor.getMainPanel().getConfigurationPanel().getServerPort(), temp.getServerPort());
 
         // Finally make sure the confirmation dialog was called.
-        verify(noMockOption, times(1)).showConfirmDialog((Component) any(), anyObject(), anyString(), anyInt(), anyInt());
+        verify(noMockOption, times(1))
+                .showConfirmDialog((Component) any(), anyObject(), anyString(), anyInt(), anyInt());
 
         // File chooser should not have been called for the actual opening
         verify(filechooser, times(1)).showOpenDialog((Component) any());
     }
 
- 
+
 }
