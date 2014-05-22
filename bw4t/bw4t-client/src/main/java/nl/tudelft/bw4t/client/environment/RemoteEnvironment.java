@@ -18,6 +18,7 @@ import nl.tudelft.bw4t.client.environment.handlers.ActionHandler;
 import nl.tudelft.bw4t.client.environment.handlers.PerceptsHandler;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.startup.InitParam;
+import nl.tudelft.bw4t.client.startup.Launcher;
 
 import org.apache.log4j.Logger;
 
@@ -234,6 +235,19 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
             LOGGER.error("Unable to bind to the remote environment.");
         }
     }
+    
+    /**
+	 * Unfortunately goal requires the main class to be implementing the
+	 * {@link EnvironmentInterfaceStandard}, that is why we had to reroute the
+	 * main method through here.
+	 * 
+	 * @see Launcher#launch(String[])
+	 * @param args
+	 *            the commandline arguments
+	 */
+    public static void main(String[] args) {
+		Launcher.launch(args);
+	}
 
     /**
      * Filter out all the parameters for the server from the given set of
