@@ -33,7 +33,7 @@ import javax.swing.table.DefaultTableModel;
 public class EntityPanel extends JPanel {
 
     /** The number column. */
-    private static final String NUMBER_COLUMN = "Nr";
+    private static final String NUMBER_COLUMN = "Number of bots";
 
     /** The bot options. */
     private JPanel botOptions = new JPanel();
@@ -173,12 +173,17 @@ public class EntityPanel extends JPanel {
     private void createBotTable() {
 
         botTable = new JTable();
+        
         botList = new DefaultTableModel() {
+            
             @Override
             public boolean isCellEditable(final int row, final int column) {
-                // make all cells not editable
+                if (column == 2) {
+                    return true;
+                }
                 return false;
-            }
+         }
+            
         };
 
         botTable.setModel(botList);
@@ -242,7 +247,9 @@ public class EntityPanel extends JPanel {
         epartnerList = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(final int row, final int column) {
-                // make all cells not editable
+                if (column == 1) {
+                    return true;
+                }
                 return false;
             }
         };

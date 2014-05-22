@@ -94,29 +94,7 @@ public class ScenarioEditor extends JFrame {
         new ScenarioEditor();
     }
     
-    //TODO: remove below method
-    /**
-     * Paints the background of the GUI.
-     * @param g The graphics.
-     */
-    @Override
-    public void paint(Graphics g) {
-        if (new Random().nextInt(7) == 0) {
-            try {
-                g.drawImage(ImageIO.read(new File(System.getProperty("user.dir")
-                        + "/src/main/resources/boss.jpg")), 0, 50, null);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-        super.paint(g);
-    }
+
 
     /**
      * Set the content pane to the given panel. This changes which panel is
