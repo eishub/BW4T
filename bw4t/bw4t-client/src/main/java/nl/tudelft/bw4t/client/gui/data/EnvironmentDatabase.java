@@ -6,6 +6,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 import nl.tudelft.bw4t.client.gui.data.structures.DropZoneInfo;
 import nl.tudelft.bw4t.client.gui.data.structures.RoomInfo;
@@ -172,7 +173,7 @@ public class EnvironmentDatabase {
         return toBePerformedAction;
     }
 
-    public void setToBePerformedAction(LinkedList<Percept> toBePerformedAction) {
-        this.toBePerformedAction = toBePerformedAction;
+    public void setToBePerformedAction(List<Percept> percepts) {
+        this.toBePerformedAction = (LinkedList<Percept>) percepts;
     }
 }

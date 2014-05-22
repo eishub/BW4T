@@ -3,6 +3,9 @@ package nl.tudelft.bw4t.client.gui.listeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
+import java.util.List;
+
+import org.apache.log4j.Logger;
 
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
@@ -18,6 +21,10 @@ import eis.iilang.Percept;
 public class PickUpActionListener implements ActionListener {
     
     private BW4TClientGUI bw4tClientMapRenderer;
+    /**
+     * The log4j Logger which displays logs on console
+     */
+    private final static Logger LOGGER = Logger.getLogger(BW4TClientGUI.class);
     
     public PickUpActionListener(BW4TClientGUI bw4tClientMapRenderer) {
         this.bw4tClientMapRenderer = bw4tClientMapRenderer;
@@ -30,11 +37,10 @@ public class PickUpActionListener implements ActionListener {
             try {
                 data.humanAgent.pickUp();
             } catch (Exception e1) {
-                // Also catch NoServerException. Nothing we can do really.
-                e1.printStackTrace();
+                LOGGER.error("Could tell the agent to perform a pickUp action.", e1);
             }
         else {
-            LinkedList<Percept> percepts = new LinkedList<Percept>();
+            List<Percept> percepts = new LinkedList<Percept>();
             Percept percept = new Percept("pickUp");
             percepts.add(percept);
             data.environmentDatabase.setToBePerformedAction(percepts);
