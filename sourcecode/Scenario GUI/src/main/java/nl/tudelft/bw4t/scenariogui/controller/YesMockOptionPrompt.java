@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 public class YesMockOptionPrompt implements OptionPrompt {
 
     /**
-     * @see javax.swing.JOptionPane#showConfirmDialog(java.awt.Component, Object, String, int, int);
      * @param parentComponent The <code>java.awt.Component</code> that will be used to align the box.
      * @param message The message to be shown to the user.
      * @param title The title of the confirmation dialog

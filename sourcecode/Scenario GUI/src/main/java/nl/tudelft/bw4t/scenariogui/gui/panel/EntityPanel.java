@@ -39,7 +39,8 @@ public class EntityPanel extends JPanel {
 
     /** The number of bots column. */
     private static final String NUMBER_BOTS_COLUMN = "Number of bots";
-    
+
+    /** The number of e-partners */
     private static final String NUMBER_EPARTNERS_COLUMN = "Number of e-partners";
 
     /** The bot options. */
@@ -220,7 +221,10 @@ public class EntityPanel extends JPanel {
             }
         });
     }
-    
+
+    /**
+     * Create the dropdown list.
+     */
     public void setUpControllerColumn() {
     	JComboBox controllers = new JComboBox();
     	controllers.addItem("Agent");
