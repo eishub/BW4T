@@ -192,9 +192,6 @@ class MapSelector extends JPanel {
 	 */
 	private Vector<String> getMaps() throws FileNotFoundException {
 		File f = new File(System.getProperty("user.dir") + "/maps");
-		System.out.println("Working Directory = " +
-	              System.getProperty("user.dir"));
-		System.out.println(f.toString());
 		if (f.list() == null) {
 			throw new FileNotFoundException("maps directory not found");
 		}

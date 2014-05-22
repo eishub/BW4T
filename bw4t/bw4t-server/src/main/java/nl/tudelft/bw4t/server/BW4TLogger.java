@@ -8,7 +8,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import nl.tudelft.bw4t.map.BlockColor;
+import nl.tudelft.bw4t.server.BW4TEnvironment;
 
 /**
  * This logger logs all actions to a file:
@@ -40,273 +43,273 @@ import nl.tudelft.bw4t.map.BlockColor;
  * This class should be thread safe.
  * 
  * @author W.Pasman 1dec2011
- * 
  */
 public class BW4TLogger {
-	// set to true if logging fails and
-	// warning was printed.
+    // set to true if logging fails and
+    // warning was printed.
 
-	static boolean alreadywarned;
-	private static File logFile;
-	private static FileWriter writer;
-	private static BW4TLogger theLogger = null; // the singleton
+    static boolean alreadywarned;
+    private static File logFile;
+    private static FileWriter writer;
+    private static BW4TLogger theLogger = null; // the singleton
 
-	private static Long starttime = null;
+    private static Long starttime = null;
 
-	/**
-	 * Here we store per-agent performance records.
-	 */
-	private static HashMap<String, AgentRecord> agentRecords;
+    /**
+     * The log4j logger, logs to the console.
+     */
+    private static Logger logger = Logger.getLogger(BW4TEnvironment.class);
 
-	/**
-	 * Create a new Logger.
-	 * 
-	 * @throws IOException
-	 *             if log file can not be created.
-	 */
-	private BW4TLogger() {
-		reset();
-		try {
-			System.out.println("creating log file");
-			System.out.println((new File(System.getProperty("user.dir")+ "/log/")).getAbsolutePath());
-			logFile = File.createTempFile("BW4T", ".txt", new File(System.getProperty("user.dir")+ "/log/"));
-			writer = new FileWriter(logFile);
-			ArrayList<String> info = new ArrayList<String>();
-			info.add("logcreationtime " + System.currentTimeMillis());
-			log(info);
-		} catch (IOException e) {
-			System.out
-					.println("WARNING. opening log file failed. Proceeding as if file opened OK.");
-			e.printStackTrace();
-		}
-	}
+    /**
+     * Here we store per-agent performance records.
+     */
+    private static HashMap<String, AgentRecord> agentRecords;
 
-	/**
-	 * reset all internal values to null/default.
-	 */
-	private void reset() {
-		alreadywarned = false;
-		logFile = null;
-		writer = null;
-		theLogger = null;
-		starttime = null;
-		agentRecords = new HashMap<String, AgentRecord>();
+    /**
+     * Create a new Logger.
+     * 
+     * @throws IOException
+     *             if log file can not be created.
+     */
+    private BW4TLogger() {
+        reset();
+        try {
+            logger.info("Starting the BW4T logger.");
+            logFile = File.createTempFile("BW4T", ".txt",
+                    new File(System.getProperty("user.dir") + "/log/"));
+            writer = new FileWriter(logFile);
+            ArrayList<String> info = new ArrayList<String>();
+            info.add("logcreationtime " + System.currentTimeMillis());
+            log(info);
+        } catch (IOException e) {
+            //logger.error("The BW4T Server was unable to open the logfile as requested. Proceeding as if no problem was encountered.");
+            e.printStackTrace();
+        }
+    }
 
-	}
+    /**
+     * reset all internal values to null/default.
+     */
+    private void reset() {
+        alreadywarned = false;
+        logFile = null;
+        writer = null;
+        theLogger = null;
+        starttime = null;
+        agentRecords = new HashMap<String, AgentRecord>();
 
-	/**
-	 * get the logger instance
-	 * 
-	 * @return the BW4TLogger
-	 * @throws IOException
-	 */
-	public synchronized static BW4TLogger getInstance() {
-		if (theLogger == null) {
-			theLogger = new BW4TLogger();
-		}
-		return theLogger;
-	}
+    }
 
-	/**
-	 * get the agent's record. Creates new one if it does not yet exist.
-	 * 
-	 * @param agent
-	 *            is the name of the agent
-	 * @return AgentRecord.
-	 */
-	private AgentRecord getAgentRecord(String agent) {
-		if (agentRecords.get(agent) == null) {
-			agentRecords.put(agent, new AgentRecord(agent, "unknown"));
-		}
-		return agentRecords.get(agent);
-	}
+    /**
+     * get the logger instance
+     * 
+     * @return the BW4TLogger
+     * @throws IOException
+     */
+    public synchronized static BW4TLogger getInstance() {
+        if (theLogger == null) {
+            theLogger = new BW4TLogger();
+        }
+        return theLogger;
+    }
 
-	/**
-	 * Log to file. The items are written to a single row, with tabs separating
-	 * them and a newline at the end. If there are 0 items in the list, nothing
-	 * is written to the log file.
-	 * 
-	 * @param text
-	 *            is text to be appended to log file.
-	 * @throws IOException
-	 */
-	public void log(String[] items) {
-		log(Arrays.asList(items));
-	}
+    /**
+     * get the agent's record. Creates new one if it does not yet exist.
+     * 
+     * @param agent
+     *            is the name of the agent
+     * @return AgentRecord.
+     */
+    private AgentRecord getAgentRecord(String agent) {
+        if (agentRecords.get(agent) == null) {
+            agentRecords.put(agent, new AgentRecord(agent, "unknown"));
+        }
+        return agentRecords.get(agent);
+    }
 
-	/**
-	 * Log to file. The items are written to a single row, with tabs separating
-	 * them and a newline at the end. If there are 0 items in the list, nothing
-	 * is written to the log file.
-	 * 
-	 * @param text
-	 *            is text to be appended to log file.
-	 */
-	public synchronized void log(List<String> items) {
+    /**
+     * Log to file. The items are written to a single row, with tabs separating
+     * them and a newline at the end. If there are 0 items in the list, nothing
+     * is written to the log file.
+     * 
+     * @param text
+     *            is text to be appended to log file.
+     * @throws IOException
+     */
+    public void log(String[] items) {
+        log(Arrays.asList(items));
+    }
 
-		try {
-			if (items.size() == 0) {
-				return;
-			}
-			writer.write(items.get(0));
+    /**
+     * Log to file. The items are written to a single row, with tabs separating
+     * them and a newline at the end. If there are 0 items in the list, nothing
+     * is written to the log file.
+     * 
+     * @param text
+     *            is text to be appended to log file.
+     */
+    public synchronized void log(List<String> items) {
 
-			for (int i = 1; i < items.size(); i++) {
-				writer.write("\t" + items.get(i));
-			}
+        try {
+            if (items.size() == 0) {
+                return;
+            }
+            writer.write(items.get(0));
 
-			writer.write("\n");
-			writer.flush();
-		} catch (IOException e) {
-			if (alreadywarned)
-				return;
-			System.out.println("WARNING. Writing to log file is failing."
-					+ e.getMessage());
-			e.printStackTrace();
-			alreadywarned = true;
-		}
-	}
+            for (int i = 1; i < items.size(); i++) {
+                writer.write("\t" + items.get(i));
+            }
 
-	/**
-	 * write the team info to log file.
-	 * 
-	 * @param nAgent
-	 *            is number of agents in team
-	 * @param nHumans
-	 *            is number of humans in the team
-	 */
-	public void logTeam(Integer nAgents, Integer nHumans) throws IOException {
-		log(new String[] { "team", nAgents.toString(), nHumans.toString() });
-	}
+            writer.write("\n");
+            writer.flush();
+        } catch (IOException e) {
+            if (alreadywarned)
+                return;
+            e.printStackTrace();
+            alreadywarned = true;
+        }
+    }
 
-	/**
-	 * log the goal sequence
-	 * 
-	 * @param sequence
-	 *            is a list of Strings, each item being a color.
-	 * @throws IOException
-	 */
-	public void logSequence(List<BlockColor> sequence) throws IOException {
-		ArrayList<String> logString = new ArrayList<String>();
-		logString.add("sequence");
-		for (BlockColor col : sequence) {
-			logString.add(" " + col.getLetter());
-		}
-		log(logString);
-	}
+    /**
+     * write the team info to log file.
+     * 
+     * @param nAgent
+     *            is number of agents in team
+     * @param nHumans
+     *            is number of humans in the team
+     */
+    public void logTeam(Integer nAgents, Integer nHumans) throws IOException {
+        log(new String[] { "team", nAgents.toString(), nHumans.toString() });
+    }
 
-	/**
-	 * called when a robot makes a good drop in the drop zone. Nothing is logged
-	 * at this point
-	 */
-	public void logGoodDrop(String entity) {
-		getAgentRecord(entity).addGoodDrop();
-	}
+    /**
+     * log the goal sequence
+     * 
+     * @param sequence
+     *            is a list of Strings, each item being a color.
+     * @throws IOException
+     */
+    public void logSequence(List<BlockColor> sequence) throws IOException {
+        ArrayList<String> logString = new ArrayList<String>();
+        logString.add("sequence");
+        for (BlockColor col : sequence) {
+            logString.add(" " + col.getLetter());
+        }
+        log(logString);
+    }
 
-	/**
-	 * called when a robot makes a wrong drop in the drop zone. Nothign is
-	 * logged at this point
-	 */
-	public void logWrongDrop(String entity) {
-		getAgentRecord(entity).addWrongDrop();
-	}
+    /**
+     * called when a robot makes a good drop in the drop zone. Nothing is logged
+     * at this point
+     */
+    public void logGoodDrop(String entity) {
+        getAgentRecord(entity).addGoodDrop();
+    }
 
-	/**
-	 * log the action. If this is the first action, it is also the start time.
-	 * 
-	 * @param entity
-	 * @param action
-	 */
-	public void logAction(String entity, String action) {
-		Long time = System.currentTimeMillis();
-		log(new String[] { "action ", "" + time, entity, action });
-		if (starttime == null) {
-			starttime = time;
-		}
-	}
+    /**
+     * called when a robot makes a wrong drop in the drop zone. Nothign is
+     * logged at this point
+     */
+    public void logWrongDrop(String entity) {
+        getAgentRecord(entity).addWrongDrop();
+    }
 
-	/**
-	 * record a sent message
-	 * 
-	 * @param entity
-	 */
-	public void logSentMessageAction(String entity) {
-		getAgentRecord(entity).addSentMessage();
-	}
+    /**
+     * log the action. If this is the first action, it is also the start time.
+     * 
+     * @param entity
+     * @param action
+     */
+    public void logAction(String entity, String action) {
+        Long time = System.currentTimeMillis();
+        log(new String[] { "action ", "" + time, entity, action });
+        if (starttime == null) {
+            starttime = time;
+        }
+    }
 
-	public void logEnteredRoom(String entity) {
-		getAgentRecord(entity).addEnteredRoom();
-	}
+    /**
+     * record a sent message
+     * 
+     * @param entity
+     */
+    public void logSentMessageAction(String entity) {
+        getAgentRecord(entity).addSentMessage();
+    }
 
-	/**
-	 * log the start of a motion
-	 * 
-	 * @param entity
-	 */
-	public void logMoving(String entity) {
-		getAgentRecord(entity).setStartedMoving();
-	}
+    public void logEnteredRoom(String entity) {
+        getAgentRecord(entity).addEnteredRoom();
+    }
 
-	/**
-	 * log the stop of a motion
-	 * 
-	 * @param entity
-	 */
-	public void logStopMoving(String entity) {
-		getAgentRecord(entity).setStoppedMoving();
-	}
+    /**
+     * log the start of a motion
+     * 
+     * @param entity
+     */
+    public void logMoving(String entity) {
+        getAgentRecord(entity).setStartedMoving();
+    }
 
-	/**
-	 * This adds the agent summary to the log file and closes the log file. Any
-	 * attempt to log after this will create a new log file.
-	 */
-	public synchronized void closeLog() {
-		System.out.println("closing the log");
-		logAgentSummary();
-		try {
-			writer.close();
-		} catch (IOException e) {
-			System.out.println("WARNING. log file did not close:"
-					+ e.getMessage());
-		}
-		reset();
-	}
+    /**
+     * log the stop of a motion
+     * 
+     * @param entity
+     */
+    public void logStopMoving(String entity) {
+        getAgentRecord(entity).setStoppedMoving();
+    }
 
-	private void logAgentSummary() {
-		for (AgentRecord agentrecord : agentRecords.values()) {
-			for (List<String> summary : agentrecord.toSummaryArray()) {
-				log(summary);
-			}
-		}
+    /**
+     * This adds the agent summary to the log file and closes the log file. Any
+     * attempt to log after this will create a new log file.
+     */
+    public synchronized void closeLog() {
+        logger.info("Closing the log file.");
+        logAgentSummary();
+        try {
+            writer.close();
+        } catch (IOException e) {
+            //logger.error("Unable to close log file.");
+        }
+        reset();
+    }
 
-	}
+    private void logAgentSummary() {
+        for (AgentRecord agentrecord : agentRecords.values()) {
+            for (List<String> summary : agentrecord.toSummaryArray()) {
+                log(summary);
+            }
+        }
 
-	/**
-	 * Log a room and the blocks in there.
-	 * 
-	 * @param room
-	 *            is name of room
-	 * @param blocksInRoom
-	 *            is list of block colors
-	 */
-	public void logRoomBlocks(String room, List<BlockColor> blocksInRoom) {
+    }
 
-		ArrayList<String> logString = new ArrayList<String>();
-		logString.add("room");
-		logString.add(room);
-		for (BlockColor c : blocksInRoom) {
-			logString.add(c.getLetter().toString());
-		}
-		log(logString);
-	}
+    /**
+     * Log a room and the blocks in there.
+     * 
+     * @param room
+     *            is name of room
+     * @param blocksInRoom
+     *            is list of block colors
+     */
+    public void logRoomBlocks(String room, List<BlockColor> blocksInRoom) {
 
-	/**
-	 * This is called when the sequence has been completed.
-	 */
-	public void logCompletedSequence() {
-		Long complete = System.currentTimeMillis();
-		log(new String[] { "sequencecomplete", "" + complete });
-		log(new String[] { "totaltime",
-				"" + (float) (complete - starttime) / 1000. });
-		closeLog(); // no more actions after this point, close right away.
-	}
+        ArrayList<String> logString = new ArrayList<String>();
+        logString.add("room");
+        logString.add(room);
+        for (BlockColor c : blocksInRoom) {
+            logString.add(c.getLetter().toString());
+        }
+        log(logString);
+    }
+
+    /**
+     * This is called when the sequence has been completed.
+     */
+    public void logCompletedSequence() {
+        Long complete = System.currentTimeMillis();
+        log(new String[] { "sequencecomplete", "" + complete });
+        log(new String[] { "totaltime",
+                "" + (float) (complete - starttime) / 1000. });
+        closeLog(); // no more actions after this point, close right away.
+    }
 }

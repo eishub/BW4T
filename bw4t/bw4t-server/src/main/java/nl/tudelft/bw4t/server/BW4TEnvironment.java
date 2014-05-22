@@ -12,6 +12,8 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBException;
 
+import org.apache.log4j.Logger;
+
 import nl.tudelft.bw4t.BW4TBuilder;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.visualizations.ServerContextDisplay;
@@ -50,6 +52,11 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	private static final long serialVersionUID = -279637264069930353L;
 	private static BW4TEnvironment instance;
 
+	/**
+	 * The log4j logger, logs to the console.
+	 */
+	private static Logger LOGGER = Logger.getLogger(BW4TEnvironment.class);
+
 	private static String mapName;
 	public static void setMapName(String mapName) {
         BW4TEnvironment.mapName = mapName;
@@ -62,6 +69,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	private Context context;
 	private static NewMap theMap;
 	private ServerContextDisplay contextDisplay;
+	private boolean guiEnabled;
 
 	/**
 	 * Create a new instance of this environment
@@ -80,14 +88,13 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @throws JAXBException
 	 */
 	BW4TEnvironment(BW4TServer server2, String scenarioLocation,
-			String mapLocation) throws IOException, ManagementException,
+			String mapLocation, boolean guiEnabled) throws IOException, ManagementException,
 			ScenarioLoadException, JAXBException {
 		super();
 		instance = this;
 		this.server = server2;
 		this.mapName = mapLocation;
 		this.scenarioLocation = System.getProperty("user.dir") + "/" + scenarioLocation;
-		System.out.println(this.scenarioLocation);
 		launchAll();
 	}
 
@@ -142,7 +149,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 			try {
 				this.deleteEntity(entity);
 			} catch (EntityException | RelationException e) {
-				System.err.println("Failure deleting entity " + entity);
+				LOGGER.error("Failure to delete entity: " + entity);
 				e.printStackTrace();
 			}
 		}
@@ -172,7 +179,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 */
 	public void init(Map<String, Parameter> parameters)
 			throws ManagementException {
-		// System.out.println("re-initializing repast simulator");
 		setState(EnvironmentState.INITIALIZING);
 		takeDownSimulation();
 
@@ -191,8 +197,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		}
 
 		setState(EnvironmentState.RUNNING);
-		// System.out.println("re-initialised");
-
 	}
 
 	/**
@@ -211,7 +215,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		if (server == null)
 			server = Launcher.getInstance().setupRemoteServer();
 		setState(EnvironmentState.INITIALIZING);
-		System.out.println("BW4TServer bound");
+		LOGGER.info("BW4T Server has been bound.");
 	}
 
 	/**
@@ -229,7 +233,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
 			JAXBException {
 		theMap = NewMap.create(new FileInputStream(new File(System.getProperty("user.dir") + "/maps/" + BW4TEnvironment.mapName)));
 		stepper = new Stepper(scenarioLocation, this);
-		System.out.println(scenarioLocation);
 		new Thread(stepper).start();
 	}
 
@@ -418,7 +421,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
 			server.takeDown();
 			server = null;
 		}
-		// System.out.println("server is taken down");
 		launchAll();
 	}
 
@@ -455,12 +457,15 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 */
 	public void setContext(Context c) {
 		context = c;
-		// the display closes itself when you click on the close button.
-		try {
-			contextDisplay = new ServerContextDisplay(context);
-		} catch (Exception e) {
-			System.err.println("BW4T started ok but failed to launch display");
-			e.printStackTrace();
+		if (guiEnabled) {
+			LOGGER.info("Launching the BW4T Server Graphical User Interface.");
+			try {
+				contextDisplay = new ServerContextDisplay(context);
+			} catch (Exception e) {
+				LOGGER.error("BW4T Server started ok but failed to launch display.",e);
+			}
+		} else {
+			LOGGER.info("Launching the BW4T Server without a graphical user interface.");
 		}
 	}
 

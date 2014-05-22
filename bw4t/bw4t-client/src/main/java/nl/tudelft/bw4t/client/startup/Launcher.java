@@ -1,19 +1,19 @@
 package nl.tudelft.bw4t.client.startup;
 
-import eis.exceptions.ManagementException;
-import eis.exceptions.NoEnvironmentException;
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import nl.tudelft.bw4t.BW4TEnvironmentListener;
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.startup.LauncherException;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
-import nl.tudelft.bw4t.BW4TEnvironmentListener;
-import nl.tudelft.bw4t.client.BW4TRemoteEnvironment;
-import nl.tudelft.bw4t.startup.LauncherException;
+import eis.exceptions.ManagementException;
+import eis.exceptions.NoEnvironmentException;
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
 
 /**
  * This class is used to startup the remote environment to interact with the
@@ -26,7 +26,7 @@ public final class Launcher {
 	/**
 	 * store the remoteenvironment
 	 */
-	private static BW4TRemoteEnvironment environment;
+	private static RemoteEnvironment environment;
 	
 	/**
 	 * The log4j Logger which displays logs on console
@@ -69,7 +69,7 @@ public final class Launcher {
 	 * 
 	 * @return the remote environment
 	 */
-	public static BW4TRemoteEnvironment getEnvironment() {
+	public static RemoteEnvironment getEnvironment() {
 		return environment;
 	}
 
@@ -78,15 +78,15 @@ public final class Launcher {
 	 * 
 	 * @param initParams
 	 *            the parameters to be given to the environment
-	 *            {@link BW4TRemoteEnvironment#init(Map)}
+	 *            {@link RemoteEnvironment#init(Map)}
 	 * @return the created environment
 	 */
-	public static BW4TRemoteEnvironment startupEnvironment(
+	public static RemoteEnvironment startupEnvironment(
 			Map<String, Parameter> initParams) {
 		if (environment != null) {
 			return environment;
 		}
-		environment = new BW4TRemoteEnvironment();
+		environment = new RemoteEnvironment();
 		environment.attachEnvironmentListener(new BW4TEnvironmentListener(
 				environment));
 		try {

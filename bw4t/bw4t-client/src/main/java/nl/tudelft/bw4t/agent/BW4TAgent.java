@@ -3,7 +3,7 @@ package nl.tudelft.bw4t.agent;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 
-import nl.tudelft.bw4t.client.BW4TRemoteEnvironment;
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.message.BW4TMessage;
 import nl.tudelft.bw4t.message.MessageTranslator;
 import eis.eis2java.translation.Translator;
@@ -24,7 +24,7 @@ public class BW4TAgent extends Thread implements ActionInterface {
 
 	String agentId, entityId;
 	boolean environmentKilled;
-	private BW4TRemoteEnvironment bw4tenv;
+	private RemoteEnvironment bw4tenv;
 
 	/**
 	 * Create a new BW4TAgent that can be registered to an entity
@@ -34,12 +34,12 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	 * @param env
 	 *            the remote environment
 	 */
-	public BW4TAgent(String agentId, BW4TRemoteEnvironment env) {
+	public BW4TAgent(String agentId, RemoteEnvironment env) {
 		this.agentId = agentId;
 		this.bw4tenv = env;
 	}
 
-	public BW4TRemoteEnvironment getEnvironment() {
+	public RemoteEnvironment getEnvironment() {
 		return bw4tenv;
 	}
 
@@ -217,7 +217,7 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	 */
 	public LinkedList<Percept> getPercepts() throws PerceiveException,
 			NoEnvironmentException {
-		return bw4tenv.getAllPerceptsFromEntity(entityId);
+		return (LinkedList<Percept>) bw4tenv.getAllPerceptsFromEntity(entityId);
 	}
 
 	public void setKilled() {
