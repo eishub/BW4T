@@ -7,12 +7,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-
 import nl.tudelft.bw4t.agent.BW4TAgent;
 import nl.tudelft.bw4t.agent.HumanAgent;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
+
+import org.apache.log4j.Logger;
+
 import eis.EnvironmentListener;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;

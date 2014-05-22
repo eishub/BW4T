@@ -29,6 +29,7 @@ import nl.tudelft.bw4t.RendererMapLoader;
 import nl.tudelft.bw4t.agent.HumanAgent;
 import nl.tudelft.bw4t.client.BW4TClientSettings;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.client.environment.handlers.PerceptsHandler;
 import nl.tudelft.bw4t.client.gui.data.EnvironmentDatabase;
 import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
 import nl.tudelft.bw4t.client.gui.listeners.ChatListMouseListener;
@@ -261,9 +262,8 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
             if (bw4tClientInfo.humanPlayer) {
                 List<Percept> percepts;
                 try {
-                    percepts = bw4tClientInfo.environment
-                            .getAllPerceptsFromEntity(bw4tClientInfo.environmentDatabase
-                                    .getEntityId() + "gui");
+                    percepts = PerceptsHandler.getAllPerceptsFromEntity(bw4tClientInfo.environmentDatabase
+                                    .getEntityId() + "gui", bw4tClientInfo.environment);
                     if (percepts != null) {
                         ProcessingOperations.processPercepts(percepts,
                                 bw4tClientInfo);

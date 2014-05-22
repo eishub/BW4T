@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.client.environment.handlers.PerceptsHandler;
 
 import org.apache.log4j.Logger;
 
@@ -48,8 +49,8 @@ public class TestAgent extends BW4TAgent {
      */
     private void percepts() {
         try {
-            List<Percept> percepts = getEnvironment().getAllPerceptsFromEntity(
-                    entityId);
+            List<Percept> percepts = PerceptsHandler.getAllPerceptsFromEntity(
+                    entityId,getEnvironment());
             if (percepts != null) {
                 processPercepts(percepts);
             }

@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import nl.tudelft.bw4t.client.environment.EntityNotifiers;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.startup.InitParam;
 import nl.tudelft.bw4t.map.NewMap;
@@ -44,10 +45,9 @@ import eis.iilang.Percept;
  */
 public class BW4TClient extends UnicastRemoteObject implements
 		BW4TClientActions {
+    private static final long serialVersionUID = -7174958200299731682L;
 
-	private static final long serialVersionUID = 4060908402879332038L;
-
-	/**
+    /**
 	 * The parent that we serve.
 	 */
 	private RemoteEnvironment parent;
@@ -56,7 +56,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 
 	private BW4TServerActions server;
 	
-	private static Logger LOGGER = Logger.getLogger(BW4TClient.class);
+	private static final Logger LOGGER = Logger.getLogger(BW4TClient.class);
 
 	/**
 	 * the map that the server uses.
@@ -555,7 +555,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	@Override
 	public void handleNewEntity(String entity) throws RemoteException,
 			EntityException {
-		parent.notifyNewEntity(entity);
+		EntityNotifiers.notifyNewEntity(entity, parent.getData());
 	}
 
 	/**
@@ -564,7 +564,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	@Override
 	public void handleFreeEntity(String entity, Collection<String> agents)
 			throws RemoteException {
-		parent.notifyFreeEntity(entity, agents);
+	    EntityNotifiers.notifyFreeEntity(entity, agents, parent.getData());
 	}
 
 	/**
@@ -573,7 +573,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	@Override
 	public void handleDeletedEntity(String entity, Collection<String> agents)
 			throws RemoteException {
-		parent.notifyDeletedEntity(entity, agents);
+	    EntityNotifiers.notifyDeletedEntity(entity, agents, parent.getData());
 	}
 
 	/**
