@@ -122,22 +122,17 @@ public class BW4TClient extends UnicastRemoteObject implements
 				.nameLower());
 		String serverPortString = ((Identifier) serverPort).getValue();
 
-		String killKey = ((Identifier) initParameters.get(InitParam.KILL
-				.nameLower())).getValue();
-
-		if (killKey.isEmpty()) {
-			// Launch the client and bind it
-			bindAddress = "rmi://" + clientIpString + ":" + clientPortString
-					+ "/BW4TClient";
-			try {
-				LocateRegistry.createRegistry(Integer
-						.parseInt(clientPortString));
-			} catch (Exception e) {
-				LOGGER.error("Registry was already created.", e);
-			}
-			Naming.rebind(bindAddress, this);
-			LOGGER.info("The BW4T Client is bound to: " + bindAddress);
+		// Launch the client and bind it
+		bindAddress = "rmi://" + clientIpString + ":" + clientPortString
+				+ "/BW4TClient";
+		try {
+			LocateRegistry.createRegistry(Integer.parseInt(clientPortString));
+		} catch (Exception e) {
+			LOGGER.error("Registry was already created.", e);
 		}
+		Naming.rebind(bindAddress, this);
+		LOGGER.info("The BW4T Client is bound to: " + bindAddress);
+
 		// Register the client to the server
 		String address = "//" + serverIpString + ":" + serverPortString
 				+ "/BW4TServer";
@@ -150,10 +145,12 @@ public class BW4TClient extends UnicastRemoteObject implements
 		}
 
 	}
-	
+
 	/**
 	 * Try to shutdown the server with the given parameters.
-	 * @param shutdownParams the parameters given by console
+	 * 
+	 * @param shutdownParams
+	 *            the parameters given by console
 	 */
 	public void shutdownServer(java.util.Map<String, Parameter> shutdownParams) {
 		Parameter serverIp = shutdownParams.get(InitParam.SERVERIP.nameLower());
@@ -172,16 +169,15 @@ public class BW4TClient extends UnicastRemoteObject implements
 		try {
 			server = (BW4TServerActions) Naming.lookup(address);
 		} catch (Exception e) {
-			LOGGER.info("The server is already down: "
-					+ address);
+			LOGGER.info("The server is already down: " + address);
 			return;
 		}
-		
+
 		LOGGER.info("Attempting to shutdown the server with key: " + killKey);
 		try {
 			((BW4TServerHiddenActions) server).stopServer(killKey);
 		} catch (RemoteException e) {
-			//LOGGER.error("An error occured while shutting down server", e);
+			// LOGGER.error("An error occured while shutting down server", e);
 		}
 	}
 
