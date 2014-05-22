@@ -55,7 +55,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * The log4j logger, logs to the console.
 	 */
-	private static Logger logger = Logger.getLogger(BW4TEnvironment.class);
+	private static Logger LOGGER = Logger.getLogger(BW4TEnvironment.class);
 
 	private static String mapName;
 	public static void setMapName(String mapName) {
@@ -69,6 +69,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	private Context context;
 	private static NewMap theMap;
 	private ServerContextDisplay contextDisplay;
+	private boolean guiEnabled;
 
 	/**
 	 * Create a new instance of this environment
@@ -87,7 +88,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @throws JAXBException
 	 */
 	BW4TEnvironment(BW4TServer server2, String scenarioLocation,
-			String mapLocation) throws IOException, ManagementException,
+			String mapLocation, boolean guiEnabled) throws IOException, ManagementException,
 			ScenarioLoadException, JAXBException {
 		super();
 		instance = this;
@@ -148,7 +149,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 			try {
 				this.deleteEntity(entity);
 			} catch (EntityException | RelationException e) {
-				logger.error("Failure to delete entity: " + entity);
+				LOGGER.error("Failure to delete entity: " + entity);
 				e.printStackTrace();
 			}
 		}
@@ -214,7 +215,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		if (server == null)
 			server = Launcher.getInstance().setupRemoteServer();
 		setState(EnvironmentState.INITIALIZING);
-		logger.info("BW4T Server has been bound.");
+		LOGGER.info("BW4T Server has been bound.");
 	}
 
 	/**
@@ -456,11 +457,15 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 */
 	public void setContext(Context c) {
 		context = c;
-		try {
-			contextDisplay = new ServerContextDisplay(context);
-		} catch (Exception e) {
-			logger.error("BW4T Server started ok but failed to launch display.");
-			e.printStackTrace();
+		if (guiEnabled) {
+			LOGGER.info("Launching the BW4T Server Graphical User Interface.");
+			try {
+				contextDisplay = new ServerContextDisplay(context);
+			} catch (Exception e) {
+				LOGGER.error("BW4T Server started ok but failed to launch display.",e);
+			}
+		} else {
+			LOGGER.info("Launching the BW4T Server without a graphical user interface.");
 		}
 	}
 

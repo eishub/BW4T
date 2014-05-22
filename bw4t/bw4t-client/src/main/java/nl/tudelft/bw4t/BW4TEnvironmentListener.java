@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 
 import nl.tudelft.bw4t.agent.BW4TAgent;
 import nl.tudelft.bw4t.agent.HumanAgent;
-import nl.tudelft.bw4t.client.BW4TRemoteEnvironment;
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import eis.EnvironmentListener;
 import eis.exceptions.AgentException;
@@ -44,9 +44,9 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
      */
     private Map<BW4TAgent, BW4TClientGUI> agentData = new HashMap<BW4TAgent, BW4TClientGUI>();
 
-    private BW4TRemoteEnvironment environment;
+    private RemoteEnvironment environment;
 
-    public BW4TEnvironmentListener(BW4TRemoteEnvironment env) {
+    public BW4TEnvironmentListener(RemoteEnvironment env) {
         environment = env;
     }
 
@@ -149,7 +149,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
             Class<? extends BW4TAgent> c = Class.forName(agentClassName)
                     .asSubclass(BW4TAgent.class);
             Class[] types = new Class[] { String.class,
-                    BW4TRemoteEnvironment.class };
+                    RemoteEnvironment.class };
             Constructor<BW4TAgent> cons = (Constructor<BW4TAgent>) c
                     .getConstructor(types);
             // we use the entityId as name for the agent as well. #2761

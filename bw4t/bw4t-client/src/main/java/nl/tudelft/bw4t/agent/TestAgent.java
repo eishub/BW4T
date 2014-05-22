@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import nl.tudelft.bw4t.client.BW4TRemoteEnvironment;
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 
 import org.apache.log4j.Logger;
 
@@ -25,7 +25,7 @@ public class TestAgent extends BW4TAgent {
      */
     private final static Logger LOGGER = Logger.getLogger(TestAgent.class);
 
-    public TestAgent(String agentId, BW4TRemoteEnvironment env) {
+    public TestAgent(String agentId, RemoteEnvironment env) {
         super(agentId, env);
         places = new ArrayList<String>();
     }

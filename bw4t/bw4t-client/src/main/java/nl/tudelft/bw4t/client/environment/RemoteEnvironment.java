@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.client;
+package nl.tudelft.bw4t.client.environment;
 
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
+import nl.tudelft.bw4t.client.BW4TClient;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.operations.ProcessingOperations;
 import nl.tudelft.bw4t.client.startup.InitParam;
@@ -57,33 +58,20 @@ import eis.iilang.Percept;
  *           can not be a singleton. This has considerable implications for the
  *           design.
  */
-public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
-
-    // env is in KILLED mode if client=null. init sets client.
-    private BW4TClient client = null;
-
-    private Map<String, Parameter> initParameters;
-
-    private List<EnvironmentListener> environmentListeners = new LinkedList<EnvironmentListener>();
-
-    private Map<String, BW4TClientGUI> entityToGUI = new HashMap<String, BW4TClientGUI>();
+public class RemoteEnvironment implements EnvironmentInterfaceStandard {
 
     private final static Logger LOGGER = Logger
-            .getLogger(BW4TRemoteEnvironment.class);
+            .getLogger(RemoteEnvironment.class);
 
-    private boolean connectedToGoal = false;
+    private RemoteEnvironmentData data = new RemoteEnvironmentData(null,
+            new LinkedList<EnvironmentListener>(),
+            new HashMap<String, BW4TClientGUI>(), false,
+            new ArrayList<String>(),
+            new ConcurrentHashMap<String, HashSet<AgentListener>>());
 
-    /**
-     * This is a list of locally registered agents.
-     * <p/>
-     * Only locally registered agents can act and be associated with entities.
-     */
-    private List<String> localAgents = new ArrayList<String>();
-
-    /**
-     * Stores for each agent (represented by a string) a set of listeners.
-     */
-    private Map<String, HashSet<AgentListener>> agentsToAgentListeners = new ConcurrentHashMap<String, HashSet<AgentListener>>();;
+    public RemoteEnvironmentData getData() {
+        return data;
+    }
 
     /**
      * Get the initial parameters for this environment
@@ -91,7 +79,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
      * @return the initial parameters
      */
     public Map<String, Parameter> getInitParameters() {
-        return initParameters;
+        return data.getInitParameters();
     }
 
     /**
@@ -102,8 +90,8 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
      * @param agents
      *            is the list of agents that were associated
      */
-    protected void notifyFreeEntity(String entity, Collection<String> agents) {
-        for (EnvironmentListener listener : environmentListeners) {
+    public void notifyFreeEntity(String entity, Collection<String> agents) {
+        for (EnvironmentListener listener : data.getEnvironmentListeners()) {
             listener.handleFreeEntity(entity, agents);
         }
     }
@@ -114,8 +102,8 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
      * @param entity
      *            is the new entity.
      */
-    protected void notifyNewEntity(String entity) {
-        for (EnvironmentListener listener : environmentListeners) {
+    public void notifyNewEntity(String entity) {
+        for (EnvironmentListener listener : data.getEnvironmentListeners()) {
             listener.handleNewEntity(entity);
         }
     }
@@ -126,12 +114,13 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
      * @param entity
      *            is the deleted entity.
      */
-    protected void notifyDeletedEntity(String entity, Collection<String> agents) {
+    public void notifyDeletedEntity(String entity, Collection<String> agents) {
         LOGGER.debug("Notifying all listeners about an entity that has been deleted.");
-        if (entityToGUI.get(entity) != null) {
-            entityToGUI.get(entity).getBW4TClientInfo().jFrame.dispose();
+        if (data.getEntityToGUI().get(entity) != null) {
+            data.getEntityToGUI().get(entity).getBW4TClientInfo().jFrame
+                    .dispose();
         }
-        for (EnvironmentListener listener : environmentListeners) {
+        for (EnvironmentListener listener : data.getEnvironmentListeners()) {
             listener.handleDeletedEntity(entity, agents);
         }
     }
@@ -142,7 +131,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
     @Override
     public String getType(String entity) throws EntityException {
         try {
-            return client.getType(entity);
+            return data.getClient().getType(entity);
         } catch (RemoteException e) {
             throw environmentSuddenDeath(e);
         }
@@ -157,8 +146,8 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
     @Override
     public void registerAgent(String agentId) throws AgentException {
         try {
-            client.registerAgent(agentId);
-            localAgents.add(agentId);
+            data.getClient().registerAgent(agentId);
+            data.getLocalAgents().add(agentId);
         } catch (RemoteException e) {
             throw environmentSuddenDeath(e);
         }
@@ -167,7 +156,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
     @Override
     public List<String> getAgents() {
         try {
-            return (LinkedList<String>) client.getAgents();
+            return (LinkedList<String>) data.getClient().getAgents();
         } catch (RemoteException e) {
             throw environmentSuddenDeath(e);
         }
@@ -177,7 +166,8 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
     public Set<String> getAssociatedEntities(String agent)
             throws AgentException {
         try {
-            return (HashSet<String>) client.getAssociatedEntities(agent);
+            return (HashSet<String>) data.getClient().getAssociatedEntities(
+                    agent);
         } catch (RemoteException e) {
             throw environmentSuddenDeath(e);
         }
@@ -211,16 +201,17 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
      */
     public Percept performEntityAction(String entity, Action action)
             throws RemoteException, ActException {
-        if (connectedToGoal && "sendToGUI".equals(action.getName())) {
-            if (entityToGUI.get(entity) == null) {
+        if (data.isConnectedToGoal() && "sendToGUI".equals(action.getName())) {
+            if (data.getEntityToGUI().get(entity) == null) {
                 ActException e = new ActException("sendToGUI failed:" + entity
                         + " is not connected to a GUI.");
                 e.setType(ActException.FAILURE);
                 throw e;
             }
-            return entityToGUI.get(entity).sendToGUI(action.getParameters());
+            return data.getEntityToGUI().get(entity)
+                    .sendToGUI(action.getParameters());
         } else {
-            return client.performEntityAction(entity, action);
+            return data.getClient().performEntityAction(entity, action);
         }
 
     }
@@ -232,28 +223,28 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
     public void associateEntity(String agentId, String entityId)
             throws RelationException {
         try {
-            if (connectedToGoal && "human".equals(getType(entityId))) {
-                client.associateEntity(agentId, entityId);
+            if (data.isConnectedToGoal() && "human".equals(getType(entityId))) {
+                data.getClient().associateEntity(agentId, entityId);
                 BW4TClientGUI renderer = new BW4TClientGUI(this, entityId,
                         true, true);
-                entityToGUI.put(entityId, renderer);
-            } else if (connectedToGoal
-                    && "true".equals(((Identifier) initParameters
+                data.getEntityToGUI().put(entityId, renderer);
+            } else if (data.isConnectedToGoal()
+                    && "true".equals(((Identifier) data.getInitParameters()
                             .get(InitParam.LAUNCHGUI.nameLower())).getValue())) {
-                client.associateEntity(agentId, entityId);
+                data.getClient().associateEntity(agentId, entityId);
                 BW4TClientGUI renderer = new BW4TClientGUI(this, entityId,
                         true, false);
-                entityToGUI.put(entityId, renderer);
+                data.getEntityToGUI().put(entityId, renderer);
             } else if ("bot".equals(getType(entityId))
-                    && "true".equals(((Identifier) initParameters
+                    && "true".equals(((Identifier) data.getInitParameters()
                             .get(InitParam.LAUNCHGUI.nameLower())).getValue())) {
-                client.associateEntity(agentId, entityId);
+                data.getClient().associateEntity(agentId, entityId);
                 BW4TClientGUI renderer = new BW4TClientGUI(this, entityId,
                         false, false);
-                entityToGUI.put(entityId, renderer);
+                data.getEntityToGUI().put(entityId, renderer);
             } else {
-                client.associateEntity(agentId, entityId);
-                entityToGUI.put(entityId, null);
+                data.getClient().associateEntity(agentId, entityId);
+                data.getEntityToGUI().put(entityId, null);
             }
         } catch (RemoteException e) {
             throw environmentSuddenDeath(e);
@@ -268,18 +259,20 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
     @Override
     public void init(Map<String, Parameter> parameters)
             throws ManagementException {
-        this.initParameters = parameters;
-        Parameter goal = initParameters.get(InitParam.GOAL.nameLower());
-        connectedToGoal = Boolean.parseBoolean(((Identifier) goal).getValue());
+        this.data.setInitParameters(parameters);
+        Parameter goal = data.getInitParameters().get(
+                InitParam.GOAL.nameLower());
+        data.setConnectedToGoal(Boolean.parseBoolean(((Identifier) goal)
+                .getValue()));
         try {
             LOGGER.info("Connecting to BW4T Server.");
-            client = new BW4TClient(this);
-            client.connectServer(initParameters);
+            data.setClient(new BW4TClient(this));
+            data.getClient().connectServer(data.getInitParameters());
             Map<String, Parameter> serverparams = extractServerParameters(parameters);
             if (!(serverparams.isEmpty())) {
-                client.initServer(parameters);
+                data.getClient().initServer(parameters);
             }
-            client.register(initParameters);
+            data.getClient().register(data.getInitParameters());
         } catch (RemoteException e) {
             LOGGER.error("Unable to access the remote environment.");
         } catch (MalformedURLException e) {
@@ -315,7 +308,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
      *            , the new initialization parameters
      */
     public void setInitParameters(Map<String, Parameter> parameters) {
-        this.initParameters = parameters;
+        this.data.setInitParameters(parameters);
     }
 
     /**
@@ -325,7 +318,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
      */
     protected boolean isSupportedByEnvironment(Action arg0) throws ActException {
         try {
-            return client.isSupportedByEnvironment(arg0);
+            return data.getClient().isSupportedByEnvironment(arg0);
         } catch (RemoteException e) {
             throw new ActException(ActException.FAILURE,
                     "failed to reach remote env", e);
@@ -460,31 +453,31 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
             throws PerceiveException {
 
         try {
-            boolean launchGui = "true".equals(((Identifier) initParameters
-                    .get("launchgui")).getValue());
-            if (connectedToGoal && !"gui".contains(entity)
+            boolean launchGui = "true".equals(((Identifier) data
+                    .getInitParameters().get("launchgui")).getValue());
+            if (data.isConnectedToGoal() && !"gui".contains(entity)
                     && "human".equals(getType(entity))) {
-                return (LinkedList<Percept>) entityToGUI.get(entity)
+                return (LinkedList<Percept>) data.getEntityToGUI().get(entity)
                         .getToBePerformedAction();
             } else if (entity.contains("gui")
                     && "human".equals(getType(entity.replace("gui", "")))) {
-                return (LinkedList<Percept>) client
+                return (LinkedList<Percept>) data.getClient()
                         .getAllPerceptsFromEntity(entity.replace("gui", ""));
             } else if (launchGui) {
-                if (entityToGUI.get(entity) == null) {
+                if (data.getEntityToGUI().get(entity) == null) {
                     return null;
                 }
-                List<Percept> percepts = (LinkedList<Percept>) client
+                List<Percept> percepts = (LinkedList<Percept>) data.getClient()
                         .getAllPerceptsFromEntity(entity);
                 BW4TClientGUI tempEntity;
                 if (percepts != null) {
-                    tempEntity = entityToGUI.get(entity);
+                    tempEntity = data.getEntityToGUI().get(entity);
                     ProcessingOperations.processPercepts(percepts,
                             tempEntity.getBW4TClientInfo());
                 }
                 return percepts;
             } else {
-                return (LinkedList<Percept>) client
+                return (LinkedList<Percept>) data.getClient()
                         .getAllPerceptsFromEntity(entity);
             }
         } catch (RemoteException e) {
@@ -527,7 +520,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
      */
     @Override
     public void start() throws ManagementException {
-        client.start();
+        data.getClient().start();
     }
 
     /**
@@ -535,7 +528,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
      */
     @Override
     public void pause() throws ManagementException {
-        client.pause();
+        data.getClient().pause();
     }
 
     /**
@@ -544,14 +537,14 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
     @Override
     public void kill() throws ManagementException {
 
-        for (BW4TClientGUI renderer : entityToGUI.values()) {
+        for (BW4TClientGUI renderer : data.getEntityToGUI().values()) {
             if (renderer != null) {
                 renderer.getBW4TClientInfo().stop = true;
             }
         }
         // copy list, the localAgents list is going to be changes by removing
         // agents.
-        List<String> allAgents = new ArrayList<String>(localAgents);
+        List<String> allAgents = new ArrayList<String>(data.getLocalAgents());
         for (String agentname : allAgents) {
             try {
                 unregisterAgent(agentname);
@@ -563,8 +556,8 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
             }
         }
         try {
-            client.kill();
-            client = null;
+            data.getClient().kill();
+            data.setClient(null);
         } catch (Exception e) {
             throw new ManagementException("problem while killing client", e);
         }
@@ -579,8 +572,8 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
      */
     public void attachEnvironmentListener(EnvironmentListener listener) {
 
-        if (!environmentListeners.contains(listener)) {
-            environmentListeners.add(listener);
+        if (!data.getEnvironmentListeners().contains(listener)) {
+            data.getEnvironmentListeners().add(listener);
         }
 
     }
@@ -590,8 +583,8 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
      */
     public void detachEnvironmentListener(EnvironmentListener listener) {
 
-        if (environmentListeners.contains(listener)) {
-            environmentListeners.remove(listener);
+        if (data.getEnvironmentListeners().contains(listener)) {
+            data.getEnvironmentListeners().remove(listener);
         }
 
     }
@@ -601,11 +594,12 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
      */
     public void attachAgentListener(String agent, AgentListener listener) {
 
-        if (!localAgents.contains(agent)) {
+        if (!data.getLocalAgents().contains(agent)) {
             return;
         }
 
-        Set<AgentListener> listeners = agentsToAgentListeners.get(agent);
+        Set<AgentListener> listeners = data.getAgentsToAgentListeners().get(
+                agent);
 
         if (listeners == null) {
             listeners = new HashSet<AgentListener>();
@@ -613,7 +607,8 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
 
         listeners.add(listener);
 
-        agentsToAgentListeners.put(agent, (HashSet<AgentListener>) listeners);
+        data.getAgentsToAgentListeners().put(agent,
+                (HashSet<AgentListener>) listeners);
 
     }
 
@@ -621,10 +616,11 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
      * {@inheritDoc}
      */
     public void detachAgentListener(String agent, AgentListener listener) {
-        if (!localAgents.contains(agent)) {
+        if (!data.getLocalAgents().contains(agent)) {
             return;
         }
-        Set<AgentListener> listeners = agentsToAgentListeners.get(agent);
+        Set<AgentListener> listeners = data.getAgentsToAgentListeners().get(
+                agent);
         if (listeners == null || !listeners.contains(agent)) {
             return;
         }
@@ -643,8 +639,8 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
     public void unregisterAgent(String agent) throws AgentException {
         try {
             LOGGER.debug("Unregistering agent: " + agent);
-            localAgents.remove(agent);
-            client.unregisterAgent(agent);
+            data.getLocalAgents().remove(agent);
+            data.getClient().unregisterAgent(agent);
         } catch (RemoteException e) {
             throw environmentSuddenDeath(e);
         }
@@ -658,7 +654,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
     @Override
     public Collection<String> getEntities() {
         try {
-            return client.getEntities();
+            return data.getClient().getEntities();
         } catch (RemoteException e) {
             throw new NoEnvironmentException("can't access environment", e);
         }
@@ -680,7 +676,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
     public void freeEntity(String entity) throws RelationException,
             EntityException {
         try {
-            client.freeEntity(entity);
+            data.getClient().freeEntity(entity);
         } catch (RemoteException e) {
             throw environmentSuddenDeath(e);
         }
@@ -698,7 +694,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
     @Override
     public void freeAgent(String agent) throws RelationException {
         try {
-            client.freeAgent(agent);
+            data.getClient().freeAgent(agent);
             // agent is just freed, not removed. Keep it in #localAgents.
         } catch (RemoteException e) {
             throw environmentSuddenDeath(e);
@@ -719,7 +715,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
     @Override
     public void freePair(String agent, String entity) throws RelationException {
         try {
-            client.freePair(agent, entity);
+            data.getClient().freePair(agent, entity);
         } catch (RemoteException e) {
             throw environmentSuddenDeath(e);
         }
@@ -739,7 +735,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
     public Collection<String> getAssociatedAgents(String entity)
             throws EntityException {
         try {
-            return client.getAssociatedAgents(entity);
+            return data.getClient().getAssociatedAgents(entity);
         } catch (RemoteException e) {
             throw environmentSuddenDeath(e);
         }
@@ -753,7 +749,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
     @Override
     public Collection<String> getFreeEntities() {
         try {
-            return client.getFreeEntities();
+            return data.getClient().getFreeEntities();
         } catch (RemoteException e) {
             throw environmentSuddenDeath(e);
         }
@@ -891,7 +887,8 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
                     ret.put(entity, p);
                 }
             } catch (Exception e) {
-                throw new ActException(ActException.FAILURE,"performAction failed:", e);
+                throw new ActException(ActException.FAILURE,
+                        "performAction failed:", e);
             }
 
         }
@@ -906,13 +903,15 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
      */
     @Override
     public EnvironmentState getState() {
-        if (client != null) {
+        if (data.getClient() != null) {
             try {
                 LOGGER.debug("Getting the environment state: "
-                        + client.getState());
-                return client.getState();
+                        + data.getClient().getState());
+                return data.getClient().getState();
             } catch (RemoteException e) {
-                LOGGER.warn("getState detected non-responsive environment. Assuming it's killed.", e);
+                LOGGER.warn(
+                        "getState detected non-responsive environment. Assuming it's killed.",
+                        e);
             }
         }
         return EnvironmentState.KILLED;
@@ -950,7 +949,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
     @Override
     public String queryProperty(String property) throws QueryException {
         try {
-            return client.queryProperty(property);
+            return data.getClient().queryProperty(property);
         } catch (RemoteException e) {
             throw new NoEnvironmentException("can't access environment", e);
         }
@@ -971,7 +970,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
     public String queryEntityProperty(String entity, String property)
             throws QueryException {
         try {
-            return client.queryEntityProperty(entity, property);
+            return data.getClient().queryEntityProperty(entity, property);
         } catch (RemoteException e) {
             throw environmentSuddenDeath(e);
         }
@@ -983,7 +982,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
      * @param newState
      */
     public void handleStateChange(EnvironmentState newState) {
-        for (EnvironmentListener listener : environmentListeners) {
+        for (EnvironmentListener listener : data.getEnvironmentListeners()) {
             listener.handleStateChange(newState);
         }
     }
@@ -996,16 +995,7 @@ public class BW4TRemoteEnvironment implements EnvironmentInterfaceStandard {
      */
     @Override
     public void reset(Map<String, Parameter> params) throws ManagementException {
-        client.resetServer(params);
-    }
-
-    /**
-     * get the environment map
-     * 
-     * @return {@link nl.tudelft.bw4t.Map} of environment
-     */
-    public NewMap getMap() {
-        return client.getMap();
+        data.getClient().resetServer(params);
     }
 
 }

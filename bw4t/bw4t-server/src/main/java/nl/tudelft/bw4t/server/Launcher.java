@@ -58,6 +58,10 @@ public class Launcher {
 	 * the message to be made available to the clients.
 	 */
 	private String paramServerMsg;
+	/**
+	 * true if GUI should be enabled, false if server should run without GUI.
+	 */
+	private boolean paramGUI;
 
 	/**
 	 * This class cannot be externally instanciated, it is a utility startup class.
@@ -92,6 +96,7 @@ public class Launcher {
 		paramServerPort = Integer.parseInt(findArgument(args, "-serverport", "8000"));
 		paramServerMsg = findArgument(args, "-msg", "Hello I am an BW4T Server version " + BW4TEnvironment.VERSION
 				+ ".");
+		paramGUI = Boolean.parseBoolean(findArgument(args, "-gui", "false"));
 	}
 
 	/**
@@ -155,7 +160,7 @@ public class Launcher {
 	 */
 	private void setupEnvironment() {
 		try {
-			environment = new BW4TEnvironment(setupRemoteServer(), paramScenario, paramMap);
+			environment = new BW4TEnvironment(setupRemoteServer(), paramScenario, paramMap, paramGUI);
 		} catch (ManagementException | IOException | ScenarioLoadException | JAXBException e) {
 			Launcher.logger.warn("Failed to start the BW4T Environment.");
 			throw new LauncherException("failed to start the bw4t environment", e);
