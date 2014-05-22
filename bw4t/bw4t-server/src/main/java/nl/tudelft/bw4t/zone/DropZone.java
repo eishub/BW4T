@@ -6,10 +6,13 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.robots.Robot;
 import nl.tudelft.bw4t.server.BW4TLogger;
+import nl.tudelft.bw4t.server.Launcher;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 
@@ -20,6 +23,11 @@ import repast.simphony.space.continuous.ContinuousSpace;
  */
 public class DropZone extends Room {
 
+	/**
+	 * The log4j logger, logs to the console.
+	 */
+	private static Logger logger = Logger.getLogger(Launcher.class);
+	
 	/** The sequence of blocks that are to be dropped in here */
 	private List<BlockColor> sequence = new ArrayList<BlockColor>();
 
@@ -55,9 +63,7 @@ public class DropZone extends Room {
 		try {
 			BW4TLogger.getInstance().logSequence(colors);
 		} catch (IOException e) {
-			System.out.println("WARNING. log file failed to write:"
-					+ e.getMessage());
-			e.printStackTrace();
+			logger.warn("WARNING. log file failed to write: " + e.getMessage());
 		}
 	}
 

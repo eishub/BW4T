@@ -5,7 +5,10 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import org.apache.log4j.Logger;
+
 import nl.tudelft.bw4t.BoundedMoveableObject;
+import nl.tudelft.bw4t.server.Launcher;
 import nl.tudelft.bw4t.util.PathPlanner;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.Zone;
@@ -21,6 +24,11 @@ import repast.simphony.space.continuous.NdPoint;
  * @author W.Pasman 22aug
  */
 public class NavigatingRobot extends Robot {
+	
+	/**
+	 * The log4j logger, logs to the console.
+	 */
+	private static Logger logger = Logger.getLogger(Launcher.class);
 
 	/**
 	 * We keep a stack of planned motions. We may need to extend this if
@@ -66,10 +74,7 @@ public class NavigatingRobot extends Robot {
 	private void robotStopped() {
 		currentMove = null;
 		if (isCollided()) {
-			// move failed for some reason.
-			System.out
-					.println("planned motion failed! Cancelling planned path. collision flag = "
-							+ super.isCollided());
+			logger.warn("Motion planning failed. Canceling planned path. Collision flag is " + super.isCollided());
 			plannedMoves.clear();
 			return;
 		}

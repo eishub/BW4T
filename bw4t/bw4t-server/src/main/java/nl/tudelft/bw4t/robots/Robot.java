@@ -90,11 +90,13 @@ public class Robot extends BoundedMoveableObject {
 	}
 
 	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Robot)
-			return super.equals(obj);
-		else
-			return false;
+		return super.equals(obj);
 	}
 
 	/**
