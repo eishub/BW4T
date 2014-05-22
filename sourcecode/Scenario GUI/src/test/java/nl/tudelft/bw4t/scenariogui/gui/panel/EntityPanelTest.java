@@ -4,10 +4,12 @@ import java.awt.Component;
 
 import javax.swing.JOptionPane;
 
+
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.Ignore;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
@@ -61,6 +63,20 @@ public class EntityPanelTest {
     }
 
     /**
+     * Test if the count of bots is correct after changing
+     * the number of bots
+     */
+    @Test
+    public final void testBotCountListener() {
+        Object[] data = {"d1", "d2", "1"};
+
+        spyEntityPanel.getBotTableModel().addRow(data);
+        spyEntityPanel.getBotTableModel().setValueAt(12, 0, 2);
+
+        assertEquals(12, spyEntityPanel.getBotCount());
+    }
+
+    /**
      * Test if the count of E-partners is correct after adding
      * an E-partner to the table.
      */
@@ -69,9 +85,22 @@ public class EntityPanelTest {
         Object[] data = {"D1", "1"};
 
         spyEntityPanel.getEPartnerTableModel().addRow(data);
-        spyEntityPanel.updateEPartnerCount();
 
         assertEquals(spyEntityPanel.getEPartnerCount(), 1);
+    }
+
+    /**
+     * Test if the count of bots is correct after changing
+     * the number of bots
+     */
+    @Test
+    public final void testEPartnerCountListener() {
+        Object[] data = {"d1", "1"};
+
+        spyEntityPanel.getEPartnerTableModel().addRow(data);
+        spyEntityPanel.getEPartnerTableModel().setValueAt(12, 0, 1);
+
+        assertEquals(12, spyEntityPanel.getEPartnerCount());
     }
 
     /**
@@ -104,7 +133,7 @@ public class EntityPanelTest {
     @Test
     public void testDeleteBotConfirmDelete() {
         doReturn(JOptionPane.YES_OPTION).when(spyEntityPanel).
-                showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
+            showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
 
         /* Add a bot to the list */
         spyEntityPanel.getNewBotButton().doClick();
@@ -128,7 +157,7 @@ public class EntityPanelTest {
     @Test
     public void testDeleteBotDeclineDelete() {
         doReturn(JOptionPane.NO_OPTION).when(spyEntityPanel).
-                showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
+            showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
 
 
         /* Add a bot to the list */
@@ -165,7 +194,7 @@ public class EntityPanelTest {
         /* check if the bot count is still 1. */
         assertEquals(spyEntityPanel.getBotCount(), 1);
     }
-
+    
     /**
      * Test if an E-partner is successfully added when the add
      * E-partner button is clicked.
@@ -176,7 +205,7 @@ public class EntityPanelTest {
         verify(spyEntityPanel, times(1)).addEPartnerAction();
         assertEquals(spyEntityPanel.getEPartnerCount(), 1);
     }
-
+    
     /**
      * Test if an E-partner is successfully modified when the
      * modify E-partner button is clicked.
@@ -187,7 +216,7 @@ public class EntityPanelTest {
         verify(spyEntityPanel, times(1)).modifyEPartnerAction();
         //TODO: Verify if the E-partner has actually been modified.
     }
-
+    
     /**
      * Test if an E-partner is actually deleted when the
      * delete E-partner is clicked, and the YES option is
@@ -196,18 +225,18 @@ public class EntityPanelTest {
     @Test
     public void testDeleteEPartnerConfirmDelete() {
         doReturn(JOptionPane.YES_OPTION).when(spyEntityPanel)
-                .showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
-
+            .showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
+        
         /** Add an E-partner to the list */
         spyEntityPanel.getNewEPartnerButton().doClick();
-
+        
         /** Select that E-partner */
         spyEntityPanel.getEPartnerTable().selectAll();
 
         /** Attempt to delete it */
         spyEntityPanel.getDeleteEPartnerButton().doClick();
         verify(spyEntityPanel, times(1)).deleteEPartnerAction();
-
+        
         /** Check if the E-partner count is zero */
         assertEquals(spyEntityPanel.getBotCount(), 0);
     }
@@ -220,39 +249,39 @@ public class EntityPanelTest {
     @Test
     public void testDeleteEPartnerDeclineDelete() {
         doReturn(JOptionPane.NO_OPTION).when(spyEntityPanel)
-                .showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
-
+            .showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
+        
         /** Add an E-partner to the list */
         spyEntityPanel.getNewEPartnerButton().doClick();
-
+        
         /** Select that E-partner */
         spyEntityPanel.getEPartnerTable().selectAll();
-
+        
         /** Attempt to delete it */
         spyEntityPanel.getDeleteEPartnerButton().doClick();
         verify(spyEntityPanel, times(1)).deleteEPartnerAction();
-
+        
         /** Check if the E-partner count is still one */
         assertEquals(spyEntityPanel.getEPartnerCount(), 1);
     }
-
+    
     /**
      * Test if an E-partner is not deleted when the
      * delete E-partner button is clicked, while no row is selected.
      */
     @Test
     public void testDeleteEPartnerSelection() {
-        doReturn(JOptionPane.NO_OPTION).when(spyEntityPanel).
-                showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
-
-        /** Add an E-partner to the list */
-        spyEntityPanel.getNewEPartnerButton().doClick();
-
-        /** Attempt to delete it */
-        spyEntityPanel.getDeleteEPartnerButton().doClick();
-        verify(spyEntityPanel, times(1)).deleteEPartnerAction();
-
-        /** Check if the E-partner count is still one */
-        assertEquals(spyEntityPanel.getEPartnerCount(), 1);
+    	doReturn(JOptionPane.NO_OPTION).when(spyEntityPanel).
+    		showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
+    	
+    	/** Add an E-partner to the list */
+    	spyEntityPanel.getNewEPartnerButton().doClick();
+    	
+    	/** Attempt to delete it */
+    	spyEntityPanel.getDeleteEPartnerButton().doClick();
+    	verify(spyEntityPanel, times(1)).deleteEPartnerAction();
+    	
+    	/** Check if the E-partner count is still one */
+    	assertEquals(spyEntityPanel.getEPartnerCount(), 1);
     }
 }
