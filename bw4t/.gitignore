@@ -4,3 +4,6 @@ target/
 bin/
 bw4t-client/target/
 bw4t-server/target/
+bw4t-integration-test/BW4T.rs
+bw4t-integration-test/log
+bw4t-integration-test/maps

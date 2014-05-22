@@ -23,101 +23,119 @@ import eis.iilang.Parameter;
  */
 public final class Launcher {
 
-    /**
-     * store the remoteenvironment
-     */
-    private static RemoteEnvironment environment;
+	/**
+	 * store the remoteenvironment
+	 */
+	private static RemoteEnvironment environment;
 
-    /**
-     * The log4j Logger which displays logs on console
-     */
-    private static Logger logger = Logger.getLogger(Launcher.class);
+	/**
+	 * The log4j Logger which displays logs on console
+	 */
+	private static Logger LOGGER = Logger.getLogger(Launcher.class);
 
-    /**
-     * This is a utility class, no instantiation!
-     */
-    private Launcher() {
-    }
+	/**
+	 * This is a utility class, no instantiation!
+	 */
+	private Launcher() {
+	}
 
-    /**
-     * convert the console parameters to EIS parameters
-     * 
-     * @param args
-     *            the console arguments
-     */
-    public static void launch(String[] args) {
-        /**
-         * Set up the logging environment to log on the console.
-         */
-        BasicConfigurator.configure();
-        logger.info("Starting up BW4T Client.");
-        logger.info("Reading initialization parameters...");
-        /**
-         * Load all known parameters into the init array, convert it to EIS
-         * format.
-         */
-        Map<String, Parameter> init = new HashMap<String, Parameter>();
-        for (InitParam param : InitParam.values()) {
-            init.put(param.nameLower(), new Identifier(
-                    findArgument(args, param)));
-        }
-        startupEnvironment(init);
-    }
+	/**
+	 * convert the console parameters to EIS parameters
+	 * 
+	 * @param args
+	 *            the console arguments
+	 */
+	public static void launch(String[] args) {
+		/**
+		 * Set up the logging environment to log on the console.
+		 */
+		BasicConfigurator.configure();
+		LOGGER.info("Starting up BW4T Client.");
+		LOGGER.info("Reading initialization parameters...");
+		/**
+		 * Load all known parameters into the init array, convert it to EIS
+		 * format.
+		 */
+		Map<String, Parameter> init = new HashMap<String, Parameter>();
+		for (InitParam param : InitParam.values()) {
+			init.put(param.nameLower(), new Identifier(
+					findArgument(args, param)));
+		}
 
-    /**
-     * get the environment for the client
-     * 
-     * @return the remote environment
-     */
-    public static RemoteEnvironment getEnvironment() {
-        return environment;
-    }
+		startupEnvironment(init);
+	}
 
-    /**
-     * Start the remote environment, connect to the server
-     * 
-     * @param initParams
-     *            the parameters to be given to the environment
-     *            {@link RemoteEnvironment#init(Map)}
-     * @return the created environment
-     */
-    public static RemoteEnvironment startupEnvironment(
-            Map<String, Parameter> initParams) {
-        if (environment != null) {
-            return environment;
-        }
-        environment = new RemoteEnvironment();
-        environment.attachEnvironmentListener(new BW4TEnvironmentListener(
-                environment));
-        try {
-            logger.info("Initializing environment...");
-            environment.init(initParams);
-        } catch (ManagementException | NoEnvironmentException e) {
-            logger.error("The Launcher encountered an error while trying to initialize the environment.");
-            throw new LauncherException(e);
-        }
-        return environment;
-    }
+	/**
+	 * get the environment for the client
+	 * 
+	 * @return the remote environment
+	 */
+	public static RemoteEnvironment getEnvironment() {
+		return environment;
+	}
 
-    /**
-     * Find a certain argument in the string array and return its setting
-     * 
-     * @param args
-     *            , the string array containing all the arguments
-     * @param param
-     *            the parameter to look for. The name of the parameter in lower
-     *            case and prefixed with "-" should be in the list, and the next
-     *            element in the array then should contain the value.
-     * @return the value for the parameter. Returns default value if not in the
-     *         array.
-     */
-    private static String findArgument(String[] args, InitParam param) {
-        for (int i = 0; i < args.length - 1; i++) {
-            if (args[i].equalsIgnoreCase("-" + param.nameLower())) {
-                return args[i + 1];
-            }
-        }
-        return param.getDefaultValue();
-    }
+	/**
+	 * Start the remote environment, connect to the server
+	 * 
+	 * @param initParams
+	 *            the parameters to be given to the environment
+	 *            {@link RemoteEnvironment#init(Map)}
+	 * @return the created environment
+	 */
+	public static RemoteEnvironment startupEnvironment(
+			Map<String, Parameter> initParams) {
+		if (environment != null) {
+			return environment;
+		}
+		environment = new RemoteEnvironment();
+		environment.attachEnvironmentListener(new BW4TEnvironmentListener(
+				environment));
+		try {
+			LOGGER.info("Initializing environment...");
+			environment.init(initParams);
+		} catch (ManagementException | NoEnvironmentException e) {
+			LOGGER.error("The Launcher encountered an error while trying to initialize the environment.");
+			throw new LauncherException(e);
+		}
+		return environment;
+	}
+
+	/**
+	 * Find a certain argument in the string array and return its setting
+	 * 
+	 * @param args
+	 *            the string array containing all the arguments
+	 * @param param
+	 *            the parameter to look for. The name of the parameter in lower
+	 *            case and prefixed with "-" should be in the list, and the next
+	 *            element in the array then should contain the value.
+	 * @return the value for the parameter. Returns default value if not in the
+	 *         array.
+	 */
+	private static String findArgument(String[] args, InitParam param) {
+		return findArgument(args, "-" + param.nameLower(), param.getDefaultValue());
+	}
+
+	/**
+	 * Find a certain argument in the string array and return its setting
+	 * 
+	 * @param args
+	 *            the string array containing all the arguments
+	 * @param param
+	 *            the name of the parameter to look for
+	 * @param def
+	 *            the default value for this parameter
+	 * @return
+	 */
+	private static String findArgument(String[] args, String param, String def) {
+		for (int i = 0; i < args.length - 1; i++) {
+			if (args[i].equalsIgnoreCase(param)) {
+				LOGGER.info("Found parameter '" + param + "' with '" + args[i + 1] + "'");
+				return args[i + 1];
+			}
+		}
+		LOGGER.info("Defaulting parameter '" + param + "' with '" + def + "'");
+		return def;
+	}
 
 }

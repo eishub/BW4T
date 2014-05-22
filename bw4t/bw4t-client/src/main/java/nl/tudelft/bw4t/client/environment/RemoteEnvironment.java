@@ -222,15 +222,17 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
             LOGGER.info("Connecting to BW4T Server.");
             data.setClient(new BW4TClient(this));
             data.getClient().connectServer(data.getInitParameters());
-            Map<String, Parameter> serverparams = extractServerParameters(parameters);
-            if (!(serverparams.isEmpty())) {
-                data.getClient().initServer(parameters);
+            if(((Identifier) data.getInitParameters().get(InitParam.KILL.nameLower())).getValue().isEmpty()) {
+            	Map<String, Parameter> serverparams = extractServerParameters(parameters);
+            	if (!(serverparams.isEmpty())) {
+            	data.getClient().initServer(parameters);
+            	}
+            	data.getClient().register(data.getInitParameters());
             }
-            data.getClient().register(data.getInitParameters());
         } catch (RemoteException e) {
             LOGGER.error("Unable to access the remote environment.");
         } catch (MalformedURLException e) {
-            LOGGER.error("The URL provided to connect to the remote environment is invalid..");
+            LOGGER.error("The URL provided to connect to the remote environment is invalid.");
         } catch (NotBoundException e) {
             LOGGER.error("Unable to bind to the remote environment.");
         }
