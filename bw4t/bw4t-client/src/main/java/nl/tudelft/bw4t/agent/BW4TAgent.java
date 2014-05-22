@@ -217,7 +217,7 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	 */
 	public LinkedList<Percept> getPercepts() throws PerceiveException,
 			NoEnvironmentException {
-		return bw4tenv.getAllPerceptsFromEntity(entityId);
+		return (LinkedList<Percept>) bw4tenv.getAllPerceptsFromEntity(entityId);
 	}
 
 	public void setKilled() {
