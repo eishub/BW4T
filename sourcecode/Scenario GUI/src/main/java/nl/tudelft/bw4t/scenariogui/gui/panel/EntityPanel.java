@@ -183,13 +183,13 @@ public class EntityPanel extends JPanel {
         
         botList = new DefaultTableModel() {
             
-            @Override
+            /*@Override
             public boolean isCellEditable(final int row, final int column) {
                 if (column == 0) {
                     return false;
                 }
                 return true;
-            }
+            }*/
         	
         	@Override
         	public Class<?> getColumnClass(int column) {
@@ -282,13 +282,13 @@ public class EntityPanel extends JPanel {
 
         ePartnerTable = new JTable();
         epartnerList = new DefaultTableModel() {
-            @Override
+            /*@Override
             public boolean isCellEditable(final int row, final int column) {
                 if (column == 1) {
                     return true;
                 }
                 return false;
-            }
+            }*/
             
             @Override
             public Class<?> getColumnClass(int column) {
