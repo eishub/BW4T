@@ -6,10 +6,13 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.robots.Robot;
 import nl.tudelft.bw4t.server.BW4TLogger;
+import nl.tudelft.bw4t.server.Launcher;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 
@@ -19,6 +22,11 @@ import repast.simphony.space.continuous.ContinuousSpace;
  * @author Lennard de Rijk
  */
 public class DropZone extends Room {
+
+	/**
+	 * The log4j logger, logs to the console.
+	 */
+	private static Logger logger = Logger.getLogger(Launcher.class);
 
 	/** The sequence of blocks that are to be dropped in here */
 	private List<BlockColor> sequence = new ArrayList<BlockColor>();
@@ -36,16 +44,14 @@ public class DropZone extends Room {
 	 * @param context
 	 *            The context in which the dropzone should be located.
 	 */
-	public DropZone(nl.tudelft.bw4t.map.Zone dropzone,
-			ContinuousSpace<Object> space, Context<Object> context) {
+	public DropZone(nl.tudelft.bw4t.map.Zone dropzone, ContinuousSpace<Object> space, Context<Object> context) {
 		super(Color.GRAY, dropzone, space, context);
 		sequence = new LinkedList<BlockColor>();
 		sequenceIndex = 0;
 	}
 
 	/**
-	 * set the sequence - the ordered list of objects to be dropped in the
-	 * dropzone.
+	 * set the sequence - the ordered list of objects to be dropped in the dropzone.
 	 * 
 	 * @param colors
 	 *            list of colors as Strings.
@@ -55,15 +61,12 @@ public class DropZone extends Room {
 		try {
 			BW4TLogger.getInstance().logSequence(colors);
 		} catch (IOException e) {
-			System.out.println("WARNING. log file failed to write:"
-					+ e.getMessage());
-			e.printStackTrace();
+			logger.warn("WARNING. log file failed to write: " + e.getMessage());
 		}
 	}
 
 	/**
-	 * Returns the color identifiers of blocks that need to be delivered in
-	 * order to this dropzone.
+	 * Returns the color identifiers of blocks that need to be delivered in order to this dropzone.
 	 */
 	public List<BlockColor> getSequence() {
 		return sequence;
@@ -74,9 +77,8 @@ public class DropZone extends Room {
 	}
 
 	/**
-	 * Called when a block is dropped. If the block has been dropped in this
-	 * zone the block will be removed from the context and if the block was of
-	 * the right color the sequence will advance.
+	 * Called when a block is dropped. If the block has been dropped in this zone the block will be removed from the
+	 * context and if the block was of the right color the sequence will advance.
 	 * <p>
 	 * This function will also log the drop events in the drop zone.
 	 * 
@@ -100,7 +102,8 @@ public class DropZone extends Room {
 				if (sequenceIndex == sequence.size()) {
 					BW4TLogger.getInstance().logCompletedSequence();
 				}
-			} else {
+			}
+			else {
 				BW4TLogger.getInstance().logWrongDrop(robot.getName());
 			}
 		}
@@ -111,8 +114,7 @@ public class DropZone extends Room {
 	/**
 	 * check if the full sequence has been completed
 	 * 
-	 * @return true if full sequence has been completed (all required boxes were
-	 *         dropped), else false.
+	 * @return true if full sequence has been completed (all required boxes were dropped), else false.
 	 */
 	public boolean sequenceComplete() {
 		return sequenceIndex >= sequence.size();

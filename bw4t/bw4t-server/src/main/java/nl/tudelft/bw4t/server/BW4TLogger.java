@@ -8,18 +8,19 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import nl.tudelft.bw4t.map.BlockColor;
+import nl.tudelft.bw4t.server.BW4TEnvironment;
 
 /**
  * This logger logs all actions to a file:
  * <ol>
  * <li>sequence: goal sequence (which block colors are to be dropped)
  * <li>room: initial blocks per room
- * <li>action: log of each action of a bot, with timestamp in ms since january
- * 1, 1970
- * <li>sequencecomplete: total time to complete task. Begin time is determined
- * by first incoming action. End time is determined by the last block of the
- * sequence dropped.
+ * <li>action: log of each action of a bot, with timestamp in ms since january 1, 1970
+ * <li>sequencecomplete: total time to complete task. Begin time is determined by first incoming action. End time is
+ * determined by the last block of the sequence dropped.
  * <li>agentsummary: for each agent:
  * <ul>
  * <li>the bot type
@@ -30,17 +31,14 @@ import nl.tudelft.bw4t.map.BlockColor;
  * <li>#rooms entered
  * </ul>
  * </ol>
- * We will write info as soon as possible to the log file, so that you at least
- * have some log info even when the system is killed before the end is reached
- * (sequence completed).
+ * We will write info as soon as possible to the log file, so that you at least have some log info even when the system
+ * is killed before the end is reached (sequence completed).
  * <p>
- * The logger is a singleton object because it needs to be called from various
- * repast objects and also from the server.
+ * The logger is a singleton object because it needs to be called from various repast objects and also from the server.
  * <p>
  * This class should be thread safe.
  * 
  * @author W.Pasman 1dec2011
- * 
  */
 public class BW4TLogger {
 	// set to true if logging fails and
@@ -52,6 +50,11 @@ public class BW4TLogger {
 	private static BW4TLogger theLogger = null; // the singleton
 
 	private static Long starttime = null;
+
+	/**
+	 * The log4j logger, logs to the console.
+	 */
+	private static Logger logger = Logger.getLogger(BW4TEnvironment.class);
 
 	/**
 	 * Here we store per-agent performance records.
@@ -67,16 +70,14 @@ public class BW4TLogger {
 	private BW4TLogger() {
 		reset();
 		try {
-			System.out.println("creating log file");
-			System.out.println((new File(System.getProperty("user.dir")+ "/log/")).getAbsolutePath());
-			logFile = File.createTempFile("BW4T", ".txt", new File(System.getProperty("user.dir")+ "/log/"));
+			logger.info("Starting the BW4T logger.");
+			logFile = File.createTempFile("BW4T", ".txt", new File(System.getProperty("user.dir") + "/log/"));
 			writer = new FileWriter(logFile);
 			ArrayList<String> info = new ArrayList<String>();
 			info.add("logcreationtime " + System.currentTimeMillis());
 			log(info);
 		} catch (IOException e) {
-			System.out
-					.println("WARNING. opening log file failed. Proceeding as if file opened OK.");
+			// logger.error("The BW4T Server was unable to open the logfile as requested. Proceeding as if no problem was encountered.");
 			e.printStackTrace();
 		}
 	}
@@ -122,9 +123,8 @@ public class BW4TLogger {
 	}
 
 	/**
-	 * Log to file. The items are written to a single row, with tabs separating
-	 * them and a newline at the end. If there are 0 items in the list, nothing
-	 * is written to the log file.
+	 * Log to file. The items are written to a single row, with tabs separating them and a newline at the end. If there
+	 * are 0 items in the list, nothing is written to the log file.
 	 * 
 	 * @param text
 	 *            is text to be appended to log file.
@@ -135,9 +135,8 @@ public class BW4TLogger {
 	}
 
 	/**
-	 * Log to file. The items are written to a single row, with tabs separating
-	 * them and a newline at the end. If there are 0 items in the list, nothing
-	 * is written to the log file.
+	 * Log to file. The items are written to a single row, with tabs separating them and a newline at the end. If there
+	 * are 0 items in the list, nothing is written to the log file.
 	 * 
 	 * @param text
 	 *            is text to be appended to log file.
@@ -159,8 +158,6 @@ public class BW4TLogger {
 		} catch (IOException e) {
 			if (alreadywarned)
 				return;
-			System.out.println("WARNING. Writing to log file is failing."
-					+ e.getMessage());
 			e.printStackTrace();
 			alreadywarned = true;
 		}
@@ -195,16 +192,14 @@ public class BW4TLogger {
 	}
 
 	/**
-	 * called when a robot makes a good drop in the drop zone. Nothing is logged
-	 * at this point
+	 * called when a robot makes a good drop in the drop zone. Nothing is logged at this point
 	 */
 	public void logGoodDrop(String entity) {
 		getAgentRecord(entity).addGoodDrop();
 	}
 
 	/**
-	 * called when a robot makes a wrong drop in the drop zone. Nothign is
-	 * logged at this point
+	 * called when a robot makes a wrong drop in the drop zone. Nothign is logged at this point
 	 */
 	public void logWrongDrop(String entity) {
 		getAgentRecord(entity).addWrongDrop();
@@ -256,17 +251,16 @@ public class BW4TLogger {
 	}
 
 	/**
-	 * This adds the agent summary to the log file and closes the log file. Any
-	 * attempt to log after this will create a new log file.
+	 * This adds the agent summary to the log file and closes the log file. Any attempt to log after this will create a
+	 * new log file.
 	 */
 	public synchronized void closeLog() {
-		System.out.println("closing the log");
+		logger.info("Closing the log file.");
 		logAgentSummary();
 		try {
 			writer.close();
 		} catch (IOException e) {
-			System.out.println("WARNING. log file did not close:"
-					+ e.getMessage());
+			// logger.error("Unable to close log file.");
 		}
 		reset();
 	}
@@ -305,8 +299,7 @@ public class BW4TLogger {
 	public void logCompletedSequence() {
 		Long complete = System.currentTimeMillis();
 		log(new String[] { "sequencecomplete", "" + complete });
-		log(new String[] { "totaltime",
-				"" + (float) (complete - starttime) / 1000. });
+		log(new String[] { "totaltime", "" + (float) (complete - starttime) / 1000. });
 		closeLog(); // no more actions after this point, close right away.
 	}
 }

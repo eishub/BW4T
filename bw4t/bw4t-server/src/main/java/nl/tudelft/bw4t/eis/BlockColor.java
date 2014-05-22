@@ -48,7 +48,8 @@ public class BlockColor {
 		if (block == null) {
 			if (other.block != null)
 				return false;
-		} else if (!block.equals(other.block))
+		}
+		else if (!block.equals(other.block))
 			return false;
 		return true;
 	}

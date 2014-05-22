@@ -8,14 +8,14 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 
 /**
- * Represents an object in the world that can be moved around if needed. It
- * forms the basis for all kinds of objects like robots, blocks and rooms.
+ * Represents an object in the world that can be moved around if needed. It forms the basis for all kinds of objects
+ * like robots, blocks and rooms.
  * 
  * 
  * 
  * @author Lennard de Rijk.
- * @author W.Pasman modified coordinate system so that both the maps and GOAL
- *         use the center-of-object as the coordinate.
+ * @author W.Pasman modified coordinate system so that both the maps and GOAL use the center-of-object as the
+ *         coordinate.
  */
 public abstract class BoundedMoveableObject {
 
@@ -34,8 +34,7 @@ public abstract class BoundedMoveableObject {
 	 * @param context
 	 *            the context in which the object should be placed.
 	 */
-	public BoundedMoveableObject(ContinuousSpace<Object> space,
-			Context<Object> context) {
+	public BoundedMoveableObject(ContinuousSpace<Object> space, Context<Object> context) {
 		if (context.size() == 0) {
 			COUNTER.set(0);
 		}
@@ -88,8 +87,7 @@ public abstract class BoundedMoveableObject {
 	}
 
 	/**
-	 * Moves this object to a new location. The given location will be the
-	 * center of the object.
+	 * Moves this object to a new location. The given location will be the center of the object.
 	 * 
 	 * @param x
 	 *            The x coordinate of the location.
@@ -107,9 +105,8 @@ public abstract class BoundedMoveableObject {
 		final int prime = 31;
 		int result = 1;
 		/*
-		 * result = prime * result + ((boundingBox == null) ? 0 :
-		 * boundingBox.hashCode()); result = prime * result + (int) (id ^ (id
-		 * >>> 32));
+		 * result = prime * result + ((boundingBox == null) ? 0 : boundingBox.hashCode()); result = prime * result +
+		 * (int) (id ^ (id >>> 32));
 		 */
 		return result;
 	}
@@ -126,7 +123,8 @@ public abstract class BoundedMoveableObject {
 		if (boundingBox == null) {
 			if (other.boundingBox != null)
 				return false;
-		} else if (!boundingBox.equals(other.boundingBox))
+		}
+		else if (!boundingBox.equals(other.boundingBox))
 			return false;
 		if (id != other.id)
 			return false;
@@ -149,8 +147,7 @@ public abstract class BoundedMoveableObject {
 	 */
 	public double distanceTo(NdPoint there) {
 		NdPoint here = getLocation();
-		double distance = Math.sqrt(Math.pow(there.getX() - here.getX(), 2)
-				+ Math.pow(there.getY() - here.getY(), 2));
+		double distance = Math.sqrt(Math.pow(there.getX() - here.getX(), 2) + Math.pow(there.getY() - here.getY(), 2));
 		return distance;
 	}
 
@@ -159,8 +156,7 @@ public abstract class BoundedMoveableObject {
 	 * 
 	 * @param o
 	 *            is the object to compute the distance to
-	 * @return distance to center of o. Note that the distance to the bounding
-	 *         box of o may be smaller than this.
+	 * @return distance to center of o. Note that the distance to the bounding box of o may be smaller than this.
 	 */
 	public double distanceTo(BoundedMoveableObject o) {
 		return distanceTo(o.getLocation());

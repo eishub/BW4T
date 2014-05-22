@@ -10,8 +10,8 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 
 /**
- * A zone is a square area on the map with a name, neighbours and access
- * restrictions. This mirrors the {@link nl.tudelft.bw4t.map.Zone} in the map.
+ * A zone is a square area on the map with a name, neighbours and access restrictions. This mirrors the
+ * {@link nl.tudelft.bw4t.map.Zone} in the map.
  * 
  * @author W.Pasman 4nov2013
  * 
@@ -26,8 +26,7 @@ public abstract class Zone extends BoundedMoveableObject {
 	 */
 	private Set<Zone> neighbours = new HashSet<Zone>();
 
-	public Zone(nl.tudelft.bw4t.map.Zone zone, ContinuousSpace<Object> space,
-			Context<Object> context) {
+	public Zone(nl.tudelft.bw4t.map.Zone zone, ContinuousSpace<Object> space, Context<Object> context) {
 		super(space, context);
 		name = zone.getName();
 		if (zone.getRenderOptions() != null) {
