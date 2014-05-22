@@ -60,7 +60,7 @@ public class Stepper implements Runnable {
 				runner.cleanUpRun();
 			}
 		} catch (Exception e) {
-			logger.error("An internal error occurred while running the stepper: " + e.getMessage());
+			logger.error("An internal error occurred while running the stepper: ", e);
 		}
 		running = false;
 		runner = null;
