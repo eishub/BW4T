@@ -23,6 +23,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -208,8 +210,15 @@ public class EntityPanel extends JPanel {
         botScrollPane = new JScrollPane(botTable);
         botScrollPane.setPreferredSize(new Dimension(
                 SCROLL_PANE_WIDTH, SCROLL_PANE_HEIGHT));
-        
         setUpControllerColumn();
+        
+        botList.addTableModelListener(new TableModelListener() {
+
+            @Override
+            public void tableChanged(TableModelEvent e) {
+               updateBotCount();
+            }
+        });
     }
     
     public void setUpControllerColumn() {
@@ -233,6 +242,7 @@ public class EntityPanel extends JPanel {
         botCounter.add(new JLabel());
         botCounter.add(new JLabel());
         botCounter.add(new JLabel("Total number of bots:"));
+        botCountField.setText("0");
         botCountField.setEditable(false);
         botCounter.add(botCountField);
     }
@@ -297,6 +307,14 @@ public class EntityPanel extends JPanel {
         epartnerScrollPane = new JScrollPane(ePartnerTable);
         epartnerScrollPane.setPreferredSize(new Dimension(
                 SCROLL_PANE_WIDTH, SCROLL_PANE_HEIGHT));
+        
+        epartnerList.addTableModelListener(new TableModelListener() {
+
+            @Override
+            public void tableChanged(TableModelEvent e) {
+               updateEPartnerCount();
+            }
+        });
     }
 
     /**
@@ -309,6 +327,7 @@ public class EntityPanel extends JPanel {
         epartnerCounter.add(new JLabel());
         epartnerCounter.add(new JLabel());
         epartnerCounter.add(new JLabel("Total number of e-partners:"));
+        epartnerCountField.setText("0");
         epartnerCountField.setEditable(false);
         epartnerCounter.add(epartnerCountField);
     }
@@ -500,22 +519,24 @@ public class EntityPanel extends JPanel {
     }
 
     /**
-     * Updates the entities count on the EntityPanel.
-     */
-    public final void updateEntitiesCount() {
-        Integer bots = botList.getRowCount();
-        Integer epartners = epartnerList.getRowCount();
-
-        botCountField.setText(bots.toString());
-        epartnerCountField.setText(epartners.toString());
-    }
-
-    /**
      * Returns the amount of bots.
      * @return The amount of bots.
      */
     public final int getBotCount() {
-        return botList.getRowCount();
+        int numBots = 0;
+        
+        for (int i = 0; i < botList.getRowCount(); i++) {
+            numBots += Integer.valueOf(botList.getValueAt(i, 2).toString());
+        }
+        return numBots;
+    }
+
+    /**
+     * Updates the bot count on the EntityPanel.
+     */
+    public final void updateBotCount() {
+        Integer bots = getBotCount();
+        botCountField.setText(bots.toString());
     }
 
     /**
@@ -523,7 +544,20 @@ public class EntityPanel extends JPanel {
      * @return The amount of epartners.
      */
     public final int getEPartnerCount() {
-        return epartnerList.getRowCount();
+        int numEPartner = 0;
+        
+        for (int i = 0; i < epartnerList.getRowCount(); i++) {
+            numEPartner += Integer.valueOf(epartnerList.getValueAt(i, 1).toString());
+        }
+        return numEPartner;
+    }
+
+    /**
+     * Updates the entities count on the EntityPanel.
+     */
+    public final void updateEPartnerCount() {
+        Integer epartners = getEPartnerCount();
+        epartnerCountField.setText(epartners.toString());
     }
 
     /**

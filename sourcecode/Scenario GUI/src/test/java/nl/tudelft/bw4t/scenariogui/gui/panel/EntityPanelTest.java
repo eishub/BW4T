@@ -53,10 +53,9 @@ public class EntityPanelTest {
      */
     @Test
     public final void testBotCount() {
-        Object[] data = {"d1", "d2", "d3"};
+        Object[] data = {"d1", "d2", "1"};
 
         spyEntityPanel.getBotTableModel().addRow(data);
-        spyEntityPanel.updateEntitiesCount();
 
         assertEquals(spyEntityPanel.getBotCount(), 1);
     }
@@ -67,10 +66,10 @@ public class EntityPanelTest {
      */
     @Test
     public final void testEPartnerCount() {
-        Object[] data = {"D1", "D2", "D3"};
+        Object[] data = {"D1", "1"};
 
         spyEntityPanel.getEPartnerTableModel().addRow(data);
-        spyEntityPanel.updateEntitiesCount();
+        spyEntityPanel.updateEPartnerCount();
 
         assertEquals(spyEntityPanel.getEPartnerCount(), 1);
     }
