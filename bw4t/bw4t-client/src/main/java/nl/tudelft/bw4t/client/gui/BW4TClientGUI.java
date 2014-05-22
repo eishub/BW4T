@@ -28,7 +28,7 @@ import javax.swing.border.BevelBorder;
 import nl.tudelft.bw4t.RendererMapLoader;
 import nl.tudelft.bw4t.agent.HumanAgent;
 import nl.tudelft.bw4t.client.BW4TClientSettings;
-import nl.tudelft.bw4t.client.BW4TRemoteEnvironment;
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.data.EnvironmentDatabase;
 import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
 import nl.tudelft.bw4t.client.gui.listeners.ChatListMouseListener;
@@ -47,7 +47,7 @@ import eis.iilang.Percept;
 /**
  * Render the current state of the world at a fixed rate (10 times per second,
  * see run()) for a client. It connects to the given
- * {@link BW4TRemoteEnvironment} on behalf of a given eis entityId. This allows
+ * {@link RemoteEnvironment} on behalf of a given eis entityId. This allows
  * fetching the latest percepts and uses these percepts to track the world
  * state.
  * <p>
@@ -63,14 +63,14 @@ import eis.iilang.Percept;
  * <li>putDown(). User asked to do the put down action.
  * </ul>
  * <p>
- * {@link BW4TRemoteEnvironment#getAllPerceptsFromEntity(String)} is called by
+ * {@link RemoteEnvironment#getAllPerceptsFromEntity(String)} is called by
  * the {@link #run()} repaint scheduler only if we are representing a
  * HumanPlayer. Otherwise the getAllPercepts is done by the agent and we assume
- * processPercepts is called by the {@link BW4TRemoteEnvironment} when the agent
+ * processPercepts is called by the {@link RemoteEnvironment} when the agent
  * asked for getAllPercepts.
  * <p>
  * The BW4TRenderer has a list {@link #toBePerformedAction} which is polled by
- * {@link BW4TRemoteEnvironment#getAllPerceptsFromEntity(String)} at every call,
+ * {@link RemoteEnvironment#getAllPerceptsFromEntity(String)} at every call,
  * and merged into the regular percepts. So user mouse clicks are stored there
  * until it's time for perceiving.
  */
@@ -98,7 +98,7 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
      * @throws IOException
      *             if map can't be loaded.
      */
-    public BW4TClientGUI(BW4TRemoteEnvironment env, String entityId,
+    public BW4TClientGUI(RemoteEnvironment env, String entityId,
             boolean goal, boolean humanPlayer) throws IOException {
         bw4tClientInfo.environment = env;
         init(entityId, humanPlayer);
@@ -114,7 +114,7 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
      * @throws IOException
      *             if map can't be loaded.
      */
-    public BW4TClientGUI(BW4TRemoteEnvironment env, String entityId,
+    public BW4TClientGUI(RemoteEnvironment env, String entityId,
             HumanAgent humanAgent) throws IOException {
         bw4tClientInfo.environment = env;
         bw4tClientInfo.humanAgent = humanAgent;
@@ -148,7 +148,7 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
         bw4tClientInfo.buttonPanel.add(jButton);
         jButton.addMouseListener(new TeamListMouseListener(this));
 
-        RendererMapLoader.loadMap(bw4tClientInfo.environment.getMap(), this);
+        RendererMapLoader.loadMap(bw4tClientInfo.environment.getData().getClient().getMap(), this);
 
         // Initialize graphics
 

@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.startup.InitParam;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.server.BW4TServerActions;
@@ -33,11 +34,11 @@ import eis.iilang.Percept;
  * lives at the client side.
  * <p>
  * This object is a listener for server events, and forwards them to the owner:
- * the {@link BW4TRemoteEnvironment}.
+ * the {@link RemoteEnvironment}.
  * 
  * @author trens
  * @author W.Pasman 8feb2012 changed to make this an explicit child of a
- *         {@link BW4TRemoteEnvironment}.
+ *         {@link RemoteEnvironment}.
  * @author W.Pasman 13feb2012 added start and pause calls.
  * 
  */
@@ -49,7 +50,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	/**
 	 * The parent that we serve.
 	 */
-	private BW4TRemoteEnvironment parent;
+	private RemoteEnvironment parent;
 
 	private String bindAddress;
 
@@ -66,14 +67,14 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 * Create a listener for the server.
 	 * 
 	 * @param parent
-	 *            is the parent {@link BW4TRemoteEnvironment}
+	 *            is the parent {@link RemoteEnvironment}
 	 * @throws RemoteException
 	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 * @throws NotBoundException
 	 * @throws MalformedURLException
 	 */
-	protected BW4TClient(BW4TRemoteEnvironment parent) throws RemoteException,
+	public BW4TClient(RemoteEnvironment parent) throws RemoteException,
 			MalformedURLException, NotBoundException {
 		this.parent = parent;
 	}

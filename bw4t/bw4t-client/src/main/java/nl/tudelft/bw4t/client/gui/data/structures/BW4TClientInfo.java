@@ -7,7 +7,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import nl.tudelft.bw4t.agent.HumanAgent;
-import nl.tudelft.bw4t.client.BW4TRemoteEnvironment;
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.data.EnvironmentDatabase;
 
 public class BW4TClientInfo {
@@ -31,7 +31,7 @@ public class BW4TClientInfo {
     /**
      * Most of the server interfacing goes through the std eis percepts
      */
-    public BW4TRemoteEnvironment environment;
+    public RemoteEnvironment environment;
 
     public BW4TClientInfo(JTextArea chatSession) {
         this.chatSession = chatSession;
