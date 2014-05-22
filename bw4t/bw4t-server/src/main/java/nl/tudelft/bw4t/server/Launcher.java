@@ -117,8 +117,10 @@ public class Launcher {
 	 */
 	private String findArgument(String[] args, String name, String def) {
 		String result = def;
+		logger.info("Default for parameter '" + name + "' is '" + def + "'");
 		for (int i = 0; i < args.length - 1; i++) {
 			if (args[i].equalsIgnoreCase(name)) {
+				logger.info("Found parameter '" + name + "' with '" + args[i + 1] + "'");
 				result = args[i + 1];
 				break;
 			}

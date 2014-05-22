@@ -149,12 +149,40 @@ public class BW4TClient extends UnicastRemoteObject implements
 			throw new NoEnvironmentException("Failed to connect " + address, e);
 		}
 
-		if (!killKey.isEmpty()) {
-			LOGGER.info("Attempting to shutdown the server with key: "
-					+ killKey);
-			((BW4TServerHiddenActions) server).stopServer(killKey);
-		}
+	}
+	
+	/**
+	 * Try to shutdown the server with the given parameters.
+	 * @param shutdownParams the parameters given by console
+	 */
+	public void shutdownServer(java.util.Map<String, Parameter> shutdownParams) {
+		Parameter serverIp = shutdownParams.get(InitParam.SERVERIP.nameLower());
+		String serverIpString = ((Identifier) serverIp).getValue();
 
+		Parameter serverPort = shutdownParams.get(InitParam.SERVERPORT
+				.nameLower());
+		String serverPortString = ((Identifier) serverPort).getValue();
+
+		String killKey = ((Identifier) shutdownParams.get(InitParam.KILL
+				.nameLower())).getValue();
+
+		// Register the client to the server
+		String address = "//" + serverIpString + ":" + serverPortString
+				+ "/BW4TServer";
+		try {
+			server = (BW4TServerActions) Naming.lookup(address);
+		} catch (Exception e) {
+			LOGGER.info("The server is already down: "
+					+ address);
+			return;
+		}
+		
+		LOGGER.info("Attempting to shutdown the server with key: " + killKey);
+		try {
+			((BW4TServerHiddenActions) server).stopServer(killKey);
+		} catch (RemoteException e) {
+			LOGGER.error("An error occured while shutting down server", e);
+		}
 	}
 
 	/**
