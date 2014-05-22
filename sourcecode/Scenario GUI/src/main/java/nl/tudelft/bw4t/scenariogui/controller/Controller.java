@@ -296,119 +296,11 @@ class DeleteEPartner implements ActionListener {
 	}
 }
 
-/**
- * Handles the event of the menu.
- */
-abstract class AbstractMenuOptionFactory implements ActionListener {
-
-    /** The menu bar as view. */
-    private MenuBar view;
-    /** The current controller that is controlling this. */
-    private Controller controller;
-
-    //made a variable for this so we can call it during testing
-    /** The file chooser. */
-    private JFileChooser currentFileChooser;
-    
-    /**
-     * Constructs a menu option object.
-     * @param newView The new view.
-     * @param mainView The main view controller.
-     */
-    public AbstractMenuOptionFactory(final MenuBar newView, final Controller mainView) {
-        this.view = newView;
-        this.setController(mainView);
-    }
-
-    /**
-     * Gets the current file chooser.
-     * @return The current file chooser.
-     */
-    public JFileChooser getCurrentFileChooser() {
-        return currentFileChooser;
-    }
-
-    /**
-     * Sets the new current file chooser.
-     * @param newFileChooser The new file chooser to set.
-     */
-    public void setCurrentFileChooser(final JFileChooser newFileChooser) {
-        currentFileChooser = newFileChooser;
-    }
-
-    /**
-     * Saves a file.
-     */
-    public void saveFile() {
-        saveFile(!view.hasLastFileLocation());
-    }
-
-    /**
-     * Saves a file.
-     * @param saveAs Whether or not to open a file chooser.
-     */
-    public void saveFile(final boolean saveAs) {
-        String path = view.getLastFileLocation();
-        if (saveAs || !view.hasLastFileLocation()) {
-            currentFileChooser = new JFileChooser();
-
-            /** Adds an xml filter for the file chooser: */
-            currentFileChooser.setFileFilter(FileFilters.xmlFilter());
-
-            if (currentFileChooser.showSaveDialog(getController().getMainView()) == JFileChooser.APPROVE_OPTION) {
-                File file = currentFileChooser.getSelectedFile();
-
-                path = file.getAbsolutePath();
-
-                String extension = ".xml";
-                if (!path.endsWith(extension)) {
-                    path += extension;
-                }
-            }
-            else {
-                return;
-            }
-        }
-        try {
-            new BW4TClientConfig((MainPanel) (getController().getMainView()).getContentPane(), path).toXML();
-            view.setLastFileLocation(path);
-        } catch (JAXBException e) {
-            ScenarioEditor.handleException(
-                    e, "Error: Saving to XML has failed.");
-        } catch (FileNotFoundException e) {
-            ScenarioEditor.handleException(
-                    e, "Error: No file has been found.");
-        }
-    }
-
-    /**
-     * Gets called when the button associated with this action
-     * is pressed.
-     * @param e The action event.
-     */
-    public abstract void actionPerformed(ActionEvent e);
-
-    /**
-     * Gets the controller.
-     * @return The controller.
-     */
-    public Controller getController() {
-        return controller;
-    }
-
-    /**
-     * Sets the controller.
-     * @param newController The new controller.
-     */
-    public void setController(final Controller newController) {
-        controller = newController;
-    }
-}
 
 /**
  * Handles the event to open a file.
  */
-class MenuOptionOpen extends AbstractMenuOptionFactory {
+class MenuOptionOpen extends AbstractMenuOption {
 
     /**
      * Constructs a new menu option open object.
@@ -427,14 +319,16 @@ class MenuOptionOpen extends AbstractMenuOptionFactory {
         ConfigurationPanel configPanel = super.getController().getMainView().getMainPanel().getConfigurationPanel();
         EntityPanel entityPanel = super.getController().getMainView().getMainPanel().getEntityPanel();
 
+
         // Check if current config is different from last saved config
         if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())) {
             // Check if user wants to save current configuration
-            int response = JOptionPane.showConfirmDialog(
+            int response = super.getOptionPrompt().showConfirmDialog(
                     null,
                     Controller.CONFIRM_SAVE_TXT,
                     "",
-                    JOptionPane.YES_NO_OPTION);
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE);
 
             if (response == JOptionPane.YES_OPTION) {
                 saveFile();
@@ -443,7 +337,7 @@ class MenuOptionOpen extends AbstractMenuOptionFactory {
         }
 
         // Open configuration file
-        JFileChooser fileChooser = new JFileChooser();
+        JFileChooser fileChooser = getCurrentFileChooser();
         fileChooser.setFileFilter(FileFilters.xmlFilter());
 
         if (fileChooser.showOpenDialog(getController().getMainView()) == JFileChooser.APPROVE_OPTION) {
@@ -476,7 +370,7 @@ class MenuOptionOpen extends AbstractMenuOptionFactory {
 /**
  * Handles the event to exit the program.
  */
-class MenuOptionExit extends AbstractMenuOptionFactory {
+class MenuOptionExit extends AbstractMenuOption {
 
     /**
      * Constructs a new menu option exit object.
@@ -516,7 +410,7 @@ class MenuOptionExit extends AbstractMenuOptionFactory {
 /**
  * Handles the event to save a file.
  */
-class MenuOptionSave extends AbstractMenuOptionFactory {
+class MenuOptionSave extends AbstractMenuOption {
 
     /**
      * Constructs a new menu option save object.
@@ -540,7 +434,7 @@ class MenuOptionSave extends AbstractMenuOptionFactory {
 /**
  * Handles the event to save at a chosen location.
  */
-class MenuOptionSaveAs extends AbstractMenuOptionFactory {
+class MenuOptionSaveAs extends AbstractMenuOption {
 
     /**
      * Constructs a new menu option save as object.
@@ -564,7 +458,7 @@ class MenuOptionSaveAs extends AbstractMenuOptionFactory {
 /**
  * Handles the event to start a new file.
  */
-class MenuOptionNew extends AbstractMenuOptionFactory {
+class MenuOptionNew extends AbstractMenuOption {
 
     /**
      * Constructs a new menu option new object.
