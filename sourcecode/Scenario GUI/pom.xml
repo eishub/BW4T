@@ -16,6 +16,8 @@
         <sonar.language>java</sonar.language>
         <sonar.sources>src/main</sonar.sources>
         <sonar.tests>src/test</sonar.tests>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.java.coveragePlugin>cobertura</sonar.java.coveragePlugin>
     </properties>
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
