@@ -8,6 +8,14 @@
         <developerConnection>scm:git@github.com:MartinRogalla/BW4T.git</developerConnection>
         <url>https://github.com/MartinRogalla/BW4T/tree/scenario_gui_main_panel</url>
     </scm>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sonar.projectKey>nl.tudelft.bw4t.scenariogui</sonar.projectKey>
+        <sonar.projectName>ScenarioEditor</sonar.projectName>
+        <sonar.projectVersion>0.0.1-SNAPSHOT</sonar.projectVersion>
+        <sonar.language>java</sonar.language>
+        <sonar.sources>src</sonar.sources>
+    </properties>
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
         <plugins>
@@ -53,10 +61,8 @@
                 <configuration>
                     <check/>
                     <instrumentation>
-                        <ignores>
-                            <ignore>nl.tudelft.bw4t.scenariogui.gui.botstore.*</ignore>
-                        </ignores>
                         <excludes>
+                            <exclude>nl/tudelft/bw4t/scenariogui/config/BotConfig.class</exclude>
                             <exclude>nl/tudelft/bw4t/scenariogui/gui/botstore/BotEditor.class</exclude>
                             <exclude>nl/tudelft/bw4t/scenariogui/gui/botstore/BotEditorPanel.class</exclude>
                         </excludes>
