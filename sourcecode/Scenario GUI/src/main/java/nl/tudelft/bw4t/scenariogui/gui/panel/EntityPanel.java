@@ -8,7 +8,9 @@ import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -21,6 +23,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -32,8 +35,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class EntityPanel extends JPanel {
 
-    /** The number column. */
-    private static final String NUMBER_COLUMN = "Number of bots";
+    /** The number of bots column. */
+    private static final String NUMBER_BOTS_COLUMN = "Number of bots";
+    
+    private static final String NUMBER_EPARTNERS_COLUMN = "Number of e-partners";
 
     /** The bot options. */
     private JPanel botOptions = new JPanel();
@@ -178,22 +183,44 @@ public class EntityPanel extends JPanel {
             
             @Override
             public boolean isCellEditable(final int row, final int column) {
-                if (column == 2) {
-                    return true;
+                if (column == 0) {
+                    return false;
                 }
-                return false;
-         }
+                return true;
+            }
+        	
+        	@Override
+        	public Class<?> getColumnClass(int column) {
+        		if (column == 2) {
+        			return Integer.class;
+        		}
+        		
+        		return String.class;
+        	}
             
         };
 
         botTable.setModel(botList);
         botList.addColumn("Bot");
         botList.addColumn("Controller");
-        botList.addColumn(NUMBER_COLUMN);
+        botList.addColumn(NUMBER_BOTS_COLUMN);
 
         botScrollPane = new JScrollPane(botTable);
         botScrollPane.setPreferredSize(new Dimension(
                 SCROLL_PANE_WIDTH, SCROLL_PANE_HEIGHT));
+        
+        setUpControllerColumn();
+    }
+    
+    public void setUpControllerColumn() {
+    	JComboBox controllers = new JComboBox();
+    	controllers.addItem("Agent");
+    	controllers.addItem("Human");
+    	botTable.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(controllers));
+    	
+    	DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+    	renderer.setToolTipText("Testtext");
+    	botTable.getColumnModel().getColumn(1).setCellRenderer(renderer);
     }
 
     /**
@@ -252,11 +279,20 @@ public class EntityPanel extends JPanel {
                 }
                 return false;
             }
+            
+            @Override
+            public Class<?> getColumnClass(int column) {
+            	if (column == 1) {
+            		return Integer.class;
+            	}
+            	
+            	return String.class;
+            }
         };
 
         ePartnerTable.setModel(epartnerList);
         epartnerList.addColumn("E-partner");
-        epartnerList.addColumn(NUMBER_COLUMN);
+        epartnerList.addColumn(NUMBER_EPARTNERS_COLUMN);
 
         epartnerScrollPane = new JScrollPane(ePartnerTable);
         epartnerScrollPane.setPreferredSize(new Dimension(
@@ -282,7 +318,7 @@ public class EntityPanel extends JPanel {
      * pressed.
      */
     public void addBotAction() {
-        Object[] newBotObject = {"Unnamed Bot", "No Controller", 1};
+        Object[] newBotObject = {"Unnamed Bot", "Agent", 1};
         getBotTableModel().addRow(newBotObject);
     }
 
