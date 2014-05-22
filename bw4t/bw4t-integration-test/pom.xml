@@ -25,19 +25,7 @@
 
 	<build>
 		<plugins>
-			<!-- *** Compiler plugin: we must force test compile because we're using 
-				a pom packaging that doesn't have this lifecycle mapping. -->
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>testCompile</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
+		
 			<!-- *** Surefire plugin: run integration tests *** -->
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>

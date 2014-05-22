@@ -45,7 +45,7 @@ public final class Launcher {
      * @param args
      *            the console arguments
      */
-    public static void main(String[] args) {
+    public static void launch(String[] args) {
         /**
          * Set up the logging environment to log on the console.
          */
