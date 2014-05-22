@@ -2,15 +2,20 @@ package nl.tudelft.bw4t.scenariogui.controller;
 
 import java.awt.Component;
 
-import javax.swing.JOptionPane;
-
 /**
  * An interface for showConfirmDialog, used to make the mocking of responses
  * simpler.
  */
 public interface OptionPrompt {
+
     /**
-     *  @see javax.swing.JOptionPane#showConfirmDialog(java.awt.Component, Object, String, int, int);
+     * @param parentComponent The <code>java.awt.Component</code> that will be used to align the box.
+     * @param message         The message to be shown to the user.
+     * @param title           The title of the confirmation dialog
+     * @param optionType      The option type
+     * @param messageType     The message type
+     * @return The chosen option
+     * @see javax.swing.JOptionPane#showConfirmDialog(java.awt.Component, Object, String, int, int);
      */
     int showConfirmDialog(Component parentComponent, Object message, String title, int optionType, int messageType);
 }
