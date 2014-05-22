@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Rectangle;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -12,19 +13,23 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -39,13 +44,16 @@ public class EntityPanel extends JPanel {
 
     /** The number of bots column. */
     private static final String NUMBER_BOTS_COLUMN = "Number of bots";
-    
+
+    /** The number of e-partners */
     private static final String NUMBER_EPARTNERS_COLUMN = "Number of e-partners";
 
     /** The bot options. */
     private JPanel botOptions = new JPanel();
     /** The bot toolbar. */
     private JPanel botToolbar = new JPanel();
+    /** The dropdown menu for adding a new bot. */
+    private JPanel botMenu = new JPanel();
     /** The bot pane. */
     private JPanel botPane = new JPanel();
     /** The bot counter. */
@@ -61,6 +69,16 @@ public class EntityPanel extends JPanel {
 
     /** The button for adding a new bot. */
     private JButton newBot = new JButton("New Bot");
+    /** The button to open the dropdown menu for adding one of the standard bots. */
+    private JButton botDropDownButton = new BasicArrowButton(SwingConstants.SOUTH);
+    /** The dropdown menu for the standard bots. */
+    private JPopupMenu botDropDownMenu = new JPopupMenu();
+    //TODO Add menuitems for the standardbots
+    /** The standardBot1 menu item */
+    private JMenuItem standardBot1 = new JMenuItem("StandardBot1");
+    /** The standardBot2 menu item */
+    private JMenuItem standardBot2 = new JMenuItem("StandardBot2");
+    //TODO add actionlisteners for the menu items
     /** The button to modify a bot. */
     private JButton modifyBot = new JButton("Modify Bot");
     /** The button to delete a bot. */
@@ -167,11 +185,34 @@ public class EntityPanel extends JPanel {
     private void createBotToolbar() {
         botToolbar.setLayout(new GridLayout(1, 0));
 
-        botToolbar.add(newBot);
+        createDropDownMenuButtons();
+        
+        botToolbar.add(botMenu);
         botToolbar.add(new JLabel());
         botToolbar.add(modifyBot);
         botToolbar.add(new JLabel());
         botToolbar.add(deleteBot);
+    }
+    
+    /**
+     * Create the dropdown menu for adding standard bots.
+     */
+    private void createDropDownMenuButtons() {
+        botMenu.setLayout(new BorderLayout());
+        
+        botDropDownMenu.add(standardBot1);
+        botDropDownMenu.add(standardBot2);
+        botDropDownButton.add(botDropDownMenu);
+        
+        botMenu.add(botDropDownButton, BorderLayout.EAST);        
+        botMenu.add(newBot, BorderLayout.CENTER);
+    }
+    
+    /**
+     * Executes the action that needs to happen when the "arrow" button is pressed.
+     */
+    public void showBotDropDown() {
+    	botDropDownMenu.show(newBot, 0, botDropDownButton.getHeight());
     }
 
     /**
@@ -220,7 +261,10 @@ public class EntityPanel extends JPanel {
             }
         });
     }
-    
+
+    /**
+     * Create the dropdown lists in the controller column.
+     */
     public void setUpControllerColumn() {
     	JComboBox controllers = new JComboBox();
     	controllers.addItem("Agent");
@@ -486,6 +530,14 @@ public class EntityPanel extends JPanel {
      */
     public final DefaultTableModel getEPartnerTableModel() {
     	return epartnerList;
+    }
+    
+    /**
+     * Returns the "arrow" button.
+     * @return The "arrow" button.
+     */
+    public JButton getDropDownButton() {
+    	return botDropDownButton;
     }
 
 

@@ -14,7 +14,11 @@
         <sonar.projectName>ScenarioEditor</sonar.projectName>
         <sonar.projectVersion>0.0.1-SNAPSHOT</sonar.projectVersion>
         <sonar.language>java</sonar.language>
-        <sonar.sources>src</sonar.sources>
+        <sonar.sources>src/main</sonar.sources>
+        <sonar.tests>src/test</sonar.tests>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.java.coveragePlugin>cobertura</sonar.java.coveragePlugin>
+        <sonar.cobertura.reportPath>target/site/cobertura/coverage.xml</sonar.cobertura.reportPath>
     </properties>
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
@@ -61,6 +65,9 @@
                 <configuration>
                     <check/>
                     <instrumentation>
+                        <ignores>
+                            <ignore>nl.tudelft.bw4t.scenariogui.gui.botstore.*</ignore>
+                        </ignores>
                         <excludes>
                             <exclude>nl/tudelft/bw4t/scenariogui/config/BotConfig.class</exclude>
                             <exclude>nl/tudelft/bw4t/scenariogui/gui/botstore/BotEditor.class</exclude>

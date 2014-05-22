@@ -15,7 +15,6 @@ public interface OptionPrompt {
      * @param optionType      The option type
      * @param messageType     The message type
      * @return The chosen option
-     * @see javax.swing.JOptionPane#showConfirmDialog(java.awt.Component, Object, String, int, int);
      */
     int showConfirmDialog(Component parentComponent, Object message, String title, int optionType, int messageType);
 }
