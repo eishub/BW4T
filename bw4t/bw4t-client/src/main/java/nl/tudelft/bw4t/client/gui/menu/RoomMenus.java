@@ -31,7 +31,8 @@ public class RoomMenus {
      */
     public static void buildPopUpMenuForBeingAtBlock(Long boxID, RoomInfo room,
             BW4TClientGUI bw4tClientMapRenderer) {
-        BW4TClientInfo bw4tClientInfo = bw4tClientMapRenderer.getBW4TClientInfo();
+        BW4TClientInfo bw4tClientInfo = bw4tClientMapRenderer
+                .getBW4TClientInfo();
         String label = MapOperations.findLabelForRoom(room, bw4tClientInfo);
 
         bw4tClientInfo.jPopupMenu.removeAll();
@@ -76,7 +77,8 @@ public class RoomMenus {
      */
     public static void buildPopUpMenuForBlock(Long boxID, RoomInfo room,
             BW4TClientGUI bw4tClientMapRenderer) {
-        BW4TClientInfo bw4tClientInfo = bw4tClientMapRenderer.getBW4TClientInfo();
+        BW4TClientInfo bw4tClientInfo = bw4tClientMapRenderer
+                .getBW4TClientInfo();
         String label = MapOperations.findLabelForRoom(room, bw4tClientInfo);
 
         bw4tClientInfo.jPopupMenu.removeAll();
@@ -117,7 +119,8 @@ public class RoomMenus {
      */
     public static void buildPopUpMenuRoom(RoomInfo room,
             BW4TClientGUI bw4tClientMapRenderer) {
-        BW4TClientInfo bw4tClientInfo = bw4tClientMapRenderer.getBW4TClientInfo();
+        BW4TClientInfo bw4tClientInfo = bw4tClientMapRenderer
+                .getBW4TClientInfo();
         long holdingID = bw4tClientInfo.environmentDatabase.getHoldingID();
         Color entityColor = bw4tClientInfo.environmentDatabase.getEntityColor();
         String label = MapOperations.findLabelForRoom(room, bw4tClientInfo);
@@ -134,8 +137,7 @@ public class RoomMenus {
 
         if (holdingID != Long.MAX_VALUE) {
             menuItem = new JMenuItem("Put down box");
-            menuItem.addActionListener(new PutdownActionListener(
-                    bw4tClientInfo));
+            menuItem.addActionListener(new PutdownActionListener(bw4tClientInfo));
             bw4tClientInfo.jPopupMenu.add(menuItem);
         }
 
@@ -201,21 +203,24 @@ public class RoomMenus {
                             null), bw4tClientInfo);
         } else {
             BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-                    MessageType.droppedOffBlock, null, null, null), bw4tClientInfo);
+                    MessageType.droppedOffBlock, null, null, null),
+                    bw4tClientInfo);
         }
 
         if (holdingID != Long.MAX_VALUE) {
             BasicMenuOperations.addMenuItemToPopupMenu(
                     new BW4TMessage(MessageType.hasColor, null, ColorTranslator
-                            .translate2ColorString(entityColor), null), bw4tClientInfo);
+                            .translate2ColorString(entityColor), null),
+                    bw4tClientInfo);
 
             submenu = BasicMenuOperations.addSubMenuToPopupMenu("I have a "
                     + ColorTranslator.translate2ColorString(entityColor)
                     + " block from ", bw4tClientInfo.jPopupMenu);
 
-            for (RoomInfo roomInfo : bw4tClientInfo.environmentDatabase.getRooms()) {
-                String labelT = MapOperations
-                        .findLabelForRoom(roomInfo, bw4tClientInfo);
+            for (RoomInfo roomInfo : bw4tClientInfo.environmentDatabase
+                    .getRooms()) {
+                String labelT = MapOperations.findLabelForRoom(roomInfo,
+                        bw4tClientInfo);
                 menuItem = new JMenuItem(labelT);
                 menuItem.addActionListener(new MessageSenderActionListener(
                         new BW4TMessage(MessageType.hasColor, labelT,
@@ -226,13 +231,16 @@ public class RoomMenus {
             }
         }
 
-        BasicMenuOperations.addSectionTitleToPopupMenu("Ask:", bw4tClientInfo.jPopupMenu);
+        BasicMenuOperations.addSectionTitleToPopupMenu("Ask:",
+                bw4tClientInfo.jPopupMenu);
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-                MessageType.isAnybodyGoingToRoom, label, null, null), bw4tClientInfo);
+                MessageType.isAnybodyGoingToRoom, label, null, null),
+                bw4tClientInfo);
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
                 MessageType.whatIsInRoom, label, null, null), bw4tClientInfo);
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-                MessageType.hasAnybodyCheckedRoom, label, null, null), bw4tClientInfo);
+                MessageType.hasAnybodyCheckedRoom, label, null, null),
+                bw4tClientInfo);
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
                 MessageType.whoIsInRoom, label, null, null), bw4tClientInfo);
 

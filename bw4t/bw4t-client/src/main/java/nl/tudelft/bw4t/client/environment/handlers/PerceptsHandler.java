@@ -24,8 +24,8 @@ public class PerceptsHandler {
      *             , NoEnvironmentException if the attempt to perform an action
      *             or to retrieve percepts has failed.
      */
-    public static List<Percept> getAllPerceptsFromEntity(String entity, RemoteEnvironment env)
-            throws PerceiveException {
+    public static List<Percept> getAllPerceptsFromEntity(String entity,
+            RemoteEnvironment env) throws PerceiveException {
         RemoteEnvironmentData data = env.getData();
         try {
             boolean launchGui = "true".equals(((Identifier) data

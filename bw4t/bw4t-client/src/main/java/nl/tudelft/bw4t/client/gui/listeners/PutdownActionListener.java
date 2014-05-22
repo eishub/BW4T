@@ -8,21 +8,20 @@ import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
 import eis.iilang.Percept;
 
 /**
- * ActionListener that performs the put down action when that command is
- * pressed in the pop up menu
+ * ActionListener that performs the put down action when that command is pressed
+ * in the pop up menu
  * 
  * @author trens
- * 
  */
 public class PutdownActionListener implements ActionListener {
     private BW4TClientInfo bw4tClientInfo;
-    
+
     public PutdownActionListener(BW4TClientInfo bw4tClientInfo) {
         this.bw4tClientInfo = bw4tClientInfo;
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {        
+    public void actionPerformed(ActionEvent e) {
         if (!bw4tClientInfo.goal)
             try {
                 bw4tClientInfo.humanAgent.putDown();

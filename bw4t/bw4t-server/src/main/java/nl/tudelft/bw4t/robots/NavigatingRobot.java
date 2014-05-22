@@ -17,29 +17,26 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 
 /**
- * Represents a self navigating robot in the BW4T environment. The self
- * navigation means that you can go to a Zone which then does path planning and
- * keeps driving till destination reached.
+ * Represents a self navigating robot in the BW4T environment. The self navigation means that you can go to a Zone which
+ * then does path planning and keeps driving till destination reached.
  * 
  * @author W.Pasman 22aug
  */
 public class NavigatingRobot extends Robot {
-	
+
 	/**
 	 * The log4j logger, logs to the console.
 	 */
 	private static Logger logger = Logger.getLogger(Launcher.class);
 
 	/**
-	 * We keep a stack of planned motions. We may need to extend this if
-	 * rotations and waiting for doors also needs to be planned. For now we keep
-	 * it simple.
+	 * We keep a stack of planned motions. We may need to extend this if rotations and waiting for doors also needs to
+	 * be planned. For now we keep it simple.
 	 */
 	Queue<NdPoint> plannedMoves = new ConcurrentLinkedQueue<NdPoint>();
 
 	/**
-	 * When a move is started, it moves from the stack to currentMove. When
-	 * currnetMove is null, it's done.
+	 * When a move is started, it moves from the stack to currentMove. When currnetMove is null, it's done.
 	 */
 	NdPoint currentMove = null;
 
@@ -51,14 +48,12 @@ public class NavigatingRobot extends Robot {
 	 * @param oneBotPerZone
 	 *            true if max 1 bot in a zone
 	 */
-	public NavigatingRobot(String name, ContinuousSpace<Object> space,
-			Context<Object> context, boolean oneBotPerZone) {
+	public NavigatingRobot(String name, ContinuousSpace<Object> space, Context<Object> context, boolean oneBotPerZone) {
 		super(name, space, context, oneBotPerZone);
 	}
 
 	/**
-	 * Catch events when the robot stops moving. Then we have to check what to
-	 * do.
+	 * Catch events when the robot stops moving. Then we have to check what to do.
 	 */
 	@Override
 	public void stopRobot() {
@@ -67,9 +62,8 @@ public class NavigatingRobot extends Robot {
 	}
 
 	/**
-	 * Check if the robot reached the previous destination without problems, and
-	 * then move on if necessary. This should be called whenever the robots
-	 * stops.
+	 * Check if the robot reached the previous destination without problems, and then move on if necessary. This should
+	 * be called whenever the robots stops.
 	 */
 	private void robotStopped() {
 		currentMove = null;
@@ -84,8 +78,7 @@ public class NavigatingRobot extends Robot {
 	@Override
 	public void setTargetLocation(NdPoint p) {
 		if (plannedMoves == null) {
-			throw new InternalError(
-					"plannedMoves==null. How is this possible??");
+			throw new InternalError("plannedMoves==null. How is this possible??");
 		}
 		plannedMoves.clear(); // clear old path.
 		Zone startpt = ZoneLocator.getNearestZone(this.getLocation());
@@ -97,8 +90,7 @@ public class NavigatingRobot extends Robot {
 		// plan the path between the Zones
 		List<Zone> path = PathPlanner.findPath(allnavs, startpt, targetpt);
 		if (path == null) {
-			throw new IllegalArgumentException("target " + p
-					+ " is unreachable from " + this);
+			throw new IllegalArgumentException("target " + p + " is unreachable from " + this);
 		}
 		// and copy Zone path to our stack.
 		for (Zone point : path) {
@@ -110,8 +102,8 @@ public class NavigatingRobot extends Robot {
 	}
 
 	/**
-	 * Let the robot move to the next planned target on the stack. This will
-	 * clear the {@link #collided} flag. Always erases the current target.
+	 * Let the robot move to the next planned target on the stack. This will clear the {@link #collided} flag. Always
+	 * erases the current target.
 	 */
 	public void useNextTarget() {
 		currentMove = null;
@@ -125,8 +117,8 @@ public class NavigatingRobot extends Robot {
 	}
 
 	/**
-	 * Set a target for the navigating robot. If your start and/or target is not
-	 * near a Zone, we go through the nearest Zone.
+	 * Set a target for the navigating robot. If your start and/or target is not near a Zone, we go through the nearest
+	 * Zone.
 	 * 
 	 * @param target
 	 */
@@ -141,8 +133,7 @@ public class NavigatingRobot extends Robot {
 		// plan the path between the Zones
 		List<Zone> path = PathPlanner.findPath(allnavs, startpt, targetpt);
 		if (path == null) {
-			throw new IllegalArgumentException("target " + target
-					+ " is unreachable from " + this);
+			throw new IllegalArgumentException("target " + target + " is unreachable from " + this);
 		}
 		// and copy Zone path to our stack.
 		for (Zone p : path) {

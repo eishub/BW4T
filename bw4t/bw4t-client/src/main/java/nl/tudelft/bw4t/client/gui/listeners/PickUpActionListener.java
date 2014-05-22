@@ -13,20 +13,19 @@ import org.apache.log4j.Logger;
 import eis.iilang.Percept;
 
 /**
- * ActionListener that performs the pick up action when that command is
- * pressed in the pop up menu
+ * ActionListener that performs the pick up action when that command is pressed
+ * in the pop up menu
  * 
  * @author trens
- * 
  */
 public class PickUpActionListener implements ActionListener {
-    
+
     private BW4TClientGUI bw4tClientMapRenderer;
     /**
      * The log4j Logger which displays logs on console
      */
     private final static Logger LOGGER = Logger.getLogger(BW4TClientGUI.class);
-    
+
     public PickUpActionListener(BW4TClientGUI bw4tClientMapRenderer) {
         this.bw4tClientMapRenderer = bw4tClientMapRenderer;
     }
@@ -38,7 +37,8 @@ public class PickUpActionListener implements ActionListener {
             try {
                 data.humanAgent.pickUp();
             } catch (Exception e1) {
-                LOGGER.error("Could tell the agent to perform a pickUp action.", e1);
+                LOGGER.error(
+                        "Could tell the agent to perform a pickUp action.", e1);
             }
         else {
             List<Percept> percepts = new LinkedList<Percept>();

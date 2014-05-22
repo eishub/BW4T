@@ -50,7 +50,7 @@ public class TestAgent extends BW4TAgent {
     private void percepts() {
         try {
             List<Percept> percepts = PerceptsHandler.getAllPerceptsFromEntity(
-                    entityId,getEnvironment());
+                    entityId, getEnvironment());
             if (percepts != null) {
                 processPercepts(percepts);
             }

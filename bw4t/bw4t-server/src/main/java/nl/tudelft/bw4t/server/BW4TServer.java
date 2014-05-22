@@ -44,7 +44,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerActions
 	 * The log4j logger, logs to the console.
 	 */
 	private static Logger logger = Logger.getLogger(Launcher.class);
-	
+
 	private static final long serialVersionUID = -3459272460308988888L;
 	private HashMap<BW4TClientActions, Integer> clientWaitingForAgent;
 	private HashMap<BW4TClientActions, Integer> clientWaitingForHuman;
@@ -163,7 +163,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerActions
 	public void unregisterAgent(String agent) throws AgentException {
 		BW4TEnvironment env = BW4TEnvironment.getInstance();
 		Set<String> ents = env.getAssociatedEntities(agent);
-		for(String entity : ents){
+		for (String entity : ents) {
 			try {
 				BW4TEnvironment.getInstance().deleteEntity(entity);
 			} catch (EntityException | RelationException e) {

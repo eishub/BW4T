@@ -35,7 +35,7 @@ public class GraphicalUpdateOperations {
             data.environmentDatabase.getDropZone().addDoor(info);
         }
     }
-    
+
     /**
      * @param worldX
      *            , the x dimension of the world as specified in the map file

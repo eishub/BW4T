@@ -33,7 +33,8 @@ public class HallwayMenu {
         JMenuItem menuItem = new JMenuItem("Go to here");
         menuItem.addActionListener(new GotoPositionActionListener(new Point(
                 bw4tClientInfo.selectedLocation[0] / VisualizerSettings.scale,
-                bw4tClientInfo.selectedLocation[1] / VisualizerSettings.scale), bw4tClientInfo));
+                bw4tClientInfo.selectedLocation[1] / VisualizerSettings.scale),
+                bw4tClientInfo));
         bw4tClientInfo.jPopupMenu.add(menuItem);
 
         if (holdingID != Long.MAX_VALUE) {
@@ -48,27 +49,35 @@ public class HallwayMenu {
                 bw4tClientInfo.jPopupMenu);
 
         for (RoomInfo room : bw4tClientInfo.environmentDatabase.getRooms()) {
-            BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-                    MessageType.amWaitingOutsideRoom, MapOperations.findLabelForRoom(room,bw4tClientInfo),
-                    null, null), bw4tClientInfo);
+            BasicMenuOperations.addMenuItemToPopupMenu(
+                    new BW4TMessage(MessageType.amWaitingOutsideRoom,
+                            MapOperations
+                                    .findLabelForRoom(room, bw4tClientInfo),
+                            null, null), bw4tClientInfo);
         }
 
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-                MessageType.amWaitingOutsideRoom,
-                MapOperations.findLabelForRoom(bw4tClientInfo.environmentDatabase.getDropZone(),bw4tClientInfo), null,
-                null), bw4tClientInfo);
+        BasicMenuOperations.addMenuItemToPopupMenu(
+                new BW4TMessage(MessageType.amWaitingOutsideRoom, MapOperations
+                        .findLabelForRoom(bw4tClientInfo.environmentDatabase
+                                .getDropZone(), bw4tClientInfo), null, null),
+                bw4tClientInfo);
 
         if (holdingID != Long.MAX_VALUE) {
             BasicMenuOperations.addMenuItemToPopupMenu(
                     new BW4TMessage(MessageType.hasColor, null, ColorTranslator
-                            .translate2ColorString(entityColor), null), bw4tClientInfo);
+                            .translate2ColorString(entityColor), null),
+                    bw4tClientInfo);
 
-            JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu("I have a "
-                    + ColorTranslator.translate2ColorString(entityColor)
-                    + " block from ", bw4tClientInfo.jPopupMenu);
+            JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu(
+                    "I have a "
+                            + ColorTranslator
+                                    .translate2ColorString(entityColor)
+                            + " block from ", bw4tClientInfo.jPopupMenu);
 
-            for (RoomInfo roomInfo : bw4tClientInfo.environmentDatabase.getRooms()) {
-                String label = MapOperations.findLabelForRoom(roomInfo, bw4tClientInfo);
+            for (RoomInfo roomInfo : bw4tClientInfo.environmentDatabase
+                    .getRooms()) {
+                String label = MapOperations.findLabelForRoom(roomInfo,
+                        bw4tClientInfo);
                 menuItem = new JMenuItem(Long.toString(roomInfo.getId()));
                 menuItem.addActionListener(new MessageSenderActionListener(
                         new BW4TMessage(MessageType.hasColor, label,
@@ -84,5 +93,4 @@ public class HallwayMenu {
         bw4tClientInfo.jPopupMenu.add(menuItem);
     }
 
-    
 }

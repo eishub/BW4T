@@ -10,11 +10,10 @@ import eis.iilang.Identifier;
 import eis.iilang.Percept;
 
 /**
- * ActionListener that performs the goTo action when that command is pressed
- * in the pop up menu
+ * ActionListener that performs the goTo action when that command is pressed in
+ * the pop up menu
  * 
  * @author trens
- * 
  */
 public class GoToRoomActionListener implements ActionListener {
     private String id;

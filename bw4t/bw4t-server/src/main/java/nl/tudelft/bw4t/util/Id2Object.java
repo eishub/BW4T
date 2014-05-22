@@ -20,8 +20,7 @@ public final class Id2Object {
 	 *            The id to get the room for.
 	 * @return The {@link BoundedMoveableObject}.
 	 */
-	public static BoundedMoveableObject getObject(Context<Object> context,
-			long id) {
+	public static BoundedMoveableObject getObject(Context<Object> context, long id) {
 
 		for (Object o : context.getObjects(BoundedMoveableObject.class)) {
 

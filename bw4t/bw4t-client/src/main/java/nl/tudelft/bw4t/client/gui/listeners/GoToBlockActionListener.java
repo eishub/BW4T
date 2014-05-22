@@ -8,24 +8,21 @@ import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
 import eis.iilang.Numeral;
 import eis.iilang.Percept;
 
-
 /**
- * ActionListener that performs the goTo action when that command is pressed
- * in the pop up menu
+ * ActionListener that performs the goTo action when that command is pressed in
+ * the pop up menu
  * 
  * @author trens
- * 
  */
 public class GoToBlockActionListener implements ActionListener {
     private long boxID;
     private BW4TClientInfo bw4tClientInfo;
 
     public GoToBlockActionListener(long id) {
-        
+
     }
 
-    public GoToBlockActionListener(Long boxID,
-            BW4TClientInfo bw4tClientInfo) {
+    public GoToBlockActionListener(Long boxID, BW4TClientInfo bw4tClientInfo) {
         this.boxID = boxID;
         this.bw4tClientInfo = bw4tClientInfo;
     }

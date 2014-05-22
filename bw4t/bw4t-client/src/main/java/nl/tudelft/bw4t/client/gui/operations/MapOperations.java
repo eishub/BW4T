@@ -29,7 +29,8 @@ public class MapOperations {
      */
     public static void buildPopUpMenuForGoalColor(BlockColor color,
             BW4TClientGUI bw4tClientMapRenderer) {
-        BW4TClientInfo bw4tClientInfo = bw4tClientMapRenderer.getBW4TClientInfo();
+        BW4TClientInfo bw4tClientInfo = bw4tClientMapRenderer
+                .getBW4TClientInfo();
         long holdingID = bw4tClientInfo.environmentDatabase.getHoldingID();
 
         bw4tClientInfo.jPopupMenu.removeAll();
@@ -43,8 +44,7 @@ public class MapOperations {
 
         if (holdingID != Long.MAX_VALUE) {
             menuItem = new JMenuItem("Put down block");
-            menuItem.addActionListener(new PutdownActionListener(
-                    bw4tClientInfo));
+            menuItem.addActionListener(new PutdownActionListener(bw4tClientInfo));
             bw4tClientInfo.jPopupMenu.add(menuItem);
         }
 
@@ -54,22 +54,26 @@ public class MapOperations {
                 bw4tClientInfo.jPopupMenu);
 
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-                MessageType.lookingFor, null, color.getName(), null), bw4tClientInfo);
+                MessageType.lookingFor, null, color.getName(), null),
+                bw4tClientInfo);
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-                MessageType.willGetColor, null, color.getName(), null), bw4tClientInfo);
-        BasicMenuOperations
-                .addMenuItemToPopupMenu(new BW4TMessage(
-                        MessageType.droppedOffBlock, null, color.getName(),
-                        null), bw4tClientInfo);
+                MessageType.willGetColor, null, color.getName(), null),
+                bw4tClientInfo);
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-                MessageType.weNeed, null, color.getName(), null), bw4tClientInfo);
+                MessageType.droppedOffBlock, null, color.getName(), null),
+                bw4tClientInfo);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
+                MessageType.weNeed, null, color.getName(), null),
+                bw4tClientInfo);
 
         if (holdingID != Long.MAX_VALUE) {
             BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-                    MessageType.hasColor, null, color.getName(), null), bw4tClientInfo);
+                    MessageType.hasColor, null, color.getName(), null),
+                    bw4tClientInfo);
 
             JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu(
-                    "I have a " + color + " block from room", bw4tClientInfo.jPopupMenu);
+                    "I have a " + color + " block from room",
+                    bw4tClientInfo.jPopupMenu);
 
             for (RoomInfo room : bw4tClientInfo.environmentDatabase.getRooms()) {
                 String label = findLabelForRoom(room, bw4tClientInfo);
@@ -82,13 +86,15 @@ public class MapOperations {
         }
 
         bw4tClientInfo.jPopupMenu.addSeparator();
-        BasicMenuOperations
-                .addSectionTitleToPopupMenu("Ask: ", bw4tClientInfo.jPopupMenu);
+        BasicMenuOperations.addSectionTitleToPopupMenu("Ask: ",
+                bw4tClientInfo.jPopupMenu);
 
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-                MessageType.whereIsColor, null, color.getName(), null), bw4tClientInfo);
+                MessageType.whereIsColor, null, color.getName(), null),
+                bw4tClientInfo);
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-                MessageType.whoHasABlock, null, color.getName(), null), bw4tClientInfo);
+                MessageType.whoHasABlock, null, color.getName(), null),
+                bw4tClientInfo);
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
                 MessageType.whereShouldIGo), bw4tClientInfo);
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
@@ -106,8 +112,7 @@ public class MapOperations {
      *            , the room for which to find the navpoint label
      * @return the label
      */
-    public static String findLabelForRoom(RoomInfo room,
-            BW4TClientInfo data) {
+    public static String findLabelForRoom(RoomInfo room, BW4TClientInfo data) {
         HashMap<String, Point> roomLabels = data.environmentDatabase
                 .getRoomLabels();
         for (String label : roomLabels.keySet()) {

@@ -23,14 +23,12 @@ public class PathPlanner {
 	 * find a path from start to end point given a graph of all Zones.
 	 * 
 	 * @param allZones
-	 *            set of all Zones in the map, or at least the ones involved in
-	 *            the search
+	 *            set of all Zones in the map, or at least the ones involved in the search
 	 * @param start
 	 *            is strat Zone
 	 * @param end
 	 *            is target Zone
-	 * @return List of subsequent Zones from start to end, or null if no path
-	 *         exists.
+	 * @return List of subsequent Zones from start to end, or null if no path exists.
 	 */
 	public static List<Zone> findPath(List<Zone> allZones, Zone start, Zone end) {
 		SimpleWeightedGraph<Zone, DefaultWeightedEdge> graph = new SimpleWeightedGraph<Zone, DefaultWeightedEdge>(
@@ -51,8 +49,7 @@ public class PathPlanner {
 			}
 		}
 
-		List<DefaultWeightedEdge> edgeList = DijkstraShortestPath
-				.findPathBetween(graph, start, end);
+		List<DefaultWeightedEdge> edgeList = DijkstraShortestPath.findPathBetween(graph, start, end);
 		if (edgeList == null) {
 			return null;
 		}
@@ -66,7 +63,8 @@ public class PathPlanner {
 			if (graph.getEdgeSource(edge).equals(current)) {
 				current = graph.getEdgeTarget(edge);
 				path.add(current);
-			} else if (graph.getEdgeTarget(edge).equals(current)) {
+			}
+			else if (graph.getEdgeTarget(edge).equals(current)) {
 				current = graph.getEdgeSource(edge);
 				path.add(current);
 			}

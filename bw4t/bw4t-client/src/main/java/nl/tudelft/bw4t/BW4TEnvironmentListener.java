@@ -149,8 +149,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
             }
             Class<? extends BW4TAgent> c = Class.forName(agentClassName)
                     .asSubclass(BW4TAgent.class);
-            Class[] types = new Class[] { String.class,
-                    RemoteEnvironment.class };
+            Class[] types = new Class[] { String.class, RemoteEnvironment.class };
             Constructor<BW4TAgent> cons = (Constructor<BW4TAgent>) c
                     .getConstructor(types);
             // we use the entityId as name for the agent as well. #2761
