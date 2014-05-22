@@ -32,8 +32,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class EntityPanel extends JPanel {
 
-    /** The number column. */
-    private static final String NUMBER_COLUMN = "Number of bots";
+    /** The number of bots column. */
+    private static final String NUMBER_BOTS_COLUMN = "Number of bots";
+    
+    private static final String NUMBER_EPARTNERS_COLUMN = "Number of e-partners";
 
     /** The bot options. */
     private JPanel botOptions = new JPanel();
@@ -182,14 +184,23 @@ public class EntityPanel extends JPanel {
                     return true;
                 }
                 return false;
-         }
+            }
+        	
+        	@Override
+        	public Class<?> getColumnClass(int column) {
+        		if (column == 2) {
+        			return Integer.class;
+        		}
+        		
+        		return String.class;
+        	}
             
         };
 
         botTable.setModel(botList);
         botList.addColumn("Bot");
         botList.addColumn("Controller");
-        botList.addColumn(NUMBER_COLUMN);
+        botList.addColumn(NUMBER_BOTS_COLUMN);
 
         botScrollPane = new JScrollPane(botTable);
         botScrollPane.setPreferredSize(new Dimension(
@@ -252,11 +263,20 @@ public class EntityPanel extends JPanel {
                 }
                 return false;
             }
+            
+            @Override
+            public Class<?> getColumnClass(int column) {
+            	if (column == 1) {
+            		return Integer.class;
+            	}
+            	
+            	return String.class;
+            }
         };
 
         ePartnerTable.setModel(epartnerList);
         epartnerList.addColumn("E-partner");
-        epartnerList.addColumn(NUMBER_COLUMN);
+        epartnerList.addColumn(NUMBER_EPARTNERS_COLUMN);
 
         epartnerScrollPane = new JScrollPane(ePartnerTable);
         epartnerScrollPane.setPreferredSize(new Dimension(
