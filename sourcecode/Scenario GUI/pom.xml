@@ -18,6 +18,7 @@
         <sonar.tests>src/test</sonar.tests>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.java.coveragePlugin>cobertura</sonar.java.coveragePlugin>
+        <sonar.cobertura.reportPath>target/site/cobertura/coverage.xml</sonar.cobertura.reportPath>
     </properties>
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
