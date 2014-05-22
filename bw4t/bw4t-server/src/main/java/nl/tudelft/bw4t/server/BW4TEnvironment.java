@@ -70,6 +70,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	private static NewMap theMap;
 	private ServerContextDisplay contextDisplay;
 	private boolean guiEnabled;
+	private String shutdownKey;
 
 	/**
 	 * Create a new instance of this environment
@@ -87,13 +88,15 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @throws ScenarioLoadException
 	 * @throws JAXBException
 	 */
-	BW4TEnvironment(BW4TServer server2, String scenarioLocation, String mapLocation, boolean guiEnabled)
-			throws IOException, ManagementException, ScenarioLoadException, JAXBException {
+	BW4TEnvironment(BW4TServer server2, String scenarioLocation, String mapLocation, boolean guiEnabled,
+			String shutdownKey) throws IOException, ManagementException, ScenarioLoadException, JAXBException {
 		super();
 		instance = this;
 		this.server = server2;
 		this.mapName = mapLocation;
 		this.scenarioLocation = System.getProperty("user.dir") + "/" + scenarioLocation;
+		this.guiEnabled = guiEnabled;
+		this.shutdownKey = shutdownKey;
 		launchAll();
 	}
 
@@ -447,6 +450,27 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		else {
 			LOGGER.info("Launching the BW4T Server without a graphical user interface.");
 		}
+	}
+
+	/**
+	 * Stop this BW4TEnvironment completely.
+	 * 
+	 * @param key
+	 *            the key required to stop the system
+	 */
+	public void shutdownServer(String key) {
+		if (key.equals(this.shutdownKey)) {
+			System.exit(0);
+		}
+	}
+
+	/**
+	 * Get the key required to shutdown the server.
+	 * 
+	 * @return the shutdown key
+	 */
+	public String getShutdownKey() {
+		return this.shutdownKey;
 	}
 
 	/**

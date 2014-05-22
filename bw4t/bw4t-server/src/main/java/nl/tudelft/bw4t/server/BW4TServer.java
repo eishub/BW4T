@@ -38,7 +38,7 @@ import eis.iilang.Percept;
  * @author trens
  * @Modified W.Pasman feb2012 added unregisterClient, and moved doc to interface.
  */
-public class BW4TServer extends UnicastRemoteObject implements BW4TServerActions {
+public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenActions {
 
 	/**
 	 * The log4j logger, logs to the console.
@@ -429,6 +429,15 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerActions
 			System.err.println("server disconnect RMI failed" + e);
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void stopServer(String key) throws RemoteException {
+		Launcher.getEnvironment().shutdownServer(key);
+		
 	}
 
 }

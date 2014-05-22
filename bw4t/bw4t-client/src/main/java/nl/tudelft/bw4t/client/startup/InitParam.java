@@ -42,7 +42,11 @@ public enum InitParam {
     /**
      * are we connected with GOAL?
      */
-    GOAL("false");
+    GOAL("false"),
+    /**
+     * The key we should try to use to kill the remote server.
+     */
+    KILL("");
 
     private final String defaultvalue;
 

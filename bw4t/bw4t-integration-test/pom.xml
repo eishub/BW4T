@@ -25,18 +25,12 @@
 
 	<build>
 		<plugins>
-		
-			<!-- *** Surefire plugin: run integration tests *** -->
+
+			<!-- *** failsafe plugin: run server and test the integration *** -->
 			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>integration-test</phase>
-						<goals>
-							<goal>test</goal>
-						</goals>
-					</execution>
-				</executions>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.17</version>
 			</plugin>
 
 			<!-- *** Ant plugin: start and stop the integration server *** -->
@@ -50,7 +44,7 @@
 						<configuration>
 							<target>
 								<java fork="true" spawn="true" classpathref="maven.runtime.classpath"
-									className="nl.tudelft.bw4t.server.Launcher" />
+									className="nl.tudelft.bw4t.server.Launcher" args="-gui false -key bw4tServerIntegration" />
 								<waitfor maxwait="3" maxwaitunit="minute" checkevery="200">
 									<socket server="localhost" port="8000" />
 								</waitfor>
@@ -66,6 +60,10 @@
 						<phase>post-integration-test</phase>
 						<configuration>
 							<target>
+								<!-- *** run a java client to kill the server *** -->
+								<java classpathref="maven.runtime.classpath"
+									className="nl.tudelft.bw4t.client.environment.RemoteEnvironment"
+									args="-kill bw4tServerIntegration" />
 							</target>
 						</configuration>
 						<goals>
