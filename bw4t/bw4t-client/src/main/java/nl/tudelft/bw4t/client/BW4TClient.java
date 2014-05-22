@@ -181,7 +181,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 		try {
 			((BW4TServerHiddenActions) server).stopServer(killKey);
 		} catch (RemoteException e) {
-			LOGGER.error("An error occured while shutting down server", e);
+			//LOGGER.error("An error occured while shutting down server", e);
 		}
 	}
 
