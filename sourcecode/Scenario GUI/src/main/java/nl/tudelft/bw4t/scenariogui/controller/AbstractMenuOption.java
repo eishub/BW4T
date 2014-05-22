@@ -121,6 +121,14 @@ public abstract class AbstractMenuOption implements ActionListener {
     }
 
     /**
+     * Returns the MenuBar
+     * @return The MenuBar
+     */
+    public MenuBar getMenuView() {
+        return this.view;
+    }
+
+    /**
      * Gets called when the button associated with this action
      * is pressed.
      *

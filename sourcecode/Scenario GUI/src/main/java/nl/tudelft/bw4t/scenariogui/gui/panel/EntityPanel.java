@@ -67,6 +67,8 @@ public class EntityPanel extends JPanel {
     private JPanel epartnerCounter = new JPanel();
     /** The table for the e-partner. */
     private DefaultTableModel epartnerList;
+    /** The GUI element for the table */
+    private JTable ePartnerTable;
     /** The scrollpane for the e-partner table. */
     private JScrollPane epartnerScrollPane;
     /** The e-partner counter. */
@@ -236,7 +238,7 @@ public class EntityPanel extends JPanel {
      */
     private void createEpartnerTable() {
 
-        JTable epartnerTable = new JTable();
+        ePartnerTable = new JTable();
         epartnerList = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(final int row, final int column) {
@@ -245,11 +247,11 @@ public class EntityPanel extends JPanel {
             }
         };
 
-        epartnerTable.setModel(epartnerList);
+        ePartnerTable.setModel(epartnerList);
         epartnerList.addColumn("E-partner");
         epartnerList.addColumn(NUMBER_COLUMN);
 
-        epartnerScrollPane = new JScrollPane(epartnerTable);
+        epartnerScrollPane = new JScrollPane(ePartnerTable);
         epartnerScrollPane.setPreferredSize(new Dimension(
                 SCROLL_PANE_WIDTH, SCROLL_PANE_HEIGHT));
     }
@@ -310,10 +312,10 @@ public class EntityPanel extends JPanel {
     /**
      * Executes action that needs to happen when the "New E-partner" button is
      * pressed.
-     * TODO Open BotStore window
      */
     public void addEPartnerAction() {
-        System.out.println("Go to Bot Store to add new E-Partner");
+        Object[] newEPartnerObject = {"Unnamed E-partner", 1};
+        getEPartnerTableModel().addRow(newEPartnerObject);
     }
 
     /**
@@ -322,21 +324,33 @@ public class EntityPanel extends JPanel {
      * TODO Open BotStore window
      */
     public void modifyEPartnerAction() {
-        System.out.println("Go to Bot Store to modify an E-Partner");
+    	int row = getSelectedEPartnerRow();
+    	
+    	if (row == -1) {
+    		JOptionPane.showMessageDialog(null, "Please select the E-partner you want to modify.");
+    	}
+    	else {
+    		System.out.println("Go to Bot Store to modify an E-Partner");
+    	}
     }
 
     /**
      * Executes action that needs to happen when the "Delete E-partner" button is
      * pressed.
-     * TODO Delete E-partner from table
      */
     public void deleteEPartnerAction() {
+    	int row = getSelectedEPartnerRow();
+    	
+    	if (row == -1) {
+    		return;
+    	}
+    	
         int response = showConfirmDialog(null,
         		"Are you sure you want to delete this E-partner?", "",
         		JOptionPane.YES_NO_OPTION);
 
         if (response == JOptionPane.YES_OPTION) {
-            System.out.println("E-partner deleted");
+            getEPartnerTableModel().removeRow(row);
         }
     }
 
@@ -393,13 +407,24 @@ public class EntityPanel extends JPanel {
     public final DefaultTableModel getBotTableModel() {
         return botList;
     }
+    
+    /**
+     * Returns the table with the list of E-partners.
+     *
+     * @return The table that contains the E-partners.
+     */
+    public final JTable getEPartnerTable() {
+    	return ePartnerTable;
+    }
 
     /**
      * Returns the table with the list of E-partners.
      *
      * @return The table that contains the E-partners.
      */
-    public final DefaultTableModel getEPartnerTable() { return epartnerList; }
+    public final DefaultTableModel getEPartnerTableModel() {
+    	return epartnerList;
+    }
 
 
     /**
@@ -512,5 +537,13 @@ public class EntityPanel extends JPanel {
      */
     public final int getSelectedBotRow() {
         return botTable.getSelectedRow();
+    }
+    
+    /**
+     * Returns the selected row in the E-partner table.
+     * @return The selected row.
+     */
+    public final int getSelectedEPartnerRow() {
+    	return ePartnerTable.getSelectedRow();
     }
 }
