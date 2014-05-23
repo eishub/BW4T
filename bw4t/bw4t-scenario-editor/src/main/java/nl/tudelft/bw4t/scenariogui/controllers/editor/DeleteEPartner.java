@@ -42,7 +42,7 @@ class DeleteEPartner implements ActionListener {
 
         int response = view.getEntityPanel().showConfirmDialog(null,
                 "Are you sure you want to delete this E-partner?", "",
-                JOptionPane.YES_NO_OPTION);
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
         if (response == JOptionPane.YES_OPTION) {
             view.getEntityPanel().getEPartnerTableModel().removeRow(row);

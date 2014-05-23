@@ -10,8 +10,8 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.controllers.DefaultOptionPrompt;
-import nl.tudelft.bw4t.scenariogui.controllers.OptionPrompt;
+import nl.tudelft.bw4t.scenariogui.util.DefaultOptionPrompt;
+import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
@@ -38,10 +38,6 @@ public abstract class AbstractMenuOption implements ActionListener {
      */
     private JFileChooser currentFileChooser;
 
-    /**
-     * The option prompt used.
-     */
-    private OptionPrompt optionPrompt;
 
     /**
      * Constructs a menu option object.
@@ -57,7 +53,6 @@ public abstract class AbstractMenuOption implements ActionListener {
          * need to be ran.
          */
         setCurrentFileChooser(new JFileChooser());
-        setOptionPrompt(new DefaultOptionPrompt());
     }
 
     /**
@@ -158,23 +153,6 @@ public abstract class AbstractMenuOption implements ActionListener {
         controller = newController;
     }
 
-    /**
-     * Gets the Option Prompt
-     *
-     * @return The <code>OptionPrompt</code>
-     */
-    public OptionPrompt getOptionPrompt() {
-        return optionPrompt;
-    }
-
-    /**
-     * Set the option prompt
-     *
-     * @param newOptionPrompt The <code>OptionPrompt</code> to be used.
-     */
-    public void setOptionPrompt(OptionPrompt newOptionPrompt) {
-        this.optionPrompt = newOptionPrompt;
-    }
 }
 
 
