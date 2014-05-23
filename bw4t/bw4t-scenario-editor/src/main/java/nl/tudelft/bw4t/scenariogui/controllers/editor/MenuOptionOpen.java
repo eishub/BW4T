@@ -43,7 +43,7 @@ class MenuOptionOpen extends AbstractMenuOption {
         // Check if current config is different from last saved config
         if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())) {
             // Check if user wants to save current configuration
-            int response = super.getOptionPrompt().showConfirmDialog(
+            int response = ScenarioEditor.option.showConfirmDialog(
                     null,
                     ScenarioEditorController.CONFIRM_SAVE_TXT,
                     "",

@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
@@ -38,7 +39,7 @@ class ModifyEPartner implements ActionListener {
         int row = view.getEntityPanel().getSelectedEPartnerRow();
 
         if (row == -1) {
-            JOptionPane.showMessageDialog(null, "Please select the E-partner you want to modify.");
+            ScenarioEditor.option.showMessageDialog(null, "Please select the E-partner you want to modify.");
         } else {
             System.out.println("Go to Bot Store to modify an E-Partner");
         }

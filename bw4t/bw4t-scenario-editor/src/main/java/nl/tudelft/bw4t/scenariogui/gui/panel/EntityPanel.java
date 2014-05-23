@@ -32,6 +32,8 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+
 /**
  * The EntityPanel class represents right pane of the MainPanel. It shows a list
  * of bots and a list of e-partners and the actions that are possible to edit
@@ -491,7 +493,7 @@ public class EntityPanel extends JPanel {
      */
     protected final void showMessageDialog(
             final Component parent, final String text) {
-        JOptionPane.showMessageDialog(parent, text);
+        ScenarioEditor.option.showMessageDialog(parent, text);
     }
 
     /**
@@ -507,8 +509,8 @@ public class EntityPanel extends JPanel {
      */
     public int showConfirmDialog(final Component parent,
                                  final String text,
-                                 final String title, final int optionType) {
-        return JOptionPane.showConfirmDialog(parent, text, title, optionType);
+                                 final String title, final int optionType, final int messageType) {
+        return ScenarioEditor.option.showConfirmDialog(parent, text, title, optionType, messageType);
     }
 
     /**
