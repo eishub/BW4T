@@ -1,9 +1,10 @@
-package nl.tudelft.bw4t.scenariogui.controller;
+package nl.tudelft.bw4t.scenariogui.controllers.menubar;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
 
+import nl.tudelft.bw4t.scenariogui.controllers.Controller;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 
@@ -14,7 +15,8 @@ public class MenuOptionNew extends AbstractMenuOption {
 
     /**
      * Constructs a new menu option new object.
-     * @param view The view.
+     *
+     * @param view     The view.
      * @param mainView The controlling main view.
      */
     public MenuOptionNew(final MenuBar view, final Controller mainView) {
@@ -23,6 +25,7 @@ public class MenuOptionNew extends AbstractMenuOption {
 
     /**
      * Gets called when the new file menu item is pressed.
+     *
      * @param e The action event.
      */
     public void actionPerformed(final ActionEvent e) {

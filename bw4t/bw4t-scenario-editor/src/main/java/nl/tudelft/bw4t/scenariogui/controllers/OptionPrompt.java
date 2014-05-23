@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.controller;
+package nl.tudelft.bw4t.scenariogui.controllers;
 
 import java.awt.Component;
 
