@@ -57,10 +57,19 @@ public class ConfigurationPanelTest {
     }
 
     /**
+     * Close the ScenarioEditor to prevent to many windows from cluttering
+     * the screen during the running of the tests
+     */
+    @After
+    public final void closeEditor() {
+        editor.dispose();
+    }
+
+    /**
      * Deletes the file after having used it.
      */
     @After
-    public final void tearDown() {
+    public final void deleteFiles() {
         new File(filePath).delete();
     }
 
