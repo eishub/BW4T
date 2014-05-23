@@ -383,8 +383,7 @@ public class EntityPanel extends JPanel {
      * pressed.
      */
     public void addBotAction() {
-        Object[] newBotObject = {"Unnamed Bot", "Agent", 1};
-        getBotTableModel().addRow(newBotObject);
+
     }
 
     /**
