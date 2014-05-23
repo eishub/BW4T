@@ -1,6 +1,5 @@
 package nl.tudelft.bw4t.scenariogui.gui.botstore;
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
 
@@ -9,11 +8,12 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
+
+import nl.tudelft.bw4t.scenariogui.config.BotConfig;
 
 /**
  * BotEditorPanel which serves as the content pane for the BotEditor frame
@@ -48,7 +48,7 @@ public class BotEditorPanel extends JPanel {
 
 	private JLabel batteryUseValueLabel = new JLabel("0.9");
 	
-	private BotEditorData dataObject = new BotEditorData();
+	private BotConfig dataObject = new BotConfig();
 	
 	/**
 	 * Create the botEditorPanel
@@ -326,7 +326,7 @@ public class BotEditorPanel extends JPanel {
 		dataObject.setSizeOverloadHandicap(sizeoverloadCheckbox.isEnabled());
 	}
 	
-	public BotEditorData getDataObject() {
+	public BotConfig getDataObject() {
 		return dataObject;
 	}
 
