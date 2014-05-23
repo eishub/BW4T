@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.server;
+package nl.tudelft.bw4t.server.environment;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,6 +16,9 @@ import org.apache.log4j.Logger;
 
 import nl.tudelft.bw4t.BW4TBuilder;
 import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.server.BW4TServer;
+import nl.tudelft.bw4t.server.RobotEntityInt;
+import nl.tudelft.bw4t.server.logging.BW4TLogger;
 import nl.tudelft.bw4t.visualizations.ServerContextDisplay;
 import repast.simphony.context.Context;
 import repast.simphony.scenario.ScenarioLoadException;
@@ -257,7 +260,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @return true if there is an entity, a dropzone and sequence not yet complete
 	 */
 	@Override
-	protected boolean isSupportedByEnvironment(Action arg0) {
+	public boolean isSupportedByEnvironment(Action arg0) {
 
 		return !getEntities().isEmpty();
 	}

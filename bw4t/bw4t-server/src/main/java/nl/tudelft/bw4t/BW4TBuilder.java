@@ -6,9 +6,9 @@ import javax.xml.bind.JAXBException;
 
 import org.apache.log4j.Logger;
 
-import nl.tudelft.bw4t.server.BW4TEnvironment;
-import nl.tudelft.bw4t.server.Launcher;
-import nl.tudelft.bw4t.server.Stepper;
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.environment.Launcher;
+import nl.tudelft.bw4t.server.environment.Stepper;
 import repast.simphony.context.Context;
 import repast.simphony.dataLoader.ContextBuilder;
 import repast.simphony.engine.environment.RunListener;

@@ -21,6 +21,8 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 
 import nl.tudelft.bw4t.client.BW4TClientActions;
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.environment.Launcher;
 import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
@@ -43,14 +45,13 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	/**
 	 * The log4j logger, logs to the console.
 	 */
-	private static Logger logger = Logger.getLogger(Launcher.class);
+	private static Logger LOGGER = Logger.getLogger(Launcher.class);
 
 	private static final long serialVersionUID = -3459272460308988888L;
-	private HashMap<BW4TClientActions, Integer> clientWaitingForAgent;
-	private HashMap<BW4TClientActions, Integer> clientWaitingForHuman;
+	private Map<BW4TClientActions, ClientInfo> clients;
 
 	private String servername;
-	private String messageOfTheDay;
+	private String messageOfTheDay = "";
 	private Registry registry;
 
 	/**
@@ -67,12 +68,11 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	 */
 	public BW4TServer(String serverIp, String serverPort) throws RemoteException, MalformedURLException {
 		super();
-		clientWaitingForAgent = new HashMap<BW4TClientActions, Integer>();
-		clientWaitingForHuman = new HashMap<BW4TClientActions, Integer>();
+		reset();
 		try {
 			registry = LocateRegistry.createRegistry(Integer.parseInt(serverPort));
 		} catch (RemoteException e) {
-			logger.warn("Registry is already running. Reconnecting.");
+			LOGGER.warn("Registry is already running. Reconnecting.");
 			registry = LocateRegistry.getRegistry(Integer.parseInt(serverPort));
 		}
 		servername = "rmi://" + serverIp + ":" + serverPort + "/BW4TServer";
@@ -89,9 +89,8 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	 */
 	@Override
 	public void registerClient(BW4TClientActions client, int agentCount, int humanCount) throws RemoteException {
-		logger.info("Registering client: " + client);
-		clientWaitingForAgent.put(client, new Integer(agentCount));
-		clientWaitingForHuman.put(client, new Integer(humanCount));
+		LOGGER.info("Registering client: " + client);
+		clients.put(client, new ClientInfo(humanCount, agentCount));
 
 		/**
 		 * #2234. First, tell client which map to use. Because of the many things that may relate to maps, this must
@@ -113,8 +112,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 
 	@Override
 	public void unregisterClient(BW4TClientActions client) {
-		clientWaitingForAgent.remove(client);
-		clientWaitingForHuman.remove(client);
+		clients.remove(client);
 	}
 
 	/**
@@ -127,28 +125,30 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	 */
 	private void notifyFreeEntity(BW4TClientActions client, String entity) throws EntityException {
 		String type = BW4TEnvironment.getInstance().getType(entity);
+		
+		ClientInfo ci = clients.get(client);
 
-		if (clientWaitingForAgent.get(client).intValue() > 0 && (type.equals("unknown") || type.equals("bot"))) {
+		if (ci.getNumberOfAgents() > 0 && (type.equals("unknown") || type.equals("bot"))) {
 			try {
-				if (type.equals("unknown")) {
+				if ("unknown".equals(type)) {
 					BW4TEnvironment.getInstance().setType(entity, "bot");
 				}
 				client.handleNewEntity(entity);
 				// Client is now waiting for one less entity
-				clientWaitingForAgent.put(client, new Integer(clientWaitingForAgent.get(client).intValue() - 1));
+				ci.decreaseNumberOfAgents();
 				return;
 			} catch (RemoteException e) {
 				reportClientProblem(client, e);
 			}
 		}
-		else if (clientWaitingForHuman.get(client).intValue() > 0 && (type.equals("unknown") || type.equals("human"))) {
+		else if (ci.getNumberOfHumans() > 0 && (type.equals("unknown") || type.equals("human"))) {
 			try {
-				if (type.equals("unknown")) {
+				if ("unknown".equals(type)) {
 					BW4TEnvironment.getInstance().setType(entity, "human");
 				}
-				((BW4TClientActions) client).handleNewEntity(entity);
+				client.handleNewEntity(entity);
 				// Client is now waiting for one less entity
-				clientWaitingForHuman.put(client, new Integer(clientWaitingForHuman.get(client).intValue() - 1));
+				ci.decreaseNumberOfHumans();
 				return;
 			} catch (RemoteException e) {
 				reportClientProblem(client, e);
@@ -318,12 +318,11 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	}
 
 	public void reset() {
-		clientWaitingForAgent = new HashMap<BW4TClientActions, Integer>();
-		clientWaitingForHuman = new HashMap<BW4TClientActions, Integer>();
+		clients = new HashMap<BW4TClientActions, ClientInfo>();
 	}
 
 	public void notifyDeletedEntity(String entity, Collection<String> agents) {
-		for (BW4TClientActions client : clientWaitingForAgent.keySet()) {
+		for (BW4TClientActions client : clients.keySet()) {
 			try {
 				client.handleDeletedEntity(entity, agents);
 			} catch (RemoteException e) {
@@ -339,7 +338,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	 * @param e
 	 */
 	private void reportClientProblem(BW4TClientActions client, Exception e) {
-		logger.warn("Problems detected with client " + client + ":" + e.getMessage());
+		LOGGER.warn("Problems detected with client " + client, e);
 	}
 
 	/**
@@ -352,16 +351,10 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	public void notifyStateChange(EnvironmentState newState) {
 		// duplicate the set before iteration, since we may call
 		// unregisterClient.
-		Set<BW4TClientActions> clients = new HashSet<BW4TClientActions>(clientWaitingForAgent.keySet());
+		Set<BW4TClientActions> clients = new HashSet<BW4TClientActions>(this.clients.keySet());
 		for (BW4TClientActions client : clients) {
 			try {
 				client.handleStateChange(newState);
-			} catch (ConnectException e) {
-				reportClientProblem(client, e);
-				unregisterClient(client);
-			} catch (UnmarshalException e) {
-				reportClientProblem(client, e);
-				unregisterClient(client);
 			} catch (RemoteException e) {
 				reportClientProblem(client, e);
 				unregisterClient(client);
@@ -394,8 +387,8 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	}
 
 	/**
-	 * Notifies connected clients of new entities on a first come first server basis All clients should notify server of
-	 * how many entities they expect The server moves on when expectations of a client have been fulfilled
+	 * Notifies connected clients of new entities on a first come first serve basis. All clients should notify server of
+	 * how many entities they expect. The server moves on when expectations of a client have been fulfilled.
 	 * 
 	 * @param entity
 	 *            , the new entity
@@ -405,7 +398,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	 *             if something unexpected happens when attempting to add or remove an entity.
 	 */
 	public void notifyNewEntity(String entity) {
-		for (BW4TClientActions client : clientWaitingForAgent.keySet()) {
+		for (BW4TClientActions client : clients.keySet()) {
 			try {
 				notifyFreeEntity(client, entity);
 			} catch (EntityException e) {
@@ -426,8 +419,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 			// registry.unbind(servername); //throws for unknown reason.
 			UnicastRemoteObject.unexportObject(this, true);
 		} catch (NoSuchObjectException e) {
-			System.err.println("server disconnect RMI failed" + e);
-			e.printStackTrace();
+			LOGGER.error("server disconnect RMI failed", e);
 		}
 	}
 

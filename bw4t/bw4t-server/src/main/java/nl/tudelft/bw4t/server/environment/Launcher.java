@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.server;
+package nl.tudelft.bw4t.server.environment;
 
 import eis.exceptions.ManagementException;
 
@@ -14,6 +14,7 @@ import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
+import nl.tudelft.bw4t.server.BW4TServer;
 import nl.tudelft.bw4t.startup.LauncherException;
 import nl.tudelft.bw4t.util.FileUtils;
 import repast.simphony.scenario.ScenarioLoadException;

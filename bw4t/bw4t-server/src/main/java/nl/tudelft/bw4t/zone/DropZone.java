@@ -11,8 +11,8 @@ import org.apache.log4j.Logger;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.robots.Robot;
-import nl.tudelft.bw4t.server.BW4TLogger;
-import nl.tudelft.bw4t.server.Launcher;
+import nl.tudelft.bw4t.server.environment.Launcher;
+import nl.tudelft.bw4t.server.logging.BW4TLogger;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 
