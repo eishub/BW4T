@@ -81,18 +81,17 @@ public class Launcher {
 		 * Set up the logging environment to log on the console.
 		 */
 		BasicConfigurator.configure();
+		LOGGER.info("Starting up BW4T Server.");
 		try {
 			LOGGER.addAppender(new FileAppender(new PatternLayout(), "BW4TServer.log"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.warn("failed to start log output to a file", e);
 		}
-		Launcher.LOGGER.info("Starting up BW4T Server.");
-		Launcher.LOGGER.info("Reading console arguments...");
+		LOGGER.info("Reading console arguments...");
 		readParameters(args);
-		Launcher.LOGGER.info("Setting up correct directory structure.");
+		LOGGER.info("Setting up correct directory structure.");
 		setupDirectoryStructure();
-		Launcher.LOGGER.info("Setting up BW4T Environment.");
+		LOGGER.info("Setting up BW4T Environment.");
 		setupEnvironment();
 	}
 
@@ -182,7 +181,7 @@ public class Launcher {
 		try {
 			environment = new BW4TEnvironment(setupRemoteServer(), paramScenario, paramMap, paramGUI, paramKey);
 		} catch (ManagementException | IOException | ScenarioLoadException | JAXBException e) {
-			Launcher.LOGGER.warn("Failed to start the BW4T Environment.");
+			LOGGER.fatal("Failed to start the BW4T Environment.");
 			throw new LauncherException("failed to start the bw4t environment", e);
 		}
 	}
@@ -196,7 +195,7 @@ public class Launcher {
 		try {
 			return new BW4TServer(paramServerIp, paramServerPort, paramServerMsg);
 		} catch (RemoteException | MalformedURLException e) {
-			Launcher.LOGGER.warn("Failed to start the RPC Server.");
+			LOGGER.fatal("Failed to start the RPC Server.");
 			throw new LauncherException("failed to start the rpc server", e);
 		}
 	}
