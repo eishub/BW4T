@@ -1,0 +1,58 @@
+\chapter{Introduction}
+
+In this chapter, we will explain our goals for this project.
+We split them up into several tasks that work towards achieving our design
+goals, which include but are not limited to: reliability, modifiability and
+ease of use.
+
+\section{Design Goals}
+For this project we were given a large codebase. This codebase had grown
+complex and convoluted. The task for us was to refactor the code to reduce
+complexity, make it more manageable and give it a \gls{pluginarch}. \\ On
+further inspection, however, it was revealed that an exact plugin architecture
+wasn't precisely what the product owner wanted. By analyzing the product
+owner's final goals, we decided that a modular design which can be easily
+expanded or modified was actually desired. \\ 
+Our goal is to have most, if not all core parts of the environment and agents
+built using interfaces. This allows for easy addition and modification of
+elements in the environment or agent behaviour. Creating these additional
+features would then be done by creating new classes utilizing one of these set
+up interfaces. Similarly these classes could then later be easily removed
+without causing parts of the system to start malfunctioning or breaking
+entirely. \\
+
+For the refactoring of the code a number of tasks need to be completed:
+\begin{itemize}
+  \item
+  \textbf{Split up codebase into Client and Server} - Currently the client and
+  server share the same codebase. This makes it hard to keep a proper overview as
+  it isn't always clear at a glance which class belongs to which structure, and
+  some classes are even shared entirely. We want to split these structures into
+  individual projects to make them easier to work with.
+  \item
+  \textbf{Convert to \Gls{maven} project} - There are currently no \gls{unittest} present
+  in the codebase, therefore in addition to splitting the codebase we wish to
+  turn these separate projects into Maven projects including Unit Tests so we can
+  easily verify that the codebases are still working correctly after having made
+  changes.
+  \item
+  \textbf{Improve and add to the \gls{gui}} - There is much room for improvement for
+  the GUI. We want to make it more user-friendly in addition to adding a whole
+  new GUI for the creation of maps via an easy to use drag-and-drop system.
+  \item
+  \textbf{Clean code} - There is a lot of unused code present, due to the
+  complexity of the codebase it can be hard to tell which pieces of code are
+  unused.
+  \item
+  \textbf{Fully utilize Repast} - Repast is a library that has been imported to
+  act as the environment for the agents to act in. However due to some missing
+  functionality and unfamiliarity with Repast at the initial time of implementation
+  Repast isn't properly utilized, many things that have been implemented manually
+  can also be handled by Repast.
+  \item
+  \textbf{Improve \gls{javadoc}} - Javadoc's are sometimes lacking in information or
+  occasionally not present at all.
+  \item
+  \textbf{Remove code duplication} - There are a number of instances of code
+  duplication present in the code which can make future updates harder to manage.
+\end{itemize}
