@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.9.19)  19 MAY 2014 12:11
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.9.19)  23 MAY 2014 11:56
 entering extended mode
 **refactor.tex
 
@@ -376,13 +376,18 @@ Package pdftex.def Info: UMLv2.png used on input line 25.
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <C:/Users/Shirley/Document
 s/TU Delft/Tweede jaar/4e kwartaal/BW4T/doc/Refactor overview/old.png (PNG copy
 )>]
-Overfull \hbox (3.95787pt too wide) in paragraph at lines 33--33
+Underfull \hbox (badness 10000) in paragraph at lines 30--31
+
+ []
+
+
+Overfull \hbox (3.95787pt too wide) in paragraph at lines 32--32
 []\OT1/cmr/bx/n/14.4 Wat kun-nen wij aankomende weken nog bereiken 
  []
 
 [2 <C:/Users/Shirley/Documents/TU Delft/Tweede jaar/4e kwartaal/BW4T/doc/Refact
 or overview/UMLv2.png (PNG copy)>] [3]
-Underfull \hbox (badness 10000) in paragraph at lines 43--45
+Underfull \hbox (badness 10000) in paragraph at lines 44--45
 
  []
 
@@ -424,9 +429,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 53--55
 
  []
 
-<lelijkCode.png, id=22, 392.96812pt x 262.73157pt>
+[4 <C:/Users/Shirley/Documents/TU Delft/Tweede jaar/4e kwartaal/BW4T/doc/Refact
+or overview/emptyMethod.png> <C:/Users/Shirley/Documents/TU Delft/Tweede jaar/4
+e kwartaal/BW4T/doc/Refactor overview/freeAgentNoClue.png> <C:/Users/Shirley/Do
+cuments/TU Delft/Tweede jaar/4e kwartaal/BW4T/doc/Refactor overview/unregisterA
+gentNoClue.png>] <lelijkCode.png, id=28, 392.96812pt x 262.73157pt>
 File: lelijkCode.png Graphic file (type png)
- <use lelijkCode.png>
+
+<use lelijkCode.png>
 Package pdftex.def Info: lelijkCode.png used on input line 57.
 (pdftex.def)             Requested size: 360.0pt x 240.7057pt.
 
@@ -434,13 +444,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 56--58
 
  []
 
-[4 <C:/Users/Shirley/Documents/TU Delft/Tweede jaar/4e kwartaal/BW4T/doc/Refact
-or overview/emptyMethod.png> <C:/Users/Shirley/Documents/TU Delft/Tweede jaar/4
-e kwartaal/BW4T/doc/Refactor overview/freeAgentNoClue.png> <C:/Users/Shirley/Do
-cuments/TU Delft/Tweede jaar/4e kwartaal/BW4T/doc/Refactor overview/unregisterA
-gentNoClue.png> <C:/Users/Shirley/Documents/TU Delft/Tweede jaar/4e kwartaal/BW
-4T/doc/Refactor overview/HackWTF.png>]
-<noEntityCheck.png, id=31, 417.81094pt x 170.13562pt>
+<noEntityCheck.png, id=29, 417.81094pt x 170.13562pt>
 File: noEntityCheck.png Graphic file (type png)
  <use noEntityCheck.png>
 Package pdftex.def Info: noEntityCheck.png used on input line 60.
@@ -456,7 +460,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 59--61
 
  []
 
-<notTested.png, id=32, 429.85594pt x 141.52875pt>
+<notTested.png, id=30, 429.85594pt x 141.52875pt>
 File: notTested.png Graphic file (type png)
  <use notTested.png>
 Package pdftex.def Info: notTested.png used on input line 63.
@@ -467,9 +471,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 62--64
  []
 
 [5 <C:/Users/Shirley/Documents/TU Delft/Tweede jaar/4e kwartaal/BW4T/doc/Refact
-or overview/lelijkCode.png> <C:/Users/Shirley/Documents/TU Delft/Tweede jaar/4e
- kwartaal/BW4T/doc/Refactor overview/noEntityCheck.png>]
-<TODOs+shouldBeFixed.png, id=38, 451.6875pt x 254.45062pt>
+or overview/HackWTF.png> <C:/Users/Shirley/Documents/TU Delft/Tweede jaar/4e kw
+artaal/BW4T/doc/Refactor overview/lelijkCode.png> <C:/Users/Shirley/Documents/T
+U Delft/Tweede jaar/4e kwartaal/BW4T/doc/Refactor overview/noEntityCheck.png>]
+<TODOs+shouldBeFixed.png, id=37, 451.6875pt x 254.45062pt>
 File: TODOs+shouldBeFixed.png Graphic file (type png)
 
 <use TODOs+shouldBeFixed.png>
@@ -482,25 +487,24 @@ Underfull \hbox (badness 10000) in paragraph at lines 65--67
 
 [6 <C:/Users/Shirley/Documents/TU Delft/Tweede jaar/4e kwartaal/BW4T/doc/Refact
 or overview/notTested.png> <C:/Users/Shirley/Documents/TU Delft/Tweede jaar/4e 
-kwartaal/BW4T/doc/Refactor overview/TODOs+shouldBeFixed.png>]
+kwartaal/BW4T/doc/Refactor overview/TODOs+shouldBeFixed.png>] [7]
 ("C:\Users\Shirley\Documents\TU Delft\Tweede jaar\4e kwartaal\BW4T\doc\Refactor
  overview\refactor.aux") ) 
 Here is how much of TeX's memory you used:
- 2011 strings out of 494045
- 25357 string characters out of 3148381
- 76107 words of memory out of 3000000
- 5286 multiletter control sequences out of 15000+200000
- 9797 words of font info for 37 fonts, out of 3000000 for 9000
+ 2015 strings out of 494045
+ 25432 string characters out of 3148381
+ 77107 words of memory out of 3000000
+ 5291 multiletter control sequences out of 15000+200000
+ 11044 words of font info for 42 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 27i,6n,24p,454b,197s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,6n,24p,529b,197s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
-nts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
-mbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb
-><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Prog
-ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on refactor.pdf (6 pages, 1349423 bytes).
+nts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
+mr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb>
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb>
+Output written on refactor.pdf (7 pages, 1339256 bytes).
 PDF statistics:
- 60 PDF objects out of 1000 (max. 8388607)
+ 61 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  51 words of extra memory for PDF output out of 10000 (max. 10000000)
 
