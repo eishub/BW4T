@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.controller;
+package nl.tudelft.bw4t.scenariogui.controllers.configurationpanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +14,9 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  */
 public class ChooseMapFileListener implements ActionListener {
 
-    /** The <code>MainPanel</code> serving as the content pane.*/
+    /**
+     * The <code>MainPanel</code> serving as the content pane.
+     */
     private MainPanel view;
 
     /**
@@ -28,6 +30,7 @@ public class ChooseMapFileListener implements ActionListener {
 
     /**
      * Listens to the map file chooser.
+     *
      * @param actionEvent is the event.
      */
     public void actionPerformed(final ActionEvent actionEvent) {

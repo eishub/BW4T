@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.controller;
+package nl.tudelft.bw4t.scenariogui.controllers;
 
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -7,6 +7,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.controllers.menubar.MenuOptionSave;
+import nl.tudelft.bw4t.scenariogui.controllers.menubar.MenuOptionSaveAs;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 
 import org.junit.Ignore;
@@ -16,7 +18,7 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.spy;
 
 /**
- * Tests the controller class. It's near impossible to get the save button.
+ * Tests the controllers class. It's near impossible to get the save button.
  *
  * @author Nick
  *
@@ -219,8 +221,8 @@ public class ControllerTest {
     }
 
     /**
-     * Gets the save button listener in the controller class.
-     * @return The save button listener in the controller class.
+     * Gets the save button listener in the controllers class.
+     * @return The save button listener in the controllers class.
      */
     private MenuOptionSave getSave() {
         return spy((MenuOptionSave) getListener(
@@ -228,8 +230,8 @@ public class ControllerTest {
     }
 
     /**
-     * Gets the save as button listener in the controller class.
-     * @return The save as button listener in the controller class.
+     * Gets the save as button listener in the controllers class.
+     * @return The save as button listener in the controllers class.
      */
     private MenuOptionSaveAs getSaveAs() {
         return spy((MenuOptionSaveAs) getListener(getMenu()
