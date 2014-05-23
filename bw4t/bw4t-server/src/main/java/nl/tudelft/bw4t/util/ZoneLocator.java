@@ -127,7 +127,6 @@ public class ZoneLocator {
 
 		for (Object o : corridors) {
 			Corridor corridor = (Corridor) o;
-			Point2D p = new Point2D.Double(corridor.getLocation().getX(), corridor.getLocation().getY());
 			double dist = corridor.distanceTo(location);
 
 			if (dist < nearestdist) {
