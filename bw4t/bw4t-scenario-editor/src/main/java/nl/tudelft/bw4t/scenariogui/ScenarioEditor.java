@@ -15,6 +15,8 @@ import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
+import nl.tudelft.bw4t.scenariogui.util.DefaultOptionPrompt;
+import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
 
 /**
  * The ScenarioEditor class serves as the Frame for the MenuBar and MainPanel.
@@ -41,6 +43,10 @@ public class ScenarioEditor extends JFrame {
      * The <code>Controller</code> containing all the ActionEvents.
      */
     private ScenarioEditorController controller;
+    /**
+     * The OptionPrompt used to handle all thread blocking GUI objects.
+     */
+    public static OptionPrompt option = new DefaultOptionPrompt();
 
     /**
      * Create the scenario editor frame, which will then hold the panels with
@@ -201,6 +207,6 @@ public class ScenarioEditor extends JFrame {
      */
     public static void showDialog(final Exception e, final String s) {
 
-        JOptionPane.showMessageDialog(null, s + "\n" + e.toString());
+        ScenarioEditor.option.showMessageDialog(null, s + "\n" + e.toString());
     }
 }
