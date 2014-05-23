@@ -10,7 +10,9 @@ import java.rmi.RemoteException;
 import javax.xml.bind.JAXBException;
 
 import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
 
 import nl.tudelft.bw4t.startup.LauncherException;
 import nl.tudelft.bw4t.util.FileUtils;
@@ -78,6 +80,12 @@ public class Launcher {
 		 * Set up the logging environment to log on the console.
 		 */
 		BasicConfigurator.configure();
+		try {
+			logger.addAppender(new FileAppender(new PatternLayout(), "BW4TServer.log"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Launcher.logger.info("Starting up BW4T Server.");
 		Launcher.logger.info("Reading console arguments...");
 		readParameters(args);
