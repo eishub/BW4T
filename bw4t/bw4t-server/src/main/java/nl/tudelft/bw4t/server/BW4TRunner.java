@@ -2,6 +2,8 @@ package nl.tudelft.bw4t.server;
 
 import java.io.File;
 
+import org.apache.log4j.Logger;
+
 import repast.simphony.batch.BatchScenarioLoader;
 import repast.simphony.engine.controller.Controller;
 import repast.simphony.engine.controller.DefaultController;
@@ -20,17 +22,21 @@ import repast.simphony.parameter.SweeperProducer;
 import repast.simphony.scenario.ScenarioLoadException;
 
 /**
- * This class implements the repast {@link Runner}. This handles the calls to
- * the repast stepping - when do bots move, how often, and pausing etc. This is
- * modified copy of TestRunner_2 (see #2009 and #2236). I did not give this much
- * thought, I just plugged it in and it did what I hoped for - being able to
- * control Repast. Otherwise, scheduling/running is not done here at all, but
- * from the {@link BW4TEnvironment} directly by calling {@link #step()}.
+ * This class implements the repast {@link Runner}. This handles the calls to the repast stepping - when do bots move,
+ * how often, and pausing etc. This is modified copy of TestRunner_2 (see #2009 and #2236). I did not give this much
+ * thought, I just plugged it in and it did what I hoped for - being able to control Repast. Otherwise,
+ * scheduling/running is not done here at all, but from the {@link BW4TEnvironment} directly by calling {@link #step()}.
  * 
  * @author W.Pasman 11mar13
  * 
  */
 public class BW4TRunner extends AbstractRunner {
+
+	/**
+	 * The log4j logger, logs to the console.
+	 */
+	private static Logger logger = Logger.getLogger(Launcher.class);
+
 	private RunEnvironmentBuilder runEnvironmentBuilder;
 	protected Controller bw4tController;
 	protected boolean pauseRunner = false;
@@ -49,8 +55,9 @@ public class BW4TRunner extends AbstractRunner {
 			BatchScenarioLoader loader = new BatchScenarioLoader(scenarioDir);
 			ControllerRegistry registry = loader.load(runEnvironmentBuilder);
 			bw4tController.setControllerRegistry(registry);
-		} else {
-			System.out.println("Scenario not found");
+		}
+		else {
+			logger.error("Scenario was not found.");
 			return;
 		}
 
@@ -66,38 +73,39 @@ public class BW4TRunner extends AbstractRunner {
 			@Override
 			public void setValue(String paramName, Object val) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public boolean isReadOnly(String paramName) {
 				// TODO Auto-generated method stub
 				return false;
 			}
-			
+
 			@Override
 			public String getValueAsString(String paramName) {
 				// TODO Auto-generated method stub
 				return "asd";
 			}
-			
+
 			@Override
 			public Object getValue(String paramName) {
 				// TODO Auto-generated method stub
 				return 223;
 			}
-			
+
 			@Override
 			public Schema getSchema() {
 				// TODO Auto-generated method stub
 				return null;
 			}
-			
+
 			@Override
 			public String getDisplayName(String paramName) {
 				// TODO Auto-generated method stub
 				return "asd";
 			}
+
 			@Override
 			public Parameters clone() {
 				// TODO Auto-generated method stub
@@ -105,8 +113,7 @@ public class BW4TRunner extends AbstractRunner {
 			}
 		};
 		bw4tController.runInitialize(params);
-		schedule = RunState.getInstance().getScheduleRegistry()
-				.getModelSchedule();
+		schedule = RunState.getInstance().getScheduleRegistry().getModelSchedule();
 		fireStartedMessage();
 	}
 
@@ -120,8 +127,7 @@ public class BW4TRunner extends AbstractRunner {
 
 	// returns the tick count of the next scheduled item
 	public double getNextScheduledTime() {
-		return ((Schedule) RunEnvironment.getInstance().getCurrentSchedule())
-				.peekNextAction().getNextTime();
+		return ((Schedule) RunEnvironment.getInstance().getCurrentSchedule()).peekNextAction().getNextTime();
 	}
 
 	/**

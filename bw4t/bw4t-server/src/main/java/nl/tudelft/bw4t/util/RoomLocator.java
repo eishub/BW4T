@@ -18,13 +18,11 @@ public final class RoomLocator {
 	}
 
 	/**
-	 * Returns the {@link BlocksRoom} the object is in. Note, {@link DropZone}
-	 * is not a {@link BlocksRoom}
+	 * Returns the {@link BlocksRoom} the object is in. Note, {@link DropZone} is not a {@link BlocksRoom}
 	 * 
 	 * @param o
 	 *            The object to get the room for.
-	 * @return The {@link BlocksRoom} the given object is in or null if it is in
-	 *         the hall.
+	 * @return The {@link BlocksRoom} the given object is in or null if it is in the hall.
 	 */
 	public static BlocksRoom getRoomFor(double x, double y) {
 		Room room = getRoomAt(x, y);
@@ -35,8 +33,7 @@ public final class RoomLocator {
 	}
 
 	/**
-	 * Find {@link Room} containing given point. Both BlocksRoom and DropZone
-	 * are Room.
+	 * Find {@link Room} containing given point. Both BlocksRoom and DropZone are Room.
 	 * 
 	 * @param x
 	 *            is x coord of point
@@ -47,8 +44,7 @@ public final class RoomLocator {
 	public static Room getRoomAt(double x, double y) {
 		Point2D location = new Point2D.Double(x, y);
 
-		Iterable<Object> rooms = BW4TEnvironment.getInstance().getContext()
-				.getObjects(Room.class);
+		Iterable<Object> rooms = BW4TEnvironment.getInstance().getContext().getObjects(Room.class);
 		for (Object r : rooms) {
 			Room room = (Room) r;
 

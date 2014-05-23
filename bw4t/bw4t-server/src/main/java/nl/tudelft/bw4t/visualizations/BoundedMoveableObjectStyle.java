@@ -13,89 +13,87 @@ import saf.v3d.scene.VSpatial;
 /**
  * Base class for visualization of {@link BoundedMoveableObject}.
  * 
- * @param <T> Subclass of {@link BoundedMoveableObject} to visualize.
+ * @param <T>
+ *            Subclass of {@link BoundedMoveableObject} to visualize.
  * 
  * @author Lennard de Rijk
  */
-public abstract class BoundedMoveableObjectStyle<T extends BoundedMoveableObject> implements
-    StyleOGL2D<T> {
+public abstract class BoundedMoveableObjectStyle<T extends BoundedMoveableObject> implements StyleOGL2D<T> {
 
-  /** Unit size of the display, how many pixels is one world coordinate. */
-  public static final int UNIT_SIZE = 15;
+	/** Unit size of the display, how many pixels is one world coordinate. */
+	public static final int UNIT_SIZE = 15;
 
-  private static final Font FONT = new Font("Arial", Font.PLAIN, 22);
+	private static final Font FONT = new Font("Arial", Font.PLAIN, 22);
 
-  /** Factory for creating shapes/spatials. */
-  private ShapeFactory2D factory;
+	/** Factory for creating shapes/spatials. */
+	private ShapeFactory2D factory;
 
-  @Override
-  public void init(ShapeFactory2D factory) {
-    this.factory = factory;
-  }
+	@Override
+	public void init(ShapeFactory2D factory) {
+		this.factory = factory;
+	}
 
-  @Override
-  public VSpatial getVSpatial(T object, VSpatial spatial) {
-    if (spatial == null) {
-      Rectangle2D boundingBox = object.getBoundingBox();
-      spatial =
-          factory
-              .createRectangle((int) boundingBox.getWidth(), (int) boundingBox.getHeight(), true);
-    }
-    return spatial;
-  }
+	@Override
+	public VSpatial getVSpatial(T object, VSpatial spatial) {
+		if (spatial == null) {
+			Rectangle2D boundingBox = object.getBoundingBox();
+			spatial = factory.createRectangle((int) boundingBox.getWidth(), (int) boundingBox.getHeight(), true);
+		}
+		return spatial;
+	}
 
-  @Override
-  public int getBorderSize(T object) {
-    return 0;
-  }
+	@Override
+	public int getBorderSize(T object) {
+		return 0;
+	}
 
-  @Override
-  public Color getBorderColor(T object) {
-    return null;
-  }
+	@Override
+	public Color getBorderColor(T object) {
+		return null;
+	}
 
-  @Override
-  public Color getColor(T object) {
-    return null;
-  }
+	@Override
+	public Color getColor(T object) {
+		return null;
+	}
 
-  @Override
-  public float getRotation(T object) {
-    return 0;
-  }
+	@Override
+	public float getRotation(T object) {
+		return 0;
+	}
 
-  @Override
-  public float getScale(T object) {
-    return UNIT_SIZE;
-  }
+	@Override
+	public float getScale(T object) {
+		return UNIT_SIZE;
+	}
 
-  @Override
-  public String getLabel(T object) {
-    return null;
-  }
+	@Override
+	public String getLabel(T object) {
+		return null;
+	}
 
-  @Override
-  public Font getLabelFont(T object) {
-    return FONT;
-  }
+	@Override
+	public Font getLabelFont(T object) {
+		return FONT;
+	}
 
-  @Override
-  public float getLabelXOffset(T object) {
-    return 0;
-  }
+	@Override
+	public float getLabelXOffset(T object) {
+		return 0;
+	}
 
-  @Override
-  public float getLabelYOffset(T object) {
-    return 0;
-  }
+	@Override
+	public float getLabelYOffset(T object) {
+		return 0;
+	}
 
-  @Override
-  public Position getLabelPosition(T object) {
-    return null;
-  }
+	@Override
+	public Position getLabelPosition(T object) {
+		return null;
+	}
 
-  @Override
-  public Color getLabelColor(T object) {
-    return Color.BLACK;
-  }
+	@Override
+	public Color getLabelColor(T object) {
+		return Color.BLACK;
+	}
 }

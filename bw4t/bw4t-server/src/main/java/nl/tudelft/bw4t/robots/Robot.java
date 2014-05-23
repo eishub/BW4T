@@ -28,14 +28,12 @@ import repast.simphony.space.continuous.NdPoint;
 public class Robot extends BoundedMoveableObject {
 
 	/**
-	 * The distance which it can move per tick. This should never be larger than
-	 * the door width because that might cause the bot to attempt to jump over a
-	 * door (which will fail).
+	 * The distance which it can move per tick. This should never be larger than the door width because that might cause
+	 * the bot to attempt to jump over a door (which will fail).
 	 */
 	private static final double MAX_MOVE_DISTANCE = .5;
 	/**
-	 * When we are this close or closer, we are effectively at the target
-	 * position.
+	 * When we are this close or closer, we are effectively at the target position.
 	 */
 	private static final double MIN_MOVE_DISTANCE = .001;
 	/** The distance which it can reach with its arm to pick up a block. */
@@ -50,8 +48,8 @@ public class Robot extends BoundedMoveableObject {
 	private Block holding;
 
 	/**
-	 * set to true if we have to cancel a motion due to a collision. A collision
-	 * is caused by an attempt to move into or out of a room
+	 * set to true if we have to cancel a motion due to a collision. A collision is caused by an attempt to move into or
+	 * out of a room
 	 */
 	private boolean collided = false;
 
@@ -73,8 +71,7 @@ public class Robot extends BoundedMoveableObject {
 	 * @param oneBotPerZone
 	 *            true if max 1 bot in a zone
 	 */
-	public Robot(String name, ContinuousSpace<Object> space,
-			Context<Object> context, boolean oneBotPerZone) {
+	public Robot(String name, ContinuousSpace<Object> space, Context<Object> context, boolean oneBotPerZone) {
 		super(space, context);
 
 		this.name = name;
@@ -90,11 +87,13 @@ public class Robot extends BoundedMoveableObject {
 	}
 
 	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Robot)
-			return super.equals(obj);
-		else
-			return false;
+		return super.equals(obj);
 	}
 
 	/**
@@ -112,8 +111,7 @@ public class Robot extends BoundedMoveableObject {
 	}
 
 	/**
-	 * Sets the location to which the robot should move. This also clears the
-	 * {@link #collided} flag.
+	 * Sets the location to which the robot should move. This also clears the {@link #collided} flag.
 	 * 
 	 * @param targetLocation
 	 *            the location to move to.
@@ -161,15 +159,13 @@ public class Robot extends BoundedMoveableObject {
 	}
 
 	/**
-	 * Drops the block the robot is holding on the current location. TODO: What
-	 * if multiple blocks dropped at same spot?
+	 * Drops the block the robot is holding on the current location. TODO: What if multiple blocks dropped at same spot?
 	 */
 	public void drop() {
 		if (holding != null) {
 			// First check if dropped in dropzone, then it won't need to be
 			// added to the context again
-			DropZone dropZone = (DropZone) context.getObjects(DropZone.class)
-					.get(0);
+			DropZone dropZone = (DropZone) context.getObjects(DropZone.class).get(0);
 			if (!dropZone.dropped(holding, this)) {
 				// bot was not in the dropzone.. Are we in a room?
 				Zone ourzone = getZone();
@@ -242,8 +238,7 @@ public class Robot extends BoundedMoveableObject {
 		ENTER_CORRIDOR;
 
 		/**
-		 * Merge the move type if multiple zones are entered at once. The result
-		 * is the 'worst' event that happens
+		 * Merge the move type if multiple zones are entered at once. The result is the 'worst' event that happens
 		 * 
 		 * @param other
 		 * @return
@@ -259,15 +254,13 @@ public class Robot extends BoundedMoveableObject {
 		}
 
 		public boolean isHit() {
-			return this == HIT_CLOSED_DOOR || this == HIT_WALL
-					|| this == HIT_OCCUPIED_ZONE;
+			return this == HIT_CLOSED_DOOR || this == HIT_WALL || this == HIT_OCCUPIED_ZONE;
 		}
 	}
 
 	/**
-	 * Check motion type for robot to move to <endx, endy>. The
-	 * {@link #MoveType} gives the actual type / possibility of the move, plus
-	 * the details why it is (not) possible.
+	 * Check motion type for robot to move to <endx, endy>. The {@link #MoveType} gives the actual type / possibility of
+	 * the move, plus the details why it is (not) possible.
 	 * 
 	 * @param endx
 	 *            is x position of target
@@ -281,15 +274,13 @@ public class Robot extends BoundedMoveableObject {
 		Door door = getCurrentDoor(startx, starty);
 
 		/*
-		 * if start and end are both in the same 'room' (outside is the 'null'
-		 * room). Then free walk always possible.
+		 * if start and end are both in the same 'room' (outside is the 'null' room). Then free walk always possible.
 		 */
 		List<Zone> endzones = ZoneLocator.getZonesAt(endx, endy);
 		Zone startzone = ZoneLocator.getZoneAt(startx, starty);
 
 		/**
-		 * If there is overlap in zones, ALL zones must be clear. Note, entering
-		 * a free space is always ok.
+		 * If there is overlap in zones, ALL zones must be clear. Note, entering a free space is always ok.
 		 */
 		MoveType result = MoveType.ENTERING_FREESPACE;
 
@@ -313,8 +304,7 @@ public class Robot extends BoundedMoveableObject {
 		}
 
 		/**
-		 * A zone switch is attempted as either startzone or endzone is not
-		 * null.
+		 * A zone switch is attempted as either startzone or endzone is not null.
 		 */
 		/**
 		 * If one of the sides is a room, we require a door
@@ -322,8 +312,8 @@ public class Robot extends BoundedMoveableObject {
 
 		if (endzone instanceof Room) {
 			/**
-			 * Start position must be ON a door to enable the switch. Check if
-			 * bot is going INTO the room, and if so, if the door is open.
+			 * Start position must be ON a door to enable the switch. Check if bot is going INTO the room, and if so, if
+			 * the door is open.
 			 */
 			if (door == null) {
 				return MoveType.HIT_WALL;
@@ -351,9 +341,8 @@ public class Robot extends BoundedMoveableObject {
 	}
 
 	/**
-	 * get door at a given position. Note that you can be in a door and at the
-	 * same time in a room. This is because rooms and doors partially overlap
-	 * usually.
+	 * get door at a given position. Note that you can be in a door and at the same time in a room. This is because
+	 * rooms and doors partially overlap usually.
 	 * 
 	 * @param x
 	 *            is x coord of position
@@ -391,9 +380,8 @@ public class Robot extends BoundedMoveableObject {
 	}
 
 	/**
-	 * Moves the robot by displacing it for the given amount. If the robot
-	 * collides with something, the movement target is cancelled to avoid
-	 * continuous bumping.
+	 * Moves the robot by displacing it for the given amount. If the robot collides with something, the movement target
+	 * is cancelled to avoid continuous bumping.
 	 * 
 	 * @param x
 	 *            the displacement in the x-dimension.
@@ -411,16 +399,15 @@ public class Robot extends BoundedMoveableObject {
 			double distance = distanceTo(targetLocation);
 			if (distance < MIN_MOVE_DISTANCE) {
 				stopRobot(); // we're there
-			} else {
+			}
+			else {
 				double movingDistance = Math.min(distance, MAX_MOVE_DISTANCE);
 
 				// Angle at which to move
-				double angle = SpatialMath.calcAngleFor2DMovement(space,
-						getLocation(), targetLocation);
+				double angle = SpatialMath.calcAngleFor2DMovement(space, getLocation(), targetLocation);
 
 				// The displacement of the robot
-				double[] displacement = SpatialMath.getDisplacement(2, 0,
-						movingDistance, angle);
+				double[] displacement = SpatialMath.getDisplacement(2, 0, movingDistance, angle);
 
 				try {
 					// Move the robot to the new position using the displacement
@@ -435,8 +422,8 @@ public class Robot extends BoundedMoveableObject {
 	}
 
 	/**
-	 * Stop the motion of the robot. Effectively sets the target location to
-	 * null. You can override this to catch this event.
+	 * Stop the motion of the robot. Effectively sets the target location to null. You can override this to catch this
+	 * event.
 	 */
 	public synchronized void stopRobot() {
 		this.targetLocation = null;
@@ -444,8 +431,7 @@ public class Robot extends BoundedMoveableObject {
 	}
 
 	/**
-	 * clear the collision flag. You can use this to reset the flag after you
-	 * took notice of the collision.
+	 * clear the collision flag. You can use this to reset the flag after you took notice of the collision.
 	 * 
 	 */
 	public void clearCollided() {
