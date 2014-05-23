@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.controllers.menubar;
+package nl.tudelft.bw4t.scenariogui.controllers.editor;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +10,6 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.controllers.ScenarioEditorController;
 import nl.tudelft.bw4t.scenariogui.controllers.DefaultOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.controllers.OptionPrompt;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
@@ -108,8 +107,7 @@ public abstract class AbstractMenuOption implements ActionListener {
                 if (!path.endsWith(extension)) {
                     path += extension;
                 }
-            }
-            else {
+            } else {
                 return;
             }
         }
