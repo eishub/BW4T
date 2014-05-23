@@ -14,6 +14,9 @@ import nl.tudelft.bw4t.zone.Room;
  */
 public final class RoomLocator {
 
+	/**
+	 * Utility class, cannot be instantiated.
+	 */
 	private RoomLocator() {
 	}
 
