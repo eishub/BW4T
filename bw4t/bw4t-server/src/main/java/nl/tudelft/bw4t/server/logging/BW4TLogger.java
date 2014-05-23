@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.server;
+package nl.tudelft.bw4t.server.logging;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -11,7 +11,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import nl.tudelft.bw4t.map.BlockColor;
-import nl.tudelft.bw4t.server.BW4TEnvironment;
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 
 /**
  * This logger logs all actions to a file:

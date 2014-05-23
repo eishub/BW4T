@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import org.apache.log4j.Logger;
 
 import nl.tudelft.bw4t.BoundedMoveableObject;
-import nl.tudelft.bw4t.server.Launcher;
+import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.util.PathPlanner;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.Zone;

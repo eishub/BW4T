@@ -1,7 +1,7 @@
 package nl.tudelft.bw4t.handicap;
 
 import nl.tudelft.bw4t.robots.Robot;
-import nl.tudelft.bw4t.server.BW4TLogger;
+import nl.tudelft.bw4t.server.logging.BW4TLogger;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.SpatialException;
 import repast.simphony.space.SpatialMath;

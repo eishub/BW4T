@@ -21,8 +21,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import nl.tudelft.bw4t.BW4TBuilder;
-import nl.tudelft.bw4t.server.BW4TEnvironment;
-import nl.tudelft.bw4t.server.Stepper;
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.environment.Stepper;
 import repast.simphony.context.Context;
 import eis.exceptions.ManagementException;
 import eis.iilang.Identifier;

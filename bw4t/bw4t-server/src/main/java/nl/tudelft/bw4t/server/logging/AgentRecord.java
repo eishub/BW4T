@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.server;
+package nl.tudelft.bw4t.server.logging;
 
 import java.util.ArrayList;
 import java.util.List;

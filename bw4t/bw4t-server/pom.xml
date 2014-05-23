@@ -27,7 +27,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>nl.tudelft.bw4t.server.Launcher</mainClass>
+							<mainClass>nl.tudelft.bw4t.server.environment.Launcher</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
