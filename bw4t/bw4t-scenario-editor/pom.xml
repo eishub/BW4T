@@ -1,29 +1,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>Scenario-GUI</groupId>
-    <artifactId>Scenario-GUI</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <scm>
-        <developerConnection>scm:git@github.com:MartinRogalla/BW4T.git</developerConnection>
-        <url>https://github.com/MartinRogalla/BW4T/tree/scenario_gui_main_panel</url>
-    </scm>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <sonar.projectKey>nl.tudelft.bw4t.scenariogui</sonar.projectKey>
-        <sonar.projectName>ScenarioEditor</sonar.projectName>
-        <sonar.projectVersion>0.0.1-SNAPSHOT</sonar.projectVersion>
-        <sonar.language>java</sonar.language>
-        <sonar.sources>src/main</sonar.sources>
-        <sonar.tests>src/test</sonar.tests>
-        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-        <sonar.java.coveragePlugin>cobertura</sonar.java.coveragePlugin>
-        <sonar.cobertura.reportPath>target/site/cobertura/coverage.xml</sonar.cobertura.reportPath>
-    </properties>
+    <parent>
+        <groupId>nl.tudelft</groupId>
+        <artifactId>bw4t</artifactId>
+        <version>3.0.1</version>
+        <relativePath>..</relativePath>
+    </parent>
+    <groupId>nl.tudelft.bw4t</groupId>
+    <artifactId>bw4t-scenario-editor</artifactId>
+    <name>bw4t-scenario-editor</name>
+    <packaging>jar</packaging>
     <build>
-        <sourceDirectory>src/main/java</sourceDirectory>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
@@ -34,6 +25,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -46,6 +38,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
                 <configuration>
                     <show>private</show>
                 </configuration>
@@ -81,20 +74,10 @@
                 </configuration>
             </plugin>
         </plugins>
-
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <testSourceDirectory>src/test/java</testSourceDirectory>
     </build>
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>1.9.5</version>
-        </dependency>
-    </dependencies>
+
     <reporting>
         <plugins>
             <plugin>
