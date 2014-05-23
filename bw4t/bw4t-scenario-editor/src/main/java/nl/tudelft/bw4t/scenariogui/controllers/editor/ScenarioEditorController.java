@@ -1,19 +1,6 @@
-package nl.tudelft.bw4t.scenariogui.controllers;
+package nl.tudelft.bw4t.scenariogui.controllers.editor;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.controllers.configurationpanel.ChooseMapFileListener;
-import nl.tudelft.bw4t.scenariogui.controllers.entitypanel.AddNewBot;
-import nl.tudelft.bw4t.scenariogui.controllers.entitypanel.AddNewEPartner;
-import nl.tudelft.bw4t.scenariogui.controllers.entitypanel.BotDropDownButton;
-import nl.tudelft.bw4t.scenariogui.controllers.entitypanel.DeleteBot;
-import nl.tudelft.bw4t.scenariogui.controllers.entitypanel.DeleteEPartner;
-import nl.tudelft.bw4t.scenariogui.controllers.entitypanel.ModifyBot;
-import nl.tudelft.bw4t.scenariogui.controllers.entitypanel.ModifyEPartner;
-import nl.tudelft.bw4t.scenariogui.controllers.menubar.MenuOptionExit;
-import nl.tudelft.bw4t.scenariogui.controllers.menubar.MenuOptionNew;
-import nl.tudelft.bw4t.scenariogui.controllers.menubar.MenuOptionOpen;
-import nl.tudelft.bw4t.scenariogui.controllers.menubar.MenuOptionSave;
-import nl.tudelft.bw4t.scenariogui.controllers.menubar.MenuOptionSaveAs;
 
 /**
  * The Controller class is in charge of all events that happen on the GUI.

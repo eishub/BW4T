@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.controllers.entitypanel;
+package nl.tudelft.bw4t.scenariogui.controllers.editor;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +8,7 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 /**
  * Handles the event to create a new E-partner.
  */
-public class AddNewEPartner implements ActionListener {
+class AddNewEPartner implements ActionListener {
 
     /**
      * The <code>MainPanel</code> serving as the content pane.

@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.controllers.configurationpanel;
+package nl.tudelft.bw4t.scenariogui.controllers.editor;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,7 +12,7 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 /**
  * Handles the event to choose a map file.
  */
-public class ChooseMapFileListener implements ActionListener {
+class ChooseMapFileListener implements ActionListener {
 
     /**
      * The <code>MainPanel</code> serving as the content pane.
@@ -47,8 +47,7 @@ public class ChooseMapFileListener implements ActionListener {
         /** Makes sure only files with the right extension are accepted */
         if (returnVal == JFileChooser.APPROVE_OPTION && file.getName().endsWith(mapExtension)) {
             view.getConfigurationPanel().setMapFile(file.getPath());
-        }
-        else if (returnVal == JFileChooser.APPROVE_OPTION && !file.getName().endsWith(mapExtension)) {
+        } else if (returnVal == JFileChooser.APPROVE_OPTION && !file.getName().endsWith(mapExtension)) {
             JOptionPane.showMessageDialog(view, "This is not a valid file.");
         }
     }

@@ -10,7 +10,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.scenariogui.controllers.ScenarioEditorController;
+import nl.tudelft.bw4t.scenariogui.controllers.editor.ScenarioEditorController;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
