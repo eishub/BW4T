@@ -5,6 +5,8 @@ import java.awt.Component;
 import javax.swing.JOptionPane;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
+import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -143,8 +145,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteBotConfirmDelete() {
-        doReturn(JOptionPane.YES_OPTION).when(spyEntityPanel).
-                showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
+        ScenarioEditor.option = new YesMockOptionPrompt();
 
         /* Add a bot to the list */
         spyEntityPanel.getNewBotButton().doClick();
@@ -166,8 +167,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteBotDeclineDelete() {
-        doReturn(JOptionPane.NO_OPTION).when(spyEntityPanel).
-                showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
+        ScenarioEditor.option = new NoMockOptionPrompt();
 
 
         /* Add a bot to the list */
@@ -190,8 +190,8 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteBotNoSelection() {
-        doReturn(JOptionPane.NO_OPTION).when(spyEntityPanel).
-                showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
+        ScenarioEditor.option = new NoMockOptionPrompt();
+
 
         /* Add a bot to the list */
         spyEntityPanel.getNewBotButton().doClick();
@@ -230,8 +230,8 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteEPartnerConfirmDelete() {
-        doReturn(JOptionPane.YES_OPTION).when(spyEntityPanel)
-                .showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
+        ScenarioEditor.option = new YesMockOptionPrompt();
+
 
         /** Add an E-partner to the list */
         spyEntityPanel.getNewEPartnerButton().doClick();
@@ -253,8 +253,8 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteEPartnerDeclineDelete() {
-        doReturn(JOptionPane.NO_OPTION).when(spyEntityPanel)
-                .showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
+        ScenarioEditor.option = new NoMockOptionPrompt();
+
 
         /** Add an E-partner to the list */
         spyEntityPanel.getNewEPartnerButton().doClick();
@@ -275,8 +275,8 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteEPartnerSelection() {
-        doReturn(JOptionPane.NO_OPTION).when(spyEntityPanel).
-                showConfirmDialog((Component) any(), anyString(), anyString(), anyInt());
+        ScenarioEditor.option = new NoMockOptionPrompt();
+
 
         /** Add an E-partner to the list */
         spyEntityPanel.getNewEPartnerButton().doClick();
