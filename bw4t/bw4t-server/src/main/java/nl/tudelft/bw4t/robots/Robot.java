@@ -7,6 +7,7 @@ import java.util.List;
 import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.doors.Door;
+import nl.tudelft.bw4t.handicap.HandicapInterface;
 import nl.tudelft.bw4t.map.Constants;
 import nl.tudelft.bw4t.server.BW4TLogger;
 import nl.tudelft.bw4t.util.ZoneLocator;
@@ -50,7 +51,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	/** The location to which the robot wants to travel. */
 	public NdPoint targetLocation;
 	/** The list of blocks the robot is holding. */
-	private List<Block> holding;
+	private final List<Block> holding;
 	/** The max. amount of blocks a robot can hold, default is 1. */
 	private int capacity = 3;
 	
@@ -227,8 +228,8 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 *            , the block to pick up
 	 */
 	public void pickUp(Block b) {
-		drop();
-		holding = b;
+		//drop(); not necessary if the bot can hold multiple blocks.
+		holding.add(b);
 		b.setHeldBy(this);
 		b.removeFromContext();
 	}

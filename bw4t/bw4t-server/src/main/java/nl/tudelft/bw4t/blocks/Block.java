@@ -19,7 +19,7 @@ public class Block extends BoundedMoveableObject {
 	public static final int SIZE = 1;
 
 	private final BlockColor colorId;
-	private final Color color;
+	private Color color;
 	private Robot heldBy;
 
 	/**

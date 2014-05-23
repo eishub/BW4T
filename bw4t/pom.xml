@@ -10,6 +10,7 @@
 		<module>bw4t-client</module>
 		<module>bw4t-core</module>
 		<module>bw4t-integration-test</module>
+        <module>bw4t-scenario-editor</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -109,12 +110,11 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.8.1</version>
+			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -122,6 +122,11 @@
 			<artifactId>eis</artifactId>
 			<version>0.3</version>
 		</dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.9.5</version>
+        </dependency>
 	</dependencies>
 
 	<reporting>
