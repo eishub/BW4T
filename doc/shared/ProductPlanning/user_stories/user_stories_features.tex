@@ -1,110 +1,102 @@
 \begin{description}
-	\item[Story 1.1:] Configuration Files\\
-	As a user\\
-	I want to make configuration files\\
-	So that I can easily load configurations
+  \item[Story 1.1:] Configuration Files (Scenario GUI)\\
+  As a user\\
+  I want to have a scenario GUI\\
+  So that I can easily make custom configurations that are read by GOAL to create maps
 
-	\begin{description}
-		\item[Scenario 1.1.1:] Maps\\
-		Given the user has launched the GUI\\
-		And the user has created the map they wanted\\
-		When the user presses the create map button\\
-		Then a configuration file should be created which can be used to load and run a simulation
-		
-		\item[Scenario 1.1.2:] Bots\\
-		Given the user has launched the GUI\\
-		And the user has specified how many bots\\
-		When the user presses the create map button\\
-		Then a configuration file should be created which can be used to load and run a simulation
+  \begin{description}
+    \item[Scenario 1.1.1:] Configuration changing\\
+    Given the user has started the program\\
+    When the user has launched the GUI\\
+    Then the user can change the settings from a standard map to create a map with an entirely new set of configurations
+    
+    \item[Scenario 1.1.2:] Room count\\
+    Given the user has changed the room count\\
+    When the user presses the create map button\\
+    Then the configuration file created contains that amount of rooms\\
+    And the map shows that amount of rooms when loaded as environment
+    
+    \item[Scenario 1.1.3:] Bots\\
+    Given the user has launched the scenario GUI\\
+    And the user has specified how many bots\\
+    When the user presses the create map button\\
+    Then the system creates a configuration file containing the settings
 
-		\item[Scenario 1.1.3:] Human\\
-		Given the user has launched the GUI\\
-		And the user has specified which bot is human controlled\\
-		When the user presses the create map button\\
-		Then a configuration file should be created which can be used to load and run a simulation
-	\end{description}
+    \item[Scenario 1.1.4:] Human Players\\
+    Given the user has launched the scenario GUI\\
+    And the user has specified which bot is human controlled\\
+    When the user presses the create map button\\
+    Then the system creates a configuration file containing the settings
+    
+    \item[Scenario 1.1.5:] Maps\\
+    Given the user has launched the scenario GUI\\
+    And the user has created the map they wanted\\
+    When the user presses the create map button\\
+    Then the system creates a configuration file corresponding with the map
+  \end{description}
+  \item[Story 1.2:] Human Player GUI\\
+  As a user \\
+  I want to control the bot via the human player GUI\\
+  So that I can tell the bot what to do
+
+  \begin{description}
+    \item[Scenario 1.2.1:] GUI starting\\
+    Given a map with at least one human player has been created\\
+    When the map is used in a GOAL multi agent system\\
+    Then there should be a human player GUI launched for every human player given in the map
+    
+    \item[Scenario 1.2.2:] Control\\
+    Given the human player GUI has started\\
+    When the user clicks a command given in the list of possible commands\\
+    Then the bot executes that command and the GUI shows this as feedback
+
+    \item[Scenario 1.2.3:] Message sending\\
+    Given the human player GUI has started\\
+    When the user makes a message and sends it\\
+    Then the GUI should show this message as being sent
+    
+    \item[Scenario 1.2.4:] Message receiving\\
+    Given the human player GUI has started\\
+    When the user receives a message made by another human player GUI\\
+    Then the GUI should show this message as being received
+
+    \item[Scenario 1.2.5:] Visual Feedback\\
+    Given the human player GUI has started\\
+    When an event has occurred that limits or extends the bots commands\\
+    Then the list of possible commands in the GUI should be updated
+  \end{description}
+  \item[Story 1.3:] E-Partner\\
+  As a user\\
+  I want to be able to use my E-Partner\\
+  So that I can assist bots and use the E-Partner as my assistant
+
+  \begin{description}
+    \item[Scenario 1.3.1:] Starting the E-Partner\\
+    Given the GOAL multi agent system is launched\\
+    And there is an E-Partner in the map\\
+    When a bot picks up the E-Partner\\
+    Then the E-Partner should be started and all its features should be unlocked for the bot that has picked it up
+    
+    \item[Scenario 1.3.2:] Control\\
+    Given the user holds the E-Partner\\
+    When the user executes an action to move the block representing the E-Partner\\
+    Then the block moves in the given direction
+    
+    \item[Scenario 1.3.3:] Communication (sending)\\
+    Given the user holds the E-Partner\\
+    When the user types in a message to send to another E-Partner\\
+    And the user clicks to send the message\\
+    Then the typed message is sent
+    
+    \item[Scenario 1.3.4:] Communication (receiving)\\
+    Given the user holds the E-Partner\\
+    When another bot or E-Partner sends a mesage to this E-Partner\\
+    Then the message is shown to the user of the E-Partner
+    
+    \item[Scenario 1.3.5:] GPS functionality\\
+    Given the user holds the E-Partner\\
+    When the GPS functionality of the E-Partner is used\\
+    Then the robot knows where it is on the map
+  \end{description}
 \end{description}
 
-\begin{description}
-	\item[Story 1.2:] Human Player GUI\\
-	As a user \\
-	I want to control the bot\\
-	So that I can tell the bot what to do
-
-	\begin{description}
-		\item[Scenario 1.2.1:] Control\\
-		Given the human player GUI has started\\
-		When the user clicks a command\\
-		Then the bot executes that command and the GUI shows this as feedback
-
-		\item[Scenario 1.2.2:] Message\\
-		Given the human player GUI has started\\
-		When an \gls{e-partner} message has been sent\\
-		Then the GUI should show this message
-
-		\item[Scenario 1.2.3:] Visual Feedback\\
-		Given the human player GUI has started\\
-		When an event has occurred that limits or extends the bots commands\\
-		Then the list of possible commands in the GUI should be updated
-		\end{description}
-	\end{description}
-
-\begin{description}
-	\item[Story 1.3:] \gls{e-partner}\\
-	As a user\\
-	I want to be able to use my \gls{e-partner}\\
-	So that I can assist bots and use the \gls{e-partner} as my assistant
-
-	\begin{description}
-		\item[Scenario 1.3.1:] Control\\
-		Given the user holds the \gls{e-partner}\\
-		When the user executes an action to move the block representing the \gls{e-partner}\\
-		Then the block moves in the given direction
-		
-		\item[Scenario 1.3.2:] Communication\\
-		Given the user holds the \gls{e-partner}\\
-		When the user types in a message to send to another \gls{e-partner}\\
-		And the user clicks to send the message\\
-		Then the typed message is sent
-	\end{description}
-\end{description}
-
-\begin{description}
-	\item[Story 1.4:] Simulation\\
-	As a user\\
-	I want to create simulation conditions\\
-	So that I can easily create specific scenarios
-	%When the user selects a handicap. For example: gripper, colorblind, size, speed, ability to walk, 
-	
-	\begin{description}
-		\item[Scenario 1.4.1:] Gripper Handicap\\
-		Given the handicap GUI has started before the simulation run\\
-		When the user unchecks the ability for a bot to use its gripper\\
-		Then when the simulation runs the bot should not be able to use its gripper
-
-		\item[Scenario 1.4.2:] Colorblind Handicap\\
-		Given the handicap GUI has started before the simulation run\\
-		When the user unchecks the ability for a bot to see colors\\
-		Then when the simulation runs the bot should not be able to differentiate between colors
-
-		\item[Scenario 1.4.3:] Bot size\\
-		Given the handicap GUI has started before the simulation run\\
-		When the user changes the size of a bot\\
-		Then when the simulation runs the bot should have that size and its restrictions
-
-		\item[Scenario 1.4.4:] Bot speed\\
-		Given the handicap GUI has started before the simulation run\\
-		When the user changes the speed of a bot\\
-		Then when the simulation runs the bot should have that speed
-
-		\item[Scenario 1.4.5:] Ability to walk\\
-		Given the handicap GUI has started before the simulation run\\
-		When the user unchecks the ability for a bot to walk\\
-		Then when the simulation runs the bot should not be able to use its gripper
-
-		\item[Scenario 1.4.6:] Physical aspects\\
-		Given the handicap GUI has started before the simulation run\\
-		When the user checks the physical aspects of a bot\\
-		Then when the simulation runs this bot can only continue its path as long as it does not collide with other bots who have the physical aspects checked as well
-	\end{description}
-\end{description}
