@@ -26,7 +26,7 @@ public class DropZone extends Room {
 	/**
 	 * The log4j logger, logs to the console.
 	 */
-	private static Logger logger = Logger.getLogger(Launcher.class);
+	private static final Logger LOGGER = Logger.getLogger(Launcher.class);
 
 	/** The sequence of blocks that are to be dropped in here */
 	private List<BlockColor> sequence = new ArrayList<BlockColor>();
@@ -61,7 +61,7 @@ public class DropZone extends Room {
 		try {
 			BW4TLogger.getInstance().logSequence(colors);
 		} catch (IOException e) {
-			logger.warn("WARNING. log file failed to write: " + e.getMessage());
+			LOGGER.warn("WARNING. log file failed to write: " + e.getMessage());
 		}
 	}
 
