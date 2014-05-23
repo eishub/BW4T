@@ -14,12 +14,7 @@ public final class BotConfig {
 	private boolean hasGripperHandicap = false;
 	private boolean hasMoveSpeedHandicap = false;
 	private boolean hasSizeOverloadHandicap = false;
-	
-	/**
-	 * This class does not need a constructor.
-	 */
-	public BotConfig() {
-	}
+
 	
 	/**
 	 * @return the size of the robot.
