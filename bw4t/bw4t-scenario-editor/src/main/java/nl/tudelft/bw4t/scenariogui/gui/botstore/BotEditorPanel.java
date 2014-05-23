@@ -318,12 +318,12 @@ public class BotEditorPanel extends JPanel {
 	 */
 	public void setDataObject() {
 		dataObject.setBotSize(sizeSlider.getValue());
-		//dataObject.setBotSpeed(speedSlider.getValue());
-		dataObject.setBatteryCapacity(batterySlider.getValue());
+		dataObject.setBotSpeed(speedSlider.getValue());
+		dataObject.setBotBatteryCapacity(batterySlider.getValue());
 		dataObject.setColorBlindHandicap(colorblindCheckbox.isEnabled());
-		//dataObject.setGripperHandicap(gripperCheckbox.isEnabled());
-		//dataObject.setMoveSpeedHandicap(movespeedCheckbox.isEnabled());
-		//dataObject.setSizeOverloadHandicap(sizeoverloadCheckbox.isEnabled());
+		dataObject.setGripperHandicap(gripperCheckbox.isEnabled());
+		dataObject.setMoveSpeedHandicap(movespeedCheckbox.isEnabled());
+		dataObject.setSizeOverloadHandicap(sizeoverloadCheckbox.isEnabled());
 	}
 	
 	public BotEditorData getDataObject() {
