@@ -10,9 +10,9 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.controller.AbstractMenuOption;
-import nl.tudelft.bw4t.scenariogui.controller.NoMockOptionPrompt;
-import nl.tudelft.bw4t.scenariogui.controller.YesMockOptionPrompt;
+import nl.tudelft.bw4t.scenariogui.controllers.menubar.AbstractMenuOption;
+import nl.tudelft.bw4t.scenariogui.controllers.NoMockOptionPrompt;
+import nl.tudelft.bw4t.scenariogui.controllers.YesMockOptionPrompt;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -117,7 +117,7 @@ public class MenuBarTest {
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.getSelectedFile()).thenReturn(new File(FILE_SAVE_PATH)).thenReturn(new File(FILE_OPEN_PATH));
 
-        // Set the controller to mock yes.
+        // Set the controllers to mock yes.
         ActionListener[] listeners = editor.getTopMenuBar().getMenuItemFileOpen().getActionListeners();
 
         // There should be one listener, so we check that and then change the option pane.
@@ -165,7 +165,7 @@ public class MenuBarTest {
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.getSelectedFile()).thenReturn(new File(FILE_SAVE_PATH));
 
-        // Set the controller to mock yes.
+        // Set the controllers to mock yes.
         ActionListener[] listeners = editor.getTopMenuBar().getMenuItemFileOpen().getActionListeners();
 
         // There should be one listener, so we check that and then change the option pane.

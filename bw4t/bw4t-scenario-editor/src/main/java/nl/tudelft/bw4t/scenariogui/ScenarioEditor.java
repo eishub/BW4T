@@ -10,7 +10,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.scenariogui.controller.Controller;
+import nl.tudelft.bw4t.scenariogui.controllers.Controller;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
@@ -86,7 +86,7 @@ public class ScenarioEditor extends JFrame {
         mPanel.setConfigurationPanel(configurationPanel);
         mPanel.setEntityPanel(entityPanel);
 
-        // Recreate the controller.
+        // Recreate the controllers.
         controller = new Controller(this);
     }
 
@@ -161,7 +161,7 @@ public class ScenarioEditor extends JFrame {
     }
 
     /**
-     * Returns the controller object being used to handle all events on the GUI.
+     * Returns the controllers object being used to handle all events on the GUI.
      *
      * @return The Controller used.
      */
