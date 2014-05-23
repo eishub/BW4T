@@ -28,15 +28,13 @@ import repast.simphony.visualizationOGL2D.StyleOGL2D;
 import eis.iilang.EnvironmentState;
 
 /**
- * Used for directly displaying the simulation from the context, unlike
- * {@link BW4TClientMapRenderer} does not use percepts and can show all
- * entities. Only used on the server side (BW4TEnvironment side).
+ * Used for directly displaying the simulation from the context, unlike {@link BW4TClientMapRenderer} does not use
+ * percepts and can show all entities. Only used on the server side (BW4TEnvironment side).
  * <p>
- * Note, this renderer is largely independent of repast, so even though Repast
- * has its own rendering tools we don't use that.
+ * Note, this renderer is largely independent of repast, so even though Repast has its own rendering tools we don't use
+ * that.
  * <p>
- * Also note that this is a runnable and runs in its own thread with a refresh
- * rate of 10Hz.
+ * Also note that this is a runnable and runs in its own thread with a refresh rate of 10Hz.
  * 
  * @author trens
  * 
@@ -63,8 +61,7 @@ public class ServerMapRenderer extends JPanel implements Runnable {
 	 * @throws IllegalAccessException
 	 * @throws InstantiationException
 	 */
-	public ServerMapRenderer(Context context) throws InstantiationException,
-			IllegalAccessException {
+	public ServerMapRenderer(Context context) throws InstantiationException, IllegalAccessException {
 		this.context = context;
 
 		computeSize(context);
@@ -81,11 +78,9 @@ public class ServerMapRenderer extends JPanel implements Runnable {
 	 * @return
 	 */
 	private void computeSize(Context context2) {
-		int width = (int) ((ContinuousSpace) context
-				.getProjection("BW4T_Projection")).getDimensions().getWidth();
+		int width = (int) ((ContinuousSpace) context.getProjection("BW4T_Projection")).getDimensions().getWidth();
 		frameWidth = (int) (scale * width);
-		int height = (int) ((ContinuousSpace) context
-				.getProjection("BW4T_Projection")).getDimensions().getHeight();
+		int height = (int) ((ContinuousSpace) context.getProjection("BW4T_Projection")).getDimensions().getHeight();
 		frameHeight = (int) (scale * height);
 		size = new Dimension(frameWidth + 10, frameHeight + 60);
 		setPreferredSize(size);
@@ -122,11 +117,8 @@ public class ServerMapRenderer extends JPanel implements Runnable {
 			g2d.setColor(Color.DARK_GRAY);
 			g2d.setFont(new Font("Arial", Font.PLAIN, 10));
 			if (corr.isLabelVisible()) {
-				g2d.drawString(corr.getName(), (int) corr.getBoundingBox()
-						.getBounds().getCenterX()
-						* scale - roomTextOffset, (int) corr.getBoundingBox()
-						.getBounds().getCenterY()
-						* scale);
+				g2d.drawString(corr.getName(), (int) corr.getBoundingBox().getBounds().getCenterX() * scale
+						- roomTextOffset, (int) corr.getBoundingBox().getBounds().getCenterY() * scale);
 			}
 		}
 	}
@@ -143,19 +135,14 @@ public class ServerMapRenderer extends JPanel implements Runnable {
 			List<BlockColor> sequence = dropZoneTemp.getSequence();
 			int sequenceIndex = dropZoneTemp.getSequenceIndex();
 			int startPosX = 0;
-			int worldY = (int) ((ContinuousSpace) context
-					.getProjection("BW4T_Projection")).getDimensions()
-					.getHeight();
+			int worldY = (int) ((ContinuousSpace) context.getProjection("BW4T_Projection")).getDimensions().getHeight();
 			for (BlockColor color : sequence) {
 				g2d.setColor(color.getColor());
-				g2d.fill(new Rectangle2D.Double(startPosX, worldY * scale, 20,
-						20));
+				g2d.fill(new Rectangle2D.Double(startPosX, worldY * scale, 20, 20));
 				if (sequenceIndex > (startPosX / 20)) {
 					g2d.setColor(Color.BLACK);
-					int[] xpoints = new int[] { startPosX, startPosX,
-							startPosX + 20 };
-					int[] ypoints = new int[] { worldY * scale,
-							worldY * scale + 20, worldY * scale + 10 };
+					int[] xpoints = new int[] { startPosX, startPosX, startPosX + 20 };
+					int[] ypoints = new int[] { worldY * scale, worldY * scale + 20, worldY * scale + 10 };
 					g2d.fillPolygon(xpoints, ypoints, 3);
 				}
 				startPosX += 20;
@@ -188,16 +175,13 @@ public class ServerMapRenderer extends JPanel implements Runnable {
 		for (Object robot : context.getObjects(Robot.class)) {
 			Robot robotTemp = (Robot) robot;
 			if (robotTemp.isConnected()) {
-				g2d.setColor(((StyleOGL2D) styles.get(Robot.class))
-						.getColor(robot));
+				g2d.setColor(((StyleOGL2D) styles.get(Robot.class)).getColor(robot));
 				g2d.fill(transformRectangle(robotTemp.getBoundingBox()));
 
 				g2d.setColor(Color.RED);
 				g2d.setFont(new Font("Arial", Font.BOLD, 16));
-				g2d.drawString(robotTemp.getName(), (int) robotTemp
-						.getBoundingBox().getCenterX() * scale - 15,
-						(int) robotTemp.getBoundingBox().getCenterY() * scale
-								+ 20);
+				g2d.drawString(robotTemp.getName(), (int) robotTemp.getBoundingBox().getCenterX() * scale - 15,
+						(int) robotTemp.getBoundingBox().getCenterY() * scale + 20);
 			}
 		}
 	}
@@ -211,8 +195,7 @@ public class ServerMapRenderer extends JPanel implements Runnable {
 	private void processRooms(Graphics2D g2d) {
 		for (Object roomObj : context.getObjects(Room.class)) {
 			Room room = (Room) roomObj;
-			Shape displayCoordinates = transformRectangle(room
-					.getBoundingBox());
+			Shape displayCoordinates = transformRectangle(room.getBoundingBox());
 			g2d.setColor(Color.GRAY);
 			g2d.fill(displayCoordinates);
 			g2d.setColor(Color.BLACK);
@@ -221,11 +204,8 @@ public class ServerMapRenderer extends JPanel implements Runnable {
 			g2d.setColor(Color.DARK_GRAY);
 			g2d.setFont(new Font("Arial", Font.PLAIN, 10));
 			if (room.isLabelVisible()) {
-				g2d.drawString(room.getName(), (int) room
-						.getBoundingBox().getBounds().getCenterX()
-						* scale - roomTextOffset, (int) room
-						.getBoundingBox().getBounds().getCenterY()
-						* scale);
+				g2d.drawString(room.getName(), (int) room.getBoundingBox().getBounds().getCenterX() * scale
+						- roomTextOffset, (int) room.getBoundingBox().getBounds().getCenterY() * scale);
 			}
 		}
 	}
@@ -245,14 +225,13 @@ public class ServerMapRenderer extends JPanel implements Runnable {
 	}
 
 	/**
-	 * Create a mapping of classes that should be displayed and the class
-	 * containing the style that should be used for displaying
+	 * Create a mapping of classes that should be displayed and the class containing the style that should be used for
+	 * displaying
 	 * 
 	 * @throws IllegalAccessException
 	 * @throws InstantiationException
 	 */
-	private void registerStyles() throws InstantiationException,
-			IllegalAccessException {
+	private void registerStyles() throws InstantiationException, IllegalAccessException {
 		styles = new HashMap<Class<?>, StyleOGL2D<?>>();
 		styles.put(Block.class, BlockStyle.class.newInstance());
 		styles.put(Door.class, DoorStyle.class.newInstance());
@@ -288,8 +267,7 @@ public class ServerMapRenderer extends JPanel implements Runnable {
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
-					if (BW4TEnvironment.getInstance().getState()
-							.equals(EnvironmentState.RUNNING)
+					if (BW4TEnvironment.getInstance().getState().equals(EnvironmentState.RUNNING)
 							&& !haveRequestedFocusAlready) {
 						requestFocus();
 						haveRequestedFocusAlready = true;

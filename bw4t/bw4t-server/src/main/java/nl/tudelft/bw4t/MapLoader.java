@@ -54,11 +54,9 @@ public final class MapLoader {
 	}
 
 	/**
-	 * Loads a file containing a map into the context. extends the sequence
-	 * color list and the room color lists.
+	 * Loads a file containing a map into the context. extends the sequence color list and the room color lists.
 	 * <ul>
-	 * <li>The sequence is extended with N random blocks (where N is the number
-	 * of rooms in the map)
+	 * <li>The sequence is extended with N random blocks (where N is the number of rooms in the map)
 	 * <li>These N random blocks are random placed in the rooms
 	 * <li>An additional 1.5*N random blocks are random placed in the rooms.
 	 * </ul>
@@ -72,34 +70,29 @@ public final class MapLoader {
 	 *             if the file can not be read from.
 	 * @throws JAXBException
 	 */
-	public static void loadMap(String location, Context<Object> context)
-			throws IOException, JAXBException {
+	public static void loadMap(String location, Context<Object> context) throws IOException, JAXBException {
 
 		/**
-		 * Temp list of all zones, because we can not yet use
-		 * BW4TEnvironment.getInstance().getContext() ... (returns null)
+		 * Temp list of all zones, because we can not yet use BW4TEnvironment.getInstance().getContext() ... (returns
+		 * null)
 		 */
 		Map<String, nl.tudelft.bw4t.zone.Zone> zones = new HashMap<String, nl.tudelft.bw4t.zone.Zone>();
 
 		/**
-		 * List of planned blocks for a room. We copy the map params and add the
-		 * extra blocks to this map.
+		 * List of planned blocks for a room. We copy the map params and add the extra blocks to this map.
 		 */
 		AbstractMap<String, List<BlockColor>> roomblocks = new HashMap<String, List<BlockColor>>();
 		Random random = new Random();
 		location = System.getProperty("user.dir") + "/maps/" + location;
 		map = NewMap.create(new FileInputStream(new File(location)));
 
-		ContinuousSpace<Object> space = createSpace(context, (int) map
-				.getArea().getX(), (int) map.getArea().getY());
+		ContinuousSpace<Object> space = createSpace(context, (int) map.getArea().getX(), (int) map.getArea().getY());
 
 		// make the extra random blocks.
-		List<BlockColor> extraSequenceBlocks = makeRandomSequence(map
-				.getRandomSequence());
+		List<BlockColor> extraSequenceBlocks = makeRandomSequence(map.getRandomSequence());
 
 		// determine all the extra blocks: the extra sequence blocks and more
-		List<BlockColor> extraBlocks = new ArrayList<BlockColor>(
-				extraSequenceBlocks);
+		List<BlockColor> extraBlocks = new ArrayList<BlockColor>(extraSequenceBlocks);
 		extraBlocks.addAll(makeRandomSequence(map.getRandomBlocks()));
 
 		// make the target sequence.
@@ -116,10 +109,10 @@ public final class MapLoader {
 			if (roomzone.getName().equals("DropZone")) {
 				room = new DropZone(roomzone, space, context);
 				((DropZone) room).setSequence(sequence);
-			} else {
+			}
+			else {
 				room = createRoom(context, space, roomzone);
-				roomblocks.put(room.getName(), new ArrayList<BlockColor>(
-						roomzone.getBlocks()));
+				roomblocks.put(room.getName(), new ArrayList<BlockColor>(roomzone.getBlocks()));
 			}
 
 			for (nl.tudelft.bw4t.map.Door door : roomzone.getDoors()) {
@@ -149,15 +142,15 @@ public final class MapLoader {
 
 		// place the blocks in the rooms.
 		for (String room : roomblocks.keySet()) {
-			createBlocksForRoom((Room) zones.get(room), context, space,
-					roomblocks.get(room));
+			createBlocksForRoom((Room) zones.get(room), context, space, roomblocks.get(room));
 
 		}
 
 		for (Entity entityparams : map.getEntities()) {
 			if (entityparams.getType() == Entity.EntityType.NORMAL) {
 				createEisEntityRobot(context, space, entityparams);
-			} else {
+			}
+			else {
 				createJavaRobot(context, space, entityparams);
 			}
 		}
@@ -169,11 +162,10 @@ public final class MapLoader {
 	 * Connect all the zones according to the map.
 	 * 
 	 * @param zones
-	 *            the map of all zones in repast. We can't yet access the BW4T
-	 *            context, therefore we need to pass this explicitly..
+	 *            the map of all zones in repast. We can't yet access the BW4T context, therefore we need to pass this
+	 *            explicitly..
 	 */
-	private static void connectAllZones(
-			Map<String, nl.tudelft.bw4t.zone.Zone> zones) {
+	private static void connectAllZones(Map<String, nl.tudelft.bw4t.zone.Zone> zones) {
 		for (Zone zone : map.getZones()) {
 			nl.tudelft.bw4t.zone.Zone z = zones.get(zone.getName());
 			for (Zone mapneigh : zone.getNeighbours()) {
@@ -210,19 +202,15 @@ public final class MapLoader {
 	 *            the unparsed size from the input file.
 	 * @return the created space
 	 */
-	private static ContinuousSpace<Object> createSpace(Context<Object> context,
-			int width, int height) {
+	private static ContinuousSpace<Object> createSpace(Context<Object> context, int width, int height) {
 
-		ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder
-				.createContinuousSpaceFactory(null);
-		return spaceFactory.createContinuousSpace(PROJECTION_ID, context,
-				new SimpleCartesianAdder<Object>(), new StickyBorders(), width,
-				height);
+		ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);
+		return spaceFactory.createContinuousSpace(PROJECTION_ID, context, new SimpleCartesianAdder<Object>(),
+				new StickyBorders(), width, height);
 	}
 
 	/**
-	 * Creates a new {@link DropZone} in the context according to the data in
-	 * the tokenizer.
+	 * Creates a new {@link DropZone} in the context according to the data in the tokenizer.
 	 * 
 	 * @param context
 	 *            The context in which the room should be placed.
@@ -231,16 +219,13 @@ public final class MapLoader {
 	 * @param tokenizer
 	 *            StringTokenizer containing the description of the room.
 	 * @throws IllegalStateException
-	 *             if a drop off location has already been defined in the given
-	 *             context.
+	 *             if a drop off location has already been defined in the given context.
 	 */
-	private static void createDropZone(Context<Object> context,
-			ContinuousSpace<Object> space, Zone dropzone,
+	private static void createDropZone(Context<Object> context, ContinuousSpace<Object> space, Zone dropzone,
 			List<BlockColor> sequence) {
 
 		if (context.getObjects(DropZone.class).size() > 0) {
-			throw new IllegalStateException(
-					"A drop zone has already been defined");
+			throw new IllegalStateException("A drop zone has already been defined");
 		}
 
 		DropZone dropZone = new DropZone(dropzone, space, context);
@@ -250,8 +235,8 @@ public final class MapLoader {
 	}
 
 	/**
-	 * Creates a new {@link Robot} in the context according to the data in the
-	 * tokenizer and adds it to the EIS environment.
+	 * Creates a new {@link Robot} in the context according to the data in the tokenizer and adds it to the EIS
+	 * environment.
 	 * 
 	 * @param context
 	 *            The context in which the robot should be placed.
@@ -261,8 +246,7 @@ public final class MapLoader {
 	 *            The {@link Entity} on the map.
 	 * @return The created robot
 	 */
-	private static void createEisEntityRobot(Context<Object> context,
-			ContinuousSpace<Object> space, Entity mapentity) {
+	private static void createEisEntityRobot(Context<Object> context, ContinuousSpace<Object> space, Entity mapentity) {
 		BW4TEnvironment environment = BW4TEnvironment.getInstance();
 
 		if (environment == null) {
@@ -275,14 +259,12 @@ public final class MapLoader {
 		try {
 			environment.registerEntity(robot.getName(), entity);
 		} catch (EntityException e) {
-			throw new IllegalStateException("Error when registering an entity",
-					e);
+			throw new IllegalStateException("Error when registering an entity", e);
 		}
 	}
 
 	/**
-	 * Creates a new {@link Robot} in the context according to the data in the
-	 * tokenizer.
+	 * Creates a new {@link Robot} in the context according to the data in the tokenizer.
 	 * 
 	 * @param context
 	 *            The context in which the robot should be placed.
@@ -292,12 +274,11 @@ public final class MapLoader {
 	 *            The {@link Entity} on the map.
 	 * @return The created robot
 	 */
-	private static NavigatingRobot createJavaRobot(Context<Object> context,
-			ContinuousSpace<Object> space, Entity mapentity) {
+	private static NavigatingRobot createJavaRobot(Context<Object> context, ContinuousSpace<Object> space,
+			Entity mapentity) {
 		String name = mapentity.getName();
 
-		NavigatingRobot robot = new NavigatingRobot(name, space, context,
-				map.getOneBotPerCorridorZone());
+		NavigatingRobot robot = new NavigatingRobot(name, space, context, map.getOneBotPerCorridorZone());
 
 		double x = mapentity.getPosition().getX();
 		double y = mapentity.getPosition().getY();
@@ -309,11 +290,9 @@ public final class MapLoader {
 	}
 
 	/**
-	 * Creates a new EMPTY (no blocks) {@link Room} in the context according to
-	 * the data in the tokenizer. We make the room empty because there may be
-	 * extra (random) blocks in addition to the explicit blocks for this room.
-	 * Therefore the exact blocks for this room have to be determined at a
-	 * higher level.
+	 * Creates a new EMPTY (no blocks) {@link Room} in the context according to the data in the tokenizer. We make the
+	 * room empty because there may be extra (random) blocks in addition to the explicit blocks for this room. Therefore
+	 * the exact blocks for this room have to be determined at a higher level.
 	 * 
 	 * @param context
 	 *            The context in which the room should be placed.
@@ -322,8 +301,7 @@ public final class MapLoader {
 	 * @param roomzone
 	 *            the room {@link Zone}.
 	 */
-	private static Room createRoom(Context<Object> context,
-			ContinuousSpace<Object> space, Zone roomzone) {
+	private static Room createRoom(Context<Object> context, ContinuousSpace<Object> space, Zone roomzone) {
 		Room room = new BlocksRoom(space, context, roomzone);
 
 		return room;
@@ -335,15 +313,13 @@ public final class MapLoader {
 	 * @param context
 	 * @param space
 	 */
-	private static Corridor createCorridor(Context<Object> context,
-			ContinuousSpace<Object> space, Zone zone) {
+	private static Corridor createCorridor(Context<Object> context, ContinuousSpace<Object> space, Zone zone) {
 		Corridor np = new Corridor(zone, space, context);
 		return np;
 	}
 
 	/**
-	 * Creates a new {@link Door} in the context according to the
-	 * {@link nl.tudelft.bw4t.map.Door}.
+	 * Creates a new {@link Door} in the context according to the {@link nl.tudelft.bw4t.map.Door}.
 	 * 
 	 * @param context
 	 *            The context in which the room should be placed.
@@ -352,9 +328,8 @@ public final class MapLoader {
 	 * @param args
 	 *            {@link nl.tudelft.bw4t.map.Door} object.
 	 */
-	private static void createDoor(Context<Object> context,
-			ContinuousSpace<Object> space, nl.tudelft.bw4t.map.Door args,
-			Room room) {
+	private static void createDoor(Context<Object> context, ContinuousSpace<Object> space,
+			nl.tudelft.bw4t.map.Door args, Room room) {
 		Door door = new Door(space, context);
 
 		double x = args.getPosition().getX();
@@ -375,8 +350,8 @@ public final class MapLoader {
 	 * @param args
 	 *            is a list of colors to be added.
 	 */
-	private static void createBlocksForRoom(Room room, Context<Object> context,
-			ContinuousSpace<Object> space, List<BlockColor> args) {
+	private static void createBlocksForRoom(Room room, Context<Object> context, ContinuousSpace<Object> space,
+			List<BlockColor> args) {
 		String roomName = room.getName();
 		BW4TLogger.getInstance().logRoomBlocks(roomName, args);
 
@@ -394,15 +369,13 @@ public final class MapLoader {
 	}
 
 	/**
-	 * find an unoccupied position for a new block in the given room, where the
-	 * given list of blocks are already in that room. Basically this algorithm
-	 * picks random points till a free position is found.
+	 * find an unoccupied position for a new block in the given room, where the given list of blocks are already in that
+	 * room. Basically this algorithm picks random points till a free position is found.
 	 * 
 	 * @param room
 	 * @param blocks
 	 */
-	private static Rectangle2D findFreePlace(Rectangle2D room,
-			List<Rectangle2D> blocks) {
+	private static Rectangle2D findFreePlace(Rectangle2D room, List<Rectangle2D> blocks) {
 		Rectangle2D block = null;
 		int retryCounter = 100; // max number of retries
 		boolean blockPlacedOK = false;
@@ -414,8 +387,7 @@ public final class MapLoader {
 			blockPlacedOK = room.contains(block);
 			for (Rectangle2D bl : blocks) {
 				/*
-				 * 2 blocks don't overlap if either their X or Y pos differs at
-				 * least 2*SIZE.
+				 * 2 blocks don't overlap if either their X or Y pos differs at least 2*SIZE.
 				 */
 				boolean noXoverlap = Math.abs(bl.getCenterX() - x) >= 2;
 				boolean noYoverlap = Math.abs(bl.getCenterY() - y) >= 2;
@@ -423,8 +395,7 @@ public final class MapLoader {
 				blockPlacedOK = blockPlacedOK && noOverlap;
 			}
 			if (retryCounter-- == 0 && !blockPlacedOK) {
-				throw new IllegalStateException(
-						"room is too small to fit more blocks");
+				throw new IllegalStateException("room is too small to fit more blocks");
 			}
 		}
 		return block;

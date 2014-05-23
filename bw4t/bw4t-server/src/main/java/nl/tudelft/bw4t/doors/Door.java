@@ -10,12 +10,11 @@ import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 
 /**
- * A door is a platform between a room and the outside. You can enter rooms only
- * through a door. This is implemented by making a thick door and requiring you
- * to first step on the door before stepping into the room.
+ * A door is a platform between a room and the outside. You can enter rooms only through a door. This is implemented by
+ * making a thick door and requiring you to first step on the door before stepping into the room.
  * 
- * Only when a door is open, someone from outside can go onto the door. From
- * inside, you are always allowed to go onto the door.
+ * Only when a door is open, someone from outside can go onto the door. From inside, you are always allowed to go onto
+ * the door.
  * 
  * 
  * @author W.Pasman
@@ -26,9 +25,8 @@ public class Door extends BoundedMoveableObject {
 	private final Color closecolor = Color.RED;
 
 	/**
-	 * The single room that this door connects to. There may be multiple doors
-	 * connecting to a single room. Stays null until the room is actually
-	 * connected. Unconnected doors are always open.
+	 * The single room that this door connects to. There may be multiple doors connecting to a single room. Stays null
+	 * until the room is actually connected. Unconnected doors are always open.
 	 */
 	private Room roomBehindTheDoor = null;
 
@@ -49,14 +47,13 @@ public class Door extends BoundedMoveableObject {
 	}
 
 	/**
-	 * only when a door is open, someone from outside can go onto the door. From
-	 * inside, you are always allowed to go onto the door.
+	 * only when a door is open, someone from outside can go onto the door. From inside, you are always allowed to go
+	 * onto the door.
 	 * 
 	 * @return
 	 */
 	public boolean isOpen() {
-		return roomBehindTheDoor == null
-				|| roomBehindTheDoor.getOccupier() == null;
+		return roomBehindTheDoor == null || roomBehindTheDoor.getOccupier() == null;
 	}
 
 	/**

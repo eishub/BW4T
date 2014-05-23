@@ -1,19 +1,19 @@
 package nl.tudelft.bw4t.client.startup;
 
-import eis.exceptions.ManagementException;
-import eis.exceptions.NoEnvironmentException;
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import nl.tudelft.bw4t.BW4TEnvironmentListener;
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.startup.LauncherException;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
-import nl.tudelft.bw4t.BW4TEnvironmentListener;
-import nl.tudelft.bw4t.client.BW4TRemoteEnvironment;
-import nl.tudelft.bw4t.startup.LauncherException;
+import eis.exceptions.ManagementException;
+import eis.exceptions.NoEnvironmentException;
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
 
 /**
  * This class is used to startup the remote environment to interact with the
@@ -26,12 +26,12 @@ public final class Launcher {
 	/**
 	 * store the remoteenvironment
 	 */
-	private static BW4TRemoteEnvironment environment;
-	
+	private static RemoteEnvironment environment;
+
 	/**
 	 * The log4j Logger which displays logs on console
 	 */
-	private static Logger logger = Logger.getLogger(Launcher.class);
+	private static Logger LOGGER = Logger.getLogger(Launcher.class);
 
 	/**
 	 * This is a utility class, no instantiation!
@@ -45,13 +45,13 @@ public final class Launcher {
 	 * @param args
 	 *            the console arguments
 	 */
-	public static void main(String[] args) {
-	    /**
-	     * Set up the logging environment to log on the console.
-	     */
-	    BasicConfigurator.configure();
-	    logger.info("Starting up BW4T Client.");
-	    logger.info("Reading initialization parameters...");
+	public static void launch(String[] args) {
+		/**
+		 * Set up the logging environment to log on the console.
+		 */
+		BasicConfigurator.configure();
+		LOGGER.info("Starting up BW4T Client.");
+		LOGGER.info("Reading initialization parameters...");
 		/**
 		 * Load all known parameters into the init array, convert it to EIS
 		 * format.
@@ -61,6 +61,7 @@ public final class Launcher {
 			init.put(param.nameLower(), new Identifier(
 					findArgument(args, param)));
 		}
+
 		startupEnvironment(init);
 	}
 
@@ -69,7 +70,7 @@ public final class Launcher {
 	 * 
 	 * @return the remote environment
 	 */
-	public static BW4TRemoteEnvironment getEnvironment() {
+	public static RemoteEnvironment getEnvironment() {
 		return environment;
 	}
 
@@ -78,22 +79,22 @@ public final class Launcher {
 	 * 
 	 * @param initParams
 	 *            the parameters to be given to the environment
-	 *            {@link BW4TRemoteEnvironment#init(Map)}
+	 *            {@link RemoteEnvironment#init(Map)}
 	 * @return the created environment
 	 */
-	public static BW4TRemoteEnvironment startupEnvironment(
+	public static RemoteEnvironment startupEnvironment(
 			Map<String, Parameter> initParams) {
 		if (environment != null) {
 			return environment;
 		}
-		environment = new BW4TRemoteEnvironment();
+		environment = new RemoteEnvironment();
 		environment.attachEnvironmentListener(new BW4TEnvironmentListener(
 				environment));
 		try {
-		    logger.info("Initializing environment...");
+			LOGGER.info("Initializing environment...");
 			environment.init(initParams);
 		} catch (ManagementException | NoEnvironmentException e) {
-		    logger.error("The Launcher encountered an error while trying to initialize the environment.");
+			LOGGER.error("The Launcher encountered an error while trying to initialize the environment.");
 			throw new LauncherException(e);
 		}
 		return environment;
@@ -103,7 +104,7 @@ public final class Launcher {
 	 * Find a certain argument in the string array and return its setting
 	 * 
 	 * @param args
-	 *            , the string array containing all the arguments
+	 *            the string array containing all the arguments
 	 * @param param
 	 *            the parameter to look for. The name of the parameter in lower
 	 *            case and prefixed with "-" should be in the list, and the next
@@ -112,12 +113,29 @@ public final class Launcher {
 	 *         array.
 	 */
 	private static String findArgument(String[] args, InitParam param) {
+		return findArgument(args, "-" + param.nameLower(), param.getDefaultValue());
+	}
+
+	/**
+	 * Find a certain argument in the string array and return its setting
+	 * 
+	 * @param args
+	 *            the string array containing all the arguments
+	 * @param param
+	 *            the name of the parameter to look for
+	 * @param def
+	 *            the default value for this parameter
+	 * @return
+	 */
+	private static String findArgument(String[] args, String param, String def) {
 		for (int i = 0; i < args.length - 1; i++) {
-			if (args[i].equalsIgnoreCase("-" + param.nameLower())) {
+			if (args[i].equalsIgnoreCase(param)) {
+				LOGGER.info("Found parameter '" + param + "' with '" + args[i + 1] + "'");
 				return args[i + 1];
 			}
 		}
-		return param.getDefaultValue();
+		LOGGER.info("Defaulting parameter '" + param + "' with '" + def + "'");
+		return def;
 	}
 
 }

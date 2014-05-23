@@ -29,15 +29,14 @@ import eis.iilang.Identifier;
 import eis.iilang.Parameter;
 
 /**
- * Used for directly displaying the simulation from the context, unlike
- * BW4TRenderer does not use percepts and can show all entities. Only used on
- * the server side (BW4TEnvironment side).
+ * Used for directly displaying the simulation from the context, unlike BW4TRenderer does not use percepts and can show
+ * all entities. Only used on the server side (BW4TEnvironment side).
  * <p>
- * Note, this renderer is largely independent of repast, so even though Repast
- * has its own rendering tools we don't use that.
+ * Note, this renderer is largely independent of repast, so even though Repast has its own rendering tools we don't use
+ * that.
  * <p>
- * Also note that this is a runnable and runs in its own thread with a refresh
- * rate of 10Hz, started by {@link BW4TBuilder}, see {@link #run()}.
+ * Also note that this is a runnable and runs in its own thread with a refresh rate of 10Hz, started by
+ * {@link BW4TBuilder}, see {@link #run()}.
  * 
  * @author trens
  * 
@@ -57,14 +56,13 @@ public class ServerContextDisplay extends JFrame {
 	 * @throws InstantiationException
 	 * @throws FileNotFoundException
 	 */
-	public ServerContextDisplay(Context context) throws InstantiationException,
-			IllegalAccessException, FileNotFoundException {
-	    try {
-	        UIManager.setLookAndFeel(
-	          UIManager.getSystemLookAndFeelClassName());
-	        } catch (Exception e) {
-	          e.printStackTrace();
-	      }
+	public ServerContextDisplay(Context context) throws InstantiationException, IllegalAccessException,
+			FileNotFoundException {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		setTitle("BW4T");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
@@ -77,9 +75,8 @@ public class ServerContextDisplay extends JFrame {
 	}
 
 	/**
-	 * We close ourselves if user clicks on reset. We need to since we are
-	 * created from {@link BW4TBuilder} which does not assume ownership; and
-	 * nobody else can create us it seems.
+	 * We close ourselves if user clicks on reset. We need to since we are created from {@link BW4TBuilder} which does
+	 * not assume ownership; and nobody else can create us it seems.
 	 */
 	public void close() {
 		myRenderer.stop();
@@ -145,19 +142,16 @@ class ControlPanel extends JPanel {
 }
 
 /**
- * This combo box allows user to select a new map. Doing that will reset the
- * server and reload the new map.
+ * This combo box allows user to select a new map. Doing that will reset the server and reload the new map.
  * <p>
- * We assume that a directory named "Maps" is available in the current
- * directory, and that it only contains maps.
+ * We assume that a directory named "Maps" is available in the current directory, and that it only contains maps.
  * 
  * @author W.Pasman 13mar13
  * 
  */
 @SuppressWarnings("serial")
 class MapSelector extends JPanel {
-	public MapSelector(final ServerContextDisplay displayer)
-			throws FileNotFoundException {
+	public MapSelector(final ServerContextDisplay displayer) throws FileNotFoundException {
 		setLayout(new BorderLayout());
 		add(new JLabel("Change Map"), BorderLayout.WEST);
 		Vector<String> maps = getMaps();
@@ -172,8 +166,7 @@ class MapSelector extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Map<String, Parameter> parameters = new HashMap<String, Parameter>();
-				parameters.put("map",
-						new Identifier((String) mapselector.getSelectedItem()));
+				parameters.put("map", new Identifier((String) mapselector.getSelectedItem()));
 				try {
 					// displayer.close(); now part of reset
 					BW4TEnvironment.getInstance().reset(parameters);
@@ -192,9 +185,6 @@ class MapSelector extends JPanel {
 	 */
 	private Vector<String> getMaps() throws FileNotFoundException {
 		File f = new File(System.getProperty("user.dir") + "/maps");
-		System.out.println("Working Directory = " +
-	              System.getProperty("user.dir"));
-		System.out.println(f.toString());
 		if (f.list() == null) {
 			throw new FileNotFoundException("maps directory not found");
 		}

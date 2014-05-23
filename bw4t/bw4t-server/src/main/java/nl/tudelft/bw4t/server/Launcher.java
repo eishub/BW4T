@@ -9,6 +9,9 @@ import java.rmi.RemoteException;
 
 import javax.xml.bind.JAXBException;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
+
 import nl.tudelft.bw4t.startup.LauncherException;
 import nl.tudelft.bw4t.util.FileUtils;
 import repast.simphony.scenario.ScenarioLoadException;
@@ -27,6 +30,11 @@ public class Launcher {
 	 * The Bw4tEnvironment at the core of this server.
 	 */
 	private static BW4TEnvironment environment;
+
+	/**
+	 * The log4j logger, logs to the console.
+	 */
+	private static Logger logger = Logger.getLogger(Launcher.class);
 
 	// Parameters from the operatingsystem
 
@@ -50,6 +58,14 @@ public class Launcher {
 	 * the message to be made available to the clients.
 	 */
 	private String paramServerMsg;
+	/**
+	 * true if GUI should be enabled, false if server should run without GUI.
+	 */
+	private boolean paramGUI;
+	/**
+	 * The key necessary to remotely kill the server.
+	 */
+	private String paramKey;
 
 	/**
 	 * This class cannot be externally instanciated, it is a utility startup class.
@@ -58,8 +74,16 @@ public class Launcher {
 	 *            The arguments received from the commandline
 	 */
 	protected Launcher(final String[] args) {
+		/**
+		 * Set up the logging environment to log on the console.
+		 */
+		BasicConfigurator.configure();
+		Launcher.logger.info("Starting up BW4T Server.");
+		Launcher.logger.info("Reading console arguments...");
 		readParameters(args);
+		Launcher.logger.info("Setting up correct directory structure.");
 		setupDirectoryStructure();
+		Launcher.logger.info("Setting up BW4T Environment.");
 		setupEnvironment();
 	}
 
@@ -76,6 +100,8 @@ public class Launcher {
 		paramServerPort = Integer.parseInt(findArgument(args, "-serverport", "8000"));
 		paramServerMsg = findArgument(args, "-msg", "Hello I am an BW4T Server version " + BW4TEnvironment.VERSION
 				+ ".");
+		paramGUI = Boolean.parseBoolean(findArgument(args, "-gui", "true"));
+		paramKey = findArgument(args, "-key", "GuVC7TZ38NN49X8utMspV3Z5");
 	}
 
 	/**
@@ -91,8 +117,10 @@ public class Launcher {
 	 */
 	private String findArgument(String[] args, String name, String def) {
 		String result = def;
+		logger.info("Default for parameter '" + name + "' is '" + def + "'");
 		for (int i = 0; i < args.length - 1; i++) {
 			if (args[i].equalsIgnoreCase(name)) {
+				logger.info("Found parameter '" + name + "' with '" + args[i + 1] + "'");
 				result = args[i + 1];
 				break;
 			}
@@ -105,9 +133,9 @@ public class Launcher {
 	 */
 	private void setupDirectoryStructure() {
 		boolean success = true;
-		
+
 		File userDir = new File(System.getProperty("user.dir"));
-		
+
 		File mapsFolder = new File(userDir.getAbsolutePath() + "/maps");
 		if (!mapsFolder.exists()) {
 			success &= mapsFolder.mkdir();
@@ -139,8 +167,9 @@ public class Launcher {
 	 */
 	private void setupEnvironment() {
 		try {
-			environment = new BW4TEnvironment(setupRemoteServer(), paramScenario, paramMap);
+			environment = new BW4TEnvironment(setupRemoteServer(), paramScenario, paramMap, paramGUI, paramKey);
 		} catch (ManagementException | IOException | ScenarioLoadException | JAXBException e) {
+			Launcher.logger.warn("Failed to start the BW4T Environment.");
 			throw new LauncherException("failed to start the bw4t environment", e);
 		}
 	}
@@ -154,6 +183,7 @@ public class Launcher {
 		try {
 			return new BW4TServer(paramServerIp, paramServerPort, paramServerMsg);
 		} catch (RemoteException | MalformedURLException e) {
+			Launcher.logger.warn("Failed to start the RPC Server.");
 			throw new LauncherException("failed to start the rpc server", e);
 		}
 	}

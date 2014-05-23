@@ -9,14 +9,19 @@
 		<module>bw4t-server</module>
 		<module>bw4t-client</module>
 		<module>bw4t-core</module>
+		<module>bw4t-integration-test</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <sonar.projectKey>nl.tudelft.bw4t</sonar.projectKey>
-    <sonar.projectName>BW4T</sonar.projectName>
-    <sonar.projectVersion>3.0.1</sonar.projectVersion>
-    <sonar.language>java</sonar.language>
-    <sonar.sources>src</sonar.sources>
+		<sonar.projectKey>nl.tudelft.bw4t</sonar.projectKey>
+		<sonar.projectName>BW4T</sonar.projectName>
+		<sonar.projectVersion>3.0.1</sonar.projectVersion>
+		<sonar.language>java</sonar.language>
+		<sonar.sources>src/main</sonar.sources>
+		<sonar.tests>src/test</sonar.tests>
+		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+		<sonar.java.coveragePlugin>cobertura</sonar.java.coveragePlugin>
+		<sonar.cobertura.reportPath>target/site/cobertura/coverage.xml</sonar.cobertura.reportPath>
 	</properties>
 	<repositories>
 		<repository>
@@ -26,6 +31,7 @@
 		</repository>
 		<repository>
 			<id>martin-private-dependency-repository</id>
+			<name>Martin Dependency</name>
 			<url>https://martinrogalla.com/bw4t/dependency/</url>
 		</repository>
 	</repositories>
