@@ -45,7 +45,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	/**
 	 * The log4j logger, logs to the console.
 	 */
-	private static final Logger LOGGER = Logger.getLogger(Launcher.class);
+	private static final Logger LOGGER = Logger.getLogger(BW4TServer.class);
 
 	private static final long serialVersionUID = -3459272460308988888L;
 	private Map<BW4TClientActions, ClientInfo> clients;

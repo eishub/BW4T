@@ -55,7 +55,7 @@ public class BW4TLogger {
 	/**
 	 * The log4j logger, logs to the console.
 	 */
-	private static Logger logger = Logger.getLogger(BW4TEnvironment.class);
+	private static final Logger LOGGER = Logger.getLogger(BW4TLogger.class);
 
 	/**
 	 * Here we store per-agent performance records.
@@ -71,15 +71,14 @@ public class BW4TLogger {
 	private BW4TLogger() {
 		reset();
 		try {
-			logger.info("Starting the BW4T logger.");
+			LOGGER.info("Starting the BW4T logger.");
 			logFile = File.createTempFile("BW4T", ".txt", new File(System.getProperty("user.dir") + "/log/"));
 			writer = new FileWriter(logFile);
 			List<String> info = new ArrayList<String>();
 			info.add("logcreationtime " + System.currentTimeMillis());
 			log(info);
 		} catch (IOException e) {
-			// logger.error("The BW4T Server was unable to open the logfile as requested. Proceeding as if no problem was encountered.");
-			e.printStackTrace();
+			LOGGER.error("The BW4T Server was unable to open the logfile as requested. Proceeding as if no problem was encountered.", e);
 		}
 	}
 
@@ -159,7 +158,7 @@ public class BW4TLogger {
 		} catch (IOException e) {
 			if (alreadywarned)
 				return;
-			e.printStackTrace();
+			LOGGER.warn("failed to write to the log", e);
 			alreadywarned = true;
 		}
 	}
@@ -256,12 +255,12 @@ public class BW4TLogger {
 	 * new log file.
 	 */
 	public synchronized void closeLog() {
-		logger.info("Closing the log file.");
+		LOGGER.info("Closing the log file.");
 		logAgentSummary();
 		try {
 			writer.close();
 		} catch (IOException e) {
-			// logger.error("Unable to close log file.");
+			LOGGER.warn("Unable to close log file.", e);
 		}
 		reset();
 	}

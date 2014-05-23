@@ -58,7 +58,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * The log4j logger, logs to the console.
 	 */
-	private static Logger LOGGER = Logger.getLogger(BW4TEnvironment.class);
+	private static final Logger LOGGER = Logger.getLogger(BW4TEnvironment.class);
 
 	private static String mapName;
 

@@ -69,7 +69,7 @@ public class RobotEntity implements RobotEntityInt {
 	/**
 	 * The log4j logger, logs to the console.
 	 */
-	private static Logger logger = Logger.getLogger(RobotEntity.class);
+	private static final Logger LOGGER = Logger.getLogger(RobotEntity.class);
 
 	private final NavigatingRobot ourRobot;
 	private final Context<Object> context;
@@ -271,7 +271,7 @@ public class RobotEntity implements RobotEntityInt {
 					result.addAll(env.getAssociatedEntities(agt));
 				}
 			} catch (AgentException e) {
-				logger.error("Ignoring an Agent's percept problem:" + e);
+				LOGGER.error("Ignoring an Agent's percept problem", e);
 			}
 		}
 		return result;
