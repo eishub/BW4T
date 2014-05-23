@@ -14,12 +14,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>nl.tudelft.bw4t</groupId>
-			<artifactId>bw4t-client</artifactId>
+			<artifactId>bw4t-server</artifactId>
 			<version>3.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>nl.tudelft.bw4t</groupId>
-			<artifactId>bw4t-server</artifactId>
+			<artifactId>bw4t-client</artifactId>
 			<version>3.0.1</version>
 		</dependency>
 	</dependencies>
