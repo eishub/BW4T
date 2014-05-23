@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.controller;
+package nl.tudelft.bw4t.scenariogui.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +22,7 @@ public class BotStoreController {
     private BotEditor view;
 
     /**
-     * Create the BotStore controller
+     * Create the BotStore controllers
      *
      * @param view The parent view, used to call relevant functions by the event listeners
      */

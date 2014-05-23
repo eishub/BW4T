@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.controller;
+package nl.tudelft.bw4t.scenariogui.controllers.menubar;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +10,9 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.controllers.Controller;
+import nl.tudelft.bw4t.scenariogui.controllers.DefaultOptionPrompt;
+import nl.tudelft.bw4t.scenariogui.controllers.OptionPrompt;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
@@ -23,12 +26,14 @@ public abstract class AbstractMenuOption implements ActionListener {
      * The menu bar as view.
      */
     private MenuBar view;
+
     /**
-     * The current controller that is controlling this.
+     * The current controllers that is controlling this.
      */
     private Controller controller;
 
     //made a variable for this so we can call it during testing
+
     /**
      * The file chooser.
      */
@@ -43,7 +48,7 @@ public abstract class AbstractMenuOption implements ActionListener {
      * Constructs a menu option object.
      *
      * @param newView  The new view.
-     * @param mainView The main view controller.
+     * @param mainView The main view controllers.
      */
     public AbstractMenuOption(final MenuBar newView, final Controller mainView) {
         this.view = newView;
@@ -122,6 +127,7 @@ public abstract class AbstractMenuOption implements ActionListener {
 
     /**
      * Returns the MenuBar
+     *
      * @return The MenuBar
      */
     public MenuBar getMenuView() {
@@ -137,18 +143,18 @@ public abstract class AbstractMenuOption implements ActionListener {
     public abstract void actionPerformed(ActionEvent e);
 
     /**
-     * Gets the controller.
+     * Gets the controllers.
      *
-     * @return The controller.
+     * @return The controllers.
      */
     public Controller getController() {
         return controller;
     }
 
     /**
-     * Sets the controller.
+     * Sets the controllers.
      *
-     * @param newController The new controller.
+     * @param newController The new controllers.
      */
     public void setController(final Controller newController) {
         controller = newController;

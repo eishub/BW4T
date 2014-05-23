@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.controller;
+package nl.tudelft.bw4t.scenariogui.controllers.menubar;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -10,6 +10,7 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.controllers.Controller;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
@@ -22,7 +23,8 @@ public class MenuOptionOpen extends AbstractMenuOption {
 
     /**
      * Constructs a new menu option open object.
-     * @param view The view.
+     *
+     * @param view     The view.
      * @param mainView The controlling main view.
      */
     public MenuOptionOpen(final MenuBar view, final Controller mainView) {
@@ -31,6 +33,7 @@ public class MenuOptionOpen extends AbstractMenuOption {
 
     /**
      * Gets called when the menu option open button is pressed.
+     *
      * @param e The action event.
      */
     public void actionPerformed(final ActionEvent e) {
@@ -82,9 +85,9 @@ public class MenuOptionOpen extends AbstractMenuOption {
                 ScenarioEditor.handleException(e1, "Error: No file has been found. ");
             }
 
-	        //set last file location to the opened file so that the previous saved file won't get
-	        //overwritten when the new config is saved.
-	        super.getMenuView().setLastFileLocation(openedFile);
+            //set last file location to the opened file so that the previous saved file won't get
+            //overwritten when the new config is saved.
+            super.getMenuView().setLastFileLocation(openedFile);
         }
         super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
     }

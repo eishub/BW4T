@@ -1,0 +1,36 @@
+package nl.tudelft.bw4t.scenariogui.controllers.entitypanel;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
+
+/**
+ * Handles the event to show the dropdown menu with the standard bots.
+ */
+public class BotDropDownButton implements ActionListener {
+
+    /**
+     * The <code>MainPanel</code> serving as the content pane.
+     */
+    private MainPanel view;
+
+    /**
+     * Create the menu drop down listener and set the view.
+     *
+     * @param newView The parent view, this is the JPanel where the button is on.
+     */
+    public BotDropDownButton(MainPanel newView) {
+        this.view = newView;
+    }
+
+    /**
+     * Handle the event by showing the dropdown menu
+     *
+     * @param ae The event
+     */
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        view.getEntityPanel().showBotDropDown();
+    }
+}
