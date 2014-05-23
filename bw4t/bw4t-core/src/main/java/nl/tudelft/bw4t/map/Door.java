@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Door implements Serializable {
     public enum Orientation {
         HORIZONTAL, VERTICAL
-    };
+    }
 
     private Point position = new Point();
     private Orientation orientation = Orientation.HORIZONTAL;
