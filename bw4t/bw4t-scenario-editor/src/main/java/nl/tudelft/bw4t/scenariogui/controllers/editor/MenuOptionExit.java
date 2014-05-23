@@ -1,17 +1,16 @@
-package nl.tudelft.bw4t.scenariogui.controllers.menubar;
+package nl.tudelft.bw4t.scenariogui.controllers.editor;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
 
-import nl.tudelft.bw4t.scenariogui.controllers.ScenarioEditorController;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 
 /**
  * Handles the event to exit the program.
  */
-public class MenuOptionExit extends AbstractMenuOption {
+class MenuOptionExit extends AbstractMenuOption {
 
     /**
      * Constructs a new menu option exit object.

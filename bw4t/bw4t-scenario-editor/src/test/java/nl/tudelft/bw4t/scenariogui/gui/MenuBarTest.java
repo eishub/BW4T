@@ -12,7 +12,7 @@ import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.controllers.NoMockOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.controllers.YesMockOptionPrompt;
-import nl.tudelft.bw4t.scenariogui.controllers.menubar.AbstractMenuOption;
+import nl.tudelft.bw4t.scenariogui.controllers.editor.AbstractMenuOption;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

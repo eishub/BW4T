@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.controllers.menubar;
+package nl.tudelft.bw4t.scenariogui.controllers.editor;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -10,7 +10,6 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.controllers.ScenarioEditorController;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
@@ -19,7 +18,7 @@ import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 /**
  * Handles the event to open a file.
  */
-public class MenuOptionOpen extends AbstractMenuOption {
+class MenuOptionOpen extends AbstractMenuOption {
 
     /**
      * Constructs a new menu option open object.
