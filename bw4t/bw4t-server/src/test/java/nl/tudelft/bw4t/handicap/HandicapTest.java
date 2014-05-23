@@ -1,5 +1,5 @@
 
-package nl.tudelft.bw4t.handicaps.tests;
+package nl.tudelft.bw4t.handicap;
 
 import static org.junit.Assert.*;
 import nl.tudelft.bw4t.handicap.ColorBlindHandicap;

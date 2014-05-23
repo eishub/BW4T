@@ -100,6 +100,7 @@ public class RobotEntity implements RobotEntityInt {
 	/**
 	 * Connect robot to repast (to be called when an agent is connected to this entity)
 	 */
+	@Override
 	public void connect() {
 		ourRobot.connect();
 	}
@@ -108,6 +109,7 @@ public class RobotEntity implements RobotEntityInt {
 	 * This function should be called before perception cycle is started, so that we can lock the relevant data from the
 	 * environment.
 	 */
+	@Override
 	public void initializePerceptionCycle() {
 		ourRobotLocation = new Point2D.Double(ourRobot.getLocation().getX(), ourRobot.getLocation().getY());
 		ourRobotRoom = RoomLocator.getRoomAt(ourRobotLocation.getX(), ourRobotLocation.getY());
@@ -301,12 +303,13 @@ public class RobotEntity implements RobotEntityInt {
 	}
 
 	/**
-	 * Percept if the robot is holding something. Send if it becomes true, and send negated if it becomes false again.
+	 * Percept if the robot is holding something. Send if it becomes true, and
+	 * send negated if it becomes false again.
 	 */
 	@AsPercept(name = "holding", filter = Filter.Type.ON_CHANGE_NEG)
-	public Long getHolding() {
-		Block holding = ourRobot.isHolding();
-		return holding != null ? holding.getId() : null;
+	public List<Block> getHolding() {
+		List<Block> holding = ourRobot.isHolding();
+		return holding;
 	}
 
 	/**
