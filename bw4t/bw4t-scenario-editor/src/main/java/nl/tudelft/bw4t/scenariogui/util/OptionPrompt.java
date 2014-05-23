@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.controllers;
+package nl.tudelft.bw4t.scenariogui.util;
 
 import java.awt.Component;
 
@@ -17,6 +17,13 @@ public interface OptionPrompt {
      * @return The chosen option
      */
     int showConfirmDialog(Component parentComponent, Object message, String title, int optionType, int messageType);
+
+    /**
+     *
+     * @param parentComponent The <code>java.awt.Component</code> that will be used to align the box.
+     * @param message
+     */
+    void showMessageDialog(Component parentComponent, Object message);
 }
 
 
