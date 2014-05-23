@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.controllers;
+package nl.tudelft.bw4t.scenariogui.controllers.editor;
 
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -7,10 +7,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.controllers.menubar.MenuOptionSave;
-import nl.tudelft.bw4t.scenariogui.controllers.menubar.MenuOptionSaveAs;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
-
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -21,15 +18,20 @@ import static org.mockito.Mockito.spy;
  * Tests the controllers class. It's near impossible to get the save button.
  *
  * @author Nick
- *
  */
 public class ControllerTest {
 
-    /** The file directory used for testing. */
+    /**
+     * The file directory used for testing.
+     */
     private static final String FILE_DIR = System.getProperty("user.dir")
             + "/src/test/resources/";
-    /** The file path used for testing. */
+
+    /**
+     * The file path used for testing.
+     */
     private static final String FILE_PATH = FILE_DIR + "SaveAsTest.xml";
+
     {
         File f = new File(FILE_PATH);
         if (f.exists()) {
@@ -37,7 +39,9 @@ public class ControllerTest {
         }
     }
 
-    /** The main GUI. */
+    /**
+     * The main GUI.
+     */
     private ScenarioEditor mainGUI = new ScenarioEditor();
 
     /**
@@ -47,7 +51,7 @@ public class ControllerTest {
     @Test
     public final void testSaveAfterHavingSavedBefore() {
         // set the last file location, so the quick save is possible
-        getMenu().setLastFileLocation(FILE_PATH); 
+        getMenu().setLastFileLocation(FILE_PATH);
         // press save (open dialogue)
         getMenu().getMenuItemFileSave().doClick();
         // verify(getSave(), times(1)).saveFile(false);
@@ -105,14 +109,12 @@ public class ControllerTest {
      * Gets the listener that is listening to this menu item which is of the
      * specified type.
      *
-     * @param menuItem
-     *            The menu item.
-     * @param listenerClass
-     *            The specified type.
+     * @param menuItem      The menu item.
+     * @param listenerClass The specified type.
      * @return The listener of this type found.
      */
     private ActionListener getListener(final JMenuItem menuItem,
-            final Class<?> listenerClass) {
+                                       final Class<?> listenerClass) {
         for (ActionListener listener : menuItem.getActionListeners()) {
             if (listenerClass.isInstance(listener)) {
                 return (ActionListener) listenerClass.cast(listener);
@@ -128,8 +130,7 @@ public class ControllerTest {
         File f = new File(FILE_PATH);
         if (f.exists()) {
             f.delete();
-        }
-        else {
+        } else {
             fail("File was not created as it should have.");
         }
     }
@@ -144,16 +145,16 @@ public class ControllerTest {
             public void run() {
                 while (true) {
                     JFileChooser fc = ((MenuOptionSaveAs) getListener(getMenu()
-                            .getMenuItemFileSaveAs(),
-                            MenuOptionSaveAs.class)).getCurrentFileChooser();
+                                    .getMenuItemFileSaveAs(),
+                            MenuOptionSaveAs.class
+                    )).getCurrentFileChooser();
                     if (fc != null) {
                         System.out.println("Not null! Executing..");
                         fc.setSelectedFile(new File(FILE_PATH));
                         fc.approveSelection();
                         System.out.println("..done!!");
                         break;
-                    }
-                    else {
+                    } else {
                         System.out.println("Is still null.");
 //                        try {
 //                            Thread.sleep(1000);
@@ -214,6 +215,7 @@ public class ControllerTest {
 
     /**
      * Gets the menu.
+     *
      * @return The menu.
      */
     private MenuBar getMenu() {
@@ -222,6 +224,7 @@ public class ControllerTest {
 
     /**
      * Gets the save button listener in the controllers class.
+     *
      * @return The save button listener in the controllers class.
      */
     private MenuOptionSave getSave() {
@@ -231,6 +234,7 @@ public class ControllerTest {
 
     /**
      * Gets the save as button listener in the controllers class.
+     *
      * @return The save as button listener in the controllers class.
      */
     private MenuOptionSaveAs getSaveAs() {
