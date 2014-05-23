@@ -10,7 +10,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.scenariogui.controller.Controller;
+import nl.tudelft.bw4t.scenariogui.controllers.editor.ScenarioEditorController;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
@@ -40,7 +40,7 @@ public class ScenarioEditor extends JFrame {
     /**
      * The <code>Controller</code> containing all the ActionEvents.
      */
-    private Controller controller;
+    private ScenarioEditorController controller;
 
     /**
      * Create the scenario editor frame, which will then hold the panels with
@@ -70,7 +70,7 @@ public class ScenarioEditor extends JFrame {
         // Setting the location relative to null centers the frame.
         setLocationRelativeTo(null);
 
-        controller = new Controller(this);
+        controller = new ScenarioEditorController(this);
         setVisible(true);
     }
 
@@ -86,8 +86,8 @@ public class ScenarioEditor extends JFrame {
         mPanel.setConfigurationPanel(configurationPanel);
         mPanel.setEntityPanel(entityPanel);
 
-        // Recreate the controller.
-        controller = new Controller(this);
+        // Recreate the controllers.
+        controller = new ScenarioEditorController(this);
     }
 
     /**
@@ -161,11 +161,11 @@ public class ScenarioEditor extends JFrame {
     }
 
     /**
-     * Returns the controller object being used to handle all events on the GUI.
+     * Returns the controllers object being used to handle all events on the GUI.
      *
      * @return The Controller used.
      */
-    public final Controller getController() {
+    public final ScenarioEditorController getController() {
         return controller;
     }
 
