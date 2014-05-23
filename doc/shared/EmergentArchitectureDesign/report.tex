@@ -1,0 +1,38 @@
+\documentclass[oneside]{tudelft-report}
+\usepackage{graphicx}
+\usepackage{glossaries}
+
+\makeglossaries 
+
+\input{glossaries}
+
+\begin{document}
+
+%% Use Roman numerals for the page numbers of the title pages and table of
+%% contents.
+\frontmatter
+
+\title[Blocks World for Teams]{Emergent Architecture\\ Design}
+\author{BW4T~Context~Project}
+\affiliation{Delft~University~of~Technology}
+\makecover
+
+%% Include an optional title page.
+\input{title}
+
+%% Use Arabic numerals for the page numbers of the chapters.
+\mainmatter
+\tableofcontents
+\input{abstract}
+\input{chapter-1}
+\input{chapter-2}
+\input{chapter-3}
+
+%% Use letters for the chapter numbers of the appendices.
+%\appendix
+%\input{appendix-a}
+
+%\bibliography{report}
+
+\end{document}
+
