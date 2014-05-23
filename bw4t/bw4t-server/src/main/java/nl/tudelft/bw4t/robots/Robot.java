@@ -214,11 +214,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 */
 	@Override
 	public boolean canPickUp(Block b) {
-		double distance = distanceTo(b.getLocation());
-		if (distance <= ARM_DISTANCE && b.isFree() && holding.size() < capacity)
-			return true;
-		else
-			return false;
+		return distanceTo(b.getLocation()) <= ARM_DISTANCE && b.isFree() && holding.size() < capacity;
 	}
 
 	/**
