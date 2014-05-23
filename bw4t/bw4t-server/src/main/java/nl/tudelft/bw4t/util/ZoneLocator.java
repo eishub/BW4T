@@ -17,6 +17,12 @@ import repast.simphony.space.continuous.NdPoint;
  */
 public class ZoneLocator {
 	/**
+	 * Utility class, cannot be instantiated.
+	 */
+	private ZoneLocator(){
+	}
+	
+	/**
 	 * Find {@link Zone} containing given point.
 	 * 
 	 * @param x
