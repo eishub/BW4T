@@ -82,7 +82,7 @@ public final class Launcher {
 	 *            {@link RemoteEnvironment#init(Map)}
 	 * @return the created environment
 	 */
-	public static RemoteEnvironment startupEnvironment(
+	public static synchronized RemoteEnvironment startupEnvironment(
 			Map<String, Parameter> initParams) {
 		if (environment != null) {
 			return environment;
