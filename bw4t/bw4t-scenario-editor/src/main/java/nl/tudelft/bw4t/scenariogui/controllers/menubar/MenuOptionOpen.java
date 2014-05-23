@@ -10,7 +10,7 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.controllers.Controller;
+import nl.tudelft.bw4t.scenariogui.controllers.ScenarioEditorController;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
@@ -27,7 +27,7 @@ public class MenuOptionOpen extends AbstractMenuOption {
      * @param view     The view.
      * @param mainView The controlling main view.
      */
-    public MenuOptionOpen(final MenuBar view, final Controller mainView) {
+    public MenuOptionOpen(final MenuBar view, final ScenarioEditorController mainView) {
         super(view, mainView);
     }
 
@@ -46,7 +46,7 @@ public class MenuOptionOpen extends AbstractMenuOption {
             // Check if user wants to save current configuration
             int response = super.getOptionPrompt().showConfirmDialog(
                     null,
-                    Controller.CONFIRM_SAVE_TXT,
+                    ScenarioEditorController.CONFIRM_SAVE_TXT,
                     "",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE);
