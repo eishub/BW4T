@@ -108,7 +108,6 @@ public class EntityPanelTest {
     @Test
     public void testAddNewBot() {
         spyEntityPanel.getNewBotButton().doClick();
-        verify(spyEntityPanel, times(1)).addBotAction();
         assertEquals(spyEntityPanel.getBotCount(), 1);
     }
 
@@ -119,7 +118,6 @@ public class EntityPanelTest {
     @Test
     public void testModifyBot() {
         spyEntityPanel.getModifyBotButton().doClick();
-        verify(spyEntityPanel, times(1)).modifyBotAction();
         //TODO: Verify if the bot has actually been modified.
     }
 
@@ -141,7 +139,6 @@ public class EntityPanelTest {
 
         /* Attempt to delete it */
         spyEntityPanel.getDeleteBotButton().doClick();
-        verify(spyEntityPanel, times(1)).deleteBotAction();
 
         /* check if the bot count is zero */
         assertEquals(spyEntityPanel.getBotCount(), 0);
@@ -166,7 +163,6 @@ public class EntityPanelTest {
 
         /* Attempt to delete it */
         spyEntityPanel.getDeleteBotButton().doClick();
-        verify(spyEntityPanel, times(1)).deleteBotAction();
 
         /* check if the bot count is still 1. */
         assertEquals(spyEntityPanel.getBotCount(), 1);
@@ -187,7 +183,6 @@ public class EntityPanelTest {
 
         /* Attempt to delete it */
         spyEntityPanel.getDeleteBotButton().doClick();
-        verify(spyEntityPanel, times(1)).deleteBotAction();
 
         /* check if the bot count is still 1. */
         assertEquals(spyEntityPanel.getBotCount(), 1);
@@ -200,7 +195,6 @@ public class EntityPanelTest {
     @Test
     public void testAddEPartner() {
         spyEntityPanel.getNewEPartnerButton().doClick();
-        verify(spyEntityPanel, times(1)).addEPartnerAction();
         assertEquals(spyEntityPanel.getEPartnerCount(), 1);
     }
 
@@ -211,7 +205,6 @@ public class EntityPanelTest {
     @Ignore
     public void testModifyEPartner() {
         spyEntityPanel.getModifyEPartnerButton().doClick();
-        verify(spyEntityPanel, times(1)).modifyEPartnerAction();
         //TODO: Verify if the E-partner has actually been modified.
     }
 
@@ -233,7 +226,6 @@ public class EntityPanelTest {
 
         /** Attempt to delete it */
         spyEntityPanel.getDeleteEPartnerButton().doClick();
-        verify(spyEntityPanel, times(1)).deleteEPartnerAction();
 
         /** Check if the E-partner count is zero */
         assertEquals(spyEntityPanel.getBotCount(), 0);
@@ -257,7 +249,6 @@ public class EntityPanelTest {
 
         /** Attempt to delete it */
         spyEntityPanel.getDeleteEPartnerButton().doClick();
-        verify(spyEntityPanel, times(1)).deleteEPartnerAction();
 
         /** Check if the E-partner count is still one */
         assertEquals(spyEntityPanel.getEPartnerCount(), 1);
@@ -277,7 +268,6 @@ public class EntityPanelTest {
 
         /** Attempt to delete it */
         spyEntityPanel.getDeleteEPartnerButton().doClick();
-        verify(spyEntityPanel, times(1)).deleteEPartnerAction();
 
         /** Check if the E-partner count is still one */
         assertEquals(spyEntityPanel.getEPartnerCount(), 1);
