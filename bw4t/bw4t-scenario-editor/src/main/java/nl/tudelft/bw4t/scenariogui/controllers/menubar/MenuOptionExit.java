@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
 
-import nl.tudelft.bw4t.scenariogui.controllers.Controller;
+import nl.tudelft.bw4t.scenariogui.controllers.ScenarioEditorController;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 
@@ -19,7 +19,7 @@ public class MenuOptionExit extends AbstractMenuOption {
      * @param view     The view.
      * @param mainView The controlling main view.
      */
-    public MenuOptionExit(final MenuBar view, final Controller mainView) {
+    public MenuOptionExit(final MenuBar view, final ScenarioEditorController mainView) {
         super(view, mainView);
     }
 
@@ -36,7 +36,7 @@ public class MenuOptionExit extends AbstractMenuOption {
             // Check if user wants to save current configuration
             int response = JOptionPane.showConfirmDialog(
                     null,
-                    Controller.CONFIRM_SAVE_TXT,
+                    ScenarioEditorController.CONFIRM_SAVE_TXT,
                     "",
                     JOptionPane.YES_NO_OPTION);
 

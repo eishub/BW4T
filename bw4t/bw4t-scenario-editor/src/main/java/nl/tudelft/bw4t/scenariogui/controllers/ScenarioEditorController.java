@@ -22,7 +22,7 @@ import nl.tudelft.bw4t.scenariogui.controllers.menubar.MenuOptionSaveAs;
  *
  * @author Calvin
  */
-public class Controller {
+public class ScenarioEditorController {
 
     /**
      * The text shown on the dialog when asked whether or not to save
@@ -40,7 +40,7 @@ public class Controller {
      *
      * @param newView used to call relevant functions by the event listeners.
      */
-    public Controller(final ScenarioEditor newView) {
+    public ScenarioEditorController(final ScenarioEditor newView) {
         this.view = newView;
 
         /** Create the action listeners for the ConfigurationPanel. */
