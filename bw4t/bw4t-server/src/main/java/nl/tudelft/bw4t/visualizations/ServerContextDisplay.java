@@ -17,11 +17,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.apache.log4j.Logger;
+
 import nl.tudelft.bw4t.BW4TBuilder;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.server.environment.Stepper;
 import repast.simphony.context.Context;
 import eis.exceptions.ManagementException;
@@ -45,6 +49,11 @@ import eis.iilang.Parameter;
 @SuppressWarnings("serial")
 public class ServerContextDisplay extends JFrame {
 
+	/**
+	 * The log4j logger, logs to the console.
+	 */
+	private static final Logger LOGGER = Logger.getLogger(ServerContextDisplay.class);
+
 	private ServerMapRenderer myRenderer;
 
 	/**
@@ -60,8 +69,9 @@ public class ServerContextDisplay extends JFrame {
 			FileNotFoundException {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			LOGGER.warn("failed to setup java look and feel", e);
 		}
 		setTitle("BW4T");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -94,7 +104,14 @@ public class ServerContextDisplay extends JFrame {
 @SuppressWarnings("serial")
 class ControlPanel extends JPanel {
 
-	// used to close the window when user presses reset.
+	/**
+	 * The log4j logger, logs to the console.
+	 */
+	private static final Logger LOGGER = Logger.getLogger(ControlPanel.class);
+
+	/**
+	 * used to close the window when user presses reset.
+	 */
 	final ServerContextDisplay displayer;
 
 	/**
@@ -134,7 +151,7 @@ class ControlPanel extends JPanel {
 					// displayer.close(); now part of reset
 					BW4TEnvironment.getInstance().reset();
 				} catch (Exception e) {
-					e.printStackTrace();
+					LOGGER.error("failed to reset the environment", e);
 				}
 			}
 		});
@@ -151,6 +168,12 @@ class ControlPanel extends JPanel {
  */
 @SuppressWarnings("serial")
 class MapSelector extends JPanel {
+
+	/**
+	 * The log4j logger, logs to the console.
+	 */
+	private static final Logger LOGGER = Logger.getLogger(MapSelector.class);
+
 	public MapSelector(final ServerContextDisplay displayer) throws FileNotFoundException {
 		setLayout(new BorderLayout());
 		add(new JLabel("Change Map"), BorderLayout.WEST);
@@ -171,7 +194,7 @@ class MapSelector extends JPanel {
 					// displayer.close(); now part of reset
 					BW4TEnvironment.getInstance().reset(parameters);
 				} catch (ManagementException e) {
-					e.printStackTrace(); // shouldn't happen
+					LOGGER.error("failed to reset the environment", e);
 				}
 			}
 		});
