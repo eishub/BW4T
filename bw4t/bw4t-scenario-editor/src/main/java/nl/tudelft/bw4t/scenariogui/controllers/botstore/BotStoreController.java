@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.controllers;
+package nl.tudelft.bw4t.scenariogui.controllers.botstore;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
