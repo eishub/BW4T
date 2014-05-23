@@ -1,15 +1,15 @@
-package nl.tudelft.bw4t.scenariogui.controllers;
+package nl.tudelft.bw4t.scenariogui.util;
 
 import java.awt.Component;
 
 import javax.swing.JOptionPane;
 
 /**
- * The OptionPrompt that always returns yes, used when mocking the
+ * The OptionPrompt that always returns no, used when mocking the
  * objects during tests, to prevent the system from hanging due
  * to having to press a button on the prompt.
  */
-public class YesMockOptionPrompt implements OptionPrompt {
+public class NoMockOptionPrompt implements OptionPrompt {
 
     /**
      * @param parentComponent The <code>java.awt.Component</code> that will be used to align the box.
@@ -21,6 +21,16 @@ public class YesMockOptionPrompt implements OptionPrompt {
      */
     public int showConfirmDialog(Component parentComponent, Object message, String title,
                                  int optionType, int messageType) {
-        return JOptionPane.YES_OPTION;
+        return JOptionPane.NO_OPTION;
+    }
+
+    /**
+     * This class will not show any message dialog.
+     *
+     * @param parentComponent The <code>java.awt.Component</code> that will be used to align the box.
+     * @param message
+     */
+    public void showMessageDialog(Component parentComponent, Object message) {
+        return;
     }
 }
