@@ -2,7 +2,7 @@ package nl.tudelft.bw4t.scenariogui.controllers.menubar;
 
 import java.awt.event.ActionEvent;
 
-import nl.tudelft.bw4t.scenariogui.controllers.Controller;
+import nl.tudelft.bw4t.scenariogui.controllers.ScenarioEditorController;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 
 /**
@@ -16,7 +16,7 @@ public class MenuOptionSaveAs extends AbstractMenuOption {
      * @param view     The view.
      * @param mainView The controlling main view.
      */
-    public MenuOptionSaveAs(final MenuBar view, final Controller mainView) {
+    public MenuOptionSaveAs(final MenuBar view, final ScenarioEditorController mainView) {
         super(view, mainView);
     }
 

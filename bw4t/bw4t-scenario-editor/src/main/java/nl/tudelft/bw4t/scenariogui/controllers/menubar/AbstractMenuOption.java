@@ -10,7 +10,7 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.controllers.Controller;
+import nl.tudelft.bw4t.scenariogui.controllers.ScenarioEditorController;
 import nl.tudelft.bw4t.scenariogui.controllers.DefaultOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.controllers.OptionPrompt;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
@@ -30,7 +30,7 @@ public abstract class AbstractMenuOption implements ActionListener {
     /**
      * The current controllers that is controlling this.
      */
-    private Controller controller;
+    private ScenarioEditorController controller;
 
     //made a variable for this so we can call it during testing
 
@@ -50,7 +50,7 @@ public abstract class AbstractMenuOption implements ActionListener {
      * @param newView  The new view.
      * @param mainView The main view controllers.
      */
-    public AbstractMenuOption(final MenuBar newView, final Controller mainView) {
+    public AbstractMenuOption(final MenuBar newView, final ScenarioEditorController mainView) {
         this.view = newView;
         this.setController(mainView);
 
@@ -147,7 +147,7 @@ public abstract class AbstractMenuOption implements ActionListener {
      *
      * @return The controllers.
      */
-    public Controller getController() {
+    public ScenarioEditorController getController() {
         return controller;
     }
 
@@ -156,7 +156,7 @@ public abstract class AbstractMenuOption implements ActionListener {
      *
      * @param newController The new controllers.
      */
-    public void setController(final Controller newController) {
+    public void setController(final ScenarioEditorController newController) {
         controller = newController;
     }
 
