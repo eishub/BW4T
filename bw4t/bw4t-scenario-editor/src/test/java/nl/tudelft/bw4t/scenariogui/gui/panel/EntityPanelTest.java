@@ -5,6 +5,7 @@ import java.awt.Component;
 import javax.swing.JOptionPane;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -15,8 +16,6 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 
 /**
@@ -28,10 +27,17 @@ public class EntityPanelTest {
      * The entity panel of the GUI.
      */
     private EntityPanel entityPanel;
+
     /**
      * A spy object of the entity panel of the GUI.
      */
     private EntityPanel spyEntityPanel;
+
+    /**
+     * Store the scenario editor so it can be properly disposed of
+     * at the end of the test run.
+     */
+    private ScenarioEditor editor;
 
     /**
      * Initializes the panel and GUI.
@@ -44,7 +50,16 @@ public class EntityPanelTest {
         ConfigurationPanel config = new ConfigurationPanel();
         /* The editor itself isn't used. It's simple so the BotPanel
          * gets handled by a controller. */
-        new ScenarioEditor(config, spyEntityPanel);
+        editor = new ScenarioEditor(config, spyEntityPanel);
+    }
+
+    /**
+     * Close the ScenarioEditor to prevent to many windows from cluttering
+     * the screen during the running of the tests
+     */
+    @After
+    public final void tearDown() {
+        editor.dispose();
     }
 
     /**

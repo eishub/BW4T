@@ -4,6 +4,7 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
+import org.junit.After;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -18,6 +19,15 @@ public class ScenarioEditorTest {
     private ScenarioEditor editor;
     /** The spy version of the scenario editor. */
     private ScenarioEditor spyEditor;
+
+    /**
+     * Close the ScenarioEditor to prevent to many windows from cluttering
+     * the screen during the running of the tests
+     */
+    @After
+    public final void closeEditor() {
+        editor.dispose();
+    }
 
     /**
      * Tests whether the active pane gets set correctly.
