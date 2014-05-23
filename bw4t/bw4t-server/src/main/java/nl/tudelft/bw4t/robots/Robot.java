@@ -590,10 +590,12 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	}
 
 	/**
-	 * set the parent, does not do anything because Robot is the super parent
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setParent(HandicapInterface hI) {}
+	public void setParent(HandicapInterface hI) {
+		//does not do anything because Robot is the super parent
+	}
 
 	/**
 	 * get the parent, returns null because Robot is the super parent

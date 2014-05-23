@@ -12,11 +12,12 @@ import nl.tudelft.bw4t.zone.Zone;
  */
 public interface HandicapInterface {
 	/**
-	 * 
+	 * Set the parent Handicap.
 	 * @param hI sets the parent of a handicap to hI
 	 */
 	public void setParent(HandicapInterface hI);
 	/**
+	 * Get the parent Handicap.
 	 * @return the parent of a handicap
 	 */
 	public HandicapInterface getParent();
@@ -44,6 +45,7 @@ public interface HandicapInterface {
 	 */
 	public MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door);
 	/**
+	 * Get the robot at the top of the Handicaps.
 	 * @return the Robot which is the super parent of the current handicap
 	 */
 	public Robot getSuperParent();	
