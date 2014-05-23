@@ -1,14 +1,13 @@
-package nl.tudelft.bw4t.scenariogui.controllers.menubar;
+package nl.tudelft.bw4t.scenariogui.controllers.editor;
 
 import java.awt.event.ActionEvent;
 
-import nl.tudelft.bw4t.scenariogui.controllers.ScenarioEditorController;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 
 /**
  * Handles the event to save a file.
  */
-public class MenuOptionSave extends AbstractMenuOption {
+class MenuOptionSave extends AbstractMenuOption {
 
     /**
      * Constructs a new menu option save object.
