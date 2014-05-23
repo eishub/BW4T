@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.gui.botstore;
+package main.java.nl.tudelft.bw4t.scenariogui.gui.botstore
 
 /**
  * @author Valentine
@@ -6,14 +6,12 @@ package nl.tudelft.bw4t.scenariogui.gui.botstore;
  */
 public final class BotEditorData {
 	
-	private int botSize = 2;
-	private int botSpeed = 100;
-	private int botBatteryCapacity = 0;
-	private int botBatteryDischargeRate = 0;
+	private int size = 2;
+	private int batteryCapacity = 0;
+	private int numberOfGrippers = 1;
+	private double speedMod = 1.0;
+	private double batteryDischargeRate = 0;
 	private boolean hasColorBlindHandicap = false;
-	private boolean hasGripperHandicap = false;
-	private boolean hasMoveSpeedHandicap = false;
-	private boolean hasSizeOverloadHandicap = false;
 	
 	/**
 	 * This class does not need a constructor.
@@ -25,56 +23,56 @@ public final class BotEditorData {
 	 * @return the size of the robot.
 	 */
 	public int getBotSize() {
-		return botSize;
+		return size;
 	}
 	
 	/**
 	 * @param newSize, the new size of the robot.
 	 */
 	public void setBotSize(int newSize) {
-		botSize = newSize;
-	}
-	
-	/**
-	 * @return the speed of the robot.
-	 */
-	public int getBotSpeed() {
-		return botSpeed;
-	}
-	
-	/**
-	 * @param newSpeed, the new speed of the robot.
-	 */
-	public void setBotSpeed(int newSpeed) {
-		botSpeed = newSpeed;
+		size = newSize;
 	}
 	
 	/**
 	 * @return the robot's battery capacity.
 	 */
-	public int getBotBatteryCapacity() {
-		return botBatteryCapacity;
+	public int getBatteryCapacity() {
+		return batteryCapacity;
 	}
 	
 	/**
 	 * @param newBatteryCapacity, the new robot's battery capacity.
 	 */
-	public void setBotBatteryCapacity(int newBatteryCapacity) {
-		botBatteryCapacity = newBatteryCapacity;
+	public void setBatteryCapacity(int newBatteryCapacity) {
+		batteryCapacity = newBatteryCapacity;
+	}
+
+	/**
+	 * @return if the robot has a gripper handicap.
+	 */
+	public int getNumberOfGrippers() {
+		return numberOfGrippers;
+	}
+	
+	/**
+	 * @param bool, adds or removes the gripper handicap.
+	 */
+	public void setNumberOfGrippers(int val) {
+		numberOfGrippers = val;
 	}
 	
 	/**
 	 * @return the robot's battery discharge rate.
 	 */
-	public int getBotBatteryDischargeRate() {
-		return botBatteryDischargeRate;
+	public double getBotBatteryDischargeRate() {
+		return batteryDischargeRate;
 	}
 	
 	/**
 	 * @param newBatteryDischargeRate, the new robot's battery discharge rate.
 	 */
-	public void setBotBatteryDischargeRate(int newBatteryDischargeRate) {
-		botBatteryDischargeRate = newBatteryDischargeRate;
+	public void setBotBatteryDischargeRate(double newBatteryDischargeRate) {
+		batteryDischargeRate = newBatteryDischargeRate;
 	}
 	
 	/**
@@ -89,47 +87,6 @@ public final class BotEditorData {
 	 */
 	public void setColorBlindHandicap(boolean bool) {
 		hasColorBlindHandicap = bool;
-	}
-	
-	/**
-	 * @return if the robot has a gripper handicap.
-	 */
-	public boolean getGripperHandicap() {
-		return hasGripperHandicap;
-	}
-	
-	/**
-	 * @param bool, adds or removes the gripper handicap.
-	 */
-	public void setGripperHandicap(boolean bool) {
-		hasGripperHandicap = bool;
-	}
-	
-	/**
-	 * @return if the robot has a move speed handicap.
-	 */
-	public boolean getMoveSpeedHandicap() {
-		return hasMoveSpeedHandicap;
-	}
-	
-	/**
-	 * @param bool, adds or removes the move speed handicap.
-	 */
-	public void setMoveSpeedHandicap(boolean bool) {
-		hasMoveSpeedHandicap = bool;
-	}
-	
-	/**
-	 * @return if the robot has a size overload handicap.
-	 */
-	public boolean getSizeOverloadHandicap() {
-		return hasSizeOverloadHandicap;
-	}
-	
-	/**
-	 * @param bool, adds or removes the size overload handicap.
-	 */
-	public void setSizeOverloadHandicap(boolean bool) {
-		hasSizeOverloadHandicap = bool;
-	}
+	}	
+
 }
