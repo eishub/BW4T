@@ -416,7 +416,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	 */
 	public void takeDown() {
 		try {
-			// registry.unbind(servername); //throws for unknown reason.
+			//registry.unbind(servername); //throws for unknown reason.
 			UnicastRemoteObject.unexportObject(this, true);
 		} catch (NoSuchObjectException e) {
 			LOGGER.error("server disconnect RMI failed", e);

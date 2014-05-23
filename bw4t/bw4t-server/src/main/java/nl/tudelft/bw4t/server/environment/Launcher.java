@@ -37,7 +37,7 @@ public class Launcher {
 	/**
 	 * The log4j logger, logs to the console.
 	 */
-	private static Logger logger = Logger.getLogger(Launcher.class);
+	private static final Logger LOGGER = Logger.getLogger(Launcher.class);
 
 	// Parameters from the operatingsystem
 
@@ -82,17 +82,17 @@ public class Launcher {
 		 */
 		BasicConfigurator.configure();
 		try {
-			logger.addAppender(new FileAppender(new PatternLayout(), "BW4TServer.log"));
+			LOGGER.addAppender(new FileAppender(new PatternLayout(), "BW4TServer.log"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Launcher.logger.info("Starting up BW4T Server.");
-		Launcher.logger.info("Reading console arguments...");
+		Launcher.LOGGER.info("Starting up BW4T Server.");
+		Launcher.LOGGER.info("Reading console arguments...");
 		readParameters(args);
-		Launcher.logger.info("Setting up correct directory structure.");
+		Launcher.LOGGER.info("Setting up correct directory structure.");
 		setupDirectoryStructure();
-		Launcher.logger.info("Setting up BW4T Environment.");
+		Launcher.LOGGER.info("Setting up BW4T Environment.");
 		setupEnvironment();
 	}
 
@@ -126,10 +126,10 @@ public class Launcher {
 	 */
 	private String findArgument(String[] args, String name, String def) {
 		String result = def;
-		logger.info("Default for parameter '" + name + "' is '" + def + "'");
+		LOGGER.debug("Default for parameter '" + name + "' is '" + def + "'");
 		for (int i = 0; i < args.length - 1; i++) {
 			if (args[i].equalsIgnoreCase(name)) {
-				logger.info("Found parameter '" + name + "' with '" + args[i + 1] + "'");
+				LOGGER.debug("Found parameter '" + name + "' with '" + args[i + 1] + "'");
 				result = args[i + 1];
 				break;
 			}
@@ -147,20 +147,24 @@ public class Launcher {
 
 		File mapsFolder = new File(userDir.getAbsolutePath() + "/maps");
 		if (!mapsFolder.exists()) {
+			LOGGER.debug("exporting maps to: " + mapsFolder.getPath());
 			success &= mapsFolder.mkdir();
 			success &= FileUtils.copyResourcesRecursively(this.getClass().getResource("/setup/maps"), userDir);
 		}
 		File scenarioFolder = new File(userDir.getAbsolutePath() + "/BW4T.rs");
 		if (!scenarioFolder.exists()) {
+			LOGGER.debug("exporting scenario to: " + scenarioFolder.getPath());
 			success &= scenarioFolder.mkdir();
 			success &= FileUtils.copyResourcesRecursively(this.getClass().getResource("/setup/BW4T.rs"), userDir);
 		}
-		File logsFolder = new File(userDir.getAbsolutePath() + "/log");
-		if (!logsFolder.exists()) {
-			success &= logsFolder.mkdir();
+		File logFolder = new File(userDir.getAbsolutePath() + "/log");
+		if (!logFolder.exists()) {
+			LOGGER.debug("creating log folder at: " + logFolder.getPath());
+			success &= logFolder.mkdir();
 		}
 		File binFolder = new File(userDir.getAbsolutePath() + "/bin/nl/tudelft");
 		if (!binFolder.exists()) {
+			LOGGER.debug("exporting server classes to: " + binFolder.getPath());
 			success &= binFolder.mkdirs();
 			success &= FileUtils.copyResourcesRecursively(this.getClass().getResource("/nl/tudelft/bw4t"), binFolder);
 		}
@@ -178,7 +182,7 @@ public class Launcher {
 		try {
 			environment = new BW4TEnvironment(setupRemoteServer(), paramScenario, paramMap, paramGUI, paramKey);
 		} catch (ManagementException | IOException | ScenarioLoadException | JAXBException e) {
-			Launcher.logger.warn("Failed to start the BW4T Environment.");
+			Launcher.LOGGER.warn("Failed to start the BW4T Environment.");
 			throw new LauncherException("failed to start the bw4t environment", e);
 		}
 	}
@@ -192,7 +196,7 @@ public class Launcher {
 		try {
 			return new BW4TServer(paramServerIp, paramServerPort, paramServerMsg);
 		} catch (RemoteException | MalformedURLException e) {
-			Launcher.logger.warn("Failed to start the RPC Server.");
+			Launcher.LOGGER.warn("Failed to start the RPC Server.");
 			throw new LauncherException("failed to start the rpc server", e);
 		}
 	}

@@ -31,7 +31,7 @@ public final class Launcher {
 	/**
 	 * The log4j Logger which displays logs on console
 	 */
-	private static Logger LOGGER = Logger.getLogger(Launcher.class);
+	private static final Logger LOGGER = Logger.getLogger(Launcher.class);
 
 	/**
 	 * This is a utility class, no instantiation!
@@ -130,11 +130,11 @@ public final class Launcher {
 	private static String findArgument(String[] args, String param, String def) {
 		for (int i = 0; i < args.length - 1; i++) {
 			if (args[i].equalsIgnoreCase(param)) {
-				LOGGER.info("Found parameter '" + param + "' with '" + args[i + 1] + "'");
+				LOGGER.debug("Found parameter '" + param + "' with '" + args[i + 1] + "'");
 				return args[i + 1];
 			}
 		}
-		LOGGER.info("Defaulting parameter '" + param + "' with '" + def + "'");
+		LOGGER.debug("Defaulting parameter '" + param + "' with '" + def + "'");
 		return def;
 	}
 
