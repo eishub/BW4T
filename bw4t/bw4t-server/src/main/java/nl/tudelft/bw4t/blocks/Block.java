@@ -53,13 +53,19 @@ public class Block extends BoundedMoveableObject {
 		// TODO: Can be refactored to only exist in the visualization?
 		return color;
 	}
+	
+	/**
+	 * @return set the color of the block
+	 */
+	public void setColorGrey() {
+		this.color = new Color(192,192,192);
+	}
 
 	@Override
 	public NdPoint getLocation() {
 		if (heldBy != null) {
 			return heldBy.getLocation();
-		}
-		else {
+		} else {
 			return super.getLocation();
 		}
 	}
