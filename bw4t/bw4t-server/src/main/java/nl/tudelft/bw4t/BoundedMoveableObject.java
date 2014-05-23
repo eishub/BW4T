@@ -22,7 +22,7 @@ public abstract class BoundedMoveableObject {
 	private static final AtomicLong COUNTER = new AtomicLong();
 
 	private final long id;
-	protected final ContinuousSpace<Object> space;
+	public final ContinuousSpace<Object> space;
 	protected final Context<Object> context;
 	protected final Rectangle2D.Double boundingBox;
 
@@ -64,6 +64,13 @@ public abstract class BoundedMoveableObject {
 	 */
 	public NdPoint getLocation() {
 		return space.getLocation(this);
+	}
+	
+	/**
+	 * @return The space of an object.
+	 */
+	public ContinuousSpace<Object> getSpace(){
+		return this.space;
 	}
 
 	/**
@@ -123,8 +130,7 @@ public abstract class BoundedMoveableObject {
 		if (boundingBox == null) {
 			if (other.boundingBox != null)
 				return false;
-		}
-		else if (!boundingBox.equals(other.boundingBox))
+		} else if (!boundingBox.equals(other.boundingBox))
 			return false;
 		if (id != other.id)
 			return false;
@@ -147,7 +153,8 @@ public abstract class BoundedMoveableObject {
 	 */
 	public double distanceTo(NdPoint there) {
 		NdPoint here = getLocation();
-		double distance = Math.sqrt(Math.pow(there.getX() - here.getX(), 2) + Math.pow(there.getY() - here.getY(), 2));
+		double distance = Math.sqrt(Math.pow(there.getX() - here.getX(), 2)
+				+ Math.pow(there.getY() - here.getY(), 2));
 		return distance;
 	}
 
