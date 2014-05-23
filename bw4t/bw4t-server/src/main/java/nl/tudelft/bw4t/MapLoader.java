@@ -81,7 +81,7 @@ public final class MapLoader {
 		/**
 		 * List of planned blocks for a room. We copy the map params and add the extra blocks to this map.
 		 */
-		AbstractMap<String, List<BlockColor>> roomblocks = new HashMap<String, List<BlockColor>>();
+		Map<String, List<BlockColor>> roomblocks = new HashMap<String, List<BlockColor>>();
 		Random random = new Random();
 		location = System.getProperty("user.dir") + "/maps/" + location;
 		map = NewMap.create(new FileInputStream(new File(location)));
@@ -377,7 +377,8 @@ public final class MapLoader {
 	 */
 	private static Rectangle2D findFreePlace(Rectangle2D room, List<Rectangle2D> blocks) {
 		Rectangle2D block = null;
-		int retryCounter = 100; // max number of retries
+		// max number of retries
+		int retryCounter = 100;
 		boolean blockPlacedOK = false;
 		while (!blockPlacedOK) {
 			double x = room.getMinX() + room.getWidth() * Math.random();
