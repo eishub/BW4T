@@ -1,4 +1,4 @@
-package main.java.nl.tudelft.bw4t.scenariogui.gui.botstore
+package nl.tudelft.bw4t.scenariogui.gui.botstore;
 
 /**
  * @author Valentine
