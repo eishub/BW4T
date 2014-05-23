@@ -1,5 +1,7 @@
 package nl.tudelft.bw4t.robots;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import nl.tudelft.bw4t.BoundedMoveableObject;
@@ -25,39 +27,63 @@ import repast.simphony.space.continuous.NdPoint;
  * 
  * @author Lennard de Rijk
  */
-public class Robot extends BoundedMoveableObject {
+public class Robot extends BoundedMoveableObject implements HandicapInterface {
 
 	/**
 	 * The distance which it can move per tick. This should never be larger than the door width because that might cause
 	 * the bot to attempt to jump over a door (which will fail).
 	 */
-	private static final double MAX_MOVE_DISTANCE = .5;
+	public static final double MAX_MOVE_DISTANCE = .5;
 	/**
-	 * When we are this close or closer, we are effectively at the target position.
+	 * When we are this close or closer, we are effectively at the target
+	 * position.
 	 */
-	private static final double MIN_MOVE_DISTANCE = .001;
+	public static final double MIN_MOVE_DISTANCE = .001;
 	/** The distance which it can reach with its arm to pick up a block. */
 	private static final double ARM_DISTANCE = 1;
+	/** The width and height of the robot */
+	public int SIZE = 2;
 
 	/** The name of the robot */
-	private final String name;
+	public final String name;
 
 	/** The location to which the robot wants to travel. */
-	private NdPoint targetLocation;
-	/** The block the robot is holding, null if none. */
-	private Block holding;
+	public NdPoint targetLocation;
+	/** The list of blocks the robot is holding. */
+	private List<Block> holding;
+	/** The max. amount of blocks a robot can hold, default is 1. */
+	private int capacity = 3;
+	
+	/**
+	 * True if robot is color blind
+	 */
+	private boolean colorBlind;
 
 	/**
 	 * set to true if we have to cancel a motion due to a collision. A collision is caused by an attempt to move into or
 	 * out of a room
 	 */
-	private boolean collided = false;
+	public boolean collided = false;
+	
 
 	/**
 	 * set to true when {@link #connect()} is called.
 	 */
 	private boolean connected = false;
-	private boolean oneBotPerZone;
+	public boolean oneBotPerZone;
+	
+	/**
+	 * 
+	 * a robot has a battery
+	 * a battery has a power value of how much the capacity should increment or decrement.
+	 */
+	public Battery battery;
+	
+	/**
+	 * 
+	 * Saves the robots handicap.
+	 */
+	public HashMap<String, HandicapInterface> handicapsMap;
 
 	/**
 	 * Creates a new robot.
@@ -76,7 +102,55 @@ public class Robot extends BoundedMoveableObject {
 
 		this.name = name;
 		this.oneBotPerZone = oneBotPerZone;
-		setSize(Constants.ROBOT_SIZE, Constants.ROBOT_SIZE);
+		setSize(SIZE, SIZE);
+		
+		/**
+		 * 
+		 * This is where the battery value will be fetched from the Bot Store GUI. 
+		 */
+		this.battery = new Battery(Integer.MAX_VALUE, Integer.MAX_VALUE, 0);
+		this.holding = new ArrayList<Block>(capacity);
+		handicapsMap = new HashMap<String, HandicapInterface>();
+	}
+	/**
+	 * Creates a new robot.
+	 * 
+	 * @param name
+	 *            The "human-friendly" name of the robot.
+	 * @param space
+	 *            The space in which the robot operates.
+	 * @param context
+	 *            The context in which the robot operates.
+	 * @param oneBotPerZone
+	 *            true if max 1 bot in a zone
+	 * @param colorBlindness
+	 * 			  true if Robot is color blind.
+	 * @param cap 
+	 * 			  The holding capacity of the robot.
+	 */
+	public Robot(String name, ContinuousSpace<Object> space,
+			Context<Object> context, boolean oneBotPerZone, boolean colorBlindness,
+			int cap) {
+		super(space, context);
+
+		this.name = name;
+		this.colorBlind = colorBlindness;
+		this.oneBotPerZone = oneBotPerZone;
+		setSize(SIZE, SIZE);
+		
+		/**
+		 * Valentine
+		 * This is where the battery value will be fetched from the Bot Store GUI. 
+		 */
+		this.battery = new Battery(Integer.MAX_VALUE, Integer.MAX_VALUE, 0);
+		capacity = cap;
+		this.holding = new ArrayList<Block>(capacity);
+		
+		/**
+		 * 
+		 * This list keeps track of the handicaps attached to the robot.
+		 */
+		handicapsMap = new HashMap<String, HandicapInterface>();
 	}
 
 	/**
@@ -93,7 +167,10 @@ public class Robot extends BoundedMoveableObject {
 
 	@Override
 	public boolean equals(Object obj) {
-		return super.equals(obj);
+		if (obj instanceof Robot)
+			return super.equals(obj);
+		else
+			return false;
 	}
 
 	/**
@@ -106,8 +183,15 @@ public class Robot extends BoundedMoveableObject {
 	/**
 	 * @return The block the robot is holding, null if holding none.
 	 */
-	public Block isHolding() {
+	public List<Block> isHolding() {
 		return holding;
+	}
+	
+	/**
+	 * @return The targetlocation of the robot
+	 */
+	public NdPoint getTargetLocation() {
+		return targetLocation;
 	}
 
 	/**
@@ -127,10 +211,10 @@ public class Robot extends BoundedMoveableObject {
 	 * @param b
 	 *            the block to check
 	 */
+	@Override
 	public boolean canPickUp(Block b) {
 		double distance = distanceTo(b.getLocation());
-
-		if (distance <= ARM_DISTANCE && b.isFree())
+		if (distance <= ARM_DISTANCE && b.isFree() && holding.size() < capacity)
 			return true;
 		else
 			return false;
@@ -162,29 +246,43 @@ public class Robot extends BoundedMoveableObject {
 	 * Drops the block the robot is holding on the current location. TODO: What if multiple blocks dropped at same spot?
 	 */
 	public void drop() {
-		if (holding != null) {
+		if (!holding.isEmpty()) {
 			// First check if dropped in dropzone, then it won't need to be
 			// added to the context again
-			DropZone dropZone = (DropZone) context.getObjects(DropZone.class).get(0);
-			if (!dropZone.dropped(holding, this)) {
+			DropZone dropZone = (DropZone) context.getObjects(DropZone.class)
+					.get(0);
+			Block b = holding.get(0);
+			if (!dropZone.dropped(b, this)) {
 				// bot was not in the dropzone.. Are we in a room?
 				Zone ourzone = getZone();
 				if (ourzone instanceof Room) {
 					// We are in a room so can drop the block
-					holding.setHeldBy(null);
-					holding.addToContext();
+					b.setHeldBy(null);
+					b.addToContext();
 					// Slightly jitter the location where the box is
 					// dropped
 					double x = ourzone.getLocation().getX();
 					double y = ourzone.getLocation().getY();
-					holding.moveTo(RandomHelper.nextDoubleFromTo(x - 5, x + 5),
+					b.moveTo(RandomHelper.nextDoubleFromTo(x - 5, x + 5),
 							RandomHelper.nextDoubleFromTo(y - 5, y + 5));
-					holding = null;
+					holding.remove(0);
 					return;
 
 				}
 			}
-			holding = null;
+			holding.remove(0);
+		}
+	}
+	
+	/**
+	 * A method for dropping multiple blocks at once.
+	 * @param amount The amount of blocks that have to be dropped,
+	 * needs to be less than the amount of blocks in the list.
+	 */
+	public void drop(int amount) {
+		assert amount <= holding.size();
+		for(int i = 0; i < amount; i++) {
+			drop();
 		}
 	}
 
@@ -207,7 +305,7 @@ public class Robot extends BoundedMoveableObject {
 		super.moveTo(x, y);
 	}
 
-	enum MoveType {
+	public enum MoveType {
 		/**
 		 * start and end point are in same room/corridor
 		 */
@@ -238,7 +336,8 @@ public class Robot extends BoundedMoveableObject {
 		ENTER_CORRIDOR;
 
 		/**
-		 * Merge the move type if multiple zones are entered at once. The result is the 'worst' event that happens
+		 * Merge the move type if multiple zones are entered at once. The result
+		 * is the 'worst' event that happens
 		 * 
 		 * @param other
 		 * @return
@@ -254,7 +353,8 @@ public class Robot extends BoundedMoveableObject {
 		}
 
 		public boolean isHit() {
-			return this == HIT_CLOSED_DOOR || this == HIT_WALL || this == HIT_OCCUPIED_ZONE;
+			return this == HIT_CLOSED_DOOR || this == HIT_WALL
+					|| this == HIT_OCCUPIED_ZONE;
 		}
 	}
 
@@ -298,7 +398,8 @@ public class Robot extends BoundedMoveableObject {
 	 * @param endzone
 	 * @return
 	 */
-	private MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door) {
+	@Override
+	public MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door) {
 		if (startzone == endzone) {
 			return MoveType.SAME_AREA;
 		}
@@ -392,6 +493,7 @@ public class Robot extends BoundedMoveableObject {
 		moveTo(getLocation().getX() + x, getLocation().getY() + y);
 	}
 
+	@Override
 	@ScheduledMethod(start = 0, duration = 0, interval = 1)
 	public synchronized void move() {
 		if (targetLocation != null) {
@@ -399,20 +501,27 @@ public class Robot extends BoundedMoveableObject {
 			double distance = distanceTo(targetLocation);
 			if (distance < MIN_MOVE_DISTANCE) {
 				stopRobot(); // we're there
-			}
-			else {
+			} else {
 				double movingDistance = Math.min(distance, MAX_MOVE_DISTANCE);
 
 				// Angle at which to move
-				double angle = SpatialMath.calcAngleFor2DMovement(space, getLocation(), targetLocation);
+				double angle = SpatialMath.calcAngleFor2DMovement(space,
+						getLocation(), targetLocation);
 
 				// The displacement of the robot
-				double[] displacement = SpatialMath.getDisplacement(2, 0, movingDistance, angle);
+				double[] displacement = SpatialMath.getDisplacement(2, 0,
+						movingDistance, angle);
 
 				try {
 					// Move the robot to the new position using the displacement
 					moveByDisplacement(displacement[0], displacement[1]);
 					BW4TLogger.getInstance().logMoving(name);
+					
+					/**
+					 * Valentine
+					 * The robot's battery discharges when it moves.
+					 */
+					this.battery.discharge();
 				} catch (SpatialException e) {
 					collided = true;
 					stopRobot();
@@ -449,5 +558,78 @@ public class Robot extends BoundedMoveableObject {
 
 	public boolean isConnected() {
 		return connected;
+	}
+	
+	/**
+	 * Valentine
+	 * This method returns the battery percentage.
+	 */
+	public int getBatteryPercentage() {
+		return this.battery.getPercentage();
+	}
+	
+	/**
+	 * Valentine
+	 * @return discharge rate of battery.
+	 */
+	public int getDischargeRate() {
+		return this.battery.getDischargeRate();
+	}
+	
+	
+	/**
+	 * Valentine
+	 * The robot is in a charging zone.
+	 * The robot charges.
+	 */
+	public void recharge() {
+		if (this.getZone().getName().equals("chargingzone")) {
+			this.battery.recharge();
+		}
+	}
+
+	/**
+	 * set the parent, does not do anything because Robot is the super parent
+	 */
+	@Override
+	public void setParent(HandicapInterface hI) {}
+
+	/**
+	 * get the parent, returns null because Robot is the super parent
+	 */
+	@Override
+	public HandicapInterface getParent() {
+		return null;
+	}
+	
+	/**
+	 * returns this Robot
+	 */
+	@Override
+	public Robot getSuperParent() {
+		return this;
+	}
+	
+	/**
+	 * Sets the size of a robot to a certain integer
+	 * @param s
+	 */
+	public void setSize(int s) {
+		this.SIZE = s;
+		setSize(s, s);
+	}
+	
+	/**
+	 * Gets the size of the robot
+	 * @return SIZE
+	 */
+	public int getSize() {
+		return this.SIZE;
+	}
+	public int getCapacity() {
+		return capacity;
+	}
+	public void setCapacity(int cap) {
+		capacity = cap;
 	}
 }
