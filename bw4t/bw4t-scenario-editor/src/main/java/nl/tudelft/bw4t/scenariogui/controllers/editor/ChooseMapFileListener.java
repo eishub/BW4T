@@ -7,6 +7,7 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
@@ -48,7 +49,7 @@ class ChooseMapFileListener implements ActionListener {
         if (returnVal == JFileChooser.APPROVE_OPTION && file.getName().endsWith(mapExtension)) {
             view.getConfigurationPanel().setMapFile(file.getPath());
         } else if (returnVal == JFileChooser.APPROVE_OPTION && !file.getName().endsWith(mapExtension)) {
-            JOptionPane.showMessageDialog(view, "This is not a valid file.");
+            ScenarioEditor.option.showMessageDialog(view, "This is not a valid file.");
         }
     }
 }
