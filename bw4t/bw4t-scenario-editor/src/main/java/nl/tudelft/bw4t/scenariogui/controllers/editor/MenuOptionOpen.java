@@ -10,6 +10,7 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.config.BotConfig;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
@@ -65,19 +66,22 @@ class MenuOptionOpen extends AbstractMenuOption {
             String openedFile = fileChooser.getSelectedFile().toString();
 
             try {
-                BW4TClientConfig temp = BW4TClientConfig.fromXML(file.getAbsolutePath());
+                BW4TClientConfig configuration= BW4TClientConfig.fromXML(file.getAbsolutePath());
 
                 // Fill the configuration panel
-                configPanel.setClientIP(temp.getClientIp());
-                configPanel.setClientPort("" + temp.getClientPort());
-                configPanel.setServerIP(temp.getServerIp());
-                configPanel.setServerPort("" + temp.getServerPort());
-                configPanel.setUseGui(temp.isLaunchGui());
+                configPanel.setClientIP(configuration.getClientIp());
+                configPanel.setClientPort("" + configuration.getClientPort());
+                configPanel.setServerIP(configuration.getServerIp());
+                configPanel.setServerPort("" + configuration.getServerPort());
+                configPanel.setUseGui(configuration.isLaunchGui());
 //                configPanel.setUseGoal(temp.isUseGoal());
-                configPanel.setMapFile(temp.getMapFile());
+                configPanel.setMapFile(configuration.getMapFile());
 
                 // Fill the bot panel
-                //TODO fill botPanel
+
+                for(BotConfig bot : configuration.getBots()) {
+                    // TODO: LOAD AND FILL BOT LIST HERE
+                }
             } catch (JAXBException e1) {
                 ScenarioEditor.handleException(e1, "Error: Opening the XML has failed.");
             } catch (FileNotFoundException e1) {
