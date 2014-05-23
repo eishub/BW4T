@@ -10,6 +10,7 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.config.BotConfig;
 import nl.tudelft.bw4t.scenariogui.util.DefaultOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
@@ -107,7 +108,9 @@ public abstract class AbstractMenuOption implements ActionListener {
             }
         }
         try {
-            new BW4TClientConfig((MainPanel) (getController().getMainView()).getContentPane(), path).toXML();
+            BW4TClientConfig configuration =  new BW4TClientConfig((MainPanel) (getController().getMainView()).getContentPane(), path);
+            //TODO: UNLOAD AND SAVE BOTS HERE
+            configuration.toXML();
             view.setLastFileLocation(path);
         } catch (JAXBException e) {
             ScenarioEditor.handleException(
