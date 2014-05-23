@@ -1,3 +1,5 @@
+package nl.tudelft.bw4t.scenariogui.gui.botstore;
+
 /**
  * @author Valentine
  * This class stores all the date from the BotEditorUI. 
