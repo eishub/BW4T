@@ -1,0 +1,66 @@
+\documentclass[oneside]{tudelft-report}
+
+
+\usepackage[acronym]{glossaries}
+\makeglossaries
+\usepackage{imakeidx}
+\makeindex
+
+\input{glossary/glossary}
+\begin{document}
+
+%% Use Roman numerals for the page numbers of the title pages and table of
+%% contents.
+\frontmatter
+
+\title[Blocks World for Teams]{Product Planning}
+\author{BW4T~Context~Project}
+\affiliation{Delft University of Technology}
+\makecover
+
+\mainmatter	
+%% Include an optional title page.
+\input{title}
+
+\pagebreak
+\chapter*{Abstract}
+\input{abstract/abstract}
+
+\pagebreak
+\tableofcontents
+\pagebreak
+
+
+\chapter{Introduction}
+\input{product_planning_files/introduction}
+
+\chapter{Product}
+\section{High-level product backlog}
+\input{product_planning_files/highlevelbacklog}
+
+\section{Roadmap}
+\input{product_planning_files/roadmap}
+
+
+\chapter{Product backlog}
+\section{User stories of features}
+\input{user_stories/user_stories_features}
+
+\section{User stories of technical improvements}
+\input{user_stories/user_stories_improvements}
+
+\section{User stories of know-how acquisition}
+\input{user_stories/user_stories_know-how}
+
+\section{Initial Release Plan}
+\input{Initial_Release_Plan/Initial_Release_Plan}
+
+
+\chapter{Definition of Done}
+\input{product_planning_files/definition-of-done}
+
+\printglossaries
+
+\addcontentsline{toc}{chapter}{Glossary}
+
+\end{document}
