@@ -6,6 +6,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
+import nl.tudelft.bw4t.scenariogui.controller.BotStoreController;
+
 /**
  * This class serves as frame for the BotEditorPanel
  * @author Arun
