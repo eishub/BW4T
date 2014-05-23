@@ -10,8 +10,8 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.controllers.NoMockOptionPrompt;
-import nl.tudelft.bw4t.scenariogui.controllers.YesMockOptionPrompt;
+import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
+import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.controllers.editor.AbstractMenuOption;
 import org.junit.After;
 import org.junit.Before;
@@ -135,7 +135,7 @@ public class MenuBarTest {
         // There should be one listener, so we check that and then change the option pane.
         assert listeners.length == 1;
         AbstractMenuOption option = (AbstractMenuOption) listeners[0];
-        option.setOptionPrompt(yesMockOption);
+        ScenarioEditor.option = yesMockOption;
 
         // Change the defaults
         editor.getMainPanel().getConfigurationPanel().setClientIP("randomvalue");
@@ -183,9 +183,7 @@ public class MenuBarTest {
         // There should be one listener, so we check that and then change the option pane.
         assert listeners.length == 1;
         AbstractMenuOption option = (AbstractMenuOption) listeners[0];
-        option.setOptionPrompt(noMockOption);
-
-        option.setOptionPrompt(noMockOption);
+        ScenarioEditor.option = noMockOption;
 
         // Change the defaults
         editor.getMainPanel().getConfigurationPanel().setClientIP("randomval");
