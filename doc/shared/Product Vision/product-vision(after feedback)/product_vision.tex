@@ -1,0 +1,80 @@
+\documentclass[oneside]{tudelft-report}
+
+\usepackage{fullpage}
+\usepackage{hyperref}
+\usepackage{{apacite}
+\usepackage{url}
+\usepackage{graphicx}
+\bibliographystyle{unsrt}
+\usepackage[acronym]{glossaries}
+\usepackage{imakeidx}
+\makeindex
+
+
+\begin{document}
+
+%% Use Roman numerals for the page numbers of the title pages and table of
+%% contents.
+\frontmatter
+
+\title[Blocks World for Teams]{Product Vision}
+\author{BW4T~Context~Project}
+\affiliation{Delft University of Technology}
+\makecover
+
+\mainmatter	
+%% Include an optional title page.
+\input{title}
+
+\pagebreak
+\section*{Abstract}
+Given the BW4T environment, we have been assigned the task to enhance this software and to extend its features according to what our customer needs. This new product will be used for further research in the domain of Joint Activity and human robot interaction. Not only will our product stand out in comparison to other products on the market, but it will also further the horizons of students and researchers, allowing them to reason about processes humans naturally understand and follow.
+
+
+\pagebreak
+\tableofcontents
+\pagebreak
+
+%TODO CONTENTS
+\chapter{Customer}
+
+\section{Usage}
+Blocks World For Teams (BW4T) \cite{bw4t} is an environment used to test joint activity, by simulating a Multi Agent System (MAS). A MAS is a system in which multiple agents work together as a team to reach a unified goal. The BW4T even has support for the mixed human-agent coordination simulation. The BW4T environment simulates a simplification of a real time rescue operation. The context Coordinated Teams: A Search and Rescue Mission \cite{context} describes rescue missions with situations unsuitable for humans. For their missions the need for robots is growing. BW4T adresses this issue and is now used mostly for research purposes as to understand and improve the coordination of human-agent teams \cite{humanagent}. Thus it will be used to measure the competence of those teams and help improve the interactions of the team members. Additionally the environment will also be used for educational purposes, to teach students the concept of MAS. This gives the students an insight on how to work with agents and how to use them in diverse missions.
+
+\section{Target Customers}
+Research groups will buy our product in the name of their university. Several researchers of such a research group will be the main users of the product. They will develop human-agent teams for a variety of scenarios in order to test their effectiveness. This environment will be developed just for that. As stated earlier the BW4T environment will also be used for teaching \cite{lecture}. However this will be less important for the development because the students will only learn certain aspects of the overall system. 
+
+In the future, the BW4T (or an enhanced version of it), might be used by actual rescue teams who need to use one or more robots in their missions. They will have the need to extensively test their team before they will actually use it in the field. They can start testing their teams with a product like the one we are building. However more development is necessary to make the system advanced enough to be used with real life robots. Also this would require a standard to be written for the interfaces between agents, in order to be able to coordinate them. 
+
+With researchers being the main users of BW4T, it will have to be tailored to their needs. Which will be discussed next.
+
+\chapter{Customer needs}
+The customer has provided us with software designed for team interaction between robots as well as between robots and humans. This software is part of the study of Joint Activity. For participants in deep research among human robot interaction, our product will be used to enhance their understanding of interdependance in a team situation and eventually apply this knowledge in the real world.
+
+There are two main needs we have analysed from the instructions given by the customer \cite{context} that we need to fulfill: the first one being the ease of use of the existing BW4T software. Promoting high cohesion and low coupling within the system should be our main goal. For instance, if they want to remove some of the system's functionalities, it should not have any effect on the rest of the software. Secondly agents’ or humans' orders need to be translated for the robots that will be used for Search and Rescue missions. In order to achieve this, we need to make good use of software called Repast, which is an extensible framework for agent simulation \cite{repast}, and combine it with GOAL as smoothly as possible. For the study of Joint Activity, it is essential to be able to run simulations with robots who are assigned a certain amount of tasks. But to perform simulations that will give good and valid results, it is mandatory to make it as realistic as possible. That is exactly what the customer needs: a realistic environment with a realistic robot behavior, so they can observe and draw consistent conclusions from the simulations.
+
+For the ease of use of the product, the current system has two main interfaces provided: a scenario GUI and human GUI. With the scenario GUI, the customer can customize the environment they want their robots to perform in. They can also add certain attributes to their robots through that same UI: features such as wheels, extra speed, feet, etc… Many scenarios can be thought up, for instance: an avalanche occurred and people need to be found and rescued as soon as possible. Or in a burning house, the firefighters need to coordinate with drones and other robots in order to find and rescue trapped individuals. With the human GUI, a human can take control of the situation and interact with the environment. 
+
+Communication is also an important part of our project. Enhancing team performance through effective communication between robots (or between robots and humans) is the key to a successful experiment \cite{communication}. Agents need to communicate in order to achieve goals faster. We can even mention a real world example: in a project team, communication is important to know what every member of the team is up to and what potential difficulties they encounter. This allows a team to advance quicker in the development of their product, and to avoid misunderstandings and detrimental problems. This can also apply to agents in the virtual world. 
+
+To facilitate joint activity between a human and other agents, we make use of the e-Partner concept. E-Partners have already been used in the medical environment: they assist and bring support to elders or children with mental disorders \cite{Pelsmaeker}. A human can take control of the robots with the e-Partner feature. The e-Partner can also guide the human through the environment and can help them achieve certain tasks: such as remembering the position of certain objects or targets within the environment. We will represent the e-Partner in the BW4T environment as a separate block that the human can pick up. Once in possession of an e-Partner, the human "player" will also be able to communicate with the other agents and give orders to them.
+
+The last feature provided for the customer has already been mentioned above: realism. It is imperative to create environments and robot capabilities as realistic as possible; otherwise research results would not be representative of a real world experience. The product will eventually be used on real Search and Rescue missions, with real robots in a real environment. Realism and accuracy of the simulations will improve the quality of the simulation results in respect to real life. 
+
+\chapter{Comparison}
+The product we are developing is an upgraded version of the existing BW4T simulation environment. It is extended in a few ways. First, the bots can see each other when there are no obstacles in between them and they can not walk over one another. If they bump into each other, damage or loss of functionality may occur. This feature makes the simulation more realistic. Second, there is an environment store where maps can be randomly generated, manually created and saved. This makes it more convenient to test on random scenarios. Because of the option to manually create maps, more realistic environments can be made to test on. Another new feature is the e-Partner (mentioned in chapter 2). This feature can be used in various ways to assist the human, which makes more diverse simulations possible.
+
+This product is similar to Gamebots: A 3D Virtual World Test-Bed For Multi-Agent Research \cite{adobbati2001gamebots} in the aspect of multiple environments creation and the human-agent collaboration. Another similar product is A Multi Context Dynamic Test Bed for Simulating Real World Constraints in Agents' Teamwork \cite{salehi2012multi}. It is used for evaluation of subjects relating to multi-agent's joint activity. But what makes our product stand out is that there are no restrictions to the number of human and agent teams.
+
+\chapter{Time Frame \& Budget}
+The project of improving the current BW4T environment will take around six to eight weeks. This block of time will be split up in separate sprints of a week each. With one to two weeks in the beginning to set and start up the project it will be assured that all aspects covered will be accounted for in the following weeks.  Ensuring that the rest of the process will go as smooth as possible. This necessary because the biggest part of the project, which consists of 6-7 weeks, will be managed in the Scrum framework. Using the Scrum framework means that every week a scrum has to take place, resulting in a tight schedule every week. At the end of every week a new working and tested prototype has to be delivered which ask for such a tight schedule. At the end of these eight weeks a final product will be delivered.
+
+Every project has its own expenses which are paid out of a budget. We as a group of students working on a research project do not have an actual budget to pay certain things like server costs from. But since we work for a university they can possibly provide us if we need anything. Thus keeping the cost low or even keeping it to zero.
+
+
+
+
+\clearpage
+\bibliography{product_vision}
+\addcontentsline{toc}{section}{References}
+\end{document}
