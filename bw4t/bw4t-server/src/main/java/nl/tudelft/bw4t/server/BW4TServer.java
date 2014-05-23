@@ -45,7 +45,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	/**
 	 * The log4j logger, logs to the console.
 	 */
-	private static Logger LOGGER = Logger.getLogger(Launcher.class);
+	private static final Logger LOGGER = Logger.getLogger(Launcher.class);
 
 	private static final long serialVersionUID = -3459272460308988888L;
 	private Map<BW4TClientActions, ClientInfo> clients;
@@ -72,7 +72,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 		try {
 			registry = LocateRegistry.createRegistry(Integer.parseInt(serverPort));
 		} catch (RemoteException e) {
-			LOGGER.warn("Registry is already running. Reconnecting.");
+			LOGGER.warn("Registry is already running. Reconnecting.", e);
 			registry = LocateRegistry.getRegistry(Integer.parseInt(serverPort));
 		}
 		servername = "rmi://" + serverIp + ":" + serverPort + "/BW4TServer";
@@ -351,8 +351,8 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	public void notifyStateChange(EnvironmentState newState) {
 		// duplicate the set before iteration, since we may call
 		// unregisterClient.
-		Set<BW4TClientActions> clients = new HashSet<BW4TClientActions>(this.clients.keySet());
-		for (BW4TClientActions client : clients) {
+		Set<BW4TClientActions> clientset = new HashSet<BW4TClientActions>(this.clients.keySet());
+		for (BW4TClientActions client : clientset) {
 			try {
 				client.handleStateChange(newState);
 			} catch (RemoteException e) {
