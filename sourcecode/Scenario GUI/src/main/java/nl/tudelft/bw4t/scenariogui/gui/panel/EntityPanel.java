@@ -221,6 +221,7 @@ public class EntityPanel extends JPanel {
     private void createBotTable() {
 
         botTable = new JTable();
+        botTable.getTableHeader().setReorderingAllowed(false);
         
         botList = new DefaultTableModel() {
             
@@ -325,6 +326,7 @@ public class EntityPanel extends JPanel {
     private void createEpartnerTable() {
 
         ePartnerTable = new JTable();
+        ePartnerTable.getTableHeader().setReorderingAllowed(false);
         epartnerList = new DefaultTableModel() {
             /*@Override
             public boolean isCellEditable(final int row, final int column) {
