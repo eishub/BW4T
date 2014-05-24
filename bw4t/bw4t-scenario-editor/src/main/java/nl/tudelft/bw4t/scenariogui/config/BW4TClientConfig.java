@@ -18,8 +18,11 @@ import nl.tudelft.bw4t.scenariogui.util.XMLManager;
  * This class holds the possible options that can be specified in the Scenario
  * GUI and is meant to be directly convertible to XML and constructible from
  * XML.
- *
- * @author Nick / Calvin
+ * <p>
+ * @author      Nick Feddes
+ * @autoher     Calvin Wong Loi Sing  
+ * @version     0.1                
+ * @since       12-05-2014        
  */
 @XmlRootElement
 public class BW4TClientConfig {

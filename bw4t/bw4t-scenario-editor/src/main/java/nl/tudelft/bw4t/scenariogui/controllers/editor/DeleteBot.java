@@ -9,6 +9,10 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
  * Handles the event to delete a bot.
+ * <p>
+ * @author        
+ * @version     0.1                
+ * @since       12-05-2014        
  */
 class DeleteBot implements ActionListener {
 

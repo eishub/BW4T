@@ -3,7 +3,6 @@ package nl.tudelft.bw4t.scenariogui;
 import java.io.FileNotFoundException;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -20,6 +19,10 @@ import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
 
 /**
  * The ScenarioEditor class serves as the Frame for the MenuBar and MainPanel.
+ * <p>
+ * @author        
+ * @version     0.1                
+ * @since       12-05-2014        
  */
 public class ScenarioEditor extends JFrame {
 
