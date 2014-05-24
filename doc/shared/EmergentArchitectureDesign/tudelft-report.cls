@@ -504,4 +504,3 @@
     linkcolor = title,
     urlcolor = title
 }
-
