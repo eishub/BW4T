@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import org.apache.log4j.Logger;
 
 import nl.tudelft.bw4t.BoundedMoveableObject;
-import nl.tudelft.bw4t.server.Launcher;
+import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.util.PathPlanner;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.Zone;
@@ -27,7 +27,7 @@ public class NavigatingRobot extends Robot {
 	/**
 	 * The log4j logger, logs to the console.
 	 */
-	private static Logger logger = Logger.getLogger(Launcher.class);
+	private static final Logger LOGGER = Logger.getLogger(NavigatingRobot.class);
 
 	/**
 	 * We keep a stack of planned motions. We may need to extend this if rotations and waiting for doors also needs to
@@ -68,7 +68,7 @@ public class NavigatingRobot extends Robot {
 	private void robotStopped() {
 		currentMove = null;
 		if (isCollided()) {
-			logger.warn("Motion planning failed. Canceling planned path. Collision flag is " + super.isCollided());
+			LOGGER.warn("Motion planning failed. Canceling planned path. Collision flag is " + super.isCollided());
 			plannedMoves.clear();
 			return;
 		}

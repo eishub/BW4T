@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.server;
+package nl.tudelft.bw4t.server.logging;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
 import nl.tudelft.bw4t.map.BlockColor;
-import nl.tudelft.bw4t.server.BW4TEnvironment;
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 
 /**
  * This logger logs all actions to a file:
@@ -54,12 +55,12 @@ public class BW4TLogger {
 	/**
 	 * The log4j logger, logs to the console.
 	 */
-	private static Logger logger = Logger.getLogger(BW4TEnvironment.class);
+	private static final Logger LOGGER = Logger.getLogger(BW4TLogger.class);
 
 	/**
 	 * Here we store per-agent performance records.
 	 */
-	private static HashMap<String, AgentRecord> agentRecords;
+	private static Map<String, AgentRecord> agentRecords;
 
 	/**
 	 * Create a new Logger.
@@ -70,15 +71,14 @@ public class BW4TLogger {
 	private BW4TLogger() {
 		reset();
 		try {
-			logger.info("Starting the BW4T logger.");
+			LOGGER.info("Starting the BW4T logger.");
 			logFile = File.createTempFile("BW4T", ".txt", new File(System.getProperty("user.dir") + "/log/"));
 			writer = new FileWriter(logFile);
-			ArrayList<String> info = new ArrayList<String>();
+			List<String> info = new ArrayList<String>();
 			info.add("logcreationtime " + System.currentTimeMillis());
 			log(info);
 		} catch (IOException e) {
-			// logger.error("The BW4T Server was unable to open the logfile as requested. Proceeding as if no problem was encountered.");
-			e.printStackTrace();
+			LOGGER.error("The BW4T Server was unable to open the logfile as requested. Proceeding as if no problem was encountered.", e);
 		}
 	}
 
@@ -158,7 +158,7 @@ public class BW4TLogger {
 		} catch (IOException e) {
 			if (alreadywarned)
 				return;
-			e.printStackTrace();
+			LOGGER.warn("failed to write to the log", e);
 			alreadywarned = true;
 		}
 	}
@@ -183,7 +183,7 @@ public class BW4TLogger {
 	 * @throws IOException
 	 */
 	public void logSequence(List<BlockColor> sequence) throws IOException {
-		ArrayList<String> logString = new ArrayList<String>();
+		List<String> logString = new ArrayList<String>();
 		logString.add("sequence");
 		for (BlockColor col : sequence) {
 			logString.add(" " + col.getLetter());
@@ -255,12 +255,12 @@ public class BW4TLogger {
 	 * new log file.
 	 */
 	public synchronized void closeLog() {
-		logger.info("Closing the log file.");
+		LOGGER.info("Closing the log file.");
 		logAgentSummary();
 		try {
 			writer.close();
 		} catch (IOException e) {
-			// logger.error("Unable to close log file.");
+			LOGGER.warn("Unable to close log file.", e);
 		}
 		reset();
 	}
@@ -283,8 +283,7 @@ public class BW4TLogger {
 	 *            is list of block colors
 	 */
 	public void logRoomBlocks(String room, List<BlockColor> blocksInRoom) {
-
-		ArrayList<String> logString = new ArrayList<String>();
+		List<String> logString = new ArrayList<String>();
 		logString.add("room");
 		logString.add(room);
 		for (BlockColor c : blocksInRoom) {

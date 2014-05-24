@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.server;
+package nl.tudelft.bw4t.server.environment;
 
 import java.io.File;
 
@@ -20,7 +20,7 @@ public class Stepper implements Runnable {
 	/**
 	 * The log4j logger, logs to the console.
 	 */
-	private static Logger logger = Logger.getLogger(Launcher.class);
+	private static final Logger LOGGER = Logger.getLogger(Stepper.class);
 
 	BW4TRunner runner; // HACK should be private.
 	private String scenarioLocation;
@@ -54,13 +54,17 @@ public class Stepper implements Runnable {
 						}
 						runner.step();
 					}
-					Thread.sleep(loopDelay);
+					try {
+						Thread.sleep(loopDelay);
+					} catch (InterruptedException e) {
+						LOGGER.warn("The main loop was interrupted.", e);
+					}
 				}
 				runner.stop();
 				runner.cleanUpRun();
 			}
 		} catch (Exception e) {
-			logger.error("An internal error occurred while running the stepper: ", e);
+			LOGGER.error("An internal error occurred while running the stepper: ", e);
 		}
 		running = false;
 		runner = null;
@@ -74,7 +78,7 @@ public class Stepper implements Runnable {
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
-				logger.warn("Wait for run state was unexpectedly interrupted, returning to wait state.");
+				LOGGER.warn("Wait for run state was unexpectedly interrupted, returning to wait state.", e);
 			}
 		}
 	}
@@ -99,11 +103,11 @@ public class Stepper implements Runnable {
 	public void terminate() {
 		running = false;
 		while (runner != null) {
-			logger.info("Stepper is running... waiting for requests.");
+			LOGGER.info("Stepper is running... waiting for requests.");
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				logger.error("Ignoring interrupt from wait.");
+				LOGGER.warn("Ignoring interrupt from wait.", e);
 			}
 		}
 	}

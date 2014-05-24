@@ -79,7 +79,7 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
     /**
      * The log4j Logger which displays logs on console
      */
-    private final static Logger LOGGER = Logger.getLogger(BW4TClientGUI.class);
+    private static final Logger LOGGER = Logger.getLogger(BW4TClientGUI.class);
 
     private BW4TClientInfo bw4tClientInfo = new BW4TClientInfo(new JTextArea(8,
             1));

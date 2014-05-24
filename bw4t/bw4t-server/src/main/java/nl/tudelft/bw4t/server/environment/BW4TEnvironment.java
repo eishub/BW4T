@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.server;
+package nl.tudelft.bw4t.server.environment;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,9 +13,13 @@ import java.util.Map;
 import javax.xml.bind.JAXBException;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 
 import nl.tudelft.bw4t.BW4TBuilder;
 import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.server.BW4TServer;
+import nl.tudelft.bw4t.server.RobotEntityInt;
+import nl.tudelft.bw4t.server.logging.BW4TLogger;
 import nl.tudelft.bw4t.visualizations.ServerContextDisplay;
 import repast.simphony.context.Context;
 import repast.simphony.scenario.ScenarioLoadException;
@@ -54,7 +58,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * The log4j logger, logs to the console.
 	 */
-	private static Logger LOGGER = Logger.getLogger(BW4TEnvironment.class);
+	private static final Logger LOGGER = Logger.getLogger(BW4TEnvironment.class);
 
 	private static String mapName;
 
@@ -133,6 +137,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	@Override
 	public void setState(EnvironmentState newstate) throws ManagementException {
 		super.setState(newstate);
+		LOGGER.info("Environment now in state: " + newstate.name());
 		server.notifyStateChange(getState());
 	}
 
@@ -144,21 +149,20 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		BW4TLogger.getInstance().closeLog();
 		setState(EnvironmentState.KILLED);
 
-		// Remove all entities.
+		LOGGER.debug("Removing all entities");
 		for (String entity : this.getEntities()) {
 			try {
 				this.deleteEntity(entity);
 			} catch (EntityException | RelationException e) {
-				LOGGER.error("Failure to delete entity: " + entity);
-				e.printStackTrace();
+				LOGGER.error("Failure to delete entity: " + entity, e);
 			}
 		}
-		// Remove all (remaining) agents.
+		LOGGER.debug("Remove all (remaining) agents");
 		for (String agent : this.getAgents()) {
 			try {
 				this.unregisterAgent(agent);
 			} catch (AgentException e) {
-				e.printStackTrace();
+				LOGGER.error("Failure to unregister agent: " + agent, e);
 			}
 		}
 		mapFullyLoaded = false;
@@ -257,7 +261,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @return true if there is an entity, a dropzone and sequence not yet complete
 	 */
 	@Override
-	protected boolean isSupportedByEnvironment(Action arg0) {
+	public boolean isSupportedByEnvironment(Action arg0) {
 
 		return !getEntities().isEmpty();
 	}
@@ -326,10 +330,8 @@ public class BW4TEnvironment extends AbstractEnvironment {
 				((RobotEntityInt) getEntity(entity)).initializePerceptionCycle();
 				return getAllPerceptsFromEntity(entity);
 			}
-		} catch (PerceiveException e) {
-			e.printStackTrace();
-		} catch (NoEnvironmentException e) {
-			e.printStackTrace();
+		} catch (PerceiveException | NoEnvironmentException e) {
+			LOGGER.error("failed to get percepts for entity: '" + entity + "'", e);
 		}
 		return null;
 	}
@@ -460,8 +462,14 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 */
 	public void shutdownServer(String key) {
 		if (key.equals(this.shutdownKey)) {
+			LOGGER.info("Server shutdown requested with correct key");
+			server.takeDown();
+			server = null;
 			System.exit(0);
 		}
+		else {
+			LOGGER.warn("Server shutdown attempted with wrong key: " + key);
+		}	
 	}
 
 	/**

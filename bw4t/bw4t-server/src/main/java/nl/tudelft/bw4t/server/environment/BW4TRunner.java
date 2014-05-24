@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.server;
+package nl.tudelft.bw4t.server.environment;
 
 import java.io.File;
 
@@ -35,7 +35,7 @@ public class BW4TRunner extends AbstractRunner {
 	/**
 	 * The log4j logger, logs to the console.
 	 */
-	private static Logger logger = Logger.getLogger(Launcher.class);
+	private static final Logger LOGGER = Logger.getLogger(BW4TRunner.class);
 
 	private RunEnvironmentBuilder runEnvironmentBuilder;
 	protected Controller bw4tController;
@@ -57,7 +57,7 @@ public class BW4TRunner extends AbstractRunner {
 			bw4tController.setControllerRegistry(registry);
 		}
 		else {
-			logger.error("Scenario was not found.");
+			LOGGER.fatal("Scenario directory was not found.");
 			return;
 		}
 
