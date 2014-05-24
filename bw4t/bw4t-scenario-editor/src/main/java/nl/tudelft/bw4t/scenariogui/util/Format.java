@@ -8,9 +8,10 @@ import javax.swing.text.DocumentFilter;
 
 /**
  * A class for the formatting of data.
- *
- * @author Nick
- *
+ * <p>
+ * @author      Nick Feddes  
+ * @version     0.1                
+ * @since       12-05-2014        
  */
 public final class Format {
     

@@ -10,6 +10,10 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 
 /**
  * Handles the event to start a new file.
+ * <p>
+ * @author        
+ * @version     0.1                
+ * @since       12-05-2014        
  */
 class MenuOptionNew extends AbstractMenuOption {
 

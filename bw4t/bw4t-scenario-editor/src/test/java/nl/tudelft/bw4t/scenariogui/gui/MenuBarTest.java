@@ -29,9 +29,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * Created on 21-5-2014.
- *
- * @author Calvin
+ * <p>
+ * @author      Calving Wong Loi Sing  
+ * @version     0.1                
+ * @since       21-05-2014        
  */
 public class MenuBarTest {
 
