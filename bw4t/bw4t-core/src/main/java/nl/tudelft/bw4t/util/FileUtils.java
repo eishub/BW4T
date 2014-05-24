@@ -19,6 +19,12 @@ import java.util.jar.JarFile;
  */
 public class FileUtils {
 
+	/**
+	 * Utility class, cannot be instantiated.
+	 */
+	private FileUtils() {
+	}
+
     /**
      * Copy a file to another file.
      * 

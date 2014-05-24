@@ -35,7 +35,7 @@ public class ProcessingOperations {
     /**
      * The log4j Logger which displays logs on console
      */
-    private final static Logger LOGGER = Logger.getLogger(BW4TClientGUI.class);
+    private final static Logger LOGGER = Logger.getLogger(ProcessingOperations.class);
 
     /**
      * Display the goal sequence

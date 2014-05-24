@@ -21,8 +21,8 @@ import repast.simphony.space.continuous.ContinuousSpace;
  */
 public class Door extends BoundedMoveableObject {
 
-	private final Color opencolor = Color.GREEN;
-	private final Color closecolor = Color.RED;
+	private static final Color COLOR_OPEN = Color.GREEN;
+	private static final Color COLOR_CLOSED = Color.RED;
 
 	/**
 	 * The single room that this door connects to. There may be multiple doors connecting to a single room. Stays null
@@ -43,7 +43,7 @@ public class Door extends BoundedMoveableObject {
 	}
 
 	public Color getColor() {
-		return isOpen() ? opencolor : closecolor;
+		return isOpen() ? COLOR_OPEN : COLOR_CLOSED;
 	}
 
 	/**

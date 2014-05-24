@@ -55,4 +55,3 @@ template:
   texlive, texlive-fonts-extra, texlive-math-extra, texlive-lang-dutch
   (or texlive-lang-european), texlive-lang-english, texlive-latex-extra,
   texlive-xetex
-

@@ -10,6 +10,12 @@ package nl.tudelft.bw4t.map;
  */
 public class Constants {
 
+	/**
+	 * Utility class, cannot be instantiated.
+	 */
+	private Constants() {
+	}	
+
     /** The width and height of the blocks */
     public final static int BLOCK_SIZE = 2;
 
