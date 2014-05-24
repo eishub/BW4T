@@ -175,6 +175,36 @@ public class BoundedMoveableObjectTest {
 		assertEquals(true, result);
 	}
 
+	@Test
+	public void testEquals_5()
+		throws Exception {
+		BoundedMoveableObject boundedMoveableObject = new Door(space, context);
+		Object obj = boundedMoveableObject;
+		boolean result = boundedMoveableObject.equals(obj);
+		assertEquals(true
+, result);
+	}
+
+	@Test
+	public void testEquals_6()
+		throws Exception {
+		when(context.size()).thenReturn(1);
+		BoundedMoveableObject boundedMoveableObject = new Door(space, context);
+		Object obj = new Door(space, context);
+		boolean result = boundedMoveableObject.equals(obj);
+		assertEquals(false, result);
+	}
+
+	@Test
+	public void testEquals_7()
+		throws Exception {
+		BoundedMoveableObject boundedMoveableObject = new Door(space, context);
+		boundedMoveableObject.setSize(2, 3);
+		Object obj = new Door(space, context);
+		boolean result = boundedMoveableObject.equals(obj);
+		assertEquals(false, result);
+	}
+
 	/**
 	 * Run the Rectangle2D getBoundingBox() method test.
 	 *
