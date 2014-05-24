@@ -38,8 +38,10 @@ import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
  * The EntityPanel class represents right pane of the MainPanel. It shows a list
  * of bots and a list of e-partners and the actions that are possible to edit
  * bots and e-partners.
- *
- * @author Katia
+ * <p>
+ * @author      Katia Asmoredjo  
+ * @version     0.1                
+ * @since       12-05-2014        
  */
 public class EntityPanel extends JPanel {
 

@@ -3,7 +3,10 @@ package nl.tudelft.bw4t.scenariogui.util;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
- * Created by on 20-5-2014.
+ * <p>
+ * @author        
+ * @version     0.1                
+ * @since       20-05-2014        
  */
 public final class FileFilters {
 

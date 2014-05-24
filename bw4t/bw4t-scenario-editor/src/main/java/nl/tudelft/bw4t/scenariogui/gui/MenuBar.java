@@ -8,9 +8,12 @@ import javax.swing.JMenuItem;
 
 /**
  * The MenuBar class extends JMenuBar. Used in the ScenarioEditor Frame.
- *
- * @author Xander
+ * <p>
+ * @author      Xander Zonneveld  
+ * @version     0.1                
+ * @since       12-05-2014        
  */
+
 public class MenuBar extends JMenuBar {
 
     /** Randomly generated serial version. */
