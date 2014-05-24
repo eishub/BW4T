@@ -11,8 +11,10 @@ import javax.xml.bind.Unmarshaller;
 /**
  * Used for storing classes in XML format and constructing Java objects from the
  * XML files.
- *
- * @author Nick
+ * <p>
+ * @author      Nick Feddes  
+ * @version     0.1                
+ * @since       12-05-2014        
  */
 public final class XMLManager {
 

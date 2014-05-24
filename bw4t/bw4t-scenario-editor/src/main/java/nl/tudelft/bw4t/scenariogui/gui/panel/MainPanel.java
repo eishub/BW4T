@@ -11,9 +11,11 @@ import javax.swing.JPanel;
  * MainPanel which serves as the content pane for the ScenarioEditor frame.
  * Creates a 1/3 - 2/3 division, the former for the ConfigurationPanel, and the
  * latter the EntityPanel
- *
- * @since 13-05-2014
- * @author Joop Aue
+ * <p>
+ * @author      Katia Asmoredjo
+ * @author      Joop Aué  
+ * @version     0.1                
+ * @since       12-05-2014        
  */
 public class MainPanel extends JPanel {
     
