@@ -21,8 +21,8 @@ import repast.simphony.space.continuous.ContinuousSpace;
  */
 public class Door extends BoundedMoveableObject {
 
-	private static final Color COLOR_OPEN = Color.GREEN;
-	private static final Color COLOR_CLOSED = Color.RED;
+	public static final Color COLOR_OPEN = Color.GREEN;
+	public static final Color COLOR_CLOSED = Color.RED;
 
 	/**
 	 * The single room that this door connects to. There may be multiple doors connecting to a single room. Stays null
@@ -73,8 +73,8 @@ public class Door extends BoundedMoveableObject {
 		case HORIZONTAL:
 			width = Constants.DOOR_WIDTH;
 			break;
-		default:
 		case VERTICAL:
+		default:
 			height = Constants.DOOR_WIDTH;
 			break;
 		}
