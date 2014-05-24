@@ -49,6 +49,7 @@ For more information on Git have a look on [**StackOverflow**][2] or learn some 
 The **Code Analysis and Statistics** of BW4T is done by [Sonar](https://martinrogalla.com/gitlab/).
 ### <i class="icon-help"></i>Sonar FAQ 
  - I don't have any frequently asked questions right now. Do you have a question or think something should be added to this FAQ?
+
 >Send Martin an e-mail at `jorn.rogalla@gmail.com`
 
 
