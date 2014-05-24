@@ -10,7 +10,7 @@
 		<module>bw4t-client</module>
 		<module>bw4t-core</module>
 		<module>bw4t-integration-test</module>
-        <module>bw4t-scenario-editor</module>
+		<module>bw4t-scenario-editor</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -24,6 +24,7 @@
 		<sonar.cobertura.reportPath>target/site/cobertura/coverage.xml</sonar.cobertura.reportPath>
 		<sonar.junit.reportsPath>target/surefire-reports</sonar.junit.reportsPath>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+		<powermock.version>1.5.4</powermock.version>
 	</properties>
 	<repositories>
 		<repository>
@@ -123,11 +124,24 @@
 			<artifactId>eis</artifactId>
 			<version>0.3</version>
 		</dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>1.9.5</version>
-        </dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.9.5</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<reporting>
