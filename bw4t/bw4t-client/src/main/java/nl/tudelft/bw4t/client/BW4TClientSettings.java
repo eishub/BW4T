@@ -4,8 +4,6 @@ import java.util.prefs.Preferences;
 
 /**
  * Static object to store settings
- * 
- * @author W.Pasman 14jan2014
  */
 
 public class BW4TClientSettings {
@@ -15,8 +13,7 @@ public class BW4TClientSettings {
     /**
      * Use the global preference store for this user to store the settings.
      */
-    static final public Preferences prefs = Preferences
-            .userNodeForPackage(BW4TClientSettings.class);
+    static final public Preferences prefs = Preferences.userNodeForPackage(BW4TClientSettings.class);
 
     /**
      * get preferred x position of top left corner of the window.
