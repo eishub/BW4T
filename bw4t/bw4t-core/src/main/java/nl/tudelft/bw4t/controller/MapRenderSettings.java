@@ -13,7 +13,7 @@ public class MapRenderSettings {
 	/**
 	 * Initialize with default values.
 	 */
-	public MapRenderSettings(){
+	public MapRenderSettings() {
 	}
 
 	/**
@@ -24,10 +24,10 @@ public class MapRenderSettings {
 	}
 
 	/**
-	 * @param worldWidth the worldWidth to set
+	 * @param worldWidth
+	 *            the worldWidth to set
 	 */
 	public void setWorldWidth(int worldWidth) {
-		this.worldWidth = worldWidth;
 	}
 
 	/**
@@ -38,10 +38,16 @@ public class MapRenderSettings {
 	}
 
 	/**
-	 * @param worldHeight the worldHeight to set
+	 * Change the size of the world.
+	 * 
+	 * @param x
+	 *            size in horizontal direction
+	 * @param y
+	 *            size in vertical direction
 	 */
-	public void setWorldHeight(int worldHeight) {
-		this.worldHeight = worldHeight;
+	public void setWorldDimensions(int x, int y) {
+		this.worldWidth = x;
+		this.worldHeight = y;
 	}
 
 	/**
@@ -52,7 +58,8 @@ public class MapRenderSettings {
 	}
 
 	/**
-	 * @param roomTextOffset the roomTextOffset to set
+	 * @param roomTextOffset
+	 *            the roomTextOffset to set
 	 */
 	public void setRoomTextOffset(int roomTextOffset) {
 		this.roomTextOffset = roomTextOffset;
@@ -76,7 +83,9 @@ public class MapRenderSettings {
 
 	/**
 	 * Scales the given value with the scaling factor.
-	 * @param value to be scaled value
+	 * 
+	 * @param value
+	 *            to be scaled value
 	 * @return the scaled value
 	 */
 	public double scale(double value) {
@@ -85,17 +94,22 @@ public class MapRenderSettings {
 
 	/**
 	 * Scales the given Rectangle.
-	 * @param rect the bounding box
+	 * 
+	 * @param rect
+	 *            the bounding box
 	 * @return the scaled rectangle
 	 */
 	public Rectangle2D transformRectangle(Rectangle2D rect) {
-		return new Rectangle.Double(scale(rect.getX()), scale(rect.getY()), scale(rect.getWidth()), scale(rect.getHeight()));
+		return new Rectangle.Double(scale(rect.getX()), scale(rect.getY()), scale(rect.getWidth()),
+				scale(rect.getHeight()));
 
 	}
 
 	/**
 	 * Scales and centers the given Rectangle.
-	 * @param rect the position and size
+	 * 
+	 * @param rect
+	 *            the position and size
 	 * @return the centered and scaled rectangle
 	 */
 	public Rectangle2D transformCenterRectangle(Rectangle2D rect) {

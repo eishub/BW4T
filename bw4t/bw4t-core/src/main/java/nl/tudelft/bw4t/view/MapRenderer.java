@@ -89,8 +89,8 @@ public class MapRenderer extends JPanel {
 	 */
 	public void drawRooms(Graphics2D g2d) {
 		MapRenderSettings set = getController().getRenderSettings();
+
 		for (Zone room : getController().getRooms()) {
-			// first paint the doors. Matches the {@link ServerMapRenderer}
 			boolean occupied = getController().isOccupied(room);
 
 			for (Door door : room.getDoors()) {
@@ -129,8 +129,10 @@ public class MapRenderer extends JPanel {
 	 */
 	public void drawLabels(Graphics2D g2d) {
 		MapRenderSettings set = getController().getRenderSettings();
+
 		g2d.setColor(Color.DARK_GRAY);
 		g2d.setFont(new Font("Arial", Font.PLAIN, 10));
+
 		for (Zone zone : getController().getZones()) {
 			Rectangle2D bbox = zone.getBoundingbox().getRectangle();
 			g2d.drawString(zone.getName(),
@@ -170,6 +172,7 @@ public class MapRenderer extends JPanel {
 	 */
 	public void drawBlocks(Graphics2D g2d) {
 		MapRenderSettings set = getController().getRenderSettings();
+
 		for (Block box : getController().getVisibleBlocks()) {
 			g2d.setColor(box.getColor().getColor());
 			g2d.fill(set.transformCenterRectangle(new Rectangle2D.Double(box.getPosition().getX(), box.getPosition()
