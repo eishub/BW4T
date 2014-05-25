@@ -11,13 +11,10 @@ import java.lang.reflect.Field;
  * {@link Color}.
  */
 public enum BlockColor implements Serializable {
-	BLUE("Blue"), ORANGE("Orange"), RED("Red"), WHITE("White"), GREEN("Green"), YELLOW(
-			"Yellow"), PINK("Pink");
+	BLUE, ORANGE, RED, WHITE, GREEN, YELLOW, PINK;
 
-	private String name;
 
-	private BlockColor(String n) {
-		name = n;
+	private BlockColor() {
 	}
 
 	/**
@@ -26,7 +23,7 @@ public enum BlockColor implements Serializable {
 	 * @return
 	 */
 	public Character getLetter() {
-		return name.charAt(0);
+		return getName().charAt(0);
 	}
 
 	/**
@@ -37,7 +34,7 @@ public enum BlockColor implements Serializable {
 	public Color getColor() {
 		Field field;
 		try {
-			field = Class.forName("java.awt.Color").getField(this.toString());
+			field = Class.forName("java.awt.Color").getField(this.name());
 			return (Color) field.get(null);
 		} catch (ClassNotFoundException | NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
 			e.printStackTrace();
@@ -88,7 +85,8 @@ public enum BlockColor implements Serializable {
 	 * @return
 	 */
 	public String getName() {
-		return name;
+		String name = name();
+		return Character.toString(name.charAt(0)).toUpperCase() + name.substring(1).toLowerCase();
 	}
 
 };
