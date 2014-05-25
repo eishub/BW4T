@@ -6,7 +6,6 @@ import java.util.List;
 
 import nl.tudelft.bw4t.client.BW4TClient;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-import nl.tudelft.bw4t.client.environment.RemoteEnvironmentData;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.operations.ProcessingOperations;
 import eis.exceptions.EntityException;
@@ -27,19 +26,19 @@ public class PerceptsHandler {
      */
     public static List<Percept> getAllPerceptsFromEntity(String entity, RemoteEnvironment env) throws PerceiveException {
         try {
-            RemoteEnvironmentData remoteEnvironmentData = env.getData();
-            BW4TClientGUI clientEntity = remoteEnvironmentData.getEntityToGUI().get(entity);
-            BW4TClient client = remoteEnvironmentData.getClient();
+            RemoteEnvironment remoteEnvironment = env;
+            BW4TClientGUI clientEntity = remoteEnvironment.getEntityToGUI().get(entity);
+            BW4TClient client = remoteEnvironment.getClient();
 
             /** Is the client running a GUI right now */
-            boolean runningGUI = "true"
-                    .equals(((Identifier) remoteEnvironmentData.getInitParameters().get("launchgui")).getValue());
+            boolean runningGUI = "true".equals(((Identifier) remoteEnvironment.getInitParameters().get("launchgui"))
+                    .getValue());
             /** Is the entity human, regardless if it's running a GUI? */
             boolean humanType = "human".equals(env.getType(entity.replace("gui", "")));
             /** Is the entity being run on a GUI? */
             boolean guiEntity = entity.contains("gui");
 
-            if (remoteEnvironmentData.isConnectedToGoal() && !guiEntity && humanType) {
+            if (remoteEnvironment.isConnectedToGoal() && !guiEntity && humanType) {
                 return clientEntity.getToBePerformedAction();
             } else if (guiEntity && humanType) {
                 return client.getAllPerceptsFromEntity(entity.replace("gui", ""));

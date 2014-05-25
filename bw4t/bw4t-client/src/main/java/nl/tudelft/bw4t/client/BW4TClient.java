@@ -558,7 +558,7 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
      */
     @Override
     public void handleNewEntity(String entity) throws RemoteException, EntityException {
-        EntityNotifiers.notifyNewEntity(entity, parent.getData());
+        EntityNotifiers.notifyNewEntity(entity, parent);
     }
 
     /**
@@ -566,7 +566,7 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
      */
     @Override
     public void handleFreeEntity(String entity, Collection<String> agents) throws RemoteException {
-        EntityNotifiers.notifyFreeEntity(entity, agents, parent.getData());
+        EntityNotifiers.notifyFreeEntity(entity, agents, parent);
     }
 
     /**
@@ -574,7 +574,7 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
      */
     @Override
     public void handleDeletedEntity(String entity, Collection<String> agents) throws RemoteException {
-        EntityNotifiers.notifyDeletedEntity(entity, agents, parent.getData());
+        EntityNotifiers.notifyDeletedEntity(entity, agents, parent);
     }
 
     /**
