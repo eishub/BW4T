@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.operations.GraphicalUpdateOperations;
-import nl.tudelft.bw4t.map.Constants;
+import nl.tudelft.bw4t.map.Door;
 import nl.tudelft.bw4t.map.Door.Orientation;
 import nl.tudelft.bw4t.map.Entity;
 import nl.tudelft.bw4t.map.NewMap;
@@ -84,14 +84,14 @@ public class RendererMapLoader {
 
 		Orientation ori = doorargs.getOrientation();
 
-		int width = Constants.DOOR_THICKNESS;
-		int height = Constants.DOOR_THICKNESS;
+		int width = Door.DOOR_THICKNESS;
+		int height = Door.DOOR_THICKNESS;
 		switch (ori) {
 		case HORIZONTAL:
-			width = Constants.DOOR_WIDTH;
+			width = Door.DOOR_WIDTH;
 			break;
 		case VERTICAL:
-			height = Constants.DOOR_WIDTH;
+			height = Door.DOOR_WIDTH;
 			break;
 		}
 
