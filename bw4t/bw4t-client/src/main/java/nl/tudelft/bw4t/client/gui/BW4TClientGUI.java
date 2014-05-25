@@ -162,7 +162,7 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
         buttonPanel.add(jButton);
         jButton.addMouseListener(new TeamListMouseListener(this));
 
-        RendererMapLoader.loadMap(environment.getData().getClient().getMap(), this);
+        RendererMapLoader.loadMap(environment.getClient().getMap(), this);
 
         // Initialize graphics
 
