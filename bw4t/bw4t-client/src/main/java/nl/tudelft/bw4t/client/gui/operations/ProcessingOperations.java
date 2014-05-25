@@ -15,7 +15,6 @@ import java.util.List;
 
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.VisualizerSettings;
-import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
 import nl.tudelft.bw4t.client.gui.data.structures.DoorInfo;
 import nl.tudelft.bw4t.client.gui.data.structures.DropZoneInfo;
 import nl.tudelft.bw4t.client.gui.data.structures.RoomInfo;
@@ -43,23 +42,17 @@ public class ProcessingOperations {
      * @param g2d
      *            , the graphics2d object
      */
-    public static void processSequence(Graphics2D g2d, BW4TClientInfo data) {
+    public static void processSequence(Graphics2D g2d, BW4TClientGUI data) {
         int startPosX = 0;
-        for (BlockColor color : data.environmentDatabase.getSequence()) {
+        for (BlockColor color : data.getEnvironmentDatabase().getSequence()) {
             g2d.setColor(color.getColor());
-            g2d.fill(new Rectangle2D.Double(startPosX,
-                    VisualizerSettings.worldY * VisualizerSettings.scale, 20,
-                    20));
-            if (data.environmentDatabase.getSequenceIndex() > (startPosX / 20)) {
+            g2d.fill(new Rectangle2D.Double(startPosX, VisualizerSettings.worldY * VisualizerSettings.scale, 20, 20));
+            if (data.getEnvironmentDatabase().getSequenceIndex() > (startPosX / 20)) {
                 g2d.setColor(Color.BLACK);
-                int[] xpoints = new int[] { startPosX, startPosX,
-                        startPosX + 20 };
-                int[] ypoints = new int[] {
-                        VisualizerSettings.worldY * VisualizerSettings.scale,
-                        VisualizerSettings.worldY * VisualizerSettings.scale
-                                + 20,
-                        VisualizerSettings.worldY * VisualizerSettings.scale
-                                + 10 };
+                int[] xpoints = new int[] { startPosX, startPosX, startPosX + 20 };
+                int[] ypoints = new int[] { VisualizerSettings.worldY * VisualizerSettings.scale,
+                        (VisualizerSettings.worldY * VisualizerSettings.scale) + 20,
+                        (VisualizerSettings.worldY * VisualizerSettings.scale) + 10 };
                 g2d.fillPolygon(xpoints, ypoints, 3);
             }
             startPosX += 20;
@@ -73,27 +66,24 @@ public class ProcessingOperations {
      * @param g2d
      *            , the graphics2d object
      */
-    public static void processRooms(Graphics2D g2d, BW4TClientInfo data) {
-        for (RoomInfo room : data.environmentDatabase.getRooms()) {
+    public static void processRooms(Graphics2D g2d, BW4TClientGUI data) {
+        for (RoomInfo room : data.getEnvironmentDatabase().getRooms()) {
             // first paint the doors. Matches the {@link ServerMapRenderer}
-            if (data.environmentDatabase.getOccupiedRooms().contains(
-                    MapOperations.findLabelForRoom(room, data))) {
+            if (data.getEnvironmentDatabase().getOccupiedRooms().contains(MapOperations.findLabelForRoom(room, data))) {
                 g2d.setColor(Color.RED);
             } else {
                 g2d.setColor(Color.GREEN);
             }
 
             for (DoorInfo door : room.getDoors()) {
-                g2d.fill(MapOperations.transformRectangle(new Rectangle2D.Double(
-                        door.getX(), door.getY(), door.getWidth(), door
-                                .getHeight())));
+                g2d.fill(MapOperations.transformRectangle(new Rectangle2D.Double(door.getX(), door.getY(), door
+                        .getWidth(), door.getHeight())));
             }
 
             // paint the room
             g2d.setColor(Color.GRAY);
-            Shape roomDisplayCoordinates = MapOperations
-                    .transformRectangle(new Rectangle2D.Double(room.getX(),
-                            room.getY(), room.getWidth(), room.getHeight()));
+            Shape roomDisplayCoordinates = MapOperations.transformRectangle(new Rectangle2D.Double(room.getX(), room
+                    .getY(), room.getWidth(), room.getHeight()));
             g2d.fill(roomDisplayCoordinates);
             g2d.setColor(Color.BLACK);
             g2d.draw(roomDisplayCoordinates);
@@ -107,16 +97,13 @@ public class ProcessingOperations {
      * @param g2d
      *            , the graphics2d object
      */
-    public static void processLabels(Graphics2D g2d, BW4TClientInfo data) {
+    public static void processLabels(Graphics2D g2d, BW4TClientGUI data) {
         g2d.setColor(Color.DARK_GRAY);
         g2d.setFont(new Font("Arial", Font.PLAIN, 10));
-        HashMap<String, Point> roomLabels = data.environmentDatabase
-                .getRoomLabels();
+        HashMap<String, Point> roomLabels = data.getEnvironmentDatabase().getRoomLabels();
         for (String label : roomLabels.keySet()) {
-            g2d.drawString(label, roomLabels.get(label).x
-                    * VisualizerSettings.scale
-                    - VisualizerSettings.roomTextOffset,
-                    roomLabels.get(label).y * VisualizerSettings.scale);
+            g2d.drawString(label, (roomLabels.get(label).x * VisualizerSettings.scale)
+                    - VisualizerSettings.roomTextOffset, roomLabels.get(label).y * VisualizerSettings.scale);
         }
     }
 
@@ -126,27 +113,24 @@ public class ProcessingOperations {
      * @param g2d
      *            , the graphics2d object
      */
-    public static void processDropZone(Graphics2D g2d, BW4TClientInfo data) {
+    public static void processDropZone(Graphics2D g2d, BW4TClientGUI data) {
         g2d.setColor(Color.DARK_GRAY);
-        DropZoneInfo dropZone = data.environmentDatabase.getDropZone();
-        g2d.fill(MapOperations.transformRectangle(new Rectangle2D.Double(
-                dropZone.getX(), dropZone.getY(), dropZone.getWidth(), dropZone
-                        .getHeight())));
+        DropZoneInfo dropZone = data.getEnvironmentDatabase().getDropZone();
+        g2d.fill(MapOperations.transformRectangle(new Rectangle2D.Double(dropZone.getX(), dropZone.getY(), dropZone
+                .getWidth(), dropZone.getHeight())));
         g2d.setColor(Color.BLACK);
-        g2d.draw(MapOperations.transformRectangle(new Rectangle2D.Double(
-                dropZone.getX(), dropZone.getY(), dropZone.getWidth(), dropZone
-                        .getHeight())));
+        g2d.draw(MapOperations.transformRectangle(new Rectangle2D.Double(dropZone.getX(), dropZone.getY(), dropZone
+                .getWidth(), dropZone.getHeight())));
 
-        if (data.environmentDatabase.getOccupiedRooms().contains(
-                VisualizerSettings.DROPZONE_NAME)) {
+        if (data.getEnvironmentDatabase().getOccupiedRooms().contains(VisualizerSettings.DROPZONE_NAME)) {
             g2d.setColor(Color.RED);
         } else {
             g2d.setColor(Color.GREEN);
         }
 
         for (DoorInfo door : dropZone.getDoors()) {
-            g2d.fill(MapOperations.transformRectangle(new Rectangle2D.Double(
-                    door.getX(), door.getY(), door.getWidth(), door.getHeight())));
+            g2d.fill(MapOperations.transformRectangle(new Rectangle2D.Double(door.getX(), door.getY(), door.getWidth(),
+                    door.getHeight())));
         }
     }
 
@@ -156,20 +140,16 @@ public class ProcessingOperations {
      * @param g2d
      *            , the graphics2d object
      */
-    public static void processBlocks(Graphics2D g2d, BW4TClientInfo data) {
-        HashMap<Long, BlockColor> allBlocks = data.environmentDatabase
-                .getAllBlocks();
+    public static void processBlocks(Graphics2D g2d, BW4TClientGUI data) {
+        HashMap<Long, BlockColor> allBlocks = data.getEnvironmentDatabase().getAllBlocks();
         for (Long box : allBlocks.keySet()) {
-            if (data.environmentDatabase.getVisibleBlocks().contains(box)) {
-                HashMap<Long, java.awt.geom.Point2D.Double> objectPositions = data.environmentDatabase
+            if (data.getEnvironmentDatabase().getVisibleBlocks().contains(box)) {
+                HashMap<Long, java.awt.geom.Point2D.Double> objectPositions = data.getEnvironmentDatabase()
                         .getObjectPositions();
                 if (objectPositions.get(box) != null) {
                     g2d.setColor(allBlocks.get(box).getColor());
-                    g2d.fill(MapOperations
-                            .transformRectangle(new Rectangle2D.Double(
-                                    objectPositions.get(box).getX(),
-                                    objectPositions.get(box).getY(),
-                                    Constants.BLOCK_SIZE, Constants.BLOCK_SIZE)));
+                    g2d.fill(MapOperations.transformRectangle(new Rectangle2D.Double(objectPositions.get(box).getX(),
+                            objectPositions.get(box).getY(), Constants.BLOCK_SIZE, Constants.BLOCK_SIZE)));
                 }
             }
         }
@@ -182,12 +162,11 @@ public class ProcessingOperations {
      * @param g2d
      *            , the graphics2d object
      */
-    public static void processEntity(Graphics2D g2d, BW4TClientInfo data) {
-        g2d.setColor(data.environmentDatabase.getEntityColor());
-        Double[] entityLocation = data.environmentDatabase.getEntityLocation();
-        g2d.fill(MapOperations.transformRectangle(new Rectangle2D.Double(
-                entityLocation[0], entityLocation[1], Constants.ROBOT_SIZE,
-                Constants.ROBOT_SIZE)));
+    public static void processEntity(Graphics2D g2d, BW4TClientGUI data) {
+        g2d.setColor(data.getEnvironmentDatabase().getEntityColor());
+        Double[] entityLocation = data.getEnvironmentDatabase().getEntityLocation();
+        g2d.fill(MapOperations.transformRectangle(new Rectangle2D.Double(entityLocation[0], entityLocation[1],
+                Constants.ROBOT_SIZE, Constants.ROBOT_SIZE)));
     }
 
     /**
@@ -198,8 +177,7 @@ public class ProcessingOperations {
      * @param percepts
      *            , a list of all received percepts
      */
-    public static void processPercepts(List<Percept> percepts,
-            BW4TClientInfo data) {
+    public static void processPercepts(List<Percept> percepts, BW4TClientGUI data) {
 
         // first process the not percepts.
         for (Percept percept : percepts) {
@@ -210,16 +188,16 @@ public class ProcessingOperations {
                 if (function.getName().equals("occupied")) {
                     LinkedList<Parameter> paramOcc = function.getParameters();
                     String id = ((Identifier) paramOcc.get(0)).getValue();
-                    data.environmentDatabase.getOccupiedRooms().remove(id);
+                    data.getEnvironmentDatabase().getOccupiedRooms().remove(id);
                 } else if (function.getName().equals("holding")) {
-                    data.environmentDatabase.setHoldingID(Long.MAX_VALUE);
-                    data.environmentDatabase.setEntityColor(Color.BLACK);
+                    data.getEnvironmentDatabase().setHoldingID(Long.MAX_VALUE);
+                    data.getEnvironmentDatabase().setEntityColor(Color.BLACK);
                 }
             }
         }
 
         // reset the ALWAYS percepts
-        data.environmentDatabase.setVisibleBlocks(new ArrayList<Long>());
+        data.getEnvironmentDatabase().setVisibleBlocks(new ArrayList<Long>());
 
         // First create updated information based on the new percepts.
         for (Percept percept : percepts) {
@@ -227,39 +205,34 @@ public class ProcessingOperations {
 
             // Initialize room ids in all rooms gotten from the map loader
             // Should only be done one time
-            HashMap<Long, BlockColor> allBlocks = data.environmentDatabase
-                    .getAllBlocks();
+            HashMap<Long, BlockColor> allBlocks = data.getEnvironmentDatabase().getAllBlocks();
             if (name.equals("position")) {
                 LinkedList<Parameter> parameters = percept.getParameters();
                 long id = ((Numeral) parameters.get(0)).getValue().longValue();
-                double x = ((Numeral) parameters.get(1)).getValue()
-                        .doubleValue();
-                double y = ((Numeral) parameters.get(2)).getValue()
-                        .doubleValue();
-                for (RoomInfo room : data.environmentDatabase.getRooms()) {
-                    if (room.getX() == (int) x && room.getY() == (int) y) {
+                double x = ((Numeral) parameters.get(1)).getValue().doubleValue();
+                double y = ((Numeral) parameters.get(2)).getValue().doubleValue();
+                for (RoomInfo room : data.getEnvironmentDatabase().getRooms()) {
+                    if ((room.getX() == (int) x) && (room.getY() == (int) y)) {
                         room.setId(id);
                         break;
                     }
                 }
 
                 // Also update drop zone id
-                if (data.environmentDatabase.getDropZone().getX() == x
-                        && data.environmentDatabase.getDropZone().getY() == y) {
-                    data.environmentDatabase.getDropZone().setId(id);
+                if ((data.getEnvironmentDatabase().getDropZone().getX() == x)
+                        && (data.getEnvironmentDatabase().getDropZone().getY() == y)) {
+                    data.getEnvironmentDatabase().getDropZone().setId(id);
                 }
 
                 // Else it is a block, add it to all object positions
-                data.environmentDatabase.getObjectPositions().put(id,
-                        new Point2D.Double(x, y));
+                data.getEnvironmentDatabase().getObjectPositions().put(id, new Point2D.Double(x, y));
             }
 
             else if (name.equals("color")) {
                 LinkedList<Parameter> parameters = percept.getParameters();
                 long id = ((Numeral) parameters.get(0)).getValue().longValue();
-                char color = ((Identifier) parameters.get(1)).getValue()
-                        .charAt(0);
-                data.environmentDatabase.getVisibleBlocks().add(id);
+                char color = ((Identifier) parameters.get(1)).getValue().charAt(0);
+                data.getEnvironmentDatabase().getVisibleBlocks().add(id);
                 if (!allBlocks.containsKey(id)) {
                     allBlocks.put(id, BlockColor.toAvailableColor(color));
                 }
@@ -269,7 +242,7 @@ public class ProcessingOperations {
             else if (name.equals("occupied")) {
                 LinkedList<Parameter> parameters = percept.getParameters();
                 String id = ((Identifier) parameters.get(0)).getValue();
-                data.environmentDatabase.getOccupiedRooms().add(id);
+                data.getEnvironmentDatabase().getOccupiedRooms().add(id);
             }
 
             else if (name.equals("not")) {
@@ -279,34 +252,30 @@ public class ProcessingOperations {
             else if (name.equals("sequenceIndex")) {
                 LinkedList<Parameter> parameters = percept.getParameters();
                 int index = ((Numeral) parameters.get(0)).getValue().intValue();
-                data.environmentDatabase.setSequenceIndex(index);
+                data.getEnvironmentDatabase().setSequenceIndex(index);
             }
 
             // Location can be updated immediately.
             else if (name.equals("location")) {
                 LinkedList<Parameter> parameters = percept.getParameters();
-                double x = ((Numeral) parameters.get(0)).getValue()
-                        .doubleValue();
-                double y = ((Numeral) parameters.get(1)).getValue()
-                        .doubleValue();
-                data.environmentDatabase
-                        .setEntityLocation(new Double[] { x, y });
+                double x = ((Numeral) parameters.get(0)).getValue().doubleValue();
+                double y = ((Numeral) parameters.get(1)).getValue().doubleValue();
+                data.getEnvironmentDatabase().setEntityLocation(new Double[] { x, y });
             }
 
             // Check if holding a block
             else if (name.equals("holding")) {
-                data.environmentDatabase.setHoldingID(((Numeral) percept
-                        .getParameters().get(0)).getValue().longValue());
-                data.environmentDatabase.setEntityColor(allBlocks.get(
-                        data.environmentDatabase.getHoldingID()).getColor());
+                data.getEnvironmentDatabase().setHoldingID(
+                        ((Numeral) percept.getParameters().get(0)).getValue().longValue());
+                data.getEnvironmentDatabase().setEntityColor(
+                        allBlocks.get(data.getEnvironmentDatabase().getHoldingID()).getColor());
             }
 
             else if (name.equals("player")) {
                 LinkedList<Parameter> parameters = percept.getParameters();
                 String player = ((Identifier) parameters.get(0)).getValue();
-                if (!data.environmentDatabase.getOtherPlayers()
-                        .contains(player)) {
-                    data.environmentDatabase.getOtherPlayers().add(player);
+                if (!data.getEnvironmentDatabase().getOtherPlayers().contains(player)) {
+                    data.getEnvironmentDatabase().getOtherPlayers().add(player);
                 }
             }
 
@@ -317,8 +286,7 @@ public class ProcessingOperations {
                     ParameterList list = (ParameterList) i;
                     for (Parameter j : list) {
                         char letter = (((Identifier) j).getValue().charAt(0));
-                        data.environmentDatabase.getSequence().add(
-                                BlockColor.toAvailableColor(letter));
+                        data.getEnvironmentDatabase().getSequence().add(BlockColor.toAvailableColor(letter));
                     }
                 }
             }
@@ -327,22 +295,20 @@ public class ProcessingOperations {
             else if (name.equals("message")) {
                 LinkedList<Parameter> parameters = percept.getParameters();
 
-                ParameterList parameterList = ((ParameterList) parameters
-                        .get(0));
+                ParameterList parameterList = ((ParameterList) parameters.get(0));
 
                 Iterator<Parameter> iterator = parameterList.iterator();
 
                 String sender = ((Identifier) iterator.next()).getValue();
                 String message = ((Identifier) iterator.next()).getValue();
 
-                data.chatSession.append(sender + " : " + message + "\n");
-                data.chatSession.setCaretPosition(data.chatSession
-                        .getDocument().getLength());
+                data.getChatSession().append(sender + " : " + message + "\n");
+                data.getChatSession().setCaretPosition(data.getChatSession().getDocument().getLength());
 
                 ArrayList<String> newMessage = new ArrayList<String>();
                 newMessage.add(sender);
                 newMessage.add(message);
-                data.environmentDatabase.getChatHistory().add(newMessage);
+                data.getEnvironmentDatabase().getChatHistory().add(newMessage);
             }
 
         }

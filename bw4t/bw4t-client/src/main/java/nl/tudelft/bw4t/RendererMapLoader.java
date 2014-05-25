@@ -95,7 +95,7 @@ public class RendererMapLoader {
             break;
         }
 
-        GraphicalUpdateOperations.addDoor(x, y, width, height, roomname, renderer.getBW4TClientInfo());
+        GraphicalUpdateOperations.addDoor(x, y, width, height, roomname, renderer);
 
     }
 
@@ -110,7 +110,7 @@ public class RendererMapLoader {
     private static void createRoom(Zone room, BW4TClientGUI renderer) {
         Rectangle rect = room.getBoundingbox();
         GraphicalUpdateOperations.addRoom(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), room.getName(),
-                renderer.getBW4TClientInfo());
+                renderer);
     }
 
     /**
@@ -123,7 +123,7 @@ public class RendererMapLoader {
      */
     private static void createDropZone(Rectangle dropzone, BW4TClientGUI renderer) {
         GraphicalUpdateOperations.addDropZone(new Integer[] { (int) dropzone.getX(), (int) dropzone.getY(),
-                (int) dropzone.getWidth(), (int) dropzone.getHeight() }, renderer.getBW4TClientInfo());
+                (int) dropzone.getWidth(), (int) dropzone.getHeight() }, renderer);
     }
 
     /**

@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
-import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
+import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import eis.iilang.Numeral;
 import eis.iilang.Percept;
 
@@ -16,31 +16,27 @@ import eis.iilang.Percept;
  * @author trens
  */
 public class GotoPositionActionListener implements ActionListener {
-    private Point position;
-    private BW4TClientInfo bw4tClientInfo;
+    private final Point position;
+    private final BW4TClientGUI bw4tClientInfo;
 
-    public GotoPositionActionListener(Point position,
-            BW4TClientInfo bw4tClientInfo) {
+    public GotoPositionActionListener(Point position, BW4TClientGUI bw4tClientInfo) {
         this.position = position;
         this.bw4tClientInfo = bw4tClientInfo;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!bw4tClientInfo.goal)
+        if (!bw4tClientInfo.isGoal()) {
             try {
-                bw4tClientInfo.humanAgent
-                        .goTo(position.getX(), position.getY());
+                bw4tClientInfo.getHumanAgent().goTo(position.getX(), position.getY());
             } catch (Exception e1) {
-                // Also catch NoServerException. Nothing we can do really.
                 e1.printStackTrace();
             }
-        else {
+        } else {
             LinkedList<Percept> percepts = new LinkedList<Percept>();
-            Percept percept = new Percept("goTo", new Numeral(position.getX()),
-                    new Numeral(position.getY()));
+            Percept percept = new Percept("goTo", new Numeral(position.getX()), new Numeral(position.getY()));
             percepts.add(percept);
-            bw4tClientInfo.environmentDatabase.setToBePerformedAction(percepts);
+            bw4tClientInfo.getEnvironmentDatabase().setToBePerformedAction(percepts);
         }
     }
 }
