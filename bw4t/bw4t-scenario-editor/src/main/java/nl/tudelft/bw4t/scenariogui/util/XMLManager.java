@@ -27,14 +27,10 @@ public final class XMLManager {
     /**
      * Constructs an XML file from the specified Java object.
      *
-     * @param filePath
-     *            The location to store the XML file in.
-     * @param xmlObject
-     *            The object to convert into an XML file.
-     * @throws javax.xml.bind.JAXBException
-     *             Thrown if there's an error serializing the object to XML.
-     * @throws java.io.FileNotFoundException
-     *             Thrown if the given XML file has not been found.
+     * @param filePath  The location to store the XML file in.
+     * @param xmlObject The object to convert into an XML file.
+     * @throws javax.xml.bind.JAXBException Thrown if there's an error serializing the object to XML.
+     * @throws java.io.FileNotFoundException    Thrown if the given XML file has not been found.
      */
     public static void toXML(final String filePath, final Object xmlObject)
             throws JAXBException, FileNotFoundException {
@@ -52,14 +48,10 @@ public final class XMLManager {
     /**
      * Constructs a Java object from an XML file.
      *
-     * @param filePath
-     *            The location of the XML file.
-     * @param generatedObjectClass
-     *            The class that the constructed Java object should have.
+     * @param filePath  The location of the XML file.
+     * @param generatedObjectClass  The class that the constructed Java object should have.
      * @return The Java object generated from the XML file.
-     * @throws javax.xml.bind.JAXBException
-     *             Thrown if the given XML file can not be parsed to a
-     *             BW4TClientConfig object.
+     * @throws javax.xml.bind.JAXBException Thrown if the given XML file can not be parsed to a BW4TClientConfig object.
      */
     public static Object fromXML(final String filePath,
             final Class<?> generatedObjectClass)

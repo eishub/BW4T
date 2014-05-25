@@ -25,7 +25,7 @@ public interface OptionPrompt {
     /**
      *
      * @param parentComponent The <code>java.awt.Component</code> that will be used to align the box.
-     * @param message
+     * @param message The message to be displayed
      */
     void showMessageDialog(Component parentComponent, Object message);
 }

@@ -32,7 +32,7 @@ public class NoMockOptionPrompt implements OptionPrompt {
      * This class will not show any message dialog.
      *
      * @param parentComponent The <code>java.awt.Component</code> that will be used to align the box.
-     * @param message
+     * @param message   The Message to be displayed
      */
     public void showMessageDialog(Component parentComponent, Object message) {
         return;

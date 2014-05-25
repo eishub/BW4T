@@ -32,7 +32,7 @@ public class YesMockOptionPrompt implements OptionPrompt {
      * This class will not show any message dialog.
      *
      * @param parentComponent The <code>java.awt.Component</code> that will be used to align the box.
-     * @param message
+     * @param message The message to be displayed.
      */
     public void showMessageDialog(Component parentComponent, Object message) {
         return;

@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
@@ -34,7 +33,10 @@ class ChooseMapFileListener implements ActionListener {
     }
 
     /**
-     * Listens to the map file chooser.
+     * Listens to the map file chooser and sets a map file
+     * <p>
+     * Actionhandler that listens to the map file chooser. 
+     * It creates a filter for MAP files in the file dialog and makes sure only MAP files are accepted and set.
      *
      * @param actionEvent is the event.
      */
@@ -44,15 +46,17 @@ class ChooseMapFileListener implements ActionListener {
          * configuration panel
          */
         JFileChooser fc = view.getConfigurationPanel().getFileChooser();
+        
         /** Create a file name extension filter to filter on MAP files */
-
         int returnVal = fc.showOpenDialog(view);
         File file = fc.getSelectedFile();
         String mapExtension = ".map";
+
         /** Makes sure only files with the right extension are accepted */
         if (returnVal == JFileChooser.APPROVE_OPTION && file.getName().endsWith(mapExtension)) {
             view.getConfigurationPanel().setMapFile(file.getPath());
-        } else if (returnVal == JFileChooser.APPROVE_OPTION && !file.getName().endsWith(mapExtension)) {
+        } 
+        else if (returnVal == JFileChooser.APPROVE_OPTION && !file.getName().endsWith(mapExtension)) {
             ScenarioEditor.getOptionPrompt().showMessageDialog(view, "This is not a valid file.");
         }
     }

@@ -10,7 +10,7 @@ import javax.swing.JPanel;
  *
  * MainPanel which serves as the content pane for the ScenarioEditor frame.
  * Creates a 1/3 - 2/3 division, the former for the ConfigurationPanel, and the
- * latter the EntityPanel
+ * latter the EntityPanel.
  * <p>
  * @author      Katia Asmoredjo
  * @author      Joop Aué  
@@ -38,10 +38,8 @@ public class MainPanel extends JPanel {
     /**
      * Create a MainPanel consisting of a ConfigurationPanel and a EntityPanel.
      *
-     * @param newConfigurationPanel
-     *            The configuration panel
-     * @param newEntityPanel
-     *            The entity panel
+     * @param newConfigurationPanel The configuration panel
+     * @param newEntityPanel    The entity panel
      */
     public MainPanel(final ConfigurationPanel newConfigurationPanel,
             final EntityPanel newEntityPanel) {
@@ -96,8 +94,7 @@ public class MainPanel extends JPanel {
     /**
      * Set the configuration panel used by the MainPanel.
      *
-     * @param newConfigurationPanel
-     *            The configuration panel object to be used.
+     * @param newConfigurationPanel The configuration panel object to be used.
      */
     public final void setConfigurationPanel(
             final ConfigurationPanel newConfigurationPanel) {
@@ -116,8 +113,7 @@ public class MainPanel extends JPanel {
     /**
      * Set the bot panel used by the MainPanel.
      *
-     * @param newEntityPanel
-     *            The bot panel object to be used.
+     * @param newEntityPanel    The bot panel object to be used.
      */
     public final void setEntityPanel(final EntityPanel newEntityPanel) {
         this.entityPanel = newEntityPanel;
