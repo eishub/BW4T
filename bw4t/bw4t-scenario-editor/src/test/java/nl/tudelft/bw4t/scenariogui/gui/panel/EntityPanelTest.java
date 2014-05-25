@@ -148,7 +148,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteBotConfirmDelete() {
-        ScenarioEditor.option = new YesMockOptionPrompt();
+        ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
 
         /* Add a bot to the list */
         spyEntityPanel.getNewBotButton().doClick();
@@ -170,7 +170,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteBotDeclineDelete() {
-        ScenarioEditor.option = new NoMockOptionPrompt();
+        ScenarioEditor.setOptionPrompt(new NoMockOptionPrompt());
 
 
         /* Add a bot to the list */
@@ -193,7 +193,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteBotNoSelection() {
-        ScenarioEditor.option = new NoMockOptionPrompt();
+        ScenarioEditor.setOptionPrompt(new NoMockOptionPrompt());
 
 
         /* Add a bot to the list */
@@ -233,7 +233,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteEPartnerConfirmDelete() {
-        ScenarioEditor.option = new YesMockOptionPrompt();
+        ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
 
 
         /** Add an E-partner to the list */
@@ -256,7 +256,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteEPartnerDeclineDelete() {
-        ScenarioEditor.option = new NoMockOptionPrompt();
+        ScenarioEditor.setOptionPrompt(new NoMockOptionPrompt());
 
 
         /** Add an E-partner to the list */
@@ -278,7 +278,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteEPartnerSelection() {
-        ScenarioEditor.option = new NoMockOptionPrompt();
+        ScenarioEditor.setOptionPrompt(new NoMockOptionPrompt());
 
 
         /** Add an E-partner to the list */

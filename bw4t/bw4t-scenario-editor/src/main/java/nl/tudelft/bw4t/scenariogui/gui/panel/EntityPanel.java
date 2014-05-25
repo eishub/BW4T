@@ -495,7 +495,7 @@ public class EntityPanel extends JPanel {
      */
     protected final void showMessageDialog(
             final Component parent, final String text) {
-        ScenarioEditor.option.showMessageDialog(parent, text);
+        ScenarioEditor.getOptionPrompt().showMessageDialog(parent, text);
     }
 
     /**
@@ -512,7 +512,7 @@ public class EntityPanel extends JPanel {
     public int showConfirmDialog(final Component parent,
                                  final String text,
                                  final String title, final int optionType, final int messageType) {
-        return ScenarioEditor.option.showConfirmDialog(parent, text, title, optionType, messageType);
+        return ScenarioEditor.getOptionPrompt().showConfirmDialog(parent, text, title, optionType, messageType);
     }
 
     /**

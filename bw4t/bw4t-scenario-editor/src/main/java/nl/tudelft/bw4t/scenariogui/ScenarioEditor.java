@@ -30,26 +30,31 @@ public class ScenarioEditor extends JFrame {
      * Randomly generated serial version.
      */
     private static final long serialVersionUID = 3291131921268747169L;
+    
     /**
      * The name of the window, as displayed in the title.
      */
     private String windowName = "Scenario Editor";
+    
     /**
      * The <code>MainPanel</code> serving as the content pane.
      */
     private MainPanel mPanel;
+    
     /**
      * The <code>MenuBar</code> at the top of the screen.
      */
     private MenuBar menuBar;
+    
     /**
      * The <code>Controller</code> containing all the ActionEvents.
      */
     private ScenarioEditorController controller;
+    
     /**
      * The OptionPrompt used to handle all thread blocking GUI objects.
      */
-    public static OptionPrompt option = new DefaultOptionPrompt();
+    private static OptionPrompt option = new DefaultOptionPrompt();
 
     /**
      * Create the scenario editor frame, which will then hold the panels with
@@ -57,7 +62,6 @@ public class ScenarioEditor extends JFrame {
      */
     public ScenarioEditor() {
         setLookAndFeel();
-        // setSize(width, height);
         setTitle(windowName);
 
         setResizable(false);
@@ -211,5 +215,22 @@ public class ScenarioEditor extends JFrame {
     public static void showDialog(final Exception e, final String s) {
 
         ScenarioEditor.option.showMessageDialog(null, s + "\n" + e.toString());
+    }
+    
+    /**
+     * Used to set the OptionPrompt for the Scenario GUI
+     * 
+     * @param o the OptionPrompt object to set option to
+     */
+    public static void setOptionPrompt(OptionPrompt o) {
+        option = o;
+    }
+    
+    /**
+     * 
+     * @return option is used to handle all thread blocking GUI objects.
+     */
+    public static OptionPrompt getOptionPrompt() {
+        return option;
     }
 }
