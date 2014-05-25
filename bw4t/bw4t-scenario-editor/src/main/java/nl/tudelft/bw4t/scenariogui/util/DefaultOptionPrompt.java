@@ -31,7 +31,7 @@ public class DefaultOptionPrompt implements OptionPrompt {
      * Call JOptionPane to show the message dialog.
      *
      * @param parentComponent The <code>java.awt.Component</code> that will be used to align the box.
-     * @param message
+     * @param message   The message to be displayed.
      */
     public void showMessageDialog(Component parentComponent, Object message) {
         JOptionPane.showMessageDialog(parentComponent, message);

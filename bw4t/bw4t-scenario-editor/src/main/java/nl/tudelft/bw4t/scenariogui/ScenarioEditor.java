@@ -91,8 +91,8 @@ public class ScenarioEditor extends JFrame {
      * Constructor where the panels are passed through as arguments. Useful for
      * testing when the panels have to be mocked or spied upon.
      *
-     * @param configurationPanel The ConfigurationPanel object used in the frame
-     * @param entityPanel        The EntityPanel object used in the frame
+     * @param configurationPanel The ConfigurationPanel object used in the frame.
+     * @param entityPanel        The EntityPanel object used in the frame.
      */
     public ScenarioEditor(final ConfigurationPanel configurationPanel, final EntityPanel entityPanel) {
         this();
@@ -117,7 +117,7 @@ public class ScenarioEditor extends JFrame {
      * Set the content pane to the given panel. This changes which panel is
      * shown in the frame.
      *
-     * @param panel the panel to be shown.
+     * @param panel The panel to be shown.
      */
     protected final void setActivePane(final JPanel panel) {
         setContentPane(panel);
@@ -183,8 +183,10 @@ public class ScenarioEditor extends JFrame {
     }
 
     /**
-     * @param e contains the exception thrown by a method
-     * @param s is a description that is specific for the place the error occurred.
+     * Handles the exceptions that are catched.
+     * 
+     * @param e The exception that is thrown.
+     * @param s A description that is specific for why the error occurred.
      */
     public static void handleException(final Exception e, final String s) {
         if (e instanceof FileNotFoundException) {
@@ -209,8 +211,10 @@ public class ScenarioEditor extends JFrame {
     }
 
     /**
-     * @param e contains the exception to print
-     * @param s is a description of the error e that will be shown.
+     * Opens a dialog showing the description of the error and the error itself as a String.
+     * 
+     * @param e The exception that is thrown.
+     * @param s A description that is specific for why the error occurred.
      */
     public static void showDialog(final Exception e, final String s) {
 
@@ -218,17 +222,17 @@ public class ScenarioEditor extends JFrame {
     }
     
     /**
-     * Used to set the OptionPrompt for the Scenario GUI
+     * Used to set the OptionPrompt for the Scenario GUI.
      * 
-     * @param o the OptionPrompt object to set option to
+     * @param o The OptionPrompt object to set option to.
      */
     public static void setOptionPrompt(OptionPrompt o) {
         option = o;
     }
     
     /**
-     * 
-     * @return option is used to handle all thread blocking GUI objects.
+     * Used to get the OptionPrompt for the Scenario GUI
+     * @return option Used to handle all thread blocking GUI objects.
      */
     public static OptionPrompt getOptionPrompt() {
         return option;

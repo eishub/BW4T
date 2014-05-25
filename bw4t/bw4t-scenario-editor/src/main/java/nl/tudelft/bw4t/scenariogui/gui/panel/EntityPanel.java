@@ -13,7 +13,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -507,6 +506,7 @@ public class EntityPanel extends JPanel {
      * @param optionType An int designating the options available on the dialog:
      *                   JOptionPane.YES_NO_OPTIONS, JOptionPane.YES_NO_CANCEL_OPTION
      *                   or JOptionPane.OK_CANCEL_OPTION,
+     * @param messageType   Message type for the confirm dialog.
      * @return An int indicating the option selected by the user
      */
     public int showConfirmDialog(final Component parent,
@@ -562,19 +562,18 @@ public class EntityPanel extends JPanel {
 
 
     /**
-     * Returns the new bot name
+     * Returns the new bot name.
      *
-     * @return The new bot name
+     * @return The new bot name.
      */
     /*
      * public String getNewBotNameLabelText() { return newBotName.getText(); }
      */
 
     /**
-     * Sets the new bot name
+     * Sets the new bot name.
      *
-     * @param newBotName
-     *            The new bot name
+     * @param newBotName    The new bot name.
      */
     /*
      * public void setNewBotNameLabelText(String newBotName) {

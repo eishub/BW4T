@@ -10,9 +10,6 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.config.BotConfig;
-import nl.tudelft.bw4t.scenariogui.util.DefaultOptionPrompt;
-import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
@@ -86,7 +83,8 @@ public abstract class AbstractMenuOption implements ActionListener {
     }
 
     /**
-     * Saves a file.
+     * Saves the configuration to XML. 
+     * When the configuration hasn't been saved before an file chooser is opened.
      *
      * @param saveAs Whether or not to open a file chooser.
      */
@@ -107,12 +105,15 @@ public abstract class AbstractMenuOption implements ActionListener {
                 if (!path.endsWith(extension)) {
                     path += extension;
                 }
-            } else {
+            } 
+            else {
                 return;
             }
         }
         try {
-            BW4TClientConfig configuration =  new BW4TClientConfig((MainPanel) (getController().getMainView()).getContentPane(), path);
+            BW4TClientConfig configuration =  
+                    new BW4TClientConfig((MainPanel) (getController().getMainView()).getContentPane(), path);
+            
             //TODO: UNLOAD AND SAVE BOTS HERE
             configuration.toXML();
             view.setLastFileLocation(path);
