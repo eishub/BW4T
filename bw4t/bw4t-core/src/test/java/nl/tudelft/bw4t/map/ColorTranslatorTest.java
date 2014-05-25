@@ -5,7 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.Color;
-import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -30,7 +30,7 @@ public class ColorTranslatorTest {
 	public void testGetAllColors_1() {
 		BlockColor[] cs = BlockColor.values();
 
-		ArrayList<String> result = ColorTranslator.getAllColors();
+		List<String> result = ColorTranslator.getAllColors();
 
 		// add additional test code here
 		assertNotNull(result);
