@@ -50,7 +50,7 @@ public class PerceptsHandler {
                 /** Get the percepts and process them in the GUI */
                 List<Percept> percepts = client.getAllPerceptsFromEntity(entity);
                 if (percepts != null) {
-                    ProcessingOperations.processPercepts(percepts, clientEntity.getBW4TClientInfo());
+                    ProcessingOperations.processPercepts(percepts, clientEntity);
                 }
                 return percepts;
             }

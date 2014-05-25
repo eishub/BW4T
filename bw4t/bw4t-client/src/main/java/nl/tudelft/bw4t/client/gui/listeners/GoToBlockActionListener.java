@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
-import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
+import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import eis.iilang.Numeral;
 import eis.iilang.Percept;
 
@@ -16,30 +16,30 @@ import eis.iilang.Percept;
  */
 public class GoToBlockActionListener implements ActionListener {
     private long boxID;
-    private BW4TClientInfo bw4tClientInfo;
+    private BW4TClientGUI bw4tClientGUI;
 
     public GoToBlockActionListener(long id) {
 
     }
 
-    public GoToBlockActionListener(Long boxID, BW4TClientInfo bw4tClientInfo) {
+    public GoToBlockActionListener(Long boxID, BW4TClientGUI bw4tClientGUI) {
         this.boxID = boxID;
-        this.bw4tClientInfo = bw4tClientInfo;
+        this.bw4tClientGUI = bw4tClientGUI;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!bw4tClientInfo.goal)
+        if (!bw4tClientGUI.isGoal()) {
             try {
-                bw4tClientInfo.humanAgent.goToBlock(boxID);
+                bw4tClientGUI.getHumanAgent().goToBlock(boxID);
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
-        else {
+        } else {
             LinkedList<Percept> percepts = new LinkedList<Percept>();
             Percept percept = new Percept("goToBlock", new Numeral(boxID));
             percepts.add(percept);
-            bw4tClientInfo.environmentDatabase.setToBePerformedAction(percepts);
+            bw4tClientGUI.getEnvironmentDatabase().setToBePerformedAction(percepts);
         }
 
     }

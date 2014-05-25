@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
-import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
 
 import org.apache.log4j.Logger;
 
@@ -20,7 +19,7 @@ import eis.iilang.Percept;
  */
 public class PickUpActionListener implements ActionListener {
 
-    private BW4TClientGUI bw4tClientMapRenderer;
+    private final BW4TClientGUI bw4tClientMapRenderer;
     /**
      * The log4j Logger which displays logs on console
      */
@@ -32,19 +31,18 @@ public class PickUpActionListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        BW4TClientInfo data = bw4tClientMapRenderer.getBW4TClientInfo();
-        if (!data.goal)
+        BW4TClientGUI data = bw4tClientMapRenderer;
+        if (!data.isGoal()) {
             try {
-                data.humanAgent.pickUp();
+                data.getHumanAgent().pickUp();
             } catch (Exception e1) {
-                LOGGER.error(
-                        "Could tell the agent to perform a pickUp action.", e1);
+                LOGGER.error("Could tell the agent to perform a pickUp action.", e1);
             }
-        else {
+        } else {
             List<Percept> percepts = new LinkedList<Percept>();
             Percept percept = new Percept("pickUp");
             percepts.add(percept);
-            data.environmentDatabase.setToBePerformedAction(percepts);
+            data.getEnvironmentDatabase().setToBePerformedAction(percepts);
         }
     }
 }

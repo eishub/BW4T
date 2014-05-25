@@ -42,9 +42,9 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
      * This map associates agents with a renderer. I suppose agents not having a
      * renderer do not end up in this list.
      */
-    private Map<BW4TAgent, BW4TClientGUI> agentData = new HashMap<BW4TAgent, BW4TClientGUI>();
+    private final Map<BW4TAgent, BW4TClientGUI> agentData = new HashMap<BW4TAgent, BW4TClientGUI>();
 
-    private RemoteEnvironment environment;
+    private final RemoteEnvironment environment;
 
     public BW4TEnvironmentListener(RemoteEnvironment env) {
         environment = env;
@@ -65,9 +65,8 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
                 if (agentB.getName().equals(agent)) {
                     agentB.setKilled();
                     if (agentData.get(agentB) != null) {
-                        agentData.get(agentB).getBW4TClientInfo().stop = true;
-                        agentData.get(agentB).getBW4TClientInfo().jFrame
-                                .dispose();
+                        agentData.get(agentB).stop = true;
+                        agentData.get(agentB).getjFrame().dispose();
                     }
                     agentData.remove(agentB);
                     return;
@@ -99,6 +98,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
      */
     @Override
     public void handleNewEntity(String entityId) {
+        LOGGER.debug("Handeling new entity of the environment: " + entityId);
         try {
             handleNewEntity1(entityId);
         } catch (Exception e) {
@@ -122,10 +122,9 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
      * @throws IOException
      * @throws RelationException
      */
-    private void handleNewEntity1(String entityId) throws EntityException,
-            AgentException, ClassNotFoundException, NoSuchMethodException,
-            InstantiationException, IllegalAccessException,
-            InvocationTargetException, IOException, RelationException {
+    private void handleNewEntity1(String entityId) throws EntityException, AgentException, ClassNotFoundException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException,
+            IOException, RelationException {
         if ("human".equals(environment.getType(entityId))) {
             HumanAgent agent = new HumanAgent("Agent" + agentCount, environment);
             agent.registerEntity(entityId);
@@ -140,17 +139,14 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
             agentData.put(agent, renderer);
         } else {
             String agentClassName = "nl.tudelft.bw4t.agent.BW4TAgent";
-            Identifier agentClass = (Identifier) environment
-                    .getInitParameters().get("agentclass");
+            Identifier agentClass = (Identifier) environment.getInitParameters().get("agentclass");
 
             if (agentClass != null) {
                 agentClassName = agentClass.getValue();
             }
-            Class<? extends BW4TAgent> c = Class.forName(agentClassName)
-                    .asSubclass(BW4TAgent.class);
+            Class<? extends BW4TAgent> c = Class.forName(agentClassName).asSubclass(BW4TAgent.class);
             Class[] types = new Class[] { String.class, RemoteEnvironment.class };
-            Constructor<BW4TAgent> cons = (Constructor<BW4TAgent>) c
-                    .getConstructor(types);
+            Constructor<BW4TAgent> cons = (Constructor<BW4TAgent>) c.getConstructor(types);
             // we use the entityId as name for the agent as well. #2761
             Object[] args = new Object[] { entityId, environment };
             BW4TAgent agent = cons.newInstance(args);
@@ -173,6 +169,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
      */
     @Override
     public void handleStateChange(EnvironmentState newState) {
+        LOGGER.debug("Handeling new environment state: " + newState);
         if (newState.equals(EnvironmentState.KILLED)) {
             // YUK YUK. FIXME
             System.exit(0);

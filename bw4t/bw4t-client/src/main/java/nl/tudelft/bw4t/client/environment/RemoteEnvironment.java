@@ -97,6 +97,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
      */
     @Override
     public void registerAgent(String agentId) throws AgentException {
+        LOGGER.debug("Registering new agent:" + agentId + ".");
         try {
             data.getClient().registerAgent(agentId);
             data.getLocalAgents().add(agentId);
@@ -107,6 +108,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
 
     @Override
     public List<String> getAgents() {
+        LOGGER.debug("Getting agents.");
         try {
             return data.getClient().getAgents();
         } catch (RemoteException e) {
@@ -167,26 +169,31 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
      */
     @Override
     public void associateEntity(String agentId, String entityId) throws RelationException {
+        LOGGER.debug("Associating Agent " + agentId + " with Entity " + entityId + ".");
         try {
             if (data.isConnectedToGoal() && "human".equals(getType(entityId))) {
                 data.getClient().associateEntity(agentId, entityId);
                 BW4TClientGUI renderer = new BW4TClientGUI(this, entityId, true, true);
                 data.getEntityToGUI().put(entityId, renderer);
+                LOGGER.debug("Branch 1");
             } else if (data.isConnectedToGoal()
                     && "true".equals(((Identifier) data.getInitParameters().get(InitParam.LAUNCHGUI.nameLower()))
                             .getValue())) {
                 data.getClient().associateEntity(agentId, entityId);
                 BW4TClientGUI renderer = new BW4TClientGUI(this, entityId, true, false);
                 data.getEntityToGUI().put(entityId, renderer);
+                LOGGER.debug("Branch 2");
             } else if ("bot".equals(getType(entityId))
                     && "true".equals(((Identifier) data.getInitParameters().get(InitParam.LAUNCHGUI.nameLower()))
                             .getValue())) {
                 data.getClient().associateEntity(agentId, entityId);
                 BW4TClientGUI renderer = new BW4TClientGUI(this, entityId, false, false);
                 data.getEntityToGUI().put(entityId, renderer);
+                LOGGER.debug("Branch 3");
             } else {
                 data.getClient().associateEntity(agentId, entityId);
                 data.getEntityToGUI().put(entityId, null);
+                LOGGER.debug("Branch 4");
             }
         } catch (RemoteException e) {
             throw environmentSuddenDeath(e);
@@ -422,7 +429,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
     public void kill() throws ManagementException {
         for (BW4TClientGUI renderer : data.getEntityToGUI().values()) {
             if (renderer != null) {
-                renderer.getBW4TClientInfo().stop = true;
+                renderer.setStop(true);
             }
         }
         // copy list, the localAgents list is going to be changes by removing

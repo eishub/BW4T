@@ -13,7 +13,7 @@ import nl.tudelft.bw4t.client.gui.menu.PlayerMenu;
  * accordingly
  */
 public class TeamListMouseListener implements MouseListener {
-    private BW4TClientGUI clientRenderer;
+    private final BW4TClientGUI clientRenderer;
 
     public TeamListMouseListener(BW4TClientGUI clientRenderer) {
         this.clientRenderer = clientRenderer;
@@ -29,8 +29,7 @@ public class TeamListMouseListener implements MouseListener {
         if (value != null) {
             String playerId = ((JButton) value).getText();
             PlayerMenu.buildPopUpMenuForRequests(playerId, clientRenderer);
-            clientRenderer.getBW4TClientInfo().jPopupMenu.show((JButton) value,
-                    e.getX(), e.getY());
+            clientRenderer.getjPopupMenu().show((JButton) value, e.getX(), e.getY());
         }
     }
 
