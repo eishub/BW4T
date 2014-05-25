@@ -14,16 +14,16 @@ public class Constants {
 	 * Utility class, cannot be instantiated.
 	 */
 	private Constants() {
-	}	
+	}
 
-    /** The width and height of the blocks */
-    public final static int BLOCK_SIZE = 2;
+	/** The width and height of the blocks */
+	public final static int BLOCK_SIZE = 2;
 
-    /** Thickness of doors. */
-    public static final int DOOR_THICKNESS = 1;
-    /** width of doors. */
-    public static final int DOOR_WIDTH = 4;
+	/** Thickness of doors. */
+	public static final int DOOR_THICKNESS = 1;
+	/** width of doors. */
+	public static final int DOOR_WIDTH = 4;
 
-    /** The width and height of the robot */
-    public final static int ROBOT_SIZE = 2;
+	/** The width and height of the robot */
+	public final static int ROBOT_SIZE = 2;
 }
