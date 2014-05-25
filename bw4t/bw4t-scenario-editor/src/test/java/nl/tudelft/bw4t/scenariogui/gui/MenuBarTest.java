@@ -10,9 +10,10 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.controllers.editor.AbstractMenuOption;
 import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
-import nl.tudelft.bw4t.scenariogui.controllers.editor.AbstractMenuOption;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

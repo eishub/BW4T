@@ -28,6 +28,7 @@ public class XMLManagerTest {
 
     /**
      * Tests the toXML and fromXML methods.
+     * 
      * @throws JAXBException If there was an error with the XML loader.
      * @throws FileNotFoundException When a file was not found.
      */

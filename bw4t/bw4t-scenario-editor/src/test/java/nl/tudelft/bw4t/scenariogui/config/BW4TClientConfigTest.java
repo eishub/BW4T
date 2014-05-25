@@ -109,6 +109,7 @@ public class BW4TClientConfigTest {
     /**
      * Tests whether the fields stay the same after saving
      * and then loading them from xml.
+     * 
      * @throws FileNotFoundException When the file could not be found.
      * @throws JAXBException If there was an error with the xml loader.
      */
