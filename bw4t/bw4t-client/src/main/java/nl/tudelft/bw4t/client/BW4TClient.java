@@ -104,8 +104,7 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
 	public void connectServer() throws RemoteException,
 	MalformedURLException, NotBoundException {
 
-		// Get all necessary parameters from initialization arguments
-		String clientPortString = InitParam.CLIENTPORT.getValue() ;
+		String clientPortString = InitParam.CLIENTPORT.getValue();
 
 		// Launch the client and bind it
 		bindAddress = "rmi://" + InitParam.CLIENTIP.getValue() + ":" + clientPortString + "/BW4TClient";
@@ -121,7 +120,7 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
 		String address = "//" + InitParam.SERVERIP.getValue() + ":" + InitParam.SERVERPORT.getValue() + "/BW4TServer";
 		try {
 			server = (BW4TServerActions) Naming.lookup(address);
-		} catch (RemoteException e) {
+		} catch (Exception e) {
 			LOGGER.error("The BW4T Client failed to connect to the server: " + address);
 			throw new NoEnvironmentException("Failed to connect " + address, e);
 		}
@@ -135,10 +134,9 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
 	 *            the parameters given by console
 	 */
 	public void shutdownServer() {
-
 		String killKey = InitParam.KILL.getValue();
 
-		// Attempt to shutdown the server
+		// Register the client to the server
 		String address = "//" + InitParam.SERVERIP.getValue() + ":" + InitParam.SERVERPORT.getValue() + "/BW4TServer";
 		try {
 			server = (BW4TServerActions) Naming.lookup(address);
@@ -539,7 +537,7 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
 	 */
 	@Override
 	public void handleNewEntity(String entity) throws RemoteException, EntityException {
-		EntityNotifiers.notifyNewEntity(entity, parent.getData());
+		EntityNotifiers.notifyNewEntity(entity, parent);
 	}
 
 	/**
@@ -547,7 +545,7 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
 	 */
 	@Override
 	public void handleFreeEntity(String entity, Collection<String> agents) throws RemoteException {
-		EntityNotifiers.notifyFreeEntity(entity, agents, parent.getData());
+		EntityNotifiers.notifyFreeEntity(entity, agents, parent);
 	}
 
 	/**
@@ -555,7 +553,7 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
 	 */
 	@Override
 	public void handleDeletedEntity(String entity, Collection<String> agents) throws RemoteException {
-		EntityNotifiers.notifyDeletedEntity(entity, agents, parent.getData());
+		EntityNotifiers.notifyDeletedEntity(entity, agents, parent);
 	}
 
 	/**
