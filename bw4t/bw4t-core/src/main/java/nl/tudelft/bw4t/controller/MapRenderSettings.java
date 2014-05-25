@@ -9,6 +9,7 @@ public class MapRenderSettings {
 	private int worldHeight = 7;
 	private int scale = 7;
 	private int roomTextOffset = 25;
+	private boolean renderEntityName = false;
 
 	/**
 	 * Initialize with default values.
@@ -79,6 +80,14 @@ public class MapRenderSettings {
 
 	public void setSequenceBlockSize(int sequenceBlockSize) {
 		this.sequenceBlockSize = sequenceBlockSize;
+	}
+
+	public boolean isRenderEntityName() {
+		return renderEntityName;
+	}
+
+	public void setRenderEntityName(boolean renderEntityName) {
+		this.renderEntityName = renderEntityName;
 	}
 
 	/**
