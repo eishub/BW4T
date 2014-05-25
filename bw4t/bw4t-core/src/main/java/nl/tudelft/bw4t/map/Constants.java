@@ -1,5 +1,7 @@
 package nl.tudelft.bw4t.map;
 
+import org.codehaus.mojo.cobertura.IgnoreCoverage;
+
 /**
  * This class contains the definitions that are shared between the server and
  * the client. It was easier to separate them out than to try and make the
@@ -13,6 +15,7 @@ public class Constants {
 	/**
 	 * Utility class, cannot be instantiated.
 	 */
+	@IgnoreCoverage
 	private Constants() {
 	}
 
