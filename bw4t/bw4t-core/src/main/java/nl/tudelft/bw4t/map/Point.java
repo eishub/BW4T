@@ -12,60 +12,61 @@ import java.io.Serializable;
  */
 public class Point implements Serializable {
 
-    private Point2D.Double point = new Point2D.Double();
+	private Point2D.Double point = new Point2D.Double();
 
-    public Point() {
-    }
+	public Point() {
+	}
 
-    public Point(double newx, double newy) {
-        point = new Point2D.Double(newx, newy);
-    }
+	public Point(double newx, double newy) {
+		point = new Point2D.Double(newx, newy);
+	}
 
-    public double getX() {
-        return point.x;
-    }
+	public double getX() {
+		return point.x;
+	}
 
-    public void setX(double x) {
-        point.x = x;
-    }
+	public void setX(double x) {
+		point.x = x;
+	}
 
-    public double getY() {
-        return point.y;
-    }
+	public double getY() {
+		return point.y;
+	}
 
-    public void setY(double y) {
-        point.y = y;
-    }
+	public void setY(double y) {
+		point.y = y;
+	}
 
-    public Point2D asPoint2D() {
-        return point;
-    }
+	public Point2D asPoint2D() {
+		return point;
+	}
 
-    @Override
-    public int hashCode() {
-        return point.hashCode();
-    }
+	@Override
+	public int hashCode() {
+		return point.hashCode();
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Point other = (Point) obj;
-        if (point == null) {
-            if (other.point != null)
-                return false;
-        } else if (!point.equals(other.point))
-            return false;
-        return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Point other = (Point) obj;
+		if (!point.equals(other.point)) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public String toString() {
-        return point.toString();
-    }
+	@Override
+	public String toString() {
+		return point.toString();
+	}
 
 }
