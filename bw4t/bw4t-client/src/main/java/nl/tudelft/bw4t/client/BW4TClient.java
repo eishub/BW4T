@@ -27,7 +27,6 @@ import eis.exceptions.NoEnvironmentException;
 import eis.exceptions.RelationException;
 import eis.iilang.Action;
 import eis.iilang.EnvironmentState;
-import eis.iilang.Identifier;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
 
@@ -44,554 +43,536 @@ import eis.iilang.Percept;
  * @author W.Pasman 13feb2012 added start and pause calls.
  */
 public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions {
-    private static final long serialVersionUID = -7174958200299731682L;
+	private static final long serialVersionUID = -7174958200299731682L;
 
-    /**
-     * The parent that we serve.
-     */
-    private final RemoteEnvironment parent;
+	/**
+	 * The parent that we serve.
+	 */
+	private final RemoteEnvironment parent;
 
-    private String bindAddress;
+	private String bindAddress;
 
-    private BW4TServerActions server;
+	private BW4TServerActions server;
 
-    private static final Logger LOGGER = Logger.getLogger(BW4TClient.class);
+	private static final Logger LOGGER = Logger.getLogger(BW4TClient.class);
 
-    /**
-     * the map that the server uses.
-     */
-    private NewMap map;
+	/**
+	 * the map that the server uses.
+	 */
+	private NewMap map;
 
-    /**
-     * Create a listener for the server.
-     * 
-     * @param parent
-     *            is the parent {@link RemoteEnvironment}
-     * @throws RemoteException
-     *             if an exception occurs during the execution of a remote
-     *             object call
-     * @throws NotBoundException
-     * @throws MalformedURLException
-     */
-    public BW4TClient(RemoteEnvironment parent) throws RemoteException, MalformedURLException, NotBoundException {
-        this.parent = parent;
-    }
+	/**
+	 * Create a listener for the server.
+	 * 
+	 * @param parent
+	 *            is the parent {@link RemoteEnvironment}
+	 * @throws RemoteException
+	 *             if an exception occurs during the execution of a remote
+	 *             object call
+	 * @throws NotBoundException
+	 * @throws MalformedURLException
+	 */
+	public BW4TClient(RemoteEnvironment parent) throws RemoteException, MalformedURLException, NotBoundException {
+		this.parent = parent;
+	}
 
-    /**
-     * run the client. This is provided as separate function from the
-     * constructor, because the parent (BW4TEnvironment) needs to do some setup
-     * with the given constructor, before it is really ready to handle callbacks
-     * from the server.
-     * 
-     * @param parameters
-     *            the set of initialization parameters as Map<String,Parameter>.
-     *            Should contain values for the following keys:
-     *            <ul>
-     *            <li>clientip
-     *            <li>clientport
-     *            <li>serverip
-     *            <li>serverport
-     *            <li>agentcount
-     *            <li>humancount
-     *            <li>goal
-     *            </ul>
-     *            Note, these are not all init parameters available to
-     *            BW4TRemoteEnvironment, these are just the ones needed to
-     *            launch this client class.
-     * @throws MalformedURLException
-     * @throws RemoteException
-     * @throws NotBoundException
-     */
-    public void connectServer(java.util.Map<String, Parameter> initParameters) throws RemoteException,
-            MalformedURLException, NotBoundException {
+	/**
+	 * run the client. This is provided as separate function from the
+	 * constructor, because the parent (BW4TEnvironment) needs to do some setup
+	 * with the given constructor, before it is really ready to handle callbacks
+	 * from the server.
+	 * 
+	 * @param parameters
+	 *            the set of initialization parameters as Map<String,Parameter>.
+	 *            Should contain values for the following keys:
+	 *            <ul>
+	 *            <li>clientip
+	 *            <li>clientport
+	 *            <li>serverip
+	 *            <li>serverport
+	 *            <li>agentcount
+	 *            <li>humancount
+	 *            <li>goal
+	 *            </ul>
+	 *            Note, these are not all init parameters available to
+	 *            BW4TRemoteEnvironment, these are just the ones needed to
+	 *            launch this client class.
+	 * @throws MalformedURLException
+	 * @throws RemoteException
+	 * @throws NotBoundException
+	 */
+	public void connectServer() throws RemoteException,
+	MalformedURLException, NotBoundException {
 
-        // Get all necessary parameters from initialization arguments
-        Parameter clientIp = initParameters.get(InitParam.CLIENTIP.nameLower());
-        String clientIpString = ((Identifier) clientIp).getValue();
+		// Get all necessary parameters from initialization arguments
+		String clientPortString = InitParam.CLIENTPORT.getValue() ;
 
-        Parameter clientPort = initParameters.get(InitParam.CLIENTPORT.nameLower());
-        String clientPortString = ((Identifier) clientPort).getValue();
+		// Launch the client and bind it
+		bindAddress = "rmi://" + InitParam.CLIENTIP.getValue() + ":" + clientPortString + "/BW4TClient";
+		try {
+			LocateRegistry.createRegistry(Integer.parseInt(clientPortString));
+		} catch (Exception e) {
+			LOGGER.error("Registry was already created.", e);
+		}
+		Naming.rebind(bindAddress, this);
+		LOGGER.info("The BW4T Client is bound to: " + bindAddress);
 
-        Parameter serverIp = initParameters.get(InitParam.SERVERIP.nameLower());
-        String serverIpString = ((Identifier) serverIp).getValue();
+		// Register the client to the server
+		String address = "//" + InitParam.SERVERIP.getValue() + ":" + InitParam.SERVERPORT.getValue() + "/BW4TServer";
+		try {
+			server = (BW4TServerActions) Naming.lookup(address);
+		} catch (RemoteException e) {
+			LOGGER.error("The BW4T Client failed to connect to the server: " + address);
+			throw new NoEnvironmentException("Failed to connect " + address, e);
+		}
 
-        Parameter serverPort = initParameters.get(InitParam.SERVERPORT.nameLower());
-        String serverPortString = ((Identifier) serverPort).getValue();
+	}
 
-        // Launch the client and bind it
-        bindAddress = "rmi://" + clientIpString + ":" + clientPortString + "/BW4TClient";
-        try {
-            LocateRegistry.createRegistry(Integer.parseInt(clientPortString));
-        } catch (Exception e) {
-            LOGGER.error("Registry was already created.", e);
-        }
-        Naming.rebind(bindAddress, this);
-        LOGGER.info("The BW4T Client is bound to: " + bindAddress);
+	/**
+	 * Try to shutdown the server with the given parameters.
+	 * 
+	 * @param shutdownParams
+	 *            the parameters given by console
+	 */
+	public void shutdownServer() {
 
-        // Register the client to the server
-        String address = "//" + serverIpString + ":" + serverPortString + "/BW4TServer";
-        try {
-            server = (BW4TServerActions) Naming.lookup(address);
-        } catch (Exception e) {
-            LOGGER.error("The BW4T Client failed to connect to the server: " + address);
-            throw new NoEnvironmentException("Failed to connect " + address, e);
-        }
+		String killKey = InitParam.KILL.getValue();
 
-    }
+		// Attempt to shutdown the server
+		String address = "//" + InitParam.SERVERIP.getValue() + ":" + InitParam.SERVERPORT.getValue() + "/BW4TServer";
+		try {
+			server = (BW4TServerActions) Naming.lookup(address);
+		} catch (Exception e) {
+			LOGGER.info("The server is already down: " + address);
+			return;
+		}
 
-    /**
-     * Try to shutdown the server with the given parameters.
-     * 
-     * @param shutdownParams
-     *            the parameters given by console
-     */
-    public void shutdownServer(java.util.Map<String, Parameter> shutdownParams) {
-        Parameter serverIp = shutdownParams.get(InitParam.SERVERIP.nameLower());
-        String serverIpString = ((Identifier) serverIp).getValue();
+		LOGGER.info("Attempting to shutdown the server with key: " + killKey);
+		try {
+			((BW4TServerHiddenActions) server).stopServer(killKey);
+		} catch (RemoteException e) {
+			// LOGGER.error("An error occurred while shutting down server", e);
+		}
+	}
 
-        Parameter serverPort = shutdownParams.get(InitParam.SERVERPORT.nameLower());
-        String serverPortString = ((Identifier) serverPort).getValue();
+	/**
+	 * Register our client with the server. Provided separately, of run
+	 * 
+	 * @param initParameters
+	 * @throws RemoteException
+	 */
+	public void register() throws RemoteException {
+		int agentCountInt = Integer.parseInt(InitParam.AGENTCOUNT.getValue());
+		int humanCountInt = Integer.parseInt(InitParam.HUMANCOUNT.getValue());
 
-        String killKey = ((Identifier) shutdownParams.get(InitParam.KILL.nameLower())).getValue();
+		LOGGER.info("Requesting " + agentCountInt + " automated agent(s) and " + humanCountInt + " human agent(s).");
+		server.registerClient(this, agentCountInt, humanCountInt);
+	}
 
-        // Register the client to the server
-        String address = "//" + serverIpString + ":" + serverPortString + "/BW4TServer";
-        try {
-            server = (BW4TServerActions) Naming.lookup(address);
-        } catch (Exception e) {
-            LOGGER.info("The server is already down: " + address);
-            return;
-        }
+	/**
+	 * kill the client interface. kill at this moment does not kill the server,
+	 * it just disconnects the client. Make sure all entities and agents have
+	 * been unbound before doing this.
+	 * 
+	 * @throws RemoteException
+	 * @throws NotBoundException
+	 * @throws MalformedURLException
+	 */
+	public void kill() throws RemoteException, MalformedURLException, NotBoundException {
+		server.unregisterClient(this);
+		Naming.unbind(bindAddress);
+		UnicastRemoteObject.unexportObject(this, true);
+	}
 
-        LOGGER.info("Attempting to shutdown the server with key: " + killKey);
-        try {
-            ((BW4TServerHiddenActions) server).stopServer(killKey);
-        } catch (RemoteException e) {
-            // LOGGER.error("An error occurred while shutting down server", e);
-        }
-    }
+	/**
+	 * Perform an entity action on the server
+	 * 
+	 * @param entity
+	 *            , the entity that should perform the action
+	 * @param action
+	 *            , the action to be performed
+	 * @return the resulting percept of the action
+	 * @throws RemoteException
+	 *             if an exception occurs during the execution of a remote
+	 *             object call
+	 */
+	public Percept performEntityAction(String entity, Action action) throws RemoteException {
+		LOGGER.debug("Entity " + entity + " performing action: " + action.toProlog());
+		return server.performEntityAction(entity, action);
+	}
 
-    /**
-     * Register our client with the server. Provided separately, of run
-     * 
-     * @param initParameters
-     * @throws RemoteException
-     */
-    public void register(java.util.Map<String, Parameter> initParameters) throws RemoteException {
-        Parameter agentCount = initParameters.get(InitParam.AGENTCOUNT.nameLower());
-        int agentCountInt = Integer.parseInt(((Identifier) agentCount).getValue());
+	/**
+	 * @param serverIP
+	 *            , the ip address of the server
+	 * @param serverPort
+	 *            , the port where the server is listening
+	 * @param expectedCount
+	 *            , the amount of entities the client wants to receive
+	 * @throws RemoteException
+	 *             if an exception occurs during the execution of a remote
+	 *             object call
+	 * @throws MalformedURLException
+	 *             if the given url could not be parsed
+	 * @throws NotBoundException
+	 *             if the server was not bound at the given address
+	 */
+	protected void connectToServer(int agentCount, int humanCount) throws RemoteException, MalformedURLException,
+	NotBoundException {
+	}
 
-        Parameter humanCount = initParameters.get(InitParam.HUMANCOUNT.nameLower());
-        int humanCountInt = Integer.parseInt(((Identifier) humanCount).getValue());
+	/**
+	 * Associate an agent to an entity on the server
+	 * 
+	 * @param agentId
+	 *            , an already registered agent that should be associated to the
+	 *            entity
+	 * @param entityId
+	 *            , the entity that the agent should be associated to
+	 * @throws RelationException
+	 *             if the attempt to manipulate the agents-entities-relation has
+	 *             failed.
+	 * @throws RemoteException
+	 *             if an exception occurs during the execution of a remote
+	 *             object call
+	 */
+	public void associateEntity(String agentId, String entityId) throws RelationException, RemoteException {
+		LOGGER.debug("Agent " + agentId + " associated with entity: " + entityId);
+		server.associateEntity(agentId, entityId);
+	}
 
-        server.registerClient(this, agentCountInt, humanCountInt);
-        LOGGER.info("Registered " + agentCountInt + " automated agent(s) and " + humanCountInt + " human agent(s).");
-    }
+	/**
+	 * Register an agent to the server, should be done before trying to
+	 * associate the agent with an entity
+	 * 
+	 * @param agentId
+	 *            , the agent to be registered
+	 * @throws RemoteException
+	 *             if an exception occurs during the execution of a remote
+	 *             object call
+	 * @throws AgentException
+	 *             if the attempt to register or unregister an agent has failed.
+	 */
+	public void registerAgent(String agentId) throws RemoteException, AgentException {
+		server.registerAgent(agentId);
+		LOGGER.debug("Register agent: " + agentId);
+	}
 
-    /**
-     * kill the client interface. kill at this moment does not kill the server,
-     * it just disconnects the client. Make sure all entities and agents have
-     * been unbound before doing this.
-     * 
-     * @throws RemoteException
-     * @throws NotBoundException
-     * @throws MalformedURLException
-     */
-    public void kill() throws RemoteException, MalformedURLException, NotBoundException {
-        server.unregisterClient(this);
-        Naming.unbind(bindAddress);
-        UnicastRemoteObject.unexportObject(this, true);
-    }
+	/**
+	 * Get all percepts for a certain entity from the server
+	 * 
+	 * @param entity
+	 *            , the entity for which percepts should be gotten
+	 * @return a list of all received percepts
+	 * @throws RemoteException
+	 *             if an exception occurs during the execution of a remote
+	 *             object call
+	 */
+	public List<Percept> getAllPerceptsFromEntity(String entity) throws RemoteException {
+		return server.getAllPerceptsFromEntity(entity);
+	}
 
-    /**
-     * Perform an entity action on the server
-     * 
-     * @param entity
-     *            , the entity that should perform the action
-     * @param action
-     *            , the action to be performed
-     * @return the resulting percept of the action
-     * @throws RemoteException
-     *             if an exception occurs during the execution of a remote
-     *             object call
-     */
-    public Percept performEntityAction(String entity, Action action) throws RemoteException {
-        LOGGER.debug("Entity " + entity + " performing action: " + action.toProlog());
-        return server.performEntityAction(entity, action);
-    }
+	/**
+	 * Get all agents registered on the server
+	 * 
+	 * @return a list of agent names
+	 * @throws RemoteException
+	 *             , if an exception occurs during the execution of a remote
+	 *             object call
+	 */
+	public List<String> getAgents() throws RemoteException {
+		return server.getAgents();
+	}
 
-    /**
-     * @param serverIP
-     *            , the ip address of the server
-     * @param serverPort
-     *            , the port where the server is listening
-     * @param expectedCount
-     *            , the amount of entities the client wants to receive
-     * @throws RemoteException
-     *             if an exception occurs during the execution of a remote
-     *             object call
-     * @throws MalformedURLException
-     *             if the given url could not be parsed
-     * @throws NotBoundException
-     *             if the server was not bound at the given address
-     */
-    protected void connectToServer(int agentCount, int humanCount) throws RemoteException, MalformedURLException,
-            NotBoundException {
-    }
+	/**
+	 * Get all associated entities for a certain agent from the server
+	 * 
+	 * @param agent
+	 *            , the agent
+	 * @return a list of entity names
+	 * @throws RemoteException
+	 *             , if an exception occurs during the execution of a remote
+	 *             object call
+	 * @throws AgentException
+	 *             , if an attempt to register or unregister an agent has
+	 *             failed.
+	 */
+	public Set<String> getAssociatedEntities(String agent) throws RemoteException, AgentException {
+		return server.getAssociatedEntities(agent);
+	}
 
-    /**
-     * Associate an agent to an entity on the server
-     * 
-     * @param agentId
-     *            , an already registered agent that should be associated to the
-     *            entity
-     * @param entityId
-     *            , the entity that the agent should be associated to
-     * @throws RelationException
-     *             if the attempt to manipulate the agents-entities-relation has
-     *             failed.
-     * @throws RemoteException
-     *             if an exception occurs during the execution of a remote
-     *             object call
-     */
-    public void associateEntity(String agentId, String entityId) throws RelationException, RemoteException {
-        LOGGER.debug("Agent " + agentId + " associated with entity: " + entityId);
-        server.associateEntity(agentId, entityId);
-    }
+	/**
+	 * Unregister an agent on the server
+	 * 
+	 * @param agentId
+	 *            , the agent to unregister
+	 * @throws AgentException
+	 *             , if an attempt to register or unregister an agent has
+	 *             failed.
+	 * @throws RemoteException
+	 *             , if an exception occurs during the execution of a remote
+	 *             object call
+	 */
+	public void unregisterAgent(String agentId) throws AgentException, RemoteException {
+		server.unregisterAgent(agentId);
+		LOGGER.debug("Unregistered agent: " + agentId);
+	}
 
-    /**
-     * Register an agent to the server, should be done before trying to
-     * associate the agent with an entity
-     * 
-     * @param agentId
-     *            , the agent to be registered
-     * @throws RemoteException
-     *             if an exception occurs during the execution of a remote
-     *             object call
-     * @throws AgentException
-     *             if the attempt to register or unregister an agent has failed.
-     */
-    public void registerAgent(String agentId) throws RemoteException, AgentException {
-        server.registerAgent(agentId);
-        LOGGER.debug("Register agent: " + agentId);
-    }
+	/**
+	 * Get all the entities on the server
+	 * 
+	 * @return the list of entities
+	 * @throws RemoteException
+	 *             , if an exception occurs during the execution of a remote
+	 *             object call
+	 */
+	public Collection<String> getEntities() throws RemoteException {
+		return server.getEntities();
+	}
 
-    /**
-     * Get all percepts for a certain entity from the server
-     * 
-     * @param entity
-     *            , the entity for which percepts should be gotten
-     * @return a list of all received percepts
-     * @throws RemoteException
-     *             if an exception occurs during the execution of a remote
-     *             object call
-     */
-    public List<Percept> getAllPerceptsFromEntity(String entity) throws RemoteException {
-        return server.getAllPerceptsFromEntity(entity);
-    }
+	/**
+	 * Free an entity on the server
+	 * 
+	 * @param entity
+	 *            , the entity to free
+	 * @throws RemoteException
+	 *             , if an exception occurs during the execution of a remote
+	 *             object call
+	 * @throws RelationException
+	 *             , if an attempt to manipulate the agents-entities-relation
+	 *             has failed.
+	 * @throws EntityException
+	 *             , if something unexpected happens when attempting to add or
+	 *             remove an entity.
+	 */
+	public void freeEntity(String entity) throws RemoteException, RelationException, EntityException {
+		server.freeEntity(entity);
+	}
 
-    /**
-     * Get all agents registered on the server
-     * 
-     * @return a list of agent names
-     * @throws RemoteException
-     *             , if an exception occurs during the execution of a remote
-     *             object call
-     */
-    public List<String> getAgents() throws RemoteException {
-        return server.getAgents();
-    }
+	/**
+	 * Free an agent on the server
+	 * 
+	 * @param agent
+	 *            , the agent to free
+	 * @throws RemoteException
+	 *             , if an exception occurs during the execution of a remote
+	 *             object call
+	 * @throws RelationException
+	 *             , if an attempt to manipulate the agents-entities-relation
+	 *             has failed.
+	 */
+	public void freeAgent(String agent) throws RemoteException, RelationException {
+		server.freeAgent(agent);
+	}
 
-    /**
-     * Get all associated entities for a certain agent from the server
-     * 
-     * @param agent
-     *            , the agent
-     * @return a list of entity names
-     * @throws RemoteException
-     *             , if an exception occurs during the execution of a remote
-     *             object call
-     * @throws AgentException
-     *             , if an attempt to register or unregister an agent has
-     *             failed.
-     */
-    public Set<String> getAssociatedEntities(String agent) throws RemoteException, AgentException {
-        return server.getAssociatedEntities(agent);
-    }
+	/**
+	 * Free an agent-entity pair on the server
+	 * 
+	 * @param agent
+	 *            , the agent for which an entity should be freed
+	 * @param entity
+	 *            , the entity to be freed
+	 * @throws RemoteException
+	 *             , if an exception occurs during the execution of a remote
+	 *             object call
+	 * @throws RelationException
+	 *             , if an attempt to manipulate the agents-entities-relation
+	 *             has failed.
+	 */
+	public void freePair(String agent, String entity) throws RemoteException, RelationException {
+		server.freePair(agent, entity);
+	}
 
-    /**
-     * Unregister an agent on the server
-     * 
-     * @param agentId
-     *            , the agent to unregister
-     * @throws AgentException
-     *             , if an attempt to register or unregister an agent has
-     *             failed.
-     * @throws RemoteException
-     *             , if an exception occurs during the execution of a remote
-     *             object call
-     */
-    public void unregisterAgent(String agentId) throws AgentException, RemoteException {
-        server.unregisterAgent(agentId);
-        LOGGER.debug("Unregistered agent: " + agentId);
-    }
+	/**
+	 * Get all associated agents for a certain entity from the server
+	 * 
+	 * @param entity
+	 *            , the entity for which to get all associated agents
+	 * @return the list of agents
+	 * @throws RemoteException
+	 *             , if an exception occurs during the execution of a remote
+	 *             object call
+	 * @throws EntityException
+	 *             , if something unexpected happens when attempting to add or
+	 *             remove an entity.
+	 */
+	public Collection<String> getAssociatedAgents(String entity) throws RemoteException, EntityException {
+		return server.getAssociatedAgents(entity);
+	}
 
-    /**
-     * Get all the entities on the server
-     * 
-     * @return the list of entities
-     * @throws RemoteException
-     *             , if an exception occurs during the execution of a remote
-     *             object call
-     */
-    public Collection<String> getEntities() throws RemoteException {
-        return server.getEntities();
-    }
+	/**
+	 * Get all free entities on the server
+	 * 
+	 * @return all free entities
+	 * @throws RemoteException
+	 *             , if an exception occurs during the execution of a remote
+	 *             object call
+	 */
+	public Collection<String> getFreeEntities() throws RemoteException {
+		return server.getFreeEntities();
+	}
 
-    /**
-     * Free an entity on the server
-     * 
-     * @param entity
-     *            , the entity to free
-     * @throws RemoteException
-     *             , if an exception occurs during the execution of a remote
-     *             object call
-     * @throws RelationException
-     *             , if an attempt to manipulate the agents-entities-relation
-     *             has failed.
-     * @throws EntityException
-     *             , if something unexpected happens when attempting to add or
-     *             remove an entity.
-     */
-    public void freeEntity(String entity) throws RemoteException, RelationException, EntityException {
-        server.freeEntity(entity);
-    }
+	/**
+	 * Get the type of an entity
+	 * 
+	 * @param entity
+	 *            , the entity for which to get its type
+	 * @return the type of the entity
+	 * @throws RemoteException
+	 *             , if an exception occurs during the execution of a remote
+	 *             object call
+	 * @throws EntityException
+	 *             , if something unexpected happens when attempting to add or
+	 *             remove an entity.
+	 */
+	public String getType(String entity) throws RemoteException, EntityException {
+		return server.getType(entity);
+	}
 
-    /**
-     * Free an agent on the server
-     * 
-     * @param agent
-     *            , the agent to free
-     * @throws RemoteException
-     *             , if an exception occurs during the execution of a remote
-     *             object call
-     * @throws RelationException
-     *             , if an attempt to manipulate the agents-entities-relation
-     *             has failed.
-     */
-    public void freeAgent(String agent) throws RemoteException, RelationException {
-        server.freeAgent(agent);
-    }
+	/**
+	 * Get the state of the environment
+	 * 
+	 * @return the state of the environment
+	 * @throws RemoteException
+	 *             , if an exception occurs during the execution of a remote
+	 *             object call
+	 */
+	public EnvironmentState getState() throws RemoteException {
+		return server.getState();
+	}
 
-    /**
-     * Free an agent-entity pair on the server
-     * 
-     * @param agent
-     *            , the agent for which an entity should be freed
-     * @param entity
-     *            , the entity to be freed
-     * @throws RemoteException
-     *             , if an exception occurs during the execution of a remote
-     *             object call
-     * @throws RelationException
-     *             , if an attempt to manipulate the agents-entities-relation
-     *             has failed.
-     */
-    public void freePair(String agent, String entity) throws RemoteException, RelationException {
-        server.freePair(agent, entity);
-    }
+	/**
+	 * Query a property of the server environment
+	 * 
+	 * @param property
+	 *            , the property to query
+	 * @return the property's value
+	 * @throws RemoteException
+	 *             , if an exception occurs during the execution of a remote
+	 *             object call
+	 */
+	public String queryProperty(String property) throws RemoteException {
+		return server.queryProperty(property);
+	}
 
-    /**
-     * Get all associated agents for a certain entity from the server
-     * 
-     * @param entity
-     *            , the entity for which to get all associated agents
-     * @return the list of agents
-     * @throws RemoteException
-     *             , if an exception occurs during the execution of a remote
-     *             object call
-     * @throws EntityException
-     *             , if something unexpected happens when attempting to add or
-     *             remove an entity.
-     */
-    public Collection<String> getAssociatedAgents(String entity) throws RemoteException, EntityException {
-        return server.getAssociatedAgents(entity);
-    }
+	/**
+	 * Query a property of an entity on the server
+	 * 
+	 * @param entity
+	 *            , the entity for which to query the property
+	 * @param property
+	 *            , the property to query
+	 * @return the value of the property
+	 * @throws RemoteException
+	 *             , if an exception occurs during the execution of a remote
+	 *             object call
+	 */
+	public String queryEntityProperty(String entity, String property) throws RemoteException {
+		return server.queryEntityProperty(entity, property);
+	}
 
-    /**
-     * Get all free entities on the server
-     * 
-     * @return all free entities
-     * @throws RemoteException
-     *             , if an exception occurs during the execution of a remote
-     *             object call
-     */
-    public Collection<String> getFreeEntities() throws RemoteException {
-        return server.getFreeEntities();
-    }
+	public boolean isSupportedByEnvironment(Action arg0) throws RemoteException {
+		return server.isSupportedByEnvironment(arg0);
+	}
 
-    /**
-     * Get the type of an entity
-     * 
-     * @param entity
-     *            , the entity for which to get its type
-     * @return the type of the entity
-     * @throws RemoteException
-     *             , if an exception occurs during the execution of a remote
-     *             object call
-     * @throws EntityException
-     *             , if something unexpected happens when attempting to add or
-     *             remove an entity.
-     */
-    public String getType(String entity) throws RemoteException, EntityException {
-        return server.getType(entity);
-    }
+	/**
+	 * tell server to start. This will cause callback to us of state change when
+	 * succesful.
+	 */
+	public void start() throws ManagementException {
+		try {
+			server.requestStart();
+		} catch (RemoteException e) {
+			throw new ManagementException("start failed", e);
+		}
+	}
 
-    /**
-     * Get the state of the environment
-     * 
-     * @return the state of the environment
-     * @throws RemoteException
-     *             , if an exception occurs during the execution of a remote
-     *             object call
-     */
-    public EnvironmentState getState() throws RemoteException {
-        return server.getState();
-    }
+	/**
+	 * tell server to stop. This will cause callback to us of state change when
+	 * succesful.
+	 */
+	public void pause() throws ManagementException {
+		try {
+			server.requestPause();
+		} catch (RemoteException e) {
+			throw new ManagementException("pause failed", e);
+		}
+	}
 
-    /**
-     * Query a property of the server environment
-     * 
-     * @param property
-     *            , the property to query
-     * @return the property's value
-     * @throws RemoteException
-     *             , if an exception occurs during the execution of a remote
-     *             object call
-     */
-    public String queryProperty(String property) throws RemoteException {
-        return server.queryProperty(property);
-    }
+	/**
+	 * initialize the server.
+	 * 
+	 * @param parameters
+	 *            init parameters for eis. see
+	 *            {@link EnvironmentInterfaceStandard#init(java.util.Map)}
+	 */
+	public void initServer(java.util.Map<String, Parameter> parameters) throws ManagementException {
+		try {
+			server.requestInit(parameters);
+		} catch (RemoteException e) {
+			throw new ManagementException("server init failed", e);
+		}
+	}
 
-    /**
-     * Query a property of an entity on the server
-     * 
-     * @param entity
-     *            , the entity for which to query the property
-     * @param property
-     *            , the property to query
-     * @return the value of the property
-     * @throws RemoteException
-     *             , if an exception occurs during the execution of a remote
-     *             object call
-     */
-    public String queryEntityProperty(String entity, String property) throws RemoteException {
-        return server.queryEntityProperty(entity, property);
-    }
+	/**
+	 * reset the server, used for BatchRunner. NOTE: we don't do reset as it's
+	 * not implemented, but we just do an INIT. This will clear and re-create
+	 * the entities.
+	 * 
+	 * @param parameters
+	 *            init parameters for eis. see
+	 *            {@link EnvironmentInterfaceStandard#init(java.util.Map)}
+	 */
+	public void resetServer(java.util.Map<String, Parameter> parameters) throws ManagementException {
+		try {
+			server.requestInit(parameters);
+			LOGGER.info("BW4T Server was reset.");
+		} catch (RemoteException e) {
+			throw new ManagementException("server reset failed", e);
+		}
+	}
 
-    public boolean isSupportedByEnvironment(Action arg0) throws RemoteException {
-        return server.isSupportedByEnvironment(arg0);
-    }
+	/**********************************************************************/
+	/******************** Implements BW4TClientActions ********************/
+	/**********************************************************************/
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void handleNewEntity(String entity) throws RemoteException, EntityException {
+		EntityNotifiers.notifyNewEntity(entity, parent.getData());
+	}
 
-    /**
-     * tell server to start. This will cause callback to us of state change when
-     * succesful.
-     */
-    public void start() throws ManagementException {
-        try {
-            server.requestStart();
-        } catch (RemoteException e) {
-            throw new ManagementException("start failed", e);
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void handleFreeEntity(String entity, Collection<String> agents) throws RemoteException {
+		EntityNotifiers.notifyFreeEntity(entity, agents, parent.getData());
+	}
 
-    /**
-     * tell server to stop. This will cause callback to us of state change when
-     * succesful.
-     */
-    public void pause() throws ManagementException {
-        try {
-            server.requestPause();
-        } catch (RemoteException e) {
-            throw new ManagementException("pause failed", e);
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void handleDeletedEntity(String entity, Collection<String> agents) throws RemoteException {
+		EntityNotifiers.notifyDeletedEntity(entity, agents, parent.getData());
+	}
 
-    /**
-     * initialize the server.
-     * 
-     * @param parameters
-     *            init parameters for eis. see
-     *            {@link EnvironmentInterfaceStandard#init(java.util.Map)}
-     */
-    public void initServer(java.util.Map<String, Parameter> parameters) throws ManagementException {
-        try {
-            server.requestInit(parameters);
-        } catch (RemoteException e) {
-            throw new ManagementException("server init failed", e);
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void handleStateChange(EnvironmentState newState) throws RemoteException {
+		parent.handleStateChange(newState);
+	}
 
-    /**
-     * reset the server, used for BatchRunner. NOTE: we don't do reset as it's
-     * not implemented, but we just do an INIT. This will clear and re-create
-     * the entities.
-     * 
-     * @param parameters
-     *            init parameters for eis. see
-     *            {@link EnvironmentInterfaceStandard#init(java.util.Map)}
-     */
-    public void resetServer(java.util.Map<String, Parameter> parameters) throws ManagementException {
-        try {
-            server.requestInit(parameters);
-            LOGGER.info("BW4T Server was reset.");
-        } catch (RemoteException e) {
-            throw new ManagementException("server reset failed", e);
-        }
-    }
+	@Override
+	public void useMap(NewMap newMap) {
+		map = newMap;
+	}
 
-    /**********************************************************************/
-    /******************** Implements BW4TClientActions ********************/
-    /**********************************************************************/
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void handleNewEntity(String entity) throws RemoteException, EntityException {
-        EntityNotifiers.notifyNewEntity(entity, parent.getData());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void handleFreeEntity(String entity, Collection<String> agents) throws RemoteException {
-        EntityNotifiers.notifyFreeEntity(entity, agents, parent.getData());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void handleDeletedEntity(String entity, Collection<String> agents) throws RemoteException {
-        EntityNotifiers.notifyDeletedEntity(entity, agents, parent.getData());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void handleStateChange(EnvironmentState newState) throws RemoteException {
-        parent.handleStateChange(newState);
-    }
-
-    @Override
-    public void useMap(NewMap newMap) {
-        map = newMap;
-    }
-
-    public NewMap getMap() {
-        return map;
-    }
+	public NewMap getMap() {
+		return map;
+	}
 
 }

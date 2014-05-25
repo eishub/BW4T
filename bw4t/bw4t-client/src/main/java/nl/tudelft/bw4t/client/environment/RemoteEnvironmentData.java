@@ -8,93 +8,83 @@ import nl.tudelft.bw4t.client.BW4TClient;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import eis.AgentListener;
 import eis.EnvironmentListener;
-import eis.iilang.Parameter;
 
 public class RemoteEnvironmentData {
-    private BW4TClient client;
-    private Map<String, Parameter> initParameters;
-    private List<EnvironmentListener> environmentListeners;
-    private Map<String, BW4TClientGUI> entityToGUI;
-    private boolean connectedToGoal;
-    /**
-     * This is a list of locally registered agents.
-     * <p/>
-     * Only locally registered agents can act and be associated with entities.
-     */
-    private List<String> localAgents;
-    /**
-     * Stores for each agent (represented by a string) a set of listeners.
-     */
-    private Map<String, HashSet<AgentListener>> agentsToAgentListeners;
+	private BW4TClient client;
+	private List<EnvironmentListener> environmentListeners;
+	private Map<String, BW4TClientGUI> entityToGUI;
+	private boolean connectedToGoal;
+	/**
+	 * This is a list of locally registered agents.
+	 * <p/>
+	 * Only locally registered agents can act and be associated with entities.
+	 */
+	private List<String> localAgents;
+	/**
+	 * Stores for each agent (represented by a string) a set of listeners.
+	 */
+	private Map<String, HashSet<AgentListener>> agentsToAgentListeners;
 
-    public RemoteEnvironmentData(BW4TClient client,
-            List<EnvironmentListener> environmentListeners,
-            Map<String, BW4TClientGUI> entityToGUI, boolean connectedToGoal,
-            List<String> localAgents,
-            Map<String, HashSet<AgentListener>> agentsToAgentListeners) {
-        this.client = client;
-        this.environmentListeners = environmentListeners;
-        this.entityToGUI = entityToGUI;
-        this.connectedToGoal = connectedToGoal;
-        this.localAgents = localAgents;
-        this.agentsToAgentListeners = agentsToAgentListeners;
-    }
+	public RemoteEnvironmentData(BW4TClient client,
+			List<EnvironmentListener> environmentListeners,
+			Map<String, BW4TClientGUI> entityToGUI, boolean connectedToGoal,
+			List<String> localAgents,
+			Map<String, HashSet<AgentListener>> agentsToAgentListeners) {
+		this.client = client;
+		this.environmentListeners = environmentListeners;
+		this.entityToGUI = entityToGUI;
+		this.connectedToGoal = connectedToGoal;
+		this.localAgents = localAgents;
+		this.agentsToAgentListeners = agentsToAgentListeners;
+	}
 
-    public BW4TClient getClient() {
-        return client;
-    }
+	public BW4TClient getClient() {
+		return client;
+	}
 
-    public void setClient(BW4TClient client) {
-        this.client = client;
-    }
+	public void setClient(BW4TClient client) {
+		this.client = client;
+	}
 
-    public Map<String, Parameter> getInitParameters() {
-        return initParameters;
-    }
+	public List<EnvironmentListener> getEnvironmentListeners() {
+		return environmentListeners;
+	}
 
-    public void setInitParameters(Map<String, Parameter> initParameters) {
-        this.initParameters = initParameters;
-    }
+	public void setEnvironmentListeners(
+			List<EnvironmentListener> environmentListeners) {
+		this.environmentListeners = environmentListeners;
+	}
 
-    public List<EnvironmentListener> getEnvironmentListeners() {
-        return environmentListeners;
-    }
+	public Map<String, BW4TClientGUI> getEntityToGUI() {
+		return entityToGUI;
+	}
 
-    public void setEnvironmentListeners(
-            List<EnvironmentListener> environmentListeners) {
-        this.environmentListeners = environmentListeners;
-    }
+	public void setEntityToGUI(Map<String, BW4TClientGUI> entityToGUI) {
+		this.entityToGUI = entityToGUI;
+	}
 
-    public Map<String, BW4TClientGUI> getEntityToGUI() {
-        return entityToGUI;
-    }
+	public boolean isConnectedToGoal() {
+		return connectedToGoal;
+	}
 
-    public void setEntityToGUI(Map<String, BW4TClientGUI> entityToGUI) {
-        this.entityToGUI = entityToGUI;
-    }
+	public void setConnectedToGoal(boolean connectedToGoal) {
+		this.connectedToGoal = connectedToGoal;
+	}
 
-    public boolean isConnectedToGoal() {
-        return connectedToGoal;
-    }
+	public List<String> getLocalAgents() {
+		return localAgents;
+	}
 
-    public void setConnectedToGoal(boolean connectedToGoal) {
-        this.connectedToGoal = connectedToGoal;
-    }
+	public void setLocalAgents(List<String> localAgents) {
+		this.localAgents = localAgents;
+	}
 
-    public List<String> getLocalAgents() {
-        return localAgents;
-    }
+	public Map<String, HashSet<AgentListener>> getAgentsToAgentListeners() {
+		return agentsToAgentListeners;
+	}
 
-    public void setLocalAgents(List<String> localAgents) {
-        this.localAgents = localAgents;
-    }
-
-    public Map<String, HashSet<AgentListener>> getAgentsToAgentListeners() {
-        return agentsToAgentListeners;
-    }
-
-    public void setAgentsToAgentListeners(
-            Map<String, HashSet<AgentListener>> agentsToAgentListeners) {
-        this.agentsToAgentListeners = agentsToAgentListeners;
-    }
+	public void setAgentsToAgentListeners(
+			Map<String, HashSet<AgentListener>> agentsToAgentListeners) {
+		this.agentsToAgentListeners = agentsToAgentListeners;
+	}
 }
