@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 
+import org.apache.log4j.Logger;
+
 /**
  * available block colors. allows to and from string conversion.Note, this is
  * not a list of {@link Color} objects, because you can't get the NAME as string
@@ -12,6 +14,11 @@ import java.lang.reflect.Field;
  */
 public enum BlockColor implements Serializable {
 	BLUE, ORANGE, RED, WHITE, GREEN, YELLOW, PINK;
+
+	/**
+	 * The log4j logger which writes logs.
+	 */
+	private static final Logger LOGGER = Logger.getLogger(BlockColor.class);
 
 
 	private BlockColor() {
@@ -37,7 +44,7 @@ public enum BlockColor implements Serializable {
 			field = Class.forName("java.awt.Color").getField(this.name());
 			return (Color) field.get(null);
 		} catch (ClassNotFoundException | NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-			e.printStackTrace();
+			LOGGER.fatal("Failed to find the field in the Color class.", e);
 		}
 		return null;
 	}
