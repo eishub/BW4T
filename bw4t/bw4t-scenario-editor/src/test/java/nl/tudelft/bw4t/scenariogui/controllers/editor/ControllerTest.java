@@ -132,7 +132,8 @@ public class ControllerTest {
         File f = new File(FILE_PATH);
         if (f.exists()) {
             f.delete();
-        } else {
+        } 
+        else {
             fail("File was not created as it should have.");
         }
     }
@@ -156,7 +157,8 @@ public class ControllerTest {
                         fc.approveSelection();
                         System.out.println("..done!!");
                         break;
-                    } else {
+                    } 
+                    else {
                         System.out.println("Is still null.");
 //                        try {
 //                            Thread.sleep(1000);
