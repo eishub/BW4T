@@ -136,7 +136,7 @@ public class MenuBarTest {
         // There should be one listener, so we check that and then change the option pane.
         assert listeners.length == 1;
         AbstractMenuOption option = (AbstractMenuOption) listeners[0];
-        ScenarioEditor.option = yesMockOption;
+        ScenarioEditor.setOptionPrompt(yesMockOption);
 
         // Change the defaults
         editor.getMainPanel().getConfigurationPanel().setClientIP("randomvalue");
@@ -184,7 +184,7 @@ public class MenuBarTest {
         // There should be one listener, so we check that and then change the option pane.
         assert listeners.length == 1;
         AbstractMenuOption option = (AbstractMenuOption) listeners[0];
-        ScenarioEditor.option = noMockOption;
+        ScenarioEditor.setOptionPrompt(noMockOption);
 
         // Change the defaults
         editor.getMainPanel().getConfigurationPanel().setClientIP("randomval");

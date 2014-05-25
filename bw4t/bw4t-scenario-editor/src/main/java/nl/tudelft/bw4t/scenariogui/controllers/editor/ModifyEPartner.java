@@ -43,7 +43,7 @@ class ModifyEPartner implements ActionListener {
         int row = view.getEntityPanel().getSelectedEPartnerRow();
 
         if (row == -1) {
-            ScenarioEditor.option.showMessageDialog(null, "Please select the E-partner you want to modify.");
+            ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select the E-partner you want to modify.");
         } else {
             System.out.println("Go to Bot Store to modify an E-Partner");
         }
