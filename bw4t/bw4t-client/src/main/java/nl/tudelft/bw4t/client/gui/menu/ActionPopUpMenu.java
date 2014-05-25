@@ -11,7 +11,7 @@ import nl.tudelft.bw4t.client.gui.data.structures.DropZoneInfo;
 import nl.tudelft.bw4t.client.gui.data.structures.RoomInfo;
 import nl.tudelft.bw4t.client.gui.operations.MapOperations;
 import nl.tudelft.bw4t.map.BlockColor;
-import nl.tudelft.bw4t.map.Constants;
+import nl.tudelft.bw4t.map.view.Block;
 
 public class ActionPopUpMenu {
     /**
@@ -46,8 +46,8 @@ public class ActionPopUpMenu {
                     HashMap<Long, java.awt.geom.Point2D.Double> objectPositions = bw4tClientInfo
                             .getEnvironmentDatabase().getObjectPositions();
                     Shape boxBoundaries = MapOperations.transformRectangle(new Rectangle2D.Double(objectPositions.get(
-                            boxID).getX(), objectPositions.get(boxID).getY(), Constants.BLOCK_SIZE,
-                            Constants.BLOCK_SIZE));
+                            boxID).getX(), objectPositions.get(boxID).getY(), Block.BLOCK_SIZE,
+                            Block.BLOCK_SIZE));
                     if (boxBoundaries.contains(new Point(bw4tClientInfo.getSelectedLocation()[0], bw4tClientInfo
                             .getSelectedLocation()[1]))) {
                         if (MapOperations.closeToBox(boxID, bw4tClientInfo)) {

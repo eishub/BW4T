@@ -30,6 +30,17 @@ public class Rectangle implements Serializable {
 		setY(y);
 	}
 
+	/**
+	 * Get a copy of the underlying Rectangle.
+	 * 
+	 * @return the rectangle.
+	 */
+	public Rectangle2D getRectangle() {
+		Rectangle2D copy = new Rectangle2D.Double();
+		copy.setRect(rectangle);
+		return copy;
+	}
+
 	public double getX() {
 		return rectangle.getCenterX();
 	}

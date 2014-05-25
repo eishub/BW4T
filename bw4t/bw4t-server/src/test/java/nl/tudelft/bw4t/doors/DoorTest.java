@@ -10,7 +10,6 @@ import static org.mockito.Mockito.when;
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 
-import nl.tudelft.bw4t.map.Constants;
 import nl.tudelft.bw4t.robots.Robot;
 import nl.tudelft.bw4t.zone.BlocksRoom;
 import nl.tudelft.bw4t.zone.Room;
@@ -72,7 +71,7 @@ public class DoorTest {
 
 		Color result = fixture.getColor();
 
-		assertEquals(result, Door.COLOR_OPEN);
+		assertEquals(result, nl.tudelft.bw4t.map.Door.COLOR_OPEN);
 	}
 
 	/**
@@ -92,7 +91,7 @@ public class DoorTest {
 		
 		Color result = fixture.getColor();
 
-		assertEquals(result, Door.COLOR_CLOSED);
+		assertEquals(result, nl.tudelft.bw4t.map.Door.COLOR_CLOSED);
 	}
 
 	/**
@@ -162,8 +161,8 @@ public class DoorTest {
 		fixture.setPos(x, y, ori);
 		
 		Rectangle2D rect = fixture.getBoundingBox();
-		assertEquals(rect.getWidth(), Constants.DOOR_WIDTH, 0.01);
-		assertEquals(rect.getHeight(), Constants.DOOR_THICKNESS, 0.01);
+		assertEquals(rect.getWidth(), nl.tudelft.bw4t.map.Door.DOOR_WIDTH, 0.01);
+		assertEquals(rect.getHeight(), nl.tudelft.bw4t.map.Door.DOOR_THICKNESS, 0.01);
 		verify(space).moveTo(fixture, x, y);
 	}
 
@@ -184,8 +183,8 @@ public class DoorTest {
 		fixture.setPos(x, y, ori);
 
 		Rectangle2D rect = fixture.getBoundingBox();
-		assertEquals(rect.getWidth(), Constants.DOOR_THICKNESS, 0.01);
-		assertEquals(rect.getHeight(), Constants.DOOR_WIDTH, 0.01);
+		assertEquals(rect.getWidth(), nl.tudelft.bw4t.map.Door.DOOR_THICKNESS, 0.01);
+		assertEquals(rect.getHeight(), nl.tudelft.bw4t.map.Door.DOOR_WIDTH, 0.01);
 		verify(space).moveTo(fixture, x, y);
 	}
 
