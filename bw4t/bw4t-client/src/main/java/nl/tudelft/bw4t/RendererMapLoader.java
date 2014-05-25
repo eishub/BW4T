@@ -29,19 +29,17 @@ public class RendererMapLoader {
      * @throws IOException
      *             when reading the file produces errors
      */
-    public static void loadMap(NewMap map, BW4TClientGUI renderer)
-            throws IOException {
+    public static void loadMap(NewMap map, BW4TClientGUI renderer) throws IOException {
 
         Point size = map.getArea();
-        GraphicalUpdateOperations.setWorldDimensions((int) size.getX(),
-                (int) size.getY());
+        GraphicalUpdateOperations.setWorldDimensions((int) size.getX(), (int) size.getY());
 
         createDropZone(map.getZone("DropZone").getBoundingbox(), renderer);
         for (Zone navpt : map.getZones()) {
             // HACK: client uses navpt as items to navigate to. You can navigate
             // to any zone.
             // these labels are rendered on top of the rooms.
-            createNavPointLabel(navpt, renderer);
+            // createNavPointLabel(navpt, renderer);
         }
 
         for (Zone room : map.getZones(Zone.Type.ROOM)) {
@@ -80,8 +78,7 @@ public class RendererMapLoader {
      * @param renderer
      *            the {@link BW4TClientGUI}.
      */
-    private static void createDoor(nl.tudelft.bw4t.map.Door doorargs,
-            String roomname, BW4TClientGUI renderer) {
+    private static void createDoor(nl.tudelft.bw4t.map.Door doorargs, String roomname, BW4TClientGUI renderer) {
         double x = doorargs.getPosition().getX();
         double y = doorargs.getPosition().getY();
 
@@ -98,8 +95,7 @@ public class RendererMapLoader {
             break;
         }
 
-        GraphicalUpdateOperations.addDoor(x, y, width, height, roomname,
-                renderer.getBW4TClientInfo());
+        GraphicalUpdateOperations.addDoor(x, y, width, height, roomname, renderer.getBW4TClientInfo());
 
     }
 
@@ -113,8 +109,7 @@ public class RendererMapLoader {
      */
     private static void createRoom(Zone room, BW4TClientGUI renderer) {
         Rectangle rect = room.getBoundingbox();
-        GraphicalUpdateOperations.addRoom(rect.getX(), rect.getY(),
-                rect.getWidth(), rect.getHeight(), room.getName(),
+        GraphicalUpdateOperations.addRoom(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), room.getName(),
                 renderer.getBW4TClientInfo());
     }
 
@@ -126,13 +121,9 @@ public class RendererMapLoader {
      * @param renderer
      *            , the BW4TRenderer
      */
-    private static void createDropZone(Rectangle dropzone,
-            BW4TClientGUI renderer) {
-        GraphicalUpdateOperations
-                .addDropZone(new Integer[] { (int) dropzone.getX(),
-                        (int) dropzone.getY(), (int) dropzone.getWidth(),
-                        (int) dropzone.getHeight() },
-                        renderer.getBW4TClientInfo());
+    private static void createDropZone(Rectangle dropzone, BW4TClientGUI renderer) {
+        GraphicalUpdateOperations.addDropZone(new Integer[] { (int) dropzone.getX(), (int) dropzone.getY(),
+                (int) dropzone.getWidth(), (int) dropzone.getHeight() }, renderer.getBW4TClientInfo());
     }
 
     /**

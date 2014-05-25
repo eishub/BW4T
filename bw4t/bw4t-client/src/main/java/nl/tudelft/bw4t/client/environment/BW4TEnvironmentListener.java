@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t;
+package nl.tudelft.bw4t.client.environment;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -9,7 +9,6 @@ import java.util.Map;
 
 import nl.tudelft.bw4t.agent.BW4TAgent;
 import nl.tudelft.bw4t.agent.HumanAgent;
-import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 
 import org.apache.log4j.Logger;
