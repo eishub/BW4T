@@ -31,7 +31,6 @@ import nl.tudelft.bw4t.client.BW4TClientSettings;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.environment.handlers.PerceptsHandler;
 import nl.tudelft.bw4t.client.gui.data.EnvironmentDatabase;
-import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
 import nl.tudelft.bw4t.client.gui.listeners.ChatListMouseListener;
 import nl.tudelft.bw4t.client.gui.listeners.TeamListMouseListener;
 import nl.tudelft.bw4t.client.gui.menu.ActionPopUpMenu;
@@ -75,307 +74,358 @@ import eis.iilang.Percept;
  * it's time for perceiving.
  */
 public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
-    private static final long serialVersionUID = 2938950289045953493L;
-    /**
-     * The log4j Logger which displays logs on console
-     */
-    private static final Logger LOGGER = Logger.getLogger(BW4TClientGUI.class);
+	private static final long serialVersionUID = 2938950289045953493L;
 
-    private BW4TClientInfo bw4tClientInfo = new BW4TClientInfo(new JTextArea(8,
-            1));
+	/**
+	 * The log4j Logger which displays logs on console
+	 */
+	private static final Logger LOGGER = Logger.getLogger(BW4TClientGUI.class);
+	/**
+	 * Data needed for updating the graphical representation of the world
+	 */
+	private EnvironmentDatabase environmentDatabase;
+	public boolean stop;
+	private JFrame jFrame;
+	private JPanel buttonPanel;
+	private JTextArea chatSession = new JTextArea(8, 1);
+	private JScrollPane chatPane;
+	/**
+	 * Private variables only used for human player
+	 */
+	private HumanAgent humanAgent;
+	private JPopupMenu jPopupMenu;
 
-    public BW4TClientInfo getBW4TClientInfo() {
-        return bw4tClientInfo;
-    }
+	public JPopupMenu getjPopupMenu() {
+		return jPopupMenu;
+	}
 
-    /**
-     * @param env
-     *            the BW4TRemoteEnvironment that we are rendering
-     * @param entityId
-     *            , the id of the entity that needs to be displayed
-     * @param goal
-     *            , if this gui is for displaying a goal agent
-     * @throws IOException
-     *             if map can't be loaded.
-     */
-    public BW4TClientGUI(RemoteEnvironment env, String entityId, boolean goal,
-            boolean humanPlayer) throws IOException {
-        bw4tClientInfo.environment = env;
-        init(entityId, humanPlayer);
-        this.bw4tClientInfo.goal = goal;
-        this.bw4tClientInfo.humanPlayer = humanPlayer;
-    }
+	private Integer[] selectedLocation;
+	private boolean goal = false;
+	private final boolean humanPlayer;
+	/**
+	 * Most of the server interfacing goes through the std eis percepts
+	 */
+	public RemoteEnvironment environment;
 
-    /**
-     * @param entityId
-     *            , the id of the entity that needs to be displayed
-     * @param humanAgent
-     *            , whether a human is supposed to control this panel
-     * @throws IOException
-     *             if map can't be loaded.
-     */
-    public BW4TClientGUI(RemoteEnvironment env, String entityId,
-            HumanAgent humanAgent) throws IOException {
-        bw4tClientInfo.environment = env;
-        bw4tClientInfo.humanAgent = humanAgent;
-        this.bw4tClientInfo.humanPlayer = true;
-        init(entityId, true);
-    }
+	/**
+	 * @param env
+	 *            the BW4TRemoteEnvironment that we are rendering
+	 * @param entityId
+	 *            , the id of the entity that needs to be displayed
+	 * @param goal
+	 *            , if this gui is for displaying a goal agent
+	 * @throws IOException
+	 *             if map can't be loaded.
+	 */
+	public BW4TClientGUI(RemoteEnvironment env, String entityId, boolean goal, boolean humanPlayer) throws IOException {
+		environment = env;
+		init(entityId, humanPlayer);
+		this.setGoal(goal);
+		this.humanPlayer = humanPlayer;
+	}
 
-    /**
-     * @param entityId
-     *            , the id of the entity that needs to be displayed
-     * @param humanPlayer
-     *            , whether a human is supposed to control this panel
-     * @throws IOException
-     */
-    private void init(final String entityId, boolean humanPlayer)
-            throws IOException {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            LOGGER.error(
-                    "Could not properly set the Native Look and Feel for the BW4T Client",
-                    e);
-        }
-        // Initialize variables
-        LOGGER.debug("Initializing agent window for entity: " + entityId);
-        bw4tClientInfo.environmentDatabase = new EnvironmentDatabase();
-        bw4tClientInfo.environmentDatabase.setEntityId(entityId);
-        bw4tClientInfo.buttonPanel = new JPanel();
+	/**
+	 * @param entityId
+	 *            , the id of the entity that needs to be displayed
+	 * @param humanAgent
+	 *            , whether a human is supposed to control this panel
+	 * @throws IOException
+	 *             if map can't be loaded.
+	 */
+	public BW4TClientGUI(RemoteEnvironment env, String entityId, HumanAgent humanAgent) throws IOException {
+		environment = env;
+		this.humanAgent = humanAgent;
+		this.humanPlayer = true;
+		init(entityId, true);
+	}
 
-        JButton jButton = new JButton("all");
-        bw4tClientInfo.buttonPanel.add(jButton);
-        jButton.addMouseListener(new TeamListMouseListener(this));
+	/**
+	 * @param entityId
+	 *            , the id of the entity that needs to be displayed
+	 * @param humanPlayer
+	 *            , whether a human is supposed to control this panel
+	 * @throws IOException
+	 */
+	private void init(final String entityId, boolean humanPlayer) throws IOException {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			LOGGER.error("Could not properly set the Native Look and Feel for the BW4T Client", e);
+		}
+		// Initialize variables
+		LOGGER.debug("Initializing agent window for entity: " + entityId);
+		setEnvironmentDatabase(new EnvironmentDatabase());
+		getEnvironmentDatabase().setEntityId(entityId);
+		buttonPanel = new JPanel();
 
-        RendererMapLoader.loadMap(bw4tClientInfo.environment.getData()
-                .getClient().getMap(), this);
+		JButton jButton = new JButton("all");
+		buttonPanel.add(jButton);
+		jButton.addMouseListener(new TeamListMouseListener(this));
 
-        // Initialize graphics
+		RendererMapLoader.loadMap(environment.getClient().getMap(), this);
 
-        bw4tClientInfo.jFrame = new JFrame(entityId);
-        bw4tClientInfo.jFrame.setSize(VisualizerSettings.worldX
-                * VisualizerSettings.scale + 10, VisualizerSettings.worldY
-                * VisualizerSettings.scale + 250);
-        bw4tClientInfo.jFrame.setLocation(BW4TClientSettings.getX(),
-                BW4TClientSettings.getY());
-        bw4tClientInfo.jFrame.setLocation(BW4TClientSettings.getX(),
-                BW4TClientSettings.getY());
-        bw4tClientInfo.jFrame.setResizable(true);
-        bw4tClientInfo.jFrame
-                .setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        bw4tClientInfo.jFrame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                LOGGER.info("Exit request received from the Window Manager to close Window of entity: "
-                        + entityId);
-                bw4tClientInfo.stop = true;
-                try {
-                    bw4tClientInfo.environment.kill();
-                } catch (Exception e1) {
-                    LOGGER.error("Could not correctly kill the environment.",
-                            e1);
-                }
-            }
-        });
+		// Initialize graphics
 
-        JPanel jPanel = new JPanel(new BorderLayout());
+		setjFrame(new JFrame(entityId));
+		getjFrame().setSize((VisualizerSettings.worldX * VisualizerSettings.scale) + 10,
+				(VisualizerSettings.worldY * VisualizerSettings.scale) + 250);
+		getjFrame().setLocation(BW4TClientSettings.getX(), BW4TClientSettings.getY());
+		getjFrame().setLocation(BW4TClientSettings.getX(), BW4TClientSettings.getY());
+		getjFrame().setResizable(true);
+		getjFrame().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		getjFrame().addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				LOGGER.info("Exit request received from the Window Manager to close Window of entity: " + entityId);
+				setStop(true);
+				try {
+					environment.kill();
+				} catch (Exception e1) {
+					LOGGER.error("Could not correctly kill the environment.", e1);
+				}
+			}
+		});
 
-        // create short chat history window
-        JPanel chatPanel = new JPanel();
-        chatPanel.setLayout(new BoxLayout(chatPanel, BoxLayout.Y_AXIS));
-        chatPanel
-                .setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        chatPanel.setFocusable(false);
+		JPanel jPanel = new JPanel(new BorderLayout());
 
-        bw4tClientInfo.chatSession.setFocusable(false);
-        bw4tClientInfo.chatPane = new JScrollPane(bw4tClientInfo.chatSession);
-        chatPanel.add(bw4tClientInfo.chatPane);
-        bw4tClientInfo.chatPane
-                .setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        bw4tClientInfo.chatPane
-                .setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        bw4tClientInfo.chatPane.setEnabled(true);
-        bw4tClientInfo.chatPane.setFocusable(false);
-        bw4tClientInfo.chatPane
-                .setColumnHeaderView(new JLabel("Chat Session:"));
+		// create short chat history window
+		JPanel chatPanel = new JPanel();
+		chatPanel.setLayout(new BoxLayout(chatPanel, BoxLayout.Y_AXIS));
+		chatPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+		chatPanel.setFocusable(false);
 
-        jPanel.add(bw4tClientInfo.buttonPanel, BorderLayout.NORTH);
-        jPanel.add(this, BorderLayout.CENTER);
-        jPanel.add(bw4tClientInfo.chatPane, BorderLayout.SOUTH);
+		getChatSession().setFocusable(false);
+		chatPane = new JScrollPane(getChatSession());
+		chatPanel.add(chatPane);
+		chatPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		chatPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		chatPane.setEnabled(true);
+		chatPane.setFocusable(false);
+		chatPane.setColumnHeaderView(new JLabel("Chat Session:"));
 
-        bw4tClientInfo.jFrame.add(jPanel);
+		jPanel.add(buttonPanel, BorderLayout.NORTH);
+		jPanel.add(this, BorderLayout.CENTER);
+		jPanel.add(chatPane, BorderLayout.SOUTH);
 
-        // Initialize mouse listeners for human controller
-        if (humanPlayer) {
-            this.bw4tClientInfo.jPopupMenu = new JPopupMenu();
-            addMouseListener(this);
+		getjFrame().add(jPanel);
 
-            bw4tClientInfo.chatSession
-                    .addMouseListener(new ChatListMouseListener(bw4tClientInfo));
-        }
+		// Initialize mouse listeners for human controller
+		if (humanPlayer) {
+			this.jPopupMenu = new JPopupMenu();
+			addMouseListener(this);
 
-        bw4tClientInfo.jFrame.setVisible(true);
-        // Start repainting graphics
-        Thread paintThread = new Thread(this);
-        paintThread.start();
-    }
+			getChatSession().addMouseListener(new ChatListMouseListener(this));
+		}
 
-    /**
-     * Adds a player by adding a new button to the button panel, facilitating
-     * sending messages to this player
-     * 
-     * @param playerId
-     *            , the Id of the player to be added
-     */
-    public void addPlayer(String playerId) {
-        if (!playerId.equals(bw4tClientInfo.environmentDatabase.getEntityId())) {
-            JButton button = new JButton(playerId);
-            button.addMouseListener(new TeamListMouseListener(this));
-            bw4tClientInfo.buttonPanel.add(button);
-        }
-    }
+		getjFrame().setVisible(true);
+		// Start repainting graphics
+		Thread paintThread = new Thread(this);
+		paintThread.start();
+	}
 
-    /**
-     * Processes all objects to display them on the panel
-     * 
-     * @param g
-     *            , the graphics object
-     */
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-        ProcessingOperations.processRooms(g2d, bw4tClientInfo);
-        ProcessingOperations.processLabels(g2d, bw4tClientInfo);
-        ProcessingOperations.processDropZone(g2d, bw4tClientInfo);
-        ProcessingOperations.processBlocks(g2d, bw4tClientInfo);
-        ProcessingOperations.processEntity(g2d, bw4tClientInfo);
-        ProcessingOperations.processSequence(g2d, bw4tClientInfo);
-    }
+	/**
+	 * Adds a player by adding a new button to the button panel, facilitating
+	 * sending messages to this player
+	 * 
+	 * @param playerId
+	 *            , the Id of the player to be added
+	 */
+	public void addPlayer(String playerId) {
+		if (!playerId.equals(getEnvironmentDatabase().getEntityId())) {
+			JButton button = new JButton(playerId);
+			button.addMouseListener(new TeamListMouseListener(this));
+			buttonPanel.add(button);
+		}
+	}
 
-    /**
-     * Poll percepts every tick, process them and repaint this panel.
-     */
-    @Override
-    public void run() {
-        while (!bw4tClientInfo.stop) {
-            if (bw4tClientInfo.humanPlayer) {
-                List<Percept> percepts;
-                try {
-                    percepts = PerceptsHandler.getAllPerceptsFromEntity(
-                            bw4tClientInfo.environmentDatabase.getEntityId()
-                                    + "gui", bw4tClientInfo.environment);
-                    if (percepts != null) {
-                        ProcessingOperations.processPercepts(percepts,
-                                bw4tClientInfo);
-                    }
-                } catch (PerceiveException e) {
-                    LOGGER.error(
-                            "Could not correctly poll the percepts from the environment.",
-                            e);
-                } catch (NoEnvironmentException e) {
-                    LOGGER.error(
-                            "Could not correctly poll the percepts from the environment. No connection could be made to the environment",
-                            e);
-                    bw4tClientInfo.stop = true;
-                }
-            }
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    validate();
-                    repaint();
-                }
-            });
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                LOGGER.error(
-                        "The system ignored the interrupted rendering delay.",
-                        e);
-            }
-        }
+	/**
+	 * Processes all objects to display them on the panel
+	 * 
+	 * @param g
+	 *            , the graphics object
+	 */
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2d = (Graphics2D) g;
+		ProcessingOperations.processRooms(g2d, this);
+		ProcessingOperations.processLabels(g2d, this);
+		ProcessingOperations.processDropZone(g2d, this);
+		ProcessingOperations.processBlocks(g2d, this);
+		ProcessingOperations.processEntity(g2d, this);
+		ProcessingOperations.processSequence(g2d, this);
+	}
 
-        LOGGER.info("Stopped the BW4T Client Renderer.");
-        BW4TClientSettings.setWindowParams(bw4tClientInfo.jFrame.getX(),
-                bw4tClientInfo.jFrame.getY());
-        bw4tClientInfo.jFrame.setVisible(false);
-    }
+	/**
+	 * Poll percepts every tick, process them and repaint this panel.
+	 */
+	@Override
+	public void run() {
+		while (!isStop()) {
+			if (humanPlayer) {
+				List<Percept> percepts;
+				try {
+					percepts = PerceptsHandler.getAllPerceptsFromEntity(getEnvironmentDatabase().getEntityId() + "gui",
+							environment);
+					if (percepts != null) {
+						ProcessingOperations.processPercepts(percepts, this);
+					}
+				} catch (PerceiveException e) {
+					LOGGER.error("Could not correctly poll the percepts from the environment.", e);
+				} catch (NoEnvironmentException e) {
+					LOGGER.error(
+							"Could not correctly poll the percepts from the environment. No connection could be made to the environment",
+							e);
+					setStop(true);
+				}
+			}
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					validate();
+					repaint();
+				}
+			});
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				LOGGER.error("The system ignored the interrupted rendering delay.", e);
+			}
+		}
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-    }
+		LOGGER.info("Stopped the BW4T Client Renderer.");
+		BW4TClientSettings.setWindowParams(getjFrame().getX(), getjFrame().getY());
+		getjFrame().setVisible(false);
+	}
 
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
+	@Override
+	public void mouseClicked(MouseEvent e) {
+	}
 
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	}
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-        // Get coordinates of mouse click
-        int mouseX = e.getX();
+	@Override
+	public void mouseExited(MouseEvent e) {
+	}
 
-        int mouseY = e.getY();
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// Get coordinates of mouse click
+		int mouseX = e.getX();
 
-        bw4tClientInfo.selectedLocation = new Integer[] { mouseX, mouseY };
+		int mouseY = e.getY();
 
-        ActionPopUpMenu.buildPopUpMenu(this);
-    }
+		setSelectedLocation(new Integer[] { mouseX, mouseY });
 
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
+		ActionPopUpMenu.buildPopUpMenu(this);
+	}
 
-    /**
-     * Method used for returning the next action that a human player wants the
-     * bot to perform. This is received by the GOAL human bot, and then
-     * forwarded to the entity on the server side.
-     * 
-     * @return a percept containing the next action to be performed
-     */
-    public List<Percept> getToBePerformedAction() {
-        List<Percept> toBePerformedActionClone = (LinkedList<Percept>) bw4tClientInfo.environmentDatabase
-                .getToBePerformedAction().clone();
-        bw4tClientInfo.environmentDatabase
-                .setToBePerformedAction(new LinkedList<Percept>());
-        return toBePerformedActionClone;
-    }
+	@Override
+	public void mouseReleased(MouseEvent e) {
+	}
 
-    /**
-     * When a GOAL agent performs the sendToGUI action it is forwarded to this
-     * method, the message is then posted on the chat window contained in the
-     * GUI.
-     * 
-     * @param parameters
-     *            , the action parameters containing the message sender and the
-     *            message itself.
-     * @return a null percept as no real percept should be returned
-     */
-    public Percept sendToGUI(List<Parameter> parameters) {
-        String sender = ((Identifier) parameters.get(0)).getValue();
-        String message = ((Identifier) parameters.get(1)).getValue();
+	/**
+	 * Method used for returning the next action that a human player wants the
+	 * bot to perform. This is received by the GOAL human bot, and then
+	 * forwarded to the entity on the server side.
+	 * 
+	 * @return a percept containing the next action to be performed
+	 */
+	public List<Percept> getToBePerformedAction() {
+		List<Percept> toBePerformedActionClone = (LinkedList<Percept>) getEnvironmentDatabase()
+				.getToBePerformedAction().clone();
+		getEnvironmentDatabase().setToBePerformedAction(new LinkedList<Percept>());
+		return toBePerformedActionClone;
+	}
 
-        bw4tClientInfo.chatSession.append(sender + " : " + message + "\n");
-        bw4tClientInfo.chatSession.setCaretPosition(bw4tClientInfo.chatSession
-                .getDocument().getLength());
+	/**
+	 * When a GOAL agent performs the sendToGUI action it is forwarded to this
+	 * method, the message is then posted on the chat window contained in the
+	 * GUI.
+	 * 
+	 * @param parameters
+	 *            , the action parameters containing the message sender and the
+	 *            message itself.
+	 * @return a null percept as no real percept should be returned
+	 */
+	public Percept sendToGUI(List<Parameter> parameters) {
+		String sender = ((Identifier) parameters.get(0)).getValue();
+		String message = ((Identifier) parameters.get(1)).getValue();
 
-        return null;
-    }
+		getChatSession().append(sender + " : " + message + "\n");
+		getChatSession().setCaretPosition(getChatSession().getDocument().getLength());
 
-    /**
-     * Adds a label with a corresponding point near which it should be drawn to
-     * the label list.
-     * 
-     * @param label
-     *            , the label
-     * @param point
-     *            , the point
-     */
-    public void addLabel(String label, Point point) {
-        bw4tClientInfo.environmentDatabase.getRoomLabels().put(label, point);
-    }
+		return null;
+	}
+
+	/**
+	 * Adds a label with a corresponding point near which it should be drawn to
+	 * the label list.
+	 * 
+	 * @param label
+	 *            , the label
+	 * @param point
+	 *            , the point
+	 */
+	public void addLabel(String label, Point point) {
+		getEnvironmentDatabase().getRoomLabels().put(label, point);
+	}
+
+	public JTextArea getChatSession() {
+		return chatSession;
+	}
+
+	public void setChatSession(JTextArea chatSession) {
+		this.chatSession = chatSession;
+	}
+
+	public boolean isStop() {
+		return stop;
+	}
+
+	public void setStop(boolean stop) {
+		this.stop = stop;
+	}
+
+	public EnvironmentDatabase getEnvironmentDatabase() {
+		return environmentDatabase;
+	}
+
+	public void setEnvironmentDatabase(EnvironmentDatabase environmentDatabase) {
+		this.environmentDatabase = environmentDatabase;
+	}
+
+	public boolean isGoal() {
+		return goal;
+	}
+
+	public void setGoal(boolean goal) {
+		this.goal = goal;
+	}
+
+	public HumanAgent getHumanAgent() {
+		return humanAgent;
+	}
+
+	public void setHumanAgent(HumanAgent humanAgent) {
+		this.humanAgent = humanAgent;
+	}
+
+	public JFrame getjFrame() {
+		return jFrame;
+	}
+
+	public void setjFrame(JFrame jFrame) {
+		this.jFrame = jFrame;
+	}
+
+	public Integer[] getSelectedLocation() {
+		return selectedLocation;
+	}
+
+	public void setSelectedLocation(Integer[] selectedLocation) {
+		this.selectedLocation = selectedLocation;
+	}
 }

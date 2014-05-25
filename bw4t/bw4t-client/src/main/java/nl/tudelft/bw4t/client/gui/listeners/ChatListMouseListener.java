@@ -3,7 +3,7 @@ package nl.tudelft.bw4t.client.gui.listeners;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
+import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.menu.ChatMenu;
 
 /**
@@ -14,10 +14,10 @@ import nl.tudelft.bw4t.client.gui.menu.ChatMenu;
  */
 public class ChatListMouseListener implements MouseListener {
 
-    private BW4TClientInfo bw4tClientInfo;
+    private final BW4TClientGUI bw4tClientGUI;
 
-    public ChatListMouseListener(BW4TClientInfo bw4tClientInfo) {
-        this.bw4tClientInfo = bw4tClientInfo;
+    public ChatListMouseListener(BW4TClientGUI bw4tClientGUI) {
+        this.bw4tClientGUI = bw4tClientGUI;
     }
 
     @Override
@@ -26,9 +26,8 @@ public class ChatListMouseListener implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        ChatMenu.buildPopUpMenuForChat(bw4tClientInfo);
-        bw4tClientInfo.jPopupMenu.show(bw4tClientInfo.chatSession, e.getX(),
-                e.getY());
+        ChatMenu.buildPopUpMenuForChat(bw4tClientGUI);
+        bw4tClientGUI.getjPopupMenu().show(bw4tClientGUI.getChatSession(), e.getX(), e.getY());
     }
 
     @Override
