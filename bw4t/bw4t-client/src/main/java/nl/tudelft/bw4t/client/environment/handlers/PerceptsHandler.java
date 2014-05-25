@@ -6,7 +6,6 @@ import java.util.List;
 
 import nl.tudelft.bw4t.client.BW4TClient;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-import nl.tudelft.bw4t.client.environment.RemoteEnvironmentData;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.operations.ProcessingOperations;
 import nl.tudelft.bw4t.client.startup.InitParam;
@@ -25,38 +24,31 @@ public class PerceptsHandler {
 	 *             The NoEnvironmentException is thrown if an attempt to perform
 	 *             an action or to retrieve percepts has failed.
 	 */
-	public static List<Percept> getAllPerceptsFromEntity(String entity,
-			RemoteEnvironment env) throws PerceiveException {
+	public static List<Percept> getAllPerceptsFromEntity(String entity, RemoteEnvironment env) throws PerceiveException {
 		try {
-			RemoteEnvironmentData remoteEnvironmentData = env.getData();
-			BW4TClientGUI clientEntity = remoteEnvironmentData.getEntityToGUI()
-					.get(entity);
-			BW4TClient client = remoteEnvironmentData.getClient();
+			RemoteEnvironment remoteEnvironment = env;
+			BW4TClientGUI clientEntity = remoteEnvironment.getEntityToGUI().get(entity);
+			BW4TClient client = remoteEnvironment.getClient();
 
 			/** Is the client running a GUI right now */
 			boolean runningGUI = "true".equals(InitParam.LAUNCHGUI.getValue());
 			/** Is the entity human, regardless if it's running a GUI? */
-			boolean humanType = "human".equals(env.getType(entity.replace(
-					"gui", "")));
+			boolean humanType = "human".equals(env.getType(entity.replace("gui", "")));
 			/** Is the entity being run on a GUI? */
 			boolean guiEntity = entity.contains("gui");
 
-			if (remoteEnvironmentData.isConnectedToGoal() && !guiEntity
-					&& humanType) {
+			if (remoteEnvironment.isConnectedToGoal() && !guiEntity && humanType) {
 				return clientEntity.getToBePerformedAction();
 			} else if (guiEntity && humanType) {
-				return client.getAllPerceptsFromEntity(entity
-						.replace("gui", ""));
+				return client.getAllPerceptsFromEntity(entity.replace("gui", ""));
 			} else if (runningGUI) {
 				if (clientEntity == null) {
 					return new LinkedList<Percept>();
 				}
 				/** Get the percepts and process them in the GUI */
-				List<Percept> percepts = client
-						.getAllPerceptsFromEntity(entity);
+				List<Percept> percepts = client.getAllPerceptsFromEntity(entity);
 				if (percepts != null) {
-					ProcessingOperations
-					.processPercepts(percepts, clientEntity);
+					ProcessingOperations.processPercepts(percepts, clientEntity);
 				}
 				return percepts;
 			}
@@ -64,8 +56,7 @@ public class PerceptsHandler {
 		} catch (RemoteException e) {
 			throw env.environmentSuddenDeath(e);
 		} catch (EntityException e) {
-			throw new PerceiveException("getAllPerceptsFromEntity failed for "
-					+ entity, e);
+			throw new PerceiveException("getAllPerceptsFromEntity failed for " + entity, e);
 		}
 	}
 }

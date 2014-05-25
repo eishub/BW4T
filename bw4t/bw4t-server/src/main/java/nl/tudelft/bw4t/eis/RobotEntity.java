@@ -18,7 +18,6 @@ import nl.tudelft.bw4t.robots.NavigatingRobot;
 import nl.tudelft.bw4t.robots.Robot;
 import nl.tudelft.bw4t.server.RobotEntityInt;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
-import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.server.logging.BW4TLogger;
 import nl.tudelft.bw4t.util.RoomLocator;
 import nl.tudelft.bw4t.util.ZoneLocator;
@@ -306,7 +305,7 @@ public class RobotEntity implements RobotEntityInt {
 	 * Percept if the robot is holding something. Send if it becomes true, and
 	 * send negated if it becomes false again.
 	 */
-	@AsPercept(name = "holding", filter = Filter.Type.ON_CHANGE_NEG)
+	@AsPercept(name = "holding", multiplePercepts = true, filter = Filter.Type.ON_CHANGE_NEG)
 	public List<Block> getHolding() {
 		List<Block> holding = ourRobot.isHolding();
 		return holding;
@@ -411,8 +410,9 @@ public class RobotEntity implements RobotEntityInt {
 	public void goTo(long targetid) {
 		Block target = null;
 		for (Block b : getVisibleBlocks()) {
-			if (b.getId() == targetid)
+			if (b.getId() == targetid) {
 				target = b;
+			}
 		}
 		if (target == null) {
 			throw new IllegalArgumentException("there is no block with id=" + targetid + " in the room");
