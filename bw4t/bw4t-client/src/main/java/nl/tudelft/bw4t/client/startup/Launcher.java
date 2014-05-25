@@ -8,7 +8,7 @@ import eis.iilang.Parameter;
 import java.util.HashMap;
 import java.util.Map;
 
-import nl.tudelft.bw4t.BW4TEnvironmentListener;
+import nl.tudelft.bw4t.client.environment.BW4TEnvironmentListener;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.startup.LauncherException;
 
