@@ -4,15 +4,13 @@ package nl.tudelft.bw4t.message;
  * Class containing all necessary information for a message Note that
  * BW4TMessage objects are only used for direct agent communication within the
  * BW4T server. This is totally separated from the GOAL messaging system.
- * 
- * @author trens
  */
 public class BW4TMessage {
 
-    private String color, playerId;
-    private String room;
-    private MessageType type;
-    private int number;
+    private final String color, playerId;
+    private final String room;
+    private final MessageType type;
+    private final int number;
 
     /**
      * Create a new message
@@ -52,8 +50,7 @@ public class BW4TMessage {
      *            , the player that the message is directed to (null if message
      *            is not directed towards someone)
      */
-    public BW4TMessage(MessageType type, String room, String color,
-            String playerId) {
+    public BW4TMessage(MessageType type, String room, String color, String playerId) {
         this.type = type;
         this.room = room;
         this.color = color;
@@ -80,8 +77,7 @@ public class BW4TMessage {
      *            blocks of given color in room. Nonsense value if the message
      *            does not use the number.
      */
-    public BW4TMessage(MessageType type, String room, String color,
-            String playerId, Integer num) {
+    public BW4TMessage(MessageType type, String room, String color, String playerId, Integer num) {
         this.type = type;
         this.room = room;
         this.color = color;

@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
-import nl.tudelft.bw4t.client.gui.data.structures.BW4TClientInfo;
 import eis.iilang.Identifier;
 import eis.iilang.Percept;
 
@@ -16,8 +15,8 @@ import eis.iilang.Percept;
  * @author trens
  */
 public class GoToRoomActionListener implements ActionListener {
-    private String id;
-    private BW4TClientGUI bw4tClientMapRenderer;
+    private final String id;
+    private final BW4TClientGUI bw4tClientMapRenderer;
 
     public GoToRoomActionListener(String id, BW4TClientGUI bw4tClientMapRenderer) {
         this.id = id;
@@ -26,19 +25,19 @@ public class GoToRoomActionListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        BW4TClientInfo data = bw4tClientMapRenderer.getBW4TClientInfo();
-        if (!data.goal)
+        BW4TClientGUI data = bw4tClientMapRenderer;
+        if (!data.isGoal()) {
             try {
-                data.humanAgent.goTo(id);
+                data.getHumanAgent().goTo(id);
             } catch (Exception e1) {
                 // Also catch NoServerException. Nothing we can do really.
                 e1.printStackTrace();
             }
-        else {
+        } else {
             LinkedList<Percept> percepts = new LinkedList<Percept>();
             Percept percept = new Percept("goTo", new Identifier(id));
             percepts.add(percept);
-            data.environmentDatabase.setToBePerformedAction(percepts);
+            data.getEnvironmentDatabase().setToBePerformedAction(percepts);
         }
 
     }
