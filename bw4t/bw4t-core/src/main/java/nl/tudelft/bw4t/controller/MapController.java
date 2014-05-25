@@ -16,13 +16,13 @@ public interface MapController {
 
 	public MapRenderSettings getRenderSettings();
 
-	public Set<Zone> getRooms();
+	public Zone getDropZone();
 
-	public boolean isOccupied(Zone room);
+	public Set<Zone> getRooms();
 
 	public Set<Zone> getZones();
 
-	public Zone getDropZone();
+	public boolean isOccupied(Zone room);
 
 	public Set<Block> getVisibleBlocks();
 
