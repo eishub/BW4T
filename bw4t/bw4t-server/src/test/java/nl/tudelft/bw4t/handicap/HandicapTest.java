@@ -41,7 +41,7 @@ public class HandicapTest {
 	@Test
 	public void structureColorBlindHandicapTest() {
 		Robot r = new Robot("",space,context,true, false, 0);
-		ColorBlindHandicap cbh = new ColorBlindHandicap(r);
+		new ColorBlindHandicap(r);
 		assertTrue(r.getHandicapsMap().get("ColorBlind") instanceof HandicapInterface);
 		assertTrue(r.getHandicapsMap().get("ColorBlind") instanceof Handicap);
 	}
@@ -51,7 +51,7 @@ public class HandicapTest {
 	@Test
 	public void structureGripperHandicapTest() {
 		Robot r = new Robot("",space,context,true, false, 0);
-		GripperHandicap gh = new GripperHandicap(r);
+		new GripperHandicap(r);
 		assertTrue(r.getHandicapsMap().get("Gripper") instanceof HandicapInterface);
 		assertTrue(r.getHandicapsMap().get("Gripper") instanceof Handicap);
 	}
@@ -61,7 +61,7 @@ public class HandicapTest {
 	@Test
 	public void structureMoveSpeedHandicapTest() {
 		Robot r = new Robot("",space,context,true, false, 0);
-		MoveSpeedHandicap msh = new MoveSpeedHandicap(r, 1.0);
+		new MoveSpeedHandicap(r, 1.0);
 		assertTrue(r.getHandicapsMap().get("MoveSpeed") instanceof HandicapInterface);
 		assertTrue(r.getHandicapsMap().get("MoveSpeed") instanceof Handicap);
 	}
@@ -71,7 +71,7 @@ public class HandicapTest {
 	@Test
 	public void structureSizeOverloadHandicapTest() {
 		Robot r = new Robot("",space,context,true, false, 0);
-		SizeOverloadHandicap soh = new SizeOverloadHandicap(r, 2);
+		new SizeOverloadHandicap(r, 2);
 		assertTrue(r.getHandicapsMap().get("SizeOverload") instanceof HandicapInterface);
 		assertTrue(r.getHandicapsMap().get("SizeOverload") instanceof Handicap);
 	}
@@ -85,7 +85,7 @@ public class HandicapTest {
 		ColorBlindHandicap cb = new ColorBlindHandicap(r);
 		GripperHandicap gh = new GripperHandicap(cb);
 		MoveSpeedHandicap msh = new MoveSpeedHandicap(gh, 0.8);
-		SizeOverloadHandicap soh = new SizeOverloadHandicap(msh, 2);
+		new SizeOverloadHandicap(msh, 2);
 		// Asserts
 		assertTrue(r.getHandicapsMap().get("ColorBlind") instanceof HandicapInterface);
 		assertTrue(r.getHandicapsMap().get("ColorBlind") instanceof Handicap);
@@ -126,7 +126,7 @@ public class HandicapTest {
 	@Test
 	public void getSizeSizeOverloadTest() {
 		Robot r = new Robot("",space,context,true, false, 0);
-		SizeOverloadHandicap soh = new SizeOverloadHandicap(r, 3);
+		new SizeOverloadHandicap(r, 3);
 		assertTrue(r.getHandicapsMap().get("SizeOverload") instanceof HandicapInterface);
 		assertTrue(r.getHandicapsMap().get("SizeOverload") instanceof Handicap);
 		assertEquals(3, r.getSize());
