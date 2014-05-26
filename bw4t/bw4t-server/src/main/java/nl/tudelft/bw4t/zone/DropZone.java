@@ -98,13 +98,13 @@ public class DropZone extends Room {
 			if (sequence.get(sequenceIndex).equals(block.getColorId())) {
 				// Correct block has been dropped in
 				sequenceIndex++;
-				BW4TLogger.getInstance().logGoodDrop(robot.getName());
+				robot.getAgentRecord().addGoodDrop();
 				if (sequenceIndex == sequence.size()) {
 					BW4TLogger.getInstance().logCompletedSequence();
 				}
 			}
 			else {
-				BW4TLogger.getInstance().logWrongDrop(robot.getName());
+				robot.getAgentRecord().addWrongDrop();
 			}
 		}
 
