@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.client;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
@@ -17,12 +18,11 @@ import eis.eis2java.translation.Translator;
 import eis.exceptions.ActException;
 import eis.exceptions.ManagementException;
 import eis.exceptions.PerceiveException;
-import eis.exceptions.RelationException;
 import eis.iilang.Action;
 import eis.iilang.Parameter;
 
-public class MovementTest {
-
+public class CommunicationTest {
+	
 	private RemoteEnvironment client;
 
 //	@Before
@@ -31,7 +31,7 @@ public class MovementTest {
 		String[] clientArgs = new String[] {
 				"-map", "Banana",
 				"-agentclass", "nl.tudelft.bw4t.agent.BW4TAgent",
-				"-agentcount", "2",
+				"-agentcount", "3",
 				"-humancount", "0"};
 		nl.tudelft.bw4t.client.startup.Launcher.launch(clientArgs);
 		client = nl.tudelft.bw4t.client.startup.Launcher.getEnvironment();
@@ -43,26 +43,35 @@ public class MovementTest {
 			InterruptedException, PerceiveException {
 		String bot1 = client.getAgents().get(0);
 		String bot2 = client.getAgents().get(1);
-		
-		// We verify that we are indeed at the starting area, then move to RoomC1
-		TestFunctions.retrievePercepts(bot1);
-		assertTrue(TestFunctions.hasPercept("at(FrontDropZone)"));
-		Parameter[] param = Translator.getInstance().translate2Parameter("RoomC1");
-		client.performAction(bot1, new Action("goTo", param));
-		Thread.sleep(2000L);
-		
-		TestFunctions.retrievePercepts(bot1);
-		assertTrue(TestFunctions.hasPercept("in(RoomC1)"));
-		
-		// Next we test collision by having a second bot attempt to enter the same room
-		TestFunctions.retrievePercepts(bot2);
-		assertTrue(TestFunctions.hasPercept("at(FrontDropZone)"));
-		param = Translator.getInstance().translate2Parameter("RoomC1");
-		client.performAction(bot2, new Action("goTo", param));
-		Thread.sleep(2000L);
+		String bot3 = client.getAgents().get(2);
 
+		sendMessage(bot1, "all", "Test");
+		sendMessage(bot1, bot2, "Test2");
+		Thread.sleep(500L);
+
+		TestFunctions.retrievePercepts(bot1);
+		assertFalse(TestFunctions.hasPercept("message([Bot1,Test])"));
+		assertFalse(TestFunctions.hasPercept("message([Bot1,Test2])"));
 		TestFunctions.retrievePercepts(bot2);
-		assertTrue(TestFunctions.hasPercept("state(collided)"));
-		assertTrue(TestFunctions.hasPercept("at(FrontRoomC1)"));
+		assertTrue(TestFunctions.hasPercept("message([Bot1,Test])"));
+		assertTrue(TestFunctions.hasPercept("message([Bot1,Test2])"));
+		TestFunctions.retrievePercepts(bot3);
+		assertTrue(TestFunctions.hasPercept("message([Bot1,Test])"));
+		assertFalse(TestFunctions.hasPercept("message([Bot1,Test2])"));
+	}
+	
+	private void sendMessage(String entityId, String receiver, String message){
+		try {
+			Parameter[] receiverParam = Translator.getInstance()
+			        .translate2Parameter(receiver);
+	        Parameter[] messageParam = Translator.getInstance()
+	                .translate2Parameter(message);
+			client.performAction(entityId, new Action("sendMessage", 
+					new Parameter[]{receiverParam[0], messageParam[0]}));
+		} catch (TranslationException e) {
+			e.printStackTrace();
+		} catch (ActException e) {
+			e.printStackTrace();
+		}
 	}
 }
