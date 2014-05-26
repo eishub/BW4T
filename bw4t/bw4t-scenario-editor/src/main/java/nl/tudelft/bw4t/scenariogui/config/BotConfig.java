@@ -11,6 +11,12 @@ import javax.xml.bind.annotation.XmlElement;
  */
 
 public final class BotConfig {
+	
+	private String name = "Bot";
+	
+	private String controller = "Agent";
+	
+	private int amount = 1;
 
     private int botSize = 2;
 
@@ -28,6 +34,55 @@ public final class BotConfig {
 
     private boolean hasSizeOverloadHandicap = false;
 
+    /**
+     * Sets the name of the bot.
+     * @param name The name of the bot.
+     */
+    @XmlElement
+    public void setBotName(String name) {
+    	this.name = name;
+    }
+    
+    /**
+     * Returns the name of the bot.
+     * @return The name of the bot.
+     */
+    public String getBotName() {
+    	return this.name;
+    }
+    
+    /**
+     * Sets the controller type of the bot.
+     * @param controller The controller type of the bot.
+     */
+    @XmlElement
+    public void setBotController(String controller) {
+    	this.controller = controller;
+    }
+    
+    /**
+     * Returns the controller type of the bot.
+     * @return The controller type of the bot.
+     */
+    public String getBotController() {
+    	return this.controller;
+    }
+    
+    /**
+     * Sets the amount of bots of a type there are.
+     * @param amount The amount of bots.
+     */
+    public void setBotAmount(int amount) {
+    	this.amount = amount;
+    }
+    
+    /**
+     * Returns the amount of bots of this type.
+     * @return The amount of bots of this type.
+     */
+    public int getBotAmount() {
+    	return this.amount;
+    }
 
     /**
      * @return the size of the robot.
