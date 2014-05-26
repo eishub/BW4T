@@ -123,8 +123,8 @@ public class MapRenderSettings {
 	 */
 	public Rectangle2D transformCenterRectangle(Rectangle2D rect) {
 		Rectangle2D ret = transformRectangle(rect);
-		double xPos = rect.getX() - ret.getWidth() / 2.;
-		double yPos = rect.getY() - ret.getHeight() / 2.;
+		double xPos = ret.getX() - ret.getWidth() / 2.;
+		double yPos = ret.getY() - ret.getHeight() / 2.;
 
 		return new Rectangle.Double(xPos, yPos, ret.getWidth(), ret.getHeight());
 
