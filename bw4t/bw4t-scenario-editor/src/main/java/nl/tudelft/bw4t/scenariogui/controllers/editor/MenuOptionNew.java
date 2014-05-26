@@ -94,7 +94,7 @@ class MenuOptionNew extends AbstractMenuOption {
     	DefaultTableModel botTable = entityPanel.getBotTableModel();
     	int rows = botTable.getRowCount();
     	
-    	for(int i = rows - 1; i >= 0; i--){
+    	for (int i = rows - 1; i >= 0; i--) {
     		botTable.removeRow(i);
     	}
     }
@@ -107,7 +107,7 @@ class MenuOptionNew extends AbstractMenuOption {
     	DefaultTableModel epartnerTable = entityPanel.getEPartnerTableModel();
     	int rows = epartnerTable.getRowCount();
     	
-    	for(int i = rows - 1; i >= 0; i--){
+    	for (int i = rows - 1; i >= 0; i--) {
     		epartnerTable.removeRow(i);
     	}
     }
