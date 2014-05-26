@@ -33,6 +33,8 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditor;
+
 /**
  * The EntityPanel class represents right pane of the MainPanel. It shows a list
  * of bots and a list of e-partners and the actions that are possible to edit
@@ -392,7 +394,8 @@ public class EntityPanel extends JPanel {
      * pressed. TODO Open BotStore window
      */
     public void modifyBotAction() {
-        System.out.println("Go to Bot Store (modify)");
+    	new BotEditor();
+        //System.out.println("Go to Bot Store (modify)");
     }
 
     /**
