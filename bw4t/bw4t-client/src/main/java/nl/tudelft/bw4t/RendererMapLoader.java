@@ -41,7 +41,6 @@ public class RendererMapLoader {
 			// these labels are rendered on top of the rooms.
 			createNavPointLabel(navpt, renderer);
 		}
-
 		for (Zone room : map.getZones(Zone.Type.ROOM)) {
 			createRoom(room, renderer);
 			for (nl.tudelft.bw4t.map.Door doorargs : room.getDoors()) {
