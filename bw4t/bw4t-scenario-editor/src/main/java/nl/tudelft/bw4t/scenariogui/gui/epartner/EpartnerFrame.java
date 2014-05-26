@@ -18,27 +18,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import net.miginfocom.swing.MigLayout;
 
-public class EpartnerPanel extends JFrame {
+/**
+ * This class creates the frame for the e-Partner GUI.
+ * @author Wendy
+ */
 
-public class gui extends JFrame {
+public class EpartnerFrame extends JFrame {
 
 	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					gui frame = new gui();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -77,5 +64,4 @@ public class gui extends JFrame {
 		contentPane.add(btnReset, "cell 2 3,growx,aligny bottom");
 		contentPane.add(btnApply, "cell 4 3,alignx right,aligny bottom");
 	}
-  }
 }
