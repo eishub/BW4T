@@ -80,11 +80,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	/**
 	 * True if the robot is human.
 	 */
-<<<<<<< HEAD
 	private boolean isHuman = false;
-=======
-	public boolean isHuman;
->>>>>>> b7f32acc6af10c0a410919b37a7d1ba1fd8c849d
 
 	/**
 	 * Creates a new robot.
@@ -111,8 +107,8 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 		 */
 		this.battery = new Battery(Integer.MAX_VALUE, Integer.MAX_VALUE, 0);
 		this.holding = new ArrayList<Block>(capacity);
-		handicapsMap = new HashMap<String, HandicapInterface>();
-		isHuman = human;
+		this.handicapsMap = new HashMap<String, HandicapInterface>();
+		this.isHuman = human;
 	}
 
 	/**
@@ -150,7 +146,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 		 * 
 		 * This list keeps track of the handicaps attached to the robot.
 		 */
-		handicapsMap = new HashMap<String, HandicapInterface>();
+		this.handicapsMap = new HashMap<String, HandicapInterface>();
 	}
 
 	/**
@@ -632,7 +628,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	}
 
 	public boolean isHuman() {
-		return isHuman;
+		return this.isHuman;
 	}
 
 	public void setHuman(boolean isHuman) {
@@ -640,7 +636,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	}
 
 	public boolean isHoldingEPartner() {
-		return isHoldingEPartner;
+		return this.isHoldingEPartner;
 	}
 
 	public void setHoldingEPartner(boolean isHoldingEPartner) {
