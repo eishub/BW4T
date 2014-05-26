@@ -2,7 +2,6 @@ package nl.tudelft.bw4t.client;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import eis.exceptions.NoEnvironmentException;
@@ -16,10 +15,14 @@ public class TestFunctions {
 	private static Collection<Percept> percepts;
 	
 	/**
+	 * Check if a given percept is present. You must have retrieved percepts before this.
 	 * @param prologPercept A Prolog percept
 	 * @return True if the percept is present, otherwise false
 	 */
 	public static boolean hasPercept(String prologPercept){
+		if (percepts==null){
+			return false;
+		}
 		String perceptName = prologPercept.substring(0, prologPercept.indexOf("("));
 		Iterator<Percept> iterator = percepts.iterator();
 		while (iterator.hasNext()) {
@@ -31,6 +34,10 @@ public class TestFunctions {
 		return false;
 	}
 	
+	/**
+	 * Retrieves the percepts received by the given bot.
+	 * @param entityId
+	 */
 	public static void retrievePercepts(String entityId){
 		try {
 			percepts=client.getAllPercepts(entityId).get(entityId);
@@ -41,10 +48,17 @@ public class TestFunctions {
 		}
 	}
 	
+	/**
+	 * @return The current collection of percepts
+	 */
 	public static Collection<Percept> getPercepts(){
 		return percepts;
 	}
 	
+	/**
+	 * Sets the client to be used.
+	 * @param c
+	 */
 	public static void setClient(RemoteEnvironment c){
 		client=c;
 	}

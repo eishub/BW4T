@@ -17,7 +17,6 @@ import eis.eis2java.translation.Translator;
 import eis.exceptions.ActException;
 import eis.exceptions.ManagementException;
 import eis.exceptions.PerceiveException;
-import eis.exceptions.RelationException;
 import eis.iilang.Action;
 import eis.iilang.Parameter;
 
@@ -38,6 +37,13 @@ public class MovementTest {
 		TestFunctions.setClient(client);
 	}
 
+	/**
+	 * Here we test if movement and collision is working properly.
+	 * @throws TranslationException
+	 * @throws ActException
+	 * @throws InterruptedException
+	 * @throws PerceiveException
+	 */
 //	@Test
 	public void movementTest() throws TranslationException, ActException,
 			InterruptedException, PerceiveException {
@@ -51,6 +57,7 @@ public class MovementTest {
 		client.performAction(bot1, new Action("goTo", param));
 		Thread.sleep(2000L);
 		
+		// We verify if we have arrived correctly
 		TestFunctions.retrievePercepts(bot1);
 		assertTrue(TestFunctions.hasPercept("in(RoomC1)"));
 		
@@ -61,6 +68,7 @@ public class MovementTest {
 		client.performAction(bot2, new Action("goTo", param));
 		Thread.sleep(2000L);
 
+		// We verify if we've collided with the door as intended
 		TestFunctions.retrievePercepts(bot2);
 		assertTrue(TestFunctions.hasPercept("state(collided)"));
 		assertTrue(TestFunctions.hasPercept("at(FrontRoomC1)"));
