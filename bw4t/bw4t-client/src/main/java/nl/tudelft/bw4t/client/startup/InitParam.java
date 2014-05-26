@@ -38,7 +38,7 @@ public enum InitParam {
     /**
      * The java agent class to load when new entities appear.
      */
-    AGENTCLASS("nl.tudelft.bw4t.agent.TestAgent"),
+    AGENTCLASS("nl.tudelft.bw4t.agent.BW4TAgent"),
     /**
      * are we connected with GOAL?
      */
@@ -48,7 +48,7 @@ public enum InitParam {
      */
     KILL("");
 
-    private final String defaultvalue;
+    private String defaultvalue;
 
     /**
      * @param def
@@ -58,6 +58,9 @@ public enum InitParam {
         defaultvalue = def;
     }
 
+    public  void setDefaultValue(String defaultvalue) {
+    	this.defaultvalue = defaultvalue;
+    }
     public String getDefaultValue() {
         return defaultvalue;
     }
