@@ -5,6 +5,7 @@ import java.io.File;
 import javax.swing.JFileChooser;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +14,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -103,6 +107,28 @@ public class ConfigurationPanelTest {
 
         assertEquals(filePathMap, editor.getMainPanel().getConfigurationPanel()
                 .getMapFile());
+    }
+
+    /**
+     * Tests the choosing of an incorrect map file.
+     * Shows a pop-up message with an error.
+     */
+    @Test
+    public final void testMapFileActionIncorrect() {
+        // Setup the mocks behaviour.
+        when(fileChooser.showOpenDialog(editor.getMainPanel())).thenReturn(
+                JFileChooser.APPROVE_OPTION);
+        when(fileChooser.getSelectedFile()).thenReturn(new File(fileMapFail));
+
+        YesMockOptionPrompt spyOption = spy(new YesMockOptionPrompt());
+        ScenarioEditor.setOptionPrompt(spyOption);
+
+        // Trigger the event.
+        editor.getMainPanel().getConfigurationPanel().getChooseMapFile()
+                .doClick();
+
+        // Verify that the pop-up message was shown.
+        verify(spyOption, times(1)).showMessageDialog(editor.getMainPanel(), "This is not a valid file.");
     }
 
     /**
