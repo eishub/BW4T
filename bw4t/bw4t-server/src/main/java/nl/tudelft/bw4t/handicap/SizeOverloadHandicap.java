@@ -1,7 +1,7 @@
 package nl.tudelft.bw4t.handicap;
 
 import nl.tudelft.bw4t.doors.Door;
-import nl.tudelft.bw4t.robots.Robot.MoveType;
+import nl.tudelft.bw4t.robots.MoveType;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.Zone;
 
@@ -19,7 +19,7 @@ public class SizeOverloadHandicap extends Handicap {
 		super(p);
 		isActive = true;
 		robot.setSize(s);
-		robot.handicapsMap.put("SizeOverload", this);
+		robot.getHandicapsMap().put("SizeOverload", this);
 	}
 	
 	/**
@@ -43,7 +43,7 @@ public class SizeOverloadHandicap extends Handicap {
 			 * Both sides are not a room. Check if target accesible
 			 */
 			else if (endzone instanceof Corridor) {
-				if (!robot.oneBotPerZone || endzone.containsMeOrNothing(robot)) {
+				if (!robot.isOneBotPerZone() || endzone.containsMeOrNothing(robot)) {
 					return MoveType.ENTER_CORRIDOR;
 				}
 				return MoveType.HIT_OCCUPIED_ZONE;
