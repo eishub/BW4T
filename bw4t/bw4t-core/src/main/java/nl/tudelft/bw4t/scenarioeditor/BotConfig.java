@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.config;
+package nl.tudelft.bw4t.scenarioeditor;
 
 import javax.xml.bind.annotation.XmlElement;
 

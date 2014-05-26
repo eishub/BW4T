@@ -48,7 +48,7 @@ public enum InitParam {
      */
     KILL("");
 
-    private final String defaultvalue;
+    private String defaultvalue;
 
     /**
      * @param def
@@ -56,6 +56,10 @@ public enum InitParam {
      */
     InitParam(String def) {
         defaultvalue = def;
+    }
+    
+    public void setDefaultValue(String defaultvalue) {
+        this.defaultvalue = defaultvalue;
     }
 
     public String getDefaultValue() {

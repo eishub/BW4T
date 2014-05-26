@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.SwingUtilities;
 
-import nl.tudelft.bw4t.scenariogui.config.BotConfig;
+import nl.tudelft.bw4t.scenarioeditor.BotConfig;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditor;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
