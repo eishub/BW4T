@@ -100,42 +100,10 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 *            The context in which the robot operates.
 	 * @param oneBotPerZone
 	 *            true if max 1 bot in a zone
-	 */
-	public Robot(String name, ContinuousSpace<Object> space, Context<Object> context, boolean oneBotPerZone, boolean human) {
-		super(space, context);
-
-		this.name = name;
-		this.oneBotPerZone = oneBotPerZone;
-		setSize(SIZE, SIZE);
-
-		/**
-		 * 
-		 * This is where the battery value will be fetched from the Bot Store GUI.
-		 */
-		this.battery = new Battery(Integer.MAX_VALUE, Integer.MAX_VALUE, 0);
-		this.holding = new ArrayList<Block>(capacity);
-		handicapsMap = new HashMap<String, HandicapInterface>();
-		isHuman = human;
-	}
-
-	/**
-	 * Creates a new robot.
-	 * 
-	 * @param name
-	 *            The "human-friendly" name of the robot.
-	 * @param space
-	 *            The space in which the robot operates.
-	 * @param context
-	 *            The context in which the robot operates.
-	 * @param oneBotPerZone
-	 *            true if max 1 bot in a zone
-	 * @param colorBlindness
-	 *            true if Robot is color blind.
 	 * @param cap
 	 *            The holding capacity of the robot.
 	 */
-	public Robot(String name, ContinuousSpace<Object> space, Context<Object> context, boolean oneBotPerZone,
-			boolean colorBlindness, int cap) {
+	public Robot(String name, ContinuousSpace<Object> space, Context<Object> context, boolean oneBotPerZone, boolean human, int cap) {
 		super(space, context);
 
 		this.name = name;
@@ -143,18 +111,22 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 		setSize(SIZE, SIZE);
 
 		/**
-		 * Valentine This is where the battery value will be fetched from the Bot Store GUI.
+		 * This is where the battery value will be fetched from the Bot Store GUI.
 		 */
 		this.battery = new Battery(Integer.MAX_VALUE, Integer.MAX_VALUE, 0);
+		/**
+		 * Here the number of blocks a bot can hold is set.
+		 */
 		capacity = cap;
 		this.holding = new ArrayList<Block>(capacity);
-
-		/**
-		 * 
-		 * This list keeps track of the handicaps attached to the robot.
-		 */
 		handicapsMap = new HashMap<String, HandicapInterface>();
+		/**
+		 * if a bot is human controller then this value is true.
+		 */
+		isHuman = human;
 	}
+
+	
 
 	/**
 	 * called when robot becomes connected and should now be injected in repast.
@@ -237,14 +209,16 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	}
 
 	/**
-	 * Pick up an e-Partner.
+	 * Pick up an e-Partner if the Robot is human controlled.
 	 * 
 	 * @param eP
 	 *            , the e-Partner the robot picks up.
 	 */
 	public void pickUpEPartner(EPartner eP) {
-		eP.setHolder(this);
-		this.isHoldingEPartner = true;
+		if(isHuman){
+			eP.setHolder(this);
+			this.isHoldingEPartner = true;
+		}
 	}
 
 	/**
