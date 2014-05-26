@@ -20,7 +20,8 @@ import nl.tudelft.bw4t.scenariogui.util.XMLManager;
  * XML.
  * <p>
  * @author      Nick Feddes
- * @author      Calvin Wong Loi Sing  
+ * @author      Calvin Wong Loi Sing
+ * @author 		Katia Asmoredjo 
  * @version     0.1                
  * @since       12-05-2014        
  */
@@ -73,6 +74,13 @@ public class BW4TClientConfig {
     @XmlElementWrapper(name = "bots")
     @XmlElement(name = "bot")
     private List<BotConfig> bots = new ArrayList<BotConfig>();
+    
+    /**
+     * The XML element wrapper for the list of epartners. 
+     */
+   /*@XmlElementWrapper(name = "epartners")
+    @XmlElement(name = "epartner")
+    private List<EpartnerConfig> epartners = new ArrayList<EpartnerConfig>();*/
 
     /**
      * An empty <code>BW4TClientConfig</code> object.
@@ -100,6 +108,11 @@ public class BW4TClientConfig {
         EntityPanel entityPanel = mainPanel.getEntityPanel();
 //        TODO: read out bot panel and add each BotConfig to the list of bots
 //        botPanel.getTable().;
+        getBots();
+        
+        //TODO add epartner configs
+        //getEpartners();
+        
         this.outputFile = newOutputFile;
     }
 
@@ -315,4 +328,31 @@ public class BW4TClientConfig {
     public List<BotConfig> getBots() {
         return bots;
     }
+    
+    /**
+     * Add an epartner to the configuration file.
+     * 
+     * @param theEpartner    The epartner that is to be added.
+     */
+    /*public void addEpartner(EpartnerConfig theEpartner) {
+        epartners.add(theEpartner);
+    }*/
+
+    /**
+     * Remove an epartner from the configuration file.
+     * 
+     * @param theEpartner    The epartner that is to be removed.
+     */
+    /*public void removeEpartner(EpartnerConfig theEpartner) {
+        epartners.remove(theEpartner);
+    }*/
+
+    /**
+     * Return all the epartners loaded.
+     * 
+     * @return The <code>List<EpartnerConfig></code> of epartners.
+     */
+    /*public List<EpartnerConfig> getEpartners() {
+        return epartners;
+    }*/
 }
