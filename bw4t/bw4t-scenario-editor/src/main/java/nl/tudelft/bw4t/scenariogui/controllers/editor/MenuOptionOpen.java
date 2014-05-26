@@ -87,9 +87,14 @@ class MenuOptionOpen extends AbstractMenuOption {
                 resetEpartnerTable(entityPanel);
                 
                 // Fill the bot panel
-
-                for (BotConfig bot : configuration.getBots()) {
-                    // TODO: LOAD AND FILL BOT LIST HERE
+                int rows = configuration.getBots().size();
+                
+                for (int i = 0; i < rows; i++) {
+                	String botName = configuration.getBot(i).getBotName();
+                	String botController = configuration.getBot(i).getBotController();
+                	int botAmount = configuration.getBot(i).getBotAmount();
+                	Object[] botObject = {botName, botController, botAmount};
+                	entityPanel.getBotTableModel().addRow(botObject);
                 }
             } catch (JAXBException e1) {
                 ScenarioEditor.handleException(e1, "Error: Opening the XML has failed.");
