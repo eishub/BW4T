@@ -109,20 +109,6 @@ public class BW4TLogger {
 	}
 
 	/**
-	 * get the agent's record. Creates new one if it does not yet exist.
-	 * 
-	 * @param agent
-	 *            is the name of the agent
-	 * @return AgentRecord.
-	 */
-	private AgentRecord getAgentRecord(String agent) {
-		if (agentRecords.get(agent) == null) {
-			agentRecords.put(agent, new AgentRecord(agent, "unknown"));
-		}
-		return agentRecords.get(agent);
-	}
-
-	/**
 	 * Log to file. The items are written to a single row, with tabs separating them and a newline at the end. If there
 	 * are 0 items in the list, nothing is written to the log file.
 	 * 
@@ -192,20 +178,6 @@ public class BW4TLogger {
 	}
 
 	/**
-	 * called when a robot makes a good drop in the drop zone. Nothing is logged at this point
-	 */
-	public void logGoodDrop(String entity) {
-		getAgentRecord(entity).addGoodDrop();
-	}
-
-	/**
-	 * called when a robot makes a wrong drop in the drop zone. Nothign is logged at this point
-	 */
-	public void logWrongDrop(String entity) {
-		getAgentRecord(entity).addWrongDrop();
-	}
-
-	/**
 	 * log the action. If this is the first action, it is also the start time.
 	 * 
 	 * @param entity
@@ -218,38 +190,7 @@ public class BW4TLogger {
 			starttime = time;
 		}
 	}
-
-	/**
-	 * record a sent message
-	 * 
-	 * @param entity
-	 */
-	public void logSentMessageAction(String entity) {
-		getAgentRecord(entity).addSentMessage();
-	}
-
-	public void logEnteredRoom(String entity) {
-		getAgentRecord(entity).addEnteredRoom();
-	}
-
-	/**
-	 * log the start of a motion
-	 * 
-	 * @param entity
-	 */
-	public void logMoving(String entity) {
-		getAgentRecord(entity).setStartedMoving();
-	}
-
-	/**
-	 * log the stop of a motion
-	 * 
-	 * @param entity
-	 */
-	public void logStopMoving(String entity) {
-		getAgentRecord(entity).setStoppedMoving();
-	}
-
+	
 	/**
 	 * This adds the agent summary to the log file and closes the log file. Any attempt to log after this will create a
 	 * new log file.
