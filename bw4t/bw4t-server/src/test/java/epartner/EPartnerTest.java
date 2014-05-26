@@ -2,9 +2,6 @@ package epartner;
 
 import static org.junit.Assert.*;
 import nl.tudelft.bw4t.blocks.EPartner;
-import nl.tudelft.bw4t.handicap.ColorBlindHandicap;
-import nl.tudelft.bw4t.handicap.Handicap;
-import nl.tudelft.bw4t.handicap.HandicapInterface;
 import nl.tudelft.bw4t.robots.Robot;
 
 import org.junit.Before;
@@ -36,8 +33,8 @@ public class EPartnerTest {
 	@Test
 	public void humanControlledRobotTest() {
 		Robot r = new Robot("",space,context,true, true, 0);
-		assertTrue(r.isHuman);
-		assertTrue(!r.isHoldingEPartner);
+		assertTrue(r.isHuman());
+		assertTrue(!r.isHoldingEPartner());
 	}
 	
 	/**
@@ -48,7 +45,7 @@ public class EPartnerTest {
 		Robot r = new Robot("",space,context,true, false, 0);
 		EPartner e = new EPartner(space, context);
 		r.pickUpEPartner(e);
-		assertFalse(r.isHoldingEPartner);
+		assertFalse(r.isHoldingEPartner());
 	}
 	
 	/**
