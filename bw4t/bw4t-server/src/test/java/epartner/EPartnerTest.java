@@ -58,5 +58,16 @@ public class EPartnerTest {
 		r.pickUpEPartner(e);
 		assertTrue(r.isHoldingEPartner());
 	}
+	
+	/**
+	 * Test which robot is holding the epartner
+	 */
+	@Test
+	public void robotHoldingEPartner(){
+		Robot r = new Robot("",space,context,true, true, 0);
+		EPartner e = new EPartner(space, context);
+		r.pickUpEPartner(e);
+		assertTrue(e.getHolder().equals(r));
+	}
 
 }
