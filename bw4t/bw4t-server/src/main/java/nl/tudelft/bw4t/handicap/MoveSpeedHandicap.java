@@ -1,7 +1,6 @@
 package nl.tudelft.bw4t.handicap;
 
 import nl.tudelft.bw4t.robots.Robot;
-import nl.tudelft.bw4t.server.logging.BW4TLogger;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.SpatialException;
 import repast.simphony.space.SpatialMath;
@@ -56,7 +55,7 @@ public class MoveSpeedHandicap extends Handicap {
 					try {
 						// Move the robot to the new position using the displacement
 						robot.moveByDisplacement(displacement[0], displacement[1]);
-						BW4TLogger.getInstance().logMoving(robot.name);
+						robot.getAgentRecord().setStartedMoving();
 						
 						/**
 						 * Valentine

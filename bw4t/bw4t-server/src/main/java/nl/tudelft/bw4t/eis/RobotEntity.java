@@ -18,7 +18,6 @@ import nl.tudelft.bw4t.robots.NavigatingRobot;
 import nl.tudelft.bw4t.robots.Robot;
 import nl.tudelft.bw4t.server.RobotEntityInt;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
-import nl.tudelft.bw4t.server.logging.BW4TLogger;
 import nl.tudelft.bw4t.util.RoomLocator;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.BlocksRoom;
@@ -483,7 +482,8 @@ public class RobotEntity implements RobotEntityInt {
 	 */
 	@AsAction(name = "sendMessage")
 	public void sendMessage(String receiver, String message) throws ActException {
-		BW4TLogger.getInstance().logSentMessageAction(ourRobot.getName());
+		ourRobot.getAgentRecord().addSentMessage();
+
 		// Translate the message into parameters
 		Parameter[] parameters = new Parameter[2];
 		try {
