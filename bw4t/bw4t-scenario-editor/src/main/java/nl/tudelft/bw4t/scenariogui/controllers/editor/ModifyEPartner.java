@@ -9,7 +9,7 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 /**
  * Handles the event to modify an E-partner.
  * <p>
- * @author        
+ * @author      Seu Man To
  * @version     0.1                
  * @since       12-05-2014        
  */
@@ -44,7 +44,7 @@ class ModifyEPartner implements ActionListener {
             ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select the E-partner you want to modify.");
         } 
         else {
-            System.out.println("Go to Bot Store to modify an E-Partner");
+            System.out.println("Go to Bot Store to modify an E-Partner.");
         }
     }
 }
