@@ -3,6 +3,7 @@ package nl.tudelft.bw4t.scenariogui.controllers.editor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditor;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
@@ -39,6 +40,7 @@ class ModifyBot implements ActionListener {
     	int row = view.getEntityPanel().getSelectedBotRow();
 
         if (row == -1) {
+        	ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select a bot first.");
             return;
         }
     	new BotEditor(view);
