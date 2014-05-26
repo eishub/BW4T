@@ -46,7 +46,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	private int size = 2;
 
 	/** The name of the robot */
-	private final String NAME;
+	private final String name;
 
 	/** The location to which the robot wants to travel. */
 	private NdPoint targetLocation;
@@ -100,7 +100,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	public Robot(String name, ContinuousSpace<Object> space, Context<Object> context, boolean oneBotPerZone) {
 		super(space, context);
 
-		this.NAME = name;
+		this.name = name;
 		this.oneBotPerZone = oneBotPerZone;
 		setSize(size, size);
 		
@@ -132,7 +132,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 			int cap) {
 		super(space, context);
 
-		this.NAME = name;
+		this.name = name;
 		this.colorBlind = colorBlindness;
 		this.oneBotPerZone = oneBotPerZone;
 		setSize(size, size);
@@ -161,17 +161,21 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	public boolean equals(Object obj) {
 		if (obj instanceof Robot) {
 			return super.equals(obj);
-		}
-		else {
+		} else {
 			return false;
 		}
+	}
+	
+	@Override
+	public int hashCode() {
+		return super.hashCode();
 	}
 
 	/**
 	 * @return The name of the robot.
 	 */
 	public String getName() {
-		return NAME;
+		return name;
 	}
 
 	/**
@@ -284,7 +288,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 			case ENTER_CORRIDOR:
 			case ENTERING_FREESPACE:
 			case ENTERING_ROOM:
-				BW4TLogger.getInstance().logEnteredRoom(NAME);
+				BW4TLogger.getInstance().logEnteredRoom(name);
 				break;
 			case HIT_CLOSED_DOOR:
 			case HIT_WALL:
@@ -458,7 +462,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 				try {
 					// Move the robot to the new position using the displacement
 					moveByDisplacement(displacement[0], displacement[1]);
-					BW4TLogger.getInstance().logMoving(NAME);
+					BW4TLogger.getInstance().logMoving(name);
 					
 					/**
 					 * Valentine
@@ -479,7 +483,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 */
 	public synchronized void stopRobot() {
 		this.targetLocation = null;
-		BW4TLogger.getInstance().logStopMoving(NAME);
+		BW4TLogger.getInstance().logStopMoving(name);
 	}
 
 	/**
@@ -583,7 +587,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	}
 	
 	public String getNAME() {
-		return NAME;
+		return name;
 	}
 	public boolean isOneBotPerZone() {
 		return oneBotPerZone;
