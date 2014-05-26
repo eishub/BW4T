@@ -48,7 +48,7 @@ public class BotEditorPanel extends JPanel {
 
 	private JLabel batteryUseValueLabel = new JLabel("0.9");
 	
-	private BotEditorData dataObject = new BotEditorData();
+	private BotEditorData dataObject = new BotEditorData("", 1, 0, 0, 1.0, 0.0, false);
 	
 	/**
 	 * Create the botEditorPanel
@@ -318,10 +318,10 @@ public class BotEditorPanel extends JPanel {
 	 */
 	public void setDataObject() {
 		dataObject.setBotSize(sizeSlider.getValue());
-		dataObject.setBotSpeed(speedSlider.getValue());
-		dataObject.setBotBatteryCapacity(batterySlider.getValue());
+		dataObject.setSpeedMod((double) speedSlider.getValue()/100.0);
+		dataObject.setBatteryCapacity(batterySlider.getValue());
 		dataObject.setColorBlindHandicap(colorblindCheckbox.isEnabled());
-		dataObject.setGripperHandicap(gripperCheckbox.isEnabled());
+		dataObject.setNumberOfGrippers(gripperCheckbox.isEnabled());
 		dataObject.setMoveSpeedHandicap(movespeedCheckbox.isEnabled());
 		dataObject.setSizeOverloadHandicap(sizeoverloadCheckbox.isEnabled());
 	}
