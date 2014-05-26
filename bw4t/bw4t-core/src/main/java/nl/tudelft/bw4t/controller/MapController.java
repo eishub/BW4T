@@ -91,4 +91,12 @@ public interface MapController extends Runnable {
 	 *            the renderer
 	 */
 	public void removeRenderer(MapRendererInterface mri);
+
+	/**
+	 * Use this function to stop the update thread.
+	 * 
+	 * @param run
+	 *            set to false to stop the thread.
+	 */
+	public void setRunning(boolean run);
 }

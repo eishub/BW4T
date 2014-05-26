@@ -12,15 +12,15 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBException;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
-
 import nl.tudelft.bw4t.BW4TBuilder;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.server.BW4TServer;
 import nl.tudelft.bw4t.server.RobotEntityInt;
 import nl.tudelft.bw4t.server.logging.BW4TLogger;
 import nl.tudelft.bw4t.visualizations.ServerContextDisplay;
+
+import org.apache.log4j.Logger;
+
 import repast.simphony.context.Context;
 import repast.simphony.scenario.ScenarioLoadException;
 import eis.eis2java.environment.AbstractEnvironment;
@@ -69,12 +69,12 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	private BW4TServer server;
 	private boolean mapFullyLoaded;
 	private Stepper stepper;
-	private String scenarioLocation;
+	private final String scenarioLocation;
 	private Context context;
 	private static NewMap theMap;
 	private ServerContextDisplay contextDisplay;
-	private boolean guiEnabled;
-	private String shutdownKey;
+	private final boolean guiEnabled;
+	private final String shutdownKey;
 
 	/**
 	 * Create a new instance of this environment
@@ -101,7 +101,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		this.scenarioLocation = System.getProperty("user.dir") + "/" + scenarioLocation;
 		this.guiEnabled = guiEnabled;
 		this.shutdownKey = shutdownKey;
-		launchAll();
 	}
 
 	/**
@@ -112,7 +111,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @throws ScenarioLoadException
 	 * @throws JAXBException
 	 */
-	private void launchAll() throws IOException, ManagementException, ScenarioLoadException, JAXBException {
+	void launchAll() throws IOException, ManagementException, ScenarioLoadException, JAXBException {
 		launchServer();
 		setState(EnvironmentState.RUNNING);
 		launchRepast();
@@ -181,6 +180,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * initialize Repast. Does not reset the {@link BW4TServer}.
 	 */
+	@Override
 	public void init(Map<String, Parameter> parameters) throws ManagementException {
 		setState(EnvironmentState.INITIALIZING);
 		takeDownSimulation();
@@ -214,8 +214,9 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @throws MalformedURLException
 	 */
 	private void launchServer() throws RemoteException, ManagementException, MalformedURLException {
-		if (server == null)
+		if (server == null) {
 			server = Launcher.getInstance().setupRemoteServer();
+		}
 		setState(EnvironmentState.INITIALIZING);
 		LOGGER.info("BW4T Server has been bound.");
 	}
@@ -358,6 +359,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @return
 	 * @deprecated TODO remove
 	 */
+	@Deprecated
 	public BW4TRunner getRunner() {
 		return stepper.runner;
 	}
@@ -400,7 +402,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @throws JAXBException
 	 */
 	public void reset() throws NotBoundException, IOException, ScenarioLoadException, ManagementException,
-			JAXBException {
+	JAXBException {
 		takeDownSimulation();
 		if (server != null) {
 			server.takeDown();
@@ -469,7 +471,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		}
 		else {
 			LOGGER.warn("Server shutdown attempted with wrong key: " + key);
-		}	
+		}
 	}
 
 	/**
@@ -486,7 +488,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * 
 	 * @return the {@link NewMap}
 	 */
-	public static NewMap getMap() {
+	public NewMap getMap() {
 		return theMap;
 	}
 

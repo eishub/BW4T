@@ -220,7 +220,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 				g2d.setColor(Color.RED);
 				g2d.setFont(new Font("Arial", Font.BOLD, 16));
 				g2d.drawString(e.getName(),
-						(int) set.scale(e.getLocation().getX()) - g2d.getFontMetrics().stringWidth(e.getName()),
+						(int) set.scale(e.getLocation().getX()) - g2d.getFontMetrics().stringWidth(e.getName())/2,
 						(int) set.scale(e.getLocation().getY()) + set.getEntityNameOffset());
 			}
 		}

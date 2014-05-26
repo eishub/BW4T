@@ -11,7 +11,10 @@ public class MapRenderSettings {
 	private int roomTextOffset = 25;
 	private boolean renderEntityName = false;
 	private int entityNameOffset = 20;
-	private int updateDelay = 100;
+	/**
+	 * We want to achieve roughly 15fps = 1000/15 = 66.6666
+	 */
+	private int updateDelay = 66;
 
 	/**
 	 * Initialize with default values.
