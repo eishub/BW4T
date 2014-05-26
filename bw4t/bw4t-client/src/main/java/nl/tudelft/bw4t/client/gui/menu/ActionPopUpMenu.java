@@ -3,7 +3,7 @@ package nl.tudelft.bw4t.client.gui.menu;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 
-import nl.tudelft.bw4t.client.controller.ClientMapController;
+import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.operations.MapOperations;
 import nl.tudelft.bw4t.controller.MapRenderSettings;
@@ -18,7 +18,7 @@ public class ActionPopUpMenu {
 	public static void buildPopUpMenu(BW4TClientGUI gui) {
 		// Check if pressing on a color in the goal sequence list
 		int startPosX = 0;
-		ClientMapController cmc = gui.getMapController();
+		ClientController cmc = gui.getMapController();
 		MapRenderSettings set = cmc.getRenderSettings();
 		for (BlockColor color : cmc.getSequence()) {
 			Shape colorBounds = new Rectangle2D.Double(startPosX, set.scale(set.getWorldHeight()),

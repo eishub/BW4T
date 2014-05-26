@@ -1,13 +1,16 @@
 package nl.tudelft.bw4t.robots;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.handicap.HandicapInterface;
+import nl.tudelft.bw4t.map.view.Entity;
 import nl.tudelft.bw4t.server.logging.BW4TLogger;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.Corridor;
@@ -626,5 +629,14 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 
 	public void setCapacity(int cap) {
 		capacity = cap;
+	}
+
+	public Entity getView() {
+		Collection<nl.tudelft.bw4t.map.view.Block> bs = new HashSet<>();
+		for (Block block : holding) {
+			bs.add(block.getView());
+		}
+		NdPoint loc = getSpace().getLocation(this);
+		return new Entity(getName(), loc.getX(), loc.getY(), bs);
 	}
 }

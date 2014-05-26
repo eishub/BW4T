@@ -5,7 +5,7 @@ import java.awt.geom.Point2D;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import nl.tudelft.bw4t.client.controller.ClientMapController;
+import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.PutdownActionListener;
@@ -24,7 +24,7 @@ public class MapOperations {
 	 *            , the color that was clicked
 	 */
 	public static void buildPopUpMenuForGoalColor(BlockColor color, BW4TClientGUI gui) {
-		ClientMapController cmc = gui.getMapController();
+		ClientController cmc = gui.getMapController();
 		Block holdingID = cmc.getTheBot().getFirstHolding();
 
 		gui.getjPopupMenu().removeAll();

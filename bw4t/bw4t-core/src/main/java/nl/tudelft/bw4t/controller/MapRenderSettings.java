@@ -10,6 +10,8 @@ public class MapRenderSettings {
 	private int scale = 7;
 	private int roomTextOffset = 25;
 	private boolean renderEntityName = false;
+	private int entityNameOffset = 20;
+	private int updateDelay = 100;
 
 	/**
 	 * Initialize with default values.
@@ -82,12 +84,28 @@ public class MapRenderSettings {
 		this.sequenceBlockSize = sequenceBlockSize;
 	}
 
+	public int getEntityNameOffset() {
+		return entityNameOffset;
+	}
+
+	public void setEntityNameOffset(int entityNameOffset) {
+		this.entityNameOffset = entityNameOffset;
+	}
+
 	public boolean isRenderEntityName() {
 		return renderEntityName;
 	}
 
 	public void setRenderEntityName(boolean renderEntityName) {
 		this.renderEntityName = renderEntityName;
+	}
+
+	public int getUpdateDelay() {
+		return updateDelay;
+	}
+
+	public void setUpdateDelay(int updateDelay) {
+		this.updateDelay = updateDelay;
 	}
 
 	/**

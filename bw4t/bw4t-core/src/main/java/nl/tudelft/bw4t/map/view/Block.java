@@ -37,6 +37,14 @@ public class Block {
 	}
 
 	/**
+	 * @param x the position to set
+	 * @param y the position to set
+	 */
+	public void setPosition(double x, double y) {
+		this.position = new Point2D.Double(x, y);
+	}
+
+	/**
 	 * @return the objectId
 	 */
 	public long getObjectId() {

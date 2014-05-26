@@ -19,26 +19,21 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 
 import nl.tudelft.bw4t.agent.HumanAgent;
 import nl.tudelft.bw4t.client.BW4TClientSettings;
-import nl.tudelft.bw4t.client.controller.ClientMapController;
+import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-import nl.tudelft.bw4t.client.environment.handlers.PerceptsHandler;
-import nl.tudelft.bw4t.client.gui.data.EnvironmentDatabase;
 import nl.tudelft.bw4t.client.gui.listeners.ChatListMouseListener;
 import nl.tudelft.bw4t.client.gui.listeners.TeamListMouseListener;
 import nl.tudelft.bw4t.client.gui.menu.ActionPopUpMenu;
-import nl.tudelft.bw4t.client.gui.operations.ProcessingOperations;
 import nl.tudelft.bw4t.view.MapRenderer;
+import nl.tudelft.bw4t.view.MapRendererInterface;
 
 import org.apache.log4j.Logger;
 
-import eis.exceptions.NoEnvironmentException;
-import eis.exceptions.PerceiveException;
 import eis.iilang.Identifier;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
@@ -67,24 +62,22 @@ import eis.iilang.Percept;
  * {@link RemoteEnvironment#getAllPerceptsFromEntity(String)} at every call, and merged into the regular percepts. So
  * user mouse clicks are stored there until it's time for perceiving.
  */
-public class BW4TClientGUI extends JFrame implements Runnable {
+public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 	private static final long serialVersionUID = 2938950289045953493L;
 
 	/**
 	 * The log4j Logger which displays logs on console
 	 */
 	private static final Logger LOGGER = Logger.getLogger(BW4TClientGUI.class);
+
 	private final BW4TClientGUI that = this;
-	/**
-	 * Data needed for updating the graphical representation of the world
-	 */
-	private EnvironmentDatabase environmentDatabase;
-	public boolean stop;
+	private final ClientController controller;
+	private List<Percept> toBePerformedAction = new LinkedList<>();
+
 	private JPanel buttonPanel;
 	private JTextArea chatSession = new JTextArea(8, 1);
 	private JScrollPane chatPane;
 	private JScrollPane mapRenderer;
-	private final ClientMapController mapController;
 
 	/**
 	 * Private variables only used for human player
@@ -97,8 +90,6 @@ public class BW4TClientGUI extends JFrame implements Runnable {
 	}
 
 	private Point selectedLocation;
-	private boolean goal = false;
-	private final boolean humanPlayer;
 	/**
 	 * Most of the server interfacing goes through the std eis percepts
 	 */
@@ -116,10 +107,8 @@ public class BW4TClientGUI extends JFrame implements Runnable {
 	 */
 	public BW4TClientGUI(RemoteEnvironment env, String entityId, boolean goal, boolean humanPlayer) throws IOException {
 		environment = env;
-		mapController = new ClientMapController(environment.getClient().getMap());
-		init(entityId, humanPlayer);
-		this.setGoal(goal);
-		this.humanPlayer = humanPlayer;
+		controller = new ClientController(environment.getClient().getMap(), entityId);
+		init();
 	}
 
 	/**
@@ -132,10 +121,13 @@ public class BW4TClientGUI extends JFrame implements Runnable {
 	 */
 	public BW4TClientGUI(RemoteEnvironment env, String entityId, HumanAgent humanAgent) throws IOException {
 		environment = env;
-		this.humanAgent = humanAgent;
-		this.humanPlayer = true;
-		mapController = new ClientMapController(environment.getClient().getMap());
-		init(entityId, true);
+		controller = new ClientController(environment.getClient().getMap(), entityId, humanAgent);
+		init();
+	}
+
+	public BW4TClientGUI(ClientController cc) throws IOException {
+		this.controller = cc;
+		init();
 	}
 
 	/**
@@ -145,23 +137,25 @@ public class BW4TClientGUI extends JFrame implements Runnable {
 	 *            , whether a human is supposed to control this panel
 	 * @throws IOException
 	 */
-	private void init(final String entityId, boolean humanPlayer) throws IOException {
+	private void init() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
 			LOGGER.error("Could not properly set the Native Look and Feel for the BW4T Client", e);
 		}
+		LOGGER.debug("Attaching to ClientController");
+		controller.addRenderer(this);
+
 		// Initialize variables
+		String entityId = controller.getTheBot().getName();
 		LOGGER.debug("Initializing agent window for entity: " + entityId);
-		setEnvironmentDatabase(new EnvironmentDatabase());
-		getEnvironmentDatabase().setEntityId(entityId);
 		buttonPanel = new JPanel();
 
 		JButton jButton = new JButton("all");
 		buttonPanel.add(jButton);
 		jButton.addMouseListener(new TeamListMouseListener(this));
 
-		MapRenderer renderer = new MapRenderer(mapController);
+		MapRenderer renderer = new MapRenderer(controller);
 		mapRenderer = new JScrollPane(renderer);
 
 		// Initialize graphics
@@ -173,8 +167,8 @@ public class BW4TClientGUI extends JFrame implements Runnable {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				LOGGER.info("Exit request received from the Window Manager to close Window of entity: " + entityId);
-				setStop(true);
+				LOGGER.info("Exit request received from the Window Manager to close Window of entity: " + controller.getTheBot().getName());
+				controller.removeRenderer(that);
 				try {
 					environment.kill();
 				} catch (Exception e1) {
@@ -207,7 +201,7 @@ public class BW4TClientGUI extends JFrame implements Runnable {
 		add(mainPanel);
 
 		// Initialize mouse listeners for human controller
-		if (humanPlayer) {
+		if (controller.isHuman()) {
 			this.jPopupMenu = new JPopupMenu();
 			renderer.addMouseListener(new MouseAdapter() {
 				@Override
@@ -229,9 +223,6 @@ public class BW4TClientGUI extends JFrame implements Runnable {
 		pack();
 
 		setVisible(true);
-		// Start repainting graphics
-		Thread paintThread = new Thread(this);
-		paintThread.start();
 	}
 
 	/**
@@ -241,54 +232,18 @@ public class BW4TClientGUI extends JFrame implements Runnable {
 	 *            , the Id of the player to be added
 	 */
 	public void addPlayer(String playerId) {
-		if (!playerId.equals(getEnvironmentDatabase().getEntityId())) {
+		if (!playerId.equals(controller.getTheBot().getName())) {
 			JButton button = new JButton(playerId);
 			button.addMouseListener(new TeamListMouseListener(this));
 			buttonPanel.add(button);
 		}
 	}
 
-	/**
-	 * Poll percepts every tick, process them and repaint this panel.
-	 */
 	@Override
-	public void run() {
-		while (!isStop()) {
-			if (humanPlayer) {
-				List<Percept> percepts;
-				try {
-					percepts = PerceptsHandler.getAllPerceptsFromEntity(getEnvironmentDatabase().getEntityId() + "gui",
-							environment);
-					if (percepts != null) {
-						ProcessingOperations.processPercepts(percepts, this);
-						handlePercepts(percepts);
-					}
-				} catch (PerceiveException e) {
-					LOGGER.error("Could not correctly poll the percepts from the environment.", e);
-				} catch (NoEnvironmentException e) {
-					LOGGER.error(
-							"Could not correctly poll the percepts from the environment. No connection could be made to the environment",
-							e);
-					setStop(true);
-				}
-			}
-			SwingUtilities.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					validate();
-					repaint();
-				}
-			});
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				LOGGER.error("The system ignored the interrupted rendering delay.", e);
-			}
-		}
-
+	public void dispose() {
 		LOGGER.info("Stopped the BW4T Client Renderer.");
 		BW4TClientSettings.setWindowParams(getX(), getY());
-		dispose();
+		super.dispose();
 	}
 
 	/**
@@ -298,9 +253,8 @@ public class BW4TClientGUI extends JFrame implements Runnable {
 	 * @return a percept containing the next action to be performed
 	 */
 	public List<Percept> getToBePerformedAction() {
-		List<Percept> toBePerformedActionClone = (LinkedList<Percept>) getEnvironmentDatabase()
-				.getToBePerformedAction().clone();
-		getEnvironmentDatabase().setToBePerformedAction(new LinkedList<Percept>());
+		List<Percept> toBePerformedActionClone = toBePerformedAction;
+		setToBePerformedAction(new LinkedList<Percept>());
 		return toBePerformedActionClone;
 	}
 
@@ -322,48 +276,12 @@ public class BW4TClientGUI extends JFrame implements Runnable {
 		return null;
 	}
 
-	/**
-	 * Adds a label with a corresponding point near which it should be drawn to the label list.
-	 * 
-	 * @param label
-	 *            , the label
-	 * @param point
-	 *            , the point
-	 */
-	public void addLabel(String label, Point point) {
-		getEnvironmentDatabase().getRoomLabels().put(label, point);
-	}
-
 	public JTextArea getChatSession() {
 		return chatSession;
 	}
 
 	public void setChatSession(JTextArea chatSession) {
 		this.chatSession = chatSession;
-	}
-
-	public boolean isStop() {
-		return stop;
-	}
-
-	public void setStop(boolean stop) {
-		this.stop = stop;
-	}
-
-	public EnvironmentDatabase getEnvironmentDatabase() {
-		return environmentDatabase;
-	}
-
-	public void setEnvironmentDatabase(EnvironmentDatabase environmentDatabase) {
-		this.environmentDatabase = environmentDatabase;
-	}
-
-	public boolean isGoal() {
-		return goal;
-	}
-
-	public void setGoal(boolean goal) {
-		this.goal = goal;
 	}
 
 	public HumanAgent getHumanAgent() {
@@ -382,14 +300,18 @@ public class BW4TClientGUI extends JFrame implements Runnable {
 		this.selectedLocation = new Point(x, y);
 	}
 
+	public void setToBePerformedAction(List<Percept> toBePerformedAction) {
+		this.toBePerformedAction = toBePerformedAction;
+	}
+
 	public void handlePercepts(List<Percept> percepts) {
-		mapController.handlePercepts(percepts);
+		controller.handlePercepts(percepts);
 	}
 
 	/**
 	 * @return the mapController
 	 */
-	public ClientMapController getMapController() {
-		return mapController;
+	public ClientController getMapController() {
+		return controller;
 	}
 }
