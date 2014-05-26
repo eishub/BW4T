@@ -1,7 +1,9 @@
 package nl.tudelft.bw4t.scenariogui.gui.botstore;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.text.DecimalFormat;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
@@ -11,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JComboBox;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import nl.tudelft.bw4t.scenarioeditor.BotConfig;
@@ -31,20 +34,22 @@ public class BotEditorPanel extends JPanel {
 	private JPanel botCheckables = new JPanel();
 	private JPanel botSliders = new JPanel();
 	
-	private JComboBox botTypeSelector = new JComboBox();
-	
 	private JButton applyButton = new JButton("Apply");
 	private JButton resetButton = new JButton("Reset");
 	private JButton cancelButton = new JButton("Cancel");
 	
-	private JCheckBox gripperCheckbox = new JCheckBox("Gripper Handicap");
+	private JTextField botNameTextField = new JTextField(20);
+	
+	private JCheckBox gripperCheckbox = new JCheckBox("Gripper Disabled");
 	private JCheckBox colorblindCheckbox = new JCheckBox("Color Blind Handicap");
-	private JCheckBox movespeedCheckbox = new JCheckBox("Move Speed Handicap");
-	private JCheckBox sizeoverloadCheckbox = new JCheckBox("Size Overload Handicap");
+	private JCheckBox customSizeCheckbox = new JCheckBox("Custom Bot Size");
+	private JCheckBox movespeedCheckbox = new JCheckBox("Custom Bot Speed");
+	private JCheckBox batteryEnabledCheckbox = new JCheckBox("Battery Capacity enabled");
 	
 	private JSlider sizeSlider = new JSlider();
 	private JSlider speedSlider = new JSlider();
 	private JSlider batterySlider = new JSlider();
+	private JSlider numberOfGrippersSlider = new JSlider();
 
 	private JLabel batteryUseValueLabel = new JLabel("0.9");
 	
@@ -68,22 +73,17 @@ public class BotEditorPanel extends JPanel {
 	 * create the checkables panel
 	 */
 	public void createBotCheckablesPanel(){
-		botCheckables.setLayout(new GridLayout(5,1));
+		botCheckables.setLayout(new GridLayout(4,1));
 		JLabel checkablesLabel = new JLabel("Checkables");
-		JLabel batteryUseLabel = new JLabel("Average Battery use:");
-		JLabel perTickLabel = new JLabel("per tick");
+		JLabel handicapsLabel = new JLabel("Handicaps:");
+		JLabel restrictionsLabel = new JLabel("Other options:");
+		JLabel emptyLabel = new JLabel("\n");
 		
 		checkablesLabel.setFont(new Font("Tahoma",Font.PLAIN,24));
-		batteryUseLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JPanel buttonPanel = new JPanel();
-		JPanel batteryCapPanel = new JPanel();
 		JPanel checkablesPanel = new JPanel();
 		JPanel empty = new JPanel();
-		
-		batteryCapPanel.add(batteryUseLabel);
-		batteryCapPanel.add(batteryUseValueLabel);
-		batteryCapPanel.add(perTickLabel);
 		
 		buttonPanel.add(applyButton);
 		buttonPanel.add(resetButton);
@@ -91,13 +91,16 @@ public class BotEditorPanel extends JPanel {
 		
 		botCheckables.add(checkablesLabel);
 		checkablesPanel.setLayout(new BoxLayout(checkablesPanel, BoxLayout.PAGE_AXIS));
+		checkablesPanel.add(handicapsLabel);
 		checkablesPanel.add(gripperCheckbox);
 		checkablesPanel.add(colorblindCheckbox);
+		checkablesPanel.add(emptyLabel);
+		checkablesPanel.add(restrictionsLabel);
+		checkablesPanel.add(customSizeCheckbox);
 		checkablesPanel.add(movespeedCheckbox);
-		checkablesPanel.add(sizeoverloadCheckbox);
+		checkablesPanel.add(batteryEnabledCheckbox);
 		botCheckables.add(checkablesPanel);
 		botCheckables.add(empty);
-		botCheckables.add(batteryCapPanel);
 		botCheckables.add(buttonPanel);
 		
 	}
@@ -105,13 +108,21 @@ public class BotEditorPanel extends JPanel {
 	 * creates the botSlidersPanel
 	 */
 	public void createBotSlidersPanel(){
-		botSliders.setLayout(new GridLayout(8,1));
-		JLabel botTitleLabel = new JLabel("Bot X");
-		botTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		botTitleLabel.setFont(new java.awt.Font("Tahoma", 0, 36));
+		botSliders.setLayout(new GridLayout(10,1));
 		
-		botTypeSelector.setModel(new DefaultComboBoxModel(new String[]{"Agent", "Human"}));
+		JLabel batteryUseLabel = new JLabel("Battery use:");
+		JLabel perTickLabel = new JLabel("per tick (minuites??)");
+		batteryUseLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
+		JPanel batteryCapPanel = new JPanel();
+		
+		batteryCapPanel.add(batteryUseLabel);
+		batteryCapPanel.add(batteryUseValueLabel);
+		batteryCapPanel.add(perTickLabel);
+		
+		JLabel numberOfGrippersLabel = new JLabel("Number of Grippers");
+		numberOfGrippersLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		numberOfGrippersLabel.setToolTipText("default is 1");
 		JLabel sizeLabel = new JLabel("Bot Size");
 		sizeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		sizeLabel.setToolTipText("default is 2");
@@ -124,20 +135,31 @@ public class BotEditorPanel extends JPanel {
 		
 		createSliders();
 		
-		botSliders.add(botTitleLabel);
-		botSliders.add(botTypeSelector);
+		botSliders.add(botNameTextField);
+		botSliders.add(numberOfGrippersLabel);
+		botSliders.add(numberOfGrippersSlider);
 		botSliders.add(sizeLabel);
 		botSliders.add(sizeSlider);
 		botSliders.add(speedLabel);
 		botSliders.add(speedSlider);
 		botSliders.add(batteryCapacity);
 		botSliders.add(batterySlider);
+		botSliders.add(batteryCapPanel);
 	}
 	
 	/**
 	 * sets the default settings for the sliders
 	 */
 	public void createSliders(){
+		numberOfGrippersSlider.setMajorTickSpacing(1);
+		numberOfGrippersSlider.setMaximum(5);
+		numberOfGrippersSlider.setMinimum(1);
+		numberOfGrippersSlider.setPaintTicks(true);
+		numberOfGrippersSlider.setPaintLabels(true);
+		numberOfGrippersSlider.setSnapToTicks(true);
+		numberOfGrippersSlider.setValue(1);
+		numberOfGrippersSlider.setValueIsAdjusting(true);
+		
 		sizeSlider.setMajorTickSpacing(1);
 		sizeSlider.setMaximum(5);
 		sizeSlider.setMinimum(1);
@@ -147,9 +169,9 @@ public class BotEditorPanel extends JPanel {
 		sizeSlider.setValue(2);
 		sizeSlider.setValueIsAdjusting(true);
 		
-		speedSlider.setMajorTickSpacing(25);
-		speedSlider.setMaximum(200);
-		speedSlider.setMinimum(0);
+		speedSlider.setMajorTickSpacing(10);
+		speedSlider.setMaximum(140);
+		speedSlider.setMinimum(70);
         speedSlider.setPaintLabels(true);
         speedSlider.setPaintTicks(true);
         speedSlider.setSnapToTicks(true);
@@ -185,9 +207,8 @@ public class BotEditorPanel extends JPanel {
         batterySlider.setValue(0);
         gripperCheckbox.setSelected(false);
         colorblindCheckbox.setSelected(false);
-        sizeoverloadCheckbox.setSelected(false);
+        customSizeCheckbox.setSelected(false);
         movespeedCheckbox.setSelected(false);
-        botTypeSelector.setSelectedIndex(0);
         calculateBatteryUse();
 	}
 	
@@ -208,7 +229,7 @@ public class BotEditorPanel extends JPanel {
 		int speed = speedSlider.getValue();
     	int size = sizeSlider.getValue();
     	// Calculate average battery use result
-    	double res = 0.01*speed + 0.2*size;
+    	double res = 0.002*size + 0.000025*speed;
     	// Set label
     	batteryUseValueLabel.setText(String.valueOf(res));
 	}
@@ -241,14 +262,6 @@ public class BotEditorPanel extends JPanel {
 		this.cancelButton = cancelButton;
 	}
 
-	public JComboBox getBotTypeSelector() {
-		return botTypeSelector;
-	}
-
-	public void setBotTypeSelector(JComboBox botTypeSelector) {
-		this.botTypeSelector = botTypeSelector;
-	}
-
 	public JCheckBox getGripperCheckbox() {
 		return gripperCheckbox;
 	}
@@ -274,11 +287,11 @@ public class BotEditorPanel extends JPanel {
 	}
 
 	public JCheckBox getsizeoverloadCheckbox() {
-		return sizeoverloadCheckbox;
+		return customSizeCheckbox;
 	}
 
 	public void setsizeoverloadCheckbox(JCheckBox sizeoverloadCheckbox) {
-		this.sizeoverloadCheckbox = sizeoverloadCheckbox;
+		this.customSizeCheckbox = sizeoverloadCheckbox;
 	}
 
 	public JSlider getSizeSlider() {
@@ -323,7 +336,7 @@ public class BotEditorPanel extends JPanel {
 		dataObject.setColorBlindHandicap(colorblindCheckbox.isEnabled());
 		dataObject.setGripperHandicap(gripperCheckbox.isEnabled());
 		dataObject.setMoveSpeedHandicap(movespeedCheckbox.isEnabled());
-		dataObject.setSizeOverloadHandicap(sizeoverloadCheckbox.isEnabled());
+		dataObject.setSizeOverloadHandicap(customSizeCheckbox.isEnabled());
 	}
 	
 	public BotConfig getDataObject() {
