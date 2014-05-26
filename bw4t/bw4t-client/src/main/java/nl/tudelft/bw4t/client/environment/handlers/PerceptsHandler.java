@@ -7,7 +7,6 @@ import java.util.List;
 import nl.tudelft.bw4t.client.BW4TClient;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
-import nl.tudelft.bw4t.client.gui.operations.ProcessingOperations;
 import nl.tudelft.bw4t.client.startup.InitParam;
 import eis.exceptions.EntityException;
 import eis.exceptions.PerceiveException;
@@ -38,7 +37,7 @@ public class PerceptsHandler {
 			boolean guiEntity = entity.contains("gui");
 
 			if (remoteEnvironment.isConnectedToGoal() && !guiEntity && humanType) {
-				return clientEntity.getToBePerformedAction();
+				return clientEntity.getController().getToBePerformedAction();
 			} else if (guiEntity && humanType) {
 				return client.getAllPerceptsFromEntity(entity.replace("gui", ""));
 			} else if (runningGUI) {
@@ -47,9 +46,7 @@ public class PerceptsHandler {
 				}
 				/** Get the percepts and process them in the GUI */
 				List<Percept> percepts = client.getAllPerceptsFromEntity(entity);
-				if (percepts != null) {
-					ProcessingOperations.processPercepts(percepts, clientEntity);
-				}
+				//FIXME update the Controllers with the new percepts
 				return percepts;
 			}
 			return client.getAllPerceptsFromEntity(entity);

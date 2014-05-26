@@ -39,8 +39,7 @@ public class Block extends BoundedMoveableObject {
 		this.colorId = colorId;
 		this.color = colorId.getColor();
 		setSize(SIZE, SIZE);
-		this.view = new nl.tudelft.bw4t.map.view.Block(getId(), getColorId(), new Point2D.Double(getLocation().getX(),
-				getLocation().getY()));
+		this.view = new nl.tudelft.bw4t.map.view.Block(getId(), getColorId(), new Point2D.Double());
 	}
 
 	/**
@@ -77,7 +76,9 @@ public class Block extends BoundedMoveableObject {
 		else {
 			p = super.getLocation();
 		}
-		this.view.setPosition(p.getX(), p.getY());
+		if (p != null) {
+			this.view.setPosition(p.getX(), p.getY());
+		}
 		return p;
 	}
 

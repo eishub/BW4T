@@ -493,12 +493,10 @@ public class RobotEntity implements RobotEntityInt {
 			throw new ActException("translating of message failed:" + message, e);
 		}
 
-		// Send to all other entities (except self)
+		// Send to all other entities 
 		if (receiver.equals("all")) {
 			for (String entity : BW4TEnvironment.getInstance().getEntities()) {
-				if (!entity.equals(ourRobot.getName())) {
 					BW4TEnvironment.getInstance().performClientAction(entity, new Action("receiveMessage", parameters));
-				}
 			}
 		}
 		// Send to a single entity

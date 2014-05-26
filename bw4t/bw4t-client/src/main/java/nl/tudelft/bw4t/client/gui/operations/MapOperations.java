@@ -24,7 +24,7 @@ public class MapOperations {
 	 *            , the color that was clicked
 	 */
 	public static void buildPopUpMenuForGoalColor(BlockColor color, BW4TClientGUI gui) {
-		ClientController cmc = gui.getMapController();
+		ClientController cmc = gui.getController();
 		Block holdingID = cmc.getTheBot().getFirstHolding();
 
 		gui.getjPopupMenu().removeAll();
@@ -37,7 +37,7 @@ public class MapOperations {
 
 		if (holdingID != null) {
 			menuItem = new JMenuItem("Put down block");
-			menuItem.addActionListener(new PutdownActionListener(gui));
+			menuItem.addActionListener(new PutdownActionListener(gui.getController()));
 			gui.getjPopupMenu().add(menuItem);
 		}
 
@@ -64,7 +64,7 @@ public class MapOperations {
 			for (Zone room : cmc.getRooms()) {
 				menuItem = new JMenuItem(room.getName());
 				menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(
-						MessageType.hasColorFromRoom, room.getName(), color.getName(), null), gui));
+						MessageType.hasColorFromRoom, room.getName(), color.getName(), null), gui.getController()));
 				submenu.add(menuItem);
 			}
 		}
@@ -91,12 +91,12 @@ public class MapOperations {
 	 *            , the box that should be checked
 	 * @return true if close to the box, false if not
 	 */
-	public static boolean closeToBox(Block boxID, BW4TClientGUI data) {
+	public static boolean closeToBox(Block boxID, ClientController data) {
 		double minX = boxID.getPosition().getX() - 0.5;
 		double maxX = boxID.getPosition().getX() + 0.5;
 		double minY = boxID.getPosition().getY() - 0.5;
 		double maxY = boxID.getPosition().getY() + 0.5;
-		Point2D loc = data.getMapController().getTheBot().getLocation();
+		Point2D loc = data.getTheBot().getLocation();
 		return (loc.getX() > minX) && (loc.getX() < maxX) && (loc.getY() > minY) && (loc.getY() < maxY);
 	}
 }

@@ -7,12 +7,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -29,6 +29,7 @@ import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.listeners.ChatListMouseListener;
 import nl.tudelft.bw4t.client.gui.listeners.TeamListMouseListener;
 import nl.tudelft.bw4t.client.gui.menu.ActionPopUpMenu;
+import nl.tudelft.bw4t.client.gui.menu.ComboAgentModel;
 import nl.tudelft.bw4t.view.MapRenderer;
 import nl.tudelft.bw4t.view.MapRendererInterface;
 
@@ -62,7 +63,7 @@ import eis.iilang.Percept;
  * {@link RemoteEnvironment#getAllPerceptsFromEntity(String)} at every call, and merged into the regular percepts. So
  * user mouse clicks are stored there until it's time for perceiving.
  */
-public class BW4TClientGUI extends JFrame implements MapRendererInterface {
+public class BW4TClientGUI extends JFrame implements MapRendererInterface, ClientGUI {
 	private static final long serialVersionUID = 2938950289045953493L;
 
 	/**
@@ -72,21 +73,22 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 
 	private final BW4TClientGUI that = this;
 	private final ClientController controller;
-	private List<Percept> toBePerformedAction = new LinkedList<>();
 
 	private JPanel buttonPanel;
 	private JTextArea chatSession = new JTextArea(8, 1);
 	private JScrollPane chatPane;
 	private JScrollPane mapRenderer;
 
-	/**
-	 * Private variables only used for human player
-	 */
-	private HumanAgent humanAgent;
+	private JComboBox<ComboAgentModel> agentSelector;
+
 	private JPopupMenu jPopupMenu;
 
 	public JPopupMenu getjPopupMenu() {
 		return jPopupMenu;
+	}
+
+	public JComboBox<ComboAgentModel> getAgentSelector() {
+		return agentSelector;
 	}
 
 	private Point selectedLocation;
@@ -149,25 +151,18 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 		// Initialize variables
 		String entityId = controller.getTheBot().getName();
 		LOGGER.debug("Initializing agent window for entity: " + entityId);
-		buttonPanel = new JPanel();
-
-		JButton jButton = new JButton("all");
-		buttonPanel.add(jButton);
-		jButton.addMouseListener(new TeamListMouseListener(this));
-
-		MapRenderer renderer = new MapRenderer(controller);
-		mapRenderer = new JScrollPane(renderer);
 
 		// Initialize graphics
 
-		setName("BW4T - " + entityId);
+		setTitle("BW4T - " + entityId);
 		setLocation(BW4TClientSettings.getX(), BW4TClientSettings.getY());
 		setLocation(BW4TClientSettings.getX(), BW4TClientSettings.getY());
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				LOGGER.info("Exit request received from the Window Manager to close Window of entity: " + controller.getTheBot().getName());
+				LOGGER.info("Exit request received from the Window Manager to close Window of entity: "
+						+ controller.getTheBot().getName());
 				controller.removeRenderer(that);
 				try {
 					environment.kill();
@@ -178,6 +173,19 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 		});
 
 		JPanel mainPanel = new JPanel(new BorderLayout());
+
+		buttonPanel = new JPanel();
+
+		JLabel jLabelMessage = new JLabel("Send message to:");
+		JButton jButton = new JButton("Choose Message");
+		buttonPanel.add(jLabelMessage);
+		agentSelector = new JComboBox<ComboAgentModel>(new ComboAgentModel(this));
+		buttonPanel.add(agentSelector);
+		buttonPanel.add(jButton);
+		jButton.addMouseListener(new TeamListMouseListener(this));
+
+		MapRenderer renderer = new MapRenderer(controller);
+		mapRenderer = new JScrollPane(renderer);
 
 		// create short chat history window
 		JPanel chatPanel = new JPanel();
@@ -246,16 +254,18 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 		super.dispose();
 	}
 
-	/**
-	 * Method used for returning the next action that a human player wants the bot to perform. This is received by the
-	 * GOAL human bot, and then forwarded to the entity on the server side.
-	 * 
-	 * @return a percept containing the next action to be performed
-	 */
-	public List<Percept> getToBePerformedAction() {
-		List<Percept> toBePerformedActionClone = toBePerformedAction;
-		setToBePerformedAction(new LinkedList<Percept>());
-		return toBePerformedActionClone;
+	@Override
+	public void update() {
+		getChatSession().setText(join(getController().getChatHistory(), "\n"));
+		getChatSession().setCaretPosition(getChatSession().getDocument().getLength());
+	}
+
+	private String join(Iterable<String> chatHistory, String filler) {
+		StringBuilder sb = new StringBuilder();
+		for (String string : chatHistory) {
+			sb.append(string).append(filler);
+		}
+		return sb.toString();
 	}
 
 	/**
@@ -284,14 +294,6 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 		this.chatSession = chatSession;
 	}
 
-	public HumanAgent getHumanAgent() {
-		return humanAgent;
-	}
-
-	public void setHumanAgent(HumanAgent humanAgent) {
-		this.humanAgent = humanAgent;
-	}
-
 	public Point getSelectedLocation() {
 		return selectedLocation;
 	}
@@ -300,18 +302,10 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 		this.selectedLocation = new Point(x, y);
 	}
 
-	public void setToBePerformedAction(List<Percept> toBePerformedAction) {
-		this.toBePerformedAction = toBePerformedAction;
-	}
-
-	public void handlePercepts(List<Percept> percepts) {
-		controller.handlePercepts(percepts);
-	}
-
 	/**
 	 * @return the mapController
 	 */
-	public ClientController getMapController() {
+	public ClientController getController() {
 		return controller;
 	}
 }

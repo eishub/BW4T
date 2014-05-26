@@ -18,7 +18,7 @@ public class ActionPopUpMenu {
 	public static void buildPopUpMenu(BW4TClientGUI gui) {
 		// Check if pressing on a color in the goal sequence list
 		int startPosX = 0;
-		ClientController cmc = gui.getMapController();
+		ClientController cmc = gui.getController();
 		MapRenderSettings set = cmc.getRenderSettings();
 		for (BlockColor color : cmc.getSequence()) {
 			Shape colorBounds = new Rectangle2D.Double(startPosX, set.scale(set.getWorldHeight()),
@@ -40,7 +40,7 @@ public class ActionPopUpMenu {
 
 					Shape boxBoundaries = set.transformCenterRectangle(new Rectangle2D.Double(box.getPosition().getX(), box.getPosition().getY(), Block.BLOCK_SIZE, Block.BLOCK_SIZE));
 					if (boxBoundaries.contains(gui.getSelectedLocation())) {
-						if (MapOperations.closeToBox(box, gui)) {
+						if (MapOperations.closeToBox(box, gui.getController())) {
 							RoomMenus.buildPopUpMenuForBeingAtBlock(box, room, gui);
 						}
 						else {
