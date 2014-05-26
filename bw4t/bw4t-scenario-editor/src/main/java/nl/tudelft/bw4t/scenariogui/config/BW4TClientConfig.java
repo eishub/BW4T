@@ -72,7 +72,7 @@ public class BW4TClientConfig {
      */
     @XmlElementWrapper(name = "bots")
     @XmlElement(name = "bot")
-    private List<BotConfig> bots = new ArrayList<BotConfig>();
+    private List<BotConfig> bots;
 
     /**
      * An empty <code>BW4TClientConfig</code> object.
@@ -101,6 +101,7 @@ public class BW4TClientConfig {
 //        TODO: read out bot panel and add each BotConfig to the list of bots
 //        botPanel.getTable().;
         this.outputFile = newOutputFile;
+        bots = mainPanel.getBotConfig();
     }
 
     /**
