@@ -1,8 +1,6 @@
 package nl.tudelft.bw4t.scenariogui.config;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
-import nl.tudelft.bw4t.scenarioeditor.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
@@ -14,7 +12,10 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  * @author Nick Feddes
  *
  */
-public class BW4TClientConfigIntegration {
+public final class BW4TClientConfigIntegration {
+    
+    /** Prevents this class from being instantiated. */
+    private BW4TClientConfigIntegration() { }
     
     /**
      * A <code>BW4TClientConfig</code> object holding the configuration.
