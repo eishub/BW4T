@@ -20,7 +20,7 @@ public class PlayerMenu {
 	 *            , the playerId that the request should be sent to
 	 */
 	public static void buildPopUpMenuForRequests(String playerId, BW4TClientGUI gui) {
-		ClientController cmc = gui.getMapController();
+		ClientController cmc = gui.getController();
 		gui.getjPopupMenu().removeAll();
 		BasicMenuOperations.addSectionTitleToPopupMenu("Request:", gui.getjPopupMenu());
 
@@ -37,7 +37,7 @@ public class PlayerMenu {
 		for (Zone room : cmc.getRooms()) {
 			JMenuItem menuItem = new JMenuItem(room.getName());
 			menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.goToRoom, room.getName(),
-					null, receiver), gui));
+					null, receiver), gui.getController()));
 			submenu.add(menuItem);
 		}
 
@@ -46,7 +46,7 @@ public class PlayerMenu {
 		for (String color : ColorTranslator.getAllColors()) {
 			JMenuItem menuItem = new JMenuItem(color);
 			menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.findColor, null,
-					color, receiver), gui));
+					color, receiver), gui.getController()));
 			submenu.add(menuItem);
 		}
 
@@ -60,7 +60,7 @@ public class PlayerMenu {
 			for (Zone room : cmc.getRooms()) {
 				JMenuItem menuItem = new JMenuItem(room.getName());
 				menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(
-						MessageType.getColorFromRoom, room.getName(), color, receiver), gui));
+						MessageType.getColorFromRoom, room.getName(), color, receiver), gui.getController()));
 				submenu2.add(menuItem);
 			}
 		}

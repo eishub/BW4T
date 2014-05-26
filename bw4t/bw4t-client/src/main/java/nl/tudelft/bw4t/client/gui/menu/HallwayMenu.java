@@ -24,23 +24,23 @@ public class HallwayMenu {
 	 */
 	public static void buildPopUpMenuForHallway(BW4TClientGUI gui) {
 		gui.getjPopupMenu().removeAll();
-		ClientController cmc = gui.getMapController();
+		ClientController cmc = gui.getController();
 		MapRenderSettings set = cmc.getRenderSettings();
 
 		Block holdingID = cmc.getTheBot().getFirstHolding();
-		Color entityColor = gui.getEnvironmentDatabase().getEntityColor();
+		Color entityColor = cmc.getTheBot().getColor();
 
 		// Robot commands
 		BasicMenuOperations.addSectionTitleToPopupMenu("Command my robot to: ", gui.getjPopupMenu());
 
 		JMenuItem menuItem = new JMenuItem("Go to here");
 		menuItem.addActionListener(new GotoPositionActionListener(new Point(gui.getSelectedLocation().x
-				/ set.getScale(), gui.getSelectedLocation().y / set.getScale()), gui));
+				/ set.getScale(), gui.getSelectedLocation().y / set.getScale()), gui.getController()));
 		gui.getjPopupMenu().add(menuItem);
 
 		if (holdingID != null) {
 			menuItem = new JMenuItem("Put down box");
-			menuItem.addActionListener(new PutdownActionListener(gui));
+			menuItem.addActionListener(new PutdownActionListener(gui.getController()));
 			gui.getjPopupMenu().add(menuItem);
 		}
 
@@ -68,7 +68,7 @@ public class HallwayMenu {
 			for (Zone roomInfo : cmc.getRooms()) {
 				menuItem = new JMenuItem(roomInfo.getName());
 				menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.hasColor,
-						roomInfo.getName(), ColorTranslator.translate2ColorString(entityColor), null), gui));
+						roomInfo.getName(), ColorTranslator.translate2ColorString(entityColor), null), gui.getController()));
 				submenu.add(menuItem);
 			}
 		}

@@ -11,6 +11,7 @@ import java.util.Set;
 
 import nl.tudelft.bw4t.agent.HumanAgent;
 import nl.tudelft.bw4t.client.environment.handlers.PerceptsHandler;
+import nl.tudelft.bw4t.client.gui.ClientGUI;
 import nl.tudelft.bw4t.client.startup.Launcher;
 import nl.tudelft.bw4t.controller.AbstractMapController;
 import nl.tudelft.bw4t.map.BlockColor;
@@ -44,10 +45,14 @@ public class ClientController extends AbstractMapController {
 	private final Map<Long, Block> allBlocks = new HashMap<>();
 	private final List<BlockColor> sequence = new LinkedList<>();
 
-	private Set<String> otherPlayers;
+	private final Set<String> otherPlayers = new HashSet<>();
 	private final List<String> chatHistory = new LinkedList<>();
 
 	private HumanAgent humanAgent;
+
+	private List<Percept> toBePerformedAction = new LinkedList<>();
+
+	private boolean updateNextFrame = true;
 
 	public ClientController(NewMap map, String entityId) {
 		super(map);
@@ -103,7 +108,7 @@ public class ClientController extends AbstractMapController {
 		return otherPlayers;
 	}
 
-	private List<String> getChatHistory() {
+	public List<String> getChatHistory() {
 		return chatHistory;
 	}
 
@@ -113,6 +118,22 @@ public class ClientController extends AbstractMapController {
 
 	public HumanAgent getHumanAgent() {
 		return humanAgent;
+	}
+
+	public void setToBePerformedAction(List<Percept> toBePerformedAction) {
+		this.toBePerformedAction = toBePerformedAction;
+	}
+
+	/**
+	 * Method used for returning the next action that a human player wants the bot to perform. This is received by the
+	 * GOAL human bot, and then forwarded to the entity on the server side.
+	 * 
+	 * @return a percept containing the next action to be performed
+	 */
+	public List<Percept> getToBePerformedAction() {
+		List<Percept> toBePerformedActionClone = toBePerformedAction;
+		setToBePerformedAction(new LinkedList<Percept>());
+		return toBePerformedActionClone;
 	}
 
 	private void addOccupiedRoom(String name) {
@@ -219,6 +240,8 @@ public class ClientController extends AbstractMapController {
 				String message = ((Identifier) iterator.next()).getValue();
 
 				getChatHistory().add(sender + ": " + message);
+
+				updateNextFrame = true;
 			}
 		}
 
@@ -243,10 +266,17 @@ public class ClientController extends AbstractMapController {
 			setRunning(false);
 		}
 		super.run();
+		updateNextFrame = false;
 	}
 
 	@Override
 	protected void updateRenderer(MapRendererInterface mri) {
+		if (updateNextFrame && mri instanceof ClientGUI) {
+			ClientGUI gui = (ClientGUI) mri;
+			if (gui != null) {
+				gui.update();
+			}
+		}
 		mri.validate();
 		mri.repaint();
 	}

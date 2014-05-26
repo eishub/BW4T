@@ -391,7 +391,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
 	public void kill() throws ManagementException {
 		for (BW4TClientGUI renderer : getEntityToGUI().values()) {
 			if (renderer != null) {
-				renderer.setStop(true);
+				//FIXME renderer.setStop(true);
 			}
 		}
 		// copy list, the localAgents list is going to be changes by removing

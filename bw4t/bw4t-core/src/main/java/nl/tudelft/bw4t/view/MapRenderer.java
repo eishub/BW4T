@@ -35,11 +35,13 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 		return controller;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see nl.tudelft.bw4t.view.MapRendererInterface#setController(nl.tudelft.bw4t.controller.MapController)
 	 */
 	public void setController(MapController controller) {
-		if(this.controller != null){
+		if (this.controller != null) {
 			this.controller.removeRenderer(this);
 		}
 		this.controller = controller;
@@ -211,7 +213,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 		for (Entity e : getController().getVisibleEntities()) {
 			g2d.setColor(e.getColor());
 			Point2D loc = e.getLocation();
-			g2d.fill(set.transformRectangle(new Rectangle2D.Double(loc.getX(), loc.getY(), Entity.ROBOT_SIZE,
+			g2d.fill(set.transformCenterRectangle(new Rectangle2D.Double(loc.getX(), loc.getY(), Entity.ROBOT_SIZE,
 					Entity.ROBOT_SIZE)));
 
 			if (set.isRenderEntityName()) {
