@@ -16,7 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import nl.tudelft.bw4t.scenarioeditor.BotConfig;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
 
 /**
  * BotEditorPanel which serves as the content pane for the BotEditor frame

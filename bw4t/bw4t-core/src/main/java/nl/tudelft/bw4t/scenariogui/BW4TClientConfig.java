@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenarioeditor;
+package nl.tudelft.bw4t.scenariogui;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
