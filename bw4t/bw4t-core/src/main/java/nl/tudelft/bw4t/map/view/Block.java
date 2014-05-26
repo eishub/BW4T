@@ -8,9 +8,12 @@ public class Block {
 	/** The width and height of the blocks */
 	public final static int BLOCK_SIZE = 1;
 
-	private final long objectId;
-	private final BlockColor color;
-	private Point2D position;
+	private long objectId = 0;
+	private BlockColor color = null;
+	private Point2D position = new Point2D.Double();
+	public Block() {
+		super();
+	}
 
 	public Block(long objectId, BlockColor color, Point2D position) {
 		super();
@@ -41,9 +44,20 @@ public class Block {
 	}
 
 	/**
+	 * @param id the objectId
+	 */
+	public void setObjectId(long id) {
+		objectId = id;
+	}
+
+	/**
 	 * @return the color
 	 */
 	public BlockColor getColor() {
 		return color;
+	}
+
+	public void setColor(BlockColor c) {
+		color = c;
 	}
 }

@@ -22,6 +22,7 @@ public class MapRendererTest extends JFrame {
 	MapController mapController;
 
 	public MapRendererTest() throws JAXBException {
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		InputStream inputStream = MapRendererTest.class.getResourceAsStream("/Rainbow");
 		map = NewMap.create(inputStream);
 		mapController = new TestMapController(map);

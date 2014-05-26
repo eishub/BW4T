@@ -1,11 +1,9 @@
 package nl.tudelft.bw4t.client.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -25,9 +23,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 
-import nl.tudelft.bw4t.RendererMapLoader;
 import nl.tudelft.bw4t.agent.HumanAgent;
 import nl.tudelft.bw4t.client.BW4TClientSettings;
+import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.environment.handlers.PerceptsHandler;
 import nl.tudelft.bw4t.client.gui.data.EnvironmentDatabase;
@@ -35,6 +33,7 @@ import nl.tudelft.bw4t.client.gui.listeners.ChatListMouseListener;
 import nl.tudelft.bw4t.client.gui.listeners.TeamListMouseListener;
 import nl.tudelft.bw4t.client.gui.menu.ActionPopUpMenu;
 import nl.tudelft.bw4t.client.gui.operations.ProcessingOperations;
+import nl.tudelft.bw4t.view.MapRenderer;
 
 import org.apache.log4j.Logger;
 
@@ -45,14 +44,12 @@ import eis.iilang.Parameter;
 import eis.iilang.Percept;
 
 /**
- * Render the current state of the world at a fixed rate (10 times per second,
- * see run()) for a client. It connects to the given {@link RemoteEnvironment}
- * on behalf of a given eis entityId. This allows fetching the latest percepts
- * and uses these percepts to track the world state.
+ * Render the current state of the world at a fixed rate (10 times per second, see run()) for a client. It connects to
+ * the given {@link RemoteEnvironment} on behalf of a given eis entityId. This allows fetching the latest percepts and
+ * uses these percepts to track the world state.
  * <p>
- * It is possible to set up this renderer as a human GUI as well. In that case,
- * a human can click with the mouse in the GUI. His actions create GOAL
- * percepts:
+ * It is possible to set up this renderer as a human GUI as well. In that case, a human can click with the mouse in the
+ * GUI. His actions create GOAL percepts:
  * <ul>
  * <li>sendMessage("all",Message). User asked to send given Message.
  * <li>goToBlock(Id). User asked to go to given block id (Id is a numeral).
@@ -62,33 +59,33 @@ import eis.iilang.Percept;
  * <li>putDown(). User asked to do the put down action.
  * </ul>
  * <p>
- * {@link RemoteEnvironment#getAllPerceptsFromEntity(String)} is called by the
- * {@link #run()} repaint scheduler only if we are representing a HumanPlayer.
- * Otherwise the getAllPercepts is done by the agent and we assume
- * processPercepts is called by the {@link RemoteEnvironment} when the agent
- * asked for getAllPercepts.
+ * {@link RemoteEnvironment#getAllPerceptsFromEntity(String)} is called by the {@link #run()} repaint scheduler only if
+ * we are representing a HumanPlayer. Otherwise the getAllPercepts is done by the agent and we assume processPercepts is
+ * called by the {@link RemoteEnvironment} when the agent asked for getAllPercepts.
  * <p>
  * The BW4TRenderer has a list {@link #toBePerformedAction} which is polled by
- * {@link RemoteEnvironment#getAllPerceptsFromEntity(String)} at every call, and
- * merged into the regular percepts. So user mouse clicks are stored there until
- * it's time for perceiving.
+ * {@link RemoteEnvironment#getAllPerceptsFromEntity(String)} at every call, and merged into the regular percepts. So
+ * user mouse clicks are stored there until it's time for perceiving.
  */
-public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
+public class BW4TClientGUI extends JFrame implements Runnable {
 	private static final long serialVersionUID = 2938950289045953493L;
 
 	/**
 	 * The log4j Logger which displays logs on console
 	 */
 	private static final Logger LOGGER = Logger.getLogger(BW4TClientGUI.class);
+	private final BW4TClientGUI that = this;
 	/**
 	 * Data needed for updating the graphical representation of the world
 	 */
 	private EnvironmentDatabase environmentDatabase;
 	public boolean stop;
-	private JFrame jFrame;
 	private JPanel buttonPanel;
 	private JTextArea chatSession = new JTextArea(8, 1);
 	private JScrollPane chatPane;
+	private JScrollPane mapRenderer;
+	private final ClientMapController mapController;
+
 	/**
 	 * Private variables only used for human player
 	 */
@@ -99,7 +96,7 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
 		return jPopupMenu;
 	}
 
-	private Integer[] selectedLocation;
+	private Point selectedLocation;
 	private boolean goal = false;
 	private final boolean humanPlayer;
 	/**
@@ -119,6 +116,7 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
 	 */
 	public BW4TClientGUI(RemoteEnvironment env, String entityId, boolean goal, boolean humanPlayer) throws IOException {
 		environment = env;
+		mapController = new ClientMapController(environment.getClient().getMap());
 		init(entityId, humanPlayer);
 		this.setGoal(goal);
 		this.humanPlayer = humanPlayer;
@@ -136,6 +134,7 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
 		environment = env;
 		this.humanAgent = humanAgent;
 		this.humanPlayer = true;
+		mapController = new ClientMapController(environment.getClient().getMap());
 		init(entityId, true);
 	}
 
@@ -162,18 +161,16 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
 		buttonPanel.add(jButton);
 		jButton.addMouseListener(new TeamListMouseListener(this));
 
-		RendererMapLoader.loadMap(environment.getClient().getMap(), this);
+		MapRenderer renderer = new MapRenderer(mapController);
+		mapRenderer = new JScrollPane(renderer);
 
 		// Initialize graphics
 
-		setjFrame(new JFrame(entityId));
-		getjFrame().setSize((VisualizerSettings.worldX * VisualizerSettings.scale) + 10,
-				(VisualizerSettings.worldY * VisualizerSettings.scale) + 250);
-		getjFrame().setLocation(BW4TClientSettings.getX(), BW4TClientSettings.getY());
-		getjFrame().setLocation(BW4TClientSettings.getX(), BW4TClientSettings.getY());
-		getjFrame().setResizable(true);
-		getjFrame().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		getjFrame().addWindowListener(new WindowAdapter() {
+		setName("BW4T - " + entityId);
+		setLocation(BW4TClientSettings.getX(), BW4TClientSettings.getY());
+		setLocation(BW4TClientSettings.getX(), BW4TClientSettings.getY());
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				LOGGER.info("Exit request received from the Window Manager to close Window of entity: " + entityId);
@@ -186,7 +183,7 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
 			}
 		});
 
-		JPanel jPanel = new JPanel(new BorderLayout());
+		JPanel mainPanel = new JPanel(new BorderLayout());
 
 		// create short chat history window
 		JPanel chatPanel = new JPanel();
@@ -203,29 +200,42 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
 		chatPane.setFocusable(false);
 		chatPane.setColumnHeaderView(new JLabel("Chat Session:"));
 
-		jPanel.add(buttonPanel, BorderLayout.NORTH);
-		jPanel.add(this, BorderLayout.CENTER);
-		jPanel.add(chatPane, BorderLayout.SOUTH);
+		mainPanel.add(buttonPanel, BorderLayout.NORTH);
+		mainPanel.add(mapRenderer, BorderLayout.CENTER);
+		mainPanel.add(chatPane, BorderLayout.SOUTH);
 
-		getjFrame().add(jPanel);
+		add(mainPanel);
 
 		// Initialize mouse listeners for human controller
 		if (humanPlayer) {
 			this.jPopupMenu = new JPopupMenu();
-			addMouseListener(this);
+			renderer.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// Get coordinates of mouse click
+					int mouseX = e.getX();
+
+					int mouseY = e.getY();
+
+					setSelectedLocation(mouseX, mouseY);
+
+					ActionPopUpMenu.buildPopUpMenu(that);
+				}
+			});
 
 			getChatSession().addMouseListener(new ChatListMouseListener(this));
 		}
 
-		getjFrame().setVisible(true);
+		pack();
+
+		setVisible(true);
 		// Start repainting graphics
 		Thread paintThread = new Thread(this);
 		paintThread.start();
 	}
 
 	/**
-	 * Adds a player by adding a new button to the button panel, facilitating
-	 * sending messages to this player
+	 * Adds a player by adding a new button to the button panel, facilitating sending messages to this player
 	 * 
 	 * @param playerId
 	 *            , the Id of the player to be added
@@ -236,24 +246,6 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
 			button.addMouseListener(new TeamListMouseListener(this));
 			buttonPanel.add(button);
 		}
-	}
-
-	/**
-	 * Processes all objects to display them on the panel
-	 * 
-	 * @param g
-	 *            , the graphics object
-	 */
-	@Override
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2d = (Graphics2D) g;
-		ProcessingOperations.processRooms(g2d, this);
-		ProcessingOperations.processLabels(g2d, this);
-		ProcessingOperations.processDropZone(g2d, this);
-		ProcessingOperations.processBlocks(g2d, this);
-		ProcessingOperations.processEntity(g2d, this);
-		ProcessingOperations.processSequence(g2d, this);
 	}
 
 	/**
@@ -269,6 +261,7 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
 							environment);
 					if (percepts != null) {
 						ProcessingOperations.processPercepts(percepts, this);
+						handlePercepts(percepts);
 					}
 				} catch (PerceiveException e) {
 					LOGGER.error("Could not correctly poll the percepts from the environment.", e);
@@ -294,42 +287,13 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
 		}
 
 		LOGGER.info("Stopped the BW4T Client Renderer.");
-		BW4TClientSettings.setWindowParams(getjFrame().getX(), getjFrame().getY());
-		getjFrame().setVisible(false);
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// Get coordinates of mouse click
-		int mouseX = e.getX();
-
-		int mouseY = e.getY();
-
-		setSelectedLocation(new Integer[] { mouseX, mouseY });
-
-		ActionPopUpMenu.buildPopUpMenu(this);
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
+		BW4TClientSettings.setWindowParams(getX(), getY());
+		dispose();
 	}
 
 	/**
-	 * Method used for returning the next action that a human player wants the
-	 * bot to perform. This is received by the GOAL human bot, and then
-	 * forwarded to the entity on the server side.
+	 * Method used for returning the next action that a human player wants the bot to perform. This is received by the
+	 * GOAL human bot, and then forwarded to the entity on the server side.
 	 * 
 	 * @return a percept containing the next action to be performed
 	 */
@@ -341,13 +305,11 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
 	}
 
 	/**
-	 * When a GOAL agent performs the sendToGUI action it is forwarded to this
-	 * method, the message is then posted on the chat window contained in the
-	 * GUI.
+	 * When a GOAL agent performs the sendToGUI action it is forwarded to this method, the message is then posted on the
+	 * chat window contained in the GUI.
 	 * 
 	 * @param parameters
-	 *            , the action parameters containing the message sender and the
-	 *            message itself.
+	 *            , the action parameters containing the message sender and the message itself.
 	 * @return a null percept as no real percept should be returned
 	 */
 	public Percept sendToGUI(List<Parameter> parameters) {
@@ -361,8 +323,7 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
 	}
 
 	/**
-	 * Adds a label with a corresponding point near which it should be drawn to
-	 * the label list.
+	 * Adds a label with a corresponding point near which it should be drawn to the label list.
 	 * 
 	 * @param label
 	 *            , the label
@@ -413,19 +374,22 @@ public class BW4TClientGUI extends JPanel implements Runnable, MouseListener {
 		this.humanAgent = humanAgent;
 	}
 
-	public JFrame getjFrame() {
-		return jFrame;
-	}
-
-	public void setjFrame(JFrame jFrame) {
-		this.jFrame = jFrame;
-	}
-
-	public Integer[] getSelectedLocation() {
+	public Point getSelectedLocation() {
 		return selectedLocation;
 	}
 
-	public void setSelectedLocation(Integer[] selectedLocation) {
-		this.selectedLocation = selectedLocation;
+	public void setSelectedLocation(int x, int y) {
+		this.selectedLocation = new Point(x, y);
+	}
+
+	public void handlePercepts(List<Percept> percepts) {
+		mapController.handlePercepts(percepts);
+	}
+
+	/**
+	 * @return the mapController
+	 */
+	public ClientMapController getMapController() {
+		return mapController;
 	}
 }
