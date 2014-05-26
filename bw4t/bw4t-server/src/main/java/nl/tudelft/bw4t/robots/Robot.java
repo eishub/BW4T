@@ -9,7 +9,6 @@ import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.handicap.HandicapInterface;
-import nl.tudelft.bw4t.map.Constants;
 import nl.tudelft.bw4t.server.BW4TLogger;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.Corridor;
@@ -630,10 +629,6 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 		this.isHoldingEPartner = isHoldingEPartner;
 	}
 
-	public HashMap<String, HandicapInterface> getHandicapsMap() {
-		return this.handicapsMap;
-	}
-	
 	public Battery getBattery() {
 		return this.battery;
 	}
