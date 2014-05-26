@@ -51,7 +51,7 @@ public class BotEditorPanel extends JPanel {
 	private JSlider batterySlider = new JSlider();
 	private JSlider numberOfGrippersSlider = new JSlider();
 
-	private JLabel batteryUseValueLabel = new JLabel("0.9");
+	private JLabel batteryUseValueLabel = new JLabel("0,900000");
 	
 	private BotConfig dataObject = new BotConfig();
 	
@@ -230,8 +230,28 @@ public class BotEditorPanel extends JPanel {
     	int size = sizeSlider.getValue();
     	// Calculate average battery use result
     	double res = 0.002*size + 0.000025*speed;
+    	// Round down to 6 digits after comma
+    	// (Required, because otherwise the sliders are resized).
+    	DecimalFormat df = new DecimalFormat("#.######");
+    	String value = df.format(res);
     	// Set label
-    	batteryUseValueLabel.setText(String.valueOf(res));
+    	batteryUseValueLabel.setText(padString(value));
+	}
+	
+	/**
+	 * Pad the string with zeros (the string with
+	 * the value for the battery usage is aligned with
+	 * the sliders, and will cause the sliders to resize
+	 * when changed. This function keeps the string at a
+	 * certain length, so the sliders aren't resized anymore).
+	 * @param value The string to be padded.
+	 * @return The padded string.
+	 */
+	public String padString(String value) {
+		while(value.length() < 8) {
+			value += "0";
+		}
+		return value;
 	}
 	
 	/**
