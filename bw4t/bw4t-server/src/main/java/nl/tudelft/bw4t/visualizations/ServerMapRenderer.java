@@ -1,3 +1,19 @@
+package nl.tudelft.bw4t.visualizations;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
 import org.apache.log4j.Logger;
 
 import nl.tudelft.bw4t.blocks.Block;
