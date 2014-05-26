@@ -106,9 +106,7 @@ public class BW4TClientConfig {
         useGoal = ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue();
         mapFile = configPanel.getMapFile();
         EntityPanel entityPanel = mainPanel.getEntityPanel();
-//        TODO: read out bot panel and add each BotConfig to the list of bots
-//        botPanel.getTable().;
-        getBots();
+        //getBots();
         
         //TODO add epartner configs
         //getEpartners();
@@ -327,6 +325,15 @@ public class BW4TClientConfig {
      */
     public List<BotConfig> getBots() {
         return bots;
+    }
+    
+    /**
+     * Returns the index'th bot.
+     * @param index The bot index.
+     * @return The index'th bot.
+     */
+    public BotConfig getBot(int index) {
+    	return bots.get(index);
     }
     
     /**
