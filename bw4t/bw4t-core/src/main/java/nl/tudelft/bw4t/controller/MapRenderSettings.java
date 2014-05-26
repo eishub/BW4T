@@ -97,6 +97,17 @@ public class MapRenderSettings {
 	 *            to be scaled value
 	 * @return the scaled value
 	 */
+	public int scale(int value) {
+		return value * getScale();
+	}
+
+	/**
+	 * Scales the given value with the scaling factor.
+	 * 
+	 * @param value
+	 *            to be scaled value
+	 * @return the scaled value
+	 */
 	public double scale(double value) {
 		return value * getScale();
 	}
