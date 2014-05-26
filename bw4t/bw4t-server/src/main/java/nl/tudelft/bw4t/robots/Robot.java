@@ -10,7 +10,6 @@ import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.handicap.HandicapInterface;
 import nl.tudelft.bw4t.map.Constants;
 import nl.tudelft.bw4t.server.logging.AgentRecord;
-import nl.tudelft.bw4t.server.logging.BW4TLogger;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.DropZone;
@@ -299,7 +298,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 			case ENTER_CORRIDOR:
 			case ENTERING_FREESPACE:
 			case ENTERING_ROOM:
-				BW4TLogger.getInstance().logEnteredRoom(name);
+				agentRecord.addEnteredRoom();
 				break;
 			case HIT_CLOSED_DOOR:
 			case HIT_WALL:
@@ -520,7 +519,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 				try {
 					// Move the robot to the new position using the displacement
 					moveByDisplacement(displacement[0], displacement[1]);
-					BW4TLogger.getInstance().logMoving(name);
+					agentRecord.setStartedMoving();
 					
 					/**
 					 * Valentine
@@ -541,7 +540,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 */
 	public synchronized void stopRobot() {
 		this.targetLocation = null;
-		BW4TLogger.getInstance().logStopMoving(name);
+		agentRecord.setStoppedMoving();
 	}
 
 	/**
@@ -638,5 +637,13 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	}
 	public void setCapacity(int cap) {
 		capacity = cap;
+	}
+	
+	/**
+	 * gets AgentRecord
+	 * @return AgentRecord
+	 */
+	public AgentRecord getAgentRecord(){
+		return agentRecord;
 	}
 }
