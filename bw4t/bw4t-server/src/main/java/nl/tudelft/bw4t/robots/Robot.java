@@ -44,23 +44,19 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	private static final double ARM_DISTANCE = 1;
 	/** The width and height of the robot */
 	public int SIZE = 2;
-
 	/** The name of the robot */
 	public final String name;
-
 	/** The location to which the robot wants to travel. */
 	public NdPoint targetLocation;
 	/** The list of blocks the robot is holding. */
 	private final List<Block> holding;
 	/** The max. amount of blocks a robot can hold, default is 1. */
 	private int capacity = 3;
-
 	/**
 	 * set to true if we have to cancel a motion due to a collision. A collision is caused by an attempt to move into or
 	 * out of a room
 	 */
 	public boolean collided = false;
-
 	/**
 	 * set to true when {@link #connect()} is called.
 	 */
@@ -71,23 +67,20 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 * 
 	 * a robot has a battery a battery has a power value of how much the capacity should increment or decrement.
 	 */
-	public Battery battery;
-
+	private Battery battery;
 	/**
 	 * 
 	 * Saves the robots handicap.
 	 */
-	public HashMap<String, HandicapInterface> handicapsMap;
-
+	private HashMap<String, HandicapInterface> handicapsMap;
 	/**
 	 * True if the robot is holding an e-Partner.
 	 */
-	public boolean isHoldingEPartner = false;
-
+	private boolean isHoldingEPartner = false;
 	/**
 	 * True if the robot is human.
 	 */
-	public boolean isHuman = false;
+	private boolean isHuman = false;
 
 	/**
 	 * Creates a new robot.
@@ -243,7 +236,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 */
 	public void pickUpEPartner(EPartner eP) {
 		eP.setHolder(this);
-		this.isHoldingEPartner = true;
+		this.setHoldingEPartner(true);
 	}
 
 	/**
@@ -616,21 +609,11 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 		return this;
 	}
 
-	/**
-	 * Sets the size of a robot to a certain integer
-	 * 
-	 * @param s
-	 */
+	
 	public void setSize(int s) {
 		this.SIZE = s;
 		setSize(s, s);
 	}
-
-	/**
-	 * Gets the size of the robot
-	 * 
-	 * @return SIZE
-	 */
 	public int getSize() {
 		return this.SIZE;
 	}
@@ -641,5 +624,21 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 
 	public void setCapacity(int cap) {
 		capacity = cap;
+	}
+
+	public boolean isHuman() {
+		return isHuman;
+	}
+
+	public void setHuman(boolean isHuman) {
+		this.isHuman = isHuman;
+	}
+
+	public boolean isHoldingEPartner() {
+		return isHoldingEPartner;
+	}
+
+	public void setHoldingEPartner(boolean isHoldingEPartner) {
+		this.isHoldingEPartner = isHoldingEPartner;
 	}
 }
