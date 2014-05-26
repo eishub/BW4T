@@ -21,6 +21,7 @@ public class BW4TClientConfigIntegration {
      *
      * @param mainPanel     Serves as the content pane.
      * @param newOutputFile Contains the file location used for saving.
+     * @return The created config object.
      */
     public static BW4TClientConfig createConfigFromPanel(final MainPanel mainPanel,
                             final String newOutputFile) {
