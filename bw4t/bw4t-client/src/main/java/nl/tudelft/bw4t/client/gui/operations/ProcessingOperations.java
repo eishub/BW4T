@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.VisualizerSettings;
@@ -141,10 +142,10 @@ public class ProcessingOperations {
      *            , the graphics2d object
      */
     public static void processBlocks(Graphics2D g2d, BW4TClientGUI data) {
-        HashMap<Long, BlockColor> allBlocks = data.getEnvironmentDatabase().getAllBlocks();
+        Map<Long, BlockColor> allBlocks = data.getEnvironmentDatabase().getAllBlocks();
         for (Long box : allBlocks.keySet()) {
             if (data.getEnvironmentDatabase().getVisibleBlocks().contains(box)) {
-                HashMap<Long, java.awt.geom.Point2D.Double> objectPositions = data.getEnvironmentDatabase()
+                Map<Long, java.awt.geom.Point2D.Double> objectPositions = data.getEnvironmentDatabase()
                         .getObjectPositions();
                 if (objectPositions.get(box) != null) {
                     g2d.setColor(allBlocks.get(box).getColor());
