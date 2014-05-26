@@ -36,7 +36,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
 	/**
 	 * The log4j Logger which displays logs on console
 	 */
-	private final static Logger LOGGER = Logger.getLogger(BW4TClientGUI.class);
+	private final static Logger LOGGER = Logger.getLogger(BW4TEnvironmentListener.class);
 
 	/**
 	 * This map associates agents with a renderer. I suppose agents not having a
@@ -66,7 +66,6 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
 					agentB.setKilled();
 					if (agentData.get(agentB) != null) {
 						agentData.get(agentB).stop = true;
-						agentData.get(agentB).getjFrame().dispose();
 					}
 					agentData.remove(agentB);
 					return;
