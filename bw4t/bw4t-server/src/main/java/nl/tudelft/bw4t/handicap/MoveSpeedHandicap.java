@@ -1,7 +1,7 @@
 package nl.tudelft.bw4t.handicap;
 
 import nl.tudelft.bw4t.robots.Robot;
-import nl.tudelft.bw4t.server.BW4TLogger;
+import nl.tudelft.bw4t.server.logging.BW4TLogger;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.SpatialException;
 import repast.simphony.space.SpatialMath;
@@ -29,7 +29,7 @@ public class MoveSpeedHandicap extends Handicap {
 		speedMod = speedModifier;
 		isActive = true;
 		
-		robot.getHandicapsMap().put("MoveSpeed", this);
+		robot.handicapsMap.put("MoveSpeed", this);
 	}
 	/**
 	 * Overridden method move of Robot which has the speed modifier
@@ -62,7 +62,7 @@ public class MoveSpeedHandicap extends Handicap {
 						 * Valentine
 						 * The robot's battery discharges when it moves.
 						 */
-						robot.getBattery().discharge();
+						robot.battery.discharge();
 					} catch (SpatialException e) {
 						robot.collided = true;
 						robot.stopRobot();

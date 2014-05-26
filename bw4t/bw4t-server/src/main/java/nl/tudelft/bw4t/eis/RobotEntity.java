@@ -16,10 +16,10 @@ import nl.tudelft.bw4t.eis.translators.PointTranslator;
 import nl.tudelft.bw4t.eis.translators.ZoneTranslator;
 import nl.tudelft.bw4t.robots.NavigatingRobot;
 import nl.tudelft.bw4t.robots.Robot;
-import nl.tudelft.bw4t.server.BW4TEnvironment;
-import nl.tudelft.bw4t.server.BW4TLogger;
-import nl.tudelft.bw4t.server.Launcher;
 import nl.tudelft.bw4t.server.RobotEntityInt;
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.environment.Launcher;
+import nl.tudelft.bw4t.server.logging.BW4TLogger;
 import nl.tudelft.bw4t.util.RoomLocator;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.BlocksRoom;
@@ -69,7 +69,7 @@ public class RobotEntity implements RobotEntityInt {
 	/**
 	 * The log4j logger, logs to the console.
 	 */
-	private static Logger logger = Logger.getLogger(RobotEntity.class);
+	private static final Logger LOGGER = Logger.getLogger(RobotEntity.class);
 
 	private final NavigatingRobot ourRobot;
 	private final Context<Object> context;
@@ -271,7 +271,7 @@ public class RobotEntity implements RobotEntityInt {
 					result.addAll(env.getAssociatedEntities(agt));
 				}
 			} catch (AgentException e) {
-				logger.error("Ignoring an Agent's percept problem:" + e);
+				LOGGER.error("Ignoring an Agent's percept problem", e);
 			}
 		}
 		return result;
@@ -303,7 +303,8 @@ public class RobotEntity implements RobotEntityInt {
 	}
 
 	/**
-	 * Percept if the robot is holding something. Send if it becomes true, and send negated if it becomes false again.
+	 * Percept if the robot is holding something. Send if it becomes true, and
+	 * send negated if it becomes false again.
 	 */
 	@AsPercept(name = "holding", filter = Filter.Type.ON_CHANGE_NEG)
 	public List<Block> getHolding() {
@@ -482,30 +483,27 @@ public class RobotEntity implements RobotEntityInt {
 	 */
 	@AsAction(name = "sendMessage")
 	public void sendMessage(String receiver, String message) throws ActException {
-		if ((ourRobot.isHuman() && ourRobot.isHoldingEPartner()) || !ourRobot.isHuman()) {
-			BW4TLogger.getInstance().logSentMessageAction(ourRobot.getName());
-			// Translate the message into parameters
-			Parameter[] parameters = new Parameter[2];
-			try {
-				parameters[0] = Translator.getInstance().translate2Parameter(ourRobot.getName())[0];
-				parameters[1] = Translator.getInstance().translate2Parameter(message)[0];
-			} catch (TranslationException e) {
-				throw new ActException("translating of message failed:" + message, e);
-			}
+		BW4TLogger.getInstance().logSentMessageAction(ourRobot.getName());
+		// Translate the message into parameters
+		Parameter[] parameters = new Parameter[2];
+		try {
+			parameters[0] = Translator.getInstance().translate2Parameter(ourRobot.getName())[0];
+			parameters[1] = Translator.getInstance().translate2Parameter(message)[0];
+		} catch (TranslationException e) {
+			throw new ActException("translating of message failed:" + message, e);
+		}
 
-			// Send to all other entities (except self)
-			if (receiver.equals("all")) {
-				for (String entity : BW4TEnvironment.getInstance().getEntities()) {
-					if (!entity.equals(ourRobot.getName())) {
-						BW4TEnvironment.getInstance().performClientAction(entity,
-								new Action("receiveMessage", parameters));
-					}
+		// Send to all other entities (except self)
+		if (receiver.equals("all")) {
+			for (String entity : BW4TEnvironment.getInstance().getEntities()) {
+				if (!entity.equals(ourRobot.getName())) {
+					BW4TEnvironment.getInstance().performClientAction(entity, new Action("receiveMessage", parameters));
 				}
 			}
-			// Send to a single entity
-			else {
-				BW4TEnvironment.getInstance().performClientAction(receiver, new Action("receiveMessage", parameters));
-			}
+		}
+		// Send to a single entity
+		else {
+			BW4TEnvironment.getInstance().performClientAction(receiver, new Action("receiveMessage", parameters));
 		}
 	}
 
@@ -519,14 +517,12 @@ public class RobotEntity implements RobotEntityInt {
 	 */
 	@AsAction(name = "receiveMessage")
 	public void receiveMessage(String sender, String message) {
-		if ((ourRobot.isHuman() && ourRobot.isHoldingEPartner()) || !ourRobot.isHuman()) {
-			// Add message to messageArray
-			ArrayList<String> messageArray = new ArrayList<String>();
-			messageArray.add(sender);
-			messageArray.add(message);
+		// Add message to messageArray
+		ArrayList<String> messageArray = new ArrayList<String>();
+		messageArray.add(sender);
+		messageArray.add(message);
 
-			messages.add(messageArray);
-		}
+		messages.add(messageArray);
 	}
 
 	/**

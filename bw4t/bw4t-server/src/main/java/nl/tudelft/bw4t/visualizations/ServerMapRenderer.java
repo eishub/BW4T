@@ -1,24 +1,10 @@
-package nl.tudelft.bw4t.visualizations;
-
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.geom.Rectangle2D;
-import java.util.HashMap;
-import java.util.List;
-
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import org.apache.log4j.Logger;
 
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.robots.Robot;
-import nl.tudelft.bw4t.server.BW4TEnvironment;
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.DropZone;
 import nl.tudelft.bw4t.zone.Room;
@@ -44,6 +30,12 @@ public class ServerMapRenderer extends JPanel implements Runnable {
 	 * 
 	 */
 	private static final long serialVersionUID = -3897473512101235101L;
+
+	/**
+	 * The log4j logger, logs to the console.
+	 */
+	private static final Logger LOGGER = Logger.getLogger(ServerMapRenderer.class);
+	
 	private Context context;
 	private HashMap<Class<?>, StyleOGL2D<?>> styles;
 	private int scale = 7;
@@ -263,6 +255,7 @@ public class ServerMapRenderer extends JPanel implements Runnable {
 	@Override
 	public void run() {
 		running = true;
+		LOGGER.debug("started update thread for the ServerMapRenderer");
 		while (running) {
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
@@ -281,7 +274,7 @@ public class ServerMapRenderer extends JPanel implements Runnable {
 				// Sleep for a short while
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				LOGGER.warn("The update thread was interrupted", e);
 			}
 		}
 	}
