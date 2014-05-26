@@ -10,12 +10,20 @@ import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.Zone.Type;
+import nl.tudelft.bw4t.view.MapRendererInterface;
+
+import org.apache.log4j.Logger;
 
 /**
  * An abstract {@link MapController} implementation, taking over as much functionality as possible. Without using client
  * or server-specific code.
  */
-public abstract class AbstractMapController implements MapController {
+public abstract class AbstractMapController implements MapController, Runnable {
+	/**
+	 * The log4j logger which writes logs.
+	 */
+	private static final Logger LOGGER = Logger.getLogger(AbstractMapController.class);
+
 	/**
 	 * The map to be rendered.
 	 */
@@ -24,10 +32,20 @@ public abstract class AbstractMapController implements MapController {
 	 * Various rendering settings.
 	 */
 	private MapRenderSettings renderSettings;
+	/**
+	 * True while the thread to update the {@link MapRendererInterface} is running.
+	 */
+	private boolean running = false;
+
+	/**
+	 * The set of all connected {@link MapRendererInterface}s.
+	 */
+	private final Set<MapRendererInterface> renderers = new HashSet<>();
 
 	public AbstractMapController(NewMap map) {
 		renderSettings = new MapRenderSettings();
 		this.setMap(map);
+		startupUpdateException();
 	}
 
 	/**
@@ -64,6 +82,44 @@ public abstract class AbstractMapController implements MapController {
 		this.renderSettings = theRenderSettings;
 	}
 
+	/**
+	 * Is the update thread running?
+	 * 
+	 * @return true iff the thread is running.
+	 */
+	public boolean isRunning() {
+		return running;
+	}
+
+	/**
+	 * Set the update thread running?
+	 * 
+	 * @param run
+	 *            the value to be set
+	 */
+	protected void setRunning(boolean run) {
+		running = run;
+	}
+
+	public Set<MapRendererInterface> getRenderers() {
+		return renderers;
+	}
+
+	private void startupUpdateException() {
+		Thread thread = new Thread(new Updater(this));
+		thread.start();
+	}
+
+	@Override
+	public void addRenderer(MapRendererInterface mri) {
+		getRenderers().add(mri);
+	}
+
+	@Override
+	public void removeRenderer(MapRendererInterface mri) {
+		getRenderers().remove(mri);
+	}
+
 	@Override
 	public List<BlockColor> getSequence() {
 		return map.getSequence();
@@ -96,5 +152,23 @@ public abstract class AbstractMapController implements MapController {
 		}
 		throw new MapFormatException("The map does not include a dropzone!");
 	}
+
+	/**
+	 * Called every {@link MapRenderSettings#getUpdateDelay()}, to update the renderers.
+	 */
+	@Override
+	public void run() {
+		for (MapRendererInterface mri : getRenderers()) {
+			updateRenderer(mri);
+		}
+	}
+
+	/**
+	 * Called every {@link MapRenderSettings#getUpdateDelay()} for every associated {@link MapRendererInterface}.
+	 * 
+	 * @param mri
+	 *            the current renderer
+	 */
+	protected abstract void updateRenderer(MapRendererInterface mri);
 
 }

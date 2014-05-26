@@ -19,7 +19,7 @@ import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.Block;
 import nl.tudelft.bw4t.map.view.Entity;
 
-public class MapRenderer extends JPanel {
+public class MapRenderer extends JPanel implements MapRendererInterface {
 	/**
 	 * Serialization id.
 	 */
@@ -35,8 +35,15 @@ public class MapRenderer extends JPanel {
 		return controller;
 	}
 
+	/* (non-Javadoc)
+	 * @see nl.tudelft.bw4t.view.MapRendererInterface#setController(nl.tudelft.bw4t.controller.MapController)
+	 */
 	public void setController(MapController controller) {
+		if(this.controller != null){
+			this.controller.removeRenderer(this);
+		}
 		this.controller = controller;
+		this.controller.addRenderer(this);
 		updateMinimumSize();
 	}
 
@@ -206,6 +213,14 @@ public class MapRenderer extends JPanel {
 			Point2D loc = e.getLocation();
 			g2d.fill(set.transformRectangle(new Rectangle2D.Double(loc.getX(), loc.getY(), Entity.ROBOT_SIZE,
 					Entity.ROBOT_SIZE)));
+
+			if (set.isRenderEntityName()) {
+				g2d.setColor(Color.RED);
+				g2d.setFont(new Font("Arial", Font.BOLD, 16));
+				g2d.drawString(e.getName(),
+						(int) set.scale(e.getLocation().getX()) - g2d.getFontMetrics().stringWidth(e.getName()),
+						(int) set.scale(e.getLocation().getY()) + set.getEntityNameOffset());
+			}
 		}
 	}
 }
