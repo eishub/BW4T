@@ -38,6 +38,13 @@ public class CommunicationTest {
 		TestFunctions.setClient(client);
 	}
 
+	/**
+	 * Here we verify if messages are being sent and received correctly.
+	 * @throws TranslationException
+	 * @throws ActException
+	 * @throws InterruptedException
+	 * @throws PerceiveException
+	 */
 //	@Test
 	public void movementTest() throws TranslationException, ActException,
 			InterruptedException, PerceiveException {
@@ -45,21 +52,28 @@ public class CommunicationTest {
 		String bot2 = client.getAgents().get(1);
 		String bot3 = client.getAgents().get(2);
 
+		// We send the messages and wait a short while for them to arrive
 		sendMessage(bot1, "all", "Test");
 		sendMessage(bot1, bot2, "Test2");
 		Thread.sleep(500L);
 
+		// We verify if the messages arrived at the correct bots
 		TestFunctions.retrievePercepts(bot1);
-		assertFalse(TestFunctions.hasPercept("message([Bot1,Test])"));
-		assertFalse(TestFunctions.hasPercept("message([Bot1,Test2])"));
+		assertFalse(TestFunctions.hasPercept("message(["+bot1+",Test])"));
+		assertFalse(TestFunctions.hasPercept("message(["+bot1+",Test2])"));
 		TestFunctions.retrievePercepts(bot2);
-		assertTrue(TestFunctions.hasPercept("message([Bot1,Test])"));
-		assertTrue(TestFunctions.hasPercept("message([Bot1,Test2])"));
+		assertTrue(TestFunctions.hasPercept("message(["+bot1+",Test])"));
+		assertTrue(TestFunctions.hasPercept("message(["+bot1+",Test2])"));
 		TestFunctions.retrievePercepts(bot3);
-		assertTrue(TestFunctions.hasPercept("message([Bot1,Test])"));
-		assertFalse(TestFunctions.hasPercept("message([Bot1,Test2])"));
+		assertTrue(TestFunctions.hasPercept("message(["+bot1+",Test])"));
+		assertFalse(TestFunctions.hasPercept("message(["+bot1+",Test2])"));
 	}
 	
+	/**
+	 * @param entityId Which bot should send the message
+	 * @param receiver To who the message is directed
+	 * @param message The contents of the message
+	 */
 	private void sendMessage(String entityId, String receiver, String message){
 		try {
 			Parameter[] receiverParam = Translator.getInstance()
