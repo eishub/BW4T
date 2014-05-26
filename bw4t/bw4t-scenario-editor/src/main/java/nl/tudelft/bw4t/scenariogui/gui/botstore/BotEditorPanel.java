@@ -187,40 +187,7 @@ public class BotEditorPanel extends JPanel {
         batterySlider.setPaintLabels(true);
         batterySlider.setMajorTickSpacing(10);
         
-	}
-	
-	/**
-	 * Executes action that needs to happen when  the "Apply" button is pressed.
-	 * TODO save the bot
-	 */
-	public void applyAction() {
-		setDataObject();
-	}
-	
-	/**
-	 * Executes action that needs to happen when  the "Reset" button is pressed.
-	 * Resets to default settings
-	 */
-	public void resetAction(){
-		speedSlider.setValue(100);
-        sizeSlider.setValue(2);
-        batterySlider.setValue(0);
-        gripperCheckbox.setSelected(false);
-        colorblindCheckbox.setSelected(false);
-        customSizeCheckbox.setSelected(false);
-        movespeedCheckbox.setSelected(false);
-        calculateBatteryUse();
-	}
-	
-	/**
-	 * Executes action that needs to happen when  the "Cancel" button is pressed. 
-	 * closes the BotEditor
-	 */
-	
-	public void cancelAction(){	
-		
-	}
-	
+	}	
 	/**
      * This method should recalculate the average battery use per tick.
      * After calculation, it should update the batteryUseValueLabel label in this GUI.
@@ -346,21 +313,16 @@ public class BotEditorPanel extends JPanel {
 		this.batteryUseValueLabel = batteryUseValueLabel;
 	}
 	
-	/**
-	 * This method plugs the GUI values into the data object.
-	 */
-	public void setDataObject() {
-		dataObject.setBotSize(sizeSlider.getValue());
-		dataObject.setBotSpeed(speedSlider.getValue());
-		dataObject.setBotBatteryCapacity(batterySlider.getValue());
-		dataObject.setColorBlindHandicap(colorblindCheckbox.isEnabled());
-		dataObject.setGripperHandicap(gripperCheckbox.isEnabled());
-		dataObject.setMoveSpeedHandicap(movespeedCheckbox.isEnabled());
-		dataObject.setSizeOverloadHandicap(customSizeCheckbox.isEnabled());
-	}
-	
 	public BotConfig getDataObject() {
 		return dataObject;
+	}
+
+	public JSlider getNumberOfGrippersSlider() {
+		return numberOfGrippersSlider;
+	}
+
+	public void setNumberOfGrippersSlider(JSlider numberOfGrippersSlider) {
+		this.numberOfGrippersSlider = numberOfGrippersSlider;
 	}
 
 }
