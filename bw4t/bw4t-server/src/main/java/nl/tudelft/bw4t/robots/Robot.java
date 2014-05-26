@@ -44,23 +44,19 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	private static final double ARM_DISTANCE = 1;
 	/** The width and height of the robot */
 	public int SIZE = 2;
-
 	/** The name of the robot */
 	public final String name;
-
 	/** The location to which the robot wants to travel. */
 	public NdPoint targetLocation;
 	/** The list of blocks the robot is holding. */
 	private final List<Block> holding;
 	/** The max. amount of blocks a robot can hold, default is 1. */
 	private int capacity = 3;
-
 	/**
 	 * set to true if we have to cancel a motion due to a collision. A collision is caused by an attempt to move into or
 	 * out of a room
 	 */
 	public boolean collided = false;
-
 	/**
 	 * set to true when {@link #connect()} is called.
 	 */
@@ -71,23 +67,20 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 * 
 	 * a robot has a battery a battery has a power value of how much the capacity should increment or decrement.
 	 */
-	public Battery battery;
-
+	private Battery battery;
 	/**
 	 * 
 	 * Saves the robots handicap.
 	 */
-	public HashMap<String, HandicapInterface> handicapsMap;
-
+	private HashMap<String, HandicapInterface> handicapsMap;
 	/**
 	 * True if the robot is holding an e-Partner.
 	 */
-	public boolean isHoldingEPartner = false;
-
+	private boolean isHoldingEPartner = false;
 	/**
 	 * True if the robot is human.
 	 */
-	public boolean isHuman;
+	private boolean isHuman = false;
 
 	/**
 	 * Creates a new robot.
@@ -114,12 +107,13 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 		 * This is where the battery value will be fetched from the Bot Store GUI.
 		 */
 		this.battery = new Battery(Integer.MAX_VALUE, Integer.MAX_VALUE, 0);
+
 		/**
 		 * Here the number of blocks a bot can hold is set.
 		 */
 		capacity = cap;
 		this.holding = new ArrayList<Block>(capacity);
-		handicapsMap = new HashMap<String, HandicapInterface>();
+		this.handicapsMap = new HashMap<String, HandicapInterface>();
 		/**
 		 * if a bot is human controller then this value is true.
 		 */
@@ -215,7 +209,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 *            , the e-Partner the robot picks up.
 	 */
 	public void pickUpEPartner(EPartner eP) {
-		if(isHuman){
+		if(isHuman()){
 			eP.setHolder(this);
 			this.isHoldingEPartner = true;
 		}
@@ -591,21 +585,11 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 		return this;
 	}
 
-	/**
-	 * Sets the size of a robot to a certain integer
-	 * 
-	 * @param s
-	 */
+	
 	public void setSize(int s) {
 		this.SIZE = s;
 		setSize(s, s);
 	}
-
-	/**
-	 * Gets the size of the robot
-	 * 
-	 * @return SIZE
-	 */
 	public int getSize() {
 		return this.SIZE;
 	}
@@ -616,5 +600,21 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 
 	public void setCapacity(int cap) {
 		capacity = cap;
+	}
+
+	public boolean isHuman() {
+		return this.isHuman;
+	}
+
+	public void setHuman(boolean isHuman) {
+		this.isHuman = isHuman;
+	}
+
+	public boolean isHoldingEPartner() {
+		return this.isHoldingEPartner;
+	}
+
+	public void setHoldingEPartner(boolean isHoldingEPartner) {
+		this.isHoldingEPartner = isHoldingEPartner;
 	}
 }

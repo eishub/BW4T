@@ -482,7 +482,7 @@ public class RobotEntity implements RobotEntityInt {
 	 */
 	@AsAction(name = "sendMessage")
 	public void sendMessage(String receiver, String message) throws ActException {
-		if ((ourRobot.isHuman && ourRobot.isHoldingEPartner) || !ourRobot.isHuman) {
+		if ((ourRobot.isHuman() && ourRobot.isHoldingEPartner()) || !ourRobot.isHuman()) {
 			BW4TLogger.getInstance().logSentMessageAction(ourRobot.getName());
 			// Translate the message into parameters
 			Parameter[] parameters = new Parameter[2];
@@ -519,7 +519,7 @@ public class RobotEntity implements RobotEntityInt {
 	 */
 	@AsAction(name = "receiveMessage")
 	public void receiveMessage(String sender, String message) {
-		if ((ourRobot.isHuman && ourRobot.isHoldingEPartner) || !ourRobot.isHuman) {
+		if ((ourRobot.isHuman() && ourRobot.isHoldingEPartner()) || !ourRobot.isHuman()) {
 			// Add message to messageArray
 			ArrayList<String> messageArray = new ArrayList<String>();
 			messageArray.add(sender);
