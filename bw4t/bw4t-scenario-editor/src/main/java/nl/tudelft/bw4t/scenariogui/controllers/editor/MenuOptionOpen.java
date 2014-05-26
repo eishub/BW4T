@@ -88,7 +88,7 @@ class MenuOptionOpen extends AbstractMenuOption {
                 
                 // Fill the bot panel
 
-                for(BotConfig bot : configuration.getBots()) {
+                for (BotConfig bot : configuration.getBots()) {
                     // TODO: LOAD AND FILL BOT LIST HERE
                 }
             } catch (JAXBException e1) {
@@ -113,7 +113,7 @@ class MenuOptionOpen extends AbstractMenuOption {
     	int rows = botTable.getRowCount();
     	
     	if (rows > 0) {
-	    	for(int i = rows - 1; i >= 0; i--){
+	    	for (int i = rows - 1; i >= 0; i--) {
 	    		botTable.removeRow(i);
 	    	}
     	}
@@ -128,7 +128,7 @@ class MenuOptionOpen extends AbstractMenuOption {
     	int rows = epartnerTable.getRowCount();
     	
     	if (rows > 0) {
-	    	for(int i = rows - 1; i >= 0; i--){
+	    	for (int i = rows - 1; i >= 0; i--) {
 	    		epartnerTable.removeRow(i);
 	    	}
     	}
