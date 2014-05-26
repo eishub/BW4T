@@ -3,13 +3,15 @@ package nl.tudelft.bw4t.scenariogui.controllers.editor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JOptionPane;
-
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
  * Handles the event to modify an E-partner.
+ * <p>
+ * @author        
+ * @version     0.1                
+ * @since       12-05-2014        
  */
 class ModifyEPartner implements ActionListener {
 
@@ -39,8 +41,9 @@ class ModifyEPartner implements ActionListener {
         int row = view.getEntityPanel().getSelectedEPartnerRow();
 
         if (row == -1) {
-            ScenarioEditor.option.showMessageDialog(null, "Please select the E-partner you want to modify.");
-        } else {
+            ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select the E-partner you want to modify.");
+        } 
+        else {
             System.out.println("Go to Bot Store to modify an E-Partner");
         }
     }

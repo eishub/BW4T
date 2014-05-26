@@ -13,11 +13,14 @@ import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.config.BotConfig;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
-import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 
 /**
  * Handles the event to open a file.
+  * <p>
+ * @author        
+ * @version     0.1                
+ * @since       12-05-2014        
  */
 class MenuOptionOpen extends AbstractMenuOption {
 
@@ -36,15 +39,14 @@ class MenuOptionOpen extends AbstractMenuOption {
      *
      * @param e The action event.
      */
+    //TODO: Split up in multiple shorter methods
     public void actionPerformed(final ActionEvent e) {
         ConfigurationPanel configPanel = super.getController().getMainView().getMainPanel().getConfigurationPanel();
-        EntityPanel entityPanel = super.getController().getMainView().getMainPanel().getEntityPanel();
-
 
         // Check if current config is different from last saved config
         if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())) {
             // Check if user wants to save current configuration
-            int response = ScenarioEditor.option.showConfirmDialog(
+            int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
                     null,
                     ScenarioEditorController.CONFIRM_SAVE_TXT,
                     "",
@@ -66,7 +68,7 @@ class MenuOptionOpen extends AbstractMenuOption {
             String openedFile = fileChooser.getSelectedFile().toString();
 
             try {
-                BW4TClientConfig configuration= BW4TClientConfig.fromXML(file.getAbsolutePath());
+                BW4TClientConfig configuration = BW4TClientConfig.fromXML(file.getAbsolutePath());
 
                 // Fill the configuration panel
                 configPanel.setClientIP(configuration.getClientIp());

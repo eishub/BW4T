@@ -3,7 +3,6 @@ package nl.tudelft.bw4t.scenariogui;
 import java.io.FileNotFoundException;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -20,6 +19,10 @@ import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
 
 /**
  * The ScenarioEditor class serves as the Frame for the MenuBar and MainPanel.
+ * <p>
+ * @author        
+ * @version     0.1                
+ * @since       12-05-2014        
  */
 public class ScenarioEditor extends JFrame {
 
@@ -27,26 +30,31 @@ public class ScenarioEditor extends JFrame {
      * Randomly generated serial version.
      */
     private static final long serialVersionUID = 3291131921268747169L;
+    
     /**
      * The name of the window, as displayed in the title.
      */
     private String windowName = "Scenario Editor";
+    
     /**
      * The <code>MainPanel</code> serving as the content pane.
      */
     private MainPanel mPanel;
+    
     /**
      * The <code>MenuBar</code> at the top of the screen.
      */
     private MenuBar menuBar;
+    
     /**
      * The <code>Controller</code> containing all the ActionEvents.
      */
     private ScenarioEditorController controller;
+    
     /**
      * The OptionPrompt used to handle all thread blocking GUI objects.
      */
-    public static OptionPrompt option = new DefaultOptionPrompt();
+    private static OptionPrompt option = new DefaultOptionPrompt();
 
     /**
      * Create the scenario editor frame, which will then hold the panels with
@@ -54,7 +62,6 @@ public class ScenarioEditor extends JFrame {
      */
     public ScenarioEditor() {
         setLookAndFeel();
-        // setSize(width, height);
         setTitle(windowName);
 
         setResizable(false);
@@ -84,8 +91,8 @@ public class ScenarioEditor extends JFrame {
      * Constructor where the panels are passed through as arguments. Useful for
      * testing when the panels have to be mocked or spied upon.
      *
-     * @param configurationPanel The ConfigurationPanel object used in the frame
-     * @param entityPanel        The EntityPanel object used in the frame
+     * @param configurationPanel The ConfigurationPanel object used in the frame.
+     * @param entityPanel        The EntityPanel object used in the frame.
      */
     public ScenarioEditor(final ConfigurationPanel configurationPanel, final EntityPanel entityPanel) {
         this();
@@ -110,7 +117,7 @@ public class ScenarioEditor extends JFrame {
      * Set the content pane to the given panel. This changes which panel is
      * shown in the frame.
      *
-     * @param panel the panel to be shown.
+     * @param panel The panel to be shown.
      */
     protected final void setActivePane(final JPanel panel) {
         setContentPane(panel);
@@ -176,8 +183,10 @@ public class ScenarioEditor extends JFrame {
     }
 
     /**
-     * @param e contains the exception thrown by a method
-     * @param s is a description that is specific for the place the error occurred.
+     * Handles the exceptions that are catched.
+     * 
+     * @param e The exception that is thrown.
+     * @param s A description that is specific for why the error occurred.
      */
     public static void handleException(final Exception e, final String s) {
         if (e instanceof FileNotFoundException) {
@@ -202,11 +211,30 @@ public class ScenarioEditor extends JFrame {
     }
 
     /**
-     * @param e contains the exception to print
-     * @param s is a description of the error e that will be shown.
+     * Opens a dialog showing the description of the error and the error itself as a String.
+     * 
+     * @param e The exception that is thrown.
+     * @param s A description that is specific for why the error occurred.
      */
     public static void showDialog(final Exception e, final String s) {
 
         ScenarioEditor.option.showMessageDialog(null, s + "\n" + e.toString());
+    }
+    
+    /**
+     * Used to set the OptionPrompt for the Scenario GUI.
+     * 
+     * @param o The OptionPrompt object to set option to.
+     */
+    public static void setOptionPrompt(OptionPrompt o) {
+        option = o;
+    }
+    
+    /**
+     * Used to get the OptionPrompt for the Scenario GUI
+     * @return option Used to handle all thread blocking GUI objects.
+     */
+    public static OptionPrompt getOptionPrompt() {
+        return option;
     }
 }

@@ -7,6 +7,10 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
  * Handles the event to create a new bot.
+ * <p>
+ * @author        
+ * @version     0.1                
+ * @since       12-05-2014        
  */
 class AddNewBot implements ActionListener {
 
@@ -14,6 +18,11 @@ class AddNewBot implements ActionListener {
      * The <code>MainPanel</code> serving as the content pane.
      */
     private MainPanel view;
+    
+    /**
+     * Keeps track of the amount of bots created
+     */
+    private int botCount;
 
     /**
      * Create an AddNewBot event handler.
@@ -22,18 +31,21 @@ class AddNewBot implements ActionListener {
      */
     public AddNewBot(final MainPanel newView) {
         this.view = newView;
+        botCount = 0;
     }
 
     /**
      * Listens to the add a new bot button.
      * Executes action that needs to happen when the "New bot" button is
-     * pressed.
+     * pressed. Gives default name of "Bot \<n\>" where \<n\> is the n'th bot created.  
      *
      * @param ae The action event.
      */
     public void actionPerformed(final ActionEvent ae) {
-        Object[] newBotObject = {"Unnamed Bot", "Agent", 1};
+        botCount++;
+        Object[] newBotObject = {"Bot " + botCount, "Agent", 1};
         view.getEntityPanel().getBotTableModel().addRow(newBotObject);
+        
     }
 
 }

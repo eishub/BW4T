@@ -7,6 +7,10 @@ import javax.swing.JOptionPane;
 /**
  * This is the DefaultOptionPrompt, used in production when a confirmation dialog
  * has to be shown to the user.
+ * <p>
+ * @author        
+ * @version     0.1                
+ * @since       12-05-2014        
  */
 public class DefaultOptionPrompt implements OptionPrompt {
 
@@ -27,7 +31,7 @@ public class DefaultOptionPrompt implements OptionPrompt {
      * Call JOptionPane to show the message dialog.
      *
      * @param parentComponent The <code>java.awt.Component</code> that will be used to align the box.
-     * @param message
+     * @param message   The message to be displayed.
      */
     public void showMessageDialog(Component parentComponent, Object message) {
         JOptionPane.showMessageDialog(parentComponent, message);

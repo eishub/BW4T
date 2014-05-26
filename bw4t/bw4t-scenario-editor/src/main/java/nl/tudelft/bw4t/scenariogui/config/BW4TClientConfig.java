@@ -18,8 +18,11 @@ import nl.tudelft.bw4t.scenariogui.util.XMLManager;
  * This class holds the possible options that can be specified in the Scenario
  * GUI and is meant to be directly convertible to XML and constructible from
  * XML.
- *
- * @author Nick / Calvin
+ * <p>
+ * @author      Nick Feddes
+ * @author      Calvin Wong Loi Sing  
+ * @version     0.1                
+ * @since       12-05-2014        
  */
 @XmlRootElement
 public class BW4TClientConfig {
@@ -64,6 +67,9 @@ public class BW4TClientConfig {
      */
     private String mapFile;
 
+    /**
+     * The XML element wrapper for the list of bots. 
+     */
     @XmlElementWrapper(name = "bots")
     @XmlElement(name = "bot")
     private List<BotConfig> bots = new ArrayList<BotConfig>();
@@ -77,8 +83,8 @@ public class BW4TClientConfig {
     /**
      * A <code>BW4TClientConfig</code> object holding the configuration.
      *
-     * @param mainPanel     serves as the content pane
-     * @param newOutputFile contains the file location used for saving
+     * @param mainPanel     Serves as the content pane.
+     * @param newOutputFile Contains the file location used for saving.
      */
     public BW4TClientConfig(final MainPanel mainPanel,
                             final String newOutputFile) {
@@ -285,7 +291,8 @@ public class BW4TClientConfig {
 
     /**
      * Add a bot to the configuration file.
-     * @param theBot The bot that is to be added.
+     * 
+     * @param theBot    The bot that is to be added.
      */
     public void addBot(BotConfig theBot) {
         bots.add(theBot);
@@ -293,7 +300,8 @@ public class BW4TClientConfig {
 
     /**
      * Remove a bot from the configuration file.
-     * @param theBot The bot that is to be removed
+     * 
+     * @param theBot    The bot that is to be removed.
      */
     public void removeBot(BotConfig theBot) {
         bots.remove(theBot);
@@ -301,6 +309,7 @@ public class BW4TClientConfig {
 
     /**
      * Return all the bots loaded.
+     * 
      * @return The <code>List<BotConfig></code> of bots.
      */
     public List<BotConfig> getBots() {

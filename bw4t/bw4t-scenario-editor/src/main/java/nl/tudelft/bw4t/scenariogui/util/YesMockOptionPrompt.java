@@ -8,6 +8,10 @@ import javax.swing.JOptionPane;
  * The OptionPrompt that always returns yes, used when mocking the
  * objects during tests, to prevent the system from hanging due
  * to having to press a button on the prompt.
+ * <p>
+ * @author        
+ * @version     0.1                
+ * @since       12-05-2014        
  */
 public class YesMockOptionPrompt implements OptionPrompt {
 
@@ -28,7 +32,7 @@ public class YesMockOptionPrompt implements OptionPrompt {
      * This class will not show any message dialog.
      *
      * @param parentComponent The <code>java.awt.Component</code> that will be used to align the box.
-     * @param message
+     * @param message The message to be displayed.
      */
     public void showMessageDialog(Component parentComponent, Object message) {
         return;

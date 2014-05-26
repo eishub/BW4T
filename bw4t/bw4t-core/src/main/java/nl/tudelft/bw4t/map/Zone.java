@@ -26,7 +26,7 @@ public class Zone implements Serializable {
         ROOM,
         /** Corridor. Adjustable 1 bot or multiple bots allowed */
         CORRIDOR
-    };
+    }
 
     /**
      * NAME MUST BE SET UNIQUE. Otherwise XML serialization will fail.

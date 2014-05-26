@@ -10,7 +10,7 @@ import java.util.prefs.Preferences;
 
 public class BW4TClientSettings {
     private BW4TClientSettings() {
-    };
+    }
 
     /**
      * Use the global preference store for this user to store the settings.

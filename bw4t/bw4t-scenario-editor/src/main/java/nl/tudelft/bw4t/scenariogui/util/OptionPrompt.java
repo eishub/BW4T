@@ -5,6 +5,10 @@ import java.awt.Component;
 /**
  * An interface for showConfirmDialog, used to make the mocking of responses
  * simpler.
+ * <p>
+ * @author        
+ * @version     0.1                
+ * @since       12-05-2014        
  */
 public interface OptionPrompt {
 
@@ -21,7 +25,7 @@ public interface OptionPrompt {
     /**
      *
      * @param parentComponent The <code>java.awt.Component</code> that will be used to align the box.
-     * @param message
+     * @param message The message to be displayed
      */
     void showMessageDialog(Component parentComponent, Object message);
 }

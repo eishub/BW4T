@@ -9,9 +9,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-
 /**
- * Created on 15-05-2014.
+ * <p>
+ * @author        
+ * @version     0.1                
+ * @since       15-05-2014        
  */
 public class ScenarioEditorTest {
 

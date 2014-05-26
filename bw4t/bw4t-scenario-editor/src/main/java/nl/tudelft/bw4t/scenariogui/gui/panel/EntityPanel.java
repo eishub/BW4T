@@ -13,7 +13,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -38,8 +37,10 @@ import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
  * The EntityPanel class represents right pane of the MainPanel. It shows a list
  * of bots and a list of e-partners and the actions that are possible to edit
  * bots and e-partners.
- *
- * @author Katia
+ * <p>
+ * @author      Katia Asmoredjo  
+ * @version     0.1                
+ * @since       12-05-2014        
  */
 public class EntityPanel extends JPanel {
 
@@ -493,7 +494,7 @@ public class EntityPanel extends JPanel {
      */
     protected final void showMessageDialog(
             final Component parent, final String text) {
-        ScenarioEditor.option.showMessageDialog(parent, text);
+        ScenarioEditor.getOptionPrompt().showMessageDialog(parent, text);
     }
 
     /**
@@ -505,12 +506,13 @@ public class EntityPanel extends JPanel {
      * @param optionType An int designating the options available on the dialog:
      *                   JOptionPane.YES_NO_OPTIONS, JOptionPane.YES_NO_CANCEL_OPTION
      *                   or JOptionPane.OK_CANCEL_OPTION,
+     * @param messageType   Message type for the confirm dialog.
      * @return An int indicating the option selected by the user
      */
     public int showConfirmDialog(final Component parent,
                                  final String text,
                                  final String title, final int optionType, final int messageType) {
-        return ScenarioEditor.option.showConfirmDialog(parent, text, title, optionType, messageType);
+        return ScenarioEditor.getOptionPrompt().showConfirmDialog(parent, text, title, optionType, messageType);
     }
 
     /**
@@ -560,19 +562,18 @@ public class EntityPanel extends JPanel {
 
 
     /**
-     * Returns the new bot name
+     * Returns the new bot name.
      *
-     * @return The new bot name
+     * @return The new bot name.
      */
     /*
      * public String getNewBotNameLabelText() { return newBotName.getText(); }
      */
 
     /**
-     * Sets the new bot name
+     * Sets the new bot name.
      *
-     * @param newBotName
-     *            The new bot name
+     * @param newBotName    The new bot name.
      */
     /*
      * public void setNewBotNameLabelText(String newBotName) {

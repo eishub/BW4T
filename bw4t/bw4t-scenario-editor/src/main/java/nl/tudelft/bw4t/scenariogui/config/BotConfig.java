@@ -3,9 +3,13 @@ package nl.tudelft.bw4t.scenariogui.config;
 import javax.xml.bind.annotation.XmlElement;
 
 /**
- * @author Valentine
- *         This class stores all the date from the BotEditorUI.
+ * This class stores all the date from the BotEditorUI.         
+ * <p>
+ * @author      Valentine Mairet  
+ * @version     0.1                
+ * @since       12-05-2014        
  */
+
 public final class BotConfig {
 
     private int botSize = 2;
