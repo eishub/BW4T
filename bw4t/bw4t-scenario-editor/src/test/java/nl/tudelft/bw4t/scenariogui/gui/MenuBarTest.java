@@ -31,7 +31,7 @@ import static org.mockito.Mockito.when;
 
 /**
  * <p>
- * @author      Calving Wong Loi Sing  
+ * @author      Calvin Wong Loi Sing  
  * @version     0.1                
  * @since       21-05-2014        
  */
