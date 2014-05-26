@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,6 +33,7 @@ import nl.tudelft.bw4t.client.gui.data.EnvironmentDatabase;
 import nl.tudelft.bw4t.client.gui.listeners.ChatListMouseListener;
 import nl.tudelft.bw4t.client.gui.listeners.TeamListMouseListener;
 import nl.tudelft.bw4t.client.gui.menu.ActionPopUpMenu;
+import nl.tudelft.bw4t.client.gui.menu.ComboAgentModel;
 import nl.tudelft.bw4t.client.gui.operations.ProcessingOperations;
 import nl.tudelft.bw4t.view.MapRenderer;
 
@@ -84,6 +86,8 @@ public class BW4TClientGUI extends JFrame implements Runnable {
 	private JTextArea chatSession = new JTextArea(8, 1);
 	private JScrollPane chatPane;
 	private JScrollPane mapRenderer;
+	private JComboBox<ComboAgentModel> agentSelector;
+
 	private final ClientMapController mapController;
 
 	/**
@@ -94,6 +98,10 @@ public class BW4TClientGUI extends JFrame implements Runnable {
 
 	public JPopupMenu getjPopupMenu() {
 		return jPopupMenu;
+	}
+
+	public JComboBox<ComboAgentModel> getAgentSelector() {
+		return agentSelector;
 	}
 
 	private Point selectedLocation;
@@ -157,7 +165,11 @@ public class BW4TClientGUI extends JFrame implements Runnable {
 		getEnvironmentDatabase().setEntityId(entityId);
 		buttonPanel = new JPanel();
 
-		JButton jButton = new JButton("all");
+		JLabel jLabelMessage = new JLabel("Send message to:");
+		JButton jButton = new JButton("Choose Message");
+		buttonPanel.add(jLabelMessage);
+		agentSelector = new JComboBox<ComboAgentModel>(new ComboAgentModel(this));
+		buttonPanel.add(agentSelector);
 		buttonPanel.add(jButton);
 		jButton.addMouseListener(new TeamListMouseListener(this));
 
@@ -166,7 +178,7 @@ public class BW4TClientGUI extends JFrame implements Runnable {
 
 		// Initialize graphics
 
-		setName("BW4T - " + entityId);
+		setTitle("BW4T - " + entityId);
 		setLocation(BW4TClientSettings.getX(), BW4TClientSettings.getY());
 		setLocation(BW4TClientSettings.getX(), BW4TClientSettings.getY());
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
