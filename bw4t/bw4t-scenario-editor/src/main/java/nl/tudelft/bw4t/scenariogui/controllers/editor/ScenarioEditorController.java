@@ -7,7 +7,10 @@ import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
  * It delegates all events to classes implementing ActionListener,
  * sending the view along as an argument.
  *
- * @author Calvin
+ * <p>
+ * @author      Calvin Wong Loi Sing  
+ * @version     0.1                
+ * @since       12-05-2014        
  */
 public class ScenarioEditorController {
 
@@ -23,6 +26,7 @@ public class ScenarioEditorController {
     private ScenarioEditor view;
 
     /**
+     * TODO: Split up into multiple methods
      * Create a controllers object to control all ActionEvents.
      *
      * @param newView used to call relevant functions by the event listeners.

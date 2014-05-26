@@ -12,7 +12,7 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.environment.handlers.PerceptsHandler;
-import nl.tudelft.bw4t.server.BW4TEnvironment;
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 
 import org.junit.After;
 import org.junit.Before;

@@ -27,20 +27,20 @@ Repast is nu een plugin en de bijbehorende jar files zijn uit het systeem, wat v
 We zijn bezig geweest met het splitsen van de server, client en een core. In core zitten de klassen die zowel door de server en de client gebruikt wordt. Elk van deze onderdelen is nu een apart Maven project. Met deze structuur hopen wij meer overzicht te krijgen in de code en dat het voor andere mensen ook (snel) duidelijk is hoe het systeem in elkaar zit. Verder is het testen van het systeem met deze structuur een stuk makkelijker. 
 
 \section{Repast}
-Repast is zeker een goed platform voor agent-based modeling. Echter in dit project niet heel nuttig, dit omdat GOAL totaal onafhankelijk werkt van Repast. Het is niet mogelijk om te zorgen dat GOAL en Repast goed synchroon lopen zonder GOAL daarop aan te passen. Wij zijn van mening dat Repast alleen gebruikt kan worden als het systeem helemaal opnieuw wordt opgebouwd en er aanpassingen aan GOAL gemaakt worden. \\
-Repast erin laten zitten heeft voor ons op dit moment geen toegevoegde waarde, alles wat Repast biedt moet in dit systeem net anders gebruikt worden. De klassen en methodes moeten dan toch op een eigen manier worden geimplementeerd. Dit geldt ook voor eventuele toekomstig functies van Repast, deze kunnen heel nuttig zijn voor systemen zoals BW4T maar alleen als deze hierop gebouwd zijn.
+Repast is zeker een goed platform voor agent-based modeling. Echter voor dit project zullen we geen verder gebruik maken Repast dan hoe het nu gebruikt wordt. Dit omdat we problemen verwachten als we Repast meer gaan gebruiken. Met name het synchroon lopen met GOAL is een uitdaging. Als we het systeem meer gebruik willen laten maken van Repast zal er een hoop moeten worden omgeschreven. Wij zijn niet in staat dit in 5 weken te doen, aangezien we zoveel moeten veranderen dat er dan geen werkend product is. \\
 
 \section{Wat kunnen wij aankomende weken nog bereiken}
 Wat wij de aankomende weken nog kunnen doen is zorgen dat het opstarten van het systeem makkelijker is. Dus dat de server en client niet apart opgestart hoeven te worden, maar dat er een launcher is die alles voor je doet. \\
 Ook zullen we de client-server architecture verder uitwerken. Hierbij willen we proberen om het systeem te versimpelen door overbodige connecties tussen klasses te verwijderen of om te zetten naar client-server communicatie. Ook zullen we de documentatie van het systeem proberen te verbeteren. \\
-Een ander punt waar we aan gaan werken is het schrijven van testen. Dit zullen voornamelijk functionaliteitstesten zijn. 
+Een ander punt waar we aan gaan werken is het schrijven van testen. Dit zullen voornamelijk functionaliteitstesten zijn. \\
+In de bijlage bevindt zich ook de toepassing van de MoSCoW-methode.
 
 \section{Wat zou er kunnen gebeuren}
 Als we meer tijd en ervaring zouden hebben zouden we het hele systeem omgooien. Zodanig dat de server-client architecture nog beter wordt geimplementeerd, de documentatie duidelijk is, en alles in het systeem goed getest is. Bij een langer lopend project is het te overwegen om alsnog Repast te gaan gebruiken. Dit zou dus betekenen dat er ook goed naar de link tussen GOAL en Repast gekeken moet worden. \\
 Het is dan ook heel belangrijk dat het overzicht bewaart blijft, dat er kritisch naar de code wordt gekeken zodat het systeem optimaal werkt.
 
 \newpage
-\textbf{Bijlagen} 
+\section*{Bijlagen} 
 Deze bijlage bevat een aantal voorbeelden van 'slechte' code en comments. Het zijn situaties die we willen verbeteren en voorkomen. \\
 
 Lege methodes \\
@@ -64,5 +64,45 @@ Niet getest, op de gok iets proberen \\
 
 Zou gedaan moeten worden, maar is dus niet gedaan \\
 \includegraphics[width=\linewidth]{TODOs+shouldBeFixed} \\
+
+\newpage
+\section*{MoSCoW}
+\subsection*{Must}
+\begin{enumerate}
+\item[-] Fully integration tests
+\item[-] Test coverage of 50 $\%$
+\item[-] System works same as before refactoring, functionallities are the same
+\item[-] Documentation codeBase complete on package level
+\item[-] Wouter must know how the new architecture is
+\item[-] Launcher
+\item[-] New logger fully integrated, old logger does not excist anymore
+\item[-] Good graphical overview
+\item[-] Make sure that the stakeholders get why we do what we do (eg with Repast)
+\item[-] Integration with other groups
+\item[-] System with Jenskins and Sonar on server TU Delft
+\item[-] Exception handling
+\end{enumerate}
+
+\subsection*{Should}
+\begin{enumerate}
+\item[-] Reduce indicated mistakes given by Sonar
+\item[-] Documentation codeBase for core complete on classe level
+\item[-] Visualization package for Client en Server mergen
+\end{enumerate}
+
+\subsection*{Could}
+\begin{enumerate}
+\item[-] Documentation codeBase complete on classe level
+\item[-] Analysing tool wich make use of the logger
+\item[-] Use CodeCity on old on new system
+\end{enumerate}
+
+\subsection*{Won't}
+\begin{enumerate}
+\item[-] Logger replay function
+\item[-] More use of Repast
+\item[-] Documentation codeBase complete on method level
+\end{enumerate}
+
 
 \end{document}

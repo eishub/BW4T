@@ -12,6 +12,6 @@ public final class VisualizerSettings {
     public final static int roomTextOffset = 25;
 
     private VisualizerSettings() {
-    };
+    }
 
 }

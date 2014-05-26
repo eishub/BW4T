@@ -10,6 +10,10 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 
 /**
  * Handles the event to exit the program.
+ * <p>
+ * @author        
+ * @version     0.1                
+ * @since       12-05-2014        
  */
 class MenuOptionExit extends AbstractMenuOption {
 
@@ -34,7 +38,7 @@ class MenuOptionExit extends AbstractMenuOption {
         // Check if current config is different from last saved config
         if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())) {
             // Check if user wants to save current configuration
-            int response = ScenarioEditor.option.showConfirmDialog(
+            int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
                     null,
                     ScenarioEditorController.CONFIRM_SAVE_TXT,
                     "",

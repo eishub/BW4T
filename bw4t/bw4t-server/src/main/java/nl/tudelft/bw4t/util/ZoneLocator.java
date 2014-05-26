@@ -4,7 +4,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.tudelft.bw4t.server.BW4TEnvironment;
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.Zone;
 import repast.simphony.space.continuous.NdPoint;
@@ -16,6 +16,12 @@ import repast.simphony.space.continuous.NdPoint;
  * 
  */
 public class ZoneLocator {
+	/**
+	 * Utility class, cannot be instantiated.
+	 */
+	private ZoneLocator(){
+	}
+	
 	/**
 	 * Find {@link Zone} containing given point.
 	 * 
@@ -127,7 +133,6 @@ public class ZoneLocator {
 
 		for (Object o : corridors) {
 			Corridor corridor = (Corridor) o;
-			Point2D p = new Point2D.Double(corridor.getLocation().getX(), corridor.getLocation().getY());
 			double dist = corridor.distanceTo(location);
 
 			if (dist < nearestdist) {

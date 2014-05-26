@@ -17,7 +17,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by Calvin on 12-5-2014.
+ * <p>
+ * @author      Calvin Wong Loi Sing  
+ * @version     0.1                
+ * @since       12-05-2014        
  */
 public class BW4TClientConfigTest {
 
@@ -106,6 +109,7 @@ public class BW4TClientConfigTest {
     /**
      * Tests whether the fields stay the same after saving
      * and then loading them from xml.
+     * 
      * @throws FileNotFoundException When the file could not be found.
      * @throws JAXBException If there was an error with the xml loader.
      */

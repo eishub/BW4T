@@ -23,11 +23,17 @@ import nl.tudelft.bw4t.scenariogui.util.Format;
 /**
  * The ConfigurationPanel class represents the left pane of the MainPanel. It
  * shows the options the user can configure.
+ * <p>
+ * @author        
+ * @version     0.1                
+ * @since       12-05-2014        
  */
+ 
 public class ConfigurationPanel extends JPanel {
     
     /** Localhost. */
     private static final String LOCALHOST = "localhost";
+    
     /** True. */
     private static final String TRUE = "true";
     
@@ -42,8 +48,6 @@ public class ConfigurationPanel extends JPanel {
 
     /**
      * The default values for in the GUI.
-     * @author Nick
-     *
      */
     public static enum DEFAULT_VALUES {
         /** The default server ip. */
@@ -66,6 +70,7 @@ public class ConfigurationPanel extends JPanel {
 
         /**
          * Constructs a new default configuration.
+         * 
          * @param newValue The new default value.
          */
         DEFAULT_VALUES(final String newValue) {
@@ -288,6 +293,8 @@ public class ConfigurationPanel extends JPanel {
 
     /**
      * Show the option to use GOAL in the panel.
+     * 
+     * @deprecated Always the case, so there was no need to make this an option. 
      */
     // private void showGoalOptions(){
     // c.insets = new Insets(8, 8, 0, 0);
@@ -371,8 +378,7 @@ public class ConfigurationPanel extends JPanel {
     /**
      * Sets the value of the text field of the client IP.
      *
-     * @param newClientIP
-     *            The IP of the client
+     * @param newClientIP   The IP of the client.
      */
     public final void setClientIP(final String newClientIP) {
         this.clientIP.setText(newClientIP);
@@ -390,8 +396,7 @@ public class ConfigurationPanel extends JPanel {
     /**
      * Sets the value of the text field of the client port.
      *
-     * @param newClientPort
-     *            The port of the client
+     * @param newClientPort The port of the client.
      */
     public final void setClientPort(final String newClientPort) {
         this.clientPort.setText(newClientPort);
@@ -409,8 +414,7 @@ public class ConfigurationPanel extends JPanel {
     /**
      * Sets the value of the text field of the server IP.
      *
-     * @param newServerIP
-     *            The IP of the server
+     * @param newServerIP   The IP of the server.
      */
     public final void setServerIP(final String newServerIP) {
         this.serverIP.setText(newServerIP);
@@ -428,8 +432,7 @@ public class ConfigurationPanel extends JPanel {
     /**
      * Sets the value of the text field of the server port.
      *
-     * @param newServerPort
-     *            The port of the server
+     * @param newServerPort The port of the server.
      */
     public final void setServerPort(final String newServerPort) {
         this.serverPort.setText(newServerPort);
@@ -438,6 +441,7 @@ public class ConfigurationPanel extends JPanel {
     /**
      * Returns if GOAL needs to be used.
      *
+     * @deprecated Goal is always used, so there is not use of this method.
      * @return The use of GOAL.
      */
     // public boolean useGoal(){
@@ -450,8 +454,8 @@ public class ConfigurationPanel extends JPanel {
     /**
      * Sets if GOAL needs to be used.
      *
-     * @param The
-     *            use of GOAL.
+     * @deprecated Goal is always used, so there is not use of this method.
+     * @param useGoal Whether or not to use Goal.
      */
     // public void setUseGoal(boolean useGoal){
     // if(useGoal)
@@ -472,8 +476,7 @@ public class ConfigurationPanel extends JPanel {
     /**
      * Sets if GOAL needs to be used.
      *
-     * @param useGui
-     *           The  use of GOAL.
+     * @param useGui    The  use of GOAL.
      */
     public final void setUseGui(final boolean useGui) {
         if (useGui) {
@@ -505,8 +508,7 @@ public class ConfigurationPanel extends JPanel {
     /**
      * Sets the value of the text field to the path of the Map file.
      *
-     * @param mapFile
-     *            The path of the Map file
+     * @param mapFile   The path of the Map file
      */
     public final void setMapFile(final String mapFile) {
         this.mapFileTextField.setText(mapFile);
@@ -523,6 +525,7 @@ public class ConfigurationPanel extends JPanel {
 
     /**
      * Sets the new file chooser.
+     * 
      * @param newFileChooser The new file chooser.
      */
     public final void setFileChooser(final JFileChooser newFileChooser) {
@@ -563,13 +566,14 @@ public class ConfigurationPanel extends JPanel {
             isDefault = false;
         }
 
-        // TODO: check if the bot list is empty (since that is default too)
+        // TODO: check if the bot list is empty (since that is default too). Split into submethods as well.
 
         return isDefault;
     }
 
     /**
      * Returns the values that have been saved previously.
+     * 
      * @return The values that have been saved previously.
      */
     public String getOldValues() {
@@ -602,6 +606,7 @@ public class ConfigurationPanel extends JPanel {
 
     /**
      * Returns the current values.
+     * 
      * @return The current values.
      */
     public String getCurrentValues() {

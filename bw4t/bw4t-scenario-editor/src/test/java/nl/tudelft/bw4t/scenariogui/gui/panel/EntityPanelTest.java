@@ -21,7 +21,10 @@ import static org.mockito.Mockito.spy;
 
 
 /**
- * Created on 14-5-2014.
+ * <p>
+ * @author        
+ * @version     0.1                
+ * @since       14-05-2014        
  */
 public class EntityPanelTest {
 
@@ -145,7 +148,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteBotConfirmDelete() {
-        ScenarioEditor.option = new YesMockOptionPrompt();
+        ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
 
         /* Add a bot to the list */
         spyEntityPanel.getNewBotButton().doClick();
@@ -167,7 +170,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteBotDeclineDelete() {
-        ScenarioEditor.option = new NoMockOptionPrompt();
+        ScenarioEditor.setOptionPrompt(new NoMockOptionPrompt());
 
 
         /* Add a bot to the list */
@@ -190,7 +193,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteBotNoSelection() {
-        ScenarioEditor.option = new NoMockOptionPrompt();
+        ScenarioEditor.setOptionPrompt(new NoMockOptionPrompt());
 
 
         /* Add a bot to the list */
@@ -230,7 +233,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteEPartnerConfirmDelete() {
-        ScenarioEditor.option = new YesMockOptionPrompt();
+        ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
 
 
         /** Add an E-partner to the list */
@@ -253,7 +256,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteEPartnerDeclineDelete() {
-        ScenarioEditor.option = new NoMockOptionPrompt();
+        ScenarioEditor.setOptionPrompt(new NoMockOptionPrompt());
 
 
         /** Add an E-partner to the list */
@@ -275,7 +278,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteEPartnerSelection() {
-        ScenarioEditor.option = new NoMockOptionPrompt();
+        ScenarioEditor.setOptionPrompt(new NoMockOptionPrompt());
 
 
         /** Add an E-partner to the list */

@@ -90,7 +90,7 @@ public class BotEditorPanel extends JPanel {
 		buttonPanel.add(cancelButton);
 		
 		botCheckables.add(checkablesLabel);
-		checkablesPanel.setLayout(new BoxLayout(checkablesPanel,BoxLayout.PAGE_AXIS));
+		checkablesPanel.setLayout(new BoxLayout(checkablesPanel, BoxLayout.PAGE_AXIS));
 		checkablesPanel.add(gripperCheckbox);
 		checkablesPanel.add(colorblindCheckbox);
 		checkablesPanel.add(movespeedCheckbox);

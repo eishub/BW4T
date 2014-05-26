@@ -1,5 +1,10 @@
 package nl.tudelft.bw4t.client.startup;
 
+import eis.exceptions.ManagementException;
+import eis.exceptions.NoEnvironmentException;
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,11 +14,6 @@ import nl.tudelft.bw4t.startup.LauncherException;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
-
-import eis.exceptions.ManagementException;
-import eis.exceptions.NoEnvironmentException;
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
 
 /**
  * This class is used to startup the remote environment to interact with the
@@ -31,7 +31,7 @@ public final class Launcher {
 	/**
 	 * The log4j Logger which displays logs on console
 	 */
-	private static Logger LOGGER = Logger.getLogger(Launcher.class);
+	private static final Logger LOGGER = Logger.getLogger(Launcher.class);
 
 	/**
 	 * This is a utility class, no instantiation!
@@ -82,7 +82,7 @@ public final class Launcher {
 	 *            {@link RemoteEnvironment#init(Map)}
 	 * @return the created environment
 	 */
-	public static RemoteEnvironment startupEnvironment(
+	public static synchronized RemoteEnvironment startupEnvironment(
 			Map<String, Parameter> initParams) {
 		if (environment != null) {
 			return environment;
@@ -130,11 +130,11 @@ public final class Launcher {
 	private static String findArgument(String[] args, String param, String def) {
 		for (int i = 0; i < args.length - 1; i++) {
 			if (args[i].equalsIgnoreCase(param)) {
-				LOGGER.info("Found parameter '" + param + "' with '" + args[i + 1] + "'");
+				LOGGER.debug("Found parameter '" + param + "' with '" + args[i + 1] + "'");
 				return args[i + 1];
 			}
 		}
-		LOGGER.info("Defaulting parameter '" + param + "' with '" + def + "'");
+		LOGGER.debug("Defaulting parameter '" + param + "' with '" + def + "'");
 		return def;
 	}
 

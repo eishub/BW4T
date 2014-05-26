@@ -16,7 +16,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Created on 13/05/2014.
+ * <p>
+ * @author        
+ * @version     0.1                
+ * @since       13-05-2014        
  */
 public class ConfigurationPanelTest {
 
