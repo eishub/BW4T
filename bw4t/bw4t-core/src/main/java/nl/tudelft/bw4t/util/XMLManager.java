@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.util;
+package nl.tudelft.bw4t.util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,7 +19,7 @@ import javax.xml.bind.Unmarshaller;
 public final class XMLManager {
 
     /**
-     * Prevents this class from being instanciated.
+     * Prevents this class from being instantiated.
      */
     private XMLManager() {
     }

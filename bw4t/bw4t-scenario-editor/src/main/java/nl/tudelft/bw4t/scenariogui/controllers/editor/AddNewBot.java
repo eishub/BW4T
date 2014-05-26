@@ -3,7 +3,7 @@ package nl.tudelft.bw4t.scenariogui.controllers.editor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import nl.tudelft.bw4t.scenariogui.config.BotConfig;
+import nl.tudelft.bw4t.scenarioeditor.BotConfig;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**

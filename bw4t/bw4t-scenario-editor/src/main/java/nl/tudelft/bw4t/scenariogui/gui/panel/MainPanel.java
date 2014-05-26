@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 
-import nl.tudelft.bw4t.scenariogui.config.BotConfig;
+import nl.tudelft.bw4t.scenarioeditor.BotConfig;
 
 /**
  *
@@ -19,7 +19,8 @@ import nl.tudelft.bw4t.scenariogui.config.BotConfig;
  * latter the EntityPanel.
  * <p>
  * @author      Katia Asmoredjo
- * @author      Joop Aué  
+ * @author      Joop Aué
+ * @author      Nick Feddes  
  * @version     0.1                
  * @since       12-05-2014        
  */
