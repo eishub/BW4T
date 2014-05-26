@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 
-import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenarioeditor.BotConfig;
 
 /**
  *

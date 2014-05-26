@@ -2,7 +2,7 @@ package nl.tudelft.bw4t.client.startup;
 
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import nl.tudelft.bw4t.scenarioeditor.BW4TClientConfig;
 import nl.tudelft.bw4t.util.XMLManager;
 
 /**

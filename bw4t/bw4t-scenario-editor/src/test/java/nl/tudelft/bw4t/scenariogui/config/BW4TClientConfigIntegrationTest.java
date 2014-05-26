@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import nl.tudelft.bw4t.scenarioeditor.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
