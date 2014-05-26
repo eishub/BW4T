@@ -303,8 +303,7 @@ public class RobotEntity implements RobotEntityInt {
 	}
 
 	/**
-	 * Percept if the robot is holding something. Send if it becomes true, and
-	 * send negated if it becomes false again.
+	 * Percept if the robot is holding something. Send if it becomes true, and send negated if it becomes false again.
 	 */
 	@AsPercept(name = "holding", filter = Filter.Type.ON_CHANGE_NEG)
 	public List<Block> getHolding() {
@@ -483,27 +482,30 @@ public class RobotEntity implements RobotEntityInt {
 	 */
 	@AsAction(name = "sendMessage")
 	public void sendMessage(String receiver, String message) throws ActException {
-		BW4TLogger.getInstance().logSentMessageAction(ourRobot.getName());
-		// Translate the message into parameters
-		Parameter[] parameters = new Parameter[2];
-		try {
-			parameters[0] = Translator.getInstance().translate2Parameter(ourRobot.getName())[0];
-			parameters[1] = Translator.getInstance().translate2Parameter(message)[0];
-		} catch (TranslationException e) {
-			throw new ActException("translating of message failed:" + message, e);
-		}
+		if ((ourRobot.isHuman() && ourRobot.isHoldingEPartner()) || !ourRobot.isHuman()) {
+			BW4TLogger.getInstance().logSentMessageAction(ourRobot.getName());
+			// Translate the message into parameters
+			Parameter[] parameters = new Parameter[2];
+			try {
+				parameters[0] = Translator.getInstance().translate2Parameter(ourRobot.getName())[0];
+				parameters[1] = Translator.getInstance().translate2Parameter(message)[0];
+			} catch (TranslationException e) {
+				throw new ActException("translating of message failed:" + message, e);
+			}
 
-		// Send to all other entities (except self)
-		if (receiver.equals("all")) {
-			for (String entity : BW4TEnvironment.getInstance().getEntities()) {
-				if (!entity.equals(ourRobot.getName())) {
-					BW4TEnvironment.getInstance().performClientAction(entity, new Action("receiveMessage", parameters));
+			// Send to all other entities (except self)
+			if (receiver.equals("all")) {
+				for (String entity : BW4TEnvironment.getInstance().getEntities()) {
+					if (!entity.equals(ourRobot.getName())) {
+						BW4TEnvironment.getInstance().performClientAction(entity,
+								new Action("receiveMessage", parameters));
+					}
 				}
 			}
-		}
-		// Send to a single entity
-		else {
-			BW4TEnvironment.getInstance().performClientAction(receiver, new Action("receiveMessage", parameters));
+			// Send to a single entity
+			else {
+				BW4TEnvironment.getInstance().performClientAction(receiver, new Action("receiveMessage", parameters));
+			}
 		}
 	}
 
@@ -517,12 +519,14 @@ public class RobotEntity implements RobotEntityInt {
 	 */
 	@AsAction(name = "receiveMessage")
 	public void receiveMessage(String sender, String message) {
-		// Add message to messageArray
-		ArrayList<String> messageArray = new ArrayList<String>();
-		messageArray.add(sender);
-		messageArray.add(message);
+		if ((ourRobot.isHuman() && ourRobot.isHoldingEPartner()) || !ourRobot.isHuman()) {
+			// Add message to messageArray
+			ArrayList<String> messageArray = new ArrayList<String>();
+			messageArray.add(sender);
+			messageArray.add(message);
 
-		messages.add(messageArray);
+			messages.add(messageArray);
+		}
 	}
 
 	/**
