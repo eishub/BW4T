@@ -40,7 +40,7 @@ public class HandicapTest {
 	 */	
 	@Test
 	public void structureColorBlindHandicapTest() {
-		Robot r = new Robot("",space,context,true);
+		Robot r = new Robot("",space,context,true, false, 0);
 		ColorBlindHandicap cbh = new ColorBlindHandicap(r);
 		assertTrue(r.handicapsMap.get("ColorBlind") instanceof HandicapInterface);
 		assertTrue(r.handicapsMap.get("ColorBlind") instanceof Handicap);
@@ -50,7 +50,7 @@ public class HandicapTest {
 	 */
 	@Test
 	public void structureGripperHandicapTest() {
-		Robot r = new Robot("",space,context,true);
+		Robot r = new Robot("",space,context,true, false, 0);
 		GripperHandicap gh = new GripperHandicap(r);
 		assertTrue(r.handicapsMap.get("Gripper") instanceof HandicapInterface);
 		assertTrue(r.handicapsMap.get("Gripper") instanceof Handicap);
@@ -60,7 +60,7 @@ public class HandicapTest {
 	 */
 	@Test
 	public void structureMoveSpeedHandicapTest() {
-		Robot r = new Robot("",space,context,true);
+		Robot r = new Robot("",space,context,true, false, 0);
 		MoveSpeedHandicap msh = new MoveSpeedHandicap(r, 1.0);
 		assertTrue(r.handicapsMap.get("MoveSpeed") instanceof HandicapInterface);
 		assertTrue(r.handicapsMap.get("MoveSpeed") instanceof Handicap);
@@ -70,7 +70,7 @@ public class HandicapTest {
 	 */
 	@Test
 	public void structureSizeOverloadHandicapTest() {
-		Robot r = new Robot("",space,context,true);
+		Robot r = new Robot("",space,context,true, false, 0);
 		SizeOverloadHandicap soh = new SizeOverloadHandicap(r, 2);
 		assertTrue(r.handicapsMap.get("SizeOverload") instanceof HandicapInterface);
 		assertTrue(r.handicapsMap.get("SizeOverload") instanceof Handicap);
@@ -81,7 +81,7 @@ public class HandicapTest {
 	 */
 	@Test
 	public void structureAllHandicapsTest() {
-		Robot r = new Robot("",space,context,true);
+		Robot r = new Robot("",space,context,true, false, 0);
 		ColorBlindHandicap cb = new ColorBlindHandicap(r);
 		GripperHandicap gh = new GripperHandicap(cb);
 		MoveSpeedHandicap msh = new MoveSpeedHandicap(gh, 0.8);
@@ -106,7 +106,7 @@ public class HandicapTest {
 	 */
 	@Test
 	public void getSpeedModTest() {
-		Robot r = new Robot("",space,context,true);
+		Robot r = new Robot("",space,context,true, false, 0);
 		MoveSpeedHandicap msh = new MoveSpeedHandicap(r, 0.5);
 		double delta = 0;
 		assertEquals(0.5, msh.getSpeedMod(), delta);
@@ -117,7 +117,7 @@ public class HandicapTest {
 	 */
 	@Test
 	public void getSpeedModImmovableTest() {
-		Robot r = new Robot("",space,context,true);
+		Robot r = new Robot("",space,context,true, false, 0);
 		MoveSpeedHandicap msh = new MoveSpeedHandicap(r, 0);
 		double delta = 0;
 		assertEquals(0, msh.getSpeedMod(), delta);
@@ -125,7 +125,7 @@ public class HandicapTest {
 	
 	@Test
 	public void getSizeSizeOverloadTest() {
-		Robot r = new Robot("",space,context,true);
+		Robot r = new Robot("",space,context,true, false, 0);
 		SizeOverloadHandicap soh = new SizeOverloadHandicap(r, 3);
 		assertTrue(r.handicapsMap.get("SizeOverload") instanceof HandicapInterface);
 		assertTrue(r.handicapsMap.get("SizeOverload") instanceof Handicap);
