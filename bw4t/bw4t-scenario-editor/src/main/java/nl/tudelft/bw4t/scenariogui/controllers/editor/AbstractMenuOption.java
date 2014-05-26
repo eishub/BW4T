@@ -8,8 +8,9 @@ import java.io.FileNotFoundException;
 import javax.swing.JFileChooser;
 import javax.xml.bind.JAXBException;
 
+import nl.tudelft.bw4t.scenarioeditor.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfigIntegration;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
@@ -17,7 +18,7 @@ import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 /**
  * Handles the event of the menu.
  * <p>
- * @author        
+ * @author      Nick Feddes 
  * @version     0.1                
  * @since       12-05-2014        
  */
@@ -111,8 +112,9 @@ public abstract class AbstractMenuOption implements ActionListener {
             }
         }
         try {
-            BW4TClientConfig configuration =  
-                    new BW4TClientConfig((MainPanel) (getController().getMainView()).getContentPane(), path);
+            BW4TClientConfig configuration = BW4TClientConfigIntegration.
+                    createConfigFromPanel((MainPanel) (getController().getMainView()).
+                            getContentPane(), path);
             
             //TODO: UNLOAD AND SAVE BOTS HERE
             configuration.toXML();
