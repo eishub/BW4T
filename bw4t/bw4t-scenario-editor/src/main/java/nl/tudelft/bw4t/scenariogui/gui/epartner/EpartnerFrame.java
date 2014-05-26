@@ -30,7 +30,7 @@ public class EpartnerFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public gui() {
+	public EpartnerFrame() {
 		setTitle("e-Partner");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 292, 144);
@@ -39,29 +39,29 @@ public class EpartnerFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[][141px][][141px][141px]", "[][][125px][125px]"));
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Communicator");
-		chckbxNewCheckBox.setAlignmentY(Component.TOP_ALIGNMENT);
-		contentPane.add(chckbxNewCheckBox, "cell 0 0,grow");
+		JCheckBox CommunicatorCheckBox = new JCheckBox("Communicator");
+		CommunicatorCheckBox.setAlignmentY(Component.TOP_ALIGNMENT);
+		contentPane.add(CommunicatorCheckBox, "cell 0 0,grow");
 		
-		JButton btnCancel = new JButton("Cancel");
-		btnCancel.addActionListener(new ActionListener() {
+		JButton CancelButton = new JButton("Cancel");
+		CancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
 		
-		JCheckBox chckbxCommunicator = new JCheckBox("GPS");
-		chckbxCommunicator.setVerticalAlignment(SwingConstants.TOP);
-		contentPane.add(chckbxCommunicator, "cell 0 1,grow");
-		contentPane.add(btnCancel, "cell 0 3,growx,aligny bottom");
+		JCheckBox GPSCheckBox = new JCheckBox("GPS");
+		GPSCheckBox.setVerticalAlignment(SwingConstants.TOP);
+		contentPane.add(GPSCheckBox, "cell 0 1,grow");
+		contentPane.add(CancelButton, "cell 0 3,growx,aligny bottom");
 		
-		JButton btnApply = new JButton("Apply");
-		btnApply.addActionListener(new ActionListener() {
+		JButton ApplyButton = new JButton("Apply");
+		ApplyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
 		
-		JButton btnReset = new JButton("Reset");
-		contentPane.add(btnReset, "cell 2 3,growx,aligny bottom");
-		contentPane.add(btnApply, "cell 4 3,alignx right,aligny bottom");
+		JButton ResetButton = new JButton("Reset");
+		contentPane.add(ResetButton, "cell 2 3,growx,aligny bottom");
+		contentPane.add(ApplyButton, "cell 4 3,alignx right,aligny bottom");
 	}
 }
