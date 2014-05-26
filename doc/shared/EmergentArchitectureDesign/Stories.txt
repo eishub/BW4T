@@ -1,0 +1,25 @@
+User stories
+
+Story 1: Startup server
+-environment moet verschijnen
+
+Story x: Startup client
+- bots launche, staat in front dropzone en staat stil
+
+Story 2: Move the bot
+- als de bot in direction d wil lopen en er staat niks in de weg lukt dit
+- als de bot in direction d wil lopen en in direction d staat iets in de weg dan gaat dit niet en blijft de bot op zn huidige positie staan 
+(bijvoorbeeld door een muur of als de kamer bezet is)
+muur -> kijken voor een andere route --> percept (muur is extra feature)
+kamer -> wachten --> percept
+
+Story 3: Pickup a block
+- als de bot in een kamer is en het blokje is er, pak op
+- als de bot in een kamer staat en een blokje op wil pakken wat er niet is, dan...
+- als de bot al een blokje vast heeft en nog een blokje wil oppakken dan
+
+Story 4: Deliver a block
+- als de bot een blokje vast heeft dan..
+
+Story 5: Communication
+- als een bot ...

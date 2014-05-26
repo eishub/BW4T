@@ -9,7 +9,8 @@ import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.handicap.HandicapInterface;
-import nl.tudelft.bw4t.server.BW4TLogger;
+import nl.tudelft.bw4t.map.Constants;
+import nl.tudelft.bw4t.server.logging.BW4TLogger;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.DropZone;
@@ -181,11 +182,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 */
 	@Override
 	public boolean canPickUp(Block b) {
-		double distance = distanceTo(b.getLocation());
-		if (distance <= ARM_DISTANCE && b.isFree() && holding.size() < capacity)
-			return true;
-		else
-			return false;
+		return distanceTo(b.getLocation()) <= ARM_DISTANCE && b.isFree() && holding.size() < capacity;
 	}
 
 	/**
@@ -562,7 +559,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	}
 
 	/**
-	 * set the parent, does not do anything because Robot is the super parent
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setParent(HandicapInterface hI) {
