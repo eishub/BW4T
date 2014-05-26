@@ -30,4 +30,8 @@ public class EPartner extends BoundedMoveableObject{
 		this.holder = robot;
 	}
 	
+	public Robot getHolder(){
+		return this.holder;
+	}
+	
 }
