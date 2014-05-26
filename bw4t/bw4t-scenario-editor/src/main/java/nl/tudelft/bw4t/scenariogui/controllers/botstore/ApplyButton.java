@@ -24,7 +24,13 @@ class ApplyButton implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent ae) {
-        view.setDataObject();
+        view.getDataObject().setBotSize(view.getSizeSlider().getValue());
+        view.getDataObject().setBotSpeed(view.getSpeedSlider().getValue());
+        view.getDataObject().setBotBatteryCapacity(view.getBatterySlider().getValue());
+        view.getDataObject().setColorBlindHandicap(view.getColorblindCheckbox().isEnabled());
+        view.getDataObject().setGripperHandicap(view.getGripperCheckbox().isEnabled());
+        view.getDataObject().setMoveSpeedHandicap(view.getmovespeedCheckbox().isEnabled());
+        view.getDataObject().setSizeOverloadHandicap(view.getsizeoverloadCheckbox().isEnabled());
         BotConfig data = view.getDataObject();
         int index = mp.getEntityPanel().getSelectedBotRow();
         // Overwrite the existing config

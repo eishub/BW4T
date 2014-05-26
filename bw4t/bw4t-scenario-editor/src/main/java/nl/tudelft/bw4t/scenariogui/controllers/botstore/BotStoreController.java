@@ -26,9 +26,6 @@ public class BotStoreController {
         view.getBotEditorPanel().getResetButton().addActionListener(
                 new ResetButton(getMainView().getBotEditorPanel()));
 
-        view.getBotEditorPanel().getCancelButton().addActionListener(
-                new CancelButton(getMainView().getBotEditorPanel()));
-
         view.getBotEditorPanel().getApplyButton().addActionListener(
                 new ApplyButton(getMainView().getBotEditorPanel()));
 
@@ -52,6 +49,9 @@ public class BotStoreController {
 
         view.getBotEditorPanel().getmovespeedCheckbox().addActionListener(
                 new JumpBox(getMainView().getBotEditorPanel()));
+        
+        view.getBotEditorPanel().getCancelButton().addActionListener(
+                new CancelButton(getMainView()));
     }
 
     public BotEditor getMainView() {
