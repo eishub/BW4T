@@ -584,8 +584,20 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	public Robot getSuperParent() {
 		return this;
 	}
-
 	
+	
+	public HashMap<String, HandicapInterface> getHandicapsMap() {
+		return handicapsMap;
+	}
+
+
+
+	public void setHandicapsMap(HashMap<String, HandicapInterface> handicapsMap) {
+		this.handicapsMap = handicapsMap;
+	}
+
+
+
 	public void setSize(int s) {
 		this.SIZE = s;
 		setSize(s, s);
