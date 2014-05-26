@@ -15,18 +15,22 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.apache.log4j.Logger;
-
 import nl.tudelft.bw4t.BW4TBuilder;
+import nl.tudelft.bw4t.controller.ServerMapController;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.server.environment.Stepper;
+import nl.tudelft.bw4t.view.MapRenderer;
+
+import org.apache.log4j.Logger;
+
 import repast.simphony.context.Context;
 import eis.exceptions.ManagementException;
 import eis.iilang.Identifier;
@@ -54,7 +58,8 @@ public class ServerContextDisplay extends JFrame {
 	 */
 	private static final Logger LOGGER = Logger.getLogger(ServerContextDisplay.class);
 
-	private ServerMapRenderer myRenderer;
+	private final MapRenderer myRenderer;
+	private final ServerMapController controller;
 
 	/**
 	 * Create a new instance of this class and initialize it
@@ -66,7 +71,7 @@ public class ServerContextDisplay extends JFrame {
 	 * @throws FileNotFoundException
 	 */
 	public ServerContextDisplay(Context context) throws InstantiationException, IllegalAccessException,
-			FileNotFoundException {
+	FileNotFoundException {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
@@ -77,8 +82,10 @@ public class ServerContextDisplay extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 
-		myRenderer = new ServerMapRenderer(context);
-		add(myRenderer, BorderLayout.CENTER);
+		controller = new ServerMapController(Launcher.getEnvironment().getMap(), context);
+		myRenderer = new MapRenderer(controller);
+		add(new JScrollPane(myRenderer), BorderLayout.CENTER);
+		//		add(new ServerMapRenderer(context), BorderLayout.CENTER);
 		add(new ControlPanel(this), BorderLayout.NORTH);
 		pack();
 		setVisible(true);
@@ -89,7 +96,7 @@ public class ServerContextDisplay extends JFrame {
 	 * not assume ownership; and nobody else can create us it seems.
 	 */
 	public void close() {
-		myRenderer.stop();
+		myRenderer.getController().setRunning(false);
 		setVisible(false);
 	}
 

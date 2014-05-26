@@ -1,7 +1,5 @@
 package nl.tudelft.bw4t.server.environment;
 
-import eis.exceptions.ManagementException;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -9,15 +7,17 @@ import java.rmi.RemoteException;
 
 import javax.xml.bind.JAXBException;
 
+import nl.tudelft.bw4t.server.BW4TServer;
+import nl.tudelft.bw4t.startup.LauncherException;
+import nl.tudelft.bw4t.util.FileUtils;
+
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
-import nl.tudelft.bw4t.server.BW4TServer;
-import nl.tudelft.bw4t.startup.LauncherException;
-import nl.tudelft.bw4t.util.FileUtils;
 import repast.simphony.scenario.ScenarioLoadException;
+import eis.exceptions.ManagementException;
 
 /**
  * This class handles the startup of the server interpreting the configuration variables and invoking the proper
@@ -180,6 +180,7 @@ public class Launcher {
 	private void setupEnvironment() {
 		try {
 			environment = new BW4TEnvironment(setupRemoteServer(), paramScenario, paramMap, paramGUI, paramKey);
+			environment.launchAll();
 		} catch (ManagementException | IOException | ScenarioLoadException | JAXBException e) {
 			LOGGER.fatal("Failed to start the BW4T Environment.");
 			throw new LauncherException("failed to start the bw4t environment", e);

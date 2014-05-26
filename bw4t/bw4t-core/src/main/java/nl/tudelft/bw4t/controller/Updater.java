@@ -27,7 +27,9 @@ class Updater implements Runnable {
 		if (controller.isRunning()) {
 			return;
 		}
-		controller.setRunning(true);
+		controller.setForceRunning(true);
+
+		LOGGER.info("Started updater thread for: " + controller);
 
 		while (controller.isRunning()) {
 
@@ -40,6 +42,7 @@ class Updater implements Runnable {
 				LOGGER.warn("The update thread was interrupted", e);
 			}
 		}
+		LOGGER.info("Stopped updater thread for: " + controller);
 		controller = null;
 	}
 }

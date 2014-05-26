@@ -2,6 +2,8 @@ package nl.tudelft.bw4t.controller;
 
 import java.awt.geom.Point2D;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import nl.tudelft.bw4t.map.BlockColor;
@@ -46,6 +48,15 @@ public class TestMapController extends AbstractMapController {
 	protected void updateRenderer(MapRendererInterface mri) {
 		mri.validate();
 		mri.repaint();
+	}
+
+	@Override
+	public List<BlockColor> getSequence() {
+		List<BlockColor> set = new LinkedList<BlockColor>();
+		set.add(BlockColor.RED);
+		set.add(BlockColor.BLUE);
+		set.add(BlockColor.BLUE);
+		return set;
 	}
 
 }

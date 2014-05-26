@@ -1,10 +1,8 @@
 package nl.tudelft.bw4t.controller;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.MapFormatException;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Point;
@@ -45,7 +43,7 @@ public abstract class AbstractMapController implements MapController, Runnable {
 	public AbstractMapController(NewMap map) {
 		renderSettings = new MapRenderSettings();
 		this.setMap(map);
-		startupUpdateException();
+		setRunning(true);
 	}
 
 	/**
@@ -97,7 +95,16 @@ public abstract class AbstractMapController implements MapController, Runnable {
 	 * @param run
 	 *            the value to be set
 	 */
-	protected void setRunning(boolean run) {
+	@Override
+	public void setRunning(boolean run) {
+		if(!run){
+			setForceRunning(run);
+		} else if(!running) {
+			startupUpdateThread();
+		}
+	}
+
+	protected void setForceRunning(boolean run) {
 		running = run;
 	}
 
@@ -105,7 +112,7 @@ public abstract class AbstractMapController implements MapController, Runnable {
 		return renderers;
 	}
 
-	private void startupUpdateException() {
+	private void startupUpdateThread() {
 		Thread thread = new Thread(new Updater(this));
 		thread.start();
 	}
@@ -118,11 +125,6 @@ public abstract class AbstractMapController implements MapController, Runnable {
 	@Override
 	public void removeRenderer(MapRendererInterface mri) {
 		getRenderers().remove(mri);
-	}
-
-	@Override
-	public List<BlockColor> getSequence() {
-		return map.getSequence();
 	}
 
 	@Override
@@ -170,5 +172,6 @@ public abstract class AbstractMapController implements MapController, Runnable {
 	 *            the current renderer
 	 */
 	protected abstract void updateRenderer(MapRendererInterface mri);
+
 
 }

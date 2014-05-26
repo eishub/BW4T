@@ -1,8 +1,11 @@
 package nl.tudelft.bw4t.controller;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.Block;
@@ -15,6 +18,7 @@ import nl.tudelft.bw4t.zone.Room;
 import repast.simphony.context.Context;
 import repast.simphony.space.Dimensions;
 import repast.simphony.space.continuous.ContinuousSpace;
+import repast.simphony.util.collections.IndexedIterable;
 import eis.iilang.EnvironmentState;
 
 public class ServerMapController extends AbstractMapController {
@@ -28,6 +32,16 @@ public class ServerMapController extends AbstractMapController {
 		serverContext = context;
 		Dimensions size = ((ContinuousSpace) context.getProjection("BW4T_Projection")).getDimensions();
 		getRenderSettings().setWorldDimensions((int) size.getWidth(), (int) size.getHeight());
+	}
+
+	@Override
+	public List<BlockColor> getSequence() {
+		IndexedIterable<Object> dropZone = serverContext.getObjects(DropZone.class);
+		if(dropZone.size() == 0){
+			return new ArrayList<>();
+		}
+		DropZone zone = (DropZone) dropZone.get(0);
+		return zone.getSequence();
 	}
 
 	@Override
@@ -47,7 +61,7 @@ public class ServerMapController extends AbstractMapController {
 		for (Object roomObj : serverContext.getObjects(Room.class)) {
 			Room sroom = (Room) roomObj;
 			if (sroom.getName().equals(room.getName())) {
-				return sroom.getOccupier() == null;
+				return sroom.getOccupier() != null;
 			}
 		}
 		return false;

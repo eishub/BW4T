@@ -107,6 +107,7 @@ public class Block extends BoundedMoveableObject {
 	}
 
 	public nl.tudelft.bw4t.map.view.Block getView() {
+		this.getLocation();
 		return this.view;
 	}
 
