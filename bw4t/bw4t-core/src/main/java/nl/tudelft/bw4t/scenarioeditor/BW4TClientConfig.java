@@ -69,7 +69,7 @@ public class BW4TClientConfig {
      */
     @XmlElementWrapper(name = "bots")
     @XmlElement(name = "bot")
-    private List<BotConfig> bots;
+    private List<BotConfig> bots = new ArrayList<BotConfig>();
 
     /**
      * An empty <code>BW4TClientConfig</code> object.
