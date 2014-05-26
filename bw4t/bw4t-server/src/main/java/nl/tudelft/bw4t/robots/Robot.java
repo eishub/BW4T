@@ -158,11 +158,6 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	}
 
 	@Override
-	public int hashCode() {
-		return super.hashCode();
-	}
-
-	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Robot) {
 			return super.equals(obj);
@@ -372,12 +367,12 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 			}
 
 			r =  MoveType.HIT_CLOSED_DOOR;
-		}
+		
 
 		/**
 		 * Both sides are not a room. Check if target accesible
 		 */
-		else if (endzone instanceof Corridor) {
+		} else if (endzone instanceof Corridor) {
 			if (!oneBotPerZone || endzone.containsMeOrNothing(this)) {
 				r = MoveType.ENTER_CORRIDOR;
 			}
@@ -447,7 +442,8 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 			// Calculate the distance that the robot is allowed to move.
 			double distance = distanceTo(targetLocation);
 			if (distance < MIN_MOVE_DISTANCE) {
-				stopRobot(); // we're there
+				// we're there
+				stopRobot();
 			} else {
 				double movingDistance = Math.min(distance, MAX_MOVE_DISTANCE);
 
@@ -534,7 +530,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 * The robot charges.
 	 */
 	public void recharge() {
-		if (this.getZone().getName().equals("chargingzone")) {
+		if("chargingzone".equals(this.getZone().getName())) {
 			this.battery.recharge();
 		}
 	}
