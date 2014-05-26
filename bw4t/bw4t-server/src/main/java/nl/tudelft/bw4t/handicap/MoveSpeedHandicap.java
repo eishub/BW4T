@@ -29,7 +29,7 @@ public class MoveSpeedHandicap extends Handicap {
 		speedMod = speedModifier;
 		isActive = true;
 		
-		robot.handicapsMap.put("MoveSpeed", this);
+		robot.getHandicapsMap().put("MoveSpeed", this);
 	}
 	/**
 	 * Overridden method move of Robot which has the speed modifier
@@ -62,7 +62,7 @@ public class MoveSpeedHandicap extends Handicap {
 						 * Valentine
 						 * The robot's battery discharges when it moves.
 						 */
-						robot.battery.discharge();
+						robot.getBattery().discharge();
 					} catch (SpatialException e) {
 						robot.collided = true;
 						robot.stopRobot();

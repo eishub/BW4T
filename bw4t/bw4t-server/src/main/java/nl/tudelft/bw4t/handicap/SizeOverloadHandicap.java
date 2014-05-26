@@ -19,7 +19,7 @@ public class SizeOverloadHandicap extends Handicap {
 		super(p);
 		isActive = true;
 		robot.setSize(s);
-		robot.handicapsMap.put("SizeOverload", this);
+		robot.getHandicapsMap().put("SizeOverload", this);
 	}
 	
 	/**
