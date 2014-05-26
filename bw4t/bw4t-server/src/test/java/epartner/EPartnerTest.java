@@ -51,5 +51,12 @@ public class EPartnerTest {
 	/**
 	 * Test to check if a human controlled Robot can pickup an E-Partner
 	 */
+	@Test
+	public void humanPickupEPartnerTest(){
+		Robot r = new Robot("",space,context,true, true, 0);
+		EPartner e = new EPartner(space, context);
+		r.pickUpEPartner(e);
+		assertTrue(r.isHoldingEPartner());
+	}
 
 }
