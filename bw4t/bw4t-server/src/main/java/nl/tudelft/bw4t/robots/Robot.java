@@ -642,4 +642,12 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	public void setHoldingEPartner(boolean isHoldingEPartner) {
 		this.isHoldingEPartner = isHoldingEPartner;
 	}
+
+	public HashMap<String, HandicapInterface> getHandicapsMap() {
+		return this.handicapsMap;
+	}
+	
+	public Battery getBattery() {
+		return this.battery;
+	}
 }
