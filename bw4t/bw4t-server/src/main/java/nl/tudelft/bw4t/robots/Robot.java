@@ -80,7 +80,11 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	/**
 	 * True if the robot is human.
 	 */
+<<<<<<< HEAD
 	private boolean isHuman = false;
+=======
+	public boolean isHuman;
+>>>>>>> b7f32acc6af10c0a410919b37a7d1ba1fd8c849d
 
 	/**
 	 * Creates a new robot.
@@ -94,7 +98,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 * @param oneBotPerZone
 	 *            true if max 1 bot in a zone
 	 */
-	public Robot(String name, ContinuousSpace<Object> space, Context<Object> context, boolean oneBotPerZone) {
+	public Robot(String name, ContinuousSpace<Object> space, Context<Object> context, boolean oneBotPerZone, boolean human) {
 		super(space, context);
 
 		this.name = name;
@@ -108,6 +112,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 		this.battery = new Battery(Integer.MAX_VALUE, Integer.MAX_VALUE, 0);
 		this.holding = new ArrayList<Block>(capacity);
 		handicapsMap = new HashMap<String, HandicapInterface>();
+		isHuman = human;
 	}
 
 	/**
