@@ -3,6 +3,7 @@ package nl.tudelft.bw4t.scenariogui.controllers.editor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditor;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
@@ -35,6 +36,11 @@ class ModifyBot implements ActionListener {
      * @param ae The action.
      */
     public void actionPerformed(final ActionEvent ae) {
-        System.out.println("Go to Bot Store (modify)");
+    	int row = view.getEntityPanel().getSelectedBotRow();
+
+        if (row == -1) {
+            return;
+        }
+    	new BotEditor(view);
     }
 }
