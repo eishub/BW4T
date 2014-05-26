@@ -69,7 +69,13 @@ public class BW4TClientConfig {
      */
     @XmlElementWrapper(name = "bots")
     @XmlElement(name = "bot")
-    private List<BotConfig> bots = new ArrayList<BotConfig>();
+    private List<BotConfig> bots;
+
+    /**
+     * An empty <code>BW4TClientConfig</code> object.
+     */
+    public BW4TClientConfig() {
+    }
 
     /**
      * Converts Java Object into XML file.
