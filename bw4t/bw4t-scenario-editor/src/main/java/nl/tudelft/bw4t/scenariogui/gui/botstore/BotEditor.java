@@ -1,4 +1,3 @@
-package nl.tudelft.bw4t.scenariogui.gui.botstore;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
