@@ -42,8 +42,8 @@ public class HandicapTest {
 	public void structureColorBlindHandicapTest() {
 		Robot r = new Robot("",space,context,true);
 		ColorBlindHandicap cbh = new ColorBlindHandicap(r);
-		assertTrue(r.handicapsMap.get("ColorBlind") instanceof HandicapInterface);
-		assertTrue(r.handicapsMap.get("ColorBlind") instanceof Handicap);
+		assertTrue(r.getHandicapsMap().get("ColorBlind") instanceof HandicapInterface);
+		assertTrue(r.getHandicapsMap().get("ColorBlind") instanceof Handicap);
 	}
 	/**
 	 * Test GripperHandicap structure
@@ -52,8 +52,8 @@ public class HandicapTest {
 	public void structureGripperHandicapTest() {
 		Robot r = new Robot("",space,context,true);
 		GripperHandicap gh = new GripperHandicap(r);
-		assertTrue(r.handicapsMap.get("Gripper") instanceof HandicapInterface);
-		assertTrue(r.handicapsMap.get("Gripper") instanceof Handicap);
+		assertTrue(r.getHandicapsMap().get("Gripper") instanceof HandicapInterface);
+		assertTrue(r.getHandicapsMap().get("Gripper") instanceof Handicap);
 	}
 	/**
 	 * Test MoveSpeedHandicap structure
@@ -62,8 +62,8 @@ public class HandicapTest {
 	public void structureMoveSpeedHandicapTest() {
 		Robot r = new Robot("",space,context,true);
 		MoveSpeedHandicap msh = new MoveSpeedHandicap(r, 1.0);
-		assertTrue(r.handicapsMap.get("MoveSpeed") instanceof HandicapInterface);
-		assertTrue(r.handicapsMap.get("MoveSpeed") instanceof Handicap);
+		assertTrue(r.getHandicapsMap().get("MoveSpeed") instanceof HandicapInterface);
+		assertTrue(r.getHandicapsMap().get("MoveSpeed") instanceof Handicap);
 	}
 	/**
 	 * Test SizeOverloadHandicap structure
@@ -72,8 +72,8 @@ public class HandicapTest {
 	public void structureSizeOverloadHandicapTest() {
 		Robot r = new Robot("",space,context,true);
 		SizeOverloadHandicap soh = new SizeOverloadHandicap(r, 2);
-		assertTrue(r.handicapsMap.get("SizeOverload") instanceof HandicapInterface);
-		assertTrue(r.handicapsMap.get("SizeOverload") instanceof Handicap);
+		assertTrue(r.getHandicapsMap().get("SizeOverload") instanceof HandicapInterface);
+		assertTrue(r.getHandicapsMap().get("SizeOverload") instanceof Handicap);
 	}
 	
 	/**
@@ -87,14 +87,14 @@ public class HandicapTest {
 		MoveSpeedHandicap msh = new MoveSpeedHandicap(gh, 0.8);
 		SizeOverloadHandicap soh = new SizeOverloadHandicap(msh, 2);
 		// Asserts
-		assertTrue(r.handicapsMap.get("ColorBlind") instanceof HandicapInterface);
-		assertTrue(r.handicapsMap.get("ColorBlind") instanceof Handicap);
-		assertTrue(r.handicapsMap.get("Gripper") instanceof HandicapInterface);
-		assertTrue(r.handicapsMap.get("Gripper") instanceof Handicap);
-		assertTrue(r.handicapsMap.get("MoveSpeed") instanceof HandicapInterface);
-		assertTrue(r.handicapsMap.get("MoveSpeed") instanceof Handicap);
-		assertTrue(r.handicapsMap.get("SizeOverload") instanceof HandicapInterface);
-		assertTrue(r.handicapsMap.get("SizeOverload") instanceof Handicap);				
+		assertTrue(r.getHandicapsMap().get("ColorBlind") instanceof HandicapInterface);
+		assertTrue(r.getHandicapsMap().get("ColorBlind") instanceof Handicap);
+		assertTrue(r.getHandicapsMap().get("Gripper") instanceof HandicapInterface);
+		assertTrue(r.getHandicapsMap().get("Gripper") instanceof Handicap);
+		assertTrue(r.getHandicapsMap().get("MoveSpeed") instanceof HandicapInterface);
+		assertTrue(r.getHandicapsMap().get("MoveSpeed") instanceof Handicap);
+		assertTrue(r.getHandicapsMap().get("SizeOverload") instanceof HandicapInterface);
+		assertTrue(r.getHandicapsMap().get("SizeOverload") instanceof Handicap);				
 	}
 	
 	/**
@@ -127,8 +127,8 @@ public class HandicapTest {
 	public void getSizeSizeOverloadTest() {
 		Robot r = new Robot("",space,context,true);
 		SizeOverloadHandicap soh = new SizeOverloadHandicap(r, 3);
-		assertTrue(r.handicapsMap.get("SizeOverload") instanceof HandicapInterface);
-		assertTrue(r.handicapsMap.get("SizeOverload") instanceof Handicap);
+		assertTrue(r.getHandicapsMap().get("SizeOverload") instanceof HandicapInterface);
+		assertTrue(r.getHandicapsMap().get("SizeOverload") instanceof Handicap);
 		assertEquals(3, r.getSize());
 	}
 	
