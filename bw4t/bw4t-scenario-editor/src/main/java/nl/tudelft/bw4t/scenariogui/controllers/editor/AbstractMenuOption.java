@@ -114,7 +114,13 @@ public abstract class AbstractMenuOption implements ActionListener {
             BW4TClientConfig configuration =  
                     new BW4TClientConfig((MainPanel) (getController().getMainView()).getContentPane(), path);
             
-            //TODO: UNLOAD AND SAVE BOTS HERE
+            //UNLOAD AND SAVE BOTS HERE
+            int rows = getController().getMainView().getMainPanel().getEntityPanel().getBotTableModel().getRowCount();
+            
+            for (int i = 0; i < rows; i++) {
+            	configuration.addBot(getController().getMainView().getMainPanel().getEntityPanel().getBotConfig(i));
+            }
+            
             configuration.toXML();
             view.setLastFileLocation(path);
         } catch (JAXBException e) {
