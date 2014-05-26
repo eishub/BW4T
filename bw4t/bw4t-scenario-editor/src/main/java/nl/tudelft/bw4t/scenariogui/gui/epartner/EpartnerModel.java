@@ -1,41 +1,41 @@
-package nl.tudelft.bw4t.scenariogui.gui.botstore;
+package src.main.java.nl.tudelft.bw4t.scenariogui.gui.epartner;
 
-import javax.swing.JFrame;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.WindowConstants;
-import javax.swing.border.EmptyBorder;
-
-import nl.tudelft.bw4t.scenariogui.controller.BotStoreController;
+import src.main.java.nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
+import src.main.java.nl.tudelft.bw4t.scenariogui.gui.botstore.BotStoreController;
+import src.main.java.nl.tudelft.bw4t.scenariogui.gui.botstore.EmptyBorder;
+import src.main.java.nl.tudelft.bw4t.scenariogui.gui.botstore.JFrame;
+import src.main.java.nl.tudelft.bw4t.scenariogui.gui.botstore.String;
 
 /**
- * This class serves as frame for the BotEditorPanel
- * @author Arun
+ * This class serves as frame for the EpartnerPanel
+ * @author Wendy
+ *
  */
-public class BotEditor extends JFrame{
-	
+
+public class EpartnerModel extends JFrame {
+
 	/** the name of the window */
-	private String windowName = "Bot Editor";
+	private String windowName = "Epartner";
 	/** the window width*/
 	private int width;
 	/** the window height*/
 	private int height;
 	
-	private BotEditorPanel bPanel;
-	private BotStoreController controller;
-	
+	private EpartnerPanel ePanel;
+	private EpartnerController controller;
+
 	/**
-	 * creates the BotEditor frame
+	 * creates the EpartnerPanel frame
 	 */
-	public BotEditor(){
+	public EpartnerModel(){
 		setLookAndFeel();
 		setTitle(windowName);
 		setResizable(false);
 		setLayout(null);
-			
-		bPanel = new BotEditorPanel();
-		bPanel.setBorder(new EmptyBorder(15,15,15,15));
-		setContentPane(bPanel);
+					
+		ePanel = new EPartnerPanel();
+		ePanel.setBorder(new EmptyBorder(15,15,15,15));
+		setContentPane(ePanel);
 		
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		
@@ -48,7 +48,7 @@ public class BotEditor extends JFrame{
 		
 		setVisible(true);
 		
-		controller = new BotStoreController(this);
+		controller = new EpartnerController(this);
 	}
 	
 	/**
@@ -71,14 +71,14 @@ public class BotEditor extends JFrame{
         }
     }
     /**
-     * Returns the BotEditorPanel
-     * @return botEditorPanel used
+     * Returns the EpartnerPanel
+     * @return EpartnerPanel used
      */
-	public BotEditorPanel getBotEditorPanel() {
-		return bPanel;
+	public EpartnerPanel getEpartnerPanel() {
+		return ePanel;
 	}
 	
 	public static void main(String[] args){
-		new BotEditor();
+		new EpartnerModel();
 	}
 }
