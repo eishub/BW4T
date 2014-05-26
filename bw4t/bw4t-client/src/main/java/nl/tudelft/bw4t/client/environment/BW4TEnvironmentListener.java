@@ -21,12 +21,11 @@ import eis.exceptions.RelationException;
 import eis.iilang.EnvironmentState;
 
 /**
- * Class that can be registered to BW4TRemoteEnvironment as EnvironmentListener
- * and will launch new agents when new entities are available
+ * Class that can be registered to BW4TRemoteEnvironment as EnvironmentListener and will launch new agents when new
+ * entities are available
  * <p>
- * This is needed when the BW4TRemoteEnvironment is runned stand-alone. Do not
- * start this when running GOAL, as GOAL already is an environment runner and
- * will associate agents to entities if entities appear.
+ * This is needed when the BW4TRemoteEnvironment is runned stand-alone. Do not start this when running GOAL, as GOAL
+ * already is an environment runner and will associate agents to entities if entities appear.
  * 
  * @author trens
  */
@@ -39,8 +38,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
 	private final static Logger LOGGER = Logger.getLogger(BW4TEnvironmentListener.class);
 
 	/**
-	 * This map associates agents with a renderer. I suppose agents not having a
-	 * renderer do not end up in this list.
+	 * This map associates agents with a renderer. I suppose agents not having a renderer do not end up in this list.
 	 */
 	private final Map<BW4TAgent, BW4TClientGUI> agentData = new HashMap<BW4TAgent, BW4TClientGUI>();
 
@@ -88,9 +86,8 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
 	}
 
 	/**
-	 * Handle a new entity, load the human agent if it is of type human
-	 * otherwise load the agent that was specified in the program argument or
-	 * the default one (BW4TAgent)
+	 * Handle a new entity, load the human agent if it is of type human otherwise load the agent that was specified in
+	 * the program argument or the default one (BW4TAgent)
 	 * 
 	 * @param entityId
 	 *            , the new entity
@@ -122,8 +119,9 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
 	 * @throws RelationException
 	 */
 	private void handleNewEntity1(String entityId) throws EntityException, AgentException, ClassNotFoundException,
-	NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException,
-	IOException, RelationException {
+			NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException,
+			IOException, RelationException {
+		agentCount = environment.getAgents().size();
 		if ("human".equals(environment.getType(entityId))) {
 			HumanAgent agent = new HumanAgent("Agent" + agentCount, environment);
 			agent.registerEntity(entityId);
@@ -136,7 +134,8 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
 			agentCount++;
 
 			agentData.put(agent, renderer);
-		} else {
+		}
+		else {
 			String agentClassName = InitParam.AGENTCLASS.getValue();
 			Class<? extends BW4TAgent> c = Class.forName(agentClassName).asSubclass(BW4TAgent.class);
 			Class[] types = new Class[] { String.class, RemoteEnvironment.class };
