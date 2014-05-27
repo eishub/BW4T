@@ -178,5 +178,111 @@ public class ConfigurationPanelTest {
                         .getConfigurationPanel()
                         .getCurrentValues()));
     }
+    
+    /**
+     * Tests setting the Client IP field.
+     */
+    @Test
+    public void testSetClientIP() {
+    	editor.getMainPanel().getConfigurationPanel().setClientIP("New IP");
+
+        assertEquals("New IP", editor.getMainPanel().getConfigurationPanel()
+                .getClientIP());
+    }
+    
+    /**
+     * Tests setting the Client Port field.
+     */
+    @Test
+    public void testSetClientPort() {
+    	editor.getMainPanel().getConfigurationPanel().setClientPort("8888");
+    	
+    	String res = "" + editor.getMainPanel().getConfigurationPanel().getClientPort();
+
+    	assertEquals("8888", res);
+    }
+    
+    /**
+     * Tests setting the Server IP field.
+     */
+    @Test
+    public void testSetServerIP() {
+    	editor.getMainPanel().getConfigurationPanel().setServerIP("New IP");
+
+        assertEquals("New IP", editor.getMainPanel().getConfigurationPanel()
+                .getServerIP());
+    }
+    
+    /**
+     * Tests setting the Server Port field.
+     */
+    @Test
+    public void testSetServerPort() {
+    	editor.getMainPanel().getConfigurationPanel().setServerPort("9999");
+    	
+    	String res = "" + editor.getMainPanel().getConfigurationPanel().getServerPort();
+
+        assertEquals("9999", res);
+    }
+    
+    /**
+     * Tests whether changes have been made to the Client IP field.
+     */
+    @Test
+    public void testChangesClientIP() {
+    	editor.getMainPanel().getConfigurationPanel().setClientIP("New IP");
+    	
+    	assertEquals(false, editor.getMainPanel().getConfigurationPanel().isDefault());
+    }
+    
+    /**
+     * Tests whether changes have been made to the Client Port field.
+     */
+    @Test
+    public void testChangesClientPort() {
+    	editor.getMainPanel().getConfigurationPanel().setClientPort("7777");
+    	
+    	assertEquals(false, editor.getMainPanel().getConfigurationPanel().isDefault());
+    }
+    
+    /**
+     * Tests whether changes have been made to the Server IP field.
+     */
+    @Test
+    public void testChangesServerIP() {
+    	editor.getMainPanel().getConfigurationPanel().setServerIP("New IP");
+    	
+    	assertEquals(false, editor.getMainPanel().getConfigurationPanel().isDefault());
+    }
+    
+    /**
+     * Tests whether changes have been made to the Server Port field.
+     */
+    @Test
+    public void testChangesServerPort() {
+    	editor.getMainPanel().getConfigurationPanel().setServerPort("1010");
+    	
+    	assertEquals(false, editor.getMainPanel().getConfigurationPanel().isDefault());
+    }
+    
+    /**
+     * Tests whether changes have been made to the Launch GUI section.
+     */
+    @Test
+    public void testChangesLaunchGUI() {
+    	editor.getMainPanel().getConfigurationPanel().setUseGui(false);
+    	
+    	assertEquals(false, editor.getMainPanel().getConfigurationPanel().isDefault());
+    }
+    
+    /**
+     * Tests whether changes have been made to the Map file section.
+     */
+    @Test
+    public void testChangesMapFile() {
+    	editor.getMainPanel().getConfigurationPanel().setMapFile("New Map");
+    	
+    	assertEquals(false, editor.getMainPanel().getConfigurationPanel().isDefault());
+    }
 
 }
