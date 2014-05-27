@@ -205,6 +205,8 @@ public class BotEditorPanel extends JPanel {
 	 * Resets to default settings
 	 */
 	public void resetAction(){
+		botNameTextField.setText(dataObject.getBotName());
+		botAmountTextField.setText(dataObject.getBotAmount());
 		speedSlider.setValue(100);
         sizeSlider.setValue(2);
         batterySlider.setValue(0);
