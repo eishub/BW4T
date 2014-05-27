@@ -219,7 +219,8 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	}
 
 	/**
-	 * Drops the block the robot is holding on the current location. TODO: What if multiple blocks dropped at same spot?
+	 * Drops the block the robot is holding on the current location. TODO: What if multiple blocks dropped at
+	 * same spot?
 	 */
 	public void drop() {
 		if (!holding.isEmpty()) {
@@ -311,7 +312,8 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 		ENTER_CORRIDOR;
 
 		/**
-		 * Merge the move type if multiple zones are entered at once. The result is the 'worst' event that happens
+		 * Merge the move type if multiple zones are entered at once. The result is the 'worst' event that
+		 * happens
 		 * 
 		 * @param other
 		 * @return
@@ -332,8 +334,8 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	}
 
 	/**
-	 * Check motion type for robot to move to <endx, endy>. The {@link #MoveType} gives the actual type / possibility of
-	 * the move, plus the details why it is (not) possible.
+	 * Check motion type for robot to move to <endx, endy>. The {@link #MoveType} gives the actual type /
+	 * possibility of the move, plus the details why it is (not) possible.
 	 * 
 	 * @param endx
 	 *            is x position of target
@@ -346,8 +348,9 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 		double starty = getLocation().getY();
 		Door door = getCurrentDoor(startx, starty);
 
-		/*
-		 * if start and end are both in the same 'room' (outside is the 'null' room). Then free walk always possible.
+		/**
+		 * if start and end are both in the same 'room' (outside is the 'null' room). Then free walk always
+		 * possible.
 		 */
 		List<Zone> endzones = ZoneLocator.getZonesAt(endx, endy);
 		Zone startzone = ZoneLocator.getZoneAt(startx, starty);
@@ -454,8 +457,8 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	}
 
 	/**
-	 * Moves the robot by displacing it for the given amount. If the robot collides with something, the movement target
-	 * is cancelled to avoid continuous bumping.
+	 * Moves the robot by displacing it for the given amount. If the robot collides with something, the movement
+	 * target is cancelled to avoid continuous bumping.
 	 * 
 	 * @param x
 	 *            the displacement in the x-dimension.
