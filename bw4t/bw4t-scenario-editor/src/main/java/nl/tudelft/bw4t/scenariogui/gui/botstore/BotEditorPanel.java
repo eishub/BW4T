@@ -1,19 +1,14 @@
 package nl.tudelft.bw4t.scenariogui.gui.botstore;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.text.DecimalFormat;
 
 import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import nl.tudelft.bw4t.scenariogui.BotConfig;
@@ -57,10 +52,11 @@ public class BotEditorPanel extends JPanel {
 	
 	/**
 	 * Create the botEditorPanel
+	 * @param name the bot gets
 	 */
-	public BotEditorPanel(String name){
+	public BotEditorPanel(String name) {
 		botNameTextField.setText(name);
-		setLayout(new BorderLayout(20,20));		
+		setLayout(new BorderLayout(20, 20));		
 		
 		createBotCheckablesPanel();
 		createBotSlidersPanel();
@@ -72,14 +68,14 @@ public class BotEditorPanel extends JPanel {
 	/**
 	 * create the checkables panel
 	 */
-	public void createBotCheckablesPanel(){
-		botCheckables.setLayout(new GridLayout(4,1));
+	public void createBotCheckablesPanel() {
+		botCheckables.setLayout(new GridLayout(4, 1));
 		JLabel checkablesLabel = new JLabel("Checkables");
 		JLabel handicapsLabel = new JLabel("Handicaps:");
 		JLabel restrictionsLabel = new JLabel("Other options:");
 		JLabel emptyLabel = new JLabel("\n");
 		
-		checkablesLabel.setFont(new Font("Tahoma",Font.PLAIN,24));
+		checkablesLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		
 		JPanel buttonPanel = new JPanel();
 		JPanel checkablesPanel = new JPanel();
@@ -107,8 +103,8 @@ public class BotEditorPanel extends JPanel {
 	/**
 	 * creates the botSlidersPanel
 	 */
-	public void createBotSlidersPanel(){
-		botSliders.setLayout(new GridLayout(10,1));
+	public void createBotSlidersPanel() {
+		botSliders.setLayout(new GridLayout(10, 1));
 		
 		JLabel batteryUseLabel = new JLabel("Battery use:");
 		JLabel perTickLabel = new JLabel("per tick");
@@ -156,7 +152,7 @@ public class BotEditorPanel extends JPanel {
 	/**
 	 * sets the default settings for the sliders
 	 */
-	public void createSliders(){
+	public void createSliders() {
 		numberOfGrippersSlider.setMajorTickSpacing(1);
 		numberOfGrippersSlider.setMaximum(5);
 		numberOfGrippersSlider.setMinimum(1);

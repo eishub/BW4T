@@ -13,7 +13,7 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  * This class serves as frame for the BotEditorPanel
  * @author Arun
  */
-public class BotEditor extends JFrame{
+public class BotEditor extends JFrame {
 	
 	/** the name of the window */
 	private String windowName = "Bot Editor";
@@ -29,14 +29,14 @@ public class BotEditor extends JFrame{
 	/**
 	 * creates the BotEditor frame
 	 */
-	public BotEditor(MainPanel parent, String name){
+	public BotEditor(MainPanel pparent, String pname) {
 		setLookAndFeel();
 		setTitle(windowName);
 		setResizable(false);
 		setLayout(null);
-		this.parent = parent;
-		bPanel = new BotEditorPanel(name);
-		bPanel.setBorder(new EmptyBorder(15,15,15,15));
+		this.parent = pparent;
+		bPanel = new BotEditorPanel(pname);
+		bPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
 		setContentPane(bPanel);
 		
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -81,23 +81,24 @@ public class BotEditor extends JFrame{
 	}
 	/**
 	 * Get the main panel.
+	 * @return parent
 	 */
 	public MainPanel getParent() {
 		return parent;
 	}
 	/**
 	 * Set the main panel.
-	 * @param parent the main panel.
+	 * @param pparent the main panel.
 	 */
-	public void setParent(MainPanel parent) {
-		this.parent = parent;
+	public void setParent(MainPanel pparent) {
+		this.parent = pparent;
 	}
 
-	public static void main(String[] args){
-		new BotEditor(null,"");
+	public static void main(String[] args) {
+		new BotEditor(null, "");
 	}
 
-	public void setBotEditorPanel(BotEditorPanel bPanel) {
-		this.bPanel = bPanel;
+	public void setBotEditorPanel(BotEditorPanel pbPanel) {
+		this.bPanel = pbPanel;
 	}
 }
