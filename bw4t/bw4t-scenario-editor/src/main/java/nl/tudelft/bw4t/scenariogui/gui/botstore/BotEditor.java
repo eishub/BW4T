@@ -6,7 +6,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
-import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.controllers.botstore.BotStoreController;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 

@@ -95,6 +95,7 @@ class MenuOptionOpen extends AbstractMenuOption {
                 	String botAmount = configuration.getBot(i).getBotAmount();
                 	Object[] botObject = {botName, botController, botAmount};
                 	entityPanel.getBotTableModel().addRow(botObject);
+                	entityPanel.getBotConfigs().add(configuration.getBot(i));
                 }
             } catch (JAXBException e1) {
                 ScenarioEditor.handleException(e1, "Error: Opening the XML has failed.");
