@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
  * This class stores all the date from the BotEditorUI.         
  * <p>
  * @author      Valentine Mairet  
+ * @author 		Katia Asmoredjo
  * @version     0.1                
  * @since       12-05-2014        
  */
@@ -16,7 +17,7 @@ public final class BotConfig {
 	
 	private String controller = "Agent";
 	
-	private int amount = 1;
+	private String amount = "1";
 
     private int botSize = 2;
 
@@ -72,7 +73,7 @@ public final class BotConfig {
      * Sets the amount of bots of a type there are.
      * @param amount The amount of bots.
      */
-    public void setBotAmount(int amount) {
+    public void setBotAmount(String amount) {
     	this.amount = amount;
     }
     
@@ -80,7 +81,7 @@ public final class BotConfig {
      * Returns the amount of bots of this type.
      * @return The amount of bots of this type.
      */
-    public int getBotAmount() {
+    public String getBotAmount() {
     	return this.amount;
     }
 

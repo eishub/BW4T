@@ -11,13 +11,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JComboBox;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.config.BotConfig;
 
 /**
  * BotEditorPanel which serves as the content pane for the BotEditor frame
  * @author Arun
+ * @author Katia Asmoredjo
  */
 public class BotEditorPanel extends JPanel {
 	
@@ -28,14 +31,18 @@ public class BotEditorPanel extends JPanel {
 	 * and we can use these values to instantiate the two handicaps. 
 	 * Also, once those values are automatically changed, we should disable user interaction with the sliders.
 	 */
-	private JPanel botCheckables = new JPanel();
+	private JPanel botHandicaps = new JPanel();
 	private JPanel botSliders = new JPanel();
+	private JPanel botInfo = new JPanel();
 	
 	private JComboBox botTypeSelector = new JComboBox();
 	
 	private JButton applyButton = new JButton("Apply");
 	private JButton resetButton = new JButton("Reset");
 	private JButton cancelButton = new JButton("Cancel");
+	
+	private JTextField botNameTextField = new JTextField();
+	private JTextField botAmountTextField = new JTextField();
 	
 	private JCheckBox gripperCheckbox = new JCheckBox("Gripper Handicap");
 	private JCheckBox colorblindCheckbox = new JCheckBox("Color Blind Handicap");
@@ -49,27 +56,33 @@ public class BotEditorPanel extends JPanel {
 	private JLabel batteryUseValueLabel = new JLabel("0.9");
 	
 	private BotConfig dataObject = new BotConfig();
+	private ScenarioEditor scenarioEditor;
+	private BotEditor botEditor;
 	
 	/**
 	 * Create the botEditorPanel
 	 */
-	public BotEditorPanel(){
+	public BotEditorPanel(BotEditor botEditor, ScenarioEditor scenarioEditor){
 		setLayout(new BorderLayout(20,20));		
 		
-		createBotCheckablesPanel();
+		createBotHandicapPanel();
 		createBotSlidersPanel();
+		createBotInfoPanel();
 		
 		add(botSliders, BorderLayout.WEST);
-		add(botCheckables, BorderLayout.EAST);
+		add(botHandicaps, BorderLayout.EAST);
+		add(botInfo, BorderLayout.NORTH);
 		
+		this.scenarioEditor = scenarioEditor;
+		this.botEditor = botEditor;
 	}
 	
 	/**
-	 * create the checkables panel
+	 * create the handicap panel
 	 */
-	public void createBotCheckablesPanel(){
-		botCheckables.setLayout(new GridLayout(5,1));
-		JLabel checkablesLabel = new JLabel("Checkables");
+	public void createBotHandicapPanel(){
+		botHandicaps.setLayout(new GridLayout(5,1));
+		JLabel checkablesLabel = new JLabel("Handicaps");
 		JLabel batteryUseLabel = new JLabel("Average Battery use:");
 		JLabel perTickLabel = new JLabel("per tick");
 		
@@ -89,28 +102,41 @@ public class BotEditorPanel extends JPanel {
 		buttonPanel.add(resetButton);
 		buttonPanel.add(cancelButton);
 		
-		botCheckables.add(checkablesLabel);
+		botHandicaps.add(checkablesLabel);
 		checkablesPanel.setLayout(new BoxLayout(checkablesPanel, BoxLayout.PAGE_AXIS));
 		checkablesPanel.add(gripperCheckbox);
 		checkablesPanel.add(colorblindCheckbox);
 		checkablesPanel.add(movespeedCheckbox);
 		checkablesPanel.add(sizeoverloadCheckbox);
-		botCheckables.add(checkablesPanel);
-		botCheckables.add(empty);
-		botCheckables.add(batteryCapPanel);
-		botCheckables.add(buttonPanel);
+		botHandicaps.add(checkablesPanel);
+		botHandicaps.add(empty);
+		botHandicaps.add(batteryCapPanel);
+		botHandicaps.add(buttonPanel);
 		
 	}
+	
+	/**
+	 * Create the panel which contains the bots name and the controller type
+	 */
+	private void createBotInfoPanel() {
+		botInfo.setLayout(new GridLayout(1, 0));
+		
+		botNameTextField.setText(dataObject.getBotName());
+		botInfo.add(botNameTextField);
+
+		botTypeSelector.setModel(new DefaultComboBoxModel(new String[]{"Agent", "Human"}));
+		botInfo.add(botTypeSelector);
+		
+		botInfo.add(new JLabel("  Amount of this type:"));
+		botAmountTextField.setText(dataObject.getBotAmount());
+		botInfo.add(botAmountTextField);
+	}
+	
 	/**
 	 * creates the botSlidersPanel
 	 */
 	public void createBotSlidersPanel(){
-		botSliders.setLayout(new GridLayout(8,1));
-		JLabel botTitleLabel = new JLabel("Bot X");
-		botTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		botTitleLabel.setFont(new java.awt.Font("Tahoma", 0, 36));
-		
-		botTypeSelector.setModel(new DefaultComboBoxModel(new String[]{"Agent", "Human"}));
+		botSliders.setLayout(new GridLayout(0,1));
 		
 		JLabel sizeLabel = new JLabel("Bot Size");
 		sizeLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -124,8 +150,6 @@ public class BotEditorPanel extends JPanel {
 		
 		createSliders();
 		
-		botSliders.add(botTitleLabel);
-		botSliders.add(botTypeSelector);
 		botSliders.add(sizeLabel);
 		botSliders.add(sizeSlider);
 		botSliders.add(speedLabel);
@@ -173,6 +197,7 @@ public class BotEditorPanel extends JPanel {
 	 */
 	public void applyAction() {
 		setDataObject();
+		
 	}
 	
 	/**
@@ -196,8 +221,9 @@ public class BotEditorPanel extends JPanel {
 	 * closes the BotEditor
 	 */
 	
-	public void cancelAction(){	
-		
+	public void cancelAction(){
+		this.setVisible(false);
+		botEditor.dispose();
 	}
 	
 	/**
@@ -317,6 +343,9 @@ public class BotEditorPanel extends JPanel {
 	 * This method plugs the GUI values into the data object.
 	 */
 	public void setDataObject() {
+		dataObject.setBotName(botNameTextField.getText());
+		dataObject.setBotController((String)botTypeSelector.getSelectedItem());
+		dataObject.setBotAmount(botAmountTextField.getText());
 		dataObject.setBotSize(sizeSlider.getValue());
 		dataObject.setBotSpeed(speedSlider.getValue());
 		dataObject.setBotBatteryCapacity(batterySlider.getValue());
