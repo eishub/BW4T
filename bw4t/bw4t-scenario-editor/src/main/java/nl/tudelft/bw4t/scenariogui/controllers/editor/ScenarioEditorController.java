@@ -9,7 +9,7 @@ import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
  *
  * <p>
  * @author      Calvin Wong Loi Sing
- * @authot      Nick Feddes 
+ * @author      Nick Feddes
  * @version     0.1                
  * @since       12-05-2014        
  */
@@ -85,6 +85,10 @@ public class ScenarioEditorController {
         );
         getMainView().getMainPanel().getEntityPanel().getDropDownButton().addActionListener(
                 new BotDropDownButton(getMainView().getMainPanel())
+        );
+
+        getMainView().addWindowListener(
+                new WindowExit(getMainView())
         );
     }
 

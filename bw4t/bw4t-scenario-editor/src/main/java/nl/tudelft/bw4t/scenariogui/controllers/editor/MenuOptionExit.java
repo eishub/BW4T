@@ -47,9 +47,9 @@ class MenuOptionExit extends AbstractMenuOption {
             if (response == JOptionPane.YES_OPTION) {
                 saveFile();
                 super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
-                System.exit(0);
+                getController().getMainView().closeScenarioEditor();
             } else {
-            	System.exit(0);
+                getController().getMainView().closeScenarioEditor();
             }
         } else {
         	int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
@@ -59,7 +59,7 @@ class MenuOptionExit extends AbstractMenuOption {
         			JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         	
         	if(response == JOptionPane.YES_OPTION) {
-        		System.exit(0);
+                getController().getMainView().closeScenarioEditor();
         	}
         }
         getController().getMainView().closeScenarioEditor();
