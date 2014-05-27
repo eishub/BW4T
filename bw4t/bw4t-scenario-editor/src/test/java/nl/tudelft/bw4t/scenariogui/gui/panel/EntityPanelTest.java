@@ -4,15 +4,19 @@ import java.awt.Component;
 
 import javax.swing.JOptionPane;
 
+import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyObject;
@@ -373,7 +377,18 @@ public class EntityPanelTest {
         verify(spyEntityPanel, times(1)).showBotDropDown();
     }
 
-
+    @Test
+    public void testCompareBotConfigs() {
+    	assertTrue(entityPanel.compareBotConfigs());
+    	
+    	entityPanel.getBotConfigs().add(new BotConfig());
+    	
+    	assertFalse(entityPanel.compareBotConfigs());
+    	
+    	entityPanel.updateBotConfigs();
+    	
+    	assertTrue(entityPanel.compareBotConfigs());
+    }
 
 
 }

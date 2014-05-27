@@ -246,7 +246,7 @@ public class EntityPanel extends JPanel {
     /**
      * The list with the last saved BotConfigs.
      */
-    private List<BotConfig> oldBotConfigs = new ArrayList<BotConfig>();
+    private List<BotConfig> oldBotConfigs = botConfigList;
 
     /**
      * Create an EntityPanel object.
@@ -683,7 +683,11 @@ public class EntityPanel extends JPanel {
      * Updates the BotConfig list.
      */
     public void updateBotConfigs() {
-    	oldBotConfigs = botConfigList;
+    	oldBotConfigs.clear();
+    	
+    	for (int i = 0; i < botConfigList.size(); i++) {
+    		oldBotConfigs.add(botConfigList.get(i));
+    	}
     }
     
     /**
