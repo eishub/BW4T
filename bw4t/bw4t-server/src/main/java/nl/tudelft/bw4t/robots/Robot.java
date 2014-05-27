@@ -9,7 +9,6 @@ import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.handicap.HandicapInterface;
-import nl.tudelft.bw4t.map.Constants;
 import nl.tudelft.bw4t.server.logging.BW4TLogger;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.Corridor;
@@ -32,8 +31,8 @@ import repast.simphony.space.continuous.NdPoint;
 public class Robot extends BoundedMoveableObject implements HandicapInterface {
 
 	/**
-	 * The distance which it can move per tick. This should never be larger than the door width because that might cause
-	 * the bot to attempt to jump over a door (which will fail).
+	 * The distance which it can move per tick. This should never be larger than the door width because that might 
+	 * cause the bot to attempt to jump over a door (which will fail).
 	 */
 	public static final double MAX_MOVE_DISTANCE = .5;
 	/**
@@ -43,25 +42,25 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	/** The distance which it can reach with its arm to pick up a block. */
 	private static final double ARM_DISTANCE = 1;
 	/** The width and height of the robot */
-	public int SIZE = 2;
+	private int size = 2;
 	/** The name of the robot */
-	public final String name;
+	private final String name;
 	/** The location to which the robot wants to travel. */
-	public NdPoint targetLocation;
+	private NdPoint targetLocation;
 	/** The list of blocks the robot is holding. */
 	private final List<Block> holding;
 	/** The max. amount of blocks a robot can hold, default is 1. */
 	private int capacity = 3;
 	/**
-	 * set to true if we have to cancel a motion due to a collision. A collision is caused by an attempt to move into or
-	 * out of a room
+	 * set to true if we have to cancel a motion due to a collision. A collision is caused by an attempt to move
+	 * into or out of a room
 	 */
-	public boolean collided = false;
+	private boolean collided = false;
 	/**
 	 * set to true when {@link #connect()} is called.
 	 */
 	private boolean connected = false;
-	public boolean oneBotPerZone;
+	private boolean oneBotPerZone;
 
 	/**
 	 * 
@@ -85,23 +84,24 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	/**
 	 * Creates a new robot.
 	 * 
-	 * @param name
+	 * @param pname
 	 *            The "human-friendly" name of the robot.
 	 * @param space
 	 *            The space in which the robot operates.
 	 * @param context
 	 *            The context in which the robot operates.
-	 * @param oneBotPerZone
+	 * @param poneBotPerZone
 	 *            true if max 1 bot in a zone
 	 * @param cap
 	 *            The holding capacity of the robot.
 	 */
-	public Robot(String name, ContinuousSpace<Object> space, Context<Object> context, boolean oneBotPerZone, boolean human, int cap) {
+	public Robot(String pname, ContinuousSpace<Object> space, Context<Object> context,
+			boolean poneBotPerZone, boolean human, int cap) {
 		super(space, context);
 
-		this.name = name;
-		this.oneBotPerZone = oneBotPerZone;
-		setSize(SIZE, SIZE);
+		this.name = pname;
+		this.oneBotPerZone = poneBotPerZone;
+		setSize(size, size); 
 
 		/**
 		 * This is where the battery value will be fetched from the Bot Store GUI.
@@ -119,8 +119,6 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 		 */
 		isHuman = human;
 	}
-
-	
 
 	/**
 	 * called when robot becomes connected and should now be injected in repast.
@@ -166,11 +164,11 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	/**
 	 * Sets the location to which the robot should move. This also clears the {@link #collided} flag.
 	 * 
-	 * @param targetLocation
+	 * @param ptargetLocation
 	 *            the location to move to.
 	 */
-	public synchronized void setTargetLocation(NdPoint targetLocation) {
-		this.targetLocation = targetLocation;
+	public synchronized void setTargetLocation(NdPoint ptargetLocation) {
+		this.targetLocation = ptargetLocation;
 		collided = false;
 	}
 
@@ -475,7 +473,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 			// Calculate the distance that the robot is allowed to move.
 			double distance = distanceTo(targetLocation);
 			if (distance < MIN_MOVE_DISTANCE) {
-				stopRobot(); // we're there
+				stopRobot(); 
 			}
 			else {
 				double movingDistance = Math.min(distance, MAX_MOVE_DISTANCE);
@@ -504,8 +502,8 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	}
 
 	/**
-	 * Stop the motion of the robot. Effectively sets the target location to null. You can override this to catch this
-	 * event.
+	 * Stop the motion of the robot. Effectively sets the target location to null. You can override this to catch
+	 * this event.
 	 */
 	public synchronized void stopRobot() {
 		this.targetLocation = null;
@@ -534,7 +532,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	}
 
 	/**
-	 * Valentine This method returns the battery percentage.
+	 * @return This method returns the battery percentage.
 	 */
 	public int getBatteryPercentage() {
 		return this.battery.getPercentage();
@@ -567,6 +565,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 
 	/**
 	 * get the parent, returns null because Robot is the super parent
+	 * @return null
 	 */
 	@Override
 	public HandicapInterface getParent() {
@@ -575,31 +574,27 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 
 	/**
 	 * returns this Robot
+	 * @return this
 	 */
 	@Override
 	public Robot getSuperParent() {
 		return this;
 	}
 	
-	
 	public HashMap<String, HandicapInterface> getHandicapsMap() {
 		return handicapsMap;
 	}
-
-
 
 	public void setHandicapsMap(HashMap<String, HandicapInterface> handicapsMap) {
 		this.handicapsMap = handicapsMap;
 	}
 
-
-
 	public void setSize(int s) {
-		this.SIZE = s;
+		this.size = s;
 		setSize(s, s);
 	}
 	public int getSize() {
-		return this.SIZE;
+		return this.size;
 	}
 
 	public int getCapacity() {
