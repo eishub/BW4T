@@ -10,7 +10,7 @@ import java.util.Map;
 import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.doors.Door;
-import nl.tudelft.bw4t.handicap.*;
+import nl.tudelft.bw4t.handicap.HandicapInterface;
 import nl.tudelft.bw4t.map.view.Entity;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.Corridor;
