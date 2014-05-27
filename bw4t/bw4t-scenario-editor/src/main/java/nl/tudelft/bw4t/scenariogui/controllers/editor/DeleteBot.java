@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
@@ -41,6 +42,7 @@ class DeleteBot implements ActionListener {
         int row = view.getEntityPanel().getSelectedBotRow();
 
         if (row == -1) {
+            ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select a bot first.");
             return;
         }
 

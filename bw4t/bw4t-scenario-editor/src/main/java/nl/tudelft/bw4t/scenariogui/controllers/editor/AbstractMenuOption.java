@@ -8,8 +8,9 @@ import java.io.FileNotFoundException;
 import javax.swing.JFileChooser;
 import javax.xml.bind.JAXBException;
 
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfigIntegration;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
@@ -121,8 +122,9 @@ public abstract class AbstractMenuOption implements ActionListener {
             }
         }
         try {
-            BW4TClientConfig configuration =  
-                    new BW4TClientConfig((MainPanel) (getController().getMainView()).getContentPane(), path);
+            BW4TClientConfig configuration = BW4TClientConfigIntegration.
+                    createConfigFromPanel((MainPanel) (getController().getMainView()).
+                            getContentPane(), path);
             
             //UNLOAD AND SAVE BOTS HERE
             int rows = getController().getMainView().getMainPanel().getEntityPanel().getBotTableModel().getRowCount();
