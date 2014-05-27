@@ -9,7 +9,7 @@ import java.rmi.RemoteException;
 
 import javax.xml.bind.JAXBException;
 
-import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
@@ -80,7 +80,7 @@ public class Launcher {
 		/**
 		 * Set up the logging environment to log on the console.
 		 */
-		BasicConfigurator.configure();
+		PropertyConfigurator.configure(Launcher.class.getResource("/log4j.properties"));
 		LOGGER.info("Starting up BW4T Server.");
 		try {
 			LOGGER.addAppender(new FileAppender(new PatternLayout(), "BW4TServer.log"));
