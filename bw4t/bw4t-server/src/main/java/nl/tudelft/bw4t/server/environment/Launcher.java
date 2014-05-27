@@ -83,13 +83,8 @@ public class Launcher {
 		/**
 		 * Set up the logging environment to log on the console.
 		 */
-		PropertyConfigurator.configure(Launcher.class.getResource("/log4j.properties"));
+		PropertyConfigurator.configure(Launcher.class.getResource("/log4j.xml"));
 		LOGGER.info("Starting up BW4T Server.");
-		try {
-			LOGGER.addAppender(new FileAppender(new PatternLayout(), "BW4TServer.log"));
-		} catch (IOException e) {
-			LOGGER.warn("failed to start log output to a file", e);
-		}
 		LOGGER.info("Reading console arguments...");
 		readParameters(args);
 		LOGGER.info("Setting up correct directory structure.");

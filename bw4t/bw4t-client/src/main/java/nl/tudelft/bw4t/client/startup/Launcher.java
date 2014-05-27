@@ -9,6 +9,7 @@ import nl.tudelft.bw4t.message.MessageTranslator;
 import nl.tudelft.bw4t.logger.BotLog;
 import nl.tudelft.bw4t.startup.LauncherException;
 
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -51,10 +52,9 @@ public final class Launcher {
         /**
          * Set up the logging environment to log on the console.
          */
-        PropertyConfigurator.configure("log4j.properties");
+        BasicConfigurator.configure();
         LOGGER.info("Starting up BW4T Client.");
         LOGGER.info("Reading initialization parameters...");
-        LOGGER.log(BotLog.BOTLOG, "test");
         /**
          * Load all known parameters into the init array, convert it to EIS
          * format.

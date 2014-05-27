@@ -48,7 +48,7 @@ public final class MapLoader {
 
 	/** Identifier used for the space projections, matched in context.xml */
 
-	private static final String PROJECTION_ID = "BW4T_Projection";
+	public static final String PROJECTION_ID = "BW4T_Projection";
 
 	private static NewMap map;
 
