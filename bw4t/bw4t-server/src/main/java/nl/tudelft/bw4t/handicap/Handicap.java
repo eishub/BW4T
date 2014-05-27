@@ -27,6 +27,7 @@ public abstract class Handicap implements HandicapInterface {
 	
 	/**
 	 * Sets the parent to a new parent.
+	 * @param hI
 	 */
 	public void setParent(HandicapInterface hI) {
 		parent = hI;
@@ -34,6 +35,7 @@ public abstract class Handicap implements HandicapInterface {
 	
 	/**
 	 * Returns the parent.
+	 * @return parent
 	 */
 	public HandicapInterface getParent() {
 		return parent;
@@ -42,7 +44,7 @@ public abstract class Handicap implements HandicapInterface {
 	/**
 	 * GripperHandicap.
 	 * @param b
-	 * @return
+	 * @return 
 	 */
 	public boolean canPickUp(Block b) {
 		return parent.canPickUp(b);

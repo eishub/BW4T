@@ -7,13 +7,14 @@ import nl.tudelft.bw4t.zone.Zone;
 
 public class SizeOverloadHandicap extends Handicap {
 	
-	public boolean isActive;
+	private boolean isActive;
 	
 	/**
 	 * Calls the super method on p,
 	 * Sets the handicap to active,
 	 * Adds the handicap to the robot handicap storage.
 	 * @param p HandicapInterface the SizeOverloadHandicap wraps around.
+	 * @param s Size the bot is gonna be.
 	 */
 	public SizeOverloadHandicap(HandicapInterface p, int s) {
 		super(p);
@@ -25,6 +26,10 @@ public class SizeOverloadHandicap extends Handicap {
 	/**
 	 * Override of the checkZoneAccess method,
 	 * The robot cannot access zones anymore.
+	 * @param startzone Startzone
+	 * @param endzone Endzone
+	 * @param door Door
+	 * @return MoveType.SAME_AREA
 	 */
 	@Override
 	public MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door) {
@@ -58,16 +63,14 @@ public class SizeOverloadHandicap extends Handicap {
 	/**
 	 * Activate the handicap.
 	 */
-	public void activate()
-	{
+	public void activate() {
 		isActive = true;
 	}
 	
 	/**
 	 * Deactivate the handicap.
 	 */
-	public void deactivate()
-	{
+	public void deactivate() {
 		isActive = false;
 	}
 }

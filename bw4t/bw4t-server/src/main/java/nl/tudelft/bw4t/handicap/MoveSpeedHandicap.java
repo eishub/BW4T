@@ -18,7 +18,7 @@ public class MoveSpeedHandicap extends Handicap {
 	/**
 	 * boolean value to check if the handicap is active or not
 	 */
-	public boolean isActive;
+	private boolean isActive;
 	/**
 	 * Constructor for the handicap
 	 * @param p HandicapInterface of the MoveSpeedHandicap Wraps around
@@ -41,8 +41,9 @@ public class MoveSpeedHandicap extends Handicap {
 				// Calculate the distance that the robot is allowed to move.
 				double distance = robot.distanceTo(robot.targetLocation);
 				if (distance < Robot.MIN_MOVE_DISTANCE) {
-					robot.stopRobot(); // we're there
-				} else {
+					robot.stopRobot(); 
+				} 
+				else {
 					double movingDistance = Math.min(distance, Robot.MAX_MOVE_DISTANCE * speedMod);
 		
 					// Angle at which to move
@@ -77,18 +78,19 @@ public class MoveSpeedHandicap extends Handicap {
 	/**
 	 * set the handicap to active
 	 */
-	public void activate()
-	{
+	public void activate() {
 		isActive = true;
 	}
 	/**
 	 * set the handicap to inactive
 	 */
-	public void deactivate()
-	{
+	public void deactivate() {
 		isActive = false;
 	}
 	
+	/**
+	 * @return speedMod
+	 */	
 	public double getSpeedMod() {
 		return speedMod;
 	}
