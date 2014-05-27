@@ -20,17 +20,17 @@ import eis.exceptions.PerceiveException;
 import eis.iilang.Action;
 import eis.iilang.Parameter;
 
-public class MovementTest {
-
+public class BlockTest {
+	
 	private RemoteEnvironment client;
 
-//	@Before
+	@Before
 	public void setup() throws ManagementException, IOException,
 			ScenarioLoadException, JAXBException, InterruptedException {		
 		String[] clientArgs = new String[] {
 				"-map", "Banana",
 				"-agentclass", "nl.tudelft.bw4t.agent.BW4TAgent",
-				"-agentcount", "2",
+				"-agentcount", "1",
 				"-humancount", "0"};
 		nl.tudelft.bw4t.client.startup.Launcher.launch(clientArgs);
 		client = nl.tudelft.bw4t.client.startup.Launcher.getEnvironment();
@@ -38,39 +38,43 @@ public class MovementTest {
 	}
 
 	/**
-	 * Here we test if movement and collision is working properly.
+	 * Here we test the picking up and delivering of a block.
 	 * @throws TranslationException
 	 * @throws ActException
 	 * @throws InterruptedException
 	 * @throws PerceiveException
 	 */
-//	@Test
-	public void movementTest() throws TranslationException, ActException,
+	@Test
+	public void blockTest() throws TranslationException, ActException,
 			InterruptedException, PerceiveException {
-		String bot1 = client.getAgents().get(0);
-		String bot2 = client.getAgents().get(1);
+		String bot = client.getAgents().get(0);
 		
-		// We verify that we are indeed at the starting area, then move to RoomC1
-		TestFunctions.retrievePercepts(bot1);
-		assertTrue(TestFunctions.hasPercept("at(FrontDropZone)"));
+		// Move to RoomC1
 		Parameter[] param = Translator.getInstance().translate2Parameter("RoomC1");
-		client.performAction(bot1, new Action("goTo", param));
+		client.performAction(bot, new Action("goTo", param));
 		Thread.sleep(2000L);
 		
-		// We verify if we have arrived correctly
-		TestFunctions.retrievePercepts(bot1);
-		assertTrue(TestFunctions.hasPercept("in(RoomC1)"));
+		// Check if the yellow block is present and move to it
+		// It should always be present on the Banana map
+		TestFunctions.retrievePercepts(bot);
+		assertTrue(TestFunctions.hasPercept("color(46,YELLOW)"));
+		param = Translator.getInstance().translate2Parameter(46);
+		client.performAction(bot, new Action("goToBlock", param));
+		Thread.sleep(500L);
 		
-		// Next we test collision by having a second bot attempt to enter the same room
-		TestFunctions.retrievePercepts(bot2);
-		assertTrue(TestFunctions.hasPercept("at(FrontDropZone)"));
-		param = Translator.getInstance().translate2Parameter("RoomC1");
-		client.performAction(bot2, new Action("goTo", param));
-		Thread.sleep(2000L);
-
-		// We verify if we've collided with the door as intended
-		TestFunctions.retrievePercepts(bot2);
-		assertTrue(TestFunctions.hasPercept("state(collided)"));
-		assertTrue(TestFunctions.hasPercept("at(FrontRoomC1)"));
+		// Pick the block up
+		client.performAction(bot, new Action("pickUp"));
+		Thread.sleep(200L);
+		
+		// Move to the DropZone
+		param = Translator.getInstance().translate2Parameter("DropZone");
+		client.performAction(bot, new Action("goTo", param));
+		Thread.sleep(3000L);
+		
+		// Put the block down and verify the sequence index increased
+		client.performAction(bot, new Action("putDown"));
+		Thread.sleep(200L);
+		TestFunctions.retrievePercepts(bot);
+		assertTrue(TestFunctions.hasPercept("sequenceIndex(1)"));
 	}
 }
