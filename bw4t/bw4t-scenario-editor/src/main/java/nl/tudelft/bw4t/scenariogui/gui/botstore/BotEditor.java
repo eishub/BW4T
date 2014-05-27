@@ -6,62 +6,64 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
+import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.controllers.botstore.BotStoreController;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
  * This class serves as frame for the BotEditorPanel
- * 
  * @author Arun
+ * @author Katia Asmoredjo
  */
 public class BotEditor extends JFrame {
-
+    
     /** the name of the window */
     private String windowName = "Bot Editor";
-    /** the windwow width */
-    private int width;
-    /** the window height */
-    private int height;
-    /** The parent of this frame. */
-    private MainPanel parent;
     private BotEditorPanel bPanel;
     private BotStoreController controller;
-
+    private MainPanel view;
+    private static int row;
+    
+    private MainPanel parent;
+    
     /**
-     * creates the BotEditor frame
+     * Creates the BotEditor.
+     * @param view The MainPanel.
+     * @param row The row number of the selected bot.
      */
-    public BotEditor(MainPanel parent) {
+    public BotEditor(MainPanel view, int row){
         setLookAndFeel();
         setTitle(windowName);
         setResizable(false);
         setLayout(null);
-        this.parent = parent;
-        bPanel = new BotEditorPanel();
+        this.view = view;
+        this.row = row;
+        this.parent = view;
+            
+        bPanel = new BotEditorPanel(this, this.view);
         bPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
         setContentPane(bPanel);
-
+        
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-
+        
         pack();
-
-        width = this.getWidth();
-        height = this.getHeight();
-
+        
         setLocationRelativeTo(null);
-
+        
         setVisible(true);
-
+        
         controller = new BotStoreController(this);
     }
-
+    
     /**
-     * Function to set the look and feel of the frame to the default look and
-     * feel of the system. Throws exceptions which are passed over since the
-     * failure to set the look and feel is not considered harmful.
+     *  Function to set the look and feel of the frame to the default look and feel of the system.
+     *  Throws exceptions which are passed over since the failure to set the look and feel is not
+     *  considered harmful.
      */
     private void setLookAndFeel() {
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            UIManager.setLookAndFeel(
+                    UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException e) {
             // pass
         } catch (InstantiationException e) {
@@ -72,16 +74,23 @@ public class BotEditor extends JFrame {
             // pass
         }
     }
-
+    
+    /**
+     * Returns the row number of the bot that is currently selected.
+     * @return The row number of the bot that is currently selected.
+     */
+    public int getRow() {
+        return this.row;
+    }
+    
     /**
      * Returns the BotEditorPanel
-     * 
      * @return botEditorPanel used
      */
     public BotEditorPanel getBotEditorPanel() {
         return bPanel;
     }
-
+    
     /**
      * Get the main panel.
      */
@@ -99,7 +108,7 @@ public class BotEditor extends JFrame {
         this.parent = parent;
     }
 
-    public static void main(String[] args) {
-        new BotEditor(null);
+    public static void main(String[] args){
+        new BotEditor(null, row);
     }
 }
