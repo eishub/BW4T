@@ -1,11 +1,10 @@
 package nl.tudelft.bw4t.client.startup;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import eis.iilang.Identifier;
 import eis.iilang.Parameter;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Available init parameters and default values for {@link BW4TEnvironment}.

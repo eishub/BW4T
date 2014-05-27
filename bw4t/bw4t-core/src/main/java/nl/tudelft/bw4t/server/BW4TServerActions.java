@@ -1,14 +1,5 @@
 package nl.tudelft.bw4t.server;
 
-import java.rmi.Remote;
-import java.rmi.RemoteException;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import nl.tudelft.bw4t.client.BW4TClientActions;
-import repast.simphony.batch.BatchRunner;
 import eis.EnvironmentInterfaceStandard;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
@@ -18,6 +9,15 @@ import eis.iilang.Action;
 import eis.iilang.EnvironmentState;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
+
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import nl.tudelft.bw4t.client.BW4TClientActions;
 
 /**
  * This interface defines the calls that the clients can make to the server. Note, this interface does not support kill
