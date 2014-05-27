@@ -24,20 +24,17 @@ public class Battery
 	 * @param c The current amount of energy left.
 	 * @param dr The discharge rate.
 	 */
-	public Battery(int m, int c, int dr)
-	{
+	public Battery(int m, int c, int dr) {
 		this.max = m;
 		this.current = c;
 		this.dRate = dr;
 	}
 	
-	public int getCurrentCapacity()
-	{
+	public int getCurrentCapacity()	{
 		return this.current;
 	}
 	
-	public int getDischargeRate()
-	{
+	public int getDischargeRate() {
 		return this.dRate;
 	}
 	
@@ -46,8 +43,7 @@ public class Battery
 	 * Cast to double and reformat maybe?
 	 * @return the percentage of battery power left.
 	 */
-	public int getPercentage()
-	{
+	public int getPercentage() {
 		return (int) ((((double) this.current) * 100.0) / ((double) this.max));
 	}
 	
@@ -55,8 +51,7 @@ public class Battery
 	 * If the charging of the battery exceeds the max capacity, 
 	 * the current capacity is set to the max capacity.
 	 */
-	public void recharge()
-	{
+	public void recharge() {
 		/*
 		int temp = this.current + this.drate;
 		
@@ -78,18 +73,12 @@ public class Battery
 	 * If the emptying of the battery falls below 0, 
 	 * the current capacity is set to 0.
 	 */
-	public void discharge()
-	{
-		if (this.max != Integer.MAX_VALUE)
-		{
+	public void discharge()	{
+		if (this.max != Integer.MAX_VALUE) {
 			int temp = this.current - this.dRate;
-			
-			if (temp < 0)
-			{
+			if (temp < 0) {
 				this.current = 0;
-			}
-			else
-			{
+			} else {
 				this.current = temp;
 			}
 		}
