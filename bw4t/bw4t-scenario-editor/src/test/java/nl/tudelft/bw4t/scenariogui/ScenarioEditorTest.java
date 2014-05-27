@@ -6,8 +6,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import javax.swing.JFileChooser;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.controllers.editor.AbstractMenuOption;

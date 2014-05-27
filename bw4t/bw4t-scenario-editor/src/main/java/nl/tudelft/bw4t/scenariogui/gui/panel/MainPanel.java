@@ -139,7 +139,8 @@ public class MainPanel extends JPanel {
     	bots = list;
     }
     /**
-     * Get the bot config list.
+     * Returns the BotConfig list.
+     * @return The BotConfig list.
      */
     public List<BotConfig> getBotConfig() {
     	return bots;
@@ -154,7 +155,7 @@ public class MainPanel extends JPanel {
     }
     /**
      * Add a BotConfig-object to the end of the current list.
-     * @param b
+     * @param b The BotConfig object.
      */
     public void addBotConfig(BotConfig b) {
     	bots.add(b);

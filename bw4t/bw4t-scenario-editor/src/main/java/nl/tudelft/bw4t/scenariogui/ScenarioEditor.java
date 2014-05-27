@@ -1,16 +1,11 @@
 package nl.tudelft.bw4t.scenariogui;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.FileNotFoundException;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.WindowConstants;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.controllers.editor.ScenarioEditorController;
