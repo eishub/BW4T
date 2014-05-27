@@ -1,7 +1,8 @@
 package nl.tudelft.bw4t.controller;
 
+import eis.iilang.EnvironmentState;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,17 +18,34 @@ import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.view.MapRendererInterface;
 import nl.tudelft.bw4t.zone.DropZone;
 import nl.tudelft.bw4t.zone.Room;
+
 import repast.simphony.context.Context;
 import repast.simphony.space.Dimensions;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.util.collections.IndexedIterable;
-import eis.iilang.EnvironmentState;
 
+/**
+ * the {@link MapController} used by the server.
+ */
 public class ServerMapController extends AbstractMapController {
 
+	/**
+	 * the repast context containing block and entities.
+	 */
 	private final Context<Object> serverContext;
+	/**
+	 * make sure we focus on the map once we started the application.
+	 */
 	private boolean haveRequestedFocusAlready = false;
 
+	/**
+	 * Instantiate the MapController with the given repast context and the map used.
+	 * 
+	 * @param map
+	 *            the map to be displayed
+	 * @param context
+	 *            the repast context containing block and entities
+	 */
 	public ServerMapController(NewMap map, Context<Object> context) {
 		super(map);
 		getRenderSettings().setRenderEntityName(true);
@@ -39,7 +57,7 @@ public class ServerMapController extends AbstractMapController {
 	@Override
 	public List<BlockColor> getSequence() {
 		IndexedIterable<Object> dropZone = serverContext.getObjects(DropZone.class);
-		if (((Collection<Object>) dropZone).isEmpty()) {
+		if (dropZone.size() <= 0) {
 			return new ArrayList<>();
 		}
 		DropZone zone = (DropZone) dropZone.get(0);
