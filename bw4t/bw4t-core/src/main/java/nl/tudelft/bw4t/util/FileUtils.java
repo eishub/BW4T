@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLDecoder;
 import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -19,11 +20,18 @@ import org.apache.log4j.Logger;
 /**
  * A class of File operations.
  */
-public class FileUtils {
+public final class FileUtils {
+	private static final String COULD_NOT_FIND_FILE = "Could not find '%s'";
+
 	/**
 	 * The log4j logger, logs to the console.
 	 */
 	private static final Logger LOGGER = Logger.getLogger(FileUtils.class);
+
+	/**
+	 * error message used when we failed to close a file.
+	 */
+	private static final String FAILED_TO_CLOSE = "Failed to close file '%s'";
 
 	/**
 	 * Utility class, cannot be instantiated.
@@ -48,21 +56,20 @@ public class FileUtils {
 			fos = new FileOutputStream(destFile);
 			return FileUtils.copyStream(fis, fos);
 		} catch (final FileNotFoundException e) {
-			LOGGER.error("Failed to copy file '" + toCopy + "' to '" + destFile
-					+ "'", e);
+			LOGGER.error(String.format("Failed to copy file '%s' to '%s'", toCopy, destFile), e);
 		} finally {
 			if (fis != null) {
 				try {
 					fis.close();
 				} catch (IOException e) {
-					LOGGER.warn("Failed to close file '" + toCopy + "'", e);
+					LOGGER.warn(String.format(FAILED_TO_CLOSE, toCopy), e);
 				}
 			}
 			if (fos != null) {
 				try {
 					fos.close();
 				} catch (IOException e) {
-					LOGGER.warn("Failed to close file '" + destFile + "'", e);
+					LOGGER.warn(String.format(FAILED_TO_CLOSE, toCopy), e);
 				}
 			}
 		}
@@ -78,14 +85,13 @@ public class FileUtils {
 	 *            the folder to be copied to
 	 * @return true iff the files were successfully copied
 	 */
-	private static boolean copyFilesRecusively(final File toCopy,
-			final File destDir) {
+	private static boolean copyFilesRecusively(final File toCopy, final File destDir) {
 		assert destDir.isDirectory();
 
 		if (!toCopy.isDirectory()) {
-			return FileUtils.copyFile(toCopy,
-					new File(destDir, toCopy.getName()));
-		} else {
+			return FileUtils.copyFile(toCopy, new File(destDir, toCopy.getName()));
+		}
+		else {
 			final File newDestDir = new File(destDir, toCopy.getName());
 			if (!newDestDir.exists() && !newDestDir.mkdir()) {
 				return false;
@@ -109,34 +115,29 @@ public class FileUtils {
 	 * @return true iff the file were successfully copied
 	 * @throws IOException
 	 */
-	public static boolean copyJarResourcesRecursively(
-			final JarURLConnection jarConnection, final File destDir)
+	public static boolean copyJarResourcesRecursively(final JarURLConnection jarConnection, final File destDir)
 			throws IOException {
 
 		final JarFile jarFile = jarConnection.getJarFile();
 		final String entryName = jarConnection.getEntryName();
-		String entryNameParent = entryName.substring(0,
-				entryName.lastIndexOf('/') + 1);
+		String entryNameParent = entryName.substring(0, entryName.lastIndexOf('/') + 1);
 
-		for (final Enumeration<JarEntry> e = jarFile.entries(); e
-				.hasMoreElements();) {
+		for (final Enumeration<JarEntry> e = jarFile.entries(); e.hasMoreElements();) {
 			final JarEntry entry = e.nextElement();
 			if (entry.getName().startsWith(entryName)) {
-				final String filename = FileUtils.removeStart(entry.getName(),
-						entryNameParent);
+				final String filename = FileUtils.removeStart(entry.getName(), entryNameParent);
 
 				final File f = new File(destDir, filename);
 				if (!entry.isDirectory()) {
-					final InputStream entryInputStream = jarFile
-							.getInputStream(entry);
+					final InputStream entryInputStream = jarFile.getInputStream(entry);
 					if (!FileUtils.copyStream(entryInputStream, f)) {
 						return false;
 					}
 					entryInputStream.close();
-				} else {
+				}
+				else {
 					if (!FileUtils.ensureDirectoryExists(f)) {
-						throw new IOException("Could not create directory: "
-								+ f.getAbsolutePath());
+						throw new IOException("Could not create directory: " + f.getAbsolutePath());
 					}
 				}
 			}
@@ -145,8 +146,7 @@ public class FileUtils {
 	}
 
 	/**
-	 * Copy files from local filesystem or resources to a folder in the
-	 * filesystem.
+	 * Copy files from local filesystem or resources to a folder in the filesystem.
 	 * 
 	 * @param originUrl
 	 *            the origin url containing the files
@@ -154,16 +154,15 @@ public class FileUtils {
 	 *            the folder to copy to
 	 * @return true iff the files were copied successfully
 	 */
-	public static boolean copyResourcesRecursively( //
-			final URL originUrl, final File destination) {
+	public static boolean copyResourcesRecursively(final URL originUrl, final File destination) {
 		try {
 			final URLConnection urlConnection = originUrl.openConnection();
 			if (urlConnection instanceof JarURLConnection) {
-				return FileUtils.copyJarResourcesRecursively(
-						(JarURLConnection) urlConnection, destination);
-			} else {
-				return FileUtils.copyFilesRecusively(
-						new File(originUrl.getPath()), destination);
+				return FileUtils.copyJarResourcesRecursively((JarURLConnection) urlConnection, destination);
+			}
+			else {
+				return FileUtils.copyFilesRecusively(new File(URLDecoder.decode(originUrl.getPath(), "UTF-8")),
+						destination);
 			}
 		} catch (final IOException e) {
 			LOGGER.error("Failed to copy files from Jar", e);
@@ -172,8 +171,7 @@ public class FileUtils {
 	}
 
 	/**
-	 * Copy contents from the inputstream to the given file, closes the
-	 * inputstream afterwards.
+	 * Copy contents from the inputstream to the given file, closes the inputstream afterwards.
 	 * 
 	 * @param is
 	 *            the inputstream
@@ -187,13 +185,13 @@ public class FileUtils {
 			fos = new FileOutputStream(f);
 			return FileUtils.copyStream(is, fos);
 		} catch (final FileNotFoundException e) {
-			LOGGER.error("Failed to open file: '" + f + "'", e);
+			LOGGER.warn(String.format(COULD_NOT_FIND_FILE, f), e);
 		} finally {
 			if (fos != null) {
 				try {
 					fos.close();
 				} catch (IOException e) {
-					LOGGER.warn("Failed to close file: '" + f + "'", e);
+					LOGGER.warn(String.format(FAILED_TO_CLOSE, f), e);
 				}
 			}
 		}
@@ -201,8 +199,7 @@ public class FileUtils {
 	}
 
 	/**
-	 * this function copies the contents of the inputstream to the outputstream
-	 * and closes both streams.
+	 * this function copies the contents of the inputstream to the outputstream and closes both streams.
 	 * 
 	 * @param is
 	 *            the inputstream
@@ -210,8 +207,7 @@ public class FileUtils {
 	 *            the outputstream
 	 * @return true iff the contents were successfully copied
 	 */
-	private static boolean copyStream(final InputStream is,
-			final OutputStream os) {
+	private static boolean copyStream(final InputStream is, final OutputStream os) {
 		try {
 			final byte[] buf = new byte[1024];
 
