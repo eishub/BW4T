@@ -178,7 +178,7 @@ public class ScenarioEditor extends JFrame {
      *
      * @return The Controller used.
      */
-    public final ScenarioEditorController getController() {
+    public ScenarioEditorController getController() {
         return controller;
     }
 
@@ -236,5 +236,12 @@ public class ScenarioEditor extends JFrame {
      */
     public static OptionPrompt getOptionPrompt() {
         return option;
+    }
+
+    /**
+     * Closes the ScenarioEditor window and all child frames.
+     */
+    public void closeScenarioEditor() {
+        System.exit(0);
     }
 }

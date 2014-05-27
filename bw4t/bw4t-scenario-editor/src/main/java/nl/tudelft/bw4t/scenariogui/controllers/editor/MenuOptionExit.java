@@ -50,6 +50,6 @@ class MenuOptionExit extends AbstractMenuOption {
             }
         }
 
-        System.exit(0);
+        getController().getMainView().closeScenarioEditor();
     }
 }
