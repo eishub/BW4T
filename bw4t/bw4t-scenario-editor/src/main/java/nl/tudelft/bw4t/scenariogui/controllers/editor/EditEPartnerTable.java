@@ -32,18 +32,18 @@ public class EditEPartnerTable implements TableModelListener {
     /**
      * Gets called when a cell in the table was changed.
      * Updates the config object with the new data.
-     * @param arg0 The event.
+     * @param event The event.
      */
     @Override
-    public void tableChanged(TableModelEvent arg0) {
-        if (arg0.getColumn() == -1)
+    public void tableChanged(TableModelEvent event) {
+        if (event.getColumn() == -1)
             return;
         // TODO: once the EPartnerConfig has been made, uncomment (select it, then ctrl + 7) below stuff
         System.out.println("TODO: once the EPartnerConfig has been made, uncomment below stuff");
-//        EPartnerConfig config = view.getEntityPanel().getEPartnerConfigs().get(arg0.getFirstRow());
+//        EPartnerConfig config = view.getEntityPanel().getEPartnerConfigs().get(event.getFirstRow());
 //        String value = (String) view.getEntityPanel().getEPartnerTable().getValueAt(
-//                arg0.getFirstRow(), arg0.getColumn());
-//        switch (arg0.getColumn()) {
+//                event.getFirstRow(), event.getColumn());
+//        switch (event.getColumn()) {
 //        case 0:
 //            config.setEPartnerName(value);
 //            break;
