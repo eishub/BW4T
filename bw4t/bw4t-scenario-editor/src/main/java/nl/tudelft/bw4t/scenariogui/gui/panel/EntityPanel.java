@@ -5,6 +5,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -31,6 +33,7 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 
 /**
@@ -233,6 +236,11 @@ public class EntityPanel extends JPanel {
      * The button for deleting an e-partner.
      */
     private JButton deleteEpartner = new JButton("Delete E-partner");
+
+    /**
+     * The list that hold the created bots.
+     */
+    private List<BotConfig> botConfigList = new ArrayList<BotConfig>();
 
     /**
      * Create an EntityPanel object.
@@ -703,5 +711,23 @@ public class EntityPanel extends JPanel {
      */
     public final int getSelectedEPartnerRow() {
         return ePartnerTable.getSelectedRow();
+    }
+    
+
+    /**
+     * Returns the list with BotConfigs.
+     * @return The list with BotConfigs.
+     */
+    public List<BotConfig> getBotConfigs() {
+    	return botConfigList;
+    }
+    
+    /**
+     * Returns the BotConfig at the index'th place.
+     * @param index The index of the bot.
+     * @return The BotConfig at the index'th place.
+     */
+    public BotConfig getBotConfig(int index) {
+    	return botConfigList.get(index);
     }
 }

@@ -43,15 +43,15 @@ class DeleteBot implements ActionListener {
 
         if (row == -1) {
         	ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select the bot you want to delete.");
-        }
+        } else {
+        	int response = view.getEntityPanel().showConfirmDialog(null,
+                    "Are you sure you want to delete this bot?", "",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-        int response = view.getEntityPanel().showConfirmDialog(null,
-                "Are you sure you want to delete this bot?", "",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-        if (response == JOptionPane.YES_OPTION) {
-            view.getEntityPanel().getBotTableModel().removeRow(row);
-            view.removeBotConfig(row);
-        }
+            if (response == JOptionPane.YES_OPTION) {
+                view.getEntityPanel().getBotTableModel().removeRow(row);
+                view.removeBotConfig(row);
+            }
+        }        
     }
 }
