@@ -308,7 +308,7 @@ public class MenuBarTest {
         editor.getTopMenuBar().getMenuItemFileExit().doClick();
 
         /* Verify if closeScenarioEditor is called */
-        verify(editor, times(1)).closeScenarioEditor();
+        verify(editor, atLeastOnce()).closeScenarioEditor();
 
         /* Verify if it asked if we wanted to save */
         verify(option, times(1)).showConfirmDialog(null, ScenarioEditorController.CONFIRM_SAVE_TXT, "",

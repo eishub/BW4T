@@ -20,7 +20,6 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 import nl.tudelft.bw4t.scenariogui.util.DefaultOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
-import nl.tudelft.bw4t.scenariogui.controllers.editor.WindowExit;
 
 /**
  * The ScenarioEditor class serves as the Frame for the MenuBar and MainPanel.
@@ -81,7 +80,6 @@ public class ScenarioEditor extends JFrame {
         setActivePane(mPanel);
         
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        this.addWindowListener(new WindowExit(this));
 
         // Gives window its size by inner components
         pack();

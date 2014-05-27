@@ -17,7 +17,7 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
  * @since		26-05-2014
  *
  */
-public class WindowExit implements WindowListener {
+class WindowExit implements WindowListener {
 	
 	/**
 	 * The view being controlled.
@@ -39,7 +39,7 @@ public class WindowExit implements WindowListener {
 		
 		// Check if current config is different from last saved config
         if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())) {
-        	int response = JOptionPane.showOptionDialog(
+        	int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
     				null,
     				"You have not saved your current configuration. \n"
     				+
@@ -48,27 +48,24 @@ public class WindowExit implements WindowListener {
 					"Are you sure you want to exit the program? \n",
     				"",
     				JOptionPane.YES_NO_OPTION,
-    				JOptionPane.QUESTION_MESSAGE,
-    				null,
-    				null,
-    				null);
+    				JOptionPane.QUESTION_MESSAGE
+            );
         	
         	if (response == JOptionPane.YES_OPTION) {
-        		System.exit(0);
+                view.closeScenarioEditor();
         	}
-        } else {
-        	int response = JOptionPane.showOptionDialog(
+        }
+        else {
+        	int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
         			null,
         			"Are you sure you want to exit the program?",
         			"",
         			JOptionPane.YES_NO_OPTION,
-        			JOptionPane.QUESTION_MESSAGE,
-        			null,
-        			null,
-        			null);
+        			JOptionPane.QUESTION_MESSAGE
+                );
 		
         	if (response == JOptionPane.YES_OPTION) {
-        		System.exit(0);
+                view.closeScenarioEditor();
         	}
         }
 	}
