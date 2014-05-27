@@ -15,7 +15,7 @@ public class GripperHandicap extends Handicap {
 		super(p);
 		isActive = true;
 		
-		robot.handicapsMap.put("Gripper", this);
+		robot.getHandicapsMap().put("Gripper", this);
 	}
 
 	/**
