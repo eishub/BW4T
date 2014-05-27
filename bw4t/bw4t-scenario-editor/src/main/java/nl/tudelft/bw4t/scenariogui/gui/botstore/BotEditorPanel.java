@@ -111,14 +111,21 @@ public class BotEditorPanel extends JPanel {
 		botSliders.setLayout(new GridLayout(10,1));
 		
 		JLabel batteryUseLabel = new JLabel("Battery use:");
-		JLabel perTickLabel = new JLabel("per tick (minuites??)");
+		JLabel perTickLabel = new JLabel("per tick");
 		batteryUseLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
+		JLabel botNameLabel = new JLabel("Bot name:");
+		
 		JPanel batteryCapPanel = new JPanel();
+		JPanel botNamePanel = new JPanel();
 		
 		batteryCapPanel.add(batteryUseLabel);
 		batteryCapPanel.add(batteryUseValueLabel);
 		batteryCapPanel.add(perTickLabel);
+		
+		botNamePanel.setLayout(new BoxLayout(botNamePanel, BoxLayout.PAGE_AXIS));
+		botNamePanel.add(botNameLabel);
+		botNamePanel.add(botNameTextField);
 		
 		JLabel numberOfGrippersLabel = new JLabel("Number of Grippers");
 		numberOfGrippersLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -134,8 +141,7 @@ public class BotEditorPanel extends JPanel {
 		batteryCapacity.setToolTipText("Max capacity on a scale of 10-100");
 		
 		createSliders();
-		
-		botSliders.add(botNameTextField);
+		botSliders.add(botNamePanel);
 		botSliders.add(numberOfGrippersLabel);
 		botSliders.add(numberOfGrippersSlider);
 		botSliders.add(sizeLabel);
@@ -269,13 +275,21 @@ public class BotEditorPanel extends JPanel {
 		return batterySlider;
 	}
 
+	public void setBatteryEnabledCheckbox(JCheckBox batteryEnabledCheckbox) {
+		this.batteryEnabledCheckbox = batteryEnabledCheckbox;
+	}
+
+	public JCheckBox getBatteryEnabledCheckbox() {
+		return batteryEnabledCheckbox;
+	}
+	
 	public void setBatterySlider(JSlider batterySlider) {
 		this.batterySlider = batterySlider;
 	}
 
 	public JLabel getBatteryUseValueLabel() {
 		return batteryUseValueLabel;
-	}
+	}	
 
 	public void setBatteryUseValueLabel(JLabel batteryUseValueLabel) {
 		this.batteryUseValueLabel = batteryUseValueLabel;

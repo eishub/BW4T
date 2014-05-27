@@ -23,6 +23,7 @@ class ResetButton implements ActionListener {
         view.getColorblindCheckbox().setSelected(false);
         view.getsizeoverloadCheckbox().setSelected(false);
         view.getmovespeedCheckbox().setSelected(false);
+        view.getBatteryEnabledCheckbox().setSelected(false);
         view.getNumberOfGrippersSlider().setValue(2);
     }
 }
