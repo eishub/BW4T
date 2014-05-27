@@ -20,10 +20,6 @@ import org.powermock.core.ListMap;
 
 /**
  * The class <code>RemoteEnvironmentTest</code> contains tests for the class <code>{@link RemoteEnvironment}</code>.
- *
- * @generatedBy CodePro at 5/27/14 3:25 PM
- * @author archos
- * @version $Revision: 1.0 $
  */
 public class RemoteEnvironmentTest {
 	/**
