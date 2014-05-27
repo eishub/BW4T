@@ -32,17 +32,17 @@ public class ConfigurationPanelTest {
      */
     private ScenarioEditor editor;
     /**
-     * The file used to save the file in.
+     * The base directory of all files used in the test.
      */
-    private final String filePath = "testpath.xml";
+    private static final String BASE = System.getProperty("user.dir") + "/src/test/resources/";
     /**
      * The file that has to be opened.
      */
-    private final String filePathMap = "test.map";
+    private final String filePathMap = BASE + "test.map";
     /**
      * The selected file that cannot be opened.
      */
-    private final String fileMapFail = "test.fail";
+    private final String fileMapFail = BASE + "test.fail";
     /**
      * The file chooser object.
      */
@@ -73,21 +73,13 @@ public class ConfigurationPanelTest {
     }
 
     /**
-     * Deletes the file after having used it.
-     */
-    @After
-    public final void deleteFiles() {
-        new File(filePath).delete();
-    }
-
-    /**
      * Tests the setMapFile method.
      */
     @Test
     public final void testSetMapFile() {
-        editor.getMainPanel().getConfigurationPanel().setMapFile(filePath);
+        editor.getMainPanel().getConfigurationPanel().setMapFile(filePathMap);
 
-        assertEquals(filePath, editor.getMainPanel().getConfigurationPanel()
+        assertEquals(filePathMap, editor.getMainPanel().getConfigurationPanel()
                 .getMapFile());
     }
 
@@ -99,13 +91,17 @@ public class ConfigurationPanelTest {
         // Setup the mocks behaviour.
         when(fileChooser.showOpenDialog(editor.getMainPanel())).thenReturn(
                 JFileChooser.APPROVE_OPTION);
-        when(fileChooser.getSelectedFile()).thenReturn(new File(filePathMap));
+
+        File mapFile = new File(filePathMap);
+
+        when(fileChooser.getSelectedFile()).thenReturn(mapFile);
 
         // Trigger the event.
         editor.getMainPanel().getConfigurationPanel().getChooseMapFile()
                 .doClick();
 
-        assertEquals(filePathMap, editor.getMainPanel().getConfigurationPanel()
+        /* Replace the backward slashes with forward slashes */
+        assertEquals(mapFile.getAbsolutePath(), editor.getMainPanel().getConfigurationPanel()
                 .getMapFile());
     }
 
