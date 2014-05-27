@@ -16,7 +16,7 @@ public class BotEditor extends JFrame{
 	
 	/** the name of the window */
 	private String windowName = "Bot Editor";
-	/** the window width*/
+	/** the windwow width*/
 	private int width;
 	/** the window height*/
 	private int height;
