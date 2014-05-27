@@ -13,11 +13,12 @@ import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
+import nl.tudelft.bw4t.scenariogui.util.MapSpec;
 
 /**
  * Handles the event of the menu.
  * <p>
- * @author        
+ * @author      Nick Feddes
  * @version     0.1                
  * @since       12-05-2014        
  */
@@ -89,6 +90,15 @@ public abstract class AbstractMenuOption implements ActionListener {
      * @param saveAs Whether or not to open a file chooser.
      */
     public void saveFile(final boolean saveAs) {
+        MapSpec map = controller.getMainView().getMainPanel().getConfigurationPanel().getMapSpecifications();
+        int botCount = controller.getMainView().getMainPanel().getEntityPanel().getBotCount();
+        if (map.isSet() && botCount > map.getEntitiesAllowedInMap()) {
+            ScenarioEditor.getOptionPrompt().showMessageDialog(view,
+                    "The selected map can only hold " + map.getEntitiesAllowedInMap() +
+                    " bots. Please delete some first.");
+            return;
+        }
+        
         String path = view.getLastFileLocation();
         if (saveAs || !view.hasLastFileLocation()) {
             currentFileChooser = getCurrentFileChooser();
