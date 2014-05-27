@@ -19,9 +19,9 @@ public class ZoneLocator {
 	/**
 	 * Utility class, cannot be instantiated.
 	 */
-	private ZoneLocator(){
+	private ZoneLocator() {
 	}
-	
+
 	/**
 	 * Find {@link Zone} containing given point.
 	 * 
@@ -111,9 +111,9 @@ public class ZoneLocator {
 
 	public static Zone getNearestZone(NdPoint location) {
 		Zone z = ZoneLocator.getZoneAt(location);
-		if (z != null)
+		if (z != null) {
 			return z;
-
+		}
 		return getNearestCorridorZone(location);
 	}
 
