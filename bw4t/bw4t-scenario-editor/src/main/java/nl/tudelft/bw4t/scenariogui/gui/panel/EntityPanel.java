@@ -34,7 +34,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.config.BotConfig;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
 
 /**
  * The EntityPanel class represents right pane of the MainPanel. It shows a list

@@ -7,7 +7,7 @@ import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 /**
  * Handles the event to save a file.
  * <p>
- * @author        
+ * @author      Nick Feddes  
  * @version     0.1                
  * @since       12-05-2014        
  */

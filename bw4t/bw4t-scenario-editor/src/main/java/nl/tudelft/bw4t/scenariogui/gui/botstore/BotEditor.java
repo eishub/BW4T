@@ -19,7 +19,6 @@ public class BotEditor extends JFrame {
 	
 	/** the name of the window */
 	private String windowName = "Bot Editor";
-	
 	private BotEditorPanel bPanel;
 	private BotStoreController controller;
 	private MainPanel view;
@@ -35,7 +34,6 @@ public class BotEditor extends JFrame {
 		setTitle(windowName);
 		setResizable(false);
 		setLayout(null);
-		
 		this.view = view;
 		this.row = row;
 			
@@ -89,7 +87,7 @@ public class BotEditor extends JFrame {
 	public BotEditorPanel getBotEditorPanel() {
 		return bPanel;
 	}
-	
+
 	public static void main(String[] args){
 		new BotEditor(null, row);
 	}

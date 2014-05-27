@@ -108,4 +108,11 @@
             </plugin>
         </plugins>
     </reporting>
+    <dependencies>
+    	<dependency>
+    		<groupId>nl.tudelft.bw4t.core</groupId>
+    		<artifactId>bw4t-core</artifactId>
+    		<version>3.1.0</version>
+    	</dependency>
+    </dependencies>
 </project>

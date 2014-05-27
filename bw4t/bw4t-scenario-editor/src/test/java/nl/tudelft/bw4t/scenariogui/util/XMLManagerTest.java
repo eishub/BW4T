@@ -5,7 +5,8 @@ import java.io.FileNotFoundException;
 
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import nl.tudelft.bw4t.util.XMLManager;
 
 import org.junit.Test;
 
