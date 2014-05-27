@@ -96,4 +96,8 @@ public class BotEditor extends JFrame{
 	public static void main(String[] args){
 		new BotEditor(null);
 	}
+
+	public void setBotEditorPanel(BotEditorPanel bPanel) {
+		this.bPanel = bPanel;
+	}
 }
