@@ -39,7 +39,12 @@ import static org.mockito.Mockito.when;
 /**
  * <p>
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @author      Calvin Wong Loi Sing  
+=======
+ * @author      Calvin Wong Loi Sing
+ * @author		Katia Asmoredjo
+>>>>>>> ScenarioEditor_K
 =======
  * @author      Calvin Wong Loi Sing
  * @author		Katia Asmoredjo

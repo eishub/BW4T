@@ -276,7 +276,7 @@ public class ConfigurationPanelTest {
      */
     @Test
     public void testChangesMapFile() {
-    	editor.getMainPanel().getConfigurationPanel().setMapFile("New Map");
+    	editor.getMainPanel().getConfigurationPanel().setMapFile(filePathMap);
     	
     	assertEquals(false, editor.getMainPanel().getConfigurationPanel().isDefault());
     }
