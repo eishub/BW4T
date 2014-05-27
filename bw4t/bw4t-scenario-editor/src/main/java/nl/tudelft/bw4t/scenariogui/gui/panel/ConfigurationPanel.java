@@ -19,6 +19,7 @@ import javax.swing.border.TitledBorder;
 
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 import nl.tudelft.bw4t.scenariogui.util.Format;
+import nl.tudelft.bw4t.scenariogui.util.MapSpec;
 
 /**
  * The ConfigurationPanel class represents the left pane of the MainPanel. It
@@ -107,6 +108,9 @@ public class ConfigurationPanel extends JPanel {
     private static final int TEXT_FIELD_COLUMN_SIZE_BIG = 15;
     /** The column size of the small text fields. */
     private static final int TEXT_FIELD_COLUMN_SIZE_SMALL = 6;
+    
+    /** The specifications of the currently selected map file. */
+    private MapSpec mapSpec;
 
     /** The text field holding the client ip. */
     private JTextField clientIP = new JTextField(
@@ -199,6 +203,8 @@ public class ConfigurationPanel extends JPanel {
         title.setTitleJustification(TitledBorder.LEFT);
         title.setTitleFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE));
         setBorder(title);
+        
+        mapSpec = new MapSpec(DEFAULT_VALUES.MAP_FILE.getValue());
 
         // showConfigLabel();
         showClientOptions();
@@ -511,6 +517,7 @@ public class ConfigurationPanel extends JPanel {
      * @param mapFile   The path of the Map file
      */
     public final void setMapFile(final String mapFile) {
+        mapSpec.setMapFileLocation(mapFile);
         this.mapFileTextField.setText(mapFile);
     }
 
@@ -616,4 +623,13 @@ public class ConfigurationPanel extends JPanel {
                 + this.guiCheckBox.getSelectedCheckbox()
                 + this.mapFileTextField.getText();
     }
+    
+    /**
+     * Returns the map specifications for the selected map.
+     * @return The map specifications for the selected map.
+     */
+    public MapSpec getMapSpecifications() {
+        return mapSpec;
+    }
+    
 }
