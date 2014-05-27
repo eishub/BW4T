@@ -127,36 +127,44 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	 * @param entity
 	 * @throws EntityException
 	 */
+	private void notifyFreeHuman(BW4TClientActions client, String entity, String type, ClientInfo ci) throws EntityException{
+		try {
+			if ("unknown".equals(type)) {
+				BW4TEnvironment.getInstance().setType(entity, "human");
+			}
+			client.handleNewEntity(entity);
+			// Client is now waiting for one less entity
+			ci.decreaseNumberOfHumans();
+			return;
+		} catch (RemoteException e) {
+			reportClientProblem(client, e);
+		}
+	}
+	private void notifyFreeBot(BW4TClientActions client, String entity, String type, ClientInfo ci) throws EntityException{
+		try {
+			if ("unknown".equals(type)) {
+				BW4TEnvironment.getInstance().setType(entity, "bot");
+			}
+			client.handleNewEntity(entity);
+			// Client is now waiting for one less entity
+			ci.decreaseNumberOfAgents();
+			return;
+		} catch (RemoteException e) {
+			reportClientProblem(client, e);
+		}
+	}
+	
 	private void notifyFreeEntity(BW4TClientActions client, String entity) throws EntityException {
 		String type = BW4TEnvironment.getInstance().getType(entity);
 		
 		ClientInfo ci = clients.get(client);
 
 		if (ci.getNumberOfAgents() > 0 && (type.equals("unknown") || type.equals("bot"))) {
-			try {
-				if ("unknown".equals(type)) {
-					BW4TEnvironment.getInstance().setType(entity, "bot");
-				}
-				client.handleNewEntity(entity);
-				// Client is now waiting for one less entity
-				ci.decreaseNumberOfAgents();
-				return;
-			} catch (RemoteException e) {
-				reportClientProblem(client, e);
-			}
+			notifyFreeBot(client,entity,type,ci); 
 		}
 		else if (ci.getNumberOfHumans() > 0 && (type.equals("unknown") || type.equals("human"))) {
-			try {
-				if ("unknown".equals(type)) {
-					BW4TEnvironment.getInstance().setType(entity, "human");
-				}
-				client.handleNewEntity(entity);
-				// Client is now waiting for one less entity
-				ci.decreaseNumberOfHumans();
-				return;
-			} catch (RemoteException e) {
-				reportClientProblem(client, e);
-			}
+			notifyFreeHuman(client,entity,type,ci); 
+
 		}
 	}
 
