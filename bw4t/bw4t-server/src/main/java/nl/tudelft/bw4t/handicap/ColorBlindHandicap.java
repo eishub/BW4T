@@ -22,16 +22,14 @@ public class ColorBlindHandicap extends Handicap{
 	/**
 	 * Activate the handicap.
 	 */
-	public void activate()
-	{
+	public void activate() {
 		isActive = true;
 	}
 	
 	/**
 	 * Deactivate the handicap.
 	 */
-	public void deactivate()
-	{
+	public void deactivate() {
 		isActive = false;
 	}
 

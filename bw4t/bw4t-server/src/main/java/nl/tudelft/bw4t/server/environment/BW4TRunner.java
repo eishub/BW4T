@@ -55,7 +55,8 @@ public class BW4TRunner extends AbstractRunner {
 			BatchScenarioLoader loader = new BatchScenarioLoader(scenarioDir);
 			ControllerRegistry registry = loader.load(runEnvironmentBuilder);
 			bw4tController.setControllerRegistry(registry);
-		} else {
+		}
+		else {
 			LOGGER.fatal("Scenario directory was not found.");
 			return;
 		}
@@ -65,7 +66,7 @@ public class BW4TRunner extends AbstractRunner {
 	}
 
 	public void runInitialize() {
-		BW4TParameters params = new BW4TParameters(); 			
+		BW4TParameters params = new BW4TParameters();
 		bw4tController.runInitialize(params);
 		schedule = RunState.getInstance().getScheduleRegistry().getModelSchedule();
 		fireStartedMessage();

@@ -40,8 +40,7 @@ public enum MoveType {
 	public MoveType merge(MoveType other) {
 		if (this.isHit()) {
 			return this;
-		}
-		else if (other.isHit() || (this == SAME_AREA || this == ENTERING_FREESPACE)) {
+		} else if (other.isHit() || (this == SAME_AREA || this == ENTERING_FREESPACE)) {
 			return other;
 		} else {
 			return this;
