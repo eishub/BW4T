@@ -31,7 +31,7 @@ public final class BotEditorData {
 	}
 	
 	/**
-	 * @param newSize, the new size of the robot.
+	 * @param newSize the new size of the robot.
 	 */
 	public void setBotSize(int newSize) {
 		botSize = newSize;
@@ -45,7 +45,7 @@ public final class BotEditorData {
 	}
 	
 	/**
-	 * @param newSpeed, the new speed of the robot.
+	 * @param newSpeed the new speed of the robot.
 	 */
 	public void setBotSpeed(int newSpeed) {
 		botSpeed = newSpeed;
@@ -59,7 +59,7 @@ public final class BotEditorData {
 	}
 	
 	/**
-	 * @param newBatteryCapacity, the new robot's battery capacity.
+	 * @param newBatteryCapacity the new robot's battery capacity.
 	 */
 	public void setBotBatteryCapacity(int newBatteryCapacity) {
 		botBatteryCapacity = newBatteryCapacity;
@@ -73,7 +73,7 @@ public final class BotEditorData {
 	}
 	
 	/**
-	 * @param newBatteryDischargeRate, the new robot's battery discharge rate.
+	 * @param newBatteryDischargeRate the new robot's battery discharge rate.
 	 */
 	public void setBotBatteryDischargeRate(int newBatteryDischargeRate) {
 		botBatteryDischargeRate = newBatteryDischargeRate;
@@ -87,7 +87,7 @@ public final class BotEditorData {
 	}
 	
 	/**
-	 * @param bool, adds or removes the color blind handicap.
+	 * @param bool adds or removes the color blind handicap.
 	 */
 	public void setColorBlindHandicap(boolean bool) {
 		hasColorBlindHandicap = bool;
@@ -101,7 +101,7 @@ public final class BotEditorData {
 	}
 	
 	/**
-	 * @param bool, adds or removes the gripper handicap.
+	 * @param bool adds or removes the gripper handicap.
 	 */
 	public void setGripperHandicap(boolean bool) {
 		hasGripperHandicap = bool;
@@ -115,7 +115,7 @@ public final class BotEditorData {
 	}
 	
 	/**
-	 * @param bool, adds or removes the move speed handicap.
+	 * @param bool adds or removes the move speed handicap.
 	 */
 	public void setMoveSpeedHandicap(boolean bool) {
 		hasMoveSpeedHandicap = bool;
@@ -129,7 +129,7 @@ public final class BotEditorData {
 	}
 	
 	/**
-	 * @param bool, adds or removes the size overload handicap.
+	 * @param bool adds or removes the size overload handicap.
 	 */
 	public void setSizeOverloadHandicap(boolean bool) {
 		hasSizeOverloadHandicap = bool;
