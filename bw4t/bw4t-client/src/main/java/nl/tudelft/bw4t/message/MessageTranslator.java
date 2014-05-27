@@ -77,7 +77,6 @@ public class MessageTranslator {
         	String key = e.getKey();
         	if(message.equals(key)) {
         		BW4TMessage msg = translatorEquals.get(key).exec(message);
-        		System.out.println("Map:    " + msg);
         		return msg;
         	}
         }
