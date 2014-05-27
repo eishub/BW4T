@@ -17,8 +17,8 @@ public class BotEditorTest {
 	@Test
 	public void setBotEditorPane(){
 		MainPanel parent = new MainPanel(new ConfigurationPanel(),new EntityPanel());
-		botEditor = new BotEditor(parent);
-		BotEditorPanel panel = new BotEditorPanel();
+		botEditor = new BotEditor(parent,"");
+		BotEditorPanel panel = new BotEditorPanel("");
 		botEditor.setBotEditorPanel(panel);
 		botEditor.setParent(parent);
 		assertEquals(parent, botEditor.getParent());
