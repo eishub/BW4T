@@ -4,6 +4,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import nl.tudelft.bw4t.client.controller.ClientController;
+import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
 import nl.tudelft.bw4t.map.ColorTranslator;
@@ -20,7 +21,7 @@ public class PlayerMenu {
 	 *            , the playerId that the request should be sent to
 	 */
 	public static void buildPopUpMenuForRequests(String playerId, BW4TClientGUI gui) {
-		ClientController cmc = gui.getController();
+		ClientMapController cmc = gui.getController().getMapController();
 		gui.getjPopupMenu().removeAll();
 		BasicMenuOperations.addSectionTitleToPopupMenu("Request:", gui.getjPopupMenu());
 
