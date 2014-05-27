@@ -1,13 +1,13 @@
-package src.main.java.nl.tudelft.bw4t.scenariogui.controller;
+package nl.tudelft.bw4t.scenariogui.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import src.main.java.nl.tudelft.bw4t.scenariogui.gui.epartner.EpartnerFrame;
-import src.main.java.nl.tudelft.bw4t.scenariogui.gui.epartner.JButton;
-import src.main.java.nl.tudelft.bw4t.scenariogui.gui.epartner.JCheckBox;
+import nl.tudelft.bw4t.scenariogui.gui.epartner.EpartnerFrame;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 
 /**
  * EpartnerController is in charge of all events that happen on the EpartnerGUI.
