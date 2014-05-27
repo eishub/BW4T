@@ -7,7 +7,6 @@ import nl.tudelft.bw4t.client.environment.BW4TEnvironmentListener;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.startup.LauncherException;
 
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
