@@ -10,18 +10,11 @@ import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.Zone.Type;
 import nl.tudelft.bw4t.view.MapRendererInterface;
 
-import org.apache.log4j.Logger;
-
 /**
  * An abstract {@link MapController} implementation, taking over as much functionality as possible. Without using client
  * or server-specific code.
  */
 public abstract class AbstractMapController implements MapController, Runnable {
-	/**
-	 * The log4j logger which writes logs.
-	 */
-	private static final Logger LOGGER = Logger.getLogger(AbstractMapController.class);
-
 	/**
 	 * The map to be rendered.
 	 */
@@ -40,9 +33,15 @@ public abstract class AbstractMapController implements MapController, Runnable {
 	 */
 	private final Set<MapRendererInterface> renderers = new HashSet<>();
 
-	public AbstractMapController(NewMap map) {
+	/**
+	 * Creates Default {@link MapRenderSettings}, sets the map and starts the updater.
+	 * 
+	 * @param theMap
+	 *            the map to be used
+	 */
+	public AbstractMapController(NewMap theMap) {
 		renderSettings = new MapRenderSettings();
-		this.setMap(map);
+		this.setMap(theMap);
 		setRunning(true);
 	}
 
@@ -54,6 +53,8 @@ public abstract class AbstractMapController implements MapController, Runnable {
 	}
 
 	/**
+	 * Set the map and update the world dimensions in the renderer.
+	 * 
 	 * @param themap
 	 *            the map to set
 	 */
@@ -97,21 +98,34 @@ public abstract class AbstractMapController implements MapController, Runnable {
 	 */
 	@Override
 	public void setRunning(boolean run) {
-		if(!run){
+		if (!run) {
 			setForceRunning(run);
-		} else if(!running) {
+		}
+		else if (!running) {
 			startupUpdateThread();
 		}
 	}
 
+	/**
+	 * Sets the actual variable doesn't start the thread.
+	 * 
+	 * @param run
+	 *            the value to be set
+	 */
 	protected void setForceRunning(boolean run) {
 		running = run;
 	}
 
+	/**
+	 * @return the renderers
+	 */
 	public Set<MapRendererInterface> getRenderers() {
 		return renderers;
 	}
 
+	/**
+	 * Start the update thread.(will fail if it's already running)
+	 */
 	private void startupUpdateThread() {
 		Thread thread = new Thread(new Updater(this));
 		thread.start();
@@ -172,6 +186,5 @@ public abstract class AbstractMapController implements MapController, Runnable {
 	 *            the current renderer
 	 */
 	protected abstract void updateRenderer(MapRendererInterface mri);
-
 
 }
