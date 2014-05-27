@@ -51,6 +51,7 @@ public class ConfigurationPanel extends JPanel {
 
     /**
      * The default values for in the GUI.
+     * @author     Nick Feddes
      */
     public static enum DEFAULT_VALUES {
         /** The default server ip. */

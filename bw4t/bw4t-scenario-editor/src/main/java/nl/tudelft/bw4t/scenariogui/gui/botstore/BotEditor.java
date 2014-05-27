@@ -8,31 +8,37 @@ import javax.swing.border.EmptyBorder;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.controllers.botstore.BotStoreController;
+import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
  * This class serves as frame for the BotEditorPanel
  * @author Arun
  * @author Katia Asmoredjo
  */
-public class BotEditor extends JFrame{
+public class BotEditor extends JFrame {
 	
 	/** the name of the window */
 	private String windowName = "Bot Editor";
-	
 	private BotEditorPanel bPanel;
 	private BotStoreController controller;
+	private MainPanel view;
+	private static int row;
 	
 	/**
-	 * creates the BotEditor frame
+	 * Creates the BotEditor.
+	 * @param view The MainPanel.
+	 * @param row The row number of the selected bot.
 	 */
-	public BotEditor(){
+	public BotEditor(MainPanel view, int row){
 		setLookAndFeel();
 		setTitle(windowName);
 		setResizable(false);
 		setLayout(null);
+		this.view = view;
+		this.row = row;
 			
-		bPanel = new BotEditorPanel(this, new ScenarioEditor());
-		bPanel.setBorder(new EmptyBorder(15,15,15,15));
+		bPanel = new BotEditorPanel(this, this.view);
+		bPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
 		setContentPane(bPanel);
 		
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -65,6 +71,15 @@ public class BotEditor extends JFrame{
             // pass
         }
     }
+    
+    /**
+     * Returns the row number of the bot that is currently selected.
+     * @return The row number of the bot that is currently selected.
+     */
+    public int getRow() {
+    	return this.row;
+    }
+    
     /**
      * Returns the BotEditorPanel
      * @return botEditorPanel used
@@ -72,8 +87,8 @@ public class BotEditor extends JFrame{
 	public BotEditorPanel getBotEditorPanel() {
 		return bPanel;
 	}
-	
+
 	public static void main(String[] args){
-		new BotEditor();
+		new BotEditor(null, row);
 	}
 }
