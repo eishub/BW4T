@@ -83,6 +83,8 @@ public class AgentRecord {
 	 * element of the top list having a list of items for one log line.
 	 * 
 	 * @return
+	 * 
+	 * TODO log this at the end
 	 */
 	public List<List<String>> toSummaryArray() {
 		List<List<String>> summaries = new ArrayList<List<String>>();
