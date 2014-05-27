@@ -86,35 +86,6 @@ public class BW4TClientConfig {
     }
 
     /**
-<<<<<<< HEAD:bw4t/bw4t-core/src/main/java/nl/tudelft/bw4t/scenariogui/BW4TClientConfig.java
-=======
-     * A <code>BW4TClientConfig</code> object holding the configuration.
-     *
-     * @param mainPanel     Serves as the content pane.
-     * @param newOutputFile Contains the file location used for saving.
-     */
-    public BW4TClientConfig(final MainPanel mainPanel,
-                            final String newOutputFile) {
-        ConfigurationPanel configPanel = mainPanel.getConfigurationPanel();
-        clientIp = configPanel.getClientIP();
-        clientPort = configPanel.getClientPort();
-        serverIp = configPanel.getServerIP();
-        serverPort = configPanel.getServerPort();
-        launchGui = configPanel.useGui();
-//        configPanel.useGoal();
-        useGoal = ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue();
-        mapFile = configPanel.getMapFile();
-        EntityPanel entityPanel = mainPanel.getEntityPanel();
-        //getBots();
-        
-        //TODO add epartner configs
-        //getEpartners();
-        
-        this.outputFile = newOutputFile;
-    }
-
-    /**
->>>>>>> ScenarioEditor_K:bw4t/bw4t-scenario-editor/src/main/java/nl/tudelft/bw4t/scenariogui/config/BW4TClientConfig.java
      * Converts Java Object into XML file.
      *
      * @throws FileNotFoundException Signals that an attempt to open the file denoted by a
