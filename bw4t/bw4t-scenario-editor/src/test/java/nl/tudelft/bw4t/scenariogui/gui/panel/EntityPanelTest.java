@@ -89,10 +89,8 @@ public class EntityPanelTest {
      */
     @Test
     public final void testBotCountListener() {
-        Object[] data = {"d1", "d2", "1"};
-
-        spyEntityPanel.getBotTableModel().addRow(data);
-        spyEntityPanel.getBotTableModel().setValueAt(12, 0, 2);
+        spyEntityPanel.getNewBotButton().doClick();
+        spyEntityPanel.getBotTableModel().setValueAt("12", 0, 2);
 
         assertEquals(12, spyEntityPanel.getBotCount());
     }
@@ -117,7 +115,7 @@ public class EntityPanelTest {
     @Test
     public final void testEPartnerCountListener() {
         Object[] data = {"d1", "1"};
-
+        
         spyEntityPanel.getEPartnerTableModel().addRow(data);
         spyEntityPanel.getEPartnerTableModel().setValueAt(12, 0, 1);
 
