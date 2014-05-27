@@ -8,6 +8,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.JAXBException;
@@ -97,7 +98,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		super();
 		instance = this;
 		this.server = server2;
-		this.mapName = mapLocation;
+		BW4TEnvironment.mapName = mapLocation;
 		this.scenarioLocation = System.getProperty("user.dir") + "/" + scenarioLocation;
 		this.guiEnabled = guiEnabled;
 		this.shutdownKey = shutdownKey;
@@ -184,7 +185,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	public void init(Map<String, Parameter> parameters) throws ManagementException {
 		setState(EnvironmentState.INITIALIZING);
 		takeDownSimulation();
-
+		String error = "launch of Repast failed"; 
 		Parameter map = parameters.get("map");
 		if (map != null) {
 			BW4TEnvironment.setMapName(((Identifier) map).getValue());
@@ -192,11 +193,11 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		try {
 			launchRepast();
 		} catch (IOException e) {
-			throw new ManagementException("launch of Repast failed", e);
+			throw new ManagementException(error, e);
 		} catch (ScenarioLoadException e) {
-			throw new ManagementException("launch of Repast failed", e);
+			throw new ManagementException(error, e);
 		} catch (JAXBException e) {
-			throw new ManagementException("launch of Repast failed", e);
+			throw new ManagementException(error, e);
 		}
 
 		setState(EnvironmentState.RUNNING);
@@ -325,7 +326,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 *            , the entity for which all percepts should be gotten
 	 * @return all percepts for the entity
 	 */
-	public synchronized LinkedList<Percept> getAllPerceptsFrom(String entity) {
+	public synchronized List<Percept> getAllPerceptsFrom(String entity) {
 		try {
 			if (this.isMapFullyLoaded()) {
 				((RobotEntityInt) getEntity(entity)).initializePerceptionCycle();
@@ -334,7 +335,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		} catch (PerceiveException | NoEnvironmentException e) {
 			LOGGER.error("failed to get percepts for entity: '" + entity + "'", e);
 		}
-		return null;
+		return new LinkedList<Percept>();
 	}
 
 	/**
@@ -353,26 +354,16 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		mapFullyLoaded = true;
 	}
 
-	/**
-	 * get our custom runner.
-	 * 
-	 * @return
-	 * @deprecated TODO remove
-	 */
-	@Deprecated
-	public BW4TRunner getRunner() {
-		return stepper.runner;
-	}
-
+	
 	public double getTps() {
-		if(stepper == null){
+		if (stepper == null) {
 			return Stepper.MIN_TPS;
 		}
 		return stepper.getTps();
 	}
 
 	public void setTps(double tps) {
-		if(stepper == null) {
+		if (stepper == null) {
 			return;
 		}
 		stepper.setTps(tps);
@@ -388,7 +379,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
 			if (BW4TEnvironment.mapName == null) {
 				BW4TEnvironment.setMapName("Random");
 			}
-			// this.mapLocation = "Maps/" + this.mapLocation;
 			reset();
 		} catch (Exception e) {
 			throw new ManagementException("reset failed", e);
@@ -404,14 +394,21 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @throws ManagementException
 	 * @throws JAXBException
 	 */
-	public void reset() throws NotBoundException, IOException, ScenarioLoadException, ManagementException,
-	JAXBException {
-		takeDownSimulation();
+	public void reset() throws EnvironmentResetException {
+		try {
+			takeDownSimulation();
+		} catch (ManagementException e) {
+			throw new EnvironmentResetException(e);
+		}
 		if (server != null) {
 			server.takeDown();
 			server = null;
 		}
-		launchAll();
+		try {
+			launchAll();
+		} catch (ManagementException | IOException | ScenarioLoadException | JAXBException e) {
+			throw new EnvironmentResetException(e);
+		}
 	}
 
 	/**
@@ -453,8 +450,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 			} catch (Exception e) {
 				LOGGER.error("BW4T Server started ok but failed to launch display.", e);
 			}
-		}
-		else {
+		} else {
 			LOGGER.info("Launching the BW4T Server without a graphical user interface.");
 		}
 	}
@@ -471,8 +467,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 			server.takeDown();
 			server = null;
 			System.exit(0);
-		}
-		else {
+		} else {
 			LOGGER.warn("Server shutdown attempted with wrong key: " + key);
 		}
 	}
