@@ -17,11 +17,13 @@ import nl.tudelft.bw4t.scenariogui.controllers.editor.ScenarioEditorController;
 import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyObject;
@@ -145,7 +147,6 @@ public class MenuBarTest {
 
         // There should be one listener, so we check that and then change the option pane.
         assert listeners.length == 1;
-        AbstractMenuOption option = (AbstractMenuOption) listeners[0];
         ScenarioEditor.setOptionPrompt(yesMockOption);
 
         // Change the defaults
@@ -193,7 +194,6 @@ public class MenuBarTest {
 
         // There should be one listener, so we check that and then change the option pane.
         assert listeners.length == 1;
-        AbstractMenuOption option = (AbstractMenuOption) listeners[0];
         ScenarioEditor.setOptionPrompt(noMockOption);
 
         // Change the defaults
@@ -356,15 +356,13 @@ public class MenuBarTest {
         ActionListener[] listeners = editor.getTopMenuBar().getMenuItemFileNew().getActionListeners();
         assert listeners.length == 1;
 
-        String startValues = editor.getMainPanel().getConfigurationPanel().getCurrentValues();
-
         AbstractMenuOption menuOption = (AbstractMenuOption) listeners[0];
         menuOption.setController(new ScenarioEditorController(editor));
 
         /* Click the new button */
         editor.getTopMenuBar().getMenuItemFileNew().doClick();
 
-        assertEquals(startValues, editor.getMainPanel().getConfigurationPanel().getCurrentValues());
+        assertTrue(editor.getMainPanel().getConfigurationPanel().isDefault());
     }
 
     /**
@@ -376,8 +374,6 @@ public class MenuBarTest {
         /* Reset the controller to the spied objects controller */
         ActionListener[] listeners = editor.getTopMenuBar().getMenuItemFileNew().getActionListeners();
         assert listeners.length == 1;
-
-        String startValues = editor.getMainPanel().getConfigurationPanel().getCurrentValues();
 
         /* Some change */
         editor.getMainPanel().getConfigurationPanel().setClientIP("blaaas");
@@ -396,7 +392,7 @@ public class MenuBarTest {
         verify(option, times(1)).showConfirmDialog(null, ScenarioEditorController.CONFIRM_SAVE_TXT, "",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-        assertEquals(startValues, editor.getMainPanel().getConfigurationPanel().getCurrentValues());
+        assertTrue(editor.getMainPanel().getConfigurationPanel().isDefault());
     }
 
     /**
@@ -419,7 +415,6 @@ public class MenuBarTest {
         menuOption.setController(new ScenarioEditorController(editor));
         menuOption = (AbstractMenuOption) newfile.getActionListeners()[0];
         menuOption.setCurrentFileChooser(filechooser);
-        String startValues = editor.getMainPanel().getConfigurationPanel().getCurrentValues();
 
         /* Some change */
         editor.getMainPanel().getConfigurationPanel().setClientIP("blaaas");
