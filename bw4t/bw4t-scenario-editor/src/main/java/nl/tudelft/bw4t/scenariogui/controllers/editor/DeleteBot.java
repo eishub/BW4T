@@ -47,7 +47,7 @@ class DeleteBot implements ActionListener {
             return;
         }
 
-        int response = view.getEntityPanel().showConfirmDialog(null,
+        int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(null,
                 "Are you sure you want to delete this bot?", "",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
