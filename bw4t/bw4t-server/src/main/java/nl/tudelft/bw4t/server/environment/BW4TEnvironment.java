@@ -76,6 +76,8 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	private boolean guiEnabled;
 	private String shutdownKey;
 
+	private static Long starttime = null; // starttime, first action
+	
 	/**
 	 * Create a new instance of this environment
 	 * 
@@ -146,8 +148,13 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * reports errors and proceeds.
 	 */
 	public void removeAllEntities() throws ManagementException {
-		//TODO
-		//BW4TLogger.getInstance().closeLog();
+		LOGGER.info("Closing the log file.");
+		
+		String message = " ";
+		//TODO check if total time is calculated same way as before
+		LOGGER.log(BotLog.BOTLOG, "total time: " + (System.currentTimeMillis()-starttime));
+		//TODO log AgentRecord, each toSummaryArray of agentRecord of object of each bot
+	
 		setState(EnvironmentState.KILLED);
 
 		LOGGER.debug("Removing all entities");
@@ -305,8 +312,12 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @return the percept received after performing the action
 	 */
 	public Percept performClientAction(String entity, Action action) throws ActException {
+		Long time = System.currentTimeMillis();
+		LOGGER.log(BotLog.BOTLOG, "action " + time + entity + action);
 		
-		LOGGER.log(BotLog.BOTLOG, "action " + System.currentTimeMillis() + entity + action);
+		if(starttime == null){
+			starttime = time;
+		}
 		
 		return performEntityAction(entity, action);
 	}
