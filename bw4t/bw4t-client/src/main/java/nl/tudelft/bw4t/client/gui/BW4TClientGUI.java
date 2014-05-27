@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -30,6 +31,7 @@ import nl.tudelft.bw4t.client.gui.listeners.ChatListMouseListener;
 import nl.tudelft.bw4t.client.gui.listeners.TeamListMouseListener;
 import nl.tudelft.bw4t.client.gui.menu.ActionPopUpMenu;
 import nl.tudelft.bw4t.client.gui.menu.ComboAgentModel;
+import nl.tudelft.bw4t.controller.MapRenderSettings;
 import nl.tudelft.bw4t.view.MapRenderer;
 import nl.tudelft.bw4t.view.MapRendererInterface;
 
@@ -211,7 +213,21 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
 		// Initialize mouse listeners for human controller
 		if (controller.isHuman()) {
 			this.jPopupMenu = new JPopupMenu();
-			renderer.addMouseListener(new MouseAdapter() {
+			MouseAdapter ma = new MouseAdapter() {
+				private boolean mouseOver = false;
+
+				@Override
+				public void mouseEntered(MouseEvent arg0) {
+					super.mouseEntered(arg0);
+					mouseOver = true;
+				}
+
+				@Override
+				public void mouseExited(MouseEvent arg0) {
+					super.mouseExited(arg0);
+					mouseOver = false;
+				}
+
 				@Override
 				public void mousePressed(MouseEvent e) {
 					// Get coordinates of mouse click
@@ -223,7 +239,23 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
 
 					ActionPopUpMenu.buildPopUpMenu(that);
 				}
-			});
+
+				@Override
+				public void mouseWheelMoved(MouseWheelEvent mwe) {
+					if(mouseOver && mwe.isControlDown()){
+						MapRenderSettings settings = that.getController().getRenderSettings();
+						if(mwe.getUnitsToScroll() >= 0) {
+							settings.setScale(settings.getScale() + 0.1);
+						} else {
+							settings.setScale(settings.getScale() - 0.1);
+						}
+					} else {
+						super.mouseWheelMoved(mwe);
+					}
+				}
+			};
+			renderer.addMouseListener(ma);
+			renderer.addMouseWheelListener(ma);
 
 			getChatSession().addMouseListener(new ChatListMouseListener(this));
 		}

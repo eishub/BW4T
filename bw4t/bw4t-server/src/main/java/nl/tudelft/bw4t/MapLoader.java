@@ -4,7 +4,6 @@ import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,7 +45,7 @@ import eis.exceptions.EntityException;
 public final class MapLoader {
 
 	/** Identifier used for the space projections, matched in context.xml */
-	private static final String PROJECTION_ID = "BW4T_Projection";
+	public static final String PROJECTION_ID = "BW4T_Projection";
 
 	private static NewMap map;
 

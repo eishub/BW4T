@@ -8,6 +8,8 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -17,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
@@ -85,7 +88,7 @@ public class ServerContextDisplay extends JFrame {
 		controller = new ServerMapController(Launcher.getEnvironment().getMap(), context);
 		myRenderer = new MapRenderer(controller);
 		add(new JScrollPane(myRenderer), BorderLayout.CENTER);
-		//		add(new ServerMapRenderer(context), BorderLayout.CENTER);
+		// add(new ServerMapRenderer(context), BorderLayout.CENTER);
 		add(new ControlPanel(this), BorderLayout.NORTH);
 		pack();
 		setVisible(true);
@@ -121,6 +124,10 @@ class ControlPanel extends JPanel {
 	 */
 	final ServerContextDisplay displayer;
 
+	final JLabel tpsDisplay = new JLabel("0.0 tps");
+
+	private final JSlider slider;
+
 	/**
 	 * @param disp
 	 *            is used to close the window when user presses reset.
@@ -131,8 +138,10 @@ class ControlPanel extends JPanel {
 		setLayout(new BorderLayout());
 		add(new JLabel("Speed"), BorderLayout.WEST);
 		// slider goes in percentage, 100 is fastest
-		final JSlider slider = new JSlider(0, 100, 90);
+		slider = new JSlider(0, 100, 0);
+		slider.setEnabled(false);
 		final JButton resetbutton = new JButton("Reset");
+		add(tpsDisplay, BorderLayout.WEST);
 		add(slider, BorderLayout.CENTER);
 		add(resetbutton, BorderLayout.EAST);
 		add(new MapSelector(displayer), BorderLayout.NORTH);
@@ -141,13 +150,10 @@ class ControlPanel extends JPanel {
 
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
-				int sliderval = slider.getValue();
 				// now we have speed (on Hz axis) and we need delay (s axis).
 				// first get interpolated speed.
-				double minf = 1. / Stepper.MAX_DELAY;
-				double maxf = 1. / Stepper.MIN_DELAY;
-				double f = minf + (maxf - minf) * sliderval / 100.;
-				BW4TEnvironment.getInstance().setDelay((int) (1. / f));
+				BW4TEnvironment.getInstance().setTps(calculateTpsFromSlider());
+				updateTpsDisplay();
 			}
 		});
 
@@ -162,6 +168,42 @@ class ControlPanel extends JPanel {
 				}
 			}
 		});
+
+		new Timer().schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				SwingUtilities.invokeLater(new Runnable() {
+
+					@Override
+					public void run() {
+						slider.setEnabled(true);
+						slider.setValue(calculateSliderValueFromDelay());
+						updateTpsDisplay();
+					}
+				});
+			}
+		}, 1000);
+		updateTpsDisplay();
+	}
+
+	public double calculateTpsFromSlider() {
+		double percent = (slider.getValue() - slider.getMinimum()) / (double) (slider.getMaximum() - slider.getMinimum());
+		int value = (int) (Stepper.MIN_TPS + (Stepper.MAX_TPS - Stepper.MIN_TPS) * percent);
+		LOGGER.trace("Delay Calculated from the slider: " + value);
+		return value;
+	}
+
+	public int calculateSliderValueFromDelay() {
+		double delay = BW4TEnvironment.getInstance().getTps();
+		double percent = (delay - Stepper.MIN_TPS) / (Stepper.MAX_TPS - Stepper.MIN_TPS);
+		int value = (int) (slider.getMinimum() + (slider.getMaximum() - slider.getMinimum()) * percent);
+		LOGGER.trace("Slider value from delay: " + value);
+		return value;
+	}
+
+	public void updateTpsDisplay() {
+		tpsDisplay.setText(String.format("%3.1f tps", BW4TEnvironment.getInstance().getTps()));
 	}
 }
 
