@@ -33,7 +33,7 @@ public class EpartnerController {
         view.getEpartnerFrame().getResetButton().addActionListener(
                 new ResetButton(getMainView().getEpartnerFrame()));
 
-        view.getgetEpartnerFrame().getCancelButton().addActionListener(
+        view.getEpartnerFrame().getCancelButton().addActionListener(
                 new CancelButton(getMainView().getEpartnerFrame()));
 
         view.getEpartnerFrame().getApplyButton().addActionListener(
