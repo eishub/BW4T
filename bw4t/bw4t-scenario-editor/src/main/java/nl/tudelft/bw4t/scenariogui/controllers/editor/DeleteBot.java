@@ -42,8 +42,7 @@ class DeleteBot implements ActionListener {
         int row = view.getEntityPanel().getSelectedBotRow();
 
         if (row == -1) {
-            ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select a bot first.");
-            return;
+        	ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select the bot you want to delete.");
         }
 
         int response = view.getEntityPanel().showConfirmDialog(null,

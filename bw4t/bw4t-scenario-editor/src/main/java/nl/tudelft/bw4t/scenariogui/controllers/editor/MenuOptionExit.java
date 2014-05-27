@@ -11,7 +11,7 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 /**
  * Handles the event to exit the program.
  * <p>
- * @author        
+ * @author      Seu Man To
  * @version     0.1                
  * @since       12-05-2014        
  */
@@ -47,9 +47,21 @@ class MenuOptionExit extends AbstractMenuOption {
             if (response == JOptionPane.YES_OPTION) {
                 saveFile();
                 super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
+                System.exit(0);
+            } else {
+            	System.exit(0);
             }
+        } else {
+        	int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
+        			null, 
+        			"Are you sure you want to exit the program?",
+        			"",
+        			JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        	
+        	if(response == JOptionPane.YES_OPTION) {
+        		System.exit(0);
+        	}
         }
-
         getController().getMainView().closeScenarioEditor();
     }
 }
