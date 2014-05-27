@@ -42,7 +42,7 @@ public class MessageSenderActionListener extends ClientActionListener {
 		} else {
 			List<Percept> percepts = new LinkedList<Percept>();
 			Percept percept = new Percept("sendMessage", new Identifier("all"), MessageTranslator.translateMessage(
-					message, getController().getTheBot().getName()));
+					message, getController().getMapController().getTheBot().getName()));
 			percepts.add(percept);
 			getController().setToBePerformedAction(percepts);
 		}
