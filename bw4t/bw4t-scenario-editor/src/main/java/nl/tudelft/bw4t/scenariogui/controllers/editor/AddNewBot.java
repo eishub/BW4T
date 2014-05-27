@@ -3,7 +3,7 @@ package nl.tudelft.bw4t.scenariogui.controllers.editor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import nl.tudelft.bw4t.scenariogui.config.BotConfig;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
@@ -44,9 +44,11 @@ class AddNewBot implements ActionListener {
      */
     public void actionPerformed(final ActionEvent ae) {
         botCount++;
-        Object[] newBotObject = {"Bot " + botCount, "Agent", 1};
+        Object[] newBotObject = {"Bot" + " " + botCount, "Agent", 1};
         view.getEntityPanel().getBotTableModel().addRow(newBotObject);
-        view.getEntityPanel().getBotConfigs().add(new BotConfig());
+        BotConfig newBotConfig = new BotConfig();
+        newBotConfig.setBotName("Bot " + botCount);
+        view.getEntityPanel().getBotConfigs().add(newBotConfig);
     }
 
 }

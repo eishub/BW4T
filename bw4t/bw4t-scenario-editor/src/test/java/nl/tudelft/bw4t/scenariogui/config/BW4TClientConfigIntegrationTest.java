@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 
 import javax.xml.bind.JAXBException;
 
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
@@ -22,7 +23,7 @@ import static org.junit.Assert.assertTrue;
  * @version     0.1                
  * @since       12-05-2014        
  */
-public class BW4TClientConfigTest {
+public class BW4TClientConfigIntegrationTest {
 
     /** The custom config object used in this test. */
     private static BW4TClientConfig config;
@@ -127,7 +128,8 @@ public class BW4TClientConfigTest {
         panel.getConfigurationPanel().setClientIP(dummyIP);
         panel.getConfigurationPanel().setClientPort(dummyPort);
 
-        BW4TClientConfig configuration = new BW4TClientConfig(panel, FILE_PATH);
+        BW4TClientConfig configuration = BW4TClientConfigIntegration.
+                createConfigFromPanel(panel, FILE_PATH);
 
         configuration.toXML();
 
