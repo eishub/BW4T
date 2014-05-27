@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
+import repast.simphony.scenario.Scenario;
 
 /**
  * Handles the event to delete an E-partner.
@@ -45,7 +46,7 @@ class DeleteEPartner implements ActionListener {
         	ScenarioEditor.getOptionPrompt().showMessageDialog(
         			null, "Please select the E-partner you want to delete.");
         } else {
-        	int response = view.getEntityPanel().showConfirmDialog(null,
+        	int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(null,
                     "Are you sure you want to delete this E-partner?", "",
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
