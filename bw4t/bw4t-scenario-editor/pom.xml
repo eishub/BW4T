@@ -58,16 +58,6 @@
                 <version>2.6</version>
                 <configuration>
                     <check/>
-                    <instrumentation>
-                        <ignores>
-                            <ignore>nl.tudelft.bw4t.scenariogui.gui.botstore.*</ignore>
-                        </ignores>
-                        <excludes>
-                            <exclude>nl/tudelft/bw4t/scenariogui/config/BotConfig.class</exclude>
-                            <exclude>nl/tudelft/bw4t/scenariogui/gui/botstore/BotEditor.class</exclude>
-                            <exclude>nl/tudelft/bw4t/scenariogui/gui/botstore/BotEditorPanel.class</exclude>
-                        </excludes>
-                    </instrumentation>
                     <formats>
                         <format>html</format>
                         <format>xml</format>
