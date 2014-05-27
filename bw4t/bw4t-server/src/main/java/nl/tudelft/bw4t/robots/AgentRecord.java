@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.server.logging;
+package nl.tudelft.bw4t.robots;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,6 @@ public class AgentRecord {
 	private Integer wrongDrops = 0;// number of wrong drops
 	private Integer nMessages = 0; // number of messages
 	private Integer nRoomsEntered = 0; // number of rooms entered
-	private static Long starttime = null; // starttime, first action
 
 	/** accumulated milliseconds of standing still */
 	private Long totalStandingStillMillis = 0L;
@@ -77,15 +76,6 @@ public class AgentRecord {
 	 */
 	public void addSentMessage() {
 		nMessages++;
-	}
-	
-	/**
-	 * Checks if it is the first action, when it is set timer
-	 */
-	public void setTime(Long time){
-		if(starttime==null){
-			starttime = time;
-		}
 	}
 
 	/**
