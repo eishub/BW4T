@@ -41,4 +41,16 @@ public class BotEditorPanelTest {
 		assertEquals(size, spypanel.getSizeSlider().getValue());
 		assertEquals(cap, spypanel.getBatterySlider().getValue());
 	}
+	@Test
+	public final void testModifySliders(){
+		int speed = 140;
+		int size = 5;
+		int cap = 100;
+		spypanel.getSpeedSlider().setValue(speed);
+		spypanel.getSizeSlider().setValue(size);
+		spypanel.getBatterySlider().setValue(cap);
+		assertEquals(speed, spypanel.getSpeedSlider().getValue());
+		assertEquals(size, spypanel.getSizeSlider().getValue());
+		assertEquals(cap, spypanel.getBatterySlider().getValue());	
+	}
 }
