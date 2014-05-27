@@ -1,5 +1,4 @@
 package nl.tudelft.bw4t.scenariogui.controllers.botstore;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -12,17 +11,33 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
  * Handles actions of the applybutton
+ * @author Arun
  */
 class ApplyButton implements ActionListener {
+	/**
+	 * The BotEditorPanel to request components from.
+	 */
     private BotEditorPanel view;
+    /**
+     * The MainPanel to request components from.
+     */
     private MainPanel mp;
-
-    public ApplyButton(BotEditorPanel view) {
-        this.view = view;
+    
+    /**
+     * Constructor.
+     * @param pview The BotEditorPanel in which the button listening
+     * to this listener is situated.
+     */
+    public ApplyButton(BotEditorPanel pview) {
+        this.view = pview;
         BotEditor be = (BotEditor) SwingUtilities.getWindowAncestor(view);
         mp = be.getParent();
     }
-
+    /**
+     * Adds the given settings to the BotConfig-object, 
+     * making it ready to be used.
+     * @param ae The action event caused by clicking on the button.
+     */
     public void actionPerformed(ActionEvent ae) {
         view.getDataObject().setBotSize(view.getSizeSlider().getValue());
         view.getDataObject().setBotSpeed(view.getSpeedSlider().getValue());
