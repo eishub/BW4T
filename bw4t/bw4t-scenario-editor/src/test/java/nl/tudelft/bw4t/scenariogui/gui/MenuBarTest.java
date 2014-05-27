@@ -8,8 +8,8 @@ import java.io.FileNotFoundException;
 import javax.swing.JFileChooser;
 import javax.xml.bind.JAXBException;
 
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.controllers.editor.AbstractMenuOption;
 import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
@@ -31,7 +31,7 @@ import static org.mockito.Mockito.when;
 
 /**
  * <p>
- * @author      Calving Wong Loi Sing  
+ * @author      Calvin Wong Loi Sing  
  * @version     0.1                
  * @since       21-05-2014        
  */
