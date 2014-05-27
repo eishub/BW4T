@@ -1,11 +1,9 @@
 package nl.tudelft.bw4t.scenariogui.gui.epartner;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -13,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import net.miginfocom.swing.MigLayout;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorData;
 
 /**
@@ -44,8 +43,7 @@ public class EpartnerFrame extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
-		setVisible(true);
+		contentPane.setLayout(new MigLayout("", "[][141px][][141px][141px]", "[][][125px][125px]"));
 		
 		leftAloneCheckbox.setAlignmentY(Component.TOP_ALIGNMENT);
 		contentPane.add(leftAloneCheckbox, "cell 0 0,grow");
@@ -148,10 +146,6 @@ public class EpartnerFrame extends JFrame {
 	
 	public BotEditorData getDataObject() {
 		return dataObject;
-	}
-	
-	public static void main(String [] args){
-		new EpartnerFrame();
 	}
 }
 
