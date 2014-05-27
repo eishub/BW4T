@@ -33,8 +33,11 @@ class ModifyBot implements ActionListener {
     /**
      * Executes action that needs to happen when the "Modify bot" button is
      * pressed. 
+<<<<<<< HEAD
      * TODO Open BotStore window
      * Gets called when the bot is modified.
+=======
+>>>>>>> ScenarioEditor_K
      *
      * @param ae The action event.
      */

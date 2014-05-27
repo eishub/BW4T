@@ -20,7 +20,11 @@ import nl.tudelft.bw4t.scenariogui.util.MapSpec;
  * Handles the event of the menu.
  * <p>
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @author      Nick Feddes 
+=======
+ * @author      Nick Feddes
+>>>>>>> ScenarioEditor_K
 =======
  * @author      Nick Feddes
 >>>>>>> ScenarioEditor_K
