@@ -1,5 +1,8 @@
 package nl.tudelft.bw4t.message;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.StringTokenizer;
 
 import nl.tudelft.bw4t.map.ColorTranslator;
@@ -15,7 +18,52 @@ import eis.iilang.Parameter;
  * @author trens
  */
 public class MessageTranslator {
-
+	public static Map<String, MessageCommand> translator = new HashMap<String, MessageCommand>();
+	public static Map<String, MessageCommand> translatorEquals = new HashMap<String, MessageCommand>();
+	
+	public static void init(){
+        
+        translator.put("I am going to ", new CommandRoomColor(MessageType.goingToRoom));
+        translator.put("I have a ", new CommandRoomColor(MessageType.hasColor));
+        translator.put("has been checked", new CommandContainsBy(MessageType.checked));
+        translator.put("contains", new CommandContains());
+        translator.put("empty", new CommandRoom(MessageType.roomIsEmpty));
+        translator.put("Is anybody going to", new CommandRoom(MessageType.isAnybodyGoingToRoom));
+        translator.put("Who has a", new CommandColor(MessageType.whoHasABlock));
+        translator.put("We need", new CommandColor(MessageType.weNeed));
+        translator.put("I am looking for", new CommandColor(MessageType.lookingFor));
+        translator.put("I will get", new CommandColor(MessageType.willGetColor));
+        translator.put("I am getting", new CommandRoomColor(MessageType.amGettingColor));
+        translator.put("go to", new CommandRoomColorPlayer(MessageType.goToRoom));
+        translator.put("find a", new CommandRoomColorPlayer(MessageType.findColor));
+        translator.put("get the", new CommandRoomColorPlayer(MessageType.getColorFromRoom));
+        translator.put("Where should I go", new CommandType(MessageType.whereShouldIGo));
+        translator.put("What color should I ", new CommandType(MessageType.whatColorShouldIGet));
+        translator.put("Where is a ", new CommandColor(MessageType.whereIsColor));
+        translator.put("What is in ", new CommandRoom(MessageType.whatIsInRoom));
+        translator.put("Has anybody checked", new CommandRoom(MessageType.hasAnybodyCheckedRoom));
+        translator.put("Who is in ", new CommandRoom(MessageType.whoIsInRoom));
+        translator.put("I am in ", new CommandRoom(MessageType.inRoom));
+        translator.put("I am about to drop ", new CommandColor(MessageType.aboutToDropOffBlock));
+        translator.put("I just dropped off", new CommandColor(MessageType.droppedOffBlock));
+        translator.put("I am waiting outside", new CommandRoom(MessageType.amWaitingOutsideRoom));
+        translator.put("are you close", new CommandRoomColorPlayer(MessageType.areYouClose));
+        translator.put("will you be long", new CommandRoomColorPlayer(MessageType.willYouBeLong));
+        translator.put("I am at a", new CommandColor(MessageType.atBox));
+        
+        translatorEquals.put("yes", new CommandType(MessageType.yes));
+        translatorEquals.put("no", new CommandType(MessageType.no));
+        translatorEquals.put("I do", new CommandType(MessageType.iDo));
+        translatorEquals.put("I don't", new CommandType(MessageType.iDoNot));
+        translatorEquals.put("I don't know", new CommandType(MessageType.iDoNotKnow));
+        translatorEquals.put("OK", new CommandRoom(MessageType.ok));
+        translatorEquals.put("wait", new CommandType(MessageType.wait));
+        translatorEquals.put("I am on the way", new CommandType(MessageType.onTheWay));
+        translatorEquals.put("I am almost there", new CommandType(MessageType.almostThere));
+        translatorEquals.put("I am far away", new CommandType(MessageType.farAway));
+        translatorEquals.put("I am delayed", new CommandType(MessageType.delayed));
+	}
+	
     /**
      * Translate a message (String) to a message (BW4TMessage)
      * 
@@ -23,7 +71,35 @@ public class MessageTranslator {
      *            , the message that should be translated
      * @return the translated message
      */
-    public static BW4TMessage translateMessage(String message) {
+	public static BW4TMessage translateMessage(String message){
+			
+        for(Entry<String, MessageCommand> e : translatorEquals.entrySet()){
+        	String key = e.getKey();
+        	if(message.equals(key)) {
+        		BW4TMessage msg = translatorEquals.get(key).exec(message);
+        		System.out.println("Map:    " + msg);
+        		return msg;
+        	}
+        }
+    	                
+        for(Entry<String, MessageCommand> e : translator.entrySet()){
+        	String key = e.getKey();
+        	if(message.contains(key)) {
+        		return translator.get(key).exec(message);
+        	}
+        }
+		return null; 
+	}
+	
+	/**
+     * Translate a message (String) to a message (BW4TMessage)
+     * 
+     * @param message
+     *            , the message that should be translated
+     * @return the translated message
+     */
+	@Deprecated
+    public static BW4TMessage translateMessageLegacy(String message) {
         BW4TMessage translatedMessage = null;
         String room = null;
         String color = null;
@@ -281,14 +357,14 @@ public class MessageTranslator {
         } else if (message.getType() == MessageType.goToRoom) {
             return message.getPlayerId() + ", go to room " + message.getRoom();
         } else if (message.getType() == MessageType.findColor) {
-            return message.getPlayerId() + ", find a " + message.getColor();
+            return message.getPlayerId() + ", find a " + message.getColor() + " block";
         } else if (message.getType() == MessageType.getColorFromRoom) {
             return message.getPlayerId() + ", get the " + message.getColor()
                     + " from room " + message.getRoom();
         } else if (message.getType() == MessageType.areYouClose) {
             return message.getPlayerId() + ", are you close?";
         } else if (message.getType() == MessageType.willYouBeLong) {
-            return message.getPlayerId() + " will you be long?";
+            return message.getPlayerId() + ", will you be long?";
         }
 
         return null;
@@ -304,13 +380,13 @@ public class MessageTranslator {
      *            the message in which "room <room id>" should be found
      * @return the room id or Long.MAX_VALUE if no room id found
      */
-    private static String findRoomId(String message) {
+    static String findRoomId(String message) {
         StringTokenizer tokenizer = new StringTokenizer(message);
         String token = tokenizer.nextToken();
 
         while (tokenizer.hasMoreTokens()) {
             if (token.equals("room")) {
-                return tokenizer.nextToken();
+                return tokenizer.nextToken().replace("?","");
             }
             token = tokenizer.nextToken();
         }
@@ -325,7 +401,7 @@ public class MessageTranslator {
      *            , the message in which a color id should be found
      * @return the color id or null if no color id found
      */
-    private static String findColorId(String message) {
+    static String findColorId(String message) {
         StringTokenizer tokenizer = new StringTokenizer(message);
         String token = tokenizer.nextToken();
         while (tokenizer.hasMoreTokens()) {
@@ -339,7 +415,7 @@ public class MessageTranslator {
         return null;
     }
 
-    private static int findNumber(String message) {
+    protected static int findNumber(String message) {
         StringTokenizer tokenizer = new StringTokenizer(message);
         while (tokenizer.hasMoreTokens()) {
             try {
