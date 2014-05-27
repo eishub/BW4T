@@ -2,7 +2,13 @@ package nl.tudelft.bw4t.handicap;
 
 import nl.tudelft.bw4t.blocks.Block;
 
+/**
+ * @author Valentine Mairet & Ruben Starmans
+ */
 public class GripperHandicap extends Handicap {
+	/**
+	 * boolean is true when the handicap is active.
+	 */
 	private boolean isActive;
 
 	/**
@@ -21,6 +27,7 @@ public class GripperHandicap extends Handicap {
 	/**
 	 * Override of the canPickUp method,
 	 * The non gripping robot cannot pick up blocks.
+	 * @param b block which the robot tries to pick up
 	 * @return false
 	 */
 	@Override
@@ -36,8 +43,7 @@ public class GripperHandicap extends Handicap {
 	/**
 	 * Activate the handicap.
 	 */
-	public void activate()
-	{
+	public void activate() {
 		isActive = true;
 	}
 	
@@ -45,8 +51,7 @@ public class GripperHandicap extends Handicap {
 	 * Deactivate the handicap.
 	 * @param bool
 	 */
-	public void deactivate()
-	{
+	public void deactivate() {
 		isActive = false;
 	}
 }
