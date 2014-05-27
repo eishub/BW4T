@@ -31,5 +31,6 @@ class MenuOptionSave extends AbstractMenuOption {
     public void actionPerformed(final ActionEvent e) {
         saveFile();
         super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
+        super.getController().getMainView().getMainPanel().getEntityPanel().updateBotConfigs();
     }
 }

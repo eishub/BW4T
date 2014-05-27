@@ -47,7 +47,8 @@ class MenuOptionOpen extends AbstractMenuOption {
         EntityPanel entityPanel = super.getController().getMainView().getMainPanel().getEntityPanel();
 
         // Check if current config is different from last saved config
-        if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())) {
+        if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())
+        		|| !entityPanel.compareBotConfigs()) {
             // Check if user wants to save current configuration
             int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
                     null,
@@ -108,6 +109,7 @@ class MenuOptionOpen extends AbstractMenuOption {
             super.getMenuView().setLastFileLocation(openedFile);
         }
         super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
+        super.getController().getMainView().getMainPanel().getEntityPanel().updateBotConfigs();
     }
     
     /**
