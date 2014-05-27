@@ -47,7 +47,7 @@ public class MapSpec {
      * @param newMapFileLocation The new path to the map file.
      */
     public void setMapFileLocation(String newMapFileLocation) {
-        if (newMapFileLocation != null && !newMapFileLocation.equals("")) {
+        if (isSet(newMapFileLocation)) {
             if (!this.mapFileLocation.equals(newMapFileLocation)) {
                 this.mapFileLocation = newMapFileLocation;
                 readMapSpecifications();
@@ -64,6 +64,23 @@ public class MapSpec {
      */
     public int getEntitiesAllowedInMap() {
         return entitiesAllowedInMap;
+    }
+    
+    /**
+     * Checks whether the path to the map file of this map specification is set.
+     * @return Whether the path to the map file is set.
+     */
+    public boolean isSet() {
+        return isSet(mapFileLocation);
+    }
+    
+    /**
+     * Checks whether the given map path is set.
+     * @param mapFileLocation The map path.
+     * @return Whether the given map path is set.
+     */
+    public boolean isSet(String mapFileLocation) {
+        return mapFileLocation != null && !mapFileLocation.equals("");
     }
 
 }
