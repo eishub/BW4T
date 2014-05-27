@@ -11,6 +11,7 @@
 		<module>bw4t-core</module>
 		<module>bw4t-integration-test</module>
 		<module>bw4t-scenario-editor</module>
+		<module>bw4t-map-editor</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -144,6 +145,12 @@
 			<artifactId>powermock-api-mockito</artifactId>
 			<version>${powermock.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock</artifactId>
+			<version>1.5.4</version>
+			<type>pom</type>
 		</dependency>
 	</dependencies>
 
