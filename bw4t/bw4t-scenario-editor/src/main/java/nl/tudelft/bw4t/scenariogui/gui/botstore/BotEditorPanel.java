@@ -51,7 +51,7 @@ public class BotEditorPanel extends JPanel {
 	private JSlider batterySlider = new JSlider();
 	private JSlider numberOfGrippersSlider = new JSlider();
 	
-	private JLabel batteryUseValueLabel = new JLabel("0,900000");
+	private JLabel batteryUseValueLabel = new JLabel("0,006500");
 	
 	private BotConfig dataObject = new BotConfig();
 	
