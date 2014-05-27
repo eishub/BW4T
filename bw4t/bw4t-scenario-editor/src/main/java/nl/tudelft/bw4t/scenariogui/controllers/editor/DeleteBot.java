@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
+import repast.simphony.scenario.Scenario;
 
 /**
  * Handles the event to delete a bot.
