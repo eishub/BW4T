@@ -9,6 +9,7 @@ import nl.tudelft.bw4t.startup.LauncherException;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import eis.exceptions.ManagementException;
 import eis.exceptions.NoEnvironmentException;
@@ -50,6 +51,7 @@ public final class Launcher {
          * Set up the logging environment to log on the console.
          */
         BasicConfigurator.configure();
+        PropertyConfigurator.configure("log4j.properties");
         LOGGER.info("Starting up BW4T Client.");
         LOGGER.info("Reading initialization parameters...");
         /**
