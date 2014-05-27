@@ -33,16 +33,16 @@ public class EditBotTable implements TableModelListener {
     /**
      * Gets called when a cell in the table was changed.
      * Updates the config object with the new data.
-     * @param arg0 The event.
+     * @param event The event.
      */
     @Override
-    public void tableChanged(TableModelEvent arg0) {
-        if (arg0.getColumn() == -1) 
+    public void tableChanged(TableModelEvent event) {
+        if (event.getColumn() == -1) 
             return;
-        BotConfig config = view.getEntityPanel().getBotConfigs().get(arg0.getFirstRow());
+        BotConfig config = view.getEntityPanel().getBotConfigs().get(event.getFirstRow());
         String value = (String) view.getEntityPanel().getBotTable().getValueAt(
-                arg0.getFirstRow(), arg0.getColumn());
-        switch (arg0.getColumn()) {
+                event.getFirstRow(), event.getColumn());
+        switch (event.getColumn()) {
         case 0:
             config.setBotName(value);
             break;
