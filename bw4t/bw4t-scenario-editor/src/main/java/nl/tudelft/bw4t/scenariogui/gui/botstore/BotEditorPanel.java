@@ -66,7 +66,7 @@ public class BotEditorPanel extends JPanel {
 		
 		add(botSliders, BorderLayout.WEST);
 		add(botCheckables, BorderLayout.EAST);
-		
+		calculateBatteryUse();
 	}
 	
 	/**
@@ -167,6 +167,7 @@ public class BotEditorPanel extends JPanel {
 		sizeSlider.setPaintLabels(true);
 		sizeSlider.setSnapToTicks(true);
 		sizeSlider.setValue(2);
+		sizeSlider.setEnabled(false);
 		sizeSlider.setValueIsAdjusting(true);
 		
 		speedSlider.setMajorTickSpacing(10);
@@ -176,6 +177,7 @@ public class BotEditorPanel extends JPanel {
         speedSlider.setPaintTicks(true);
         speedSlider.setSnapToTicks(true);
         speedSlider.setValue(100);
+        speedSlider.setEnabled(false);
         speedSlider.setValueIsAdjusting(true);
         
         batterySlider = new JSlider();
@@ -185,6 +187,7 @@ public class BotEditorPanel extends JPanel {
         batterySlider.setSnapToTicks(true);
         batterySlider.setPaintTicks(true);
         batterySlider.setPaintLabels(true);
+        batterySlider.setEnabled(false);
         batterySlider.setMajorTickSpacing(10);
         
 	}	
@@ -325,4 +328,12 @@ public class BotEditorPanel extends JPanel {
 		this.numberOfGrippersSlider = numberOfGrippersSlider;
 	}
 
+	public JCheckBox getBatteryEnabledCheckbox() {
+		return batteryEnabledCheckbox;
+	}
+
+	public void setBatteryEnabledCheckbox(JCheckBox batteryEnabledCheckbox) {
+		this.batteryEnabledCheckbox = batteryEnabledCheckbox;
+	}
+	
 }

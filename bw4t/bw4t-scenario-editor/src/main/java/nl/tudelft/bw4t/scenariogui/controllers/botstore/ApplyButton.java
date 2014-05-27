@@ -36,6 +36,7 @@ class ApplyButton implements ActionListener {
         // Overwrite the existing config
         // (there is always a basic config present for every bot).
         mp.addBotConfig(index, data);
+        // Debugging purposes.
         System.out.println("Getting data object completed. Bot config size: " + mp.getBotConfig().size());
         System.out.println("New config placed at index: " + index);
     }
