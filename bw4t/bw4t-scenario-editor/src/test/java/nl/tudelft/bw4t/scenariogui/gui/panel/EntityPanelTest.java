@@ -18,6 +18,8 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 
 /**
@@ -140,6 +142,27 @@ public class EntityPanelTest {
         spyEntityPanel.getModifyBotButton().doClick();
         //TODO: Verify if the bot has actually been modified.
     }
+    
+    /**
+     * Test if a bot is not modified when the
+     * modify bot button is clicked,
+     * while the bot is not selected.
+     */
+    @Test
+    public void testModifyBotNoSelection() {
+    	NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
+    	ScenarioEditor.setOptionPrompt(spyOption);
+    	
+    	/* Add a bot to the list */
+    	spyEntityPanel.getNewBotButton().doClick();
+    	
+    	/* Attempt to modify the bot */
+    	spyEntityPanel.getModifyBotButton().doClick();
+    	
+    	/* Check if the warning message is shown  */
+    	verify(spyOption, times(1)).showMessageDialog(
+    			null, "Please select the bot you want to modify.");
+    }
 
     /**
      * Test if a bot is actually deleted when the
@@ -172,7 +195,6 @@ public class EntityPanelTest {
     public void testDeleteBotDeclineDelete() {
         ScenarioEditor.setOptionPrompt(new NoMockOptionPrompt());
 
-
         /* Add a bot to the list */
         spyEntityPanel.getNewBotButton().doClick();
 
@@ -193,8 +215,8 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteBotNoSelection() {
-        ScenarioEditor.setOptionPrompt(new NoMockOptionPrompt());
-
+    	NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
+        ScenarioEditor.setOptionPrompt(spyOption);
 
         /* Add a bot to the list */
         spyEntityPanel.getNewBotButton().doClick();
@@ -204,6 +226,9 @@ public class EntityPanelTest {
 
         /* check if the bot count is still 1. */
         assertEquals(spyEntityPanel.getBotCount(), 1);
+        
+        /* Check if the warning message is shown */
+        verify(spyOption, times(1)).showMessageDialog(null, "Please select the bot you want to delete.");
     }
 
     /**
@@ -225,6 +250,27 @@ public class EntityPanelTest {
         spyEntityPanel.getModifyEPartnerButton().doClick();
         //TODO: Verify if the E-partner has actually been modified.
     }
+    
+    /**
+     * Test if an E-partner is not modified when the
+     * modify E-partner button is clicked,
+     * while the E-partner is not selected.
+     */
+    @Test
+    public void testModifyEPartnerNoSelection() {
+    	NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
+    	ScenarioEditor.setOptionPrompt(spyOption);
+    	
+    	/* Add an E-partner to the list */
+    	spyEntityPanel.getNewEPartnerButton().doClick();
+    	
+    	/* Attempt to modify the E-partner */
+    	spyEntityPanel.getModifyEPartnerButton().doClick();
+    	
+    	/* Check if the warning message is shown  */
+    	verify(spyOption, times(1)).showMessageDialog(
+    			null, "Please select the E-partner you want to modify.");
+    }
 
     /**
      * Test if an E-partner is actually deleted when the
@@ -236,16 +282,16 @@ public class EntityPanelTest {
         ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
 
 
-        /** Add an E-partner to the list */
+        /* Add an E-partner to the list */
         spyEntityPanel.getNewEPartnerButton().doClick();
 
-        /** Select that E-partner */
+        /* Select that E-partner */
         spyEntityPanel.getEPartnerTable().selectAll();
 
-        /** Attempt to delete it */
+        /* Attempt to delete it */
         spyEntityPanel.getDeleteEPartnerButton().doClick();
 
-        /** Check if the E-partner count is zero */
+        /* Check if the E-partner count is zero */
         assertEquals(spyEntityPanel.getBotCount(), 0);
     }
 
@@ -259,16 +305,16 @@ public class EntityPanelTest {
         ScenarioEditor.setOptionPrompt(new NoMockOptionPrompt());
 
 
-        /** Add an E-partner to the list */
+        /* Add an E-partner to the list */
         spyEntityPanel.getNewEPartnerButton().doClick();
 
-        /** Select that E-partner */
+        /* Select that E-partner */
         spyEntityPanel.getEPartnerTable().selectAll();
 
-        /** Attempt to delete it */
+        /* Attempt to delete it */
         spyEntityPanel.getDeleteEPartnerButton().doClick();
 
-        /** Check if the E-partner count is still one */
+        /* Check if the E-partner count is still one */
         assertEquals(spyEntityPanel.getEPartnerCount(), 1);
     }
 
@@ -278,16 +324,20 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteEPartnerSelection() {
-        ScenarioEditor.setOptionPrompt(new NoMockOptionPrompt());
+    	NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
+        ScenarioEditor.setOptionPrompt(spyOption);
 
-
-        /** Add an E-partner to the list */
+        /* Add an E-partner to the list */
         spyEntityPanel.getNewEPartnerButton().doClick();
 
-        /** Attempt to delete it */
+        /* Attempt to delete it */
         spyEntityPanel.getDeleteEPartnerButton().doClick();
 
-        /** Check if the E-partner count is still one */
+        /* Check if the E-partner count is still one */
         assertEquals(spyEntityPanel.getEPartnerCount(), 1);
+        
+        /* Check if the warning message is shown */
+        verify(spyOption, times(1)).showMessageDialog(
+        		null, "Please select the E-partner you want to delete.");
     }
 }
