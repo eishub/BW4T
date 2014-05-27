@@ -366,7 +366,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 * Check motion type for robot to move to <endx, endy>. The {@link #MoveType} gives the actual type / possibility of
 	 * the move, plus the details why it is (not) possible.
 	 * 
-	 * @param endx
+	 * @param end
 	 *            is x position of target
 	 * @param endy
 	 *            is y position of target

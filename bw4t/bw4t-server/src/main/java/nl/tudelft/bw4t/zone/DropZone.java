@@ -58,21 +58,14 @@ public class DropZone extends Room {
 	 */
 	public void setSequence(List<BlockColor> colors) {
 		sequence = colors;
-			//TODO
 		
-		/*
-		public void logSequence(List<BlockColor> sequence) throws IOException {
-			List<String> logString = new ArrayList<String>();
-			logString.add("sequence");
-			for (BlockColor col : sequence) {
-				logString.add(" " + col.getLetter());
-			}
-			log(logString);
-		} */
-		String message = " hoi";
+		String message = "sequence";
+		
+		for (BlockColor col : sequence) {
+			message = message + " " + col.getLetter();
+		}
 				
 		LOGGER.log(BotLog.BOTLOG, message);
-			//BW4TLogger.getInstance().logSequence(colors);
 		
 	}
 
@@ -112,6 +105,8 @@ public class DropZone extends Room {
 				robot.getAgentRecord().addGoodDrop();
 				if (sequenceIndex == sequence.size()) {
 					//TODO
+					String message = " ";
+					LOGGER.log(BotLog.BOTLOG, message);
 					//BW4TLogger.getInstance().logCompletedSequence();
 				}
 			}
