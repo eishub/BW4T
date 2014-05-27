@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.config.BotConfig;
+import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
  * BotEditorPanel which serves as the content pane for the BotEditor frame
@@ -55,15 +56,21 @@ public class BotEditorPanel extends JPanel {
 
 	private JLabel batteryUseValueLabel = new JLabel("0.9");
 	
-	private BotConfig dataObject = new BotConfig();
-	private ScenarioEditor scenarioEditor;
+	private BotConfig dataObject;
+	private MainPanel mainPanel;
 	private BotEditor botEditor;
 	
 	/**
-	 * Create the botEditorPanel
+	 * Create the BotEditor panel.
+	 * @param botEditor The BotEditor.
+	 * @param mainPanel The MainPanel.
 	 */
-	public BotEditorPanel(BotEditor botEditor, ScenarioEditor scenarioEditor){
-		setLayout(new BorderLayout(20,20));		
+	public BotEditorPanel(BotEditor botEditor, MainPanel mainPanel){
+		setLayout(new BorderLayout(20, 20));		
+		
+		this.mainPanel = mainPanel;
+		this.botEditor = botEditor;
+		this.dataObject = mainPanel.getEntityPanel().getBotConfig(botEditor.getRow());
 		
 		createBotHandicapPanel();
 		createBotSlidersPanel();
@@ -72,21 +79,18 @@ public class BotEditorPanel extends JPanel {
 		add(botSliders, BorderLayout.WEST);
 		add(botHandicaps, BorderLayout.EAST);
 		add(botInfo, BorderLayout.NORTH);
-		
-		this.scenarioEditor = scenarioEditor;
-		this.botEditor = botEditor;
 	}
 	
 	/**
 	 * create the handicap panel
 	 */
-	public void createBotHandicapPanel(){
-		botHandicaps.setLayout(new GridLayout(5,1));
+	public void createBotHandicapPanel() {
+		botHandicaps.setLayout(new GridLayout(5, 1));
 		JLabel checkablesLabel = new JLabel("Handicaps");
 		JLabel batteryUseLabel = new JLabel("Average Battery use:");
 		JLabel perTickLabel = new JLabel("per tick");
 		
-		checkablesLabel.setFont(new Font("Tahoma",Font.PLAIN,24));
+		checkablesLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		batteryUseLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JPanel buttonPanel = new JPanel();
@@ -120,7 +124,6 @@ public class BotEditorPanel extends JPanel {
 	 */
 	private void createBotInfoPanel() {
 		botInfo.setLayout(new GridLayout(1, 0));
-		
 		botNameTextField.setText(dataObject.getBotName());
 		botInfo.add(botNameTextField);
 
@@ -135,8 +138,8 @@ public class BotEditorPanel extends JPanel {
 	/**
 	 * creates the botSlidersPanel
 	 */
-	public void createBotSlidersPanel(){
-		botSliders.setLayout(new GridLayout(0,1));
+	public void createBotSlidersPanel() {
+		botSliders.setLayout(new GridLayout(0, 1));
 		
 		JLabel sizeLabel = new JLabel("Bot Size");
 		sizeLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -204,7 +207,7 @@ public class BotEditorPanel extends JPanel {
 	 * Executes action that needs to happen when  the "Reset" button is pressed.
 	 * Resets to default settings
 	 */
-	public void resetAction(){
+	public void resetAction() {
 		botNameTextField.setText(dataObject.getBotName());
 		botAmountTextField.setText(dataObject.getBotAmount());
 		speedSlider.setValue(100);
@@ -223,7 +226,7 @@ public class BotEditorPanel extends JPanel {
 	 * closes the BotEditor
 	 */
 	
-	public void cancelAction(){
+	public void cancelAction() {
 		this.setVisible(false);
 		botEditor.dispose();
 	}
@@ -232,11 +235,11 @@ public class BotEditorPanel extends JPanel {
      * This method should recalculate the average battery use per tick.
      * After calculation, it should update the batteryUseValueLabel label in this GUI.
      */
-	public void calculateBatteryUse(){
+	public void calculateBatteryUse() {
 		int speed = speedSlider.getValue();
     	int size = sizeSlider.getValue();
     	// Calculate average battery use result
-    	double res = 0.01*speed + 0.2*size;
+    	double res = 0.01 * speed + 0.2 * size;
     	// Set label
     	batteryUseValueLabel.setText(String.valueOf(res));
 	}
@@ -346,7 +349,7 @@ public class BotEditorPanel extends JPanel {
 	 */
 	public void setDataObject() {
 		dataObject.setBotName(botNameTextField.getText());
-		dataObject.setBotController((String)botTypeSelector.getSelectedItem());
+		dataObject.setBotController((String) botTypeSelector.getSelectedItem());
 		dataObject.setBotAmount(botAmountTextField.getText());
 		dataObject.setBotSize(sizeSlider.getValue());
 		dataObject.setBotSpeed(speedSlider.getValue());
