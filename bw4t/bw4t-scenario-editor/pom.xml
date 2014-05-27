@@ -120,5 +120,10 @@
             <artifactId>bw4t-core</artifactId>
             <version>3.0.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.migLayout</groupId>
+           	<artifactId>migLayout</artifactId>
+           	<version>3.7.4</version>               
+		</dependency>
     </dependencies>
 </project>
