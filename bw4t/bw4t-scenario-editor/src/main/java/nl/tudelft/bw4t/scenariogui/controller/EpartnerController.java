@@ -6,8 +6,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import nl.tudelft.bw4t.scenariogui.gui.epartner.EpartnerFrame;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
 
 /**
  * EpartnerController is in charge of all events that happen on the EpartnerGUI.
@@ -30,20 +28,20 @@ public class EpartnerController {
     public EpartnerController(EpartnerFrame view) {
         this.view = view;
 
-        view.getEpartnerFrame().getResetButton().addActionListener(
-                new ResetButton(getMainView().getEpartnerFrame()));
+        view.getResetButton().addActionListener(
+                new ResetButton(getMainView()));
 
-        view.getgetEpartnerFrame().getCancelButton().addActionListener(
-                new CancelButton(getMainView().getEpartnerFrame()));
+        view.getCancelButton().addActionListener(
+                new CancelButton(getMainView()));
 
-        view.getEpartnerFrame().getApplyButton().addActionListener(
-                new ApplyButton(getMainView().getEpartnerFrame()));
+        view.getApplyButton().addActionListener(
+                new ApplyButton(getMainView()));
 
-        view.getEpartnerFrame().getLeftAloneCheckBox().addActionListener(
-                new LeftAloneCheckBox(getMainView().getEpartnerFrame()));
+        view.getLeftAloneCheckbox().addActionListener(
+                new LeftAloneCheckBox(getMainView()));
 
-        view.getEpartnerFrame().getGPSCheckbox().addActionListener(
-                new GPSCheckbox(getMainView().getEpartnerFrame()));
+        view.getGPSCheckbox().addActionListener(
+                new GPSCheckBox(getMainView()));
     }
 
     public EpartnerFrame getMainView() {
