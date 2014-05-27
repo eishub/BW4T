@@ -46,7 +46,7 @@ public class CommunicationTest {
 	 * @throws PerceiveException
 	 */
 //	@Test
-	public void movementTest() throws TranslationException, ActException,
+	public void communicationTest() throws TranslationException, ActException,
 			InterruptedException, PerceiveException {
 		String bot1 = client.getAgents().get(0);
 		String bot2 = client.getAgents().get(1);
