@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
+
 import org.apache.log4j.Logger;
 
 import nl.tudelft.bw4t.blocks.Block;
@@ -94,7 +96,7 @@ public class DropZone extends Room {
 			return false;
 		}
 
-		if (sequence.size() > 0 && sequenceIndex != sequence.size()) {
+		if (!sequence.isEmpty() && sequenceIndex != sequence.size()) {
 			if (sequence.get(sequenceIndex).equals(block.getColorId())) {
 				// Correct block has been dropped in
 				sequenceIndex++;
