@@ -85,6 +85,13 @@ public class ScenarioEditorController {
         getMainView().getMainPanel().getEntityPanel().getDropDownButton().addActionListener(
                 new BotDropDownButton(getMainView().getMainPanel())
         );
+        
+        /** Adds the listener for the bot table: */
+        getMainView().getMainPanel().getEntityPanel().getBotTable().getModel().addTableModelListener(
+                new EditBotTable(getMainView().getMainPanel()));
+        getMainView().getMainPanel().getEntityPanel().getEPartnerTable().getModel().addTableModelListener(
+                new EditEPartnerTable(getMainView().getMainPanel()));
+        
     }
 
     /**
