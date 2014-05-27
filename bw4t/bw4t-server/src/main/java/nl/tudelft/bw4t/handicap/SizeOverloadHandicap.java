@@ -48,7 +48,7 @@ public class SizeOverloadHandicap extends Handicap {
 			 * Both sides are not a room. Check if target accesible
 			 */
 			else if (endzone instanceof Corridor) {
-				if (!robot.oneBotPerZone || endzone.containsMeOrNothing(robot)) {
+				if (!robot.getOneBotPerZone() || endzone.containsMeOrNothing(robot)) {
 					return MoveType.ENTER_CORRIDOR;
 				}
 				return MoveType.HIT_OCCUPIED_ZONE;
