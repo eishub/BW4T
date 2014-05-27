@@ -4,7 +4,7 @@ package nl.tudelft.bw4t.scenariogui.controllers.editor;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import nl.tudelft.bw4t.scenariogui.config.BotConfig;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
