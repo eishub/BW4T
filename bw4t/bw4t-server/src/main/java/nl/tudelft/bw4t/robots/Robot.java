@@ -9,7 +9,6 @@ import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.handicap.HandicapInterface;
 import nl.tudelft.bw4t.map.Constants;
-import nl.tudelft.bw4t.server.logging.AgentRecord;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.DropZone;
@@ -366,7 +365,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 * Check motion type for robot to move to <endx, endy>. The {@link #MoveType} gives the actual type / possibility of
 	 * the move, plus the details why it is (not) possible.
 	 * 
-	 * @param endx
+	 * @param end
 	 *            is x position of target
 	 * @param endy
 	 *            is y position of target
