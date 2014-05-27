@@ -1,12 +1,14 @@
 package nl.tudelft.bw4t.handicap;
 /**
  * 
- * @author Ruben Starmans
+ * @author Valentine Mairet & Ruben Starmans
  *
  */
-public class ColorBlindHandicap extends Handicap{
-	
-	public boolean isActive;
+public class ColorBlindHandicap extends Handicap {
+	/**
+	 * boolean is true if the handicap is active.
+	 */
+	private boolean isActive;
 	
 	/**
 	 * Sets the handicap to active,
@@ -15,24 +17,36 @@ public class ColorBlindHandicap extends Handicap{
 	 */
 	public ColorBlindHandicap(HandicapInterface p) {
 		super(p);
-		isActive = true;
+		setActive(true);
 		robot.getHandicapsMap().put("ColorBlind", this);
 	}
 	
 	/**
 	 * Activate the handicap.
 	 */
-	public void activate()
-	{
-		isActive = true;
+	public void activate() {
+		setActive(true);
 	}
 	
 	/**
 	 * Deactivate the handicap.
 	 */
-	public void deactivate()
-	{
-		isActive = false;
+	public void deactivate() {
+		setActive(false);
+	}
+
+	/**
+	 * @return if the handicap is active or not
+	 */
+	public boolean isActive() {
+		return isActive;
+	}
+
+	/**
+	 * @param act true when handicap is active.
+	 */
+	public void setActive(boolean act) {
+		this.isActive = act;
 	}
 
 	

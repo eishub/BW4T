@@ -12,28 +12,27 @@ import nl.tudelft.bw4t.zone.Zone;
  */
 public interface HandicapInterface {
 	/**
-	 * 
 	 * @param hI sets the parent of a handicap to hI
 	 */
-	public void setParent(HandicapInterface hI);
+	void setParent(HandicapInterface hI);
 	/**
 	 * @return the parent of a handicap
 	 */
-	public HandicapInterface getParent();
+	HandicapInterface getParent();
 	
 	/**
 	 * GripperHandicap. Check if robot can pick up a block.
 	 * @param b Block the block to check
 	 * @return false if it cannot pick it up, true if it can
 	 */
-	public boolean canPickUp(Block b);
+	boolean canPickUp(Block b);
 	
 	/**
 	 * Method to move the robot
 	 * MoveSpeedHandicap.
 	 * The robot is immovable if speed is 0.
 	 */
-	public void move();
+	void move();
 	
 	/**
 	 * SizeOverloadHandicap
@@ -42,9 +41,9 @@ public interface HandicapInterface {
 	 * @param door which is between the two zones
 	 * @return true if the endzone can be accessed
 	 */
-	public MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door);
+	MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door);
 	/**
 	 * @return the Robot which is the super parent of the current handicap
 	 */
-	public Robot getSuperParent();	
+	Robot getSuperParent();	
 }
