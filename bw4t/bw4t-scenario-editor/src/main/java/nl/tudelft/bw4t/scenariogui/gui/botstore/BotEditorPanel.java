@@ -38,7 +38,7 @@ public class BotEditorPanel extends JPanel {
 	private JButton resetButton = new JButton("Reset");
 	private JButton cancelButton = new JButton("Cancel");
 	
-	private JTextField botNameTextField = new JTextField(20);
+	private JLabel botNameTextField = new JLabel();
 	
 	private JCheckBox gripperCheckbox = new JCheckBox("Gripper Disabled");
 	private JCheckBox colorblindCheckbox = new JCheckBox("Color Blind Handicap");
@@ -58,7 +58,8 @@ public class BotEditorPanel extends JPanel {
 	/**
 	 * Create the botEditorPanel
 	 */
-	public BotEditorPanel(){
+	public BotEditorPanel(String name){
+		botNameTextField.setText(name);
 		setLayout(new BorderLayout(20,20));		
 		
 		createBotCheckablesPanel();

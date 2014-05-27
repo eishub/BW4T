@@ -29,13 +29,13 @@ public class BotEditor extends JFrame{
 	/**
 	 * creates the BotEditor frame
 	 */
-	public BotEditor(MainPanel parent){
+	public BotEditor(MainPanel parent, String name){
 		setLookAndFeel();
 		setTitle(windowName);
 		setResizable(false);
 		setLayout(null);
 		this.parent = parent;
-		bPanel = new BotEditorPanel();
+		bPanel = new BotEditorPanel(name);
 		bPanel.setBorder(new EmptyBorder(15,15,15,15));
 		setContentPane(bPanel);
 		
@@ -94,6 +94,6 @@ public class BotEditor extends JFrame{
 	}
 
 	public static void main(String[] args){
-		new BotEditor(null);
+		new BotEditor(null,"");
 	}
 }
