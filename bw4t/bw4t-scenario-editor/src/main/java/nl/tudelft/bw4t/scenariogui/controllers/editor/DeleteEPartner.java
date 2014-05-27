@@ -44,14 +44,14 @@ class DeleteEPartner implements ActionListener {
         if (row == -1) {
         	ScenarioEditor.getOptionPrompt().showMessageDialog(
         			null, "Please select the E-partner you want to delete.");
-        }
+        } else {
+        	int response = view.getEntityPanel().showConfirmDialog(null,
+                    "Are you sure you want to delete this E-partner?", "",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-        int response = view.getEntityPanel().showConfirmDialog(null,
-                "Are you sure you want to delete this E-partner?", "",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-        if (response == JOptionPane.YES_OPTION) {
-            view.getEntityPanel().getEPartnerTableModel().removeRow(row);
+            if (response == JOptionPane.YES_OPTION) {
+                view.getEntityPanel().getEPartnerTableModel().removeRow(row);
+            }
         }
     }
 }
