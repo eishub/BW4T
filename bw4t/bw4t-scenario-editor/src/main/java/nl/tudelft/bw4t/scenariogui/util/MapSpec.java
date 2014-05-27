@@ -76,11 +76,11 @@ public class MapSpec {
     
     /**
      * Checks whether the given map path is set.
-     * @param mapFileLocation The map path.
+     * @param mapPath The map path.
      * @return Whether the given map path is set.
      */
-    public boolean isSet(String mapFileLocation) {
-        return mapFileLocation != null && !mapFileLocation.equals("");
+    public boolean isSet(String mapPath) {
+        return mapPath != null && !mapPath.equals("");
     }
 
 }
