@@ -1,4 +1,4 @@
-package src.main.java.nl.tudelft.bw4t.scenariogui.gui.epartner;
+package nl.tudelft.bw4t.scenariogui.gui.epartner;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -16,10 +16,7 @@ import java.awt.CardLayout;
 
 import javax.swing.BoxLayout;
 
-import src.main.java.nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorData;
-import src.main.java.nl.tudelft.bw4t.scenariogui.gui.botstore.JComboBox;
-import src.main.java.nl.tudelft.bw4t.scenariogui.gui.botstore.JLabel;
-import src.main.java.nl.tudelft.bw4t.scenariogui.gui.botstore.JSlider;
+import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorData;
 
 import java.awt.Component;
 import java.awt.event.ActionListener;
@@ -57,8 +54,8 @@ public class EpartnerFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[][141px][][141px][141px]", "[][][125px][125px]"));
 		
-		LeftAloneCheckBox.setAlignmentY(Component.TOP_ALIGNMENT);
-		contentPane.add(LeftAloneCheckBox, "cell 0 0,grow");
+		LeftAloneCheckbox.setAlignmentY(Component.TOP_ALIGNMENT);
+		contentPane.add(LeftAloneCheckbox, "cell 0 0,grow");
 		
 		CancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -92,7 +89,7 @@ public class EpartnerFrame extends JFrame {
 	 */
 	public void resetAction(){
         LeftAloneCheckbox.setSelected(false);
-        GPSCheckbox.setSelected(false);
+        GPSCheckBox.setSelected(false);
 	}
 	
 	/**
@@ -137,11 +134,11 @@ public class EpartnerFrame extends JFrame {
 	}
 
 	public JCheckBox getGPSCheckbox() {
-		return GPSCheckbox;
+		return GPSCheckBox;
 	}
 
 	public void setGPSCheckbox(JCheckBox GPSCheckbox) {
-		this.GPSCheckbox = GPSCheckbox;
+		this.GPSCheckBox = GPSCheckbox;
 	}
 	
 	/**
@@ -149,7 +146,7 @@ public class EpartnerFrame extends JFrame {
 	 */
 	public void setDataObject() {
 		dataObject.setLeftAlone(LeftAloneCheckbox.isEnabled());
-		dataObject.setGPS(GPSCheckbox.isEnabled());
+		dataObject.setGPS(GPSCheckBox.isEnabled());
 	}
 	
 	public BotEditorData getDataObject() {
