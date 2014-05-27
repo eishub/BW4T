@@ -1,13 +1,11 @@
-package src.main.java.nl.tudelft.bw4t.scenariogui.controller;
+package nl.tudelft.bw4t.scenariogui.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import src.main.java.nl.tudelft.bw4t.scenariogui.gui.epartner.EpartnerFrame;
-import src.main.java.nl.tudelft.bw4t.scenariogui.gui.epartner.JButton;
-import src.main.java.nl.tudelft.bw4t.scenariogui.gui.epartner.JCheckBox;
+import nl.tudelft.bw4t.scenariogui.gui.epartner.EpartnerFrame;
 
 /**
  * EpartnerController is in charge of all events that happen on the EpartnerGUI.
@@ -30,20 +28,20 @@ public class EpartnerController {
     public EpartnerController(EpartnerFrame view) {
         this.view = view;
 
-        view.getEpartnerFrame().getResetButton().addActionListener(
-                new ResetButton(getMainView().getEpartnerFrame()));
+        view.getResetButton().addActionListener(
+                new ResetButton(getMainView()));
 
-        view.getEpartnerFrame().getCancelButton().addActionListener(
-                new CancelButton(getMainView().getEpartnerFrame()));
+        view.getCancelButton().addActionListener(
+                new CancelButton(getMainView()));
 
-        view.getEpartnerFrame().getApplyButton().addActionListener(
-                new ApplyButton(getMainView().getEpartnerFrame()));
+        view.getApplyButton().addActionListener(
+                new ApplyButton(getMainView()));
 
-        view.getEpartnerFrame().getLeftAloneCheckBox().addActionListener(
-                new LeftAloneCheckBox(getMainView().getEpartnerFrame()));
+        view.getLeftAloneCheckbox().addActionListener(
+                new LeftAloneCheckBox(getMainView()));
 
-        view.getEpartnerFrame().getGPSCheckbox().addActionListener(
-                new GPSCheckbox(getMainView().getEpartnerFrame()));
+        view.getGPSCheckbox().addActionListener(
+                new GPSCheckBox(getMainView()));
     }
 
     public EpartnerFrame getMainView() {
