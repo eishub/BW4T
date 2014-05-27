@@ -18,10 +18,10 @@ public class BotStoreController {
     /**
      * Create the BotStore controllers
      *
-     * @param view The parent view, used to call relevant functions by the event listeners
+     * @param pview The parent view, used to call relevant functions by the event listeners
      */
-    public BotStoreController(BotEditor view) {
-        this.view = view;
+    public BotStoreController(BotEditor pview) {
+        this.view = pview;
 
         view.getBotEditorPanel().getResetButton().addActionListener(
                 new ResetButton(getMainView().getBotEditorPanel()));
@@ -59,7 +59,11 @@ public class BotStoreController {
         view.getBotEditorPanel().getmovespeedCheckbox().addActionListener(
         		new SpeedBox(getMainView().getBotEditorPanel()));
     }
-
+    
+    /**
+     * Return the BotEditor-object passed in the constructor.
+     * @return the object passed in the constructor.
+     */
     public BotEditor getMainView() {
         return view;
     }

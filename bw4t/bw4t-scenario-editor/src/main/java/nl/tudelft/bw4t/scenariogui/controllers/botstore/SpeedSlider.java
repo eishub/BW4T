@@ -10,10 +10,16 @@ import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
  * Handles actions of the speedslider
  */
 class SpeedSlider implements MouseListener {
+	/**
+	 * The panel containing the slider.
+	 */
     private BotEditorPanel view;
-
-    public SpeedSlider(BotEditorPanel view) {
-        this.view = view;
+    /**
+     * Constructor.
+     * @param pview The panel containing the slider.
+     */
+    public SpeedSlider(BotEditorPanel pview) {
+        this.view = pview;
     }
 
     @Override
@@ -36,7 +42,7 @@ class SpeedSlider implements MouseListener {
     public void mouseReleased(MouseEvent arg0) {
         int speed = view.getSpeedSlider().getValue();
         int size = view.getSizeSlider().getValue();
-        double res = 0.002*size + 0.000025*speed;
+        double res = 0.002 * size + 0.000025 * speed;
         DecimalFormat df = new DecimalFormat("#.######");
         String value = df.format(res);
         view.getBatteryUseValueLabel().setText(padString(value));
@@ -53,7 +59,7 @@ class SpeedSlider implements MouseListener {
 	 * @return The padded string.
 	 */
 	public String padString(String value) {
-		while(value.length() < 8) {
+		while (value.length() < 8) {
 			value += "0";
 		}
 		return value;
