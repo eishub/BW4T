@@ -34,8 +34,8 @@ public class HallwayMenu {
 		BasicMenuOperations.addSectionTitleToPopupMenu("Command my robot to: ", gui.getjPopupMenu());
 
 		JMenuItem menuItem = new JMenuItem("Go to here");
-		menuItem.addActionListener(new GotoPositionActionListener(new Point(gui.getSelectedLocation().x
-				/ set.getScale(), gui.getSelectedLocation().y / set.getScale()), gui.getController()));
+		menuItem.addActionListener(new GotoPositionActionListener(new Point((int) (gui.getSelectedLocation().x / set
+				.getScale()), (int) (gui.getSelectedLocation().y / set.getScale())), gui.getController()));
 		gui.getjPopupMenu().add(menuItem);
 
 		if (holdingID != null) {
@@ -68,7 +68,8 @@ public class HallwayMenu {
 			for (Zone roomInfo : cmc.getRooms()) {
 				menuItem = new JMenuItem(roomInfo.getName());
 				menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.hasColor,
-						roomInfo.getName(), ColorTranslator.translate2ColorString(entityColor), null), gui.getController()));
+						roomInfo.getName(), ColorTranslator.translate2ColorString(entityColor), null), gui
+						.getController()));
 				submenu.add(menuItem);
 			}
 		}

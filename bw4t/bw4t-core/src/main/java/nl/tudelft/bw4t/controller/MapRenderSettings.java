@@ -7,7 +7,7 @@ public class MapRenderSettings {
 	private int sequenceBlockSize = 20;
 	private int worldWidth = 7;
 	private int worldHeight = 7;
-	private int scale = 7;
+	private double scale = 7;
 	private int roomTextOffset = 25;
 	private boolean renderEntityName = false;
 	private int entityNameOffset = 20;
@@ -71,11 +71,14 @@ public class MapRenderSettings {
 		this.roomTextOffset = roomTextOffset;
 	}
 
-	public int getScale() {
+	public double getScale() {
 		return scale;
 	}
 
-	public void setScale(int scale) {
+	public void setScale(double scale) {
+		if(scale < 3 || scale > 15) {
+			return;
+		}
 		this.scale = scale;
 	}
 
@@ -84,6 +87,9 @@ public class MapRenderSettings {
 	}
 
 	public void setSequenceBlockSize(int sequenceBlockSize) {
+		if(sequenceBlockSize < 1 || sequenceBlockSize > 100) {
+			return;
+		}
 		this.sequenceBlockSize = sequenceBlockSize;
 	}
 
@@ -92,6 +98,9 @@ public class MapRenderSettings {
 	}
 
 	public void setEntityNameOffset(int entityNameOffset) {
+		if(sequenceBlockSize < -50 || sequenceBlockSize > 50) {
+			return;
+		}
 		this.entityNameOffset = entityNameOffset;
 	}
 
@@ -108,6 +117,9 @@ public class MapRenderSettings {
 	}
 
 	public void setUpdateDelay(int updateDelay) {
+		if(updateDelay < 10 || updateDelay > 1000) {
+			return;
+		}
 		this.updateDelay = updateDelay;
 	}
 
@@ -119,7 +131,7 @@ public class MapRenderSettings {
 	 * @return the scaled value
 	 */
 	public int scale(int value) {
-		return value * getScale();
+		return (int) (value * getScale());
 	}
 
 	/**

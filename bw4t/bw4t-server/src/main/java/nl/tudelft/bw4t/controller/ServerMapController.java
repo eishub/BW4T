@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import nl.tudelft.bw4t.MapLoader;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
@@ -30,7 +31,7 @@ public class ServerMapController extends AbstractMapController {
 		super(map);
 		getRenderSettings().setRenderEntityName(true);
 		serverContext = context;
-		Dimensions size = ((ContinuousSpace) context.getProjection("BW4T_Projection")).getDimensions();
+		Dimensions size = ((ContinuousSpace) context.getProjection(MapLoader.PROJECTION_ID)).getDimensions();
 		getRenderSettings().setWorldDimensions((int) size.getWidth(), (int) size.getHeight());
 	}
 

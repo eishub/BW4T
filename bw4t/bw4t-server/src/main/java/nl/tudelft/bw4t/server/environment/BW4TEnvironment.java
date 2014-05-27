@@ -364,15 +364,18 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		return stepper.runner;
 	}
 
-	/**
-	 * set new delay value. Lower is faster animation speed.
-	 * 
-	 * @param value
-	 *            the value for the delay. Should be at least {@link #MIN_DELAY} .
-	 */
-	public void setDelay(int value) {
-		stepper.setDelay(value);
+	public double getTps() {
+		if(stepper == null){
+			return Stepper.MIN_TPS;
+		}
+		return stepper.getTps();
+	}
 
+	public void setTps(double tps) {
+		if(stepper == null) {
+			return;
+		}
+		stepper.setTps(tps);
 	}
 
 	/**
