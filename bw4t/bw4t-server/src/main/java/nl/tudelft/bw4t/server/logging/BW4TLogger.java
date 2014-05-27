@@ -9,10 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-
 import nl.tudelft.bw4t.map.BlockColor;
-import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+
+import org.apache.log4j.Logger;
 
 /**
  * This logger logs all actions to a file:
@@ -48,7 +47,8 @@ public class BW4TLogger {
 	static boolean alreadywarned;
 	private static File logFile;
 	private static FileWriter writer;
-	private static BW4TLogger theLogger = null; // the singleton
+	// the singleton
+	private static BW4TLogger theLogger = null; 
 
 	private static Long starttime = null;
 
@@ -101,7 +101,7 @@ public class BW4TLogger {
 	 * @return the BW4TLogger
 	 * @throws IOException
 	 */
-	public synchronized static BW4TLogger getInstance() {
+	public static synchronized BW4TLogger getInstance() {
 		if (theLogger == null) {
 			theLogger = new BW4TLogger();
 		}
@@ -144,7 +144,7 @@ public class BW4TLogger {
 	public synchronized void log(List<String> items) {
 
 		try {
-			if (items.size() == 0) {
+			if (items.isEmpty()) {
 				return;
 			}
 			writer.write(items.get(0));
@@ -156,8 +156,9 @@ public class BW4TLogger {
 			writer.write("\n");
 			writer.flush();
 		} catch (IOException e) {
-			if (alreadywarned)
+			if (alreadywarned) {
 				return;
+			}
 			LOGGER.warn("failed to write to the log", e);
 			alreadywarned = true;
 		}
@@ -299,6 +300,7 @@ public class BW4TLogger {
 		Long complete = System.currentTimeMillis();
 		log(new String[] { "sequencecomplete", "" + complete });
 		log(new String[] { "totaltime", "" + (float) (complete - starttime) / 1000. });
-		closeLog(); // no more actions after this point, close right away.
+		// no more actions after this point, close right away.
+		closeLog(); 
 	}
 }
