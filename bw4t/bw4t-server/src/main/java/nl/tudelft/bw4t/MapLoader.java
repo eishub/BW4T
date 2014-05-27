@@ -69,7 +69,7 @@ public final class MapLoader {
 	 *             if the file can not be read from.
 	 * @throws JAXBException
 	 */
-	public static void loadMap(String location, Context<Object> context) throws IOException, JAXBException {
+	public static void loadMap(String tmpLocation, Context<Object> context) throws IOException, JAXBException {
 
 		/**
 		 * Temp list of all zones, because we can not yet use BW4TEnvironment.getInstance().getContext() ... (returns
@@ -82,7 +82,8 @@ public final class MapLoader {
 		 */
 		Map<String, List<BlockColor>> roomblocks = new HashMap<String, List<BlockColor>>();
 		Random random = new Random();
-		location = System.getProperty("user.dir") + "/maps/" + location;
+		String location; 
+		location = System.getProperty("user.dir") + "/maps/" + tmpLocation;
 		map = NewMap.create(new FileInputStream(new File(location)));
 
 		ContinuousSpace<Object> space = createSpace(context, (int) map.getArea().getX(), (int) map.getArea().getY());
@@ -105,11 +106,10 @@ public final class MapLoader {
 
 		for (Zone roomzone : map.getZones(Zone.Type.ROOM)) {
 			Room room;
-			if (roomzone.getName().equals("DropZone")) {
+			if ("DropZone".equals(roomzone.getName())) {
 				room = new DropZone(roomzone, space, context);
 				((DropZone) room).setSequence(sequence);
-			}
-			else {
+			} else {
 				room = createRoom(context, space, roomzone);
 				roomblocks.put(room.getName(), new ArrayList<BlockColor>(roomzone.getBlocks()));
 			}
@@ -117,9 +117,7 @@ public final class MapLoader {
 			for (nl.tudelft.bw4t.map.Door door : roomzone.getDoors()) {
 				createDoor(context, space, door, room);
 			}
-
 			zones.put(roomzone.getName(), room);
-
 		}
 
 		connectAllZones(zones);
@@ -148,8 +146,7 @@ public final class MapLoader {
 		for (Entity entityparams : map.getEntities()) {
 			if (entityparams.getType() == Entity.EntityType.NORMAL) {
 				createEisEntityRobot(context, space, entityparams);
-			}
-			else {
+			} else {
 				createJavaRobot(context, space, entityparams);
 			}
 		}
@@ -301,9 +298,7 @@ public final class MapLoader {
 	 *            the room {@link Zone}.
 	 */
 	private static Room createRoom(Context<Object> context, ContinuousSpace<Object> space, Zone roomzone) {
-		Room room = new BlocksRoom(space, context, roomzone);
-
-		return room;
+		return new BlocksRoom(space, context, roomzone);
 	}
 
 	/**
@@ -313,8 +308,7 @@ public final class MapLoader {
 	 * @param space
 	 */
 	private static Corridor createCorridor(Context<Object> context, ContinuousSpace<Object> space, Zone zone) {
-		Corridor np = new Corridor(zone, space, context);
-		return np;
+		return new Corridor(zone, space, context);
 	}
 
 	/**

@@ -31,8 +31,7 @@ public class SizeOverloadHandicap extends Handicap {
 		if (isActive && robot.getSize() >= 4) {
 			if (startzone == endzone) {
 				return MoveType.SAME_AREA;
-			}
-		
+				
 			/**
 			 * A zone switch is attempted as either startzone or endzone is not
 			 * null.
@@ -42,14 +41,13 @@ public class SizeOverloadHandicap extends Handicap {
 			/**
 			 * Both sides are not a room. Check if target accesible
 			 */
-			else if (endzone instanceof Corridor) {
+			} else if (endzone instanceof Corridor) {
 				if (!robot.isOneBotPerZone() || endzone.containsMeOrNothing(robot)) {
 					return MoveType.ENTER_CORRIDOR;
 				}
 				return MoveType.HIT_OCCUPIED_ZONE;
 			}
-		}
-		else {
+		} else {
 			super.checkZoneAccess(startzone, endzone, door);
 		}
 		return MoveType.ENTERING_FREESPACE;
@@ -58,16 +56,14 @@ public class SizeOverloadHandicap extends Handicap {
 	/**
 	 * Activate the handicap.
 	 */
-	public void activate()
-	{
+	public void activate() {
 		isActive = true;
 	}
 	
 	/**
 	 * Deactivate the handicap.
 	 */
-	public void deactivate()
-	{
+	public void deactivate() {
 		isActive = false;
 	}
 }
