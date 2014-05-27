@@ -12,9 +12,12 @@ import java.util.Random;
 
 import javax.xml.bind.JAXBException;
 
+import org.apache.log4j.Logger;
+
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.eis.RobotEntity;
+import nl.tudelft.bw4t.logger.BotLog;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Door.Orientation;
 import nl.tudelft.bw4t.map.Entity;
@@ -23,7 +26,6 @@ import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.robots.NavigatingRobot;
 import nl.tudelft.bw4t.robots.Robot;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
-import nl.tudelft.bw4t.server.logging.BW4TLogger;
 import nl.tudelft.bw4t.zone.BlocksRoom;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.DropZone;
@@ -45,10 +47,16 @@ import eis.exceptions.EntityException;
 public final class MapLoader {
 
 	/** Identifier used for the space projections, matched in context.xml */
-	public static final String PROJECTION_ID = "BW4T_Projection";
+
+	private static final String PROJECTION_ID = "BW4T_Projection";
 
 	private static NewMap map;
 
+    /**
+     * The log4j Logger which displays logs on console
+     */
+    private static final Logger LOGGER = Logger.getLogger(MapLoader.class);
+    
 	private MapLoader() {
 	}
 
@@ -345,8 +353,14 @@ public final class MapLoader {
 	 */
 	private static void createBlocksForRoom(Room room, Context<Object> context, ContinuousSpace<Object> space,
 			List<BlockColor> args) {
-		String roomName = room.getName();
-		BW4TLogger.getInstance().logRoomBlocks(roomName, args);
+		
+		String logRoom = room.getName();
+		
+		for (BlockColor c : args) {
+			logRoom = logRoom + c.getLetter().toString();
+		}
+		
+		LOGGER.log(BotLog.BOTLOG, logRoom);
 
 		Rectangle2D roomBox = room.getBoundingBox();
 		List<Rectangle2D> newblocks = new ArrayList<Rectangle2D>();

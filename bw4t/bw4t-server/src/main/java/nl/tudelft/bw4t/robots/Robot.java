@@ -10,9 +10,8 @@ import java.util.Map;
 import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.doors.Door;
-import nl.tudelft.bw4t.handicap.HandicapInterface;
-import nl.tudelft.bw4t.map.view.Entity;
-import nl.tudelft.bw4t.server.logging.BW4TLogger;
+import nl.tudelft.bw4t.handicap.*;
+import nl.tudelft.bw4t.map.Entity;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.DropZone;
@@ -87,6 +86,11 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	private final Map<String, HandicapInterface> handicapsMap;
 
 	/**
+	 * AgentRecord object for this Robot, needed for logging
+	 */
+	AgentRecord agentRecord;
+	
+	/**
 	 * Creates a new robot.
 	 * 
 	 * @param name
@@ -104,6 +108,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 		this.name = name;
 		this.oneBotPerZone = oneBotPerZone;
 		setSize(size, size);
+		this.agentRecord = new AgentRecord(name, "unknown");
 
 		/**
 		 * This is where the battery value will be fetched from the Bot Store GUI.
@@ -288,7 +293,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 			case ENTER_CORRIDOR:
 			case ENTERING_FREESPACE:
 			case ENTERING_ROOM:
-				BW4TLogger.getInstance().logEnteredRoom(name);
+				agentRecord.addEnteredRoom();
 				break;
 			case HIT_CLOSED_DOOR:
 			case HIT_WALL:
@@ -305,7 +310,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 * Check motion type for robot to move to <endx, endy>. The {@link #MoveType} gives the actual type / possibility of
 	 * the move, plus the details why it is (not) possible.
 	 * 
-	 * @param endx
+	 * @param end
 	 *            is x position of target
 	 * @param endy
 	 *            is y position of target
@@ -460,7 +465,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 				try {
 					// Move the robot to the new position using the displacement
 					moveByDisplacement(displacement[0], displacement[1]);
-					BW4TLogger.getInstance().logMoving(name);
+					agentRecord.setStartedMoving();
 
 					/**
 					 * Valentine The robot's battery discharges when it moves.
@@ -480,7 +485,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 */
 	public synchronized void stopRobot() {
 		this.targetLocation = null;
-		BW4TLogger.getInstance().logStopMoving(name);
+		agentRecord.setStoppedMoving();
 	}
 
 	/**
@@ -608,5 +613,14 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	}
 	public Map<String, HandicapInterface> getHandicapsMap() {
 		return handicapsMap;
+	}
+	
+	/**
+	 * gets AgentRecord
+	 * @return AgentRecord
+	 */
+	public AgentRecord getAgentRecord(){
+		return agentRecord;
+
 	}
 }

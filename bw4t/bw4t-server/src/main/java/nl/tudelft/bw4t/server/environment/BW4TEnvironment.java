@@ -14,10 +14,10 @@ import java.util.Map;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.BW4TBuilder;
+import nl.tudelft.bw4t.logger.BotLog;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.server.BW4TServer;
 import nl.tudelft.bw4t.server.RobotEntityInt;
-import nl.tudelft.bw4t.server.logging.BW4TLogger;
 import nl.tudelft.bw4t.visualizations.ServerContextDisplay;
 
 import org.apache.log4j.Logger;
@@ -77,6 +77,8 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	private final boolean guiEnabled;
 	private final String shutdownKey;
 
+	private static Long starttime = null; // starttime, first action
+	
 	/**
 	 * Create a new instance of this environment
 	 * 
@@ -146,7 +148,13 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * reports errors and proceeds.
 	 */
 	public void removeAllEntities() throws ManagementException {
-		BW4TLogger.getInstance().closeLog();
+		LOGGER.info("Closing the log file.");
+		
+		String message = " ";
+		//TODO check if total time is calculated same way as before
+		LOGGER.log(BotLog.BOTLOG, "total time: " + (System.currentTimeMillis()-starttime));
+		//TODO log AgentRecord, each toSummaryArray of agentRecord of object of each bot
+	
 		setState(EnvironmentState.KILLED);
 
 		LOGGER.debug("Removing all entities");
@@ -306,7 +314,13 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @return the percept received after performing the action
 	 */
 	public Percept performClientAction(String entity, Action action) throws ActException {
-		BW4TLogger.getInstance().logAction(entity, action.toProlog());
+		Long time = System.currentTimeMillis();
+		LOGGER.log(BotLog.BOTLOG, "action " + time + entity + action);
+		
+		if(starttime == null){
+			starttime = time;
+		}
+		
 		return performEntityAction(entity, action);
 	}
 
