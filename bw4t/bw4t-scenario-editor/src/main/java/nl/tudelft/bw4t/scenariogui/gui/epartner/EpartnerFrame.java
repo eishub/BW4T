@@ -1,28 +1,18 @@
 package nl.tudelft.bw4t.scenariogui.gui.epartner;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JCheckBox;
 import javax.swing.SwingConstants;
-import javax.swing.JButton;
-
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.CardLayout;
-
-import javax.swing.BoxLayout;
-
-import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorData;
-
-import java.awt.Component;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
+import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorData;
 
 /**
  * This class creates the frame for the e-Partner GUI.
@@ -31,18 +21,15 @@ import net.miginfocom.swing.MigLayout;
 
 public class EpartnerFrame extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	
-	private JButton ApplyButton = new JButton("Apply");
-	private JButton ResetButton = new JButton("Reset");
-	private JButton CancelButton = new JButton("Cancel");
+	private JButton applyButton = new JButton("Apply");
+	private JButton resetButton = new JButton("Reset");
+	private JButton cancelButton = new JButton("Cancel");
 	
-	private JCheckBox LeftAloneCheckbox = new JCheckBox("Left-alone Warning");
-	private JCheckBox GPSCheckBox = new JCheckBox("Geolocator");
+	private JCheckBox leftAloneCheckbox = new JCheckBox("Left-alone Warning");
+	private JCheckBox gpsCheckBox = new JCheckBox("Geolocator");
 	
 	private BotEditorData dataObject = new BotEditorData();
 	
@@ -58,25 +45,25 @@ public class EpartnerFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[][141px][][141px][141px]", "[][][125px][125px]"));
 		
-		LeftAloneCheckbox.setAlignmentY(Component.TOP_ALIGNMENT);
-		contentPane.add(LeftAloneCheckbox, "cell 0 0,grow");
+		leftAloneCheckbox.setAlignmentY(Component.TOP_ALIGNMENT);
+		contentPane.add(leftAloneCheckbox, "cell 0 0,grow");
 		
-		CancelButton.addActionListener(new ActionListener() {
+		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
 		
-		GPSCheckBox.setVerticalAlignment(SwingConstants.TOP);
-		contentPane.add(GPSCheckBox, "cell 0 1,grow");
-		contentPane.add(CancelButton, "cell 0 3,growx,aligny bottom");
+		gpsCheckBox.setVerticalAlignment(SwingConstants.TOP);
+		contentPane.add(gpsCheckBox, "cell 0 1,grow");
+		contentPane.add(cancelButton, "cell 0 3,growx,aligny bottom");
 		
-		ApplyButton.addActionListener(new ActionListener() {
+		applyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
 		
-		contentPane.add(ResetButton, "cell 2 3,growx,aligny bottom");
-		contentPane.add(ApplyButton, "cell 4 3,alignx right,aligny bottom");
+		contentPane.add(resetButton, "cell 2 3,growx,aligny bottom");
+		contentPane.add(applyButton, "cell 4 3,alignx right,aligny bottom");
 	}
 	
 	/**
@@ -91,9 +78,9 @@ public class EpartnerFrame extends JFrame {
 	 * Executes action that needs to happen when  the "Reset" button is pressed.
 	 * Resets to default settings
 	 */
-	public void resetAction(){
-        LeftAloneCheckbox.setSelected(false);
-        GPSCheckBox.setSelected(false);
+	public void resetAction() {
+        leftAloneCheckbox.setSelected(false);
+        gpsCheckBox.setSelected(false);
 	}
 	
 	/**
@@ -101,58 +88,60 @@ public class EpartnerFrame extends JFrame {
 	 * closes the BotEditor
 	 */
 	
-	public void cancelAction(){	
+	public void cancelAction() {	
 		
 	}
 	
-	// getters and setters
-		
+	/**
+	 * getters and setters
+	 */
+	
 	public JButton getApplyButton() {
-		return ApplyButton;
+		return applyButton;
 	}
 
 	public void setApplyButton(JButton ApplyButton) {
-		this.ApplyButton = ApplyButton;
+		this.applyButton = ApplyButton;
 	}
 
 	public JButton getResetButton() {
-		return ResetButton;
+		return resetButton;
 	}
 
 	public void setResetButton(JButton ResetButton) {
-		this.ResetButton = ResetButton;
+		this.resetButton = ResetButton;
 	}
 
 	public JButton getCancelButton() {
-		return CancelButton;
+		return cancelButton;
 	}
 
 	public void setCancelButton(JButton CancelButton) {
-		this.CancelButton = CancelButton;
+		this.cancelButton = CancelButton;
 	}
 
 	public JCheckBox getLeftAloneCheckbox() {
-		return LeftAloneCheckbox;
+		return leftAloneCheckbox;
 	}
 
 	public void setLeftAloneCheckbox(JCheckBox LeftAloneCheckbox) {
-		this.LeftAloneCheckbox = LeftAloneCheckbox;
+		this.leftAloneCheckbox = LeftAloneCheckbox;
 	}
 
 	public JCheckBox getGPSCheckbox() {
-		return GPSCheckBox;
+		return gpsCheckBox;
 	}
 
 	public void setGPSCheckbox(JCheckBox GPSCheckbox) {
-		this.GPSCheckBox = GPSCheckbox;
+		this.gpsCheckBox = GPSCheckbox;
 	}
 	
 	/**
 	 * This method plugs the GUI values into the data object.
 	 */
 	public void setDataObject() {
-		dataObject.setLeftAlone(LeftAloneCheckbox.isEnabled());
-		dataObject.setGPS(GPSCheckBox.isEnabled());
+		dataObject.setLeftAlone(leftAloneCheckbox.isEnabled());
+		dataObject.setGPS(gpsCheckBox.isEnabled());
 	}
 	
 	public BotEditorData getDataObject() {

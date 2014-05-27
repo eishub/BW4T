@@ -61,7 +61,7 @@ public abstract class Handicap implements HandicapInterface {
 	 * @param startzone
 	 * @param endzone
 	 * @param door
-	 * @return
+	 * @return 
 	 */
 	public MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door) {
 		return parent.checkZoneAccess(startzone, endzone, door);
@@ -69,6 +69,7 @@ public abstract class Handicap implements HandicapInterface {
 	
 	/**
 	 * Returns the robot the handicaps are attached to.
+	 * @return temp
 	 */
 	public Robot getSuperParent() {
 		HandicapInterface temp = parent;

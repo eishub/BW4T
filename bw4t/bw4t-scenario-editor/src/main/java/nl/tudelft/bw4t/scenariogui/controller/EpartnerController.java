@@ -2,8 +2,6 @@ package nl.tudelft.bw4t.scenariogui.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import nl.tudelft.bw4t.scenariogui.gui.epartner.EpartnerFrame;
 
@@ -23,11 +21,11 @@ public class EpartnerController {
     /**
      * Create the Epartner controller
      *
-     * @param view The parent view, used to call relevant functions by the event listeners
+     * @param pview The parent view, used to call relevant functions by the event listeners
      */
-    public EpartnerController(EpartnerFrame view) {
-        this.view = view;
-
+    public EpartnerController(EpartnerFrame pview) {
+        this.view = pview;
+        
         view.getResetButton().addActionListener(
                 new ResetButton(getMainView()));
 
@@ -41,9 +39,12 @@ public class EpartnerController {
                 new LeftAloneCheckBox(getMainView()));
 
         view.getGPSCheckbox().addActionListener(
-                new GPSCheckBox(getMainView()));
+                new gpsCheckBox(getMainView()));
     }
 
+    /**
+     * @return view
+     */
     public EpartnerFrame getMainView() {
         return view;
     }
@@ -53,10 +54,11 @@ public class EpartnerController {
  * Handles actions of the ResetButton
  */
 class ResetButton implements ActionListener {
-    private EpartnerFrame view;
 
-    public ResetButton(EpartnerFrame view) {
-        this.view = view;
+    private EpartnerFrame view;
+    
+    public ResetButton(EpartnerFrame pview) {
+        this.view = pview;
     }
 
     public void actionPerformed(ActionEvent ae) {
@@ -70,8 +72,8 @@ class ResetButton implements ActionListener {
 class CancelButton implements ActionListener {
     private EpartnerFrame view;
 
-    public CancelButton(EpartnerFrame view) {
-        this.view = view;
+    public CancelButton(EpartnerFrame pview) {
+        this.view = pview;
     }
 
     public void actionPerformed(ActionEvent ae) {
@@ -85,8 +87,8 @@ class CancelButton implements ActionListener {
 class ApplyButton implements ActionListener {
     private EpartnerFrame view;
 
-    public ApplyButton(EpartnerFrame view) {
-        this.view = view;
+    public ApplyButton(EpartnerFrame pview) {
+        this.view = pview;
     }
 
     public void actionPerformed(ActionEvent ae) {
@@ -112,11 +114,11 @@ class LeftAloneCheckBox implements ActionListener {
 /**
  * Handles actions of the GPSCheckBox
  */
-class GPSCheckBox implements ActionListener {
+class gpsCheckBox implements ActionListener {
     private EpartnerFrame view;
 
-    public GPSCheckBox(EpartnerFrame view) {
-        this.view = view;
+    public gpsCheckBox(EpartnerFrame pview) {
+        this.view = pview;
     }
 
     public void actionPerformed(ActionEvent ae) {
