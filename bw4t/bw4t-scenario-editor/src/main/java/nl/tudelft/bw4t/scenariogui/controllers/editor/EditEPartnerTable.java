@@ -38,7 +38,7 @@ public class EditEPartnerTable implements TableModelListener {
     public void tableChanged(TableModelEvent arg0) {
         if (arg0.getColumn() == -1)
             return;
-        //TODO: once the EPartnerConfig has been made, uncomment (select it, then ctrl + 7) below stuff
+        // TODO: once the EPartnerConfig has been made, uncomment (select it, then ctrl + 7) below stuff
         System.out.println("TODO: once the EPartnerConfig has been made, uncomment below stuff");
 //        EPartnerConfig config = view.getEntityPanel().getEPartnerConfigs().get(arg0.getFirstRow());
 //        String value = (String) view.getEntityPanel().getEPartnerTable().getValueAt(
