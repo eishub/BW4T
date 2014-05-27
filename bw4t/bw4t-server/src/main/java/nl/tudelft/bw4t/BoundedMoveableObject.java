@@ -35,7 +35,7 @@ public abstract class BoundedMoveableObject {
 	 *            the context in which the object should be placed.
 	 */
 	public BoundedMoveableObject(ContinuousSpace<Object> space, Context<Object> context) {
-		if (context.size() == 0) {
+		if (context.isEmpty()) {
 			COUNTER.set(0);
 		}
 		this.id = COUNTER.getAndIncrement();
@@ -109,31 +109,21 @@ public abstract class BoundedMoveableObject {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		/*
-		 * result = prime * result + ((boundingBox == null) ? 0 : boundingBox.hashCode()); result = prime * result +
-		 * (int) (id ^ (id >>> 32));
-		 */
-		return result;
+		return 1; 
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
 		BoundedMoveableObject other = (BoundedMoveableObject) obj;
-		if (boundingBox == null) {
-			if (other.boundingBox != null)
-				return false;
-		} else if (!boundingBox.equals(other.boundingBox))
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null || getClass() != obj.getClass() 
+				|| (boundingBox == null && other.boundingBox != null ) 
+				|| (!boundingBox.equals(other.boundingBox))
+				|| (id != other.id)) {
 			return false;
-		if (id != other.id)
-			return false;
+		} 
 		return true;
 	}
 
@@ -153,9 +143,9 @@ public abstract class BoundedMoveableObject {
 	 */
 	public double distanceTo(NdPoint there) {
 		NdPoint here = getLocation();
-		double distance = Math.sqrt(Math.pow(there.getX() - here.getX(), 2)
+		return Math.sqrt(Math.pow(there.getX() - here.getX(), 2)
 				+ Math.pow(there.getY() - here.getY(), 2));
-		return distance;
+
 	}
 
 	/**
