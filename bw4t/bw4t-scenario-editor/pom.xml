@@ -81,9 +81,7 @@
             	<extensions>true</extensions>
             	<configuration>
             		<publicPackages>
-            			<publicPackage>com.miglayout</publicPackage>
-						<publicPackage>org.tbee.javafx.scene.layout</publicPackage>
-						<publicPackage>org.tbee.javafx.scene.layout.fxml</publicPackage>	
+            			<publicPackage>com.miglayout</publicPackage>	
 						<publicPackage>net.miginfocom.layout</publicPackage>
 						<publicPackage>net.miginfocom.swing</publicPackage>
 					</publicPackages>
