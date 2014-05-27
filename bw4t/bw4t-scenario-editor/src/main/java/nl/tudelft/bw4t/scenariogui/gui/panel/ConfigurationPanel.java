@@ -541,6 +541,45 @@ public class ConfigurationPanel extends JPanel {
     }
 
     /**
+     * Returns if changes has been made to the default configuration.
+     *
+     * @return whether changes have been made.
+     */
+    public final boolean isDefault() {
+        boolean isDefault = true;
+
+        if (!this.getClientIP().equals(
+                DEFAULT_VALUES.DEFAULT_CLIENT_IP.getValue())) {
+            isDefault = false;
+        }
+        else if (this.getClientPort() != DEFAULT_VALUES.DEFAULT_CLIENT_PORT
+                .getIntValue()) {
+            isDefault = false;
+        }
+        else if (!this.getServerIP().equals(
+                DEFAULT_VALUES.DEFAULT_SERVER_IP.getValue())) {
+            isDefault = false;
+        }
+        else if (this.getServerPort() != DEFAULT_VALUES.DEFAULT_SERVER_PORT
+                .getIntValue()) {
+            isDefault = false;
+        }
+        else if (this.useGui() != DEFAULT_VALUES.USE_GUI.getBooleanValue()) {
+            isDefault = false;
+        // if(this.useGoal() != DEFAULT_VALUES.USE_GOAL.getBooleanValue() &&
+        // isDefault)
+        // isDefault = false;
+        }
+        else if (!this.getMapFile().equals(DEFAULT_VALUES.MAP_FILE.getValue())) {
+            isDefault = false;
+        }
+
+        // TODO: check if the bot list is empty (since that is default too). Split into submethods as well.
+
+        return isDefault;
+    }
+
+    /**
      * Returns the values that have been saved previously.
      * 
      * @return The values that have been saved previously.
