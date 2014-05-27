@@ -46,7 +46,8 @@ class ModifyBot implements ActionListener {
     	
     	if (row == -1) {
             ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select the bot you want to modify.");
-        } else {
+        }
+    	else {
         	new BotEditor(view, row);
         }
     }

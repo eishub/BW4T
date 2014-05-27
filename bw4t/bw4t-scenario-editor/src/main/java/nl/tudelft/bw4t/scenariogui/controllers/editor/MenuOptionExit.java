@@ -49,17 +49,19 @@ class MenuOptionExit extends AbstractMenuOption {
                 saveFile();
                 super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
                 getController().getMainView().closeScenarioEditor();
-            } else {
+            }
+            else {
                 getController().getMainView().closeScenarioEditor();
             }
-        } else {
+        }
+        else {
         	int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
         			null, 
         			"Are you sure you want to exit the program?",
         			"",
         			JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         	
-        	if(response == JOptionPane.YES_OPTION) {
+        	if (response == JOptionPane.YES_OPTION) {
                 getController().getMainView().closeScenarioEditor();
         	}
         }

@@ -10,7 +10,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
