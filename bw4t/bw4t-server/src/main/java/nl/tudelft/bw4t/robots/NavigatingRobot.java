@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import org.apache.log4j.Logger;
-
 import nl.tudelft.bw4t.BoundedMoveableObject;
-import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.util.PathPlanner;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.Zone;
+
+import org.apache.log4j.Logger;
+
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
@@ -57,8 +57,10 @@ public class NavigatingRobot extends Robot {
 	 */
 	@Override
 	public void stopRobot() {
-		super.stopRobot(); // do the normal handling to stop the robot.
-		robotStopped(); // and handle the event
+		// do the normal handling to stop the robot.
+		super.stopRobot(); 
+		// and handle the event
+		robotStopped();
 	}
 
 	/**
@@ -80,7 +82,8 @@ public class NavigatingRobot extends Robot {
 		if (plannedMoves == null) {
 			throw new InternalError("plannedMoves==null. How is this possible??");
 		}
-		plannedMoves.clear(); // clear old path.
+		// clear old path.
+		plannedMoves.clear(); 
 		Zone startpt = ZoneLocator.getNearestZone(this.getLocation());
 		Zone targetpt = ZoneLocator.getNearestZone(p);
 		List<Zone> allnavs = new ArrayList<Zone>();
@@ -108,7 +111,8 @@ public class NavigatingRobot extends Robot {
 	public void useNextTarget() {
 		currentMove = null;
 		if (plannedMoves.isEmpty()) {
-			return; // we're there.
+			// we're there.
+			return; 
 		}
 
 		// we arrived at the inbetween target
@@ -123,7 +127,8 @@ public class NavigatingRobot extends Robot {
 	 * @param target
 	 */
 	public void setTarget(BoundedMoveableObject target) {
-		plannedMoves.clear(); // clear old path.
+		// clear old path.
+		plannedMoves.clear(); 
 		Zone startpt = ZoneLocator.getNearestZone(this.getLocation());
 		Zone targetpt = ZoneLocator.getNearestZone(target.getLocation());
 		List<Zone> allnavs = new ArrayList<Zone>();
@@ -141,7 +146,8 @@ public class NavigatingRobot extends Robot {
 		}
 		// and add the real target
 		plannedMoves.add(target.getLocation());
-		useNextTarget(); // make the bot use the new path.
+		// make the bot use the new path.
+		useNextTarget(); 
 	}
 
 	/** The possible states of the navigating robot */

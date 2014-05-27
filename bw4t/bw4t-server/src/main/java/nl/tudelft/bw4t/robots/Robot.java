@@ -162,8 +162,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	public boolean equals(Object obj) {
 		if (obj instanceof Robot) {
 			return super.equals(obj);
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
