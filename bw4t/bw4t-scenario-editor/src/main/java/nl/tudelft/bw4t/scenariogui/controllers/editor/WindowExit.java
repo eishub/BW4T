@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.scenariogui.controllers.editor;
 
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -17,7 +18,7 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
  * @since		26-05-2014
  *
  */
-class WindowExit implements WindowListener {
+class WindowExit extends WindowAdapter {
 	
 	/**
 	 * The view being controlled.
@@ -34,21 +35,23 @@ class WindowExit implements WindowListener {
 	
 	@Override
 	public void windowClosing(WindowEvent e) {
+        System.out.println( "okaa");
 		ConfigurationPanel configPanel = 
 				view.getController().getMainView().getMainPanel().getConfigurationPanel();
 		
 		// Check if current config is different from last saved config
         if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())) {
+            System.out.println("grr");
         	int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
-    				null,
-    				"You have not saved your current configuration. \n"
-    				+
-					"If you exit now, your changes will be lost. \n"
-    				+
-					"Are you sure you want to exit the program? \n",
-    				"",
-    				JOptionPane.YES_NO_OPTION,
-    				JOptionPane.QUESTION_MESSAGE
+                    null,
+                    "You have not saved your current configuration. \n"
+                            +
+                            "If you exit now, your changes will be lost. \n"
+                            +
+                            "Are you sure you want to exit the program? \n",
+                    "",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
             );
         	
         	if (response == JOptionPane.YES_OPTION) {
@@ -56,53 +59,21 @@ class WindowExit implements WindowListener {
         	}
         }
         else {
-        	int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
-        			null,
-        			"Are you sure you want to exit the program?",
-        			"",
-        			JOptionPane.YES_NO_OPTION,
-        			JOptionPane.QUESTION_MESSAGE
-                );
-		
+            System.out.println("hoooold::");
+        	int response = JOptionPane.showConfirmDialog(
+                    null,
+                    "Are you sure you want to exit the program?",
+                    "",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+            );
+
+               System.out.println("res: "+response);
         	if (response == JOptionPane.YES_OPTION) {
+                System.out.println("hh");
                 view.closeScenarioEditor();
         	}
+
         }
-	}
-
-	@Override
-	public void windowActivated(WindowEvent arg0) {
-		return;
-		
-	}
-
-	@Override
-	public void windowClosed(WindowEvent arg0) {
-		return;
-		
-	}
-
-	@Override
-	public void windowDeactivated(WindowEvent arg0) {
-		return;
-		
-	}
-
-	@Override
-	public void windowDeiconified(WindowEvent arg0) {
-		return;
-		
-	}
-
-	@Override
-	public void windowIconified(WindowEvent arg0) {
-		return;
-		
-	}
-
-	@Override
-	public void windowOpened(WindowEvent arg0) {
-		return;
-		
 	}
 }
