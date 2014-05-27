@@ -15,9 +15,12 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 
 /**
@@ -216,15 +219,37 @@ public class EntityPanelTest {
         assertEquals(spyEntityPanel.getEPartnerCount(), 1);
     }
 
+
     /**
      * Test if an E-partner is successfully modified when the
      * modify E-partner button is clicked.
      */
-    @Ignore
+    @Test
     public void testModifyEPartner() {
+        /* Select an E-Partner */
+        spyEntityPanel.getEPartnerTable().selectAll();
+
+        /* Click the modify epartner button */
         spyEntityPanel.getModifyEPartnerButton().doClick();
+
+
         //TODO: Verify if the E-partner has actually been modified.
     }
+
+    /**
+     * Test if a pop-up is generated notifying the user that they made no selection
+     * when they try to modify an epartner without first selecting one.
+     */
+    @Test
+    public void testEPartnerModifyNoSelection() {
+        YesMockOptionPrompt spyOption = spy(new YesMockOptionPrompt());
+        ScenarioEditor.setOptionPrompt(spyOption);
+
+        editor.getMainPanel().getEntityPanel().getModifyEPartnerButton().doClick();
+
+        verify(spyOption, times(1)).showMessageDialog(null, "Please select the E-partner you want to modify.");
+    }
+
 
     /**
      * Test if an E-partner is actually deleted when the
@@ -290,4 +315,19 @@ public class EntityPanelTest {
         /** Check if the E-partner count is still one */
         assertEquals(spyEntityPanel.getEPartnerCount(), 1);
     }
+
+
+    /**
+     * Test if the bot dropdown menu when creating a new bot
+     * is shown when the button is clicked.
+     */
+    @Ignore
+    public void testBotDropdown() {
+        spyEntityPanel.getDropDownButton().doClick();
+        verify(spyEntityPanel, times(1)).showBotDropDown();
+    }
+
+
+
+
 }
