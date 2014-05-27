@@ -1,0 +1,17 @@
+2014-05-27 14:41:00,550 [main] INFO  nl.tudelft.bw4t.client.startup.Launcher - Starting up BW4T Client.
+2014-05-27 14:41:00,550 [main] INFO  nl.tudelft.bw4t.client.startup.Launcher - Reading initialization parameters...
+2014-05-27 14:41:00,552 [main] DEBUG nl.tudelft.bw4t.client.startup.Launcher - Defaulting parameter '-clientip' with 'localhost'
+2014-05-27 14:41:00,552 [main] DEBUG nl.tudelft.bw4t.client.startup.Launcher - Defaulting parameter '-clientport' with '2000'
+2014-05-27 14:41:00,552 [main] DEBUG nl.tudelft.bw4t.client.startup.Launcher - Defaulting parameter '-serverip' with 'localhost'
+2014-05-27 14:41:00,552 [main] DEBUG nl.tudelft.bw4t.client.startup.Launcher - Defaulting parameter '-serverport' with '8000'
+2014-05-27 14:41:00,552 [main] DEBUG nl.tudelft.bw4t.client.startup.Launcher - Defaulting parameter '-agentcount' with '0'
+2014-05-27 14:41:00,552 [main] DEBUG nl.tudelft.bw4t.client.startup.Launcher - Defaulting parameter '-launchgui' with 'true'
+2014-05-27 14:41:00,552 [main] DEBUG nl.tudelft.bw4t.client.startup.Launcher - Defaulting parameter '-humancount' with '1'
+2014-05-27 14:41:00,552 [main] DEBUG nl.tudelft.bw4t.client.startup.Launcher - Defaulting parameter '-agentclass' with 'nl.tudelft.bw4t.agent.BW4TAgent'
+2014-05-27 14:41:00,552 [main] DEBUG nl.tudelft.bw4t.client.startup.Launcher - Defaulting parameter '-goal' with 'false'
+2014-05-27 14:41:00,552 [main] DEBUG nl.tudelft.bw4t.client.startup.Launcher - Defaulting parameter '-kill' with ''
+2014-05-27 14:41:00,555 [main] INFO  nl.tudelft.bw4t.client.startup.Launcher - Initializing environment...
+2014-05-27 14:41:00,555 [main] INFO  nl.tudelft.bw4t.client.environment.RemoteEnvironment - Connecting to BW4T Server.
+2014-05-27 14:41:00,671 [main] INFO  nl.tudelft.bw4t.client.BW4TClient - The BW4T Client is bound to: rmi://localhost:2000/BW4TClient
+2014-05-27 14:41:00,684 [main] INFO  nl.tudelft.bw4t.client.BW4TClient - Requesting 0 automated agent(s) and 1 human agent(s).
+2014-05-27 14:41:00,695 [RMI TCP Connection(3)-145.94.47.15] DEBUG nl.tudelft.bw4t.client.gui.BW4TClientGUI - Handeling new environment state: RUNNING
