@@ -41,9 +41,9 @@ import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
  * 
  * @author W.Pasman 1dec2011
  */
+
+/*
 public class BW4TLogger {
-	// set to true if logging fails and
-	// warning was printed.
 
 	static boolean alreadywarned;
 	private static File logFile;
@@ -51,16 +51,16 @@ public class BW4TLogger {
 	private static BW4TLogger theLogger = null; // the singleton
 
 	private static Long starttime = null;
-
+*/
 	/**
 	 * The log4j logger, logs to the console.
 	 */
-	private static final Logger LOGGER = Logger.getLogger(BW4TLogger.class);
+//	private static final Logger LOGGER = Logger.getLogger(BW4TLogger.class);
 
 	/**
 	 * Here we store per-agent performance records.
 	 */
-	private static Map<String, AgentRecord> agentRecords;
+//	private static Map<String, AgentRecord> agentRecords;
 
 	/**
 	 * Create a new Logger.
@@ -68,7 +68,7 @@ public class BW4TLogger {
 	 * @throws IOException
 	 *             if log file can not be created.
 	 */
-	private BW4TLogger() {
+/*	private BW4TLogger() {
 		reset();
 		try {
 			LOGGER.info("Starting the BW4T logger.");
@@ -81,10 +81,11 @@ public class BW4TLogger {
 			LOGGER.error("The BW4T Server was unable to open the logfile as requested. Proceeding as if no problem was encountered.", e);
 		}
 	}
-
+*/
 	/**
 	 * reset all internal values to null/default.
 	 */
+/*
 	private void reset() {
 		alreadywarned = false;
 		logFile = null;
@@ -94,19 +95,21 @@ public class BW4TLogger {
 		agentRecords = new HashMap<String, AgentRecord>();
 
 	}
-
+*/
 	/**
 	 * get the logger instance
 	 * 
 	 * @return the BW4TLogger
 	 * @throws IOException
 	 */
+/*
 	public synchronized static BW4TLogger getInstance() {
 		if (theLogger == null) {
 			theLogger = new BW4TLogger();
 		}
 		return theLogger;
 	}
+*/
 
 	/**
 	 * Log to file. The items are written to a single row, with tabs separating them and a newline at the end. If there
@@ -116,9 +119,11 @@ public class BW4TLogger {
 	 *            is text to be appended to log file.
 	 * @throws IOException
 	 */
+/*
 	public void log(String[] items) {
 		log(Arrays.asList(items));
-	}
+	} 
+	*/
 
 	/**
 	 * Log to file. The items are written to a single row, with tabs separating them and a newline at the end. If there
@@ -127,6 +132,7 @@ public class BW4TLogger {
 	 * @param text
 	 *            is text to be appended to log file.
 	 */
+/*
 	public synchronized void log(List<String> items) {
 
 		try {
@@ -147,7 +153,7 @@ public class BW4TLogger {
 			LOGGER.warn("failed to write to the log", e);
 			alreadywarned = true;
 		}
-	}
+	} */
 
 	/**
 	 * write the team info to log file.
@@ -157,9 +163,9 @@ public class BW4TLogger {
 	 * @param nHumans
 	 *            is number of humans in the team
 	 */
-	public void logTeam(Integer nAgents, Integer nHumans) throws IOException {
-		log(new String[] { "team", nAgents.toString(), nHumans.toString() });
-	}
+	//public void logTeam(Integer nAgents, Integer nHumans) throws IOException {
+		//log(new String[] { "team", nAgents.toString(), nHumans.toString() });
+	//}
 
 	/**
 	 * log the goal sequence
@@ -168,6 +174,7 @@ public class BW4TLogger {
 	 *            is a list of Strings, each item being a color.
 	 * @throws IOException
 	 */
+	/*
 	public void logSequence(List<BlockColor> sequence) throws IOException {
 		List<String> logString = new ArrayList<String>();
 		logString.add("sequence");
@@ -175,7 +182,7 @@ public class BW4TLogger {
 			logString.add(" " + col.getLetter());
 		}
 		log(logString);
-	}
+	} */
 
 	/**
 	 * log the action. If this is the first action, it is also the start time.
@@ -183,18 +190,20 @@ public class BW4TLogger {
 	 * @param entity
 	 * @param action
 	 */
+	/*
 	public void logAction(String entity, String action) {
 		Long time = System.currentTimeMillis();
 		log(new String[] { "action ", "" + time, entity, action });
 		if (starttime == null) {
 			starttime = time;
 		}
-	}
+	}*/
 	
 	/**
 	 * This adds the agent summary to the log file and closes the log file. Any attempt to log after this will create a
 	 * new log file.
 	 */
+	/*
 	public synchronized void closeLog() {
 		LOGGER.info("Closing the log file.");
 		logAgentSummary();
@@ -213,7 +222,7 @@ public class BW4TLogger {
 			}
 		}
 
-	}
+	} */
 
 	/**
 	 * Log a room and the blocks in there.
@@ -223,6 +232,7 @@ public class BW4TLogger {
 	 * @param blocksInRoom
 	 *            is list of block colors
 	 */
+/*
 	public void logRoomBlocks(String room, List<BlockColor> blocksInRoom) {
 		List<String> logString = new ArrayList<String>();
 		logString.add("room");
@@ -232,14 +242,16 @@ public class BW4TLogger {
 		}
 		log(logString);
 	}
-
+*/
 	/**
 	 * This is called when the sequence has been completed.
 	 */
+/*
 	public void logCompletedSequence() {
 		Long complete = System.currentTimeMillis();
 		log(new String[] { "sequencecomplete", "" + complete });
 		log(new String[] { "totaltime", "" + (float) (complete - starttime) / 1000. });
 		closeLog(); // no more actions after this point, close right away.
 	}
-}
+	*/
+//}

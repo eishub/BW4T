@@ -16,10 +16,10 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 
 import nl.tudelft.bw4t.BW4TBuilder;
+import nl.tudelft.bw4t.logger.BotLog;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.server.BW4TServer;
 import nl.tudelft.bw4t.server.RobotEntityInt;
-import nl.tudelft.bw4t.server.logging.BW4TLogger;
 import nl.tudelft.bw4t.visualizations.ServerContextDisplay;
 import repast.simphony.context.Context;
 import repast.simphony.scenario.ScenarioLoadException;
@@ -146,7 +146,8 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * reports errors and proceeds.
 	 */
 	public void removeAllEntities() throws ManagementException {
-		BW4TLogger.getInstance().closeLog();
+		//TODO
+		//BW4TLogger.getInstance().closeLog();
 		setState(EnvironmentState.KILLED);
 
 		LOGGER.debug("Removing all entities");
@@ -304,7 +305,9 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @return the percept received after performing the action
 	 */
 	public Percept performClientAction(String entity, Action action) throws ActException {
-		BW4TLogger.getInstance().logAction(entity, action.toProlog());
+		
+		LOGGER.log(BotLog.BOTLOG, "action " + System.currentTimeMillis() + entity + action);
+		
 		return performEntityAction(entity, action);
 	}
 

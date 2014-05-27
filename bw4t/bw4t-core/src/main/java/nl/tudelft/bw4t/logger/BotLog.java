@@ -1,4 +1,5 @@
-package nl.tudelft.bw4t.server.logging;
+package nl.tudelft.bw4t.logger;
+
 
 import org.apache.log4j.Level;
 

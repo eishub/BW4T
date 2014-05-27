@@ -9,10 +9,10 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import nl.tudelft.bw4t.blocks.Block;
+import nl.tudelft.bw4t.logger.BotLog;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.robots.Robot;
 import nl.tudelft.bw4t.server.environment.Launcher;
-import nl.tudelft.bw4t.server.logging.BW4TLogger;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 
@@ -58,11 +58,22 @@ public class DropZone extends Room {
 	 */
 	public void setSequence(List<BlockColor> colors) {
 		sequence = colors;
-		try {
-			BW4TLogger.getInstance().logSequence(colors);
-		} catch (IOException e) {
-			LOGGER.warn("WARNING. log file failed to write: " + e.getMessage());
-		}
+			//TODO
+		
+		/*
+		public void logSequence(List<BlockColor> sequence) throws IOException {
+			List<String> logString = new ArrayList<String>();
+			logString.add("sequence");
+			for (BlockColor col : sequence) {
+				logString.add(" " + col.getLetter());
+			}
+			log(logString);
+		} */
+		String message = " hoi";
+				
+		LOGGER.log(BotLog.BOTLOG, message);
+			//BW4TLogger.getInstance().logSequence(colors);
+		
 	}
 
 	/**
@@ -100,7 +111,8 @@ public class DropZone extends Room {
 				sequenceIndex++;
 				robot.getAgentRecord().addGoodDrop();
 				if (sequenceIndex == sequence.size()) {
-					BW4TLogger.getInstance().logCompletedSequence();
+					//TODO
+					//BW4TLogger.getInstance().logCompletedSequence();
 				}
 			}
 			else {
