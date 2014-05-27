@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,7 +39,7 @@ public class ServerMapController extends AbstractMapController {
 	@Override
 	public List<BlockColor> getSequence() {
 		IndexedIterable<Object> dropZone = serverContext.getObjects(DropZone.class);
-		if(dropZone.size() == 0){
+		if (((Collection<Object>) dropZone).isEmpty()) {
 			return new ArrayList<>();
 		}
 		DropZone zone = (DropZone) dropZone.get(0);
@@ -91,8 +92,7 @@ public class ServerMapController extends AbstractMapController {
 
 	@Override
 	protected void updateRenderer(MapRendererInterface mri) {
-		if (BW4TEnvironment.getInstance().getState().equals(EnvironmentState.RUNNING)
-				&& !haveRequestedFocusAlready ) {
+		if (BW4TEnvironment.getInstance().getState().equals(EnvironmentState.RUNNING) && !haveRequestedFocusAlready) {
 			mri.requestFocus();
 			haveRequestedFocusAlready = true;
 		}
