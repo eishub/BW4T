@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
+import repast.simphony.scenario.Scenario;
 
 /**
  * Handles the event to delete a bot.
@@ -44,7 +45,7 @@ class DeleteBot implements ActionListener {
         if (row == -1) {
         	ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select the bot you want to delete.");
         } else {
-        	int response = view.getEntityPanel().showConfirmDialog(null,
+        	int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(null,
                     "Are you sure you want to delete this bot?", "",
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 

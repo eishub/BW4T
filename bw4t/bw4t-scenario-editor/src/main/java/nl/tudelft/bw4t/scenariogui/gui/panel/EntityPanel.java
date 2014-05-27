@@ -35,6 +35,7 @@ import javax.swing.table.DefaultTableModel;
 
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
 
 /**
  * The EntityPanel class represents right pane of the MainPanel. It shows a list
@@ -337,26 +338,7 @@ public class EntityPanel extends JPanel {
         botTable = new JTable();
         botTable.getTableHeader().setReorderingAllowed(false);
 
-        botList = new DefaultTableModel() {
-            
-            /*@Override
-            public boolean isCellEditable(final int row, final int column) {
-                if (column == 0) {
-                    return false;
-                }
-                return true;
-            }*/
-
-            @Override
-            public Class<?> getColumnClass(int column) {
-                if (column == 2) {
-                    return Integer.class;
-                }
-
-                return String.class;
-            }
-
-        };
+        botList = new EntityTableModel();
 
         botTable.setModel(botList);
         botList.addColumn("Bot");
@@ -441,24 +423,7 @@ public class EntityPanel extends JPanel {
 
         ePartnerTable = new JTable();
         ePartnerTable.getTableHeader().setReorderingAllowed(false);
-        epartnerList = new DefaultTableModel() {
-            /*@Override
-            public boolean isCellEditable(final int row, final int column) {
-                if (column == 1) {
-                    return true;
-                }
-                return false;
-            }*/
-
-            @Override
-            public Class<?> getColumnClass(int column) {
-                if (column == 1) {
-                    return Integer.class;
-                }
-
-                return String.class;
-            }
-        };
+        epartnerList = new EntityTableModel();
 
         ePartnerTable.setModel(epartnerList);
         epartnerList.addColumn("E-partner");
@@ -492,36 +457,6 @@ public class EntityPanel extends JPanel {
         epartnerCounter.add(epartnerCountField);
     }
 
-    /**
-     * Create a pop up message with the the given text. The user has to press OK
-     * to continue.
-     *
-     * @param parent The parent component who's frame is to be used. If null then a
-     *               frame is created.
-     * @param text   The text to be displayed in the message dialog.
-     */
-    protected final void showMessageDialog(
-            final Component parent, final String text) {
-        ScenarioEditor.getOptionPrompt().showMessageDialog(parent, text);
-    }
-
-    /**
-     * @param parent     Determines the Frame in which the dialog is displayed; if
-     *                   null, or if the parentComponent has no Frame, a default Frame
-     *                   is used
-     * @param text       The text to display
-     * @param title      The title for the dialog
-     * @param optionType An int designating the options available on the dialog:
-     *                   JOptionPane.YES_NO_OPTIONS, JOptionPane.YES_NO_CANCEL_OPTION
-     *                   or JOptionPane.OK_CANCEL_OPTION,
-     * @param messageType   Message type for the confirm dialog.
-     * @return An int indicating the option selected by the user
-     */
-    public int showConfirmDialog(final Component parent,
-                                 final String text,
-                                 final String title, final int optionType, final int messageType) {
-        return ScenarioEditor.getOptionPrompt().showConfirmDialog(parent, text, title, optionType, messageType);
-    }
 
     /**
      * Returns the table with the list of bots.
