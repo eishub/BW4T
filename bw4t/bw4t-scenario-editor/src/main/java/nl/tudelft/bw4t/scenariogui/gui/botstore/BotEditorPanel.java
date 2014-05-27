@@ -38,7 +38,7 @@ public class BotEditorPanel extends JPanel {
 	private JButton resetButton = new JButton("Reset");
 	private JButton cancelButton = new JButton("Cancel");
 	
-	private JTextField botNameTextField = new JTextField(20);
+	private JLabel botNameTextField = new JLabel();
 	
 	private JCheckBox gripperCheckbox = new JCheckBox("Gripper Disabled");
 	private JCheckBox colorblindCheckbox = new JCheckBox("Color Blind Handicap");
@@ -51,14 +51,15 @@ public class BotEditorPanel extends JPanel {
 	private JSlider batterySlider = new JSlider();
 	private JSlider numberOfGrippersSlider = new JSlider();
 	
-	private JLabel batteryUseValueLabel = new JLabel("0,900000");
+	private JLabel batteryUseValueLabel = new JLabel("0,006500");
 	
 	private BotConfig dataObject = new BotConfig();
 	
 	/**
 	 * Create the botEditorPanel
 	 */
-	public BotEditorPanel(){
+	public BotEditorPanel(String name){
+		botNameTextField.setText(name);
 		setLayout(new BorderLayout(20,20));		
 		
 		createBotCheckablesPanel();
@@ -66,7 +67,6 @@ public class BotEditorPanel extends JPanel {
 		
 		add(botSliders, BorderLayout.WEST);
 		add(botCheckables, BorderLayout.EAST);
-		
 	}
 	
 	/**
@@ -111,14 +111,21 @@ public class BotEditorPanel extends JPanel {
 		botSliders.setLayout(new GridLayout(10,1));
 		
 		JLabel batteryUseLabel = new JLabel("Battery use:");
-		JLabel perTickLabel = new JLabel("per tick (minuites??)");
+		JLabel perTickLabel = new JLabel("per tick");
 		batteryUseLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
+		JLabel botNameLabel = new JLabel("Bot name:");
+		
 		JPanel batteryCapPanel = new JPanel();
+		JPanel botNamePanel = new JPanel();
 		
 		batteryCapPanel.add(batteryUseLabel);
 		batteryCapPanel.add(batteryUseValueLabel);
 		batteryCapPanel.add(perTickLabel);
+		
+		botNamePanel.setLayout(new BoxLayout(botNamePanel, BoxLayout.PAGE_AXIS));
+		botNamePanel.add(botNameLabel);
+		botNamePanel.add(botNameTextField);
 		
 		JLabel numberOfGrippersLabel = new JLabel("Number of Grippers");
 		numberOfGrippersLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -134,8 +141,7 @@ public class BotEditorPanel extends JPanel {
 		batteryCapacity.setToolTipText("Max capacity on a scale of 10-100");
 		
 		createSliders();
-		
-		botSliders.add(botNameTextField);
+		botSliders.add(botNamePanel);
 		botSliders.add(numberOfGrippersLabel);
 		botSliders.add(numberOfGrippersSlider);
 		botSliders.add(sizeLabel);
@@ -167,6 +173,7 @@ public class BotEditorPanel extends JPanel {
 		sizeSlider.setPaintLabels(true);
 		sizeSlider.setSnapToTicks(true);
 		sizeSlider.setValue(2);
+		sizeSlider.setEnabled(false);
 		sizeSlider.setValueIsAdjusting(true);
 		
 		speedSlider.setMajorTickSpacing(10);
@@ -176,6 +183,7 @@ public class BotEditorPanel extends JPanel {
         speedSlider.setPaintTicks(true);
         speedSlider.setSnapToTicks(true);
         speedSlider.setValue(100);
+        speedSlider.setEnabled(false);
         speedSlider.setValueIsAdjusting(true);
         
         batterySlider = new JSlider();
@@ -185,6 +193,7 @@ public class BotEditorPanel extends JPanel {
         batterySlider.setSnapToTicks(true);
         batterySlider.setPaintTicks(true);
         batterySlider.setPaintLabels(true);
+        batterySlider.setEnabled(false);
         batterySlider.setMajorTickSpacing(10);
         
 	}
@@ -269,13 +278,21 @@ public class BotEditorPanel extends JPanel {
 		return batterySlider;
 	}
 
+	public void setBatteryEnabledCheckbox(JCheckBox batteryEnabledCheckbox) {
+		this.batteryEnabledCheckbox = batteryEnabledCheckbox;
+	}
+
+	public JCheckBox getBatteryEnabledCheckbox() {
+		return batteryEnabledCheckbox;
+	}
+	
 	public void setBatterySlider(JSlider batterySlider) {
 		this.batterySlider = batterySlider;
 	}
 
 	public JLabel getBatteryUseValueLabel() {
 		return batteryUseValueLabel;
-	}
+	}	
 
 	public void setBatteryUseValueLabel(JLabel batteryUseValueLabel) {
 		this.batteryUseValueLabel = batteryUseValueLabel;
@@ -292,5 +309,4 @@ public class BotEditorPanel extends JPanel {
 	public void setNumberOfGrippersSlider(JSlider numberOfGrippersSlider) {
 		this.numberOfGrippersSlider = numberOfGrippersSlider;
 	}
-
 }

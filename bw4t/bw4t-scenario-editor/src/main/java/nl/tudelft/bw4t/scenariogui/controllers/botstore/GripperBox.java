@@ -3,6 +3,8 @@ package nl.tudelft.bw4t.scenariogui.controllers.botstore;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JSlider;
+
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
 
 /**
@@ -16,6 +18,12 @@ class GripperBox implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent ae) {
-
+    	JSlider gripSlider = view.getNumberOfGrippersSlider();
+    	if(view.getGripperCheckbox().isSelected()) {
+    		gripSlider.setEnabled(false);
+    	}
+    	else {
+    		gripSlider.setEnabled(true);
+    	}
     }
 }
