@@ -73,12 +73,7 @@
                         <format>xml</format>
                     </formats>
                 </configuration>
-            </plugin>
-            <plugin>
-            	<groupId>com.migLayout</groupId>
-            	<artifactId>migLayout</artifactId>
-            	<version>3.7.4</version>               
-			</plugin>        			
+            </plugin>       			
         </plugins>
         <sourceDirectory>src/main/java</sourceDirectory>
         <testSourceDirectory>src/test/java</testSourceDirectory>
@@ -120,10 +115,5 @@
             <artifactId>bw4t-core</artifactId>
             <version>3.0.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.migLayout</groupId>
-           	<artifactId>migLayout</artifactId>
-           	<version>3.7.4</version>               
-		</dependency>
     </dependencies>
 </project>
