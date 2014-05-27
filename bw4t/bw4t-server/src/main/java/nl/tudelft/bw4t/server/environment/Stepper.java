@@ -20,20 +20,22 @@ public class Stepper implements Runnable {
 	/**
 	 * The log4j logger, logs to the console.
 	 */
-	private static final Logger LOGGER = Logger.getLogger(Stepper.class);
-
-	BW4TRunner runner; // HACK should be private.
-	private final String scenarioLocation;
-	private final AbstractEnvironment environment;
-	private long loopDelay = 10; // default 10ms between steps
-	private boolean running = true;
-
 	public static final int MIN_DELAY = 10;
 	public static final int MAX_DELAY = 200;
 
 	public static final double MIN_TPS = 5.0;
 	public static final double MAX_TPS = 100.0;
 
+	private static final Logger LOGGER = Logger.getLogger(Stepper.class);
+	// HACK should be private.
+	BW4TRunner runner;
+	private final String scenarioLocation;
+	private final AbstractEnvironment environment;
+	// default 10ms between steps
+	private long loopDelay = 10; 
+	private boolean running = true;
+
+	
 	public Stepper(String scenario, AbstractEnvironment envi) throws ScenarioLoadException {
 		scenarioLocation = scenario;
 		environment = envi;
@@ -71,19 +73,6 @@ public class Stepper implements Runnable {
 		}
 		running = false;
 		runner = null;
-	}
-
-	/**
-	 * wait till run mode allows us to move the entities.
-	 */
-	private void waitTillWeRun() {
-		while (environment.getState() != EnvironmentState.RUNNING) {
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				LOGGER.warn("Wait for run state was unexpectedly interrupted, returning to wait state.", e);
-			}
-		}
 	}
 
 	public long getDelay() {
