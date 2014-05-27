@@ -136,9 +136,9 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
 
 	/**
 	 * @param entityId
-	 *            , the id of the entity that needs to be displayed
+	 *            the id of the entity that needs to be displayed
 	 * @param humanPlayer
-	 *            , whether a human is supposed to control this panel
+	 *            whether a human is supposed to control this panel
 	 * @throws IOException
 	 */
 	private void init() {
@@ -148,10 +148,10 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
 			LOGGER.error("Could not properly set the Native Look and Feel for the BW4T Client", e);
 		}
 		LOGGER.debug("Attaching to ClientController");
-		controller.addRenderer(this);
+		controller.getMapController().addRenderer(this);
 
 		// Initialize variables
-		String entityId = controller.getTheBot().getName();
+		String entityId = controller.getMapController().getTheBot().getName();
 		LOGGER.debug("Initializing agent window for entity: " + entityId);
 
 		// Initialize graphics
@@ -164,8 +164,8 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
 			@Override
 			public void windowClosing(WindowEvent e) {
 				LOGGER.info("Exit request received from the Window Manager to close Window of entity: "
-						+ controller.getTheBot().getName());
-				controller.removeRenderer(that);
+						+ controller.getMapController().getTheBot().getName());
+				controller.getMapController().removeRenderer(that);
 				try {
 					environment.kill();
 				} catch (Exception e1) {
@@ -186,7 +186,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
 		buttonPanel.add(jButton);
 		jButton.addMouseListener(new TeamListMouseListener(this));
 
-		MapRenderer renderer = new MapRenderer(controller);
+		MapRenderer renderer = new MapRenderer(controller.getMapController());
 		mapRenderer = new JScrollPane(renderer);
 
 		// create short chat history window
@@ -243,7 +243,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
 				@Override
 				public void mouseWheelMoved(MouseWheelEvent mwe) {
 					if(mouseOver && mwe.isControlDown()){
-						MapRenderSettings settings = that.getController().getRenderSettings();
+						MapRenderSettings settings = that.getController().getMapController().getRenderSettings();
 						if(mwe.getUnitsToScroll() >= 0) {
 							settings.setScale(settings.getScale() + 0.1);
 						} else {
@@ -272,7 +272,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
 	 *            , the Id of the player to be added
 	 */
 	public void addPlayer(String playerId) {
-		if (!playerId.equals(controller.getTheBot().getName())) {
+		if (!playerId.equals(controller.getMapController().getTheBot().getName())) {
 			JButton button = new JButton(playerId);
 			button.addMouseListener(new TeamListMouseListener(this));
 			buttonPanel.add(button);

@@ -24,6 +24,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.xml.bind.ValidationException;
 
 import nl.tudelft.bw4t.BW4TBuilder;
 import nl.tudelft.bw4t.controller.ServerMapController;
@@ -73,8 +74,7 @@ public class ServerContextDisplay extends JFrame {
 	 * @throws InstantiationException
 	 * @throws FileNotFoundException
 	 */
-	public ServerContextDisplay(Context context) throws InstantiationException, IllegalAccessException,
-	FileNotFoundException {
+	public ServerContextDisplay(Context context) throws VisualizationsException {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
@@ -88,8 +88,11 @@ public class ServerContextDisplay extends JFrame {
 		controller = new ServerMapController(Launcher.getEnvironment().getMap(), context);
 		myRenderer = new MapRenderer(controller);
 		add(new JScrollPane(myRenderer), BorderLayout.CENTER);
-		// add(new ServerMapRenderer(context), BorderLayout.CENTER);
-		add(new ControlPanel(this), BorderLayout.NORTH);
+		try {
+			add(new ControlPanel(this), BorderLayout.NORTH);
+		} catch (FileNotFoundException e) {
+			throw new VisualizationsException(e);
+		}
 		pack();
 		setVisible(true);
 	}
@@ -188,7 +191,8 @@ class ControlPanel extends JPanel {
 	}
 
 	public double calculateTpsFromSlider() {
-		double percent = (slider.getValue() - slider.getMinimum()) / (double) (slider.getMaximum() - slider.getMinimum());
+		double percent = (slider.getValue() - slider.getMinimum())
+				/ (double) (slider.getMaximum() - slider.getMinimum());
 		int value = (int) (Stepper.MIN_TPS + (Stepper.MAX_TPS - Stepper.MIN_TPS) * percent);
 		LOGGER.trace("Delay Calculated from the slider: " + value);
 		return value;

@@ -10,12 +10,18 @@ import java.util.List;
  * 
  */
 public class AgentRecord {
-	private String name; // name of agent
-	private String type; // human or bot?
-	private Integer goodDrops = 0; // number of good drops.
-	private Integer wrongDrops = 0;// number of wrong drops
-	private Integer nMessages = 0; // number of messages
-	private Integer nRoomsEntered = 0; // number of rooms entered
+	// name of agent
+	private String name; 
+	// human or bot?
+	private String type; 
+	 // number of good drops.
+	private Integer goodDrops = 0;
+	// number of wrong drops
+	private Integer wrongDrops = 0;
+	// number of messages
+	private Integer nMessages = 0; 
+	// number of rooms entered
+	private Integer nRoomsEntered = 0; 
 
 	/** accumulated milliseconds of standing still */
 	private Long totalStandingStillMillis = 0L;
