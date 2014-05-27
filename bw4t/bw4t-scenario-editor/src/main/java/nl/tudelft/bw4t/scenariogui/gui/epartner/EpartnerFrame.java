@@ -103,6 +103,8 @@ public class EpartnerFrame extends JFrame {
 	public void cancelAction(){	
 		
 	}
+	
+	// getters and setters
 		
 	public JButton getApplyButton() {
 		return ApplyButton;
