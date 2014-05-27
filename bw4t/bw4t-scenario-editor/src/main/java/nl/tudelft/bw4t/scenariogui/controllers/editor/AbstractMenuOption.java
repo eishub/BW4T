@@ -103,8 +103,8 @@ public abstract class AbstractMenuOption implements ActionListener {
         int botCount = controller.getMainView().getMainPanel().getEntityPanel().getBotCount();
         if (map.isSet() && botCount > map.getEntitiesAllowedInMap()) {
             ScenarioEditor.getOptionPrompt().showMessageDialog(view,
-                    "The selected map can only hold " + map.getEntitiesAllowedInMap() +
-                    " bots. Please delete some first.");
+                    "The selected map can only hold " + map.getEntitiesAllowedInMap()
+                    + " bots. Please delete some first.");
             return;
         }
         
@@ -134,7 +134,7 @@ public abstract class AbstractMenuOption implements ActionListener {
                     createConfigFromPanel((MainPanel) (getController().getMainView()).
                             getContentPane(), path);
             
-            //UNLOAD AND SAVE BOTS HERE
+            //SAVE BOTS HERE
             int rows = getController().getMainView().getMainPanel().getEntityPanel().getBotTableModel().getRowCount();
             
             for (int i = 0; i < rows; i++) {

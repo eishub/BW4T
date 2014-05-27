@@ -51,6 +51,7 @@ class MenuOptionNew extends AbstractMenuOption {
             if (response == JOptionPane.YES_OPTION) {
                 saveFile();
                 super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
+                super.getController().getMainView().getMainPanel().getEntityPanel().updateBotConfigs();
             }
         }
 
@@ -58,6 +59,8 @@ class MenuOptionNew extends AbstractMenuOption {
         
         //save the default values as the "old" values
         super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
+        super.getController().getMainView().getMainPanel().getEntityPanel().getBotConfigs().clear();
+        super.getController().getMainView().getMainPanel().getEntityPanel().updateBotConfigs();
 
         //set last file location to null so that the previous saved file won't get
         //overwritten when the new config is saved.
