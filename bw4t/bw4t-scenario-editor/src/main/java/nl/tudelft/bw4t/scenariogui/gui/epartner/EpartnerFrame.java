@@ -1,7 +1,4 @@
-package src.main.java.nl.tudelft.bw4t.scenariogui.gui.epartner;
-
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+package nl.tudelft.bw4t.scenariogui.gui.epartner;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -9,10 +6,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JCheckBox;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.CardLayout;
-import javax.swing.BoxLayout;
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -25,6 +18,10 @@ import net.miginfocom.swing.MigLayout;
 
 public class EpartnerFrame extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
 	/**
