@@ -86,6 +86,7 @@ class MenuOptionOpen extends AbstractMenuOption {
                 // clear bots/epartners from the previous config
                 resetBotTable(entityPanel);
                 resetEpartnerTable(entityPanel);
+                super.getController().getMainView().getMainPanel().getEntityPanel().getBotConfigs().clear();
                 
                 // Fill the bot panel
                 int rows = configuration.getBots().size();
