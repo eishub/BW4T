@@ -187,38 +187,6 @@ public class BotEditorPanel extends JPanel {
         batterySlider.setPaintLabels(true);
         batterySlider.setMajorTickSpacing(10);
         
-	}	
-	/**
-     * This method should recalculate the average battery use per tick.
-     * After calculation, it should update the batteryUseValueLabel label in this GUI.
-     */
-	public void calculateBatteryUse(){
-		int speed = speedSlider.getValue();
-    	int size = sizeSlider.getValue();
-    	// Calculate average battery use result
-    	double res = 0.002*size + 0.000025*speed;
-    	// Round down to 6 digits after comma
-    	// (Required, because otherwise the sliders are resized).
-    	DecimalFormat df = new DecimalFormat("#.######");
-    	String value = df.format(res);
-    	// Set label
-    	batteryUseValueLabel.setText(padString(value));
-	}
-	
-	/**
-	 * Pad the string with zeros (the string with
-	 * the value for the battery usage is aligned with
-	 * the sliders, and will cause the sliders to resize
-	 * when changed. This function keeps the string at a
-	 * certain length, so the sliders aren't resized anymore).
-	 * @param value The string to be padded.
-	 * @return The padded string.
-	 */
-	public String padString(String value) {
-		while(value.length() < 8) {
-			value += "0";
-		}
-		return value;
 	}
 	
 	/**

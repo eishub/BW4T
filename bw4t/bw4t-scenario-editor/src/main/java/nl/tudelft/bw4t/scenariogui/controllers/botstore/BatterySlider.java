@@ -2,6 +2,7 @@ package nl.tudelft.bw4t.scenariogui.controllers.botstore;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.DecimalFormat;
 
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
 
@@ -33,7 +34,5 @@ class BatterySlider implements MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent arg0) {
-        view.calculateBatteryUse();
-
     }
 }
