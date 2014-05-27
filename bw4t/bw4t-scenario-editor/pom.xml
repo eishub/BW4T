@@ -74,6 +74,21 @@
                     </formats>
                 </configuration>
             </plugin>
+            <plugin>
+            	<groupId>org.codehaus.mojo</groupId>
+            	<artifactId>nbm-maven-plugin</artifactId>
+            	<version>3.8.1</version>
+            	<extensions>true</extensions>
+            	<configuration>
+            		<publicPackages>
+            			<publicPackage>com.miglayout</publicPackage>
+						<publicPackage>org.tbee.javafx.scene.layout</publicPackage>
+						<publicPackage>org.tbee.javafx.scene.layout.fxml</publicPackage>	
+						<publicPackage>net.miginfocom.layout</publicPackage>
+						<publicPackage>net.miginfocom.swing</publicPackage>
+					</publicPackages>
+				</configuration>               
+			</plugin>        			
         </plugins>
         <sourceDirectory>src/main/java</sourceDirectory>
         <testSourceDirectory>src/test/java</testSourceDirectory>
