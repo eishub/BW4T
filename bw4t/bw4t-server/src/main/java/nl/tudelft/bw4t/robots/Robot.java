@@ -11,7 +11,7 @@ import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.handicap.*;
-import nl.tudelft.bw4t.map.Entity;
+import nl.tudelft.bw4t.map.view.Entity;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.DropZone;
@@ -574,12 +574,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 
 	/**
 	 * Gets the size of the robot
-<<<<<<< HEAD
-	 * 
-	 * @return SIZE
-=======
 	 * @return size
->>>>>>> development
 	 */
 	public int getSize() {
 		return this.size;
