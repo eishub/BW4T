@@ -6,10 +6,11 @@ import java.util.Map;
 import nl.tudelft.bw4t.client.environment.BW4TEnvironmentListener;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.message.MessageTranslator;
+import nl.tudelft.bw4t.logger.BotLog;
 import nl.tudelft.bw4t.startup.LauncherException;
 
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import eis.exceptions.ManagementException;
 import eis.exceptions.NoEnvironmentException;
@@ -50,9 +51,10 @@ public final class Launcher {
         /**
          * Set up the logging environment to log on the console.
          */
-        BasicConfigurator.configure();
+        PropertyConfigurator.configure("log4j.properties");
         LOGGER.info("Starting up BW4T Client.");
         LOGGER.info("Reading initialization parameters...");
+        LOGGER.log(BotLog.BOTLOG, "test");
         /**
          * Load all known parameters into the init array, convert it to EIS
          * format.
