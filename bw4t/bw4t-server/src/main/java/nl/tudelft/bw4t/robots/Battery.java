@@ -5,8 +5,7 @@ package nl.tudelft.bw4t.robots;
  * 
  * @author Valentine
  */
-public class Battery 
-{
+public class Battery {
 	/**
 	 * A battery has a max capacity.
 	 * 
