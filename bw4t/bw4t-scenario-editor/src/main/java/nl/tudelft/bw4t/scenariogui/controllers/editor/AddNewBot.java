@@ -44,9 +44,11 @@ class AddNewBot implements ActionListener {
      */
     public void actionPerformed(final ActionEvent ae) {
         botCount++;
-        Object[] newBotObject = {"Bot " + botCount, "Agent", 1};
+        Object[] newBotObject = {"Bot" + " " + botCount, "Agent", 1};
         view.getEntityPanel().getBotTableModel().addRow(newBotObject);
-        view.addBotConfig(new BotConfig());
+        BotConfig newBotConfig = new BotConfig();
+        newBotConfig.setBotName("Bot " + botCount);
+        view.getEntityPanel().getBotConfigs().add(newBotConfig);
     }
 
 }
