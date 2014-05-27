@@ -6,6 +6,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import nl.tudelft.bw4t.client.controller.ClientController;
+import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.PutdownActionListener;
@@ -24,7 +25,7 @@ public class MapOperations {
 	 *            , the color that was clicked
 	 */
 	public static void buildPopUpMenuForGoalColor(BlockColor color, BW4TClientGUI gui) {
-		ClientController cmc = gui.getController();
+		ClientMapController cmc = gui.getController().getMapController();
 		Block holdingID = cmc.getTheBot().getFirstHolding();
 
 		gui.getjPopupMenu().removeAll();
@@ -96,7 +97,7 @@ public class MapOperations {
 		double maxX = boxID.getPosition().getX() + 0.5;
 		double minY = boxID.getPosition().getY() - 0.5;
 		double maxY = boxID.getPosition().getY() + 0.5;
-		Point2D loc = data.getTheBot().getLocation();
+		Point2D loc = data.getMapController().getTheBot().getLocation();
 		return (loc.getX() > minX) && (loc.getX() < maxX) && (loc.getY() > minY) && (loc.getY() < maxY);
 	}
 }

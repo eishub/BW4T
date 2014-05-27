@@ -5,6 +5,7 @@ import java.util.Map;
 
 import nl.tudelft.bw4t.client.environment.BW4TEnvironmentListener;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.message.MessageTranslator;
 import nl.tudelft.bw4t.startup.LauncherException;
 
 import org.apache.log4j.BasicConfigurator;
@@ -60,6 +61,8 @@ public final class Launcher {
         for (InitParam param : InitParam.values()) {
             init.put(param.nameLower(), new Identifier(findArgument(args, param)));
         }
+        
+        MessageTranslator.init();
 
         startupEnvironment(init);
     }

@@ -162,10 +162,9 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 
 		ClientInfo ci = clients.get(client);
 
-		if (ci.getNumberOfAgents() > 0 && (type.equals("unknown") || type.equals("bot"))) {
+		if (ci.getNumberOfAgents() > 0 && ("unknown".equals(type) || "bot".equals(type))) {
 			notifyFreeBot(client, entity, type, ci);
-		}
-		else if (ci.getNumberOfHumans() > 0 && (type.equals("unknown") || type.equals("human"))) {
+		} else if (ci.getNumberOfHumans() > 0 && ("unknown".equals(type) || "human".equals(type))) {
 			notifyFreeHuman(client, entity, type, ci);
 
 		}
@@ -232,7 +231,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	 * {@inheritDoc}
 	 */
 	@Override
-	public LinkedList<String> getAgents() throws RemoteException {
+	public List<String> getAgents() throws RemoteException {
 		return BW4TEnvironment.getInstance().getAgents();
 	}
 
@@ -240,7 +239,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	 * {@inheritDoc}
 	 */
 	@Override
-	public HashSet<String> getAssociatedEntities(String agent) throws RemoteException, AgentException {
+	public Set<String> getAssociatedEntities(String agent) throws RemoteException, AgentException {
 		return BW4TEnvironment.getInstance().getAssociatedEntities(agent);
 	}
 

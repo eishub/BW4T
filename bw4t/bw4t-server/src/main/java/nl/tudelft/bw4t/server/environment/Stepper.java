@@ -32,10 +32,9 @@ public class Stepper implements Runnable {
 	private final String scenarioLocation;
 	private final AbstractEnvironment environment;
 	// default 10ms between steps
-	private long loopDelay = 10; 
+	private long loopDelay = 10;
 	private boolean running = true;
 
-	
 	public Stepper(String scenario, AbstractEnvironment envi) throws ScenarioLoadException {
 		scenarioLocation = scenario;
 		environment = envi;
@@ -99,7 +98,7 @@ public class Stepper implements Runnable {
 	}
 
 	public void setTps(double tps) {
-		setDelay((int)(1000. / tps));
+		setDelay((int) (1000. / tps));
 	}
 
 	/**

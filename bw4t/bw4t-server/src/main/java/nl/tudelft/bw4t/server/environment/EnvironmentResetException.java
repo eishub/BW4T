@@ -2,7 +2,8 @@ package nl.tudelft.bw4t.server.environment;
 
 public class EnvironmentResetException extends Exception {
 
-	/** Processes the exceptions of environment
+	/**
+	 * Processes the exceptions of environment
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;

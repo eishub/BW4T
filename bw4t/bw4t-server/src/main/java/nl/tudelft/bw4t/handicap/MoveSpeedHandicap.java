@@ -44,7 +44,8 @@ public class MoveSpeedHandicap extends Handicap {
 				// Calculate the distance that the robot is allowed to move.
 				double distance = robot.distanceTo(targetLocation);
 				if (distance < Robot.MIN_MOVE_DISTANCE) {
-					robot.stopRobot(); // we're there
+					// we're there
+					robot.stopRobot(); 
 				} else {
 					double movingDistance = Math.min(distance, Robot.MAX_MOVE_DISTANCE * speedMod);
 		
@@ -80,15 +81,13 @@ public class MoveSpeedHandicap extends Handicap {
 	/**
 	 * set the handicap to active
 	 */
-	public void activate()
-	{
+	public void activate() {
 		isActive = true;
 	}
 	/**
 	 * set the handicap to inactive
 	 */
-	public void deactivate()
-	{
+	public void deactivate() {
 		isActive = false;
 	}
 	

@@ -4,6 +4,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import nl.tudelft.bw4t.client.controller.ClientController;
+import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.GoToBlockActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.GoToRoomActionListener;
@@ -88,7 +89,7 @@ public class RoomMenus {
 	 *            , the room that was clicked on
 	 */
 	public static void buildPopUpMenuRoom(Zone room, BW4TClientGUI gui) {
-		ClientController cmc = gui.getController();
+		ClientMapController cmc = gui.getController().getMapController();
 		Block holding = cmc.getTheBot().getFirstHolding();
 		String label = room.getName();
 		gui.getjPopupMenu().removeAll();

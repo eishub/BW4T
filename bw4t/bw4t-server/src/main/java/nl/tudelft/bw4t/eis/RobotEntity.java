@@ -195,12 +195,9 @@ public class RobotEntity implements RobotEntityInt {
 		IndexedIterable<Object> allBlocks = context.getObjects(Block.class);
 		for (Object object : allBlocks) {
 			Block b = (Block) object;
-			if (ourRobot.distanceTo(b) <= 1) {
-				// Check if not holding this block
-				if (ourRobot.isHolding() == null || !ourRobot.isHolding().contains(b)) {
-					result.add(b.getId());
-					return result;
-				}
+			if (ourRobot.distanceTo(b) <= 1 && ourRobot.isHolding() == null || !ourRobot.isHolding().contains(b)) {
+				result.add(b.getId());
+				return result;
 			}
 		}
 		return result;

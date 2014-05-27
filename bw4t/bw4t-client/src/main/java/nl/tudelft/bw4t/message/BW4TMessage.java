@@ -146,4 +146,65 @@ public class BW4TMessage {
         return number;
     }
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((color == null) ? 0 : color.hashCode());
+		result = prime * result + number;
+		result = prime * result + ((playerId == null) ? 0 : playerId.hashCode());
+		result = prime * result + ((room == null) ? 0 : room.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BW4TMessage other = (BW4TMessage) obj;
+		if (color == null) {
+			if (other.color != null)
+				return false;
+		}
+		else if (!color.equals(other.color))
+			return false;
+		if (number != other.number)
+			return false;
+		if (playerId == null) {
+			if (other.playerId != null)
+				return false;
+		}
+		else if (!playerId.equals(other.playerId))
+			return false;
+		if (room == null) {
+			if (other.room != null)
+				return false;
+		}
+		else if (!room.equals(other.room))
+			return false;
+		if (type != other.type)
+			return false;
+		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "BW4TMessage [color=" + color + ", playerId=" + playerId + ", room=" + room + ", type=" + type
+				+ ", number=" + number + "]";
+	}
+
 }

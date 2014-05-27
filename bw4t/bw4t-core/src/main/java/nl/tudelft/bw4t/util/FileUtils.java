@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLDecoder;
 import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -20,10 +21,17 @@ import org.apache.log4j.Logger;
  * A class of File operations.
  */
 public final class FileUtils {
+	private static final String COULD_NOT_FIND_FILE = "Could not find '%s'";
+
 	/**
 	 * The log4j logger, logs to the console.
 	 */
 	private static final Logger LOGGER = Logger.getLogger(FileUtils.class);
+
+	/**
+	 * error message used when we failed to close a file.
+	 */
+	private static final String FAILED_TO_CLOSE = "Failed to close file '%s'";
 
 	/**
 	 * Utility class, cannot be instantiated.
@@ -48,20 +56,20 @@ public final class FileUtils {
 			fos = new FileOutputStream(destFile);
 			return FileUtils.copyStream(fis, fos);
 		} catch (final FileNotFoundException e) {
-			LOGGER.error("Failed to copy file '" + toCopy + "' to '" + destFile + "'", e);
+			LOGGER.error(String.format("Failed to copy file '%s' to '%s'", toCopy, destFile), e);
 		} finally {
 			if (fis != null) {
 				try {
 					fis.close();
 				} catch (IOException e) {
-					LOGGER.warn("Failed to close file '" + toCopy + "'", e);
+					LOGGER.warn(String.format(FAILED_TO_CLOSE, toCopy), e);
 				}
 			}
 			if (fos != null) {
 				try {
 					fos.close();
 				} catch (IOException e) {
-					LOGGER.warn("Failed to close file '" + destFile + "'", e);
+					LOGGER.warn(String.format(FAILED_TO_CLOSE, toCopy), e);
 				}
 			}
 		}
@@ -153,7 +161,8 @@ public final class FileUtils {
 				return FileUtils.copyJarResourcesRecursively((JarURLConnection) urlConnection, destination);
 			}
 			else {
-				return FileUtils.copyFilesRecusively(new File(originUrl.getPath()), destination);
+				return FileUtils.copyFilesRecusively(new File(URLDecoder.decode(originUrl.getPath(), "UTF-8")),
+						destination);
 			}
 		} catch (final IOException e) {
 			LOGGER.error("Failed to copy files from Jar", e);
@@ -176,13 +185,13 @@ public final class FileUtils {
 			fos = new FileOutputStream(f);
 			return FileUtils.copyStream(is, fos);
 		} catch (final FileNotFoundException e) {
-			LOGGER.error("Failed to open file: '" + f + "'", e);
+			LOGGER.warn(String.format(COULD_NOT_FIND_FILE, f), e);
 		} finally {
 			if (fos != null) {
 				try {
 					fos.close();
 				} catch (IOException e) {
-					LOGGER.warn("Failed to close file: '" + f + "'", e);
+					LOGGER.warn(String.format(FAILED_TO_CLOSE, f), e);
 				}
 			}
 		}

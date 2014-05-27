@@ -7,6 +7,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import nl.tudelft.bw4t.client.controller.ClientController;
+import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.GotoPositionActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
@@ -24,7 +25,7 @@ public class HallwayMenu {
 	 */
 	public static void buildPopUpMenuForHallway(BW4TClientGUI gui) {
 		gui.getjPopupMenu().removeAll();
-		ClientController cmc = gui.getController();
+		ClientMapController cmc = gui.getController().getMapController();
 		MapRenderSettings set = cmc.getRenderSettings();
 
 		Block holdingID = cmc.getTheBot().getFirstHolding();

@@ -185,7 +185,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	public void init(Map<String, Parameter> parameters) throws ManagementException {
 		setState(EnvironmentState.INITIALIZING);
 		takeDownSimulation();
-		String error = "launch of Repast failed"; 
+		String error = "launch of Repast failed";
 		Parameter map = parameters.get("map");
 		if (map != null) {
 			BW4TEnvironment.setMapName(((Identifier) map).getValue());
@@ -354,7 +354,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		mapFullyLoaded = true;
 	}
 
-	
 	public double getTps() {
 		if (stepper == null) {
 			return Stepper.MIN_TPS;
@@ -450,7 +449,8 @@ public class BW4TEnvironment extends AbstractEnvironment {
 			} catch (Exception e) {
 				LOGGER.error("BW4T Server started ok but failed to launch display.", e);
 			}
-		} else {
+		}
+		else {
 			LOGGER.info("Launching the BW4T Server without a graphical user interface.");
 		}
 	}
@@ -467,7 +467,8 @@ public class BW4TEnvironment extends AbstractEnvironment {
 			server.takeDown();
 			server = null;
 			System.exit(0);
-		} else {
+		}
+		else {
 			LOGGER.warn("Server shutdown attempted with wrong key: " + key);
 		}
 	}
