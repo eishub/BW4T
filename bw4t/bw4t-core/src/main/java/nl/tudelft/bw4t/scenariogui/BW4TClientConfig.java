@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.config;
+package nl.tudelft.bw4t.scenariogui;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -9,10 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
-import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
-import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
-import nl.tudelft.bw4t.scenariogui.util.XMLManager;
+import nl.tudelft.bw4t.util.XMLManager;
 
 /**
  * This class holds the possible options that can be specified in the Scenario
@@ -78,29 +75,6 @@ public class BW4TClientConfig {
      * An empty <code>BW4TClientConfig</code> object.
      */
     public BW4TClientConfig() {
-    }
-
-    /**
-     * A <code>BW4TClientConfig</code> object holding the configuration.
-     *
-     * @param mainPanel     Serves as the content pane.
-     * @param newOutputFile Contains the file location used for saving.
-     */
-    public BW4TClientConfig(final MainPanel mainPanel,
-                            final String newOutputFile) {
-        ConfigurationPanel configPanel = mainPanel.getConfigurationPanel();
-        clientIp = configPanel.getClientIP();
-        clientPort = configPanel.getClientPort();
-        serverIp = configPanel.getServerIP();
-        serverPort = configPanel.getServerPort();
-        launchGui = configPanel.useGui();
-//        configPanel.useGoal();
-        useGoal = ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue();
-        mapFile = configPanel.getMapFile();
-        EntityPanel entityPanel = mainPanel.getEntityPanel();
-//        TODO: read out bot panel and add each BotConfig to the list of bots
-//        botPanel.getTable().;
-        this.outputFile = newOutputFile;
     }
 
     /**

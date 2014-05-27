@@ -10,8 +10,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBException;
 
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.controllers.editor.AbstractMenuOption;
 import nl.tudelft.bw4t.scenariogui.controllers.editor.ScenarioEditorController;
 import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
@@ -35,11 +35,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * <p/>
- *
- * @author Calving Wong Loi Sing
- * @version 0.1
- * @since 21-05-2014
+ * <p>
+ * @author      Calvin Wong Loi Sing  
+ * @version     0.1                
+ * @since       21-05-2014        
  */
 public class MenuBarTest {
 
