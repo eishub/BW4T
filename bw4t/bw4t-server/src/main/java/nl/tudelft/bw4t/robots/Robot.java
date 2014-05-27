@@ -624,4 +624,20 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	public Battery getBattery() {
 		return this.battery;
 	}
+	
+	public boolean getOneBotPerZone() {
+		return this.oneBotPerZone;
+	}
+	
+	public boolean getConnected() {
+		return this.connected;
+	}
+	
+	public boolean getCollided() {
+		return this.collided;
+	}
+	
+	public void setCollided(boolean pcollided) {
+		this.collided = pcollided;
+	}
 }
