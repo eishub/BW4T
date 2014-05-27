@@ -39,9 +39,8 @@ public class EpartnerController {
         view.getEpartnerFrame().getApplyButton().addActionListener(
                 new ApplyButton(getMainView().getEpartnerFrame()));
 
-       
-        view.getEpartnerFrame().getCommunicatorCheckbox().addActionListener(
-                new CommunicatorCheckbox(getMainView().getEpartnerFrame()));
+        view.getEpartnerFrame().getLeftAloneCheckBox().addActionListener(
+                new LeftAloneCheckBox(getMainView().getEpartnerFrame()));
 
         view.getEpartnerFrame().getGPSCheckbox().addActionListener(
                 new GPSCheckbox(getMainView().getEpartnerFrame()));
@@ -98,12 +97,12 @@ class ApplyButton implements ActionListener {
 }
 
 /**
- * Handles actions of the CommunicatorCheckBox
+ * Handles actions of the LeftAloneCheckBox
  */
-class CommunicatorCheckBox implements ActionListener {
+class LeftAloneCheckBox implements ActionListener {
     private EpartnerFrame view;
 
-    public CommunicatorCheckBox(EpartnerFrame view) {
+    public LeftAloneCheckBox(EpartnerFrame view) {
         this.view = view;
     }
 
