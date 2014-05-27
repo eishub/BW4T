@@ -6,20 +6,18 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
+import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.controllers.botstore.BotStoreController;
 
 /**
  * This class serves as frame for the BotEditorPanel
  * @author Arun
+ * @author Katia Asmoredjo
  */
 public class BotEditor extends JFrame{
 	
 	/** the name of the window */
 	private String windowName = "Bot Editor";
-	/** the windwow width*/
-	private int width;
-	/** the window height*/
-	private int height;
 	
 	private BotEditorPanel bPanel;
 	private BotStoreController controller;
@@ -33,16 +31,13 @@ public class BotEditor extends JFrame{
 		setResizable(false);
 		setLayout(null);
 			
-		bPanel = new BotEditorPanel();
+		bPanel = new BotEditorPanel(this, new ScenarioEditor());
 		bPanel.setBorder(new EmptyBorder(15,15,15,15));
 		setContentPane(bPanel);
 		
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		
 		pack();
-		
-		width = this.getWidth();
-		height = this.getHeight();
 		
 		setLocationRelativeTo(null);
 		
