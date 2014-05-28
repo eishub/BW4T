@@ -7,8 +7,8 @@ import javax.swing.JOptionPane;
 /**
  * This is the DefaultOptionPrompt, used in production when a confirmation dialog
  * has to be shown to the user.
- * <p>
- * @author        
+ * <p
+ * @author      Calvin Wong Loi Sing
  * @version     0.1                
  * @since       12-05-2014        
  */
