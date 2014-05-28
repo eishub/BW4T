@@ -385,7 +385,7 @@ public class EntityPanelTest {
     }
 
     /**
-     * Tests the compare isDefault function.
+     * Tests the isDefault function.
      */
     @Test
     public void testDefault() {
@@ -393,7 +393,7 @@ public class EntityPanelTest {
     }
 
     /**
-     * Tests the compare isDefault function.
+     * Tests the isDefault function.
      */
     @Test
     public void testBotnonDefault() {
@@ -405,7 +405,7 @@ public class EntityPanelTest {
     }
 
     /**
-     * Tests the compare isDefault function.
+     * Tests the isDefault function.
      */
     @Test
     public void testEpartnernonDefault() {
@@ -417,7 +417,7 @@ public class EntityPanelTest {
     }
 
     /**
-     * Tests the compare isDefault function.
+     * Tests the isDefault function.
      */
     @Test
     public void testBotAndEpartnernonDefault() {

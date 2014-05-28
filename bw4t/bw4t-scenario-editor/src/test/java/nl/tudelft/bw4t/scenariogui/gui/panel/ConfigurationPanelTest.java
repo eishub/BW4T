@@ -174,6 +174,14 @@ public class ConfigurationPanelTest {
                         .getConfigurationPanel()
                         .getCurrentValues()));
     }
+
+    /**
+     * Tests the isDefault function.
+     */
+    @Test
+    public void testDefault() {
+    	assertTrue(editor.getMainPanel().getConfigurationPanel().isDefault());
+    }
     
     /**
      * Tests setting the Client IP field.
@@ -280,5 +288,4 @@ public class ConfigurationPanelTest {
     	
     	assertEquals(false, editor.getMainPanel().getConfigurationPanel().isDefault());
     }
-
 }
