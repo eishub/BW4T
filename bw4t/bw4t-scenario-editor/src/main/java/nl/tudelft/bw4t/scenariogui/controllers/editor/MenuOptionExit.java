@@ -12,6 +12,7 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
  * Handles the event to exit the program.
  * <p>
  * @author      Seu Man To
+ * @author		Xander Zonneveld
  * @version     0.1                
  * @since       12-05-2014        
  */
