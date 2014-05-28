@@ -56,11 +56,6 @@ public class ScenarioEditorTest {
 	private static final String FILE_OPEN_PATH = BASE + "nonexistent.xml";
 	
 	/**
-	 * The path of the xml file used to save dummy data
-	 */
-	private static final String FILE_SAVE_PATH = BASE + "dummy.xml";
-	
-	/**
 	 * Setup the testing environment by creating the scenario editor and
 	 * assigning the editor attribute to a spy object of the ScenarioEditor.
 	 */
