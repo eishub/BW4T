@@ -20,17 +20,14 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * <p>
- * @author      Xander Zonneveld
- * @version     0.1                
- * @since       13-05-2014        
+ * <p/>
+ *
+ * @author Xander Zonneveld
+ * @version 0.1
+ * @since 13-05-2014
  */
 public class ConfigurationPanelTest {
 
-    /**
-     * The main GUI.
-     */
-    private ScenarioEditor editor;
     /**
      * The base directory of all files used in the test.
      */
@@ -44,6 +41,14 @@ public class ConfigurationPanelTest {
      */
     private final String fileMapFail = BASE + "test.fail";
     /**
+     * The main GUI.
+     */
+    private ScenarioEditor editor;
+    /**
+     * The configuration panel to be tested.
+     */
+    private ConfigurationPanel configPanel;
+    /**
      * The file chooser object.
      */
     private JFileChooser fileChooser;
@@ -55,12 +60,12 @@ public class ConfigurationPanelTest {
     public final void setUp() {
         // Mock the JFileChooser
         fileChooser = mock(JFileChooser.class);
+        configPanel = new ConfigurationPanel();
 
-        editor = new ScenarioEditor();
+        editor = new ScenarioEditor(configPanel, new EntityPanel());
 
         // Set the fileChooser used to the mocked one.
-        editor.getMainPanel().getConfigurationPanel()
-                .setFileChooser(fileChooser);
+        configPanel.setFileChooser(fileChooser);
     }
 
     /**
@@ -77,9 +82,9 @@ public class ConfigurationPanelTest {
      */
     @Test
     public final void testSetMapFile() {
-        editor.getMainPanel().getConfigurationPanel().setMapFile(filePathMap);
+        configPanel.setMapFile(filePathMap);
 
-        assertEquals(filePathMap, editor.getMainPanel().getConfigurationPanel()
+        assertEquals(filePathMap, configPanel
                 .getMapFile());
     }
 
@@ -97,11 +102,11 @@ public class ConfigurationPanelTest {
         when(fileChooser.getSelectedFile()).thenReturn(mapFile);
 
         // Trigger the event.
-        editor.getMainPanel().getConfigurationPanel().getChooseMapFile()
+        configPanel.getChooseMapFile()
                 .doClick();
 
         /* Replace the backward slashes with forward slashes */
-        assertEquals(mapFile.getAbsolutePath(), editor.getMainPanel().getConfigurationPanel()
+        assertEquals(mapFile.getAbsolutePath(), configPanel
                 .getMapFile());
     }
 
@@ -120,7 +125,7 @@ public class ConfigurationPanelTest {
         ScenarioEditor.setOptionPrompt(spyOption);
 
         // Trigger the event.
-        editor.getMainPanel().getConfigurationPanel().getChooseMapFile()
+        configPanel.getChooseMapFile()
                 .doClick();
 
         // Verify that the pop-up message was shown.
@@ -137,14 +142,14 @@ public class ConfigurationPanelTest {
         when(fileChooser.getSelectedFile()).thenReturn(new File("ss"));
 
         // Original value
-        String startURI = editor.getMainPanel().getConfigurationPanel()
+        String startURI = configPanel
                 .getMapFile();
 
         // Trigger the event.
-        editor.getMainPanel().getConfigurationPanel().getChooseMapFile()
+        configPanel.getChooseMapFile()
                 .doClick();
 
-        assertEquals(startURI, editor.getMainPanel().getConfigurationPanel()
+        assertEquals(startURI, configPanel
                 .getMapFile());
     }
 
@@ -153,23 +158,23 @@ public class ConfigurationPanelTest {
      */
     @Test
     public void testGetOldValues() {
-        assertTrue(editor.getMainPanel().getConfigurationPanel()
+        assertTrue(configPanel
                 .getOldValues().equals(editor.getMainPanel()
                         .getConfigurationPanel()
                         .getCurrentValues()));
 
         //check when values change
-        editor.getMainPanel().getConfigurationPanel().setClientIP("Other IP");
+        configPanel.setClientIP("Other IP");
 
-        assertFalse(editor.getMainPanel().getConfigurationPanel()
+        assertFalse(configPanel
                 .getOldValues().equals(editor.getMainPanel()
                         .getConfigurationPanel()
                         .getCurrentValues()));
 
         //update values
-        editor.getMainPanel().getConfigurationPanel().updateOldValues();
+        configPanel.updateOldValues();
 
-        assertTrue(editor.getMainPanel().getConfigurationPanel()
+        assertTrue(configPanel
                 .getOldValues().equals(editor.getMainPanel()
                         .getConfigurationPanel()
                         .getCurrentValues()));
@@ -180,112 +185,112 @@ public class ConfigurationPanelTest {
      */
     @Test
     public void testDefault() {
-    	assertTrue(editor.getMainPanel().getConfigurationPanel().isDefault());
+        assertTrue(configPanel.isDefault());
     }
-    
+
     /**
      * Tests setting the Client IP field.
      */
     @Test
     public void testSetClientIP() {
-    	editor.getMainPanel().getConfigurationPanel().setClientIP("New IP");
+        configPanel.setClientIP("New IP");
 
-        assertEquals("New IP", editor.getMainPanel().getConfigurationPanel()
+        assertEquals("New IP", configPanel
                 .getClientIP());
     }
-    
+
     /**
      * Tests setting the Client Port field.
      */
     @Test
     public void testSetClientPort() {
-    	editor.getMainPanel().getConfigurationPanel().setClientPort("8888");
-    	
-    	String res = "" + editor.getMainPanel().getConfigurationPanel().getClientPort();
+        configPanel.setClientPort("8888");
 
-    	assertEquals("8888", res);
+        String res = "" + configPanel.getClientPort();
+
+        assertEquals("8888", res);
     }
-    
+
     /**
      * Tests setting the Server IP field.
      */
     @Test
     public void testSetServerIP() {
-    	editor.getMainPanel().getConfigurationPanel().setServerIP("New IP");
+        configPanel.setServerIP("New IP");
 
-        assertEquals("New IP", editor.getMainPanel().getConfigurationPanel()
+        assertEquals("New IP", configPanel
                 .getServerIP());
     }
-    
+
     /**
      * Tests setting the Server Port field.
      */
     @Test
     public void testSetServerPort() {
-    	editor.getMainPanel().getConfigurationPanel().setServerPort("9999");
-    	
-    	String res = "" + editor.getMainPanel().getConfigurationPanel().getServerPort();
+        configPanel.setServerPort("9999");
+
+        String res = "" + configPanel.getServerPort();
 
         assertEquals("9999", res);
     }
-    
+
     /**
      * Tests whether changes have been made to the Client IP field.
      */
     @Test
     public void testChangesClientIP() {
-    	editor.getMainPanel().getConfigurationPanel().setClientIP("New IP");
-    	
-        assertFalse(editor.getMainPanel().getConfigurationPanel().isDefault());
+        configPanel.setClientIP("New IP");
+
+        assertFalse(configPanel.isDefault());
     }
-    
+
     /**
      * Tests whether changes have been made to the Client Port field.
      */
     @Test
     public void testChangesClientPort() {
-    	editor.getMainPanel().getConfigurationPanel().setClientPort("7777");
+        configPanel.setClientPort("7777");
 
-        assertFalse(editor.getMainPanel().getConfigurationPanel().isDefault());
+        assertFalse(configPanel.isDefault());
     }
-    
+
     /**
      * Tests whether changes have been made to the Server IP field.
      */
     @Test
     public void testChangesServerIP() {
-    	editor.getMainPanel().getConfigurationPanel().setServerIP("New IP");
+        configPanel.setServerIP("New IP");
 
-        assertFalse(editor.getMainPanel().getConfigurationPanel().isDefault());
+        assertFalse(configPanel.isDefault());
     }
-    
+
     /**
      * Tests whether changes have been made to the Server Port field.
      */
     @Test
     public void testChangesServerPort() {
-    	editor.getMainPanel().getConfigurationPanel().setServerPort("1010");
+        configPanel.setServerPort("1010");
 
-        assertFalse(editor.getMainPanel().getConfigurationPanel().isDefault());
+        assertFalse(configPanel.isDefault());
     }
-    
+
     /**
      * Tests whether changes have been made to the Launch GUI section.
      */
     @Test
     public void testChangesLaunchGUI() {
-    	editor.getMainPanel().getConfigurationPanel().setUseGui(false);
+        configPanel.setUseGui(false);
 
-        assertFalse(editor.getMainPanel().getConfigurationPanel().isDefault());
+        assertFalse(configPanel.isDefault());
     }
-    
+
     /**
      * Tests whether changes have been made to the Map file section.
      */
     @Test
     public void testChangesMapFile() {
-    	editor.getMainPanel().getConfigurationPanel().setMapFile(filePathMap);
+        configPanel.setMapFile(filePathMap);
 
-        assertFalse(editor.getMainPanel().getConfigurationPanel().isDefault());
+        assertFalse(configPanel.isDefault());
     }
 }
