@@ -23,11 +23,15 @@ public class BotEditor extends JFrame {
 	private int height;
 	/** The parent of this frame. */
 	private MainPanel parent;
+	/** the panel in the frame*/
 	private BotEditorPanel bPanel;
+	/** the controller for the frame*/
 	private BotStoreController controller;
 	
 	/**
 	 * creates the BotEditor frame
+	 * @param pparent the parent of the frame
+	 * @param pname name of the bot
 	 */
 	public BotEditor(MainPanel pparent, String pname) {
 		setLookAndFeel();
@@ -94,10 +98,10 @@ public class BotEditor extends JFrame {
 		this.parent = pparent;
 	}
 
-	public static void main(String[] args) {
-		new BotEditor(null, "");
-	}
-
+	/**
+	 * setter for botEditorPanel
+	 * @param pbPanel the panel to be set
+	 */
 	public void setBotEditorPanel(BotEditorPanel pbPanel) {
 		this.bPanel = pbPanel;
 	}
