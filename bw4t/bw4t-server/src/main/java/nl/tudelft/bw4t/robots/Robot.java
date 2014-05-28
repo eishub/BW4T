@@ -60,6 +60,9 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 * set to true when {@link #connect()} is called.
 	 */
 	private boolean connected = false;
+	/**
+	 * true if max 1 bot in a zone.
+	 */
 	private boolean oneBotPerZone;
 
 	/**
@@ -94,6 +97,8 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 *            true if max 1 bot in a zone
 	 * @param cap
 	 *            The holding capacity of the robot.
+	 * @param human
+	 * 			  True if the bot is human controlled.
 	 */
 	public Robot(String pname, ContinuousSpace<Object> space, Context<Object> context,
 			boolean poneBotPerZone, boolean human, int cap) {
@@ -177,6 +182,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 * 
 	 * @param b
 	 *            the block to check
+	 * @return true if the block is within reach and if the bot isnt holding a block already.
 	 */
 	@Override
 	public boolean canPickUp(Block b) {
@@ -203,7 +209,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 *            , the e-Partner the robot picks up.
 	 */
 	public void pickUpEPartner(EPartner eP) {
-		if(isHuman()){
+		if (isHuman()) {
 			eP.setHolder(this);
 			this.isHoldingEPartner = true;
 		}
@@ -212,7 +218,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	/**
 	 * Get current zone that the robot is in.
 	 * 
-	 * @return
+	 * @return zone the bot is in.
 	 */
 	public Zone getZone() {
 		return ZoneLocator.getZoneAt(getLocation());
@@ -239,7 +245,8 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 					// dropped
 					double x = ourzone.getLocation().getX();
 					double y = ourzone.getLocation().getY();
-					b.moveTo(RandomHelper.nextDoubleFromTo(x - 5, x + 5), RandomHelper.nextDoubleFromTo(y - 5, y + 5));
+					b.moveTo(RandomHelper.nextDoubleFromTo(x - 5, x + 5), 
+							RandomHelper.nextDoubleFromTo(y - 5, y + 5));
 					holding.remove(0);
 					return;
 
@@ -253,7 +260,8 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 * A method for dropping multiple blocks at once.
 	 * 
 	 * @param amount
-	 *            The amount of blocks that have to be dropped, needs to be less than the amount of blocks in the list.
+	 *            The amount of blocks that have to be dropped, 
+	 *            needs to be less than the amount of blocks in the list.
 	 */
 	public void drop(int amount) {
 		assert amount <= holding.size();
@@ -583,15 +591,14 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	public Robot getSuperParent() {
 		return this;
 	}
-	
+
 	public HashMap<String, HandicapInterface> getHandicapsMap() {
 		return handicapsMap;
 	}
-
 	public void setHandicapsMap(HashMap<String, HandicapInterface> handicapsMap) {
 		this.handicapsMap = handicapsMap;
 	}
-
+	
 	public void setSize(int s) {
 		this.size = s;
 		setSize(s, s);
