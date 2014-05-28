@@ -1,6 +1,6 @@
 package nl.tudelft.bw4t.robots;
 import static org.junit.Assert.*;
-import nl.tudelft.bw4t.handicap.Handicap;
+import nl.tudelft.bw4t.handicap.AbstractHandicapFactory;
 import nl.tudelft.bw4t.handicap.HandicapInterface;
 import nl.tudelft.bw4t.robots.Battery;
 import nl.tudelft.bw4t.robots.Robot;

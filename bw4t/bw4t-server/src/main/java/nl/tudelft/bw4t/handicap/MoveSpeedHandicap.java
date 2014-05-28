@@ -10,7 +10,7 @@ import repast.simphony.space.SpatialMath;
  * @author Valentine Mairet & Ruben Starmans
  *
  */
-public class MoveSpeedHandicap extends Handicap {
+public class MoveSpeedHandicap extends AbstractHandicapFactory {
 	/**
 	 * modifier for the distance per tick
 	 */

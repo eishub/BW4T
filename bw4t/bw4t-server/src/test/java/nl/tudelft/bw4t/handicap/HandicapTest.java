@@ -4,7 +4,7 @@ package nl.tudelft.bw4t.handicap;
 import static org.junit.Assert.*;
 import nl.tudelft.bw4t.handicap.ColorBlindHandicap;
 import nl.tudelft.bw4t.handicap.GripperHandicap;
-import nl.tudelft.bw4t.handicap.Handicap;
+import nl.tudelft.bw4t.handicap.AbstractHandicapFactory;
 import nl.tudelft.bw4t.handicap.HandicapInterface;
 import nl.tudelft.bw4t.handicap.MoveSpeedHandicap;
 import nl.tudelft.bw4t.handicap.SizeOverloadHandicap;
@@ -43,7 +43,7 @@ public class HandicapTest {
 		Robot r = new Robot("",space,context,true, false, 0);
 		new ColorBlindHandicap(r);
 		assertTrue(r.getHandicapsMap().get("ColorBlind") instanceof HandicapInterface);
-		assertTrue(r.getHandicapsMap().get("ColorBlind") instanceof Handicap);
+		assertTrue(r.getHandicapsMap().get("ColorBlind") instanceof AbstractHandicapFactory);
 	}
 	/**
 	 * Test GripperHandicap structure
@@ -53,7 +53,7 @@ public class HandicapTest {
 		Robot r = new Robot("",space,context,true, false, 0);
 		new GripperHandicap(r);
 		assertTrue(r.getHandicapsMap().get("Gripper") instanceof HandicapInterface);
-		assertTrue(r.getHandicapsMap().get("Gripper") instanceof Handicap);
+		assertTrue(r.getHandicapsMap().get("Gripper") instanceof AbstractHandicapFactory);
 	}
 	/**
 	 * Test MoveSpeedHandicap structure
@@ -63,7 +63,7 @@ public class HandicapTest {
 		Robot r = new Robot("",space,context,true, false, 0);
 		new MoveSpeedHandicap(r, 1.0);
 		assertTrue(r.getHandicapsMap().get("MoveSpeed") instanceof HandicapInterface);
-		assertTrue(r.getHandicapsMap().get("MoveSpeed") instanceof Handicap);
+		assertTrue(r.getHandicapsMap().get("MoveSpeed") instanceof AbstractHandicapFactory);
 	}
 	/**
 	 * Test SizeOverloadHandicap structure
@@ -73,7 +73,7 @@ public class HandicapTest {
 		Robot r = new Robot("",space,context,true, false, 0);
 		new SizeOverloadHandicap(r, 2);
 		assertTrue(r.getHandicapsMap().get("SizeOverload") instanceof HandicapInterface);
-		assertTrue(r.getHandicapsMap().get("SizeOverload") instanceof Handicap);
+		assertTrue(r.getHandicapsMap().get("SizeOverload") instanceof AbstractHandicapFactory);
 	}
 	
 	/**
@@ -88,13 +88,13 @@ public class HandicapTest {
 		new SizeOverloadHandicap(msh, 2);
 		// Asserts
 		assertTrue(r.getHandicapsMap().get("ColorBlind") instanceof HandicapInterface);
-		assertTrue(r.getHandicapsMap().get("ColorBlind") instanceof Handicap);
+		assertTrue(r.getHandicapsMap().get("ColorBlind") instanceof AbstractHandicapFactory);
 		assertTrue(r.getHandicapsMap().get("Gripper") instanceof HandicapInterface);
-		assertTrue(r.getHandicapsMap().get("Gripper") instanceof Handicap);
+		assertTrue(r.getHandicapsMap().get("Gripper") instanceof AbstractHandicapFactory);
 		assertTrue(r.getHandicapsMap().get("MoveSpeed") instanceof HandicapInterface);
-		assertTrue(r.getHandicapsMap().get("MoveSpeed") instanceof Handicap);
+		assertTrue(r.getHandicapsMap().get("MoveSpeed") instanceof AbstractHandicapFactory);
 		assertTrue(r.getHandicapsMap().get("SizeOverload") instanceof HandicapInterface);
-		assertTrue(r.getHandicapsMap().get("SizeOverload") instanceof Handicap);				
+		assertTrue(r.getHandicapsMap().get("SizeOverload") instanceof AbstractHandicapFactory);				
 	}
 	
 	/**
@@ -128,7 +128,7 @@ public class HandicapTest {
 		Robot r = new Robot("",space,context,true, false, 0);
 		new SizeOverloadHandicap(r, 3);
 		assertTrue(r.getHandicapsMap().get("SizeOverload") instanceof HandicapInterface);
-		assertTrue(r.getHandicapsMap().get("SizeOverload") instanceof Handicap);
+		assertTrue(r.getHandicapsMap().get("SizeOverload") instanceof AbstractHandicapFactory);
 		assertEquals(3, r.getSize());
 	}
 	
