@@ -5,7 +5,7 @@ import nl.tudelft.bw4t.blocks.Block;
 /**
  * @author Valentine Mairet & Ruben Starmans
  */
-public class GripperHandicap extends Handicap {
+public class GripperHandicap extends AbstractHandicapFactory {
 	/**
 	 * boolean is true when the handicap is active.
 	 */

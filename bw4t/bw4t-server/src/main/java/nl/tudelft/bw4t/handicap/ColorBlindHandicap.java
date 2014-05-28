@@ -4,7 +4,7 @@ package nl.tudelft.bw4t.handicap;
  * @author Valentine Mairet & Ruben Starmans
  *
  */
-public class ColorBlindHandicap extends Handicap {
+public class ColorBlindHandicap extends AbstractHandicapFactory {
 	/**
 	 * boolean is true if the handicap is active.
 	 */
