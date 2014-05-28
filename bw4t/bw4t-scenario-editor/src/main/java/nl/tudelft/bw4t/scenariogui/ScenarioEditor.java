@@ -1,16 +1,11 @@
 package nl.tudelft.bw4t.scenariogui;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.FileNotFoundException;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.WindowConstants;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.controllers.editor.ScenarioEditorController;
@@ -24,7 +19,8 @@ import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
 /**
  * The ScenarioEditor class serves as the Frame for the MenuBar and MainPanel.
  * <p>
- * @author        
+ * @author      Calvin Wong Loi Sing
+ * @author      Xander Zonneveld
  * @version     0.1                
  * @since       12-05-2014        
  */

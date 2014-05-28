@@ -128,6 +128,14 @@ public class BotEditorPanel extends JPanel {
         botInfo.add(botNameTextField);
 
         botTypeSelector.setModel(new DefaultComboBoxModel(new String[]{"Agent", "Human"}));
+        
+        if (dataObject.getBotController().equals("Agent")) {
+        	botTypeSelector.setSelectedIndex(0);
+        }
+        else {
+        	botTypeSelector.setSelectedIndex(1);
+        }
+        
         botInfo.add(botTypeSelector);
         
         botInfo.add(new JLabel("  Amount of this type:"));

@@ -368,6 +368,7 @@ public class MenuBarTest {
         editor.getTopMenuBar().getMenuItemFileNew().doClick();
 
         assertTrue(editor.getMainPanel().getConfigurationPanel().isDefault());
+        assertTrue(editor.getMainPanel().getEntityPanel().isDefault());
     }
 
     /**
@@ -398,6 +399,7 @@ public class MenuBarTest {
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
         assertTrue(editor.getMainPanel().getConfigurationPanel().isDefault());
+        assertTrue(editor.getMainPanel().getEntityPanel().isDefault());
     }
 
     /**

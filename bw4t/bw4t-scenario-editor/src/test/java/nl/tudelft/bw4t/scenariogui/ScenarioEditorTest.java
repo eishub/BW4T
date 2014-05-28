@@ -6,8 +6,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import javax.swing.JFileChooser;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.controllers.editor.AbstractMenuOption;
@@ -56,11 +54,6 @@ public class ScenarioEditorTest {
 	 * The path of the xml file used to test the open button.
 	 */
 	private static final String FILE_OPEN_PATH = BASE + "nonexistent.xml";
-	
-	/**
-	 * The path of the xml file used to save dummy data
-	 */
-	private static final String FILE_SAVE_PATH = BASE + "dummy.xml";
 	
 	/**
 	 * Setup the testing environment by creating the scenario editor and

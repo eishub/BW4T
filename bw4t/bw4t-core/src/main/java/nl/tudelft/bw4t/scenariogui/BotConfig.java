@@ -204,4 +204,15 @@ public final class BotConfig {
     public void setSizeOverloadHandicap(boolean bool) {
         hasSizeOverloadHandicap = bool;
     }
+    
+    /**
+     * Returns all the properties as a String.
+     * @return All the BotConfig properties.
+     */
+    public String bcToString() {
+    	return name + controller + amount + botSize + botSpeed
+    			+ botBatteryCapacity + botBatteryDischargeRate 
+    			+ hasColorBlindHandicap	+ hasGripperHandicap
+    			+ hasMoveSpeedHandicap + hasSizeOverloadHandicap;
+    }
 }
