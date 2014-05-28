@@ -1,2 +1,4 @@
 .classpath
 target/
+/target
+/target
