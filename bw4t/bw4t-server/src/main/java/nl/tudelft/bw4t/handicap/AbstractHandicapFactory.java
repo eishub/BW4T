@@ -19,7 +19,7 @@ public abstract class AbstractHandicapFactory implements HandicapInterface {
 	/**
 	 * Robot to which this handicap belongs to.
 	 */
-	private Robot robot;
+	protected Robot robot;
 	
 	/**
 	 * Sets the parent to p,
