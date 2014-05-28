@@ -46,7 +46,10 @@ import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
  */
 public class EntityPanel extends JPanel {
 
-    /**
+    /** Randomly generated serial version. */
+	private static final long serialVersionUID = 6488182242349086899L;
+
+	/**
      * The number of bots column.
      */
     private static final String NUMBER_BOTS_COLUMN = "Number of bots";
