@@ -25,7 +25,7 @@ import nl.tudelft.bw4t.scenariogui.util.MapSpec;
  * The ConfigurationPanel class represents the left pane of the MainPanel. It
  * shows the options the user can configure.
  * <p>
- * @author        
+ * @author      
  * @version     0.1                
  * @since       12-05-2014        
  */
