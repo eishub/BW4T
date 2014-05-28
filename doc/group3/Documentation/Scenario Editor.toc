@@ -1,0 +1,17 @@
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}
+\contentsline {section}{\numberline {2}General use}{3}{section.2}
+\contentsline {section}{\numberline {3}Configuration Panel}{4}{section.3}
+\contentsline {subsection}{\numberline {3.1}New configuration file}{4}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Save configuration file}{4}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Save configuration file as}{4}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Open configuration file}{5}{subsection.3.4}
+\contentsline {section}{\numberline {4}Entity Panel}{5}{section.4}
+\contentsline {subsection}{\numberline {4.1}Create new bot}{5}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Modify bot}{5}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Change controller type}{6}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}Rename bot}{6}{subsection.4.4}
+\contentsline {subsection}{\numberline {4.5}Delete bot}{6}{subsection.4.5}
+\contentsline {subsection}{\numberline {4.6}Create new e-partner}{6}{subsection.4.6}
+\contentsline {subsection}{\numberline {4.7}Modify e-partner}{6}{subsection.4.7}
+\contentsline {subsection}{\numberline {4.8}Rename e-partner}{6}{subsection.4.8}
+\contentsline {subsection}{\numberline {4.9}Delete e-partner}{6}{subsection.4.9}
