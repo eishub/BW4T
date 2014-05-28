@@ -18,6 +18,10 @@ class Updater implements Runnable {
 	 */
 	private AbstractMapController controller;
 
+	/**
+	 * Setup a new Updater object for the given MapController. 
+	 * @param c the map controller
+	 */
 	public Updater(AbstractMapController c) {
 		controller = c;
 	}

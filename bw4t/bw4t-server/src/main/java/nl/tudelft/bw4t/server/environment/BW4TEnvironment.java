@@ -1,29 +1,5 @@
 package nl.tudelft.bw4t.server.environment;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.bind.JAXBException;
-
-import nl.tudelft.bw4t.BW4TBuilder;
-import nl.tudelft.bw4t.logger.BotLog;
-import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.server.BW4TServer;
-import nl.tudelft.bw4t.server.RobotEntityInt;
-import nl.tudelft.bw4t.visualizations.ServerContextDisplay;
-
-import org.apache.log4j.Logger;
-
-import repast.simphony.context.Context;
-import repast.simphony.scenario.ScenarioLoadException;
 import eis.eis2java.environment.AbstractEnvironment;
 import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
@@ -37,6 +13,29 @@ import eis.iilang.EnvironmentState;
 import eis.iilang.Identifier;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.rmi.RemoteException;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.bind.JAXBException;
+
+import nl.tudelft.bw4t.logger.BotLog;
+import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.server.BW4TServer;
+import nl.tudelft.bw4t.server.RobotEntityInt;
+import nl.tudelft.bw4t.visualizations.ServerContextDisplay;
+
+import org.apache.log4j.Logger;
+
+import repast.simphony.context.Context;
+import repast.simphony.scenario.ScenarioLoadException;
 
 /**
  * The central environment which runs the data model and performs actions received from remote environments through the
@@ -63,9 +62,10 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	private static String mapName;
 
-	public static void setMapName(String mapName) {
-		BW4TEnvironment.mapName = mapName;
-	}
+	/**
+	 * start time of the first action.
+	 */
+	private static Long starttime = null;
 
 	private BW4TServer server;
 	private boolean mapFullyLoaded;
@@ -77,19 +77,17 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	private final boolean guiEnabled;
 	private final String shutdownKey;
 
-	private static Long starttime = null; // starttime, first action
-	
 	/**
 	 * Create a new instance of this environment
 	 * 
 	 * @param scenarioLocation
-	 *            , the location of the scenario that should be loaded in Repast
+	 *            the location of the scenario that should be loaded in Repast
 	 * @param mapLocation
-	 *            , the location of the map file
+	 *            the location of the map file
 	 * @param serverIp
-	 *            , the ip address the server should listen on
+	 *            the ip address the server should listen on
 	 * @param serverPort
-	 *            , the port the server should listen on
+	 *            the port the server should listen on
 	 * @throws IOException
 	 * @throws ManagementException
 	 * @throws ScenarioLoadException
@@ -124,7 +122,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * Notify listeners that a new entity is available, server handles correct distribution of entities to listeners
 	 * 
 	 * @param entity
-	 *            , the new entity
+	 *            the new entity
 	 */
 	@Override
 	public void notifyNewEntity(String entity) {
@@ -149,12 +147,11 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 */
 	public void removeAllEntities() throws ManagementException {
 		LOGGER.info("Closing the log file.");
-		
-		String message = " ";
-		//TODO check if total time is calculated same way as before
-		LOGGER.log(BotLog.BOTLOG, "total time: " + (System.currentTimeMillis()-starttime));
-		//TODO log AgentRecord, each toSummaryArray of agentRecord of object of each bot
-	
+
+		// TODO check if total time is calculated same way as before
+		LOGGER.log(BotLog.BOTLOG, "total time: " + (System.currentTimeMillis() - starttime));
+		// TODO log AgentRecord, each toSummaryArray of agentRecord of object of each bot
+
 		setState(EnvironmentState.KILLED);
 
 		LOGGER.debug("Removing all entities");
@@ -215,9 +212,9 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * Launch the server
 	 * 
 	 * @param serverIp
-	 *            , the ip address that the server should listen to
+	 *            the ip address that the server should listen to
 	 * @param serverPort
-	 *            , the port that the server should listen to
+	 *            the port that the server should listen to
 	 * @throws RemoteException
 	 * @throws ManagementException
 	 * @throws MalformedURLException
@@ -263,11 +260,15 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		return mapName;
 	}
 
+	public static void setMapName(String mapName) {
+		BW4TEnvironment.mapName = mapName;
+	}
+
 	/**
 	 * Check whether an action is supported by this environment.
 	 * 
 	 * @param arg0
-	 *            , the action that should be checked
+	 *            the action that should be checked
 	 * @return true if there is an entity, a dropzone and sequence not yet complete
 	 */
 	@Override
@@ -280,9 +281,9 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * Check whether an action is supported by an entity type, always returns true for now
 	 * 
 	 * @param arg0
-	 *            , the action that should be checked
+	 *            the action that should be checked
 	 * @param arg1
-	 *            , the type of entity
+	 *            the type of entity
 	 * @return the result
 	 */
 	@Override
@@ -294,9 +295,9 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * Check whether a state transition is valid, for now always returns true
 	 * 
 	 * @param oldState
-	 *            , the old state of the environment
+	 *            the old state of the environment
 	 * @param newState
-	 *            , the new state of the environment
+	 *            the new state of the environment
 	 * @return the result
 	 */
 	@Override
@@ -308,19 +309,19 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * Helper method to allow the server to call actions received from attached clients
 	 * 
 	 * @param entity
-	 *            , the entity that should perform the action
+	 *            the entity that should perform the action
 	 * @param action
-	 *            , the action that should be performed
+	 *            the action that should be performed
 	 * @return the percept received after performing the action
 	 */
 	public Percept performClientAction(String entity, Action action) throws ActException {
 		Long time = System.currentTimeMillis();
 		LOGGER.log(BotLog.BOTLOG, String.format("action %d %s %s", time, entity, action.toProlog()));
-		
-		if(starttime == null){
+
+		if (starttime == null) {
 			starttime = time;
 		}
-		
+
 		return performEntityAction(entity, action);
 	}
 
@@ -384,6 +385,9 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * reset using parameters for initial situation. Does not kill the server.
+	 * 
+	 * @param parameters
+	 *            only the map parameter is accepted
 	 */
 	@Override
 	public void reset(Map<String, Parameter> parameters) throws ManagementException {
@@ -401,11 +405,8 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * reset to initial situation.
 	 * 
-	 * @throws NotBoundException
-	 * @throws IOException
-	 * @throws ScenarioLoadException
-	 * @throws ManagementException
-	 * @throws JAXBException
+	 * @throws EnvironmentResetException
+	 *             if the server was unable to restart
 	 */
 	public void reset() throws EnvironmentResetException {
 		try {
@@ -487,20 +488,10 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		}
 	}
 
-	/**
-	 * Get the key required to shutdown the server.
-	 * 
-	 * @return the shutdown key
-	 */
 	public String getShutdownKey() {
 		return this.shutdownKey;
 	}
 
-	/**
-	 * get the current {@link NewMap}
-	 * 
-	 * @return the {@link NewMap}
-	 */
 	public NewMap getMap() {
 		return theMap;
 	}
