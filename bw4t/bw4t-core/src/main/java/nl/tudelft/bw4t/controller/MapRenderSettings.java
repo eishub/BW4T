@@ -3,7 +3,17 @@ package nl.tudelft.bw4t.controller;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 
+/**
+ * Saves values used by the {@link MapRenderer} configuring the way the map is drawn. Also has an option to change the
+ * delay between consecutive updates.
+ */
 public class MapRenderSettings {
+	public static final int BLOCK_SEQUENCE_SIZE_MAXIMUM = 100;
+	public static final int BLOCK_SEQUENCE_SIZE_MINIMUM = 1;
+	public static final int DELAY_MAXIMUM = 1000;
+	public static final int DELAY_MINIMUM = 10;
+	public static final int SCALE_MINIMUM = 3;
+	public static final int SCALE_MAXIMUM = 15;
 	private int sequenceBlockSize = 20;
 	private int worldWidth = 7;
 	private int worldHeight = 7;
@@ -12,9 +22,9 @@ public class MapRenderSettings {
 	private boolean renderEntityName = false;
 	private int entityNameOffset = 20;
 	/**
-	 * We want to achieve roughly 15fps = 1000/15 = 66.6666
+	 * We want to achieve roughly 24fps = 1000/24 = 41.6666
 	 */
-	private int updateDelay = 66;
+	private int updateDelay = 41;
 
 	/**
 	 * Initialize with default values.
@@ -22,23 +32,10 @@ public class MapRenderSettings {
 	public MapRenderSettings() {
 	}
 
-	/**
-	 * @return the worldWidth
-	 */
 	public int getWorldWidth() {
 		return worldWidth;
 	}
 
-	/**
-	 * @param worldWidth
-	 *            the worldWidth to set
-	 */
-	public void setWorldWidth(int worldWidth) {
-	}
-
-	/**
-	 * @return the worldHeight
-	 */
 	public int getWorldHeight() {
 		return worldHeight;
 	}
@@ -56,17 +53,10 @@ public class MapRenderSettings {
 		this.worldHeight = y;
 	}
 
-	/**
-	 * @return the roomTextOffset
-	 */
 	public int getRoomTextOffset() {
 		return roomTextOffset;
 	}
 
-	/**
-	 * @param roomTextOffset
-	 *            the roomTextOffset to set
-	 */
 	public void setRoomTextOffset(int roomTextOffset) {
 		this.roomTextOffset = roomTextOffset;
 	}
@@ -75,8 +65,16 @@ public class MapRenderSettings {
 		return scale;
 	}
 
+	/**
+	 * Set the scale of the map in the renderer. The scale has an upper and lower limit.
+	 * 
+	 * @see #SCALE_MINIMUM
+	 * @see #SCALE_MAXIMUM
+	 * @param scale
+	 *            the new scale
+	 */
 	public void setScale(double scale) {
-		if(scale < 3 || scale > 15) {
+		if (scale < SCALE_MINIMUM || scale > SCALE_MAXIMUM) {
 			return;
 		}
 		this.scale = scale;
@@ -86,8 +84,16 @@ public class MapRenderSettings {
 		return sequenceBlockSize;
 	}
 
+	/**
+	 * Set the size of the blocks when drawing the sequence. The size has an upper and lower limit.
+	 * 
+	 * @see #BLOCK_SEQUENCE_SIZE_MINIMUM
+	 * @see #BLOCK_SEQUENCE_SIZE_MAXIMUM
+	 * @param sequenceBlockSize
+	 *            the new size
+	 */
 	public void setSequenceBlockSize(int sequenceBlockSize) {
-		if(sequenceBlockSize < 1 || sequenceBlockSize > 100) {
+		if (sequenceBlockSize < BLOCK_SEQUENCE_SIZE_MINIMUM || sequenceBlockSize > BLOCK_SEQUENCE_SIZE_MAXIMUM) {
 			return;
 		}
 		this.sequenceBlockSize = sequenceBlockSize;
@@ -98,9 +104,6 @@ public class MapRenderSettings {
 	}
 
 	public void setEntityNameOffset(int entityNameOffset) {
-		if(sequenceBlockSize < -50 || sequenceBlockSize > 50) {
-			return;
-		}
 		this.entityNameOffset = entityNameOffset;
 	}
 
@@ -116,8 +119,16 @@ public class MapRenderSettings {
 		return updateDelay;
 	}
 
+	/**
+	 * Set the updateDelay, enforced a limit.
+	 * 
+	 * @see #DELAY_MINIMUM
+	 * @see #DELAY_MAXIMUM
+	 * @param updateDelay
+	 *            the new update delay
+	 */
 	public void setUpdateDelay(int updateDelay) {
-		if(updateDelay < 10 || updateDelay > 1000) {
+		if (updateDelay < DELAY_MINIMUM || updateDelay > DELAY_MAXIMUM) {
 			return;
 		}
 		this.updateDelay = updateDelay;
@@ -159,7 +170,7 @@ public class MapRenderSettings {
 	}
 
 	/**
-	 * Scales and centers the given Rectangle.
+	 * Scales and centers(moves it by half it width to the left and half its size to the top) the given Rectangle.
 	 * 
 	 * @param rect
 	 *            the position and size
