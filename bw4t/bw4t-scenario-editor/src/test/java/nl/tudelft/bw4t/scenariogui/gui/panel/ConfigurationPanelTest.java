@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 
 /**
  * <p>
- * @author        
+ * @author      Xander Zonneveld
  * @version     0.1                
  * @since       13-05-2014        
  */
@@ -174,6 +174,14 @@ public class ConfigurationPanelTest {
                         .getConfigurationPanel()
                         .getCurrentValues()));
     }
+
+    /**
+     * Tests the isDefault function.
+     */
+    @Test
+    public void testDefault() {
+    	assertTrue(editor.getMainPanel().getConfigurationPanel().isDefault());
+    }
     
     /**
      * Tests setting the Client IP field.
@@ -228,7 +236,7 @@ public class ConfigurationPanelTest {
     public void testChangesClientIP() {
     	editor.getMainPanel().getConfigurationPanel().setClientIP("New IP");
     	
-    	assertEquals(false, editor.getMainPanel().getConfigurationPanel().isDefault());
+        assertFalse(editor.getMainPanel().getConfigurationPanel().isDefault());
     }
     
     /**
@@ -237,8 +245,8 @@ public class ConfigurationPanelTest {
     @Test
     public void testChangesClientPort() {
     	editor.getMainPanel().getConfigurationPanel().setClientPort("7777");
-    	
-    	assertEquals(false, editor.getMainPanel().getConfigurationPanel().isDefault());
+
+        assertFalse(editor.getMainPanel().getConfigurationPanel().isDefault());
     }
     
     /**
@@ -247,8 +255,8 @@ public class ConfigurationPanelTest {
     @Test
     public void testChangesServerIP() {
     	editor.getMainPanel().getConfigurationPanel().setServerIP("New IP");
-    	
-    	assertEquals(false, editor.getMainPanel().getConfigurationPanel().isDefault());
+
+        assertFalse(editor.getMainPanel().getConfigurationPanel().isDefault());
     }
     
     /**
@@ -257,8 +265,8 @@ public class ConfigurationPanelTest {
     @Test
     public void testChangesServerPort() {
     	editor.getMainPanel().getConfigurationPanel().setServerPort("1010");
-    	
-    	assertEquals(false, editor.getMainPanel().getConfigurationPanel().isDefault());
+
+        assertFalse(editor.getMainPanel().getConfigurationPanel().isDefault());
     }
     
     /**
@@ -267,8 +275,8 @@ public class ConfigurationPanelTest {
     @Test
     public void testChangesLaunchGUI() {
     	editor.getMainPanel().getConfigurationPanel().setUseGui(false);
-    	
-    	assertEquals(false, editor.getMainPanel().getConfigurationPanel().isDefault());
+
+        assertFalse(editor.getMainPanel().getConfigurationPanel().isDefault());
     }
     
     /**
@@ -277,8 +285,7 @@ public class ConfigurationPanelTest {
     @Test
     public void testChangesMapFile() {
     	editor.getMainPanel().getConfigurationPanel().setMapFile(filePathMap);
-    	
-    	assertEquals(false, editor.getMainPanel().getConfigurationPanel().isDefault());
-    }
 
+        assertFalse(editor.getMainPanel().getConfigurationPanel().isDefault());
+    }
 }

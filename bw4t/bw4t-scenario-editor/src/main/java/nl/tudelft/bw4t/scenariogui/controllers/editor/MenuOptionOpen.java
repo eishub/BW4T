@@ -10,7 +10,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
@@ -21,6 +20,7 @@ import nl.tudelft.bw4t.scenariogui.util.FileFilters;
  * Handles the event to open a file.
   * <p>
  * @author      Katia Asmoredjo
+ * @author 		Xander Zonneveld
  * @version     0.1                
  * @since       12-05-2014        
  */
@@ -47,7 +47,8 @@ class MenuOptionOpen extends AbstractMenuOption {
         EntityPanel entityPanel = super.getController().getMainView().getMainPanel().getEntityPanel();
 
         // Check if current config is different from last saved config
-        if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())) {
+        if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())
+        		|| !entityPanel.compareBotConfigs()) {
             // Check if user wants to save current configuration
             int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
                     null,
@@ -85,6 +86,7 @@ class MenuOptionOpen extends AbstractMenuOption {
                 // clear bots/epartners from the previous config
                 resetBotTable(entityPanel);
                 resetEpartnerTable(entityPanel);
+                super.getController().getMainView().getMainPanel().getEntityPanel().getBotConfigs().clear();
                 
                 // Fill the bot panel
                 int rows = configuration.getBots().size();
@@ -108,6 +110,7 @@ class MenuOptionOpen extends AbstractMenuOption {
             super.getMenuView().setLastFileLocation(openedFile);
         }
         super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
+        super.getController().getMainView().getMainPanel().getEntityPanel().updateBotConfigs();
     }
     
     /**

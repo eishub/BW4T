@@ -10,6 +10,7 @@ import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
  * <p>
  * @author      Calvin Wong Loi Sing
  * @author      Nick Feddes
+ * @author 		Xander Zonneveld
  * @version     0.1                
  * @since       12-05-2014        
  */

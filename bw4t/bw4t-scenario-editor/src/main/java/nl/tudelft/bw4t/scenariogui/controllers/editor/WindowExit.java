@@ -2,7 +2,6 @@ package nl.tudelft.bw4t.scenariogui.controllers.editor;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
 import javax.swing.JOptionPane;
 

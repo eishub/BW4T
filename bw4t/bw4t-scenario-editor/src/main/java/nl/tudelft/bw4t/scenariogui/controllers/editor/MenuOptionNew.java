@@ -14,6 +14,7 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
  * Handles the event to start a new file.
  * <p>
  * @author      Katia Asmoredjo
+ * @author		Xander Zonneveld
  * @version     0.1                
  * @since       12-05-2014        
  */
@@ -39,7 +40,8 @@ class MenuOptionNew extends AbstractMenuOption {
         EntityPanel entityPanel = super.getController().getMainView().getMainPanel().getEntityPanel();
 
         // Check if current config is different from last saved config
-        if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())) {
+        if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())
+        		|| !entityPanel.compareBotConfigs()) {
             // Check if user wants to save current configuration
             int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
                     null,
@@ -50,6 +52,7 @@ class MenuOptionNew extends AbstractMenuOption {
             if (response == JOptionPane.YES_OPTION) {
                 saveFile();
                 super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
+                super.getController().getMainView().getMainPanel().getEntityPanel().updateBotConfigs();
             }
         }
 
@@ -57,6 +60,8 @@ class MenuOptionNew extends AbstractMenuOption {
         
         //save the default values as the "old" values
         super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
+        super.getController().getMainView().getMainPanel().getEntityPanel().getBotConfigs().clear();
+        super.getController().getMainView().getMainPanel().getEntityPanel().updateBotConfigs();
 
         //set last file location to null so that the previous saved file won't get
         //overwritten when the new config is saved.

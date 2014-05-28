@@ -1,7 +1,6 @@
 package nl.tudelft.bw4t.scenariogui.gui.panel;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -34,7 +33,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import nl.tudelft.bw4t.scenariogui.BotConfig;
-import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
 
 /**
@@ -48,7 +46,10 @@ import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
  */
 public class EntityPanel extends JPanel {
 
-    /**
+    /** Randomly generated serial version. */
+	private static final long serialVersionUID = 6488182242349086899L;
+
+	/**
      * The number of bots column.
      */
     private static final String NUMBER_BOTS_COLUMN = "Number of bots";
@@ -242,6 +243,11 @@ public class EntityPanel extends JPanel {
      * The list that hold the created bots.
      */
     private List<BotConfig> botConfigList = new ArrayList<BotConfig>();
+    
+    /**
+     * The list with the last saved BotConfigs.
+     */
+    private List<BotConfig> oldBotConfigs = botConfigList;
 
     /**
      * Create an EntityPanel object.
@@ -664,5 +670,60 @@ public class EntityPanel extends JPanel {
      */
     public BotConfig getBotConfig(int index) {
     	return botConfigList.get(index);
+    }
+    
+    /**
+     * Returns the previous saved BotConfig list.
+     * @return The previous saved BotConfig list.
+     */
+    public List<BotConfig> getOldBotConfigs() {
+    	return oldBotConfigs;
+    }
+    
+    /**
+     * Updates the BotConfig list.
+     */
+    public void updateBotConfigs() {
+    	oldBotConfigs.clear();
+    	
+    	for (int i = 0; i < botConfigList.size(); i++) {
+    		oldBotConfigs.add(botConfigList.get(i));
+    	}
+    }
+    
+    /**
+     * Compares the BotConfig lists.
+     * @return If the BotConfigs lists are equal.
+     */
+    public boolean compareBotConfigs() {
+    	if (botConfigList.size() != oldBotConfigs.size()) {
+    		return false;
+    	}
+    	
+    	for (int i = 0; i < botConfigList.size(); i++) {
+    		if (botConfigList.get(i).toString().equals(oldBotConfigs.get(i).toString())) {
+    			return false;
+    		}
+    	}
+    	
+    	return true;
+    }
+    
+    /**
+     * Returns if changes has been made to the default configuration.
+     *
+     * @return whether changes have been made.
+     */
+    public final boolean isDefault() {
+        boolean isDefault = true;
+        
+        if (this.botList.getRowCount() != 0) {
+            isDefault = false;
+        }
+        else if (this.epartnerList.getRowCount() != 0) {
+            isDefault = false;
+        }
+        
+        return isDefault;
     }
 }

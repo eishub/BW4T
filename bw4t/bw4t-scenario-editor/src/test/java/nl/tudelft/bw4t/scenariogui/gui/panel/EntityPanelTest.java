@@ -1,23 +1,18 @@
 package nl.tudelft.bw4t.scenariogui.gui.panel;
 
-import java.awt.Component;
-
-import javax.swing.JOptionPane;
-
+import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doReturn;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -373,7 +368,65 @@ public class EntityPanelTest {
         verify(spyEntityPanel, times(1)).showBotDropDown();
     }
 
+    /**
+     * Tests the compare and the update functions.
+     */
+    @Test
+    public void testCompareBotConfigs() {
+    	assertTrue(entityPanel.compareBotConfigs());
+    	
+    	entityPanel.getBotConfigs().add(new BotConfig());
+    	
+    	assertFalse(entityPanel.compareBotConfigs());
+    	
+    	entityPanel.updateBotConfigs();
+    	
+    	assertTrue(entityPanel.compareBotConfigs());
+    }
 
+    /**
+     * Tests the isDefault function.
+     */
+    @Test
+    public void testDefault() {
+    	assertTrue(entityPanel.isDefault());
+    }
 
+    /**
+     * Tests the isDefault function.
+     */
+    @Test
+    public void testBotnonDefault() {
+        Object[] botData = {"d1", "d2", "1"};
+        
+    	entityPanel.getBotTableModel().addRow(botData);
+    	
+    	assertFalse(entityPanel.isDefault());
+    }
 
+    /**
+     * Tests the isDefault function.
+     */
+    @Test
+    public void testEpartnernonDefault() {
+        Object[] epartnerData = {"d1", "1"};
+        
+    	entityPanel.getEPartnerTableModel().addRow(epartnerData);
+    	
+    	assertFalse(entityPanel.isDefault());
+    }
+
+    /**
+     * Tests the isDefault function.
+     */
+    @Test
+    public void testBotAndEpartnernonDefault() {
+        Object[] botData = {"d1", "d2", "1"};
+        Object[] epartnerData = {"d1", "1"};
+        
+    	entityPanel.getBotTableModel().addRow(botData);
+    	entityPanel.getEPartnerTableModel().addRow(epartnerData);
+    	
+    	assertFalse(entityPanel.isDefault());
+    }
 }
