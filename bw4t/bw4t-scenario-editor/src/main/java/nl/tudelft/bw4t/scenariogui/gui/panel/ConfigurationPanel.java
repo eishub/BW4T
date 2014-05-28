@@ -142,12 +142,6 @@ public class ConfigurationPanel extends JPanel {
     private JTextField mapFileTextField = new JTextField(
             DEFAULT_VALUES.MAP_FILE.getValue());
 
-    // CheckboxGroup goalCheckBox = new CheckboxGroup();
-    // private Checkbox goalYes = new Checkbox("Yes",
-    // DEFAULT_VALUES.USE_GOAL.getBooleanValue(), goalCheckBox);
-    // private Checkbox goalNo = new Checkbox("No",
-    // !DEFAULT_VALUES.USE_GOAL.getBooleanValue(), goalCheckBox);
-
     /** The checkbox group for enabling the GUI. */
     private CheckboxGroup guiCheckBox = new CheckboxGroup();
     /** The yes option of the checkbox. */
@@ -213,7 +207,6 @@ public class ConfigurationPanel extends JPanel {
         // showConfigLabel();
         showClientOptions();
         showServerOptions();
-        // showGoalOptions();
         showGuiOptions();
         showMapOptions();
 
@@ -300,31 +293,6 @@ public class ConfigurationPanel extends JPanel {
         c.weighty = 1;
         add(serverPort, c);
     }
-
-    /**
-     * Show the option to use GOAL in the panel.
-     * 
-     * @deprecated Always the case, so there was no need to make this an option. 
-     */
-    // private void showGoalOptions(){
-    // c.insets = new Insets(8, 8, 0, 0);
-    //
-    // c.gridx = 0;
-    // c.gridy += 1;
-    //
-    // JLabel goal = new JLabel("Use GOAL");
-    // goal.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE_SMALL));
-    // add(goal, c);
-    //
-    // c.insets = new Insets(0,8,0,0);
-    //
-    // c.gridx = 0;
-    // c.gridy += 1;
-    // add(goalYes, c);
-    //
-    // c.gridx = 1;
-    // add(goalNo, c);
-    // }
 
     /**
      * Show the option to use a GUI in the panel.
@@ -447,33 +415,7 @@ public class ConfigurationPanel extends JPanel {
     public final void setServerPort(final String newServerPort) {
         this.serverPort.setText(newServerPort);
     }
-
-    /**
-     * Returns if GOAL needs to be used.
-     *
-     * @deprecated Goal is always used, so there is not use of this method.
-     * @return The use of GOAL.
-     */
-    // public boolean useGoal(){
-    // if(goalCheckBox.getSelectedCheckbox() == goalYes)
-    // return true;
-    // else
-    // return false;
-    // }
-
-    /**
-     * Sets if GOAL needs to be used.
-     *
-     * @deprecated Goal is always used, so there is not use of this method.
-     * @param useGoal Whether or not to use Goal.
-     */
-    // public void setUseGoal(boolean useGoal){
-    // if(useGoal)
-    // goalCheckBox.setSelectedCheckbox(goalYes);
-    // else
-    // goalCheckBox.setSelectedCheckbox(goalNo);
-    // }
-
+    
     /**
      * Returns if a GUI needs to be displayed.
      *
@@ -551,20 +493,16 @@ public class ConfigurationPanel extends JPanel {
     public final boolean isDefault() {
         boolean isDefault = true;
 
-        if (!this.getClientIP().equals(
-                DEFAULT_VALUES.DEFAULT_CLIENT_IP.getValue())) {
+        if (!this.getClientIP().equals(DEFAULT_VALUES.DEFAULT_CLIENT_IP.getValue())) {
             isDefault = false;
         }
-        else if (this.getClientPort() != DEFAULT_VALUES.DEFAULT_CLIENT_PORT
-                .getIntValue()) {
+        else if (this.getClientPort() != DEFAULT_VALUES.DEFAULT_CLIENT_PORT.getIntValue()) {
             isDefault = false;
         }
-        else if (!this.getServerIP().equals(
-                DEFAULT_VALUES.DEFAULT_SERVER_IP.getValue())) {
+        else if (!this.getServerIP().equals(DEFAULT_VALUES.DEFAULT_SERVER_IP.getValue())) {
             isDefault = false;
         }
-        else if (this.getServerPort() != DEFAULT_VALUES.DEFAULT_SERVER_PORT
-                .getIntValue()) {
+        else if (this.getServerPort() != DEFAULT_VALUES.DEFAULT_SERVER_PORT.getIntValue()) {
             isDefault = false;
         }
         else if (this.useGui() != DEFAULT_VALUES.USE_GUI.getBooleanValue()) {
