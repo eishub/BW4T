@@ -384,5 +384,49 @@ public class EntityPanelTest {
     	assertTrue(entityPanel.compareBotConfigs());
     }
 
+    /**
+     * Tests the compare isDefault function.
+     */
+    @Test
+    public void testDefault() {
+    	assertTrue(entityPanel.isDefault());
+    }
 
+    /**
+     * Tests the compare isDefault function.
+     */
+    @Test
+    public void testBotnonDefault() {
+        Object[] botData = {"d1", "d2", "1"};
+        
+    	entityPanel.getBotTableModel().addRow(botData);
+    	
+    	assertFalse(entityPanel.isDefault());
+    }
+
+    /**
+     * Tests the compare isDefault function.
+     */
+    @Test
+    public void testEpartnernonDefault() {
+        Object[] epartnerData = {"d1", "1"};
+        
+    	entityPanel.getEPartnerTableModel().addRow(epartnerData);
+    	
+    	assertFalse(entityPanel.isDefault());
+    }
+
+    /**
+     * Tests the compare isDefault function.
+     */
+    @Test
+    public void testBotAndEpartnernonDefault() {
+        Object[] botData = {"d1", "d2", "1"};
+        Object[] epartnerData = {"d1", "1"};
+        
+    	entityPanel.getBotTableModel().addRow(botData);
+    	entityPanel.getEPartnerTableModel().addRow(epartnerData);
+    	
+    	assertFalse(entityPanel.isDefault());
+    }
 }
