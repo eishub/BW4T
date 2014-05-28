@@ -708,4 +708,22 @@ public class EntityPanel extends JPanel {
     	
     	return true;
     }
+    
+    /**
+     * Returns if changes has been made to the default configuration.
+     *
+     * @return whether changes have been made.
+     */
+    public final boolean isDefault() {
+        boolean isDefault = true;
+        
+        if (this.botList.getRowCount() != 0) {
+            isDefault = false;
+        }
+        else if (this.epartnerList.getRowCount() != 0) {
+            isDefault = false;
+        }
+        
+        return isDefault;
+    }
 }
