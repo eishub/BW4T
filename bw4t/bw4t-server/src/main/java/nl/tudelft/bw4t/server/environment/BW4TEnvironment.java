@@ -26,8 +26,10 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBException;
 
+import nl.tudelft.bw4t.eis.RobotEntity;
 import nl.tudelft.bw4t.logger.BotLog;
 import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.robots.Robot;
 import nl.tudelft.bw4t.server.BW4TServer;
 import nl.tudelft.bw4t.server.RobotEntityInt;
 import nl.tudelft.bw4t.visualizations.ServerContextDisplay;
@@ -149,8 +151,8 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		LOGGER.info("Closing the log file.");
 
 		// TODO check if total time is calculated same way as before
-		// FIXME gives a null pointer exception if the server is reset without having any agents attached
-		LOGGER.log(BotLog.BOTLOG, "total time: " + (System.currentTimeMillis() - starttime));
+		// FIXME: BOTLOG gives nullpointer exception if no bots.
+		// LOGGER.log(BotLog.BOTLOG, "total time: " + (System.currentTimeMillis() - starttime));
 		// TODO log AgentRecord, each toSummaryArray of agentRecord of object of each bot
 
 		setState(EnvironmentState.KILLED);
@@ -469,6 +471,20 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		else {
 			LOGGER.info("Launching the BW4T Server without a graphical user interface.");
 		}
+	}
+	
+	@Override
+	public void freeEntity(String entity) throws RelationException, EntityException {
+		super.freeEntity(entity);
+		this.deleteEntity(entity);
+		//this.registerEntity(entity, entity);
+	}
+	
+	@Override
+	public void freePair(String agent, String entity) throws RelationException {
+		RobotEntity robot = (RobotEntity) getEntity(entity);
+		robot.disconnect();
+		super.freePair(agent, entity);
 	}
 
 	/**

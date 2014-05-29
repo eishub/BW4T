@@ -107,7 +107,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
 
 	@Override
 	public List<String> getAgents() {
-		LOGGER.debug("Getting agents.");
 		try {
 			return getClient().getAgents();
 		} catch (RemoteException e) {
@@ -211,7 +210,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
 			getClient().register();
 
 		} catch (RemoteException e) {
-			LOGGER.error("Unable to access the remote environment.");
+			LOGGER.error("Unable to access the remote environment.", e);
 		} catch (MalformedURLException e) {
 			LOGGER.error("The URL provided to connect to the remote environment is invalid.");
 		} catch (NotBoundException e) {
@@ -390,25 +389,33 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
 	@Override
 	public void kill() throws ManagementException {
 		for (BW4TClientGUI renderer : getEntityToGUI().values()) {
-			if (renderer != null) {
+			/*if (renderer != null) {
 				//FIXME renderer.setStop(true);
-			}
+			}*/
+			//renderer.getController().getMapController().setRunning(false);
 		}
 		// copy list, the localAgents list is going to be changes by removing
 		// agents.
 		List<String> allAgents = new ArrayList<String>(localAgents);
 		for (String agentname : allAgents) {
 			try {
+				//unregisterAgent(agentname);
+				for (String entity : getAssociatedEntities(agentname)) {
+					//freePair(agentname, entity);
+					freePair(agentname,entity);
+				}
+				/*freeEntity(agentname);*/
+				//freeAgent(agentname);
 				unregisterAgent(agentname);
-				freeEntity(agentname);
-				freeAgent(agentname);
-			} catch (AgentException | RelationException | EntityException e) {
+				
+			} catch (AgentException | RelationException e) {
 				throw new ManagementException("kill failed because agent could not be freed", e);
 			}
 		}
 		try {
 			getClient().kill();
 			client = null;
+			
 		} catch (Exception e) {
 			throw new ManagementException("problem while killing client", e);
 		}
