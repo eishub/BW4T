@@ -9,6 +9,7 @@ import javax.xml.bind.JAXBException;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import repast.simphony.scenario.ScenarioLoadException;

@@ -162,6 +162,13 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	public void connect() {
 		connected = true;
 	}
+	
+	/**
+	 * called when robot should be disconnected.
+	 */
+	public void disconnect() {
+		connected = false;
+	}
 
 	@Override
 	public boolean equals(Object obj) {

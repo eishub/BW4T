@@ -76,6 +76,7 @@ public class RobotEntity implements RobotEntityInt {
 	 * Here we store data that needs to be locked for a perception cycle. See {@link #initializePerceptionCycle()}.
 	 */
 	private Point2D ourRobotLocation;
+	private Point2D spawnLocation;
 	private Room ourRobotRoom;
 
 	/**
@@ -100,7 +101,24 @@ public class RobotEntity implements RobotEntityInt {
 	 */
 	@Override
 	public void connect() {
+		spawnLocation = new Point2D.Double(ourRobot.getLocation().getX(), ourRobot.getLocation().getY());
 		ourRobot.connect();
+	}
+	
+	/**
+	 * Disconnects the robot from repast.
+	 */
+	public void disconnect(){
+		ourRobot.disconnect();
+		reset();
+	}
+	
+	/**
+	 * Reset the robot's location and should set it to its default spawn state.
+	 */
+	public void reset(){
+		ourRobot.drop();
+		ourRobot.moveTo(this.spawnLocation.getX(), this.spawnLocation.getY());
 	}
 
 	/**

@@ -48,11 +48,11 @@ public class DoorTest {
 	 */
 	@Test
 	public void testDoor_1() {
+		when(context.isEmpty()).thenReturn(true);
 		Door result = new Door(space, context);
 
-		// add additional test code here
 		assertNotNull(result);
-		assertEquals(true, result.isOpen());
+		assertTrue(result.isOpen());
 		assertEquals(null, result.getLocation());
 		assertEquals(0L, result.getId());
 	}

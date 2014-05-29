@@ -74,7 +74,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
 	private static final Logger LOGGER = Logger.getLogger(BW4TClientGUI.class);
 
 	private final BW4TClientGUI that = this;
-	private final ClientController controller;
+	private ClientController controller;
 
 	private JPanel buttonPanel;
 	private JTextArea chatSession = new JTextArea(8, 1);
@@ -165,6 +165,8 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
 			public void windowClosing(WindowEvent e) {
 				LOGGER.info("Exit request received from the Window Manager to close Window of entity: "
 						+ controller.getMapController().getTheBot().getName());
+				controller.getMapController().setRunning(false);
+				dispose();
 				controller.getMapController().removeRenderer(that);
 				try {
 					environment.kill();

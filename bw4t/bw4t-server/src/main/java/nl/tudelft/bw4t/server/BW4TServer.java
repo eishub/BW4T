@@ -76,11 +76,12 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 		try {
 			registry = LocateRegistry.createRegistry(Integer.parseInt(serverPort));
 		} catch (RemoteException e) {
-			LOGGER.warn("Registry is already running. Reconnecting.", e);
+			LOGGER.warn("Registry is already running. Getting running registry instead.");
 			registry = LocateRegistry.getRegistry(Integer.parseInt(serverPort));
 		}
 		servername = "rmi://" + serverIp + ":" + serverPort + "/BW4TServer";
 		Naming.rebind(servername, this);
+		LOGGER.debug("Server bound to: " + servername);
 	}
 
 	public BW4TServer(String serverIp, int serverPort, String motd) throws RemoteException, MalformedURLException {
@@ -164,7 +165,8 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 
 		if (ci.getNumberOfAgents() > 0 && ("unknown".equals(type) || "bot".equals(type))) {
 			notifyFreeBot(client, entity, type, ci);
-		} else if (ci.getNumberOfHumans() > 0 && ("unknown".equals(type) || "human".equals(type))) {
+		}
+		else if (ci.getNumberOfHumans() > 0 && ("unknown".equals(type) || "human".equals(type))) {
 			notifyFreeHuman(client, entity, type, ci);
 
 		}
@@ -430,9 +432,13 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	 */
 	public void takeDown() {
 		try {
-			// registry.unbind(servername); //throws for unknown reason.
+			// Unregister ourself
+			//Naming.unbind(servername);
+
+			// Unexport; this will also remove us from the RMI runtime
 			UnicastRemoteObject.unexportObject(this, true);
-		} catch (NoSuchObjectException e) {
+
+		} catch (RemoteException e) {
 			LOGGER.error("server disconnect RMI failed", e);
 		}
 	}
