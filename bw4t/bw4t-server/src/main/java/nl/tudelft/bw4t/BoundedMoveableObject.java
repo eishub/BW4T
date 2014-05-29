@@ -107,23 +107,55 @@ public abstract class BoundedMoveableObject {
 		space.moveTo(this, x, y);
 	}
 
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
-		return 1; 
+		return 1;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
-		BoundedMoveableObject other = (BoundedMoveableObject) obj;
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null || getClass() != obj.getClass() 
-				|| (boundingBox == null && other.boundingBox != null ) 
-				|| (!boundingBox.equals(other.boundingBox))
-				|| (id != other.id)) {
+		if (obj == null) {
 			return false;
-		} 
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		BoundedMoveableObject other = (BoundedMoveableObject) obj;
+		if (boundingBox == null) {
+			if (other.boundingBox != null) {
+				return false;
+			}
+		}
+		else if (!boundingBox.equals(other.boundingBox)) {
+			return false;
+		}
+		if (context == null) {
+			if (other.context != null) {
+				return false;
+			}
+		}
+		else if (!context.equals(other.context)) {
+			return false;
+		}
+		if (space == null) {
+			if (other.space != null) {
+				return false;
+			}
+		}
+		else if (!space.equals(other.space)) {
+			return false;
+		}
 		return true;
 	}
 

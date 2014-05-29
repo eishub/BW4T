@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -111,11 +112,7 @@ public class BoundedMoveableObjectTest {
 		throws Exception {
 		BoundedMoveableObject fixture = new Door(space, context);
 		Object obj = new Door(space, context);
-
-		boolean result = fixture.equals(obj);
-
-		// add additional test code here
-		assertEquals(true, result);
+		assertTrue(fixture.equals(obj));
 	}
 
 	/**
@@ -130,11 +127,7 @@ public class BoundedMoveableObjectTest {
 		throws Exception {
 		BoundedMoveableObject fixture = new Door(space, context);
 		Object obj = null;
-
-		boolean result = fixture.equals(obj);
-
-		// add additional test code here
-		assertEquals(false, result);
+		assertFalse(fixture.equals(obj));
 	}
 
 	/**
@@ -149,11 +142,7 @@ public class BoundedMoveableObjectTest {
 		throws Exception {
 		BoundedMoveableObject fixture = new Door(space, context);
 		Object obj = new Object();
-
-		boolean result = fixture.equals(obj);
-
-		// add additional test code here
-		assertEquals(false, result);
+		assertFalse(fixture.equals(obj));
 	}
 
 	/**
@@ -168,11 +157,7 @@ public class BoundedMoveableObjectTest {
 		throws Exception {
 		BoundedMoveableObject fixture = new Door(space, context);
 		Object obj = new Door(space, context);
-
-		boolean result = fixture.equals(obj);
-
-		// add additional test code here
-		assertEquals(true, result);
+		assertTrue(fixture.equals(obj));
 	}
 
 	@Test
@@ -191,8 +176,7 @@ public class BoundedMoveableObjectTest {
 		when(context.size()).thenReturn(1);
 		BoundedMoveableObject boundedMoveableObject = new Door(space, context);
 		Object obj = new Door(space, context);
-		boolean result = boundedMoveableObject.equals(obj);
-		assertEquals(false, result);
+		assertTrue(boundedMoveableObject.equals(obj));
 	}
 
 	@Test
