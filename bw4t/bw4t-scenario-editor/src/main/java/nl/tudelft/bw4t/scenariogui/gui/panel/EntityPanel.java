@@ -45,6 +45,11 @@ import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 public class EntityPanel extends JPanel {
 
     /**
+	 * The serial version UID.
+	 */
+	private static final long serialVersionUID = -2143414235581796156L;
+
+	/**
      * The number of bots column.
      */
     private static final String NUMBER_BOTS_COLUMN = "Number of bots";
@@ -339,7 +344,12 @@ public class EntityPanel extends JPanel {
                 return true;
             }*/
 
-            @Override
+            /**
+			 * The generated serial version UID.
+			 */
+			private static final long serialVersionUID = 169379829043336918L;
+
+			@Override
             public Class<?> getColumnClass(int column) {
                 if (column == 2) {
                     return Integer.class;
@@ -373,7 +383,7 @@ public class EntityPanel extends JPanel {
      * Create the dropdown lists in the controllers column.
      */
     public void setUpControllerColumn() {
-        JComboBox controllers = new JComboBox();
+        JComboBox<String> controllers = new JComboBox<String>();
         controllers.addItem("Agent");
         controllers.addItem("Human");
         botTable.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(controllers));
@@ -442,7 +452,12 @@ public class EntityPanel extends JPanel {
                 return false;
             }*/
 
-            @Override
+            /**
+			 * The generated serial version UID.
+			 */
+			private static final long serialVersionUID = 4663078758945562873L;
+
+			@Override
             public Class<?> getColumnClass(int column) {
                 if (column == 1) {
                     return Integer.class;

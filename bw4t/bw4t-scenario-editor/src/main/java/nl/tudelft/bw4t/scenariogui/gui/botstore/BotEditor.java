@@ -15,6 +15,10 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  */
 public class BotEditor extends JFrame {
 	
+	/**
+	 * Random generated serial version UID.
+	 */
+	private static final long serialVersionUID = 8114982191029560097L;
 	/** the name of the window */
 	private String windowName = "Bot Editor";
 	/** the window width*/
