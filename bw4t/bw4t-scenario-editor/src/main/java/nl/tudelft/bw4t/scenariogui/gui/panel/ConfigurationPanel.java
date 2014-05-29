@@ -26,7 +26,9 @@ import nl.tudelft.bw4t.scenariogui.util.Format;
  */
 public class ConfigurationPanel extends JPanel {
     
-    /** Localhost. */
+    /** The "required" serial version UID. */
+	private static final long serialVersionUID = -4149179465776263546L;
+	/** Localhost. */
     private static final String LOCALHOST = "localhost";
     /** True. */
     private static final String TRUE = "true";

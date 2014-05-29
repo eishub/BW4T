@@ -54,13 +54,22 @@ public class EpartnerController {
  * Handles actions of the ResetButton
  */
 class ResetButton implements ActionListener {
-
+	/**
+	 * The frame containing the button.
+	 */
     private EpartnerFrame view;
-    
+    /**
+     * The constructor for this action listener.
+     * @param pview The frame with the button in it.
+     */
     public ResetButton(EpartnerFrame pview) {
         this.view = pview;
     }
-
+    /**
+     * Perform the required action (reset to default
+     * settings).
+     * @param ae The action event triggering this method.
+     */
     public void actionPerformed(ActionEvent ae) {
         view.resetAction();
     }
@@ -70,12 +79,21 @@ class ResetButton implements ActionListener {
  * Handles actions of the CancelButton
  */
 class CancelButton implements ActionListener {
+	/**
+	 * The frame containing the button.
+	 */
     private EpartnerFrame view;
-
+    /**
+     * The constructor for this action listener.
+     * @param pview The frame with the button in it.
+     */
     public CancelButton(EpartnerFrame pview) {
         this.view = pview;
     }
-
+    /**
+     * Perform the required action (close the bot editor).
+     * @param ae The action event triggering this method.
+     */
     public void actionPerformed(ActionEvent ae) {
         view.cancelAction();
     }
@@ -85,12 +103,21 @@ class CancelButton implements ActionListener {
  * Handles actions of the ApplyButton
  */
 class ApplyButton implements ActionListener {
+	/**
+	 * The frame containing the button.
+	 */
     private EpartnerFrame view;
-
+    /**
+     * The constructor for this action listener.
+     * @param pview The frame with the button in it.
+     */
     public ApplyButton(EpartnerFrame pview) {
         this.view = pview;
     }
-
+    /**
+     * Perform the required action (save the settings).
+     * @param ae The action event triggering this method.
+     */
     public void actionPerformed(ActionEvent ae) {
         view.applyAction();
     }
@@ -100,12 +127,21 @@ class ApplyButton implements ActionListener {
  * Handles actions of the LeftAloneCheckBox
  */
 class LeftAloneCheckBox implements ActionListener {
-    private EpartnerFrame view;
-
-    public LeftAloneCheckBox(EpartnerFrame view) {
-        this.view = view;
+	/**
+	 * The frame containing the button.
+	 */
+	private EpartnerFrame view;
+    /**
+     * The constructor for this action listener.
+     * @param pview The frame with the button in it.
+     */
+    public LeftAloneCheckBox(EpartnerFrame pview) {
+        this.view = pview;
     }
-
+    /**
+     * Perform the required action (nothing at the moment).
+     * @param ae The action event triggering this method.
+     */
     public void actionPerformed(ActionEvent ae) {
 
     }
@@ -115,12 +151,21 @@ class LeftAloneCheckBox implements ActionListener {
  * Handles actions of the GPSCheckBox
  */
 class gpsCheckBox implements ActionListener {
-    private EpartnerFrame view;
-
+	/**
+	 * The frame containing the button.
+	 */
+	private EpartnerFrame view;
+    /**
+     * The constructor for this action listener.
+     * @param pview The frame with the button in it.
+     */
     public gpsCheckBox(EpartnerFrame pview) {
         this.view = pview;
     }
-
+    /**
+     * Perform the required action (nothing at the moment).
+     * @param ae The action event triggering this method.
+     */
     public void actionPerformed(ActionEvent ae) {
 
     }
