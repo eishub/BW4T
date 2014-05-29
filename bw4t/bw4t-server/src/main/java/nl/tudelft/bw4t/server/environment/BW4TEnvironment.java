@@ -149,6 +149,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		LOGGER.info("Closing the log file.");
 
 		// TODO check if total time is calculated same way as before
+		// FIXME gives a null pointer exception if the server is reset without having any agents attached
 		LOGGER.log(BotLog.BOTLOG, "total time: " + (System.currentTimeMillis() - starttime));
 		// TODO log AgentRecord, each toSummaryArray of agentRecord of object of each bot
 
