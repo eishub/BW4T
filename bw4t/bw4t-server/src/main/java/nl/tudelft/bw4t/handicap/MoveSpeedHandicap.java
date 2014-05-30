@@ -10,7 +10,7 @@ import repast.simphony.space.continuous.NdPoint;
  * @author Valentine Mairet & Ruben Starmans
  *
  */
-public class MoveSpeedHandicap extends Handicap {
+public class MoveSpeedHandicap extends AbstractHandicapFactory {
 	/**
 	 * modifier for the distance per tick
 	 */
@@ -18,7 +18,7 @@ public class MoveSpeedHandicap extends Handicap {
 	/**
 	 * boolean value to check if the handicap is active or not
 	 */
-	public boolean isActive;
+	private boolean isActive;
 	/**
 	 * Constructor for the handicap
 	 * @param p HandicapInterface of the MoveSpeedHandicap Wraps around
@@ -50,7 +50,7 @@ public class MoveSpeedHandicap extends Handicap {
 		
 					// Angle at which to move
 					double angle = SpatialMath.calcAngleFor2DMovement(robot.space,
-							robot.getLocation(), targetLocation);
+							robot.getLocation(), robot.getTargetLocation());
 		
 					// The displacement of the robot
 					double[] displacement = SpatialMath.getDisplacement(2, 0,
@@ -59,7 +59,6 @@ public class MoveSpeedHandicap extends Handicap {
 					try {
 						// Move the robot to the new position using the displacement
 						robot.moveByDisplacement(displacement[0], displacement[1]);
-						robot.getAgentRecord().setStartedMoving();
 						
 						/**
 						 * Valentine
@@ -90,6 +89,9 @@ public class MoveSpeedHandicap extends Handicap {
 		isActive = false;
 	}
 	
+	/**
+	 * @return speedMod
+	 */	
 	public double getSpeedMod() {
 		return speedMod;
 	}

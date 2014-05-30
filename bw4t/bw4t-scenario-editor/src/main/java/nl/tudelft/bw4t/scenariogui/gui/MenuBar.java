@@ -8,18 +8,13 @@ import javax.swing.JMenuItem;
 
 /**
  * The MenuBar class extends JMenuBar. Used in the ScenarioEditor Frame.
- * <p>
- * @author      Xander Zonneveld
- * @author      Nick Feddes
- * @version     0.1                
- * @since       12-05-2014        
+ *
+ * @author Xander
  */
-
 public class MenuBar extends JMenuBar {
 
     /** Randomly generated serial version. */
     private static final long serialVersionUID = -7693079154027274860L;
-    
     /** The last known file location used to save the configuration. */
     private String lastFileLocation;
 
@@ -66,8 +61,7 @@ public class MenuBar extends JMenuBar {
 
     /**
      * JMenuItem to start a new configuration with the default values filled in.
-     * 
-     * @return The JMenuItem to start a new configuration.
+     * @return The JMenuItem to start a new configuration
      */
     public final JMenuItem getMenuItemFileNew() {
         return fileNew;
@@ -75,7 +69,6 @@ public class MenuBar extends JMenuBar {
 
     /**
      * JMenuItem to open a configuration from a file.
-     * 
      * @return The JMenuItem to open a file
      */
     public final JMenuItem getMenuItemFileOpen() {
@@ -86,7 +79,7 @@ public class MenuBar extends JMenuBar {
      * JMenuItem used to save the configuration
      * to a file at a new file location.
      *
-     * @return The JMenuItem to start a save a file at a new file location.
+     * @return The JMenuItem to start a save a file at a new file location
      */
     public final JMenuItem getMenuItemFileSave() {
         return fileSave;
@@ -94,8 +87,7 @@ public class MenuBar extends JMenuBar {
 
     /**
      * JMenuItem used to save the configuration to a file at a chosen location.
-     * 
-     * @return The JMenuItem to save a file at a chosen location.
+     * @return The JMenuItem to save a file at a chosen location
      */
     public final JMenuItem getMenuItemFileSaveAs() {
         return fileSaveAs;
@@ -103,8 +95,7 @@ public class MenuBar extends JMenuBar {
 
     /**
      * JMenuItem used to exit the program.
-     * 
-     * @return The JMenuItem to exit the program.
+     * @return The JMenuItem to exit the program
      */
     public final JMenuItem getMenuItemFileExit() {
         return fileExit;
@@ -114,7 +105,7 @@ public class MenuBar extends JMenuBar {
      * Variable to get the file location used to save the configuration
      * immediately instead of having to browse to the same location again.
      *
-     * @return The last know file location.
+     * @return the last know file location
      */
     public final String getLastFileLocation() {
         return lastFileLocation;
@@ -123,8 +114,7 @@ public class MenuBar extends JMenuBar {
     /**
      * hasLastFileLocation checks if the current configuration has a
      * known file location which can be used.
-     * 
-     * @return If this configuration has a known file location.
+     * @return if this configuration has a known file location
      */
     public final boolean hasLastFileLocation() {
         return lastFileLocation != null;
@@ -134,7 +124,7 @@ public class MenuBar extends JMenuBar {
      * Variable to save the file location used to save the configuration
      * immediately instead of having to browse to the same location again.
      *
-     * @param fileLocation is the last used file location.
+     * @param fileLocation is the last used file location
      */
     public final void setLastFileLocation(final String fileLocation) {
         this.lastFileLocation = fileLocation;

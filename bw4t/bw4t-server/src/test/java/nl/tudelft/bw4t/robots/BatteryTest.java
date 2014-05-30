@@ -1,6 +1,6 @@
 package nl.tudelft.bw4t.robots;
 import static org.junit.Assert.*;
-import nl.tudelft.bw4t.handicap.Handicap;
+import nl.tudelft.bw4t.handicap.AbstractHandicapFactory;
 import nl.tudelft.bw4t.handicap.HandicapInterface;
 import nl.tudelft.bw4t.robots.Battery;
 import nl.tudelft.bw4t.robots.Robot;
@@ -25,7 +25,7 @@ public class BatteryTest {
 	}
 	@Test
 	public void robotBatteryTest() {
-		Robot r = new Robot("",space,context,true);
+		Robot r = new Robot("",space,context,true,false, 0);
 		assertTrue(r.getBatteryPercentage() == 100);
 		assertTrue(r.getDischargeRate() == 0);
 	}
