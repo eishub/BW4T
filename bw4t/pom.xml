@@ -23,6 +23,9 @@
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<sonar.java.coveragePlugin>cobertura</sonar.java.coveragePlugin>
 		<sonar.cobertura.reportPath>target/site/cobertura/coverage.xml</sonar.cobertura.reportPath>
+		<sonar.junit.reportsPath>target/surefire-reports</sonar.junit.reportsPath>
+		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+		<powermock.version>1.5.4</powermock.version>
 	</properties>
 	<repositories>
 		<repository>
@@ -72,6 +75,9 @@
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>cobertura-maven-plugin</artifactId>
 					<configuration>
+						<instrumentation>
+							<ignoreMethodAnnotation>org.codehaus.mojo.cobertura.IgnoreCoverage</ignoreMethodAnnotation>
+						</instrumentation>
 						<formats>
 							<format>xml</format>
 						</formats>
@@ -107,6 +113,31 @@
 						</execution>
 					</executions>
 				</plugin>
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+              <lifecycleMappingMetadata>
+                  <pluginExecutions>
+                      <pluginExecution>
+                          <pluginExecutionFilter>
+                              <groupId>org.apache.maven.plugins</groupId>
+                              <artifactId>maven-resources-plugin</artifactId>
+                              <versionRange>[2.0,)</versionRange>
+                              <goals>
+                                  <goal>resources</goal>
+                                  <goal>testResources</goal>
+                              </goals>
+                          </pluginExecutionFilter>
+                          <action>
+                              <ignore />
+                          </action>
+                      </pluginExecution>
+                  </pluginExecutions>
+              </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -122,11 +153,36 @@
 			<artifactId>eis</artifactId>
 			<version>0.3</version>
 		</dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>1.9.5</version>
-        </dependency>
+		<dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymock</artifactId>
+			<version>3.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.9.5</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock</artifactId>
+			<version>1.5.4</version>
+			<type>pom</type>
+		</dependency>
 	</dependencies>
 
 	<reporting>
