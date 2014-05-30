@@ -4,5 +4,5 @@
   <fileset name="all" enabled="true" check-config-name="BW4TCheckstyle" local="false">
     <file-match-pattern match-pattern="." include-pattern="true"/>
   </fileset>
-  <filter name="NonSrcDirs" enabled="false"/>
+  <filter name="WriteProtectedFiles" enabled="true"/>
 </fileset-config>

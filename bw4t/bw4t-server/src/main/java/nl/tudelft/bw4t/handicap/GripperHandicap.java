@@ -15,7 +15,7 @@ public class GripperHandicap extends Handicap {
 		super(p);
 		isActive = true;
 		
-		robot.handicapsMap.put("Gripper", this);
+		robot.getHandicapsMap().put("Gripper", this);
 	}
 
 	/**
@@ -26,9 +26,8 @@ public class GripperHandicap extends Handicap {
 	@Override
 	public boolean canPickUp(Block b) {
 		if (isActive) {
-		return false;
-		}
-		else {
+			return false;
+		} else {
 			return super.canPickUp(b);
 		}
 	}
@@ -36,8 +35,7 @@ public class GripperHandicap extends Handicap {
 	/**
 	 * Activate the handicap.
 	 */
-	public void activate()
-	{
+	public void activate() {
 		isActive = true;
 	}
 	
@@ -45,8 +43,7 @@ public class GripperHandicap extends Handicap {
 	 * Deactivate the handicap.
 	 * @param bool
 	 */
-	public void deactivate()
-	{
+	public void deactivate() {
 		isActive = false;
 	}
 }

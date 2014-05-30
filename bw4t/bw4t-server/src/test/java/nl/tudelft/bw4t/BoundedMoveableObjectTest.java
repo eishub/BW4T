@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -111,11 +112,7 @@ public class BoundedMoveableObjectTest {
 		throws Exception {
 		BoundedMoveableObject fixture = new Door(space, context);
 		Object obj = new Door(space, context);
-
-		boolean result = fixture.equals(obj);
-
-		// add additional test code here
-		assertEquals(true, result);
+		assertTrue(fixture.equals(obj));
 	}
 
 	/**
@@ -130,11 +127,7 @@ public class BoundedMoveableObjectTest {
 		throws Exception {
 		BoundedMoveableObject fixture = new Door(space, context);
 		Object obj = null;
-
-		boolean result = fixture.equals(obj);
-
-		// add additional test code here
-		assertEquals(false, result);
+		assertFalse(fixture.equals(obj));
 	}
 
 	/**
@@ -149,11 +142,7 @@ public class BoundedMoveableObjectTest {
 		throws Exception {
 		BoundedMoveableObject fixture = new Door(space, context);
 		Object obj = new Object();
-
-		boolean result = fixture.equals(obj);
-
-		// add additional test code here
-		assertEquals(false, result);
+		assertFalse(fixture.equals(obj));
 	}
 
 	/**
@@ -168,11 +157,36 @@ public class BoundedMoveableObjectTest {
 		throws Exception {
 		BoundedMoveableObject fixture = new Door(space, context);
 		Object obj = new Door(space, context);
+		assertTrue(fixture.equals(obj));
+	}
 
-		boolean result = fixture.equals(obj);
+	@Test
+	public void testEquals_5()
+		throws Exception {
+		BoundedMoveableObject boundedMoveableObject = new Door(space, context);
+		Object obj = boundedMoveableObject;
+		boolean result = boundedMoveableObject.equals(obj);
+		assertEquals(true
+, result);
+	}
 
-		// add additional test code here
-		assertEquals(true, result);
+	@Test
+	public void testEquals_6()
+		throws Exception {
+		when(context.size()).thenReturn(1);
+		BoundedMoveableObject boundedMoveableObject = new Door(space, context);
+		Object obj = new Door(space, context);
+		assertTrue(boundedMoveableObject.equals(obj));
+	}
+
+	@Test
+	public void testEquals_7()
+		throws Exception {
+		BoundedMoveableObject boundedMoveableObject = new Door(space, context);
+		boundedMoveableObject.setSize(2, 3);
+		Object obj = new Door(space, context);
+		boolean result = boundedMoveableObject.equals(obj);
+		assertEquals(false, result);
 	}
 
 	/**

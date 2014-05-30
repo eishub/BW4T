@@ -20,16 +20,20 @@ public class Stepper implements Runnable {
 	/**
 	 * The log4j logger, logs to the console.
 	 */
+	public static final int MIN_DELAY = 10;
+	public static final int MAX_DELAY = 200;
+
+	public static final double MIN_TPS = 5.0;
+	public static final double MAX_TPS = 100.0;
+
 	private static final Logger LOGGER = Logger.getLogger(Stepper.class);
-
-	BW4TRunner runner; // HACK should be private.
-	private String scenarioLocation;
-	private AbstractEnvironment environment;
-	private long loopDelay = 10; // default 10ms between steps
+	// HACK should be private.
+	BW4TRunner runner;
+	private final String scenarioLocation;
+	private final AbstractEnvironment environment;
+	// default 10ms between steps
+	private long loopDelay = 10;
 	private boolean running = true;
-
-	public final static int MIN_DELAY = 10;
-	public final static int MAX_DELAY = 200;
 
 	public Stepper(String scenario, AbstractEnvironment envi) throws ScenarioLoadException {
 		scenarioLocation = scenario;
@@ -70,17 +74,8 @@ public class Stepper implements Runnable {
 		runner = null;
 	}
 
-	/**
-	 * wait till run mode allows us to move the entities.
-	 */
-	private void waitTillWeRun() {
-		while (environment.getState() != EnvironmentState.RUNNING) {
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				LOGGER.warn("Wait for run state was unexpectedly interrupted, returning to wait state.", e);
-			}
-		}
+	public long getDelay() {
+		return loopDelay;
 	}
 
 	/**
@@ -90,11 +85,20 @@ public class Stepper implements Runnable {
 	 *            the value for the delay. Should be at least {@link #MIN_DELAY} .
 	 */
 	public void setDelay(int value) {
-		if (value < MIN_DELAY) {
-			throw new IllegalArgumentException("speed should be >=10 but got " + value);
+		if (value < MIN_DELAY || value > MAX_DELAY) {
+			throw new IllegalArgumentException("speed should be >=" + MIN_DELAY + " and <= " + MAX_DELAY + " but got "
+					+ value);
 		}
 		loopDelay = value;
 
+	}
+
+	public double getTps() {
+		return 1000. / getDelay();
+	}
+
+	public void setTps(double tps) {
+		setDelay((int) (1000. / tps));
 	}
 
 	/**
