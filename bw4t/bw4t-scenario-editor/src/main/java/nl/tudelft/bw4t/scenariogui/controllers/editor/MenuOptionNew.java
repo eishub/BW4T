@@ -14,7 +14,7 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
  * Handles the event to start a new file.
  * <p>
  * @author      Katia Asmoredjo
- * @author		Xander Zonneveld
+ * @author      Xander Zonneveld
  * @version     0.1                
  * @since       12-05-2014        
  */
@@ -41,7 +41,7 @@ class MenuOptionNew extends AbstractMenuOption {
 
         // Check if current config is different from last saved config
         if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())
-        		|| !entityPanel.compareBotConfigs()) {
+                || !entityPanel.compareBotConfigs()) {
             // Check if user wants to save current configuration
             int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
                     null,
@@ -96,12 +96,12 @@ class MenuOptionNew extends AbstractMenuOption {
      * @param entityPanel The EntityPanel which contains the bot list.
      */
     public void resetBotTable(EntityPanel entityPanel) {
-    	DefaultTableModel botTable = entityPanel.getBotTableModel();
-    	int rows = botTable.getRowCount();
-    	
-    	for (int i = rows - 1; i >= 0; i--) {
-    		botTable.removeRow(i);
-    	}
+        DefaultTableModel botTable = entityPanel.getBotTableModel();
+        int rows = botTable.getRowCount();
+        
+        for (int i = rows - 1; i >= 0; i--) {
+            botTable.removeRow(i);
+        }
     }
     
     /**
@@ -109,11 +109,11 @@ class MenuOptionNew extends AbstractMenuOption {
      * @param entityPanel The EntityPanel which contains the epartner list.
      */
     public void resetEpartnerTable(EntityPanel entityPanel) {
-    	DefaultTableModel epartnerTable = entityPanel.getEPartnerTableModel();
-    	int rows = epartnerTable.getRowCount();
-    	
-    	for (int i = rows - 1; i >= 0; i--) {
-    		epartnerTable.removeRow(i);
-    	}
+        DefaultTableModel epartnerTable = entityPanel.getEPartnerTableModel();
+        int rows = epartnerTable.getRowCount();
+        
+        for (int i = rows - 1; i >= 0; i--) {
+            epartnerTable.removeRow(i);
+        }
     }
 }

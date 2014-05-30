@@ -130,7 +130,7 @@ public abstract class AbstractMenuOption implements ActionListener {
             int rows = getController().getMainView().getMainPanel().getEntityPanel().getBotTableModel().getRowCount();
             
             for (int i = 0; i < rows; i++) {
-            	configuration.addBot(getController().getMainView().getMainPanel().getEntityPanel().getBotConfig(i));
+                configuration.addBot(getController().getMainView().getMainPanel().getEntityPanel().getBotConfig(i));
             }
             
             configuration.toXML();

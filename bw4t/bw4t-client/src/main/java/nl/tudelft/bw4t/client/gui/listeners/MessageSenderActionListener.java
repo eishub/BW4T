@@ -20,31 +20,31 @@ import eis.iilang.Percept;
  * @author trens
  */
 public class MessageSenderActionListener extends ClientActionListener {
-	/**
-	 * The log4j Logger which displays logs on console
-	 */
-	private final static Logger LOGGER = Logger.getLogger(MessageSenderActionListener.class);
-	private final BW4TMessage message;
+    /**
+     * The log4j Logger which displays logs on console
+     */
+    private final static Logger LOGGER = Logger.getLogger(MessageSenderActionListener.class);
+    private final BW4TMessage message;
 
-	public MessageSenderActionListener(BW4TMessage message, ClientController controller) {
-		super(controller);
-		this.message = message;
-	}
+    public MessageSenderActionListener(BW4TMessage message, ClientController controller) {
+        super(controller);
+        this.message = message;
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (!Launcher.getEnvironment().isConnectedToGoal()) {
-			try {
-				getController().getHumanAgent().sendMessage("all", message);
-			} catch (Exception e1) {
-				LOGGER.error("Could not send message to all other bots.", e1);
-			}
-		} else {
-			List<Percept> percepts = new LinkedList<Percept>();
-			Percept percept = new Percept("sendMessage", new Identifier("all"), MessageTranslator.translateMessage(
-					message, getController().getMapController().getTheBot().getName()));
-			percepts.add(percept);
-			getController().setToBePerformedAction(percepts);
-		}
-	}
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (!Launcher.getEnvironment().isConnectedToGoal()) {
+            try {
+                getController().getHumanAgent().sendMessage("all", message);
+            } catch (Exception e1) {
+                LOGGER.error("Could not send message to all other bots.", e1);
+            }
+        } else {
+            List<Percept> percepts = new LinkedList<Percept>();
+            Percept percept = new Percept("sendMessage", new Identifier("all"), MessageTranslator.translateMessage(
+                    message, getController().getMapController().getTheBot().getName()));
+            percepts.add(percept);
+            getController().setToBePerformedAction(percepts);
+        }
+    }
 }

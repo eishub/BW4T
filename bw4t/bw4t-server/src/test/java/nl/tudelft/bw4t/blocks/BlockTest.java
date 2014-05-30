@@ -29,278 +29,278 @@ import static org.junit.Assert.*;
 @RunWith(MockitoJUnitRunner.class)
 public class BlockTest {
 
-	@Mock private ContinuousSpace<Object> space;
-	@Mock private Context<Object> context;
-	@Mock private Robot robot;
-	
-	/**
-	 * Run the Block(BlockColor,ContinuousSpace<Object>,Context<Object>) constructor test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 24.05.14 19:21
-	 */
-	@Test
-	public void testBlock_1()
-		throws Exception {
-		BlockColor colorId = BlockColor.BLUE;
-		when(context.isEmpty()).thenReturn(true);
-		Block result = new Block(colorId, space, context);
+    @Mock private ContinuousSpace<Object> space;
+    @Mock private Context<Object> context;
+    @Mock private Robot robot;
+    
+    /**
+     * Run the Block(BlockColor,ContinuousSpace<Object>,Context<Object>) constructor test.
+     *
+     * @throws Exception
+     *
+     * @generatedBy CodePro at 24.05.14 19:21
+     */
+    @Test
+    public void testBlock_1()
+        throws Exception {
+        BlockColor colorId = BlockColor.BLUE;
+        when(context.isEmpty()).thenReturn(true);
+        Block result = new Block(colorId, space, context);
 
-		assertNotNull(result);
-		assertEquals(null, result.getLocation());
-		assertTrue(result.isFree());
-		assertEquals(null, result.getHeldBy());
-		assertEquals(0L, result.getId());
-	}
+        assertNotNull(result);
+        assertEquals(null, result.getLocation());
+        assertTrue(result.isFree());
+        assertEquals(null, result.getHeldBy());
+        assertEquals(0L, result.getId());
+    }
 
-	/**
-	 * Run the Color getColor() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 24.05.14 19:21
-	 */
-	@Test
-	public void testGetColor_1()
-		throws Exception {
-		Block fixture = new Block(BlockColor.BLUE, space, context);
+    /**
+     * Run the Color getColor() method test.
+     *
+     * @throws Exception
+     *
+     * @generatedBy CodePro at 24.05.14 19:21
+     */
+    @Test
+    public void testGetColor_1()
+        throws Exception {
+        Block fixture = new Block(BlockColor.BLUE, space, context);
 
-		Color result = fixture.getColor();
+        Color result = fixture.getColor();
 
-		// add additional test code here
-		assertNotNull(result);
-		assertEquals(0, result.getGreen());
-		assertEquals(255, result.getBlue());
-		assertEquals(0, result.getRed());
-		assertEquals(-16776961, result.getRGB());
-		assertEquals(255, result.getAlpha());
-		assertEquals(1, result.getTransparency());
-	}
+        // add additional test code here
+        assertNotNull(result);
+        assertEquals(0, result.getGreen());
+        assertEquals(255, result.getBlue());
+        assertEquals(0, result.getRed());
+        assertEquals(-16776961, result.getRGB());
+        assertEquals(255, result.getAlpha());
+        assertEquals(1, result.getTransparency());
+    }
 
-	/**
-	 * Run the BlockColor getColorId() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 24.05.14 19:21
-	 */
-	@Test
-	public void testGetColorId_1()
-		throws Exception {
-		Block fixture = new Block(BlockColor.BLUE, space, context);
+    /**
+     * Run the BlockColor getColorId() method test.
+     *
+     * @throws Exception
+     *
+     * @generatedBy CodePro at 24.05.14 19:21
+     */
+    @Test
+    public void testGetColorId_1()
+        throws Exception {
+        Block fixture = new Block(BlockColor.BLUE, space, context);
 
-		BlockColor result = fixture.getColorId();
+        BlockColor result = fixture.getColorId();
 
-		// add additional test code here
-		assertNotNull(result);
-		assertEquals("Blue", result.getName());
-		assertEquals(new Character('B'), result.getLetter());
-		assertEquals("BLUE", result.name());
-		assertEquals("BLUE", result.toString());
-		assertEquals(0, result.ordinal());
-	}
+        // add additional test code here
+        assertNotNull(result);
+        assertEquals("Blue", result.getName());
+        assertEquals(new Character('B'), result.getLetter());
+        assertEquals("BLUE", result.name());
+        assertEquals("BLUE", result.toString());
+        assertEquals(0, result.ordinal());
+    }
 
-	/**
-	 * Run the Robot getHeldBy() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 24.05.14 19:21
-	 */
-	@Test
-	public void testGetHeldBy_1()
-		throws Exception {
-		Block fixture = new Block(BlockColor.BLUE, space, context);
-		fixture.setHeldBy(robot);
+    /**
+     * Run the Robot getHeldBy() method test.
+     *
+     * @throws Exception
+     *
+     * @generatedBy CodePro at 24.05.14 19:21
+     */
+    @Test
+    public void testGetHeldBy_1()
+        throws Exception {
+        Block fixture = new Block(BlockColor.BLUE, space, context);
+        fixture.setHeldBy(robot);
 
-		Robot result = fixture.getHeldBy();
+        Robot result = fixture.getHeldBy();
 
-		// add additional test code here
-		assertNotNull(result);
-		assertEquals(result, robot);
-	}
+        // add additional test code here
+        assertNotNull(result);
+        assertEquals(result, robot);
+    }
 
-	/**
-	 * Run the NdPoint getLocation() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 24.05.14 19:21
-	 */
-	@Test
-	public void testGetLocation_1()
-		throws Exception {
-		Block fixture = new Block(BlockColor.BLUE, space, context);
-		fixture.setHeldBy(robot);
+    /**
+     * Run the NdPoint getLocation() method test.
+     *
+     * @throws Exception
+     *
+     * @generatedBy CodePro at 24.05.14 19:21
+     */
+    @Test
+    public void testGetLocation_1()
+        throws Exception {
+        Block fixture = new Block(BlockColor.BLUE, space, context);
+        fixture.setHeldBy(robot);
 
-		NdPoint result = fixture.getLocation();
+        NdPoint result = fixture.getLocation();
 
-		// add additional test code here
-		assertEquals(null, result);
-		verify(robot).getLocation();
-	}
+        // add additional test code here
+        assertEquals(null, result);
+        verify(robot).getLocation();
+    }
 
-	/**
-	 * Run the NdPoint getLocation() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 24.05.14 19:21
-	 */
-	@Test
-	public void testGetLocation_2()
-		throws Exception {
-		Block fixture = new Block(BlockColor.BLUE, space, context);
-		fixture.setHeldBy((Robot) null);
+    /**
+     * Run the NdPoint getLocation() method test.
+     *
+     * @throws Exception
+     *
+     * @generatedBy CodePro at 24.05.14 19:21
+     */
+    @Test
+    public void testGetLocation_2()
+        throws Exception {
+        Block fixture = new Block(BlockColor.BLUE, space, context);
+        fixture.setHeldBy((Robot) null);
 
-		NdPoint result = fixture.getLocation();
+        NdPoint result = fixture.getLocation();
 
-		// add additional test code here
-		assertEquals(null, result);
-		verify(space).getLocation(fixture);
-		verifyNoMoreInteractions(robot);
-	}
+        // add additional test code here
+        assertEquals(null, result);
+        verify(space).getLocation(fixture);
+        verifyNoMoreInteractions(robot);
+    }
 
-	/**
-	 * Run the boolean isFree() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 24.05.14 19:21
-	 */
-	@Test
-	public void testIsFree_1()
-		throws Exception {
-		Block fixture = new Block(BlockColor.BLUE, space, context);
-		fixture.setHeldBy((Robot) null);
+    /**
+     * Run the boolean isFree() method test.
+     *
+     * @throws Exception
+     *
+     * @generatedBy CodePro at 24.05.14 19:21
+     */
+    @Test
+    public void testIsFree_1()
+        throws Exception {
+        Block fixture = new Block(BlockColor.BLUE, space, context);
+        fixture.setHeldBy((Robot) null);
 
-		boolean result = fixture.isFree();
+        boolean result = fixture.isFree();
 
-		// add additional test code here
-		assertTrue( result);
-	}
+        // add additional test code here
+        assertTrue( result);
+    }
 
-	/**
-	 * Run the boolean isFree() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 24.05.14 19:21
-	 */
-	@Test
-	public void testIsFree_2()
-		throws Exception {
-		Block fixture = new Block(BlockColor.BLUE, space, context);
-		fixture.setHeldBy(robot);
+    /**
+     * Run the boolean isFree() method test.
+     *
+     * @throws Exception
+     *
+     * @generatedBy CodePro at 24.05.14 19:21
+     */
+    @Test
+    public void testIsFree_2()
+        throws Exception {
+        Block fixture = new Block(BlockColor.BLUE, space, context);
+        fixture.setHeldBy(robot);
 
-		boolean result = fixture.isFree();
+        boolean result = fixture.isFree();
 
-		// add additional test code here
-		assertFalse(result);
-	}
+        // add additional test code here
+        assertFalse(result);
+    }
 
-	/**
-	 * Run the void setColorGrey() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 24.05.14 19:21
-	 */
-	@Test
-	public void testSetColorGrey_1()
-		throws Exception {
-		Block fixture = new Block(BlockColor.BLUE, space, context);
+    /**
+     * Run the void setColorGrey() method test.
+     *
+     * @throws Exception
+     *
+     * @generatedBy CodePro at 24.05.14 19:21
+     */
+    @Test
+    public void testSetColorGrey_1()
+        throws Exception {
+        Block fixture = new Block(BlockColor.BLUE, space, context);
 
-		fixture.setColorGrey();
-		
-		Color result = fixture.getColor();
+        fixture.setColorGrey();
+        
+        Color result = fixture.getColor();
 
-		// add additional test code here
-		assertEquals(result.getBlue(), 182);
-		assertEquals(result.getRed(), 182);
-		assertEquals(result.getGreen(), 182);
-	}
+        // add additional test code here
+        assertEquals(result.getBlue(), 182);
+        assertEquals(result.getRed(), 182);
+        assertEquals(result.getGreen(), 182);
+    }
 
-	/**
-	 * Run the void setColorGrey() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 24.05.14 19:21
-	 */
-	@Test
-	public void testSetColorGrey_2()
-		throws Exception {
-		Block fixture = new Block(BlockColor.GREEN, space, context);
+    /**
+     * Run the void setColorGrey() method test.
+     *
+     * @throws Exception
+     *
+     * @generatedBy CodePro at 24.05.14 19:21
+     */
+    @Test
+    public void testSetColorGrey_2()
+        throws Exception {
+        Block fixture = new Block(BlockColor.GREEN, space, context);
 
-		fixture.setColorGrey();
-		
-		Color result = fixture.getColor();
+        fixture.setColorGrey();
+        
+        Color result = fixture.getColor();
 
-		// add additional test code here
-		assertEquals(result.getBlue(), 18);
-		assertEquals(result.getRed(), 18);
-		assertEquals(result.getGreen(), 18);
-	}
+        // add additional test code here
+        assertEquals(result.getBlue(), 18);
+        assertEquals(result.getRed(), 18);
+        assertEquals(result.getGreen(), 18);
+    }
 
-	/**
-	 * Run the void setHeldBy(Robot) method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 24.05.14 19:21
-	 */
-	@Test
-	public void testSetHeldBy_1()
-		throws Exception {
-		Block fixture = new Block(BlockColor.BLUE, space, context);
-		
-		assertNull(fixture.getHeldBy());
-		fixture.setHeldBy(robot);
+    /**
+     * Run the void setHeldBy(Robot) method test.
+     *
+     * @throws Exception
+     *
+     * @generatedBy CodePro at 24.05.14 19:21
+     */
+    @Test
+    public void testSetHeldBy_1()
+        throws Exception {
+        Block fixture = new Block(BlockColor.BLUE, space, context);
+        
+        assertNull(fixture.getHeldBy());
+        fixture.setHeldBy(robot);
 
-		assertEquals(robot, fixture.getHeldBy());
-		
-		fixture.setHeldBy(null);
-		assertNull(fixture.getHeldBy());
-	}
+        assertEquals(robot, fixture.getHeldBy());
+        
+        fixture.setHeldBy(null);
+        assertNull(fixture.getHeldBy());
+    }
 
-	/**
-	 * Perform pre-test initialization.
-	 *
-	 * @throws Exception
-	 *         if the initialization fails for some reason
-	 *
-	 * @generatedBy CodePro at 24.05.14 19:21
-	 */
-	@Before
-	public void setUp()
-		throws Exception {
-		// add additional set up code here
-	}
+    /**
+     * Perform pre-test initialization.
+     *
+     * @throws Exception
+     *         if the initialization fails for some reason
+     *
+     * @generatedBy CodePro at 24.05.14 19:21
+     */
+    @Before
+    public void setUp()
+        throws Exception {
+        // add additional set up code here
+    }
 
-	/**
-	 * Perform post-test clean-up.
-	 *
-	 * @throws Exception
-	 *         if the clean-up fails for some reason
-	 *
-	 * @generatedBy CodePro at 24.05.14 19:21
-	 */
-	@After
-	public void tearDown()
-		throws Exception {
-		// Add additional tear down code here
-	}
+    /**
+     * Perform post-test clean-up.
+     *
+     * @throws Exception
+     *         if the clean-up fails for some reason
+     *
+     * @generatedBy CodePro at 24.05.14 19:21
+     */
+    @After
+    public void tearDown()
+        throws Exception {
+        // Add additional tear down code here
+    }
 
-	/**
-	 * Launch the test.
-	 *
-	 * @param args the command line arguments
-	 *
-	 * @generatedBy CodePro at 24.05.14 19:21
-	 */
-	public static void main(String[] args) {
-		new org.junit.runner.JUnitCore().run(BlockTest.class);
-	}
+    /**
+     * Launch the test.
+     *
+     * @param args the command line arguments
+     *
+     * @generatedBy CodePro at 24.05.14 19:21
+     */
+    public static void main(String[] args) {
+        new org.junit.runner.JUnitCore().run(BlockTest.class);
+    }
 }

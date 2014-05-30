@@ -32,93 +32,93 @@ import repast.simphony.scenario.ScenarioLoadException;
  */
 public class BW4TRunner extends AbstractRunner {
 
-	/**
-	 * The log4j logger, logs to the console.
-	 */
-	private static final Logger LOGGER = Logger.getLogger(BW4TRunner.class);
+    /**
+     * The log4j logger, logs to the console.
+     */
+    private static final Logger LOGGER = Logger.getLogger(BW4TRunner.class);
 
-	private RunEnvironmentBuilder runEnvironmentBuilder;
-	protected Controller bw4tController;
-	protected boolean pauseRunner = false;
-	protected Object monitor = new Object();
-	protected SweeperProducer producer;
-	private ISchedule schedule;
+    private RunEnvironmentBuilder runEnvironmentBuilder;
+    protected Controller bw4tController;
+    protected boolean pauseRunner = false;
+    protected Object monitor = new Object();
+    protected SweeperProducer producer;
+    private ISchedule schedule;
 
-	public BW4TRunner() {
-		runEnvironmentBuilder = new DefaultRunEnvironmentBuilder(this, true);
-		bw4tController = new DefaultController(runEnvironmentBuilder);
-		bw4tController.setScheduleRunner(this);
-	}
+    public BW4TRunner() {
+        runEnvironmentBuilder = new DefaultRunEnvironmentBuilder(this, true);
+        bw4tController = new DefaultController(runEnvironmentBuilder);
+        bw4tController.setScheduleRunner(this);
+    }
 
-	public void load(File scenarioDir) throws ScenarioLoadException {
-		if (scenarioDir.exists()) {
-			BatchScenarioLoader loader = new BatchScenarioLoader(scenarioDir);
-			ControllerRegistry registry = loader.load(runEnvironmentBuilder);
-			bw4tController.setControllerRegistry(registry);
-		}
-		else {
-			LOGGER.fatal("Scenario directory was not found.");
-			return;
-		}
+    public void load(File scenarioDir) throws ScenarioLoadException {
+        if (scenarioDir.exists()) {
+            BatchScenarioLoader loader = new BatchScenarioLoader(scenarioDir);
+            ControllerRegistry registry = loader.load(runEnvironmentBuilder);
+            bw4tController.setControllerRegistry(registry);
+        }
+        else {
+            LOGGER.fatal("Scenario directory was not found.");
+            return;
+        }
 
-		bw4tController.batchInitialize();
-		bw4tController.runParameterSetters(null);
-	}
+        bw4tController.batchInitialize();
+        bw4tController.runParameterSetters(null);
+    }
 
-	public void runInitialize() {
-		BW4TParameters params = new BW4TParameters();
-		bw4tController.runInitialize(params);
-		schedule = RunState.getInstance().getScheduleRegistry().getModelSchedule();
-		fireStartedMessage();
-	}
+    public void runInitialize() {
+        BW4TParameters params = new BW4TParameters();
+        bw4tController.runInitialize(params);
+        schedule = RunState.getInstance().getScheduleRegistry().getModelSchedule();
+        fireStartedMessage();
+    }
 
-	public void cleanUpRun() {
-		bw4tController.runCleanup();
-	}
+    public void cleanUpRun() {
+        bw4tController.runCleanup();
+    }
 
-	public void cleanUpBatch() {
-		bw4tController.batchCleanup();
-	}
+    public void cleanUpBatch() {
+        bw4tController.batchCleanup();
+    }
 
-	// returns the tick count of the next scheduled item
-	public double getNextScheduledTime() {
-		return ((Schedule) RunEnvironment.getInstance().getCurrentSchedule()).peekNextAction().getNextTime();
-	}
+    // returns the tick count of the next scheduled item
+    public double getNextScheduledTime() {
+        return ((Schedule) RunEnvironment.getInstance().getCurrentSchedule()).peekNextAction().getNextTime();
+    }
 
-	/**
-	 * see {@link ISchedule#getModelActionCount()}.
-	 */
-	public int getModelActionCount() {
-		return schedule.getModelActionCount();
-	}
+    /**
+     * see {@link ISchedule#getModelActionCount()}.
+     */
+    public int getModelActionCount() {
+        return schedule.getModelActionCount();
+    }
 
-	/**
-	 * see {@link ISchedule#getActionCount()}.
-	 */
-	public int getActionCount() {
-		return schedule.getActionCount();
-	}
+    /**
+     * see {@link ISchedule#getActionCount()}.
+     */
+    public int getActionCount() {
+        return schedule.getActionCount();
+    }
 
-	// Step the schedule
-	public void step() {
-		schedule.execute();
-	}
+    // Step the schedule
+    public void step() {
+        schedule.execute();
+    }
 
-	// stop the schedule
-	public void stop() {
-		if (schedule != null) {
-			schedule.executeEndActions();
-			fireStoppedMessage();
-		}
-	}
+    // stop the schedule
+    public void stop() {
+        if (schedule != null) {
+            schedule.executeEndActions();
+            fireStoppedMessage();
+        }
+    }
 
-	public void setFinishing(boolean fin) {
-		schedule.setFinishing(fin);
-	}
+    public void setFinishing(boolean fin) {
+        schedule.setFinishing(fin);
+    }
 
-	public void execute(RunState toExecuteOn) {
-		// required AbstractRunner stub. We will control the
-		// schedule directly.
-	}
+    public void execute(RunState toExecuteOn) {
+        // required AbstractRunner stub. We will control the
+        // schedule directly.
+    }
 
 }

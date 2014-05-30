@@ -10,9 +10,9 @@ import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditor;
  * @author Arun
  */
 class CancelButton implements ActionListener {
-	/**
-	 * The GUI to be disposed.
-	 */
+    /**
+     * The GUI to be disposed.
+     */
     private BotEditor view;
 
     /**
@@ -27,6 +27,6 @@ class CancelButton implements ActionListener {
      * @param ae the action event causing the method to be invoked.
      */
     public void actionPerformed(ActionEvent ae) {
-    	view.dispose();
+        view.dispose();
     }
 }
