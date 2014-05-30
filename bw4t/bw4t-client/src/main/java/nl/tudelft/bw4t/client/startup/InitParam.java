@@ -54,7 +54,7 @@ public enum InitParam {
 	 */
 	KILL("");
 
-	private final String defaultvalue;
+	private String defaultvalue;
 
 	/**
 	 * Store the program-wide parameters given to the {@link RemoteEnvironment}.
@@ -147,4 +147,8 @@ public enum InitParam {
 		}
 		return parameters.get(name);
 	}
+
+	public void setDefaultValue(String defaultvalue) {
+        this.defaultvalue = defaultvalue;
+    }
 }
