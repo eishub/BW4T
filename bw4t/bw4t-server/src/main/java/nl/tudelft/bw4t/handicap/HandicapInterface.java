@@ -2,8 +2,8 @@ package nl.tudelft.bw4t.handicap;
 
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.doors.Door;
-import nl.tudelft.bw4t.robots.MoveType;
 import nl.tudelft.bw4t.robots.Robot;
+import nl.tudelft.bw4t.robots.Robot.MoveType;
 import nl.tudelft.bw4t.zone.Zone;
 /**
  * This interface contains all the methods in Robot that the handicaps will affect. 

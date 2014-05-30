@@ -59,7 +59,6 @@ public class MoveSpeedHandicap extends AbstractHandicapFactory {
 					try {
 						// Move the robot to the new position using the displacement
 						robot.moveByDisplacement(displacement[0], displacement[1]);
-						BW4TLogger.getInstance().logMoving(robot.getName());
 						
 						/**
 						 * Valentine

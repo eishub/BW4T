@@ -44,7 +44,6 @@ public class ObjectInformation {
 			return false;
 		if (id != other.id)
 			return false;
-		}
 		return true;
 	}
 }
