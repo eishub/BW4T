@@ -1,21 +1,21 @@
 package nl.tudelft.bw4t.eis;
 
 public class ObjectInformation {
-	private double x, y;
+	private double X, Y;
 	private long id;
 
-	public ObjectInformation(double x, double y, long id) {
-		this.x = x;
-		this.y = y;
+	public ObjectInformation(double X, double Y, long id) {
+		this.X = X;
+		this.Y = Y;
 		this.id = id;
 	}
 
 	public double getX() {
-		return x;
+		return X;
 	}
 
 	public double getY() {
-		return y;
+		return Y;
 	}
 
 	public long getId() {
@@ -27,9 +27,9 @@ public class ObjectInformation {
 		final int prime = 31;
 		int result = 1;
 		long temp;
-		temp = Double.doubleToLongBits(x);
+		temp = Double.doubleToLongBits(X);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(y);
+		temp = Double.doubleToLongBits(Y);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
@@ -38,14 +38,12 @@ public class ObjectInformation {
 	@Override
 	public boolean equals(Object obj) {
 		ObjectInformation other = (ObjectInformation) obj;
-		if (this == obj) {
-			return true;
-		}
-		else if (obj == null || (getClass() != obj.getClass())
-				|| (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
-				|| (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y)) || (id != other.id)) {
+		if (Double.doubleToLongBits(X) != Double.doubleToLongBits(other.X))
 			return false;
-		}
+		if (Double.doubleToLongBits(Y) != Double.doubleToLongBits(other.Y))
+			return false;
+		if (id != other.id)
+			return false;
 		return true;
 	}
 }

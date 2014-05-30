@@ -27,11 +27,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+
 /**
- * <p>
- * @author        
- * @version     0.1                
- * @since       15-05-2014        
+ * Created on 15-05-2014.
  */
 public class ScenarioEditorTest {
 
@@ -74,15 +72,6 @@ public class ScenarioEditorTest {
     }
 
     /**
-     * Close the ScenarioEditor to prevent to many windows from cluttering
-     * the screen during the running of the tests
-     */
-    @After
-    public final void closeEditor() {
-        editor.dispose();
-    }
-
-    /**
      * Tests whether the active pane gets set correctly.
      */
     @Test
@@ -93,7 +82,7 @@ public class ScenarioEditorTest {
         editor.setActivePane(panel);
         assertEquals(panel, editor.getActivePane());
     }
-	
+
 	/**
 	 * Tests whether the JAXBException is handled correctly
 	 *
@@ -104,13 +93,13 @@ public class ScenarioEditorTest {
 	@Test
 	public void testJAXBException() throws FileNotFoundException, JAXBException {
 		YesMockOptionPrompt yesMockOption = spy(new YesMockOptionPrompt());
-		
+
 		// Setup the behaviour
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.getSelectedFile()).thenReturn(new File(FILE_OPEN_PATH));
-        
+
         ScenarioEditor.setOptionPrompt(yesMockOption);
-        
+
         editor.getTopMenuBar().getMenuItemFileOpen().doClick();
 
         // Finally make sure the confirmation dialog was called.

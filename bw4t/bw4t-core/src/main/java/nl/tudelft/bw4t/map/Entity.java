@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class Entity implements Serializable {
     public enum EntityType {
         NORMAL, JAVA
-    }
+    };
 
     private String name = "-";
     /**
