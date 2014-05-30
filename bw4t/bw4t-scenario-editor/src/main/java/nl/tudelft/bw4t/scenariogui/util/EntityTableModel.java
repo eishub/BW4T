@@ -11,9 +11,9 @@ import javax.swing.table.DefaultTableModel;
 public class EntityTableModel extends DefaultTableModel {
 
     /** Randomly generated serial version. */
-	private static final long serialVersionUID = -662539737379069835L;
+    private static final long serialVersionUID = -662539737379069835L;
 
-	/**
+    /**
      * The column class for the tables in the entity panel
      * @param column The column
      * @return The column class

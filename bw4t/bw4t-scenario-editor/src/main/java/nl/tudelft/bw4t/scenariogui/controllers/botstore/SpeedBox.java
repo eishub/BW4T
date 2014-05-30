@@ -11,26 +11,26 @@ import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
  * @author Tim
  */
 public class SpeedBox implements ActionListener {
-	/**
-	 * The panel containing the check box.
-	 */
-	private BotEditorPanel view;
-	/**
+    /**
+     * The panel containing the check box.
+     */
+    private BotEditorPanel view;
+    /**
      * Constructor.
      * @param pview The panel of the jump box.
      */
-	public SpeedBox(BotEditorPanel pview) {
-		this.view = pview;
-	}
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		JSlider speedSlider = view.getSpeedSlider();
-		if (view.getmovespeedCheckbox().isSelected()) {
-			speedSlider.setEnabled(true);
-		}
-		else {
-			speedSlider.setEnabled(false);
-			speedSlider.setValue(100);
-		}
-	}
+    public SpeedBox(BotEditorPanel pview) {
+        this.view = pview;
+    }
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+        JSlider speedSlider = view.getSpeedSlider();
+        if (view.getmovespeedCheckbox().isSelected()) {
+            speedSlider.setEnabled(true);
+        }
+        else {
+            speedSlider.setEnabled(false);
+            speedSlider.setValue(100);
+        }
+    }
 }

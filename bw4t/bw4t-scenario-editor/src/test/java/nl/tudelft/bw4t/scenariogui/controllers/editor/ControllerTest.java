@@ -18,7 +18,7 @@ import static org.mockito.Mockito.spy;
  * Tests the controllers class. It's near impossible to get the save button.
  * <p>
  * @author      Nick Feddes
- * @author		Xander Zonneveld
+ * @author      Xander Zonneveld
  * @version     0.1                
  * @since       12-05-2014        
  */

@@ -11,39 +11,39 @@ import nl.tudelft.bw4t.zone.Zone;
  *
  */
 public interface HandicapInterface {
-	/**
-	 * @param hI sets the parent of a handicap to hI
-	 */
-	void setParent(HandicapInterface hI);
-	/**
-	 * @return the parent of a handicap
-	 */
-	HandicapInterface getParent();
-	
-	/**
-	 * GripperHandicap. Check if robot can pick up a block.
-	 * @param b Block the block to check
-	 * @return false if it cannot pick it up, true if it can
-	 */
-	boolean canPickUp(Block b);
-	
-	/**
-	 * Method to move the robot
-	 * MoveSpeedHandicap.
-	 * The robot is immovable if speed is 0.
-	 */
-	void move();
-	
-	/**
-	 * SizeOverloadHandicap
-	 * @param startzone current zone
-	 * @param endzone zone where the robot tries to move to
-	 * @param door which is between the two zones
-	 * @return true if the endzone can be accessed
-	 */
-	MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door);
-	/**
-	 * @return the Robot which is the super parent of the current handicap
-	 */
-	Robot getSuperParent();	
+    /**
+     * @param hI sets the parent of a handicap to hI
+     */
+    void setParent(HandicapInterface hI);
+    /**
+     * @return the parent of a handicap
+     */
+    HandicapInterface getParent();
+    
+    /**
+     * GripperHandicap. Check if robot can pick up a block.
+     * @param b Block the block to check
+     * @return false if it cannot pick it up, true if it can
+     */
+    boolean canPickUp(Block b);
+    
+    /**
+     * Method to move the robot
+     * MoveSpeedHandicap.
+     * The robot is immovable if speed is 0.
+     */
+    void move();
+    
+    /**
+     * SizeOverloadHandicap
+     * @param startzone current zone
+     * @param endzone zone where the robot tries to move to
+     * @param door which is between the two zones
+     * @return true if the endzone can be accessed
+     */
+    MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door);
+    /**
+     * @return the Robot which is the super parent of the current handicap
+     */
+    Robot getSuperParent(); 
 }

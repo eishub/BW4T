@@ -144,18 +144,18 @@ public class EntityPanelTest {
      */
     @Test
     public void testModifyBotNoSelection() {
-    	NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
-    	ScenarioEditor.setOptionPrompt(spyOption);
-    	
-    	/* Add a bot to the list */
-    	spyEntityPanel.getNewBotButton().doClick();
-    	
-    	/* Attempt to modify the bot */
-    	spyEntityPanel.getModifyBotButton().doClick();
-    	
-    	/* Check if the warning message is shown  */
-    	verify(spyOption, times(1)).showMessageDialog(
-    			null, "Please select the bot you want to modify.");
+        NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
+        ScenarioEditor.setOptionPrompt(spyOption);
+        
+        /* Add a bot to the list */
+        spyEntityPanel.getNewBotButton().doClick();
+        
+        /* Attempt to modify the bot */
+        spyEntityPanel.getModifyBotButton().doClick();
+        
+        /* Check if the warning message is shown  */
+        verify(spyOption, times(1)).showMessageDialog(
+                null, "Please select the bot you want to modify.");
     }
 
     /**
@@ -209,7 +209,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteBotNoSelection() {
-    	NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
+        NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
         ScenarioEditor.setOptionPrompt(spyOption);
 
         /* Add a bot to the list */
@@ -259,18 +259,18 @@ public class EntityPanelTest {
      */
     @Test
     public void testModifyEPartnerNoSelection() {
-    	NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
-    	ScenarioEditor.setOptionPrompt(spyOption);
-    	
-    	/* Add an E-partner to the list */
-    	spyEntityPanel.getNewEPartnerButton().doClick();
-    	
-    	/* Attempt to modify the E-partner */
-    	spyEntityPanel.getModifyEPartnerButton().doClick();
-    	
-    	/* Check if the warning message is shown  */
-    	verify(spyOption, times(1)).showMessageDialog(
-    			null, "Please select the E-partner you want to modify.");
+        NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
+        ScenarioEditor.setOptionPrompt(spyOption);
+        
+        /* Add an E-partner to the list */
+        spyEntityPanel.getNewEPartnerButton().doClick();
+        
+        /* Attempt to modify the E-partner */
+        spyEntityPanel.getModifyEPartnerButton().doClick();
+        
+        /* Check if the warning message is shown  */
+        verify(spyOption, times(1)).showMessageDialog(
+                null, "Please select the E-partner you want to modify.");
     }
 
     /**
@@ -340,7 +340,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteEPartnerSelection() {
-    	NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
+        NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
         ScenarioEditor.setOptionPrompt(spyOption);
 
         /* Add an E-partner to the list */
@@ -354,7 +354,7 @@ public class EntityPanelTest {
         
         /* Check if the warning message is shown */
         verify(spyOption, times(1)).showMessageDialog(
-        		null, "Please select the E-partner you want to delete.");
+                null, "Please select the E-partner you want to delete.");
     }
 
 
@@ -373,15 +373,15 @@ public class EntityPanelTest {
      */
     @Test
     public void testCompareBotConfigs() {
-    	assertTrue(entityPanel.compareBotConfigs());
-    	
-    	entityPanel.getBotConfigs().add(new BotConfig());
-    	
-    	assertFalse(entityPanel.compareBotConfigs());
-    	
-    	entityPanel.updateBotConfigs();
-    	
-    	assertTrue(entityPanel.compareBotConfigs());
+        assertTrue(entityPanel.compareBotConfigs());
+        
+        entityPanel.getBotConfigs().add(new BotConfig());
+        
+        assertFalse(entityPanel.compareBotConfigs());
+        
+        entityPanel.updateBotConfigs();
+        
+        assertTrue(entityPanel.compareBotConfigs());
     }
 
     /**
@@ -389,7 +389,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testDefault() {
-    	assertTrue(entityPanel.isDefault());
+        assertTrue(entityPanel.isDefault());
     }
 
     /**
@@ -399,9 +399,9 @@ public class EntityPanelTest {
     public void testBotnonDefault() {
         Object[] botData = {"d1", "d2", "1"};
         
-    	entityPanel.getBotTableModel().addRow(botData);
-    	
-    	assertFalse(entityPanel.isDefault());
+        entityPanel.getBotTableModel().addRow(botData);
+        
+        assertFalse(entityPanel.isDefault());
     }
 
     /**
@@ -411,9 +411,9 @@ public class EntityPanelTest {
     public void testEpartnernonDefault() {
         Object[] epartnerData = {"d1", "1"};
         
-    	entityPanel.getEPartnerTableModel().addRow(epartnerData);
-    	
-    	assertFalse(entityPanel.isDefault());
+        entityPanel.getEPartnerTableModel().addRow(epartnerData);
+        
+        assertFalse(entityPanel.isDefault());
     }
 
     /**
@@ -424,9 +424,9 @@ public class EntityPanelTest {
         Object[] botData = {"d1", "d2", "1"};
         Object[] epartnerData = {"d1", "1"};
         
-    	entityPanel.getBotTableModel().addRow(botData);
-    	entityPanel.getEPartnerTableModel().addRow(epartnerData);
-    	
-    	assertFalse(entityPanel.isDefault());
+        entityPanel.getBotTableModel().addRow(botData);
+        entityPanel.getEPartnerTableModel().addRow(epartnerData);
+        
+        assertFalse(entityPanel.isDefault());
     }
 }
