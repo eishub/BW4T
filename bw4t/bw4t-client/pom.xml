@@ -23,6 +23,7 @@
 			<artifactId>bw4t-core</artifactId>
 			<version>3.1.0</version>
 		</dependency>
+		
 	</dependencies>
 	<build>
 		<plugins>

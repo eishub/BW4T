@@ -26,7 +26,6 @@ public class BlocksRoom extends Room {
 	 */
 	public BlocksRoom(ContinuousSpace<Object> space, Context<Object> context, nl.tudelft.bw4t.map.Zone roomzone) {
 		super(cycle[count % cycle.length], roomzone, space, context);
-
 		count++;
 	}
 }

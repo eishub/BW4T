@@ -4,7 +4,6 @@ import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,9 +12,12 @@ import java.util.Random;
 
 import javax.xml.bind.JAXBException;
 
+import org.apache.log4j.Logger;
+
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.eis.RobotEntity;
+import nl.tudelft.bw4t.logger.BotLog;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Door.Orientation;
 import nl.tudelft.bw4t.map.Entity;
@@ -24,7 +26,6 @@ import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.robots.NavigatingRobot;
 import nl.tudelft.bw4t.robots.Robot;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
-import nl.tudelft.bw4t.server.logging.BW4TLogger;
 import nl.tudelft.bw4t.zone.BlocksRoom;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.DropZone;
@@ -46,10 +47,16 @@ import eis.exceptions.EntityException;
 public final class MapLoader {
 
 	/** Identifier used for the space projections, matched in context.xml */
-	private static final String PROJECTION_ID = "BW4T_Projection";
+
+	public static final String PROJECTION_ID = "BW4T_Projection";
 
 	private static NewMap map;
 
+    /**
+     * The log4j Logger which displays logs on console
+     */
+    private static final Logger LOGGER = Logger.getLogger(MapLoader.class);
+    
 	private MapLoader() {
 	}
 
@@ -70,7 +77,7 @@ public final class MapLoader {
 	 *             if the file can not be read from.
 	 * @throws JAXBException
 	 */
-	public static void loadMap(String location, Context<Object> context) throws IOException, JAXBException {
+	public static void loadMap(String tmpLocation, Context<Object> context) throws IOException, JAXBException {
 
 		/**
 		 * Temp list of all zones, because we can not yet use BW4TEnvironment.getInstance().getContext() ... (returns
@@ -83,7 +90,8 @@ public final class MapLoader {
 		 */
 		Map<String, List<BlockColor>> roomblocks = new HashMap<String, List<BlockColor>>();
 		Random random = new Random();
-		location = System.getProperty("user.dir") + "/maps/" + location;
+		String location; 
+		location = System.getProperty("user.dir") + "/maps/" + tmpLocation;
 		map = NewMap.create(new FileInputStream(new File(location)));
 
 		ContinuousSpace<Object> space = createSpace(context, (int) map.getArea().getX(), (int) map.getArea().getY());
@@ -106,11 +114,10 @@ public final class MapLoader {
 
 		for (Zone roomzone : map.getZones(Zone.Type.ROOM)) {
 			Room room;
-			if (roomzone.getName().equals("DropZone")) {
+			if ("DropZone".equals(roomzone.getName())) {
 				room = new DropZone(roomzone, space, context);
 				((DropZone) room).setSequence(sequence);
-			}
-			else {
+			} else {
 				room = createRoom(context, space, roomzone);
 				roomblocks.put(room.getName(), new ArrayList<BlockColor>(roomzone.getBlocks()));
 			}
@@ -118,9 +125,7 @@ public final class MapLoader {
 			for (nl.tudelft.bw4t.map.Door door : roomzone.getDoors()) {
 				createDoor(context, space, door, room);
 			}
-
 			zones.put(roomzone.getName(), room);
-
 		}
 
 		connectAllZones(zones);
@@ -149,8 +154,7 @@ public final class MapLoader {
 		for (Entity entityparams : map.getEntities()) {
 			if (entityparams.getType() == Entity.EntityType.NORMAL) {
 				createEisEntityRobot(context, space, entityparams);
-			}
-			else {
+			} else {
 				createJavaRobot(context, space, entityparams);
 			}
 		}
@@ -302,9 +306,7 @@ public final class MapLoader {
 	 *            the room {@link Zone}.
 	 */
 	private static Room createRoom(Context<Object> context, ContinuousSpace<Object> space, Zone roomzone) {
-		Room room = new BlocksRoom(space, context, roomzone);
-
-		return room;
+		return new BlocksRoom(space, context, roomzone);
 	}
 
 	/**
@@ -314,8 +316,7 @@ public final class MapLoader {
 	 * @param space
 	 */
 	private static Corridor createCorridor(Context<Object> context, ContinuousSpace<Object> space, Zone zone) {
-		Corridor np = new Corridor(zone, space, context);
-		return np;
+		return new Corridor(zone, space, context);
 	}
 
 	/**
@@ -352,8 +353,14 @@ public final class MapLoader {
 	 */
 	private static void createBlocksForRoom(Room room, Context<Object> context, ContinuousSpace<Object> space,
 			List<BlockColor> args) {
-		String roomName = room.getName();
-		BW4TLogger.getInstance().logRoomBlocks(roomName, args);
+		
+		String logRoom = room.getName();
+		
+		for (BlockColor c : args) {
+			logRoom = logRoom + c.getLetter().toString();
+		}
+		
+		LOGGER.log(BotLog.BOTLOG, logRoom);
 
 		Rectangle2D roomBox = room.getBoundingBox();
 		List<Rectangle2D> newblocks = new ArrayList<Rectangle2D>();

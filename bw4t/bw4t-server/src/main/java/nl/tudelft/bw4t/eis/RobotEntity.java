@@ -18,8 +18,6 @@ import nl.tudelft.bw4t.robots.NavigatingRobot;
 import nl.tudelft.bw4t.robots.Robot;
 import nl.tudelft.bw4t.server.RobotEntityInt;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
-import nl.tudelft.bw4t.server.environment.Launcher;
-import nl.tudelft.bw4t.server.logging.BW4TLogger;
 import nl.tudelft.bw4t.util.RoomLocator;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.BlocksRoom;
@@ -78,12 +76,13 @@ public class RobotEntity implements RobotEntityInt {
 	 * Here we store data that needs to be locked for a perception cycle. See {@link #initializePerceptionCycle()}.
 	 */
 	private Point2D ourRobotLocation;
+	private Point2D spawnLocation;
 	private Room ourRobotRoom;
 
 	/**
 	 * each item in messages is a list with two items: the sender and the messagetext.
 	 */
-	private ArrayList<ArrayList<String>> messages;
+	private List<ArrayList<String>> messages;
 
 	/**
 	 * Creates a new {@link RobotEntity} that can be launched by an EIS compatible {@link Environment}.
@@ -102,7 +101,24 @@ public class RobotEntity implements RobotEntityInt {
 	 */
 	@Override
 	public void connect() {
+		spawnLocation = new Point2D.Double(ourRobot.getLocation().getX(), ourRobot.getLocation().getY());
 		ourRobot.connect();
+	}
+	
+	/**
+	 * Disconnects the robot from repast.
+	 */
+	public void disconnect(){
+		ourRobot.disconnect();
+		reset();
+	}
+	
+	/**
+	 * Reset the robot's location and should set it to its default spawn state.
+	 */
+	public void reset(){
+		ourRobot.drop();
+		ourRobot.moveTo(this.spawnLocation.getX(), this.spawnLocation.getY());
 	}
 
 	/**
@@ -196,16 +212,9 @@ public class RobotEntity implements RobotEntityInt {
 		IndexedIterable<Object> allBlocks = context.getObjects(Block.class);
 		for (Object object : allBlocks) {
 			Block b = (Block) object;
-			if (ourRobot.distanceTo(b) <= 1) {
-				// Check if not holding this block
-				if (ourRobot.isHolding() == null) {
-					result.add(b.getId());
-					return result;
-				}
-				else if (!ourRobot.isHolding().equals(b)) {
-					result.add(b.getId());
-					return result;
-				}
+			if (ourRobot.distanceTo(b) <= 1 && ourRobot.isHolding() == null || !ourRobot.isHolding().contains(b)) {
+				result.add(b.getId());
+				return result;
 			}
 		}
 		return result;
@@ -236,7 +245,7 @@ public class RobotEntity implements RobotEntityInt {
 	 */
 	@AsPercept(name = "place", multiplePercepts = true, filter = Filter.Type.ONCE)
 	public List<String> getRooms() {
-		ArrayList<String> places = new ArrayList<String>();
+		List<String> places = new ArrayList<String>();
 		for (Object o : context.getObjects(Zone.class)) {
 			Zone zone = (Zone) o;
 			places.add(zone.getName());
@@ -266,7 +275,7 @@ public class RobotEntity implements RobotEntityInt {
 
 		for (String agt : agents) {
 			try {
-				HashSet<String> entities = env.getAssociatedEntities(agt);
+				Set<String> entities = env.getAssociatedEntities(agt);
 				if (!entities.contains(ourRobot.getName())) {
 					result.addAll(env.getAssociatedEntities(agt));
 				}
@@ -306,10 +315,9 @@ public class RobotEntity implements RobotEntityInt {
 	 * Percept if the robot is holding something. Send if it becomes true, and
 	 * send negated if it becomes false again.
 	 */
-	@AsPercept(name = "holding", filter = Filter.Type.ON_CHANGE_NEG)
+	@AsPercept(name = "holding", multiplePercepts = true, filter = Filter.Type.ON_CHANGE_NEG)
 	public List<Block> getHolding() {
-		List<Block> holding = ourRobot.isHolding();
-		return holding;
+		return ourRobot.isHolding();
 	}
 
 	/**
@@ -371,8 +379,8 @@ public class RobotEntity implements RobotEntityInt {
 	 * @return the messages that were received
 	 */
 	@AsPercept(name = "message", multiplePercepts = true, filter = Filter.Type.ALWAYS)
-	public ArrayList<ArrayList<String>> getMessages() {
-		ArrayList<ArrayList<String>> msg = messages;
+	public List<ArrayList<String>> getMessages() {
+		List<ArrayList<String>> msg = messages;
 		messages = new ArrayList<ArrayList<String>>();
 		return msg;
 	}
@@ -411,8 +419,9 @@ public class RobotEntity implements RobotEntityInt {
 	public void goTo(long targetid) {
 		Block target = null;
 		for (Block b : getVisibleBlocks()) {
-			if (b.getId() == targetid)
+			if (b.getId() == targetid) {
 				target = b;
+			}
 		}
 		if (target == null) {
 			throw new IllegalArgumentException("there is no block with id=" + targetid + " in the room");
@@ -444,7 +453,7 @@ public class RobotEntity implements RobotEntityInt {
 	 */
 	@AsAction(name = "pickUp")
 	public void pickUp() {
-		ArrayList<Block> canPickUp = new ArrayList<Block>();
+		List<Block> canPickUp = new ArrayList<Block>();
 
 		Iterable<Object> allBlocks = context.getObjects(Block.class);
 		for (Object o : allBlocks) {
@@ -457,10 +466,9 @@ public class RobotEntity implements RobotEntityInt {
 
 		Block nearest;
 		// Pick up closest block in canPickUp list
-		if (canPickUp.size() == 0) {
+		if (canPickUp.isEmpty()) {
 			return;
-		}
-		else {
+		} else {
 			nearest = canPickUp.get(0);
 			for (int i = 1; i < canPickUp.size(); i++) {
 				if (ourRobot.distanceTo(nearest) > ourRobot.distanceTo(canPickUp.get(i))) {
@@ -483,7 +491,8 @@ public class RobotEntity implements RobotEntityInt {
 	 */
 	@AsAction(name = "sendMessage")
 	public void sendMessage(String receiver, String message) throws ActException {
-		BW4TLogger.getInstance().logSentMessageAction(ourRobot.getName());
+		ourRobot.getAgentRecord().addSentMessage();
+
 		// Translate the message into parameters
 		Parameter[] parameters = new Parameter[2];
 		try {
@@ -494,15 +503,12 @@ public class RobotEntity implements RobotEntityInt {
 		}
 
 		// Send to all other entities (except self)
-		if (receiver.equals("all")) {
+		if ("all".equals(receiver)) {
 			for (String entity : BW4TEnvironment.getInstance().getEntities()) {
-				if (!entity.equals(ourRobot.getName())) {
-					BW4TEnvironment.getInstance().performClientAction(entity, new Action("receiveMessage", parameters));
-				}
+				BW4TEnvironment.getInstance().performClientAction(entity, new Action("receiveMessage", parameters));
 			}
-		}
-		// Send to a single entity
-		else {
+			// Send to a single entity
+		} else {
 			BW4TEnvironment.getInstance().performClientAction(receiver, new Action("receiveMessage", parameters));
 		}
 	}
@@ -518,11 +524,11 @@ public class RobotEntity implements RobotEntityInt {
 	@AsAction(name = "receiveMessage")
 	public void receiveMessage(String sender, String message) {
 		// Add message to messageArray
-		ArrayList<String> messageArray = new ArrayList<String>();
+		List<String> messageArray = new ArrayList<String>();
 		messageArray.add(sender);
 		messageArray.add(message);
 
-		messages.add(messageArray);
+		messages.add((ArrayList<String>) messageArray);
 	}
 
 	/**
