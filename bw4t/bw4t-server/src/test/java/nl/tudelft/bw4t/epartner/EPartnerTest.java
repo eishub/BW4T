@@ -1,4 +1,4 @@
-package epartner;
+package nl.tudelft.bw4t.epartner;
 
 import static org.junit.Assert.*;
 import nl.tudelft.bw4t.blocks.EPartner;
