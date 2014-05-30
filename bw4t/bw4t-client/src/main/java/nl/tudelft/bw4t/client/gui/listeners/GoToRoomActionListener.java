@@ -15,28 +15,28 @@ import eis.iilang.Percept;
  * @author trens
  */
 public class GoToRoomActionListener extends ClientActionListener {
-	private final String id;
+    private final String id;
 
-	public GoToRoomActionListener(String id, ClientController controller) {
-		super(controller);
-		this.id = id;
-	}
+    public GoToRoomActionListener(String id, ClientController controller) {
+        super(controller);
+        this.id = id;
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (!Launcher.getEnvironment().isConnectedToGoal()) {
-			try {
-				getController().getHumanAgent().goTo(id);
-			} catch (Exception e1) {
-				// Also catch NoServerException. Nothing we can do really.
-				e1.printStackTrace();
-			}
-		} else {
-			LinkedList<Percept> percepts = new LinkedList<Percept>();
-			Percept percept = new Percept("goTo", new Identifier(id));
-			percepts.add(percept);
-			getController().setToBePerformedAction(percepts);
-		}
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (!Launcher.getEnvironment().isConnectedToGoal()) {
+            try {
+                getController().getHumanAgent().goTo(id);
+            } catch (Exception e1) {
+                // Also catch NoServerException. Nothing we can do really.
+                e1.printStackTrace();
+            }
+        } else {
+            LinkedList<Percept> percepts = new LinkedList<Percept>();
+            Percept percept = new Percept("goTo", new Identifier(id));
+            percepts.add(percept);
+            getController().setToBePerformedAction(percepts);
+        }
 
-	}
+    }
 }

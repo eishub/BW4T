@@ -15,27 +15,27 @@ import eis.iilang.Percept;
  * @author trens
  */
 public class GoToBlockActionListener extends ClientActionListener {
-	private final long boxID;
+    private final long boxID;
 
-	public GoToBlockActionListener(Long boxID, ClientController control) {
-		super(control);
-		this.boxID = boxID;
-	}
+    public GoToBlockActionListener(Long boxID, ClientController control) {
+        super(control);
+        this.boxID = boxID;
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (!Launcher.getEnvironment().isConnectedToGoal()) {
-			try {
-				getController().getHumanAgent().goToBlock(boxID);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		} else {
-			LinkedList<Percept> percepts = new LinkedList<Percept>();
-			Percept percept = new Percept("goToBlock", new Numeral(boxID));
-			percepts.add(percept);
-			getController().setToBePerformedAction(percepts);
-		}
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (!Launcher.getEnvironment().isConnectedToGoal()) {
+            try {
+                getController().getHumanAgent().goToBlock(boxID);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        } else {
+            LinkedList<Percept> percepts = new LinkedList<Percept>();
+            Percept percept = new Percept("goToBlock", new Numeral(boxID));
+            percepts.add(percept);
+            getController().setToBePerformedAction(percepts);
+        }
 
-	}
+    }
 }

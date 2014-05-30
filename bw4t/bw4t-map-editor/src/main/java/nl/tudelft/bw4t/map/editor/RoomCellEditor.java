@@ -20,39 +20,39 @@ import nl.tudelft.bw4t.map.editor.model.Room;
  */
 @SuppressWarnings("serial")
 public class RoomCellEditor extends AbstractCellEditor implements
-		TableCellEditor {
+        TableCellEditor {
 
-	private Room room; // the room currently edited.
-	private ColorSequenceEditor colorEditor; // and the editor that we have
+    private Room room; // the room currently edited.
+    private ColorSequenceEditor colorEditor; // and the editor that we have
 
-	@Override
-	/**
-	 * {@inheritDoc}
-	 */
-	public Object getCellEditorValue() {
-		Room newRoom = new Room(0, 0); // coords are irrelevant for temp room
-		newRoom.setColors(colorEditor.getColors());
-		return newRoom;
-	}
+    @Override
+    /**
+     * {@inheritDoc}
+     */
+    public Object getCellEditorValue() {
+        Room newRoom = new Room(0, 0); // coords are irrelevant for temp room
+        newRoom.setColors(colorEditor.getColors());
+        return newRoom;
+    }
 
-	@Override
-	/**
-	 * {@inheritDoc}
-	 */
-	public Component getTableCellEditorComponent(JTable arg0, Object arg1,
-			boolean isSelected, int arg3, int arg4) {
-		if (!(arg1 instanceof Room)) {
-			return null; // no editor in that case.
-		}
-		if (!isSelected) {
-			return null;
-		}
-		room = (Room) arg1;
-		JPanel panel = new JPanel(new BorderLayout());
-		panel.add(new JLabel(room.toString()), BorderLayout.NORTH);
-		colorEditor = new ColorSequenceEditor(room.getColors());
-		panel.add(colorEditor, BorderLayout.CENTER);
-		return panel;
-	}
+    @Override
+    /**
+     * {@inheritDoc}
+     */
+    public Component getTableCellEditorComponent(JTable arg0, Object arg1,
+            boolean isSelected, int arg3, int arg4) {
+        if (!(arg1 instanceof Room)) {
+            return null; // no editor in that case.
+        }
+        if (!isSelected) {
+            return null;
+        }
+        room = (Room) arg1;
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(new JLabel(room.toString()), BorderLayout.NORTH);
+        colorEditor = new ColorSequenceEditor(room.getColors());
+        panel.add(colorEditor, BorderLayout.CENTER);
+        return panel;
+    }
 
 }

@@ -37,13 +37,13 @@ class ModifyBot implements ActionListener {
      * @param ae The action.
      */
     public void actionPerformed(final ActionEvent ae) {
-    	int row = view.getEntityPanel().getSelectedBotRow();
-    	 
+        int row = view.getEntityPanel().getSelectedBotRow();
+         
         if (row == -1) {
-        	ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select the bot you want to modify.");
+            ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select the bot you want to modify.");
             return;
         }
         String data = (String) view.getEntityPanel().getBotTable().getModel().getValueAt(row, 0);
-    	new BotEditor(view, data);
+        new BotEditor(view, data);
     }
 }

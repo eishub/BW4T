@@ -136,14 +136,14 @@ public class MainPanel extends JPanel {
      * @param list The new list.
      */
     public void setBotConfig(List<BotConfig> list) {
-    	bots = list;
+        bots = list;
     }
     /**
      * Returns the BotConfig list.
      * @return The BotConfig list.
      */
     public List<BotConfig> getBotConfig() {
-    	return bots;
+        return bots;
     }
     /**
      * Add a BotConfig-object to the list.
@@ -151,20 +151,20 @@ public class MainPanel extends JPanel {
      * @param b The BotConfig-object to be added.
      */
     public void addBotConfig(int index, BotConfig b) {
-    	bots.set(index, b);
+        bots.set(index, b);
     }
     /**
      * Add a BotConfig-object to the end of the current list.
      * @param b The BotConfig object.
      */
     public void addBotConfig(BotConfig b) {
-    	bots.add(b);
+        bots.add(b);
     }
     /**
      * Removes a BotConfig-object from the list.
      * @param i The index of the BotConfig-object that has to be removed.
      */
     public void removeBotConfig(int i) {
-    	bots.remove(i);
+        bots.remove(i);
     }
 }

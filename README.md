@@ -1,7 +1,18 @@
-#Blocks World for Teams(BW4T)
+#Blocks World for Teams - v3.2.0
 Blocks World for Teams (BW4T) is a testbed for team coordination. BW4T allows for games with human-human, agent-agent and human-agent teams of variable sizes. The goal is to jointly deliver a sequence of colored blocks in a particularorder as fast as possible. A complicating factor is that the players cannot see each other.
 
 [[Self-explaining Agents - A Study in the BW4T Testbed for Team Coordination]](http://www.dtic.mil/dtic/tr/fulltext/u2/a550537.pdf)
+
+#  Maven
+### First time running Maven
+Change your current directory to `${repository_root}/bw4t`
+ > cd ./bw4t/
+ 
+First compile and install the `bw4t-core` to your local maven repository.
+ > mvn -pl bw4t-core install
+
+Then test or install the rest of `bw4t` as follows:
+ > mvn test
 
 #  GitHub <i class="icon-provider-github"></i>
 The **BW4T Git Repository** can be found at [GitHub](https://github.com/MartinRogalla/BW4T/).

@@ -6,18 +6,18 @@ import javax.xml.bind.annotation.XmlElement;
  * This class stores all the date from the BotEditorUI.         
  * <p>
  * @author      Valentine Mairet  
- * @author 		Katia Asmoredjo
+ * @author      Katia Asmoredjo
  * @version     0.1                
  * @since       12-05-2014        
  */
 
 public final class BotConfig {
-	
-	private String name = "Bot";
-	
-	private String controller = "Agent";
-	
-	private String amount = "1";
+    
+    private String name = "Bot";
+    
+    private String controller = "Agent";
+    
+    private String amount = "1";
 
     private int botSize = 2;
 
@@ -41,7 +41,7 @@ public final class BotConfig {
      */
     @XmlElement
     public void setBotName(String name) {
-    	this.name = name;
+        this.name = name;
     }
     
     /**
@@ -49,7 +49,7 @@ public final class BotConfig {
      * @return The name of the bot.
      */
     public String getBotName() {
-    	return this.name;
+        return this.name;
     }
     
     /**
@@ -58,7 +58,7 @@ public final class BotConfig {
      */
     @XmlElement
     public void setBotController(String controller) {
-    	this.controller = controller;
+        this.controller = controller;
     }
     
     /**
@@ -66,7 +66,7 @@ public final class BotConfig {
      * @return The controller type of the bot.
      */
     public String getBotController() {
-    	return this.controller;
+        return this.controller;
     }
     
     /**
@@ -74,7 +74,7 @@ public final class BotConfig {
      * @param amount The amount of bots.
      */
     public void setBotAmount(String amount) {
-    	this.amount = amount;
+        this.amount = amount;
     }
     
     /**
@@ -82,7 +82,7 @@ public final class BotConfig {
      * @return The amount of bots of this type.
      */
     public String getBotAmount() {
-    	return this.amount;
+        return this.amount;
     }
 
     /**
@@ -210,9 +210,9 @@ public final class BotConfig {
      * @return All the BotConfig properties.
      */
     public String bcToString() {
-    	return name + controller + amount + botSize + botSpeed
-    			+ botBatteryCapacity + botBatteryDischargeRate 
-    			+ hasColorBlindHandicap	+ hasGripperHandicap
-    			+ hasMoveSpeedHandicap + hasSizeOverloadHandicap;
+        return name + controller + amount + botSize + botSpeed
+                + botBatteryCapacity + botBatteryDischargeRate 
+                + hasColorBlindHandicap + hasGripperHandicap
+                + hasMoveSpeedHandicap + hasSizeOverloadHandicap;
     }
 }

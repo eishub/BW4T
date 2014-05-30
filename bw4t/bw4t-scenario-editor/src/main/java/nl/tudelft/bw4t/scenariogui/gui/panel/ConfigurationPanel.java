@@ -28,9 +28,9 @@ import nl.tudelft.bw4t.scenariogui.util.MapSpec;
 public class ConfigurationPanel extends JPanel {
     
     /** Randomly generated serial version. */
-	private static final long serialVersionUID = 2925174902776539436L;
+    private static final long serialVersionUID = 2925174902776539436L;
 
-	/** Localhost. */
+    /** Localhost. */
     private static final String LOCALHOST = "localhost";
     /** True. */
     private static final String TRUE = "true";
