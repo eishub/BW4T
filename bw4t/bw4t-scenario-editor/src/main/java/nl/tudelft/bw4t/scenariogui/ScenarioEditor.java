@@ -6,7 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.WindowConstants;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.controllers.editor.ScenarioEditorController;
@@ -20,7 +19,8 @@ import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
 /**
  * The ScenarioEditor class serves as the Frame for the MenuBar and MainPanel.
  * <p>
- * @author        
+ * @author      Calvin Wong Loi Sing
+ * @author      Xander Zonneveld
  * @version     0.1                
  * @since       12-05-2014        
  */
@@ -74,8 +74,8 @@ public class ScenarioEditor extends JFrame {
         // Attach the MainPanel, consisting of the configuration- and botpanel.
         mPanel = new MainPanel(new ConfigurationPanel(), new EntityPanel());
         setActivePane(mPanel);
-
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         // Gives window its size by inner components
         pack();
@@ -178,7 +178,7 @@ public class ScenarioEditor extends JFrame {
      *
      * @return The Controller used.
      */
-    public final ScenarioEditorController getController() {
+    public ScenarioEditorController getController() {
         return controller;
     }
 
@@ -236,5 +236,12 @@ public class ScenarioEditor extends JFrame {
      */
     public static OptionPrompt getOptionPrompt() {
         return option;
+    }
+
+    /**
+     * Closes the ScenarioEditor window and all child frames.
+     */
+    public void closeScenarioEditor() {
+        System.exit(0);
     }
 }

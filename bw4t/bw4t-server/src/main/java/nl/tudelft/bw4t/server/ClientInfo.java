@@ -3,12 +3,12 @@ package nl.tudelft.bw4t.server;
 class ClientInfo {
 	private int numberOfHumans = 0;
 	private int numberOfAgents = 0;
-	
+
 	public ClientInfo(int reqHuman, int reqAgent) {
 		assert reqHuman >= 0;
 		assert reqAgent >= 0;
 		this.numberOfAgents = reqAgent;
-		this.numberOfHumans = reqAgent;
+		this.numberOfHumans = reqHuman;
 	}
 
 	public int getNumberOfHumans() {

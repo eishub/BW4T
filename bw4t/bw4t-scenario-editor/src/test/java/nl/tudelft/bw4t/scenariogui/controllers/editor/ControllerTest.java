@@ -17,7 +17,8 @@ import static org.mockito.Mockito.spy;
 /**
  * Tests the controllers class. It's near impossible to get the save button.
  * <p>
- * @author      Nick Feddes 
+ * @author      Nick Feddes
+ * @author		Xander Zonneveld
  * @version     0.1                
  * @since       12-05-2014        
  */
@@ -97,16 +98,6 @@ public class ControllerTest {
         }
     }
 
-    // private JDialog getSaveAsDialog() {
-    // for (ActionListener listener :
-    // saveAs.currentFileChooser.getActionListeners()) {
-    // if (listener instanceof JDialog) {
-    // return (JDialog) listener;
-    // }
-    // }
-    // return null;
-    // }
-
     /**
      * Gets the listener that is listening to this menu item which is of the
      * specified type.
@@ -160,61 +151,11 @@ public class ControllerTest {
                     } 
                     else {
                         System.out.println("Is still null.");
-//                        try {
-//                            Thread.sleep(1000);
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
                     }
                 }
             }
 
         }).start();
-
-        // FileChooserUI fUI = saveAs.currentFileChooser.getUI();
-        // fUI.getDefaultButton(saveAs.currentFileChooser).doClick();
-
-        // saveAs.currentFileChooser.setCurrentDirectory(new File(FILE_DIR));
-        // saveAs.currentFileChooser.setSelectedFile(new File(FILE_PATH));
-        // saveAs.currentFileChooser.setSelectedFiles(new File[] { new
-        // File(FILE_PATH) });
-        // saveAs.currentFileChooser.approveSelection();
-        // saveAs.currentFileChooser.setApproveButtonMnemonic(MNEMONIC);
-        // try {
-        // new Robot().keyPress(MNEMONIC);
-        // } catch (AWTException e) {
-        // e.printStackTrace();
-        // }
-
-        // System.out.println("Got here.....");
-        // JFileChooser fileChooser = (JFileChooser) component.get;
-        // if (fileChooser == null)
-        // System.out.println("File chooser == null");
-        // else
-        // System.out.println("Found the file chooser!");
-        // fileChooser.accept(new File(FILE_PATH));
-
-        // for (Window window : component.getWindows()) {
-        // if (window instanceof JDialog) {
-        // for (Component c : ((JDialog) window).getComponents()) {
-        // System.out.println(c.toString());
-        // }
-        // }
-        // }
-
-        // for (Component c : component.getComponents()) {
-        // if (c instanceof JFileChooser) {
-        // System.out.println("Found JFileChooser component!");
-        // JFileChooser fileChooser = (JFileChooser) c;
-        // fileChooser.accept(new File(FILE_PATH));
-        // break;
-        // } else {
-        // if (pressConfirmOnSaveAsDialogue(component))
-        // return true;
-        // }
-        // }
-        // System.out.println("Did NOT find JFileChooser component!");
-        // return false;
     }
 
     /**

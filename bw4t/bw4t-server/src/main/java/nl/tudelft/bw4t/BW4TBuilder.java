@@ -4,11 +4,11 @@ import java.io.IOException;
 
 import javax.xml.bind.JAXBException;
 
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.environment.Stepper;
+
 import org.apache.log4j.Logger;
 
-import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
-import nl.tudelft.bw4t.server.environment.Launcher;
-import nl.tudelft.bw4t.server.environment.Stepper;
 import repast.simphony.context.Context;
 import repast.simphony.dataLoader.ContextBuilder;
 import repast.simphony.engine.environment.RunListener;
@@ -30,9 +30,14 @@ public class BW4TBuilder implements ContextBuilder<Object> {
 	 */
 	private static final Logger LOGGER = Logger.getLogger(BW4TBuilder.class);
 
-	/** Matches the ID in context.xml and scenario.xml */
+	/** 
+	 * Matches the ID in context.xml and scenario.xml
+	 */
 	private static final String CONTEXT_ID = "BW4T";
 
+	/**
+	 * Build the Context in which to run the repast simulation.
+	 */
 	public BW4TBuilder() {
 	}
 

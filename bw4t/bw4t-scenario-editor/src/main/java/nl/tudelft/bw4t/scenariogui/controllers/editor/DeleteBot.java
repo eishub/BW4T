@@ -42,17 +42,17 @@ class DeleteBot implements ActionListener {
         int row = view.getEntityPanel().getSelectedBotRow();
 
         if (row == -1) {
-            ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select a bot first.");
+            ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select the bot you want to delete.");
             return;
         }
 
-        int response = view.getEntityPanel().showConfirmDialog(null,
+        int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(null,
                 "Are you sure you want to delete this bot?", "",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
         if (response == JOptionPane.YES_OPTION) {
             view.getEntityPanel().getBotTableModel().removeRow(row);
-            view.removeBotConfig(row);
+            view.getEntityPanel().getBotConfigs().remove(row);
         }
     }
 }

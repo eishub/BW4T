@@ -32,7 +32,7 @@ class AddNewBot implements ActionListener {
      */
     public AddNewBot(final MainPanel newView) {
         this.view = newView;
-        botCount = 0;
+        //botCount = 
     }
 
     /**
@@ -43,10 +43,12 @@ class AddNewBot implements ActionListener {
      * @param ae The action event.
      */
     public void actionPerformed(final ActionEvent ae) {
-        botCount++;
-        Object[] newBotObject = {"Bot " + botCount, "Agent", 1};
+        botCount = view.getEntityPanel().getBotConfigs().size() + 1;
+        Object[] newBotObject = {"Bot" + " " + botCount, "Agent", 1};
         view.getEntityPanel().getBotTableModel().addRow(newBotObject);
-        view.addBotConfig(new BotConfig());
+        BotConfig newBotConfig = new BotConfig();
+        newBotConfig.setBotName("Bot " + botCount);
+        view.getEntityPanel().getBotConfigs().add(newBotConfig);
     }
 
 }

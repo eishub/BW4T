@@ -8,6 +8,8 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -15,18 +17,24 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import org.apache.log4j.Logger;
+import javax.xml.bind.ValidationException;
 
 import nl.tudelft.bw4t.BW4TBuilder;
+import nl.tudelft.bw4t.controller.ServerMapController;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.server.environment.Stepper;
+import nl.tudelft.bw4t.view.MapRenderer;
+
+import org.apache.log4j.Logger;
+
 import repast.simphony.context.Context;
 import eis.exceptions.ManagementException;
 import eis.iilang.Identifier;
@@ -54,7 +62,8 @@ public class ServerContextDisplay extends JFrame {
 	 */
 	private static final Logger LOGGER = Logger.getLogger(ServerContextDisplay.class);
 
-	private ServerMapRenderer myRenderer;
+	private final MapRenderer myRenderer;
+	private final ServerMapController controller;
 
 	/**
 	 * Create a new instance of this class and initialize it
@@ -65,8 +74,7 @@ public class ServerContextDisplay extends JFrame {
 	 * @throws InstantiationException
 	 * @throws FileNotFoundException
 	 */
-	public ServerContextDisplay(Context context) throws InstantiationException, IllegalAccessException,
-			FileNotFoundException {
+	public ServerContextDisplay(Context context) throws VisualizationsException {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
@@ -77,9 +85,14 @@ public class ServerContextDisplay extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 
-		myRenderer = new ServerMapRenderer(context);
-		add(myRenderer, BorderLayout.CENTER);
-		add(new ControlPanel(this), BorderLayout.NORTH);
+		controller = new ServerMapController(Launcher.getEnvironment().getMap(), context);
+		myRenderer = new MapRenderer(controller);
+		add(new JScrollPane(myRenderer), BorderLayout.CENTER);
+		try {
+			add(new ControlPanel(this), BorderLayout.NORTH);
+		} catch (FileNotFoundException e) {
+			throw new VisualizationsException(e);
+		}
 		pack();
 		setVisible(true);
 	}
@@ -89,7 +102,7 @@ public class ServerContextDisplay extends JFrame {
 	 * not assume ownership; and nobody else can create us it seems.
 	 */
 	public void close() {
-		myRenderer.stop();
+		myRenderer.getController().setRunning(false);
 		setVisible(false);
 	}
 
@@ -114,6 +127,10 @@ class ControlPanel extends JPanel {
 	 */
 	final ServerContextDisplay displayer;
 
+	final JLabel tpsDisplay = new JLabel("0.0 tps");
+
+	private final JSlider slider;
+
 	/**
 	 * @param disp
 	 *            is used to close the window when user presses reset.
@@ -124,8 +141,10 @@ class ControlPanel extends JPanel {
 		setLayout(new BorderLayout());
 		add(new JLabel("Speed"), BorderLayout.WEST);
 		// slider goes in percentage, 100 is fastest
-		final JSlider slider = new JSlider(0, 100, 90);
+		slider = new JSlider(0, 100, 0);
+		slider.setEnabled(false);
 		final JButton resetbutton = new JButton("Reset");
+		add(tpsDisplay, BorderLayout.WEST);
 		add(slider, BorderLayout.CENTER);
 		add(resetbutton, BorderLayout.EAST);
 		add(new MapSelector(displayer), BorderLayout.NORTH);
@@ -134,13 +153,10 @@ class ControlPanel extends JPanel {
 
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
-				int sliderval = slider.getValue();
 				// now we have speed (on Hz axis) and we need delay (s axis).
 				// first get interpolated speed.
-				double minf = 1. / Stepper.MAX_DELAY;
-				double maxf = 1. / Stepper.MIN_DELAY;
-				double f = minf + (maxf - minf) * sliderval / 100.;
-				BW4TEnvironment.getInstance().setDelay((int) (1. / f));
+				BW4TEnvironment.getInstance().setTps(calculateTpsFromSlider());
+				updateTpsDisplay();
 			}
 		});
 
@@ -155,6 +171,43 @@ class ControlPanel extends JPanel {
 				}
 			}
 		});
+
+		new Timer().schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				SwingUtilities.invokeLater(new Runnable() {
+
+					@Override
+					public void run() {
+						slider.setEnabled(true);
+						slider.setValue(calculateSliderValueFromDelay());
+						updateTpsDisplay();
+					}
+				});
+			}
+		}, 1000);
+		updateTpsDisplay();
+	}
+
+	public double calculateTpsFromSlider() {
+		double percent = (slider.getValue() - slider.getMinimum())
+				/ (double) (slider.getMaximum() - slider.getMinimum());
+		int value = (int) (Stepper.MIN_TPS + (Stepper.MAX_TPS - Stepper.MIN_TPS) * percent);
+		LOGGER.trace("Delay Calculated from the slider: " + value);
+		return value;
+	}
+
+	public int calculateSliderValueFromDelay() {
+		double delay = BW4TEnvironment.getInstance().getTps();
+		double percent = (delay - Stepper.MIN_TPS) / (Stepper.MAX_TPS - Stepper.MIN_TPS);
+		int value = (int) (slider.getMinimum() + (slider.getMaximum() - slider.getMinimum()) * percent);
+		LOGGER.trace("Slider value from delay: " + value);
+		return value;
+	}
+
+	public void updateTpsDisplay() {
+		tpsDisplay.setText(String.format("%3.1f tps", BW4TEnvironment.getInstance().getTps()));
 	}
 }
 

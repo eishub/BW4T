@@ -33,9 +33,8 @@ public class GripperHandicap extends AbstractHandicapFactory {
 	@Override
 	public boolean canPickUp(Block b) {
 		if (isActive) {
-		return false;
-		}
-		else {
+			return false;
+		} else {
 			return super.canPickUp(b);
 		}
 	}

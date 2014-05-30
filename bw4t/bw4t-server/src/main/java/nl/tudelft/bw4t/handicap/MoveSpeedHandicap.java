@@ -1,10 +1,10 @@
 package nl.tudelft.bw4t.handicap;
 
 import nl.tudelft.bw4t.robots.Robot;
-import nl.tudelft.bw4t.server.logging.BW4TLogger;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.SpatialException;
 import repast.simphony.space.SpatialMath;
+import repast.simphony.space.continuous.NdPoint;
 /**
  * 
  * @author Valentine Mairet & Ruben Starmans
@@ -14,7 +14,7 @@ public class MoveSpeedHandicap extends AbstractHandicapFactory {
 	/**
 	 * modifier for the distance per tick
 	 */
-	private double speedMod;
+	private final double speedMod;
 	/**
 	 * boolean value to check if the handicap is active or not
 	 */
@@ -34,16 +34,18 @@ public class MoveSpeedHandicap extends AbstractHandicapFactory {
 	/**
 	 * Overridden method move of Robot which has the speed modifier
 	 */
+	@Override
 	@ScheduledMethod(start = 0, duration = 0, interval = 1)
 	public synchronized void move() {
 		if (isActive) {
-			if (robot.getTargetLocation() != null) {
+			NdPoint targetLocation = robot.getTargetLocation();
+			if (targetLocation != null) {
 				// Calculate the distance that the robot is allowed to move.
-				double distance = robot.distanceTo(robot.getTargetLocation());
+				double distance = robot.distanceTo(targetLocation);
 				if (distance < Robot.MIN_MOVE_DISTANCE) {
+					// we're there
 					robot.stopRobot(); 
-				} 
-				else {
+				} else {
 					double movingDistance = Math.min(distance, Robot.MAX_MOVE_DISTANCE * speedMod);
 		
 					// Angle at which to move

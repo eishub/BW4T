@@ -14,11 +14,12 @@ import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfigIntegration;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
+import nl.tudelft.bw4t.scenariogui.util.MapSpec;
 
 /**
  * Handles the event of the menu.
  * <p>
- * @author      Nick Feddes 
+ * @author      Nick Feddes
  * @version     0.1                
  * @since       12-05-2014        
  */
@@ -90,6 +91,15 @@ public abstract class AbstractMenuOption implements ActionListener {
      * @param saveAs Whether or not to open a file chooser.
      */
     public void saveFile(final boolean saveAs) {
+        MapSpec map = controller.getMainView().getMainPanel().getConfigurationPanel().getMapSpecifications();
+        int botCount = controller.getMainView().getMainPanel().getEntityPanel().getBotCount();
+        if (map.isSet() && botCount > map.getEntitiesAllowedInMap()) {
+            ScenarioEditor.getOptionPrompt().showMessageDialog(view,
+                    "The selected map can only hold " + map.getEntitiesAllowedInMap()
+                    + " bots. Please delete some first.");
+            return;
+        }
+        
         String path = view.getLastFileLocation();
         if (saveAs || !view.hasLastFileLocation()) {
             currentFileChooser = getCurrentFileChooser();
@@ -116,7 +126,13 @@ public abstract class AbstractMenuOption implements ActionListener {
                     createConfigFromPanel((MainPanel) (getController().getMainView()).
                             getContentPane(), path);
             
-            //TODO: UNLOAD AND SAVE BOTS HERE
+            //SAVE BOTS HERE
+            int rows = getController().getMainView().getMainPanel().getEntityPanel().getBotTableModel().getRowCount();
+            
+            for (int i = 0; i < rows; i++) {
+            	configuration.addBot(getController().getMainView().getMainPanel().getEntityPanel().getBotConfig(i));
+            }
+            
             configuration.toXML();
             view.setLastFileLocation(path);
         } catch (JAXBException e) {

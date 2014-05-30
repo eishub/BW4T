@@ -12,7 +12,7 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 /**
  * Handles the event to choose a map file.
  * <p>
- * @author        
+ * @author      Nick Feddes
  * @version     0.1                
  * @since       12-05-2014        
  */
@@ -53,11 +53,23 @@ class ChooseMapFileListener implements ActionListener {
         String mapExtension = ".map";
 
         /** Makes sure only files with the right extension are accepted */
-        if (returnVal == JFileChooser.APPROVE_OPTION && file.getName().endsWith(mapExtension)) {
-            view.getConfigurationPanel().setMapFile(file.getPath());
-        } 
-        else if (returnVal == JFileChooser.APPROVE_OPTION && !file.getName().endsWith(mapExtension)) {
-            ScenarioEditor.getOptionPrompt().showMessageDialog(view, "This is not a valid file.");
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            if (file.getName().endsWith(mapExtension) || hasNoExtension(file.getName())) {
+                view.getConfigurationPanel().setMapFile(file.getPath());
+            }
+            else {
+                ScenarioEditor.getOptionPrompt().showMessageDialog(view, "This is not a valid file.");
+            }
         }
     }
+    
+    /**
+     * Checks whether this file name has no extension.
+     * @param fileName The file name to check.
+     * @return Whether this file has no extension.
+     */
+    private static boolean hasNoExtension(String fileName) {
+        return !fileName.contains(".");
+    }
+    
 }

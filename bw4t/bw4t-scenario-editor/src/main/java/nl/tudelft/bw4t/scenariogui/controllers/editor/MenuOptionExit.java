@@ -11,7 +11,8 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 /**
  * Handles the event to exit the program.
  * <p>
- * @author        
+ * @author      Seu Man To
+ * @author		Xander Zonneveld
  * @version     0.1                
  * @since       12-05-2014        
  */
@@ -36,7 +37,8 @@ class MenuOptionExit extends AbstractMenuOption {
         ConfigurationPanel configPanel = super.getController().getMainView().getMainPanel().getConfigurationPanel();
 
         // Check if current config is different from last saved config
-        if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())) {
+        if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())
+        		|| !super.getController().getMainView().getMainPanel().getEntityPanel().compareBotConfigs()) {
             // Check if user wants to save current configuration
             int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
                     null,
@@ -47,9 +49,23 @@ class MenuOptionExit extends AbstractMenuOption {
             if (response == JOptionPane.YES_OPTION) {
                 saveFile();
                 super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
+                getController().getMainView().closeScenarioEditor();
+            }
+            else {
+                getController().getMainView().closeScenarioEditor();
             }
         }
-
-        System.exit(0);
+        else {
+        	int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
+        			null, 
+        			"Are you sure you want to exit the program?",
+        			"",
+        			JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        	
+        	if (response == JOptionPane.YES_OPTION) {
+                getController().getMainView().closeScenarioEditor();
+        	}
+        }
+        getController().getMainView().closeScenarioEditor();
     }
 }

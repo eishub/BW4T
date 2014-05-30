@@ -18,9 +18,4 @@ public class HumanAgent extends BW4TAgent {
     public HumanAgent(String agentId, RemoteEnvironment env) {
         super(agentId, env);
     }
-
-    @Override
-    public void run() {
-
-    }
 }
