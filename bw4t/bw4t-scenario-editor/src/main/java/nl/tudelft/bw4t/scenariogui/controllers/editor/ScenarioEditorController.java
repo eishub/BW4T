@@ -9,7 +9,8 @@ import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
  *
  * <p>
  * @author      Calvin Wong Loi Sing
- * @authot      Nick Feddes 
+ * @author      Nick Feddes
+ * @author 		Xander Zonneveld
  * @version     0.1                
  * @since       12-05-2014        
  */
@@ -86,6 +87,17 @@ public class ScenarioEditorController {
         getMainView().getMainPanel().getEntityPanel().getDropDownButton().addActionListener(
                 new BotDropDownButton(getMainView().getMainPanel())
         );
+        
+        getMainView().addWindowListener(
+                new WindowExit(getMainView())
+        );
+        
+        /** Adds the listener for the bot and e-partner table: */
+        getMainView().getMainPanel().getEntityPanel().getBotTable().getModel().addTableModelListener(
+                new EditBotTable(getMainView().getMainPanel()));
+        getMainView().getMainPanel().getEntityPanel().getEPartnerTable().getModel().addTableModelListener(
+                new EditEPartnerTable(getMainView().getMainPanel()));
+        
     }
 
     /**

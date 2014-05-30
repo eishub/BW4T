@@ -10,7 +10,8 @@
 		<module>bw4t-client</module>
 		<module>bw4t-core</module>
 		<module>bw4t-integration-test</module>
-        <module>bw4t-scenario-editor</module>
+		<module>bw4t-scenario-editor</module>
+		<module>bw4t-map-editor</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -20,7 +21,6 @@
 		<sonar.language>java</sonar.language>
 		<sonar.sources>src/main</sonar.sources>
 		<sonar.tests>src/test</sonar.tests>
-		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<sonar.java.coveragePlugin>cobertura</sonar.java.coveragePlugin>
 		<sonar.cobertura.reportPath>target/site/cobertura/coverage.xml</sonar.cobertura.reportPath>
 		<sonar.junit.reportsPath>target/surefire-reports</sonar.junit.reportsPath>

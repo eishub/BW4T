@@ -34,7 +34,7 @@ public class Battery {
 		this.dRate = dr;
 	}
 	
-	public int getCurrentCapacity() {
+	public int getCurrentCapacity()	{
 		return this.current;
 	}
 	
@@ -70,8 +70,7 @@ public class Battery {
 			
 			if (temp < 0) {
 				this.current = 0;
-			}
-			else {
+			} else {
 				this.current = temp;
 			}
 		}

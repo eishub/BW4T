@@ -1,7 +1,7 @@
 package nl.tudelft.bw4t.handicap;
 
 import nl.tudelft.bw4t.doors.Door;
-import nl.tudelft.bw4t.robots.Robot.MoveType;
+import nl.tudelft.bw4t.robots.MoveType;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.Zone;
 /**
@@ -42,25 +42,13 @@ public class SizeOverloadHandicap extends AbstractHandicapFactory {
 		if (isActive && robot.getSize() >= 4) {
 			if (startzone == endzone) {
 				return MoveType.SAME_AREA;
-			}
-		
-			/**
-			 * A zone switch is attempted as either startzone or endzone is not
-			 * null.
-			 */
-			// Removed the case where the endzone would be a room.
-			// Disabling moving through doors means that the bot cannot enter rooms.
-			/**
-			 * Both sides are not a room. Check if target accesible
-			 */
-			else if (endzone instanceof Corridor) {
-				if (!robot.getOneBotPerZone() || endzone.containsMeOrNothing(robot)) {
+			} else if (endzone instanceof Corridor) {
+				if (!robot.isOneBotPerZone() || endzone.containsMeOrNothing(robot)) {
 					return MoveType.ENTER_CORRIDOR;
 				}
 				return MoveType.HIT_OCCUPIED_ZONE;
 			}
-		}
-		else {
+		} else {
 			super.checkZoneAccess(startzone, endzone, door);
 		}
 		return MoveType.ENTERING_FREESPACE;

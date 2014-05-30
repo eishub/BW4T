@@ -51,7 +51,7 @@ public class PathPlanner {
 
 		List<DefaultWeightedEdge> edgeList = DijkstraShortestPath.findPathBetween(graph, start, end);
 		if (edgeList == null) {
-			return null;
+			return new ArrayList<Zone>();
 		}
 
 		List<Zone> path = new ArrayList<Zone>();
@@ -63,8 +63,7 @@ public class PathPlanner {
 			if (graph.getEdgeSource(edge).equals(current)) {
 				current = graph.getEdgeTarget(edge);
 				path.add(current);
-			}
-			else if (graph.getEdgeTarget(edge).equals(current)) {
+			} else if (graph.getEdgeTarget(edge).equals(current)) {
 				current = graph.getEdgeSource(edge);
 				path.add(current);
 			}

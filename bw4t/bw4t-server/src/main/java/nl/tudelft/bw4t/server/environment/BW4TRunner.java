@@ -66,52 +66,7 @@ public class BW4TRunner extends AbstractRunner {
 	}
 
 	public void runInitialize() {
-		Parameters params = new Parameters() {
-			/**
-			 * This should be changed. Temporary fix in order to be able to run BW4T.
-			 */
-			@Override
-			public void setValue(String paramName, Object val) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public boolean isReadOnly(String paramName) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-
-			@Override
-			public String getValueAsString(String paramName) {
-				// TODO Auto-generated method stub
-				return "asd";
-			}
-
-			@Override
-			public Object getValue(String paramName) {
-				// TODO Auto-generated method stub
-				return 223;
-			}
-
-			@Override
-			public Schema getSchema() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public String getDisplayName(String paramName) {
-				// TODO Auto-generated method stub
-				return "asd";
-			}
-
-			@Override
-			public Parameters clone() {
-				// TODO Auto-generated method stub
-				return this;
-			}
-		};
+		BW4TParameters params = new BW4TParameters();
 		bw4tController.runInitialize(params);
 		schedule = RunState.getInstance().getScheduleRegistry().getModelSchedule();
 		fireStartedMessage();
@@ -151,9 +106,10 @@ public class BW4TRunner extends AbstractRunner {
 
 	// stop the schedule
 	public void stop() {
-		if (schedule != null)
+		if (schedule != null) {
 			schedule.executeEndActions();
-		fireStoppedMessage();
+			fireStoppedMessage();
+		}
 	}
 
 	public void setFinishing(boolean fin) {

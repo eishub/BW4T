@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.map;
 
+import java.awt.Color;
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -11,39 +12,59 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class Door implements Serializable {
-    public enum Orientation {
-        HORIZONTAL, VERTICAL
-    };
+  public enum Orientation {
+      HORIZONTAL, VERTICAL
+  };
 
-    private Point position = new Point();
-    private Orientation orientation = Orientation.HORIZONTAL;
+	/** width of doors. */
+	public static final int DOOR_WIDTH = 4;
+	/** Thickness of doors. */
+	public static final int DOOR_THICKNESS = 1;
+	public static final Color COLOR_CLOSED = Color.RED;
+	public static final Color COLOR_OPEN = Color.GREEN;
 
-    public Door() {
-    }
+	public enum Orientation {
+		HORIZONTAL, VERTICAL
+	}
 
-    public Door(Point pos, Orientation or) {
-        position = pos;
-        orientation = or;
-    }
+	private Point position = new Point();
+	private Orientation orientation = Orientation.HORIZONTAL;
 
-    public Point getPosition() {
-        return position;
-    }
+	public Door() {
+	}
 
-    public void setPosition(Point position) {
-        this.position = position;
-    }
+	public Door(Point pos, Orientation or) {
+		position = pos;
+		orientation = or;
+	}
 
-    public Orientation getOrientation() {
-        return orientation;
-    }
+	public Point getPosition() {
+		return position;
+	}
 
-    public void setOrientation(Orientation orientation) {
-        this.orientation = orientation;
-    }
+	public void setPosition(Point position) {
+		this.position = position;
+	}
 
-    public String toString() {
-        return "Door[" + position + "," + orientation + "]";
-    }
+	public Orientation getOrientation() {
+		return orientation;
+	}
+
+	public void setOrientation(Orientation orientation) {
+		this.orientation = orientation;
+	}
+
+	public double getWidth() {
+		return (orientation == Orientation.HORIZONTAL) ? DOOR_WIDTH : DOOR_THICKNESS;
+	}
+
+	public double getHeight() {
+		return (orientation == Orientation.HORIZONTAL) ? DOOR_THICKNESS : DOOR_WIDTH;
+	}
+
+	@Override
+	public String toString() {
+		return "Door[" + position + "," + orientation + "]";
+	}
 
 }

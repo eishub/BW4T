@@ -1,10 +1,11 @@
 package nl.tudelft.bw4t.scenariogui.gui.panel;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -31,7 +32,8 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
 
 /**
  * The EntityPanel class represents right pane of the MainPanel. It shows a list
@@ -44,10 +46,8 @@ import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
  */
 public class EntityPanel extends JPanel {
 
-    /**
-	 * The serial version UID.
-	 */
-	private static final long serialVersionUID = -2143414235581796156L;
+    /** Randomly generated serial version. */
+	private static final long serialVersionUID = 6488182242349086899L;
 
 	/**
      * The number of bots column.
@@ -240,6 +240,16 @@ public class EntityPanel extends JPanel {
     private JButton deleteEpartner = new JButton("Delete E-partner");
 
     /**
+     * The list that hold the created bots.
+     */
+    private List<BotConfig> botConfigList = new ArrayList<BotConfig>();
+    
+    /**
+     * The list with the last saved BotConfigs.
+     */
+    private List<BotConfig> oldBotConfigs = botConfigList;
+
+    /**
      * Create an EntityPanel object.
      */
     public EntityPanel() {
@@ -334,31 +344,7 @@ public class EntityPanel extends JPanel {
         botTable = new JTable();
         botTable.getTableHeader().setReorderingAllowed(false);
 
-        botList = new DefaultTableModel() {
-            
-            /*@Override
-            public boolean isCellEditable(final int row, final int column) {
-                if (column == 0) {
-                    return false;
-                }
-                return true;
-            }*/
-
-            /**
-			 * The generated serial version UID.
-			 */
-			private static final long serialVersionUID = 169379829043336918L;
-
-			@Override
-            public Class<?> getColumnClass(int column) {
-                if (column == 2) {
-                    return Integer.class;
-                }
-
-                return String.class;
-            }
-
-        };
+        botList = new EntityTableModel();
 
         botTable.setModel(botList);
         botList.addColumn("Bot");
@@ -443,29 +429,7 @@ public class EntityPanel extends JPanel {
 
         ePartnerTable = new JTable();
         ePartnerTable.getTableHeader().setReorderingAllowed(false);
-        epartnerList = new DefaultTableModel() {
-            /*@Override
-            public boolean isCellEditable(final int row, final int column) {
-                if (column == 1) {
-                    return true;
-                }
-                return false;
-            }*/
-
-            /**
-			 * The generated serial version UID.
-			 */
-			private static final long serialVersionUID = 4663078758945562873L;
-
-			@Override
-            public Class<?> getColumnClass(int column) {
-                if (column == 1) {
-                    return Integer.class;
-                }
-
-                return String.class;
-            }
-        };
+        epartnerList = new EntityTableModel();
 
         ePartnerTable.setModel(epartnerList);
         epartnerList.addColumn("E-partner");
@@ -499,36 +463,6 @@ public class EntityPanel extends JPanel {
         epartnerCounter.add(epartnerCountField);
     }
 
-    /**
-     * Create a pop up message with the the given text. The user has to press OK
-     * to continue.
-     *
-     * @param parent The parent component who's frame is to be used. If null then a
-     *               frame is created.
-     * @param text   The text to be displayed in the message dialog.
-     */
-    protected final void showMessageDialog(
-            final Component parent, final String text) {
-        ScenarioEditor.getOptionPrompt().showMessageDialog(parent, text);
-    }
-
-    /**
-     * @param parent     Determines the Frame in which the dialog is displayed; if
-     *                   null, or if the parentComponent has no Frame, a default Frame
-     *                   is used
-     * @param text       The text to display
-     * @param title      The title for the dialog
-     * @param optionType An int designating the options available on the dialog:
-     *                   JOptionPane.YES_NO_OPTIONS, JOptionPane.YES_NO_CANCEL_OPTION
-     *                   or JOptionPane.OK_CANCEL_OPTION,
-     * @param messageType   Message type for the confirm dialog.
-     * @return An int indicating the option selected by the user
-     */
-    public int showConfirmDialog(final Component parent,
-                                 final String text,
-                                 final String title, final int optionType, final int messageType) {
-        return ScenarioEditor.getOptionPrompt().showConfirmDialog(parent, text, title, optionType, messageType);
-    }
 
     /**
      * Returns the table with the list of bots.
@@ -718,5 +652,78 @@ public class EntityPanel extends JPanel {
      */
     public final int getSelectedEPartnerRow() {
         return ePartnerTable.getSelectedRow();
+    }
+    
+
+    /**
+     * Returns the list with BotConfigs.
+     * @return The list with BotConfigs.
+     */
+    public List<BotConfig> getBotConfigs() {
+    	return botConfigList;
+    }
+    
+    /**
+     * Returns the BotConfig at the index'th place.
+     * @param index The index of the bot.
+     * @return The BotConfig at the index'th place.
+     */
+    public BotConfig getBotConfig(int index) {
+    	return botConfigList.get(index);
+    }
+    
+    /**
+     * Returns the previous saved BotConfig list.
+     * @return The previous saved BotConfig list.
+     */
+    public List<BotConfig> getOldBotConfigs() {
+    	return oldBotConfigs;
+    }
+    
+    /**
+     * Updates the BotConfig list.
+     */
+    public void updateBotConfigs() {
+    	oldBotConfigs.clear();
+    	
+    	for (int i = 0; i < botConfigList.size(); i++) {
+    		oldBotConfigs.add(botConfigList.get(i));
+    	}
+    }
+    
+    /**
+     * Compares the BotConfig lists.
+     * @return If the BotConfigs lists are equal.
+     */
+    public boolean compareBotConfigs() {
+    	if (botConfigList.size() != oldBotConfigs.size()) {
+    		return false;
+    	}
+    	
+    	for (int i = 0; i < botConfigList.size(); i++) {
+    		if (botConfigList.get(i).toString().equals(oldBotConfigs.get(i).toString())) {
+    			return false;
+    		}
+    	}
+    	
+    	return true;
+    }
+    
+    /**
+     * Returns if changes has been made to the default configuration.
+     *
+     * @return whether changes have been made.
+     */
+    public final boolean isDefault() {
+        boolean isDefault = true;
+        
+        if (this.botList.getRowCount() != 0) {
+            isDefault = false;
+        }
+        else if (this.epartnerList.getRowCount() != 0) {
+            isDefault = false;
+        }
+        
+        return isDefault;
     }
 }

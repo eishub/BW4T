@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
  * objects during tests, to prevent the system from hanging due
  * to having to press a button on the prompt.
  * <p>
- * @author        
+ * @author      Calvin Wong Loi Sing
  * @version     0.1                
  * @since       12-05-2014        
  */

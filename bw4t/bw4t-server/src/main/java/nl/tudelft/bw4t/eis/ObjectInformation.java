@@ -10,19 +10,6 @@ public class ObjectInformation {
 		this.id = id;
 	}
 
-	// @Override
-	// public boolean equals(Object obj) {
-	// if (obj instanceof ObjectInformation) {
-	// ObjectInformation objI = (ObjectInformation) obj;
-	// if (objI.getId() == getId() && objI.getX() == getX()
-	// && objI.getY() == getY())
-	// return true;
-	// else
-	// return false;
-	// }
-	// return false;
-	// }
-
 	public double getX() {
 		return X;
 	}
@@ -50,12 +37,6 @@ public class ObjectInformation {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
 		ObjectInformation other = (ObjectInformation) obj;
 		if (Double.doubleToLongBits(X) != Double.doubleToLongBits(other.X))
 			return false;
@@ -63,6 +44,7 @@ public class ObjectInformation {
 			return false;
 		if (id != other.id)
 			return false;
+		}
 		return true;
 	}
 }

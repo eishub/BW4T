@@ -6,19 +6,21 @@ import java.io.FileNotFoundException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 
 /**
  * Handles the event to open a file.
   * <p>
- * @author        
+ * @author      Katia Asmoredjo
+ * @author 		Xander Zonneveld
  * @version     0.1                
  * @since       12-05-2014        
  */
@@ -42,9 +44,11 @@ class MenuOptionOpen extends AbstractMenuOption {
     //TODO: Split up in multiple shorter methods
     public void actionPerformed(final ActionEvent e) {
         ConfigurationPanel configPanel = super.getController().getMainView().getMainPanel().getConfigurationPanel();
+        EntityPanel entityPanel = super.getController().getMainView().getMainPanel().getEntityPanel();
 
         // Check if current config is different from last saved config
-        if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())) {
+        if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())
+        		|| !entityPanel.compareBotConfigs()) {
             // Check if user wants to save current configuration
             int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
                     null,
@@ -79,10 +83,21 @@ class MenuOptionOpen extends AbstractMenuOption {
 //                configPanel.setUseGoal(temp.isUseGoal());
                 configPanel.setMapFile(configuration.getMapFile());
 
+                // clear bots/epartners from the previous config
+                resetBotTable(entityPanel);
+                resetEpartnerTable(entityPanel);
+                super.getController().getMainView().getMainPanel().getEntityPanel().getBotConfigs().clear();
+                
                 // Fill the bot panel
-
-                for(BotConfig bot : configuration.getBots()) {
-                    // TODO: LOAD AND FILL BOT LIST HERE
+                int rows = configuration.getBots().size();
+                
+                for (int i = 0; i < rows; i++) {
+                	String botName = configuration.getBot(i).getBotName();
+                	String botController = configuration.getBot(i).getBotController();
+                	String botAmount = configuration.getBot(i).getBotAmount();
+                	Object[] botObject = {botName, botController, botAmount};
+                	entityPanel.getBotTableModel().addRow(botObject);
+                	entityPanel.getBotConfigs().add(configuration.getBot(i));
                 }
             } catch (JAXBException e1) {
                 ScenarioEditor.handleException(e1, "Error: Opening the XML has failed.");
@@ -95,5 +110,36 @@ class MenuOptionOpen extends AbstractMenuOption {
             super.getMenuView().setLastFileLocation(openedFile);
         }
         super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
+        super.getController().getMainView().getMainPanel().getEntityPanel().updateBotConfigs();
+    }
+    
+    /**
+     * Reset the list with bots.
+     * @param entityPanel The EntityPanel which contains the bot list.
+     */
+    public void resetBotTable(EntityPanel entityPanel) {
+    	DefaultTableModel botTable = entityPanel.getBotTableModel();
+    	int rows = botTable.getRowCount();
+    	
+    	if (rows > 0) {
+	    	for (int i = rows - 1; i >= 0; i--) {
+	    		botTable.removeRow(i);
+	    	}
+    	}
+    }
+    
+    /**
+     * Reset the list with epartners.
+     * @param entityPanel The EntityPanel which contains the epartner list.
+     */
+    public void resetEpartnerTable(EntityPanel entityPanel) {
+    	DefaultTableModel epartnerTable = entityPanel.getEPartnerTableModel();
+    	int rows = epartnerTable.getRowCount();
+    	
+    	if (rows > 0) {
+	    	for (int i = rows - 1; i >= 0; i--) {
+	    		epartnerTable.removeRow(i);
+	    	}
+    	}
     }
 }
