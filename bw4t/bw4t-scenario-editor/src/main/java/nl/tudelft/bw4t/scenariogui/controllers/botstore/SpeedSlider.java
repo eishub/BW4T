@@ -10,9 +10,9 @@ import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
  * Handles actions of the speedslider
  */
 class SpeedSlider implements MouseListener {
-	/**
-	 * The panel containing the slider.
-	 */
+    /**
+     * The panel containing the slider.
+     */
     private BotEditorPanel view;
     /**
      * Constructor.
@@ -49,19 +49,19 @@ class SpeedSlider implements MouseListener {
 
     }
     
-	/**
-	 * Pad the string with zeros (the string with
-	 * the value for the battery usage is aligned with
-	 * the sliders, and will cause the sliders to resize
-	 * when changed. This function keeps the string at a
-	 * certain length, so the sliders aren't resized anymore).
-	 * @param value The string to be padded.
-	 * @return The padded string.
-	 */
-	public String padString(String value) {
-		while (value.length() < 8) {
-			value += "0";
-		}
-		return value;
-	}
+    /**
+     * Pad the string with zeros (the string with
+     * the value for the battery usage is aligned with
+     * the sliders, and will cause the sliders to resize
+     * when changed. This function keeps the string at a
+     * certain length, so the sliders aren't resized anymore).
+     * @param value The string to be padded.
+     * @return The padded string.
+     */
+    public String padString(String value) {
+        while (value.length() < 8) {
+            value += "0";
+        }
+        return value;
+    }
 }

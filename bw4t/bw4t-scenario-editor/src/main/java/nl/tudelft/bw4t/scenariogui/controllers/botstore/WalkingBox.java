@@ -12,9 +12,9 @@ import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
  * @author Arun
  */
 class WalkingBox implements ActionListener {
-	/**
-	 * The panel containing the check box.
-	 */
+    /**
+     * The panel containing the check box.
+     */
     private BotEditorPanel view;
     /**
      * Constructor.
@@ -28,13 +28,13 @@ class WalkingBox implements ActionListener {
      * @param ae The action event leading to execution of this method.
      */
     public void actionPerformed(ActionEvent ae) {
-    	JSlider sizeSlider = view.getSizeSlider();
-    	if (view.getsizeoverloadCheckbox().isSelected()) {
-    		sizeSlider.setEnabled(true);
-    	}
-    	else {
-    		sizeSlider.setEnabled(false);
-    		sizeSlider.setValue(2);
-    	}
+        JSlider sizeSlider = view.getSizeSlider();
+        if (view.getsizeoverloadCheckbox().isSelected()) {
+            sizeSlider.setEnabled(true);
+        }
+        else {
+            sizeSlider.setEnabled(false);
+            sizeSlider.setValue(2);
+        }
     }
 }
