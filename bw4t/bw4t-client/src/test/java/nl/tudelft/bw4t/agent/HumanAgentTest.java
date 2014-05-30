@@ -12,18 +12,18 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HumanAgentTest {
-	@Mock
-	private RemoteEnvironment remoteEnvironment;
-	private HumanAgent testAgent;
-	
-	@Before
-	public void setUp() throws Exception {
-		testAgent = new HumanAgent("Agent1", remoteEnvironment);
-	}
-	
-	@Test
-	public void constructortest(){
-		assertNotNull(testAgent);
-		assertEquals(remoteEnvironment, testAgent.getEnvironment());
-	}
+    @Mock
+    private RemoteEnvironment remoteEnvironment;
+    private HumanAgent testAgent;
+    
+    @Before
+    public void setUp() throws Exception {
+        testAgent = new HumanAgent("Agent1", remoteEnvironment);
+    }
+    
+    @Test
+    public void constructortest(){
+        assertNotNull(testAgent);
+        assertEquals(remoteEnvironment, testAgent.getEnvironment());
+    }
 }

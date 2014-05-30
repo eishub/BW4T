@@ -25,35 +25,35 @@ import repast.simphony.engine.environment.RunListener;
  *           run mode. Removed the singleton stuff.
  */
 public class BW4TBuilder implements ContextBuilder<Object> {
-	/**
-	 * The log4j logger, logs to the console.
-	 */
-	private static final Logger LOGGER = Logger.getLogger(BW4TBuilder.class);
+    /**
+     * The log4j logger, logs to the console.
+     */
+    private static final Logger LOGGER = Logger.getLogger(BW4TBuilder.class);
 
-	/** 
-	 * Matches the ID in context.xml and scenario.xml
-	 */
-	private static final String CONTEXT_ID = "BW4T";
+    /** 
+     * Matches the ID in context.xml and scenario.xml
+     */
+    private static final String CONTEXT_ID = "BW4T";
 
-	/**
-	 * Build the Context in which to run the repast simulation.
-	 */
-	public BW4TBuilder() {
-	}
+    /**
+     * Build the Context in which to run the repast simulation.
+     */
+    public BW4TBuilder() {
+    }
 
-	@Override
-	public Context<Object> build(Context<Object> context) {
-		context.setId(CONTEXT_ID);
-		try {
-			MapLoader.loadMap(BW4TEnvironment.getInstance().getMapLocation(), context);
-			/*
-			 * we call setContext() only after context has been prepared, because we need complete context for the
-			 * rendering that will be started immediately after publishing.
-			 */
-			BW4TEnvironment.getInstance().setContext(context);
-		} catch (IOException | JAXBException e) {
-			LOGGER.fatal("Could not load the map: " + BW4TEnvironment.getInstance().getMapLocation(), e);
-		}
-		return context;
-	}
+    @Override
+    public Context<Object> build(Context<Object> context) {
+        context.setId(CONTEXT_ID);
+        try {
+            MapLoader.loadMap(BW4TEnvironment.getInstance().getMapLocation(), context);
+            /*
+             * we call setContext() only after context has been prepared, because we need complete context for the
+             * rendering that will be started immediately after publishing.
+             */
+            BW4TEnvironment.getInstance().setContext(context);
+        } catch (IOException | JAXBException e) {
+            LOGGER.fatal("Could not load the map: " + BW4TEnvironment.getInstance().getMapLocation(), e);
+        }
+        return context;
+    }
 }

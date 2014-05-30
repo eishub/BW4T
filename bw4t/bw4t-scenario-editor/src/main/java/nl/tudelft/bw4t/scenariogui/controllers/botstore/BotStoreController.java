@@ -54,10 +54,10 @@ public class BotStoreController {
                 new CancelButton(getMainView()));
         
         view.getBotEditorPanel().getBatteryEnabledCheckbox().addActionListener(
-        		new BatteryBox(getMainView().getBotEditorPanel()));
+                new BatteryBox(getMainView().getBotEditorPanel()));
         
         view.getBotEditorPanel().getmovespeedCheckbox().addActionListener(
-        		new SpeedBox(getMainView().getBotEditorPanel()));
+                new SpeedBox(getMainView().getBotEditorPanel()));
     }
     
     /**

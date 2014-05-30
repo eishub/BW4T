@@ -18,10 +18,10 @@ import eis.iilang.Parameter;
  * @author trens
  */
 public class MessageTranslator {
-	public static Map<String, MessageCommand> translator = new HashMap<String, MessageCommand>();
-	public static Map<String, MessageCommand> translatorEquals = new HashMap<String, MessageCommand>();
-	
-	public static void init(){
+    public static Map<String, MessageCommand> translator = new HashMap<String, MessageCommand>();
+    public static Map<String, MessageCommand> translatorEquals = new HashMap<String, MessageCommand>();
+    
+    public static void init(){
         
         translator.put("I am going to ", new CommandRoomColor(MessageType.goingToRoom));
         translator.put("I have a ", new CommandRoomColor(MessageType.hasColor));
@@ -62,8 +62,8 @@ public class MessageTranslator {
         translatorEquals.put("I am almost there", new CommandType(MessageType.almostThere));
         translatorEquals.put("I am far away", new CommandType(MessageType.farAway));
         translatorEquals.put("I am delayed", new CommandType(MessageType.delayed));
-	}
-	
+    }
+    
     /**
      * Translate a message (String) to a message (BW4TMessage)
      * 
@@ -71,33 +71,33 @@ public class MessageTranslator {
      *            , the message that should be translated
      * @return the translated message
      */
-	public static BW4TMessage translateMessage(String message){
-			
+    public static BW4TMessage translateMessage(String message){
+            
         for(Entry<String, MessageCommand> e : translatorEquals.entrySet()){
-        	String key = e.getKey();
-        	if(message.equals(key)) {
-        		BW4TMessage msg = translatorEquals.get(key).exec(message);
-        		return msg;
-        	}
+            String key = e.getKey();
+            if(message.equals(key)) {
+                BW4TMessage msg = translatorEquals.get(key).exec(message);
+                return msg;
+            }
         }
-    	                
+                        
         for(Entry<String, MessageCommand> e : translator.entrySet()){
-        	String key = e.getKey();
-        	if(message.contains(key)) {
-        		return translator.get(key).exec(message);
-        	}
+            String key = e.getKey();
+            if(message.contains(key)) {
+                return translator.get(key).exec(message);
+            }
         }
-		return null; 
-	}
-	
-	/**
+        return null; 
+    }
+    
+    /**
      * Translate a message (String) to a message (BW4TMessage)
      * 
      * @param message
      *            , the message that should be translated
      * @return the translated message
      */
-	@Deprecated
+    @Deprecated
     public static BW4TMessage translateMessageLegacy(String message) {
         BW4TMessage translatedMessage = null;
         String room = null;

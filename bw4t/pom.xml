@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>nl.tudelft</groupId>
 	<artifactId>bw4t</artifactId>
-	<version>3.1.0</version>
+	<version>3.2.0</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>bw4t-server</module>
@@ -17,7 +17,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<sonar.projectKey>nl.tudelft.bw4t</sonar.projectKey>
 		<sonar.projectName>BW4T</sonar.projectName>
-		<sonar.projectVersion>3.1.0</sonar.projectVersion>
+		<sonar.projectVersion>3.2.0</sonar.projectVersion>
 		<sonar.language>java</sonar.language>
 		<sonar.sources>src/main</sonar.sources>
 		<sonar.tests>src/test</sonar.tests>

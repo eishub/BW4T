@@ -39,7 +39,7 @@ import static org.mockito.Mockito.when;
 /**
  * <p>
  * @author      Calvin Wong Loi Sing  
- * @author		  Katia Asmoredjo
+ * @author        Katia Asmoredjo
  * @version     0.1                
  * @since       21-05-2014        
  */
@@ -219,22 +219,22 @@ public class MenuBarTest {
      */
     @Test
     public void testFlushEntityLists() {
-    	//add bots and epartners
-    	editor.getMainPanel().getEntityPanel().getNewBotButton().doClick();
-    	editor.getMainPanel().getEntityPanel().getNewBotButton().doClick();
-    	editor.getMainPanel().getEntityPanel().getNewBotButton().doClick();
-    	assertEquals(editor.getMainPanel().getEntityPanel().getBotTableModel().getRowCount(), 3);
-    	
-    	editor.getMainPanel().getEntityPanel().getNewEPartnerButton().doClick();
-    	editor.getMainPanel().getEntityPanel().getNewEPartnerButton().doClick();
-    	assertEquals(editor.getMainPanel().getEntityPanel().getEPartnerTableModel().getRowCount(), 2);
-    	
-    	//open new configuration
-    	editor.getTopMenuBar().getMenuItemFileNew().doClick();
-    	
-    	//check if the rows have actually been flushed
-    	assertEquals(editor.getMainPanel().getEntityPanel().getBotTableModel().getRowCount(), 0);
-    	assertEquals(editor.getMainPanel().getEntityPanel().getEPartnerTableModel().getRowCount(), 0);
+        //add bots and epartners
+        editor.getMainPanel().getEntityPanel().getNewBotButton().doClick();
+        editor.getMainPanel().getEntityPanel().getNewBotButton().doClick();
+        editor.getMainPanel().getEntityPanel().getNewBotButton().doClick();
+        assertEquals(editor.getMainPanel().getEntityPanel().getBotTableModel().getRowCount(), 3);
+        
+        editor.getMainPanel().getEntityPanel().getNewEPartnerButton().doClick();
+        editor.getMainPanel().getEntityPanel().getNewEPartnerButton().doClick();
+        assertEquals(editor.getMainPanel().getEntityPanel().getEPartnerTableModel().getRowCount(), 2);
+        
+        //open new configuration
+        editor.getTopMenuBar().getMenuItemFileNew().doClick();
+        
+        //check if the rows have actually been flushed
+        assertEquals(editor.getMainPanel().getEntityPanel().getBotTableModel().getRowCount(), 0);
+        assertEquals(editor.getMainPanel().getEntityPanel().getEPartnerTableModel().getRowCount(), 0);
     }
 
     /**

@@ -18,7 +18,7 @@ import nl.tudelft.bw4t.util.XMLManager;
  * <p>
  * @author      Nick Feddes
  * @author      Calvin Wong Loi Sing
- * @author 		Katia Asmoredjo 
+ * @author      Katia Asmoredjo 
  * @version     0.1                
  * @since       12-05-2014        
  */
@@ -304,7 +304,7 @@ public class BW4TClientConfig {
      * @return The index'th bot.
      */
     public BotConfig getBot(int index) {
-    	return bots.get(index);
+        return bots.get(index);
     }
     
     /**

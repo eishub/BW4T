@@ -17,76 +17,76 @@ import javax.swing.SpinnerNumberModel;
  */
 @SuppressWarnings("serial")
 public class SizeDialog extends JPanel {
-	SpinnerModel rowmodel = new SpinnerNumberModel(3, // initial value
-			1, // min
-			10, // max
-			1); // step
-	JSpinner rows = new JSpinner(rowmodel);
+    SpinnerModel rowmodel = new SpinnerNumberModel(3, // initial value
+            1, // min
+            10, // max
+            1); // step
+    JSpinner rows = new JSpinner(rowmodel);
 
-	SpinnerModel colmodel = new SpinnerNumberModel(3, // initial value
-			1, // min
-			10, // max
-			1); // step
-	JSpinner cols = new JSpinner(colmodel);
+    SpinnerModel colmodel = new SpinnerNumberModel(3, // initial value
+            1, // min
+            10, // max
+            1); // step
+    JSpinner cols = new JSpinner(colmodel);
 
-	SpinnerModel entitymodel = new SpinnerNumberModel(2, // initial value
-			1, // min
-			11, // max
-			1); // step
-	JSpinner entities = new JSpinner(entitymodel);
+    SpinnerModel entitymodel = new SpinnerNumberModel(2, // initial value
+            1, // min
+            11, // max
+            1); // step
+    JSpinner entities = new JSpinner(entitymodel);
 
-	JCheckBox randomcheckbox = new JCheckBox();
-	JCheckBox labelcheckbox = new JCheckBox("", true);
+    JCheckBox randomcheckbox = new JCheckBox();
+    JCheckBox labelcheckbox = new JCheckBox("", true);
 
-	public SizeDialog() {
-		setLayout(new GridLayout(0, 2));
-		add(new JLabel("#rows"));
-		add(rows);
-		add(new JLabel("#columns"));
-		add(cols);
-		add(new JLabel("#entities"));
-		add(entities);
-		add(new JLabel("generate random sequence and blocks"));
-		add(randomcheckbox);
-		add(new JLabel("show zone labels"));
-		add(labelcheckbox);
+    public SizeDialog() {
+        setLayout(new GridLayout(0, 2));
+        add(new JLabel("#rows"));
+        add(rows);
+        add(new JLabel("#columns"));
+        add(cols);
+        add(new JLabel("#entities"));
+        add(entities);
+        add(new JLabel("generate random sequence and blocks"));
+        add(randomcheckbox);
+        add(new JLabel("show zone labels"));
+        add(labelcheckbox);
 
-		// pack();
-		// setVisible(true);
-	}
+        // pack();
+        // setVisible(true);
+    }
 
-	public boolean isRandomMap() {
-		return randomcheckbox.isSelected();
-	}
+    public boolean isRandomMap() {
+        return randomcheckbox.isSelected();
+    }
 
-	public boolean isLabelsVisible() {
-		return labelcheckbox.isSelected();
-	}
+    public boolean isLabelsVisible() {
+        return labelcheckbox.isSelected();
+    }
 
-	/**
-	 * get {@link #rows} as set by user
-	 * 
-	 * @return {@link #rows}
-	 */
-	public Integer getRows() {
-		return (Integer) (rows.getValue());
-	}
+    /**
+     * get {@link #rows} as set by user
+     * 
+     * @return {@link #rows}
+     */
+    public Integer getRows() {
+        return (Integer) (rows.getValue());
+    }
 
-	/**
-	 * get {@link #cols} as set by user
-	 * 
-	 * @return {@link #cols}
-	 */
-	public Integer getColumns() {
-		return (Integer) (cols.getValue());
-	}
+    /**
+     * get {@link #cols} as set by user
+     * 
+     * @return {@link #cols}
+     */
+    public Integer getColumns() {
+        return (Integer) (cols.getValue());
+    }
 
-	/**
-	 * get {@link #entities} as set by user
-	 * 
-	 * @return {@link #entities}
-	 */
-	public Integer getEntities() {
-		return (Integer) (entities.getValue());
-	}
+    /**
+     * get {@link #entities} as set by user
+     * 
+     * @return {@link #entities}
+     */
+    public Integer getEntities() {
+        return (Integer) (entities.getValue());
+    }
 }

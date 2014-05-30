@@ -15,9 +15,9 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  * @author Arun
  */
 class ApplyButton implements ActionListener {
-	/**
-	 * The BotEditorPanel to request components from.
-	 */
+    /**
+     * The BotEditorPanel to request components from.
+     */
     private BotEditorPanel view;
     /**
      * The MainPanel to request components from.
