@@ -20,8 +20,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * <p/>
- *
  * @author Xander Zonneveld
  * @version 0.1
  * @since 13-05-2014

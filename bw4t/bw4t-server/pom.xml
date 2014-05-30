@@ -5,7 +5,6 @@
 		<groupId>nl.tudelft</groupId>
 		<artifactId>bw4t</artifactId>
 		<version>3.1.0</version>
-		<relativePath>..</relativePath>
 	</parent>
 	<groupId>nl.tudelft.bw4t</groupId>
 	<artifactId>bw4t-server</artifactId>
@@ -27,7 +26,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>nl.tudelft.bw4t.server.environment.Launcher</mainClass>
+							<mainClass>nl.tudelft.bw4t.server.Launcher</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>

@@ -8,10 +8,9 @@ import javax.swing.text.DocumentFilter;
 
 /**
  * A class for the formatting of data.
- * <p>
- * @author      Nick Feddes  
- * @version     0.1                
- * @since       12-05-2014        
+ *
+ * @author Nick
+ *
  */
 public final class Format {
     
@@ -43,12 +42,20 @@ public final class Format {
          * Deletes the region of text from <code>off</code> to
          * <code>off + len</code>, and replaces it with <code>str</code>.
          *
-         * @param fb    FilterBypass to circumvent calling back into the Document to change it.
-         * @param off   Offset, location in document.
-         * @param len   Length of text to delete.
-         * @param str   Text to insert, null indicates no text to insert.
-         * @param attr  AttributeSet indicating attributes of inserted text, null is legal.
-         * @throws BadLocationException Reports bad locations within a document model.
+         * @param fb
+         *            FilterBypass to circumvent calling back into the Document
+         *            to change it.
+         * @param off
+         *            Offset, location in document.
+         * @param len
+         *            Length of text to delete.
+         * @param str
+         *            Text to insert, null indicates no text to insert.
+         * @param attr
+         *            AttributeSet indicating attributes of inserted text, null
+         *            is legal.
+         * @throws BadLocationException
+         *             Reports bad locations within a document model.
          */
         @Override
         public void replace(final FilterBypass fb, final int off, final int len,
@@ -62,7 +69,8 @@ public final class Format {
     /**
      * Adds a filter to the text field that only allows numerical input.
      *
-     * @param txt   The text field.
+     * @param txt
+     *            The text field.
      */
     public static void addIntegerDocumentFilterForTextField(
             final JTextField txt) {
