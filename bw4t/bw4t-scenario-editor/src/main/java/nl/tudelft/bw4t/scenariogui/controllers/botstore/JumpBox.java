@@ -10,11 +10,11 @@ import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
  * @author Arun
  */
 class JumpBox implements ActionListener {
-	/**
-	 * The panel containing the check box.
-	 */
+    /**
+     * The panel containing the check box.
+     */
     @SuppressWarnings("unused")
-	private BotEditorPanel view;
+    private BotEditorPanel view;
     /**
      * Constructor.
      * @param pview The panel of the jump box.

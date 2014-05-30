@@ -16,26 +16,26 @@ import eis.iilang.Percept;
  * @author trens
  */
 public class GotoPositionActionListener extends ClientActionListener {
-	private final Point position;
+    private final Point position;
 
-	public GotoPositionActionListener(Point position, ClientController control) {
-		super(control);
-		this.position = position;
-	}
+    public GotoPositionActionListener(Point position, ClientController control) {
+        super(control);
+        this.position = position;
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (!Launcher.getEnvironment().isConnectedToGoal()) {
-			try {
-				getController().getHumanAgent().goTo(position.getX(), position.getY());
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		} else {
-			LinkedList<Percept> percepts = new LinkedList<Percept>();
-			Percept percept = new Percept("goTo", new Numeral(position.getX()), new Numeral(position.getY()));
-			percepts.add(percept);
-			getController().setToBePerformedAction(percepts);
-		}
-	}
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (!Launcher.getEnvironment().isConnectedToGoal()) {
+            try {
+                getController().getHumanAgent().goTo(position.getX(), position.getY());
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        } else {
+            LinkedList<Percept> percepts = new LinkedList<Percept>();
+            Percept percept = new Percept("goTo", new Numeral(position.getX()), new Numeral(position.getY()));
+            percepts.add(percept);
+            getController().setToBePerformedAction(percepts);
+        }
+    }
 }

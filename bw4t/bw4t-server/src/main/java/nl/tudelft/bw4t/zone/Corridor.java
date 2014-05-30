@@ -11,8 +11,8 @@ import repast.simphony.space.continuous.ContinuousSpace;
  */
 public class Corridor extends Zone {
 
-	public Corridor(nl.tudelft.bw4t.map.Zone zone, ContinuousSpace<Object> space, Context<Object> context) {
-		super(zone, space, context);
-	}
+    public Corridor(nl.tudelft.bw4t.map.Zone zone, ContinuousSpace<Object> space, Context<Object> context) {
+        super(zone, space, context);
+    }
 
 }

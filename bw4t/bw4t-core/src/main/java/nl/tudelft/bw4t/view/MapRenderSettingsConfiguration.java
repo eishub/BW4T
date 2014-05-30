@@ -6,19 +6,19 @@ import nl.tudelft.bw4t.controller.MapRenderSettings;
 
 public class MapRenderSettingsConfiguration extends JFrame {
 
-	private final MapRenderSettings renderSettings;
+    private final MapRenderSettings renderSettings;
 
-	public MapRenderSettingsConfiguration(MapRenderSettings settings){
-		this.renderSettings = settings;
-	}
+    public MapRenderSettingsConfiguration(MapRenderSettings settings){
+        this.renderSettings = settings;
+    }
 
-	private void init() {
+    private void init() {
 
-	}
+    }
 
-	public static void main(String[] args) {
-		MapRenderSettingsConfiguration screen = new MapRenderSettingsConfiguration(new MapRenderSettings());
-		screen.setVisible(true);
-	}
+    public static void main(String[] args) {
+        MapRenderSettingsConfiguration screen = new MapRenderSettingsConfiguration(new MapRenderSettings());
+        screen.setVisible(true);
+    }
 
 }

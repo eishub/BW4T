@@ -16,51 +16,51 @@ public class Door implements Serializable {
       HORIZONTAL, VERTICAL
   };
 
-	/** width of doors. */
-	public static final int DOOR_WIDTH = 4;
-	/** Thickness of doors. */
-	public static final int DOOR_THICKNESS = 1;
-	public static final Color COLOR_CLOSED = Color.RED;
-	public static final Color COLOR_OPEN = Color.GREEN;
+    /** width of doors. */
+    public static final int DOOR_WIDTH = 4;
+    /** Thickness of doors. */
+    public static final int DOOR_THICKNESS = 1;
+    public static final Color COLOR_CLOSED = Color.RED;
+    public static final Color COLOR_OPEN = Color.GREEN;
 
-	private Point position = new Point();
-	private Orientation orientation = Orientation.HORIZONTAL;
+    private Point position = new Point();
+    private Orientation orientation = Orientation.HORIZONTAL;
 
-	public Door() {
-	}
+    public Door() {
+    }
 
-	public Door(Point pos, Orientation or) {
-		position = pos;
-		orientation = or;
-	}
+    public Door(Point pos, Orientation or) {
+        position = pos;
+        orientation = or;
+    }
 
-	public Point getPosition() {
-		return position;
-	}
+    public Point getPosition() {
+        return position;
+    }
 
-	public void setPosition(Point position) {
-		this.position = position;
-	}
+    public void setPosition(Point position) {
+        this.position = position;
+    }
 
-	public Orientation getOrientation() {
-		return orientation;
-	}
+    public Orientation getOrientation() {
+        return orientation;
+    }
 
-	public void setOrientation(Orientation orientation) {
-		this.orientation = orientation;
-	}
+    public void setOrientation(Orientation orientation) {
+        this.orientation = orientation;
+    }
 
-	public double getWidth() {
-		return (orientation == Orientation.HORIZONTAL) ? DOOR_WIDTH : DOOR_THICKNESS;
-	}
+    public double getWidth() {
+        return (orientation == Orientation.HORIZONTAL) ? DOOR_WIDTH : DOOR_THICKNESS;
+    }
 
-	public double getHeight() {
-		return (orientation == Orientation.HORIZONTAL) ? DOOR_THICKNESS : DOOR_WIDTH;
-	}
+    public double getHeight() {
+        return (orientation == Orientation.HORIZONTAL) ? DOOR_THICKNESS : DOOR_WIDTH;
+    }
 
-	@Override
-	public String toString() {
-		return "Door[" + position + "," + orientation + "]";
-	}
+    @Override
+    public String toString() {
+        return "Door[" + position + "," + orientation + "]";
+    }
 
 }

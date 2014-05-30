@@ -19,28 +19,28 @@ import eis.iilang.Percept;
  * @author trens
  */
 public class PickUpActionListener extends ClientActionListener {
-	/**
-	 * The log4j Logger which displays logs on console
-	 */
-	private final static Logger LOGGER = Logger.getLogger(BW4TClientGUI.class);
+    /**
+     * The log4j Logger which displays logs on console
+     */
+    private final static Logger LOGGER = Logger.getLogger(BW4TClientGUI.class);
 
-	public PickUpActionListener(ClientController controller) {
-		super(controller);
-	}
+    public PickUpActionListener(ClientController controller) {
+        super(controller);
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (!Launcher.getEnvironment().isConnectedToGoal()) {
-			try {
-				getController().getHumanAgent().pickUp();
-			} catch (Exception e1) {
-				LOGGER.error("Could tell the agent to perform a pickUp action.", e1);
-			}
-		} else {
-			List<Percept> percepts = new LinkedList<Percept>();
-			Percept percept = new Percept("pickUp");
-			percepts.add(percept);
-			getController().setToBePerformedAction(percepts);
-		}
-	}
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (!Launcher.getEnvironment().isConnectedToGoal()) {
+            try {
+                getController().getHumanAgent().pickUp();
+            } catch (Exception e1) {
+                LOGGER.error("Could tell the agent to perform a pickUp action.", e1);
+            }
+        } else {
+            List<Percept> percepts = new LinkedList<Percept>();
+            Percept percept = new Percept("pickUp");
+            percepts.add(percept);
+            getController().setToBePerformedAction(percepts);
+        }
+    }
 }

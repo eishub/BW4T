@@ -7,14 +7,14 @@ package nl.tudelft.bw4t.server;
  */
 
 public interface RobotEntityInt {
-	/**
-	 * To be called when a new perception cycle starts. This allows the entity to 'lock' the current repast state so
-	 * that percepts are coherent.
-	 */
-	void initializePerceptionCycle();
+    /**
+     * To be called when a new perception cycle starts. This allows the entity to 'lock' the current repast state so
+     * that percepts are coherent.
+     */
+    void initializePerceptionCycle();
 
-	/**
-	 * to be called when robot is connected, so that we can inject the entity into Repast for painting. #2326
-	 */
-	void connect();
+    /**
+     * to be called when robot is connected, so that we can inject the entity into Repast for painting. #2326
+     */
+    void connect();
 }

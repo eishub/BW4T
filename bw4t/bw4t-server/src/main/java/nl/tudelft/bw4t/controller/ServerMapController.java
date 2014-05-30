@@ -29,93 +29,93 @@ import repast.simphony.util.collections.IndexedIterable;
  */
 public class ServerMapController extends AbstractMapController {
 
-	/**
-	 * the repast context containing block and entities.
-	 */
-	private final Context<Object> serverContext;
-	/**
-	 * make sure we focus on the map once we started the application.
-	 */
-	private boolean haveRequestedFocusAlready = false;
+    /**
+     * the repast context containing block and entities.
+     */
+    private final Context<Object> serverContext;
+    /**
+     * make sure we focus on the map once we started the application.
+     */
+    private boolean haveRequestedFocusAlready = false;
 
-	/**
-	 * Instantiate the MapController with the given repast context and the map used.
-	 * 
-	 * @param map
-	 *            the map to be displayed
-	 * @param context
-	 *            the repast context containing block and entities
-	 */
-	public ServerMapController(NewMap map, Context<Object> context) {
-		super(map);
-		getRenderSettings().setRenderEntityName(true);
-		serverContext = context;
-		Dimensions size = ((ContinuousSpace) context.getProjection(MapLoader.PROJECTION_ID)).getDimensions();
-		getRenderSettings().setWorldDimensions((int) size.getWidth(), (int) size.getHeight());
-	}
+    /**
+     * Instantiate the MapController with the given repast context and the map used.
+     * 
+     * @param map
+     *            the map to be displayed
+     * @param context
+     *            the repast context containing block and entities
+     */
+    public ServerMapController(NewMap map, Context<Object> context) {
+        super(map);
+        getRenderSettings().setRenderEntityName(true);
+        serverContext = context;
+        Dimensions size = ((ContinuousSpace) context.getProjection(MapLoader.PROJECTION_ID)).getDimensions();
+        getRenderSettings().setWorldDimensions((int) size.getWidth(), (int) size.getHeight());
+    }
 
-	@Override
-	public List<BlockColor> getSequence() {
-		IndexedIterable<Object> dropZone = serverContext.getObjects(DropZone.class);
-		if (dropZone.size() <= 0) {
-			return new ArrayList<>();
-		}
-		DropZone zone = (DropZone) dropZone.get(0);
-		return zone.getSequence();
-	}
+    @Override
+    public List<BlockColor> getSequence() {
+        IndexedIterable<Object> dropZone = serverContext.getObjects(DropZone.class);
+        if (dropZone.size() <= 0) {
+            return new ArrayList<>();
+        }
+        DropZone zone = (DropZone) dropZone.get(0);
+        return zone.getSequence();
+    }
 
-	@Override
-	public int getSequenceIndex() {
-		DropZone dropZoneTemp = null;
-		for (Object dropZone : serverContext.getObjects(DropZone.class)) {
-			dropZoneTemp = (DropZone) dropZone;
-		}
-		if (dropZoneTemp != null) {
-			return dropZoneTemp.getSequenceIndex();
-		}
-		return 0;
-	}
+    @Override
+    public int getSequenceIndex() {
+        DropZone dropZoneTemp = null;
+        for (Object dropZone : serverContext.getObjects(DropZone.class)) {
+            dropZoneTemp = (DropZone) dropZone;
+        }
+        if (dropZoneTemp != null) {
+            return dropZoneTemp.getSequenceIndex();
+        }
+        return 0;
+    }
 
-	@Override
-	public boolean isOccupied(Zone room) {
-		for (Object roomObj : serverContext.getObjects(Room.class)) {
-			Room sroom = (Room) roomObj;
-			if (sroom.getName().equals(room.getName())) {
-				return sroom.getOccupier() != null;
-			}
-		}
-		return false;
-	}
+    @Override
+    public boolean isOccupied(Zone room) {
+        for (Object roomObj : serverContext.getObjects(Room.class)) {
+            Room sroom = (Room) roomObj;
+            if (sroom.getName().equals(room.getName())) {
+                return sroom.getOccupier() != null;
+            }
+        }
+        return false;
+    }
 
-	@Override
-	public Set<Block> getVisibleBlocks() {
-		Set<Block> blocks = new HashSet<>();
-		for (Object block : serverContext.getObjects(nl.tudelft.bw4t.blocks.Block.class)) {
-			blocks.add(((nl.tudelft.bw4t.blocks.Block) block).getView());
-		}
-		return blocks;
-	}
+    @Override
+    public Set<Block> getVisibleBlocks() {
+        Set<Block> blocks = new HashSet<>();
+        for (Object block : serverContext.getObjects(nl.tudelft.bw4t.blocks.Block.class)) {
+            blocks.add(((nl.tudelft.bw4t.blocks.Block) block).getView());
+        }
+        return blocks;
+    }
 
-	@Override
-	public Set<Entity> getVisibleEntities() {
-		Set<Entity> entities = new HashSet<>();
-		for (Object robot : serverContext.getObjects(Robot.class)) {
-			Robot robotTemp = (Robot) robot;
-			if (robotTemp.isConnected()) {
-				entities.add(robotTemp.getView());
-			}
-		}
-		return entities;
-	}
+    @Override
+    public Set<Entity> getVisibleEntities() {
+        Set<Entity> entities = new HashSet<>();
+        for (Object robot : serverContext.getObjects(Robot.class)) {
+            Robot robotTemp = (Robot) robot;
+            if (robotTemp.isConnected()) {
+                entities.add(robotTemp.getView());
+            }
+        }
+        return entities;
+    }
 
-	@Override
-	protected void updateRenderer(MapRendererInterface mri) {
-		if (BW4TEnvironment.getInstance().getState().equals(EnvironmentState.RUNNING) && !haveRequestedFocusAlready) {
-			mri.requestFocus();
-			haveRequestedFocusAlready = true;
-		}
-		mri.validate();
-		mri.repaint();
-	}
+    @Override
+    protected void updateRenderer(MapRendererInterface mri) {
+        if (BW4TEnvironment.getInstance().getState().equals(EnvironmentState.RUNNING) && !haveRequestedFocusAlready) {
+            mri.requestFocus();
+            haveRequestedFocusAlready = true;
+        }
+        mri.validate();
+        mri.repaint();
+    }
 
 }

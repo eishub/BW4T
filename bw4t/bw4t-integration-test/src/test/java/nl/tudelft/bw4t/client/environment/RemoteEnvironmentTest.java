@@ -14,15 +14,15 @@ import eis.iilang.Parameter;
 @RunWith(MockitoJUnitRunner.class)
 public class RemoteEnvironmentTest {
 
-	RemoteEnvironment remoteEnvironment;
-	
-	@Before
-	public void setUp() {
-		remoteEnvironment = new RemoteEnvironment();
-	}
-	
-	@Test
-	public void constructorTest() throws ManagementException {
-		remoteEnvironment.init(new HashMap<String, Parameter>());
-	}
+    RemoteEnvironment remoteEnvironment;
+    
+    @Before
+    public void setUp() {
+        remoteEnvironment = new RemoteEnvironment();
+    }
+    
+    @Test
+    public void constructorTest() throws ManagementException {
+        remoteEnvironment.init(new HashMap<String, Parameter>());
+    }
 }

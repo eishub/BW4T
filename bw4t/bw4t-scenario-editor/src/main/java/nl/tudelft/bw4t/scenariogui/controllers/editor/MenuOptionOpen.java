@@ -20,7 +20,7 @@ import nl.tudelft.bw4t.scenariogui.util.FileFilters;
  * Handles the event to open a file.
   * <p>
  * @author      Katia Asmoredjo
- * @author 		Xander Zonneveld
+ * @author      Xander Zonneveld
  * @version     0.1                
  * @since       12-05-2014        
  */
@@ -48,7 +48,7 @@ class MenuOptionOpen extends AbstractMenuOption {
 
         // Check if current config is different from last saved config
         if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())
-        		|| !entityPanel.compareBotConfigs()) {
+                || !entityPanel.compareBotConfigs()) {
             // Check if user wants to save current configuration
             int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
                     null,
@@ -92,12 +92,12 @@ class MenuOptionOpen extends AbstractMenuOption {
                 int rows = configuration.getBots().size();
                 
                 for (int i = 0; i < rows; i++) {
-                	String botName = configuration.getBot(i).getBotName();
-                	String botController = configuration.getBot(i).getBotController();
-                	String botAmount = configuration.getBot(i).getBotAmount();
-                	Object[] botObject = {botName, botController, botAmount};
-                	entityPanel.getBotTableModel().addRow(botObject);
-                	entityPanel.getBotConfigs().add(configuration.getBot(i));
+                    String botName = configuration.getBot(i).getBotName();
+                    String botController = configuration.getBot(i).getBotController();
+                    String botAmount = configuration.getBot(i).getBotAmount();
+                    Object[] botObject = {botName, botController, botAmount};
+                    entityPanel.getBotTableModel().addRow(botObject);
+                    entityPanel.getBotConfigs().add(configuration.getBot(i));
                 }
             } catch (JAXBException e1) {
                 ScenarioEditor.handleException(e1, "Error: Opening the XML has failed.");
@@ -118,14 +118,14 @@ class MenuOptionOpen extends AbstractMenuOption {
      * @param entityPanel The EntityPanel which contains the bot list.
      */
     public void resetBotTable(EntityPanel entityPanel) {
-    	DefaultTableModel botTable = entityPanel.getBotTableModel();
-    	int rows = botTable.getRowCount();
-    	
-    	if (rows > 0) {
-	    	for (int i = rows - 1; i >= 0; i--) {
-	    		botTable.removeRow(i);
-	    	}
-    	}
+        DefaultTableModel botTable = entityPanel.getBotTableModel();
+        int rows = botTable.getRowCount();
+        
+        if (rows > 0) {
+            for (int i = rows - 1; i >= 0; i--) {
+                botTable.removeRow(i);
+            }
+        }
     }
     
     /**
@@ -133,13 +133,13 @@ class MenuOptionOpen extends AbstractMenuOption {
      * @param entityPanel The EntityPanel which contains the epartner list.
      */
     public void resetEpartnerTable(EntityPanel entityPanel) {
-    	DefaultTableModel epartnerTable = entityPanel.getEPartnerTableModel();
-    	int rows = epartnerTable.getRowCount();
-    	
-    	if (rows > 0) {
-	    	for (int i = rows - 1; i >= 0; i--) {
-	    		epartnerTable.removeRow(i);
-	    	}
-    	}
+        DefaultTableModel epartnerTable = entityPanel.getEPartnerTableModel();
+        int rows = epartnerTable.getRowCount();
+        
+        if (rows > 0) {
+            for (int i = rows - 1; i >= 0; i--) {
+                epartnerTable.removeRow(i);
+            }
+        }
     }
 }
