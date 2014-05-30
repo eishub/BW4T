@@ -11,6 +11,7 @@
 		<module>bw4t-core</module>
 		<module>bw4t-integration-test</module>
 		<module>bw4t-scenario-editor</module>
+		<module>bw4t-map-editor</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -128,6 +129,12 @@
 			<version>0.3</version>
 		</dependency>
 		<dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymock</artifactId>
+			<version>3.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 			<version>1.9.5</version>
@@ -144,6 +151,12 @@
 			<artifactId>powermock-api-mockito</artifactId>
 			<version>${powermock.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock</artifactId>
+			<version>1.5.4</version>
+			<type>pom</type>
 		</dependency>
 	</dependencies>
 

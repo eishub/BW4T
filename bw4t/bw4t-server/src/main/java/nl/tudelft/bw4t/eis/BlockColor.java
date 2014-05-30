@@ -38,19 +38,15 @@ public class BlockColor {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
 		BlockColor other = (BlockColor) obj;
-		if (block == null) {
-			if (other.block != null)
-				return false;
-		}
-		else if (!block.equals(other.block))
+		if (this == obj) {
+			return true;
+		} else if (obj == null 
+				|| getClass() != obj.getClass() 
+				|| (block == null && other.block != null) 
+				|| !block.equals(other.block)) {
 			return false;
+		}
 		return true;
 	}
 }

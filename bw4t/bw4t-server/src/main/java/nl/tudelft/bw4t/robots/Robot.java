@@ -1,15 +1,17 @@
 package nl.tudelft.bw4t.robots;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.handicap.HandicapInterface;
-import nl.tudelft.bw4t.map.Constants;
-import nl.tudelft.bw4t.server.logging.BW4TLogger;
+import nl.tudelft.bw4t.map.view.Entity;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.DropZone;
@@ -36,25 +38,24 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 */
 	public static final double MAX_MOVE_DISTANCE = .5;
 	/**
-	 * When we are this close or closer, we are effectively at the target
-	 * position.
+	 * When we are this close or closer, we are effectively at the target position.
 	 */
 	public static final double MIN_MOVE_DISTANCE = .001;
 	/** The distance which it can reach with its arm to pick up a block. */
 	private static final double ARM_DISTANCE = 1;
 	/** The width and height of the robot */
-	public int SIZE = 2;
+	private int size = 2;
 
 	/** The name of the robot */
-	public final String name;
+	private final String name;
 
 	/** The location to which the robot wants to travel. */
-	public NdPoint targetLocation;
+	private NdPoint targetLocation;
 	/** The list of blocks the robot is holding. */
 	private final List<Block> holding;
 	/** The max. amount of blocks a robot can hold, default is 1. */
 	private int capacity = 3;
-	
+
 	/**
 	 * True if robot is color blind
 	 */
@@ -64,28 +65,31 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 * set to true if we have to cancel a motion due to a collision. A collision is caused by an attempt to move into or
 	 * out of a room
 	 */
-	public boolean collided = false;
-	
+	private boolean collided = false;
 
 	/**
 	 * set to true when {@link #connect()} is called.
 	 */
 	private boolean connected = false;
-	public boolean oneBotPerZone;
-	
+	private final boolean oneBotPerZone;
+
 	/**
 	 * 
-	 * a robot has a battery
-	 * a battery has a power value of how much the capacity should increment or decrement.
+	 * a robot has a battery a battery has a power value of how much the capacity should increment or decrement.
 	 */
-	public Battery battery;
-	
+	private final Battery battery;
+
 	/**
 	 * 
 	 * Saves the robots handicap.
 	 */
-	public HashMap<String, HandicapInterface> handicapsMap;
+	private final Map<String, HandicapInterface> handicapsMap;
 
+	/**
+	 * AgentRecord object for this Robot, needed for logging
+	 */
+	AgentRecord agentRecord;
+	
 	/**
 	 * Creates a new robot.
 	 * 
@@ -103,16 +107,17 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 
 		this.name = name;
 		this.oneBotPerZone = oneBotPerZone;
-		setSize(SIZE, SIZE);
-		
+		setSize(size, size);
+		this.agentRecord = new AgentRecord(name, "unknown");
+
 		/**
-		 * 
-		 * This is where the battery value will be fetched from the Bot Store GUI. 
+		 * This is where the battery value will be fetched from the Bot Store GUI.
 		 */
 		this.battery = new Battery(Integer.MAX_VALUE, Integer.MAX_VALUE, 0);
 		this.holding = new ArrayList<Block>(capacity);
 		handicapsMap = new HashMap<String, HandicapInterface>();
 	}
+
 	/**
 	 * Creates a new robot.
 	 * 
@@ -125,30 +130,27 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 * @param oneBotPerZone
 	 *            true if max 1 bot in a zone
 	 * @param colorBlindness
-	 * 			  true if Robot is color blind.
-	 * @param cap 
-	 * 			  The holding capacity of the robot.
+	 *            true if Robot is color blind.
+	 * @param cap
+	 *            The holding capacity of the robot.
 	 */
-	public Robot(String name, ContinuousSpace<Object> space,
-			Context<Object> context, boolean oneBotPerZone, boolean colorBlindness,
-			int cap) {
+	public Robot(String name, ContinuousSpace<Object> space, Context<Object> context, boolean oneBotPerZone,
+			boolean colorBlindness, int cap) {
 		super(space, context);
 
 		this.name = name;
 		this.colorBlind = colorBlindness;
 		this.oneBotPerZone = oneBotPerZone;
-		setSize(SIZE, SIZE);
-		
+		setSize(size, size);
+
 		/**
-		 * Valentine
-		 * This is where the battery value will be fetched from the Bot Store GUI. 
+		 * This is where the battery value will be fetched from the Bot Store GUI.
 		 */
 		this.battery = new Battery(Integer.MAX_VALUE, Integer.MAX_VALUE, 0);
 		capacity = cap;
 		this.holding = new ArrayList<Block>(capacity);
-		
+
 		/**
-		 * 
 		 * This list keeps track of the handicaps attached to the robot.
 		 */
 		handicapsMap = new HashMap<String, HandicapInterface>();
@@ -160,18 +162,26 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	public void connect() {
 		connected = true;
 	}
-
-	@Override
-	public int hashCode() {
-		return super.hashCode();
+	
+	/**
+	 * called when robot should be disconnected.
+	 */
+	public void disconnect() {
+		connected = false;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Robot)
+		if (obj instanceof Robot) {
 			return super.equals(obj);
-		else
+		} else {
 			return false;
+		}
+	}
+	
+	@Override
+	public int hashCode() {
+		return super.hashCode();
 	}
 
 	/**
@@ -187,11 +197,11 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	public List<Block> isHolding() {
 		return holding;
 	}
-	
+
 	/**
 	 * @return The targetlocation of the robot
 	 */
-	public NdPoint getTargetLocation() {
+	public synchronized NdPoint getTargetLocation() {
 		return targetLocation;
 	}
 
@@ -214,7 +224,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 */
 	@Override
 	public boolean canPickUp(Block b) {
-		return distanceTo(b.getLocation()) <= ARM_DISTANCE && b.isFree() && holding.size() < capacity;
+		return (distanceTo(b.getLocation()) <= ARM_DISTANCE) && b.isFree() && (holding.size() < capacity);
 	}
 
 	/**
@@ -224,7 +234,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 *            , the block to pick up
 	 */
 	public void pickUp(Block b) {
-		//drop(); not necessary if the bot can hold multiple blocks.
+		// drop(); not necessary if the bot can hold multiple blocks.
 		holding.add(b);
 		b.setHeldBy(this);
 		b.removeFromContext();
@@ -246,8 +256,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 		if (!holding.isEmpty()) {
 			// First check if dropped in dropzone, then it won't need to be
 			// added to the context again
-			DropZone dropZone = (DropZone) context.getObjects(DropZone.class)
-					.get(0);
+			DropZone dropZone = (DropZone) context.getObjects(DropZone.class).get(0);
 			Block b = holding.get(0);
 			if (!dropZone.dropped(b, this)) {
 				// bot was not in the dropzone.. Are we in a room?
@@ -260,8 +269,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 					// dropped
 					double x = ourzone.getLocation().getX();
 					double y = ourzone.getLocation().getY();
-					b.moveTo(RandomHelper.nextDoubleFromTo(x - 5, x + 5),
-							RandomHelper.nextDoubleFromTo(y - 5, y + 5));
+					b.moveTo(RandomHelper.nextDoubleFromTo(x - 5, x + 5), RandomHelper.nextDoubleFromTo(y - 5, y + 5));
 					holding.remove(0);
 					return;
 
@@ -270,15 +278,16 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 			holding.remove(0);
 		}
 	}
-	
+
 	/**
 	 * A method for dropping multiple blocks at once.
-	 * @param amount The amount of blocks that have to be dropped,
-	 * needs to be less than the amount of blocks in the list.
+	 * 
+	 * @param amount
+	 *            The amount of blocks that have to be dropped, needs to be less than the amount of blocks in the list.
 	 */
 	public void drop(int amount) {
 		assert amount <= holding.size();
-		for(int i = 0; i < amount; i++) {
+		for (int i = 0; i < amount; i++) {
 			drop();
 		}
 	}
@@ -291,75 +300,24 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 			case ENTER_CORRIDOR:
 			case ENTERING_FREESPACE:
 			case ENTERING_ROOM:
-				BW4TLogger.getInstance().logEnteredRoom(name);
+				agentRecord.addEnteredRoom();
 				break;
 			case HIT_CLOSED_DOOR:
 			case HIT_WALL:
 			case HIT_OCCUPIED_ZONE:
 				throw new SpatialException("robot bumped: " + getMoveType(x, y));
+			default:
+				throw new IllegalStateException();
 			}
 		}
 		super.moveTo(x, y);
-	}
-
-	public enum MoveType {
-		/**
-		 * start and end point are in same room/corridor
-		 */
-		SAME_AREA,
-		/**
-		 * move is attempting to go through a wall
-		 */
-		HIT_WALL,
-		/**
-		 * Entering room (through open door).
-		 */
-		ENTERING_ROOM,
-		/**
-		 * bumped into closed door
-		 */
-		HIT_CLOSED_DOOR,
-		/**
-		 * bumped into an occupied zone
-		 */
-		HIT_OCCUPIED_ZONE,
-		/**
-		 * Going from a Zone into free unzoned space.
-		 */
-		ENTERING_FREESPACE,
-		/**
-		 * Entering a corridor
-		 * */
-		ENTER_CORRIDOR;
-
-		/**
-		 * Merge the move type if multiple zones are entered at once. The result
-		 * is the 'worst' event that happens
-		 * 
-		 * @param other
-		 * @return
-		 */
-		public MoveType merge(MoveType other) {
-			if (this.isHit())
-				return this;
-			if (other.isHit())
-				return other;
-			if (this == SAME_AREA || this == ENTERING_FREESPACE)
-				return other;
-			return this;
-		}
-
-		public boolean isHit() {
-			return this == HIT_CLOSED_DOOR || this == HIT_WALL
-					|| this == HIT_OCCUPIED_ZONE;
-		}
 	}
 
 	/**
 	 * Check motion type for robot to move to <endx, endy>. The {@link #MoveType} gives the actual type / possibility of
 	 * the move, plus the details why it is (not) possible.
 	 * 
-	 * @param endx
+	 * @param end
 	 *            is x position of target
 	 * @param endy
 	 *            is y position of target
@@ -397,45 +355,48 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 */
 	@Override
 	public MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door) {
+		MoveType r;
 		if (startzone == endzone) {
-			return MoveType.SAME_AREA;
+			r = MoveType.SAME_AREA;
 		}
 
 		/**
 		 * A zone switch is attempted as either startzone or endzone is not null.
 		 */
+
 		/**
 		 * If one of the sides is a room, we require a door
 		 */
-
 		if (endzone instanceof Room) {
 			/**
 			 * Start position must be ON a door to enable the switch. Check if bot is going INTO the room, and if so, if
 			 * the door is open.
 			 */
 			if (door == null) {
-				return MoveType.HIT_WALL;
+				r = MoveType.HIT_WALL;
 			}
 			/**
 			 * If there is a door, we just check that other end is accesible
 			 */
 			if (endzone.containsMeOrNothing(this)) {
-				return MoveType.ENTERING_ROOM;
+				r = MoveType.ENTERING_ROOM;
 			}
 
-			return MoveType.HIT_CLOSED_DOOR;
-		}
+			r =  MoveType.HIT_CLOSED_DOOR;
 
-		/**
-		 * Both sides are not a room. Check if target accesible
-		 */
-		else if (endzone instanceof Corridor) {
+
+			/**
+			 * Both sides are not a room. Check if target accesible
+			 */
+		} else if (endzone instanceof Corridor) {
 			if (!oneBotPerZone || endzone.containsMeOrNothing(this)) {
-				return MoveType.ENTER_CORRIDOR;
+				r = MoveType.ENTER_CORRIDOR;
 			}
-			return MoveType.HIT_OCCUPIED_ZONE;
+			r =  MoveType.HIT_OCCUPIED_ZONE;
 		}
-		return MoveType.ENTERING_FREESPACE;
+		r = MoveType.ENTERING_FREESPACE;
+
+		return r;
 	}
 
 	/**
@@ -497,26 +458,24 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 			// Calculate the distance that the robot is allowed to move.
 			double distance = distanceTo(targetLocation);
 			if (distance < MIN_MOVE_DISTANCE) {
-				stopRobot(); // we're there
+				// we're there
+				stopRobot();
 			} else {
 				double movingDistance = Math.min(distance, MAX_MOVE_DISTANCE);
 
 				// Angle at which to move
-				double angle = SpatialMath.calcAngleFor2DMovement(space,
-						getLocation(), targetLocation);
+				double angle = SpatialMath.calcAngleFor2DMovement(space, getLocation(), targetLocation);
 
 				// The displacement of the robot
-				double[] displacement = SpatialMath.getDisplacement(2, 0,
-						movingDistance, angle);
+				double[] displacement = SpatialMath.getDisplacement(2, 0, movingDistance, angle);
 
 				try {
 					// Move the robot to the new position using the displacement
 					moveByDisplacement(displacement[0], displacement[1]);
-					BW4TLogger.getInstance().logMoving(name);
-					
+					agentRecord.setStartedMoving();
+
 					/**
-					 * Valentine
-					 * The robot's battery discharges when it moves.
+					 * Valentine The robot's battery discharges when it moves.
 					 */
 					this.battery.discharge();
 				} catch (SpatialException e) {
@@ -533,7 +492,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 */
 	public synchronized void stopRobot() {
 		this.targetLocation = null;
-		BW4TLogger.getInstance().logStopMoving(name);
+		agentRecord.setStoppedMoving();
 	}
 
 	/**
@@ -553,34 +512,35 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 		return collided;
 	}
 
+	public void setCollided(boolean collided) {
+		this.collided = collided;
+	}
+
 	public boolean isConnected() {
 		return connected;
 	}
-	
+
 	/**
-	 * Valentine
-	 * This method returns the battery percentage.
+	 * Valentine This method returns the battery percentage.
 	 */
 	public int getBatteryPercentage() {
 		return this.battery.getPercentage();
 	}
-	
+
 	/**
 	 * Valentine
+	 * 
 	 * @return discharge rate of battery.
 	 */
 	public int getDischargeRate() {
 		return this.battery.getDischargeRate();
 	}
-	
-	
+
 	/**
-	 * Valentine
-	 * The robot is in a charging zone.
-	 * The robot charges.
+	 * Valentine The robot is in a charging zone. The robot charges.
 	 */
 	public void recharge() {
-		if (this.getZone().getName().equals("chargingzone")) {
+		if("chargingzone".equals(this.getZone().getName())) {
 			this.battery.recharge();
 		}
 	}
@@ -590,7 +550,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 */
 	@Override
 	public void setParent(HandicapInterface hI) {
-		//does not do anything because Robot is the super parent
+		// does not do anything because Robot is the super parent
 	}
 
 	/**
@@ -600,7 +560,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	public HandicapInterface getParent() {
 		return null;
 	}
-	
+
 	/**
 	 * returns this Robot
 	 */
@@ -608,27 +568,61 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	public Robot getSuperParent() {
 		return this;
 	}
-	
+
 	/**
 	 * Sets the size of a robot to a certain integer
+	 * 
 	 * @param s
 	 */
 	public void setSize(int s) {
-		this.SIZE = s;
+		this.size = s;
 		setSize(s, s);
 	}
-	
+
 	/**
 	 * Gets the size of the robot
-	 * @return SIZE
+	 * @return size
 	 */
 	public int getSize() {
-		return this.SIZE;
+		return this.size;
 	}
+
 	public int getCapacity() {
 		return capacity;
 	}
+
 	public void setCapacity(int cap) {
 		capacity = cap;
+	}
+
+	public Entity getView() {
+		Collection<nl.tudelft.bw4t.map.view.Block> bs = new HashSet<>();
+		for (Block block : holding) {
+			bs.add(block.getView());
+		}
+		NdPoint loc = getSpace().getLocation(this);
+		return new Entity(getName(), loc.getX(), loc.getY(), bs);
+	}
+
+	public String getNAME() {
+		return name;
+	}
+	public boolean isOneBotPerZone() {
+		return oneBotPerZone;
+	}
+	public Battery getBattery() {
+		return battery;
+	}
+	public Map<String, HandicapInterface> getHandicapsMap() {
+		return handicapsMap;
+	}
+	
+	/**
+	 * gets AgentRecord
+	 * @return AgentRecord
+	 */
+	public AgentRecord getAgentRecord(){
+		return agentRecord;
+
 	}
 }

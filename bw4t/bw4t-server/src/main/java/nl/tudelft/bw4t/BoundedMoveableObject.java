@@ -35,7 +35,7 @@ public abstract class BoundedMoveableObject {
 	 *            the context in which the object should be placed.
 	 */
 	public BoundedMoveableObject(ContinuousSpace<Object> space, Context<Object> context) {
-		if (context.size() == 0) {
+		if (context.isEmpty()) {
 			COUNTER.set(0);
 		}
 		this.id = COUNTER.getAndIncrement();
@@ -107,33 +107,55 @@ public abstract class BoundedMoveableObject {
 		space.moveTo(this, x, y);
 	}
 
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		/*
-		 * result = prime * result + ((boundingBox == null) ? 0 : boundingBox.hashCode()); result = prime * result +
-		 * (int) (id ^ (id >>> 32));
-		 */
-		return result;
+		return 1;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		BoundedMoveableObject other = (BoundedMoveableObject) obj;
 		if (boundingBox == null) {
-			if (other.boundingBox != null)
+			if (other.boundingBox != null) {
 				return false;
-		} else if (!boundingBox.equals(other.boundingBox))
+			}
+		}
+		else if (!boundingBox.equals(other.boundingBox)) {
 			return false;
-		if (id != other.id)
+		}
+		if (context == null) {
+			if (other.context != null) {
+				return false;
+			}
+		}
+		else if (!context.equals(other.context)) {
 			return false;
+		}
+		if (space == null) {
+			if (other.space != null) {
+				return false;
+			}
+		}
+		else if (!space.equals(other.space)) {
+			return false;
+		}
 		return true;
 	}
 
@@ -153,9 +175,9 @@ public abstract class BoundedMoveableObject {
 	 */
 	public double distanceTo(NdPoint there) {
 		NdPoint here = getLocation();
-		double distance = Math.sqrt(Math.pow(there.getX() - here.getX(), 2)
+		return Math.sqrt(Math.pow(there.getX() - here.getX(), 2)
 				+ Math.pow(there.getY() - here.getY(), 2));
-		return distance;
+
 	}
 
 	/**

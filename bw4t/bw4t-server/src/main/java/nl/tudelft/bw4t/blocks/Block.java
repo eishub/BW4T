@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.blocks;
 
 import java.awt.Color;
+import java.awt.geom.Point2D;
 
 import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.map.BlockColor;
@@ -21,6 +22,7 @@ public class Block extends BoundedMoveableObject {
 	private final BlockColor colorId;
 	private Color color;
 	private Robot heldBy;
+	private final nl.tudelft.bw4t.map.view.Block view;
 
 	/**
 	 * Creates a new block with the given color.
@@ -37,6 +39,7 @@ public class Block extends BoundedMoveableObject {
 		this.colorId = colorId;
 		this.color = colorId.getColor();
 		setSize(SIZE, SIZE);
+		this.view = new nl.tudelft.bw4t.map.view.Block(getId(), getColorId(), new Point2D.Double());
 	}
 
 	/**
@@ -53,24 +56,30 @@ public class Block extends BoundedMoveableObject {
 		// TODO: Can be refactored to only exist in the visualization?
 		return color;
 	}
-	
+
 	/**
 	 * @return set the color of the block
 	 */
 	public void setColorGrey() {
 		Color c = getColorId().getColor();
-		//The sRGB color space is defined in terms of the CIE 1931 linear luminance Y
-		int bright = (int) Math.round(0.2126*c.getRed() + 0.7152 * c.getBlue() + 0.0722 * c.getGreen());
-		this.color = new Color(bright,bright,bright);
+		// The sRGB color space is defined in terms of the CIE 1931 linear luminance Y
+		int bright = (int) Math.round(0.2126 * c.getRed() + 0.7152 * c.getBlue() + 0.0722 * c.getGreen());
+		this.color = new Color(bright, bright, bright);
 	}
 
 	@Override
 	public NdPoint getLocation() {
+		NdPoint p;
 		if (heldBy != null) {
-			return heldBy.getLocation();
-		} else {
-			return super.getLocation();
+			p = heldBy.getLocation();
 		}
+		else {
+			p = super.getLocation();
+		}
+		if (p != null) {
+			this.view.setPosition(p.getX(), p.getY());
+		}
+		return p;
 	}
 
 	/**
@@ -95,6 +104,11 @@ public class Block extends BoundedMoveableObject {
 	 */
 	public boolean isFree() {
 		return getHeldBy() == null;
+	}
+
+	public nl.tudelft.bw4t.map.view.Block getView() {
+		this.getLocation();
+		return this.view;
 	}
 
 }

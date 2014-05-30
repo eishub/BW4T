@@ -44,13 +44,12 @@ public class BlockTest {
 	public void testBlock_1()
 		throws Exception {
 		BlockColor colorId = BlockColor.BLUE;
-
+		when(context.isEmpty()).thenReturn(true);
 		Block result = new Block(colorId, space, context);
 
-		// add additional test code here
 		assertNotNull(result);
 		assertEquals(null, result.getLocation());
-		assertEquals(true, result.isFree());
+		assertTrue(result.isFree());
 		assertEquals(null, result.getHeldBy());
 		assertEquals(0L, result.getId());
 	}
