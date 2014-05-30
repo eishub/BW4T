@@ -4,19 +4,23 @@ package nl.tudelft.bw4t.robots;
  * Represents the robot's battery.
  * 
  * @author Valentine
+ * @author Wendy
  */
-public class Battery 
-{
+public class Battery {
 	/**
 	 * A battery has a max capacity.
-	 * 
-	 * A battery has a current capacity.
-	 * 
+	 */
+	private int max;
+	
+	/**
+	 * A battery has a current capacity. 
+	 */
+	private int current;
+	
+	/**
 	 * A battery has a discharge rate, 
 	 * which represents how much the battery decreases per tick.
 	 */
-	private int max;
-	private int current;
 	private int dRate;
 	/**
 	 * Constructor. TODO: should we really allow the current value to be negative?
@@ -52,19 +56,6 @@ public class Battery
 	 * the current capacity is set to the max capacity.
 	 */
 	public void recharge() {
-		/*
-		int temp = this.current + this.drate;
-		
-		if (temp > this.max)
-		{
-			this.current = this.max;
-		}
-		else
-		{
-			this.current = temp;
-		}
-		*/
-		
 		this.current = this.max;
 	}
 	
@@ -73,9 +64,10 @@ public class Battery
 	 * If the emptying of the battery falls below 0, 
 	 * the current capacity is set to 0.
 	 */
-	public void discharge()	{
+	public void discharge() {
 		if (this.max != Integer.MAX_VALUE) {
 			int temp = this.current - this.dRate;
+			
 			if (temp < 0) {
 				this.current = 0;
 			} else {

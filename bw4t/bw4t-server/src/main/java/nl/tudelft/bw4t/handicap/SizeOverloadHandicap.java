@@ -1,19 +1,26 @@
 package nl.tudelft.bw4t.handicap;
 
 import nl.tudelft.bw4t.doors.Door;
-import nl.tudelft.bw4t.robots.MoveType;
+import nl.tudelft.bw4t.robots.Robot.MoveType;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.Zone;
-
-public class SizeOverloadHandicap extends Handicap {
-	
-	public boolean isActive;
+/**
+ * 
+ * @author Valentine Mairet & Ruben Starmans
+ *
+ */
+public class SizeOverloadHandicap extends AbstractHandicapFactory {
+	/**
+	 * true if the handicap is active.
+	 */
+	private boolean isActive;
 	
 	/**
 	 * Calls the super method on p,
 	 * Sets the handicap to active,
 	 * Adds the handicap to the robot handicap storage.
 	 * @param p HandicapInterface the SizeOverloadHandicap wraps around.
+	 * @param s Size the bot is gonna be.
 	 */
 	public SizeOverloadHandicap(HandicapInterface p, int s) {
 		super(p);
@@ -25,22 +32,16 @@ public class SizeOverloadHandicap extends Handicap {
 	/**
 	 * Override of the checkZoneAccess method,
 	 * The robot cannot access zones anymore.
+	 * @param startzone Startzone
+	 * @param endzone Endzone
+	 * @param door Door
+	 * @return MoveType.SAME_AREA
 	 */
 	@Override
 	public MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door) {
 		if (isActive && robot.getSize() >= 4) {
 			if (startzone == endzone) {
 				return MoveType.SAME_AREA;
-				
-			/**
-			 * A zone switch is attempted as either startzone or endzone is not
-			 * null.
-			 */
-			// Removed the case where the endzone would be a room.
-			// Disabling moving through doors means that the bot cannot enter rooms.
-			/**
-			 * Both sides are not a room. Check if target accesible
-			 */
 			} else if (endzone instanceof Corridor) {
 				if (!robot.isOneBotPerZone() || endzone.containsMeOrNothing(robot)) {
 					return MoveType.ENTER_CORRIDOR;

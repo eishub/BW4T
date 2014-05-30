@@ -12,16 +12,16 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class Door implements Serializable {
+  public enum Orientation {
+      HORIZONTAL, VERTICAL
+  };
+
 	/** width of doors. */
 	public static final int DOOR_WIDTH = 4;
 	/** Thickness of doors. */
 	public static final int DOOR_THICKNESS = 1;
 	public static final Color COLOR_CLOSED = Color.RED;
 	public static final Color COLOR_OPEN = Color.GREEN;
-
-	public enum Orientation {
-		HORIZONTAL, VERTICAL
-	}
 
 	private Point position = new Point();
 	private Orientation orientation = Orientation.HORIZONTAL;

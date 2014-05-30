@@ -10,9 +10,6 @@ import repast.simphony.context.Context;
  */
 public final class Id2Object {
 
-	/**
-	 * Utility class, cannot be instantiated.
-	 */
 	private Id2Object() {
 	}
 
