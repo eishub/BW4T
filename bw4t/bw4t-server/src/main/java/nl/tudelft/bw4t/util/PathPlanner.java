@@ -16,10 +16,6 @@ import org.jgrapht.graph.SimpleWeightedGraph;
  * 
  */
 public class PathPlanner {
-
-	/**
-	 * Utility class, cannot be instantiated.
-	 */
 	private PathPlanner() {
 	}
 

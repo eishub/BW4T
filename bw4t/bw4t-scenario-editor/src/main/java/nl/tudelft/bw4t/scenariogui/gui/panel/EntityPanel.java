@@ -1,11 +1,11 @@
 package nl.tudelft.bw4t.scenariogui.gui.panel;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -14,7 +14,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -33,100 +32,222 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
+
 /**
  * The EntityPanel class represents right pane of the MainPanel. It shows a list
  * of bots and a list of e-partners and the actions that are possible to edit
  * bots and e-partners.
- *
- * @author Katia
+ * <p>
+ * @author      Katia Asmoredjo  
+ * @version     0.1                
+ * @since       12-05-2014        
  */
 public class EntityPanel extends JPanel {
 
-    /** The number of bots column. */
+    /** Randomly generated serial version. */
+	private static final long serialVersionUID = 6488182242349086899L;
+
+	/**
+     * The number of bots column.
+     */
     private static final String NUMBER_BOTS_COLUMN = "Number of bots";
 
-    /** The number of e-partners */
+    /**
+     * The number of e-partners
+     */
     private static final String NUMBER_EPARTNERS_COLUMN = "Number of e-partners";
 
-    /** The bot options. */
-    private JPanel botOptions = new JPanel();
-    /** The bot toolbar. */
-    private JPanel botToolbar = new JPanel();
-    /** The dropdown menu for adding a new bot. */
-    private JPanel botMenu = new JPanel();
-    /** The bot pane. */
-    private JPanel botPane = new JPanel();
-    /** The bot counter. */
-    private JPanel botCounter = new JPanel();
-    /** The list of bots. */
-    private DefaultTableModel botList;
-    /** The GUI element for the table */
-    private JTable botTable;
-    /** The scrollpane of the bot list. */
-    private JScrollPane botScrollPane;
-    /** The bot count field. */
-    private JTextField botCountField = new JTextField();
-
-    /** The button for adding a new bot. */
-    private JButton newBot = new JButton("New Bot");
-    /** The button to open the dropdown menu for adding one of the standard bots. */
-    private JButton botDropDownButton = new BasicArrowButton(SwingConstants.SOUTH);
-    /** The dropdown menu for the standard bots. */
-    private JPopupMenu botDropDownMenu = new JPopupMenu();
-    //TODO Add menuitems for the standardbots
-    /** The standardBot1 menu item */
-    private JMenuItem standardBot1 = new JMenuItem("StandardBot1");
-    /** The standardBot2 menu item */
-    private JMenuItem standardBot2 = new JMenuItem("StandardBot2");
-    //TODO add actionlisteners for the menu items
-    /** The button to modify a bot. */
-    private JButton modifyBot = new JButton("Modify Bot");
-    /** The button to delete a bot. */
-    private JButton deleteBot = new JButton("Delete Bot");
-
-    /** The toolbar for the e-partner. */
-    private JPanel epartnerToolbar = new JPanel();
-    /** The panel for the e-partner. */
-    private JPanel epartnerPane = new JPanel();
-    /** The counter for the e-partner. */
-    private JPanel epartnerCounter = new JPanel();
-    /** The table for the e-partner. */
-    private DefaultTableModel epartnerList;
-    /** The GUI element for the table */
-    private JTable ePartnerTable;
-    /** The scrollpane for the e-partner table. */
-    private JScrollPane epartnerScrollPane;
-    /** The e-partner counter. */
-    private JTextField epartnerCountField = new JTextField();
-
-    /** The button for adding a new e-partner. */
-    private JButton newEpartner = new JButton("New E-partner");
-    /** The button for modifying an e-partner. */
-    private JButton modifyEpartner = new JButton("Modify E-partner");
-    /** The button for deleting an e-partner. */
-    private JButton deleteEpartner = new JButton("Delete E-partner");
-
-    /* Initial value 1, maximum 100, minimum 1, steps of 1 */
-    /** The maximum value for the spinner. */
+    /**
+     * The maximum value for the spinner.
+     */
     private static final int MAXIMUM_SPINNER_VALUE = 100;
-    /** The spinner model. */
+
+    /**
+     * The spinner model.
+     */
     private SpinnerModel model = new SpinnerNumberModel(1, 1,
             MAXIMUM_SPINNER_VALUE, 1);
-    /** The amount to duplicate a bot by when duplicating it. */
+
+    /**
+     * The amount to duplicate a bot by when duplicating it.
+     */
     private JSpinner duplicateAmount = new JSpinner(model);
 
-    /** The font size. */
+    /**
+     * The font size.
+     */
     private static final int FONT_SIZE = 16;
 
-    /** The amount of rows in the grid for the bot option panel. */
+    /**
+     * The amount of rows in the grid for the bot option panel.
+     */
     private static final int BOT_OPTION_PANEL_GRID_ROWS_AMT = 15;
-    /** The margin width. */
+
+    /**
+     * The margin width.
+     */
     private static final int BOT_OPTION_PANEL_MARGIN_WIDTH = 8;
 
-    /** The width of the scroll pane. */
+    /**
+     * The width of the scroll pane.
+     */
     private static final int SCROLL_PANE_WIDTH = 500;
-    /** The height of the scroll pane. */
+
+    /**
+     * The height of the scroll pane.
+     */
     private static final int SCROLL_PANE_HEIGHT = 200;
+
+    /**
+     * String representation of the number 0.
+     */
+    private static final String ZERO = "0";
+
+    /**
+     * The bot options.
+     */
+    private JPanel botOptions = new JPanel();
+
+    /**
+     * The bot toolbar.
+     */
+    private JPanel botToolbar = new JPanel();
+
+    /**
+     * The dropdown menu for adding a new bot.
+     */
+    private JPanel botMenu = new JPanel();
+
+    /**
+     * The bot pane.
+     */
+    private JPanel botPane = new JPanel();
+    //TODO Add menuitems for the standardbots
+
+    /**
+     * The bot counter.
+     */
+    private JPanel botCounter = new JPanel();
+
+    /**
+     * The list of bots.
+     */
+    private DefaultTableModel botList;
+    //TODO add actionlisteners for the menu items
+
+    /**
+     * The GUI element for the table
+     */
+    private JTable botTable;
+
+    /**
+     * The scrollpane of the bot list.
+     */
+    private JScrollPane botScrollPane;
+
+    /**
+     * The bot count field.
+     */
+    private JTextField botCountField = new JTextField();
+
+    /**
+     * The button for adding a new bot.
+     */
+    private JButton newBot = new JButton("New Bot");
+
+    /**
+     * The button to open the dropdown menu for adding one of the standard bots.
+     */
+    private JButton botDropDownButton = new BasicArrowButton(SwingConstants.SOUTH);
+
+    /**
+     * The dropdown menu for the standard bots.
+     */
+    private JPopupMenu botDropDownMenu = new JPopupMenu();
+
+    /**
+     * The standardBot1 menu item
+     */
+    private JMenuItem standardBot1 = new JMenuItem("StandardBot1");
+
+    /**
+     * The standardBot2 menu item
+     */
+    private JMenuItem standardBot2 = new JMenuItem("StandardBot2");
+
+    /**
+     * The button to modify a bot.
+     */
+    private JButton modifyBot = new JButton("Modify Bot");
+
+    /**
+     * The button to delete a bot.
+     */
+    private JButton deleteBot = new JButton("Delete Bot");
+
+    /**
+     * The toolbar for the e-partner.
+     */
+    private JPanel epartnerToolbar = new JPanel();
+
+    /**
+     * The panel for the e-partner.
+     */
+    private JPanel epartnerPane = new JPanel();
+
+    /* Initial value 1, maximum 100, minimum 1, steps of 1 */
+
+    /**
+     * The counter for the e-partner.
+     */
+    private JPanel epartnerCounter = new JPanel();
+
+    /**
+     * The table for the e-partner.
+     */
+    private DefaultTableModel epartnerList;
+
+    /**
+     * The GUI element for the table
+     */
+    private JTable ePartnerTable;
+
+    /**
+     * The scrollpane for the e-partner table.
+     */
+    private JScrollPane epartnerScrollPane;
+
+    /**
+     * The e-partner counter.
+     */
+    private JTextField epartnerCountField = new JTextField();
+
+    /**
+     * The button for adding a new e-partner.
+     */
+    private JButton newEpartner = new JButton("New E-partner");
+
+    /**
+     * The button for modifying an e-partner.
+     */
+    private JButton modifyEpartner = new JButton("Modify E-partner");
+
+    /**
+     * The button for deleting an e-partner.
+     */
+    private JButton deleteEpartner = new JButton("Delete E-partner");
+
+    /**
+     * The list that hold the created bots.
+     */
+    private List<BotConfig> botConfigList = new ArrayList<BotConfig>();
+    
+    /**
+     * The list with the last saved BotConfigs.
+     */
+    private List<BotConfig> oldBotConfigs = botConfigList;
 
     /**
      * Create an EntityPanel object.
@@ -186,33 +307,33 @@ public class EntityPanel extends JPanel {
         botToolbar.setLayout(new GridLayout(1, 0));
 
         createDropDownMenuButtons();
-        
+
         botToolbar.add(botMenu);
         botToolbar.add(new JLabel());
         botToolbar.add(modifyBot);
         botToolbar.add(new JLabel());
         botToolbar.add(deleteBot);
     }
-    
+
     /**
      * Create the dropdown menu for adding standard bots.
      */
     private void createDropDownMenuButtons() {
         botMenu.setLayout(new BorderLayout());
-        
+
         botDropDownMenu.add(standardBot1);
         botDropDownMenu.add(standardBot2);
         botDropDownButton.add(botDropDownMenu);
-        
-        botMenu.add(botDropDownButton, BorderLayout.EAST);        
+
+        botMenu.add(botDropDownButton, BorderLayout.EAST);
         botMenu.add(newBot, BorderLayout.CENTER);
     }
-    
+
     /**
      * Executes the action that needs to happen when the "arrow" button is pressed.
      */
     public void showBotDropDown() {
-    	botDropDownMenu.show(newBot, 0, botDropDownButton.getHeight());
+        botDropDownMenu.show(newBot, 0, botDropDownButton.getHeight());
     }
 
     /**
@@ -222,27 +343,8 @@ public class EntityPanel extends JPanel {
 
         botTable = new JTable();
         botTable.getTableHeader().setReorderingAllowed(false);
-        
-        botList = new DefaultTableModel() {
-            
-            /*@Override
-            public boolean isCellEditable(final int row, final int column) {
-                if (column == 0) {
-                    return false;
-                }
-                return true;
-            }*/
-        	
-        	@Override
-        	public Class<?> getColumnClass(int column) {
-        		if (column == 2) {
-        			return Integer.class;
-        		}
-        		
-        		return String.class;
-        	}
-            
-        };
+
+        botList = new EntityTableModel();
 
         botTable.setModel(botList);
         botList.addColumn("Bot");
@@ -253,28 +355,28 @@ public class EntityPanel extends JPanel {
         botScrollPane.setPreferredSize(new Dimension(
                 SCROLL_PANE_WIDTH, SCROLL_PANE_HEIGHT));
         setUpControllerColumn();
-        
+
         botList.addTableModelListener(new TableModelListener() {
 
             @Override
             public void tableChanged(TableModelEvent e) {
-               updateBotCount();
+                updateBotCount();
             }
         });
     }
 
     /**
-     * Create the dropdown lists in the controller column.
+     * Create the dropdown lists in the controllers column.
      */
     public void setUpControllerColumn() {
-    	JComboBox controllers = new JComboBox();
-    	controllers.addItem("Agent");
-    	controllers.addItem("Human");
-    	botTable.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(controllers));
-    	
-    	DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-    	renderer.setToolTipText("Testtext");
-    	botTable.getColumnModel().getColumn(1).setCellRenderer(renderer);
+        JComboBox controllers = new JComboBox<String>();
+        controllers.addItem("Agent");
+        controllers.addItem("Human");
+        botTable.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(controllers));
+
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setToolTipText("Testtext");
+        botTable.getColumnModel().getColumn(1).setCellRenderer(renderer);
     }
 
     /**
@@ -287,7 +389,7 @@ public class EntityPanel extends JPanel {
         botCounter.add(new JLabel());
         botCounter.add(new JLabel());
         botCounter.add(new JLabel("Total number of bots:"));
-        botCountField.setText("0");
+        botCountField.setText(ZERO);
         botCountField.setEditable(false);
         botCounter.add(botCountField);
     }
@@ -327,24 +429,7 @@ public class EntityPanel extends JPanel {
 
         ePartnerTable = new JTable();
         ePartnerTable.getTableHeader().setReorderingAllowed(false);
-        epartnerList = new DefaultTableModel() {
-            /*@Override
-            public boolean isCellEditable(final int row, final int column) {
-                if (column == 1) {
-                    return true;
-                }
-                return false;
-            }*/
-            
-            @Override
-            public Class<?> getColumnClass(int column) {
-            	if (column == 1) {
-            		return Integer.class;
-            	}
-            	
-            	return String.class;
-            }
-        };
+        epartnerList = new EntityTableModel();
 
         ePartnerTable.setModel(epartnerList);
         epartnerList.addColumn("E-partner");
@@ -353,12 +438,12 @@ public class EntityPanel extends JPanel {
         epartnerScrollPane = new JScrollPane(ePartnerTable);
         epartnerScrollPane.setPreferredSize(new Dimension(
                 SCROLL_PANE_WIDTH, SCROLL_PANE_HEIGHT));
-        
+
         epartnerList.addTableModelListener(new TableModelListener() {
 
             @Override
             public void tableChanged(TableModelEvent e) {
-               updateEPartnerCount();
+                updateEPartnerCount();
             }
         });
     }
@@ -373,130 +458,11 @@ public class EntityPanel extends JPanel {
         epartnerCounter.add(new JLabel());
         epartnerCounter.add(new JLabel());
         epartnerCounter.add(new JLabel("Total number of e-partners:"));
-        epartnerCountField.setText("0");
+        epartnerCountField.setText(ZERO);
         epartnerCountField.setEditable(false);
         epartnerCounter.add(epartnerCountField);
     }
 
-    /**
-     * Executes action that needs to happen when the "New bot" button is
-     * pressed.
-     */
-    public void addBotAction() {
-        Object[] newBotObject = {"Unnamed Bot", "Agent", 1};
-        getBotTableModel().addRow(newBotObject);
-    }
-
-    /**
-     * Executes action that needs to happen when the "Modify bot" button is
-     * pressed. TODO Open BotStore window
-     */
-    public void modifyBotAction() {
-        System.out.println("Go to Bot Store (modify)");
-    }
-
-    /**
-     * Executes action that needs to happen when the "Delete bot" button is
-     * pressed.
-     */
-    public void deleteBotAction() {
-        int row = getSelectedBotRow();
-        System.out.println(row);
-
-        if (row == -1) {
-            return;
-        }
-
-        int response = showConfirmDialog(null,
-                "Are you sure you want to delete this bot?", "",
-                JOptionPane.YES_NO_OPTION);
-
-        if (response == JOptionPane.YES_OPTION) {
-            getBotTableModel().removeRow(row);
-        }
-
-    }
-
-    /**
-     * Executes action that needs to happen when the "New E-partner" button is
-     * pressed.
-     */
-    public void addEPartnerAction() {
-        Object[] newEPartnerObject = {"Unnamed E-partner", 1};
-        getEPartnerTableModel().addRow(newEPartnerObject);
-    }
-
-    /**
-     * Executes action that needs to happen when the "Modify E-partner" button is
-     * pressed.
-     * TODO Open BotStore window
-     */
-    public void modifyEPartnerAction() {
-    	int row = getSelectedEPartnerRow();
-    	
-    	if (row == -1) {
-    		JOptionPane.showMessageDialog(null, "Please select the E-partner you want to modify.");
-    	}
-    	else {
-    		System.out.println("Go to Bot Store to modify an E-Partner");
-    	}
-    }
-
-    /**
-     * Executes action that needs to happen when the "Delete E-partner" button is
-     * pressed.
-     */
-    public void deleteEPartnerAction() {
-    	int row = getSelectedEPartnerRow();
-    	
-    	if (row == -1) {
-    		return;
-    	}
-    	
-        int response = showConfirmDialog(null,
-        		"Are you sure you want to delete this E-partner?", "",
-        		JOptionPane.YES_NO_OPTION);
-
-        if (response == JOptionPane.YES_OPTION) {
-            getEPartnerTableModel().removeRow(row);
-        }
-    }
-
-    /**
-     * Create a pop up message with the the given text. The user has to press OK
-     * to continue.
-     *
-     * @param parent
-     *            The parent component who's frame is to be used. If null then a
-     *            frame is created.
-     * @param text
-     *            The text to be displayed in the message dialog.
-     */
-    protected final void showMessageDialog(
-            final Component parent, final String text) {
-        JOptionPane.showMessageDialog(parent, text);
-    }
-
-    /**
-     * @param parent
-     *            Determines the Frame in which the dialog is displayed; if
-     *            null, or if the parentComponent has no Frame, a default Frame
-     *            is used
-     * @param text
-     *            The text to display
-     * @param title
-     *            The title for the dialog
-     * @param optionType
-     *            An int designating the options available on the dialog:
-     *            JOptionPane.YES_NO_OPTIONS, JOptionPane.YES_NO_CANCEL_OPTION
-     *            or JOptionPane.OK_CANCEL_OPTION,
-     * @return An int indicating the option selected by the user
-     */
-    protected int showConfirmDialog(final Component parent,
-            final String text,
-            final String title, final int optionType) {
-        return JOptionPane.showConfirmDialog(parent, text, title, optionType);
-    }
 
     /**
      * Returns the table with the list of bots.
@@ -515,14 +481,14 @@ public class EntityPanel extends JPanel {
     public final DefaultTableModel getBotTableModel() {
         return botList;
     }
-    
+
     /**
      * Returns the table with the list of E-partners.
      *
      * @return The table that contains the E-partners.
      */
     public final JTable getEPartnerTable() {
-    	return ePartnerTable;
+        return ePartnerTable;
     }
 
     /**
@@ -531,32 +497,32 @@ public class EntityPanel extends JPanel {
      * @return The table that contains the E-partners.
      */
     public final DefaultTableModel getEPartnerTableModel() {
-    	return epartnerList;
+        return epartnerList;
     }
-    
+
     /**
      * Returns the "arrow" button.
+     *
      * @return The "arrow" button.
      */
     public JButton getDropDownButton() {
-    	return botDropDownButton;
+        return botDropDownButton;
     }
 
 
     /**
-     * Returns the new bot name
+     * Returns the new bot name.
      *
-     * @return The new bot name
+     * @return The new bot name.
      */
     /*
      * public String getNewBotNameLabelText() { return newBotName.getText(); }
      */
 
     /**
-     * Sets the new bot name
+     * Sets the new bot name.
      *
-     * @param newBotName
-     *            The new bot name
+     * @param newBotName    The new bot name.
      */
     /*
      * public void setNewBotNameLabelText(String newBotName) {
@@ -574,11 +540,12 @@ public class EntityPanel extends JPanel {
 
     /**
      * Returns the amount of bots.
+     *
      * @return The amount of bots.
      */
     public final int getBotCount() {
         int numBots = 0;
-        
+
         for (int i = 0; i < botList.getRowCount(); i++) {
             numBots += Integer.valueOf(botList.getValueAt(i, 2).toString());
         }
@@ -595,11 +562,12 @@ public class EntityPanel extends JPanel {
 
     /**
      * Returns the amount of epartners.
+     *
      * @return The amount of epartners.
      */
     public final int getEPartnerCount() {
         int numEPartner = 0;
-        
+
         for (int i = 0; i < epartnerList.getRowCount(); i++) {
             numEPartner += Integer.valueOf(epartnerList.getValueAt(i, 1).toString());
         }
@@ -616,30 +584,34 @@ public class EntityPanel extends JPanel {
 
     /**
      * Returns the button to create a new E-partner.
+     *
      * @return The button to create a new E-partner.
      */
     public JButton getNewEPartnerButton() {
-    	return newEpartner;
+        return newEpartner;
     }
 
     /**
      * Returns the button to delete an E-partner.
+     *
      * @return The button to delete an E-partner.
      */
     public JButton getDeleteEPartnerButton() {
-    	return deleteEpartner;
+        return deleteEpartner;
     }
 
     /**
      * Returns the button to modify an E-partner.
+     *
      * @return The button to modify an E-partner.
      */
     public JButton getModifyEPartnerButton() {
-    	return modifyEpartner;
+        return modifyEpartner;
     }
 
     /**
      * Returns the button to add a bot.
+     *
      * @return The add bot button.
      */
     public JButton getNewBotButton() {
@@ -648,6 +620,7 @@ public class EntityPanel extends JPanel {
 
     /**
      * Returns the button to modify a bot.
+     *
      * @return The modify bot button.
      */
     public JButton getModifyBotButton() {
@@ -656,6 +629,7 @@ public class EntityPanel extends JPanel {
 
     /**
      * Returns the button to delete a bot.
+     *
      * @return The delete bot button.
      */
     public JButton getDeleteBotButton() {
@@ -664,17 +638,92 @@ public class EntityPanel extends JPanel {
 
     /**
      * Returns the selected row in the bot table.
+     *
      * @return The selected row.
      */
     public final int getSelectedBotRow() {
         return botTable.getSelectedRow();
     }
-    
+
     /**
      * Returns the selected row in the E-partner table.
+     *
      * @return The selected row.
      */
     public final int getSelectedEPartnerRow() {
-    	return ePartnerTable.getSelectedRow();
+        return ePartnerTable.getSelectedRow();
+    }
+    
+
+    /**
+     * Returns the list with BotConfigs.
+     * @return The list with BotConfigs.
+     */
+    public List<BotConfig> getBotConfigs() {
+    	return botConfigList;
+    }
+    
+    /**
+     * Returns the BotConfig at the index'th place.
+     * @param index The index of the bot.
+     * @return The BotConfig at the index'th place.
+     */
+    public BotConfig getBotConfig(int index) {
+    	return botConfigList.get(index);
+    }
+    
+    /**
+     * Returns the previous saved BotConfig list.
+     * @return The previous saved BotConfig list.
+     */
+    public List<BotConfig> getOldBotConfigs() {
+    	return oldBotConfigs;
+    }
+    
+    /**
+     * Updates the BotConfig list.
+     */
+    public void updateBotConfigs() {
+    	oldBotConfigs.clear();
+    	
+    	for (int i = 0; i < botConfigList.size(); i++) {
+    		oldBotConfigs.add(botConfigList.get(i));
+    	}
+    }
+    
+    /**
+     * Compares the BotConfig lists.
+     * @return If the BotConfigs lists are equal.
+     */
+    public boolean compareBotConfigs() {
+    	if (botConfigList.size() != oldBotConfigs.size()) {
+    		return false;
+    	}
+    	
+    	for (int i = 0; i < botConfigList.size(); i++) {
+    		if (botConfigList.get(i).toString().equals(oldBotConfigs.get(i).toString())) {
+    			return false;
+    		}
+    	}
+    	
+    	return true;
+    }
+    
+    /**
+     * Returns if changes has been made to the default configuration.
+     *
+     * @return whether changes have been made.
+     */
+    public final boolean isDefault() {
+        boolean isDefault = true;
+        
+        if (this.botList.getRowCount() != 0) {
+            isDefault = false;
+        }
+        else if (this.epartnerList.getRowCount() != 0) {
+            isDefault = false;
+        }
+        
+        return isDefault;
     }
 }

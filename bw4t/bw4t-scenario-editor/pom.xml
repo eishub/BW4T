@@ -1,3 +1,4 @@
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -57,22 +58,12 @@
                 <version>2.6</version>
                 <configuration>
                     <check/>
-                    <instrumentation>
-                        <ignores>
-                            <ignore>nl.tudelft.bw4t.scenariogui.gui.botstore.*</ignore>
-                        </ignores>
-                        <excludes>
-                            <exclude>nl/tudelft/bw4t/scenariogui/config/BotConfig.class</exclude>
-                            <exclude>nl/tudelft/bw4t/scenariogui/gui/botstore/BotEditor.class</exclude>
-                            <exclude>nl/tudelft/bw4t/scenariogui/gui/botstore/BotEditorPanel.class</exclude>
-                        </excludes>
-                    </instrumentation>
                     <formats>
                         <format>html</format>
                         <format>xml</format>
                     </formats>
                 </configuration>
-            </plugin>
+            </plugin>       			
         </plugins>
         <sourceDirectory>src/main/java</sourceDirectory>
         <testSourceDirectory>src/test/java</testSourceDirectory>
@@ -108,4 +99,15 @@
             </plugin>
         </plugins>
     </reporting>
+    <dependencies>
+        <dependency>
+            <groupId>nl.tudelft.bw4t.core</groupId>
+            <artifactId>bw4t-core</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <dependency>
+        	<groupId>com.miglayout</groupId>
+        	<artifactId>miglayout</artifactId>
+        </dependency>
+    </dependencies>
 </project>
