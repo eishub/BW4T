@@ -19,15 +19,25 @@ import javax.swing.border.TitledBorder;
 
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 import nl.tudelft.bw4t.scenariogui.util.Format;
+import nl.tudelft.bw4t.scenariogui.util.MapSpec;
 
 /**
  * The ConfigurationPanel class represents the left pane of the MainPanel. It
  * shows the options the user can configure.
+ * <p>
+ * @author      
+ * @version     0.1                
+ * @since       12-05-2014        
  */
+ 
 public class ConfigurationPanel extends JPanel {
-    
-    /** Localhost. */
+
+    /** Randomly generated serial version. */
+	private static final long serialVersionUID = 2925174902776539436L;
+
+	/** Localhost. */
     private static final String LOCALHOST = "localhost";
+    
     /** True. */
     private static final String TRUE = "true";
     
@@ -42,8 +52,7 @@ public class ConfigurationPanel extends JPanel {
 
     /**
      * The default values for in the GUI.
-     * @author Nick
-     *
+     * @author     Nick Feddes
      */
     public static enum DEFAULT_VALUES {
         /** The default server ip. */
@@ -66,6 +75,7 @@ public class ConfigurationPanel extends JPanel {
 
         /**
          * Constructs a new default configuration.
+         * 
          * @param newValue The new default value.
          */
         DEFAULT_VALUES(final String newValue) {
@@ -102,6 +112,9 @@ public class ConfigurationPanel extends JPanel {
     private static final int TEXT_FIELD_COLUMN_SIZE_BIG = 15;
     /** The column size of the small text fields. */
     private static final int TEXT_FIELD_COLUMN_SIZE_SMALL = 6;
+    
+    /** The specifications of the currently selected map file. */
+    private MapSpec mapSpec;
 
     /** The text field holding the client ip. */
     private JTextField clientIP = new JTextField(
@@ -128,12 +141,6 @@ public class ConfigurationPanel extends JPanel {
     /** The text filed holding the location to the map file. */
     private JTextField mapFileTextField = new JTextField(
             DEFAULT_VALUES.MAP_FILE.getValue());
-
-    // CheckboxGroup goalCheckBox = new CheckboxGroup();
-    // private Checkbox goalYes = new Checkbox("Yes",
-    // DEFAULT_VALUES.USE_GOAL.getBooleanValue(), goalCheckBox);
-    // private Checkbox goalNo = new Checkbox("No",
-    // !DEFAULT_VALUES.USE_GOAL.getBooleanValue(), goalCheckBox);
 
     /** The checkbox group for enabling the GUI. */
     private CheckboxGroup guiCheckBox = new CheckboxGroup();
@@ -194,11 +201,12 @@ public class ConfigurationPanel extends JPanel {
         title.setTitleJustification(TitledBorder.LEFT);
         title.setTitleFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE));
         setBorder(title);
+        
+        mapSpec = new MapSpec(DEFAULT_VALUES.MAP_FILE.getValue());
 
         // showConfigLabel();
         showClientOptions();
         showServerOptions();
-        // showGoalOptions();
         showGuiOptions();
         showMapOptions();
 
@@ -287,29 +295,6 @@ public class ConfigurationPanel extends JPanel {
     }
 
     /**
-     * Show the option to use GOAL in the panel.
-     */
-    // private void showGoalOptions(){
-    // c.insets = new Insets(8, 8, 0, 0);
-    //
-    // c.gridx = 0;
-    // c.gridy += 1;
-    //
-    // JLabel goal = new JLabel("Use GOAL");
-    // goal.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE_SMALL));
-    // add(goal, c);
-    //
-    // c.insets = new Insets(0,8,0,0);
-    //
-    // c.gridx = 0;
-    // c.gridy += 1;
-    // add(goalYes, c);
-    //
-    // c.gridx = 1;
-    // add(goalNo, c);
-    // }
-
-    /**
      * Show the option to use a GUI in the panel.
      */
     private void showGuiOptions() {
@@ -371,8 +356,7 @@ public class ConfigurationPanel extends JPanel {
     /**
      * Sets the value of the text field of the client IP.
      *
-     * @param newClientIP
-     *            The IP of the client
+     * @param newClientIP   The IP of the client.
      */
     public final void setClientIP(final String newClientIP) {
         this.clientIP.setText(newClientIP);
@@ -390,8 +374,7 @@ public class ConfigurationPanel extends JPanel {
     /**
      * Sets the value of the text field of the client port.
      *
-     * @param newClientPort
-     *            The port of the client
+     * @param newClientPort The port of the client.
      */
     public final void setClientPort(final String newClientPort) {
         this.clientPort.setText(newClientPort);
@@ -409,8 +392,7 @@ public class ConfigurationPanel extends JPanel {
     /**
      * Sets the value of the text field of the server IP.
      *
-     * @param newServerIP
-     *            The IP of the server
+     * @param newServerIP   The IP of the server.
      */
     public final void setServerIP(final String newServerIP) {
         this.serverIP.setText(newServerIP);
@@ -428,38 +410,12 @@ public class ConfigurationPanel extends JPanel {
     /**
      * Sets the value of the text field of the server port.
      *
-     * @param newServerPort
-     *            The port of the server
+     * @param newServerPort The port of the server.
      */
     public final void setServerPort(final String newServerPort) {
         this.serverPort.setText(newServerPort);
     }
-
-    /**
-     * Returns if GOAL needs to be used.
-     *
-     * @return The use of GOAL.
-     */
-    // public boolean useGoal(){
-    // if(goalCheckBox.getSelectedCheckbox() == goalYes)
-    // return true;
-    // else
-    // return false;
-    // }
-
-    /**
-     * Sets if GOAL needs to be used.
-     *
-     * @param The
-     *            use of GOAL.
-     */
-    // public void setUseGoal(boolean useGoal){
-    // if(useGoal)
-    // goalCheckBox.setSelectedCheckbox(goalYes);
-    // else
-    // goalCheckBox.setSelectedCheckbox(goalNo);
-    // }
-
+    
     /**
      * Returns if a GUI needs to be displayed.
      *
@@ -472,8 +428,7 @@ public class ConfigurationPanel extends JPanel {
     /**
      * Sets if GOAL needs to be used.
      *
-     * @param useGui
-     *           The  use of GOAL.
+     * @param useGui    The  use of GOAL.
      */
     public final void setUseGui(final boolean useGui) {
         if (useGui) {
@@ -505,10 +460,10 @@ public class ConfigurationPanel extends JPanel {
     /**
      * Sets the value of the text field to the path of the Map file.
      *
-     * @param mapFile
-     *            The path of the Map file
+     * @param mapFile   The path of the Map file
      */
     public final void setMapFile(final String mapFile) {
+        mapSpec.setMapFileLocation(mapFile);
         this.mapFileTextField.setText(mapFile);
     }
 
@@ -523,6 +478,7 @@ public class ConfigurationPanel extends JPanel {
 
     /**
      * Sets the new file chooser.
+     * 
      * @param newFileChooser The new file chooser.
      */
     public final void setFileChooser(final JFileChooser newFileChooser) {
@@ -537,20 +493,16 @@ public class ConfigurationPanel extends JPanel {
     public final boolean isDefault() {
         boolean isDefault = true;
 
-        if (!this.getClientIP().equals(
-                DEFAULT_VALUES.DEFAULT_CLIENT_IP.getValue())) {
+        if (!this.getClientIP().equals(DEFAULT_VALUES.DEFAULT_CLIENT_IP.getValue())) {
             isDefault = false;
         }
-        else if (this.getClientPort() != DEFAULT_VALUES.DEFAULT_CLIENT_PORT
-                .getIntValue()) {
+        else if (this.getClientPort() != DEFAULT_VALUES.DEFAULT_CLIENT_PORT.getIntValue()) {
             isDefault = false;
         }
-        else if (!this.getServerIP().equals(
-                DEFAULT_VALUES.DEFAULT_SERVER_IP.getValue())) {
+        else if (!this.getServerIP().equals(DEFAULT_VALUES.DEFAULT_SERVER_IP.getValue())) {
             isDefault = false;
         }
-        else if (this.getServerPort() != DEFAULT_VALUES.DEFAULT_SERVER_PORT
-                .getIntValue()) {
+        else if (this.getServerPort() != DEFAULT_VALUES.DEFAULT_SERVER_PORT.getIntValue()) {
             isDefault = false;
         }
         else if (this.useGui() != DEFAULT_VALUES.USE_GUI.getBooleanValue()) {
@@ -563,13 +515,14 @@ public class ConfigurationPanel extends JPanel {
             isDefault = false;
         }
 
-        // TODO: check if the bot list is empty (since that is default too)
+        // TODO: check if the bot list is empty (since that is default too). Split into submethods as well.
 
         return isDefault;
     }
 
     /**
      * Returns the values that have been saved previously.
+     * 
      * @return The values that have been saved previously.
      */
     public String getOldValues() {
@@ -602,6 +555,7 @@ public class ConfigurationPanel extends JPanel {
 
     /**
      * Returns the current values.
+     * 
      * @return The current values.
      */
     public String getCurrentValues() {
@@ -611,4 +565,13 @@ public class ConfigurationPanel extends JPanel {
                 + this.guiCheckBox.getSelectedCheckbox()
                 + this.mapFileTextField.getText();
     }
+    
+    /**
+     * Returns the map specifications for the selected map.
+     * @return The map specifications for the selected map.
+     */
+    public MapSpec getMapSpecifications() {
+        return mapSpec;
+    }
+    
 }
