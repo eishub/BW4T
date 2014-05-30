@@ -33,31 +33,31 @@ import static org.mockito.Mockito.when;
  */
 public class ScenarioEditorTest {
 
-	/**
-	 * The Scenario editor that is spied upon for this test.
-	 */
-	private ScenarioEditor editor;
+    /**
+     * The Scenario editor that is spied upon for this test.
+     */
+    private ScenarioEditor editor;
 
-	/**
-	 * File choose used to mock the behaviour of the user.
-	 */
-	private JFileChooser filechooser;
+    /**
+     * File choose used to mock the behaviour of the user.
+     */
+    private JFileChooser filechooser;
 
-	/**
-	 * The base directory of all files used in the test.
-	 */
-	private static final String BASE = System.getProperty("user.dir") + "/src/test/resources/";
-	
-	/**
-	 * The path of the xml file used to test the open button.
-	 */
-	private static final String FILE_OPEN_PATH = BASE + "nonexistent.xml";
-	
-	/**
-	 * Setup the testing environment by creating the scenario editor and
-	 * assigning the editor attribute to a spy object of the ScenarioEditor.
-	 */
-	@Before
+    /**
+     * The base directory of all files used in the test.
+     */
+    private static final String BASE = System.getProperty("user.dir") + "/src/test/resources/";
+    
+    /**
+     * The path of the xml file used to test the open button.
+     */
+    private static final String FILE_OPEN_PATH = BASE + "nonexistent.xml";
+    
+    /**
+     * Setup the testing environment by creating the scenario editor and
+     * assigning the editor attribute to a spy object of the ScenarioEditor.
+     */
+    @Before
     public void setUp() {
         editor = spy(new ScenarioEditor());
 
@@ -83,18 +83,18 @@ public class ScenarioEditorTest {
         assertEquals(panel, editor.getActivePane());
     }
 
-	/**
-	 * Tests whether the JAXBException is handled correctly
-	 *
-	 * @throws FileNotFoundException File not found exception
-	 * @throws JAXBException JAXBException, also called in some cases when a file is not found
-	 * by JAXB itself.
-	 */
-	@Test
-	public void testJAXBException() throws FileNotFoundException, JAXBException {
-		YesMockOptionPrompt yesMockOption = spy(new YesMockOptionPrompt());
+    /**
+     * Tests whether the JAXBException is handled correctly
+     *
+     * @throws FileNotFoundException File not found exception
+     * @throws JAXBException JAXBException, also called in some cases when a file is not found
+     * by JAXB itself.
+     */
+    @Test
+    public void testJAXBException() throws FileNotFoundException, JAXBException {
+        YesMockOptionPrompt yesMockOption = spy(new YesMockOptionPrompt());
 
-		// Setup the behaviour
+        // Setup the behaviour
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.getSelectedFile()).thenReturn(new File(FILE_OPEN_PATH));
 
@@ -105,5 +105,5 @@ public class ScenarioEditorTest {
         // Finally make sure the confirmation dialog was called.
         verify(yesMockOption, times(1))
                 .showMessageDialog((Component) any(), anyString());
-	}
+    }
 }

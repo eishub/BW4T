@@ -12,9 +12,9 @@ import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
  * @author Arun
  */
 class GripperBox implements ActionListener {
-	/**
-	 * The panel containing this checkbox.
-	 */
+    /**
+     * The panel containing this checkbox.
+     */
     private BotEditorPanel view;
     /**
      * Constructor
@@ -30,12 +30,12 @@ class GripperBox implements ActionListener {
      * @param ae The action event belonging to the check box.
      */
     public void actionPerformed(ActionEvent ae) {
-    	JSlider gripSlider = view.getNumberOfGrippersSlider();
-    	if (view.getGripperCheckbox().isSelected()) {
-    		gripSlider.setEnabled(false);
-    	}
-    	else {
-    		gripSlider.setEnabled(true);
-    	}
+        JSlider gripSlider = view.getNumberOfGrippersSlider();
+        if (view.getGripperCheckbox().isSelected()) {
+            gripSlider.setEnabled(false);
+        }
+        else {
+            gripSlider.setEnabled(true);
+        }
     }
 }

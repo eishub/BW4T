@@ -47,9 +47,9 @@ import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
 public class EntityPanel extends JPanel {
 
     /** Randomly generated serial version. */
-	private static final long serialVersionUID = 6488182242349086899L;
+    private static final long serialVersionUID = 6488182242349086899L;
 
-	/**
+    /**
      * The number of bots column.
      */
     private static final String NUMBER_BOTS_COLUMN = "Number of bots";
@@ -660,7 +660,7 @@ public class EntityPanel extends JPanel {
      * @return The list with BotConfigs.
      */
     public List<BotConfig> getBotConfigs() {
-    	return botConfigList;
+        return botConfigList;
     }
     
     /**
@@ -669,7 +669,7 @@ public class EntityPanel extends JPanel {
      * @return The BotConfig at the index'th place.
      */
     public BotConfig getBotConfig(int index) {
-    	return botConfigList.get(index);
+        return botConfigList.get(index);
     }
     
     /**
@@ -677,18 +677,18 @@ public class EntityPanel extends JPanel {
      * @return The previous saved BotConfig list.
      */
     public List<BotConfig> getOldBotConfigs() {
-    	return oldBotConfigs;
+        return oldBotConfigs;
     }
     
     /**
      * Updates the BotConfig list.
      */
     public void updateBotConfigs() {
-    	oldBotConfigs.clear();
-    	
-    	for (int i = 0; i < botConfigList.size(); i++) {
-    		oldBotConfigs.add(botConfigList.get(i));
-    	}
+        oldBotConfigs.clear();
+        
+        for (int i = 0; i < botConfigList.size(); i++) {
+            oldBotConfigs.add(botConfigList.get(i));
+        }
     }
     
     /**
@@ -696,17 +696,17 @@ public class EntityPanel extends JPanel {
      * @return If the BotConfigs lists are equal.
      */
     public boolean compareBotConfigs() {
-    	if (botConfigList.size() != oldBotConfigs.size()) {
-    		return false;
-    	}
-    	
-    	for (int i = 0; i < botConfigList.size(); i++) {
-    		if (botConfigList.get(i).toString().equals(oldBotConfigs.get(i).toString())) {
-    			return false;
-    		}
-    	}
-    	
-    	return true;
+        if (botConfigList.size() != oldBotConfigs.size()) {
+            return false;
+        }
+        
+        for (int i = 0; i < botConfigList.size(); i++) {
+            if (botConfigList.get(i).toString().equals(oldBotConfigs.get(i).toString())) {
+                return false;
+            }
+        }
+        
+        return true;
     }
     
     /**

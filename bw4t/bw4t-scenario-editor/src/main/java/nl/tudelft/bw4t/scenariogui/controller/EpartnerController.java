@@ -54,9 +54,9 @@ public class EpartnerController {
  * Handles actions of the ResetButton
  */
 class ResetButton implements ActionListener {
-	/**
-	 * The frame containing the button.
-	 */
+    /**
+     * The frame containing the button.
+     */
     private EpartnerFrame view;
     /**
      * The constructor for this action listener.
@@ -79,9 +79,9 @@ class ResetButton implements ActionListener {
  * Handles actions of the CancelButton
  */
 class CancelButton implements ActionListener {
-	/**
-	 * The frame containing the button.
-	 */
+    /**
+     * The frame containing the button.
+     */
     private EpartnerFrame view;
     /**
      * The constructor for this action listener.
@@ -103,9 +103,9 @@ class CancelButton implements ActionListener {
  * Handles actions of the ApplyButton
  */
 class ApplyButton implements ActionListener {
-	/**
-	 * The frame containing the button.
-	 */
+    /**
+     * The frame containing the button.
+     */
     private EpartnerFrame view;
     /**
      * The constructor for this action listener.
@@ -127,10 +127,10 @@ class ApplyButton implements ActionListener {
  * Handles actions of the LeftAloneCheckBox
  */
 class LeftAloneCheckBox implements ActionListener {
-	/**
-	 * The frame containing the button.
-	 */
-	private EpartnerFrame view;
+    /**
+     * The frame containing the button.
+     */
+    private EpartnerFrame view;
     /**
      * The constructor for this action listener.
      * @param pview The frame with the button in it.
@@ -151,10 +151,10 @@ class LeftAloneCheckBox implements ActionListener {
  * Handles actions of the GPSCheckBox
  */
 class gpsCheckBox implements ActionListener {
-	/**
-	 * The frame containing the button.
-	 */
-	private EpartnerFrame view;
+    /**
+     * The frame containing the button.
+     */
+    private EpartnerFrame view;
     /**
      * The constructor for this action listener.
      * @param pview The frame with the button in it.

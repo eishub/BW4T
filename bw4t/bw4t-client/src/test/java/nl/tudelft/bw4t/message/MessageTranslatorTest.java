@@ -30,20 +30,20 @@ public class MessageTranslatorTest {
         
         @Before
         public void init(){
-        	MessageTranslator.init();
+            MessageTranslator.init();
         }
         
         @Test
         public void testMapSize(){
-        	//assertTrue(MessageTranslator.translator.size() > 0);
-        	MessageTranslator.init();
-        	assertTrue(MessageTranslator.translator.size() > 0);
+            //assertTrue(MessageTranslator.translator.size() > 0);
+            MessageTranslator.init();
+            assertTrue(MessageTranslator.translator.size() > 0);
         }
         
         @Test
         public void testNewMap(){
-        	assertTrue(MessageTranslator.translateMessage(stringMessage).equals(MessageTranslator.translateMessageLegacy(stringMessage)));
-        	assertFalse(MessageTranslator.translateMessage(stringMessage) == null);
+            assertTrue(MessageTranslator.translateMessage(stringMessage).equals(MessageTranslator.translateMessageLegacy(stringMessage)));
+            assertFalse(MessageTranslator.translateMessage(stringMessage) == null);
         }
        
         @Test

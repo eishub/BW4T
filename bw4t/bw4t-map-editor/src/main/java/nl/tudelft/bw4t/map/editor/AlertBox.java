@@ -10,9 +10,9 @@ import javax.swing.JOptionPane;
  */
 public class AlertBox {
 
-	public static void alert(String string) {
-		JOptionPane.showMessageDialog(MapEditor.frame, "Warning:" + string,
-				"Click OK to continue", JOptionPane.WARNING_MESSAGE);
-	}
+    public static void alert(String string) {
+        JOptionPane.showMessageDialog(MapEditor.frame, "Warning:" + string,
+                "Click OK to continue", JOptionPane.WARNING_MESSAGE);
+    }
 
 }
