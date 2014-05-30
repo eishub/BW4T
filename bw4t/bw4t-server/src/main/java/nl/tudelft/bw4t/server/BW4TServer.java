@@ -2,12 +2,10 @@ package nl.tudelft.bw4t.server;
 
 import java.net.MalformedURLException;
 import java.rmi.AccessException;
-import java.rmi.ConnectException;
 import java.rmi.Naming;
 import java.rmi.NoSuchObjectException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.UnmarshalException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -15,14 +13,16 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.apache.log4j.Logger;
 
 import nl.tudelft.bw4t.client.BW4TClientActions;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.Launcher;
+
+import org.apache.log4j.Logger;
+
 import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
@@ -49,8 +49,8 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 
 	private static final long serialVersionUID = -3459272460308988888L;
 	/**
-	 * Stores references to all connected clients plus information about them.
-	 * Is not transfered to the clients as it is only used by the server.
+	 * Stores references to all connected clients plus information about them. Is not transfered to the clients as it is
+	 * only used by the server.
 	 */
 	private transient Map<BW4TClientActions, ClientInfo> clients;
 
@@ -76,11 +76,12 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 		try {
 			registry = LocateRegistry.createRegistry(Integer.parseInt(serverPort));
 		} catch (RemoteException e) {
-			LOGGER.warn("Registry is already running. Reconnecting.", e);
+			LOGGER.warn("Registry is already running. Getting running registry instead.");
 			registry = LocateRegistry.getRegistry(Integer.parseInt(serverPort));
 		}
 		servername = "rmi://" + serverIp + ":" + serverPort + "/BW4TServer";
 		Naming.rebind(servername, this);
+		LOGGER.debug("Server bound to: " + servername);
 	}
 
 	public BW4TServer(String serverIp, int serverPort, String motd) throws RemoteException, MalformedURLException {
@@ -127,36 +128,47 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	 * @param entity
 	 * @throws EntityException
 	 */
+	private void notifyFreeHuman(BW4TClientActions client, String entity, String type, ClientInfo ci)
+			throws EntityException {
+		try {
+			if ("unknown".equals(type)) {
+				BW4TEnvironment.getInstance().setType(entity, "human");
+			}
+			client.handleNewEntity(entity);
+			// Client is now waiting for one less entity
+			ci.decreaseNumberOfHumans();
+			return;
+		} catch (RemoteException e) {
+			reportClientProblem(client, e);
+		}
+	}
+
+	private void notifyFreeBot(BW4TClientActions client, String entity, String type, ClientInfo ci)
+			throws EntityException {
+		try {
+			if ("unknown".equals(type)) {
+				BW4TEnvironment.getInstance().setType(entity, "bot");
+			}
+			client.handleNewEntity(entity);
+			// Client is now waiting for one less entity
+			ci.decreaseNumberOfAgents();
+			return;
+		} catch (RemoteException e) {
+			reportClientProblem(client, e);
+		}
+	}
+
 	private void notifyFreeEntity(BW4TClientActions client, String entity) throws EntityException {
 		String type = BW4TEnvironment.getInstance().getType(entity);
-		
+
 		ClientInfo ci = clients.get(client);
 
-		if (ci.getNumberOfAgents() > 0 && (type.equals("unknown") || type.equals("bot"))) {
-			try {
-				if ("unknown".equals(type)) {
-					BW4TEnvironment.getInstance().setType(entity, "bot");
-				}
-				client.handleNewEntity(entity);
-				// Client is now waiting for one less entity
-				ci.decreaseNumberOfAgents();
-				return;
-			} catch (RemoteException e) {
-				reportClientProblem(client, e);
-			}
+		if (ci.getNumberOfAgents() > 0 && ("unknown".equals(type) || "bot".equals(type))) {
+			notifyFreeBot(client, entity, type, ci);
 		}
-		else if (ci.getNumberOfHumans() > 0 && (type.equals("unknown") || type.equals("human"))) {
-			try {
-				if ("unknown".equals(type)) {
-					BW4TEnvironment.getInstance().setType(entity, "human");
-				}
-				client.handleNewEntity(entity);
-				// Client is now waiting for one less entity
-				ci.decreaseNumberOfHumans();
-				return;
-			} catch (RemoteException e) {
-				reportClientProblem(client, e);
-			}
+		else if (ci.getNumberOfHumans() > 0 && ("unknown".equals(type) || "human".equals(type))) {
+			notifyFreeHuman(client, entity, type, ci);
+
 		}
 	}
 
@@ -213,7 +225,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	 * {@inheritDoc}
 	 */
 	@Override
-	public LinkedList<Percept> getAllPerceptsFromEntity(String entity) throws RemoteException {
+	public List<Percept> getAllPerceptsFromEntity(String entity) throws RemoteException {
 		return BW4TEnvironment.getInstance().getAllPerceptsFrom(entity);
 	}
 
@@ -221,7 +233,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	 * {@inheritDoc}
 	 */
 	@Override
-	public LinkedList<String> getAgents() throws RemoteException {
+	public List<String> getAgents() throws RemoteException {
 		return BW4TEnvironment.getInstance().getAgents();
 	}
 
@@ -229,7 +241,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	 * {@inheritDoc}
 	 */
 	@Override
-	public HashSet<String> getAssociatedEntities(String agent) throws RemoteException, AgentException {
+	public Set<String> getAssociatedEntities(String agent) throws RemoteException, AgentException {
 		return BW4TEnvironment.getInstance().getAssociatedEntities(agent);
 	}
 
@@ -420,9 +432,13 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	 */
 	public void takeDown() {
 		try {
-			//registry.unbind(servername); //throws for unknown reason.
+			// Unregister ourself
+			//Naming.unbind(servername);
+
+			// Unexport; this will also remove us from the RMI runtime
 			UnicastRemoteObject.unexportObject(this, true);
-		} catch (NoSuchObjectException e) {
+
+		} catch (RemoteException e) {
 			LOGGER.error("server disconnect RMI failed", e);
 		}
 	}
@@ -433,7 +449,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	@Override
 	public void stopServer(String key) throws RemoteException {
 		Launcher.getEnvironment().shutdownServer(key);
-		
+
 	}
 
 }

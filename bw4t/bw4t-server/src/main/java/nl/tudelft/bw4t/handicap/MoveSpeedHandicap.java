@@ -1,10 +1,10 @@
 package nl.tudelft.bw4t.handicap;
 
 import nl.tudelft.bw4t.robots.Robot;
-import nl.tudelft.bw4t.server.logging.BW4TLogger;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.SpatialException;
 import repast.simphony.space.SpatialMath;
+import repast.simphony.space.continuous.NdPoint;
 /**
  * 
  * @author Valentine Mairet & Ruben Starmans
@@ -14,7 +14,7 @@ public class MoveSpeedHandicap extends Handicap {
 	/**
 	 * modifier for the distance per tick
 	 */
-	private double speedMod;
+	private final double speedMod;
 	/**
 	 * boolean value to check if the handicap is active or not
 	 */
@@ -29,25 +29,28 @@ public class MoveSpeedHandicap extends Handicap {
 		speedMod = speedModifier;
 		isActive = true;
 		
-		robot.handicapsMap.put("MoveSpeed", this);
+		robot.getHandicapsMap().put("MoveSpeed", this);
 	}
 	/**
 	 * Overridden method move of Robot which has the speed modifier
 	 */
+	@Override
 	@ScheduledMethod(start = 0, duration = 0, interval = 1)
 	public synchronized void move() {
 		if (isActive) {
-			if (robot.targetLocation != null) {
+			NdPoint targetLocation = robot.getTargetLocation();
+			if (targetLocation != null) {
 				// Calculate the distance that the robot is allowed to move.
-				double distance = robot.distanceTo(robot.targetLocation);
+				double distance = robot.distanceTo(targetLocation);
 				if (distance < Robot.MIN_MOVE_DISTANCE) {
-					robot.stopRobot(); // we're there
+					// we're there
+					robot.stopRobot(); 
 				} else {
 					double movingDistance = Math.min(distance, Robot.MAX_MOVE_DISTANCE * speedMod);
 		
 					// Angle at which to move
 					double angle = SpatialMath.calcAngleFor2DMovement(robot.space,
-							robot.getLocation(), robot.targetLocation);
+							robot.getLocation(), targetLocation);
 		
 					// The displacement of the robot
 					double[] displacement = SpatialMath.getDisplacement(2, 0,
@@ -56,15 +59,15 @@ public class MoveSpeedHandicap extends Handicap {
 					try {
 						// Move the robot to the new position using the displacement
 						robot.moveByDisplacement(displacement[0], displacement[1]);
-						BW4TLogger.getInstance().logMoving(robot.name);
+						robot.getAgentRecord().setStartedMoving();
 						
 						/**
 						 * Valentine
 						 * The robot's battery discharges when it moves.
 						 */
-						robot.battery.discharge();
+						robot.getBattery().discharge();
 					} catch (SpatialException e) {
-						robot.collided = true;
+						robot.setCollided(true);
 						robot.stopRobot();
 					}
 				}
@@ -77,15 +80,13 @@ public class MoveSpeedHandicap extends Handicap {
 	/**
 	 * set the handicap to active
 	 */
-	public void activate()
-	{
+	public void activate() {
 		isActive = true;
 	}
 	/**
 	 * set the handicap to inactive
 	 */
-	public void deactivate()
-	{
+	public void deactivate() {
 		isActive = false;
 	}
 	

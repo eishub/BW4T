@@ -55,17 +55,6 @@ public final class RoomLocator {
 				return room;
 			}
 		}
-
-		// Iterable<Object> dropzones = BW4TBuilder.getInstance().getContext()
-		// .getObjects(DropZone.class);
-		// for (Object dz : dropzones) {
-		// DropZone dropzone = (DropZone) dz;
-		//
-		// if (dropzone.getBoundingBox().contains(location)) {
-		// return dropzone;
-		// }
-		// }
-
 		return null;
 
 	}

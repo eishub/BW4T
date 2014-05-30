@@ -16,22 +16,20 @@ public class ColorBlindHandicap extends Handicap{
 	public ColorBlindHandicap(HandicapInterface p) {
 		super(p);
 		isActive = true;
-		robot.handicapsMap.put("ColorBlind", this);
+		robot.getHandicapsMap().put("ColorBlind", this);
 	}
 	
 	/**
 	 * Activate the handicap.
 	 */
-	public void activate()
-	{
+	public void activate() {
 		isActive = true;
 	}
 	
 	/**
 	 * Deactivate the handicap.
 	 */
-	public void deactivate()
-	{
+	public void deactivate() {
 		isActive = false;
 	}
 

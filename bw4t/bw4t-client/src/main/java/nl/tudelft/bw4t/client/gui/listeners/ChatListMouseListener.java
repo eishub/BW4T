@@ -14,31 +14,31 @@ import nl.tudelft.bw4t.client.gui.menu.ChatMenu;
  */
 public class ChatListMouseListener implements MouseListener {
 
-    private final BW4TClientGUI bw4tClientGUI;
+	private final BW4TClientGUI bw4tClientGUI;
 
-    public ChatListMouseListener(BW4TClientGUI bw4tClientGUI) {
-        this.bw4tClientGUI = bw4tClientGUI;
-    }
+	public ChatListMouseListener(BW4TClientGUI bw4tClientGUI) {
+		this.bw4tClientGUI = bw4tClientGUI;
+	}
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-    }
+	@Override
+	public void mouseClicked(MouseEvent e) {
+	}
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-        ChatMenu.buildPopUpMenuForChat(bw4tClientGUI);
-        bw4tClientGUI.getjPopupMenu().show(bw4tClientGUI.getChatSession(), e.getX(), e.getY());
-    }
+	@Override
+	public void mousePressed(MouseEvent e) {
+		ChatMenu.buildPopUpMenuForChat(bw4tClientGUI);
+		bw4tClientGUI.getjPopupMenu().show(bw4tClientGUI.getChatSession(), e.getX(), e.getY());
+	}
 
-    @Override
-    public void mouseEntered(MouseEvent arg0) {
-    }
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+	}
 
-    @Override
-    public void mouseExited(MouseEvent arg0) {
-    }
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+	}
 
-    @Override
-    public void mouseReleased(MouseEvent arg0) {
-    }
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+	}
 }

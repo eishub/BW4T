@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.eis.translators;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import nl.tudelft.bw4t.zone.Zone;
 import eis.eis2java.exception.TranslationException;
@@ -20,7 +21,7 @@ public class ZoneTranslator implements Java2Parameter<Zone> {
 
 	@Override
 	public Parameter[] translate(Zone zone) throws TranslationException {
-		ArrayList<Parameter> params = new ArrayList<Parameter>();
+		List<Parameter> params = new ArrayList<Parameter>();
 		params.add(new Numeral(zone.getId()));
 		params.add(new Identifier(zone.getName()));
 		params.add(new Numeral(zone.getLocation().getX()));
