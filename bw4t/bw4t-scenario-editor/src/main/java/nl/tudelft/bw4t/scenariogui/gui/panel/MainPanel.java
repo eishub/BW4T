@@ -3,17 +3,26 @@ package nl.tudelft.bw4t.scenariogui.gui.panel;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+
+import nl.tudelft.bw4t.scenariogui.BotConfig;
 
 /**
  *
  * MainPanel which serves as the content pane for the ScenarioEditor frame.
  * Creates a 1/3 - 2/3 division, the former for the ConfigurationPanel, and the
- * latter the EntityPanel
- *
- * @since 13-05-2014
- * @author Joop Aue
+ * latter the EntityPanel.
+ * <p>
+ * @author      Katia Asmoredjo
+ * @author      Joop Aué
+ * @author      Nick Feddes  
+ * @version     0.1                
+ * @since       12-05-2014        
  */
 public class MainPanel extends JPanel {
     
@@ -32,14 +41,18 @@ public class MainPanel extends JPanel {
     private EntityPanel entityPanel;
     /**  */
     private GridBagLayout gbl;
+    /**
+     * The XML element wrapper for the list of bots. 
+     */
+    @XmlElementWrapper(name = "bots")
+    @XmlElement(name = "bot")
+    private List<BotConfig> bots = new ArrayList<BotConfig>();
 
     /**
      * Create a MainPanel consisting of a ConfigurationPanel and a EntityPanel.
      *
-     * @param newConfigurationPanel
-     *            The configuration panel
-     * @param newEntityPanel
-     *            The entity panel
+     * @param newConfigurationPanel The configuration panel
+     * @param newEntityPanel    The entity panel
      */
     public MainPanel(final ConfigurationPanel newConfigurationPanel,
             final EntityPanel newEntityPanel) {
@@ -94,8 +107,7 @@ public class MainPanel extends JPanel {
     /**
      * Set the configuration panel used by the MainPanel.
      *
-     * @param newConfigurationPanel
-     *            The configuration panel object to be used.
+     * @param newConfigurationPanel The configuration panel object to be used.
      */
     public final void setConfigurationPanel(
             final ConfigurationPanel newConfigurationPanel) {
@@ -114,11 +126,45 @@ public class MainPanel extends JPanel {
     /**
      * Set the bot panel used by the MainPanel.
      *
-     * @param newEntityPanel
-     *            The bot panel object to be used.
+     * @param newEntityPanel    The bot panel object to be used.
      */
     public final void setEntityPanel(final EntityPanel newEntityPanel) {
         this.entityPanel = newEntityPanel;
     }
-
+    /** 
+     * Set the bot config list. 
+     * @param list The new list.
+     */
+    public void setBotConfig(List<BotConfig> list) {
+    	bots = list;
+    }
+    /**
+     * Returns the BotConfig list.
+     * @return The BotConfig list.
+     */
+    public List<BotConfig> getBotConfig() {
+    	return bots;
+    }
+    /**
+     * Add a BotConfig-object to the list.
+     * @param index The index in the list that the BotConfig should be on.
+     * @param b The BotConfig-object to be added.
+     */
+    public void addBotConfig(int index, BotConfig b) {
+    	bots.set(index, b);
+    }
+    /**
+     * Add a BotConfig-object to the end of the current list.
+     * @param b The BotConfig object.
+     */
+    public void addBotConfig(BotConfig b) {
+    	bots.add(b);
+    }
+    /**
+     * Removes a BotConfig-object from the list.
+     * @param i The index of the BotConfig-object that has to be removed.
+     */
+    public void removeBotConfig(int i) {
+    	bots.remove(i);
+    }
 }
