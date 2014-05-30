@@ -15,19 +15,19 @@ import eis.iilang.Parameter;
  */
 public class BlockWithColorTranslator implements Java2Parameter<BlockColor> {
 
-	@Override
-	public Parameter[] translate(BlockColor blockColor) throws TranslationException {
-		Block block = blockColor.getBlock();
-		// color(id, color)
-		Parameter[] params = new Parameter[2];
-		params[0] = new Numeral(block.getId());
-		params[1] = new Identifier(String.valueOf(block.getColorId()));
+    @Override
+    public Parameter[] translate(BlockColor blockColor) throws TranslationException {
+        Block block = blockColor.getBlock();
+        // color(id, color)
+        Parameter[] params = new Parameter[2];
+        params[0] = new Numeral(block.getId());
+        params[1] = new Identifier(String.valueOf(block.getColorId()));
 
-		return params;
-	}
+        return params;
+    }
 
-	@Override
-	public Class<? extends BlockColor> translatesFrom() {
-		return BlockColor.class;
-	}
+    @Override
+    public Class<? extends BlockColor> translatesFrom() {
+        return BlockColor.class;
+    }
 }

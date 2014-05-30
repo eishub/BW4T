@@ -10,11 +10,11 @@ import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
  * @author Arun
  */
 class BatterySlider implements MouseListener {
-	/**
-	 * The BotEditorPanel to get components from.
-	 */
+    /**
+     * The BotEditorPanel to get components from.
+     */
     @SuppressWarnings("unused")
-	private BotEditorPanel view;
+    private BotEditorPanel view;
     /**
      * Constructor.
      * @param pview The BotEditorPanel containing this slider.

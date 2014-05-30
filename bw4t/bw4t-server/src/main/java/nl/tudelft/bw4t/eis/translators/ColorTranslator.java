@@ -14,14 +14,14 @@ import eis.iilang.Parameter;
  */
 public class ColorTranslator implements Java2Parameter<BlockColor> {
 
-	@Override
-	public Parameter[] translate(BlockColor o) throws TranslationException {
-		return new Parameter[] { new Identifier(o.toString()) };
-	}
+    @Override
+    public Parameter[] translate(BlockColor o) throws TranslationException {
+        return new Parameter[] { new Identifier(o.toString()) };
+    }
 
-	@Override
-	public Class<? extends BlockColor> translatesFrom() {
-		return BlockColor.class;
-	}
+    @Override
+    public Class<? extends BlockColor> translatesFrom() {
+        return BlockColor.class;
+    }
 
 }

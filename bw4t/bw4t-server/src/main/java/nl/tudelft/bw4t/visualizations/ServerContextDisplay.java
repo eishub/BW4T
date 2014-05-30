@@ -57,54 +57,54 @@ import eis.iilang.Parameter;
 @SuppressWarnings("serial")
 public class ServerContextDisplay extends JFrame {
 
-	/**
-	 * The log4j logger, logs to the console.
-	 */
-	private static final Logger LOGGER = Logger.getLogger(ServerContextDisplay.class);
+    /**
+     * The log4j logger, logs to the console.
+     */
+    private static final Logger LOGGER = Logger.getLogger(ServerContextDisplay.class);
 
-	private final MapRenderer myRenderer;
-	private final ServerMapController controller;
+    private final MapRenderer myRenderer;
+    private final ServerMapController controller;
 
-	/**
-	 * Create a new instance of this class and initialize it
-	 * 
-	 * @param context
-	 *            the central data model of Repast
-	 * @throws IllegalAccessException
-	 * @throws InstantiationException
-	 * @throws FileNotFoundException
-	 */
-	public ServerContextDisplay(Context context) throws VisualizationsException {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-			LOGGER.warn("failed to setup java look and feel", e);
-		}
-		setTitle("BW4T");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLayout(new BorderLayout());
+    /**
+     * Create a new instance of this class and initialize it
+     * 
+     * @param context
+     *            the central data model of Repast
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     * @throws FileNotFoundException
+     */
+    public ServerContextDisplay(Context context) throws VisualizationsException {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                | UnsupportedLookAndFeelException e) {
+            LOGGER.warn("failed to setup java look and feel", e);
+        }
+        setTitle("BW4T");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
 
-		controller = new ServerMapController(Launcher.getEnvironment().getMap(), context);
-		myRenderer = new MapRenderer(controller);
-		add(new JScrollPane(myRenderer), BorderLayout.CENTER);
-		try {
-			add(new ControlPanel(this), BorderLayout.NORTH);
-		} catch (FileNotFoundException e) {
-			throw new VisualizationsException(e);
-		}
-		pack();
-		setVisible(true);
-	}
+        controller = new ServerMapController(Launcher.getEnvironment().getMap(), context);
+        myRenderer = new MapRenderer(controller);
+        add(new JScrollPane(myRenderer), BorderLayout.CENTER);
+        try {
+            add(new ControlPanel(this), BorderLayout.NORTH);
+        } catch (FileNotFoundException e) {
+            throw new VisualizationsException(e);
+        }
+        pack();
+        setVisible(true);
+    }
 
-	/**
-	 * We close ourselves if user clicks on reset. We need to since we are created from {@link BW4TBuilder} which does
-	 * not assume ownership; and nobody else can create us it seems.
-	 */
-	public void close() {
-		myRenderer.getController().setRunning(false);
-		setVisible(false);
-	}
+    /**
+     * We close ourselves if user clicks on reset. We need to since we are created from {@link BW4TBuilder} which does
+     * not assume ownership; and nobody else can create us it seems.
+     */
+    public void close() {
+        myRenderer.getController().setRunning(false);
+        setVisible(false);
+    }
 
 }
 
@@ -117,98 +117,98 @@ public class ServerContextDisplay extends JFrame {
 @SuppressWarnings("serial")
 class ControlPanel extends JPanel {
 
-	/**
-	 * The log4j logger, logs to the console.
-	 */
-	private static final Logger LOGGER = Logger.getLogger(ControlPanel.class);
+    /**
+     * The log4j logger, logs to the console.
+     */
+    private static final Logger LOGGER = Logger.getLogger(ControlPanel.class);
 
-	/**
-	 * used to close the window when user presses reset.
-	 */
-	final ServerContextDisplay displayer;
+    /**
+     * used to close the window when user presses reset.
+     */
+    final ServerContextDisplay displayer;
 
-	final JLabel tpsDisplay = new JLabel("0.0 tps");
+    final JLabel tpsDisplay = new JLabel("0.0 tps");
 
-	private final JSlider slider;
+    private final JSlider slider;
 
-	/**
-	 * @param disp
-	 *            is used to close the window when user presses reset.
-	 * @throws FileNotFoundException
-	 */
-	public ControlPanel(ServerContextDisplay disp) throws FileNotFoundException {
-		this.displayer = disp;
-		setLayout(new BorderLayout());
-		add(new JLabel("Speed"), BorderLayout.WEST);
-		// slider goes in percentage, 100 is fastest
-		slider = new JSlider(0, 100, 0);
-		slider.setEnabled(false);
-		final JButton resetbutton = new JButton("Reset");
-		add(tpsDisplay, BorderLayout.WEST);
-		add(slider, BorderLayout.CENTER);
-		add(resetbutton, BorderLayout.EAST);
-		add(new MapSelector(displayer), BorderLayout.NORTH);
+    /**
+     * @param disp
+     *            is used to close the window when user presses reset.
+     * @throws FileNotFoundException
+     */
+    public ControlPanel(ServerContextDisplay disp) throws FileNotFoundException {
+        this.displayer = disp;
+        setLayout(new BorderLayout());
+        add(new JLabel("Speed"), BorderLayout.WEST);
+        // slider goes in percentage, 100 is fastest
+        slider = new JSlider(0, 100, 0);
+        slider.setEnabled(false);
+        final JButton resetbutton = new JButton("Reset");
+        add(tpsDisplay, BorderLayout.WEST);
+        add(slider, BorderLayout.CENTER);
+        add(resetbutton, BorderLayout.EAST);
+        add(new MapSelector(displayer), BorderLayout.NORTH);
 
-		slider.addChangeListener(new ChangeListener() {
+        slider.addChangeListener(new ChangeListener() {
 
-			@Override
-			public void stateChanged(ChangeEvent arg0) {
-				// now we have speed (on Hz axis) and we need delay (s axis).
-				// first get interpolated speed.
-				BW4TEnvironment.getInstance().setTps(calculateTpsFromSlider());
-				updateTpsDisplay();
-			}
-		});
+            @Override
+            public void stateChanged(ChangeEvent arg0) {
+                // now we have speed (on Hz axis) and we need delay (s axis).
+                // first get interpolated speed.
+                BW4TEnvironment.getInstance().setTps(calculateTpsFromSlider());
+                updateTpsDisplay();
+            }
+        });
 
-		resetbutton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					// displayer.close(); now part of reset
-					BW4TEnvironment.getInstance().reset();
-				} catch (Exception e) {
-					LOGGER.error("failed to reset the environment", e);
-				}
-			}
-		});
+        resetbutton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                try {
+                    // displayer.close(); now part of reset
+                    BW4TEnvironment.getInstance().reset();
+                } catch (Exception e) {
+                    LOGGER.error("failed to reset the environment", e);
+                }
+            }
+        });
 
-		new Timer().schedule(new TimerTask() {
+        new Timer().schedule(new TimerTask() {
 
-			@Override
-			public void run() {
-				SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                SwingUtilities.invokeLater(new Runnable() {
 
-					@Override
-					public void run() {
-						slider.setEnabled(true);
-						slider.setValue(calculateSliderValueFromDelay());
-						updateTpsDisplay();
-					}
-				});
-			}
-		}, 1000);
-		updateTpsDisplay();
-	}
+                    @Override
+                    public void run() {
+                        slider.setEnabled(true);
+                        slider.setValue(calculateSliderValueFromDelay());
+                        updateTpsDisplay();
+                    }
+                });
+            }
+        }, 1000);
+        updateTpsDisplay();
+    }
 
-	public double calculateTpsFromSlider() {
-		double percent = (slider.getValue() - slider.getMinimum())
-				/ (double) (slider.getMaximum() - slider.getMinimum());
-		int value = (int) (Stepper.MIN_TPS + (Stepper.MAX_TPS - Stepper.MIN_TPS) * percent);
-		LOGGER.trace("Delay Calculated from the slider: " + value);
-		return value;
-	}
+    public double calculateTpsFromSlider() {
+        double percent = (slider.getValue() - slider.getMinimum())
+                / (double) (slider.getMaximum() - slider.getMinimum());
+        int value = (int) (Stepper.MIN_TPS + (Stepper.MAX_TPS - Stepper.MIN_TPS) * percent);
+        LOGGER.trace("Delay Calculated from the slider: " + value);
+        return value;
+    }
 
-	public int calculateSliderValueFromDelay() {
-		double delay = BW4TEnvironment.getInstance().getTps();
-		double percent = (delay - Stepper.MIN_TPS) / (Stepper.MAX_TPS - Stepper.MIN_TPS);
-		int value = (int) (slider.getMinimum() + (slider.getMaximum() - slider.getMinimum()) * percent);
-		LOGGER.trace("Slider value from delay: " + value);
-		return value;
-	}
+    public int calculateSliderValueFromDelay() {
+        double delay = BW4TEnvironment.getInstance().getTps();
+        double percent = (delay - Stepper.MIN_TPS) / (Stepper.MAX_TPS - Stepper.MIN_TPS);
+        int value = (int) (slider.getMinimum() + (slider.getMaximum() - slider.getMinimum()) * percent);
+        LOGGER.trace("Slider value from delay: " + value);
+        return value;
+    }
 
-	public void updateTpsDisplay() {
-		tpsDisplay.setText(String.format("%3.1f tps", BW4TEnvironment.getInstance().getTps()));
-	}
+    public void updateTpsDisplay() {
+        tpsDisplay.setText(String.format("%3.1f tps", BW4TEnvironment.getInstance().getTps()));
+    }
 }
 
 /**
@@ -222,49 +222,49 @@ class ControlPanel extends JPanel {
 @SuppressWarnings("serial")
 class MapSelector extends JPanel {
 
-	/**
-	 * The log4j logger, logs to the console.
-	 */
-	private static final Logger LOGGER = Logger.getLogger(MapSelector.class);
+    /**
+     * The log4j logger, logs to the console.
+     */
+    private static final Logger LOGGER = Logger.getLogger(MapSelector.class);
 
-	public MapSelector(final ServerContextDisplay displayer) throws FileNotFoundException {
-		setLayout(new BorderLayout());
-		add(new JLabel("Change Map"), BorderLayout.WEST);
-		Vector<String> maps = getMaps();
-		final JComboBox mapselector = new JComboBox(maps);
+    public MapSelector(final ServerContextDisplay displayer) throws FileNotFoundException {
+        setLayout(new BorderLayout());
+        add(new JLabel("Change Map"), BorderLayout.WEST);
+        Vector<String> maps = getMaps();
+        final JComboBox mapselector = new JComboBox(maps);
 
-		// find the current map in the list and highlight it
-		String mapname = BW4TEnvironment.getMapLocation();
-		mapselector.setSelectedItem(mapname);
+        // find the current map in the list and highlight it
+        String mapname = BW4TEnvironment.getMapLocation();
+        mapselector.setSelectedItem(mapname);
 
-		add(mapselector, BorderLayout.CENTER);
-		mapselector.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Map<String, Parameter> parameters = new HashMap<String, Parameter>();
-				parameters.put("map", new Identifier((String) mapselector.getSelectedItem()));
-				try {
-					// displayer.close(); now part of reset
-					BW4TEnvironment.getInstance().reset(parameters);
-				} catch (ManagementException e) {
-					LOGGER.error("failed to reset the environment", e);
-				}
-			}
-		});
-	}
+        add(mapselector, BorderLayout.CENTER);
+        mapselector.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                Map<String, Parameter> parameters = new HashMap<String, Parameter>();
+                parameters.put("map", new Identifier((String) mapselector.getSelectedItem()));
+                try {
+                    // displayer.close(); now part of reset
+                    BW4TEnvironment.getInstance().reset(parameters);
+                } catch (ManagementException e) {
+                    LOGGER.error("failed to reset the environment", e);
+                }
+            }
+        });
+    }
 
-	/**
-	 * get list of available map names.
-	 * 
-	 * @return vector with all available map names in the Maps directory.
-	 * @throws FileNotFoundException
-	 */
-	private Vector<String> getMaps() throws FileNotFoundException {
-		File f = new File(System.getProperty("user.dir") + "/maps");
-		if (f.list() == null) {
-			throw new FileNotFoundException("maps directory not found");
-		}
-		Vector<String> maps = new Vector<String>(Arrays.asList(f.list()));
-		return maps;
-	}
+    /**
+     * get list of available map names.
+     * 
+     * @return vector with all available map names in the Maps directory.
+     * @throws FileNotFoundException
+     */
+    private Vector<String> getMaps() throws FileNotFoundException {
+        File f = new File(System.getProperty("user.dir") + "/maps");
+        if (f.list() == null) {
+            throw new FileNotFoundException("maps directory not found");
+        }
+        Vector<String> maps = new Vector<String>(Arrays.asList(f.list()));
+        return maps;
+    }
 }

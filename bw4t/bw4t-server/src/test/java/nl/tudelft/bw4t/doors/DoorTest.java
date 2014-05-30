@@ -34,196 +34,196 @@ import repast.simphony.space.continuous.ContinuousSpace;
 @RunWith(MockitoJUnitRunner.class)
 public class DoorTest {
 
-	@Mock private ContinuousSpace<Object> space;
-	@Mock private Context<Object> context;
-	@Mock private BlocksRoom room;
-	@Mock private Robot robot;
-	
-	/**
-	 * Run the Door(ContinuousSpace<Object>,Context<Object>) constructor test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 24.05.14 15:09
-	 */
-	@Test
-	public void testDoor_1() {
-		when(context.isEmpty()).thenReturn(true);
-		Door result = new Door(space, context);
+    @Mock private ContinuousSpace<Object> space;
+    @Mock private Context<Object> context;
+    @Mock private BlocksRoom room;
+    @Mock private Robot robot;
+    
+    /**
+     * Run the Door(ContinuousSpace<Object>,Context<Object>) constructor test.
+     *
+     * @throws Exception
+     *
+     * @generatedBy CodePro at 24.05.14 15:09
+     */
+    @Test
+    public void testDoor_1() {
+        when(context.isEmpty()).thenReturn(true);
+        Door result = new Door(space, context);
 
-		assertNotNull(result);
-		assertTrue(result.isOpen());
-		assertEquals(null, result.getLocation());
-		assertEquals(0L, result.getId());
-	}
+        assertNotNull(result);
+        assertTrue(result.isOpen());
+        assertEquals(null, result.getLocation());
+        assertEquals(0L, result.getId());
+    }
 
-	/**
-	 * Run the Color getColor() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 24.05.14 15:09
-	 */
-	@Test
-	public void testGetColor_1() {
-		Door fixture = new Door(space, context);
-		fixture.connectTo(null);
+    /**
+     * Run the Color getColor() method test.
+     *
+     * @throws Exception
+     *
+     * @generatedBy CodePro at 24.05.14 15:09
+     */
+    @Test
+    public void testGetColor_1() {
+        Door fixture = new Door(space, context);
+        fixture.connectTo(null);
 
-		Color result = fixture.getColor();
+        Color result = fixture.getColor();
 
-		assertEquals(result, nl.tudelft.bw4t.map.Door.COLOR_OPEN);
-	}
+        assertEquals(result, nl.tudelft.bw4t.map.Door.COLOR_OPEN);
+    }
 
-	/**
-	 * Run the Color getColor() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 24.05.14 15:09
-	 */
-	@Test
-	public void testGetColor_2() {
-		when(room.getOccupier()).thenReturn(robot);
-		
-		Door fixture = new Door(space, context);
-		fixture.connectTo(room);
+    /**
+     * Run the Color getColor() method test.
+     *
+     * @throws Exception
+     *
+     * @generatedBy CodePro at 24.05.14 15:09
+     */
+    @Test
+    public void testGetColor_2() {
+        when(room.getOccupier()).thenReturn(robot);
+        
+        Door fixture = new Door(space, context);
+        fixture.connectTo(room);
 
-		
-		Color result = fixture.getColor();
+        
+        Color result = fixture.getColor();
 
-		assertEquals(result, nl.tudelft.bw4t.map.Door.COLOR_CLOSED);
-	}
+        assertEquals(result, nl.tudelft.bw4t.map.Door.COLOR_CLOSED);
+    }
 
-	/**
-	 * Run the boolean isOpen() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 24.05.14 15:09
-	 */
-	@Test
-	public void testIsOpen_1() {
-		Door fixture = new Door(space, context);
-		fixture.connectTo((Room) null);
+    /**
+     * Run the boolean isOpen() method test.
+     *
+     * @throws Exception
+     *
+     * @generatedBy CodePro at 24.05.14 15:09
+     */
+    @Test
+    public void testIsOpen_1() {
+        Door fixture = new Door(space, context);
+        fixture.connectTo((Room) null);
 
-		boolean result = fixture.isOpen();
+        boolean result = fixture.isOpen();
 
-		// add additional test code here
-		assertTrue(result);
-	}
+        // add additional test code here
+        assertTrue(result);
+    }
 
-	/**
-	 * Run the boolean isOpen() method test.
-	 *
-	 * @generatedBy CodePro at 24.05.14 15:09
-	 */
-	@Test
-	public void testIsOpen_2() {
-		when(room.getOccupier()).thenReturn(robot);
-		
-		Door fixture = new Door(space, context);
-		fixture.connectTo(room);
+    /**
+     * Run the boolean isOpen() method test.
+     *
+     * @generatedBy CodePro at 24.05.14 15:09
+     */
+    @Test
+    public void testIsOpen_2() {
+        when(room.getOccupier()).thenReturn(robot);
+        
+        Door fixture = new Door(space, context);
+        fixture.connectTo(room);
 
-		boolean result = fixture.isOpen();
+        boolean result = fixture.isOpen();
 
-		assertFalse(result);
-	}
+        assertFalse(result);
+    }
 
-	/**
-	 * Run the boolean isOpen() method test.
-	 *
-	 * @generatedBy CodePro at 24.05.14 15:09
-	 */
-	@Test
-	public void testIsOpen_3() {
-		Door fixture = new Door(space, context);
-		fixture.connectTo(room);
+    /**
+     * Run the boolean isOpen() method test.
+     *
+     * @generatedBy CodePro at 24.05.14 15:09
+     */
+    @Test
+    public void testIsOpen_3() {
+        Door fixture = new Door(space, context);
+        fixture.connectTo(room);
 
-		boolean result = fixture.isOpen();
+        boolean result = fixture.isOpen();
 
-		assertTrue(result);
-	}
+        assertTrue(result);
+    }
 
-	/**
-	 * Run the void setPos(double,double,Orientation) method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 24.05.14 15:09
-	 */
-	@Test
-	public void testSetPos_1() {
-		Door fixture = new Door(space, context);
-		double x = 1.0;
-		double y = 1.0;
-		nl.tudelft.bw4t.map.Door.Orientation ori = nl.tudelft.bw4t.map.Door.Orientation.HORIZONTAL;
+    /**
+     * Run the void setPos(double,double,Orientation) method test.
+     *
+     * @throws Exception
+     *
+     * @generatedBy CodePro at 24.05.14 15:09
+     */
+    @Test
+    public void testSetPos_1() {
+        Door fixture = new Door(space, context);
+        double x = 1.0;
+        double y = 1.0;
+        nl.tudelft.bw4t.map.Door.Orientation ori = nl.tudelft.bw4t.map.Door.Orientation.HORIZONTAL;
 
-		fixture.setPos(x, y, ori);
-		
-		Rectangle2D rect = fixture.getBoundingBox();
-		assertEquals(rect.getWidth(), nl.tudelft.bw4t.map.Door.DOOR_WIDTH, 0.01);
-		assertEquals(rect.getHeight(), nl.tudelft.bw4t.map.Door.DOOR_THICKNESS, 0.01);
-		verify(space).moveTo(fixture, x, y);
-	}
+        fixture.setPos(x, y, ori);
+        
+        Rectangle2D rect = fixture.getBoundingBox();
+        assertEquals(rect.getWidth(), nl.tudelft.bw4t.map.Door.DOOR_WIDTH, 0.01);
+        assertEquals(rect.getHeight(), nl.tudelft.bw4t.map.Door.DOOR_THICKNESS, 0.01);
+        verify(space).moveTo(fixture, x, y);
+    }
 
-	/**
-	 * Run the void setPos(double,double,Orientation) method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 24.05.14 15:09
-	 */
-	@Test
-	public void testSetPos_2() {
-		Door fixture = new Door(space, context);
-		double x = 1.0;
-		double y = 1.0;
-		nl.tudelft.bw4t.map.Door.Orientation ori = nl.tudelft.bw4t.map.Door.Orientation.VERTICAL;
+    /**
+     * Run the void setPos(double,double,Orientation) method test.
+     *
+     * @throws Exception
+     *
+     * @generatedBy CodePro at 24.05.14 15:09
+     */
+    @Test
+    public void testSetPos_2() {
+        Door fixture = new Door(space, context);
+        double x = 1.0;
+        double y = 1.0;
+        nl.tudelft.bw4t.map.Door.Orientation ori = nl.tudelft.bw4t.map.Door.Orientation.VERTICAL;
 
-		fixture.setPos(x, y, ori);
+        fixture.setPos(x, y, ori);
 
-		Rectangle2D rect = fixture.getBoundingBox();
-		assertEquals(rect.getWidth(), nl.tudelft.bw4t.map.Door.DOOR_THICKNESS, 0.01);
-		assertEquals(rect.getHeight(), nl.tudelft.bw4t.map.Door.DOOR_WIDTH, 0.01);
-		verify(space).moveTo(fixture, x, y);
-	}
+        Rectangle2D rect = fixture.getBoundingBox();
+        assertEquals(rect.getWidth(), nl.tudelft.bw4t.map.Door.DOOR_THICKNESS, 0.01);
+        assertEquals(rect.getHeight(), nl.tudelft.bw4t.map.Door.DOOR_WIDTH, 0.01);
+        verify(space).moveTo(fixture, x, y);
+    }
 
-	/**
-	 * Perform pre-test initialization.
-	 *
-	 * @throws Exception
-	 *         if the initialization fails for some reason
-	 *
-	 * @generatedBy CodePro at 24.05.14 15:09
-	 */
-	@Before
-	public void setUp()
-		throws Exception {
-		// add additional set up code here
-	}
+    /**
+     * Perform pre-test initialization.
+     *
+     * @throws Exception
+     *         if the initialization fails for some reason
+     *
+     * @generatedBy CodePro at 24.05.14 15:09
+     */
+    @Before
+    public void setUp()
+        throws Exception {
+        // add additional set up code here
+    }
 
-	/**
-	 * Perform post-test clean-up.
-	 *
-	 * @throws Exception
-	 *         if the clean-up fails for some reason
-	 *
-	 * @generatedBy CodePro at 24.05.14 15:09
-	 */
-	@After
-	public void tearDown()
-		throws Exception {
-		// Add additional tear down code here
-	}
+    /**
+     * Perform post-test clean-up.
+     *
+     * @throws Exception
+     *         if the clean-up fails for some reason
+     *
+     * @generatedBy CodePro at 24.05.14 15:09
+     */
+    @After
+    public void tearDown()
+        throws Exception {
+        // Add additional tear down code here
+    }
 
-	/**
-	 * Launch the test.
-	 *
-	 * @param args the command line arguments
-	 *
-	 * @generatedBy CodePro at 24.05.14 15:09
-	 */
-	public static void main(String[] args) {
-		new org.junit.runner.JUnitCore().run(DoorTest.class);
-	}
+    /**
+     * Launch the test.
+     *
+     * @param args the command line arguments
+     *
+     * @generatedBy CodePro at 24.05.14 15:09
+     */
+    public static void main(String[] args) {
+        new org.junit.runner.JUnitCore().run(DoorTest.class);
+    }
 }

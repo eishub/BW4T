@@ -4,16 +4,16 @@ package nl.tudelft.bw4t.logger;
 import org.apache.log4j.Level;
 
 public class BotLog extends Level {
-	
-	/**
-	 * Value of BotLog level. This value is bigger than FATAL,
-	 * to make sure this is the only level that will log to the file.
-	 */
-	public static final int BOTLOG_INT = FATAL_INT + 10;
-	
-	public static final Level BOTLOG = new BotLog(BOTLOG_INT, "BOTLOG", 10);
-	
-	/**
+    
+    /**
+     * Value of BotLog level. This value is bigger than FATAL,
+     * to make sure this is the only level that will log to the file.
+     */
+    public static final int BOTLOG_INT = FATAL_INT + 10;
+    
+    public static final Level BOTLOG = new BotLog(BOTLOG_INT, "BOTLOG", 10);
+    
+    /**
      * Constructor
      */
     protected BotLog(int arg0, String arg1, int arg2) {
@@ -71,6 +71,6 @@ public class BotLog extends Level {
         }
         return Level.toLevel(logArgument, defaultLevel);
     }
-	
-	
+    
+    
 }
