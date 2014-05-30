@@ -369,7 +369,7 @@ public class EntityPanel extends JPanel {
      * Create the dropdown lists in the controllers column.
      */
     public void setUpControllerColumn() {
-        JComboBox<String> controllers = new JComboBox<String>();
+        JComboBox controllers = new JComboBox<String>();
         controllers.addItem("Agent");
         controllers.addItem("Human");
         botTable.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(controllers));

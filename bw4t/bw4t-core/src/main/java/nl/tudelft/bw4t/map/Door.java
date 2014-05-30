@@ -23,10 +23,6 @@ public class Door implements Serializable {
 	public static final Color COLOR_CLOSED = Color.RED;
 	public static final Color COLOR_OPEN = Color.GREEN;
 
-	public enum Orientation {
-		HORIZONTAL, VERTICAL
-	}
-
 	private Point position = new Point();
 	private Orientation orientation = Orientation.HORIZONTAL;
 

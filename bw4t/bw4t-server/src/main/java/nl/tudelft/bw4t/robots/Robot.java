@@ -12,7 +12,6 @@ import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.handicap.HandicapInterface;
-import nl.tudelft.bw4t.server.logging.BW4TLogger;
 import nl.tudelft.bw4t.map.view.Entity;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.Corridor;
@@ -35,8 +34,8 @@ import repast.simphony.space.continuous.NdPoint;
 public class Robot extends BoundedMoveableObject implements HandicapInterface {
 
 	/**
-	 * The distance which it can move per tick. This should never be larger than the door width because that might 
-	 * cause the bot to attempt to jump over a door (which will fail).
+	 * The distance which it can move per tick. This should never be larger than the door width because that might cause
+	 * the bot to attempt to jump over a door (which will fail).
 	 */
 	public static final double MAX_MOVE_DISTANCE = .5;
 	/**
@@ -57,8 +56,8 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	/** The max. amount of blocks a robot can hold, default is 1. */
 	private int capacity = 3;
 	/**
-	 * set to true if we have to cancel a motion due to a collision. A collision is caused by an attempt to move
-	 * into or out of a room
+	 * set to true if we have to cancel a motion due to a collision. A collision is caused by an attempt to move into or
+	 * out of a room
 	 */
 	private boolean collided = false;
 
@@ -88,7 +87,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 * AgentRecord object for this Robot, needed for logging
 	 */
 	AgentRecord agentRecord;
-	
+
 	/**
 	 * True if the robot is holding an e-Partner.
 	 */
@@ -112,15 +111,15 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 * @param cap
 	 *            The holding capacity of the robot.
 	 * @param human
-	 * 			  True if the bot is human controlled.
+	 *            True if the bot is human controlled.
 	 */
-	public Robot(String pname, ContinuousSpace<Object> space, Context<Object> context,
-			boolean poneBotPerZone, boolean human, int cap) {
+	public Robot(String pname, ContinuousSpace<Object> space, Context<Object> context, boolean poneBotPerZone,
+			boolean human, int cap) {
 		super(space, context);
 
 		this.name = pname;
 		this.oneBotPerZone = poneBotPerZone;
-		setSize(size, size); 
+		setSize(size, size);
 
 		/**
 		 * This is where the battery value will be fetched from the Bot Store GUI.
@@ -158,11 +157,12 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	public boolean equals(Object obj) {
 		if (obj instanceof Robot) {
 			return super.equals(obj);
-		} else {
+		}
+		else {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return super.hashCode();
@@ -248,8 +248,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	}
 
 	/**
-	 * Drops the block the robot is holding on the current location. TODO: What if multiple blocks dropped at
-	 * same spot?
+	 * Drops the block the robot is holding on the current location. TODO: What if multiple blocks dropped at same spot?
 	 */
 	public void drop() {
 		if (!holding.isEmpty()) {
@@ -282,8 +281,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 * A method for dropping multiple blocks at once.
 	 * 
 	 * @param amount
-	 *            The amount of blocks that have to be dropped, 
-	 *            needs to be less than the amount of blocks in the list.
+	 *            The amount of blocks that have to be dropped, needs to be less than the amount of blocks in the list.
 	 */
 	public void drop(int amount) {
 		assert amount <= holding.size();
@@ -344,8 +342,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 		ENTER_CORRIDOR;
 
 		/**
-		 * Merge the move type if multiple zones are entered at once. The result is the 'worst' event that
-		 * happens
+		 * Merge the move type if multiple zones are entered at once. The result is the 'worst' event that happens
 		 * 
 		 * @param other
 		 * @return
@@ -366,8 +363,8 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	}
 
 	/**
-	 * Check motion type for robot to move to <endx, endy>. The {@link #MoveType} gives the actual type /
-	 * possibility of the move, plus the details why it is (not) possible.
+	 * Check motion type for robot to move to <endx, endy>. The {@link #MoveType} gives the actual type / possibility of
+	 * the move, plus the details why it is (not) possible.
 	 * 
 	 * @param end
 	 *            is x position of target
@@ -381,8 +378,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 		Door door = getCurrentDoor(startx, starty);
 
 		/**
-		 * if start and end are both in the same 'room' (outside is the 'null' room). Then free walk always
-		 * possible.
+		 * if start and end are both in the same 'room' (outside is the 'null' room). Then free walk always possible.
 		 */
 		List<Zone> endzones = ZoneLocator.getZonesAt(endx, endy);
 		Zone startzone = ZoneLocator.getZoneAt(startx, starty);
@@ -408,48 +404,45 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 */
 	@Override
 	public MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door) {
-		MoveType r;
 		if (startzone == endzone) {
-			r = MoveType.SAME_AREA;
+			return MoveType.SAME_AREA;
 		}
 
 		/**
 		 * A zone switch is attempted as either startzone or endzone is not null.
 		 */
-
 		/**
 		 * If one of the sides is a room, we require a door
 		 */
+
 		if (endzone instanceof Room) {
 			/**
 			 * Start position must be ON a door to enable the switch. Check if bot is going INTO the room, and if so, if
 			 * the door is open.
 			 */
 			if (door == null) {
-				r = MoveType.HIT_WALL;
+				return MoveType.HIT_WALL;
 			}
 			/**
 			 * If there is a door, we just check that other end is accesible
 			 */
 			if (endzone.containsMeOrNothing(this)) {
-				r = MoveType.ENTERING_ROOM;
+				return MoveType.ENTERING_ROOM;
 			}
 
-			r =  MoveType.HIT_CLOSED_DOOR;
-
-
-			/**
-			 * Both sides are not a room. Check if target accesible
-			 */
-		} else if (endzone instanceof Corridor) {
-			if (!oneBotPerZone || endzone.containsMeOrNothing(this)) {
-				r = MoveType.ENTER_CORRIDOR;
-			}
-			r =  MoveType.HIT_OCCUPIED_ZONE;
+			return MoveType.HIT_CLOSED_DOOR;
 		}
-		r = MoveType.ENTERING_FREESPACE;
 
-		return r;
+		/**
+		 * Both sides are not a room. Check if target accesible
+		 */
+		else if (endzone instanceof Corridor) {
+			if (!oneBotPerZone || endzone.containsMeOrNothing(this)) {
+				return MoveType.ENTER_CORRIDOR;
+			}
+			return MoveType.HIT_OCCUPIED_ZONE;
+		}
+		return MoveType.ENTERING_FREESPACE;
 	}
 
 	/**
@@ -492,8 +485,8 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	}
 
 	/**
-	 * Moves the robot by displacing it for the given amount. If the robot collides with something, the movement
-	 * target is cancelled to avoid continuous bumping.
+	 * Moves the robot by displacing it for the given amount. If the robot collides with something, the movement target
+	 * is cancelled to avoid continuous bumping.
 	 * 
 	 * @param x
 	 *            the displacement in the x-dimension.
@@ -513,7 +506,8 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 			if (distance < MIN_MOVE_DISTANCE) {
 				// we're there
 				stopRobot();
-			} else {
+			}
+			else {
 				double movingDistance = Math.min(distance, MAX_MOVE_DISTANCE);
 
 				// Angle at which to move
@@ -540,8 +534,8 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	}
 
 	/**
-	 * Stop the motion of the robot. Effectively sets the target location to null. You can override this to catch
-	 * this event.
+	 * Stop the motion of the robot. Effectively sets the target location to null. You can override this to catch this
+	 * event.
 	 */
 	public synchronized void stopRobot() {
 		this.targetLocation = null;
@@ -593,7 +587,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	 * Valentine The robot is in a charging zone. The robot charges.
 	 */
 	public void recharge() {
-		if("chargingzone".equals(this.getZone().getName())) {
+		if ("chargingzone".equals(this.getZone().getName())) {
 			this.battery.recharge();
 		}
 	}
@@ -608,6 +602,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 
 	/**
 	 * get the parent, returns null because Robot is the super parent
+	 * 
 	 * @return null
 	 */
 	@Override
@@ -617,6 +612,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 
 	/**
 	 * returns this Robot
+	 * 
 	 * @return this
 	 */
 	@Override
@@ -627,10 +623,11 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	public HashMap<String, HandicapInterface> getHandicapsMap() {
 		return handicapsMap;
 	}
+
 	public void setHandicapsMap(HashMap<String, HandicapInterface> handicapsMap) {
 		this.handicapsMap = handicapsMap;
 	}
-	
+
 	/**
 	 * Sets the size of a robot to a certain integer
 	 * 
@@ -643,6 +640,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 
 	/**
 	 * Gets the size of the robot
+	 * 
 	 * @return size
 	 */
 	public int getSize() {
@@ -676,20 +674,39 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	public Battery getBattery() {
 		return this.battery;
 	}
-	
+
 	public boolean getOneBotPerZone() {
 		return this.oneBotPerZone;
 	}
-	
+
 	public boolean getConnected() {
 		return this.connected;
 	}
-	
+
 	public boolean getCollided() {
 		return this.collided;
 	}
+
+	/**
+	 * gets AgentRecord
+	 * 
+	 * @return AgentRecord
+	 */
+	public AgentRecord getAgentRecord() {
+		return agentRecord;
+
+	}
+
+	public Entity getView() {
+		Collection<nl.tudelft.bw4t.map.view.Block> bs = new HashSet<>();
+		for (Block block : holding) {
+			bs.add(block.getView());
+		}
+		NdPoint loc = getSpace().getLocation(this);
+		return new Entity(getName(), loc.getX(), loc.getY(), bs);
+	}
 	
-	public void setCollided(boolean pcollided) {
-		this.collided = pcollided;
+	public boolean isOneBotPerZone() {
+		return oneBotPerZone;
 	}
 }

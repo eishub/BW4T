@@ -40,7 +40,7 @@ class ModifyBot implements ActionListener {
     	int row = view.getEntityPanel().getSelectedBotRow();
     	 
         if (row == -1) {
-        	ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select a bot first.");
+        	ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select the bot you want to modify.");
             return;
         }
         String data = (String) view.getEntityPanel().getBotTable().getModel().getValueAt(row, 0);

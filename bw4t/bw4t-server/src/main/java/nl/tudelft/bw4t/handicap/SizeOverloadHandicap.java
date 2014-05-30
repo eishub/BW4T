@@ -1,7 +1,7 @@
 package nl.tudelft.bw4t.handicap;
 
 import nl.tudelft.bw4t.doors.Door;
-import nl.tudelft.bw4t.robots.MoveType;
+import nl.tudelft.bw4t.robots.Robot.MoveType;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.Zone;
 /**
