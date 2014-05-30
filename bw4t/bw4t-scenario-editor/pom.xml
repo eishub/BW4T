@@ -1,3 +1,4 @@
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -62,7 +63,7 @@
                         <format>xml</format>
                     </formats>
                 </configuration>
-            </plugin>
+            </plugin>       			
         </plugins>
         <sourceDirectory>src/main/java</sourceDirectory>
         <testSourceDirectory>src/test/java</testSourceDirectory>
@@ -99,10 +100,14 @@
         </plugins>
     </reporting>
     <dependencies>
-    	<dependency>
-    		<groupId>nl.tudelft.bw4t.core</groupId>
-    		<artifactId>bw4t-core</artifactId>
-    		<version>3.1.0</version>
-    	</dependency>
+        <dependency>
+            <groupId>nl.tudelft.bw4t.core</groupId>
+            <artifactId>bw4t-core</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <dependency>
+        	<groupId>com.miglayout</groupId>
+        	<artifactId>miglayout</artifactId>
+        </dependency>
     </dependencies>
 </project>
