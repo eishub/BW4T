@@ -18,8 +18,7 @@ public final class BotConfig {
     //FIXME This should be an enum!
     private String controller = "Agent";
     
-    //FIXME This should be an integer, we're not in javascript!
-    private String amount = "1";
+    private int amount = 1;
 
     private int botSize = 2;
 
@@ -75,7 +74,7 @@ public final class BotConfig {
      * Sets the amount of bots of a type there are.
      * @param amount The amount of bots.
      */
-    public void setBotAmount(String amount) {
+    public void setBotAmount(int amount) {
         this.amount = amount;
     }
     
@@ -83,7 +82,7 @@ public final class BotConfig {
      * Returns the amount of bots of this type.
      * @return The amount of bots of this type.
      */
-    public String getBotAmount() {
+    public int getBotAmount() {
         return this.amount;
     }
 
