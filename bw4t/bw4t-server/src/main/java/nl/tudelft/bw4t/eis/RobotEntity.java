@@ -461,10 +461,10 @@ public class RobotEntity implements RobotEntityInt {
         for (Object o : allBlocks) {
             Block aBlock = (Block) o;
 
-            LOGGER.debug(String.format("%s is %f units away from block %d.", ourRobot.getName(), ourRobot.distanceTo(aBlock), aBlock.getId()));
+            LOGGER.trace(String.format("%s is %f units away from block %d.", ourRobot.getName(), ourRobot.distanceTo(aBlock), aBlock.getId()));
             if (ourRobot.canPickUp(aBlock)) {
                 canPickUp.add(aBlock);
-                LOGGER.debug(String.format("%s can pick up block %d.", ourRobot.getName(), aBlock.getId()));
+                LOGGER.trace(String.format("%s can pick up block %d.", ourRobot.getName(), aBlock.getId()));
             }
         }
 

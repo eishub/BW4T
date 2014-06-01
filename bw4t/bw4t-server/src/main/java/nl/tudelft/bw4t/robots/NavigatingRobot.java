@@ -49,7 +49,7 @@ public class NavigatingRobot extends Robot {
      *            true if max 1 bot in a zone
      */
     public NavigatingRobot(String name, ContinuousSpace<Object> space, Context<Object> context, boolean oneBotPerZone) {
-        super(name, space, context, oneBotPerZone, 0);
+        super(name, space, context, oneBotPerZone, 1);
     }
 
     /**
