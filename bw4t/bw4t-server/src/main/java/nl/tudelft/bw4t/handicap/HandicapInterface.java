@@ -43,6 +43,22 @@ public interface HandicapInterface {
      * @return true if the endzone can be accessed
      */
     MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door);
+    
+    /**
+     * @return the speed of the robot.
+     */
+    double getSpeedMod();
+
+    /**
+     * @return if the human is holding an e-Partner.
+     */
+	boolean isHoldingEPartner();
+
+	/**
+	 * @param isHoldingEPartner change whether the human is holding an e-Partner or not. 
+	 */
+	void setHoldingEPartner(boolean isHoldingEPartner);
+	
     /**
      * @return the Robot which is the super parent of the current handicap
      */

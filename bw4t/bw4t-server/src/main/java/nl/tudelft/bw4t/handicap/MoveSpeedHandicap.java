@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.handicap;
 
+import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.robots.Robot;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.SpatialException;
@@ -70,9 +71,7 @@ public class MoveSpeedHandicap extends AbstractHandicapFactory {
         }
     }
     
-    /**
-     * @return speedMod
-     */ 
+    @Override
     public double getSpeedMod() {
         return speedMod;
     }
