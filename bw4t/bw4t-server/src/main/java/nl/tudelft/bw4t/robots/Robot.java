@@ -696,20 +696,21 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 		return 1;
 	}
 
+	/**
+	 * Only a human has the possibility to use these functions. 
+	 */
+	
 	@Override
 	public boolean canPickUpEPartner(EPartner eP) {
 		return false;
 	}
-
 	@Override
 	public void pickUpEPartner(EPartner eP) {
 	}
-	
 	@Override
 	public boolean isHoldingEPartner() {
 		return false;
 	}
-
 	@Override
 	public void setHoldingEPartner(boolean isHoldingEPartner) {
 	}
