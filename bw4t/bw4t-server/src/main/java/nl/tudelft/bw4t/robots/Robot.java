@@ -569,16 +569,15 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
     }
 
     /**
-     * Valentine
      * 
      * @return discharge rate of battery.
      */
-    public int getDischargeRate() {
+    public double getDischargeRate() {
         return this.battery.getDischargeRate();
     }
 
     /**
-     * Valentine The robot is in a charging zone. The robot charges.
+     * The robot is in a charging zone. The robot charges.
      */
     public void recharge() {
         if ("chargingzone".equals(this.getZone().getName())) {
@@ -651,6 +650,10 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 
     public Battery getBattery() {
         return this.battery;
+    }
+
+    public void setBattery(Battery battery) {
+        this.battery = battery;
     }
 
     public boolean getOneBotPerZone() {
