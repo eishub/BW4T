@@ -704,7 +704,6 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	
 	@Override
 	public boolean isHoldingEPartner() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
