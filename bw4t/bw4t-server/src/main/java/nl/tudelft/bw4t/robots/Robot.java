@@ -92,10 +92,6 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
      * True if the robot is holding an e-Partner.
      */
     private boolean isHoldingEPartner = false;
-    /**
-     * True if the robot is human.
-     */
-    private boolean isHuman = false;
 
     /**
      * Creates a new robot.
@@ -113,8 +109,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
      * @param human
      *            True if the bot is human controlled.
      */
-    public Robot(String pname, ContinuousSpace<Object> space, Context<Object> context, boolean poneBotPerZone,
-            boolean human, int cap) {
+    public Robot(String pname, ContinuousSpace<Object> space, Context<Object> context, boolean poneBotPerZone, int cap) {
         super(space, context);
 
         this.name = pname;
@@ -132,11 +127,6 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
         capacity = cap;
         this.holding = new ArrayList<Block>(capacity);
         this.handicapsMap = new HashMap<String, HandicapInterface>();
-
-        /**
-         * if a bot is human controller then this value is true.
-         */
-        isHuman = human;
     }
 
     /**
@@ -205,7 +195,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
      * 
      * @param b
      *            the block to check
-     * @return true if the block is within reach and if the bot isnt holding a block already.
+     * @return true if the block is within reach and if the bot isn't holding a block already.
      */
     @Override
     public boolean canPickUp(Block b) {
@@ -223,19 +213,6 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
         holding.add(b);
         b.setHeldBy(this);
         b.removeFromContext();
-    }
-
-    /**
-     * Pick up an e-Partner if the Robot is human controlled.
-     * 
-     * @param eP
-     *            , the e-Partner the robot picks up.
-     */
-    public void pickUpEPartner(EPartner eP) {
-        if (isHuman()) {
-            eP.setHolder(this);
-            this.isHoldingEPartner = true;
-        }
     }
 
     /**
@@ -522,7 +499,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
                     agentRecord.setStartedMoving();
 
                     /**
-                     * Valentine The robot's battery discharges when it moves.
+                     * The robot's battery discharges when it moves.
                      */
                     this.battery.discharge();
                 } catch (SpatialException e) {
@@ -653,14 +630,6 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 
     public void setCapacity(int cap) {
         capacity = cap;
-    }
-
-    public boolean isHuman() {
-        return this.isHuman;
-    }
-
-    public void setHuman(boolean isHuman) {
-        this.isHuman = isHuman;
     }
 
     public boolean isHoldingEPartner() {

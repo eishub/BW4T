@@ -32,7 +32,7 @@ public class EPartnerTest {
      */ 
     @Test
     public void humanControlledRobotTest() {
-        Robot r = new Robot("",space,context,true, true, 0);
+        Robot r = new Robot("",space,context,true, 0);
         assertTrue(r.isHuman());
         assertTrue(!r.isHoldingEPartner());
     }
@@ -42,7 +42,7 @@ public class EPartnerTest {
      */
     @Test
     public void nonHumanPickupEPartnerTest(){
-        Robot r = new Robot("",space,context,true, false, 0);
+        Robot r = new Robot("",space,context,true, 0);
         EPartner e = new EPartner(space, context);
         r.pickUpEPartner(e);
         assertFalse(r.isHoldingEPartner());
@@ -53,7 +53,7 @@ public class EPartnerTest {
      */
     @Test
     public void humanPickupEPartnerTest(){
-        Robot r = new Robot("",space,context,true, true, 0);
+        Robot r = new Robot("",space,context,true, 0);
         EPartner e = new EPartner(space, context);
         r.pickUpEPartner(e);
         assertTrue(r.isHoldingEPartner());
@@ -64,7 +64,7 @@ public class EPartnerTest {
      */
     @Test
     public void robotHoldingEPartner(){
-        Robot r = new Robot("",space,context,true, true, 0);
+        Robot r = new Robot("",space,context,true, 0);
         EPartner e = new EPartner(space, context);
         r.pickUpEPartner(e);
         assertTrue(e.getHolder().equals(r));

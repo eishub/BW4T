@@ -1,18 +1,24 @@
 package nl.tudelft.bw4t.handicap;
+
 /**
- * 
- * @author Valentine Mairet & Ruben Starmans
- *
+ * @author Valentine Mairet
  */
-public class ColorBlindHandicap extends AbstractHandicapFactory {
-    
+public class Human extends AbstractHandicapFactory {
+	
     /**
      * Sets the handicap to active,
      * Adds the handicap to the robot handicap storage.
      * @param p is the HandicapInterface the ColorBlindHandicap wraps around.
      */
-    public ColorBlindHandicap(HandicapInterface p) {
+    public Human(HandicapInterface p) {
         super(p);
         robot.getHandicapsMap().put("ColorBlind", this);
+    }
+    
+    public boolean canPickUpEPartner(EPartner eP) {
+    	
+    }
+    public void pickUpEPartner(EPartner eP) {
+    	
     }
 }

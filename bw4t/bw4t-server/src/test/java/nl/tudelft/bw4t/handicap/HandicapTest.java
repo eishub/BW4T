@@ -29,7 +29,7 @@ import repast.simphony.space.continuous.NdPoint;
     @Mock private NdPoint point;
     
     @Before
-    public void setUp(){
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
     
@@ -41,7 +41,7 @@ import repast.simphony.space.continuous.NdPoint;
      */ 
     @Test
     public void structureColorBlindHandicapTest() {
-        Robot r = new Robot("",space,context,true, false, 0);
+        Robot r = new Robot("",space,context,true, 0);
         new ColorBlindHandicap(r);
         assertTrue(r.getHandicapsMap().get("ColorBlind") instanceof HandicapInterface);
         assertTrue(r.getHandicapsMap().get("ColorBlind") instanceof AbstractHandicapFactory);
@@ -51,7 +51,7 @@ import repast.simphony.space.continuous.NdPoint;
      */
     @Test
     public void structureGripperHandicapTest() {
-        Robot r = new Robot("",space,context,true, false, 0);
+        Robot r = new Robot("",space,context,true, 0);
         new GripperHandicap(r);
         assertTrue(r.getHandicapsMap().get("Gripper") instanceof HandicapInterface);
         assertTrue(r.getHandicapsMap().get("Gripper") instanceof AbstractHandicapFactory);
@@ -61,7 +61,7 @@ import repast.simphony.space.continuous.NdPoint;
      */
     @Test
     public void structureMoveSpeedHandicapTest() {
-        Robot r = new Robot("",space,context,true, false, 0);
+        Robot r = new Robot("",space,context,true, 0);
         new MoveSpeedHandicap(r, 1.0);
         assertTrue(r.getHandicapsMap().get("MoveSpeed") instanceof HandicapInterface);
         assertTrue(r.getHandicapsMap().get("MoveSpeed") instanceof AbstractHandicapFactory);
@@ -71,7 +71,7 @@ import repast.simphony.space.continuous.NdPoint;
      */
     @Test
     public void structureSizeOverloadHandicapTest() {
-        Robot r = new Robot("",space,context,true, false, 0);
+        Robot r = new Robot("",space,context,true, 0);
         new SizeOverloadHandicap(r, 2);
         assertTrue(r.getHandicapsMap().get("SizeOverload") instanceof HandicapInterface);
         assertTrue(r.getHandicapsMap().get("SizeOverload") instanceof AbstractHandicapFactory);
@@ -82,7 +82,7 @@ import repast.simphony.space.continuous.NdPoint;
      */
     @Test
     public void structureAllHandicapsTest() {
-        Robot r = new Robot("",space,context,true, false, 0);
+        Robot r = new Robot("",space,context,true, 0);
         ColorBlindHandicap cb = new ColorBlindHandicap(r);
         GripperHandicap gh = new GripperHandicap(cb);
         MoveSpeedHandicap msh = new MoveSpeedHandicap(gh, 0.8);
@@ -107,7 +107,7 @@ import repast.simphony.space.continuous.NdPoint;
      */
     @Test
     public void getSpeedModTest() {
-        Robot r = new Robot("test",space,context,true, false, 0);
+        Robot r = new Robot("test",space,context,true, 0);
         MoveSpeedHandicap msh = new MoveSpeedHandicap(r, 0.5);
         double delta = 0;
         assertEquals(0.5, msh.getSpeedMod(), delta);
@@ -118,7 +118,7 @@ import repast.simphony.space.continuous.NdPoint;
      */
     @Test
     public void getSpeedModImmovableTest() {
-        Robot r = new Robot("test",space,context,true, false, 0);
+        Robot r = new Robot("test",space,context,true, 0);
         MoveSpeedHandicap msh = new MoveSpeedHandicap(r, 0);
         double delta = 0;
         assertEquals(0, msh.getSpeedMod(), delta);
@@ -126,7 +126,7 @@ import repast.simphony.space.continuous.NdPoint;
     
     @Test
     public void getSizeSizeOverloadTest() {
-        Robot r = new Robot("",space,context,true, false, 0);
+        Robot r = new Robot("",space,context,true, 0);
         new SizeOverloadHandicap(r, 3);
         assertTrue(r.getHandicapsMap().get("SizeOverload") instanceof HandicapInterface);
         assertTrue(r.getHandicapsMap().get("SizeOverload") instanceof AbstractHandicapFactory);
