@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.handicap;
 
 import nl.tudelft.bw4t.blocks.Block;
+import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.robots.Robot;
 import nl.tudelft.bw4t.robots.Robot.MoveType;
@@ -42,6 +43,33 @@ public interface HandicapInterface {
      * @return true if the endzone can be accessed
      */
     MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door);
+    
+    /**
+     * @return the speed of the robot.
+     */
+    double getSpeedMod();
+    
+    /**
+     * @param eP the e-Partner to be picked up.
+     * @return true if the human can pick it up. 
+     */
+    boolean canPickUpEPartner(EPartner eP);
+    
+    /**
+     * @param eP the picked up e-Partner. 
+     */
+    void pickUpEPartner(EPartner eP);
+
+    /**
+     * @return if the human is holding an e-Partner.
+     */
+	boolean isHoldingEPartner();
+
+	/**
+	 * @param isHoldingEPartner change whether the human is holding an e-Partner or not. 
+	 */
+	void setHoldingEPartner(boolean isHoldingEPartner);
+	
     /**
      * @return the Robot which is the super parent of the current handicap
      */

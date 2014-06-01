@@ -21,6 +21,7 @@ import nl.tudelft.bw4t.zone.Zone;
 
 import org.apache.log4j.Logger;
 
+import eis.exceptions.EntityException;
 import repast.simphony.context.Context;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.random.RandomHelper;
@@ -28,7 +29,6 @@ import repast.simphony.space.SpatialException;
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
-import eis.exceptions.EntityException;
 
 /**
  * Represents a robot in the BW4T environment.
@@ -49,7 +49,8 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
      */
     public static final double MIN_MOVE_DISTANCE = .001;
     /** The distance which it can reach with its arm to pick up a block. */
-    private static final double ARM_DISTANCE = 1;
+    public static final double ARM_DISTANCE = 1;
+    
     /** The width and height of the robot */
     private int size = 2;
     /** The name of the robot */
@@ -93,11 +94,6 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
      * AgentRecord object for this Robot, needed for logging
      */
     AgentRecord agentRecord;
-
-    /**
-     * True if the robot is holding an e-Partner.
-     */
-    private boolean isHoldingEPartner = false;
 
     /**
      * Creates a new robot.
@@ -653,14 +649,6 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
         capacity = cap;
     }
 
-    public boolean isHoldingEPartner() {
-        return this.isHoldingEPartner;
-    }
-
-    public void setHoldingEPartner(boolean isHoldingEPartner) {
-        this.isHoldingEPartner = isHoldingEPartner;
-    }
-
     public Battery getBattery() {
         return this.battery;
     }
@@ -699,4 +687,28 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
     public boolean isOneBotPerZone() {
         return oneBotPerZone;
     }
+
+	@Override
+	public double getSpeedMod() {
+		return 1;
+	}
+
+	@Override
+	public boolean canPickUpEPartner(EPartner eP) {
+		return false;
+	}
+
+	@Override
+	public void pickUpEPartner(EPartner eP) {
+	}
+
+	@Override
+	public boolean isHoldingEPartner() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setHoldingEPartner(boolean isHoldingEPartner) {
+	}
 }
