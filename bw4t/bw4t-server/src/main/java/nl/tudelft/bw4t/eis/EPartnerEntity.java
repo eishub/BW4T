@@ -106,15 +106,6 @@ public class EPartnerEntity implements RobotEntityInt {
      */
     public void disconnect(){
         ourEPartner.disconnect();
-        reset();
-    }
-    
-    /**
-     * Reset the robot's location and should set it to its default spawn state.
-     */
-    public void reset(){
-        ourEPartner.drop();
-        ourEPartner.moveTo(this.spawnLocation.getX(), this.spawnLocation.getY());
     }
 
     /**
@@ -256,8 +247,6 @@ public class EPartnerEntity implements RobotEntityInt {
      */
     @AsAction(name = "sendMessage")
     public void sendMessage(String receiver, String message) throws ActException {
-        ourEPartner.getAgentRecord().addSentMessage();
-
         // Translate the message into parameters
         Parameter[] parameters = new Parameter[2];
         try {
