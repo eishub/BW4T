@@ -2,6 +2,9 @@ package nl.tudelft.bw4t.epartner;
 
 import static org.junit.Assert.*;
 import nl.tudelft.bw4t.blocks.EPartner;
+import nl.tudelft.bw4t.handicap.HandicapInterface;
+import nl.tudelft.bw4t.handicap.Human;
+import nl.tudelft.bw4t.robots.NavigatingRobot;
 import nl.tudelft.bw4t.robots.Robot;
 
 import org.junit.Before;
@@ -17,12 +20,13 @@ import repast.simphony.space.continuous.NdPoint;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EPartnerTest {
+	
     @Mock private ContinuousSpace<Object> space;
     @Mock private Context<Object> context;
     @Mock private NdPoint point;
     
     @Before
-    public void setUp(){
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
     
@@ -32,16 +36,16 @@ public class EPartnerTest {
      */ 
     @Test
     public void humanControlledRobotTest() {
-        Robot r = new Robot("",space,context,true, 0);
-        assertTrue(!r.isHoldingEPartner());
+        HandicapInterface r = new Human(new NavigatingRobot("", space, context, true));
+        assertFalse(r.isHoldingEPartner());
     }
     
     /**
      * Test to check if a non-human controlled Robot can pickup an E-Partner.
      */
     @Test
-    public void nonHumanPickupEPartnerTest(){
-        Robot r = new Robot("",space,context,true, 0);
+    public void nonHumanPickupEPartnerTest() {
+        Robot r = new NavigatingRobot("", space, context, true);
         EPartner e = new EPartner(space, context);
         r.pickUpEPartner(e);
         assertFalse(r.isHoldingEPartner());
@@ -51,22 +55,10 @@ public class EPartnerTest {
      * Test to check if a human controlled Robot can pickup an E-Partner
      */
     @Test
-    public void humanPickupEPartnerTest(){
-        Robot r = new Robot("",space,context,true, 0);
+    public void humanPickupEPartnerTest() {
+        HandicapInterface r = new Human(new NavigatingRobot("", space, context, true));
         EPartner e = new EPartner(space, context);
         r.pickUpEPartner(e);
         assertTrue(r.isHoldingEPartner());
     }
-    
-    /**
-     * Test which robot is holding the epartner
-     */
-    @Test
-    public void robotHoldingEPartner(){
-        Robot r = new Robot("",space,context,true, 0);
-        EPartner e = new EPartner(space, context);
-        r.pickUpEPartner(e);
-        assertTrue(e.getHolder().equals(r));
-    }
-
 }
