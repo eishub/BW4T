@@ -1,17 +1,19 @@
 package nl.tudelft.bw4t.handicap;
 
+import repast.simphony.random.RandomHelper;
 import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.robots.Robot;
+import nl.tudelft.bw4t.zone.Zone;
 
 /**
  * @author Valentine Mairet
  */
 public class Human extends AbstractHandicapFactory {
-	
+    
     /**
-     * True if the human is holding an e-Partner.
+     * The e-Partner the human is holding.
      */
-    private boolean isHoldingEPartner = false;
+    private EPartner ePartner;
 	
     /**
      * Sets the handicap to active,
@@ -21,6 +23,7 @@ public class Human extends AbstractHandicapFactory {
     public Human(HandicapInterface p) {
         super(p);
         robot.getHandicapsList().add("Human");
+        this.ePartner = null;
     }
     
     /**
@@ -32,17 +35,38 @@ public class Human extends AbstractHandicapFactory {
     }
     
     /**
+     * The Human picks up an e-Partner.
      * @param eP the picked up e-Partner. 
      */
     public void pickUpEPartner(EPartner eP) {
-    	this.setHoldingEPartner(true);
+    	this.ePartner = eP;
+    }
+    
+    /**
+     * The Human drops the e-Partner they are holding. 
+     * @param eP the e-Partner the human is holding.
+     */
+    public void dropEPartner() {
+    	
+    	if (!isHoldingEPartner()) {
+    		return;
+    	}
+    	
+    	this.ePartner.addToContext();
+    	
+        double x = robot.getLocation().getX();
+        double y = robot.getLocation().getY();
+        
+        this.ePartner.moveTo(RandomHelper.nextDoubleFromTo(x - 5, x + 5), RandomHelper.nextDoubleFromTo(y - 5, y + 5));
+        
+        this.ePartner = null;
     }
 
 	public boolean isHoldingEPartner() {
-		return isHoldingEPartner;
+		return this.ePartner != null;
 	}
-
-	public void setHoldingEPartner(boolean isHoldingEPartner) {
-		this.isHoldingEPartner = isHoldingEPartner;
+	
+	public EPartner getEPartner() {
+		return this.ePartner;
 	}
 }
