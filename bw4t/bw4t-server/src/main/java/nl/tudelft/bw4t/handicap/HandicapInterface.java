@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.handicap;
 
+import repast.simphony.random.RandomHelper;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.doors.Door;
@@ -58,14 +59,19 @@ public interface HandicapInterface {
     void pickUpEPartner(EPartner eP);
     
     /**
+     * @param eP the e-Partner the human is holding.
+     */
+    void dropEPartner();
+    
+    /**
      * @return if the human is holding an e-Partner.
      */
 	boolean isHoldingEPartner();
-
+	
 	/**
-	 * @param isHoldingEPartner change whether the human is holding an e-Partner or not. 
+	 * @return the e-Partner the human is holding. 
 	 */
-	void setHoldingEPartner(boolean isHoldingEPartner);
+	EPartner getEPartner();
 	
     /**
      * @return the size of the robot.

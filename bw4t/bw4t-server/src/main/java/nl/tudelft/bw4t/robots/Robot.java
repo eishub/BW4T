@@ -1,10 +1,10 @@
 package nl.tudelft.bw4t.robots;
 
+import eis.exceptions.EntityException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-
 import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.blocks.EPartner;
@@ -17,10 +17,7 @@ import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.DropZone;
 import nl.tudelft.bw4t.zone.Room;
 import nl.tudelft.bw4t.zone.Zone;
-
 import org.apache.log4j.Logger;
-
-import eis.exceptions.EntityException;
 import repast.simphony.context.Context;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.random.RandomHelper;
@@ -698,7 +695,6 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	/**
 	 * Only a human has the possibility to use these functions. 
 	 */
-	
 	@Override
 	public boolean canPickUpEPartner(EPartner eP) {
 		return false;
@@ -707,10 +703,18 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	public void pickUpEPartner(EPartner eP) {
 	}
 	@Override
+	public void dropEPartner() {
+	}
+	@Override
 	public boolean isHoldingEPartner() {
 		return false;
 	}
 	@Override
-	public void setHoldingEPartner(boolean isHoldingEPartner) {
+	public EPartner getEPartner() {
+		return null;
+	}
+	
+	public boolean isHuman() {
+		return handicapsList.contains("Human");
 	}
 }

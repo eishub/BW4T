@@ -558,5 +558,25 @@ public class RobotEntity implements RobotEntityInt {
         }
         return dropzone.sequenceComplete();
     }
+    
+    /**
+     * Only available for the human:
+     * picks up the e-Partner. 
+     */
+    @AsAction(name = "pickUpEPartner")
+    public void pickUpEPartner() {
+    	
+    }
+    
+    /**
+     * Only available for the human:
+     * drops the e-Partner they are currently holding. 
+     */
+    @AsAction(name = "dropEPartner")
+    public void dropEPartner() {
+    	if (ourRobot.isHuman()) {
+    		ourRobot.dropEPartner();
+    	}
+    }
 
 }
