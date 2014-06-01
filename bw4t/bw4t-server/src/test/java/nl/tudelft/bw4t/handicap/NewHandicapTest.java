@@ -47,7 +47,7 @@ public class NewHandicapTest {
     public void testColorBlindHandicap() {
         HandicapInterface r = new ColorBlindHandicap(new NavigatingRobot("", space, context, true, 0));
         
-        assertTrue(r.getSuperParent().getHandicapsMap().containsKey("ColorBlind"));
+        assertTrue(r.getSuperParent().getHandicapsList().contains("ColorBlind"));
     }
     
     /**
@@ -59,7 +59,7 @@ public class NewHandicapTest {
     public void testGripperHandicap() {
         HandicapInterface r = new GripperHandicap(new NavigatingRobot("", space, context, true, 200));
         
-        assertTrue(r.getSuperParent().getHandicapsMap().containsKey("Gripper"));
+        assertTrue(r.getSuperParent().getHandicapsList().contains("Gripper"));
         
         assertFalse(r.canPickUp(block));
         assertTrue(r.getCapacity() == 0);
@@ -73,7 +73,7 @@ public class NewHandicapTest {
     public void testMoveSpeedHandicap() {
     	HandicapInterface r = new MoveSpeedHandicap(new NavigatingRobot("", space, context, true, 1), 3.14);
     	
-        assertTrue(r.getSuperParent().getHandicapsMap().containsKey("MoveSpeed"));
+        assertTrue(r.getSuperParent().getHandicapsList().contains("MoveSpeed"));
         
     	assertTrue(r.getSpeedMod() == 3.14);
     }
@@ -86,7 +86,7 @@ public class NewHandicapTest {
     public void testSizeOverloadHandicap() {
     	HandicapInterface r = new SizeOverloadHandicap(new NavigatingRobot("", space, context, true, 1), 5);
     	
-        assertTrue(r.getSuperParent().getHandicapsMap().containsKey("SizeOverload"));
+        assertTrue(r.getSuperParent().getHandicapsList().contains("SizeOverload"));
         
     	assertTrue(r.getSize() == 5);
     }
@@ -107,7 +107,7 @@ public class NewHandicapTest {
         		new MoveSpeedHandicap(
         	    new NavigatingRobot("", space, context, true, 1), 3.14))), 2);
         
-        assertTrue(r.getSuperParent().getHandicapsMap().values().size() == 4);
+        assertTrue(r.getSuperParent().getHandicapsList().size() == 4);
  
         assertTrue(r.getSpeedMod() == 3.14);
         assertFalse(r.canPickUp(block));

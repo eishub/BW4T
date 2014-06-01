@@ -13,6 +13,6 @@ public class ColorBlindHandicap extends AbstractHandicapFactory {
      */
     public ColorBlindHandicap(HandicapInterface p) {
         super(p);
-        robot.getHandicapsMap().put("ColorBlind", this);
+        robot.getHandicapsList().add("ColorBlind");
     }
 }

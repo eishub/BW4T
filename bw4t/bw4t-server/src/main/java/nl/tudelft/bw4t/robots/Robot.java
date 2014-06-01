@@ -2,7 +2,6 @@ package nl.tudelft.bw4t.robots;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -88,7 +87,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
      * 
      * Saves the robots handicap.
      */
-    private HashMap<String, HandicapInterface> handicapsMap;
+    private ArrayList<String> handicapsList;
 
     /**
      * AgentRecord object for this Robot, needed for logging
@@ -128,7 +127,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
          */
         capacity = cap;
         this.holding = new ArrayList<Block>(capacity);
-        this.handicapsMap = new HashMap<String, HandicapInterface>();
+        this.handicapsList = new ArrayList<String>();
     }
 
     /**
@@ -613,12 +612,12 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
         return this;
     }
 
-    public HashMap<String, HandicapInterface> getHandicapsMap() {
-        return handicapsMap;
+    public ArrayList<String> getHandicapsList() {
+        return this.handicapsList;
     }
 
-    public void setHandicapsMap(HashMap<String, HandicapInterface> handicapsMap) {
-        this.handicapsMap = handicapsMap;
+    public void setHandicapsMap(ArrayList<String> handicapsList) {
+        this.handicapsList = handicapsList;
     }
 
     /**

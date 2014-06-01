@@ -26,7 +26,7 @@ public class MoveSpeedHandicap extends AbstractHandicapFactory {
         super(p);
         speedMod = speedModifier;
         
-        robot.getHandicapsMap().put("MoveSpeed", this);
+        robot.getHandicapsList().add("MoveSpeed");
     }
     
     /**
