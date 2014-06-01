@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.handicap;
 
 import nl.tudelft.bw4t.blocks.Block;
+import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.robots.Robot;
 import nl.tudelft.bw4t.robots.Robot.MoveType;
@@ -46,4 +47,17 @@ public interface HandicapInterface {
      * @return the Robot which is the super parent of the current handicap
      */
     Robot getSuperParent(); 
+    
+    /**
+     * Can we pick the given e-partner.
+     * @param eP the e-partner to be picked up
+     * @return true if it is possible to pickup the e-partner
+     */
+    boolean canPickUpEPartner(EPartner eP);
+
+    /**
+     * Pick the given e-partner.
+     * @param eP the e-partner to be picked up
+     */
+    void pickUpEPartner(EPartner eP);
 }
