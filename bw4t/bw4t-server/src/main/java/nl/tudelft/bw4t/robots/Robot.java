@@ -699,4 +699,13 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
     public boolean isOneBotPerZone() {
         return oneBotPerZone;
     }
+
+	@Override
+	public boolean canPickUpEPartner(EPartner eP) {
+		return false;
+	}
+
+	@Override
+	public void pickUpEPartner(EPartner eP) {
+	}
 }

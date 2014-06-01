@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.handicap;
 
 import nl.tudelft.bw4t.blocks.Block;
+import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.robots.Robot;
 import nl.tudelft.bw4t.robots.Robot.MoveType;
@@ -80,5 +81,15 @@ public abstract class AbstractHandicapFactory implements HandicapInterface {
      */
     public Robot getSuperParent() {
         return robot;
+    }
+    
+    @Override
+    public boolean canPickUpEPartner(EPartner eP) {
+    	return parent.canPickUpEPartner(eP);
+    }
+    
+    @Override
+    public void pickUpEPartner(EPartner eP) {
+    	parent.pickUpEPartner(eP);
     }
 }
