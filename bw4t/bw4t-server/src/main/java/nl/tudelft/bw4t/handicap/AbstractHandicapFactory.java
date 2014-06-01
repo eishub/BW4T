@@ -91,15 +91,20 @@ public abstract class AbstractHandicapFactory implements HandicapInterface {
 		parent.pickUpEPartner(eP);
 		
 	}
+	
+	@Override
+	public void dropEPartner() {
+		parent.dropEPartner();
+	}
 
 	@Override
 	public boolean isHoldingEPartner() {
 		return parent.isHoldingEPartner();
 	}
-
+	
 	@Override
-	public void setHoldingEPartner(boolean isHoldingEPartner) {
-		parent.setHoldingEPartner(isHoldingEPartner);
+	public EPartner getEPartner() {
+		return parent.getEPartner();
 	}
 	
 	@Override
