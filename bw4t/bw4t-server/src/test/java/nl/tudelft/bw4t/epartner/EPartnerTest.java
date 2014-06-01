@@ -33,7 +33,6 @@ public class EPartnerTest {
     @Test
     public void humanControlledRobotTest() {
         Robot r = new Robot("",space,context,true, 0);
-        assertTrue(r.isHuman());
         assertTrue(!r.isHoldingEPartner());
     }
     
