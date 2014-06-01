@@ -24,7 +24,7 @@ public class SizeOverloadHandicap extends AbstractHandicapFactory {
         super(p);
         size = s;
         robot.setSize(s);
-        robot.getHandicapsMap().put("SizeOverload", this);
+        robot.getHandicapsList().add("SizeOverload");
     }
     
     /**

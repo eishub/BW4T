@@ -33,7 +33,7 @@ public class HumanTest {
     public void testPickUpEPartner() {
         HandicapInterface r = new Human(new NavigatingRobot("", space, context, true, 1));
 
-        assertTrue(r.getSuperParent().getHandicapsMap().containsKey("Human"));
+        assertTrue(r.getSuperParent().getHandicapsList().contains("Human"));
 
         r.pickUpEPartner(ePartner);
         assertTrue(r.isHoldingEPartner());
