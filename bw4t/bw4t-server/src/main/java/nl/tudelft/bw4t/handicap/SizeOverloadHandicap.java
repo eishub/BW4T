@@ -10,6 +10,8 @@ import nl.tudelft.bw4t.zone.Zone;
  *
  */
 public class SizeOverloadHandicap extends AbstractHandicapFactory {
+	
+	private final int size;
     
     /**
      * Calls the super method on p,
@@ -20,6 +22,7 @@ public class SizeOverloadHandicap extends AbstractHandicapFactory {
      */
     public SizeOverloadHandicap(HandicapInterface p, int s) {
         super(p);
+        size = s;
         robot.setSize(s);
         robot.getHandicapsMap().put("SizeOverload", this);
     }
@@ -49,5 +52,10 @@ public class SizeOverloadHandicap extends AbstractHandicapFactory {
             super.checkZoneAccess(startzone, endzone, door);
         }
         return MoveType.ENTERING_FREESPACE;
+    }
+    
+    @Override
+    public int getSize() {
+    	return this.size;
     }
 }

@@ -16,6 +16,7 @@ public class GripperHandicap extends AbstractHandicapFactory {
     public GripperHandicap(HandicapInterface p) {
         super(p);
         robot.getHandicapsMap().put("Gripper", this);
+        robot.setCapacity(0);
     }
 
     /**
@@ -27,5 +28,10 @@ public class GripperHandicap extends AbstractHandicapFactory {
     @Override
     public boolean canPickUp(Block b) {
     	return false;
+    }
+    
+    @Override
+    public int getCapacity() {
+    	return 0;
     }
 }

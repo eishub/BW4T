@@ -282,7 +282,7 @@ public final class MapLoader {
             Entity mapentity) {
         String name = mapentity.getName();
 
-        NavigatingRobot robot = new NavigatingRobot(name, space, context, map.getOneBotPerCorridorZone());
+        NavigatingRobot robot = new NavigatingRobot(name, space, context, map.getOneBotPerCorridorZone(), 1);
 
         double x = mapentity.getPosition().getX();
         double y = mapentity.getPosition().getY();

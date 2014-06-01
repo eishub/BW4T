@@ -103,6 +103,16 @@ public abstract class AbstractHandicapFactory implements HandicapInterface {
 	}
 	
 	@Override
+	public int getSize() {
+		return parent.getSize();
+	}
+	
+	@Override
+	public int getCapacity() {
+		return parent.getCapacity();
+	}
+	
+	@Override
 	public double getSpeedMod() {
 		return parent.getSpeedMod();
 	}
