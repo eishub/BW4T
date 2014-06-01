@@ -6,10 +6,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import org.apache.log4j.Logger;
 import org.omg.CORBA.Environment;
-
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.util.collections.IndexedIterable;
@@ -117,56 +115,13 @@ public class EPartnerEntity implements RobotEntityInt {
         ourEPartnerLocation = new Point2D.Double(ourEPartner.getLocation().getX(), ourEPartner.getLocation().getY());
         ourEPartnerRoom = RoomLocator.getRoomAt(ourEPartnerLocation.getX(), ourEPartnerLocation.getY());
     }
-
+    
     /**
-     * @return All blocks that are visible to the robot, excluding the one the robot is holding
+     * Percept if the e-Partner was dropped.
      */
-    private Set<Block> getVisibleBlocks() {
-        Set<Block> blocks = new HashSet<Block>();
-
-        if (ourEPartnerRoom != null) {
-            // Add all blocks in the same room as the robot.
-            Iterable<Object> allBlocks = context.getObjects(Block.class);
-            for (Object b : allBlocks) {
-                Block aBlock = (Block) b;
-                Double p = new Point2D.Double(aBlock.getLocation().getX(), aBlock.getLocation().getY());
-                if (ourEPartnerRoom.getBoundingBox().contains(p)) {
-                    blocks.add(aBlock);
-                }
-            }
-        }
-
-        return blocks;
-    }
-
-    /**
-     * Percepts for the location of rooms and the dropzone and the blocks Send on change
-     */
-    @AsPercept(name = "position", multiplePercepts = true, filter = Filter.Type.ON_CHANGE)
-    public List<ObjectInformation> getLocations() {
-        List<ObjectInformation> objects = new ArrayList<ObjectInformation>();
-
-        // Add the dropzone
-        DropZone dropZone = (DropZone) context.getObjects(DropZone.class).get(0);
-        objects.add(new ObjectInformation(dropZone.getLocation().getX(), dropZone.getLocation().getY(), dropZone
-                .getId()));
-
-        // Add rooms
-        IndexedIterable<Object> allRooms = context.getObjects(BlocksRoom.class);
-        for (Object object : allRooms) {
-            Room r = (Room) object;
-            objects.add(new ObjectInformation(r.getLocation().getX(), r.getLocation().getY(), r.getId()));
-        }
-
-        // Add blocks
-        for (Block block : getVisibleBlocks()) {
-            objects.add(new ObjectInformation(block.getLocation().getX(), block.getLocation().getY(), block.getId()));
-        }
-
-        // #2830 add robots own position
-        objects.add(new ObjectInformation(ourEPartnerLocation.getX(), ourEPartnerLocation.getY(), ourEPartner.getId()));
-
-        return objects;
+    @AsPercept(name = "dropped", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
+    public boolean wasDropped() {
+    	return ourEPartner.isDropped();
     }
 
     /**
@@ -198,14 +153,6 @@ public class EPartnerEntity implements RobotEntityInt {
             return null;
         }
         return ourEPartnerRoom.getName();
-    }
-
-    /**
-     * Percept for the location of this robot Send on change
-     */
-    @AsPercept(name = "location", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
-    public Point2D getLocation() {
-        return new Point2D.Double(ourEPartnerLocation.getX(), ourEPartnerLocation.getY());
     }
 
     /**
