@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 
 import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.blocks.Block;
@@ -13,11 +12,15 @@ import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.handicap.HandicapInterface;
 import nl.tudelft.bw4t.map.view.Entity;
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.DropZone;
 import nl.tudelft.bw4t.zone.Room;
 import nl.tudelft.bw4t.zone.Zone;
+
+import org.apache.log4j.Logger;
+
 import repast.simphony.context.Context;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.random.RandomHelper;
@@ -25,6 +28,7 @@ import repast.simphony.space.SpatialException;
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
+import eis.exceptions.EntityException;
 
 /**
  * Represents a robot in the BW4T environment.
@@ -32,6 +36,8 @@ import repast.simphony.space.continuous.NdPoint;
  * @author Lennard de Rijk
  */
 public class Robot extends BoundedMoveableObject implements HandicapInterface {
+	
+	private static final Logger LOGGER = Logger.getLogger(Robot.class);
 
     /**
      * The distance which it can move per tick. This should never be larger than the door width because that might cause
@@ -133,7 +139,20 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
      * called when robot becomes connected and should now be injected in repast.
      */
     public void connect() {
+    	BW4TEnvironment env = BW4TEnvironment.getInstance();
+        HashSet<String> associatedAgents = null;
+		try {
+			associatedAgents = env.getAssociatedAgents(this.getName());
+		} catch (EntityException e) {
+			LOGGER.error("Unable to get the associated agent for this entity", e);
+		}
         connected = true;
+		try {
+			agentRecord = new AgentRecord((associatedAgents != null && !associatedAgents.isEmpty())?associatedAgents.iterator().next(): "no agents", env.getType(this.getName()));
+		} catch (EntityException e) {
+			LOGGER.error("Unable to get the type of this entity", e);
+			agentRecord = new AgentRecord("unkown", "unkown");
+		}
     }
 
     /**
@@ -277,6 +296,8 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
             case ENTERING_ROOM:
                 agentRecord.addEnteredRoom();
                 break;
+            case SAME_AREA:
+            	break;
             case HIT_CLOSED_DOOR:
             case HIT_WALL:
             case HIT_OCCUPIED_ZONE:
