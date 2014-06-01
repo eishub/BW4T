@@ -35,7 +35,7 @@ public class Human extends AbstractHandicapFactory {
      * @param eP the picked up e-Partner. 
      */
     public void pickUpEPartner(EPartner eP) {
-        this.setHoldingEPartner(true);
+    	this.setHoldingEPartner(true);
     }
 
 	public boolean isHoldingEPartner() {
