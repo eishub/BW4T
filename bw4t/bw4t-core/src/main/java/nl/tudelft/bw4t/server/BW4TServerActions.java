@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 
 import nl.tudelft.bw4t.client.BW4TClientActions;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
 
 /**
  * This interface defines the calls that the clients can make to the server. Note, this interface does not support kill
@@ -40,6 +41,18 @@ public interface BW4TServerActions extends Remote {
      *             if an exception occurs during the execution of a remote object call
      */
     void registerClient(BW4TClientActions client, int agentCount, int humanCount) throws RemoteException;
+
+    /**
+     * Called when a client wants to register itself to this server
+     * 
+     * @param client
+     *            the client that wants to register
+     * @param bots
+     *            a list of configurations, the bots to be created in the environment
+     * @throws RemoteException
+     *             if an exception occurs during the execution of a remote object call
+     */
+    void registerClient(BW4TClientActions client, List<BotConfig> bots) throws RemoteException;
 
     /**
      * Remove a client from the server. At this moment the client makes sure that it frees its entities first.
