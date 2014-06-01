@@ -20,7 +20,7 @@ public class Human extends AbstractHandicapFactory {
      */
     public Human(HandicapInterface p) {
         super(p);
-        robot.getHandicapsMap().put("Human", this);
+        robot.getHandicapsList().add("Human");
     }
     
     /**

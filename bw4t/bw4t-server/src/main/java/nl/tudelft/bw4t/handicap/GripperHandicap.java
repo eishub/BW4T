@@ -15,7 +15,7 @@ public class GripperHandicap extends AbstractHandicapFactory {
      */
     public GripperHandicap(HandicapInterface p) {
         super(p);
-        robot.getHandicapsMap().put("Gripper", this);
+        robot.getHandicapsList().add("Gripper");
         robot.setCapacity(0);
     }
 

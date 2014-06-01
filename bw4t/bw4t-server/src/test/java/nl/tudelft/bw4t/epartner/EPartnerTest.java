@@ -46,7 +46,7 @@ public class EPartnerTest {
     @Test
     public void nonHumanPickupEPartnerTest() {
         Robot r = new NavigatingRobot("", space, context, true, 0);
-        EPartner e = new EPartner(space, context);
+        EPartner e = new EPartner("", space, context);
         r.pickUpEPartner(e);
         assertFalse(r.isHoldingEPartner());
     }
@@ -57,7 +57,7 @@ public class EPartnerTest {
     @Test
     public void humanPickupEPartnerTest() {
         HandicapInterface r = new Human(new NavigatingRobot("", space, context, true, 0));
-        EPartner e = new EPartner(space, context);
+        EPartner e = new EPartner("", space, context);
         r.pickUpEPartner(e);
         assertTrue(r.isHoldingEPartner());
     }
