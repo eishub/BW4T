@@ -3,7 +3,7 @@ package nl.tudelft.bw4t.blocks;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import nl.tudelft.bw4t.BoundedMoveableObject;
-import nl.tudelft.bw4t.robots.Robot;
+import nl.tudelft.bw4t.handicap.HandicapInterface;
 
 /**
  * @author Valentine Mairet & Ruben Starmans
@@ -11,14 +11,11 @@ import nl.tudelft.bw4t.robots.Robot;
 public class EPartner extends BoundedMoveableObject {
     
     /**
-     * Robot that picked up the E-Partner
+     * Human that picked up the E-Partner
      */
-    private Robot holder;
+    private HandicapInterface holder;
 
     /**
-     * 
-     * @param type
-     *            Type of E-Partner
      * @param space
      * @param context
      */
@@ -26,15 +23,11 @@ public class EPartner extends BoundedMoveableObject {
         super(space, context);
     }
 
-    /**
-     * @param holder
-     *            Robot that picked up the E-Partner
-     */
-    public void setHolder(Robot robot){
-        this.holder = robot;
+    public void setHolder(HandicapInterface human){
+        this.holder = human;
     }
     
-    public Robot getHolder(){
+    public HandicapInterface getHolder(){
         return this.holder;
   }
     
