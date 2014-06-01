@@ -45,26 +45,6 @@ public interface HandicapInterface {
     MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door);
     
     /**
-     * @return the speed of the robot.
-     */
-    double getSpeedMod();
-
-    /**
-     * @return if the human is holding an e-Partner.
-     */
-	boolean isHoldingEPartner();
-
-	/**
-	 * @param isHoldingEPartner change whether the human is holding an e-Partner or not. 
-	 */
-	void setHoldingEPartner(boolean isHoldingEPartner);
-	
-    /**
-     * @return the Robot which is the super parent of the current handicap
-     */
-    Robot getSuperParent(); 
-    
-    /**
      * Can we pick the given e-partner.
      * @param eP the e-partner to be picked up
      * @return true if it is possible to pickup the e-partner
@@ -76,4 +56,34 @@ public interface HandicapInterface {
      * @param eP the e-partner to be picked up
      */
     void pickUpEPartner(EPartner eP);
+    
+    /**
+     * @return if the human is holding an e-Partner.
+     */
+	boolean isHoldingEPartner();
+
+	/**
+	 * @param isHoldingEPartner change whether the human is holding an e-Partner or not. 
+	 */
+	void setHoldingEPartner(boolean isHoldingEPartner);
+	
+    /**
+     * @return the size of the robot.
+     */
+    int getSize();
+    
+    /**
+     * @return the gripper capacity of the robot.
+     */
+    int getCapacity();
+    
+    /**
+     * @return the speed of the robot.
+     */
+    double getSpeedMod();
+	
+    /**
+     * @return the Robot which is the super parent of the current handicap
+     */
+    Robot getSuperParent(); 
 }

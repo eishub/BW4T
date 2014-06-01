@@ -24,23 +24,18 @@ public class Human extends AbstractHandicapFactory {
     }
     
     /**
-     * @param eP
-     * 			The ePartner to be picked up.
-     * @return
-     * 			True if the human can pick it up. 
+     * @param eP the ePartner to be picked up.
+     * @return true if the human can pick it up. 
      */
     public boolean canPickUpEPartner(EPartner eP) {
     	return (robot.distanceTo(eP.getLocation()) <= Robot.ARM_DISTANCE);
     }
     
     /**
-     * @param eP
-     * 			The picked up e-Partner. 
+     * @param eP the picked up e-Partner. 
      */
     public void pickUpEPartner(EPartner eP) {
-    	//if (this.canPickUpEPartner(eP)) {
-        	this.setHoldingEPartner(true);
-    	//}
+        this.setHoldingEPartner(true);
     }
 
 	public boolean isHoldingEPartner() {
