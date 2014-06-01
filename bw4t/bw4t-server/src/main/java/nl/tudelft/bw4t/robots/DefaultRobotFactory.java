@@ -5,6 +5,7 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import nl.tudelft.bw4t.handicap.ColorBlindHandicap;
 import nl.tudelft.bw4t.handicap.GripperHandicap;
 import nl.tudelft.bw4t.handicap.HandicapInterface;
+import nl.tudelft.bw4t.handicap.Human;
 import nl.tudelft.bw4t.handicap.MoveSpeedHandicap;
 import nl.tudelft.bw4t.handicap.SizeOverloadHandicap;
 import nl.tudelft.bw4t.map.NewMap;
@@ -29,7 +30,7 @@ public class DefaultRobotFactory implements RobotFactory {
 	@Override
 	public HandicapInterface getDefaultRobot(String name) {
 		final NewMap map = Launcher.getEnvironment().getMap();
-		return new NavigatingRobot(name, space, context, map.getOneBotPerCorridorZone());
+		return new NavigatingRobot(name, space, context, map.getOneBotPerCorridorZone(), 1);
 	}
 
 	@Override
@@ -49,7 +50,7 @@ public class DefaultRobotFactory implements RobotFactory {
 			r = new SizeOverloadHandicap(r, config.getBotSize());
 		}
 		if (config.getBotController().equalsIgnoreCase("Human")) {
-			
+			r = new Human(r);
 		}
 		r.getSuperParent().setBattery(new Battery(config.getBotBatteryCapacity(), config.getBotBatteryDischargeRate()));
 		return r;

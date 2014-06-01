@@ -182,7 +182,7 @@ public class Launcher {
     }
 
     /**
-     * setup the environment with repast and all.
+     * setup the environment.
      */
     private void setupEnvironment() {
             try {
@@ -194,11 +194,16 @@ public class Launcher {
         
     }
 
+    /**
+     * Setup the factories used by the system.
+     */
     private void setupFactories() {
 		robotFactory = new DefaultRobotFactory();
 	}
 
-
+    /**
+     * start the environment, repast and all.
+     */
 	private void startEnvironment() {
         try {
 		environment.launchAll();
