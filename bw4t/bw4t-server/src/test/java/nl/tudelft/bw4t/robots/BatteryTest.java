@@ -25,7 +25,7 @@ public class BatteryTest {
     }
     @Test
     public void robotBatteryTest() {
-        Robot r = new Robot("",space,context,true,false, 0);
+        Robot r = new Robot("",space,context,true, 0);
         assertTrue(r.getBatteryPercentage() == 100);
         assertTrue(r.getDischargeRate() == 0);
     }

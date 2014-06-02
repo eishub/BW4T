@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import static org.mockito.Mockito.spy;
 import static org.junit.Assert.assertEquals;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditor;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
@@ -20,11 +21,12 @@ public class BotEditorPanelTest {
     
     @Before
     public final void setUp(){
-        String name = "";
-        panel = new BotEditorPanel(name);
+    	EntityPanel entityPanel = new EntityPanel();
+    	entityPanel.getBotConfigs().add(new BotConfig());
+        MainPanel parent = new MainPanel(new ConfigurationPanel(), entityPanel);
+        editor = new BotEditor(parent, 0);
+        panel = new BotEditorPanel(editor, parent);
         spypanel = spy(panel);
-        MainPanel parent = new MainPanel(new ConfigurationPanel(), new EntityPanel());
-        editor = new BotEditor(parent, name);
     }
     
     @After

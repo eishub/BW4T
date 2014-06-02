@@ -18,6 +18,9 @@ import java.util.Map;
 import java.util.Set;
 
 import nl.tudelft.bw4t.client.BW4TClientActions;
+import nl.tudelft.bw4t.handicap.HandicapInterface;
+import nl.tudelft.bw4t.robots.RobotFactory;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.Launcher;
 
@@ -113,6 +116,32 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
             }
         }
 
+    }
+    
+    @Override
+    public void registerClient(BW4TClientActions client, List<BotConfig> bots) throws RemoteException {
+    	LOGGER.info("Registering client: " + client);
+    	ClientInfo cInfo = new ClientInfo(bots);
+		clients.put(client, cInfo);
+    	
+    	//send the client our map
+        client.useMap(BW4TEnvironment.getInstance().getMap());
+        client.handleStateChange(getState());
+        
+        RobotFactory robotFactory = Launcher.getInstance().getRobotFactory();
+        //for every request and attach them
+        for(BotConfig c : cInfo.getRequestedBots()) {
+        	int created = 0;
+        	
+        	while (created < c.getBotAmount()) {
+        		//create robot from request
+				HandicapInterface bot = robotFactory.getRobot(c);
+				//TODO create the entity for the environment
+				
+        		//TODO assign robot to client
+				created++;
+        	}
+        }
     }
 
     @Override
