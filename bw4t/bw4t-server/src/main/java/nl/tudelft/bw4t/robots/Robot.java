@@ -218,13 +218,8 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
      * 
      * @param b
      *            , the block to pick up
-     * TODO: Do we want the robot to drop a block if he already is holding one or just ignore the block?
-     * 		Shouldn't it then throw an exception when the robot tries to pick up something it cannot?
      */
     public void pickUp(Block b) {
-    	if (this.grippercap == 1) {
-    		drop();
-    	}
         holding.add(b);
         b.setHeldBy(this);
         b.removeFromContext();
