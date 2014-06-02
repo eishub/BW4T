@@ -2,6 +2,7 @@ package nl.tudelft.bw4t.scenariogui.controllers.botstore;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.SwingUtilities;
 
@@ -44,10 +45,13 @@ class ApplyButton implements ActionListener {
     	String fileName = view.getFileNameField().getText();
     	String botName = view.getBotNameField().getText();
     	String nonAlphaNumericRegex = "^[a-zA-Z0-9_-]";
+    	File f;
     	if (fileName.endsWith(".goal")) {
     		if (fileName.length() > 5) {
+    			f = new File(fileName);
     			String name = fileName.substring(0, fileName.length() - 5);
-    			if (name.matches(nonAlphaNumericRegex)) {
+    			if (name.matches(nonAlphaNumericRegex) 
+    					|| f.exists()) {
 	    			if (botName.length() > 0) {
 	    				if (botName.matches(nonAlphaNumericRegex)) {
 		    				view.getDataObject().setBotSize(view.getSizeSlider().getValue());
@@ -86,7 +90,8 @@ class ApplyButton implements ActionListener {
     			}
     			else {
     				ScenarioEditor.getOptionPrompt().showMessageDialog(view, "Please specify a file name"
-    						+ " consisting of valid alphanumeric characters.");
+    						+ " consisting of valid alphanumeric characters"
+    						+ " or consisting of valid file name characters.");
     			}
     		}
     		else {
