@@ -51,22 +51,11 @@ public class EpartnerFrame extends JFrame {
         contentPane.setLayout(new MigLayout("", "[][141px][][141px][141px]", "[][][125px][125px]"));
         
         leftAloneCheckbox.setAlignmentY(Component.TOP_ALIGNMENT);
-        contentPane.add(leftAloneCheckbox, "cell 0 0,grow");
-        
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-            }
-        });
-        
         gpsCheckBox.setVerticalAlignment(SwingConstants.TOP);
+        
+        contentPane.add(leftAloneCheckbox, "cell 0 0,grow");
         contentPane.add(gpsCheckBox, "cell 0 1,grow");
         contentPane.add(cancelButton, "cell 0 3,growx,aligny bottom");
-        
-        applyButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-            }
-        });
-        
         contentPane.add(resetButton, "cell 2 3,growx,aligny bottom");
         contentPane.add(applyButton, "cell 4 3,alignx right,aligny bottom");
     }
