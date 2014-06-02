@@ -375,29 +375,13 @@ public class BotEditorPanel extends JPanel {
     public JSlider getNumberOfGrippersSlider() {
         return numberOfGrippersSlider;
     }
-    /**
-     * Replaces the slider determining the amount of
-     * grippers the bot can use.
-     * @param _numberOfGrippersSlider The new slider.
-     */
-    public void setNumberOfGrippersSlider(JSlider _numberOfGrippersSlider) {
-        this.numberOfGrippersSlider = _numberOfGrippersSlider;
-    }
     
     public JTextField getFileNameField() {
 		return fileNameField;
 	}
 
-	public void setFileNameField(JTextField _fileNameField) {
-		this.fileNameField = _fileNameField;
-	}
-
 	public JTextField getBotNameField() {
 		return botNameField;
-	}
-
-	public void setBotNameField(JTextField _botNameField) {
-		this.botNameField = _botNameField;
 	}
 
 	public JCheckBox getCustomSizeCheckbox() {
