@@ -12,7 +12,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
-import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorData;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
 
 /**
  * This class creates the frame for the e-Partner GUI.
@@ -36,7 +36,7 @@ public class EpartnerFrame extends JFrame {
     /** The checkbox to enable GPS. */
     private JCheckBox gpsCheckBox = new JCheckBox("Geolocator");
     /** The data object. */
-    private BotEditorData dataObject = new BotEditorData();
+    private BotConfig dataObject = new BotConfig();
     
     /**
      * Create the frame.
@@ -187,8 +187,9 @@ public class EpartnerFrame extends JFrame {
      * Returns the data object with its values for usage.
      * @return The created data object.
      */
-    public BotEditorData getDataObject() {
+    public BotConfig getDataObject() {
         return dataObject;
     }
+    
 }
 
