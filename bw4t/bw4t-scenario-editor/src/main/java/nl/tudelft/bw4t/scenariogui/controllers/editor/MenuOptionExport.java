@@ -5,19 +5,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfigIntegration;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
-import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
-import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
-import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 import nl.tudelft.bw4t.scenariogui.util.ExportToGOAL;
-import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 
 /**
  * Handles the event to export the project to mas2g.
@@ -51,11 +43,13 @@ class MenuOptionExport extends AbstractMenuOption {
         filechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         filechooser.setAcceptAllFileFilterUsed(false);
 
-        if(filechooser.showOpenDialog(getController().getMainView()) == JFileChooser.APPROVE_OPTION) {
+        if (filechooser.showOpenDialog(getController().getMainView()) == JFileChooser.APPROVE_OPTION) {
             String directory = filechooser.getSelectedFile().getAbsolutePath();
             try {
-                saveXMLFile(directory + "/source.xml");
-                BW4TClientConfig configuration = BW4TClientConfig.fromXML(directory  + "/source.xml");
+                String saveDirectory = directory + "/source.xml";
+
+                saveXMLFile(saveDirectory);
+                BW4TClientConfig configuration = BW4TClientConfig.fromXML(saveDirectory);
 
                 ExportToGOAL.export(directory, configuration);
                 System.out.println(directory + " bots: " + configuration.getBots().size());
