@@ -57,7 +57,7 @@ public class BotEditorPanel extends JPanel {
      * The button that opens the file chooser to select
      * an existing .goal file to use.
      */
-    private JButton fileButton = new JButton("Select GOAL file");
+    private JButton fileButton = new JButton("Use existing GOAL file");
     /**
      * The label containing the name of the bot.
      */

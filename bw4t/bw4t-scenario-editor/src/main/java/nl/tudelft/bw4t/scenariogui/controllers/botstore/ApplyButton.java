@@ -91,7 +91,7 @@ class ApplyButton implements ActionListener {
     			else {
     				ScenarioEditor.getOptionPrompt().showMessageDialog(view, "Please specify a file name"
     						+ " consisting of valid alphanumeric characters"
-    						+ " or consisting of valid file name characters.");
+    						+ " or use an existing file.");
     			}
     		}
     		else {
