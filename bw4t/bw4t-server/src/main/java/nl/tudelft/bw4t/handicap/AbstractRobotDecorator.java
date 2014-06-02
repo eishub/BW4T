@@ -23,9 +23,21 @@ import repast.simphony.space.continuous.NdPoint;
  */
 public abstract class AbstractRobotDecorator implements IRobot {
     
+    /**
+     * This is the parent of the component.
+     * It can be the robot itself, or another handicap. 
+     */
     private IRobot parent;
+    
+    /**
+     * This is the robot all handicaps wrap around. 
+     */
     protected AbstractRobot robot = null;
     
+    /***
+     * @param p
+     * The interface the handicap wraps around. 
+     */
     public AbstractRobotDecorator(IRobot p) {
         parent = p;
         robot = getSuperParent();
