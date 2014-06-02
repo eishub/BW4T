@@ -67,7 +67,7 @@ public class NewHandicapTest {
     
     /**
      * - the MoveSpeedHandicap was nicely added to the Handicaps Map;
-     * - the robot's speed mod is 3.14.
+     * - the robot's speed mod is 1.1.
      */
     @Test
     public void testMoveSpeedHandicap() {
@@ -75,7 +75,7 @@ public class NewHandicapTest {
     	
         assertTrue(r.getSuperParent().getHandicapsList().contains("MoveSpeed"));
         
-    	assertTrue(r.getSpeedMod() == 3.14);
+    	assertTrue(r.getSpeedMod() == 1.1);
     }
     
     /**
@@ -93,7 +93,7 @@ public class NewHandicapTest {
     
     /**
      * - the handicaps were nicely added to the Handicaps Map;
-     * - the robot's speed mod is 3.14;
+     * - the robot's speed mod is 0.8;
      * - the robot cannot pick up blocks;
      * - the robot's capacity is 0 no matter what;
      * - the robot's size is 2. 
@@ -105,11 +105,11 @@ public class NewHandicapTest {
         		new ColorBlindHandicap(
         		new GripperHandicap(
         		new MoveSpeedHandicap(
-        	    new NavigatingRobot("", space, context, true, 1), 3.14))), 2);
+        	    new NavigatingRobot("", space, context, true, 1), 0.8))), 2);
         
         assertTrue(r.getSuperParent().getHandicapsList().size() == 4);
  
-        assertTrue(r.getSpeedMod() == 3.14);
+        assertTrue(r.getSpeedMod() == 0.8);
         assertFalse(r.canPickUp(block));
         assertTrue(r.getGripperCapacity() == 0);
         assertTrue(r.getSize() == 2);
