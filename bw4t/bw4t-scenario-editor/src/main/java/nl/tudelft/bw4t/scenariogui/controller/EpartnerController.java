@@ -1,8 +1,5 @@
 package nl.tudelft.bw4t.scenariogui.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import nl.tudelft.bw4t.scenariogui.gui.epartner.EpartnerFrame;
 
 /**
