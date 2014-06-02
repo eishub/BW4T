@@ -90,12 +90,12 @@
     <module name="UpperEll"/>
     <module name="MissingDeprecated"/>
     <module name="MissingOverride"/>
-    <module name="RightCurly">
+    <!-- <module name="RightCurly">
       <property name="option" value="alone"/>
-      <property name="tokens" value="LITERAL_FINALLY,LITERAL_IF,LITERAL_ELSE"/>
-    </module>
+      <property name="tokens" value="LITERAL_FINALLY,LITERAL_IF"/>
+    </module> -->
     <module name="RightCurly">
-      <property name="tokens" value="LITERAL_TRY,LITERAL_CATCH"/>
+      <property name="tokens" value="LITERAL_TRY,LITERAL_CATCH,LITERAL_ELSE"/>
     </module>
   </module>
   <module name="NewlineAtEndOfFile"/>
