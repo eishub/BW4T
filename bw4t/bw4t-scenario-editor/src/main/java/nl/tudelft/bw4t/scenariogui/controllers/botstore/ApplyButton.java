@@ -37,7 +37,7 @@ class ApplyButton implements ActionListener {
      */
     public void actionPerformed(ActionEvent ae) {
     	String fileName = view.getFileNameField().getText();
-    	String botName = view.getBotNameField().getText();
+    	String botName = view.getReferenceNameField().getText();
     	String nonAlphaNumericRegex = "^[a-zA-Z0-9_-]*$";
     	File f;
     	if (fileName.endsWith(".goal")) {
