@@ -44,6 +44,9 @@ public class DefaultEntityFactory implements EntityFactory {
 		}
 		if (config.getGripperHandicap()) {
 			r = new GripperHandicap(r);
+		} else {
+			// if the robot does not have a gripper handicap, it grabs the value set in the UI. 
+			r.getSuperParent().setGripperCapacity(config.getBotGripperCapacity());
 		}
 		if (config.getMoveSpeedHandicap()) {
 			//TODO figure out if the magic number is correct
@@ -55,7 +58,8 @@ public class DefaultEntityFactory implements EntityFactory {
 		if (EntityType.HUMAN.isA(config.getBotController())) {
 			r = new Human(r);
 		}
-		r.getSuperParent().setBattery(new Battery(config.getBotBatteryCapacity(), config.getBotBatteryDischargeRate()));
+		r.getSuperParent().setBattery(
+				new Battery(config.getBotBatteryCapacity(), config.getBotBatteryDischargeRate()));
 		return r;
 	}
 
