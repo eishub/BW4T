@@ -19,7 +19,7 @@ public class MenuBar extends JMenuBar {
     private String lastFileLocation;
 
     /** The items in the menu. */
-    private JMenuItem fileNew, fileOpen, fileSave, fileSaveAs, fileExit;
+    private JMenuItem fileNew, fileOpen, fileSave, fileSaveAs, exportGOAL, fileExit;
 
     /**
      * Construct a menu bar for the Scenario Editor.
@@ -50,6 +50,12 @@ public class MenuBar extends JMenuBar {
         fileSaveAs = new JMenuItem("Save As..");
         fileSaveAs.setToolTipText(toolTipText);
         file.add(fileSaveAs);
+
+        file.addSeparator();
+
+        exportGOAL = new JMenuItem("Export To GOAL");
+        exportGOAL.setToolTipText("Export to Scenario to a GOAL project");
+        file.add(exportGOAL);
 
         file.addSeparator();
 
@@ -102,6 +108,15 @@ public class MenuBar extends JMenuBar {
     }
 
     /**
+     * JMenuItem used to export the scenario.
+     * @return The JMenuItem to export the scenario
+     */
+    public final JMenuItem getMenuItemFileExport() {
+        return exportGOAL;
+    }
+
+
+    /**
      * Variable to get the file location used to save the configuration
      * immediately instead of having to browse to the same location again.
      *
@@ -129,4 +144,6 @@ public class MenuBar extends JMenuBar {
     public final void setLastFileLocation(final String fileLocation) {
         this.lastFileLocation = fileLocation;
     }
+
+
 }
