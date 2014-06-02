@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import static org.mockito.Mockito.spy;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditor;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
@@ -52,5 +54,27 @@ public class BotEditorPanelTest {
         assertEquals(speed, spypanel.getSpeedSlider().getValue());
         assertEquals(size, spypanel.getSizeSlider().getValue());
         assertEquals(cap, spypanel.getBatterySlider().getValue());  
+    }
+    @Test
+    public final void testInitialHandicaps(){
+    	assertFalse(spypanel.getGripperCheckbox().isSelected());
+    	assertFalse(spypanel.getColorblindCheckbox().isSelected());
+    	assertFalse(spypanel.getCustomSizeCheckbox().isSelected());
+    	assertFalse(spypanel.getMovespeedCheckbox().isSelected());
+    	assertFalse(spypanel.getBatteryEnabledCheckbox().isSelected());
+    }
+    
+    @Test
+    public final void testModifyCheckBoxes(){
+    	spypanel.getGripperCheckbox().setSelected(true);
+    	spypanel.getColorblindCheckbox().setSelected(true);
+    	spypanel.getCustomSizeCheckbox().setSelected(true);
+    	spypanel.getMovespeedCheckbox().setSelected(true);
+    	spypanel.getBatteryEnabledCheckbox().setSelected(true);
+    	assertTrue(spypanel.getGripperCheckbox().isSelected());
+    	assertTrue(spypanel.getColorblindCheckbox().isSelected());
+    	assertTrue(spypanel.getCustomSizeCheckbox().isSelected());
+    	assertTrue(spypanel.getMovespeedCheckbox().isSelected());
+    	assertTrue(spypanel.getBatteryEnabledCheckbox().isSelected());
     }
 }

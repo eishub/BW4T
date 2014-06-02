@@ -441,4 +441,20 @@ public class BotEditorPanel extends JPanel {
     public void setNumberOfGrippersSlider(JSlider _numberOfGrippersSlider) {
         this.numberOfGrippersSlider = _numberOfGrippersSlider;
     }
+
+	public JCheckBox getCustomSizeCheckbox() {
+		return customSizeCheckbox;
+	}
+
+	public void setCustomSizeCheckbox(JCheckBox customSizeCheckbox) {
+		this.customSizeCheckbox = customSizeCheckbox;
+	}
+
+	public JCheckBox getMovespeedCheckbox() {
+		return movespeedCheckbox;
+	}
+
+	public void setMovespeedCheckbox(JCheckBox movespeedCheckbox) {
+		this.movespeedCheckbox = movespeedCheckbox;
+	}
 }
