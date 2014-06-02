@@ -2,6 +2,8 @@ package nl.tudelft.bw4t.handicap;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.doors.Door;
@@ -10,6 +12,7 @@ import nl.tudelft.bw4t.robots.AbstractRobot;
 import nl.tudelft.bw4t.robots.AgentRecord;
 import nl.tudelft.bw4t.robots.Battery;
 import nl.tudelft.bw4t.robots.MoveType;
+import nl.tudelft.bw4t.robots.NavigatingRobot.State;
 import nl.tudelft.bw4t.zone.Room;
 import nl.tudelft.bw4t.zone.Zone;
 import repast.simphony.space.continuous.NdPoint;
@@ -265,4 +268,14 @@ public abstract class AbstractRobotDecorator implements IRobot {
 		
 		return robot;
 	}
+    
+    @Override
+    public State getState() {
+        return parent.getState();
+    }
+    
+    @Override
+    public void setTarget(BoundedMoveableObject target) {
+        parent.setTarget(target);
+    }
 }

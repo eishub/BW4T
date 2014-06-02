@@ -2,6 +2,8 @@ package nl.tudelft.bw4t.handicap;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.doors.Door;
@@ -10,6 +12,7 @@ import nl.tudelft.bw4t.robots.AbstractRobot;
 import nl.tudelft.bw4t.robots.AgentRecord;
 import nl.tudelft.bw4t.robots.Battery;
 import nl.tudelft.bw4t.robots.MoveType;
+import nl.tudelft.bw4t.robots.NavigatingRobot.State;
 import nl.tudelft.bw4t.zone.Room;
 import nl.tudelft.bw4t.zone.Zone;
 import repast.simphony.space.continuous.NdPoint;
@@ -241,9 +244,23 @@ public interface IRobot {
 	void dropEPartner();
 	
     /**
-     * returns this Robot
+     * get the {@link NavigatingRobot} at the head of the chain.
      * 
-     * @return this
+     * @return the Robot
      */
 	AbstractRobot getSuperParent();
+
+	/**
+	 * Get the current state of the robot.
+	 * @return the state
+	 */
+    State getState();
+
+    /**
+     * Set a target for the navigating robot. If your start and/or target is not near a Zone, we go through the nearest
+     * Zone.
+     * 
+     * @param target the object i will move to
+     */
+    void setTarget(BoundedMoveableObject target);
 }
