@@ -117,7 +117,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
         }
         if (humanCount > 0) {
             BotConfig bot = new BotConfig();
-            bot.setBotAmount(agentCount);
+            bot.setBotAmount(humanCount);
             bot.setBotController(EntityType.HUMAN.nameLower());
             bots.add(bot);
         }
