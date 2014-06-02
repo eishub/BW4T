@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import static org.mockito.Mockito.spy;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditor;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
@@ -33,24 +35,56 @@ public class BotEditorPanelTest {
     }
     
     @Test
-    public final void testInitialSliders(){
+    public final void testInitialSliders() {
         int speed = 100;
         int size = 2;
         int cap = 10;
+        int grippers = 1;
         assertEquals(speed, spypanel.getSpeedSlider().getValue());
         assertEquals(size, spypanel.getSizeSlider().getValue());
         assertEquals(cap, spypanel.getBatterySlider().getValue());
+        assertEquals(grippers, spypanel.getNumberOfGrippersSlider().getValue());
     }
     @Test
-    public final void testModifySliders(){
+    public final void testModifySliders() {
         int speed = 140;
         int size = 5;
         int cap = 100;
+        int grippers = 5;
         spypanel.getSpeedSlider().setValue(speed);
         spypanel.getSizeSlider().setValue(size);
         spypanel.getBatterySlider().setValue(cap);
+        spypanel.getNumberOfGrippersSlider().setValue(5);
         assertEquals(speed, spypanel.getSpeedSlider().getValue());
         assertEquals(size, spypanel.getSizeSlider().getValue());
         assertEquals(cap, spypanel.getBatterySlider().getValue());  
+        assertEquals(grippers, spypanel.getNumberOfGrippersSlider().getValue());
+    }
+    @Test
+    public final void testInitialHandicaps() {
+    	assertFalse(spypanel.getGripperCheckbox().isSelected());
+    	assertFalse(spypanel.getColorblindCheckbox().isSelected());
+    	assertFalse(spypanel.getCustomSizeCheckbox().isSelected());
+    	assertFalse(spypanel.getMovespeedCheckbox().isSelected());
+    	assertFalse(spypanel.getBatteryEnabledCheckbox().isSelected());
+    }
+    
+    @Test
+    public final void testModifyCheckBoxes() {
+    	spypanel.getGripperCheckbox().setSelected(true);
+    	spypanel.getColorblindCheckbox().setSelected(true);
+    	spypanel.getCustomSizeCheckbox().setSelected(true);
+    	spypanel.getMovespeedCheckbox().setSelected(true);
+    	spypanel.getBatteryEnabledCheckbox().setSelected(true);
+    	assertTrue(spypanel.getGripperCheckbox().isSelected());
+    	assertTrue(spypanel.getColorblindCheckbox().isSelected());
+    	assertTrue(spypanel.getCustomSizeCheckbox().isSelected());
+    	assertTrue(spypanel.getMovespeedCheckbox().isSelected());
+    	assertTrue(spypanel.getBatteryEnabledCheckbox().isSelected());
+    }
+    @Test
+    public final void testBatteryUseValue() {
+    	String value = "0";
+    	assertEquals(value, spypanel.getBatteryUseValueLabel().getText());
     }
 }

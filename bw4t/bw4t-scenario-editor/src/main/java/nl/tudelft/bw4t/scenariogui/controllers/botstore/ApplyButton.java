@@ -43,7 +43,7 @@ class ApplyButton implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
     	String fileName = view.getFileNameField().getText();
     	String botName = view.getBotNameField().getText();
-    	String nonAlphaNumericRegex = "^[a-zA-Z0-9]";
+    	String nonAlphaNumericRegex = "^[a-zA-Z0-9_-]";
     	if (fileName.endsWith(".goal")) {
     		if (fileName.length() > 5) {
     			String name = fileName.substring(0, fileName.length() - 5);
@@ -70,6 +70,8 @@ class ApplyButton implements ActionListener {
 				        	// Overwrite the existing config
 				        	// (there is always a basic config present for every bot).
 				        	mp.getEntityPanel().getBotConfigs().set(index, data);
+				        	ScenarioEditor.getOptionPrompt().showMessageDialog(view, 
+		        					"Bot configuration succesfully created.");
 	    				}
 	    				else {
 	    					ScenarioEditor.getOptionPrompt().showMessageDialog(view, 

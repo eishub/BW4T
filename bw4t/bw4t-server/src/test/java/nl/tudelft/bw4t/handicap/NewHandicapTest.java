@@ -1,40 +1,57 @@
 
 package nl.tudelft.bw4t.handicap;
 
-import static org.junit.Assert.*;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.handicap.ColorBlindHandicap;
 import nl.tudelft.bw4t.handicap.GripperHandicap;
-import nl.tudelft.bw4t.handicap.AbstractHandicapFactory;
 import nl.tudelft.bw4t.handicap.HandicapInterface;
 import nl.tudelft.bw4t.handicap.MoveSpeedHandicap;
 import nl.tudelft.bw4t.handicap.SizeOverloadHandicap;
 import nl.tudelft.bw4t.robots.NavigatingRobot;
-import nl.tudelft.bw4t.robots.Robot;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 
-@RunWith(MockitoJUnitRunner.class)
 /**
+ * @author Joost Rothweiler
  * @author Valentine Mairet
+ * 
  */
+@RunWith(MockitoJUnitRunner.class)
+
 public class NewHandicapTest {
 	
+    /**
+     * space Mock
+     */
     @Mock private ContinuousSpace<Object> space;
+    /**
+     * sontext Mock
+     */
     @Mock private Context<Object> context;
+    /**
+     * point Mock
+     */
     @Mock private NdPoint point;
+    /**
+     * block Mock
+     */
     @Mock private Block block;
     
+    /**
+     * Initialize the Mocks used.
+     */
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -63,6 +80,18 @@ public class NewHandicapTest {
         
         assertFalse(r.canPickUp(block));
         assertTrue(r.getGripperCapacity() == 0);
+    }
+    
+    /**
+     * - The Human handicap was added to the Handicaps Map;
+     * - The Robot is not holding an e-Partner.
+     */
+    @Test
+    public void testHumanHandicap() {
+    	HandicapInterface r = new Human(new NavigatingRobot("", space, context, true, 200));
+    	
+    	assertTrue(r.getSuperParent().getHandicapsList().contains("Human"));
+    	assertTrue(r.getEPartner() == null);
     }
     
     /**
@@ -113,6 +142,25 @@ public class NewHandicapTest {
         assertFalse(r.canPickUp(block));
         assertTrue(r.getGripperCapacity() == 0);
         assertTrue(r.getSize() == 2);
+    }
+    
+    /**
+     * Testing whether the robot is an instance of
+     * - HandicapInterface
+     * - AbstractHandicapFactory
+     */
+    @Test
+    public void testAllHandicapStructure() {
+        HandicapInterface r = 
+        		new SizeOverloadHandicap(
+        		new ColorBlindHandicap(
+        		new GripperHandicap(
+        		new MoveSpeedHandicap(
+        	    new NavigatingRobot("", space, context, true, 1), 1.0))), 3);
+        
+        assertTrue(r instanceof HandicapInterface);
+        assertTrue(r instanceof AbstractHandicapFactory);
+        
     }
 }
     
