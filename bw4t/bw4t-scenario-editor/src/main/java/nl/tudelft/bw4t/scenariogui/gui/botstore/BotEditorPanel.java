@@ -54,6 +54,11 @@ public class BotEditorPanel extends JPanel {
      */
     private JButton cancelButton = new JButton("Cancel");
     /**
+     * The button that opens the file chooser to select
+     * an existing .goal file to use.
+     */
+    private JButton fileButton = new JButton("Select GOAL file");
+    /**
      * The label containing the name of the bot.
      */
     private JLabel botNameTextField = new JLabel();
@@ -172,6 +177,7 @@ public class BotEditorPanel extends JPanel {
         namePanel.add(emptyLabel2);
         namePanel.add(fileNameLabel);
         namePanel.add(fileNameField);
+        namePanel.add(fileButton);
         namePanel.add(emptyLabel3);
         namePanel.add(botNameLabel);
         namePanel.add(botNameField);
@@ -407,4 +413,13 @@ public class BotEditorPanel extends JPanel {
 	public JCheckBox getMovespeedCheckbox() {
 		return movespeedCheckbox;
 	}
+
+	public JButton getFileButton() {
+		return fileButton;
+	}
+
+	public void setFileButton(JButton _fileButton) {
+		this.fileButton = _fileButton;
+	}
+	
 }
