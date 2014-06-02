@@ -61,12 +61,12 @@ public class DropZone extends Room {
     public void setSequence(List<BlockColor> colors) {
         sequence = colors;
         
-        String message = "sequence";
-        
+        StringBuffer s = new StringBuffer();
+        s.append("sequence");
         for (BlockColor col : sequence) {
-            message = message + " " + col.getLetter();
+            s.append(" " + col.getLetter());
         }
-                
+        String message = s.toString();        
         LOGGER.log(BotLog.BOTLOG, message);
         
     }
