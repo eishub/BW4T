@@ -27,11 +27,11 @@ import java.util.Map;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.eis.RobotEntity;
-import nl.tudelft.bw4t.logger.BotLog;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.robots.Robot;
 import nl.tudelft.bw4t.server.BW4TServer;
 import nl.tudelft.bw4t.server.RobotEntityInt;
+import nl.tudelft.bw4t.server.logging.BotLog;
 import nl.tudelft.bw4t.visualizations.ServerContextDisplay;
 
 import org.apache.log4j.Logger;
