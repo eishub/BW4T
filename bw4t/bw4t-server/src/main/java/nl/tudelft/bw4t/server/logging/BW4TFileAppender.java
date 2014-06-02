@@ -51,8 +51,7 @@ public class BW4TFileAppender extends FileAppender {
                 // between the file name and the extension
                 newFileName = fileName.substring(0, dotIndex) + HIPHEN + System.currentTimeMillis() + DOT
                         + fileName.substring(dotIndex + 1);
-            }
-            else {
+            } else {
                 // the file name has no extension. So, just append the timestamp
                 // at the end.
                 newFileName = fileName + HIPHEN + System.currentTimeMillis();

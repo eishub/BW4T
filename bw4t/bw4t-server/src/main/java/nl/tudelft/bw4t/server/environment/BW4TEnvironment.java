@@ -467,8 +467,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
             } catch (Exception e) {
                 LOGGER.error("BW4T Server started ok but failed to launch display.", e);
             }
-        }
-        else {
+        } else {
             LOGGER.info("Launching the BW4T Server without a graphical user interface.");
         }
     }
@@ -496,11 +495,15 @@ public class BW4TEnvironment extends AbstractEnvironment {
     public void shutdownServer(String key) {
         if (key.equals(this.shutdownKey)) {
             LOGGER.info("Server shutdown requested with correct key");
+            try {
+				this.setState(EnvironmentState.KILLED);
+			} catch (ManagementException e) {
+				LOGGER.warn("failed to notify clients that the server is going down...", e);
+			}
             server.takeDown();
             server = null;
             System.exit(0);
-        }
-        else {
+        } else {
             LOGGER.warn("Server shutdown attempted with wrong key: " + key);
         }
     }
