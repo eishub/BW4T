@@ -1,7 +1,7 @@
 package nl.tudelft.bw4t.scenariogui.controllers.botstore;
 
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.text.DecimalFormat;
 
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
@@ -9,7 +9,7 @@ import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
 /**
  * Handles actions of the speedslider
  */
-class SpeedSlider implements MouseListener {
+class SpeedSlider extends MouseAdapter {
     /**
      * The panel containing the slider.
      */
@@ -21,23 +21,7 @@ class SpeedSlider implements MouseListener {
     public SpeedSlider(BotEditorPanel pview) {
         this.view = pview;
     }
-
-    @Override
-    public void mouseClicked(MouseEvent arg0) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent arg0) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent arg0) {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent arg0) {
-    }
-
+    
     @Override
     public void mouseReleased(MouseEvent arg0) {
     	if (view.getBatteryEnabledCheckbox().isSelected()) {
