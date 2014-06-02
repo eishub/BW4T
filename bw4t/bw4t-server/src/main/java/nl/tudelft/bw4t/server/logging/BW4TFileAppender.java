@@ -51,13 +51,13 @@ public class BW4TFileAppender extends FileAppender {
             final int dotIndex = fileName.indexOf(DOT);
             if (dotIndex != -1) {
             	// the current date to be inserted in the file name.
-            	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd'-'HH:mm:ss");
+            	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
             	//get current date time with Date()
          	   	Date date = new Date();
          	   	System.out.println(dateFormat.format(date));
                 // the file name has an extension. so, insert the time stamp
                 // between the file name and the extension
-                newFileName = fileName.substring(0, dotIndex) + HIPHEN + dateFormat.format(date) + DOT
+                newFileName = fileName.substring(0, dotIndex) + HIPHEN + System.currentTimeMillis() + DOT
                         + fileName.substring(dotIndex + 1);
             }
             else {
