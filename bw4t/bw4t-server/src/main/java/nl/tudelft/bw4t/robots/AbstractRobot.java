@@ -509,11 +509,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	}
 
 	@Override
-	public void setHandicapsList(ArrayList<String> handicapsList) {
-	    this.handicapsList = handicapsList;
-	}
-
-	@Override
 	public int getGripperCapacity() {
 	    return grippercap;
 	}
@@ -555,6 +550,11 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	@Override
 	public void dropEPartner() {
 	}
+	
+	@Override
+    public double distanceTo(Block b) {
+        return super.distanceTo(b);
+    }
 
 	@Override
 	public AbstractRobot getSuperParent() {
