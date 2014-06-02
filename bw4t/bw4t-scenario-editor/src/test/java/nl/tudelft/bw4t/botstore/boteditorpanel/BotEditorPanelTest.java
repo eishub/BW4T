@@ -1,27 +1,36 @@
 package nl.tudelft.bw4t.botstore.boteditorpanel;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.mockito.Mockito.spy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditor;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
+import static org.mockito.Mockito.spy;
+
+
+/**
+ * Test the boteditorpanel
+ */
 public class BotEditorPanelTest {
-    private BotEditor editor;
+    
+	/** the frame on which we put the panel */
+	private BotEditor editor;
+	/** the panel we test */
     private BotEditorPanel panel;
+    /** the spy entity of panel */
     private BotEditorPanel spypanel;
     
+    /** setup the panel */
     @Before
-    public final void setUp(){
+    public final void setUp() {
         String name = "";
         panel = new BotEditorPanel(name);
         spypanel = spy(panel);
@@ -29,11 +38,13 @@ public class BotEditorPanelTest {
         editor = new BotEditor(parent, name);
     }
     
+    /** dispose the frame after testing */
     @After
     public final void dispose() {
         editor.dispose();
     }
     
+    /** testing the initial slider setup */
     @Test
     public final void testInitialSliders() {
         int speed = 100;
@@ -45,6 +56,8 @@ public class BotEditorPanelTest {
         assertEquals(cap, spypanel.getBatterySlider().getValue());
         assertEquals(grippers, spypanel.getNumberOfGrippersSlider().getValue());
     }
+    
+    /** test modify sliders */
     @Test
     public final void testModifySliders() {
         int speed = 140;
@@ -60,6 +73,8 @@ public class BotEditorPanelTest {
         assertEquals(cap, spypanel.getBatterySlider().getValue());  
         assertEquals(grippers, spypanel.getNumberOfGrippersSlider().getValue());
     }
+    
+    /** test initial handicaps */
     @Test
     public final void testInitialHandicaps() {
     	assertFalse(spypanel.getGripperCheckbox().isSelected());
@@ -69,6 +84,7 @@ public class BotEditorPanelTest {
     	assertFalse(spypanel.getBatteryEnabledCheckbox().isSelected());
     }
     
+    /** test modify handicaps */
     @Test
     public final void testModifyCheckBoxes() {
     	spypanel.getGripperCheckbox().setSelected(true);
@@ -82,6 +98,8 @@ public class BotEditorPanelTest {
     	assertTrue(spypanel.getMovespeedCheckbox().isSelected());
     	assertTrue(spypanel.getBatteryEnabledCheckbox().isSelected());
     }
+    
+    /** test the batteryusevale */
     @Test
     public final void testBatteryUseValue() {
     	String value = "0";
