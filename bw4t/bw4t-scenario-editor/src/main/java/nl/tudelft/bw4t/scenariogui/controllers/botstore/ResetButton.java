@@ -40,5 +40,7 @@ class ResetButton implements ActionListener {
         view.getmovespeedCheckbox().setSelected(false);
         view.getBatteryEnabledCheckbox().setSelected(false);
         view.getNumberOfGrippersSlider().setValue(1);
+        view.getFileNameField().setText(".goal");
+        view.getBotNameField().setText("");
     }
 }

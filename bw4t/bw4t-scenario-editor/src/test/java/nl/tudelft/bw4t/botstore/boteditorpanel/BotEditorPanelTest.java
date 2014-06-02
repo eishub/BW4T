@@ -107,4 +107,7 @@ public class BotEditorPanelTest {
     	String value = "0";
     	assertEquals(value, spypanel.getBatteryUseValueLabel().getText());
     }
+    
+    
+    
 }
