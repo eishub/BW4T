@@ -6,10 +6,10 @@ import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.map.view.Entity;
+import nl.tudelft.bw4t.robots.AbstractRobot;
 import nl.tudelft.bw4t.robots.AgentRecord;
 import nl.tudelft.bw4t.robots.Battery;
 import nl.tudelft.bw4t.robots.MoveType;
-import nl.tudelft.bw4t.robots.AbstractRobot;
 import nl.tudelft.bw4t.zone.Room;
 import nl.tudelft.bw4t.zone.Zone;
 import repast.simphony.space.continuous.NdPoint;
@@ -19,20 +19,9 @@ import repast.simphony.space.continuous.NdPoint;
  */
 public abstract class AbstractRobotDecorator implements IRobot {
     
-    /**
-     * Handicap which the current handicap is wrapped around.
-     */
     private IRobot parent;
-    /**
-     * Robot to which this handicap belongs to.
-     */
     protected AbstractRobot robot = null;
     
-    /**
-     * Sets the parent to p,
-     * Sets the robot to the super parent (last parent).
-     * @param p HandicapInterface the Handicap wraps around.
-     */
     public AbstractRobotDecorator(IRobot p) {
         parent = p;
         robot = getSuperParent();
