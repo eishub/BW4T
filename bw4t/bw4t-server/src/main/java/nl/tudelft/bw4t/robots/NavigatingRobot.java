@@ -161,5 +161,4 @@ public class NavigatingRobot extends AbstractRobot {
         }
         return State.TRAVELING;
     }
-
 }

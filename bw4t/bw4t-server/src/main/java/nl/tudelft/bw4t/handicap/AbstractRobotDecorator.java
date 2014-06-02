@@ -212,11 +212,6 @@ public abstract class AbstractRobotDecorator implements IRobot {
 	}
 	
     @Override
-	public void setHandicapsList(ArrayList<String> handicapsList) {
-		parent.setHandicapsList(handicapsList);
-	}
-	
-    @Override
 	public int getGripperCapacity() {
 		return parent.getGripperCapacity();
 	}
@@ -262,15 +257,6 @@ public abstract class AbstractRobotDecorator implements IRobot {
 	}
 	
     @Override
-	public AbstractRobot getSuperParent() {
-		if (robot == null) {
-		    robot = parent.getSuperParent();
-		}
-		
-		return robot;
-	}
-    
-    @Override
     public State getState() {
         return parent.getState();
     }
@@ -280,11 +266,6 @@ public abstract class AbstractRobotDecorator implements IRobot {
         parent.setTarget(target);
     }
     
-    @Override
-    public int distanceTo(Block b) {
-        return parent.distanceTo(b);
-    }
-
     @Override
     public NdPoint getLocation() {
         return parent.getLocation();
@@ -298,5 +279,19 @@ public abstract class AbstractRobotDecorator implements IRobot {
     @Override
     public Context<Object> getContext() {
         return parent.getContext();
+    }
+
+    @Override
+    public double distanceTo(Block b) {
+        return parent.distanceTo(b);
+    }
+
+    @Override
+    public AbstractRobot getSuperParent() {
+    	if (robot == null) {
+    	    robot = parent.getSuperParent();
+    	}
+    	
+    	return robot;
     }
 }
