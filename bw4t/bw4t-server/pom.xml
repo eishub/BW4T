@@ -26,7 +26,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>nl.tudelft.bw4t.server.Launcher</mainClass>
+							<mainClass>nl.tudelft.bw4t.server.enivironment.Launcher</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
@@ -44,6 +44,12 @@
 				</executions>
 			</plugin>
 		</plugins>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 	</build>
 	<dependencies>
 		<dependency>
