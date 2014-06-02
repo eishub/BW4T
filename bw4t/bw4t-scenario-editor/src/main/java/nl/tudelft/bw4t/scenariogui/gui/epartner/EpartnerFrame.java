@@ -108,13 +108,6 @@ public class EpartnerFrame extends JFrame {
         return applyButton;
     }
     /**
-     * Replaces the apply button.
-     * @param ApplyButton The new button.
-     */
-    public void setApplyButton(JButton ApplyButton) {
-        this.applyButton = ApplyButton;
-    }
-    /**
      * Returns the reset button used.
      * @return The reset button.
      */
@@ -122,25 +115,11 @@ public class EpartnerFrame extends JFrame {
         return resetButton;
     }
     /**
-     * Replaces the reset button with a new one.
-     * @param ResetButton The new button.
-     */
-    public void setResetButton(JButton ResetButton) {
-        this.resetButton = ResetButton;
-    }
-    /**
      * Returns the currently used cancel button.
      * @return The cancel button.
      */
     public JButton getCancelButton() {
         return cancelButton;
-    }
-    /**
-     * Replaces the cancel button.
-     * @param CancelButton The new cancel button.
-     */
-    public void setCancelButton(JButton CancelButton) {
-        this.cancelButton = CancelButton;
     }
     /**
      * Returns the checkbox enabling or disabling
@@ -151,14 +130,6 @@ public class EpartnerFrame extends JFrame {
         return leftAloneCheckbox;
     }
     /**
-     * Replaces the checkbox enabling or disabling
-     * warnings when the bot is left alone.
-     * @param LeftAloneCheckbox The new checkbox.
-     */
-    public void setLeftAloneCheckbox(JCheckBox LeftAloneCheckbox) {
-        this.leftAloneCheckbox = LeftAloneCheckbox;
-    }
-    /**
      * Returns the checkbox enabling or
      * disabling GPS functionality.
      * @return The checkbox.
@@ -166,15 +137,6 @@ public class EpartnerFrame extends JFrame {
     public JCheckBox getGPSCheckbox() {
         return gpsCheckBox;
     }
-    /**
-     * Replaces the checkbox enabling or disabling
-     * GPS functionality.
-     * @param GPSCheckbox The new checkbox.
-     */
-    public void setGPSCheckbox(JCheckBox GPSCheckbox) {
-        this.gpsCheckBox = GPSCheckbox;
-    }
-    
     /**
      * This method plugs the GUI values into the data object.
      */
