@@ -2,6 +2,7 @@ package nl.tudelft.bw4t.robots;
 
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
+import nl.tudelft.bw4t.agent.EntityType;
 import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.handicap.ColorBlindHandicap;
 import nl.tudelft.bw4t.handicap.GripperHandicap;
@@ -51,7 +52,7 @@ public class DefaultEntityFactory implements EntityFactory {
 		if (config.getSizeOverloadHandicap()) {
 			r = new SizeOverloadHandicap(r, config.getBotSize());
 		}
-		if (config.getBotController().equalsIgnoreCase("Human")) {
+		if (EntityType.HUMAN.isA(config.getBotController())) {
 			r = new Human(r);
 		}
 		r.getSuperParent().setBattery(new Battery(config.getBotBatteryCapacity(), config.getBotBatteryDischargeRate()));
@@ -65,8 +66,9 @@ public class DefaultEntityFactory implements EntityFactory {
 
     @Override
     public EPartner makeEPartner(EPartnerConfig c) {
-        // TODO Auto-generated method stub
-        return null;
+        EPartner ep = makeDefaultEPartner(c.getName());
+        //TODO actually configure the e-partner
+        return ep;
     }
 
 }
