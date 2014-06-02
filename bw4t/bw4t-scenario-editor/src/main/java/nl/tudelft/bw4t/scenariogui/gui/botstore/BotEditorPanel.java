@@ -400,10 +400,5 @@ public class BotEditorPanel extends JPanel {
 
 	public JButton getFileButton() {
 		return fileButton;
-	}
-
-	public void setFileButton(JButton _fileButton) {
-		this.fileButton = _fileButton;
-	}
-	
+	}	
 }
