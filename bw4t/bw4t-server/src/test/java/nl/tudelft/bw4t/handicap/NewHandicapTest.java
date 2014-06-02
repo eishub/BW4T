@@ -67,7 +67,7 @@ public class NewHandicapTest {
     
     /**
      * - the MoveSpeedHandicap was nicely added to the Handicaps Map;
-     * - the robot's speed mod is 3.14.
+     * - the robot's speed mod is 1.1.
      */
     @Test
     public void testMoveSpeedHandicap() {
@@ -75,7 +75,7 @@ public class NewHandicapTest {
     	
         assertTrue(r.getSuperParent().getHandicapsList().contains("MoveSpeed"));
         
-    	assertTrue(r.getSpeedMod() == 3.14);
+    	assertTrue(r.getSpeedMod() == 1.1);
     }
     
     /**
