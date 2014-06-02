@@ -23,6 +23,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
+import repast.simphony.space.continuous.NdPoint;
 
 /**
  * The class <code>DoorTest</code> contains tests for the class <code>{@link Door}</code>.
@@ -53,7 +54,7 @@ public class DoorTest {
 
         assertNotNull(result);
         assertTrue(result.isOpen());
-        assertEquals(null, result.getLocation());
+        assertEquals(new NdPoint(0, 0), result.getLocation());
         assertEquals(0L, result.getId());
     }
 

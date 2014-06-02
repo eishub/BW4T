@@ -48,7 +48,7 @@ public class BlockTest {
         Block result = new Block(colorId, space, context);
 
         assertNotNull(result);
-        assertEquals(null, result.getLocation());
+        assertEquals(new NdPoint(0, 0), result.getLocation());
         assertTrue(result.isFree());
         assertEquals(null, result.getHeldBy());
         assertEquals(0L, result.getId());
@@ -157,7 +157,7 @@ public class BlockTest {
         NdPoint result = fixture.getLocation();
 
         // add additional test code here
-        assertEquals(null, result);
+        assertEquals(new NdPoint(0, 0), result);
         verify(space).getLocation(fixture);
         verifyNoMoreInteractions(robot);
     }
