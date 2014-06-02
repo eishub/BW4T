@@ -62,7 +62,7 @@ public class NewHandicapTest {
         assertTrue(r.getSuperParent().getHandicapsList().contains("Gripper"));
         
         assertFalse(r.canPickUp(block));
-        assertTrue(r.getCapacity() == 0);
+        assertTrue(r.getGripperCapacity() == 0);
     }
     
     /**
@@ -111,7 +111,7 @@ public class NewHandicapTest {
  
         assertTrue(r.getSpeedMod() == 3.14);
         assertFalse(r.canPickUp(block));
-        assertTrue(r.getCapacity() == 0);
+        assertTrue(r.getGripperCapacity() == 0);
         assertTrue(r.getSize() == 2);
     }
 }

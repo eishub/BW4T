@@ -1,6 +1,5 @@
 package nl.tudelft.bw4t.handicap;
 
-import repast.simphony.random.RandomHelper;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.doors.Door;
@@ -59,7 +58,7 @@ public interface HandicapInterface {
     void pickUpEPartner(EPartner eP);
     
     /**
-     * @param eP the e-Partner the human is holding.
+     * drops the e-Partner the human is holding.
      */
     void dropEPartner();
     
@@ -81,7 +80,7 @@ public interface HandicapInterface {
     /**
      * @return the gripper capacity of the robot.
      */
-    int getCapacity();
+    int getGripperCapacity();
     
     /**
      * @return the speed of the robot.

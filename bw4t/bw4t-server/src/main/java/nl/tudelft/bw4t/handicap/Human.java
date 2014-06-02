@@ -1,9 +1,8 @@
 package nl.tudelft.bw4t.handicap;
 
-import repast.simphony.random.RandomHelper;
 import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.robots.Robot;
-import nl.tudelft.bw4t.zone.Zone;
+import repast.simphony.random.RandomHelper;
 
 /**
  * @author Valentine Mairet
@@ -44,7 +43,6 @@ public class Human extends AbstractHandicapFactory {
     
     /**
      * The Human drops the e-Partner they are holding. 
-     * @param eP the e-Partner the human is holding.
      */
     public void dropEPartner() {
     	

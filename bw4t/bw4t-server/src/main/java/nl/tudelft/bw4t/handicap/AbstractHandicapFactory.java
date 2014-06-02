@@ -113,8 +113,8 @@ public abstract class AbstractHandicapFactory implements HandicapInterface {
 	}
 	
 	@Override
-	public int getCapacity() {
-		return parent.getCapacity();
+	public int getGripperCapacity() {
+		return parent.getGripperCapacity();
 	}
 	
 	@Override

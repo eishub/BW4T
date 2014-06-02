@@ -11,6 +11,9 @@ import nl.tudelft.bw4t.zone.Zone;
  */
 public class SizeOverloadHandicap extends AbstractHandicapFactory {
 	
+	/**
+	 * This variable indicates the size of the robot. 
+	 */
 	private final int size;
     
     /**
