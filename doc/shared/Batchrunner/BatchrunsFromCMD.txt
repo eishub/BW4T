@@ -1,6 +1,6 @@
 How to run batch runs from the command prompt:
 
-1. Dowload + install GOAL if you haven't done so yet.
+1. Dowload + install GOAL if you haven't done so yet (or reinstall so you don't have the 2k12 version).
 	Go to http://mmi.tudelft.nl/trac/goal/wiki/Releases and under 'Legacy Downloads and Release Descriptions'
 	press the download button on the latest release. Then install it from there.
 
