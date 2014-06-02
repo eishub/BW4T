@@ -97,7 +97,7 @@ public class BotEditorPanel extends JPanel {
      * A dynamically updated label to show
      * what the usage of battery charge is per tick.
      */
-    private JLabel batteryUseValueLabel = new JLabel("0,006500");
+    private JLabel batteryUseValueLabel = new JLabel("0");
     /**
      * The data object.
      */
@@ -348,28 +348,12 @@ public class BotEditorPanel extends JPanel {
     public JSlider getNumberOfGrippersSlider() {
         return numberOfGrippersSlider;
     }
-    /**
-     * Replaces the slider determining the amount of
-     * grippers the bot can use.
-     * @param _numberOfGrippersSlider The new slider.
-     */
-    public void setNumberOfGrippersSlider(JSlider _numberOfGrippersSlider) {
-        this.numberOfGrippersSlider = _numberOfGrippersSlider;
-    }
 
 	public JCheckBox getCustomSizeCheckbox() {
 		return customSizeCheckbox;
 	}
 
-	public void setCustomSizeCheckbox(JCheckBox customSizeCheckbox) {
-		this.customSizeCheckbox = customSizeCheckbox;
-	}
-
 	public JCheckBox getMovespeedCheckbox() {
 		return movespeedCheckbox;
-	}
-
-	public void setMovespeedCheckbox(JCheckBox movespeedCheckbox) {
-		this.movespeedCheckbox = movespeedCheckbox;
 	}
 }
