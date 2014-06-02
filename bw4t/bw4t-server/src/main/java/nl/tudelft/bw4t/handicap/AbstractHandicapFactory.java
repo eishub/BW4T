@@ -1,16 +1,22 @@
 package nl.tudelft.bw4t.handicap;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import repast.simphony.space.continuous.NdPoint;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.doors.Door;
+import nl.tudelft.bw4t.map.view.Entity;
+import nl.tudelft.bw4t.robots.AgentRecord;
+import nl.tudelft.bw4t.robots.Battery;
 import nl.tudelft.bw4t.robots.Robot;
-import nl.tudelft.bw4t.robots.Robot.MoveType;
+import nl.tudelft.bw4t.robots.MoveType;
+import nl.tudelft.bw4t.zone.Room;
 import nl.tudelft.bw4t.zone.Zone;
 
 /**
- * 
  * @author Valentine Mairet & Ruben Starmans
- *
  */
 public abstract class AbstractHandicapFactory implements HandicapInterface {
     /**
@@ -32,107 +38,161 @@ public abstract class AbstractHandicapFactory implements HandicapInterface {
         robot = getSuperParent();
     }
     
-    /**
-     * Sets the parent to a new parent.
-     * @param hI sets the parent handicap.
-     */
-    @Override
-    public void setParent(HandicapInterface hI) {
-        parent = hI;
-    }
-    
-    /**
-     * Returns the parent.
-     * @return parent
-     */
-    @Override
-    public HandicapInterface getParent() {
-        return parent;
-    }
-    
-    /**
-     * GripperHandicap.
-     * @param b block that is about to be picked up.
-     * @return true if the block can be picked up.
-     */
-    @Override
-    public boolean canPickUp(Block b) {
-        return parent.canPickUp(b);
-    }
-    
-    /**
-     * MoveSpeedHandicap.
-     * The robot is immovable if speed is 0.s
-     */
-    @Override
-    public void move() {
-        parent.move();
-    }
-    
-    /**
-     * SizeOverloadHandicap
-     * @param startzone current zone where the robot is now.
-     * @param endzone target zone.
-     * @param door which is in between the two zones.
-     * @return return true if the robot can access the target zone.
-     */
-    @Override
-    public MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door) {
-        return parent.checkZoneAccess(startzone, endzone, door);
-    }
-
-	@Override
-	public boolean canPickUpEPartner(EPartner eP) {
-		return parent.canPickUpEPartner(eP);
+	public String getName() {
+		return parent.getName();
 	}
-
-	@Override
+	
+	public void connect() {
+		parent.connect();
+	}
+	
+	public void disconnect() {
+		parent.disconnect();
+	}
+	
+	public List<Block> isHolding() {
+		return parent.isHolding();
+	}
+	
+	public NdPoint getTargetLocation() {
+		return parent.getTargetLocation();
+	}
+	
+	public void setTargetLocation(NdPoint ptargetLocation) {
+		parent.setTargetLocation(ptargetLocation);
+	}
+	
+	public boolean canPickUp(Block b) {
+		return parent.canPickUp(b);
+	}
+	
+	public void pickUp(Block b) {
+		parent.pickUp(b);
+	}
+	
+	public void drop() {
+		parent.drop();
+	}
+	
+	public void drop(int amount) {
+		parent.drop(amount);
+	}
+	
+	public void moveTo(double x, double y) {
+		parent.moveTo(x, y);
+	}
+	
+	public MoveType getMoveType(double endx, double endy) {
+		return parent.getMoveType(endx, endy);
+	}
+	
+	public MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door) {
+		parent.
+	}
+	
+	public Door getCurrentDoor(double x, double y) {
+		parent.
+	}
+	
+	public Room getCurrentRoom(double x, double y) {
+		parent.
+	}
+	
+	public Zone getZone() {
+		parent.
+	}
+	
+	public void moveByDisplacement(double x, double y) {
+		parent.
+	}
+	public void move() {
+		parent.
+	}
+	public void stopRobot() {
+		parent.
+	}
+	boolean isCollided() {
+		parent.
+	}
+	public void setCollided(boolean collided) {
+		parent.
+	}
+	public void clearCollided() {
+		parent.
+	}
+	boolean isConnected() {
+		parent.
+	}
+	boolean isOneBotPerZone() {
+		parent.
+	}
+	int getSize() {
+		parent.
+	}
+	public void setSize(int s) {
+		parent.
+	}
+	Entity getView() {
+		parent.
+	}
+	AgentRecord getAgentRecord() {
+		parent.
+	}
+	Battery getBattery() {
+		parent.
+	}
+	public void setBattery(Battery battery) {
+		parent.
+	}
+	int getBatteryPercentage() {
+		parent.
+	}
+	double getDischargeRate() {
+		parent.
+	}
+	public void recharge() {
+		parent.
+	}
+	HandicapInterface getParent() {
+		parent.
+	}
+	public void setParent(HandicapInterface hI) {
+		parent.
+	}
+	ArrayList<String> getHandicapsList() {
+		parent.
+	}
+	public void setHandicapsList(ArrayList<String> handicapsList) {
+		parent.
+	}
+	int getGripperCapacity() {
+		parent.
+	}
+	public void setGripperCapacity(int newcap) {
+		parent.
+	}
+	double getSpeedMod() {
+		parent.
+	}
+	boolean isHuman() {
+		parent.
+	}
+	EPartner getEPartner() {
+		parent.
+	}
+	boolean isHoldingEPartner() {
+		parent.
+	}
+	boolean canPickUpEPartner(EPartner eP) {
+		parent.
+	}
 	public void pickUpEPartner(EPartner eP) {
-		parent.pickUpEPartner(eP);
-		
+		parent.
 	}
-	
-	@Override
 	public void dropEPartner() {
-		parent.dropEPartner();
+		parent.
 	}
-
-	@Override
-	public boolean isHoldingEPartner() {
-		return parent.isHoldingEPartner();
+	Robot getSuperParent() {
+		parent.
 	}
-	
-	@Override
-	public EPartner getEPartner() {
-		return parent.getEPartner();
-	}
-	
-	@Override
-	public int getSize() {
-		return parent.getSize();
-	}
-	
-	@Override
-	public int getGripperCapacity() {
-		return parent.getGripperCapacity();
-	}
-	
-	@Override
-	public double getSpeedMod() {
-		return parent.getSpeedMod();
-	}
-    
-    /**
-     * Attention! This method calls itself on the parent until it gets to robot.
-     * Please do not edit this.
-     * @return robot the handicaps are attached to.
-     */
-	@Override
-    public Robot getSuperParent() {
-		if (robot == null) {
-			robot = parent.getSuperParent();
-		}
-		
-        return robot;
-    }
 }
