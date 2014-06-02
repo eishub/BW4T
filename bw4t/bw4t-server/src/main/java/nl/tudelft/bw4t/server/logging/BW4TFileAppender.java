@@ -47,6 +47,8 @@ public class BW4TFileAppender extends FileAppender {
 
             final int dotIndex = fileName.indexOf(DOT);
             if (dotIndex != -1) {
+            	// the current date to be inserted in the file name.
+            	
                 // the file name has an extension. so, insert the time stamp
                 // between the file name and the extension
                 newFileName = fileName.substring(0, dotIndex) + HIPHEN + System.currentTimeMillis() + DOT

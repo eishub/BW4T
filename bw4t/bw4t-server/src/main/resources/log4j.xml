@@ -16,7 +16,7 @@
 		<param name="File" value="log/BW4T.log" />
 		<param name="Threshold" value="fatal" />
 		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%m%n" />
+			<param name="ConversionPattern" value="%d [%t] %-5p %c - %m%n" />
 		</layout>
 	</appender>
 	<root>
