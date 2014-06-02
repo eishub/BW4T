@@ -97,7 +97,7 @@ public final class MapLoader {
 
         ContinuousSpace<Object> space = createSpace(context, (int) map.getArea().getX(), (int) map.getArea().getY());
         
-        Launcher.getInstance().getRobotFactory().setSpace(space);
+        Launcher.getInstance().getEntityFactory().setSpace(space);
 
         // make the extra random blocks.
         List<BlockColor> extraSequenceBlocks = makeRandomSequence(map.getRandomSequence());
