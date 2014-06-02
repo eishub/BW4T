@@ -15,6 +15,7 @@ import nl.tudelft.bw4t.robots.MoveType;
 import nl.tudelft.bw4t.robots.NavigatingRobot.State;
 import nl.tudelft.bw4t.zone.Room;
 import nl.tudelft.bw4t.zone.Zone;
+import repast.simphony.context.Context;
 import repast.simphony.space.continuous.NdPoint;
 /**
  * This interface contains all the methods from the original Robot class.  
@@ -24,7 +25,8 @@ import repast.simphony.space.continuous.NdPoint;
 public interface IRobot {
     
     /**
-     * @return The name of the robot
+     * @return 
+     * The name of the robot
      */
 	String getName();
 	
@@ -39,12 +41,14 @@ public interface IRobot {
 	void disconnect();
 	
     /**
-     * @return The block the robot is holding, null if holding none
+     * @return 
+     * The block the robot is holding, null if holding none
      */
 	List<Block> isHolding();
 	
     /**
-     * @return The targetlocation of the robot
+     * @return 
+     * The targetlocation of the robot
      */
 	NdPoint getTargetLocation();
 	
@@ -52,7 +56,7 @@ public interface IRobot {
      * Sets the location to which the robot should move. This also clears the {@link #collided} flag.
      * 
      * @param ptargetLocation
-     *            the location to move to.
+     * the location to move to
      */
 	void setTargetLocation(NdPoint ptargetLocation);
 	
@@ -60,8 +64,10 @@ public interface IRobot {
      * Check if robot can pick up a block.
      * 
      * @param b
-     *            the block to check
-     * @return true if the block is within reach and if the bot isn't holding a block already.
+     * the block to check
+     * 
+     * @return 
+     * true if the block is within reach and if the bot isn't holding a block already
      */
 	boolean canPickUp(Block b);
 	
@@ -69,12 +75,13 @@ public interface IRobot {
      * Pick up a block
      * 
      * @param b
-     *            , the block to pick up
+     * the block to pick up
      */
 	void pickUp(Block b);
 	
     /**
-     * Drops the block the robot is holding on the current location. TODO: What if multiple blocks dropped at same spot?
+     * Drops the block the robot is holding on the current location. 
+     * TODO: What if multiple blocks dropped at same spot?
      */
 	void drop();
 	
@@ -82,27 +89,45 @@ public interface IRobot {
      * A method for dropping multiple blocks at once.
      * 
      * @param amount
-     *              The amount of blocks that have to be dropped, needs to be less than the amount of blocks in the list.
+     * The amount of blocks that have to be dropped, needs to be less than the amount of blocks in the list
      */
 	void drop(int amount);
 	
+	/**
+	 * This method moves the robot to a location (x, y). 
+	 * @param x  
+	 * the coord of location
+	 * @param y
+	 * the coord of location
+	 */
 	void moveTo(double x, double y);
 	
     /**
      * Check motion type for robot to move to <endx, endy>. The {@link #MoveType} gives the actual type / possibility of
      * the move, plus the details why it is (not) possible.
      * 
-     * @param end
-     *            is x position of target
+     * @param endx
+     * is x position of target
      * @param endy
-     *            is y position of target
+     * is y position of target
+     * 
+     * @return
+     * Type of move to access the point (x, y)
      */
 	MoveType getMoveType(double endx, double endy);
 	
     /**
      * check if we can access endzone from startzone.
+     * 
      * @param startzone
+     * the zone where the robot is
      * @param endzone
+     * the zone the robot is going to
+     * @param door
+     * the door leading to the zone
+     * 
+     * @return
+     * Type of move to access the zone.
      */
 	MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door);
 	
@@ -111,9 +136,10 @@ public interface IRobot {
      * rooms and doors partially overlap usually.
      * 
      * @param x
-     *            is x coord of position
+     * is x coord of position
      * @param y
-     *            is y coord of position
+     * is y coord of position
+     * 
      * @return Door or null if not on a door
      */
 	Door getCurrentDoor(double x, double y);
@@ -122,9 +148,10 @@ public interface IRobot {
      * get room at a given position. CHECK maybe move this to RoomLocator?
      * 
      * @param x
-     *            is x coord of position
+     * is x coord of position
      * @param y
-     *            is y coord of position
+     * is y coord of position
+     * 
      * @return Room or null if not inside a room
      */
 	Room getCurrentRoom(double x, double y);
@@ -132,68 +159,97 @@ public interface IRobot {
     /**
      * Get current zone that the robot is in.
      * 
-     * @return zone the bot is in.
+     * @return 
+     * zone the bot is in
      */
 	Zone getZone();
 	
 	 /**
-     * Moves the robot by displacing it for the given amount. If the robot collides with something, the movement target
-     * is cancelled to avoid continuous bumping.
+     * Moves the robot by displacing it for the given amount. 
+     * If the robot collides with something, the movement target is cancelled to avoid continuous bumping.
      * 
      * @param x
-     *            the displacement in the x-dimension.
+     * the displacement in the x-dimension
      * @param y
-     *            the displacement in the y-dimension.
+     * the displacement in the y-dimension
      */
 	void moveByDisplacement(double x, double y);
 	
+	/**
+	 * makes the robot moves in the environment. 
+	 */
 	void move();
 	
     /**
-     * Stop the motion of the robot. Effectively sets the target location to null. You can override this to catch this
-     * event.
+     * Stop the motion of the robot. 
+     * Effectively sets the target location to null. 
+     * You can override this to catch this event.
      */
 	void stopRobot();
 	
+	/**
+	 * @return
+	 * whether the robot has collided with something
+	 */
 	boolean isCollided();
 	
+	/**
+	 * @param collided
+	 * the value "collided" should be set to
+	 */
 	void setCollided(boolean collided);
 	
     /**
      * clear the collision flag. You can use this to reset the flag after you took notice of the collision.
-     * 
      */
 	void clearCollided();
 	
+	/**
+	 * @return
+	 * True if an agent is connected to the robot
+	 */
 	boolean isConnected();
 	
+	/**
+	 * @return
+	 * True if there is only one robot per zone
+	 */
 	boolean isOneBotPerZone();
 	
 	/**
-     * Gets the size of the robot
-     * 
-     * @return size
+     * @return
+     * The size of the robot 
      */
 	int getSize();
 	
 	/**
-     * Sets the size of a robot to a certain integer
-     * 
      * @param s
+     * gives a new size to the robot
      */
 	void setSize(int s);
 	
+	/**
+	 * @return
+	 * translates the robot object to a map entity which can be drawn by the map renderer
+	 */
 	Entity getView();
 	
     /**
-     * gets AgentRecord
-     * 
-     * @return AgentRecord
+     * @return 
+     * the agent record containing statistics about actions performed by the robot
      */
 	AgentRecord getAgentRecord();
 	
+	/**
+	 * @return
+	 * the robot's battery
+	 */
 	Battery getBattery();
 	
+	/**
+	 * @param battery
+	 * gives a new battery to a robot
+	 */
 	void setBattery(Battery battery);
 	
 	/**
@@ -219,38 +275,77 @@ public interface IRobot {
      */
 	IRobot getParent();
 	
+	/**
+	 * @param hI
+	 * changes the parent 
+	 */
 	void setParent(IRobot hI);
 	
+	/**
+	 * @return
+	 * returns which handicaps are attached to the robot
+	 */
 	ArrayList<String> getHandicapsList();
 	
-	void setHandicapsList(ArrayList<String> handicapsList);
-	
+	/**
+	 * @return
+	 * the number of grippers a robot has
+	 */
 	int getGripperCapacity();
 	
+	/**
+	 * @param newcap
+	 * changes the number of grippers to a new variable
+	 */
 	void setGripperCapacity(int newcap);
 	
+	/**
+	 * @return
+	 * how much the speed of the robot is multiplied by
+	 */
 	double getSpeedMod();
 	
+	/**
+	 * @return
+	 * whether the robot is controlled by a human agent (is human, essentially)
+	 */
 	boolean isHuman();
 	
+	/**
+	 * @return
+	 * the e-Partner held by a human 
+	 * only used if the robot has a Human wrapped around it
+	 */
 	EPartner getEPartner();
 	
+	/**
+	 * @return
+	 * whether the human is holding a e-Partner
+	 * only used if the robot has a Human wrapped around it
+	 */
 	boolean isHoldingEPartner();
 	
+	/**
+	 * @param eP
+	 * the e-Partner the human could pick up
+	 * @return
+	 * true if the human is holding e-Partner eP
+	 * only used if the robot has a Human wrapped around it
+	 */
 	boolean canPickUpEPartner(EPartner eP);
 	
+	/**
+	 * @param eP
+	 * only used if the robot has a Human wrapped around it
+	 */
 	void pickUpEPartner(EPartner eP);
 	
+	/**
+	 * only used if the robot has a Human wrapped around it
+	 */
 	void dropEPartner();
 	
     /**
-     * get the {@link NavigatingRobot} at the head of the chain.
-     * 
-     * @return the Robot
-     */
-	AbstractRobot getSuperParent();
-
-	/**
 	 * Get the current state of the robot.
 	 * @return the state
 	 */
@@ -263,4 +358,39 @@ public interface IRobot {
      * @param target the object i will move to
      */
     void setTarget(BoundedMoveableObject target);
+
+    /**
+     * @return
+     * the location of the robot
+     */
+    NdPoint getLocation();
+
+    /**
+     * @return
+     * the ID of the robot
+     */
+    long getId();
+
+    /**
+     * TODO: please clarify this. 
+     * 
+     * @return
+     * a giant HashMap handled by Repast containing a bunch of objects
+     */
+    Context<Object> getContext();
+
+    /**
+     * @param b
+     * the block we want to calculate the distance to
+     * @return
+     * the distance in question
+     */
+    double distanceTo(Block b);
+
+    /**
+     * get the {@link NavigatingRobot} at the head of the chain.
+     * 
+     * @return the Robot
+     */
+    AbstractRobot getSuperParent();
 }
