@@ -1,11 +1,12 @@
 package nl.tudelft.bw4t.botstore.boteditorpanel;
 
+
+import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditor;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,35 +19,49 @@ import static org.mockito.Mockito.spy;
 
 /**
  * Test the boteditorpanel
+ *
  * @author ???
  * @author Tim
  */
 public class BotEditorPanelTest {
-    
-	/** the frame on which we put the panel */
-	private BotEditor editor;
-	/** the panel we test */
+
+    /**
+     * the frame on which we put the panel
+     */
+    private BotEditor editor;
+    /**
+     * the panel we test
+     */
     private BotEditorPanel panel;
-    /** the spy entity of panel */
+    /**
+     * the spy entity of panel
+     */
     private BotEditorPanel spypanel;
-    
-    /** setup the panel */
+
+    /**
+     * setup the panel
+     */
     @Before
     public final void setUp() {
-        String name = "";
-        panel = new BotEditorPanel(name);
+        EntityPanel entityPanel = new EntityPanel();
+        entityPanel.getBotConfigs().add(new BotConfig());
+        MainPanel parent = new MainPanel(new ConfigurationPanel(), entityPanel);
+        editor = new BotEditor(parent, 0);
+        panel = new BotEditorPanel(editor, parent);
         spypanel = spy(panel);
-        MainPanel parent = new MainPanel(new ConfigurationPanel(), new EntityPanel());
-        editor = new BotEditor(parent, name);
     }
-    
-    /** dispose the frame after testing */
+
+    /**
+     * dispose the frame after testing
+     */
     @After
     public final void dispose() {
         editor.dispose();
     }
-    
-    /** testing the initial slider setup */
+
+    /**
+     * testing the initial slider setup
+     */
     @Test
     public final void testInitialSliders() {
         int speed = 100;
@@ -58,8 +73,10 @@ public class BotEditorPanelTest {
         assertEquals(cap, spypanel.getBatterySlider().getValue());
         assertEquals(grippers, spypanel.getNumberOfGrippersSlider().getValue());
     }
-    
-    /** test modify sliders */
+
+    /**
+     * test modify sliders
+     */
     @Test
     public final void testModifySliders() {
         int speed = 140;
@@ -72,42 +89,47 @@ public class BotEditorPanelTest {
         spypanel.getNumberOfGrippersSlider().setValue(5);
         assertEquals(speed, spypanel.getSpeedSlider().getValue());
         assertEquals(size, spypanel.getSizeSlider().getValue());
-        assertEquals(cap, spypanel.getBatterySlider().getValue());  
+        assertEquals(cap, spypanel.getBatterySlider().getValue());
         assertEquals(grippers, spypanel.getNumberOfGrippersSlider().getValue());
     }
-    
-    /** test initial handicaps */
+
+    /**
+     * test initial handicaps
+     */
     @Test
     public final void testInitialHandicaps() {
-    	assertFalse(spypanel.getGripperCheckbox().isSelected());
-    	assertFalse(spypanel.getColorblindCheckbox().isSelected());
-    	assertFalse(spypanel.getCustomSizeCheckbox().isSelected());
-    	assertFalse(spypanel.getMovespeedCheckbox().isSelected());
-    	assertFalse(spypanel.getBatteryEnabledCheckbox().isSelected());
+        assertFalse(spypanel.getGripperCheckbox().isSelected());
+        assertFalse(spypanel.getColorblindCheckbox().isSelected());
+        assertFalse(spypanel.getCustomSizeCheckbox().isSelected());
+        assertFalse(spypanel.getMovespeedCheckbox().isSelected());
+        assertFalse(spypanel.getBatteryEnabledCheckbox().isSelected());
     }
-    
-    /** test modify handicaps */
+
+    /**
+     * test modify handicaps
+     */
     @Test
     public final void testModifyCheckBoxes() {
-    	spypanel.getGripperCheckbox().setSelected(true);
-    	spypanel.getColorblindCheckbox().setSelected(true);
-    	spypanel.getCustomSizeCheckbox().setSelected(true);
-    	spypanel.getMovespeedCheckbox().setSelected(true);
-    	spypanel.getBatteryEnabledCheckbox().setSelected(true);
-    	assertTrue(spypanel.getGripperCheckbox().isSelected());
-    	assertTrue(spypanel.getColorblindCheckbox().isSelected());
-    	assertTrue(spypanel.getCustomSizeCheckbox().isSelected());
-    	assertTrue(spypanel.getMovespeedCheckbox().isSelected());
-    	assertTrue(spypanel.getBatteryEnabledCheckbox().isSelected());
+        spypanel.getGripperCheckbox().setSelected(true);
+        spypanel.getColorblindCheckbox().setSelected(true);
+        spypanel.getCustomSizeCheckbox().setSelected(true);
+        spypanel.getMovespeedCheckbox().setSelected(true);
+        spypanel.getBatteryEnabledCheckbox().setSelected(true);
+        assertTrue(spypanel.getGripperCheckbox().isSelected());
+        assertTrue(spypanel.getColorblindCheckbox().isSelected());
+        assertTrue(spypanel.getCustomSizeCheckbox().isSelected());
+        assertTrue(spypanel.getMovespeedCheckbox().isSelected());
+        assertTrue(spypanel.getBatteryEnabledCheckbox().isSelected());
     }
-    
-    /** test the batteryusevale */
+
+    /**
+     * test the batteryusevale
+     */
     @Test
     public final void testBatteryUseValue() {
-    	String value = "0";
-    	assertEquals(value, spypanel.getBatteryUseValueLabel().getText());
+        String value = "0";
+        assertEquals(value, spypanel.getBatteryUseValueLabel().getText());
     }
-    
-    
-    
+
+
 }

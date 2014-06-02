@@ -27,6 +27,13 @@ class ResetButton implements ActionListener {
      * @param ae The action event causing this.
      */
     public void actionPerformed(ActionEvent ae) {
+    	view.getBotNameTextField().setText(view.getDataObject().getBotName());
+		view.getBotAmountTextField().setText("" + view.getDataObject().getBotAmount());
+		if (view.getDataObject().getBotController().equals("Agent")) {
+			view.getBotControllerType().setSelectedIndex(0);
+		} else {
+			view.getBotControllerType().setSelectedIndex(1);
+		}
         view.getSpeedSlider().setValue(100);
         view.getSizeSlider().setValue(2);
         view.getBatterySlider().setValue(0);

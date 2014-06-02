@@ -4,8 +4,10 @@ import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -13,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
  * BotEditorPanel which serves as the content pane for the BotEditor frame
@@ -39,6 +42,12 @@ public class BotEditorPanel extends JPanel {
      * Panel for all sliders.
      */
     private JPanel botSliders = new JPanel();
+    
+    /**
+     * Panel that shows name, controller type and amount.
+     */
+	private JPanel botInfo = new JPanel();
+	
     /**
      * The button to be clicked on to save the data object.
      */
@@ -53,15 +62,28 @@ public class BotEditorPanel extends JPanel {
      * data object and to close the frame.
      */
     private JButton cancelButton = new JButton("Cancel");
+
     /**
      * The button that opens the file chooser to select
      * an existing .goal file to use.
      */
     private JButton fileButton = new JButton("Use existing GOAL file");
+
     /**
-     * The label containing the name of the bot.
+     * Combobox for the controller types.
      */
-    private JLabel botNameTextField = new JLabel();
+	private JComboBox botControllerSelector = new JComboBox();
+	    
+    /**
+     * TextField that shows the name of the bot.
+     */
+	private JTextField botNameTextField = new JTextField();
+	
+	/**
+	 * Textfield that shows the amount of bots of this type there are.
+	 */
+	private JTextField botAmountTextField = new JTextField();
+	    
     /**
      * The checkbox for enabling/disabling the gripper.
      */
@@ -118,21 +140,53 @@ public class BotEditorPanel extends JPanel {
      * The data object.
      */
     private BotConfig dataObject = new BotConfig();
+
+    /**
+     * The MainPanel.
+     */
+	private MainPanel mainPanel;
+	
+	/**
+	 * The BotEditor.
+	 */
+	private BotEditor botEditor;
     
     /**
-     * Create the botEditorPanel
-     * @param name the bot gets
+     * Create the botEditorPanel.
+     * @param botEditor The BotEditor.
+     * @param mainPanel The MainPanel.
      */
-    public BotEditorPanel(String name) {
-        botNameTextField.setText(name);
-        setLayout(new BorderLayout(20, 20));        
+    public BotEditorPanel(BotEditor botEditor, MainPanel mainPanel) {
+        setLayout(new BorderLayout(20, 20));      
         
+        this.mainPanel = mainPanel;
+		this.botEditor = botEditor;
+		this.dataObject = mainPanel.getEntityPanel().getBotConfig(botEditor.getRow());
+        
+        createBotInfoPanel();
         createBotCheckablesPanel();
         createBotSlidersPanel();
         
+        add(botInfo, BorderLayout.NORTH);
         add(botSliders, BorderLayout.WEST);
         add(botCheckables, BorderLayout.EAST);
     }
+    
+    /**
+	 * Create the panel which contains the bots name and the controller type
+	 */
+	private void createBotInfoPanel() {
+		botInfo.setLayout(new GridLayout(1, 0));
+		botNameTextField.setText(dataObject.getBotName());
+		botInfo.add(botNameTextField);
+
+		botControllerSelector.setModel(new DefaultComboBoxModel(new String[]{"Agent", "Human"}));
+		botInfo.add(botControllerSelector);
+		
+		botInfo.add(new JLabel("  Amount of this type:"));
+		botAmountTextField.setText("" + dataObject.getBotAmount());
+		botInfo.add(botAmountTextField);
+	}
     
     /**
      * create the checkables panel
@@ -163,15 +217,35 @@ public class BotEditorPanel extends JPanel {
         buttonPanel.add(resetButton);
         buttonPanel.add(cancelButton);
         
-        botCheckables.add(checkablesLabel);
+        botCheckables.add(new JLabel(""));
         checkablesPanel.setLayout(new BoxLayout(checkablesPanel, BoxLayout.PAGE_AXIS));
         checkablesPanel.add(handicapsLabel);
+        
+        if (dataObject.getGripperHandicap()) {
+        	gripperCheckbox.setSelected(true);
+        }
         checkablesPanel.add(gripperCheckbox);
+        
+        if (dataObject.getColorBlindHandicap()) {
+        	colorblindCheckbox.setSelected(true);
+        }
         checkablesPanel.add(colorblindCheckbox);
         checkablesPanel.add(emptyLabel);
         checkablesPanel.add(restrictionsLabel);
+        
+        if (dataObject.getSizeOverloadHandicap()) {
+        	customSizeCheckbox.setSelected(true);
+        }
         checkablesPanel.add(customSizeCheckbox);
+        
+        if (dataObject.getMoveSpeedHandicap()) {
+        	movespeedCheckbox.setSelected(true);
+        }
         checkablesPanel.add(movespeedCheckbox);
+        
+        if (dataObject.isBatteryEnabled()) {
+        	batteryEnabledCheckbox.setSelected(true);
+        }
         checkablesPanel.add(batteryEnabledCheckbox);
         namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.PAGE_AXIS));
         namePanel.add(emptyLabel2);
@@ -196,8 +270,6 @@ public class BotEditorPanel extends JPanel {
         JLabel perTickLabel = new JLabel("per tick");
         batteryUseLabel.setHorizontalAlignment(SwingConstants.CENTER);
         
-        JLabel botNameLabel = new JLabel("Bot name:");
-        
         JPanel batteryCapPanel = new JPanel();
         JPanel botNamePanel = new JPanel();
         
@@ -206,8 +278,6 @@ public class BotEditorPanel extends JPanel {
         batteryCapPanel.add(perTickLabel);
         
         botNamePanel.setLayout(new BoxLayout(botNamePanel, BoxLayout.PAGE_AXIS));
-        botNamePanel.add(botNameLabel);
-        botNamePanel.add(botNameTextField);
         
         JLabel numberOfGrippersLabel = new JLabel("Number of Grippers");
         numberOfGrippersLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -223,14 +293,29 @@ public class BotEditorPanel extends JPanel {
         batteryCapacity.setToolTipText("Max capacity on a scale of 10-100");
         
         createSliders();
-        botSliders.add(botNamePanel);
         botSliders.add(numberOfGrippersLabel);
+        numberOfGrippersSlider.setValue(dataObject.getGrippers());
+        if (dataObject.getGripperHandicap()) {
+        	numberOfGrippersSlider.setEnabled(false);
+        }
         botSliders.add(numberOfGrippersSlider);
         botSliders.add(sizeLabel);
+        sizeSlider.setValue(dataObject.getBotSize());
+        if (dataObject.getSizeOverloadHandicap()) {
+        	sizeSlider.setEnabled(true);
+        }
         botSliders.add(sizeSlider);
         botSliders.add(speedLabel);
+        speedSlider.setValue(dataObject.getBotSpeed());
+        if (dataObject.getMoveSpeedHandicap()) {
+        	speedSlider.setEnabled(true);
+        }
         botSliders.add(speedSlider);
         botSliders.add(batteryCapacity);
+        batterySlider.setValue(dataObject.getBotBatteryCapacity());
+        if (dataObject.isBatteryEnabled()) {
+        	batterySlider.setEnabled(true);
+        }
         botSliders.add(batterySlider);
         botSliders.add(batteryCapPanel);
     }
@@ -245,7 +330,6 @@ public class BotEditorPanel extends JPanel {
         numberOfGrippersSlider.setPaintTicks(true);
         numberOfGrippersSlider.setPaintLabels(true);
         numberOfGrippersSlider.setSnapToTicks(true);
-        numberOfGrippersSlider.setValue(1);
         numberOfGrippersSlider.setValueIsAdjusting(true);
         
         sizeSlider.setMajorTickSpacing(1);
@@ -254,7 +338,6 @@ public class BotEditorPanel extends JPanel {
         sizeSlider.setPaintTicks(true);
         sizeSlider.setPaintLabels(true);
         sizeSlider.setSnapToTicks(true);
-        sizeSlider.setValue(2);
         sizeSlider.setEnabled(false);
         sizeSlider.setValueIsAdjusting(true);
         
@@ -264,14 +347,12 @@ public class BotEditorPanel extends JPanel {
         speedSlider.setPaintLabels(true);
         speedSlider.setPaintTicks(true);
         speedSlider.setSnapToTicks(true);
-        speedSlider.setValue(100);
         speedSlider.setEnabled(false);
         speedSlider.setValueIsAdjusting(true);
         
         batterySlider = new JSlider();
         batterySlider.setMinimum(10);
         batterySlider.setMaximum(100);
-        batterySlider.setValue(10);
         batterySlider.setSnapToTicks(true);
         batterySlider.setPaintTicks(true);
         batterySlider.setPaintLabels(true);
@@ -301,6 +382,38 @@ public class BotEditorPanel extends JPanel {
     public JButton getCancelButton() {
         return cancelButton;
     }
+    /**
+     * Sets a new cancel button to be used.
+     * @param _cancelButton The new cancel button.
+     */
+    public void setCancelButton(JButton _cancelButton) {
+        this.cancelButton = _cancelButton;
+    }
+    
+    /**
+     * Returns the bot name textfield.
+     * @return The bot name textfield.
+     */
+    public JTextField getBotNameTextField() {
+    	return this.botNameTextField;
+    }
+    
+    /**
+     * Returns the controller type of the bot.
+     * @return The controller type of the bot.
+     */
+    public JComboBox getBotControllerType() {
+    	return this.botControllerSelector;
+    }
+    
+    /**
+     * Returns the bot amount textfield.
+     * @return The bot amount textfield.
+     */
+    public JTextField getBotAmountTextField() {
+    	return this.botAmountTextField;
+    }
+    
     /**
      * Get the currently used gripper checkbox.
      * @return The checkbox for setting the gripper handicap.
