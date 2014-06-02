@@ -455,18 +455,23 @@ public class RobotEntity implements RobotEntityInt {
     public void pickUp() {
         List<Block> canPickUp = new ArrayList<Block>();
 
+        LOGGER.debug(String.format("%s is trying to pick up a block.", ourRobot.getName()));
+        
         Iterable<Object> allBlocks = context.getObjects(Block.class);
         for (Object o : allBlocks) {
             Block aBlock = (Block) o;
 
+            LOGGER.trace(String.format("%s is %f units away from block %d.", ourRobot.getName(), ourRobot.distanceTo(aBlock), aBlock.getId()));
             if (ourRobot.canPickUp(aBlock)) {
                 canPickUp.add(aBlock);
+                LOGGER.trace(String.format("%s can pick up block %d.", ourRobot.getName(), aBlock.getId()));
             }
         }
 
         Block nearest;
         // Pick up closest block in canPickUp list
         if (canPickUp.isEmpty()) {
+        	LOGGER.debug(String.format("%s can not pickup any blocks.", ourRobot.getName()));
             return;
         } else {
             nearest = canPickUp.get(0);
@@ -476,6 +481,7 @@ public class RobotEntity implements RobotEntityInt {
                 }
             }
         }
+    	LOGGER.debug(String.format("%s will pickup block %d.", ourRobot.getName(), nearest.getId()));
         ourRobot.pickUp(nearest);
     }
 
@@ -551,6 +557,26 @@ public class RobotEntity implements RobotEntityInt {
             return false;
         }
         return dropzone.sequenceComplete();
+    }
+    
+    /**
+     * Only available for the human:
+     * picks up the e-Partner. 
+     */
+    @AsAction(name = "pickUpEPartner")
+    public void pickUpEPartner() {
+    	
+    }
+    
+    /**
+     * Only available for the human:
+     * drops the e-Partner they are currently holding. 
+     */
+    @AsAction(name = "dropEPartner")
+    public void dropEPartner() {
+    	if (ourRobot.isHuman()) {
+    		ourRobot.dropEPartner();
+    	}
     }
 
 }

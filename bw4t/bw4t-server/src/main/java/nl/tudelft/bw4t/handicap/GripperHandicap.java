@@ -6,10 +6,6 @@ import nl.tudelft.bw4t.blocks.Block;
  * @author Valentine Mairet & Ruben Starmans
  */
 public class GripperHandicap extends AbstractHandicapFactory {
-    /**
-     * boolean is true when the handicap is active.
-     */
-    private boolean isActive;
 
     /**
      * Calls the super method on p,
@@ -19,9 +15,8 @@ public class GripperHandicap extends AbstractHandicapFactory {
      */
     public GripperHandicap(HandicapInterface p) {
         super(p);
-        isActive = true;
-        
-        robot.getHandicapsMap().put("Gripper", this);
+        robot.getHandicapsList().add("Gripper");
+        robot.setGripperCapacity(0);
     }
 
     /**
@@ -32,25 +27,11 @@ public class GripperHandicap extends AbstractHandicapFactory {
      */
     @Override
     public boolean canPickUp(Block b) {
-        if (isActive) {
-            return false;
-        } else {
-            return super.canPickUp(b);
-        }
+    	return false;
     }
     
-    /**
-     * Activate the handicap.
-     */
-    public void activate() {
-        isActive = true;
-    }
-    
-    /**
-     * Deactivate the handicap.
-     * @param bool
-     */
-    public void deactivate() {
-        isActive = false;
+    @Override
+    public int getGripperCapacity() {
+    	return 0;
     }
 }

@@ -134,8 +134,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
             agentCount++;
 
             agentData.put(agent, renderer);
-        }
-        else {
+        } else {
             String agentClassName = InitParam.AGENTCLASS.getValue();
             Class<? extends BW4TAgent> c = Class.forName(agentClassName).asSubclass(BW4TAgent.class);
             Class[] types = new Class[] { String.class, RemoteEnvironment.class };

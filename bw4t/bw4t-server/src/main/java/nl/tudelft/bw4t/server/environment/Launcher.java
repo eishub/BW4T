@@ -7,14 +7,14 @@ import java.rmi.RemoteException;
 
 import javax.xml.bind.JAXBException;
 
+import nl.tudelft.bw4t.robots.DefaultRobotFactory;
+import nl.tudelft.bw4t.robots.RobotFactory;
 import nl.tudelft.bw4t.server.BW4TServer;
 import nl.tudelft.bw4t.startup.LauncherException;
 import nl.tudelft.bw4t.util.FileUtils;
 
 import org.apache.log4j.BasicConfigurator;
-
 import org.apache.log4j.PropertyConfigurator;
-
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
@@ -72,6 +72,11 @@ public class Launcher {
      * The key necessary to remotely kill the server.
      */
     private String paramKey;
+    
+    /**
+     * stores a reference to the robot faactory being used to create new robots.
+     */
+    private RobotFactory robotFactory;
 
     /**
      * This class cannot be externally instanciated, it is a utility startup class.
@@ -80,6 +85,7 @@ public class Launcher {
      *            The arguments received from the commandline
      */
     protected Launcher(final String[] args) {
+    	setInstance(this);
         /**
          * Set up the logging environment to log on the console.
          */
@@ -91,9 +97,13 @@ public class Launcher {
         setupDirectoryStructure();
         LOGGER.info("Setting up BW4T Environment.");
         setupEnvironment();
+        setupFactories();
+        LOGGER.info("Starting the BW4T Environment.");
+        startEnvironment();
     }
+    
 
-    /**
+	/**
      * Interpret the parameter sent from the operating system.
      * 
      * @param args
@@ -173,17 +183,36 @@ public class Launcher {
     }
 
     /**
-     * setup the environment with repast and all.
+     * setup the environment.
      */
     private void setupEnvironment() {
+            try {
+				environment = new BW4TEnvironment(setupRemoteServer(), paramScenario, paramMap, paramGUI, paramKey);
+			} catch (ManagementException | IOException | ScenarioLoadException | JAXBException e) {
+				LOGGER.fatal("Failed to setup the BW4T Environment.");
+	            throw new LauncherException("failed to setup the bw4t environment", e);
+			}
+        
+    }
+
+    /**
+     * Setup the factories used by the system.
+     */
+    private void setupFactories() {
+		robotFactory = new DefaultRobotFactory();
+	}
+
+    /**
+     * start the environment, repast and all.
+     */
+	private void startEnvironment() {
         try {
-            environment = new BW4TEnvironment(setupRemoteServer(), paramScenario, paramMap, paramGUI, paramKey);
-            environment.launchAll();
+		environment.launchAll();
         } catch (ManagementException | IOException | ScenarioLoadException | JAXBException e) {
             LOGGER.fatal("Failed to start the BW4T Environment.");
             throw new LauncherException("failed to start the bw4t environment", e);
         }
-    }
+	}
 
     /**
      * Setup the rpc server so clients can connect to this environment.
@@ -199,6 +228,10 @@ public class Launcher {
         }
     }
 
+    public RobotFactory getRobotFactory() {
+    	return robotFactory;
+    }
+
     /**
      * The main method to start up the bw4t server.
      * 
@@ -206,7 +239,7 @@ public class Launcher {
      *            the command line arguments transmitted by the operating systems
      */
     public static void main(final String[] args) {
-        setInstance(new Launcher(args));
+        new Launcher(args);
     }
 
     /**
