@@ -55,7 +55,8 @@ public class DefaultRobotFactory implements RobotFactory {
 		if (config.getBotController().equalsIgnoreCase("Human")) {
 			r = new Human(r);
 		}
-		r.getSuperParent().setBattery(new Battery(config.getBotBatteryCapacity(), config.getBotBatteryDischargeRate()));
+		r.getSuperParent().setBattery(
+				new Battery(config.getBotBatteryCapacity(), config.getBotBatteryDischargeRate()));
 		return r;
 	}
 
