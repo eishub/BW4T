@@ -372,10 +372,10 @@ public class EntityPanel extends JPanel {
         JComboBox controllers = new JComboBox<String>();
         controllers.addItem(BotConfig.Controller.AGENT);
         controllers.addItem(BotConfig.Controller.HUMAN);
+
         botTable.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(controllers));
 
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-        renderer.setToolTipText("Testtext");
         botTable.getColumnModel().getColumn(1).setCellRenderer(renderer);
     }
 
@@ -672,6 +672,10 @@ public class EntityPanel extends JPanel {
         return botConfigList.get(index);
     }
     
+    public BotConfig getOldBotConfig(int index) {
+        return oldBotConfigs.get(index);
+    }
+    
     /**
      * Returns the previous saved BotConfig list.
      * @return The previous saved BotConfig list.
@@ -684,11 +688,7 @@ public class EntityPanel extends JPanel {
      * Updates the BotConfig list.
      */
     public void updateBotConfigs() {
-        oldBotConfigs.clear();
-        
-        for (int i = 0; i < botConfigList.size(); i++) {
-            oldBotConfigs.add(botConfigList.get(i));
-        }
+    	oldBotConfigs = botConfigList;
     }
     
     /**
@@ -701,7 +701,7 @@ public class EntityPanel extends JPanel {
         }
         
         for (int i = 0; i < botConfigList.size(); i++) {
-            if (botConfigList.get(i).toString().equals(oldBotConfigs.get(i).toString())) {
+            if (!botConfigList.get(i).bcToString().equals(oldBotConfigs.get(i).bcToString())) {
                 return false;
             }
         }
