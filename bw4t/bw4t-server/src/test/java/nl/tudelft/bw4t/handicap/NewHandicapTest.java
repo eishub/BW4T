@@ -71,7 +71,7 @@ public class NewHandicapTest {
      */
     @Test
     public void testMoveSpeedHandicap() {
-    	HandicapInterface r = new MoveSpeedHandicap(new NavigatingRobot("", space, context, true, 1), 3.14);
+    	HandicapInterface r = new MoveSpeedHandicap(new NavigatingRobot("", space, context, true, 1), 1.1);
     	
         assertTrue(r.getSuperParent().getHandicapsList().contains("MoveSpeed"));
         
