@@ -47,16 +47,16 @@ public class MapOperations {
         BasicMenuOperations.addSectionTitleToPopupMenu("Tell: ", gui.getjPopupMenu());
 
         BasicMenuOperations.addMenuItemToPopupMenu(
-                new BW4TMessage(MessageType.lookingFor, null, color.getName(), null), gui);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.willGetColor, null, color.getName(),
+                new BW4TMessage(MessageType.LOOKINGFOR, null, color.getName(), null), gui);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.WILLGETCOLOR, null, color.getName(),
                 null), gui);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.droppedOffBlock, null, color.getName(),
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.DROPPEDOFFBLOCK, null, color.getName(),
                 null), gui);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.weNeed, null, color.getName(), null),
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.WENEED, null, color.getName(), null),
                 gui);
 
         if (holdingID != null) {
-            BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.hasColor, null, color.getName(),
+            BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.HASCOLOR, null, color.getName(),
                     null), gui);
 
             JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu("I have a " + color + " block from room",
@@ -65,7 +65,7 @@ public class MapOperations {
             for (Zone room : cmc.getRooms()) {
                 menuItem = new JMenuItem(room.getName());
                 menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(
-                        MessageType.hasColorFromRoom, room.getName(), color.getName(), null), gui.getController()));
+                        MessageType.HASCOLORFROMROOM, room.getName(), color.getName(), null), gui.getController()));
                 submenu.add(menuItem);
             }
         }
@@ -73,12 +73,12 @@ public class MapOperations {
         gui.getjPopupMenu().addSeparator();
         BasicMenuOperations.addSectionTitleToPopupMenu("Ask: ", gui.getjPopupMenu());
 
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.whereIsColor, null, color.getName(),
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.WHEREISCOLOR, null, color.getName(),
                 null), gui);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.whoHasABlock, null, color.getName(),
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.WHOHASABLOCK, null, color.getName(),
                 null), gui);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.whereShouldIGo), gui);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.whatColorShouldIGet), gui);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.WHERESHOULDIGO), gui);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.WHATCOLORSHOULDIGET), gui);
 
         gui.getjPopupMenu().addSeparator();
         menuItem = new JMenuItem("Close menu");
