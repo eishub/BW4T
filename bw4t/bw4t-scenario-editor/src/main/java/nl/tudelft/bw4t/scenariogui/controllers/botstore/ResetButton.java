@@ -29,6 +29,7 @@ class ResetButton implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
     	view.getBotNameTextField().setText(view.getDataObject().getBotName());
 		view.getBotAmountTextField().setText("" + view.getDataObject().getBotAmount());
+		//FIXME change to enum
 		if (view.getDataObject().getBotController().equals("Agent")) {
 			view.getBotControllerType().setSelectedIndex(0);
 		} else {
@@ -48,6 +49,6 @@ class ResetButton implements ActionListener {
         view.getBatteryEnabledCheckbox().setSelected(false);
         view.getNumberOfGrippersSlider().setValue(1);
         view.getFileNameField().setText(".goal");
-        view.getBotNameField().setText("");
+        view.getReferenceNameField().setText("");
     }
 }
