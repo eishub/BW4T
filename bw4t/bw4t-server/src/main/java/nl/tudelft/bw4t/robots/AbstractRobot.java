@@ -37,14 +37,14 @@ import repast.simphony.space.continuous.NdPoint;
  */
 public abstract class AbstractRobot extends BoundedMoveableObject implements IRobot {
 	
-	/**
+	private static final Logger LOGGER = Logger.getLogger(AbstractRobot.class);
+
+    /**
 	 * AgentRecord object for this Robot, needed for logging
 	 */
 	AgentRecord agentRecord;
 
-	private static final Logger LOGGER = Logger.getLogger(AbstractRobot.class);
-
-    /**
+	/**
      * The distance which it can move per tick. This should never be larger than the door width because that might cause
      * the bot to attempt to jump over a door (which will fail).
      */
@@ -110,8 +110,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
      *            true if max 1 bot in a zone
      * @param cap
      *            The holding capacity of the robot.
-     * @param human
-     *            True if the bot is human controlled.
      */
     public AbstractRobot(String pname, ContinuousSpace<Object> space, Context<Object> context, boolean poneBotPerZone, int cap) {
         super(space, context);
@@ -133,17 +131,11 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         this.handicapsList = new ArrayList<String>();
     }
 
-    /**
-	 * @return The name of the robot.
-	 */
 	@Override
 	public String getName() {
 	    return name;
 	}
 
-	/**
-     * called when robot becomes connected and should now be injected in repast.
-     */
     @Override
     public void connect() {
     	BW4TEnvironment env = BW4TEnvironment.getInstance();
@@ -155,16 +147,17 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		}
         connected = true;
 		try {
-			agentRecord = new AgentRecord((associatedAgents != null && !associatedAgents.isEmpty())?associatedAgents.iterator().next(): "no agents", env.getType(this.getName()));
+			agentRecord = 
+			        new AgentRecord(
+			                (associatedAgents != null && !associatedAgents.isEmpty())
+			                ? associatedAgents.iterator().next() : "no agents", 
+			                        env.getType(this.getName()));
 		} catch (EntityException e) {
 			LOGGER.error("Unable to get the type of this entity", e);
 			agentRecord = new AgentRecord("unkown", "unkown");
 		}
     }
 
-    /**
-     * called when robot should be disconnected.
-     */
     @Override
     public void disconnect() {
         connected = false;
@@ -185,54 +178,27 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         return super.hashCode();
     }
 
-    /**
-     * @return The block the robot is holding, null if holding none.
-     */
     @Override
     public List<Block> isHolding() {
         return holding;
     }
 
-    /**
-     * @return The targetlocation of the robot
-     */
     @Override
     public synchronized NdPoint getTargetLocation() {
         return targetLocation;
     }
 
-    /**
-     * Sets the location to which the robot should move. This also clears the {@link #collided} flag.
-     * 
-     * @param ptargetLocation
-     *            the location to move to.
-     */
     @Override
     public synchronized void setTargetLocation(NdPoint ptargetLocation) {
         this.targetLocation = ptargetLocation;
         collided = false;
     }
 
-    /**
-     * Check if robot can pick up a block.
-     * 
-     * @param b
-     *            the block to check
-     * @return true if the block is within reach and if the bot isn't holding a block already.
-     */
     @Override
     public boolean canPickUp(Block b) {
         return (distanceTo(b.getLocation()) <= ARM_DISTANCE) && b.isFree() && (holding.size() < grippercap);
     }
 
-    /**
-     * Pick up a block
-     * 
-     * @param b
-     *            , the block to pick up
-     * TODO: Do we want the robot to drop a block if he already is holding one or just ignore the block?
-     * 		Shouldn't it then throw an exception when the robot tries to pick up something it cannot?
-     */
     @Override
     public void pickUp(Block b) {
     	if (this.grippercap == 1) {
@@ -243,9 +209,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         b.removeFromContext();
     }
 
-    /**
-     * Drops the block the robot is holding on the current location. TODO: What if multiple blocks dropped at same spot?
-     */
     @Override
     public void drop() {
         if (!holding.isEmpty()) {
@@ -274,12 +237,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         }
     }
 
-    /**
-     * A method for dropping multiple blocks at once.
-     * 
-     * @param amount
-     *            The amount of blocks that have to be dropped, needs to be less than the amount of blocks in the list.
-     */
     @Override
     public void drop(int amount) {
         assert amount <= holding.size();
@@ -311,15 +268,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         super.moveTo(x, y);
     }
 
-    /**
-     * Check motion type for robot to move to <endx, endy>. The {@link #MoveType} gives the actual type / possibility of
-     * the move, plus the details why it is (not) possible.
-     * 
-     * @param end
-     *            is x position of target
-     * @param endy
-     *            is y position of target
-     */
     @Override
     public MoveType getMoveType(double endx, double endy) {
         double startx = getLocation().getX();
@@ -344,13 +292,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 
     }
 
-    /**
-     * check if we can access endzone from startzone.
-     * 
-     * @param startzone
-     * @param endzone
-     * @return
-     */
     @Override
     public MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door) {
         if (startzone == endzone) {
@@ -394,16 +335,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         return MoveType.ENTERING_FREESPACE;
     }
 
-    /**
-     * get door at a given position. Note that you can be in a door and at the same time in a room. This is because
-     * rooms and doors partially overlap usually.
-     * 
-     * @param x
-     *            is x coord of position
-     * @param y
-     *            is y coord of position
-     * @return Door or null if not on a door
-     */
     @Override
     public Door getCurrentDoor(double x, double y) {
         for (Object o : context.getObjects(Door.class)) {
@@ -415,15 +346,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         return null;
     }
 
-    /**
-     * get room at a given position. CHECK maybe move this to RoomLocator?
-     * 
-     * @param x
-     *            is x coord of position
-     * @param y
-     *            is y coord of position
-     * @return Room or null if not inside a room
-     */
     @Override
     public Room getCurrentRoom(double x, double y) {
         for (Object o : context.getObjects(Room.class)) {
@@ -435,25 +357,12 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         return null;
     }
 
-    /**
-	 * Get current zone that the robot is in.
-	 * 
-	 * @return zone the bot is in.
-	 */
 	@Override
 	public Zone getZone() {
 	    return ZoneLocator.getZoneAt(getLocation());
 	}
 
-	/**
-     * Moves the robot by displacing it for the given amount. If the robot collides with something, the movement target
-     * is cancelled to avoid continuous bumping.
-     * 
-     * @param x
-     *            the displacement in the x-dimension.
-     * @param y
-     *            the displacement in the y-dimension.
-     */
+
     @Override
     public void moveByDisplacement(double x, double y) {
         moveTo(getLocation().getX() + x, getLocation().getY() + y);
@@ -495,10 +404,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         }
     }
 
-    /**
-     * Stop the motion of the robot. Effectively sets the target location to null. You can override this to catch this
-     * event.
-     */
+
     @Override
     public synchronized void stopRobot() {
         this.targetLocation = null;
@@ -515,10 +421,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         this.collided = collided;
     }
 
-    /**
-	 * clear the collision flag. You can use this to reset the flag after you took notice of the collision.
-	 * 
-	 */
+
 	@Override
 	public void clearCollided() {
 	    collided = false;
@@ -534,21 +437,13 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	    return this.oneBotPerZone;
 	}
 
-	/**
-	 * Gets the size of the robot
-	 * 
-	 * @return size
-	 */
+
 	@Override
 	public int getSize() {
 	    return this.size;
 	}
 
-	/**
-     * Sets the size of a robot to a certain integer
-     * 
-     * @param s
-     */
+
     @Override
     public void setSize(int s) {
         this.size = s;
@@ -565,11 +460,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         return new Entity(getName(), loc.getX(), loc.getY(), bs);
     }
     
-    /**
-	 * gets AgentRecord
-	 * 
-	 * @return AgentRecord
-	 */
 	@Override
 	public AgentRecord getAgentRecord() {
 	    return agentRecord;
@@ -586,26 +476,16 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	    this.battery = battery;
 	}
 
-	/**
-	 * @return This method returns the battery percentage.
-	 */
 	@Override
 	public int getBatteryPercentage() {
 	    return this.battery.getPercentage();
 	}
 
-	/**
-	 * 
-	 * @return discharge rate of battery.
-	 */
 	@Override
 	public double getDischargeRate() {
 	    return this.battery.getDischargeRate();
 	}
 
-	/**
-	 * The robot is in a charging zone. The robot charges.
-	 */
 	@Override
 	public void recharge() {
 	    if ("chargingzone".equals(this.getZone().getName())) {
@@ -613,19 +493,11 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	    }
 	}
 
-	/**
-	 * get the parent, returns null because Robot is the super parent
-	 * 
-	 * @return null
-	 */
 	@Override
 	public IRobot getParent() {
 	    return null;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void setParent(IRobot hI) {
 	    // does not do anything because Robot is the super parent
@@ -671,9 +543,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		return false;
 	}
 
-	/**
-	 * Only a human has the possibility to use these functions. 
-	 */
 	@Override
 	public boolean canPickUpEPartner(EPartner eP) {
 		return false;
@@ -687,11 +556,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	public void dropEPartner() {
 	}
 
-	/**
-	 * returns this Robot
-	 * 
-	 * @return this
-	 */
 	@Override
 	public AbstractRobot getSuperParent() {
 	    return this;
