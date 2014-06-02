@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
@@ -93,7 +94,7 @@ class MenuOptionOpen extends AbstractMenuOption {
                 
                 for (int i = 0; i < rows; i++) {
                     String botName = configuration.getBot(i).getBotName();
-                    String botController = configuration.getBot(i).getBotController();
+                    BotConfig.Controller botController = configuration.getBot(i).getBotController();
                     String botAmount = Integer.toString(configuration.getBot(i).getBotAmount());
                     Object[] botObject = {botName, botController, botAmount};
                     entityPanel.getBotTableModel().addRow(botObject);

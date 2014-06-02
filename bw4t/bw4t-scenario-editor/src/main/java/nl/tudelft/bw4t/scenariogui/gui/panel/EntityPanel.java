@@ -370,8 +370,8 @@ public class EntityPanel extends JPanel {
      */
     public void setUpControllerColumn() {
         JComboBox controllers = new JComboBox<String>();
-        controllers.addItem("Agent");
-        controllers.addItem("Human");
+        controllers.addItem(BotConfig.Controller.AGENT);
+        controllers.addItem(BotConfig.Controller.HUMAN);
         botTable.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(controllers));
 
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
