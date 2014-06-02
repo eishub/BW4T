@@ -201,9 +201,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 
     @Override
     public void pickUp(Block b) {
-    	if (this.grippercap == 1) {
-    		drop();
-    	}
         holding.add(b);
         b.setHeldBy(this);
         b.removeFromContext();
