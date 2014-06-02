@@ -5,15 +5,15 @@
     This configuration file was written by the eclipse-cs plugin configuration editor
 -->
 <!--
-    Checkstyle-Configuration: BW4T Checkstyle configuration
+    Checkstyle-Configuration: BW4TCheckstyle
     Description: none
 -->
 <module name="Checker">
   <property name="severity" value="warning"/>
   <module name="TreeWalker">
     <module name="JavadocMethod">
+      <property name="allowMissingPropertyJavadoc" value="true"/>
       <property name="suppressLoadErrors" value="true"/>
-      <property name="allowMissingPropertyJavadoc" value="true" />
     </module>
     <module name="JavadocType"/>
     <module name="JavadocVariable"/>
@@ -85,17 +85,14 @@
     <module name="ArrayTypeStyle"/>
     <module name="TrailingComment"/>
     <module name="UncommentedMain">
-    	<property name="excludedClasses" value="Launcher"/>
+      <property name="excludedClasses" value="Launcher"/>
     </module>
     <module name="UpperEll"/>
     <module name="MissingDeprecated"/>
     <module name="MissingOverride"/>
     <module name="RightCurly">
-      <property name="option" value="alone"/>
-      <property name="tokens" value="LITERAL_FINALLY,LITERAL_IF,LITERAL_ELSE"/>
-    </module>
-    <module name="RightCurly">
-      <property name="tokens" value="LITERAL_TRY,LITERAL_CATCH"/>
+      <property name="tokens" value="LITERAL_TRY,LITERAL_CATCH,LITERAL_ELSE"/>
+       <property name="tokens" value="LITERAL_FINALLY,LITERAL_IF"/>
     </module>
   </module>
   <module name="NewlineAtEndOfFile"/>
