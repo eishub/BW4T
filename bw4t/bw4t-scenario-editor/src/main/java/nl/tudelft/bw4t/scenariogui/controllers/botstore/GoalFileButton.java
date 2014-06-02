@@ -19,16 +19,24 @@ public class GoalFileButton implements ActionListener {
 	 */
 	private BotEditorPanel view;
 	/**
+	 * The file chooser.
+	 */
+	private JFileChooser jfc;
+	/**
 	 * Constructor.
 	 * @param _view The panel containing the button.
 	 */
 	public GoalFileButton(BotEditorPanel _view) {
 		view = _view;
 	}
+	/**
+	 * Performs the action.
+	 * @param arg0 The action event.
+	 */
 	@SuppressWarnings("static-access")
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		JFileChooser jfc = new JFileChooser();
+		jfc = new JFileChooser();
 		jfc.setFileFilter(FileFilters.goalFilter());
 		if (jfc.showOpenDialog(view) == jfc.APPROVE_OPTION) {
 			File f = jfc.getSelectedFile();
