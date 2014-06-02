@@ -40,8 +40,9 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	private static final Logger LOGGER = Logger.getLogger(AbstractRobot.class);
 
     /**
-	 * AgentRecord object for this Robot, needed for logging
-	 */
+     * AgentRecord object for this Robot, needed for logging. It needs to be set up at the initialization of the object,
+     * because we otherwise get an Exception when adding Robots after we have added the rooms to the environment.
+     */
 	AgentRecord agentRecord = new AgentRecord("", "");
 
 	/**
