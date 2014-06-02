@@ -85,6 +85,7 @@ public class Launcher {
      *            The arguments received from the commandline
      */
     protected Launcher(final String[] args) {
+    	setInstance(this);
         /**
          * Set up the logging environment to log on the console.
          */
@@ -238,7 +239,7 @@ public class Launcher {
      *            the command line arguments transmitted by the operating systems
      */
     public static void main(final String[] args) {
-        setInstance(new Launcher(args));
+        new Launcher(args);
     }
 
     /**
