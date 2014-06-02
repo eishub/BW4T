@@ -49,7 +49,7 @@ public class DefaultRobotFactory implements RobotFactory {
 		if (config.getSizeOverloadHandicap()) {
 			r = new SizeOverloadHandicap(r, config.getBotSize());
 		}
-		if (config.getBotController().equalsIgnoreCase("Human")) {
+		if (config.getBotController() == BotConfig.Controller.HUMAN) {
 			r = new Human(r);
 		}
 		r.getSuperParent().setBattery(new Battery(config.getBotBatteryCapacity(), config.getBotBatteryDischargeRate()));

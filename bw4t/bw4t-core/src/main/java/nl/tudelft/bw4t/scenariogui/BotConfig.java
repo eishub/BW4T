@@ -12,11 +12,15 @@ import javax.xml.bind.annotation.XmlElement;
  */
 
 public final class BotConfig {
+
+    public enum Controller {
+        AGENT,
+        HUMAN
+    }
     
     private String name = "Bot";
     
-    //FIXME This should be an enum!
-    private String controller = "Agent";
+    private Controller controller = Controller.AGENT;
     
     private int amount = 1;
 
@@ -66,7 +70,7 @@ public final class BotConfig {
      * @param controller The controller type of the bot.
      */
     @XmlElement
-    public void setBotController(String controller) {
+    public void setBotController(Controller controller) {
         this.controller = controller;
     }
     
@@ -74,7 +78,7 @@ public final class BotConfig {
      * Returns the controller type of the bot.
      * @return The controller type of the bot.
      */
-    public String getBotController() {
+    public Controller getBotController() {
         return this.controller;
     }
     

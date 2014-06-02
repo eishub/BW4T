@@ -145,7 +145,7 @@ public final class ExportToGOAL {
         for (BotConfig bot : ExportToGOAL.configuration.getBots()) {
             //TODO: Change this to goal file implementation and existing files.
             String botName = bot.getBotName();
-            String botGoalFilename = bot.getGoalFile();
+            String botGoalFilename = bot.getFileName();
 
             File goalFile = new File(botGoalFilename);
             if (goalFile.exists()) {
@@ -157,7 +157,7 @@ public final class ExportToGOAL {
                     FileUtils.copyFile(goalFile, goalFileInDirectory);
                 }
                 // Set the filename to the copied one.
-                bot.setGoalFile(goalFilename);
+                bot.setFileName(goalFilename);
             }
             else {
                 /* Case 2: New GOAL file */
@@ -173,14 +173,14 @@ public final class ExportToGOAL {
         launchPolicyBuilder = new StringBuilder();
         for (BotConfig bot : configuration.getBots()) {
             String type = "";
-            if (bot.getBotController().equals("Agent")) {
+            if (bot.getBotController() == BotConfig.Controller.AGENT) {
                 type = "bot";
                 agentCount++;
-            } else if (bot.getBotController().equals("Human")) {
+            } else if (bot.getBotController() == BotConfig.Controller.HUMAN) {
                 type = "human";
                 humanCount++;
             }
-            String goalFileSanitized = bot.getGoalFile().toLowerCase().replace(" ", "_");
+            String goalFileSanitized = bot.getFileName().toLowerCase().replace(" ", "_");
             String goalFileNoExt = goalFileSanitized.substring(0, goalFileSanitized.length() - 5);
             launchPolicyBuilder.append("\t");
             launchPolicyBuilder.append(String.format("when [type=%s,max=%d]@env do launch %s: %s .",
@@ -191,7 +191,7 @@ public final class ExportToGOAL {
             );
             launchPolicyBuilder.append("\n");
             /* Remove the last 5 characters since that is the extension. */
-            goalFiles.put(bot.getGoalFile(), goalFileNoExt);
+            goalFiles.put(bot.getFileName(), goalFileNoExt);
         }
     }
 
