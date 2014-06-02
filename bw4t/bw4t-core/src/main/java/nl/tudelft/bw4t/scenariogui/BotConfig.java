@@ -15,17 +15,22 @@ public final class BotConfig {
     
     private String name = "Bot";
     
+    //FIXME This should be an enum!
     private String controller = "Agent";
     
-    private String amount = "1";
+    private int amount = 1;
 
     private int botSize = 2;
 
     private int botSpeed = 100;
 
-    private int botBatteryCapacity = 0;
+    private int botBatteryCapacity = 10;
 
     private int botBatteryDischargeRate = 0;
+    
+    private int numberOfGrippers = 1;
+    
+    private boolean batteryEnabled = false;
 
     private boolean hasColorBlindHandicap = false;
 
@@ -73,7 +78,8 @@ public final class BotConfig {
      * Sets the amount of bots of a type there are.
      * @param amount The amount of bots.
      */
-    public void setBotAmount(String amount) {
+    @XmlElement
+    public void setBotAmount(int amount) {
         this.amount = amount;
     }
     
@@ -81,7 +87,7 @@ public final class BotConfig {
      * Returns the amount of bots of this type.
      * @return The amount of bots of this type.
      */
-    public String getBotAmount() {
+    public int getBotAmount() {
         return this.amount;
     }
 
@@ -113,6 +119,23 @@ public final class BotConfig {
     @XmlElement
     public void setBotSpeed(int newSpeed) {
         botSpeed = newSpeed;
+    }
+    
+    /**
+     * Sets if the battery is enabled or not.
+     * @param batteryEnabled If the battery is enabled.
+     */
+    @XmlElement
+    public void setBatteryEnabled(boolean batteryEnabled) {
+    	this.batteryEnabled = batteryEnabled;
+    }
+    
+    /**
+     * Returns if the battery is enabled or not.
+     * @return If the battery is enabled.
+     */
+    public boolean isBatteryEnabled() {
+    	return this.batteryEnabled;
     }
 
     /**
@@ -203,6 +226,23 @@ public final class BotConfig {
     @XmlElement
     public void setSizeOverloadHandicap(boolean bool) {
         hasSizeOverloadHandicap = bool;
+    }
+    
+    /**
+     * Sets the amount of grippers a bot has.
+     * @param grippers The amount of grippers.
+     */
+    @XmlElement
+    public void setGrippers(int grippers) {
+    	this.numberOfGrippers = grippers;
+    }
+    
+    /**
+     * Returns the amount of grippers the bot has.
+     * @return The amount of grippers the bot has.
+     */
+    public int getGrippers() {
+    	return this.numberOfGrippers;
     }
     
     /**

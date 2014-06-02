@@ -97,9 +97,7 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
      */
     public void connectServer() throws RemoteException, MalformedURLException, NotBoundException {
 
-        String clientPortString = InitParam.CLIENTPORT.getValue();
-
-        int portNumber = Integer.parseInt(clientPortString);
+        int portNumber = Integer.parseInt(InitParam.CLIENTPORT.getValue());
 
         // Launch the client and bind it
         Registry register = null;
@@ -108,7 +106,7 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
                 bindAddress = "rmi://" + InitParam.CLIENTIP.getValue() + ":" + portNumber + "/BW4TClient";
                 register = LocateRegistry.createRegistry(portNumber);
             } catch (Exception e) {
-                LOGGER.error("Registry was already created.", e);
+                LOGGER.warn("Registry was already created, trying the next port number.", e);
                 portNumber++;
             }
         }

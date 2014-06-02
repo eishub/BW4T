@@ -26,6 +26,7 @@ import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.robots.NavigatingRobot;
 import nl.tudelft.bw4t.robots.Robot;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.zone.BlocksRoom;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.DropZone;
@@ -95,6 +96,8 @@ public final class MapLoader {
         map = NewMap.create(new FileInputStream(new File(location)));
 
         ContinuousSpace<Object> space = createSpace(context, (int) map.getArea().getX(), (int) map.getArea().getY());
+        
+        Launcher.getInstance().getRobotFactory().setSpace(space);
 
         // make the extra random blocks.
         List<BlockColor> extraSequenceBlocks = makeRandomSequence(map.getRandomSequence());
@@ -282,7 +285,7 @@ public final class MapLoader {
             Entity mapentity) {
         String name = mapentity.getName();
 
-        NavigatingRobot robot = new NavigatingRobot(name, space, context, map.getOneBotPerCorridorZone());
+        NavigatingRobot robot = new NavigatingRobot(name, space, context, map.getOneBotPerCorridorZone(), 1);
 
         double x = mapentity.getPosition().getX();
         double y = mapentity.getPosition().getY();
