@@ -42,7 +42,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     /**
 	 * AgentRecord object for this Robot, needed for logging
 	 */
-	AgentRecord agentRecord;
+	AgentRecord agentRecord = new AgentRecord("", "");
 
 	/**
      * The distance which it can move per tick. This should never be larger than the door width because that might cause
