@@ -6,6 +6,7 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import nl.tudelft.bw4t.BoundedMoveableObject;
+import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.util.PathPlanner;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.Zone;

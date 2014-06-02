@@ -15,6 +15,7 @@ import nl.tudelft.bw4t.robots.MoveType;
 import nl.tudelft.bw4t.robots.NavigatingRobot.State;
 import nl.tudelft.bw4t.zone.Room;
 import nl.tudelft.bw4t.zone.Zone;
+import repast.simphony.context.Context;
 import repast.simphony.space.continuous.NdPoint;
 
 /**
@@ -277,5 +278,25 @@ public abstract class AbstractRobotDecorator implements IRobot {
     @Override
     public void setTarget(BoundedMoveableObject target) {
         parent.setTarget(target);
+    }
+    
+    @Override
+    public int distanceTo(Block b) {
+        return parent.distanceTo(b);
+    }
+
+    @Override
+    public NdPoint getLocation() {
+        return parent.getLocation();
+    }
+
+    @Override
+    public long getId() {
+        return parent.getId();
+    }
+
+    @Override
+    public Context<Object> getContext() {
+        return parent.getContext();
     }
 }
