@@ -28,10 +28,10 @@ public class EpartnerFrame extends JFrame {
     private JButton resetButton = new JButton("Reset");
     /** The cancel button. */
     private JButton cancelButton = new JButton("Cancel");
-    /** The checkbox for the left-alone warnings. */
-    private JCheckBox leftAloneCheckbox = new JCheckBox("Left-alone Warning");
     /** The checkbox to enable GPS. */
-    private JCheckBox gpsCheckBox = new JCheckBox("Geolocator");
+    private JCheckBox gpsCheckbox = new JCheckBox("GPS");
+    /** The checkbox for the Forget-me-not app. */
+    private JCheckBox forgetCheckBox = new JCheckBox("Forget-me-not");
     /** The data object. */
     private BotConfig dataObject = new BotConfig();
     
@@ -47,11 +47,11 @@ public class EpartnerFrame extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(new MigLayout("", "[][141px][][141px][141px]", "[][][125px][125px]"));
         
-        leftAloneCheckbox.setAlignmentY(Component.TOP_ALIGNMENT);
-        gpsCheckBox.setVerticalAlignment(SwingConstants.TOP);
+        gpsCheckbox.setAlignmentY(Component.TOP_ALIGNMENT);
+        forgetCheckBox.setVerticalAlignment(SwingConstants.TOP);
         
-        contentPane.add(leftAloneCheckbox, "cell 0 0,grow");
-        contentPane.add(gpsCheckBox, "cell 0 1,grow");
+        contentPane.add(gpsCheckbox, "cell 0 0,grow");
+        contentPane.add(forgetCheckBox, "cell 0 1,grow");
         contentPane.add(cancelButton, "cell 0 3,growx,aligny bottom");
         contentPane.add(resetButton, "cell 2 3,growx,aligny bottom");
         contentPane.add(applyButton, "cell 4 3,alignx right,aligny bottom");
@@ -86,7 +86,7 @@ public class EpartnerFrame extends JFrame {
      * @return The checkbox.
      */
     public JCheckBox getLeftAloneCheckbox() {
-        return leftAloneCheckbox;
+        return gpsCheckbox;
     }
     /**
      * Returns the checkbox enabling or
@@ -94,14 +94,14 @@ public class EpartnerFrame extends JFrame {
      * @return The checkbox.
      */
     public JCheckBox getGPSCheckbox() {
-        return gpsCheckBox;
+        return forgetCheckBox;
     }
     /**
      * This method plugs the GUI values into the data object.
      */
     public void setDataObject() {
-        dataObject.setLeftAlone(leftAloneCheckbox.isEnabled());
-        dataObject.setGPS(gpsCheckBox.isEnabled());
+        dataObject.setLeftAlone(gpsCheckbox.isEnabled());
+        dataObject.setGPS(forgetCheckBox.isEnabled());
     }
     
     /**
