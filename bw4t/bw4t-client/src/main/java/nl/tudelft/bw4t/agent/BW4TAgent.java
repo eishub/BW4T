@@ -17,8 +17,6 @@ import eis.iilang.Percept;
 
 /**
  * Java agent that can control an entity
- * 
- * @author trens
  */
 public class BW4TAgent extends Thread implements ActionInterface {
 
