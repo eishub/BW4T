@@ -10,7 +10,7 @@ import static org.mockito.Mockito.when;
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 
-import nl.tudelft.bw4t.robots.Robot;
+import nl.tudelft.bw4t.robots.AbstractRobot;
 import nl.tudelft.bw4t.zone.BlocksRoom;
 import nl.tudelft.bw4t.zone.Room;
 
@@ -37,7 +37,7 @@ public class DoorTest {
     @Mock private ContinuousSpace<Object> space;
     @Mock private Context<Object> context;
     @Mock private BlocksRoom room;
-    @Mock private Robot robot;
+    @Mock private AbstractRobot robot;
     
     /**
      * Run the Door(ContinuousSpace<Object>,Context<Object>) constructor test.

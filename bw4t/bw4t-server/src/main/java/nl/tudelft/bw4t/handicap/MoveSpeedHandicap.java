@@ -1,6 +1,6 @@
 package nl.tudelft.bw4t.handicap;
 
-import nl.tudelft.bw4t.robots.Robot;
+import nl.tudelft.bw4t.robots.AbstractRobot;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.SpatialException;
 import repast.simphony.space.SpatialMath;
@@ -10,7 +10,7 @@ import repast.simphony.space.continuous.NdPoint;
  * @author Valentine Mairet & Ruben Starmans
  *
  */
-public class MoveSpeedHandicap extends AbstractHandicapFactory {
+public class MoveSpeedHandicap extends AbstractRobotDecorator {
     /**
      * modifier for the distance per tick
      */
@@ -21,7 +21,7 @@ public class MoveSpeedHandicap extends AbstractHandicapFactory {
      * @param p HandicapInterface of the MoveSpeedHandicap Wraps around
      * @param speedModifier modifier of the distance per tick
      */
-    public MoveSpeedHandicap(HandicapInterface p, double speedModifier) {
+    public MoveSpeedHandicap(IRobot p, double speedModifier) {
         super(p);
         speedMod = speedModifier;
         
@@ -38,12 +38,12 @@ public class MoveSpeedHandicap extends AbstractHandicapFactory {
         if (targetLocation != null) {
             // Calculate the distance that the robot is allowed to move.
             double distance = robot.distanceTo(targetLocation);
-            if (distance < Robot.MIN_MOVE_DISTANCE) {
+            if (distance < AbstractRobot.MIN_MOVE_DISTANCE) {
                 // we're there
                 robot.stopRobot(); 
             } 
             else {
-                double movingDistance = Math.min(distance, Robot.MAX_MOVE_DISTANCE * speedMod);
+                double movingDistance = Math.min(distance, AbstractRobot.MAX_MOVE_DISTANCE * speedMod);
     
                 // Angle at which to move
                 double angle = SpatialMath.calcAngleFor2DMovement(robot.space,

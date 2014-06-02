@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import nl.tudelft.bw4t.BoundedMoveableObject;
-import nl.tudelft.bw4t.robots.Robot;
+import nl.tudelft.bw4t.robots.AbstractRobot;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
@@ -69,9 +69,9 @@ public abstract class Zone extends BoundedMoveableObject {
      * 
      * @return Robot, or null if no occupier.
      */
-    public Robot getOccupier() {
-        for (Object o : context.getObjects(Robot.class)) {
-            Robot robot = (Robot) o;
+    public AbstractRobot getOccupier() {
+        for (Object o : context.getObjects(AbstractRobot.class)) {
+            AbstractRobot robot = (AbstractRobot) o;
             NdPoint loc = robot.getLocation();
             if (getBoundingBox().contains(loc.getX(), loc.getY())) {
                 return robot;
@@ -86,8 +86,8 @@ public abstract class Zone extends BoundedMoveableObject {
      * @param robot
      * @return true if
      */
-    public boolean containsMeOrNothing(Robot robot) {
-        Robot occ = getOccupier();
+    public boolean containsMeOrNothing(AbstractRobot robot) {
+        AbstractRobot occ = getOccupier();
         return occ == null || robot == occ;
     }
 

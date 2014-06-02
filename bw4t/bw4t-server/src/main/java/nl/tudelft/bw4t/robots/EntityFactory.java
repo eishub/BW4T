@@ -1,7 +1,7 @@
 package nl.tudelft.bw4t.robots;
 
 import nl.tudelft.bw4t.blocks.EPartner;
-import nl.tudelft.bw4t.handicap.HandicapInterface;
+import nl.tudelft.bw4t.handicap.IRobot;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import repast.simphony.context.Context;
@@ -19,14 +19,14 @@ public interface EntityFactory {
 	 * @param name the entity name for this robot
 	 * @return the created robot
 	 */
-	HandicapInterface makeDefaultRobot(String name);
+	IRobot makeDefaultRobot(String name);
 	
 	/**
 	 * Get a robot created according to the given specifications.
 	 * @param config the specification for the robot.
 	 * @return the created robot
 	 */
-	HandicapInterface makeRobot(BotConfig config);
+	IRobot makeRobot(BotConfig config);
 	
 	/**
 	 * Make a new Epartner with the default configuration.
