@@ -122,7 +122,10 @@ public class EPartnerEntity implements RobotEntityInt {
     @AsPercept(name = "dropped", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
     public boolean wasDropped() {
     	return ourEPartner.isDropped();
+    	//TODO does this actually work? replacewith percept heldBy(Enitity), with on change negation filter?!
     }
+    
+    //TODO how does the goal agent know what we selected in the epartner gui? it needs tobestored somewhere and sent as percept
 
     /**
      * Percept for navpoints the robot is at. Send on change. If robot is in a {@link Zone}, that zone name is returned.
