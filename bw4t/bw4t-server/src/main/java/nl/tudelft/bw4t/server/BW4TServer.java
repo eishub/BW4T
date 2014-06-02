@@ -9,6 +9,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,10 +18,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.text.html.parser.Entity;
+
+import nl.tudelft.bw4t.agent.EntityType;
+import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.client.BW4TClientActions;
+import nl.tudelft.bw4t.eis.EPartnerEntity;
 import nl.tudelft.bw4t.handicap.HandicapInterface;
-import nl.tudelft.bw4t.robots.RobotFactory;
+import nl.tudelft.bw4t.robots.EntityFactory;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.Launcher;
 
@@ -108,39 +115,68 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 
         // #2013 late-listening pattern... partial implement.
         ((BW4TClientActions) client).handleStateChange(getState());
-        for (String entity : getFreeEntities()) {
-            try {
-                notifyFreeEntity(client, entity);
-            } catch (EntityException e) {
-                reportClientProblem(client, e);
-            }
+        List<BotConfig> bots = new ArrayList<BotConfig>();
+        if (agentCount > 0) {
+            BotConfig bot = new BotConfig();
+            bot.setBotAmount(agentCount);
+            bot.setBotController(EntityType.BOT.nameLower());
+            bots.add(bot);
         }
-
+        if(humanCount > 0) {
+            BotConfig bot = new BotConfig();
+            bot.setBotAmount(agentCount);
+            bot.setBotController(EntityType.HUMAN.nameLower());
+            bots.add(bot);
+        }
     }
     
     @Override
-    public void registerClient(BW4TClientActions client, List<BotConfig> bots) throws RemoteException {
+    public void registerClient(BW4TClientActions client, List<BotConfig> bots, List<EPartnerConfig> partners)
+    		throws RemoteException {
+        BW4TEnvironment env = Launcher.getEnvironment();
     	LOGGER.info("Registering client: " + client);
-    	ClientInfo cInfo = new ClientInfo(bots);
+    	ClientInfo cInfo = new ClientInfo(bots, partners);
 		clients.put(client, cInfo);
     	
     	//send the client our map
         client.useMap(BW4TEnvironment.getInstance().getMap());
         client.handleStateChange(getState());
         
-        RobotFactory robotFactory = Launcher.getInstance().getRobotFactory();
+        EntityFactory entityFactory = Launcher.getInstance().getEntityFactory();
         //for every request and attach them
         for(BotConfig c : cInfo.getRequestedBots()) {
         	int created = 0;
         	
         	while (created < c.getBotAmount()) {
         		//create robot from request
-				HandicapInterface bot = robotFactory.getRobot(c);
+				HandicapInterface bot = entityFactory.makeRobot(c);
 				//TODO create the entity for the environment
 				
         		//TODO assign robot to client
 				created++;
         	}
+        }
+
+        //for every request and attach them
+        for (EPartnerConfig c : cInfo.getRequestedEPartners()) {
+            int created = 0;
+            String name = c.getName();
+            while (created < c.getAmount()) {
+                c.setName(String.format("%s_%d", name, created+1));
+                //create robot from request
+                EPartner epartner = entityFactory.makeEPartner(c);
+                //create the entity for the environment
+                EPartnerEntity ee = new EPartnerEntity(epartner);
+                //register the entity in the environment
+                try {
+                    env.registerEntity(epartner.getName(), ee);
+                } catch (EntityException e) {
+                    LOGGER.error("Failed to register new Epartner in the environment.", e);
+                }
+                //assign robot to client
+                
+                created++;
+            }
         }
     }
 
@@ -157,47 +193,35 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
      * @param entity
      * @throws EntityException
      */
-    private void notifyFreeHuman(BW4TClientActions client, String entity, String type, ClientInfo ci)
+    private void notifyFreeEpartner(BW4TClientActions client, EPartnerConfig ci)
             throws EntityException {
         try {
-            if ("unknown".equals(type)) {
-                BW4TEnvironment.getInstance().setType(entity, "human");
+            String entity = ci.getName();
+            if ("unknown".equals(Launcher.getEnvironment().getType(entity))) {
+                BW4TEnvironment.getInstance().setType(entity, "epartner");
             }
             client.handleNewEntity(entity);
-            // Client is now waiting for one less entity
-            ci.decreaseNumberOfHumans();
             return;
         } catch (RemoteException e) {
             reportClientProblem(client, e);
         }
     }
 
-    private void notifyFreeBot(BW4TClientActions client, String entity, String type, ClientInfo ci)
+    private void notifyFreeRobot(BW4TClientActions client, BotConfig ci)
             throws EntityException {
         try {
-            if ("unknown".equals(type)) {
-                BW4TEnvironment.getInstance().setType(entity, "bot");
+            String entity = ci.getBotName();
+            if ("unknown".equals(Launcher.getEnvironment().getType(entity))) {
+                String type = "bot";
+                if(ci.getBotController().equalsIgnoreCase("human")){
+                    type = "human";
+                }
+                BW4TEnvironment.getInstance().setType(entity, type);
             }
             client.handleNewEntity(entity);
-            // Client is now waiting for one less entity
-            ci.decreaseNumberOfAgents();
             return;
         } catch (RemoteException e) {
             reportClientProblem(client, e);
-        }
-    }
-
-    private void notifyFreeEntity(BW4TClientActions client, String entity) throws EntityException {
-        String type = BW4TEnvironment.getInstance().getType(entity);
-
-        ClientInfo ci = clients.get(client);
-
-        if (ci.getNumberOfAgents() > 0 && ("unknown".equals(type) || "bot".equals(type))) {
-            notifyFreeBot(client, entity, type, ci);
-        }
-        else if (ci.getNumberOfHumans() > 0 && ("unknown".equals(type) || "human".equals(type))) {
-            notifyFreeHuman(client, entity, type, ci);
-
         }
     }
 
@@ -443,13 +467,6 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
      *             if something unexpected happens when attempting to add or remove an entity.
      */
     public void notifyNewEntity(String entity) {
-        for (BW4TClientActions client : clients.keySet()) {
-            try {
-                notifyFreeEntity(client, entity);
-            } catch (EntityException e) {
-                reportClientProblem(client, e);
-            }
-        }
     }
 
     /**
