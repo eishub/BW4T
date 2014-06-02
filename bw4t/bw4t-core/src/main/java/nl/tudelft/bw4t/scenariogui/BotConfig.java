@@ -39,6 +39,10 @@ public final class BotConfig {
     private boolean leftAlone = false;
     
     private boolean gps = false;
+    
+    private String fileName = "*.goal";
+    
+    private String referenceName = "";
 
     /**
      * Sets the name of the bot.
@@ -244,4 +248,29 @@ public final class BotConfig {
     public boolean getGPS() {
         return gps;
     }
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String _name) {
+		this.name = _name;
+	}
+
+	public String getReferenceName() {
+		return referenceName;
+	}
+
+	public void setReferenceName(String _referenceName) {
+		this.referenceName = _referenceName;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String _fileName) {
+		this.fileName = _fileName;
+	}
+    
 }
