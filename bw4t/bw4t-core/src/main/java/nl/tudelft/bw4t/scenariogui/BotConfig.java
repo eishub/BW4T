@@ -19,6 +19,8 @@ public final class BotConfig {
     private String controller = "Agent";
     
     private int amount = 1;
+    
+    private int botGripperCapacity = 1;
 
     private int botSize = 2;
 
@@ -93,6 +95,21 @@ public final class BotConfig {
     public int getBotAmount() {
         return this.amount;
     }
+    
+    /**
+     * @return the bot gripper capacity. 
+     */
+    public int getBotGripperCapacity() {
+    	return botGripperCapacity;
+    }
+	
+    /**
+     * @param newgripcap, the new gripper capacity. 
+     */
+    @XmlElement
+	public void setBotGripperCapacity(int newgripcap) {
+		botGripperCapacity = newgripcap;
+	}
 
     /**
      * @return the size of the robot.
@@ -272,5 +289,4 @@ public final class BotConfig {
 	public void setFileName(String _fileName) {
 		this.fileName = _fileName;
 	}
-    
 }

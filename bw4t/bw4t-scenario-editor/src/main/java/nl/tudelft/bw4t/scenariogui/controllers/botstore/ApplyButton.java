@@ -54,6 +54,8 @@ class ApplyButton implements ActionListener {
     					|| f.exists()) {
 	    			if (botName.length() > 0) {
 	    				if (botName.matches(nonAlphaNumericRegex)) {
+	    					view.getDataObject().setBotGripperCapacity(
+	    							view.getNumberOfGrippersSlider().getValue());
 		    				view.getDataObject().setBotSize(view.getSizeSlider().getValue());
 				    		view.getDataObject().setBotSpeed(view.getSpeedSlider().getValue());
 				    		view.getDataObject().setBotBatteryCapacity(

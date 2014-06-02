@@ -41,6 +41,9 @@ public class DefaultRobotFactory implements RobotFactory {
 		}
 		if (config.getGripperHandicap()) {
 			r = new GripperHandicap(r);
+		} else {
+			// if the robot does not have a gripper handicap, it grabs the value set in the UI. 
+			r.getSuperParent().setGripperCapacity(config.getBotGripperCapacity());
 		}
 		if (config.getMoveSpeedHandicap()) {
 			//TODO figure out if the magic number is correct
