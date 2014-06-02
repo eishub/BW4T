@@ -190,7 +190,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
         try {
             String entity = ci.getName();
             if ("unknown".equals(Launcher.getEnvironment().getType(entity))) {
-                BW4TEnvironment.getInstance().setType(entity, "epartner");
+                BW4TEnvironment.getInstance().setType(entity, EntityType.EPARTNER.nameLower());
             }
             client.handleNewEntity(entity);
             return;

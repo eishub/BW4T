@@ -1,5 +1,37 @@
 package nl.tudelft.bw4t.server.environment;
 
+import java.awt.geom.Point2D;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.rmi.RemoteException;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.bind.JAXBException;
+
+import nl.tudelft.bw4t.BW4TBuilder;
+import nl.tudelft.bw4t.blocks.EPartner;
+import nl.tudelft.bw4t.eis.EPartnerEntity;
+import nl.tudelft.bw4t.eis.RobotEntity;
+import nl.tudelft.bw4t.handicap.IRobot;
+import nl.tudelft.bw4t.logger.BotLog;
+import nl.tudelft.bw4t.map.Entity;
+import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.robots.EntityFactory;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
+import nl.tudelft.bw4t.server.BW4TServer;
+import nl.tudelft.bw4t.server.RobotEntityInt;
+import nl.tudelft.bw4t.visualizations.ServerContextDisplay;
+
+import org.apache.log4j.Logger;
+
+import repast.simphony.context.Context;
+import repast.simphony.scenario.ScenarioLoadException;
 import eis.eis2java.environment.AbstractEnvironment;
 import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
@@ -13,38 +45,6 @@ import eis.iilang.EnvironmentState;
 import eis.iilang.Identifier;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.rmi.RemoteException;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.bind.JAXBException;
-
-import nl.tudelft.bw4t.blocks.EPartner;
-import nl.tudelft.bw4t.client.BW4TClientActions;
-import nl.tudelft.bw4t.eis.EPartnerEntity;
-import nl.tudelft.bw4t.eis.RobotEntity;
-import nl.tudelft.bw4t.handicap.IRobot;
-import nl.tudelft.bw4t.logger.BotLog;
-import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.robots.AbstractRobot;
-import nl.tudelft.bw4t.robots.EntityFactory;
-import nl.tudelft.bw4t.scenariogui.BotConfig;
-import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
-import nl.tudelft.bw4t.server.BW4TServer;
-import nl.tudelft.bw4t.server.RobotEntityInt;
-import nl.tudelft.bw4t.visualizations.ServerContextDisplay;
-
-import org.apache.log4j.Logger;
-
-import repast.simphony.context.Context;
-import repast.simphony.scenario.ScenarioLoadException;
 
 /**
  * The central environment which runs the data model and performs actions received from remote environments through the
@@ -85,6 +85,8 @@ public class BW4TEnvironment extends AbstractEnvironment {
     private ServerContextDisplay contextDisplay;
     private final boolean guiEnabled;
     private final String shutdownKey;
+
+    private int nextBotSpawnIndex = 0;
 
     /**
      * Create a new instance of this environment
@@ -524,6 +526,15 @@ public class BW4TEnvironment extends AbstractEnvironment {
     public NewMap getMap() {
         return theMap;
     }
+    
+    public Point2D getNextBotSpawnPoint() {
+        List<Entity> ents = getMap().getEntities();
+        Point2D p = ents.get(nextBotSpawnIndex++).getPosition().asPoint2D();
+        if(nextBotSpawnIndex  > ents.size()) {
+            nextBotSpawnIndex = 0;
+        }
+        return p;
+    }
 
     /**
      * Spawns a new EPartner according to the given specifications and notifies the given client.
@@ -561,7 +572,9 @@ public class BW4TEnvironment extends AbstractEnvironment {
         RobotEntity be = new RobotEntity(bot);
         // register the entity in the environment
         this.registerEntity(c.getBotName(), be);
-        // TODO Place the Robot
+        // Place the Robot
+        Point2D p = getNextBotSpawnPoint();
+        bot.moveTo(p.getX(), p.getY());
     }
 
 }
