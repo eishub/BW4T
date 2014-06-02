@@ -72,8 +72,7 @@ public class Block extends BoundedMoveableObject {
         NdPoint p;
         if (heldBy != null) {
             p = heldBy.getLocation();
-        }
-        else {
+        } else {
             p = super.getLocation();
         }
         if (p != null) {
