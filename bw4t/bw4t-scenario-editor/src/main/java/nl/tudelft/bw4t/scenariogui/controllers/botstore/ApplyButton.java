@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.SwingUtilities;
 
 import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditor;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
@@ -40,19 +41,59 @@ class ApplyButton implements ActionListener {
      * @param ae The action event caused by clicking on the button.
      */
     public void actionPerformed(ActionEvent ae) {
-        view.getDataObject().setBotSize(view.getSizeSlider().getValue());
-        view.getDataObject().setBotSpeed(view.getSpeedSlider().getValue());
-        view.getDataObject().setBotBatteryCapacity(view.getBatterySlider().getValue());
-        view.getDataObject().setColorBlindHandicap(view.getColorblindCheckbox().isEnabled());
-        view.getDataObject().setGripperHandicap(view.getGripperCheckbox().isEnabled());
-        view.getDataObject().setMoveSpeedHandicap(view.getmovespeedCheckbox().isEnabled());
-        view.getDataObject().setSizeOverloadHandicap(view.getsizeoverloadCheckbox().isEnabled());
-        BotConfig data = view.getDataObject();
-        int index = mp.getEntityPanel().getSelectedBotRow();
-        // Overwrite the existing config
-        // (there is always a basic config present for every bot).
-        mp.addBotConfig(index, data);
-        System.out.println("Getting data object completed. Bot config size: " + mp.getBotConfig().size());
-        System.out.println("New config placed at index: " + index);
+    	String fileName = view.getFileNameField().getText();
+    	String botName = view.getBotNameField().getText();
+    	String nonAlphaNumericRegex = "^[a-zA-Z0-9]";
+    	if (fileName.endsWith(".goal")) {
+    		if (fileName.length() > 5) {
+    			String name = fileName.substring(0, fileName.length() - 5);
+    			if (name.matches(nonAlphaNumericRegex)) {
+	    			if (botName.length() > 0) {
+	    				if (botName.matches(nonAlphaNumericRegex)) {
+		    				view.getDataObject().setBotSize(view.getSizeSlider().getValue());
+				    		view.getDataObject().setBotSpeed(view.getSpeedSlider().getValue());
+				    		view.getDataObject().setBotBatteryCapacity(
+				    				view.getBatterySlider().getValue());
+				    		view.getDataObject().setColorBlindHandicap(
+				    				view.getColorblindCheckbox().isEnabled());
+				    		view.getDataObject().setGripperHandicap(
+				    				view.getGripperCheckbox().isEnabled());
+				    		view.getDataObject().setMoveSpeedHandicap(
+				    				view.getmovespeedCheckbox().isEnabled());
+				    		view.getDataObject().setSizeOverloadHandicap(
+				    				view.getsizeoverloadCheckbox()
+				    				.isEnabled());
+				    		view.getDataObject().setFileName(fileName);
+				    		view.getDataObject().setReferenceName(botName);
+				        	BotConfig data = view.getDataObject();
+				        	int index = mp.getEntityPanel().getSelectedBotRow();
+				        	// Overwrite the existing config
+				        	// (there is always a basic config present for every bot).
+				        	mp.getEntityPanel().getBotConfigs().set(index, data);
+	    				}
+	    				else {
+	    					ScenarioEditor.getOptionPrompt().showMessageDialog(view, 
+		        					"Please specify a reference name consisting "
+		        					+ "of valid alphanumeric characters.");
+	    				}
+	    			}
+	    			else {
+	        			ScenarioEditor.getOptionPrompt().showMessageDialog(view, 
+	        					"Please specify a reference name.");
+	    			}
+    			}
+    			else {
+    				ScenarioEditor.getOptionPrompt().showMessageDialog(view, "Please specify a file name"
+    						+ " consisting of valid alphanumeric characters.");
+    			}
+    		}
+    		else {
+    			ScenarioEditor.getOptionPrompt().showMessageDialog(view, "Please specify a file name.");
+    		}
+    	}
+    	else {
+    		ScenarioEditor.getOptionPrompt().showMessageDialog(view, "The file name is invalid.\n"
+    				+ "File names should end in .goal.");
+    	}
     }
 }

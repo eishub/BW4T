@@ -9,6 +9,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import nl.tudelft.bw4t.scenariogui.BotConfig;
@@ -78,6 +79,16 @@ public class BotEditorPanel extends JPanel {
      */
     private JCheckBox batteryEnabledCheckbox = new JCheckBox("Battery Capacity enabled");
     /**
+     * The text field containing the file name the
+     * bot should use.
+     */
+    private JTextField fileNameField = new JTextField(".goal");
+    /**
+     * The text field containing the reference name
+     * of the bot.
+     */
+    private JTextField botNameField = new JTextField();
+    /**
      * The slider to set the size of the bot.
      */
     private JSlider sizeSlider = new JSlider();
@@ -122,17 +133,26 @@ public class BotEditorPanel extends JPanel {
      * create the checkables panel
      */
     public void createBotCheckablesPanel() {
-        botCheckables.setLayout(new GridLayout(4, 1));
+    	final String newLine = "\n";
+        botCheckables.setLayout(new GridLayout(5, 1));
         JLabel checkablesLabel = new JLabel("Checkables");
+        JLabel nameLabel = new JLabel("Names");
         JLabel handicapsLabel = new JLabel("Handicaps:");
         JLabel restrictionsLabel = new JLabel("Other options:");
-        JLabel emptyLabel = new JLabel("\n");
+        JLabel fileNameLabel = new JLabel("GOAL File name:");
+        JLabel botNameLabel = new JLabel("Reference name of bot:");
+        JLabel emptyLabel = new JLabel(newLine);
+        JLabel emptyLabel2 = new JLabel(newLine);
+        JLabel emptyLabel3 = new JLabel(newLine);
         
-        checkablesLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
+        Font f = new Font("Tahoma", Font.PLAIN, 24);
+        
+        checkablesLabel.setFont(f);
+        nameLabel.setFont(f);
         
         JPanel buttonPanel = new JPanel();
         JPanel checkablesPanel = new JPanel();
-        JPanel empty = new JPanel();
+        JPanel namePanel = new JPanel();
         
         buttonPanel.add(applyButton);
         buttonPanel.add(resetButton);
@@ -148,10 +168,17 @@ public class BotEditorPanel extends JPanel {
         checkablesPanel.add(customSizeCheckbox);
         checkablesPanel.add(movespeedCheckbox);
         checkablesPanel.add(batteryEnabledCheckbox);
+        namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.PAGE_AXIS));
+        namePanel.add(emptyLabel2);
+        namePanel.add(fileNameLabel);
+        namePanel.add(fileNameField);
+        namePanel.add(emptyLabel3);
+        namePanel.add(botNameLabel);
+        namePanel.add(botNameField);
         botCheckables.add(checkablesPanel);
-        botCheckables.add(empty);
+        botCheckables.add(nameLabel);
+        botCheckables.add(namePanel);
         botCheckables.add(buttonPanel);
-        
     }
     /**
      * creates the botSlidersPanel
@@ -441,4 +468,20 @@ public class BotEditorPanel extends JPanel {
     public void setNumberOfGrippersSlider(JSlider _numberOfGrippersSlider) {
         this.numberOfGrippersSlider = _numberOfGrippersSlider;
     }
+    
+    public JTextField getFileNameField() {
+		return fileNameField;
+	}
+
+	public void setFileNameField(JTextField _fileNameField) {
+		this.fileNameField = _fileNameField;
+	}
+
+	public JTextField getBotNameField() {
+		return botNameField;
+	}
+
+	public void setBotNameField(JTextField _botNameField) {
+		this.botNameField = _botNameField;
+	}
 }
