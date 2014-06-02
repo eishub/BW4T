@@ -15,9 +15,10 @@ public final class BotConfig {
     
     private String name = "Bot";
     
+    //FIXME This should be an enum!
     private String controller = "Agent";
     
-    private String amount = "1";
+    private int amount = 1;
 
     private int botSize = 2;
 
@@ -34,6 +35,14 @@ public final class BotConfig {
     private boolean hasMoveSpeedHandicap = false;
 
     private boolean hasSizeOverloadHandicap = false;
+    
+    private boolean leftAlone = false;
+    
+    private boolean gps = false;
+    
+    private String fileName = "*.goal";
+    
+    private String referenceName = "";
 
     /**
      * Sets the name of the bot.
@@ -73,7 +82,7 @@ public final class BotConfig {
      * Sets the amount of bots of a type there are.
      * @param amount The amount of bots.
      */
-    public void setBotAmount(String amount) {
+    public void setBotAmount(int amount) {
         this.amount = amount;
     }
     
@@ -81,7 +90,7 @@ public final class BotConfig {
      * Returns the amount of bots of this type.
      * @return The amount of bots of this type.
      */
-    public String getBotAmount() {
+    public int getBotAmount() {
         return this.amount;
     }
 
@@ -215,4 +224,53 @@ public final class BotConfig {
                 + hasColorBlindHandicap + hasGripperHandicap
                 + hasMoveSpeedHandicap + hasSizeOverloadHandicap;
     }
+    /**
+     * @param enabled adds or removes the ability to leave the robot alone.
+     */
+    public void setLeftAlone(boolean enabled) {
+        leftAlone = enabled;
+    }
+    /**
+     * @return whether or not the robot can be left alone.
+     */
+    public boolean getLeftAlone() {
+        return leftAlone;
+    }
+    /**
+     * @param enabled adds or removes the GPS usability.
+     */
+    public void setGPS(boolean enabled) {
+        gps = enabled;
+    }
+    /**
+     * @return whether or not the robot can make use of the GPS functionality.
+     */
+    public boolean getGPS() {
+        return gps;
+    }
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String _name) {
+		this.name = _name;
+	}
+
+	public String getReferenceName() {
+		return referenceName;
+	}
+
+	public void setReferenceName(String _referenceName) {
+		this.referenceName = _referenceName;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String _fileName) {
+		this.fileName = _fileName;
+	}
+    
 }

@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.server.environment.Stepper;
 
 import org.apache.log4j.Logger;
@@ -45,6 +46,7 @@ public class BW4TBuilder implements ContextBuilder<Object> {
     public Context<Object> build(Context<Object> context) {
         context.setId(CONTEXT_ID);
         try {
+        	Launcher.getInstance().getRobotFactory().setContext(context);
             MapLoader.loadMap(BW4TEnvironment.getInstance().getMapLocation(), context);
             /*
              * we call setContext() only after context has been prepared, because we need complete context for the
