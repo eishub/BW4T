@@ -26,10 +26,17 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBException;
 
+import nl.tudelft.bw4t.blocks.EPartner;
+import nl.tudelft.bw4t.client.BW4TClientActions;
+import nl.tudelft.bw4t.eis.EPartnerEntity;
 import nl.tudelft.bw4t.eis.RobotEntity;
+import nl.tudelft.bw4t.handicap.HandicapInterface;
 import nl.tudelft.bw4t.logger.BotLog;
 import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.robots.EntityFactory;
 import nl.tudelft.bw4t.robots.Robot;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.server.BW4TServer;
 import nl.tudelft.bw4t.server.RobotEntityInt;
 import nl.tudelft.bw4t.visualizations.ServerContextDisplay;
@@ -472,14 +479,14 @@ public class BW4TEnvironment extends AbstractEnvironment {
             LOGGER.info("Launching the BW4T Server without a graphical user interface.");
         }
     }
-    
+
     @Override
     public void freeEntity(String entity) throws RelationException, EntityException {
         super.freeEntity(entity);
         this.deleteEntity(entity);
-        //this.registerEntity(entity, entity);
+        // this.registerEntity(entity, entity);
     }
-    
+
     @Override
     public void freePair(String agent, String entity) throws RelationException {
         RobotEntity robot = (RobotEntity) getEntity(entity);
@@ -497,10 +504,10 @@ public class BW4TEnvironment extends AbstractEnvironment {
         if (key.equals(this.shutdownKey)) {
             LOGGER.info("Server shutdown requested with correct key");
             try {
-				this.setState(EnvironmentState.KILLED);
-			} catch (ManagementException e) {
-				LOGGER.warn("failed to notify clients that the server is going down...", e);
-			}
+                this.setState(EnvironmentState.KILLED);
+            } catch (ManagementException e) {
+                LOGGER.warn("failed to notify clients that the server is going down...", e);
+            }
             server.takeDown();
             server = null;
             System.exit(0);
@@ -516,6 +523,45 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
     public NewMap getMap() {
         return theMap;
+    }
+
+    /**
+     * Spawns a new EPartner according to the given specifications and notifies the given client.
+     * 
+     * @param c
+     *            the configuration to use
+     * @throws EntityException
+     *             when we are unable to register EPartner
+     */
+    public void spawn(EPartnerConfig c) throws EntityException {
+        EntityFactory entityFactory = Launcher.getInstance().getEntityFactory();
+        // create robot from request
+        EPartner epartner = entityFactory.makeEPartner(c);
+        // create the entity for the environment
+        EPartnerEntity ee = new EPartnerEntity(epartner);
+        // register the entity in the environment
+        this.registerEntity(epartner.getName(), ee);
+        // TODO: Place the EPartner
+
+    }
+
+    /**
+     * Spawns a new Robot according to the given specifications and notifies the given client.
+     * 
+     * @param c
+     *            the configuration to use
+     * @throws EntityException
+     *             when we are unable to register Robot
+     */
+    public void spawn(BotConfig c) throws EntityException {
+        EntityFactory entityFactory = Launcher.getInstance().getEntityFactory();
+        // create robot from request
+        HandicapInterface bot = entityFactory.makeRobot(c);
+        // create the entity for the environment
+        RobotEntity be = new RobotEntity(bot);
+        // register the entity in the environment
+        this.registerEntity(c.getBotName(), be);
+        // TODO Place the Robot
     }
 
 }

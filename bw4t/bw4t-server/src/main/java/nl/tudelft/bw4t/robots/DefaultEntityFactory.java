@@ -65,8 +65,9 @@ public class DefaultEntityFactory implements EntityFactory {
 
     @Override
     public EPartner makeEPartner(EPartnerConfig c) {
-        // TODO Auto-generated method stub
-        return null;
+        EPartner ep = makeDefaultEPartner(c.getName());
+        //TODO actually configure the e-partner
+        return ep;
     }
 
 }
