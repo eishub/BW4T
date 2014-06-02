@@ -59,33 +59,6 @@ public class EpartnerFrame extends JFrame {
         contentPane.add(resetButton, "cell 2 3,growx,aligny bottom");
         contentPane.add(applyButton, "cell 4 3,alignx right,aligny bottom");
     }
-    
-    /**
-     * Executes action that needs to happen when  the "Apply" button is pressed.
-     * TODO save the bot
-     */
-    public void applyAction() {
-        setDataObject();
-    }
-    
-    /**
-     * Executes action that needs to happen when  the "Reset" button is pressed.
-     * Resets to default settings
-     */
-    public void resetAction() {
-        leftAloneCheckbox.setSelected(false);
-        gpsCheckBox.setSelected(false);
-    }
-    
-    /**
-     * Executes action that needs to happen when  the "Cancel" button is pressed. 
-     * closes the BotEditor
-     */
-    
-    public void cancelAction() {    
-        
-    }
-    
     /**
      * getters and setters
      */
