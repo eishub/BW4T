@@ -394,10 +394,6 @@ public class BotEditorPanel extends JPanel {
 		return customSizeCheckbox;
 	}
 
-	public JCheckBox getMovespeedCheckbox() {
-		return movespeedCheckbox;
-	}
-
 	public JButton getFileButton() {
 		return fileButton;
 	}	
