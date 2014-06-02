@@ -158,6 +158,7 @@ public final class MapLoader {
             if (entityparams.getType() == Entity.EntityType.NORMAL) {
                 createEisEntityRobot(context, space, entityparams);
             } else {
+                //FIXME useless the robot is never used anywhere it gets created and then garbage collected
                 createJavaRobot(context, space, entityparams);
             }
         }
