@@ -24,7 +24,7 @@ import nl.tudelft.bw4t.agent.EntityType;
 import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.client.BW4TClientActions;
 import nl.tudelft.bw4t.eis.EPartnerEntity;
-import nl.tudelft.bw4t.handicap.HandicapInterface;
+import nl.tudelft.bw4t.handicap.IRobot;
 import nl.tudelft.bw4t.robots.EntityFactory;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
@@ -149,7 +149,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
         	
         	while (created < c.getBotAmount()) {
         		//create robot from request
-				HandicapInterface bot = entityFactory.makeRobot(c);
+				IRobot bot = entityFactory.makeRobot(c);
 				//TODO create the entity for the environment
 				
         		//TODO assign robot to client

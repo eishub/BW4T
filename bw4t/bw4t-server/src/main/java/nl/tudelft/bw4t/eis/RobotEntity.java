@@ -14,9 +14,9 @@ import nl.tudelft.bw4t.eis.translators.ColorTranslator;
 import nl.tudelft.bw4t.eis.translators.ObjectInformationTranslator;
 import nl.tudelft.bw4t.eis.translators.PointTranslator;
 import nl.tudelft.bw4t.eis.translators.ZoneTranslator;
-import nl.tudelft.bw4t.handicap.HandicapInterface;
+import nl.tudelft.bw4t.handicap.IRobot;
 import nl.tudelft.bw4t.robots.NavigatingRobot;
-import nl.tudelft.bw4t.robots.Robot;
+import nl.tudelft.bw4t.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.RobotEntityInt;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.util.RoomLocator;
@@ -45,7 +45,7 @@ import eis.iilang.Action;
 import eis.iilang.Parameter;
 
 /**
- * EIS entity for a {@link Robot}.
+ * EIS entity for a {@link AbstractRobot}.
  * 
  * @author Lennard de Rijk
  * @modified W.Pasman #2318 #2291 "lock" robot position at start of perception cycle.
@@ -70,7 +70,7 @@ public class RobotEntity implements RobotEntityInt {
      */
     private static final Logger LOGGER = Logger.getLogger(RobotEntity.class);
 
-    private final HandicapInterface ourRobot;
+    private final IRobot ourRobot;
     private final NavigatingRobot navRobot;
     private final Context<Object> context;
 
@@ -90,9 +90,9 @@ public class RobotEntity implements RobotEntityInt {
      * Creates a new {@link RobotEntity} that can be launched by an EIS compatible {@link Environment}.
      * 
      * @param robot
-     *            The {@link Robot} that this entity can put up for controlling in EIS.
+     *            The {@link AbstractRobot} that this entity can put up for controlling in EIS.
      */
-    public RobotEntity(HandicapInterface robot) {
+    public RobotEntity(IRobot robot) {
         this.ourRobot = robot;
         this.navRobot = (NavigatingRobot) robot.getSuperParent();
         this.context = navRobot.getContext();

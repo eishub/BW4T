@@ -30,7 +30,7 @@ import nl.tudelft.bw4t.eis.translators.ObjectInformationTranslator;
 import nl.tudelft.bw4t.eis.translators.PointTranslator;
 import nl.tudelft.bw4t.eis.translators.ZoneTranslator;
 import nl.tudelft.bw4t.robots.NavigatingRobot;
-import nl.tudelft.bw4t.robots.Robot;
+import nl.tudelft.bw4t.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.RobotEntityInt;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.util.RoomLocator;
@@ -82,7 +82,7 @@ public class EPartnerEntity implements RobotEntityInt {
      * Creates a new {@link RobotEntity} that can be launched by an EIS compatible {@link Environment}.
      * 
      * @param robot
-     *            The {@link Robot} that this entity can put up for controlling in EIS.
+     *            The {@link AbstractRobot} that this entity can put up for controlling in EIS.
      */
     public EPartnerEntity(EPartner eP) {
         this.ourEPartner = eP;

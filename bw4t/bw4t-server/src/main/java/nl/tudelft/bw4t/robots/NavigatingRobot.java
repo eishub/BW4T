@@ -22,7 +22,7 @@ import repast.simphony.space.continuous.NdPoint;
  * 
  * @author W.Pasman 22aug
  */
-public class NavigatingRobot extends Robot {
+public class NavigatingRobot extends AbstractRobot {
 
     /**
      * The log4j logger, logs to the console.

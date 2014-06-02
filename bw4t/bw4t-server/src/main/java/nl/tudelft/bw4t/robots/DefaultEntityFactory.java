@@ -5,7 +5,7 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.handicap.ColorBlindHandicap;
 import nl.tudelft.bw4t.handicap.GripperHandicap;
-import nl.tudelft.bw4t.handicap.HandicapInterface;
+import nl.tudelft.bw4t.handicap.IRobot;
 import nl.tudelft.bw4t.handicap.Human;
 import nl.tudelft.bw4t.handicap.MoveSpeedHandicap;
 import nl.tudelft.bw4t.handicap.SizeOverloadHandicap;
@@ -30,14 +30,14 @@ public class DefaultEntityFactory implements EntityFactory {
 	}
 
 	@Override
-	public HandicapInterface makeDefaultRobot(String name) {
+	public IRobot makeDefaultRobot(String name) {
 		final NewMap map = Launcher.getEnvironment().getMap();
 		return new NavigatingRobot(name, space, context, map.getOneBotPerCorridorZone(), 1);
 	}
 
 	@Override
-	public HandicapInterface makeRobot(BotConfig config) {
-		HandicapInterface r = makeDefaultRobot(config.getBotName());
+	public IRobot makeRobot(BotConfig config) {
+		IRobot r = makeDefaultRobot(config.getBotName());
 		if (config.getColorBlindHandicap()) {
 			r = new ColorBlindHandicap(r);
 		}

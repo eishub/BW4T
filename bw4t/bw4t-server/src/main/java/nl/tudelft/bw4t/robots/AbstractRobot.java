@@ -11,7 +11,7 @@ import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.doors.Door;
-import nl.tudelft.bw4t.handicap.HandicapInterface;
+import nl.tudelft.bw4t.handicap.IRobot;
 import nl.tudelft.bw4t.map.view.Entity;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.util.ZoneLocator;
@@ -35,14 +35,14 @@ import repast.simphony.space.continuous.NdPoint;
  * 
  * @author Lennard de Rijk
  */
-public abstract class Robot extends BoundedMoveableObject implements HandicapInterface {
+public abstract class AbstractRobot extends BoundedMoveableObject implements IRobot {
 	
 	/**
 	 * AgentRecord object for this Robot, needed for logging
 	 */
 	AgentRecord agentRecord;
 
-	private static final Logger LOGGER = Logger.getLogger(Robot.class);
+	private static final Logger LOGGER = Logger.getLogger(AbstractRobot.class);
 
     /**
      * The distance which it can move per tick. This should never be larger than the door width because that might cause
@@ -113,7 +113,7 @@ public abstract class Robot extends BoundedMoveableObject implements HandicapInt
      * @param human
      *            True if the bot is human controlled.
      */
-    public Robot(String pname, ContinuousSpace<Object> space, Context<Object> context, boolean poneBotPerZone, int cap) {
+    public AbstractRobot(String pname, ContinuousSpace<Object> space, Context<Object> context, boolean poneBotPerZone, int cap) {
         super(space, context);
 
         this.name = pname;
@@ -172,7 +172,7 @@ public abstract class Robot extends BoundedMoveableObject implements HandicapInt
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Robot) {
+        if (obj instanceof AbstractRobot) {
             return super.equals(obj);
         }
         else {
@@ -619,7 +619,7 @@ public abstract class Robot extends BoundedMoveableObject implements HandicapInt
 	 * @return null
 	 */
 	@Override
-	public HandicapInterface getParent() {
+	public IRobot getParent() {
 	    return null;
 	}
 
@@ -627,7 +627,7 @@ public abstract class Robot extends BoundedMoveableObject implements HandicapInt
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setParent(HandicapInterface hI) {
+	public void setParent(IRobot hI) {
 	    // does not do anything because Robot is the super parent
 	}
 
@@ -693,7 +693,7 @@ public abstract class Robot extends BoundedMoveableObject implements HandicapInt
 	 * @return this
 	 */
 	@Override
-	public Robot getSuperParent() {
+	public AbstractRobot getSuperParent() {
 	    return this;
 	}
 }

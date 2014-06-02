@@ -5,12 +5,12 @@ import static org.junit.Assert.*;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.handicap.ColorBlindHandicap;
 import nl.tudelft.bw4t.handicap.GripperHandicap;
-import nl.tudelft.bw4t.handicap.AbstractHandicapFactory;
-import nl.tudelft.bw4t.handicap.HandicapInterface;
+import nl.tudelft.bw4t.handicap.AbstractRobotDecorator;
+import nl.tudelft.bw4t.handicap.IRobot;
 import nl.tudelft.bw4t.handicap.MoveSpeedHandicap;
 import nl.tudelft.bw4t.handicap.SizeOverloadHandicap;
 import nl.tudelft.bw4t.robots.NavigatingRobot;
-import nl.tudelft.bw4t.robots.Robot;
+import nl.tudelft.bw4t.robots.AbstractRobot;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -45,9 +45,9 @@ public class NewHandicapTest {
      */
     @Test
     public void testColorBlindHandicap() {
-        HandicapInterface r = new ColorBlindHandicap(new NavigatingRobot("", space, context, true, 0));
+        IRobot r = new ColorBlindHandicap(new NavigatingRobot("", space, context, true, 0));
         
-        assertTrue(r.getSuperParent().getHandicapsList().contains("ColorBlind"));
+        assertTrue(r.getHandicapsList().contains("ColorBlind"));
     }
     
     /**
@@ -57,9 +57,9 @@ public class NewHandicapTest {
      */
     @Test
     public void testGripperHandicap() {
-        HandicapInterface r = new GripperHandicap(new NavigatingRobot("", space, context, true, 200));
+        IRobot r = new GripperHandicap(new NavigatingRobot("", space, context, true, 200));
         
-        assertTrue(r.getSuperParent().getHandicapsList().contains("Gripper"));
+        assertTrue(r.getHandicapsList().contains("Gripper"));
         
         assertFalse(r.canPickUp(block));
         assertTrue(r.getGripperCapacity() == 0);
@@ -71,9 +71,9 @@ public class NewHandicapTest {
      */
     @Test
     public void testMoveSpeedHandicap() {
-    	HandicapInterface r = new MoveSpeedHandicap(new NavigatingRobot("", space, context, true, 1), 3.14);
+    	IRobot r = new MoveSpeedHandicap(new NavigatingRobot("", space, context, true, 1), 3.14);
     	
-        assertTrue(r.getSuperParent().getHandicapsList().contains("MoveSpeed"));
+        assertTrue(r.getHandicapsList().contains("MoveSpeed"));
         
     	assertTrue(r.getSpeedMod() == 3.14);
     }
@@ -84,9 +84,9 @@ public class NewHandicapTest {
      */
     @Test
     public void testSizeOverloadHandicap() {
-    	HandicapInterface r = new SizeOverloadHandicap(new NavigatingRobot("", space, context, true, 1), 5);
+    	IRobot r = new SizeOverloadHandicap(new NavigatingRobot("", space, context, true, 1), 5);
     	
-        assertTrue(r.getSuperParent().getHandicapsList().contains("SizeOverload"));
+        assertTrue(r.getHandicapsList().contains("SizeOverload"));
         
     	assertTrue(r.getSize() == 5);
     }
@@ -100,14 +100,14 @@ public class NewHandicapTest {
      */
     @Test
     public void testAllHandicaps() {
-        HandicapInterface r = 
+        IRobot r = 
         		new SizeOverloadHandicap(
         		new ColorBlindHandicap(
         		new GripperHandicap(
         		new MoveSpeedHandicap(
         	    new NavigatingRobot("", space, context, true, 1), 3.14))), 2);
         
-        assertTrue(r.getSuperParent().getHandicapsList().size() == 4);
+        assertTrue(r.getHandicapsList().size() == 4);
  
         assertTrue(r.getSpeedMod() == 3.14);
         assertFalse(r.canPickUp(block));

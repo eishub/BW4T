@@ -24,7 +24,7 @@ import nl.tudelft.bw4t.map.Entity;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.robots.NavigatingRobot;
-import nl.tudelft.bw4t.robots.Robot;
+import nl.tudelft.bw4t.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.zone.BlocksRoom;
@@ -242,7 +242,7 @@ public final class MapLoader {
     }
 
     /**
-     * Creates a new {@link Robot} in the context according to the data in the tokenizer and adds it to the EIS
+     * Creates a new {@link AbstractRobot} in the context according to the data in the tokenizer and adds it to the EIS
      * environment.
      * 
      * @param context
@@ -271,7 +271,7 @@ public final class MapLoader {
     }
 
     /**
-     * Creates a new {@link Robot} in the context according to the data in the tokenizer.
+     * Creates a new {@link AbstractRobot} in the context according to the data in the tokenizer.
      * 
      * @param context
      *            The context in which the robot should be placed.
