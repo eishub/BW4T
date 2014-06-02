@@ -111,8 +111,7 @@ public class DropZone extends Room {
                     LOGGER.log(BotLog.BOTLOG, message);
                     //BW4TLogger.getInstance().logCompletedSequence();
                 }
-            }
-            else {
+            } else {
                 robot.getAgentRecord().addWrongDrop();
             }
         }

@@ -158,8 +158,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
     public boolean equals(Object obj) {
         if (obj instanceof Robot) {
             return super.equals(obj);
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -425,12 +424,12 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
             }
 
             return MoveType.HIT_CLOSED_DOOR;
-        }
+        
 
         /**
          * Both sides are not a room. Check if target accesible
          */
-        else if (endzone instanceof Corridor) {
+        } else if (endzone instanceof Corridor) {
             if (!oneBotPerZone || endzone.containsMeOrNothing(this)) {
                 return MoveType.ENTER_CORRIDOR;
             }
@@ -500,8 +499,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
             if (distance < MIN_MOVE_DISTANCE) {
                 // we're there
                 stopRobot();
-            }
-            else {
+            } else {
                 double movingDistance = Math.min(distance, MAX_MOVE_DISTANCE);
 
                 // Angle at which to move

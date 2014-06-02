@@ -115,21 +115,18 @@ public class ClientMapController extends AbstractMapController {
             if (function.getName().equals("occupied")) {
                 LinkedList<Parameter> paramOcc = function.getParameters();
                 removeOccupiedRoom(((Identifier) paramOcc.get(0)).getValue());
-            }
-            else if (function.getName().equals("holding")) {
+            }else if (function.getName().equals("holding")) {
                 theBot.getHolding().remove(((Numeral) function.getParameters().get(0)).getValue());
             }
-        }
         // Prepare updated occupied rooms list
-        else if (name.equals("occupied")) {
+    	} else if (name.equals("occupied")) {
             addOccupiedRoom(((Identifier) parameters.get(0)).getValue());
-        }
+        
         // Check if holding a block
-        else if (name.equals("holding")) {
+    	} else if (name.equals("holding")) {
             Long blockId = ((Numeral) parameters.get(0)).getValue().longValue();
             theBot.getHolding().put(blockId, getBlock(blockId));
-        }
-        else if (name.equals("position")) {
+        } else if (name.equals("position")) {
             long id = ((Numeral) parameters.get(0)).getValue().longValue();
             double x = ((Numeral) parameters.get(1)).getValue().doubleValue();
             double y = ((Numeral) parameters.get(2)).getValue().doubleValue();
@@ -137,17 +134,16 @@ public class ClientMapController extends AbstractMapController {
             Block b = getBlock(id);
             b.setObjectId(id);
             b.setPosition(new Point2D.Double(x, y));
-        }
-        else if (name.equals("color")) {
+        } else if (name.equals("color")) {
             long id = ((Numeral) parameters.get(0)).getValue().longValue();
             char color = ((Identifier) parameters.get(1)).getValue().charAt(0);
 
             Block b = getBlock(id);
             b.setColor(BlockColor.toAvailableColor(color));
             getVisibleBlocks().add(b);
-        }
+        
         // Update group goal sequence
-        else if (name.equals("sequence")) {
+        } else if (name.equals("sequence")) {
             for (Parameter i : parameters) {
                 ParameterList list = (ParameterList) i;
                 for (Parameter j : list) {
@@ -155,14 +151,14 @@ public class ClientMapController extends AbstractMapController {
                     getSequence().add(BlockColor.toAvailableColor(letter));
                 }
             }
-        }
+        
         // get the current index of the sequence
-        else if (name.equals("sequenceIndex")) {
+        } else if (name.equals("sequenceIndex")) {
             int index = ((Numeral) parameters.get(0)).getValue().intValue();
             setSequenceIndex(index);
-        }
+        
         // Location can be updated immediately.
-        else if (name.equals("location")) {
+        } else if (name.equals("location")) {
             double x = ((Numeral) parameters.get(0)).getValue().doubleValue();
             double y = ((Numeral) parameters.get(1)).getValue().doubleValue();
             theBot.setLocation(x, y);
