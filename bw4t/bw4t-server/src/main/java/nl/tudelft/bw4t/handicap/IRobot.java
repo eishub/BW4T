@@ -15,6 +15,7 @@ import nl.tudelft.bw4t.robots.MoveType;
 import nl.tudelft.bw4t.robots.NavigatingRobot.State;
 import nl.tudelft.bw4t.zone.Room;
 import nl.tudelft.bw4t.zone.Zone;
+import repast.simphony.context.Context;
 import repast.simphony.space.continuous.NdPoint;
 /**
  * This interface contains all the methods from the original Robot class.  
@@ -263,4 +264,12 @@ public interface IRobot {
      * @param target the object i will move to
      */
     void setTarget(BoundedMoveableObject target);
+
+    int distanceTo(Block b);
+
+    NdPoint getLocation();
+
+    long getId();
+
+    Context<Object> getContext();
 }
