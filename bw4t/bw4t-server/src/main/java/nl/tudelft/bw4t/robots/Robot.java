@@ -57,7 +57,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
     /** The list of blocks the robot is holding. */
     private final List<Block> holding;
     /** The max. amount of blocks a robot can hold, default is 1. */
-    private int capacity = 3;
+    private int grippercap = 3;
     /**
      * set to true if we have to cancel a motion due to a collision. A collision is caused by an attempt to move into or
      * out of a room
@@ -122,8 +122,8 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
         /**
          * Here the number of blocks a bot can hold is set.
          */
-        capacity = cap;
-        this.holding = new ArrayList<Block>(capacity);
+        this.grippercap = cap;
+        this.holding = new ArrayList<Block>(grippercap);
         this.handicapsList = new ArrayList<String>();
     }
 
@@ -210,7 +210,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
      */
     @Override
     public boolean canPickUp(Block b) {
-        return (distanceTo(b.getLocation()) <= ARM_DISTANCE) && b.isFree() && (holding.size() < capacity);
+        return (distanceTo(b.getLocation()) <= ARM_DISTANCE) && b.isFree() && (holding.size() < grippercap);
     }
 
     /**
@@ -220,7 +220,9 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
      *            , the block to pick up
      */
     public void pickUp(Block b) {
-        // drop(); not necessary if the bot can hold multiple blocks.
+    	if (this.grippercap == 1) {
+    		drop();
+    	}
         holding.add(b);
         b.setHeldBy(this);
         b.removeFromContext();
@@ -636,12 +638,13 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
         return this.size;
     }
 
-    public int getCapacity() {
-        return capacity;
+    @Override
+    public int getGripperCapacity() {
+        return grippercap;
     }
-
-    public void setCapacity(int cap) {
-        capacity = cap;
+    
+    public void setGripperCapacity(int newcap) {
+    	this.grippercap = newcap;
     }
 
     public Battery getBattery() {
