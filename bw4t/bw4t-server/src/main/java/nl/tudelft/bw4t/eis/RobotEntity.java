@@ -14,6 +14,7 @@ import nl.tudelft.bw4t.eis.translators.ColorTranslator;
 import nl.tudelft.bw4t.eis.translators.ObjectInformationTranslator;
 import nl.tudelft.bw4t.eis.translators.PointTranslator;
 import nl.tudelft.bw4t.eis.translators.ZoneTranslator;
+import nl.tudelft.bw4t.handicap.HandicapInterface;
 import nl.tudelft.bw4t.robots.NavigatingRobot;
 import nl.tudelft.bw4t.robots.Robot;
 import nl.tudelft.bw4t.server.RobotEntityInt;
@@ -69,7 +70,8 @@ public class RobotEntity implements RobotEntityInt {
      */
     private static final Logger LOGGER = Logger.getLogger(RobotEntity.class);
 
-    private final NavigatingRobot ourRobot;
+    private final HandicapInterface ourRobot;
+    private final NavigatingRobot navRobot;
     private final Context<Object> context;
 
     /**
@@ -82,7 +84,7 @@ public class RobotEntity implements RobotEntityInt {
     /**
      * each item in messages is a list with two items: the sender and the messagetext.
      */
-    private List<ArrayList<String>> messages;
+    private List<ArrayList<String>> messages = new ArrayList<ArrayList<String>>();
 
     /**
      * Creates a new {@link RobotEntity} that can be launched by an EIS compatible {@link Environment}.
@@ -90,10 +92,10 @@ public class RobotEntity implements RobotEntityInt {
      * @param robot
      *            The {@link Robot} that this entity can put up for controlling in EIS.
      */
-    public RobotEntity(NavigatingRobot robot) {
+    public RobotEntity(HandicapInterface robot) {
         this.ourRobot = robot;
-        this.context = robot.getContext();
-        messages = new ArrayList<ArrayList<String>>();
+        this.navRobot = (NavigatingRobot) robot.getSuperParent();
+        this.context = navRobot.getContext();
     }
 
     /**
@@ -101,15 +103,15 @@ public class RobotEntity implements RobotEntityInt {
      */
     @Override
     public void connect() {
-        spawnLocation = new Point2D.Double(ourRobot.getLocation().getX(), ourRobot.getLocation().getY());
-        ourRobot.connect();
+        spawnLocation = new Point2D.Double(navRobot.getLocation().getX(), navRobot.getLocation().getY());
+        navRobot.connect();
     }
     
     /**
      * Disconnects the robot from repast.
      */
     public void disconnect(){
-        ourRobot.disconnect();
+        navRobot.disconnect();
         reset();
     }
     
@@ -117,8 +119,8 @@ public class RobotEntity implements RobotEntityInt {
      * Reset the robot's location and should set it to its default spawn state.
      */
     public void reset(){
-        ourRobot.drop();
-        ourRobot.moveTo(this.spawnLocation.getX(), this.spawnLocation.getY());
+        navRobot.drop();
+        navRobot.moveTo(this.spawnLocation.getX(), this.spawnLocation.getY());
     }
 
     /**
@@ -127,7 +129,7 @@ public class RobotEntity implements RobotEntityInt {
      */
     @Override
     public void initializePerceptionCycle() {
-        ourRobotLocation = new Point2D.Double(ourRobot.getLocation().getX(), ourRobot.getLocation().getY());
+        ourRobotLocation = new Point2D.Double(navRobot.getLocation().getX(), navRobot.getLocation().getY());
         ourRobotRoom = RoomLocator.getRoomAt(ourRobotLocation.getX(), ourRobotLocation.getY());
     }
 
@@ -177,7 +179,7 @@ public class RobotEntity implements RobotEntityInt {
         }
 
         // #2830 add robots own position
-        objects.add(new ObjectInformation(ourRobotLocation.getX(), ourRobotLocation.getY(), ourRobot.getId()));
+        objects.add(new ObjectInformation(ourRobotLocation.getX(), ourRobotLocation.getY(), navRobot.getId()));
 
         return objects;
     }
@@ -192,7 +194,7 @@ public class RobotEntity implements RobotEntityInt {
     @AsPercept(name = "at", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
     public String getAt() throws PerceiveException {
 
-        Zone navpt = ZoneLocator.getNearestZone(ourRobot.getLocation());
+        Zone navpt = ZoneLocator.getNearestZone(navRobot.getLocation());
         if (navpt == null) {
             throw new PerceiveException(
                     "perceiving 'at' percept failed, because map has no suitable navpoint for position "
@@ -212,7 +214,7 @@ public class RobotEntity implements RobotEntityInt {
         IndexedIterable<Object> allBlocks = context.getObjects(Block.class);
         for (Object object : allBlocks) {
             Block b = (Block) object;
-            if (ourRobot.distanceTo(b) <= 1 && ourRobot.isHolding() == null || !ourRobot.isHolding().contains(b)) {
+            if (navRobot.distanceTo(b) <= 1 && navRobot.isHolding() == null || !navRobot.isHolding().contains(b)) {
                 result.add(b.getId());
                 return result;
             }
@@ -259,7 +261,7 @@ public class RobotEntity implements RobotEntityInt {
      */
     @AsPercept(name = "robot", filter = Filter.Type.ONCE)
     public long getRobot() {
-        return ourRobot.getId();
+        return navRobot.getId();
     }
 
     /**
@@ -276,7 +278,7 @@ public class RobotEntity implements RobotEntityInt {
         for (String agt : agents) {
             try {
                 Set<String> entities = env.getAssociatedEntities(agt);
-                if (!entities.contains(ourRobot.getName())) {
+                if (!entities.contains(navRobot.getName())) {
                     result.addAll(env.getAssociatedEntities(agt));
                 }
             } catch (AgentException e) {
@@ -293,7 +295,7 @@ public class RobotEntity implements RobotEntityInt {
      */
     @AsPercept(name = "ownName", multiplePercepts = false, filter = Filter.Type.ONCE)
     public String getOwnName() {
-        return ourRobot.getName();
+        return navRobot.getName();
     }
 
     /**
@@ -317,7 +319,7 @@ public class RobotEntity implements RobotEntityInt {
      */
     @AsPercept(name = "holding", multiplePercepts = true, filter = Filter.Type.ON_CHANGE_NEG)
     public List<Block> getHolding() {
-        return ourRobot.isHolding();
+        return navRobot.isHolding();
     }
 
     /**
@@ -390,7 +392,7 @@ public class RobotEntity implements RobotEntityInt {
      */
     @AsPercept(name = "state", filter = Filter.Type.ON_CHANGE)
     public String getState() {
-        return ourRobot.getState().toString().toLowerCase();
+        return navRobot.getState().toString().toLowerCase();
     }
 
     /**
@@ -403,7 +405,7 @@ public class RobotEntity implements RobotEntityInt {
      */
     @AsAction(name = "goTo")
     public void goTo(double x, double y) {
-        ourRobot.setTargetLocation(new NdPoint(x, y));
+        navRobot.setTargetLocation(new NdPoint(x, y));
     }
 
     /**
@@ -427,7 +429,7 @@ public class RobotEntity implements RobotEntityInt {
             throw new IllegalArgumentException("there is no block with id=" + targetid + " in the room");
         }
 
-        ourRobot.setTarget(target);
+        navRobot.setTarget(target);
     }
 
     /**
@@ -442,7 +444,7 @@ public class RobotEntity implements RobotEntityInt {
         if (target == null) {
             throw new IllegalArgumentException("unknown place " + navPoint);
         }
-        ourRobot.setTarget(target);
+        navRobot.setTarget(target);
     }
 
     /**
@@ -455,34 +457,34 @@ public class RobotEntity implements RobotEntityInt {
     public void pickUp() {
         List<Block> canPickUp = new ArrayList<Block>();
 
-        LOGGER.debug(String.format("%s is trying to pick up a block.", ourRobot.getName()));
+        LOGGER.debug(String.format("%s is trying to pick up a block.", navRobot.getName()));
         
         Iterable<Object> allBlocks = context.getObjects(Block.class);
         for (Object o : allBlocks) {
             Block aBlock = (Block) o;
 
-            LOGGER.trace(String.format("%s is %f units away from block %d.", ourRobot.getName(), ourRobot.distanceTo(aBlock), aBlock.getId()));
+            LOGGER.trace(String.format("%s is %f units away from block %d.", navRobot.getName(), navRobot.distanceTo(aBlock), aBlock.getId()));
             if (ourRobot.canPickUp(aBlock)) {
                 canPickUp.add(aBlock);
-                LOGGER.trace(String.format("%s can pick up block %d.", ourRobot.getName(), aBlock.getId()));
+                LOGGER.trace(String.format("%s can pick up block %d.", navRobot.getName(), aBlock.getId()));
             }
         }
 
         Block nearest;
         // Pick up closest block in canPickUp list
         if (canPickUp.isEmpty()) {
-        	LOGGER.debug(String.format("%s can not pickup any blocks.", ourRobot.getName()));
+        	LOGGER.debug(String.format("%s can not pickup any blocks.", navRobot.getName()));
             return;
         } else {
             nearest = canPickUp.get(0);
             for (int i = 1; i < canPickUp.size(); i++) {
-                if (ourRobot.distanceTo(nearest) > ourRobot.distanceTo(canPickUp.get(i))) {
+                if (navRobot.distanceTo(nearest) > navRobot.distanceTo(canPickUp.get(i))) {
                     nearest = canPickUp.get(i);
                 }
             }
         }
-    	LOGGER.debug(String.format("%s will pickup block %d.", ourRobot.getName(), nearest.getId()));
-        ourRobot.pickUp(nearest);
+    	LOGGER.debug(String.format("%s will pickup block %d.", navRobot.getName(), nearest.getId()));
+    	navRobot.pickUp(nearest);
     }
 
     /**
@@ -497,12 +499,12 @@ public class RobotEntity implements RobotEntityInt {
      */
     @AsAction(name = "sendMessage")
     public void sendMessage(String receiver, String message) throws ActException {
-        ourRobot.getAgentRecord().addSentMessage();
+        navRobot.getAgentRecord().addSentMessage();
 
         // Translate the message into parameters
         Parameter[] parameters = new Parameter[2];
         try {
-            parameters[0] = Translator.getInstance().translate2Parameter(ourRobot.getName())[0];
+            parameters[0] = Translator.getInstance().translate2Parameter(navRobot.getName())[0];
             parameters[1] = Translator.getInstance().translate2Parameter(message)[0];
         } catch (TranslationException e) {
             throw new ActException("translating of message failed:" + message, e);
@@ -542,7 +544,7 @@ public class RobotEntity implements RobotEntityInt {
      */
     @AsAction(name = "putDown")
     public void putDown() {
-        ourRobot.drop();
+        navRobot.drop();
     }
 
     /**
@@ -574,7 +576,7 @@ public class RobotEntity implements RobotEntityInt {
      */
     @AsAction(name = "dropEPartner")
     public void dropEPartner() {
-    	if (ourRobot.isHuman()) {
+    	if (navRobot.isHuman()) {
     		ourRobot.dropEPartner();
     	}
     }
