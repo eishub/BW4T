@@ -13,7 +13,34 @@ import goal.tools.errorhandling.exceptions.GOALParseException;
 
 public class Launcher {
     
+    private static LinkedList<Simulation> scheduledSimulations;
+    private static TimeoutChecker timeoutChecker;
+    
+    private static long lastStartTime;
+    
+    private static class Simulation {
+        
+    }
+    
+    private static class TimeoutChecker implements Runnable {
+
+        @Override
+        public void run() {
+            while (true) {
+                if (System.currentTimeMillis() - lastStartTime > 100000) {
+                    //time out occured
+                }
+            }
+        }
+        
+    }
+    
     public static void main(String[] args) {
+        scheduledSimulations = new LinkedList<Simulation>();
+        
+        timeoutChecker = new TimeoutChecker();
+        new Thread(timeoutChecker).start();
+        
         //Run.run(args);
         
         //ok, so the Run object was supposed to work as below:
@@ -43,6 +70,11 @@ public class Launcher {
 //            e.printStackTrace();
 //        }
         
+    }
+    
+    private void executeSimulation(Simulation task) {
+        lastStartTime = System.currentTimeMillis();
+        //TODO: new Run(new File("MAS File Loc Here")).run();
     }
 
 }
