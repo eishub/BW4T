@@ -15,7 +15,7 @@ public class BotEditorTest {
     private BotEditor botEditor;
     
     @Test
-    public void setBotEditorPane(){
+    public void testBotEditorPane(){
         MainPanel parent = new MainPanel(new ConfigurationPanel(),new EntityPanel());
         botEditor = new BotEditor(parent,"");
         BotEditorPanel panel = new BotEditorPanel("");

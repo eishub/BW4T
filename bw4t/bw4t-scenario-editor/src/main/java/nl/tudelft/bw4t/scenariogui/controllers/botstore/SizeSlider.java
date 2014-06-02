@@ -41,13 +41,14 @@ class SizeSlider implements MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent arg0) {
-        int speed = view.getSpeedSlider().getValue();
-        int size = view.getSizeSlider().getValue();
-        double res = 0.002 * size + 0.000025 * speed;
-        DecimalFormat df = new DecimalFormat("#.######");
-        String value = df.format(res);
-        view.getBatteryUseValueLabel().setText(padString(value));
-
+    	if (view.getBatteryEnabledCheckbox().isSelected()) {
+	        int speed = view.getSpeedSlider().getValue();
+	        int size = view.getSizeSlider().getValue();
+	        double res = 0.002 * size + 0.000025 * speed;
+	        DecimalFormat df = new DecimalFormat("#.######");
+	        String value = df.format(res);
+	        view.getBatteryUseValueLabel().setText(padString(value));
+    	}
     }
     
     /**

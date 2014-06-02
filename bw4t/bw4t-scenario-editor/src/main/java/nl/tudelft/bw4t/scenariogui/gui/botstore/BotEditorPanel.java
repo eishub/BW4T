@@ -108,7 +108,7 @@ public class BotEditorPanel extends JPanel {
      * A dynamically updated label to show
      * what the usage of battery charge is per tick.
      */
-    private JLabel batteryUseValueLabel = new JLabel("0,006500");
+    private JLabel batteryUseValueLabel = new JLabel("0");
     /**
      * The data object.
      */
@@ -282,25 +282,11 @@ public class BotEditorPanel extends JPanel {
         return applyButton;
     }
     /**
-     * Sets the apply button.
-     * @param _applyButton The new apply button.
-     */
-    public void setApplyButton(JButton _applyButton) {
-        this.applyButton = _applyButton;
-    }
-    /**
      * Returns the reset button.
      * @return the reset button.
      */
     public JButton getResetButton() {
         return resetButton;
-    }
-    /**
-     * Sets a new reset button.
-     * @param _resetButton The new reset button.
-     */
-    public void setResetButton(JButton _resetButton) {
-        this.resetButton = _resetButton;
     }
     /**
      * Returns the cancel button.
@@ -310,25 +296,11 @@ public class BotEditorPanel extends JPanel {
         return cancelButton;
     }
     /**
-     * Sets a new cancel button to be used.
-     * @param _cancelButton The new cancel button.
-     */
-    public void setCancelButton(JButton _cancelButton) {
-        this.cancelButton = _cancelButton;
-    }
-    /**
      * Get the currently used gripper checkbox.
      * @return The checkbox for setting the gripper handicap.
      */
     public JCheckBox getGripperCheckbox() {
         return gripperCheckbox;
-    }
-    /**
-     * Set a new gripper checkbox.
-     * @param _gripperCheckbox The new gripper checkbox.
-     */
-    public void setGripperCheckbox(JCheckBox _gripperCheckbox) {
-        this.gripperCheckbox = _gripperCheckbox;
     }
     /**
      * Get the currently used color blindness checkbox.
@@ -338,25 +310,11 @@ public class BotEditorPanel extends JPanel {
         return colorblindCheckbox;
     }
     /**
-     * Set a new color blindness checkbox.
-     * @param _colorblindCheckbox The new checkbox.
-     */
-    public void setColorblindCheckbox(JCheckBox _colorblindCheckbox) {
-        this.colorblindCheckbox = _colorblindCheckbox;
-    }
-    /**
      * Returns the currently used move speed checkbox.
      * @return The move speed checkbox.
      */
     public JCheckBox getmovespeedCheckbox() {
         return movespeedCheckbox;
-    }
-    /**
-     * Set a new move speed checkbox.
-     * @param _movespeedCheckbox The new checkbox.
-     */
-    public void setmovespeedCheckbox(JCheckBox _movespeedCheckbox) {
-        this.movespeedCheckbox = _movespeedCheckbox;
     }
     /**
      * Returns the used custom size checkbox.
@@ -366,25 +324,11 @@ public class BotEditorPanel extends JPanel {
         return customSizeCheckbox;
     }
     /**
-     * Replace the custom size checkbox with a new checkbox.
-     * @param _sizeoverloadCheckbox The new checkbox.
-     */
-    public void setsizeoverloadCheckbox(JCheckBox _sizeoverloadCheckbox) {
-        this.customSizeCheckbox = _sizeoverloadCheckbox;
-    }
-    /**
      * Returns the used size slider.
      * @return The size slider.
      */
     public JSlider getSizeSlider() {
         return sizeSlider;
-    }
-    /**
-     * Replace the size slider with a new one.
-     * @param _sizeSlider The new size slider.
-     */
-    public void setSizeSlider(JSlider _sizeSlider) {
-        this.sizeSlider = _sizeSlider;
     }
     /**
      * Returns the current speed slider.
@@ -394,25 +338,11 @@ public class BotEditorPanel extends JPanel {
         return speedSlider;
     }
     /**
-     * Replaces the speed slider with a new slider.
-     * @param _speedSlider The new slider.
-     */
-    public void setSpeedSlider(JSlider _speedSlider) {
-        this.speedSlider = _speedSlider;
-    }
-    /**
      * Returns the currently used battery slider.
      * @return The battery slider.
      */
     public JSlider getBatterySlider() {
         return batterySlider;
-    }
-    /**
-     * Replaces the battery enabled checkbox with a new one.
-     * @param _batteryEnabledCheckbox The new checkbox.
-     */
-    public void setBatteryEnabledCheckbox(JCheckBox _batteryEnabledCheckbox) {
-        this.batteryEnabledCheckbox = _batteryEnabledCheckbox;
     }
     /**
      * Returns the used battery enabled checkbox.
@@ -422,28 +352,13 @@ public class BotEditorPanel extends JPanel {
         return batteryEnabledCheckbox;
     }
     /**
-     * Replaces the battery slider.
-     * @param _batterySlider The new slider.
-     */
-    public void setBatterySlider(JSlider _batterySlider) {
-        this.batterySlider = _batterySlider;
-    }
-    /**
      * Return the label describing what the robot
      * uses regarding battery potential per tick.
      * @return The aforementioned label.
      */
     public JLabel getBatteryUseValueLabel() {
         return batteryUseValueLabel;
-    }   
-    /**
-     * Replace the label describing the battery usage
-     * of the robot.
-     * @param _batteryUseValueLabel The new label.
-     */
-    public void setBatteryUseValueLabel(JLabel _batteryUseValueLabel) {
-        this.batteryUseValueLabel = _batteryUseValueLabel;
-    }
+    }  
     /**
      * Returns the created data object and the
      * settings contained.
@@ -483,5 +398,13 @@ public class BotEditorPanel extends JPanel {
 
 	public void setBotNameField(JTextField _botNameField) {
 		this.botNameField = _botNameField;
+	}
+
+	public JCheckBox getCustomSizeCheckbox() {
+		return customSizeCheckbox;
+	}
+
+	public JCheckBox getMovespeedCheckbox() {
+		return movespeedCheckbox;
 	}
 }
