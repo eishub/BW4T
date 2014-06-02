@@ -10,10 +10,11 @@ import nl.tudelft.bw4t.zone.Zone;
  *
  */
 public class SizeOverloadHandicap extends AbstractHandicapFactory {
-    /**
-     * true if the handicap is active.
-     */
-    private boolean isActive;
+	
+	/**
+	 * This variable indicates the size of the robot. 
+	 */
+	private final int size;
     
     /**
      * Calls the super method on p,
@@ -24,9 +25,9 @@ public class SizeOverloadHandicap extends AbstractHandicapFactory {
      */
     public SizeOverloadHandicap(HandicapInterface p, int s) {
         super(p);
-        isActive = true;
+        size = s;
         robot.setSize(s);
-        robot.getHandicapsMap().put("SizeOverload", this);
+        robot.getHandicapsList().add("SizeOverload");
     }
     
     /**
@@ -39,32 +40,25 @@ public class SizeOverloadHandicap extends AbstractHandicapFactory {
      */
     @Override
     public MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door) {
-        if (isActive && robot.getSize() >= 4) {
+        if (robot.getSize() >= 4) {
             if (startzone == endzone) {
                 return MoveType.SAME_AREA;
-            } else if (endzone instanceof Corridor) {
+            } 
+            else if (endzone instanceof Corridor) {
                 if (!robot.isOneBotPerZone() || endzone.containsMeOrNothing(robot)) {
                     return MoveType.ENTER_CORRIDOR;
                 }
                 return MoveType.HIT_OCCUPIED_ZONE;
             }
-        } else {
+        } 
+        else {
             super.checkZoneAccess(startzone, endzone, door);
         }
         return MoveType.ENTERING_FREESPACE;
     }
     
-    /**
-     * Activate the handicap.
-     */
-    public void activate() {
-        isActive = true;
-    }
-    
-    /**
-     * Deactivate the handicap.
-     */
-    public void deactivate() {
-        isActive = false;
+    @Override
+    public int getSize() {
+    	return this.size;
     }
 }
