@@ -14,7 +14,7 @@ import goal.tools.errorhandling.exceptions.GOALParseException;
 public class Launcher {
     
     public static void main(String[] args) {
-        
+        //Run.run(args);
         
         //ok, so the Run object was supposed to work as below:
         //new Run(new File("MAS File Loc Here")).run();
