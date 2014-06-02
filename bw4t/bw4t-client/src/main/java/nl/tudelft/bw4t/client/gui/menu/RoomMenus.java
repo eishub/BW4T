@@ -153,8 +153,7 @@ public class RoomMenus {
         if (holding != null) {
             BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.aboutToDropOffBlock, null, holding
                     .getColor().getName(), null), gui);
-        }
-        else {
+        } else {
             BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.droppedOffBlock, null, null, null),
                     gui);
         }

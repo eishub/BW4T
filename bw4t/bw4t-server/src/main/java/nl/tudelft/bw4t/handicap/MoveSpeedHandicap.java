@@ -41,8 +41,7 @@ public class MoveSpeedHandicap extends AbstractHandicapFactory {
             if (distance < Robot.MIN_MOVE_DISTANCE) {
                 // we're there
                 robot.stopRobot(); 
-            } 
-            else {
+            } else {
                 double movingDistance = Math.min(distance, Robot.MAX_MOVE_DISTANCE * speedMod);
     
                 // Angle at which to move

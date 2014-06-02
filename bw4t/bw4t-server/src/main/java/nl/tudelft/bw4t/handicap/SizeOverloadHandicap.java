@@ -43,15 +43,13 @@ public class SizeOverloadHandicap extends AbstractHandicapFactory {
         if (robot.getSize() >= 4) {
             if (startzone == endzone) {
                 return MoveType.SAME_AREA;
-            } 
-            else if (endzone instanceof Corridor) {
+            } else if (endzone instanceof Corridor) {
                 if (!robot.isOneBotPerZone() || endzone.containsMeOrNothing(robot)) {
                     return MoveType.ENTER_CORRIDOR;
                 }
                 return MoveType.HIT_OCCUPIED_ZONE;
             }
-        } 
-        else {
+        } else {
             super.checkZoneAccess(startzone, endzone, door);
         }
         return MoveType.ENTERING_FREESPACE;

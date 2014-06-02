@@ -133,8 +133,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 
         if (closed) {
             g2d.setColor(Door.COLOR_CLOSED);
-        }
-        else {
+        } else {
             g2d.setColor(Door.COLOR_OPEN);
         }
 

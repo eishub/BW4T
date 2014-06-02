@@ -81,12 +81,10 @@ public class TestAgent extends BW4TAgent {
             if ("place".equals(name)) {
                 LinkedList<Parameter> parameters = percept.getParameters();
                 places.add(((Identifier) parameters.get(0)).getValue());
-            }
-            else if ("state".equals(name)) {
+            } else if ("state".equals(name)) {
                 LinkedList<Parameter> parameters = percept.getParameters();
                 state = ((Identifier) parameters.get(0)).getValue();
-            }
-            else if ("player".equals(name)) {
+            } else if ("player".equals(name)) {
                 LOGGER.info(percept);
             }
         }

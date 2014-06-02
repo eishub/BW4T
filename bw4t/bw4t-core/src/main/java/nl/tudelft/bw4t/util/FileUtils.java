@@ -90,8 +90,7 @@ public final class FileUtils {
 
         if (!toCopy.isDirectory()) {
             return FileUtils.copyFile(toCopy, new File(destDir, toCopy.getName()));
-        }
-        else {
+        } else {
             final File newDestDir = new File(destDir, toCopy.getName());
             if (!newDestDir.exists() && !newDestDir.mkdir()) {
                 return false;
@@ -159,8 +158,7 @@ public final class FileUtils {
             final URLConnection urlConnection = originUrl.openConnection();
             if (urlConnection instanceof JarURLConnection) {
                 return FileUtils.copyJarResourcesRecursively((JarURLConnection) urlConnection, destination);
-            }
-            else {
+            } else {
                 return FileUtils.copyFilesRecusively(new File(URLDecoder.decode(originUrl.getPath(), "UTF-8")),
                         destination);
             }
