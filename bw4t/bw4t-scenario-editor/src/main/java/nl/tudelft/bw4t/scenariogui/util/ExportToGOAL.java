@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBException;
 
+import nl.tudelft.bw4t.agent.EntityType;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
@@ -110,6 +111,9 @@ public final class ExportToGOAL {
         ExportToGOAL.configuration = configuration;
         goalFiles = new HashMap<String, String>();
 
+        agentCount = 0;
+        humanCount = 0;
+
         try {
             generateHierarchy();
             buildLaunchPolicy();
@@ -191,10 +195,10 @@ public final class ExportToGOAL {
         launchPolicyBuilder = new StringBuilder();
         for (BotConfig bot : configuration.getBots()) {
             String type = "";
-            if (bot.getBotController() == BotConfig.Controller.AGENT) {
+            if (bot.getBotController() == EntityType.AGENT) {
                 type = "bot";
                 agentCount += bot.getBotAmount();
-            } else if (bot.getBotController() == BotConfig.Controller.HUMAN) {
+            } else if (bot.getBotController() == EntityType.HUMAN) {
                 type = "human";
                 humanCount += bot.getBotAmount();
             }

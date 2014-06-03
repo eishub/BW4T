@@ -3,7 +3,7 @@
     <bots>
         <bot>
             <batteryEnabled>false</batteryEnabled>
-            <botAmount>1</botAmount>
+            <botAmount>2</botAmount>
             <botBatteryCapacity>10</botBatteryCapacity>
             <botBatteryDischargeRate>0</botBatteryDischargeRate>
             <botController>HUMAN</botController>
