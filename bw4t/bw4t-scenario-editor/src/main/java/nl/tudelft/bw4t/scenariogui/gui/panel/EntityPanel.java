@@ -691,13 +691,13 @@ public class EntityPanel extends JPanel {
      * Compares the BotConfig lists.
      * @return If the BotConfigs lists are equal.
      */
-    public boolean compareBotConfigs() {
-        if (botConfigList.size() != oldBotConfigs.size()) {
+    public boolean compareBotConfigs(List<BotConfig> config) {
+        if (botConfigList.size() != config.size()) {
             return false;
         }
         
         for (int i = 0; i < botConfigList.size(); i++) {
-            if (!botConfigList.get(i).bcToString().equals(oldBotConfigs.get(i).bcToString())) {
+            if (!botConfigList.get(i).bcToString().equals(config.get(i).bcToString())) {
                 return false;
             }
         }

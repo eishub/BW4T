@@ -38,7 +38,7 @@ class MenuOptionExit extends AbstractMenuOption {
 
         // Check if current config is different from last saved config
         if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())
-                || !super.getController().getMainView().getMainPanel().getEntityPanel().compareBotConfigs()) {
+                || !super.getController().getMainView().getMainPanel().getEntityPanel().compareBotConfigs(super.getController().getMainView().getMainPanel().getEntityPanel().getOldBotConfigs())) {
             // Check if user wants to save current configuration
             int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
                     null,

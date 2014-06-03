@@ -75,7 +75,7 @@ public class BotEditorPanel extends JPanel {
     /**
      * TextField that shows the name of the bot.
      */
-    private JLabel botNameTextField = new JLabel();
+    private JTextField botNameField = new JTextField();
     /**
 	 * Textfield that shows the amount of bots of this type there are.
 	 */
@@ -111,13 +111,12 @@ public class BotEditorPanel extends JPanel {
      * The text field containing the reference name
      * of the bot.
      */
-    private JTextField botNameField = new JTextField();
+    private JTextField botReferenceField = new JTextField();
     /**
      * The slider to set the size of the bot.
      */
-    private JTextField botReferenceField = new JTextField();
-    
     private JSlider sizeSlider = new JSlider();
+    
     /**
      * The slider to set the speed of the bot.
      */
@@ -185,9 +184,6 @@ public class BotEditorPanel extends JPanel {
         botControllerSelector.setModel(new DefaultComboBoxModel(new String[]{"Agent","Human"}));
         botAmountTextField.setText("" + dataObject.getBotAmount());
 		
-        botNameTextField.setText(dataObject.getBotName());
-        nameLabel.setFont( new Font("Tahoma", Font.PLAIN, 24));
-        
 		botAmountTextField.setText("" + dataObject.getBotAmount());
 		
 		JPanel controllerpanel = new JPanel();
