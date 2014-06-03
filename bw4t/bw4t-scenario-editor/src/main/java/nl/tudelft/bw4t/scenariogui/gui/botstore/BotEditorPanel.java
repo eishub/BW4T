@@ -224,11 +224,26 @@ public class BotEditorPanel extends JPanel {
         checkablesPanel.setLayout(new BoxLayout(checkablesPanel, BoxLayout.PAGE_AXIS));
         checkablesPanel.add(checkablesLabel);
         checkablesPanel.add(handicapsLabel);
+        if (dataObject.getGripperHandicap()) {
+        	gripperCheckbox.setSelected(true);
+        }
         checkablesPanel.add(gripperCheckbox);
+        if (dataObject.getColorBlindHandicap()) {
+        	colorblindCheckbox.setSelected(true);
+        }
         checkablesPanel.add(colorblindCheckbox);
         checkablesPanel.add(restrictionsLabel);
+        if (dataObject.getSizeOverloadHandicap()) {
+        	customSizeCheckbox.setSelected(true);
+        }
         checkablesPanel.add(customSizeCheckbox);
+        if (dataObject.getMoveSpeedHandicap()) {
+        	movespeedCheckbox.setSelected(true);
+        }
         checkablesPanel.add(movespeedCheckbox);
+        if (dataObject.isBatteryEnabled()) {
+        	batteryEnabledCheckbox.setSelected(true);
+        }
         checkablesPanel.add(batteryEnabledCheckbox);
         botCheckables.add(checkablesPanel);
     }
@@ -273,18 +288,34 @@ public class BotEditorPanel extends JPanel {
         createSliders();
         gripperPanel.setLayout(new BoxLayout(gripperPanel, BoxLayout.PAGE_AXIS));
         gripperPanel.add(numberOfGrippersLabel);
+        numberOfGrippersSlider.setValue(dataObject.getGrippers());
+        if (dataObject.getGripperHandicap()) {
+        	numberOfGrippersSlider.setEnabled(false);
+        }
         gripperPanel.add(numberOfGrippersSlider);
         
         sizePanel.setLayout(new BoxLayout(sizePanel, BoxLayout.PAGE_AXIS));
         sizePanel.add(sizeLabel);
+        sizeSlider.setValue(dataObject.getBotSize());
+        if (dataObject.getSizeOverloadHandicap()) {
+        	sizeSlider.setEnabled(true);
+        }
         sizePanel.add(sizeSlider);
         
         speedPanel.setLayout(new BoxLayout(speedPanel, BoxLayout.PAGE_AXIS));
         speedPanel.add(speedLabel);
+        speedSlider.setValue(dataObject.getBotSpeed());
+        if (dataObject.getMoveSpeedHandicap()) {
+        	speedSlider.setEnabled(true);
+        }
         speedPanel.add(speedSlider);
         
         batteryPanel.setLayout(new BoxLayout(batteryPanel, BoxLayout.PAGE_AXIS));
         batteryPanel.add(batteryCapacity);
+        batterySlider.setValue(dataObject.getBotBatteryCapacity());
+        if (dataObject.isBatteryEnabled()) {
+        	speedSlider.setEnabled(true);
+        }
         batteryPanel.add(batterySlider);
         
         botSliders.add(gripperPanel);
@@ -470,4 +501,3 @@ public class BotEditorPanel extends JPanel {
 		return botReferenceField;
 	}	
 }
-
