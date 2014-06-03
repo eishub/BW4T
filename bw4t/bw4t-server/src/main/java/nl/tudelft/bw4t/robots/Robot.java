@@ -125,6 +125,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
         this.grippercap = cap;
         this.holding = new ArrayList<Block>(grippercap);
         this.handicapsList = new ArrayList<String>();
+        this.agentRecord = new AgentRecord(name, "unknown");
     }
 
     /**
@@ -139,12 +140,6 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 			LOGGER.error("Unable to get the associated agent for this entity", e);
 		}
         connected = true;
-		try {
-			agentRecord = new AgentRecord((associatedAgents != null && !associatedAgents.isEmpty())?associatedAgents.iterator().next(): "no agents", env.getType(this.getName()));
-		} catch (EntityException e) {
-			LOGGER.error("Unable to get the type of this entity", e);
-			agentRecord = new AgentRecord("unkown", "unkown");
-		}
     }
 
     /**

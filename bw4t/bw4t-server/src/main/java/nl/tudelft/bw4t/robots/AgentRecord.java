@@ -3,6 +3,11 @@ package nl.tudelft.bw4t.robots;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.logging.BotLog;
+
+import org.apache.log4j.Logger;
+
 /**
  * This class stores performance information of an agent.
  * 
@@ -30,6 +35,11 @@ public class AgentRecord {
      */
     private Long currentStandingStillMillis = System.currentTimeMillis();
 
+    /**
+     * The log4j logger, logs to the console and file
+     */
+    private static final Logger LOGGER = Logger.getLogger(BW4TEnvironment.class);
+    
     /**
      * create new Agent record
      * 
@@ -112,5 +122,9 @@ public class AgentRecord {
         summary.add(label);
         summary.add(value);
         return summary;
+    }
+    
+    public void logSummary(){
+    	LOGGER.log(BotLog.BOTLOG, "test summary");
     }
 }

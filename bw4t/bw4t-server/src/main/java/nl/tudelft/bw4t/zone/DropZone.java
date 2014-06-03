@@ -10,9 +10,13 @@ import javax.management.RuntimeErrorException;
 
 import org.apache.log4j.Logger;
 
+import eis.exceptions.EntityException;
+import eis.exceptions.RelationException;
 import nl.tudelft.bw4t.blocks.Block;
+import nl.tudelft.bw4t.eis.RobotEntity;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.robots.Robot;
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.server.logging.BotLog;
 import repast.simphony.context.Context;
@@ -28,7 +32,7 @@ public class DropZone extends Room {
     /**
      * The log4j logger, logs to the console.
      */
-    private static final Logger LOGGER = Logger.getLogger(Launcher.class);
+    private static final Logger LOGGER = Logger.getLogger(DropZone.class);
 
     /** The sequence of blocks that are to be dropped in here */
     private List<BlockColor> sequence = new ArrayList<BlockColor>();
@@ -105,11 +109,17 @@ public class DropZone extends Room {
                 // Correct block has been dropped in
                 sequenceIndex++;
                 robot.getAgentRecord().addGoodDrop();
+               
                 if (sequenceIndex == sequence.size()) {
-                    //TODO
-                    String message = " ";
-                    LOGGER.log(BotLog.BOTLOG, message);
-                    //BW4TLogger.getInstance().logCompletedSequence();
+                    BW4TEnvironment env = BW4TEnvironment.getInstance();
+                    
+                    for (String entity : env.getEntities()) {
+                    	if(env.getEntity(entity) instanceof RobotEntity ) {
+                        	RobotEntity rEntity = (RobotEntity)env.getEntity(entity);
+                        	rEntity.getRobotObject().getAgentRecord().logSummary();
+                    	}
+                    }
+                    
                 }
             }
             else {
