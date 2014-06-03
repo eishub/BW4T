@@ -194,8 +194,7 @@ public final class ExportToGOAL {
             if (bot.getBotController() == BotConfig.Controller.AGENT) {
                 type = "bot";
                 agentCount += bot.getBotAmount();
-            }
-            else if (bot.getBotController() == BotConfig.Controller.HUMAN) {
+            } else if (bot.getBotController() == BotConfig.Controller.HUMAN) {
                 type = "human";
                 humanCount += bot.getBotAmount();
             }
