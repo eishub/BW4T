@@ -4,8 +4,10 @@ import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -13,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
  * BotEditorPanel which serves as the content pane for the BotEditor frame
@@ -40,6 +43,11 @@ public class BotEditorPanel extends JPanel {
      */
     private JPanel botSliders = new JPanel();
     /**
+     * Panel that shows name, controller type and amount.
+     */
+	private JPanel botInfo = new JPanel();
+	
+    /**
      * The button to be clicked on to save the data object.
      */
     private JButton applyButton = new JButton("Apply");
@@ -53,15 +61,26 @@ public class BotEditorPanel extends JPanel {
      * data object and to close the frame.
      */
     private JButton cancelButton = new JButton("Cancel");
+
     /**
      * The button that opens the file chooser to select
      * an existing .goal file to use.
      */
     private JButton fileButton = new JButton("Use existing GOAL file");
     /**
-     * The label containing the name of the bot.
+     * Combobox for the controller types.
+     */
+	private JComboBox botControllerSelector = new JComboBox();
+	    
+    /**
+     * TextField that shows the name of the bot.
      */
     private JLabel botNameTextField = new JLabel();
+    /**
+	 * Textfield that shows the amount of bots of this type there are.
+	 */
+	private JTextField botAmountTextField = new JTextField();
+	    
     /**
      * The checkbox for enabling/disabling the gripper.
      */
@@ -96,6 +115,8 @@ public class BotEditorPanel extends JPanel {
     /**
      * The slider to set the size of the bot.
      */
+    private JTextField botReferenceField = new JTextField();
+    
     private JSlider sizeSlider = new JSlider();
     /**
      * The slider to set the speed of the bot.
@@ -118,21 +139,73 @@ public class BotEditorPanel extends JPanel {
      * The data object.
      */
     private BotConfig dataObject = new BotConfig();
+
+    /**
+     * The MainPanel.
+     */
+	private MainPanel mainPanel;
+	
+	/**
+	 * The BotEditor.
+	 */
+	private BotEditor botEditor;
     
     /**
-     * Create the botEditorPanel
-     * @param name the bot gets
+     * Create the botEditorPanel.
+     * @param botEditor The BotEditor.
+     * @param mainPanel The MainPanel.
      */
-    public BotEditorPanel(String name) {
-        botNameField.setText(name);
-        setLayout(new BorderLayout(20, 20));        
+    public BotEditorPanel(BotEditor botEditor, MainPanel mainPanel) {
+        setLayout(new BorderLayout(20, 20));      
         
+        this.mainPanel = mainPanel;
+		this.botEditor = botEditor;
+		this.dataObject = mainPanel.getEntityPanel().getBotConfig(botEditor.getRow());
+        
+		createBotInfoPanel();
         createBotCheckablesPanel();
         createBotSlidersPanel();
         
+        add(botInfo, BorderLayout.NORTH);
         add(botSliders, BorderLayout.EAST);
         add(botCheckables, BorderLayout.WEST);
     }
+    
+    /**
+	 * Create the panel which contains the bots name and the controller type
+	 */
+	private void createBotInfoPanel() {
+        botInfo.setLayout(new GridLayout(10, 0));
+		
+        JLabel nameLabel = new JLabel("Names");
+        JLabel fileNameLabel = new JLabel("GOAL File name:");
+        JLabel botNameLabel = new JLabel("Bot Name:");
+        
+        botNameField.setText(dataObject.getBotName());
+        botControllerSelector.setModel(new DefaultComboBoxModel(new String[]{"Agent","Human"}));
+        botAmountTextField.setText("" + dataObject.getBotAmount());
+		
+        botNameTextField.setText(dataObject.getBotName());
+        nameLabel.setFont( new Font("Tahoma", Font.PLAIN, 24));
+        
+		botAmountTextField.setText("" + dataObject.getBotAmount());
+		
+		JPanel controllerpanel = new JPanel();
+		controllerpanel.setLayout(new GridLayout(1, 0));
+		
+        botInfo.add(nameLabel);
+        controllerpanel.add(botControllerSelector);
+        controllerpanel.add(new JLabel("   Amount of this type:"));
+        controllerpanel.add(botAmountTextField);
+        botInfo.add(controllerpanel);
+        botInfo.add(botNameLabel);
+        botInfo.add(botNameField);
+        botInfo.add(new JLabel("Bot reference name:"));
+        botInfo.add(botReferenceField);
+        botInfo.add(fileNameLabel);
+        botInfo.add(fileNameField);
+        botInfo.add(fileButton);
+	}
     
     /**
      * create the checkables panel
@@ -141,50 +214,22 @@ public class BotEditorPanel extends JPanel {
     	final String newLine = "\n";
         botCheckables.setLayout(new GridLayout(2, 1));
         JLabel checkablesLabel = new JLabel("Specs");
-        JLabel nameLabel = new JLabel("Names");
         JLabel handicapsLabel = new JLabel("Handicaps:");
         JLabel restrictionsLabel = new JLabel("Other options:");
-        JLabel fileNameLabel = new JLabel("GOAL File name:");
-        JLabel botNameLabel = new JLabel("Bot Name:");
-        JLabel emptyLabel = new JLabel(newLine);
-        JLabel emptyLabel2 = new JLabel(newLine);
-        JLabel emptyLabel3 = new JLabel(newLine);
-        JLabel emptyLabel4 = new JLabel(newLine);
-        JLabel emptyLabel5 = new JLabel(newLine);
-        JLabel emptyLabel6 = new JLabel(newLine);
         
-        Font f = new Font("Tahoma", Font.PLAIN, 24);
-        
-        checkablesLabel.setFont(f);
-        nameLabel.setFont(f);
+        checkablesLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
        
         JPanel checkablesPanel = new JPanel();
-        JPanel namePanel = new JPanel();
 
         checkablesPanel.setLayout(new BoxLayout(checkablesPanel, BoxLayout.PAGE_AXIS));
         checkablesPanel.add(checkablesLabel);
-        checkablesPanel.add(emptyLabel4);
         checkablesPanel.add(handicapsLabel);
         checkablesPanel.add(gripperCheckbox);
         checkablesPanel.add(colorblindCheckbox);
-        checkablesPanel.add(emptyLabel);
         checkablesPanel.add(restrictionsLabel);
         checkablesPanel.add(customSizeCheckbox);
         checkablesPanel.add(movespeedCheckbox);
         checkablesPanel.add(batteryEnabledCheckbox);
-        namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.PAGE_AXIS));
-        nameLabel.setFont(f);
-        namePanel.add(nameLabel);
-        namePanel.add(emptyLabel3);
-        namePanel.add(botNameLabel);
-        namePanel.add(botNameField);
-        namePanel.add(emptyLabel2);
-        namePanel.add(fileNameLabel);
-        namePanel.add(fileNameField);
-        namePanel.add(emptyLabel6);
-        namePanel.add(fileButton);
-        namePanel.add(emptyLabel5);
-        botCheckables.add(namePanel);
         botCheckables.add(checkablesPanel);
     }
     /**
@@ -411,5 +456,18 @@ public class BotEditorPanel extends JPanel {
 
 	public JButton getFileButton() {
 		return fileButton;
+	}
+
+	public JComboBox getBotControllerSelector() {
+		return botControllerSelector;
+	}
+
+	public JTextField getBotAmountTextField() {
+		return botAmountTextField;
+	}
+
+	public JTextField getBotReferenceField() {
+		return botReferenceField;
 	}	
 }
+
