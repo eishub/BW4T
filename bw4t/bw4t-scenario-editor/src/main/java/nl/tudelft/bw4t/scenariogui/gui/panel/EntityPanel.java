@@ -34,6 +34,7 @@ import javax.swing.table.DefaultTableModel;
 
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
+import nl.tudelft.bw4t.scenariogui.util.Format;
 
 /**
  * The EntityPanel class represents right pane of the MainPanel. It shows a list
@@ -546,7 +547,7 @@ public class EntityPanel extends JPanel {
         int numBots = 0;
 
         for (int i = 0; i < botList.getRowCount(); i++) {
-            numBots += Integer.valueOf(botList.getValueAt(i, 2).toString());
+            numBots += Format.getNonNegativeIntValue(botList.getValueAt(i, 2).toString());
         }
         return numBots;
     }

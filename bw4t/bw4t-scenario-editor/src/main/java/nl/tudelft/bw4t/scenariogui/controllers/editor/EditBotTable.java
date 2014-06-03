@@ -6,6 +6,7 @@ import javax.swing.event.TableModelListener;
 
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
+import nl.tudelft.bw4t.scenariogui.util.Format;
 
 /**
  * Handles the event when a cell in the bot table is edited.
@@ -50,7 +51,7 @@ public class EditBotTable implements TableModelListener {
             config.setBotController(value);
             break;
         case 2:
-            config.setBotAmount(Integer.parseInt(value));
+            config.setBotAmount(Format.getNonNegativeIntValue(value));
             break;
          default:
             break;
