@@ -39,6 +39,7 @@ public final class ExportToGOAL {
             + "agentcount = \"%d\", "
             + "humancount = \"%d\", "
             + "launchgui = \"%s\", "
+            + "configfile = \"source.xml\", "
             + "goal = \"true\"] "
             + ".\n";
 
