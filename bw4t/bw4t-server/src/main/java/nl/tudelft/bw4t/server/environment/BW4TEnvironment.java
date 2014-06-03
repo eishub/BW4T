@@ -327,7 +327,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
      */
     public Percept performClientAction(String entity, Action action) throws ActException {
         Long time = System.currentTimeMillis();
-        LOGGER.log(BotLog.BOTLOG, String.format("action %d %s %s", time, entity, action.toProlog()));
+        LOGGER.log(BotLog.BOTLOG, String.format("action %s %s", entity, action.toProlog()));
 
         if (starttime == null) {
             starttime = time;
