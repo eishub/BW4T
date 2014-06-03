@@ -8,6 +8,8 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.bind.JAXBException;
+
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
@@ -23,9 +25,18 @@ import nl.tudelft.bw4t.util.FileUtils;
 public final class ExportToGOAL {
 
     /**
+     * The tab character(s) to be used.
+     */
+    private static final String TAB = "\t";
+    /**
+     * The newline character(s) to be used.
+     */
+    private static final String NEWLINE = "\n";
+
+    /**
      * The environment used.
      */
-    private static final String ENVIRONMENT = "env = \"BW4T3/BW4TClient.jar\" .\n";
+    private static final String ENVIRONMENT = "env = \"BW4T3/BW4TClient.jar\" ." + NEWLINE;
 
     /**
      * The initialization string.
@@ -40,8 +51,8 @@ public final class ExportToGOAL {
             + "humancount = \"%d\", "
             + "launchgui = \"%s\", "
             + "configfile = \"source.xml\", "
-            + "goal = \"true\"] "
-            + ".\n";
+            + "goal = \"true\"] ."
+            + NEWLINE;
 
     /**
      * The configuration file to be converted.
@@ -83,7 +94,8 @@ public final class ExportToGOAL {
     /**
      * Hide the constructor
      */
-    private ExportToGOAL() { }
+    private ExportToGOAL() {
+    }
 
 
     /**
@@ -104,20 +116,25 @@ public final class ExportToGOAL {
             generateEnvironmentBlock();
             generateAgentBlock();
             generateLaunchPolicy();
-        } catch (SecurityException ex) {
-            ScenarioEditor.handleException(ex, "File or Directory could not be created. Access Denied.");
+
+            // Save the configuration again with the latest changes concerning the goal files.
+            configuration.setFileLocation(directory + "/source.xml");
+            configuration.toXML();
         } catch (IOException ex) {
             ScenarioEditor.handleException(ex, "An IO Exception has occurred. Please try again.");
+        } catch (JAXBException ex) {
+            ScenarioEditor.handleException(ex, "A problem occured while attempting to export the protect. "
+                    + "Please try again.");
+
         }
     }
 
     /**
      * Generate the project hierarchy.
      *
-     * @throws SecurityException Exception raised if there's no access to the file/folder
      * @throws IOException Exception raised if there are problems reading/writing to files
      */
-    private static void generateHierarchy() throws SecurityException, IOException {
+    private static void generateHierarchy() throws IOException {
         File directory = new File(ExportToGOAL.directory);
         directory.mkdir();
 
@@ -177,20 +194,21 @@ public final class ExportToGOAL {
             if (bot.getBotController() == BotConfig.Controller.AGENT) {
                 type = "bot";
                 agentCount += bot.getBotAmount();
-            } else if (bot.getBotController() == BotConfig.Controller.HUMAN) {
+            }
+            else if (bot.getBotController() == BotConfig.Controller.HUMAN) {
                 type = "human";
                 humanCount += bot.getBotAmount();
             }
             String goalFileSanitized = bot.getFileName().toLowerCase().replace(" ", "_");
             String goalFileNoExt = goalFileSanitized.substring(0, goalFileSanitized.length() - 5);
-            launchPolicyBuilder.append("\t");
+            launchPolicyBuilder.append(TAB);
             launchPolicyBuilder.append(String.format("when [type=%s,max=%d]@env do launch %s: %s .",
                             type,
                             new Integer(bot.getBotAmount()),
                             bot.getBotName().toLowerCase().replace(" ", "_"),
                             goalFileNoExt)
             );
-            launchPolicyBuilder.append("\n");
+            launchPolicyBuilder.append(NEWLINE);
             /* Remove the last 5 characters since that is the extension. */
             goalFiles.put(bot.getFileName(), goalFileNoExt);
         }
@@ -198,6 +216,7 @@ public final class ExportToGOAL {
 
     /**
      * Write the environment block to the mas2g file.
+     *
      * @throws IOException Exception raised if there are problems reading/writing to files
      */
     private static void generateEnvironmentBlock() throws IOException {
@@ -205,7 +224,7 @@ public final class ExportToGOAL {
 
         out.println("environment{");
 
-        out.print("\t");
+        out.print(TAB);
         out.print(ENVIRONMENT);
 
         String init = String.format(
@@ -219,7 +238,7 @@ public final class ExportToGOAL {
                 configuration.isLaunchGui() ? "true" : "false"
         );
 
-        out.print("\t");
+        out.print(TAB);
         out.print(init);
 
         out.println("}");
@@ -229,6 +248,7 @@ public final class ExportToGOAL {
 
     /**
      * Write the agent files block to the mas2g.
+     *
      * @throws IOException Exception raised if there are problems reading/writing to files
      */
     private static void generateAgentBlock() throws IOException {
@@ -238,7 +258,7 @@ public final class ExportToGOAL {
 
         out.println("agentfiles{");
         for (Map.Entry<String, String> item : goalFiles.entrySet()) {
-            String entry = "\t\"%s\" [name = %s] .\n";
+            String entry = TAB + "\"%s\" [name = %s] ." + NEWLINE;
             out.append(String.format(entry, item.getKey(), item.getValue()));
         }
         out.println("}");
@@ -248,6 +268,7 @@ public final class ExportToGOAL {
 
     /**
      * Write the launch policy to the mas2g.
+     *
      * @throws IOException Exception raised if there are problems reading/writing to files
      */
     private static void generateLaunchPolicy() throws IOException {
