@@ -356,13 +356,13 @@ public final class MapLoader {
      */
     private static void createBlocksForRoom(Room room, Context<Object> context, ContinuousSpace<Object> space,
             List<BlockColor> args) {
-        
-        String logRoom = room.getName();
-        
+                
+        StringBuffer buf = new StringBuffer(); 
+        buf.append(room.getName());
         for (BlockColor c : args) {
-            logRoom = logRoom + c.getLetter().toString();
+            buf.append(c.getLetter().toString());
         }
-        
+        String logRoom = buf.toString();
         LOGGER.log(BotLog.BOTLOG, logRoom);
 
         Rectangle2D roomBox = room.getBoundingBox();
