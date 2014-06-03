@@ -3,53 +3,62 @@ package nl.tudelft.bw4t.scenariogui.gui.panel;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JPanel;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-
-import nl.tudelft.bw4t.scenariogui.BotConfig;
 
 /**
- *
  * MainPanel which serves as the content pane for the ScenarioEditor frame.
  * Creates a 1/3 - 2/3 division, the former for the ConfigurationPanel, and the
  * latter the EntityPanel.
- * <p>
- * @author      Katia Asmoredjo
- * @author      Joop Aué
- * @author      Nick Feddes  
- * @version     0.1                
- * @since       12-05-2014        
+ * <p/>
+ *
+ * @author Katia Asmoredjo
+ * @author Joop Aué
+ * @author Nick Feddes
+ * @version 0.1
+ * @since 12-05-2014
  */
 public class MainPanel extends JPanel {
-    
-    /** The inset used. */
+
+    /**
+     * The inset used.
+     */
     private static final int INSET = 10;
-    /** The weights used. */
+    /**
+     * The weights used.
+     */
     private static final double WEIGHT_1 = 0.1;
-    /** The bigger weight used. */
+    /**
+     * The bigger weight used.
+     */
     private static final double WEIGHT_2 = 0.8;
 
-    /** Randomly generated serial version. */
+    /**
+     * Randomly generated serial version.
+     */
     private static final long serialVersionUID = 475250876795906302L;
-    /** The configuration panel. */
+    /**
+     * The configuration panel.
+     */
     private ConfigurationPanel configurationPanel;
-    /** The entity panel. */
+    /**
+     * The entity panel.
+     */
     private EntityPanel entityPanel;
     /**  */
     private GridBagLayout gbl;
+    /**
+     * The XML element wrapper for the list of bots. 
+     */
 
     /**
      * Create a MainPanel consisting of a ConfigurationPanel and a EntityPanel.
      *
      * @param newConfigurationPanel The configuration panel
-     * @param newEntityPanel    The entity panel
+     * @param newEntityPanel        The entity panel
      */
     public MainPanel(final ConfigurationPanel newConfigurationPanel,
-            final EntityPanel newEntityPanel) {
+                     final EntityPanel newEntityPanel) {
         gbl = new GridBagLayout();
         this.setLayout(gbl);
         this.setConfigurationPanel(newConfigurationPanel);
@@ -60,7 +69,7 @@ public class MainPanel extends JPanel {
         this.configurationPanel = newConfigurationPanel;
         this.entityPanel = newEntityPanel;
     }
-    
+
     /**
      * Draw the two panels unto the main panel. These will have black borders
      * around them.
@@ -120,10 +129,9 @@ public class MainPanel extends JPanel {
     /**
      * Set the bot panel used by the MainPanel.
      *
-     * @param newEntityPanel    The bot panel object to be used.
+     * @param newEntityPanel The bot panel object to be used.
      */
     public final void setEntityPanel(final EntityPanel newEntityPanel) {
         this.entityPanel = newEntityPanel;
     }
-
 }

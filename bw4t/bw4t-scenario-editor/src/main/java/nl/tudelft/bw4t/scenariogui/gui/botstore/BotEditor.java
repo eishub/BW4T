@@ -7,12 +7,11 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import nl.tudelft.bw4t.scenariogui.controllers.botstore.BotStoreController;
-import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
-import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
  * This class serves as frame for the BotEditorPanel
+ *
  * @author Arun
  */
 public class BotEditor extends JFrame {
@@ -21,41 +20,48 @@ public class BotEditor extends JFrame {
      * Random generated serial version UID.
      */
     private static final long serialVersionUID = 8114982191029560097L;
-    /** the name of the window */
+    /**
+     * the name of the window
+     */
     private String windowName = "Bot Editor";
-    /** the window width*/
-    private int width;
-    /** the window height*/
-    private int height;
-    /** The parent of this frame. */
+    /**
+     * The parent of this frame.
+     */
     private MainPanel parent;
-    /** the panel in the frame*/
+    /**
+     * the panel in the frame
+     */
     private BotEditorPanel bPanel;
-    /** the controller for the frame*/
+    /**
+     * the controller for the frame
+     */
     private BotStoreController controller;
 
     /**
-     * creates the BotEditor frame
-     * @param pparent the parent of the frame
-     * @param pname name of the bot
+     * The row number of the selected bot.
      */
-    public BotEditor(MainPanel pparent, String pname) {
+    private int row;
+
+    /**
+     * creates the BotEditor frame
+     *
+     * @param pparent the parent of the frame
+     * @param row the row number of the bot being edited.
+     */
+    public BotEditor(MainPanel pparent, int row) {
         setLookAndFeel();
         setTitle(windowName);
         setResizable(false);
         setLayout(null);
         this.parent = pparent;
-        bPanel = new BotEditorPanel(pname);
+        this.row = row;
+        bPanel = new BotEditorPanel(this, this.parent);
         bPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
         setContentPane(bPanel);
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         pack();
-
-        width = this.getWidth();
-        height = this.getHeight();
-
         setLocationRelativeTo(null);
 
         setVisible(true);
@@ -64,9 +70,9 @@ public class BotEditor extends JFrame {
     }
 
     /**
-     *  Function to set the look and feel of the frame to the default look and feel of the system.
-     *  Throws exceptions which are passed over since the failure to set the look and feel is not
-     *  considered harmful.
+     * Function to set the look and feel of the frame to the default look and feel of the system.
+     * Throws exceptions which are passed over since the failure to set the look and feel is not
+     * considered harmful.
      */
     private void setLookAndFeel() {
         try {
@@ -82,37 +88,49 @@ public class BotEditor extends JFrame {
             // pass
         }
     }
+
+    /**
+     * Returns the row number of the bot that is currently selected.
+     *
+     * @return The row number of the bot that is currently selected.
+     */
+    public int getRow() {
+        return this.row;
+    }
+
     /**
      * Returns the BotEditorPanel
+     *
      * @return botEditorPanel used
      */
     public BotEditorPanel getBotEditorPanel() {
         return bPanel;
     }
-    /**
-     * Get the main panel.
-     * @return parent
-     */
-    public MainPanel getParent() {
-        return parent;
-    }
-    /**
-     * Set the main panel.
-     * @param pparent the main panel.
-     */
-    public void setParent(MainPanel pparent) {
-        this.parent = pparent;
-    }
 
     /**
      * setter for botEditorPanel
+     *
      * @param pbPanel the panel to be set
      */
     public void setBotEditorPanel(BotEditorPanel pbPanel) {
         this.bPanel = pbPanel;
     }
 
-    public static void main(String[] args) {
-        new BotEditor(new MainPanel(new ConfigurationPanel(), new EntityPanel()),"Bot X");
+    /**
+     * Get the main panel.
+     *
+     * @return parent
+     */
+    public MainPanel getParent() {
+        return parent;
+    }
+
+    /**
+     * Set the main panel.
+     *
+     * @param pparent the main panel.
+     */
+    public void setParent(MainPanel pparent) {
+        this.parent = pparent;
     }
 }
