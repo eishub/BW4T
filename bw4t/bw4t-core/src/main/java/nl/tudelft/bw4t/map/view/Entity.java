@@ -8,9 +8,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class Entity {
-    /** The width and height of the robot */
-    public final static int ROBOT_SIZE = 2;
-    public final static Color ROBOT_COLOR = Color.BLACK;
+    
 
     private String name = "";
 
@@ -18,6 +16,10 @@ public class Entity {
 
     private Point2D location;
 
+    /** The width and height of the robot */
+    public final static int ROBOT_SIZE = 2;
+    public final static Color ROBOT_COLOR = Color.BLACK;
+    
     public Entity(){
         location = new Point2D.Double();
     }
