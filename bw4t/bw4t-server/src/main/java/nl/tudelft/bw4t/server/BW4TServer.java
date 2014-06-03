@@ -3,7 +3,6 @@ package nl.tudelft.bw4t.server;
 import java.net.MalformedURLException;
 import java.rmi.AccessException;
 import java.rmi.Naming;
-import java.rmi.NoSuchObjectException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -13,20 +12,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.swing.text.html.parser.Entity;
-
 import nl.tudelft.bw4t.agent.EntityType;
-import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.client.BW4TClientActions;
-import nl.tudelft.bw4t.eis.EPartnerEntity;
-import nl.tudelft.bw4t.handicap.IRobot;
-import nl.tudelft.bw4t.eis.RobotEntity;
-import nl.tudelft.bw4t.robots.EntityFactory;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
@@ -112,13 +103,13 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
         if (agentCount > 0) {
             BotConfig bot = new BotConfig();
             bot.setBotAmount(agentCount);
-            bot.setBotController(EntityType.BOT.nameLower());
+            bot.setBotController(EntityType.AGENT);
             bots.add(bot);
         }
         if (humanCount > 0) {
             BotConfig bot = new BotConfig();
             bot.setBotAmount(humanCount);
-            bot.setBotController(EntityType.HUMAN.nameLower());
+            bot.setBotController(EntityType.HUMAN);
             bots.add(bot);
         }
         registerClient(client, bots, null);
@@ -183,7 +174,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
      * both when an entity is new and when an entity became free after use.
      * 
      * @param client
-     * @param entity
+     * @param ci
      * @throws EntityException
      */
     public void notifyFreeEpartner(BW4TClientActions client, EPartnerConfig ci) throws EntityException {
@@ -204,7 +195,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
             String entity = ci.getBotName();
             if ("unknown".equals(Launcher.getEnvironment().getType(entity))) {
                 String type = "bot";
-                if (EntityType.HUMAN.isA(ci.getBotController())) {
+                if (EntityType.HUMAN == ci.getBotController()) {
                     type = "human";
                 }
                 BW4TEnvironment.getInstance().setType(entity, type);

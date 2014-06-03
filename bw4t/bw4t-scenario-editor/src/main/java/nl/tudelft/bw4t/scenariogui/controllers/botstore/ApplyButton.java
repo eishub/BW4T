@@ -6,6 +6,7 @@ import java.io.File;
 
 import javax.swing.SwingUtilities;
 
+import nl.tudelft.bw4t.agent.EntityType;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditor;
@@ -55,7 +56,7 @@ class ApplyButton implements ActionListener {
 	    			if (botName.length() > 0) {
 	    				if (botName.matches(nonAlphaNumericRegex)) {
 	    			    	view.getDataObject().setBotName(view.getBotNameField().getText());
-	    					view.getDataObject().setBotController((String) view.getBotControllerSelector().getSelectedItem());
+	    					view.getDataObject().setBotController((EntityType) view.getBotControllerSelector().getSelectedItem());
 	    					view.getDataObject().setBotAmount(Integer.parseInt(view.getBotAmountTextField().getText()));
 	    			        view.getDataObject().setBotSize(view.getSizeSlider().getValue());
 	    			        view.getDataObject().setBotSpeed(view.getSpeedSlider().getValue());

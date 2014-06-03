@@ -12,8 +12,7 @@ class gpsCheckBox implements ActionListener {
     /**
      * The frame containing the button.
      */
-    @SuppressWarnings("unused")
-	private EpartnerFrame view;
+    private EpartnerFrame view;
     /**
      * The constructor for this action listener.
      * @param pview The frame with the button in it.

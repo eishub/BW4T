@@ -9,8 +9,8 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
  * Handles the event to modify a bot.
- * 
- * @version     0.1                
+ *
+ * @version     0.1
  * @since       12-05-2014        
  */
 class ModifyBot implements ActionListener {
@@ -37,7 +37,7 @@ class ModifyBot implements ActionListener {
      */
     public void actionPerformed(final ActionEvent ae) {
         int row = view.getEntityPanel().getSelectedBotRow();
-         
+
         if (row == -1) {
             ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select the bot you want to modify.");
             return;
