@@ -2,6 +2,7 @@
 .classpath
 target/
 bin/
+log/
 bw4t-client/target/
 bw4t-server/target/
 bw4t-integration-test/BW4T.rs

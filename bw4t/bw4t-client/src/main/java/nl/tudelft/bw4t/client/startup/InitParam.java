@@ -52,7 +52,11 @@ public enum InitParam {
     /**
      * The key we should try to use to kill the remote server.
      */
-    KILL("");
+    KILL(""),
+    /**
+     * The file from which the client reads the configuration.
+     */
+    CONFIGFILE("");
 
     private String defaultvalue;
 
@@ -85,8 +89,6 @@ public enum InitParam {
     /**
      * Extract the value of a setting from the given Map.
      * 
-     * @param params
-     *            the map of parameters
      * @return the value of the parameter or the default value.
      */
     public String getValue() {
@@ -121,8 +123,6 @@ public enum InitParam {
      * parameters. We do this by removing all parameters that we can handle as
      * client; the remaining ones must be server parameters.
      * 
-     * @param parameters
-     *            a set of parameters for both client and server
      * @return parameters for the server
      */
     public static Map<String, Parameter> getServerParameters() {

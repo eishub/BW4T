@@ -13,7 +13,7 @@ import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.Block;
 import nl.tudelft.bw4t.map.view.Entity;
-import nl.tudelft.bw4t.robots.Robot;
+import nl.tudelft.bw4t.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.view.MapRendererInterface;
 import nl.tudelft.bw4t.zone.DropZone;
@@ -99,8 +99,8 @@ public class ServerMapController extends AbstractMapController {
     @Override
     public Set<Entity> getVisibleEntities() {
         Set<Entity> entities = new HashSet<>();
-        for (Object robot : serverContext.getObjects(Robot.class)) {
-            Robot robotTemp = (Robot) robot;
+        for (Object robot : serverContext.getObjects(AbstractRobot.class)) {
+            AbstractRobot robotTemp = (AbstractRobot) robot;
             if (robotTemp.isConnected()) {
                 entities.add(robotTemp.getView());
             }
