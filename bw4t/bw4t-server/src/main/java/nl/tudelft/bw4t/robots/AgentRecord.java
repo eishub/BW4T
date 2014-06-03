@@ -88,43 +88,25 @@ public class AgentRecord {
     }
 
     /**
-     * should be called when agent sends message
+     * should be called when agent sends message.
      */
     public void addSentMessage() {
         nMessages++;
     }
-
+    
     /**
-     * Convert this record to a summary list for in the log file. The list is a number of lines for in the log, each
-     * element of the top list having a list of items for one log line.
-     * 
-     * @return
-     * 
-     * TODO log this at the end
+     * Write summary in logfile.
      */
-    public List<List<String>> toSummaryArray() {
-        List<List<String>> summaries = new ArrayList<List<String>>();
-
-        summaries.add(summary("type", type));
-        summaries.add(summary("gooddrops", "" + goodDrops));
-        summaries.add(summary("wrongdrops", "" + wrongDrops));
-        summaries.add(summary("nmessage", "" + nMessages));
-        summaries.add(summary("idletime", "" + (float) totalStandingStillMillis / 1000.));
-        summaries.add(summary("nroomsentered", "" + nRoomsEntered));
-
-        return summaries;
-    }
-
-    private List<String> summary(String label, String value) {
-        List<String> summary = new ArrayList<String>();
-        summary.add("agentsummary");
-        summary.add(name);
-        summary.add(label);
-        summary.add(value);
-        return summary;
+    public void logSummary(){
+    	 summary("type", type);
+    	 summary("gooddrops", "" + goodDrops);
+         summary("wrongdrops", "" + wrongDrops);
+         summary("nmessage", "" + nMessages);
+         summary("idletime", "" + (float) totalStandingStillMillis / 1000.);
+         summary("nroomsentered", "" + nRoomsEntered);
     }
     
-    public void logSummary(){
-    	LOGGER.log(BotLog.BOTLOG, "test summary");
+    private void summary(String label, String value){
+    	LOGGER.log(BotLog.BOTLOG, String.format("agentsummary %s %s %s", name, label, value));
     }
 }

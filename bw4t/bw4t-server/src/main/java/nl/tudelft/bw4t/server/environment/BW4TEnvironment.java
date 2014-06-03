@@ -159,11 +159,13 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
         LOGGER.debug("Removing all entities");
         for (String entity : this.getEntities()) {
-            try {
-            	if(this.getEntity(entity) instanceof RobotEntity ) {
-            		RobotEntity rEntity = (RobotEntity)this.getEntity(entity);
-            		rEntity.getRobotObject().getAgentRecord().logSummary(); 
-            	}
+        	
+        	if(this.getEntity(entity) instanceof RobotEntity ) {
+        		RobotEntity rEntity = (RobotEntity)this.getEntity(entity);
+        		rEntity.getRobotObject().getAgentRecord().logSummary(); 
+        	}
+           
+        	try {
                 this.deleteEntity(entity);
             } catch (EntityException | RelationException e) {
                 LOGGER.error("Failure to delete entity: " + entity, e);

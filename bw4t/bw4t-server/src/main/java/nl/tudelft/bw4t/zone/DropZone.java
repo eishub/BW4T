@@ -109,17 +109,9 @@ public class DropZone extends Room {
                 // Correct block has been dropped in
                 sequenceIndex++;
                 robot.getAgentRecord().addGoodDrop();
-               
+                log();
                 if (sequenceIndex == sequence.size()) {
-                    BW4TEnvironment env = BW4TEnvironment.getInstance();
-                    
-                    for (String entity : env.getEntities()) {
-                    	if(env.getEntity(entity) instanceof RobotEntity ) {
-                        	RobotEntity rEntity = (RobotEntity)env.getEntity(entity);
-                        	rEntity.getRobotObject().getAgentRecord().logSummary();
-                    	}
-                    }
-                    
+                    log();
                 }
             }
             else {
@@ -128,6 +120,20 @@ public class DropZone extends Room {
         }
 
         return true;
+    }
+    
+    /**
+     * Writing summarie into logfile.
+     */
+    private void log(){
+    	BW4TEnvironment env = BW4TEnvironment.getInstance();
+        
+        for (String entity : env.getEntities()) {
+        	if(env.getEntity(entity) instanceof RobotEntity ) {
+            	RobotEntity rEntity = (RobotEntity)env.getEntity(entity);
+            	rEntity.getRobotObject().getAgentRecord().logSummary();
+        	}
+        }
     }
 
     /**
