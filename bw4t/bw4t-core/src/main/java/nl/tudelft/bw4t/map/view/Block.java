@@ -5,12 +5,14 @@ import java.awt.geom.Point2D;
 import nl.tudelft.bw4t.map.BlockColor;
 
 public class Block {
-    /** The width and height of the blocks */
-    public final static int BLOCK_SIZE = 1;
-
+ 
     private long objectId = 0;
     private BlockColor color = null;
     private Point2D position = new Point2D.Double();
+    
+    /** The width and height of the blocks */
+    public final static int BLOCK_SIZE = 1;
+    
     public Block() {
         super();
     }
