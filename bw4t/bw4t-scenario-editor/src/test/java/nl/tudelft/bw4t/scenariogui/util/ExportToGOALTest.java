@@ -6,15 +6,17 @@ import java.io.IOException;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
 
 /**
+ * Test the ExportToGoal class.
+ *
  * @author Calvin Wong Loi Sing
  *         Created on 3-6-2014.
  */
@@ -57,7 +59,7 @@ public class ExportToGOALTest {
     /**
      * The goal files as defined in the test xml.
      */
-    private static final String[] GOAL_FILES = { "robot.goal", "grace.goal" };
+    private static final String[] GOAL_FILES = {"robot.goal", "grace.goal"};
 
     /**
      * The BW4T Configuration File
@@ -68,6 +70,9 @@ public class ExportToGOALTest {
     public void setUp() throws IOException, JAXBException {
         /* Delete the export directory and everything in it */
         FileUtils.deleteDirectory(new File(EXPORT_DIR));
+
+        /* Mock the alert boxes in ScenarioEditor in the case of an error (unexpected) so Jenkins doesn't freeze */
+        ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
 
         configuration = BW4TClientConfig.fromXML(CONFIG_PATH);
 
