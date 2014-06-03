@@ -42,10 +42,6 @@ public final class BotConfig {
 
     private boolean hasSizeOverloadHandicap = false;
     
-    private boolean leftAlone = false;
-    
-    private boolean gps = false;
-    
     private String fileName = "*.goal";
     
     private String referenceName = "";
@@ -280,39 +276,7 @@ public final class BotConfig {
                 + hasColorBlindHandicap + hasGripperHandicap
                 + hasMoveSpeedHandicap + hasSizeOverloadHandicap;
     }
-    /**
-     * @param enabled adds or removes the ability to leave the robot alone.
-     */
-    public void setLeftAlone(boolean enabled) {
-        leftAlone = enabled;
-    }
-    /**
-     * @return whether or not the robot can be left alone.
-     */
-    public boolean getLeftAlone() {
-        return leftAlone;
-    }
-    /**
-     * @param enabled adds or removes the GPS usability.
-     */
-    public void setGPS(boolean enabled) {
-        gps = enabled;
-    }
-    /**
-     * @return whether or not the robot can make use of the GPS functionality.
-     */
-    public boolean getGPS() {
-        return gps;
-    }
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String _name) {
-		this.name = _name;
-	}
-
+    
 	public String getReferenceName() {
 		return referenceName;
 	}
@@ -328,4 +292,5 @@ public final class BotConfig {
 	public void setFileName(String _fileName) {
 		this.fileName = _fileName;
 	}
+
 }

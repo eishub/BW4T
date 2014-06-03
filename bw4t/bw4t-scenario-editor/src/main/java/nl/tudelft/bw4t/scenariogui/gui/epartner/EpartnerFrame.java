@@ -33,6 +33,7 @@ public class EpartnerFrame extends JFrame {
     /** The checkbox for the Forget-me-not app. */
     private JCheckBox forgetCheckBox = new JCheckBox("Forget-me-not");
     /** The data object. */
+    //TODO this should be epartnerconfig
     private BotConfig dataObject = new BotConfig();
     
     /**
@@ -100,14 +101,14 @@ public class EpartnerFrame extends JFrame {
      * This method plugs the GUI values into the data object.
      */
     public void setDataObject() {
-        dataObject.setLeftAlone(gpsCheckbox.isEnabled());
-        dataObject.setGPS(forgetCheckBox.isEnabled());
+    	//TODO set epartnerconfig
     }
     
     /**
      * Returns the data object with its values for usage.
      * @return The created data object.
      */
+    //TODO this should be epartnerconfig
     public BotConfig getDataObject() {
         return dataObject;
     }
