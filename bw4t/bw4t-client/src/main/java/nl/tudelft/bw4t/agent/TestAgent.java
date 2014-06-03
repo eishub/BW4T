@@ -1,5 +1,12 @@
 package nl.tudelft.bw4t.agent;
 
+import eis.exceptions.ActException;
+import eis.exceptions.NoEnvironmentException;
+import eis.exceptions.PerceiveException;
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
+import eis.iilang.Percept;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,25 +16,18 @@ import nl.tudelft.bw4t.client.environment.handlers.PerceptsHandler;
 
 import org.apache.log4j.Logger;
 
-import eis.exceptions.ActException;
-import eis.exceptions.NoEnvironmentException;
-import eis.exceptions.PerceiveException;
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
-
 /**
- * The Class TestAgent.
+ * A Testing Agent for use in BW4T.
  */
 public class TestAgent extends BW4TAgent {
 
-    /** The places. */
+    /** The places which have been percepted by the agent. */
     private List<String> places;
     
-    /** The state. */
+    /** The state of the Agent. */
     private String state = "arrived";
     
-    /** The next destination. */
+    /** The index of destination where to go to next. */
     private int nextDestination = 0;
 
     /** The log4j Logger which displays logs on console. */

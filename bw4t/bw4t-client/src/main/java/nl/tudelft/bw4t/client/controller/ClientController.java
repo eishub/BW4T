@@ -16,55 +16,106 @@ import nl.tudelft.bw4t.client.gui.ClientGUI;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.view.MapRendererInterface;
 
+/**
+ * The client controller of the MVC pattern used to create the BW4T Client.
+ */
 public class ClientController {
     /**
-     * The map controller used by this clientcontroller.
+     * The map controller used by this Client Controller.
      */
     private final ClientMapController mapController;
 
+    /** The other players. */
     private final Set<String> otherPlayers = new HashSet<>();
+    
+    /** The chat history. */
     private final List<String> chatHistory = new LinkedList<>();
 
+    /** The human agent. */
     private HumanAgent humanAgent;
 
+    /** The to be performed action. */
     private List<Percept> toBePerformedAction = new LinkedList<>();
 
     /**
-     * if set to true the update function of the gui will be called the next frame.
+     * If set to true, the update function of the GUI will be called the next frame.
      */
     private boolean updateNextFrame = true;
 
+    /**
+     * Instantiates a new client controller.
+     *
+     * @param map the map
+     * @param entityId the entity id
+     */
     public ClientController(NewMap map, String entityId) {
         mapController = new ClientMapController(map, this);
         getMapController().getTheBot().setName(entityId);
         humanAgent = null;
     }
 
+    /**
+     * Instantiates a new client controller.
+     *
+     * @param map the map
+     * @param entityId the entity id
+     * @param humanAgent2 the human agent2
+     */
     public ClientController(NewMap map, String entityId, HumanAgent humanAgent2) {
         this(map, entityId);
         humanAgent = humanAgent2;
     }
 
+    /**
+     * Gets the map controller.
+     *
+     * @return the map controller
+     */
     public ClientMapController getMapController() {
         return mapController;
     }
 
+    /**
+     * Gets the other players.
+     *
+     * @return the other players
+     */
     public Set<String> getOtherPlayers() {
         return otherPlayers;
     }
 
+    /**
+     * Gets the chat history.
+     *
+     * @return the chat history
+     */
     public List<String> getChatHistory() {
         return chatHistory;
     }
 
+    /**
+     * Checks if is human.
+     *
+     * @return true, if is human
+     */
     public boolean isHuman() {
         return humanAgent != null;
     }
 
+    /**
+     * Gets the human agent.
+     *
+     * @return the human agent
+     */
     public HumanAgent getHumanAgent() {
         return humanAgent;
     }
 
+    /**
+     * Sets the to be performed action.
+     *
+     * @param toBePerformedAction the new to be performed action
+     */
     public void setToBePerformedAction(List<Percept> toBePerformedAction) {
         this.toBePerformedAction = toBePerformedAction;
     }
@@ -129,12 +180,17 @@ public class ClientController {
     }
     
     /**
-     * the update request was finished.
+     * The update request was finished.
      */
     void updatedNextFrame() {
         updateNextFrame = false;
     }
 
+    /**
+     * Update renderer.
+     *
+     * @param mri the Map Renderer, used to render the client GUI.
+     */
     public void updateRenderer(MapRendererInterface mri) {
         if (updateNextFrame && mri instanceof ClientGUI) {
             ClientGUI gui = (ClientGUI) mri;
