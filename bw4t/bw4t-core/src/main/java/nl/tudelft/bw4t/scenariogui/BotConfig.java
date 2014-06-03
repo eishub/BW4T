@@ -2,6 +2,8 @@ package nl.tudelft.bw4t.scenariogui;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import nl.tudelft.bw4t.agent.EntityType;
+
 /**
  * This class stores all the date from the BotEditorUI.         
  * <p>
@@ -13,14 +15,9 @@ import javax.xml.bind.annotation.XmlElement;
 
 public final class BotConfig {
 
-    public enum Controller {
-        AGENT,
-        HUMAN
-    }
-
     private String name = "Bot";
 
-    private Controller controller = Controller.AGENT;
+    private EntityType controller = EntityType.AGENT;
 
     private int amount = 1;
 
@@ -72,7 +69,7 @@ public final class BotConfig {
      * @param controller The controller type of the bot.
      */
     @XmlElement
-    public void setBotController(Controller controller) {
+    public void setBotController(EntityType controller) {
         this.controller = controller;
     }
 
@@ -80,7 +77,7 @@ public final class BotConfig {
      * Returns the controller type of the bot.
      * @return The controller type of the bot.
      */
-    public Controller getBotController() {
+    public EntityType getBotController() {
         return this.controller;
     }
 
@@ -102,19 +99,19 @@ public final class BotConfig {
     }
 
     /**
-     * @return the bot gripper capacity.
+     * @return the bot gripper capacity. 
      */
     public int getBotGripperCapacity() {
-    	return botGripperCapacity;
+        return botGripperCapacity;
     }
 
     /**
-     * @param newgripcap, the new gripper capacity.
+     * @param newgripcap, the new gripper capacity. 
      */
     @XmlElement
-	public void setBotGripperCapacity(int newgripcap) {
-		botGripperCapacity = newgripcap;
-	}
+    public void setBotGripperCapacity(int newgripcap) {
+        botGripperCapacity = newgripcap;
+    }
 
     /**
      * @return the size of the robot.
@@ -152,7 +149,7 @@ public final class BotConfig {
      */
     @XmlElement
     public void setBatteryEnabled(boolean batteryEnabled) {
-    	this.batteryEnabled = batteryEnabled;
+        this.batteryEnabled = batteryEnabled;
     }
 
     /**
@@ -160,7 +157,7 @@ public final class BotConfig {
      * @return If the battery is enabled.
      */
     public boolean isBatteryEnabled() {
-    	return this.batteryEnabled;
+        return this.batteryEnabled;
     }
 
     /**
@@ -259,7 +256,7 @@ public final class BotConfig {
      */
     @XmlElement
     public void setGrippers(int grippers) {
-    	this.numberOfGrippers = grippers;
+        this.numberOfGrippers = grippers;
     }
 
     /**
@@ -267,7 +264,7 @@ public final class BotConfig {
      * @return The amount of grippers the bot has.
      */
     public int getGrippers() {
-    	return this.numberOfGrippers;
+        return this.numberOfGrippers;
     }
 
     /**
@@ -281,34 +278,22 @@ public final class BotConfig {
                 + hasMoveSpeedHandicap + hasSizeOverloadHandicap;
     }
 
-	public String getReferenceName() {
-		return referenceName;
-	}
+    public String getReferenceName() {
+        return referenceName;
+    }
 
-	/**
-	 * Sets the reference name in goal.
-	 * @param _referenceName The reference name in goal.
-	 */
-	@XmlElement
-	public void setReferenceName(String _referenceName) {
-		this.referenceName = _referenceName;
-	}
+    @XmlElement
+    public void setReferenceName(String _referenceName) {
+        this.referenceName = _referenceName;
+    }
 
-	/**
-	 * Returns the goal file name.
-	 * @return The goal file name.
-	 */
-	public String getFileName() {
-		return fileName;
-	}
+    public String getFileName() {
+        return fileName;
+    }
 
-	/**
-	 * Sets the goal file name.
-	 * @param _fileName The goal file name.
-	 */
-	@XmlElement
-	public void setFileName(String _fileName) {
-		this.fileName = _fileName;
-	}
+    @XmlElement
+    public void setFileName(String _fileName) {
+        this.fileName = _fileName;
+    }
 
 }
