@@ -22,16 +22,16 @@ import static org.mockito.Mockito.spy;
  * @author Tim
  */
 public class BotEditorPanelTest {
-    
-	/** the frame on which we put the panel */
-	private BotEditor editor;
-	/** the panel we test */
+
+    /** the frame on which we put the panel */
+    private BotEditor editor;
+    /** the panel we test */
     private BotEditorPanel panel;
     /** the spy entity of panel */
     private BotEditorPanel spypanel;
     /** A shared string declared here */
     private String zero;
-    
+
     /** setup the panel */
     @Before
     public final void setUp() {
@@ -42,13 +42,13 @@ public class BotEditorPanelTest {
         MainPanel parent = new MainPanel(new ConfigurationPanel(), new EntityPanel());
         editor = new BotEditor(parent, name);
     }
-    
+
     /** dispose the frame after testing */
     @After
     public final void dispose() {
         editor.dispose();
     }
-    
+
     /** testing the initial slider setup */
     @Test
     public final void testInitialSliders() {
@@ -61,7 +61,7 @@ public class BotEditorPanelTest {
         assertEquals(cap, spypanel.getBatterySlider().getValue());
         assertEquals(grippers, spypanel.getNumberOfGrippersSlider().getValue());
     }
-    
+
     /** test modify sliders */
     @Test
     public final void testModifySliders() {
@@ -75,135 +75,133 @@ public class BotEditorPanelTest {
         spypanel.getNumberOfGrippersSlider().setValue(5);
         assertEquals(speed, spypanel.getSpeedSlider().getValue());
         assertEquals(size, spypanel.getSizeSlider().getValue());
-        assertEquals(cap, spypanel.getBatterySlider().getValue());  
+        assertEquals(cap, spypanel.getBatterySlider().getValue());
         assertEquals(grippers, spypanel.getNumberOfGrippersSlider().getValue());
     }
-    
+
     /** test initial handicaps */
     @Test
     public final void testInitialHandicaps() {
-    	assertFalse(spypanel.getGripperCheckbox().isSelected());
-    	assertFalse(spypanel.getColorblindCheckbox().isSelected());
-    	assertFalse(spypanel.getCustomSizeCheckbox().isSelected());
-    	assertFalse(spypanel.getmovespeedCheckbox().isSelected());
-    	assertFalse(spypanel.getBatteryEnabledCheckbox().isSelected());
+        assertFalse(spypanel.getGripperCheckbox().isSelected());
+        assertFalse(spypanel.getColorblindCheckbox().isSelected());
+        assertFalse(spypanel.getCustomSizeCheckbox().isSelected());
+        assertFalse(spypanel.getmovespeedCheckbox().isSelected());
+        assertFalse(spypanel.getBatteryEnabledCheckbox().isSelected());
     }
-    
+
     /** test modify handicaps */
     @Test
     public final void testModifyCheckBoxes() {
-    	spypanel.getGripperCheckbox().setSelected(true);
-    	spypanel.getColorblindCheckbox().setSelected(true);
-    	spypanel.getCustomSizeCheckbox().setSelected(true);
-    	spypanel.getmovespeedCheckbox().setSelected(true);
-    	spypanel.getBatteryEnabledCheckbox().setSelected(true);
-    	assertTrue(spypanel.getGripperCheckbox().isSelected());
-    	assertTrue(spypanel.getColorblindCheckbox().isSelected());
-    	assertTrue(spypanel.getCustomSizeCheckbox().isSelected());
-    	assertTrue(spypanel.getmovespeedCheckbox().isSelected());
-    	assertTrue(spypanel.getBatteryEnabledCheckbox().isSelected());
+        spypanel.getGripperCheckbox().setSelected(true);
+        spypanel.getColorblindCheckbox().setSelected(true);
+        spypanel.getCustomSizeCheckbox().setSelected(true);
+        spypanel.getmovespeedCheckbox().setSelected(true);
+        spypanel.getBatteryEnabledCheckbox().setSelected(true);
+        assertTrue(spypanel.getGripperCheckbox().isSelected());
+        assertTrue(spypanel.getColorblindCheckbox().isSelected());
+        assertTrue(spypanel.getCustomSizeCheckbox().isSelected());
+        assertTrue(spypanel.getmovespeedCheckbox().isSelected());
+        assertTrue(spypanel.getBatteryEnabledCheckbox().isSelected());
     }
-    
+
     /** test the batteryusevalue */
     @Test
     public final void testBatteryUseValue() {
-    	assertEquals(zero, spypanel.getBatteryUseValueLabel().getText());
+        assertEquals(zero, spypanel.getBatteryUseValueLabel().getText());
     }
-    
+
     /** Test the speed slider */
-	@Test
+    @Test
     public final void testSpeedSliderValue() {
-    	int i = editor.getBotEditorPanel().getSpeedSlider().getValue();
-    	assertEquals(i, 100);
+        int i = editor.getBotEditorPanel().getSpeedSlider().getValue();
+        assertEquals(i, 100);
     }
-	
-	/** Test the enabling of the speed slider */
-	@Test
-	public final void testSpeedSliderEnable() {
-		editor.getBotEditorPanel().getmovespeedCheckbox().doClick();
-		assertTrue(editor.getBotEditorPanel().getSpeedSlider().isEnabled());
-	}
-	
-	/** Test the enabling of the size slider */
-	@Test
-	public final void testSizeSliderEnable() {
-		editor.getBotEditorPanel().getsizeoverloadCheckbox().doClick();
-		assertTrue(editor.getBotEditorPanel().getSizeSlider().isEnabled());
-	}
-	
-	/** Test the enabling of the size slider */
-	@Test
-	public final void testCapacitySliderEnable() {
-		editor.getBotEditorPanel().getBatteryEnabledCheckbox().doClick();
-		assertTrue(editor.getBotEditorPanel().getBatterySlider().isEnabled());
-	}
-	
-	/** Test the disabling of the speed slider */
-	@Test
-	public final void testSpeedSliderDisable() {
-		editor.getBotEditorPanel().getmovespeedCheckbox().setSelected(true);
-		editor.getBotEditorPanel().getmovespeedCheckbox().doClick();
-		assertFalse(editor.getBotEditorPanel().getSpeedSlider().isEnabled());
-	}
-	
-	/** Test the disabling of the size slider */
-	@Test
-	public final void testSizeSliderDisable() {
-		editor.getBotEditorPanel().getsizeoverloadCheckbox().setSelected(true);
-		editor.getBotEditorPanel().getsizeoverloadCheckbox().doClick();
-		assertFalse(editor.getBotEditorPanel().getSizeSlider().isEnabled());
-	}
-	
-	/** Test the disabling of the size slider */
-	@Test
-	public final void testCapacitySliderDisable() {
-		editor.getBotEditorPanel().getBatteryEnabledCheckbox().setSelected(true);
-		editor.getBotEditorPanel().getBatteryEnabledCheckbox().doClick();
-		assertFalse(editor.getBotEditorPanel().getBatterySlider().isEnabled());
-	}
-	
-	/** Test the disabling of the gripper slider */
-	@Test
-	public final void testGripperSliderDisable() {
-		editor.getBotEditorPanel().getGripperCheckbox().doClick();
-		assertFalse(editor.getBotEditorPanel().getNumberOfGrippersSlider().isEnabled());
-	}
-	
-	/** Test the enabling of the gripper slider */
-	@Test
-	public final void testGripperSliderEnable() {
-		editor.getBotEditorPanel().getGripperCheckbox().setSelected(true);
-		editor.getBotEditorPanel().getGripperCheckbox().doClick();
-		assertTrue(editor.getBotEditorPanel().getNumberOfGrippersSlider().isEnabled());
-	}
-	
-	/** Test the selection of the color blind checkbox */
-	@Test
-	public final void testColorBlindCheckbox() {
-		editor.getBotEditorPanel().getColorblindCheckbox().doClick();
-	}
-	
-	/** Test the reset button */
-	@Test
-	public final void testResetButtonClick() {
-		editor.getBotEditorPanel().getResetButton().doClick();
-		assertEquals(editor.getBotEditorPanel().getSpeedSlider().getValue(), 100);
-		assertEquals(editor.getBotEditorPanel().getSizeSlider().getValue(), 2);
-		assertEquals(editor.getBotEditorPanel().getBatterySlider().getValue(), 10);
-		assertEquals(editor.getBotEditorPanel().getNumberOfGrippersSlider().getValue(), 1);
-		assertEquals(editor.getBotEditorPanel().getSizeSlider().isEnabled(), false);
-		assertEquals(editor.getBotEditorPanel().getSpeedSlider().isEnabled(), false);
-		assertEquals(editor.getBotEditorPanel().getBatterySlider().isEnabled(), false);
-		assertEquals(editor.getBotEditorPanel().getNumberOfGrippersSlider().isEnabled(), true);
-		assertEquals(editor.getBotEditorPanel().getGripperCheckbox().isSelected(), false);
-		assertEquals(editor.getBotEditorPanel().getColorblindCheckbox().isSelected(), false);
-		assertEquals(editor.getBotEditorPanel().getsizeoverloadCheckbox().isSelected(), false);
-		assertEquals(editor.getBotEditorPanel().getmovespeedCheckbox().isSelected(), false);
-		assertEquals(editor.getBotEditorPanel().getBatteryEnabledCheckbox().isSelected(), false);
-		assertEquals(editor.getBotEditorPanel().getFileNameField().getText(), ".goal");
-		assertEquals(editor.getBotEditorPanel().getBotNameField().getText(), "");
-		assertEquals(editor.getBotEditorPanel().getBatteryUseValueLabel().getText(), zero);
-	}
-	
-	
+
+    /** Test the enabling of the speed slider */
+    @Test
+    public final void testSpeedSliderEnable() {
+        editor.getBotEditorPanel().getmovespeedCheckbox().doClick();
+        assertTrue(editor.getBotEditorPanel().getSpeedSlider().isEnabled());
+    }
+
+    /** Test the enabling of the size slider */
+    @Test
+    public final void testSizeSliderEnable() {
+        editor.getBotEditorPanel().getsizeoverloadCheckbox().doClick();
+        assertTrue(editor.getBotEditorPanel().getSizeSlider().isEnabled());
+    }
+
+    /** Test the enabling of the size slider */
+    @Test
+    public final void testCapacitySliderEnable() {
+        editor.getBotEditorPanel().getBatteryEnabledCheckbox().doClick();
+        assertTrue(editor.getBotEditorPanel().getBatterySlider().isEnabled());
+    }
+
+    /** Test the disabling of the speed slider */
+    @Test
+    public final void testSpeedSliderDisable() {
+        editor.getBotEditorPanel().getmovespeedCheckbox().setSelected(true);
+        editor.getBotEditorPanel().getmovespeedCheckbox().doClick();
+        assertFalse(editor.getBotEditorPanel().getSpeedSlider().isEnabled());
+    }
+
+    /** Test the disabling of the size slider */
+    @Test
+    public final void testSizeSliderDisable() {
+        editor.getBotEditorPanel().getsizeoverloadCheckbox().setSelected(true);
+        editor.getBotEditorPanel().getsizeoverloadCheckbox().doClick();
+        assertFalse(editor.getBotEditorPanel().getSizeSlider().isEnabled());
+    }
+
+    /** Test the disabling of the size slider */
+    @Test
+    public final void testCapacitySliderDisable() {
+        editor.getBotEditorPanel().getBatteryEnabledCheckbox().setSelected(true);
+        editor.getBotEditorPanel().getBatteryEnabledCheckbox().doClick();
+        assertFalse(editor.getBotEditorPanel().getBatterySlider().isEnabled());
+    }
+
+    /** Test the disabling of the gripper slider */
+    @Test
+    public final void testGripperSliderDisable() {
+        editor.getBotEditorPanel().getGripperCheckbox().doClick();
+        assertFalse(editor.getBotEditorPanel().getNumberOfGrippersSlider().isEnabled());
+    }
+
+    /** Test the enabling of the gripper slider */
+    @Test
+    public final void testGripperSliderEnable() {
+        editor.getBotEditorPanel().getGripperCheckbox().setSelected(true);
+        editor.getBotEditorPanel().getGripperCheckbox().doClick();
+        assertTrue(editor.getBotEditorPanel().getNumberOfGrippersSlider().isEnabled());
+    }
+
+    /** Test the selection of the color blind checkbox */
+    @Test
+    public final void testColorBlindCheckbox() {
+        editor.getBotEditorPanel().getColorblindCheckbox().doClick();
+    }
+
+    /** Test the reset button */
+    @Test
+    public final void testResetButtonClick() {
+        editor.getBotEditorPanel().getResetButton().doClick();
+        assertEquals(editor.getBotEditorPanel().getSpeedSlider().getValue(), 100);
+        assertEquals(editor.getBotEditorPanel().getSizeSlider().getValue(), 2);
+        assertEquals(editor.getBotEditorPanel().getBatterySlider().getValue(), 10);
+        assertEquals(editor.getBotEditorPanel().getNumberOfGrippersSlider().getValue(), 1);
+        assertEquals(editor.getBotEditorPanel().getSizeSlider().isEnabled(), false);
+        assertEquals(editor.getBotEditorPanel().getSpeedSlider().isEnabled(), false);
+        assertEquals(editor.getBotEditorPanel().getBatterySlider().isEnabled(), false);
+        assertEquals(editor.getBotEditorPanel().getNumberOfGrippersSlider().isEnabled(), true);
+        assertEquals(editor.getBotEditorPanel().getGripperCheckbox().isSelected(), false);
+        assertEquals(editor.getBotEditorPanel().getColorblindCheckbox().isSelected(), false);
+        assertEquals(editor.getBotEditorPanel().getsizeoverloadCheckbox().isSelected(), false);
+        assertEquals(editor.getBotEditorPanel().getmovespeedCheckbox().isSelected(), false);
+        assertEquals(editor.getBotEditorPanel().getBatteryEnabledCheckbox().isSelected(), false);
+        assertEquals(editor.getBotEditorPanel().getFileNameField().getText(), ".goal");
+        assertEquals(editor.getBotEditorPanel().getBotNameField().getText(), "");
+        assertEquals(editor.getBotEditorPanel().getBatteryUseValueLabel().getText(), zero);
+    }
 }
