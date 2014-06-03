@@ -12,7 +12,8 @@ class LeftAloneCheckBox implements ActionListener {
     /**
      * The frame containing the button.
      */
-    private EpartnerFrame view;
+    @SuppressWarnings("unused")
+	private EpartnerFrame view;
     /**
      * The constructor for this action listener.
      * @param pview The frame with the button in it.
@@ -25,6 +26,6 @@ class LeftAloneCheckBox implements ActionListener {
      * @param ae The action event triggering this method.
      */
     public void actionPerformed(ActionEvent ae) {
-
+    	
     }
 }

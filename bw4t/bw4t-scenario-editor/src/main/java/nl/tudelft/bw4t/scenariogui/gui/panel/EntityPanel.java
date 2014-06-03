@@ -33,6 +33,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
 
 /**
@@ -239,6 +240,9 @@ public class EntityPanel extends JPanel {
      */
     private JButton deleteEpartner = new JButton("Delete E-partner");
 
+    private  List<EPartnerConfig> epartnerConfigList = new ArrayList<EPartnerConfig>();
+    
+    private List<EPartnerConfig> oldEpartnerConfigs = epartnerConfigList;
     /**
      * The list that hold the created bots.
      */
@@ -663,6 +667,11 @@ public class EntityPanel extends JPanel {
         return botConfigList;
     }
 
+    public List<EPartnerConfig> getEPartnerConfigs() {
+    	return epartnerConfigList;
+    }
+    
+    
     /**
      * Returns the BotConfig at the index'th place.
      * @param index The index of the bot.
@@ -672,6 +681,10 @@ public class EntityPanel extends JPanel {
         return botConfigList.get(index);
     }
 
+    public EPartnerConfig getEPartnerConfig(int index) {
+    	return epartnerConfigList.get(index);
+    }
+    
     /**
      * Returns the previous saved BotConfig list.
      * @return The previous saved BotConfig list.
@@ -680,6 +693,10 @@ public class EntityPanel extends JPanel {
         return oldBotConfigs;
     }
 
+    public List<EPartnerConfig> getOldEPartnerConfigs() {
+    	return oldEpartnerConfigs;
+    }
+    
     /**
      * Updates the BotConfig list.
      */
@@ -687,6 +704,10 @@ public class EntityPanel extends JPanel {
         oldBotConfigs = botConfigList;
     }
 
+    public void updateEpartnerConfigs() {
+    	oldEpartnerConfigs = epartnerConfigList;
+    }
+    
     /**
      * Compares the BotConfig lists.
      * @return If the BotConfigs lists are equal.

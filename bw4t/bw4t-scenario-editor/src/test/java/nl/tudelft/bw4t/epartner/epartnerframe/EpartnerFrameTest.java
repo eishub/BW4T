@@ -14,11 +14,11 @@ public class EpartnerFrameTest {
 	private EpartnerFrame frame;
 	private EpartnerFrame spyframe;
 	
-	@Before
-	public final void setupEpartnerFrame() {
-		frame = new EpartnerFrame();
-		spyframe = spy(frame);
-	}
+//	@Before
+//	public final void setupEpartnerFrame() {
+//		frame = new EpartnerFrame();
+//		spyframe = spy(frame);
+//	}
 	
 	@After
 	public final void dispose(){

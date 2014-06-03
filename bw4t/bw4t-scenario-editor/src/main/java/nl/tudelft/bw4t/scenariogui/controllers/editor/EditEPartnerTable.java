@@ -4,6 +4,7 @@ package nl.tudelft.bw4t.scenariogui.controllers.editor;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
+import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
@@ -18,7 +19,8 @@ public class EditEPartnerTable implements TableModelListener {
     /**
      * The <code>MainPanel</code> serving as the content pane.
      */
-    private MainPanel view;
+    @SuppressWarnings("unused")
+	private MainPanel view;
 
     /**
      * Create a EditEPartnerTable event handler.
@@ -38,21 +40,19 @@ public class EditEPartnerTable implements TableModelListener {
     public void tableChanged(TableModelEvent event) {
         if (event.getColumn() == -1)
             return;
-        // TODO: once the EPartnerConfig has been made, uncomment (select it, then ctrl + 7) below stuff
-        System.out.println("TODO: once the EPartnerConfig has been made, uncomment below stuff");
-//        EPartnerConfig config = view.getEntityPanel().getEPartnerConfigs().get(event.getFirstRow());
-//        String value = (String) view.getEntityPanel().getEPartnerTable().getValueAt(
-//                event.getFirstRow(), event.getColumn());
-//        switch (event.getColumn()) {
-//        case 0:
-//            config.setEPartnerName(value);
-//            break;
-//        case 1:
-//            config.setEPartnerAmount(value);
-//            break;
-//         default:
-//            break;
-//        }
+        EPartnerConfig config = view.getEntityPanel().getEPartnerConfigs().get(event.getFirstRow());
+        String value = "" + view.getEntityPanel().getEPartnerTable().getValueAt(
+                event.getFirstRow(), event.getColumn());
+        switch (event.getColumn()) {
+        case 0:
+            config.setName(value);
+            break;
+        case 1:
+            config.setAmount(Integer.parseInt(value));
+            break;
+         default:
+            break;
+        }
     }
     
 }
