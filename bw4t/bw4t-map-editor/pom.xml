@@ -10,6 +10,9 @@
 	<groupId>nl.tudelft.bw4t</groupId>
 	<artifactId>bw4t-map-editor</artifactId>
 	<name>bw4t-map-editor</name>
+  <properties>
+    <checkstyle.config.location>../checkstyle.xml</checkstyle.config.location>
+  </properties>
 	<packaging>jar</packaging>
 
 	<dependencies>
