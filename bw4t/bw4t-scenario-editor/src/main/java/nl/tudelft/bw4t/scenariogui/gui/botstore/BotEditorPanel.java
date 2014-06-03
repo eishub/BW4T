@@ -180,7 +180,7 @@ public class BotEditorPanel extends JPanel {
 		botNameTextField.setText(dataObject.getBotName());
 		botInfo.add(botNameTextField);
 
-		botControllerSelector.setModel(new DefaultComboBoxModel(new String[]{"Agent", "Human"}));
+		botControllerSelector.setModel(new DefaultComboBoxModel(new BotConfig.Controller[] {BotConfig.Controller.AGENT, BotConfig.Controller.HUMAN}));
 		botInfo.add(botControllerSelector);
 		
 		botInfo.add(new JLabel("  Amount of this type:"));
@@ -333,7 +333,6 @@ public class BotEditorPanel extends JPanel {
         numberOfGrippersSlider.setValueIsAdjusting(true);
         
         sizeSlider.setMajorTickSpacing(1);
-        sizeSlider.setMaximum(5);
         sizeSlider.setMinimum(1);
         sizeSlider.setPaintTicks(true);
         sizeSlider.setPaintLabels(true);

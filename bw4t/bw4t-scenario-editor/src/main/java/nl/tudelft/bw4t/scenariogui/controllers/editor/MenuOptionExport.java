@@ -52,7 +52,6 @@ class MenuOptionExport extends AbstractMenuOption {
                 BW4TClientConfig configuration = BW4TClientConfig.fromXML(saveDirectory);
 
                 ExportToGOAL.export(directory, configuration);
-                System.out.println(directory + " bots: " + configuration.getBots().size());
             } catch (FileNotFoundException e1) {
                 e1.printStackTrace();
             } catch (JAXBException e1) {

@@ -175,10 +175,10 @@ public final class ExportToGOAL {
             String type = "";
             if (bot.getBotController() == BotConfig.Controller.AGENT) {
                 type = "bot";
-                agentCount++;
+                agentCount += bot.getBotAmount();
             } else if (bot.getBotController() == BotConfig.Controller.HUMAN) {
                 type = "human";
-                humanCount++;
+                humanCount += bot.getBotAmount();
             }
             String goalFileSanitized = bot.getFileName().toLowerCase().replace(" ", "_");
             String goalFileNoExt = goalFileSanitized.substring(0, goalFileSanitized.length() - 5);
