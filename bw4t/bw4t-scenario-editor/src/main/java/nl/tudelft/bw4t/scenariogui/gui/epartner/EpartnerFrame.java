@@ -21,7 +21,7 @@ public class EpartnerFrame extends JFrame {
     private static final long serialVersionUID = 1L;
     /** The JPanel containing all the buttons. */
     private JPanel contentPane;
-    
+
     /** The apply button. */
     private JButton applyButton = new JButton("Apply");
     /** The reset button. */
@@ -33,8 +33,9 @@ public class EpartnerFrame extends JFrame {
     /** The checkbox for the Forget-me-not app. */
     private JCheckBox forgetCheckBox = new JCheckBox("Forget-me-not");
     /** The data object. */
+    //TODO this should be epartnerconfig
     private BotConfig dataObject = new BotConfig();
-    
+
     /**
      * Create the frame.
      */
@@ -46,10 +47,10 @@ public class EpartnerFrame extends JFrame {
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(new MigLayout("", "[][141px][][141px][141px]", "[][][125px][125px]"));
-        
+
         gpsCheckbox.setAlignmentY(Component.TOP_ALIGNMENT);
         forgetCheckBox.setVerticalAlignment(SwingConstants.TOP);
-        
+
         contentPane.add(gpsCheckbox, "cell 0 0,grow");
         contentPane.add(forgetCheckBox, "cell 0 1,grow");
         contentPane.add(cancelButton, "cell 0 3,growx,aligny bottom");
@@ -100,16 +101,15 @@ public class EpartnerFrame extends JFrame {
      * This method plugs the GUI values into the data object.
      */
     public void setDataObject() {
-        dataObject.setLeftAlone(gpsCheckbox.isEnabled());
-        dataObject.setGPS(forgetCheckBox.isEnabled());
+        //TODO set epartnerconfig
     }
-    
+
     /**
      * Returns the data object with its values for usage.
      * @return The created data object.
      */
+    //TODO this should be epartnerconfig
     public BotConfig getDataObject() {
         return dataObject;
     }
 }
-

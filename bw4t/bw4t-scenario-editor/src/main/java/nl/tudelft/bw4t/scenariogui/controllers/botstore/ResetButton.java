@@ -45,6 +45,6 @@ class ResetButton implements ActionListener {
         view.getBatteryUseValueLabel().setText("0");
         view.getBotReferenceField().setText("");
         view.getBotAmountTextField().setText("1");
-
+        
     }
 }
