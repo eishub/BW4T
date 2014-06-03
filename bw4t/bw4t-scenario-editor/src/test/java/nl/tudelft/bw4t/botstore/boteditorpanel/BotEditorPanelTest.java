@@ -12,13 +12,14 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.spy;
 
 
 /**
  * Test the boteditorpanel
- * @author ???
+ * @author Arun
  * @author Tim
  */
 public class BotEditorPanelTest {
@@ -85,7 +86,7 @@ public class BotEditorPanelTest {
     	assertFalse(spypanel.getGripperCheckbox().isSelected());
     	assertFalse(spypanel.getColorblindCheckbox().isSelected());
     	assertFalse(spypanel.getCustomSizeCheckbox().isSelected());
-    	assertFalse(spypanel.getMovespeedCheckbox().isSelected());
+    	assertFalse(spypanel.getmovespeedCheckbox().isSelected());
     	assertFalse(spypanel.getBatteryEnabledCheckbox().isSelected());
     }
     
@@ -95,16 +96,16 @@ public class BotEditorPanelTest {
     	spypanel.getGripperCheckbox().setSelected(true);
     	spypanel.getColorblindCheckbox().setSelected(true);
     	spypanel.getCustomSizeCheckbox().setSelected(true);
-    	spypanel.getMovespeedCheckbox().setSelected(true);
+    	spypanel.getmovespeedCheckbox().setSelected(true);
     	spypanel.getBatteryEnabledCheckbox().setSelected(true);
     	assertTrue(spypanel.getGripperCheckbox().isSelected());
     	assertTrue(spypanel.getColorblindCheckbox().isSelected());
     	assertTrue(spypanel.getCustomSizeCheckbox().isSelected());
-    	assertTrue(spypanel.getMovespeedCheckbox().isSelected());
+    	assertTrue(spypanel.getmovespeedCheckbox().isSelected());
     	assertTrue(spypanel.getBatteryEnabledCheckbox().isSelected());
     }
     
-    /** test the batteryusevale */
+    /** test the batteryusevalue */
     @Test
     public final void testBatteryUseValue() {
     	assertEquals(zero, spypanel.getBatteryUseValueLabel().getText());
@@ -203,6 +204,8 @@ public class BotEditorPanelTest {
 		assertEquals(editor.getBotEditorPanel().getFileNameField().getText(), ".goal");
 		assertEquals(editor.getBotEditorPanel().getBotNameField().getText(), "");
 		assertEquals(editor.getBotEditorPanel().getBatteryUseValueLabel().getText(), zero);
-		
+		assertEquals(editor.getBotEditorPanel().getBatteryUseValueLabel().getText(), "0");
 	}
+	
+	
 }

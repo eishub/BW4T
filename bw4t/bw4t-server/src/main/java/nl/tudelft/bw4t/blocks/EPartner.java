@@ -2,7 +2,7 @@ package nl.tudelft.bw4t.blocks;
 
 import java.util.ArrayList;
 import nl.tudelft.bw4t.BoundedMoveableObject;
-import nl.tudelft.bw4t.handicap.HandicapInterface;
+import nl.tudelft.bw4t.handicap.IRobot;
 import org.apache.log4j.Logger;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
@@ -22,7 +22,7 @@ public class EPartner extends BoundedMoveableObject {
     /**
      * Human that owns the E-Partner
      */
-    private HandicapInterface holder;
+    private IRobot holder;
     
     private String name;
     private ArrayList<String> typeList;
@@ -56,11 +56,11 @@ public class EPartner extends BoundedMoveableObject {
         this.connected = false;
     }
 
-    public HandicapInterface getHolder() {
+    public IRobot getHolder() {
         return this.holder;
     }
     
-    public void setHolder(HandicapInterface human) {
+    public void setHolder(IRobot human) {
         this.holder = human;
     }
 

@@ -7,6 +7,8 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import nl.tudelft.bw4t.scenariogui.controllers.botstore.BotStoreController;
+import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
@@ -108,5 +110,9 @@ public class BotEditor extends JFrame {
      */
     public void setBotEditorPanel(BotEditorPanel pbPanel) {
         this.bPanel = pbPanel;
+    }
+    
+    public static void main(String[] args) {
+    	new BotEditor(new MainPanel(new ConfigurationPanel(), new EntityPanel()),"Bot X");
     }
 }

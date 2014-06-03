@@ -2,26 +2,24 @@
 package nl.tudelft.bw4t.handicap;
 
 import nl.tudelft.bw4t.blocks.Block;
+import nl.tudelft.bw4t.handicap.AbstractRobotDecorator;
 import nl.tudelft.bw4t.handicap.ColorBlindHandicap;
 import nl.tudelft.bw4t.handicap.GripperHandicap;
-import nl.tudelft.bw4t.handicap.HandicapInterface;
+import nl.tudelft.bw4t.handicap.IRobot;
 import nl.tudelft.bw4t.handicap.MoveSpeedHandicap;
 import nl.tudelft.bw4t.handicap.SizeOverloadHandicap;
 import nl.tudelft.bw4t.robots.NavigatingRobot;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Joost Rothweiler
@@ -37,7 +35,7 @@ public class NewHandicapTest {
      */
     @Mock private ContinuousSpace<Object> space;
     /**
-     * sontext Mock
+     * context Mock
      */
     @Mock private Context<Object> context;
     /**
@@ -58,70 +56,70 @@ public class NewHandicapTest {
     }
     
     /**
-     * - the ColorBlindHandicap was nicely added to the Handicaps Map.
+     * - the ColorBlindHandicap was nicely added to the Handicaps List.
      */
     @Test
     public void testColorBlindHandicap() {
-        HandicapInterface r = new ColorBlindHandicap(new NavigatingRobot("", space, context, true, 0));
+        IRobot r = new ColorBlindHandicap(new NavigatingRobot("", space, context, true, 0));
         
-        assertTrue(r.getSuperParent().getHandicapsList().contains("ColorBlind"));
+        assertTrue(r.getHandicapsList().contains("ColorBlind"));
     }
     
     /**
-     * - the GripperHandicap was nicely added to the Handicaps Map;
+     * - the GripperHandicap was nicely added to the Handicaps List;
      * - the robot cannot pick up blocks.
      * - the robot's capacity is 0 no matter what. 
      */
     @Test
     public void testGripperHandicap() {
-        HandicapInterface r = new GripperHandicap(new NavigatingRobot("", space, context, true, 200));
+        IRobot r = new GripperHandicap(new NavigatingRobot("", space, context, true, 200));
         
-        assertTrue(r.getSuperParent().getHandicapsList().contains("Gripper"));
+        assertTrue(r.getHandicapsList().contains("Gripper"));
         
         assertFalse(r.canPickUp(block));
         assertTrue(r.getGripperCapacity() == 0);
     }
     
     /**
-     * - The Human handicap was added to the Handicaps Map;
+     * - The Human handicap was added to the Handicaps List;
      * - The Robot is not holding an e-Partner.
      */
     @Test
     public void testHumanHandicap() {
-    	HandicapInterface r = new Human(new NavigatingRobot("", space, context, true, 200));
+    	IRobot r = new Human(new NavigatingRobot("", space, context, true, 200));
     	
     	assertTrue(r.getSuperParent().getHandicapsList().contains("Human"));
     	assertTrue(r.getEPartner() == null);
     }
     
     /**
-     * - the MoveSpeedHandicap was nicely added to the Handicaps Map;
+     * - the MoveSpeedHandicap was nicely added to the Handicaps List;
      * - the robot's speed mod is 1.1.
      */
     @Test
     public void testMoveSpeedHandicap() {
-    	HandicapInterface r = new MoveSpeedHandicap(new NavigatingRobot("", space, context, true, 1), 1.1);
+    	IRobot r = new MoveSpeedHandicap(new NavigatingRobot("", space, context, true, 1), 1.1);
     	
-        assertTrue(r.getSuperParent().getHandicapsList().contains("MoveSpeed"));
+        assertTrue(r.getHandicapsList().contains("MoveSpeed"));
         
     	assertTrue(r.getSpeedMod() == 1.1);
     }
     
     /**
-     * - the SizeOverloadHandicap was nicely added to the Handicaps Map;
+     * - the SizeOverloadHandicap was nicely added to the Handicaps List;
      * - the robot's size is 5.
      */
     @Test
     public void testSizeOverloadHandicap() {
-    	HandicapInterface r = new SizeOverloadHandicap(new NavigatingRobot("", space, context, true, 1), 5);
+    	IRobot r = new SizeOverloadHandicap(new NavigatingRobot("", space, context, true, 1), 5);
     	
-        assertTrue(r.getSuperParent().getHandicapsList().contains("SizeOverload"));
+        assertTrue(r.getHandicapsList().contains("SizeOverload"));
         
     	assertTrue(r.getSize() == 5);
     }
     
     /**
-     * - the handicaps were nicely added to the Handicaps Map;
+     * - the handicaps were nicely added to the Handicaps List;
      * - the robot's speed mod is 0.8;
      * - the robot cannot pick up blocks;
      * - the robot's capacity is 0 no matter what;
@@ -129,14 +127,14 @@ public class NewHandicapTest {
      */
     @Test
     public void testAllHandicaps() {
-        HandicapInterface r = 
+        IRobot r = 
         		new SizeOverloadHandicap(
         		new ColorBlindHandicap(
         		new GripperHandicap(
         		new MoveSpeedHandicap(
         	    new NavigatingRobot("", space, context, true, 1), 0.8))), 2);
         
-        assertTrue(r.getSuperParent().getHandicapsList().size() == 4);
+        assertTrue(r.getHandicapsList().size() == 4);
  
         assertTrue(r.getSpeedMod() == 0.8);
         assertFalse(r.canPickUp(block));
@@ -146,20 +144,20 @@ public class NewHandicapTest {
     
     /**
      * Testing whether the robot is an instance of
-     * - HandicapInterface
-     * - AbstractHandicapFactory
+     * - IRobot
+     * - AbstractRobotDecorator
      */
     @Test
     public void testAllHandicapStructure() {
-        HandicapInterface r = 
+        IRobot r = 
         		new SizeOverloadHandicap(
         		new ColorBlindHandicap(
         		new GripperHandicap(
         		new MoveSpeedHandicap(
         	    new NavigatingRobot("", space, context, true, 1), 1.0))), 3);
         
-        assertTrue(r instanceof HandicapInterface);
-        assertTrue(r instanceof AbstractHandicapFactory);
+        assertTrue(r instanceof IRobot);
+        assertTrue(r instanceof AbstractRobotDecorator);
         
     }
 }
