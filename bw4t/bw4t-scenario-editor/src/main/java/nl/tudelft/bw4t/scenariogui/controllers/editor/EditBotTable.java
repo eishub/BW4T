@@ -50,7 +50,7 @@ public class EditBotTable implements TableModelListener {
             config.setBotController(value);
             break;
         case 2:
-            config.setBotAmount(value);
+            config.setBotAmount(Integer.parseInt(value));
             break;
          default:
             break;

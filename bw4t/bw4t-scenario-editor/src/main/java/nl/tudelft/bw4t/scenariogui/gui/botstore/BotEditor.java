@@ -21,10 +21,6 @@ public class BotEditor extends JFrame {
     private static final long serialVersionUID = 8114982191029560097L;
     /** the name of the window */
     private String windowName = "Bot Editor";
-    /** the window width*/
-    private int width;
-    /** the window height*/
-    private int height;
     /** The parent of this frame. */
     private MainPanel parent;
     /** the panel in the frame*/
@@ -32,28 +28,28 @@ public class BotEditor extends JFrame {
     /** the controller for the frame*/
     private BotStoreController controller;
     
+    /** The row number of the selected bot. */
+    private int row;
+    
     /**
      * creates the BotEditor frame
      * @param pparent the parent of the frame
-     * @param pname name of the bot
+     * @param row
      */
-    public BotEditor(MainPanel pparent, String pname) {
+    public BotEditor(MainPanel pparent, int row) {
         setLookAndFeel();
         setTitle(windowName);
         setResizable(false);
         setLayout(null);
         this.parent = pparent;
-        bPanel = new BotEditorPanel(pname);
+        this.row = row;
+        bPanel = new BotEditorPanel(this, this.parent);
         bPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
         setContentPane(bPanel);
         
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         
         pack();
-        
-        width = this.getWidth();
-        height = this.getHeight();
-        
         setLocationRelativeTo(null);
         
         setVisible(true);
@@ -80,6 +76,15 @@ public class BotEditor extends JFrame {
             // pass
         }
     }
+    
+    /**
+     * Returns the row number of the bot that is currently selected.
+     * @return The row number of the bot that is currently selected.
+     */
+    public int getRow() {
+    	return this.row;
+    }
+    
     /**
      * Returns the BotEditorPanel
      * @return botEditorPanel used
