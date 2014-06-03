@@ -64,8 +64,6 @@ public enum InitParam {
     
     private static final Logger LOGGER = Logger.getLogger(InitParam.class);
     
-    private static boolean configFileLoaded = false;
-
     private String defaultvalue;
 
     /**
@@ -126,6 +124,8 @@ public enum InitParam {
             }
         }
     }
+    
+    
 
     /**
      * Get all program-wide parameters.

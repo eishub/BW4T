@@ -306,6 +306,27 @@ public class BW4TClientConfig {
     public BotConfig getBot(int index) {
         return bots.get(index);
     }
+
+    /**
+     * calculate the total number of Robots to be requested.
+     * @return the count
+     */
+    public int countBots() {
+        int count = 0;
+        for (BotConfig bot : bots) {
+            count += bot.getBotAmount();
+        }
+        return count;
+    }
+
+    /**
+     * calculate the total number of Robots to be requested.
+     * @return the count
+     */
+    public int countEpartners() {
+        //TODO implement this method once it is possible(waiting for group 2)
+        return 0;
+    }
     
     /**
      * Add an epartner to the configuration file.
