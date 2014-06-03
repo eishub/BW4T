@@ -31,7 +31,7 @@ public enum EntityType {
         switch (name.toLowerCase()) {
         case "human":
             return HUMAN;
-        case "bot":
+        case "agent":
             return AGENT;
         case "epartner":
             return EPARTNER;

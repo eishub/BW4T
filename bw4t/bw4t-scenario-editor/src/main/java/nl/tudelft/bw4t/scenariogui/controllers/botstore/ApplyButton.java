@@ -56,7 +56,7 @@ class ApplyButton implements ActionListener {
 	    			if (botName.length() > 0) {
 	    				if (botName.matches(nonAlphaNumericRegex)) {
 	    			    	view.getDataObject().setBotName(view.getBotNameField().getText());
-	    					view.getDataObject().setBotController((EntityType) view.getBotControllerSelector().getSelectedItem());
+	    					view.getDataObject().setBotController(EntityType.getType((String) view.getBotControllerSelector().getSelectedItem()));
 	    					view.getDataObject().setBotAmount(Integer.parseInt(view.getBotAmountTextField().getText()));
 	    			        view.getDataObject().setBotSize(view.getSizeSlider().getValue());
 	    			        view.getDataObject().setBotSpeed(view.getSpeedSlider().getValue());
