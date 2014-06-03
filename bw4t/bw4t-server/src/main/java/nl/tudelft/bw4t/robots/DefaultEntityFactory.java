@@ -15,6 +15,10 @@ import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.server.environment.Launcher;
 
+/**
+ * @author Jan Giesenberg
+ * @author Valentine Mairet
+ */
 public class DefaultEntityFactory implements EntityFactory {
 
 	private Context<Object> context;
@@ -71,7 +75,14 @@ public class DefaultEntityFactory implements EntityFactory {
     @Override
     public EPartner makeEPartner(EPartnerConfig c) {
         EPartner ep = makeDefaultEPartner(c.getName());
-        //TODO actually configure the e-partner
+        
+        if (c.isGps()) {
+            ep.getTypeList().add("GPS");
+        }
+        if (c.isForgotMeNot()) {
+            ep.getTypeList().add("Forget-me-not");
+        }
+        
         return ep;
     }
 
