@@ -107,5 +107,4 @@ public final class Format {
             amount *= -1;
         return (int) amount;
     }
-
 }
