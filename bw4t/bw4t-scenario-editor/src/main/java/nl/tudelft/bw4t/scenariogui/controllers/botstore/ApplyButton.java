@@ -25,7 +25,7 @@ class ApplyButton implements ActionListener {
      * The MainPanel to request components from.
      */
     private MainPanel mp;
-    
+
     /**
      * Constructor.
      * @param pview The BotEditorPanel in which the button listening
@@ -42,67 +42,67 @@ class ApplyButton implements ActionListener {
      * @param ae The action event caused by clicking on the button.
      */
     public void actionPerformed(ActionEvent ae) {
-    	String fileName = view.getFileNameField().getText();
-    	String botName = view.getBotNameField().getText();
-    	String nonAlphaNumericRegex = "^[ a-zA-Z0-9_-]*$";
-    	File f;
-    	if (fileName.endsWith(".goal")) {
-    		if (fileName.length() > 5) {
-    			f = new File(fileName);
-    			String name = fileName.substring(0, fileName.length() - 5);
-    			if (name.matches(nonAlphaNumericRegex) 
-    					|| f.exists()) {
-	    			if (botName.length() > 0) {
-	    				if (botName.matches(nonAlphaNumericRegex)) {
-	    					view.getDataObject().setBotGripperCapacity(
-	    							view.getNumberOfGrippersSlider().getValue());
-		    				view.getDataObject().setBotSize(view.getSizeSlider().getValue());
-				    		view.getDataObject().setBotSpeed(view.getSpeedSlider().getValue());
-				    		view.getDataObject().setBotBatteryCapacity(
-				    				view.getBatterySlider().getValue());
-				    		view.getDataObject().setColorBlindHandicap(
-				    				view.getColorblindCheckbox().isEnabled());
-				    		view.getDataObject().setGripperHandicap(
-				    				view.getGripperCheckbox().isEnabled());
-				    		view.getDataObject().setMoveSpeedHandicap(
-				    				view.getmovespeedCheckbox().isEnabled());
-				    		view.getDataObject().setSizeOverloadHandicap(
-				    				view.getsizeoverloadCheckbox()
-				    				.isEnabled());
-				    		view.getDataObject().setFileName(fileName);
-				    		view.getDataObject().setReferenceName(botName);
-				        	BotConfig data = view.getDataObject();
-				        	int index = mp.getEntityPanel().getSelectedBotRow();
-				        	// Overwrite the existing config
-				        	// (there is always a basic config present for every bot).
-				        	mp.getEntityPanel().getBotConfigs().set(index, data);
-				        	ScenarioEditor.getOptionPrompt().showMessageDialog(view, 
-		        					"Bot configuration succesfully created.");
-	    				}
-	    				else {
-	    					ScenarioEditor.getOptionPrompt().showMessageDialog(view, 
-		        					"Please specify a reference name consisting "
-		        					+ "of valid alphanumeric characters.");
-	    				}
-	    			}
-	    			else {
-	        			ScenarioEditor.getOptionPrompt().showMessageDialog(view, 
-	        					"Please specify a reference name.");
-	    			}
-    			}
-    			else {
-    				ScenarioEditor.getOptionPrompt().showMessageDialog(view, "Please specify a file name"
-    						+ " consisting of valid alphanumeric characters"
-    						+ " or use an existing file.");
-    			}
-    		}
-    		else {
-    			ScenarioEditor.getOptionPrompt().showMessageDialog(view, "Please specify a file name.");
-    		}
-    	}
-    	else {
-    		ScenarioEditor.getOptionPrompt().showMessageDialog(view, "The file name is invalid.\n"
-    				+ "File names should end in .goal.");
-    	}
+        String fileName = view.getFileNameField().getText();
+        String botName = view.getBotNameField().getText();
+        String nonAlphaNumericRegex = "^[ a-zA-Z0-9_-]*$";
+        File f;
+        if (fileName.endsWith(".goal")) {
+            if (fileName.length() > 5) {
+                f = new File(fileName);
+                String name = fileName.substring(0, fileName.length() - 5);
+                if (name.matches(nonAlphaNumericRegex)
+                        || f.exists()) {
+                    if (botName.length() > 0) {
+                        if (botName.matches(nonAlphaNumericRegex)) {
+                            view.getDataObject().setBotGripperCapacity(
+                                    view.getNumberOfGrippersSlider().getValue());
+                            view.getDataObject().setBotSize(view.getSizeSlider().getValue());
+                            view.getDataObject().setBotSpeed(view.getSpeedSlider().getValue());
+                            view.getDataObject().setBotBatteryCapacity(
+                                    view.getBatterySlider().getValue());
+                            view.getDataObject().setColorBlindHandicap(
+                                    view.getColorblindCheckbox().isEnabled());
+                            view.getDataObject().setGripperHandicap(
+                                    view.getGripperCheckbox().isEnabled());
+                            view.getDataObject().setMoveSpeedHandicap(
+                                    view.getmovespeedCheckbox().isEnabled());
+                            view.getDataObject().setSizeOverloadHandicap(
+                                    view.getsizeoverloadCheckbox()
+                                            .isEnabled());
+                            view.getDataObject().setFileName(fileName);
+                            view.getDataObject().setReferenceName(botName);
+                            BotConfig data = view.getDataObject();
+                            int index = mp.getEntityPanel().getSelectedBotRow();
+                            // Overwrite the existing config
+                            // (there is always a basic config present for every bot).
+                            mp.getEntityPanel().getBotConfigs().set(index, data);
+                            ScenarioEditor.getOptionPrompt().showMessageDialog(view,
+                                    "Bot configuration succesfully created.");
+                        }
+                        else {
+                            ScenarioEditor.getOptionPrompt().showMessageDialog(view,
+                                    "Please specify a reference name consisting "
+                                            + "of valid alphanumeric characters.");
+                        }
+                    }
+                    else {
+                        ScenarioEditor.getOptionPrompt().showMessageDialog(view,
+                                "Please specify a reference name.");
+                    }
+                }
+                else {
+                    ScenarioEditor.getOptionPrompt().showMessageDialog(view, "Please specify a file name"
+                            + " consisting of valid alphanumeric characters"
+                            + " or use an existing file.");
+                }
+            }
+            else {
+                ScenarioEditor.getOptionPrompt().showMessageDialog(view, "Please specify a file name.");
+            }
+        }
+        else {
+            ScenarioEditor.getOptionPrompt().showMessageDialog(view, "The file name is invalid.\n"
+                    + "File names should end in .goal.");
+        }
     }
 }

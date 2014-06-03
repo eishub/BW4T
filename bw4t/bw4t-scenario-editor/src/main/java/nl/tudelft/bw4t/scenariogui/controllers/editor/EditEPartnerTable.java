@@ -18,8 +18,7 @@ public class EditEPartnerTable implements TableModelListener {
     /**
      * The <code>MainPanel</code> serving as the content pane.
      */
-    @SuppressWarnings("unused")
-	private MainPanel view;
+    private MainPanel view;
 
     /**
      * Create a EditEPartnerTable event handler.

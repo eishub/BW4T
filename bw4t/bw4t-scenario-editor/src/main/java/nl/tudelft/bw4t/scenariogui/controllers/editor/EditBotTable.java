@@ -11,7 +11,7 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  * Handles the event when a cell in the bot table is edited.
  * <p>
  * @author      Nick Feddes
- * @version     0.1                
+ * @version     0.1
  * @since       27-05-2014        
  */
 public class EditBotTable implements TableModelListener {
@@ -37,24 +37,24 @@ public class EditBotTable implements TableModelListener {
      */
     @Override
     public void tableChanged(TableModelEvent event) {
-        if (event.getColumn() == -1) 
+        if (event.getColumn() == -1)
             return;
         BotConfig config = view.getEntityPanel().getBotConfigs().get(event.getFirstRow());
         String value = (String) view.getEntityPanel().getBotTable().getValueAt(
                 event.getFirstRow(), event.getColumn());
         switch (event.getColumn()) {
-        case 0:
-            config.setBotName(value);
-            break;
-        case 1:
-            config.setBotController(value);
-            break;
-        case 2:
-            config.setBotAmount(Integer.parseInt(value));
-            break;
-         default:
-            break;
+            case 0:
+                config.setBotName(value);
+                break;
+            case 1:
+                config.setBotController(value);
+                break;
+            case 2:
+                config.setBotAmount(Integer.parseInt(value));
+                break;
+            default:
+                break;
         }
     }
-    
+
 }

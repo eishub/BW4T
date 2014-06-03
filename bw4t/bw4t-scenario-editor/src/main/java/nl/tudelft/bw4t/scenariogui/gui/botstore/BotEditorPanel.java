@@ -1,4 +1,5 @@
 package nl.tudelft.bw4t.scenariogui.gui.botstore;
+
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -16,10 +17,11 @@ import nl.tudelft.bw4t.scenariogui.BotConfig;
 
 /**
  * BotEditorPanel which serves as the content pane for the BotEditor frame
+ *
  * @author Arun
  */
 public class BotEditorPanel extends JPanel {
-    
+
     /**
      * The generated serial version UID.
      */
@@ -118,27 +120,28 @@ public class BotEditorPanel extends JPanel {
      * The data object.
      */
     private BotConfig dataObject = new BotConfig();
-    
+
     /**
      * Create the botEditorPanel
+     *
      * @param name the bot gets
      */
     public BotEditorPanel(String name) {
         botNameField.setText(name);
-        setLayout(new BorderLayout(20, 20));        
-        
+        setLayout(new BorderLayout(20, 20));
+
         createBotCheckablesPanel();
         createBotSlidersPanel();
-        
+
         add(botSliders, BorderLayout.EAST);
         add(botCheckables, BorderLayout.WEST);
     }
-    
+
     /**
      * create the checkables panel
      */
     public void createBotCheckablesPanel() {
-    	final String newLine = "\n";
+        final String newLine = "\n";
         botCheckables.setLayout(new GridLayout(2, 1));
         JLabel checkablesLabel = new JLabel("Specs");
         JLabel nameLabel = new JLabel("Names");
@@ -152,12 +155,12 @@ public class BotEditorPanel extends JPanel {
         JLabel emptyLabel4 = new JLabel(newLine);
         JLabel emptyLabel5 = new JLabel(newLine);
         JLabel emptyLabel6 = new JLabel(newLine);
-        
+
         Font f = new Font("Tahoma", Font.PLAIN, 24);
-        
+
         checkablesLabel.setFont(f);
         nameLabel.setFont(f);
-       
+
         JPanel checkablesPanel = new JPanel();
         JPanel namePanel = new JPanel();
 
@@ -187,31 +190,32 @@ public class BotEditorPanel extends JPanel {
         botCheckables.add(namePanel);
         botCheckables.add(checkablesPanel);
     }
+
     /**
      * creates the botSlidersPanel
      */
     public void createBotSlidersPanel() {
         botSliders.setLayout(new GridLayout(6, 1));
-        
+
         JLabel batteryUseLabel = new JLabel("Battery use:");
         JLabel perTickLabel = new JLabel("per tick");
         batteryUseLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        
+
         JPanel buttonPanel = new JPanel();
         JPanel batteryCapPanel = new JPanel();
         JPanel speedPanel = new JPanel();
         JPanel sizePanel = new JPanel();
         JPanel gripperPanel = new JPanel();
         JPanel batteryPanel = new JPanel();
-        
+
         buttonPanel.add(applyButton);
         buttonPanel.add(resetButton);
         buttonPanel.add(cancelButton);
-        
+
         batteryCapPanel.add(batteryUseLabel);
         batteryCapPanel.add(batteryUseValueLabel);
         batteryCapPanel.add(perTickLabel);
-        
+
         JLabel numberOfGrippersLabel = new JLabel("Number of Grippers");
         numberOfGrippersLabel.setHorizontalAlignment(SwingConstants.CENTER);
         numberOfGrippersLabel.setToolTipText("default is 1");
@@ -224,24 +228,24 @@ public class BotEditorPanel extends JPanel {
         JLabel batteryCapacity = new JLabel("Battery Capacity");
         batteryCapacity.setHorizontalAlignment(SwingConstants.CENTER);
         batteryCapacity.setToolTipText("Max capacity on a scale of 10-100");
-        
+
         createSliders();
         gripperPanel.setLayout(new BoxLayout(gripperPanel, BoxLayout.PAGE_AXIS));
         gripperPanel.add(numberOfGrippersLabel);
         gripperPanel.add(numberOfGrippersSlider);
-        
+
         sizePanel.setLayout(new BoxLayout(sizePanel, BoxLayout.PAGE_AXIS));
         sizePanel.add(sizeLabel);
         sizePanel.add(sizeSlider);
-        
+
         speedPanel.setLayout(new BoxLayout(speedPanel, BoxLayout.PAGE_AXIS));
         speedPanel.add(speedLabel);
         speedPanel.add(speedSlider);
-        
+
         batteryPanel.setLayout(new BoxLayout(batteryPanel, BoxLayout.PAGE_AXIS));
         batteryPanel.add(batteryCapacity);
         batteryPanel.add(batterySlider);
-        
+
         botSliders.add(gripperPanel);
         botSliders.add(sizePanel);
         botSliders.add(speedPanel);
@@ -249,7 +253,7 @@ public class BotEditorPanel extends JPanel {
         botSliders.add(batteryCapPanel);
         botSliders.add(buttonPanel);
     }
-    
+
     /**
      * sets the default settings for the sliders
      */
@@ -262,7 +266,7 @@ public class BotEditorPanel extends JPanel {
         numberOfGrippersSlider.setSnapToTicks(true);
         numberOfGrippersSlider.setValue(1);
         numberOfGrippersSlider.setValueIsAdjusting(true);
-        
+
         sizeSlider.setMajorTickSpacing(1);
         sizeSlider.setMaximum(5);
         sizeSlider.setMinimum(1);
@@ -272,7 +276,7 @@ public class BotEditorPanel extends JPanel {
         sizeSlider.setValue(2);
         sizeSlider.setEnabled(false);
         sizeSlider.setValueIsAdjusting(true);
-        
+
         speedSlider.setMajorTickSpacing(10);
         speedSlider.setMaximum(140);
         speedSlider.setMinimum(70);
@@ -282,7 +286,7 @@ public class BotEditorPanel extends JPanel {
         speedSlider.setValue(100);
         speedSlider.setEnabled(false);
         speedSlider.setValueIsAdjusting(true);
-        
+
         batterySlider = new JSlider();
         batterySlider.setMinimum(10);
         batterySlider.setMaximum(100);
@@ -292,124 +296,151 @@ public class BotEditorPanel extends JPanel {
         batterySlider.setPaintLabels(true);
         batterySlider.setEnabled(false);
         batterySlider.setMajorTickSpacing(10);
-        
+
     }
-    
+
     /**
      * Returns the applybutton
+     *
      * @return the applyButton
      */
     public JButton getApplyButton() {
         return applyButton;
     }
+
     /**
      * Returns the reset button.
+     *
      * @return the reset button.
      */
     public JButton getResetButton() {
         return resetButton;
     }
+
     /**
      * Returns the cancel button.
+     *
      * @return The cancel button.
      */
     public JButton getCancelButton() {
         return cancelButton;
     }
+
     /**
      * Get the currently used gripper checkbox.
+     *
      * @return The checkbox for setting the gripper handicap.
      */
     public JCheckBox getGripperCheckbox() {
         return gripperCheckbox;
     }
+
     /**
      * Get the currently used color blindness checkbox.
+     *
      * @return The checkbox for setting the color blind handicap.
      */
     public JCheckBox getColorblindCheckbox() {
         return colorblindCheckbox;
     }
+
     /**
      * Returns the currently used move speed checkbox.
+     *
      * @return The move speed checkbox.
      */
     public JCheckBox getmovespeedCheckbox() {
         return movespeedCheckbox;
     }
+
     /**
      * Returns the used custom size checkbox.
+     *
      * @return The custom size checkbox.
      */
     public JCheckBox getsizeoverloadCheckbox() {
         return customSizeCheckbox;
     }
+
     /**
      * Returns the used size slider.
+     *
      * @return The size slider.
      */
     public JSlider getSizeSlider() {
         return sizeSlider;
     }
+
     /**
      * Returns the current speed slider.
+     *
      * @return The used speed slider.
      */
     public JSlider getSpeedSlider() {
         return speedSlider;
     }
+
     /**
      * Returns the currently used battery slider.
+     *
      * @return The battery slider.
      */
     public JSlider getBatterySlider() {
         return batterySlider;
     }
+
     /**
      * Returns the used battery enabled checkbox.
+     *
      * @return The used checkbox.
      */
     public JCheckBox getBatteryEnabledCheckbox() {
         return batteryEnabledCheckbox;
     }
+
     /**
      * Return the label describing what the robot
      * uses regarding battery potential per tick.
+     *
      * @return The aforementioned label.
      */
     public JLabel getBatteryUseValueLabel() {
         return batteryUseValueLabel;
-    }  
+    }
+
     /**
      * Returns the created data object and the
      * settings contained.
+     *
      * @return The data object.
      */
     public BotConfig getDataObject() {
         return dataObject;
     }
+
     /**
      * Returns the slider determining the amount of
      * grippers the bot can use.
+     *
      * @return The aforementioned slider.
      */
     public JSlider getNumberOfGrippersSlider() {
         return numberOfGrippersSlider;
     }
-    
+
     public JTextField getFileNameField() {
-		return fileNameField;
-	}
+        return fileNameField;
+    }
 
-	public JTextField getBotNameField() {
-		return botNameField;
-	}
+    public JTextField getBotNameField() {
+        return botNameField;
+    }
 
-	public JCheckBox getCustomSizeCheckbox() {
-		return customSizeCheckbox;
-	}
+    public JCheckBox getCustomSizeCheckbox() {
+        return customSizeCheckbox;
+    }
 
-	public JButton getFileButton() {
-		return fileButton;
-	}	
+    public JButton getFileButton() {
+        return fileButton;
+    }
 }
