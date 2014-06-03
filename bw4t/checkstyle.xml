@@ -62,7 +62,9 @@
     <module name="InnerAssignment"/>
     <module name="JUnitTestCase"/>
     <module name="MissingSwitchDefault"/>
-    <module name="MultipleStringLiterals"/>
+    <module name="MultipleStringLiterals">
+    	<property name="allowedDuplicates" value="4"/>
+    </module>
     <module name="NoClone"/>
     <module name="PackageDeclaration"/>
     <module name="RedundantThrows">
