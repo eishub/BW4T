@@ -372,17 +372,17 @@ public class EntityPanelTest {
      * Tests the compare and the update functions.
      */
     @Test
-    public void testCompareBotConfigs() {
-        assertTrue(entityPanel.compareBotConfigs());
+    public void testBotConfigs() {
+        assertTrue(entityPanel.compareBotConfigs(entityPanel.getOldBotConfigs()));
         
         entityPanel.getBotConfigs().add(new BotConfig());
         
         //FIXME for some reason the new config is added to the old config list as well
-        //assertFalse(entityPanel.compareBotConfigs());
+        //assertFalse(entityPanel.compareBotConfigs(entityPanel.getOldBotConfigs()));
         
         entityPanel.updateBotConfigs();
         
-        assertTrue(entityPanel.compareBotConfigs());
+        assertTrue(entityPanel.compareBotConfigs(entityPanel.getOldBotConfigs()));
     }
 
     /**
