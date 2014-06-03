@@ -3,6 +3,8 @@ package nl.tudelft.bw4t.client.startup;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.bind.JAXBException;
+
 import nl.tudelft.bw4t.client.environment.BW4TEnvironmentListener;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.message.MessageTranslator;
@@ -60,6 +62,20 @@ public final class Launcher {
         BasicConfigurator.configure();
         LOGGER.info("Starting up BW4T Client.");
         LOGGER.info("Reading initialization parameters...");
+        
+		/** Reads the configuration file (if a path was supplied) and sets the default
+		 * values in the InitParam based on it: */
+		String pathToConfigFile = findArgument(args, InitConfig.CONFIG_FILE_PARAMETER, null);
+		if (pathToConfigFile != null) {
+		    try {
+		    	InitConfig.readAndUseInitConfig(pathToConfigFile);
+		    } catch (JAXBException e) {
+		    	LOGGER.error("There was a problem reading the config file at: " + pathToConfigFile);
+		    	System.out.println("There was a problem reading the config file at: " + pathToConfigFile);
+		    	e.printStackTrace();
+		    }
+		}
+        
         /**
          * Load all known parameters into the init array, convert it to EIS
          * format.
@@ -138,10 +154,12 @@ public final class Launcher {
         for (int i = 0; i < (args.length - 1); i++) {
             if (args[i].equalsIgnoreCase(param)) {
                 LOGGER.debug("Found parameter '" + param + "' with '" + args[i + 1] + "'");
+                System.out.println("Found parameter '" + param + "' with '" + args[i + 1] + "'");
                 return args[i + 1];
             }
         }
         LOGGER.debug("Defaulting parameter '" + param + "' with '" + def + "'");
+        System.out.println("Defaulting parameter '" + param + "' with '" + def + "'");
         return def;
     }
 
