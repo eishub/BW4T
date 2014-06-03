@@ -92,7 +92,7 @@ public class NavigatingRobot extends Robot {
         }
         // plan the path between the Zones
         List<Zone> path = PathPlanner.findPath(allnavs, startpt, targetpt);
-        if (path == null) {
+        if (path.isEmpty()) {
             throw new IllegalArgumentException("target " + p + " is unreachable from " + this);
         }
         // and copy Zone path to our stack.
@@ -137,7 +137,7 @@ public class NavigatingRobot extends Robot {
         }
         // plan the path between the Zones
         List<Zone> path = PathPlanner.findPath(allnavs, startpt, targetpt);
-        if (path == null) {
+        if (path.isEmpty()) {
             throw new IllegalArgumentException("target " + target + " is unreachable from " + this);
         }
         // and copy Zone path to our stack.

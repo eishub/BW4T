@@ -138,9 +138,7 @@ public class ClientController {
     public void updateRenderer(MapRendererInterface mri) {
         if (updateNextFrame && mri instanceof ClientGUI) {
             ClientGUI gui = (ClientGUI) mri;
-            if (gui != null) {
-                gui.update();
-            }
+            gui.update();
         }
     }
 
