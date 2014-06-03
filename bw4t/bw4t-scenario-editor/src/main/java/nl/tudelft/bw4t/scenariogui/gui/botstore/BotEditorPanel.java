@@ -199,10 +199,13 @@ public class BotEditorPanel extends JPanel {
         controllerpanel.add(botAmountTextField);
         botInfo.add(controllerpanel);
         botInfo.add(botNameLabel);
+        botNameField.setText(dataObject.getBotName());
         botInfo.add(botNameField);
         botInfo.add(new JLabel("Bot reference name:"));
+        botReferenceField.setText(dataObject.getReferenceName());
         botInfo.add(botReferenceField);
         botInfo.add(fileNameLabel);
+        fileNameField.setText(dataObject.getFileName());
         botInfo.add(fileNameField);
         botInfo.add(fileButton);
 	}
