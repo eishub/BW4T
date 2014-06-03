@@ -1,15 +1,14 @@
 package nl.tudelft.bw4t.message;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.StringTokenizer;
-
-import nl.tudelft.bw4t.map.ColorTranslator;
 import eis.iilang.Function;
 import eis.iilang.Identifier;
 import eis.iilang.Numeral;
 import eis.iilang.Parameter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.StringTokenizer;
+import nl.tudelft.bw4t.map.ColorTranslator;
 
 /**
  * Class used for translating messages (String->BW4TMessage and
@@ -17,14 +16,35 @@ import eis.iilang.Parameter;
  * 
  * @author trens
  */
-public class MessageTranslator {
-    public static Map<String, StringToMessageCommand> stringToMessage = new HashMap<String, StringToMessageCommand>();
-    public static Map<String, StringToMessageCommand> stringToMessageEquals = new HashMap<String, StringToMessageCommand>();
+public final class MessageTranslator {
+	/**
+	 * {@link HashMap} for converting messages from {@link String} format to
+	 * {@link BW4TMessage} format. Used for {@code String.contains()} matches.
+	 */
+    private static Map<String, StringToMessageCommand> stringToMessage =
+    		new HashMap<String, StringToMessageCommand>();
+	/**
+	 * {@link HashMap} for converting messages from {@link String} format to
+	 * {@link BW4TMessage} format. Used for exact matches.
+	 */
+    private static Map<String, StringToMessageCommand> stringToMessageEquals =
+    		new HashMap<String, StringToMessageCommand>();
+	/**
+	 * {@link HashMap} for converting messages from {@link BW4TMessage} format to
+	 * {@link String} format
+	 */
+    private static Map<MessageType, TypeToStringCommand> messageToString =
+    		new HashMap<MessageType, TypeToStringCommand>();
     
-    public static Map<MessageType, TypeToStringCommand> messageToString = new HashMap<MessageType, TypeToStringCommand>();
+    /**
+     * Should never be instantiated.
+     */
+    private MessageTranslator() { }
     
-    public static void init(){
-        
+    /**
+     * Fills the HashMaps used to translate messages.
+     */
+    public static void init() {
         stringToMessage.put("I am going to ", new CommandRoomColor(MessageType.GOINGTOROOM));
         stringToMessage.put("I have a ", new CommandRoomColor(MessageType.HASCOLOR));
         stringToMessage.put("has been checked", new CommandContainsBy(MessageType.CHECKED));
@@ -64,42 +84,41 @@ public class MessageTranslator {
         stringToMessageEquals.put("I am almost there", new CommandType(MessageType.ALMOSTTHERE));
         stringToMessageEquals.put("I am far away", new CommandType(MessageType.FARAWAY));
         stringToMessageEquals.put("I am delayed", new CommandType(MessageType.DELAYED));
-        
-        
     }
     
     /**
-     * Translate a message (String) to a message (BW4TMessage)
+     * Translates a messages from {@link String} to {@link BW4TMessage} format.
      * 
      * @param message
-     *            , the message that should be translated
-     * @return the translated message
+     *            - The String message that should be translated.
+     * @return The message in BW4TMessage format.
      */
-    public static BW4TMessage translateMessage(String message){
+    public static BW4TMessage translateMessage(String message) {
             
-        for(Entry<String, StringToMessageCommand> e : stringToMessageEquals.entrySet()){
+        for (Entry<String, StringToMessageCommand> e : stringToMessageEquals.entrySet()) {
             String key = e.getKey();
-            if(message.equals(key)) {
+            if (message.equals(key)) {
                 BW4TMessage msg = stringToMessageEquals.get(key).exec(message);
                 return msg;
             }
         }
                         
-        for(Entry<String, StringToMessageCommand> e : stringToMessage.entrySet()){
+        for (Entry<String, StringToMessageCommand> e : stringToMessage.entrySet()) {
             String key = e.getKey();
-            if(message.contains(key)) {
+            if (message.contains(key)) {
                 return stringToMessage.get(key).exec(message);
             }
         }
         return null; 
     }
-    
+
     /**
-     * Translate a message (String) to a message (BW4TMessage)
+     * Translates a message from {@link BW4TMessage} to {@link String} format.
      * 
      * @param message
-     *            , the message that should be translated
-     * @return the translated message
+     *            - The String message that should be translated.
+     * @return The message in BW4TMessage format.
+     * @deprecated Old function that does not utilize the new HashMaps.
      */
     @Deprecated
     public static BW4TMessage translateMessageLegacy(String message) {
@@ -240,8 +259,10 @@ public class MessageTranslator {
         return translatedMessage;
     }
     
-    public static String translateMessageMap(BW4TMessage message){
-    	
+    /**
+	 * TODO: Being worked on by Sille.
+     */
+    public static String translateMessageMap(BW4TMessage message) {
     	messageToString.put(MessageType.WHERESHOULDIGO, new CommandString("Where should I go?"));
     	messageToString.put(MessageType.CHECKED, new CommandChecked());
     	messageToString.put(MessageType.WHATCOLORSHOULDIGET, new CommandString("What color should I get?"));
@@ -272,13 +293,13 @@ public class MessageTranslator {
     }
 
     /**
-     * Translate a message (BW4TMessage) to a message (String)
+     * Translates a messages from {@link BW4TMessage} to {@link String} format.
      *
      * @param message
-     *            , the message that should be translated
-     * @return the translated message
+     *            - The BW4TMessage that should be translated.
+     * @return The message in String format.
      * @deprecated
-     * 			Replaced by function with map
+     * 			Old function that does not utilize the new HashMaps.
      */
     @Deprecated
     public static String translateMessage(BW4TMessage message) {
@@ -408,14 +429,14 @@ public class MessageTranslator {
     }
 
     /**
-     * Find a room id in a message. Note #1933, we can not look specifically for
-     * room names because we have no map loaded and don't know any navpoint
-     * names. Therefore the message must contain a segment "room XXX" and XXX
-     * then will be the room.
+     * Find a room id in a message. We can not look specifically for
+     * room names because we have no map loaded and don't know any navpoint names.
+     * Therefore the message must contain a segment {@code "room XYZ"} and {@code XYZ}
+     * will be the room.
      * 
      * @param message
-     *            the message in which "room <room id>" should be found
-     * @return the room id or Long.MAX_VALUE if no room id found
+     *            - The message in which {@code "room <room id>"} should be found.
+     * @return The room id or {@code Long.MAX_VALUE} if no room id is found.
      */
     static String findRoomId(String message) {
         StringTokenizer tokenizer = new StringTokenizer(message);
@@ -423,7 +444,7 @@ public class MessageTranslator {
 
         while (tokenizer.hasMoreTokens()) {
             if (token.equals("room")) {
-                return tokenizer.nextToken().replace("?","");
+                return tokenizer.nextToken().replace("?", "");
             }
             token = tokenizer.nextToken();
         }
@@ -432,11 +453,11 @@ public class MessageTranslator {
     }
 
     /**
-     * Find a color id in a message
+     * Find a color id in a message.
      * 
      * @param message
-     *            , the message in which a color id should be found
-     * @return the color id or null if no color id found
+     *            - The message in which a color id should be found.
+     * @return The color id or {@code null} if no color id is found.
      */
     static String findColorId(String message) {
         StringTokenizer tokenizer = new StringTokenizer(message);
@@ -452,6 +473,13 @@ public class MessageTranslator {
         return null;
     }
 
+    /**
+     * Find the first number in the given message.
+     * 
+     * @param message
+     *            - The message in which a number should be found.
+     * @return The number or {@code Integer.MAX_VALUE} if no number is found.
+     */
     protected static int findNumber(String message) {
         StringTokenizer tokenizer = new StringTokenizer(message);
         while (tokenizer.hasMoreTokens()) {
@@ -468,14 +496,14 @@ public class MessageTranslator {
     }
 
     /**
-     * Translate a BW4TMessage to a LinkedList<Parameter> that can be sent to
-     * GOAL
+     * Translate a {@link BW4TMessage} to a {@link LinkedList}<{@link Parameter}>
+     * that can be sent to GOAL.
      * 
      * @param message
-     *            , the message to be translated
+     *            - The BW4TMessage that should be translated.
      * @param entityId
-     *            , the sender of the message
-     * @return the translated message
+     *            - The sender of the message.
+     * @return The message in {@code LinkedList<Parameter>} format.
      */
     public static Parameter translateMessage(BW4TMessage message,
             String entityId) {
