@@ -2,10 +2,10 @@ package nl.tudelft.bw4t.epartner;
 
 import static org.junit.Assert.*;
 import nl.tudelft.bw4t.blocks.EPartner;
-import nl.tudelft.bw4t.handicap.HandicapInterface;
+import nl.tudelft.bw4t.handicap.IRobot;
 import nl.tudelft.bw4t.handicap.Human;
 import nl.tudelft.bw4t.robots.NavigatingRobot;
-import nl.tudelft.bw4t.robots.Robot;
+import nl.tudelft.bw4t.robots.AbstractRobot;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,7 +36,7 @@ public class EPartnerTest {
      */ 
     @Test
     public void humanControlledRobotTest() {
-        HandicapInterface r = new Human(new NavigatingRobot("", space, context, true, 0));
+        IRobot r = new Human(new NavigatingRobot("", space, context, true, 0));
         assertFalse(r.isHoldingEPartner());
     }
     
@@ -45,7 +45,7 @@ public class EPartnerTest {
      */
     @Test
     public void nonHumanPickupEPartnerTest() {
-        Robot r = new NavigatingRobot("", space, context, true, 0);
+        AbstractRobot r = new NavigatingRobot("", space, context, true, 0);
         EPartner e = new EPartner("", space, context);
         r.pickUpEPartner(e);
         assertFalse(r.isHoldingEPartner());
@@ -56,7 +56,7 @@ public class EPartnerTest {
      */
     @Test
     public void humanPickupEPartnerTest() {
-        HandicapInterface r = new Human(new NavigatingRobot("", space, context, true, 0));
+        IRobot r = new Human(new NavigatingRobot("", space, context, true, 0));
         EPartner e = new EPartner("", space, context);
         r.pickUpEPartner(e);
         assertTrue(r.isHoldingEPartner());

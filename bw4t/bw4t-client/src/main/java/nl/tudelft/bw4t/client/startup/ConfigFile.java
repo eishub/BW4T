@@ -12,9 +12,7 @@ import nl.tudelft.bw4t.util.XMLManager;
  * @author Nick Feddes
  *
  */
-public class InitConfig {
-    
-    public static final String CONFIG_FILE_PARAMETER = "-configfile";
+public class ConfigFile {
     
     private static BW4TClientConfig config;
     
@@ -23,7 +21,7 @@ public class InitConfig {
      * @param pathToConfigFile The path to the config file.
      * @throws JAXBException When there is a problem reading the config file.
      */
-    public static void readAndUseInitConfig(String pathToConfigFile) throws JAXBException {
+    public static void readConfigFile(String pathToConfigFile) throws JAXBException {
         
         // Reads the configuration file and constructs a BW4TClientConfig from it:
         config = (BW4TClientConfig) XMLManager.
@@ -42,12 +40,6 @@ public class InitConfig {
      */
     private static void setDefaultValueForInitParam(InitParam param) {
         switch (param) {
-        case AGENTCLASS:
-            // not in config file atm
-            break;
-        case AGENTCOUNT:
-            //
-            break;
         case CLIENTIP:
             param.setDefaultValue(config.getClientIp());
             break;
@@ -56,12 +48,6 @@ public class InitConfig {
             break;
         case GOAL:
             param.setDefaultValue(((Boolean) config.isUseGoal()).toString());
-            break;
-        case HUMANCOUNT:
-            //
-            break;
-        case KILL:
-            // not in config file atm
             break;
         case LAUNCHGUI:
             param.setDefaultValue(((Boolean) config.isLaunchGui()).toString());

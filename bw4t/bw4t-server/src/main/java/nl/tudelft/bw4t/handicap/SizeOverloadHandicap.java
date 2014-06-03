@@ -1,7 +1,7 @@
 package nl.tudelft.bw4t.handicap;
 
 import nl.tudelft.bw4t.doors.Door;
-import nl.tudelft.bw4t.robots.Robot.MoveType;
+import nl.tudelft.bw4t.robots.MoveType;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.Zone;
 /**
@@ -9,7 +9,7 @@ import nl.tudelft.bw4t.zone.Zone;
  * @author Valentine Mairet & Ruben Starmans
  *
  */
-public class SizeOverloadHandicap extends AbstractHandicapFactory {
+public class SizeOverloadHandicap extends AbstractRobotDecorator {
 	
 	/**
 	 * This variable indicates the size of the robot. 
@@ -23,7 +23,7 @@ public class SizeOverloadHandicap extends AbstractHandicapFactory {
      * @param p HandicapInterface the SizeOverloadHandicap wraps around.
      * @param s Size the bot is gonna be.
      */
-    public SizeOverloadHandicap(HandicapInterface p, int s) {
+    public SizeOverloadHandicap(IRobot p, int s) {
         super(p);
         size = s;
         robot.setSize(s);

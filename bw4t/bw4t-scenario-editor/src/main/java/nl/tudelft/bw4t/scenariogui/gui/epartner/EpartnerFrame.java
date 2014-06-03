@@ -111,6 +111,5 @@ public class EpartnerFrame extends JFrame {
     public BotConfig getDataObject() {
         return dataObject;
     }
-    
 }
 
