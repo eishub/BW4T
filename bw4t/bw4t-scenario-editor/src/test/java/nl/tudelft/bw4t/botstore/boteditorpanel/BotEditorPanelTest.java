@@ -1,9 +1,5 @@
 package nl.tudelft.bw4t.botstore.boteditorpanel;
 
-import java.awt.event.MouseEvent;
-
-import javax.swing.JSlider;
-
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditor;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
@@ -33,11 +29,14 @@ public class BotEditorPanelTest {
     private BotEditorPanel panel;
     /** the spy entity of panel */
     private BotEditorPanel spypanel;
+    /** A shared string declared here */
+    private String zero;
     
     /** setup the panel */
     @Before
     public final void setUp() {
         String name = "";
+        zero = "0";
         panel = new BotEditorPanel(name);
         spypanel = spy(panel);
         MainPanel parent = new MainPanel(new ConfigurationPanel(), new EntityPanel());
@@ -108,8 +107,7 @@ public class BotEditorPanelTest {
     /** test the batteryusevale */
     @Test
     public final void testBatteryUseValue() {
-    	String value = "0";
-    	assertEquals(value, spypanel.getBatteryUseValueLabel().getText());
+    	assertEquals(zero, spypanel.getBatteryUseValueLabel().getText());
     }
     
     /** Test the speed slider */
@@ -204,7 +202,7 @@ public class BotEditorPanelTest {
 		assertEquals(editor.getBotEditorPanel().getBatteryEnabledCheckbox().isSelected(), false);
 		assertEquals(editor.getBotEditorPanel().getFileNameField().getText(), ".goal");
 		assertEquals(editor.getBotEditorPanel().getBotNameField().getText(), "");
-		assertEquals(editor.getBotEditorPanel().getBatteryUseValueLabel().getText(), "0");
+		assertEquals(editor.getBotEditorPanel().getBatteryUseValueLabel().getText(), zero);
 		
 	}
 }
