@@ -357,10 +357,10 @@ public final class MapLoader {
     private static void createBlocksForRoom(Room room, Context<Object> context, ContinuousSpace<Object> space,
             List<BlockColor> args) {
         
-        String logRoom = room.getName();
+        String logRoom = room.getName() + " contains blocks:";
         
         for (BlockColor c : args) {
-            logRoom = logRoom + c.getLetter().toString();
+            logRoom = logRoom + " " + c.getLetter().toString();
         }
         
         LOGGER.log(BotLog.BOTLOG, logRoom);
