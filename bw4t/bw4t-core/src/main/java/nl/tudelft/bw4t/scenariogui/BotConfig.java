@@ -292,26 +292,36 @@ public final class BotConfig {
         return gps;
     }
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String _name) {
-		this.name = _name;
-	}
-
+    /**
+     * Returns the reference name in goal.
+     * @return The reference name in goal.
+     */
 	public String getReferenceName() {
 		return referenceName;
 	}
 
+	/**
+	 * Sets the reference name in goal.
+	 * @param _referenceName The reference name in goal.
+	 */
+	@XmlElement
 	public void setReferenceName(String _referenceName) {
 		this.referenceName = _referenceName;
 	}
 
+	/**
+	 * Returns the goal file name.
+	 * @return The goal file name.
+	 */
 	public String getFileName() {
 		return fileName;
 	}
 
+	/**
+	 * Sets the goal file name.
+	 * @param _fileName The goal file name.
+	 */
+	@XmlElement
 	public void setFileName(String _fileName) {
 		this.fileName = _fileName;
 	}

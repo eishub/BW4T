@@ -114,7 +114,7 @@ public class BotEditorPanel extends JPanel {
      * The text field containing the reference name
      * of the bot.
      */
-    private JTextField botNameField = new JTextField();
+    private JTextField referenceNameField = new JTextField();
     /**
      * The slider to set the size of the bot.
      */
@@ -250,11 +250,13 @@ public class BotEditorPanel extends JPanel {
         namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.PAGE_AXIS));
         namePanel.add(emptyLabel2);
         namePanel.add(fileNameLabel);
+        fileNameField.setText(dataObject.getFileName());
         namePanel.add(fileNameField);
         namePanel.add(fileButton);
         namePanel.add(emptyLabel3);
         namePanel.add(botNameLabel);
-        namePanel.add(botNameField);
+        referenceNameField.setText(dataObject.getReferenceName());
+        namePanel.add(referenceNameField);
         botCheckables.add(checkablesPanel);
         botCheckables.add(nameLabel);
         botCheckables.add(namePanel);
@@ -498,8 +500,8 @@ public class BotEditorPanel extends JPanel {
 		return fileNameField;
 	}
 
-	public JTextField getBotNameField() {
-		return botNameField;
+	public JTextField getReferenceNameField() {
+		return referenceNameField;
 	}
 
 	public JCheckBox getCustomSizeCheckbox() {
