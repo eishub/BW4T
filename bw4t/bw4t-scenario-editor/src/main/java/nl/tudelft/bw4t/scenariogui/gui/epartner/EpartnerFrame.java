@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
-import nl.tudelft.bw4t.scenariogui.controller.EpartnerController;
+import nl.tudelft.bw4t.scenariogui.controllers.epartner.EpartnerController;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
@@ -82,10 +82,10 @@ public class EpartnerFrame extends JFrame {
 	/** Create the panel which contains the epartner info. */
 	private void createInfoPanel() {
 		infoPane.setLayout(new GridLayout(1, 0));
-		epartnerNameField.setText(dataObject.getName());
+		epartnerNameField.setText(dataObject.getEpartnerName());
 		infoPane.add(epartnerNameField);
 		infoPane.add(new JLabel("  Amount of this type:"));
-		epartnerAmountField.setText("" + dataObject.getAmount());
+		epartnerAmountField.setText("" + dataObject.getEpartnerAmount());
 		infoPane.add(epartnerAmountField);
 	}
 
