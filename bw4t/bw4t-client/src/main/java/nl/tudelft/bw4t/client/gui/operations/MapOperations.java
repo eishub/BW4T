@@ -15,14 +15,15 @@ import nl.tudelft.bw4t.map.view.Block;
 import nl.tudelft.bw4t.message.BW4TMessage;
 import nl.tudelft.bw4t.message.MessageType;
 
-/** Responsible for the pop-up menu when clicking on goal colors. */
+/** Responsible for building the pop-up menu when clicking on goal colors. */
 public final class MapOperations {
 	
 	/** Should never be instantiated. */
 	private MapOperations() { }
 	
     /**
-     * Build the pop up menu for clicking on a group goal color.
+     * Used for building the pop-up menu that displays the actions
+     * a user can perform when clicking on a group goal color.
      * 
      * @param color
      *            - The color that was clicked.

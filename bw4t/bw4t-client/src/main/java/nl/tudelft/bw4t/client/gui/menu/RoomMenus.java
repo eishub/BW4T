@@ -2,8 +2,6 @@ package nl.tudelft.bw4t.client.gui.menu;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-
-import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.GoToBlockActionListener;
@@ -17,45 +15,58 @@ import nl.tudelft.bw4t.map.view.Block;
 import nl.tudelft.bw4t.message.BW4TMessage;
 import nl.tudelft.bw4t.message.MessageType;
 
-public class RoomMenus {
+/** Responsible for building certain pop-up menus related to rooms. */
+public final class RoomMenus {
+	
+	/** Should never be instantiated. */
+	private RoomMenus() { }
+	
     /**
      * Used for building the pop up menu when clicking on the agent while it is near a box
      * 
      * @param box
-     *            , the box that the robot is at.
+     *            - The box that the robot is at.
+     * @param room
+     *            - The room the robot is in.
+     * @param gui
+     *            - The {@link BW4TClientGUI} to create the pop-up menu on.
      */
-    public static void buildPopUpMenuForBeingAtBlock(Block box, Zone room, BW4TClientGUI bw4tClientMapRenderer) {
+    public static void buildPopUpMenuForBeingAtBlock(Block box, Zone room, BW4TClientGUI gui) {
         String label = room.getName();
 
-        bw4tClientMapRenderer.getjPopupMenu().removeAll();
+        gui.getjPopupMenu().removeAll();
 
         // Robot commands
-        BasicMenuOperations.addSectionTitleToPopupMenu("Command my robot to:", bw4tClientMapRenderer.getjPopupMenu());
+        BasicMenuOperations.addSectionTitleToPopupMenu("Command my robot to:", gui.getjPopupMenu());
 
         JMenuItem menuItem = new JMenuItem("Pick up " + box.getColor() + " block");
-        menuItem.addActionListener(new PickUpActionListener(bw4tClientMapRenderer.getController()));
-        bw4tClientMapRenderer.getjPopupMenu().add(menuItem);
+        menuItem.addActionListener(new PickUpActionListener(gui.getController()));
+        gui.getjPopupMenu().add(menuItem);
 
         // Message sending
-        bw4tClientMapRenderer.getjPopupMenu().addSeparator();
-        BasicMenuOperations.addSectionTitleToPopupMenu("Tell: ", bw4tClientMapRenderer.getjPopupMenu());
+        gui.getjPopupMenu().addSeparator();
+        BasicMenuOperations.addSectionTitleToPopupMenu("Tell: ", gui.getjPopupMenu());
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.ROOMCONTAINS, label, box.getColor()
-                .getName(), null), bw4tClientMapRenderer);
+                .getName(), null), gui);
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.AMGETTINGCOLOR, label, box.getColor()
-                .getName(), null), bw4tClientMapRenderer);
+                .getName(), null), gui);
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.ATBOX, null, box.getColor().getName(),
-                null), bw4tClientMapRenderer);
+                null), gui);
 
-        bw4tClientMapRenderer.getjPopupMenu().addSeparator();
+        gui.getjPopupMenu().addSeparator();
         menuItem = new JMenuItem("Close menu");
-        bw4tClientMapRenderer.getjPopupMenu().add(menuItem);
+        gui.getjPopupMenu().add(menuItem);
     }
 
     /**
      * Used for building a pop up menu when clicking on a box
      * 
      * @param box
-     *            , the box that was clicked on
+     *            The box that was clicked on.
+     * @param room
+     *            - The room the robot is in.
+     * @param gui
+     *            - The {@link BW4TClientGUI} to create the pop-up menu on.
      */
     public static void buildPopUpMenuForBlock(Block box, Zone room, BW4TClientGUI gui) {
         String label = room.getName();
@@ -86,7 +97,9 @@ public class RoomMenus {
      * Used for building a pop up menu when clicking on a room
      * 
      * @param room
-     *            , the room that was clicked on
+     *            - The room that was clicked on.
+     * @param gui
+     *            - The {@link BW4TClientGUI} to create the pop-up menu on.
      */
     public static void buildPopUpMenuRoom(Zone room, BW4TClientGUI gui) {
         ClientMapController cmc = gui.getController().getMapController();
