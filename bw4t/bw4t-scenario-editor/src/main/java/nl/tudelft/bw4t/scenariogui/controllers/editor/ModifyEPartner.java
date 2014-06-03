@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditor;
+import nl.tudelft.bw4t.scenariogui.gui.epartner.EpartnerFrame;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
@@ -32,7 +34,6 @@ class ModifyEPartner implements ActionListener {
     /**
      * Executes action that needs to happen when the "Modify E-partner" button is
      * pressed.
-     * TODO Open BotStore window
      * Gets called when the e-partner is modified.
      *
      * @param ae The action event.
@@ -44,7 +45,8 @@ class ModifyEPartner implements ActionListener {
             ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select the E-partner you want to modify.");
         } 
         else {
-            System.out.println("Go to Bot Store to modify an E-Partner.");
+        	String data = (String) view.getEntityPanel().getEPartnerTable().getModel().getValueAt(row, 0);
+            new EpartnerFrame(view, row);
         }
     }
 }
