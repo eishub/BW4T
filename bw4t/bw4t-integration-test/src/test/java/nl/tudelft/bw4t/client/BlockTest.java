@@ -1,21 +1,5 @@
 package nl.tudelft.bw4t.client;
 
-import static org.junit.Assert.assertTrue;
-
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-
-import javax.xml.bind.JAXBException;
-
-import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-
-import repast.simphony.scenario.ScenarioLoadException;
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Translator;
 import eis.exceptions.ActException;
@@ -24,13 +8,35 @@ import eis.exceptions.PerceiveException;
 import eis.iilang.Action;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
+import java.io.IOException;
+import java.util.Iterator;
+import javax.xml.bind.JAXBException;
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import org.junit.Before;
+import org.junit.Test;
+import repast.simphony.scenario.ScenarioLoadException;
+import static org.junit.Assert.assertTrue;
 
+/**
+ * We test if blocks are properly perceived, picked up and delivered.
+ */
 public class BlockTest {
     
+    /**
+     * Client to be used for testing.
+     */
     private RemoteEnvironment client;
 
+    /**
+     * Launch the client and set it for use by the TestFunctions class.
+     * @throws ManagementException
+     * @throws IOException
+     * @throws ScenarioLoadException
+     * @throws JAXBException
+     * @throws InterruptedException
+     */
     @Before
-    public void setup() throws ManagementException, IOException,
+    public void setUp() throws ManagementException, IOException,
             ScenarioLoadException, JAXBException, InterruptedException {        
         String[] clientArgs = new String[] {
                 "-map", "Banana",
