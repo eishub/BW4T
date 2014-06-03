@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.controller;
+package nl.tudelft.bw4t.scenariogui.controllers.epartner;
 
 import nl.tudelft.bw4t.scenariogui.gui.epartner.EpartnerFrame;
 

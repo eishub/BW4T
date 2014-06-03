@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.controller;
+package nl.tudelft.bw4t.scenariogui.controllers.epartner;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -46,10 +46,10 @@ public class EditEPartnerTable implements TableModelListener {
 						.getValueAt(event.getFirstRow(), event.getColumn());
 		switch (event.getColumn()) {
 		case 0:
-			config.setName(value);
+			config.setEpartnerName(value);
 			break;
 		case 1:
-			config.setAmount(Integer.parseInt(value));
+			config.setEpartnerAmount(Integer.parseInt(value));
 			break;
 		default:
 			break;

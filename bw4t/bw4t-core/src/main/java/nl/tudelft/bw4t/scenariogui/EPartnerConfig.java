@@ -20,7 +20,7 @@ public final class EPartnerConfig {
 	 * 
 	 * @return The epartner name.
 	 */
-	public String getName() {
+	public String getEpartnerName() {
 		return name;
 	}
 
@@ -31,7 +31,7 @@ public final class EPartnerConfig {
 	 *            The epartner name.
 	 */
 	@XmlElement
-	public void setName(String name) {
+	public void setEpartnerName(String name) {
 		this.name = name;
 	}
 
@@ -40,7 +40,7 @@ public final class EPartnerConfig {
 	 * 
 	 * @return The epartner amount.
 	 */
-	public int getAmount() {
+	public int getEpartnerAmount() {
 		return amount;
 	}
 
@@ -51,7 +51,7 @@ public final class EPartnerConfig {
 	 *            The epartner amount.
 	 */
 	@XmlElement
-	public void setAmount(int amount) {
+	public void setEpartnerAmount(int amount) {
 		this.amount = amount;
 	}
 

@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.controller;
+package nl.tudelft.bw4t.scenariogui.controllers.epartner;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,8 +33,8 @@ class EpartnerApplyButton implements ActionListener {
 	 *            The action event triggering this method.
 	 */
 	public void actionPerformed(ActionEvent ae) {
-		view.getDataObject().setName(view.getName());
-		view.getDataObject().setAmount(
+		view.getDataObject().setEpartnerName(view.getName());
+		view.getDataObject().setEpartnerAmount(
 				Integer.parseInt(view.getEpartnerAmount().getText()));
 		view.getDataObject().setForgetMeNot(
 				view.getLeftAloneCheckbox().isSelected());
