@@ -278,6 +278,7 @@ public final class BotConfig {
                 + hasMoveSpeedHandicap + hasSizeOverloadHandicap;
     }
 
+
     public String getReferenceName() {
         return referenceName;
     }
@@ -295,5 +296,6 @@ public final class BotConfig {
     public void setFileName(String _fileName) {
         this.fileName = _fileName;
     }
+
 
 }
