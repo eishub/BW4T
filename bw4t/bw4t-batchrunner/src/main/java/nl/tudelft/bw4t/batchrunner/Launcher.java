@@ -24,7 +24,6 @@ public class Launcher {
     
     private static class TimeoutChecker implements Runnable {
 
-        @Override
         public void run() {
             while (true) {
                 if (System.currentTimeMillis() - lastStartTime > 100000) {
