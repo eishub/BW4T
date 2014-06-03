@@ -62,7 +62,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
      */
     private static final Logger LOGGER = Logger.getLogger(BW4TEnvironment.class);
 
-    private static String mapName;
+    private String mapName;
 
     /**
      * start time of the first action.
@@ -98,14 +98,16 @@ public class BW4TEnvironment extends AbstractEnvironment {
     BW4TEnvironment(BW4TServer server2, String scenarioLocation, String mapLocation, boolean guiEnabled,
             String shutdownKey) throws IOException, ManagementException, ScenarioLoadException, JAXBException {
         super();
-        instance = this;
+        setInstance(this); 
         this.server = server2;
-        BW4TEnvironment.mapName = mapLocation;
+     	mapName = mapLocation;
         this.scenarioLocation = System.getProperty("user.dir") + "/" + scenarioLocation;
         this.guiEnabled = guiEnabled;
         this.shutdownKey = shutdownKey;
     }
-
+    private static void setInstance(BW4TEnvironment env){
+    	instance = env;  
+    }
     /**
      * Launch server and start repast.
      * 
@@ -196,7 +198,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
         String error = "launch of Repast failed";
         Parameter map = parameters.get("map");
         if (map != null) {
-            BW4TEnvironment.setMapName(((Identifier) map).getValue());
+            setMapName(((Identifier) map).getValue());
         }
         try {
             launchRepast();
@@ -242,7 +244,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
      */
     private void launchRepast() throws IOException, ScenarioLoadException, JAXBException {
         theMap = NewMap.create(new FileInputStream(new File(System.getProperty("user.dir") + "/maps/"
-                + BW4TEnvironment.mapName)));
+                + mapName)));
         stepper = new Stepper(scenarioLocation, this);
         new Thread(stepper).start();
     }
@@ -259,12 +261,12 @@ public class BW4TEnvironment extends AbstractEnvironment {
         return instance;
     }
 
-    public static String getMapLocation() {
+    public String getMapLocation() {
         return mapName;
     }
 
-    public static void setMapName(String mapName) {
-        BW4TEnvironment.mapName = mapName;
+    public void setMapName(String mapName) {
+         this.mapName = mapName;
     }
 
     /**
@@ -395,9 +397,9 @@ public class BW4TEnvironment extends AbstractEnvironment {
     @Override
     public void reset(Map<String, Parameter> parameters) throws ManagementException {
         try {
-            BW4TEnvironment.setMapName(((Identifier) parameters.get("map")).getValue());
-            if (BW4TEnvironment.mapName == null) {
-                BW4TEnvironment.setMapName("Random");
+            setMapName(((Identifier) parameters.get("map")).getValue());
+            if (mapName == null) {
+                setMapName("Random");
             }
             reset();
         } catch (Exception e) {
