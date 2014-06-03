@@ -578,5 +578,12 @@ public class RobotEntity implements RobotEntityInt {
     		ourRobot.dropEPartner();
     	}
     }
+    
+    /**
+     * get ourRobot object
+     */
+    public NavigatingRobot getRobotObject(){
+    	return ourRobot;
+    }
 
 }
