@@ -1,4 +1,3 @@
-
 package nl.tudelft.bw4t.handicap;
 
 import java.util.ArrayList;
