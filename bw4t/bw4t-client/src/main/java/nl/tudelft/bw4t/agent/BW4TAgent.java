@@ -7,9 +7,9 @@ import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.environment.handlers.PerceptsHandler;
 import nl.tudelft.bw4t.message.BW4TMessage;
 import nl.tudelft.bw4t.message.MessageTranslator;
+import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Translator;
 import eis.exceptions.ActException;
-import eis.exceptions.NoEnvironmentException;
 import eis.exceptions.PerceiveException;
 import eis.iilang.Action;
 import eis.iilang.Parameter;
@@ -20,27 +20,26 @@ import eis.iilang.Percept;
  */
 public class BW4TAgent extends Thread implements ActionInterface {
 
-    String agentId, entityId;
-    boolean environmentKilled;
+	/**
+	 * Information storage about the agent.
+	 */
+    protected String agentId, entityId;
+    protected boolean environmentKilled;
     private RemoteEnvironment bw4tenv;
 
     /**
-     * Create a new BW4TAgent that can be registered to an entity
+     * Create a new BW4TAgent that can be registered to an entity.
      * 
      * @param agentId
-     *            , the Id of this agent used for registering to an entity
+     *            , the id of this agent used for registering to an entity.
      * @param env
-     *            the remote environment
+     *            the remote environment.
      */
     public BW4TAgent(String agentId, RemoteEnvironment env) {
         this.agentId = agentId;
         this.bw4tenv = env;
     }
-
-    public RemoteEnvironment getEnvironment() {
-        return bw4tenv;
-    }
-
+    
     /**
      * Register an entity to this agent
      * 
@@ -49,15 +48,6 @@ public class BW4TAgent extends Thread implements ActionInterface {
      */
     public void registerEntity(String entityId) {
         this.entityId = entityId;
-    }
-
-    /**
-     * Get the Id of this agent
-     * 
-     * @return the Id of this agent
-     */
-    public String getAgentId() {
-        return agentId;
     }
 
     /**
@@ -70,13 +60,7 @@ public class BW4TAgent extends Thread implements ActionInterface {
     }
 
     /**
-     * Perform a goTo action towards a point in the world
-     * 
-     * @param x
-     *            , the x coordinate of the point
-     * @param y
-     *            , the y coordinate of the point
-     * @throws ActException
+     * {@inheritDoc}
      */
     @Override
     public void goTo(double x, double y) throws ActException {
@@ -87,7 +71,7 @@ public class BW4TAgent extends Thread implements ActionInterface {
             parameters[0] = xParam[0];
             parameters[1] = yParam[0];
             bw4tenv.performEntityAction(entityId, new Action("goTo", parameters));
-        } catch (Exception e) {
+        } catch (RemoteException | TranslationException e) {
             ActException ex = new ActException("goTo", e);
             ex.setType(ActException.FAILURE);
             throw ex;
@@ -95,30 +79,29 @@ public class BW4TAgent extends Thread implements ActionInterface {
     }
 
     /**
-     * Perform a goToNavPointAction towards a navpoint in the world
-     * 
-     * @param id
-     *            , the id of the navpoint
-     * @throws ActException
+     * {@inheritDoc}
      */
     @Override
     public void goToBlock(long id) throws ActException {
         try {
             Parameter[] idParam = Translator.getInstance().translate2Parameter(id);
             bw4tenv.performEntityAction(entityId, new Action("goToBlock", idParam));
-        } catch (Exception e) {
+        } catch (TranslationException | RemoteException e) {
             ActException ex = new ActException("goToBlock failed", e);
             ex.setType(ActException.FAILURE);
             throw ex;
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void goTo(String navPoint) throws ActException {
         try {
             Parameter[] idParam = Translator.getInstance().translate2Parameter(navPoint);
             bw4tenv.performEntityAction(entityId, new Action("goTo", idParam));
-        } catch (Exception e) {
+        } catch (TranslationException | RemoteException e) {
             ActException ex = new ActException("goTo failed", e);
             ex.setType(ActException.FAILURE);
             throw ex;
@@ -126,17 +109,13 @@ public class BW4TAgent extends Thread implements ActionInterface {
     }
 
     /**
-     * Pick up a certain block in the world
-     * 
-     * @param id
-     *            , the id of the block
-     * @throws ActException
+     * {@inheritDoc}
      */
     @Override
     public void pickUp() throws ActException {
         try {
             bw4tenv.performEntityAction(entityId, new Action("pickUp"));
-        } catch (Exception e) {
+        } catch (RemoteException e) {
             ActException ex = new ActException("pickUp failed", e);
             ex.setType(ActException.FAILURE);
             throw ex;
@@ -144,9 +123,7 @@ public class BW4TAgent extends Thread implements ActionInterface {
     }
 
     /**
-     * Put down a block in the world
-     * 
-     * @throws ActException
+     * {@inheritDoc}
      */
     @Override
     public void putDown() throws ActException {
@@ -160,13 +137,7 @@ public class BW4TAgent extends Thread implements ActionInterface {
     }
 
     /**
-     * Sends a message to certain other agents after translating it to the right format
-     * 
-     * @param message
-     *            , a BW4TMessage
-     * @param receiver
-     *            , a receiver (can be either all or the id of another agent)
-     * @throws ActException
+     * {@inheritDoc}
      */
     @Override
     public void sendMessage(String receiver, BW4TMessage message) throws ActException {
@@ -181,6 +152,7 @@ public class BW4TAgent extends Thread implements ActionInterface {
      * @param receiver
      *            , a receiver (can be either all or the id of another agent)
      * @throws ActException
+     * 			  , if an attempt to perform an action has failed.
      */
     private void sendMessage(String receiver, String message) throws ActException {
         try {
@@ -190,7 +162,7 @@ public class BW4TAgent extends Thread implements ActionInterface {
             parameters[0] = receiverParam[0];
             parameters[1] = messageParam[0];
             bw4tenv.performEntityAction(entityId, new Action("sendMessage", parameters));
-        } catch (Exception e) {
+        } catch (RemoteException | TranslationException e) {
             ActException ex = new ActException("putDown failed", e);
             ex.setType(ActException.FAILURE);
             throw ex;
@@ -198,16 +170,25 @@ public class BW4TAgent extends Thread implements ActionInterface {
     }
 
     /**
-     * Get all percepts for the associated entity
-     * 
-     * @return a list of percepts
-     */
-    public LinkedList<Percept> getPercepts() throws PerceiveException, NoEnvironmentException {
-        return (LinkedList<Percept>) PerceptsHandler.getAllPerceptsFromEntity(entityId, bw4tenv);
-    }
+	 * Get all percepts for the associated entity
+	 * 
+	 * @return a list of percepts
+	 * @throws PerceiveException if there was a problem retrieving the percepts.
+	 */
+	public LinkedList<Percept> getPercepts() throws PerceiveException {
+	    return (LinkedList<Percept>) PerceptsHandler.getAllPerceptsFromEntity(entityId, bw4tenv);
+	}
 
-    public void setKilled() {
+	public void setKilled() {
         environmentKilled = true;
     }
+	
+	public String getAgentId() {
+	    return agentId;
+	}
+
+	public RemoteEnvironment getEnvironment() {
+	    return bw4tenv;
+	}
 
 }
