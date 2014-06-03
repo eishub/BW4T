@@ -36,18 +36,18 @@ class ApplyButton implements ActionListener {
      * @param ae The action event caused by clicking on the button.
      */
     public void actionPerformed(ActionEvent ae) {
-        String fileName = view.getFileNameField().getText();
-        String botName = view.getBotNameField().getText();
-        String nonAlphaNumericRegex = "^[a-zA-Z0-9_-]*$";
-        File f;
-        if (fileName.endsWith(".goal")) {
-            if (fileName.length() > 5) {
-                f = new File(fileName);
-                String name = fileName.substring(0, fileName.length() - 5);
-                if (name.matches(nonAlphaNumericRegex)
-                        || f.exists()) {
-                    if (botName.length() > 0) {
-                        if (botName.matches(nonAlphaNumericRegex)) {
+    	String fileName = view.getFileNameField().getText();
+    	String botName = view.getReferenceNameField().getText();
+    	String nonAlphaNumericRegex = "^[a-zA-Z0-9_-]*$";
+    	File f;
+    	if (fileName.endsWith(".goal")) {
+    		if (fileName.length() > 5) {
+    			f = new File(fileName);
+    			String name = fileName.substring(0, fileName.length() - 5);
+    			if (name.matches(nonAlphaNumericRegex) 
+    					|| f.exists()) {
+	    			if (botName.length() > 0) {
+	    				if (botName.matches(nonAlphaNumericRegex)) {
                             view.getDataObject().setBotName(view.getBotNameTextField().getText());
                             view.getDataObject().setBotController((BotConfig.Controller) view.getBotControllerType().getSelectedItem());
                             view.getDataObject().setBotAmount(Integer.parseInt(view.getBotAmountTextField().getText()));
