@@ -38,14 +38,16 @@ public class BlockColor {
 
     @Override
     public boolean equals(Object obj) {
-        BlockColor other = (BlockColor) obj;
         if (this == obj) {
             return true;
-        } else if (obj == null 
+        } else {
+        	BlockColor other = (BlockColor) obj;
+        	if (obj == null 
                 || getClass() != obj.getClass() 
                 || (block == null && other.block != null) 
                 || !block.equals(other.block)) {
             return false;
+        	}
         }
         return true;
     }
