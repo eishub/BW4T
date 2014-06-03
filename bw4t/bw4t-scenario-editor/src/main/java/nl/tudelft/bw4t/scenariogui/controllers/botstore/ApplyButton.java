@@ -44,7 +44,7 @@ class ApplyButton implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
     	String fileName = view.getFileNameField().getText();
     	String botName = view.getBotNameField().getText();
-    	String nonAlphaNumericRegex = "^[ a-zA-Z0-9_-]*$";
+    	String nonAlphaNumericRegex = "^[a-zA-Z0-9_-]*$";
     	File f;
     	if (fileName.endsWith(".goal")) {
     		if (fileName.length() > 5) {
@@ -54,23 +54,20 @@ class ApplyButton implements ActionListener {
     					|| f.exists()) {
 	    			if (botName.length() > 0) {
 	    				if (botName.matches(nonAlphaNumericRegex)) {
-	    					view.getDataObject().setBotGripperCapacity(
-	    							view.getNumberOfGrippersSlider().getValue());
-		    				view.getDataObject().setBotSize(view.getSizeSlider().getValue());
-				    		view.getDataObject().setBotSpeed(view.getSpeedSlider().getValue());
-				    		view.getDataObject().setBotBatteryCapacity(
-				    				view.getBatterySlider().getValue());
-				    		view.getDataObject().setColorBlindHandicap(
-				    				view.getColorblindCheckbox().isEnabled());
-				    		view.getDataObject().setGripperHandicap(
-				    				view.getGripperCheckbox().isEnabled());
-				    		view.getDataObject().setMoveSpeedHandicap(
-				    				view.getmovespeedCheckbox().isEnabled());
-				    		view.getDataObject().setSizeOverloadHandicap(
-				    				view.getsizeoverloadCheckbox()
-				    				.isEnabled());
-				    		view.getDataObject().setFileName(fileName);
-				    		view.getDataObject().setReferenceName(botName);
+	    			    	view.getDataObject().setBotName(view.getBotNameField().getText());
+	    					view.getDataObject().setBotController((String) view.getBotControllerSelector().getSelectedItem());
+	    					view.getDataObject().setBotAmount(Integer.parseInt(view.getBotAmountTextField().getText()));
+	    			        view.getDataObject().setBotSize(view.getSizeSlider().getValue());
+	    			        view.getDataObject().setBotSpeed(view.getSpeedSlider().getValue());
+	    			        view.getDataObject().setBotBatteryCapacity(view.getBatterySlider().getValue());
+	    			        view.getDataObject().setBotGripperCapacity((view.getNumberOfGrippersSlider().getValue()));
+	    			        view.getDataObject().setBatteryEnabled(view.getBatteryEnabledCheckbox().isSelected());
+	    			        view.getDataObject().setColorBlindHandicap(view.getColorblindCheckbox().isSelected());
+	    			        view.getDataObject().setGripperHandicap(view.getGripperCheckbox().isSelected());
+	    			        view.getDataObject().setMoveSpeedHandicap(view.getmovespeedCheckbox().isSelected());
+	    			        view.getDataObject().setSizeOverloadHandicap(view.getsizeoverloadCheckbox().isSelected());
+	    			        view.getDataObject().setReferenceName(view.getBotReferenceField().getText());
+	    			        view.getDataObject().setFileName(view.getFileNameField().getText());
 				        	BotConfig data = view.getDataObject();
 				        	int index = mp.getEntityPanel().getSelectedBotRow();
 				        	// Overwrite the existing config
