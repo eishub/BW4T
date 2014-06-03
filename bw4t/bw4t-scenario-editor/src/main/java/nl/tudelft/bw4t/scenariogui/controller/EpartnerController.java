@@ -18,12 +18,12 @@ public class EpartnerController {
 	/**
 	 * Create the Epartner controller
 	 * 
-	 * @param pview
+	 * @param view
 	 *            The parent view, used to call relevant functions by the event
 	 *            listeners
 	 */
-	public EpartnerController(EpartnerFrame pview) {
-		this.view = pview;
+	public EpartnerController(EpartnerFrame view) {
+		this.view = view;
 
 		view.getResetButton().addActionListener(
 				new EpartnerResetButton(getMainView()));

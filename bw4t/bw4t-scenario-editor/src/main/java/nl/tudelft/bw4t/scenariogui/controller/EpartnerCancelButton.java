@@ -15,10 +15,10 @@ class EpartnerCancelButton implements ActionListener {
     private EpartnerFrame view;
     /**
      * The constructor for this action listener.
-     * @param pview The frame with the button in it.
+     * @param view The frame with the button in it.
      */
-    public EpartnerCancelButton(EpartnerFrame pview) {
-        this.view = pview;
+    public EpartnerCancelButton(EpartnerFrame view) {
+        this.view = view;
     }
     /**
      * Perform the required action (close the bot editor).

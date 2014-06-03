@@ -25,6 +25,6 @@ class gpsCheckBox implements ActionListener {
      * @param ae The action event triggering this method.
      */
     public void actionPerformed(ActionEvent ae) {
-
+    	
     }
 }
