@@ -133,8 +133,7 @@ public final class FileUtils {
                         return false;
                     }
                     entryInputStream.close();
-                }
-                else {
+                } else {
                     if (!FileUtils.ensureDirectoryExists(f)) {
                         throw new IOException("Could not create directory: " + f.getAbsolutePath());
                     }
