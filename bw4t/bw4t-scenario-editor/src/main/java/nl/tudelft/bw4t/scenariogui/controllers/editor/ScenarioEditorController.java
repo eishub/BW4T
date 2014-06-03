@@ -60,6 +60,9 @@ public class ScenarioEditorController {
         getMainView().getTopMenuBar().getMenuItemFileSaveAs().addActionListener(
                 new MenuOptionSaveAs(getMainView().getTopMenuBar(), this)
         );
+        getMainView().getTopMenuBar().getMenuItemFileExport().addActionListener(
+                new MenuOptionExport(getMainView().getTopMenuBar(), this)
+        );
 
         /** Adds the listeners for the EntityPanel */
         getMainView().getMainPanel().getEntityPanel().getNewBotButton().
