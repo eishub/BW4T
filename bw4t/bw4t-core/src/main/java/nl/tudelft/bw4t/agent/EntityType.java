@@ -4,7 +4,7 @@ package nl.tudelft.bw4t.agent;
  * The possible types of entities in the BW4T system may be.
  */
 public enum EntityType {
-    HUMAN, BOT, EPARTNER;
+    HUMAN, AGENT, EPARTNER;
 
     /**
      * @return {@link #name()} in lower case
@@ -32,7 +32,7 @@ public enum EntityType {
         case "human":
             return HUMAN;
         case "bot":
-            return BOT;
+            return AGENT;
         case "epartner":
             return EPARTNER;
         default:

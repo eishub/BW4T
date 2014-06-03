@@ -41,7 +41,7 @@ import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
  * bots and e-partners.
  * <p>
  * @author      Katia Asmoredjo  
- * @version     0.1                
+ * @version     0.1
  * @since       12-05-2014        
  */
 public class EntityPanel extends JPanel {
@@ -243,7 +243,7 @@ public class EntityPanel extends JPanel {
      * The list that hold the created bots.
      */
     private List<BotConfig> botConfigList = new ArrayList<BotConfig>();
-    
+
     /**
      * The list with the last saved BotConfigs.
      */
@@ -653,7 +653,7 @@ public class EntityPanel extends JPanel {
     public final int getSelectedEPartnerRow() {
         return ePartnerTable.getSelectedRow();
     }
-    
+
 
     /**
      * Returns the list with BotConfigs.
@@ -662,7 +662,7 @@ public class EntityPanel extends JPanel {
     public List<BotConfig> getBotConfigs() {
         return botConfigList;
     }
-    
+
     /**
      * Returns the BotConfig at the index'th place.
      * @param index The index of the bot.
@@ -671,7 +671,7 @@ public class EntityPanel extends JPanel {
     public BotConfig getBotConfig(int index) {
         return botConfigList.get(index);
     }
-    
+
     /**
      * Returns the previous saved BotConfig list.
      * @return The previous saved BotConfig list.
@@ -679,14 +679,14 @@ public class EntityPanel extends JPanel {
     public List<BotConfig> getOldBotConfigs() {
         return oldBotConfigs;
     }
-    
+
     /**
      * Updates the BotConfig list.
      */
     public void updateBotConfigs() {
         oldBotConfigs = botConfigList;
     }
-    
+
     /**
      * Compares the BotConfig lists.
      * @return If the BotConfigs lists are equal.
@@ -695,16 +695,16 @@ public class EntityPanel extends JPanel {
         if (botConfigList.size() != config.size()) {
             return false;
         }
-        
+
         for (int i = 0; i < botConfigList.size(); i++) {
             if (!botConfigList.get(i).bcToString().equals(config.get(i).bcToString())) {
                 return false;
             }
         }
-        
+
         return true;
     }
-    
+
     /**
      * Returns if changes has been made to the default configuration.
      *
@@ -712,14 +712,14 @@ public class EntityPanel extends JPanel {
      */
     public final boolean isDefault() {
         boolean isDefault = true;
-        
+
         if (this.botList.getRowCount() != 0) {
             isDefault = false;
         }
         else if (this.epartnerList.getRowCount() != 0) {
             isDefault = false;
         }
-        
+
         return isDefault;
     }
 }
