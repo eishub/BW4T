@@ -15,13 +15,34 @@ import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 
+/**
+ * @author Valentine Mairet
+ * This test tests the Human bot. It currently tests whether a 
+ * human bot can pick up and drop an epartner.
+ *
+*/
 public class HumanTest {
 	
+    /**
+     * space Mock
+     */
     @Mock private ContinuousSpace<Object> space;
+    /**
+     * context Mock
+     */
     @Mock private Context<Object> context;
+    /**
+     * point Mock
+     */
     @Mock private NdPoint point;
+    /**
+     * ePartner Mock
+     */
     @Mock private EPartner ePartner;
     
+    /**
+     * Setup Mocks
+     */
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -47,8 +68,6 @@ public class HumanTest {
     @Test
     public void testDropEPartner() {
         NavigatingRobot robot = spy(new NavigatingRobot("", space, context, true, 1));
-        
-        when(robot.getLocation()).thenReturn(point);
         
 		IRobot r = new Human(robot);
 

@@ -1,6 +1,8 @@
 
 package nl.tudelft.bw4t.handicap;
 
+import java.util.ArrayList;
+
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.handicap.AbstractRobotDecorator;
 import nl.tudelft.bw4t.handicap.ColorBlindHandicap;
@@ -9,12 +11,16 @@ import nl.tudelft.bw4t.handicap.IRobot;
 import nl.tudelft.bw4t.handicap.MoveSpeedHandicap;
 import nl.tudelft.bw4t.handicap.SizeOverloadHandicap;
 import nl.tudelft.bw4t.robots.NavigatingRobot;
+import nl.tudelft.bw4t.zone.DropZone;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
+
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
@@ -48,11 +54,18 @@ public class NewHandicapTest {
     @Mock private Block block;
     
     /**
+     * DropZone Mock
+     */
+    @Mock private DropZone dropzone;
+    
+    /**
      * Initialize the Mocks used.
      */
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        
+        
     }
     
     /**
@@ -78,6 +91,18 @@ public class NewHandicapTest {
         
         assertFalse(r.canPickUp(block));
         assertTrue(r.getGripperCapacity() == 0);
+    }
+    
+    /**
+     * - Set the gripper capacity to 2.
+     * - Default is 1, robot can now hold 2 blocks.
+     */
+    @Test
+    public void testSetGripperCapacity() {
+        IRobot r = new Human(new NavigatingRobot("", space, context, true, 200));
+        r.setGripperCapacity(2);
+        
+        assertTrue(r.getGripperCapacity() == 2);
     }
     
     /**
@@ -160,6 +185,34 @@ public class NewHandicapTest {
         assertTrue(r instanceof AbstractRobotDecorator);
         
     }
+    
+    /**
+     * Testing the AbstractRobotDecorator getName method.
+     */
+    @Test
+    public void testDecoratorGetName() {
+    	IRobot r = new SizeOverloadHandicap(new NavigatingRobot("botname", space, context, true, 1), 5);
+    	
+    	assertTrue(r.getName().equals("botname"));
+    }
+    
+    
+    /**
+     * Testing the pickUp block function.
+     * By picking up a block and testing whether the robot is now holding it.
+     */
+    @Test
+    public void testDecoratorPickUp() {
+    	IRobot r = new SizeOverloadHandicap(new NavigatingRobot("", space, context, true, 1), 5);
+    	r.pickUp(block);
+    	
+    	ArrayList<Block> blockList = new ArrayList<Block>();
+    	blockList.add(block);
+    	
+    	assertTrue(blockList.equals(r.isHolding()));
+    }
+    
+
 }
     
     
