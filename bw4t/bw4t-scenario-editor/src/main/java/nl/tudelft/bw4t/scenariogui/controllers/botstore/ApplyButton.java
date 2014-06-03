@@ -44,7 +44,7 @@ class ApplyButton implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
     	String fileName = view.getFileNameField().getText();
     	String botName = view.getBotNameField().getText();
-    	String nonAlphaNumericRegex = "^[a-zA-Z0-9_-]*$";
+    	String nonAlphaNumericRegex = "^[ a-zA-Z0-9_-]*$";
     	File f;
     	if (fileName.endsWith(".goal")) {
     		if (fileName.length() > 5) {
@@ -60,7 +60,7 @@ class ApplyButton implements ActionListener {
 	    			        view.getDataObject().setBotSize(view.getSizeSlider().getValue());
 	    			        view.getDataObject().setBotSpeed(view.getSpeedSlider().getValue());
 	    			        view.getDataObject().setBotBatteryCapacity(view.getBatterySlider().getValue());
-	    			        view.getDataObject().setBotGripperCapacity((view.getNumberOfGrippersSlider().getValue()));
+	    			        view.getDataObject().setGrippers(view.getNumberOfGrippersSlider().getValue());
 	    			        view.getDataObject().setBatteryEnabled(view.getBatteryEnabledCheckbox().isSelected());
 	    			        view.getDataObject().setColorBlindHandicap(view.getColorblindCheckbox().isSelected());
 	    			        view.getDataObject().setGripperHandicap(view.getGripperCheckbox().isSelected());
@@ -68,11 +68,7 @@ class ApplyButton implements ActionListener {
 	    			        view.getDataObject().setSizeOverloadHandicap(view.getsizeoverloadCheckbox().isSelected());
 	    			        view.getDataObject().setReferenceName(view.getBotReferenceField().getText());
 	    			        view.getDataObject().setFileName(view.getFileNameField().getText());
-				        	BotConfig data = view.getDataObject();
-				        	int index = mp.getEntityPanel().getSelectedBotRow();
-				        	// Overwrite the existing config
-				        	// (there is always a basic config present for every bot).
-				        	mp.getEntityPanel().getBotConfigs().set(index, data);
+				        	
 				        	ScenarioEditor.getOptionPrompt().showMessageDialog(view, 
 		        					"Bot configuration succesfully created.");
 	    				}
