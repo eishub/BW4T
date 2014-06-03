@@ -7,6 +7,8 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import nl.tudelft.bw4t.scenariogui.controllers.botstore.BotStoreController;
+import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
@@ -21,6 +23,10 @@ public class BotEditor extends JFrame {
     private static final long serialVersionUID = 8114982191029560097L;
     /** the name of the window */
     private String windowName = "Bot Editor";
+    /** the window width*/
+    private int width;
+    /** the window height*/
+    private int height;
     /** The parent of this frame. */
     private MainPanel parent;
     /** the panel in the frame*/
@@ -28,28 +34,28 @@ public class BotEditor extends JFrame {
     /** the controller for the frame*/
     private BotStoreController controller;
     
-    /** The row number of the selected bot. */
-    private int row;
-    
     /**
      * creates the BotEditor frame
      * @param pparent the parent of the frame
-     * @param row
+     * @param pname name of the bot
      */
-    public BotEditor(MainPanel pparent, int row) {
+    public BotEditor(MainPanel pparent, String pname) {
         setLookAndFeel();
         setTitle(windowName);
         setResizable(false);
         setLayout(null);
         this.parent = pparent;
-        this.row = row;
-        bPanel = new BotEditorPanel(this, this.parent);
+        bPanel = new BotEditorPanel(pname);
         bPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
         setContentPane(bPanel);
         
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         
         pack();
+        
+        width = this.getWidth();
+        height = this.getHeight();
+        
         setLocationRelativeTo(null);
         
         setVisible(true);
@@ -76,15 +82,6 @@ public class BotEditor extends JFrame {
             // pass
         }
     }
-    
-    /**
-     * Returns the row number of the bot that is currently selected.
-     * @return The row number of the bot that is currently selected.
-     */
-    public int getRow() {
-    	return this.row;
-    }
-    
     /**
      * Returns the BotEditorPanel
      * @return botEditorPanel used
@@ -113,5 +110,9 @@ public class BotEditor extends JFrame {
      */
     public void setBotEditorPanel(BotEditorPanel pbPanel) {
         this.bPanel = pbPanel;
+    }
+    
+    public static void main(String[] args) {
+    	new BotEditor(new MainPanel(new ConfigurationPanel(), new EntityPanel()),"Bot X");
     }
 }

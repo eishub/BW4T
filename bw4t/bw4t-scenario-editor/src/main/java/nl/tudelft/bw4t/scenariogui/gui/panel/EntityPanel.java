@@ -34,7 +34,6 @@ import javax.swing.table.DefaultTableModel;
 
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
-import nl.tudelft.bw4t.scenariogui.util.Format;
 
 /**
  * The EntityPanel class represents right pane of the MainPanel. It shows a list
@@ -370,12 +369,13 @@ public class EntityPanel extends JPanel {
      * Create the dropdown lists in the controllers column.
      */
     public void setUpControllerColumn() {
-        JComboBox<String> controllers = new JComboBox<String>();
+        JComboBox controllers = new JComboBox<String>();
         controllers.addItem("Agent");
         controllers.addItem("Human");
         botTable.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(controllers));
 
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setToolTipText("Testtext");
         botTable.getColumnModel().getColumn(1).setCellRenderer(renderer);
     }
 
@@ -547,7 +547,7 @@ public class EntityPanel extends JPanel {
         int numBots = 0;
 
         for (int i = 0; i < botList.getRowCount(); i++) {
-            numBots += Format.getNonNegativeIntValue(botList.getValueAt(i, 2).toString());
+            numBots += Integer.valueOf(botList.getValueAt(i, 2).toString());
         }
         return numBots;
     }
@@ -672,10 +672,6 @@ public class EntityPanel extends JPanel {
         return botConfigList.get(index);
     }
     
-    public BotConfig getOldBotConfig(int index) {
-        return oldBotConfigs.get(index);
-    }
-    
     /**
      * Returns the previous saved BotConfig list.
      * @return The previous saved BotConfig list.
@@ -688,7 +684,11 @@ public class EntityPanel extends JPanel {
      * Updates the BotConfig list.
      */
     public void updateBotConfigs() {
-    	oldBotConfigs = botConfigList;
+        oldBotConfigs.clear();
+        
+        for (int i = 0; i < botConfigList.size(); i++) {
+            oldBotConfigs.add(botConfigList.get(i));
+        }
     }
     
     /**
@@ -701,7 +701,7 @@ public class EntityPanel extends JPanel {
         }
         
         for (int i = 0; i < botConfigList.size(); i++) {
-            if (!botConfigList.get(i).bcToString().equals(oldBotConfigs.get(i).bcToString())) {
+            if (botConfigList.get(i).toString().equals(oldBotConfigs.get(i).toString())) {
                 return false;
             }
         }
