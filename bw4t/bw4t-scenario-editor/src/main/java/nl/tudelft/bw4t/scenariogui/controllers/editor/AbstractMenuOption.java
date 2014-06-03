@@ -122,19 +122,7 @@ public abstract class AbstractMenuOption implements ActionListener {
             }
         }
         try {
-            BW4TClientConfig configuration = BW4TClientConfigIntegration.
-                    createConfigFromPanel((MainPanel) (getController().getMainView()).
-                            getContentPane(), path);
-            
-            //SAVE BOTS HERE
-            int rows = getController().getMainView().getMainPanel().getEntityPanel().getBotTableModel().getRowCount();
-            
-            for (int i = 0; i < rows; i++) {
-                configuration.addBot(getController().getMainView().getMainPanel().getEntityPanel().getBotConfig(i));
-            }
-            
-            configuration.toXML();
-            view.setLastFileLocation(path);
+            saveXMLFile(path);
         } catch (JAXBException e) {
             ScenarioEditor.handleException(
                     e, "Error: Saving to XML has failed.");
@@ -143,6 +131,24 @@ public abstract class AbstractMenuOption implements ActionListener {
                     e, "Error: No file has been found.");
         }
     }
+
+
+    public void saveXMLFile(String path) throws JAXBException, FileNotFoundException {
+        BW4TClientConfig configuration = BW4TClientConfigIntegration.
+                createConfigFromPanel((MainPanel) (getController().getMainView()).
+                        getContentPane(), path);
+
+        //SAVE BOTS HERE
+        int rows = getController().getMainView().getMainPanel().getEntityPanel().getBotTableModel().getRowCount();
+
+        for (int i = 0; i < rows; i++) {
+            configuration.addBot(getController().getMainView().getMainPanel().getEntityPanel().getBotConfig(i));
+        }
+
+        configuration.toXML();
+        view.setLastFileLocation(path);
+    }
+
 
     /**
      * Returns the MenuBar
