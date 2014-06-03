@@ -1,13 +1,13 @@
 package nl.tudelft.bw4t.handicap;
 
 import nl.tudelft.bw4t.blocks.EPartner;
-import nl.tudelft.bw4t.robots.Robot;
+import nl.tudelft.bw4t.robots.AbstractRobot;
 import repast.simphony.random.RandomHelper;
 
 /**
  * @author Valentine Mairet
  */
-public class Human extends AbstractHandicapFactory {
+public class Human extends AbstractRobotDecorator {
     
     /**
      * The e-Partner the human is holding.
@@ -19,7 +19,7 @@ public class Human extends AbstractHandicapFactory {
      * Adds the handicap to the robot handicap storage.
      * @param p is the HandicapInterface the Human wraps around.
      */
-    public Human(HandicapInterface p) {
+    public Human(IRobot p) {
         super(p);
         robot.getHandicapsList().add("Human");
         this.ePartner = null;
@@ -30,7 +30,7 @@ public class Human extends AbstractHandicapFactory {
      * @return true if the human can pick it up. 
      */
     public boolean canPickUpEPartner(EPartner eP) {
-    	return (robot.distanceTo(eP.getLocation()) <= Robot.ARM_DISTANCE);
+    	return (robot.distanceTo(eP.getLocation()) <= AbstractRobot.ARM_DISTANCE);
     }
     
     /**
