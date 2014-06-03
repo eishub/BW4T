@@ -22,8 +22,8 @@ public class EpartnerController {
 	 *            The parent view, used to call relevant functions by the event
 	 *            listeners
 	 */
-	public EpartnerController(EpartnerFrame pview) {
-		this.view = pview;
+	public EpartnerController(EpartnerFrame view) {
+		this.view = view;
 
 		view.getResetButton().addActionListener(
 				new EpartnerResetButton(getMainView()));

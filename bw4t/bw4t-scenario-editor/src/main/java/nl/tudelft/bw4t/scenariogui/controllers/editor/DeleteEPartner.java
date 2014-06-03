@@ -51,6 +51,7 @@ class DeleteEPartner implements ActionListener {
 
             if (response == JOptionPane.YES_OPTION) {
                 view.getEntityPanel().getEPartnerTableModel().removeRow(row);
+                view.getEntityPanel().getEPartnerConfigs().remove(row);
             }
         }
     }
