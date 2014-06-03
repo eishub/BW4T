@@ -3,6 +3,9 @@ package nl.tudelft.bw4t.client;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 import javax.xml.bind.JAXBException;
 
@@ -20,6 +23,7 @@ import eis.exceptions.ManagementException;
 import eis.exceptions.PerceiveException;
 import eis.iilang.Action;
 import eis.iilang.Parameter;
+import eis.iilang.Percept;
 
 public class BlockTest {
     
@@ -58,8 +62,16 @@ public class BlockTest {
         // Check if the yellow block is present and move to it
         // It should always be present on the Banana map
         TestFunctions.retrievePercepts(bot);
-        assertTrue(TestFunctions.hasPercept("color(46,YELLOW)"));
-        param = Translator.getInstance().translate2Parameter(46);
+        Iterator<Percept> percepts = TestFunctions.getPercepts().iterator();
+        int blockNumber = -1;
+        while (percepts.hasNext()) {
+            Percept percept = percepts.next();
+            if (percept.toProlog().startsWith("color(") && percept.toProlog().endsWith(",YELLOW)")) {
+                blockNumber = Integer.parseInt(percept.toProlog().replace("color(","").replace(",YELLOW)",""));
+            }
+        }
+        assertTrue(blockNumber != -1);
+        param = Translator.getInstance().translate2Parameter(blockNumber);
         client.performAction(bot, new Action("goToBlock", param));
         Thread.sleep(500L);
         
