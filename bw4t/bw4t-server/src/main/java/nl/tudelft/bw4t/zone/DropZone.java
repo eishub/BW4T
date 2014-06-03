@@ -126,8 +126,11 @@ public class DropZone extends Room {
      * Writing summarie into logfile.
      */
     private void log(){
+    	
     	BW4TEnvironment env = BW4TEnvironment.getInstance();
+        long totalTime = System.currentTimeMillis() - env.getStarttime();
         
+        LOGGER.log(BotLog.BOTLOG, "time to finish sequence " + totalTime);
         for (String entity : env.getEntities()) {
         	if(env.getEntity(entity) instanceof RobotEntity ) {
             	RobotEntity rEntity = (RobotEntity)env.getEntity(entity);

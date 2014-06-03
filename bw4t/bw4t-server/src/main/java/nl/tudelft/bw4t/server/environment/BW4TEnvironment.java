@@ -151,9 +151,9 @@ public class BW4TEnvironment extends AbstractEnvironment {
     public void removeAllEntities() throws ManagementException {
        
         // TODO check if total time is calculated same way as before
+    	LOGGER.log(BotLog.BOTLOG, "total time: " + (System.currentTimeMillis() - starttime));
         // FIXME: BOTLOG gives nullpointer exception if no bots.
-        // LOGGER.log(BotLog.BOTLOG, "total time: " + (System.currentTimeMillis() - starttime));
-        // TODO log AgentRecord, each toSummaryArray of agentRecord of object of each bot
+        
 
         setState(EnvironmentState.KILLED);
 
@@ -524,6 +524,10 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
     public NewMap getMap() {
         return theMap;
+    }
+    
+    public long getStarttime(){
+    	return starttime;
     }
 
 }
