@@ -6,6 +6,10 @@ import eis.iilang.Parameter;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.bind.JAXBException;
+
+import org.apache.log4j.Logger;
+
 /**
  * Available init parameters and default values for {@link BW4TEnvironment}.
  * 
@@ -57,6 +61,10 @@ public enum InitParam {
      * The file from which the client reads the configuration.
      */
     CONFIGFILE("");
+    
+    private static final Logger LOGGER = Logger.getLogger(InitParam.class);
+    
+    private static boolean configFileLoaded = false;
 
     private String defaultvalue;
 
@@ -107,6 +115,16 @@ public enum InitParam {
      */
     public static void setParameters(Map<String, Parameter> params) {
         parameters = params;
+        
+        final String cfile = CONFIGFILE.getValue();
+        if (!cfile.isEmpty()) {
+            LOGGER.info(String.format("Reading configuration file '%s'", cfile));
+            try {
+                ConfigFile.readConfigFile(cfile);
+            } catch (JAXBException e) {
+                LOGGER.error(String.format("Unable to load configuration file: '%s'", cfile), e);
+            }
+        }
     }
 
     /**
