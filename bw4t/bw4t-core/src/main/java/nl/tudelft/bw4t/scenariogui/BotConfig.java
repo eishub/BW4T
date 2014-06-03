@@ -281,6 +281,7 @@ public final class BotConfig {
 		return referenceName;
 	}
 
+	@XmlElement
 	public void setReferenceName(String _referenceName) {
 		this.referenceName = _referenceName;
 	}
@@ -289,6 +290,7 @@ public final class BotConfig {
 		return fileName;
 	}
 
+	@XmlElement
 	public void setFileName(String _fileName) {
 		this.fileName = _fileName;
 	}
