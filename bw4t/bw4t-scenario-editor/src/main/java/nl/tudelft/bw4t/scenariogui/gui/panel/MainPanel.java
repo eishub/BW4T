@@ -44,10 +44,7 @@ public class MainPanel extends JPanel {
     /**
      * The XML element wrapper for the list of bots. 
      */
-    @XmlElementWrapper(name = "bots")
-    @XmlElement(name = "bot")
-    private List<BotConfig> bots = new ArrayList<BotConfig>();
-
+    
     /**
      * Create a MainPanel consisting of a ConfigurationPanel and a EntityPanel.
      *
@@ -130,41 +127,5 @@ public class MainPanel extends JPanel {
      */
     public final void setEntityPanel(final EntityPanel newEntityPanel) {
         this.entityPanel = newEntityPanel;
-    }
-    /** 
-     * Set the bot config list. 
-     * @param list The new list.
-     */
-    public void setBotConfig(List<BotConfig> list) {
-        bots = list;
-    }
-    /**
-     * Returns the BotConfig list.
-     * @return The BotConfig list.
-     */
-    public List<BotConfig> getBotConfig() {
-        return bots;
-    }
-    /**
-     * Add a BotConfig-object to the list.
-     * @param index The index in the list that the BotConfig should be on.
-     * @param b The BotConfig-object to be added.
-     */
-    public void addBotConfig(int index, BotConfig b) {
-        bots.set(index, b);
-    }
-    /**
-     * Add a BotConfig-object to the end of the current list.
-     * @param b The BotConfig object.
-     */
-    public void addBotConfig(BotConfig b) {
-        bots.add(b);
-    }
-    /**
-     * Removes a BotConfig-object from the list.
-     * @param i The index of the BotConfig-object that has to be removed.
-     */
-    public void removeBotConfig(int i) {
-        bots.remove(i);
     }
 }

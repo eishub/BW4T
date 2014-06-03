@@ -31,7 +31,7 @@ class ModifyBot implements ActionListener {
 
     /**
      * Executes action that needs to happen when the "Modify bot" button is
-     * pressed. TODO Open BotStore window
+     * pressed.
      *
      * @param ae The action.
      */
