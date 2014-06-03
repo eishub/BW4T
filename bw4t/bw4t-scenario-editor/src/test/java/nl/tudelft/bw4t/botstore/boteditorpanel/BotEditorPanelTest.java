@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.botstore.boteditorpanel;
 
+import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditor;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
@@ -29,18 +30,16 @@ public class BotEditorPanelTest {
     private BotEditorPanel panel;
     /** the spy entity of panel */
     private BotEditorPanel spypanel;
-    /** A shared string declared here */
-    private String zero;
     
     /** setup the panel */
     @Before
     public final void setUp() {
-        String name = "";
-        zero = "0";
-        panel = new BotEditorPanel(name);
+    	EntityPanel entityPanel = new EntityPanel();
+        entityPanel.getBotConfigs().add(new BotConfig());
+        MainPanel parent = new MainPanel(new ConfigurationPanel(), entityPanel);
+        editor = new BotEditor(parent, 0);
+        panel = new BotEditorPanel(editor, parent);
         spypanel = spy(panel);
-        MainPanel parent = new MainPanel(new ConfigurationPanel(), new EntityPanel());
-        editor = new BotEditor(parent, name);
     }
     
     /** dispose the frame after testing */
@@ -107,7 +106,7 @@ public class BotEditorPanelTest {
     /** test the batteryusevalue */
     @Test
     public final void testBatteryUseValue() {
-    	assertEquals(zero, spypanel.getBatteryUseValueLabel().getText());
+    	assertEquals("0", spypanel.getBatteryUseValueLabel().getText());
     }
     
     /** Test the speed slider */
@@ -202,7 +201,7 @@ public class BotEditorPanelTest {
 		assertEquals(editor.getBotEditorPanel().getBatteryEnabledCheckbox().isSelected(), false);
 		assertEquals(editor.getBotEditorPanel().getFileNameField().getText(), ".goal");
 		assertEquals(editor.getBotEditorPanel().getBotNameField().getText(), "");
-		assertEquals(editor.getBotEditorPanel().getBatteryUseValueLabel().getText(), zero);
+		assertEquals(editor.getBotEditorPanel().getBatteryUseValueLabel().getText(), "0");
 	}
 	
 	

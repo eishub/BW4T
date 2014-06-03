@@ -684,11 +684,7 @@ public class EntityPanel extends JPanel {
      * Updates the BotConfig list.
      */
     public void updateBotConfigs() {
-        oldBotConfigs.clear();
-        
-        for (int i = 0; i < botConfigList.size(); i++) {
-            oldBotConfigs.add(botConfigList.get(i));
-        }
+        oldBotConfigs = botConfigList;
     }
     
     /**
@@ -701,7 +697,7 @@ public class EntityPanel extends JPanel {
         }
         
         for (int i = 0; i < botConfigList.size(); i++) {
-            if (botConfigList.get(i).toString().equals(oldBotConfigs.get(i).toString())) {
+            if (!botConfigList.get(i).bcToString().equals(oldBotConfigs.get(i).bcToString())) {
                 return false;
             }
         }

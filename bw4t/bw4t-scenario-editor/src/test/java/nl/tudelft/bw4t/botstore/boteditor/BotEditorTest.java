@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.botstore.boteditor;
 
+import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditor;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
@@ -23,9 +24,11 @@ public class BotEditorTest {
     /** Test the setup of boteditor */
     @Test
     public void testBotEditorPane() {
-        MainPanel parent = new MainPanel(new ConfigurationPanel(), new EntityPanel());
-        botEditor = new BotEditor(parent, "");
-        BotEditorPanel panel = new BotEditorPanel("");
+        EntityPanel entityPanel = new EntityPanel();
+        entityPanel.getBotConfigs().add(new BotConfig());
+        MainPanel parent = new MainPanel(new ConfigurationPanel(), entityPanel);
+        botEditor = new BotEditor(parent, 0);
+        BotEditorPanel panel = new BotEditorPanel(botEditor, parent);
         botEditor.setBotEditorPanel(panel);
         botEditor.setParent(parent);
         assertEquals(parent, botEditor.getParent());
