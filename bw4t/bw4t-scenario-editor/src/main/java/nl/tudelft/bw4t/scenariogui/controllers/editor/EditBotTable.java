@@ -48,7 +48,7 @@ public class EditBotTable implements TableModelListener {
             config.setBotName((String) value);
             break;
         case 1:
-            EntityType botController = (EntityType) value;
+            EntityType botController = EntityType.getType((String) value);
 
             config.setBotController(botController);
             break;
