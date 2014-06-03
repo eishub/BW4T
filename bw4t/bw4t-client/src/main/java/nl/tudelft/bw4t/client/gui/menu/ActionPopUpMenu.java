@@ -2,8 +2,6 @@ package nl.tudelft.bw4t.client.gui.menu;
 
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
-
-import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.operations.MapOperations;
@@ -12,9 +10,17 @@ import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.Block;
 
-public class ActionPopUpMenu {
+/** Responsible for building the pop-up menu when the user clicks on the map. */
+public final class ActionPopUpMenu {
+	
+	/** Should never be instantiated. */
+	private ActionPopUpMenu() { }
+	
     /**
-     * Used for building the pop up menu that displays the actions a user can undertake
+     * Used for building the pop-up menu that displays the actions a user can perform.
+     * 
+     * @param gui
+     *            - The {@link BW4TClientGUI} to create the pop-up menu on.
      */
     public static void buildPopUpMenu(BW4TClientGUI gui) {
         // Check if pressing on a color in the goal sequence list
@@ -39,31 +45,34 @@ public class ActionPopUpMenu {
                 // Check if pressing on a block
                 for (Block box : cmc.getVisibleBlocks()) {
 
-                    Shape boxBoundaries = set.transformCenterRectangle(new Rectangle2D.Double(box.getPosition().getX(), box.getPosition().getY(), Block.BLOCK_SIZE, Block.BLOCK_SIZE));
+                    Shape boxBoundaries = set.transformCenterRectangle(new Rectangle2D.Double(box.getPosition().getX(),
+                    		box.getPosition().getY(), Block.BLOCK_SIZE, Block.BLOCK_SIZE));
                     if (boxBoundaries.contains(gui.getSelectedLocation())) {
                         if (MapOperations.closeToBox(box, gui.getController())) {
                             RoomMenus.buildPopUpMenuForBeingAtBlock(box, room, gui);
                         } else {
                             RoomMenus.buildPopUpMenuForBlock(box, room, gui);
                         }
-                        gui.getjPopupMenu().show(gui, (int) gui.getSelectedLocation().getX(), (int) gui.getSelectedLocation().getY());
+                        gui.getjPopupMenu().show(gui, (int) gui.getSelectedLocation().getX(),
+                        		(int) gui.getSelectedLocation().getY());
                         return;
                     }
                 }
                 RoomMenus.buildPopUpMenuRoom(room, gui);
-                gui.getjPopupMenu().show(gui, (int) gui.getSelectedLocation().getX(), (int) gui.getSelectedLocation().getY());
+                gui.getjPopupMenu().show(gui, (int) gui.getSelectedLocation().getX(),
+                		(int) gui.getSelectedLocation().getY());
                 return;
             }
         }
         // Check for dropzone
-        //      DropZoneInfo dropZone = gui.getEnvironmentDatabase().getDropZone();
-        //      Shape dropZoneBoundaries = MapOperations.transformRectangle(new Rectangle2D.Double(dropZone.getX(), dropZone
-        //              .getY(), dropZone.getWidth(), dropZone.getHeight()));
-        //      if (dropZoneBoundaries.contains(new Point(gui.getSelectedLocation()[0], gui.getSelectedLocation()[1]))) {
-        //          RoomMenus.buildPopUpMenuRoom(dropZone, gui);
-        //          gui.getjPopupMenu().show(gui, gui.getSelectedLocation()[0], gui.getSelectedLocation()[1]);
-        //          return;
-        //      }
+//        DropZoneInfo dropZone = gui.getEnvironmentDatabase().getDropZone();
+//        Shape dropZoneBoundaries = MapOperations.transformRectangle(new Rectangle2D.Double(dropZone.getX(), dropZone
+//                .getY(), dropZone.getWidth(), dropZone.getHeight()));
+//        if (dropZoneBoundaries.contains(new Point(gui.getSelectedLocation()[0], gui.getSelectedLocation()[1]))) {
+//            RoomMenus.buildPopUpMenuRoom(dropZone, gui);
+//            gui.getjPopupMenu().show(gui, gui.getSelectedLocation()[0], gui.getSelectedLocation()[1]);
+//            return;
+//        }
 
         // Otherwise it is a hallway
         HallwayMenu.buildPopUpMenuForHallway(gui);

@@ -2,11 +2,8 @@ package nl.tudelft.bw4t.client.gui.menu;
 
 import java.awt.Color;
 import java.awt.Point;
-
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-
-import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.GotoPositionActionListener;
@@ -19,9 +16,18 @@ import nl.tudelft.bw4t.map.view.Block;
 import nl.tudelft.bw4t.message.BW4TMessage;
 import nl.tudelft.bw4t.message.MessageType;
 
-public class HallwayMenu {
+/** Responsible for building the pop-up menu when the user clicks on a hallway. */
+public final class HallwayMenu {
+	
+	/** Should never be instantiated */
+	private HallwayMenu() { }
+	
     /**
-     * Builds a pop up menu for when the player clicked on a hallway
+     * Used for building the pop-up menu that displays actions 
+     * a user can perform when clicking on a hallway.
+     * 
+     * @param gui
+     *            - The {@link BW4TClientGUI} to create the pop-up menu on.
      */
     public static void buildPopUpMenuForHallway(BW4TClientGUI gui) {
         gui.getjPopupMenu().removeAll();
@@ -79,5 +85,4 @@ public class HallwayMenu {
         menuItem = new JMenuItem("Close menu");
         gui.getjPopupMenu().add(menuItem);
     }
-
 }

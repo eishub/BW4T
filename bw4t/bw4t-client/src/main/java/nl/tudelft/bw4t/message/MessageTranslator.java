@@ -296,10 +296,7 @@ public final class MessageTranslator {
      * @param message
      *            - The BW4TMessage that should be translated.
      * @return The message in String format.
-     * @deprecated
-     * 			Old function that does not utilize the new HashMaps.
      */
-    @Deprecated
     public static String translateMessage(BW4TMessage message) {
         if (message.getType() == MessageType.WHERESHOULDIGO) {
             return "Where should I go?";

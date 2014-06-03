@@ -2,8 +2,6 @@ package nl.tudelft.bw4t.client.gui.menu;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-
-import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
@@ -12,13 +10,20 @@ import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.message.BW4TMessage;
 import nl.tudelft.bw4t.message.MessageType;
 
-public class PlayerMenu {
+/** Responsible for building the pop-up menu for sending requests to a player. */
+public final class PlayerMenu {
+	
+	/** Should never be instantiated */
+	private PlayerMenu() { }
+	
     /**
-     * Builds pop up menu for sending requests to a certain player, is called
-     * when a player button is pressed
+     * Used for building the pop-up menu that displays actions 
+     * a user can perform when clicking on another player.
      * 
      * @param playerId
-     *            , the playerId that the request should be sent to
+     *            - The playerId that the request should be sent to.
+     * @param gui
+     *            - The {@link BW4TClientGUI} to create the pop-up menu on.
      */
     public static void buildPopUpMenuForRequests(String playerId, BW4TClientGUI gui) {
         ClientMapController cmc = gui.getController().getMapController();
@@ -37,8 +42,8 @@ public class PlayerMenu {
 
         for (Zone room : cmc.getRooms()) {
             JMenuItem menuItem = new JMenuItem(room.getName());
-            menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.GOTOROOM, room.getName(),
-                    null, receiver), gui.getController()));
+            menuItem.addActionListener(new MessageSenderActionListener(
+            		new BW4TMessage(MessageType.GOTOROOM, room.getName(), null, receiver), gui.getController()));
             submenu.add(menuItem);
         }
 
