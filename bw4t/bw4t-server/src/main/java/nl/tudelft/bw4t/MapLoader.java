@@ -357,13 +357,12 @@ public final class MapLoader {
     private static void createBlocksForRoom(Room room, Context<Object> context, ContinuousSpace<Object> space,
             List<BlockColor> args) {
         
-        String logRoom = room.getName() + " contains blocks:";
-        
+        String letter = "";
         for (BlockColor c : args) {
-            logRoom = logRoom + " " + c.getLetter().toString();
+            letter = letter + " " + c.getLetter().toString();
         }
         
-        LOGGER.log(BotLog.BOTLOG, logRoom);
+        LOGGER.log(BotLog.BOTLOG, String.format("room %s contains blocks: %s", room.getName(), letter));
 
         Rectangle2D roomBox = room.getBoundingBox();
         List<Rectangle2D> newblocks = new ArrayList<Rectangle2D>();
