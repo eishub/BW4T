@@ -16,7 +16,7 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  * @author Arun
  */
 public class BotEditor extends JFrame {
-    
+
     /**
      * Random generated serial version UID.
      */
@@ -33,7 +33,7 @@ public class BotEditor extends JFrame {
     private BotEditorPanel bPanel;
     /** the controller for the frame*/
     private BotStoreController controller;
-    
+
     /**
      * creates the BotEditor frame
      * @param pparent the parent of the frame
@@ -48,21 +48,21 @@ public class BotEditor extends JFrame {
         bPanel = new BotEditorPanel(pname);
         bPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
         setContentPane(bPanel);
-        
+
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        
+
         pack();
-        
+
         width = this.getWidth();
         height = this.getHeight();
-        
+
         setLocationRelativeTo(null);
-        
+
         setVisible(true);
-        
+
         controller = new BotStoreController(this);
     }
-    
+
     /**
      *  Function to set the look and feel of the frame to the default look and feel of the system.
      *  Throws exceptions which are passed over since the failure to set the look and feel is not
@@ -111,8 +111,8 @@ public class BotEditor extends JFrame {
     public void setBotEditorPanel(BotEditorPanel pbPanel) {
         this.bPanel = pbPanel;
     }
-    
+
     public static void main(String[] args) {
-    	new BotEditor(new MainPanel(new ConfigurationPanel(), new EntityPanel()),"Bot X");
+        new BotEditor(new MainPanel(new ConfigurationPanel(), new EntityPanel()),"Bot X");
     }
 }

@@ -41,10 +41,7 @@ public class MainPanel extends JPanel {
     private EntityPanel entityPanel;
     /**  */
     private GridBagLayout gbl;
-    /**
-     * The XML element wrapper for the list of bots. 
-     */
-    
+
     /**
      * Create a MainPanel consisting of a ConfigurationPanel and a EntityPanel.
      *
@@ -128,4 +125,5 @@ public class MainPanel extends JPanel {
     public final void setEntityPanel(final EntityPanel newEntityPanel) {
         this.entityPanel = newEntityPanel;
     }
+
 }
