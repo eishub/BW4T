@@ -10,9 +10,6 @@ import nl.tudelft.bw4t.scenariogui.gui.epartner.EpartnerFrame;
 
 public class EpartnerController {
 
-	/**
-	 * The view being controlled
-	 */
 	private EpartnerFrame view;
 
 	/**
@@ -31,7 +28,8 @@ public class EpartnerController {
 		view.getCancelButton().addActionListener(
 				new EpartnerCancelButton(getMainView()));
 
-		view.getApplyButton().addActionListener(new EpartnerApplyButton(getMainView()));
+		view.getApplyButton().addActionListener(
+				new EpartnerApplyButton(getMainView()));
 
 		view.getLeftAloneCheckbox().addActionListener(
 				new LeftAloneCheckBox(getMainView()));
@@ -40,7 +38,9 @@ public class EpartnerController {
 	}
 
 	/**
-	 * @return view
+	 * Returns the epartnerframe.
+	 * 
+	 * @return view The epartner frame.
 	 */
 	public EpartnerFrame getMainView() {
 		return view;
