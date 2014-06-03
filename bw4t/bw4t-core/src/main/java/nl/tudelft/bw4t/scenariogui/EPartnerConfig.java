@@ -10,19 +10,21 @@ public final class EPartnerConfig {
 	 */
 	private String name = "";
 
+	/**
+	 * The amount of e-Partners created from the config. 
+	 */
     private int amount = 1;
+
+	/**
+	 * Boolean value to determine if the bot can use GPS (default = false).
+	 */
+	private boolean gps = false;
 
 	/**
      * Boolean value to determine if the robot can be left
      * alone without it giving warnings.
      */
-    private boolean leftAlone = false;
-    
-    /**
-     * Boolean value to determine if the bot can use GPS (default = false).
-     */
-    private boolean gps = false;
-	
+    private boolean forgetmenot = false;
     
     public String getName() {
 		return name;
@@ -40,19 +42,19 @@ public final class EPartnerConfig {
 		this.amount = amount;
 	}
 
-	public boolean isLeftAlone() {
-		return leftAlone;
-	}
-
-	public void setLeftAlone(boolean leftAlone) {
-		this.leftAlone = leftAlone;
-	}
-
 	public boolean isGps() {
 		return gps;
 	}
 
 	public void setGps(boolean gps) {
 		this.gps = gps;
+	}
+
+	public boolean isForgotMeNot() {
+		return forgetmenot;
+	}
+
+	public void setForgetMeNot(boolean fmn) {
+		this.forgetmenot = fmn;
 	}
 }
