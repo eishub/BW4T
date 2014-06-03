@@ -36,9 +36,7 @@ public final class MessageTranslator {
     private static Map<MessageType, TypeToStringCommand> messageToString =
     		new HashMap<MessageType, TypeToStringCommand>();
     
-    /**
-     * Should never be instantiated.
-     */
+    /** Should never be instantiated. */
     private MessageTranslator() { }
     
     /**

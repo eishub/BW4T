@@ -7,11 +7,11 @@ package nl.tudelft.bw4t.message;
  */
 public class BW4TMessage {
 
-	/**
-	 * Information storage of the message.
-	 */
+	/** Information storage of the message. {@code null} if not set. */
     private final String color, playerId, room;
+    /** MessageType of this message */
     private final MessageType type;
+    /** Number contained in this message. {@code Integer.MAX_VALUE} if not set. */
     private final int number;
 
     /**

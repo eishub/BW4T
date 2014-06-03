@@ -3,7 +3,7 @@ package nl.tudelft.bw4t.message;
 import java.util.StringTokenizer;
 
 /*
- * TODO: I think this structure can be made better by using Abstracts
+ * TODO: (Tom) I think this structure can be made better by using Abstracts
  * This to avoid having to set type every time.
  */
 
