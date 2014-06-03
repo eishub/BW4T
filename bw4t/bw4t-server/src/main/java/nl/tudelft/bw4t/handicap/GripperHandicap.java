@@ -5,7 +5,7 @@ import nl.tudelft.bw4t.blocks.Block;
 /**
  * @author Valentine Mairet & Ruben Starmans
  */
-public class GripperHandicap extends AbstractHandicapFactory {
+public class GripperHandicap extends AbstractRobotDecorator {
 
     /**
      * Calls the super method on p,
@@ -13,7 +13,7 @@ public class GripperHandicap extends AbstractHandicapFactory {
      * Adds the handicap to the robot handicap storage.
      * @param p HandicapInterface the GripperHandicap wraps around.
      */
-    public GripperHandicap(HandicapInterface p) {
+    public GripperHandicap(IRobot p) {
         super(p);
         robot.getHandicapsList().add("Gripper");
         robot.setGripperCapacity(0);

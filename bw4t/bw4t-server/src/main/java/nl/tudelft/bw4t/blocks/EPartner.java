@@ -1,9 +1,13 @@
 package nl.tudelft.bw4t.blocks;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import nl.tudelft.bw4t.BoundedMoveableObject;
-import nl.tudelft.bw4t.handicap.HandicapInterface;
+import nl.tudelft.bw4t.handicap.IRobot;
+
 import org.apache.log4j.Logger;
+
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 
@@ -22,10 +26,10 @@ public class EPartner extends BoundedMoveableObject {
     /**
      * Human that owns the E-Partner
      */
-    private HandicapInterface holder;
+    private IRobot holder;
     
     private String name;
-    private ArrayList<String> typeList;
+    private List<String> funcList;
 
     /**
      * @param n
@@ -56,11 +60,11 @@ public class EPartner extends BoundedMoveableObject {
         this.connected = false;
     }
 
-    public HandicapInterface getHolder() {
+    public IRobot getHolder() {
         return this.holder;
     }
     
-    public void setHolder(HandicapInterface human) {
+    public void setHolder(IRobot human) {
         this.holder = human;
     }
 
@@ -72,12 +76,12 @@ public class EPartner extends BoundedMoveableObject {
 		this.name = name;
 	}
 
-	public ArrayList<String> getTypeList() {
-		return this.typeList;
+	public List<String> getTypeList() {
+		return this.funcList;
 	}
 
-	public void setTypeList(ArrayList<String> typeList) {
-		this.typeList = typeList;
+	public void setTypeList(ArrayList<String> fList) {
+		this.funcList = fList;
 	}
 	
 	public boolean isDropped() {

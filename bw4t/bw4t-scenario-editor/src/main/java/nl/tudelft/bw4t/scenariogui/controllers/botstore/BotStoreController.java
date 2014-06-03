@@ -58,6 +58,9 @@ public class BotStoreController {
         
         view.getBotEditorPanel().getmovespeedCheckbox().addActionListener(
                 new SpeedBox(getMainView().getBotEditorPanel()));
+        
+        view.getBotEditorPanel().getFileButton().addActionListener(
+        		new GoalFileButton(getMainView().getBotEditorPanel()));
     }
     
     /**

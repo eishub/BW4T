@@ -33,9 +33,9 @@ public class HumanTest {
      */
     @Test
     public void testPickUpEPartner() {
-        HandicapInterface r = new Human(new NavigatingRobot("", space, context, true, 1));
+        IRobot r = new Human(new NavigatingRobot("", space, context, true, 1));
 
-        assertTrue(r.getSuperParent().getHandicapsList().contains("Human"));
+        assertTrue(r.getHandicapsList().contains("Human"));
 
         r.pickUpEPartner(ePartner);
         assertTrue(r.isHoldingEPartner());
@@ -50,7 +50,7 @@ public class HumanTest {
         
         when(robot.getLocation()).thenReturn(point);
         
-		HandicapInterface r = new Human(robot);
+		IRobot r = new Human(robot);
 
         r.pickUpEPartner(ePartner);
         assertTrue(r.isHoldingEPartner());

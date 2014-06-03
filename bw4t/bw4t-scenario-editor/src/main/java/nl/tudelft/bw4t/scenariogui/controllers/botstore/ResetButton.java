@@ -27,13 +27,6 @@ class ResetButton implements ActionListener {
      * @param ae The action event causing this.
      */
     public void actionPerformed(ActionEvent ae) {
-    	view.getBotNameTextField().setText(view.getDataObject().getBotName());
-		view.getBotAmountTextField().setText("" + view.getDataObject().getBotAmount());
-		if (view.getDataObject().getBotController().equals("Agent")) {
-			view.getBotControllerType().setSelectedIndex(0);
-		} else {
-			view.getBotControllerType().setSelectedIndex(1);
-		}
         view.getSpeedSlider().setValue(100);
         view.getSizeSlider().setValue(2);
         view.getBatterySlider().setValue(0);
@@ -47,5 +40,8 @@ class ResetButton implements ActionListener {
         view.getmovespeedCheckbox().setSelected(false);
         view.getBatteryEnabledCheckbox().setSelected(false);
         view.getNumberOfGrippersSlider().setValue(1);
+        view.getFileNameField().setText(".goal");
+        view.getBotNameField().setText("");
+        view.getBatteryUseValueLabel().setText("0");
     }
 }

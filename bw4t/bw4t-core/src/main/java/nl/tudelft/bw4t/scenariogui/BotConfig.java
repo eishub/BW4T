@@ -19,6 +19,8 @@ public final class BotConfig {
     private String controller = "Agent";
     
     private int amount = 1;
+    
+    private int botGripperCapacity = 1;
 
     private int botSize = 2;
 
@@ -39,6 +41,14 @@ public final class BotConfig {
     private boolean hasMoveSpeedHandicap = false;
 
     private boolean hasSizeOverloadHandicap = false;
+    
+    private boolean leftAlone = false;
+    
+    private boolean gps = false;
+    
+    private String fileName = "*.goal";
+    
+    private String referenceName = "";
 
     /**
      * Sets the name of the bot.
@@ -90,6 +100,21 @@ public final class BotConfig {
     public int getBotAmount() {
         return this.amount;
     }
+    
+    /**
+     * @return the bot gripper capacity. 
+     */
+    public int getBotGripperCapacity() {
+    	return botGripperCapacity;
+    }
+	
+    /**
+     * @param newgripcap, the new gripper capacity. 
+     */
+    @XmlElement
+	public void setBotGripperCapacity(int newgripcap) {
+		botGripperCapacity = newgripcap;
+	}
 
     /**
      * @return the size of the robot.
@@ -255,4 +280,52 @@ public final class BotConfig {
                 + hasColorBlindHandicap + hasGripperHandicap
                 + hasMoveSpeedHandicap + hasSizeOverloadHandicap;
     }
+    /**
+     * @param enabled adds or removes the ability to leave the robot alone.
+     */
+    public void setLeftAlone(boolean enabled) {
+        leftAlone = enabled;
+    }
+    /**
+     * @return whether or not the robot can be left alone.
+     */
+    public boolean getLeftAlone() {
+        return leftAlone;
+    }
+    /**
+     * @param enabled adds or removes the GPS usability.
+     */
+    public void setGPS(boolean enabled) {
+        gps = enabled;
+    }
+    /**
+     * @return whether or not the robot can make use of the GPS functionality.
+     */
+    public boolean getGPS() {
+        return gps;
+    }
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String _name) {
+		this.name = _name;
+	}
+
+	public String getReferenceName() {
+		return referenceName;
+	}
+
+	public void setReferenceName(String _referenceName) {
+		this.referenceName = _referenceName;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String _fileName) {
+		this.fileName = _fileName;
+	}
 }

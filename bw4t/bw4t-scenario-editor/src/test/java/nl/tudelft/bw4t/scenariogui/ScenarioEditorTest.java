@@ -14,7 +14,6 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 

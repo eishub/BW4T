@@ -31,7 +31,7 @@ class ModifyBot implements ActionListener {
 
     /**
      * Executes action that needs to happen when the "Modify bot" button is
-     * pressed. TODO Open BotStore window
+     * pressed.
      *
      * @param ae The action.
      */
@@ -42,7 +42,7 @@ class ModifyBot implements ActionListener {
             ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select the bot you want to modify.");
             return;
         }
-        
-        new BotEditor(view, row);
+        String data = (String) view.getEntityPanel().getBotTable().getModel().getValueAt(row, 0);
+        new BotEditor(view, data);
     }
 }

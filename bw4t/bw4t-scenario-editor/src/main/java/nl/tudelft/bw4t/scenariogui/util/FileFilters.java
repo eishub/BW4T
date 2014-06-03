@@ -4,6 +4,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * Created by on 20-5-2014.
+ * @author ???
+ * @author Tim
  */
 public final class FileFilters {
 
@@ -24,5 +26,14 @@ public final class FileFilters {
      */
     public static FileNameExtensionFilter mapFilter() {
         return new FileNameExtensionFilter("MAP file", "map");
+    }
+    
+    /**
+     * 
+     * Returns an extension filter for GOAL files.
+     * @return an extension filter for GOAL files.
+     */
+    public static FileNameExtensionFilter goalFilter() {
+    	return new FileNameExtensionFilter("GOAL File (*.goal)", "goal");
     }
 }
