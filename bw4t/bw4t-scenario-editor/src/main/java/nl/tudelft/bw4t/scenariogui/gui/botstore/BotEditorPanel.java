@@ -124,14 +124,14 @@ public class BotEditorPanel extends JPanel {
      * @param name the bot gets
      */
     public BotEditorPanel(String name) {
-        botNameTextField.setText(name);
+        botNameField.setText(name);
         setLayout(new BorderLayout(20, 20));        
         
         createBotCheckablesPanel();
         createBotSlidersPanel();
         
-        add(botSliders, BorderLayout.WEST);
-        add(botCheckables, BorderLayout.EAST);
+        add(botSliders, BorderLayout.EAST);
+        add(botCheckables, BorderLayout.WEST);
     }
     
     /**
@@ -139,32 +139,31 @@ public class BotEditorPanel extends JPanel {
      */
     public void createBotCheckablesPanel() {
     	final String newLine = "\n";
-        botCheckables.setLayout(new GridLayout(5, 1));
-        JLabel checkablesLabel = new JLabel("Checkables");
+        botCheckables.setLayout(new GridLayout(2, 1));
+        JLabel checkablesLabel = new JLabel("Specs");
         JLabel nameLabel = new JLabel("Names");
         JLabel handicapsLabel = new JLabel("Handicaps:");
         JLabel restrictionsLabel = new JLabel("Other options:");
         JLabel fileNameLabel = new JLabel("GOAL File name:");
-        JLabel botNameLabel = new JLabel("Reference name of bot:");
+        JLabel botNameLabel = new JLabel("Bot Name:");
         JLabel emptyLabel = new JLabel(newLine);
         JLabel emptyLabel2 = new JLabel(newLine);
         JLabel emptyLabel3 = new JLabel(newLine);
+        JLabel emptyLabel4 = new JLabel(newLine);
+        JLabel emptyLabel5 = new JLabel(newLine);
+        JLabel emptyLabel6 = new JLabel(newLine);
         
         Font f = new Font("Tahoma", Font.PLAIN, 24);
         
         checkablesLabel.setFont(f);
         nameLabel.setFont(f);
-        
-        JPanel buttonPanel = new JPanel();
+       
         JPanel checkablesPanel = new JPanel();
         JPanel namePanel = new JPanel();
-        
-        buttonPanel.add(applyButton);
-        buttonPanel.add(resetButton);
-        buttonPanel.add(cancelButton);
-        
-        botCheckables.add(checkablesLabel);
+
         checkablesPanel.setLayout(new BoxLayout(checkablesPanel, BoxLayout.PAGE_AXIS));
+        checkablesPanel.add(checkablesLabel);
+        checkablesPanel.add(emptyLabel4);
         checkablesPanel.add(handicapsLabel);
         checkablesPanel.add(gripperCheckbox);
         checkablesPanel.add(colorblindCheckbox);
@@ -174,40 +173,44 @@ public class BotEditorPanel extends JPanel {
         checkablesPanel.add(movespeedCheckbox);
         checkablesPanel.add(batteryEnabledCheckbox);
         namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.PAGE_AXIS));
-        namePanel.add(emptyLabel2);
-        namePanel.add(fileNameLabel);
-        namePanel.add(fileNameField);
-        namePanel.add(fileButton);
+        nameLabel.setFont(f);
+        namePanel.add(nameLabel);
         namePanel.add(emptyLabel3);
         namePanel.add(botNameLabel);
         namePanel.add(botNameField);
-        botCheckables.add(checkablesPanel);
-        botCheckables.add(nameLabel);
+        namePanel.add(emptyLabel2);
+        namePanel.add(fileNameLabel);
+        namePanel.add(fileNameField);
+        namePanel.add(emptyLabel6);
+        namePanel.add(fileButton);
+        namePanel.add(emptyLabel5);
         botCheckables.add(namePanel);
-        botCheckables.add(buttonPanel);
+        botCheckables.add(checkablesPanel);
     }
     /**
      * creates the botSlidersPanel
      */
     public void createBotSlidersPanel() {
-        botSliders.setLayout(new GridLayout(10, 1));
+        botSliders.setLayout(new GridLayout(6, 1));
         
         JLabel batteryUseLabel = new JLabel("Battery use:");
         JLabel perTickLabel = new JLabel("per tick");
         batteryUseLabel.setHorizontalAlignment(SwingConstants.CENTER);
         
-        JLabel botNameLabel = new JLabel("Bot name:");
-        
+        JPanel buttonPanel = new JPanel();
         JPanel batteryCapPanel = new JPanel();
-        JPanel botNamePanel = new JPanel();
+        JPanel speedPanel = new JPanel();
+        JPanel sizePanel = new JPanel();
+        JPanel gripperPanel = new JPanel();
+        JPanel batteryPanel = new JPanel();
+        
+        buttonPanel.add(applyButton);
+        buttonPanel.add(resetButton);
+        buttonPanel.add(cancelButton);
         
         batteryCapPanel.add(batteryUseLabel);
         batteryCapPanel.add(batteryUseValueLabel);
         batteryCapPanel.add(perTickLabel);
-        
-        botNamePanel.setLayout(new BoxLayout(botNamePanel, BoxLayout.PAGE_AXIS));
-        botNamePanel.add(botNameLabel);
-        botNamePanel.add(botNameTextField);
         
         JLabel numberOfGrippersLabel = new JLabel("Number of Grippers");
         numberOfGrippersLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -223,16 +226,28 @@ public class BotEditorPanel extends JPanel {
         batteryCapacity.setToolTipText("Max capacity on a scale of 10-100");
         
         createSliders();
-        botSliders.add(botNamePanel);
-        botSliders.add(numberOfGrippersLabel);
-        botSliders.add(numberOfGrippersSlider);
-        botSliders.add(sizeLabel);
-        botSliders.add(sizeSlider);
-        botSliders.add(speedLabel);
-        botSliders.add(speedSlider);
-        botSliders.add(batteryCapacity);
-        botSliders.add(batterySlider);
+        gripperPanel.setLayout(new BoxLayout(gripperPanel, BoxLayout.PAGE_AXIS));
+        gripperPanel.add(numberOfGrippersLabel);
+        gripperPanel.add(numberOfGrippersSlider);
+        
+        sizePanel.setLayout(new BoxLayout(sizePanel, BoxLayout.PAGE_AXIS));
+        sizePanel.add(sizeLabel);
+        sizePanel.add(sizeSlider);
+        
+        speedPanel.setLayout(new BoxLayout(speedPanel, BoxLayout.PAGE_AXIS));
+        speedPanel.add(speedLabel);
+        speedPanel.add(speedSlider);
+        
+        batteryPanel.setLayout(new BoxLayout(batteryPanel, BoxLayout.PAGE_AXIS));
+        batteryPanel.add(batteryCapacity);
+        batteryPanel.add(batterySlider);
+        
+        botSliders.add(gripperPanel);
+        botSliders.add(sizePanel);
+        botSliders.add(speedPanel);
+        botSliders.add(batteryPanel);
         botSliders.add(batteryCapPanel);
+        botSliders.add(buttonPanel);
     }
     
     /**
