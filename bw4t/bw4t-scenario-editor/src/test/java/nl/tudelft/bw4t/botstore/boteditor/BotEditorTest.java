@@ -31,5 +31,4 @@ public class BotEditorTest {
         assertEquals(parent, botEditor.getParent());
         assertEquals(panel, botEditor.getBotEditorPanel());
     }
-
 }

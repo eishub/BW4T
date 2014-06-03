@@ -71,14 +71,6 @@ public class MenuBarTest {
     private JFileChooser filechooser;
 
     /**
-     * "0.0" string for checkstyle issues.
-     */
-    private String zeroPointZero = "0.0";
-    /**
-     * "blaaas" string for checkstyle issues.
-     */
-    private String blaaas = "blaaas";
-    /**
      * Setup the testing environment by creating the scenario editor and
      * assigning the editor attribute to a spy object of the ScenarioEditor.
      */
@@ -288,7 +280,7 @@ public class MenuBarTest {
 
 
         /* Change some random field */
-        editor.getMainPanel().getConfigurationPanel().setClientIP(zeroPointZero);
+        editor.getMainPanel().getConfigurationPanel().setClientIP("0.0");
 
         /* Don't actually close the jvm */
         doNothing().when(editor).closeScenarioEditor();
@@ -331,7 +323,7 @@ public class MenuBarTest {
         ScenarioEditor.setOptionPrompt(option);
 
         /* Change some random field */
-        editor.getMainPanel().getConfigurationPanel().setClientIP(zeroPointZero);
+        editor.getMainPanel().getConfigurationPanel().setClientIP("0.0");
 
         /* Don't actually close the jvm */
         doNothing().when(editor).closeScenarioEditor();
@@ -381,7 +373,7 @@ public class MenuBarTest {
         assert listeners.length == 1;
 
         /* Some change */
-        editor.getMainPanel().getConfigurationPanel().setClientIP(blaaas);
+        editor.getMainPanel().getConfigurationPanel().setClientIP("blaaas");
 
         /* Fake the prompt to no */
         OptionPrompt option = spy(new NoMockOptionPrompt());
@@ -423,7 +415,7 @@ public class MenuBarTest {
         menuOption.setCurrentFileChooser(filechooser);
 
         /* Some change */
-        editor.getMainPanel().getConfigurationPanel().setClientIP(blaaas);
+        editor.getMainPanel().getConfigurationPanel().setClientIP("blaaas");
 
         /* Fake the prompt to yes */
         OptionPrompt option = spy(new YesMockOptionPrompt());
