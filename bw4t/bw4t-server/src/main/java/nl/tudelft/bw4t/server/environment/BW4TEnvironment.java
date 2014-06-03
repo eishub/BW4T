@@ -517,5 +517,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
     public NewMap getMap() {
         return theMap;
     }
+    
+ 
 
 }
