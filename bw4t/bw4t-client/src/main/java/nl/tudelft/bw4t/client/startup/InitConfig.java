@@ -91,7 +91,7 @@ public final class InitConfig {
     
     /**
      * Whether an init configuration file has been read.
-     * @return Returns true if an init configuration file has been read.
+     * @return Returns {@code true} if an init configuration file has been read.
      */
     private static boolean hasReadInitFile() {
         return config != null;
