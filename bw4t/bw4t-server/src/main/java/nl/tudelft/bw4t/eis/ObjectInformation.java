@@ -37,7 +37,10 @@ public class ObjectInformation {
 
     @Override
     public boolean equals(Object obj) {
-        ObjectInformation other = (ObjectInformation) obj;
+    	if (!(obj instanceof ObjectInformation)) {
+    		return false; 
+    	}
+    	ObjectInformation other = (ObjectInformation) obj;
         if (Double.doubleToLongBits(X) != Double.doubleToLongBits(other.X))
             return false;
         if (Double.doubleToLongBits(Y) != Double.doubleToLongBits(other.Y))
