@@ -414,7 +414,7 @@ public class EntityPanelTest {
 
         entityPanel.getEPartnerTableModel().addRow(epartnerData);
 
-        assertFalse(entityPanel.isDefault());s
+        assertFalse(entityPanel.isDefault());
     }
 
     /**
