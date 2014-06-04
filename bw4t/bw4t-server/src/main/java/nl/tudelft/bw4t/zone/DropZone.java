@@ -1,23 +1,17 @@
 package nl.tudelft.bw4t.zone;
 
 import java.awt.Color;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.management.RuntimeErrorException;
-
 import org.apache.log4j.Logger;
 
-import eis.exceptions.EntityException;
-import eis.exceptions.RelationException;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.eis.RobotEntity;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.robots.Robot;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
-import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.server.logging.BotLog;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
@@ -77,6 +71,8 @@ public class DropZone extends Room {
 
     /**
      * Returns the color identifiers of blocks that need to be delivered in order to this dropzone.
+     * 
+     * @return List<BlockColor>
      */
     public List<BlockColor> getSequence() {
         return sequence;
@@ -125,30 +121,30 @@ public class DropZone extends Room {
     /**
      * Writing total time needed to finish sequence into logfile.
      */
-    private void logTime(){
+    private void logTime() {
 
     	BW4TEnvironment env = BW4TEnvironment.getInstance();
     	
     	//totalTime is in miliseconds
         double totalTime = (System.currentTimeMillis() - env.getStarttime());
         
-        if(totalTime>60000){
-        	int totalMin = (int)totalTime / 60000;
-        	int totalSec = (int)totalTime / 1000 %60;
+        if (totalTime > 60000) {
+        	int totalMin = (int) totalTime / 60000;
+        	int totalSec = (int) totalTime / 1000 % 60;
         	LOGGER.log(BotLog.BOTLOG, "time to finish sequence is " + totalMin + " minutes and " + totalSec + " seconds");
         }
         else
-        	LOGGER.log(BotLog.BOTLOG, "time to finish sequence is " + totalTime/1000 + "seconds");
+        	LOGGER.log(BotLog.BOTLOG, "time to finish sequence is " + totalTime / 1000 + "seconds");
     }
     
     /**
      * Writing sumarry of bot into logfile.
      */
-     private void logBot(){
+     private void logBot() {
     	BW4TEnvironment env = BW4TEnvironment.getInstance();
         for (String entity : env.getEntities()) {
-        	if(env.getEntity(entity) instanceof RobotEntity ) {
-            	RobotEntity rEntity = (RobotEntity)env.getEntity(entity);
+        	if (env.getEntity(entity) instanceof RobotEntity) {
+            	RobotEntity rEntity = (RobotEntity) env.getEntity(entity);
             	rEntity.getRobotObject().getAgentRecord().logSummary();
         	}
         }

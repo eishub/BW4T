@@ -28,13 +28,10 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.eis.RobotEntity;
 import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.robots.AgentRecord;
-import nl.tudelft.bw4t.robots.Robot;
 import nl.tudelft.bw4t.server.BW4TServer;
 import nl.tudelft.bw4t.server.RobotEntityInt;
 import nl.tudelft.bw4t.server.logging.BotLog;
 import nl.tudelft.bw4t.visualizations.ServerContextDisplay;
-import nl.tudelft.bw4t.zone.DropZone;
 
 import org.apache.log4j.Logger;
 
@@ -159,8 +156,8 @@ public class BW4TEnvironment extends AbstractEnvironment {
         LOGGER.debug("Removing all entities");
         for (String entity : this.getEntities()) {
         	
-        	if(this.getEntity(entity) instanceof RobotEntity ) {
-        		RobotEntity rEntity = (RobotEntity)this.getEntity(entity);
+        	if (this.getEntity(entity) instanceof RobotEntity) {
+        		RobotEntity rEntity = (RobotEntity) this.getEntity(entity);
         		rEntity.getRobotObject().getAgentRecord().logSummary(); 
         	}
            
@@ -185,20 +182,20 @@ public class BW4TEnvironment extends AbstractEnvironment {
     /**
      * Writing total time needed to finish sequence into logfile.
      */
-    private void logTime(){
+    private void logTime() {
 
     	BW4TEnvironment env = BW4TEnvironment.getInstance();
     	
     	//totalTime is in miliseconds
         double totalTime = (System.currentTimeMillis() - env.getStarttime());
         
-        if(totalTime>60000){
-        	int totalMin = (int)totalTime / 60000;
-        	int totalSec = (int)totalTime / 1000 %60;
+        if (totalTime > 60000) {
+        	int totalMin = (int) totalTime / 60000;
+        	int totalSec = (int) totalTime / 1000 % 60;
         	LOGGER.log(BotLog.BOTLOG, "total time is " + totalMin + " minutes and " + totalSec + " seconds");
         }
         else
-        	LOGGER.log(BotLog.BOTLOG, "total time is " + totalTime/1000 + "seconds");
+        	LOGGER.log(BotLog.BOTLOG, "total time is " + totalTime / 1000 + "seconds");
     }
 
     @Override
