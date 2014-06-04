@@ -215,8 +215,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
         for (ViewEntity e : getController().getVisibleEntities()) {
             g2d.setColor(e.getColor());
             Point2D loc = e.getLocation();
-            g2d.fill(set.transformCenterRectangle(new Rectangle2D.Double(loc.getX(), loc.getY(), ViewEntity.ROBOT_SIZE,
-                    ViewEntity.ROBOT_SIZE)));
+            g2d.fill(set.transformCenterRectangle(new Rectangle2D.Double(loc.getX(), loc.getY(), e.getRobotSize(),
+                    e.getRobotSize())));
 
             if (set.isRenderEntityName()) {
                 g2d.setColor(Color.RED);
@@ -240,6 +240,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
             int[] xpoints = new int[] { x, x - size, x + size };
             int[] ypoints = new int[] { y + size, y - size, y - size };
             g2d.fillPolygon(xpoints, ypoints, 3);
+            g2d.setColor(Color.BLACK);
+            g2d.drawPolygon(xpoints, ypoints, 3);;
     	}
     }
 }

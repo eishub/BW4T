@@ -459,7 +459,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
             bs.add(block.getView());
         }
         NdPoint loc = getSpace().getLocation(this);
-        return new ViewEntity(getName(), loc.getX(), loc.getY(), bs);
+        return new ViewEntity(getName(), loc.getX(), loc.getY(), bs, getSize());
     }
     
 	@Override
