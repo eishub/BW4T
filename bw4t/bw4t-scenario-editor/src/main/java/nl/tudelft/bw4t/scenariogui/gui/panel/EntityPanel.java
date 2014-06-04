@@ -29,6 +29,7 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import nl.tudelft.bw4t.agent.EntityType;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
@@ -247,13 +248,12 @@ public class EntityPanel extends JPanel {
 	 */
 	public void setUpControllerColumn() {
 		JComboBox<String> controllers = new JComboBox<String>();
-		controllers.addItem("Agent");
-		controllers.addItem("Human");
+		controllers.addItem(EntityType.AGENT.toString());
+		controllers.addItem(EntityType.HUMAN.toString());
 		botTable.getColumnModel().getColumn(1)
 				.setCellEditor(new DefaultCellEditor(controllers));
 
 		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-		renderer.setToolTipText("Testtext");
 		botTable.getColumnModel().getColumn(1).setCellRenderer(renderer);
 	}
 
