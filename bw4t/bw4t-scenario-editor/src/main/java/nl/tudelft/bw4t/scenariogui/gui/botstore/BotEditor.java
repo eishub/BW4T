@@ -13,6 +13,7 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
  * This class serves as frame for the BotEditorPanel
+
  * @author Arun
  */
 public class BotEditor extends JFrame {
@@ -29,7 +30,7 @@ public class BotEditor extends JFrame {
     private BotEditorPanel bPanel;
     /** the controller for the frame*/
     private BotStoreController controller;
-    
+
     /** The row number of the selected bot. */
     private int row;
     
@@ -48,18 +49,18 @@ public class BotEditor extends JFrame {
         bPanel = new BotEditorPanel(this, this.parent);
         bPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
         setContentPane(bPanel);
-        
+
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        
+
         pack();
         setLocationRelativeTo(null);
-        
+
         setVisible(true);
-        
+
         controller = new BotStoreController(this);
     }
-    
-    /**
+
+     /**
      *  Function to set the look and feel of the frame to the default look and feel of the system.
      *  Throws exceptions which are passed over since the failure to set the look and feel is not
      *  considered harmful.
@@ -78,13 +79,13 @@ public class BotEditor extends JFrame {
             // pass
         }
     }
-    
+
     /**
      * Returns the row number of the bot that is currently selected.
      * @return The row number of the bot that is currently selected.
      */
     public int getRow() {
-    	return this.row;
+        return this.row;
     }
     
     /**
@@ -94,6 +95,7 @@ public class BotEditor extends JFrame {
     public BotEditorPanel getBotEditorPanel() {
         return bPanel;
     }
+
     /**
      * Get the main panel.
      * @return parent
@@ -101,6 +103,7 @@ public class BotEditor extends JFrame {
     public MainPanel getParent() {
         return parent;
     }
+
     /**
      * Set the main panel.
      * @param pparent the main panel.

@@ -17,10 +17,10 @@ import static org.junit.Assert.assertEquals;
  *
  */
 public class BotEditorTest {
-    
-	/** The boteditor used to test */
+
+    /** The boteditor used to test */
     private BotEditor botEditor;
-    
+
     /** Test the setup of boteditor */
     @Test
     public void testBotEditorPane() {
