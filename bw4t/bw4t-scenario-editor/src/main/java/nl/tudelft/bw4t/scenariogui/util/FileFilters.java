@@ -36,4 +36,12 @@ public final class FileFilters {
     public static FileNameExtensionFilter goalFilter() {
     	return new FileNameExtensionFilter("GOAL File (*.goal)", "goal");
     }
+
+    /**
+     * Returns an extension filter for MAS files.
+     * @return an extension filter for MAS files.
+     */
+    public static FileNameExtensionFilter masFilter() {
+        return new FileNameExtensionFilter("mas2g file (*.mas2g)", "mas2g");
+    }
 }
