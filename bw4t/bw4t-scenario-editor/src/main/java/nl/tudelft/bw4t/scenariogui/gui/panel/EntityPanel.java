@@ -32,6 +32,7 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import nl.tudelft.bw4t.agent.EntityType;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
 
@@ -247,7 +248,7 @@ public class EntityPanel extends JPanel {
     /**
      * The list with the last saved BotConfigs.
      */
-    private List<BotConfig> oldBotConfigs = botConfigList;
+    private List<BotConfig> oldBotConfigs = new ArrayList<BotConfig>();
 
     /**
      * Create an EntityPanel object.
@@ -370,8 +371,8 @@ public class EntityPanel extends JPanel {
      */
     public void setUpControllerColumn() {
         JComboBox controllers = new JComboBox<String>();
-        controllers.addItem("Agent");
-        controllers.addItem("Human");
+        controllers.addItem(EntityType.AGENT.nameLower());
+        controllers.addItem(EntityType.HUMAN.nameLower());
         botTable.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(controllers));
 
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
@@ -684,12 +685,16 @@ public class EntityPanel extends JPanel {
      * Updates the BotConfig list.
      */
     public void updateBotConfigs() {
-        oldBotConfigs = botConfigList;
+        oldBotConfigs.clear();
+        for (int i = 0; i < botConfigList.size(); i++) {
+            oldBotConfigs.add(botConfigList.get(i));
+        }
     }
 
     /**
      * Compares the BotConfig lists.
-     * @return If the BotConfigs lists are equal.
+     * @param config The list of bots to check 
+     * @return Whether the BotConfigs lists are equal.
      */
     public boolean compareBotConfigs(List<BotConfig> config) {
         if (botConfigList.size() != config.size()) {
