@@ -13,8 +13,9 @@ import nl.tudelft.bw4t.handicap.IRobot;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.view.Block;
-import nl.tudelft.bw4t.map.view.Entity;
+import nl.tudelft.bw4t.map.view.ViewBlock;
+import nl.tudelft.bw4t.map.view.ViewEPartner;
+import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.view.MapRendererInterface;
@@ -89,8 +90,8 @@ public class ServerMapController extends AbstractMapController {
     }
 
     @Override
-    public Set<Block> getVisibleBlocks() {
-        Set<Block> blocks = new HashSet<>();
+    public Set<ViewBlock> getVisibleBlocks() {
+        Set<ViewBlock> blocks = new HashSet<>();
         for (Object block : serverContext.getObjects(nl.tudelft.bw4t.blocks.Block.class)) {
             blocks.add(((nl.tudelft.bw4t.blocks.Block) block).getView());
         }
@@ -98,8 +99,8 @@ public class ServerMapController extends AbstractMapController {
     }
 
     @Override
-    public Set<Entity> getVisibleEntities() {
-        Set<Entity> entities = new HashSet<>();
+    public Set<ViewEntity> getVisibleEntities() {
+        Set<ViewEntity> entities = new HashSet<>();
         for (Object robot : serverContext.getObjects(IRobot.class)) {
             IRobot robotTemp = (IRobot) robot;
             if (robotTemp.isConnected()) {
@@ -110,11 +111,11 @@ public class ServerMapController extends AbstractMapController {
     }
 
     @Override
-    public Set<EPartner> getVisibleEPartners() {
-        Set<EPartner> epartners = new HashSet<>();
+    public Set<ViewEPartner> getVisibleEPartners() {
+        Set<ViewEPartner> epartners = new HashSet<>();
         for (Object epartner : serverContext.getObjects(EPartner.class)) {
             EPartner epartnerTemp = (EPartner) epartner;
-            epartners.add(epartnerTemp);
+            epartners.add(epartnerTemp.getView());
         }
         return epartners;
     }

@@ -12,7 +12,7 @@ import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.handicap.IRobot;
-import nl.tudelft.bw4t.map.view.Entity;
+import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.Corridor;
@@ -449,13 +449,13 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     }
 
     @Override
-    public Entity getView() {
-        Collection<nl.tudelft.bw4t.map.view.Block> bs = new HashSet<>();
+    public ViewEntity getView() {
+        Collection<nl.tudelft.bw4t.map.view.ViewBlock> bs = new HashSet<>();
         for (Block block : holding) {
             bs.add(block.getView());
         }
         NdPoint loc = getSpace().getLocation(this);
-        return new Entity(getName(), loc.getX(), loc.getY(), bs);
+        return new ViewEntity(getName(), loc.getX(), loc.getY(), bs);
     }
     
 	@Override
