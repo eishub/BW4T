@@ -74,7 +74,7 @@ public abstract class AbstractRobotDecorator implements IRobot {
 	}
 	
     @Override
-	public boolean canPickUp(Block b) {
+	public boolean canPickUp(BoundedMoveableObject b) {
 		return parent.canPickUp(b);
 	}
 	
@@ -254,11 +254,6 @@ public abstract class AbstractRobotDecorator implements IRobot {
 	}
 	
     @Override
-	public boolean canPickUpEPartner(EPartner eP) {
-		return parent.canPickUpEPartner(eP);
-	}
-	
-    @Override
 	public void pickUpEPartner(EPartner eP) {
 		parent.pickUpEPartner(eP);
 	}
@@ -294,7 +289,7 @@ public abstract class AbstractRobotDecorator implements IRobot {
     }
 
     @Override
-    public double distanceTo(Block b) {
+    public double distanceTo(BoundedMoveableObject b) {
         return parent.distanceTo(b);
     }
 

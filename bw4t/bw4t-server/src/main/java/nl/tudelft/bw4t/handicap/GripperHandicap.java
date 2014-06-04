@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.handicap;
 
+import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.blocks.Block;
 
 /**
@@ -26,7 +27,7 @@ public class GripperHandicap extends AbstractRobotDecorator {
      * @return false
      */
     @Override
-    public boolean canPickUp(Block b) {
+    public boolean canPickUp(BoundedMoveableObject b) {
     	return false;
     }
     

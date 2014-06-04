@@ -196,8 +196,12 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     }
 
     @Override
-    public boolean canPickUp(Block b) {
-        return (distanceTo(b.getLocation()) <= ARM_DISTANCE) && b.isFree() && (holding.size() < grippercap);
+    public boolean canPickUp(BoundedMoveableObject obj) {
+        if(obj instanceof Block) {
+            Block b = (Block) obj;
+            return (distanceTo(obj.getLocation()) <= ARM_DISTANCE) && b.isFree() && (holding.size() < grippercap);
+        }
+        return false;
     }
 
     @Override
@@ -537,11 +541,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	}
 
 	@Override
-	public boolean canPickUpEPartner(EPartner eP) {
-		return false;
-	}
-
-	@Override
 	public void pickUpEPartner(EPartner eP) {
 	}
 
@@ -550,7 +549,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	}
 	
 	@Override
-    public double distanceTo(Block b) {
+    public double distanceTo(BoundedMoveableObject b) {
         return super.distanceTo(b);
     }
 

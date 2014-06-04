@@ -7,7 +7,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.blocks.Block;
+import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.eis.translators.BlockWithColorTranslator;
 import nl.tudelft.bw4t.eis.translators.BoundedMovableObjectTranslator;
 import nl.tudelft.bw4t.eis.translators.ColorTranslator;
@@ -161,19 +163,25 @@ public class RobotEntity implements RobotEntityInt {
 
         // Add the dropzone
         DropZone dropZone = (DropZone) context.getObjects(DropZone.class).get(0);
-        objects.add(new ObjectInformation(dropZone.getLocation().getX(), dropZone.getLocation().getY(), dropZone
-                .getId()));
+        objects.add(new ObjectInformation(dropZone));
 
         // Add rooms
         IndexedIterable<Object> allRooms = context.getObjects(BlocksRoom.class);
         for (Object object : allRooms) {
             Room r = (Room) object;
-            objects.add(new ObjectInformation(r.getLocation().getX(), r.getLocation().getY(), r.getId()));
+            objects.add(new ObjectInformation(r));
         }
 
         // Add blocks
         for (Block block : getVisibleBlocks()) {
-            objects.add(new ObjectInformation(block.getLocation().getX(), block.getLocation().getY(), block.getId()));
+            objects.add(new ObjectInformation(block));
+        }
+        
+        // Add EPartners
+        IndexedIterable<Object> allEPartners = context.getObjects(EPartner.class);
+        for (Object object : allEPartners) {
+            EPartner ep = (EPartner) object;
+            objects.add(new ObjectInformation(ep));
         }
 
         // #2830 add robots own position
@@ -453,33 +461,13 @@ public class RobotEntity implements RobotEntityInt {
      */
     @AsAction(name = "pickUp")
     public void pickUp() {
-        List<Block> canPickUp = new ArrayList<Block>();
-
         LOGGER.debug(String.format("%s is trying to pick up a block.", ourRobot.getName()));
-        
-        Iterable<Object> allBlocks = context.getObjects(Block.class);
-        for (Object o : allBlocks) {
-            Block aBlock = (Block) o;
 
-            LOGGER.trace(String.format("%s is %f units away from block %d.", ourRobot.getName(), ourRobot.distanceTo(aBlock), aBlock.getId()));
-            if (ourRobot.canPickUp(aBlock)) {
-                canPickUp.add(aBlock);
-                LOGGER.trace(String.format("%s can pick up block %d.", ourRobot.getName(), aBlock.getId()));
-            }
-        }
-
-        Block nearest;
+        Block nearest = getClosest(Block.class);
         // Pick up closest block in canPickUp list
-        if (canPickUp.isEmpty()) {
+        if (nearest == null) {
         	LOGGER.debug(String.format("%s can not pickup any blocks.", ourRobot.getName()));
             return;
-        } else {
-            nearest = canPickUp.get(0);
-            for (int i = 1; i < canPickUp.size(); i++) {
-                if (ourRobot.distanceTo(nearest) > ourRobot.distanceTo(canPickUp.get(i))) {
-                    nearest = canPickUp.get(i);
-                }
-            }
         }
     	LOGGER.debug(String.format("%s will pickup block %d.", ourRobot.getName(), nearest.getId()));
     	ourRobot.pickUp(nearest);
@@ -560,12 +548,36 @@ public class RobotEntity implements RobotEntityInt {
     }
     
     /**
+     * Give the robot a list of all the EPartners on the map.
+     * @return the list of EPartners
+     */
+    @AsPercept(name="epartner")
+    public List<EPartner> getEPartners() {
+        if (!ourRobot.isHuman()) {
+            return new ArrayList<>();
+        }
+        List<EPartner> eps = new ArrayList<>();
+        for (Object obj : context.getObjects(EPartner.class)) {
+            eps.add((EPartner) obj);
+        }
+        return eps;
+    }
+    
+    /**
      * Only available for the human:
      * picks up the e-Partner. 
      */
     @AsAction(name = "pickUpEPartner")
     public void pickUpEPartner() {
-    	
+        LOGGER.debug(String.format("%s is trying to pick up an e-partner.", ourRobot.getName()));
+
+        EPartner nearest = getClosest(EPartner.class);
+        if (nearest == null) {
+            LOGGER.debug(String.format("%s can not pickup any e-partners.", ourRobot.getName()));
+            return;
+        }
+        LOGGER.debug(String.format("%s will pickup e-partner %d.", ourRobot.getName(), nearest.getId()));
+        ourRobot.pickUpEPartner(nearest);
     }
     
     /**
@@ -577,6 +589,31 @@ public class RobotEntity implements RobotEntityInt {
     	if (ourRobot.isHuman()) {
     		ourRobot.dropEPartner();
     	}
+    }
+    
+    /**
+     * Find the closest {@link BoundedMoveableObject} that can be picked up by the Robot.
+     * @param type the type of {@link BoundedMoveableObject} we are looking for 
+     * @return null if non were found, otherwise the closest
+     */
+    private <T extends BoundedMoveableObject> T getClosest(Class<T> type) {
+        Iterable<Object> allBlocks = context.getObjects(type);
+        T nearest = null;
+        double nearestDistance = Integer.MAX_VALUE;
+        for (Object o : allBlocks) {
+            T aBlock = (T) o;
+            double distance = ourRobot.distanceTo(aBlock);
+
+            LOGGER.trace(String.format("%s is %f units away from %d.", ourRobot.getName(), distance, aBlock.getId()));
+            if (ourRobot.canPickUp(aBlock)) {
+                LOGGER.trace(String.format("%s can pick up %d checking distance.", ourRobot.getName(), aBlock.getId()));
+                if (nearest == null || distance < nearestDistance) {
+                    nearest = aBlock;
+                    nearestDistance = distance;
+                }
+            }
+        }
+        return nearest;
     }
 
 }

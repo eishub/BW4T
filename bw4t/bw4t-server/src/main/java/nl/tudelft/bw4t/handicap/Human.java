@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.handicap;
 
+import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.robots.AbstractRobot;
 import repast.simphony.random.RandomHelper;
@@ -29,14 +30,19 @@ public class Human extends AbstractRobotDecorator {
      * @param eP the ePartner to be picked up.
      * @return true if the human can pick it up. 
      */
-    public boolean canPickUpEPartner(EPartner eP) {
-    	return (robot.distanceTo(eP.getLocation()) <= AbstractRobot.ARM_DISTANCE);
+    @Override
+    public boolean canPickUp(BoundedMoveableObject eP) {
+        if (eP instanceof EPartner){
+            return (robot.distanceTo(eP) <= AbstractRobot.ARM_DISTANCE);
+        }
+        return getParent().canPickUp(eP);
     }
     
     /**
      * The Human picks up an e-Partner.
      * @param eP the picked up e-Partner. 
      */
+    @Override
     public void pickUpEPartner(EPartner eP) {
     	this.ePartner = eP;
     }
@@ -44,6 +50,7 @@ public class Human extends AbstractRobotDecorator {
     /**
      * The Human drops the e-Partner they are holding. 
      */
+    @Override
     public void dropEPartner() {
     	
     	if (!isHoldingEPartner()) {
@@ -60,11 +67,13 @@ public class Human extends AbstractRobotDecorator {
         this.ePartner = null;
     }
 
-	public boolean isHoldingEPartner() {
+    @Override
+    public boolean isHoldingEPartner() {
 		return this.ePartner != null;
 	}
 	
-	public EPartner getEPartner() {
+    @Override
+    public EPartner getEPartner() {
 		return this.ePartner;
 	}
 }
