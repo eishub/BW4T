@@ -10,6 +10,7 @@ import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
+import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.view.MapRendererInterface;
 
@@ -58,5 +59,4 @@ public class TestMapController extends AbstractMapController {
         set.add(BlockColor.BLUE);
         return set;
     }
-
 }
