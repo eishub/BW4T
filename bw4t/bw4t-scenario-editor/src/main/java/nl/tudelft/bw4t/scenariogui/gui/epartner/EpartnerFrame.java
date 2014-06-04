@@ -35,7 +35,7 @@ public class EpartnerFrame extends JFrame {
 
 	private JTextField epartnerAmountField = new JTextField();
 
-	private JButton applyButton = new JButton("Apply");
+	private JButton saveButton = new JButton("Save");
 
 	private JButton resetButton = new JButton("Reset");
 
@@ -74,6 +74,7 @@ public class EpartnerFrame extends JFrame {
 		contentPane.add(optionPane, BorderLayout.CENTER);
 		contentPane.add(buttonPane, BorderLayout.SOUTH);
 
+		setResizable(false);
 		pack();
 		setVisible(true);
 
@@ -116,7 +117,7 @@ public class EpartnerFrame extends JFrame {
 	private void createButtonPanel() {
 		buttonPane.setLayout(new GridLayout(1, 0));
 
-		buttonPane.add(applyButton);
+		buttonPane.add(saveButton);
 		buttonPane.add(resetButton);
 		buttonPane.add(cancelButton);
 	}
@@ -145,7 +146,7 @@ public class EpartnerFrame extends JFrame {
 	 * @return The apply button.
 	 */
 	public JButton getApplyButton() {
-		return applyButton;
+		return saveButton;
 	}
 
 	/**
