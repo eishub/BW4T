@@ -9,8 +9,8 @@ import java.awt.geom.Point2D;
 public class ViewEPartner {
     
     public static final int EPARTNER_SIZE = 1;
-    public static final Color EPARTNER_OFFLINE = Color.RED;
-    public static final Color EPARTNER_ONLINE = Color.CYAN; 
+    public static final Color EPARTNER_OFFLINE = Color.YELLOW;
+    public static final Color EPARTNER_ONLINE = Color.GREEN; 
     
     private String name = "";
     private Point2D location = new Point2D.Double();

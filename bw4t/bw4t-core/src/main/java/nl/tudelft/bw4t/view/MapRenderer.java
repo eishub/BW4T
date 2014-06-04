@@ -76,6 +76,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
         drawBlocks(g2d);
         drawEntity(g2d);
         drawSequence(g2d);
+        drawEPartners(g2d);
     }
 
     /**
@@ -232,6 +233,13 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
     	
     	for (ViewEPartner eP : getController().getVisibleEPartners()) {
     		g2d.setColor(eP.getColor());
+    		Point2D loc = eP.getLocation();
+    		int x = (int) set.scale(loc.getX());
+    		int y = (int) set.scale(loc.getY());
+    		final int size = set.scale(eP.EPARTNER_SIZE);
+            int[] xpoints = new int[] { x, x - size, x + size };
+            int[] ypoints = new int[] { y + size, y - size, y - size };
+            g2d.fillPolygon(xpoints, ypoints, 3);
     	}
     }
 }
