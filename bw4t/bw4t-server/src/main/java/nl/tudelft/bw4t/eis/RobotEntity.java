@@ -155,6 +155,23 @@ public class RobotEntity implements RobotEntityInt {
 
         return blocks;
     }
+    
+    /**
+     * Percepts for the sizes of all the robots.
+     */
+    @AsPercept(name = "robotSize", multiplePercepts = true, filter = Filter.Type.ON_CHANGE)
+    public List<ObjectInformation> getSizes() {
+        List<ObjectInformation> sizes = new ArrayList<ObjectInformation>();
+        
+        IndexedIterable<Object> allRobots = context.getObjects(IRobot.class);
+        
+        for (Object obj : allRobots) {
+            IRobot robot = (IRobot) obj;
+            sizes.add(new ObjectInformation(robot.getSize(), robot.getSize(), robot.getId()));
+        }
+        
+        return sizes;       
+    }
 
     /**
      * Percepts for the location of rooms and the dropzone and the blocks Send on change

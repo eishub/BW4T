@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class ViewEntity {
     /** The width and height of the robot */
-    public final static int ROBOT_SIZE = 2;
+
     public final static Color ROBOT_COLOR = Color.BLACK;
 
     private String name = "";
@@ -20,15 +20,18 @@ public class ViewEntity {
     private final Map<Long, ViewBlock> holding = new HashMap<>();
 
     private Point2D location;
+    
+    private int robotsize;
 
     public ViewEntity(){
         location = new Point2D.Double();
     }
 
-    public ViewEntity(String name, double x, double y, Collection<ViewBlock> holding) {
+    public ViewEntity(String name, double x, double y, Collection<ViewBlock> holding, int robotsize) {
         this.setName(name);
         this.setLocation(x, y);
         this.setHolding(holding);
+        this.setRobotSize(robotsize);
     }
 
     public String getName() {
@@ -71,5 +74,13 @@ public class ViewEntity {
 
     public void setLocation(double x, double y) {
         location = new Point2D.Double(x, y);
+    }
+    
+    public int getRobotSize() {
+    	return robotsize;
+    }
+    
+    public void setRobotSize(int robotsize) {
+    	this.robotsize = robotsize;
     }
 }
