@@ -41,7 +41,7 @@ class MenuOptionExport extends AbstractMenuOption {
     //TODO: Split up in multiple shorter methods
     public void actionPerformed(final ActionEvent e) {
         saveFile();
-        if(getMenuView().hasLastFileLocation()) {
+        if (getMenuView().hasLastFileLocation()) {
             File saveLocation = new File(getMenuView().getLastFileLocation());
 
             JFileChooser filechooser = getCurrentFileChooser();
@@ -53,7 +53,6 @@ class MenuOptionExport extends AbstractMenuOption {
 
             if (filechooser.showDialog(getController().getMainView(), "Export MAS project") == JFileChooser.APPROVE_OPTION) {
                 File masFile = filechooser.getSelectedFile();
-                String directory = masFile.getAbsolutePath();
                 try {
                     String saveDirectory = masFile.getAbsolutePath();
 
@@ -76,7 +75,8 @@ class MenuOptionExport extends AbstractMenuOption {
                 }
             }
 
-        } else {
+        } 
+        else {
             ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Error: Can not export an unsaved scenario.");
         }
 
