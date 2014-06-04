@@ -69,7 +69,7 @@ public interface IRobot {
      * @return 
      * true if the block is within reach and if the bot isn't holding a block already
      */
-	boolean canPickUp(Block b);
+	boolean canPickUp(BoundedMoveableObject b);
 	
     /**
      * Pick up a block
@@ -327,15 +327,6 @@ public interface IRobot {
 	
 	/**
 	 * @param eP
-	 * the e-Partner the human could pick up
-	 * @return
-	 * true if the human is holding e-Partner eP
-	 * only used if the robot has a Human wrapped around it
-	 */
-	boolean canPickUpEPartner(EPartner eP);
-	
-	/**
-	 * @param eP
 	 * only used if the robot has a Human wrapped around it
 	 */
 	void pickUpEPartner(EPartner eP);
@@ -385,7 +376,7 @@ public interface IRobot {
      * @return
      * the distance in question
      */
-    double distanceTo(Block b);
+    double distanceTo(BoundedMoveableObject b);
 
     /**
      * get the {@link NavigatingRobot} at the head of the chain.
