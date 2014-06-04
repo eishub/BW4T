@@ -15,23 +15,34 @@ public class ViewEntity {
 
     public final static Color ROBOT_COLOR = Color.BLACK;
 
+    private long id = 0;
+    
     private String name = "";
 
     private final Map<Long, ViewBlock> holding = new HashMap<>();
 
     private Point2D location;
     
-    private int robotsize;
+    private int robotsize = 2;
 
     public ViewEntity(){
         location = new Point2D.Double();
     }
 
-    public ViewEntity(String name, double x, double y, Collection<ViewBlock> holding, int robotsize) {
+    public ViewEntity(long id, String name, double x, double y, Collection<ViewBlock> holding, int robotsize) {
+    	this.setId(id);
         this.setName(name);
         this.setLocation(x, y);
         this.setHolding(holding);
-        this.setRobotSize(robotsize);
+        this.setSize(robotsize);
+    }
+    
+    public long getId() {
+    	return id;
+    }
+    
+    public void setId(long id) {
+    	this.id = id;
     }
 
     public String getName() {
@@ -80,7 +91,7 @@ public class ViewEntity {
     	return robotsize;
     }
     
-    public void setRobotSize(int robotsize) {
+    public void setSize(int robotsize) {
     	this.robotsize = robotsize;
     }
 }
