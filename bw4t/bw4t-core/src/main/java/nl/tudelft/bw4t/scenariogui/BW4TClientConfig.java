@@ -34,7 +34,7 @@ public class BW4TClientConfig {
 	/**
 	 * The clientIP.
 	 */
-	private String clientIp;
+	private String clientIp = "";
 
 	/**
 	 * The client port.
@@ -44,7 +44,7 @@ public class BW4TClientConfig {
 	/**
 	 * The serverIP.
 	 */
-	private String serverIp;
+	private String serverIp = "";
 
 	/**
 	 * The server port.
@@ -64,7 +64,7 @@ public class BW4TClientConfig {
 	/**
 	 * The location of the map file.
 	 */
-	private String mapFile;
+	private String mapFile = "";
 
 	/**
 	 * The XML element wrapper for the list of bots.
