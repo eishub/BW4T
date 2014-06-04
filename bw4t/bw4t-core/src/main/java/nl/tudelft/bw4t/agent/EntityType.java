@@ -39,4 +39,12 @@ public enum EntityType {
             throw new RuntimeException("Unsupported type of entity found.");
         }
     }
+
+    /**
+     * String representation of the entity, with the first letter capitalized.
+     */
+    @Override
+    public String toString() {
+        return nameLower().substring(0, 1).toUpperCase() + nameLower().substring(1);
+    }
 }

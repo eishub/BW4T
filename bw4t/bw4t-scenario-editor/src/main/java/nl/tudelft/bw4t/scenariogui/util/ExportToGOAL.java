@@ -203,17 +203,16 @@ public final class ExportToGOAL {
                 humanCount += bot.getBotAmount();
             }
             String goalFileSanitized = bot.getFileName().toLowerCase().replace(" ", "_");
-            String goalFileNoExt = goalFileSanitized.substring(0, goalFileSanitized.length() - 5);
             launchPolicyBuilder.append(TAB);
             launchPolicyBuilder.append(String.format("when [type=%s,max=%d]@env do launch %s: %s .",
                             type,
                             new Integer(bot.getBotAmount()),
                             bot.getBotName().toLowerCase().replace(" ", "_"),
-                            goalFileNoExt)
+                            bot.getReferenceName())
             );
             launchPolicyBuilder.append(NEWLINE);
             /* Remove the last 5 characters since that is the extension. */
-            goalFiles.put(bot.getFileName(), goalFileNoExt);
+            goalFiles.put(bot.getFileName(), bot.getReferenceName());
         }
     }
 
