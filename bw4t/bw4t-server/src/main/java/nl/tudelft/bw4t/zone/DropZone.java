@@ -109,9 +109,9 @@ public class DropZone extends Room {
                 // Correct block has been dropped in
                 sequenceIndex++;
                 robot.getAgentRecord().addGoodDrop();
-                log();
                 if (sequenceIndex == sequence.size()) {
-                    log();
+                	 logTime();
+                     logBot();
                 }
             }
             else {
@@ -123,14 +123,29 @@ public class DropZone extends Room {
     }
     
     /**
-     * Writing summarie into logfile.
+     * Writing total time needed to finish sequence into logfile.
      */
-    private void log(){
-    	
+    private void logTime(){
+
     	BW4TEnvironment env = BW4TEnvironment.getInstance();
-        long totalTime = System.currentTimeMillis() - env.getStarttime();
+    	
+    	//totalTime is in miliseconds
+        double totalTime = (System.currentTimeMillis() - env.getStarttime());
         
-        LOGGER.log(BotLog.BOTLOG, "time to finish sequence " + totalTime);
+        if(totalTime>60000){
+        	int totalMin = (int)totalTime / 60000;
+        	int totalSec = (int)totalTime / 1000 %60;
+        	LOGGER.log(BotLog.BOTLOG, "time to finish sequence is " + totalMin + " minutes and " + totalSec + " seconds");
+        }
+        else
+        	LOGGER.log(BotLog.BOTLOG, "time to finish sequence is " + totalTime/1000 + "seconds");
+    }
+    
+    /**
+     * Writing sumarry of bot into logfile.
+     */
+     private void logBot(){
+    	BW4TEnvironment env = BW4TEnvironment.getInstance();
         for (String entity : env.getEntities()) {
         	if(env.getEntity(entity) instanceof RobotEntity ) {
             	RobotEntity rEntity = (RobotEntity)env.getEntity(entity);

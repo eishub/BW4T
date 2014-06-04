@@ -34,6 +34,7 @@ import nl.tudelft.bw4t.server.BW4TServer;
 import nl.tudelft.bw4t.server.RobotEntityInt;
 import nl.tudelft.bw4t.server.logging.BotLog;
 import nl.tudelft.bw4t.visualizations.ServerContextDisplay;
+import nl.tudelft.bw4t.zone.DropZone;
 
 import org.apache.log4j.Logger;
 
@@ -149,11 +150,9 @@ public class BW4TEnvironment extends AbstractEnvironment {
      * reports errors and proceeds.
      */
     public void removeAllEntities() throws ManagementException {
-       
-        // TODO check if total time is calculated same way as before
-    	LOGGER.log(BotLog.BOTLOG, "total time: " + (System.currentTimeMillis() - starttime));
+      
+    	logTime();
         // FIXME: BOTLOG gives nullpointer exception if no bots.
-        
 
         setState(EnvironmentState.KILLED);
 
@@ -171,7 +170,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
                 LOGGER.error("Failure to delete entity: " + entity, e);
             }
         }
-    
         
         LOGGER.debug("Remove all (remaining) agents");
         for (String agent : this.getAgents()) {
@@ -182,6 +180,25 @@ public class BW4TEnvironment extends AbstractEnvironment {
             }
         }
         mapFullyLoaded = false;
+    }
+    
+    /**
+     * Writing total time needed to finish sequence into logfile.
+     */
+    private void logTime(){
+
+    	BW4TEnvironment env = BW4TEnvironment.getInstance();
+    	
+    	//totalTime is in miliseconds
+        double totalTime = (System.currentTimeMillis() - env.getStarttime());
+        
+        if(totalTime>60000){
+        	int totalMin = (int)totalTime / 60000;
+        	int totalSec = (int)totalTime / 1000 %60;
+        	LOGGER.log(BotLog.BOTLOG, "time to finish sequence is " + totalMin + " minutes and " + totalSec + " seconds");
+        }
+        else
+        	LOGGER.log(BotLog.BOTLOG, "time to finish sequence is " + totalTime/1000 + "seconds");
     }
 
     @Override
