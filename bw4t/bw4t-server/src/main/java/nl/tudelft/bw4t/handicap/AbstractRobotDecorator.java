@@ -210,7 +210,7 @@ public abstract class AbstractRobotDecorator implements IRobot {
 	
     @Override
 	public IRobot getParent() {
-		return parent.getParent();
+		return parent;
 	}
 	
     @Override

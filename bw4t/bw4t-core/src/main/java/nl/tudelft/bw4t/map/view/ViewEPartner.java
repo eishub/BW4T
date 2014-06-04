@@ -12,25 +12,25 @@ public class ViewEPartner {
     public static final Color EPARTNER_OFFLINE = Color.YELLOW;
     public static final Color EPARTNER_ONLINE = Color.GREEN; 
     
-    private String name = "";
+    private long id = 0;
     private Point2D location = new Point2D.Double();
     private boolean pickedUp = false;
 
     public ViewEPartner() {
     }
 
-    public ViewEPartner(String name, Point2D location, boolean isPickedUp) {
-        this.name = name;
+    public ViewEPartner(long id, Point2D location, boolean isPickedUp) {
+        this.setId(id);
         this.location = location;
         this.pickedUp = isPickedUp;
     }
 
-    public String getName() {
-        return name;
+    public long getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Point2D getLocation() {
