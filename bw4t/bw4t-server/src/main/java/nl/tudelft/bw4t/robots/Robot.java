@@ -33,6 +33,9 @@ import repast.simphony.space.continuous.NdPoint;
  */
 public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	
+	/**
+	 * logger used to log in console and in logfile
+	 */
 	private static final Logger LOGGER = Logger.getLogger(Robot.class);
 
     /**
@@ -89,7 +92,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
     /**
      * AgentRecord object for this Robot, needed for logging
      */
-    AgentRecord agentRecord;
+    private AgentRecord agentRecord;
 
     /**
      * Creates a new robot.
@@ -334,7 +337,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
          * Merge the move type if multiple zones are entered at once. The result is the 'worst' event that happens
          * 
          * @param other
-         * @return
+         * @return MoveType
          */
         public MoveType merge(MoveType other) {
             if (this.isHit())
