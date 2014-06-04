@@ -28,7 +28,7 @@ class GripperBox implements ActionListener {
     }
     /**
      * Performs the following action: disables the gripper slider
-     * when enabled.
+     * when enabled and sends the new setting to BotConfig.
      * @param ae The action event belonging to the check box.
      */
     public void actionPerformed(ActionEvent ae) {
@@ -41,9 +41,7 @@ class GripperBox implements ActionListener {
             gripSlider.setEnabled(true);
         }
         
-        //k hier begint mijn voorbeeld (voor het officiele MVC gedoe):
         BotConfig config = view.getDataObject();
         config.setGripperHandicap(enabled);
-        
     }
 }
