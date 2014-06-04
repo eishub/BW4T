@@ -3,6 +3,7 @@ package nl.tudelft.bw4t.scenariogui.controllers.botstore;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import nl.tudelft.bw4t.agent.EntityType;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
 
 /**
@@ -27,24 +28,29 @@ class ResetButton implements ActionListener {
      * @param ae The action event causing this.
      */
     public void actionPerformed(ActionEvent ae) {
-        view.getSpeedSlider().setValue(100);
-        view.getSizeSlider().setValue(2);
-        view.getBatterySlider().setValue(0);
-        view.getSizeSlider().setEnabled(false);
-        view.getBatterySlider().setEnabled(false);
-        view.getSpeedSlider().setEnabled(false);
-        view.getNumberOfGrippersSlider().setEnabled(true);
-        view.getGripperCheckbox().setSelected(false);
-        view.getColorblindCheckbox().setSelected(false);
-        view.getsizeoverloadCheckbox().setSelected(false);
-        view.getmovespeedCheckbox().setSelected(false);
-        view.getBatteryEnabledCheckbox().setSelected(false);
-        view.getNumberOfGrippersSlider().setValue(1);
-        view.getFileNameField().setText(".goal");
-        view.getBotNameField().setText("");
+        view.getSpeedSlider().setValue(view.getDataObject().getBotSpeed());
+        view.getSizeSlider().setValue(view.getDataObject().getBotSize());
+        view.getBatterySlider().setValue(view.getDataObject().getBotBatteryCapacity());
+        view.getSizeSlider().setEnabled(view.getDataObject().getSizeOverloadHandicap());
+        view.getBatterySlider().setEnabled(view.getDataObject().isBatteryEnabled());
+        view.getSpeedSlider().setEnabled(view.getDataObject().getMoveSpeedHandicap());
+        view.getNumberOfGrippersSlider().setEnabled(view.getDataObject().getGripperHandicap());
+        view.getGripperCheckbox().setSelected(view.getDataObject().getGripperHandicap());
+        view.getColorblindCheckbox().setSelected(view.getDataObject().getColorBlindHandicap());
+        view.getsizeoverloadCheckbox().setSelected(view.getDataObject().getSizeOverloadHandicap());
+        view.getmovespeedCheckbox().setSelected(view.getDataObject().getMoveSpeedHandicap());
+        view.getBatteryEnabledCheckbox().setSelected(view.getDataObject().isBatteryEnabled());
+        view.getNumberOfGrippersSlider().setValue(view.getDataObject().getGrippers());
+        view.getFileNameField().setText(view.getDataObject().getFileName());
+        view.getBotNameField().setText(view.getDataObject().getBotName());
         view.getBatteryUseValueLabel().setText("0");
-        view.getBotReferenceField().setText("");
-        view.getBotAmountTextField().setText("1");
+        view.getBotReferenceField().setText(view.getDataObject().getReferenceName());
+        view.getBotAmountTextField().setText(""+view.getDataObject().getBotAmount());  
+        if (view.getDataObject().getBotController().equals(EntityType.HUMAN)){
+        	view.getBotControllerSelector().setSelectedIndex(1);
+        } else {
+        	view.getBotControllerSelector().setSelectedIndex(0);
+        }
         
     }
 }
