@@ -34,5 +34,6 @@ class MenuOptionSave extends AbstractMenuOption {
         super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
         super.getController().getMainView().getMainPanel().getEntityPanel().updateBotConfigs();
         super.getController().getMainView().getMainPanel().getEntityPanel().updateEPartnerCount();
+        super.getController().getMainView().getMainPanel().getEntityPanel().updateEpartnerConfigs();
     }
 }

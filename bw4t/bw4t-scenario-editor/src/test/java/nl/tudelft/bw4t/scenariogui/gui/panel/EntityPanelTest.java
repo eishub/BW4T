@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.scenariogui.gui.panel;
 
 import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
@@ -369,7 +370,7 @@ public class EntityPanelTest {
     }
 
     /**
-     * Tests the compare and the update functions.
+     * Tests the BotConfig compare and the update functions.
      */
     @Test
     public void testBotConfigs() {
@@ -382,6 +383,22 @@ public class EntityPanelTest {
         entityPanel.updateBotConfigs();
         
         assertTrue(entityPanel.compareBotConfigs(entityPanel.getOldBotConfigs()));
+    }
+    
+    /**
+     * Tests the EPartnerConfig compare and the update functions.
+     */
+    @Test
+    public void testEPartnerConfigs() {
+        assertTrue(entityPanel.compareEpartnerConfigs(entityPanel.getOldEPartnerConfigs()));
+        
+        entityPanel.getEPartnerConfigs().add(new EPartnerConfig());
+        
+        assertFalse(entityPanel.compareEpartnerConfigs(entityPanel.getOldEPartnerConfigs()));
+        
+        entityPanel.updateEpartnerConfigs();
+        
+        assertTrue(entityPanel.compareEpartnerConfigs(entityPanel.getOldEPartnerConfigs()));
     }
 
     /**
