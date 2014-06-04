@@ -13,6 +13,7 @@ import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.eis.translators.BlockWithColorTranslator;
 import nl.tudelft.bw4t.eis.translators.BoundedMovableObjectTranslator;
 import nl.tudelft.bw4t.eis.translators.ColorTranslator;
+import nl.tudelft.bw4t.eis.translators.EPartnerTranslator;
 import nl.tudelft.bw4t.eis.translators.ObjectInformationTranslator;
 import nl.tudelft.bw4t.eis.translators.PointTranslator;
 import nl.tudelft.bw4t.eis.translators.ZoneTranslator;
@@ -39,6 +40,7 @@ import eis.eis2java.annotation.AsAction;
 import eis.eis2java.annotation.AsPercept;
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Filter;
+import eis.eis2java.translation.Filter.Type;
 import eis.eis2java.translation.Translator;
 import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
@@ -64,7 +66,7 @@ public class RobotEntity implements RobotEntityInt {
         translator.registerJava2ParameterTranslator(new PointTranslator());
         translator.registerJava2ParameterTranslator(new ObjectInformationTranslator());
         translator.registerJava2ParameterTranslator(new ColorTranslator());
-
+        translator.registerJava2ParameterTranslator(new EPartnerTranslator());
     }
 
     /**
@@ -551,7 +553,7 @@ public class RobotEntity implements RobotEntityInt {
      * Give the robot a list of all the EPartners on the map.
      * @return the list of EPartners
      */
-    @AsPercept(name="epartner")
+    @AsPercept(name = "epartner", multiplePercepts = true, filter = Type.ON_CHANGE)
     public List<EPartner> getEPartners() {
         if (!ourRobot.isHuman()) {
             return new ArrayList<>();

@@ -26,6 +26,7 @@ import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
+import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.view.MapRendererInterface;
 
@@ -44,6 +45,7 @@ public class ClientMapController extends AbstractMapController {
     private ViewEntity theBot = new ViewEntity();
     private int sequenceIndex = 0;
     private Set<ViewBlock> visibleBlocks = new HashSet<>();
+    private Set<ViewEPartner> visibleEPartners = new HashSet<>();
     private Map<Long, ViewBlock> allBlocks = new HashMap<>();
     private List<BlockColor> sequence = new LinkedList<>();
 
@@ -93,6 +95,11 @@ public class ClientMapController extends AbstractMapController {
         Set<ViewEntity> entities = new HashSet<>();
         entities.add(theBot);
         return entities;
+    }
+    
+    @Override
+    public Set<ViewEPartner> getVisibleEPartners() {
+        return visibleEPartners;
     }
 
     public ViewEntity getTheBot() {
@@ -145,6 +152,10 @@ public class ClientMapController extends AbstractMapController {
             ViewBlock b = getBlock(id);
             b.setColor(BlockColor.toAvailableColor(color));
             getVisibleBlocks().add(b);
+        }
+        // Update the state of the epartners
+        else if (name.equals("epartner")) {
+            
         }
         // Update group goal sequence
         else if (name.equals("sequence")) {
