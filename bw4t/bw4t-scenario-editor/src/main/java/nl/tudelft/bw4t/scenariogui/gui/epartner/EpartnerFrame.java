@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.scenariogui.gui.epartner;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
@@ -31,15 +32,23 @@ public class EpartnerFrame extends JFrame {
 
 	private JPanel optionPane = new JPanel();
 
+	private JPanel goalPane = new JPanel();
+
 	private JTextField epartnerNameField = new JTextField();
 
 	private JTextField epartnerAmountField = new JTextField();
+
+	private JTextField epartnerReferenceField = new JTextField();
+
+	private JTextField epartnerGoalFileField = new JTextField();
 
 	private JButton saveButton = new JButton("Save");
 
 	private JButton resetButton = new JButton("Reset");
 
 	private JButton cancelButton = new JButton("Cancel");
+
+	private JButton fileButton = new JButton("Use existing GOAL file");
 
 	private JCheckBox leftAloneCheckbox = new JCheckBox("Left-alone Warning");
 
@@ -98,17 +107,41 @@ public class EpartnerFrame extends JFrame {
 		optionPane.setLayout(new GridLayout(0, 1));
 
 		optionPane.add(new JLabel(""));
-		
+
+		JLabel propertiesLabel = new JLabel("Properties");
+		propertiesLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		optionPane.add(propertiesLabel);
+
 		if (dataObject.isForgetMeNot()) {
 			leftAloneCheckbox.setSelected(true);
 		}
 		optionPane.add(leftAloneCheckbox);
-		
+
 		if (dataObject.isGps()) {
 			gpsCheckBox.setSelected(true);
 		}
 		optionPane.add(gpsCheckBox);
 		optionPane.add(new JLabel(""));
+
+		addGoalOptions();
+
+		optionPane.add(new JLabel(""));
+	}
+
+	/**
+	 * Add the goal options to the option panel.
+	 */
+	private void addGoalOptions() {
+		JLabel goalLabel = new JLabel("GOAL options");
+		goalLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		optionPane.add(goalLabel);
+		optionPane.add(new JLabel("E-partner reference name:"));
+		epartnerReferenceField.setText(dataObject.getReferenceName());
+		optionPane.add(epartnerReferenceField);
+		optionPane.add(new JLabel("GOAL file name:"));
+		epartnerGoalFileField.setText(dataObject.getFileName());
+		optionPane.add(epartnerGoalFileField);
+		optionPane.add(fileButton);
 	}
 
 	/**
@@ -211,6 +244,33 @@ public class EpartnerFrame extends JFrame {
 	 */
 	public EPartnerConfig getDataObject() {
 		return dataObject;
+	}
+
+	/**
+	 * Returns the JTextField which contains the goal reference name.
+	 * 
+	 * @return The JTextField which contains the goal reference name.
+	 */
+	public JTextField getEpartnerReferenceField() {
+		return epartnerReferenceField;
+	}
+
+	/**
+	 * Returns the JTextField which contains the goal file name.
+	 * 
+	 * @return The JTextField which contains the goal file name.
+	 */
+	public JTextField getEpartnerGoalFileField() {
+		return epartnerGoalFileField;
+	}
+
+	/**
+	 * Returns the JButton for adding a goal file.
+	 * 
+	 * @return The JButton for adding a goal file.
+	 */
+	public JButton getFileButton() {
+		return fileButton;
 	}
 
 }
