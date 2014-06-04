@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.controller;
+package nl.tudelft.bw4t.scenariogui.controllers.epartner;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,9 +6,9 @@ import java.awt.event.ActionListener;
 import nl.tudelft.bw4t.scenariogui.gui.epartner.EpartnerFrame;
 
 /**
- * Handles actions of the CancelButton
+ * Handles actions of the ResetButton
  */
-class EpartnerCancelButton implements ActionListener {
+class EpartnerResetButton implements ActionListener {
     /**
      * The frame containing the button.
      */
@@ -17,14 +17,16 @@ class EpartnerCancelButton implements ActionListener {
      * The constructor for this action listener.
      * @param pview The frame with the button in it.
      */
-    public EpartnerCancelButton(EpartnerFrame pview) {
+    public EpartnerResetButton(EpartnerFrame pview) {
         this.view = pview;
     }
     /**
-     * Perform the required action (close the bot editor).
+     * Perform the required action (reset to default
+     * settings).
      * @param ae The action event triggering this method.
      */
     public void actionPerformed(ActionEvent ae) {
-        view.dispose();
+        view.getLeftAloneCheckbox().setSelected(false);
+        view.getGPSCheckbox().setSelected(false);
     }
 }
