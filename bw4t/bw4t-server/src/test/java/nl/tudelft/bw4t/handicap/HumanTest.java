@@ -122,7 +122,8 @@ public class HumanTest {
     @Test
     public void canPickUpEPartnerTest() {
         Human h = new Human(outBot);
-        assertFalse(h.canPickUpEPartner(ePartner));
+        when(ePartner.getLocation()).thenReturn(new NdPoint(10,10));
+        assertFalse(h.canPickUp(ePartner));
     }
     /**
      * can pick up epartner test
@@ -131,7 +132,7 @@ public class HumanTest {
     @Test
     public void canPickUpEPartnerTestTrue() {
         Human h = new Human(inBot);
-        assertTrue(h.canPickUpEPartner(ePartner));
+        assertTrue(h.canPickUp(ePartner));
     }
     /**
      * Return EPartner for max. coverage

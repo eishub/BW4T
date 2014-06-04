@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.controller;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -57,6 +58,12 @@ public class TestMapController extends AbstractMapController {
         set.add(BlockColor.RED);
         set.add(BlockColor.BLUE);
         set.add(BlockColor.BLUE);
+        return set;
+    }
+    
+    @Override
+    public Set<ViewEPartner> getVisibleEPartners() {
+        Set<ViewEPartner> set = new HashSet<>();
         return set;
     }
 }
