@@ -7,12 +7,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.JFrame;
+import javax.xml.bind.JAXBException;
+
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
+import nl.tudelft.bw4t.view.MapRenderer;
 import nl.tudelft.bw4t.view.MapRendererInterface;
 
 public class TestMapController extends AbstractMapController {
@@ -64,6 +68,18 @@ public class TestMapController extends AbstractMapController {
     @Override
     public Set<ViewEPartner> getVisibleEPartners() {
         Set<ViewEPartner> set = new HashSet<>();
+        set.add(new ViewEPartner("", new Point2D.Double(5.0, 4.0), false));
+        set.add(new ViewEPartner("", new Point2D.Double(10.0, 8.0), true));
+        
         return set;
+    }
+    
+    public static void main(String[] args) throws JAXBException {
+    	NewMap map = NewMap.create(TestMapController.class.getResourceAsStream("/Rainbow"));
+    	JFrame jan = new JFrame("Pédé");
+    	jan.add(new MapRenderer(new TestMapController(map)));
+    	jan.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	jan.pack();
+    	jan.setVisible(true);
     }
 }
