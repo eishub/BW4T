@@ -52,7 +52,16 @@ class MenuOptionExit extends AbstractMenuOption {
 						.compareBotConfigs(
 								super.getController().getMainView()
 										.getMainPanel().getEntityPanel()
-										.getOldBotConfigs())) {
+										.getOldBotConfigs())
+				|| !super
+						.getController()
+						.getMainView()
+						.getMainPanel()
+						.getEntityPanel()
+						.compareEpartnerConfigs(
+								super.getController().getMainView()
+										.getMainPanel().getEntityPanel()
+										.getOldEPartnerConfigs())) {
 			// Check if user wants to save current configuration
 			int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
 					null, ScenarioEditorController.CONFIRM_SAVE_TXT, "",

@@ -101,9 +101,9 @@ class MenuOptionOpen extends AbstractMenuOption {
 						.getEntityPanel().getBotConfigs().clear();
 
 				// Fill the bot panel
-				int rows = configuration.getBots().size();
+				int botRows = configuration.getBots().size();
 
-				for (int i = 0; i < rows; i++) {
+				for (int i = 0; i < botRows; i++) {
 					String botName = configuration.getBot(i).getBotName();
 					EntityType botController = configuration.getBot(i)
 							.getBotController();
@@ -112,6 +112,18 @@ class MenuOptionOpen extends AbstractMenuOption {
 					Object[] botObject = { botName, botController, botAmount };
 					entityPanel.getBotTableModel().addRow(botObject);
 					entityPanel.getBotConfigs().add(configuration.getBot(i));
+				}
+				
+				// Fill the epartner panel
+				int epartnerRows = configuration.getEpartners().size();
+
+				for (int i = 0; i < epartnerRows; i++) {
+					String epartnerName = configuration.getEpartner(i).getEpartnerName();
+					String epartnerAmount = Integer.toString(configuration.getEpartner(i)
+							.getEpartnerAmount());
+					Object[] epartnerObject = { epartnerName, epartnerAmount };
+					entityPanel.getEPartnerTableModel().addRow(epartnerObject);
+					entityPanel.getEPartnerConfigs().add(configuration.getEpartner(i));
 				}
 			} catch (JAXBException e1) {
 				ScenarioEditor.handleException(e1,
