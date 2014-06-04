@@ -3,9 +3,7 @@ package nl.tudelft.bw4t.scenariogui.controllers.editor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfigIntegration;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditor;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
@@ -45,8 +43,6 @@ class ModifyBot implements ActionListener {
             return;
         }
         String data = (String) view.getEntityPanel().getBotTable().getModel().getValueAt(row, 0);
-        BotConfig config = view.getEntityPanel().getBotConfig(row);
-        BW4TClientConfigIntegration.setCurrentBotConfig(config);
         new BotEditor(view, row);
     }
 }

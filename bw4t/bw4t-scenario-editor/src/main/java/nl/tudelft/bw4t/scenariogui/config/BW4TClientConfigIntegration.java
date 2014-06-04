@@ -1,8 +1,6 @@
 package nl.tudelft.bw4t.scenariogui.config;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.BotConfig;
-import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
@@ -15,9 +13,6 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  *
  */
 public final class BW4TClientConfigIntegration {
-    
-    private static BotConfig currentBotConfig;
-    private static EPartnerConfig currentEpartnerConfig;
     
     /** Prevents this class from being instantiated. */
     private BW4TClientConfigIntegration() { }
@@ -48,35 +43,4 @@ public final class BW4TClientConfigIntegration {
         return config;
     }
 
-    /**
-     * Gets the config of the bot that is currently selected.
-     * @return The config of the bot that is selected, null if none is selected.
-     */
-    public static BotConfig getCurrentBotConfig() {
-        return currentBotConfig;
-    }
-
-    /**
-     * Sets the botconfig of the bot that is currently selected.
-     * @param currentBotConfig The botconfig of the bot selected in the bot table.
-     */
-    public static void setCurrentBotConfig(BotConfig currentBotConfig) {
-        BW4TClientConfigIntegration.currentBotConfig = currentBotConfig;
-    }
-
-    /**
-     * Gets the config of the e-partner that is currently selected.
-     * @return The config of the e-partner that is selected, null if none is selected.
-     */
-    public static EPartnerConfig getCurrentEpartnerConfig() {
-        return currentEpartnerConfig;
-    }
-
-    /**
-     * Sets the e-partnerconfig of the e-partner that is currently selected.
-     * @param currentEpartnerConfig The e-partnerconfig of the e-partner selected in the e-partner table.
-     */
-    public static void setCurrentEpartnerConfig(EPartnerConfig currentEpartnerConfig) {
-        BW4TClientConfigIntegration.currentEpartnerConfig = currentEpartnerConfig;
-    }
 }

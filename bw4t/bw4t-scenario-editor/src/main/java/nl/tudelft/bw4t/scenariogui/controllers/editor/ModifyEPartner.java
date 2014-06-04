@@ -3,9 +3,7 @@ package nl.tudelft.bw4t.scenariogui.controllers.editor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfigIntegration;
 import nl.tudelft.bw4t.scenariogui.gui.epartner.EpartnerFrame;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
@@ -44,11 +42,9 @@ class ModifyEPartner implements ActionListener {
 
         if (row == -1) {
             ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select the E-partner you want to modify.");
-        }
+        } 
         else {
         	String data = (String) view.getEntityPanel().getEPartnerTable().getModel().getValueAt(row, 0);
-            EPartnerConfig config = view.getEntityPanel().getEPartnerConfig(row);
-            BW4TClientConfigIntegration.setCurrentEpartnerConfig(config);
             new EpartnerFrame(view, row);
         }
     }

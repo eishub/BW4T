@@ -42,7 +42,7 @@ class GripperBox implements ActionListener {
         }
         
         //k hier begint mijn voorbeeld (voor het officiele MVC gedoe):
-        BotConfig config = BW4TClientConfigIntegration.getCurrentBotConfig();
+        BotConfig config = view.getDataObject();
         config.setGripperHandicap(enabled);
         
     }
