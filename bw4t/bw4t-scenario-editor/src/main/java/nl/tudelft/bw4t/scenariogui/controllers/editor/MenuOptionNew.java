@@ -38,7 +38,7 @@ class MenuOptionNew extends AbstractMenuOption {
     public void actionPerformed(final ActionEvent e) {
         ConfigurationPanel configPanel = super.getController().getMainView().getMainPanel().getConfigurationPanel();
         EntityPanel entityPanel = super.getController().getMainView().getMainPanel().getEntityPanel();
-
+       
         // Check if current config is different from last saved config
         if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())
                 || !entityPanel.compareBotConfigs(entityPanel.getOldBotConfigs())) {
