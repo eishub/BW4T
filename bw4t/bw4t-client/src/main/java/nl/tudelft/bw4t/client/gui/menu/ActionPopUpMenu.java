@@ -10,7 +10,7 @@ import nl.tudelft.bw4t.client.gui.operations.MapOperations;
 import nl.tudelft.bw4t.controller.MapRenderSettings;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.view.Block;
+import nl.tudelft.bw4t.map.view.ViewBlock;
 
 public class ActionPopUpMenu {
     /**
@@ -37,9 +37,9 @@ public class ActionPopUpMenu {
             Shape roomBoundaries = set.transformRectangle(room.getBoundingbox().getRectangle());
             if (roomBoundaries.contains(gui.getSelectedLocation())) {
                 // Check if pressing on a block
-                for (Block box : cmc.getVisibleBlocks()) {
+                for (ViewBlock box : cmc.getVisibleBlocks()) {
 
-                    Shape boxBoundaries = set.transformCenterRectangle(new Rectangle2D.Double(box.getPosition().getX(), box.getPosition().getY(), Block.BLOCK_SIZE, Block.BLOCK_SIZE));
+                    Shape boxBoundaries = set.transformCenterRectangle(new Rectangle2D.Double(box.getPosition().getX(), box.getPosition().getY(), ViewBlock.BLOCK_SIZE, ViewBlock.BLOCK_SIZE));
                     if (boxBoundaries.contains(gui.getSelectedLocation())) {
                         if (MapOperations.closeToBox(box, gui.getController())) {
                             RoomMenus.buildPopUpMenuForBeingAtBlock(box, room, gui);

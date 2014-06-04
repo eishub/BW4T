@@ -9,8 +9,8 @@ import java.util.Set;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.view.Block;
-import nl.tudelft.bw4t.map.view.Entity;
+import nl.tudelft.bw4t.map.view.ViewBlock;
+import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.view.MapRendererInterface;
 
 public class TestMapController extends AbstractMapController {
@@ -30,17 +30,17 @@ public class TestMapController extends AbstractMapController {
     }
 
     @Override
-    public Set<Block> getVisibleBlocks() {
-        Set<Block> set = new HashSet<Block>();
-        set.add(new Block(1, BlockColor.RED, new Point2D.Double(150.0, 2.0)));
-        set.add(new Block(2, BlockColor.BLUE, new Point2D.Double(2.0, 3.0)));
-        set.add(new Block(2, BlockColor.BLUE, new Point2D.Double(2.0, 3.0)));
+    public Set<ViewBlock> getVisibleBlocks() {
+        Set<ViewBlock> set = new HashSet<ViewBlock>();
+        set.add(new ViewBlock(1, BlockColor.RED, new Point2D.Double(150.0, 2.0)));
+        set.add(new ViewBlock(2, BlockColor.BLUE, new Point2D.Double(2.0, 3.0)));
+        set.add(new ViewBlock(2, BlockColor.BLUE, new Point2D.Double(2.0, 3.0)));
         return set;
     }
 
     @Override
-    public Set<Entity> getVisibleEntities() {
-        Set<Entity> set = new HashSet<Entity>();
+    public Set<ViewEntity> getVisibleEntities() {
+        Set<ViewEntity> set = new HashSet<ViewEntity>();
         return set;
     }
 
