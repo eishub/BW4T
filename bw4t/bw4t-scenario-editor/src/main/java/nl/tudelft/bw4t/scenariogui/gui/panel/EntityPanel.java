@@ -125,11 +125,11 @@ public class EntityPanel extends JPanel {
 
 	private List<EPartnerConfig> epartnerConfigList = new ArrayList<EPartnerConfig>();
 
-	private List<EPartnerConfig> oldEpartnerConfigs = epartnerConfigList;
+	private List<EPartnerConfig> oldEpartnerConfigs = new ArrayList<EPartnerConfig>();//epartnerConfigList;
 
 	private List<BotConfig> botConfigList = new ArrayList<BotConfig>();
 
-	private List<BotConfig> oldBotConfigs = botConfigList;
+	private List<BotConfig> oldBotConfigs = new ArrayList<BotConfig>();//botConfigList;
 
 	/**
 	 * Create an EntityPanel object.

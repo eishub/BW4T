@@ -377,8 +377,7 @@ public class EntityPanelTest {
         
         entityPanel.getBotConfigs().add(new BotConfig());
         
-        //FIXME for some reason the new config is added to the old config list as well
-        //assertFalse(entityPanel.compareBotConfigs(entityPanel.getOldBotConfigs()));
+        assertFalse(entityPanel.compareBotConfigs(entityPanel.getOldBotConfigs()));
         
         entityPanel.updateBotConfigs();
         
