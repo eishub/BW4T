@@ -1,5 +1,7 @@
 package nl.tudelft.bw4t.scenariogui;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlElement;
 
 /**
@@ -8,7 +10,8 @@ import javax.xml.bind.annotation.XmlElement;
  * 
  * Information about an EPartner to be created by the server.
  */
-public final class EPartnerConfig {
+public final class EPartnerConfig implements Serializable {
+	private static final long serialVersionUID = -8235429942348638859L;
 
 	private String name = "E-Partner";
 
