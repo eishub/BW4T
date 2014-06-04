@@ -30,9 +30,10 @@ import nl.tudelft.bw4t.util.FileUtils;
     private static final String ENVIRONMENT = "env = \"BW4T3/BW4TClient.jar\" ." + NEWLINE;
 
     private static final String INIT = "init = [ "
-            + "configfile = \"source.xml\" ."
+            + "configfile = \"%s.xml\" ] ."
             + NEWLINE;
 
+    private static String init = "";
     private static BW4TClientConfig configuration;
     private static String directory;
     private static File mas2gFile;
@@ -55,23 +56,25 @@ import nl.tudelft.bw4t.util.FileUtils;
      * @param directory     The directory where the configuration has to be stored.
      * @param configuration The BW4TClientConfig to be generated.
      */
-    public static void export(String directory, BW4TClientConfig configuration) {
+    public static void export(String directory, BW4TClientConfig configuration, String configurationName) {
         ExportToMAS.directory = directory;
         ExportToMAS.configuration = configuration;
         goalFiles = new HashMap<String, String>();
+
+        init = String.format(INIT, configurationName);
 
         agentCount = 0;
         humanCount = 0;
 
         try {
-            generateHierarchy();
+            generateHierarchy(configurationName);
             buildLaunchPolicy();
             generateEnvironmentBlock();
             generateAgentBlock();
             generateLaunchPolicy();
 
             // Save the configuration again with the latest changes concerning the goal files.
-            configuration.setFileLocation(directory + "/source.xml");
+            configuration.setFileLocation(directory + "/" + configurationName +".xml");
             configuration.toXML();
         } catch (IOException ex) {
             ScenarioEditor.handleException(ex, "An IO Exception has occurred. Please try again.");
@@ -87,7 +90,7 @@ import nl.tudelft.bw4t.util.FileUtils;
      *
      * @throws IOException Exception raised if there are problems reading/writing to files
      */
-    private static void generateHierarchy() throws IOException {
+    private static void generateHierarchy(String configurationName) throws IOException {
         File directory = new File(ExportToMAS.directory);
         directory.mkdir();
 
@@ -96,7 +99,7 @@ import nl.tudelft.bw4t.util.FileUtils;
         agentFolder.mkdir();
 
         /* And the mas2g file, since it will be overwritten in every case. */
-        ExportToMAS.mas2gFile = new File(directory.getAbsolutePath() + "/bw4t.mas2g");
+        ExportToMAS.mas2gFile = new File(directory.getAbsolutePath() + "/" + configurationName + ".mas2g");
         mas2gFile.delete();
         mas2gFile.createNewFile();
 
@@ -175,8 +178,8 @@ import nl.tudelft.bw4t.util.FileUtils;
         out.print(TAB);
         out.print(ENVIRONMENT);
 
-        String init = String.format(
-                INIT,
+        String initField = String.format(
+                init,
                 configuration.getClientIp(),
                 configuration.getClientPort(),
                 configuration.getServerIp(),
@@ -187,7 +190,7 @@ import nl.tudelft.bw4t.util.FileUtils;
         );
 
         out.print(TAB);
-        out.print(init);
+        out.print(initField);
 
         out.println("}");
 
