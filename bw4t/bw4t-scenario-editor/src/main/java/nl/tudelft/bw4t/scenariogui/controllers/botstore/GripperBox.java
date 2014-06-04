@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JSlider;
 
+import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfigIntegration;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
 
 /**
@@ -31,11 +33,17 @@ class GripperBox implements ActionListener {
      */
     public void actionPerformed(ActionEvent ae) {
         JSlider gripSlider = view.getNumberOfGrippersSlider();
-        if (view.getGripperCheckbox().isSelected()) {
+        boolean enabled = view.getGripperCheckbox().isSelected();
+        if (enabled) {
             gripSlider.setEnabled(false);
         }
         else {
             gripSlider.setEnabled(true);
         }
+        
+        //k hier begint mijn voorbeeld (voor het officiele MVC gedoe):
+        BotConfig config = BW4TClientConfigIntegration.getCurrentBotConfig();
+        config.setGripperHandicap(enabled);
+        
     }
 }
