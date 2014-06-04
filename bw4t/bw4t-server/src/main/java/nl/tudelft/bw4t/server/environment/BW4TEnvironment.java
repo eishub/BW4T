@@ -6,10 +6,13 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.xml.bind.JAXBException;
 
@@ -32,6 +35,7 @@ import org.apache.log4j.Logger;
 
 import repast.simphony.context.Context;
 import repast.simphony.scenario.ScenarioLoadException;
+import repast.simphony.space.continuous.NdPoint;
 import eis.eis2java.environment.AbstractEnvironment;
 import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
@@ -581,6 +585,25 @@ public class BW4TEnvironment extends AbstractEnvironment {
         // Place the Robot
         Point2D p = getNextBotSpawnPoint();
         bot.moveTo(p.getX(), p.getY());
+    }
+    
+    /**
+     * @return
+     * The list of points the humans are right now. 
+     */
+    public List<Point2D> getHumanSpawningPoints() {
+        List<Point2D> points = new ArrayList<Point2D>();
+        
+        for (Object robot : context.getObjects(IRobot.class)) {
+            IRobot robotTemp = (IRobot) robot;
+            
+            if (robotTemp.isHuman() && !robotTemp.isHoldingEPartner()) {
+                NdPoint location = robotTemp.getLocation();
+                points.add(new Point2D.Double(location.getX(), location.getY()));
+            }
+        }
+        
+        return points;
     }
 
 }
