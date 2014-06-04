@@ -59,7 +59,7 @@ public class DefaultEntityFactory implements EntityFactory {
 		if (config.getSizeOverloadHandicap()) {
 			r = new SizeOverloadHandicap(r, config.getBotSize());
 		}
-		if (EntityType.HUMAN.isA(config.getBotController())) {
+		if (config.getBotController() == EntityType.HUMAN) {
 			r = new Human(r);
 		}
 		r.getSuperParent().setBattery(
