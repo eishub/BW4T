@@ -16,6 +16,12 @@ import nl.tudelft.bw4t.agent.EntityType;
 
 public final class BotConfig {
 
+    /** The default reference names for the goal files */
+    public static final String DEFAULT_GOAL_FILENAME_REFERENCE = "robot";
+
+    /** The Default filename for the robot goal files */
+    public static final String DEFAULT_GOAL_FILENAME = "robot.goal";
+
 	private String name = "Bot";
 
 	private EntityType controller = EntityType.AGENT;

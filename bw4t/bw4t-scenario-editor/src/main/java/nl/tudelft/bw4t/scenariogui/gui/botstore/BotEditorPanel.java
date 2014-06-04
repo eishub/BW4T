@@ -15,6 +15,7 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import nl.tudelft.bw4t.agent.EntityType;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
@@ -58,9 +59,9 @@ public class BotEditorPanel extends JPanel {
 	private JCheckBox batteryEnabledCheckbox = new JCheckBox(
 			"Battery Capacity enabled");
 
-	private JTextField fileNameField = new JTextField(".goal");
+	private JTextField fileNameField = new JTextField(BotConfig.DEFAULT_GOAL_FILENAME);
 
-	private JTextField botReferenceField = new JTextField();
+	private JTextField botReferenceField = new JTextField(BotConfig.DEFAULT_GOAL_FILENAME_REFERENCE);
 
 	private JSlider sizeSlider = new JSlider();
 
@@ -111,7 +112,7 @@ public class BotEditorPanel extends JPanel {
 
 		botNameField.setText(dataObject.getBotName());
 		botControllerSelector.setModel(new DefaultComboBoxModel(new String[] {
-				"Agent", "Human" }));
+                EntityType.AGENT.toString(), EntityType.HUMAN.toString() }));
 		botAmountTextField.setText("" + dataObject.getBotAmount());
 
 		botInfo.add(new JLabel("Bot name:"));
