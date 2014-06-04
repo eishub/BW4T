@@ -121,7 +121,7 @@ public class EPartnerEntity implements RobotEntityInt {
      * @return
      * The functionalities of the e-Partner
      */
-    @AsPercept(name = "functionalities", multiplePercepts = true, filter = Filter.Type.ONCE)
+    @AsPercept(name = "functionality", multiplePercepts = true, filter = Filter.Type.ONCE)
     public List<String> getFunctionalities() {
         return ourEPartner.getTypeList();
     }
@@ -131,13 +131,11 @@ public class EPartnerEntity implements RobotEntityInt {
      * @throws PerceiveException 
      */
     @AsPercept(name = "heldBy", multiplePercepts = false, filter = Filter.Type.ON_CHANGE_NEG)
-    public String heldBy(Entity e) throws PerceiveException {
-        if (ourEPartner.getTypeList().contains("Forget-me-not")) {
-            return e.getName();
-        } else {
-            throw new PerceiveException(
-                    "perceiving 'heldBy' percept failed, because this e-Partner does not have this functionality.");
+    public long heldBy() throws PerceiveException {
+        if (ourEPartner.getTypeList().contains("Forget-me-not") && ourEPartner.getHolder() != null) {
+            return ourEPartner.getHolder().getId();
         }
+        return -1;
     }
     
 
@@ -163,6 +161,14 @@ public class EPartnerEntity implements RobotEntityInt {
             throw new PerceiveException(
                     "perceiving 'at' percept failed, because this e-Partner does not have this functionality.");
         }
+    }
+
+    /**
+     * Percept for the location of this robot Send on change
+     */
+    @AsPercept(name = "location", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
+    public Point2D getLocation() {
+        return new Point2D.Double(spawnLocation.getX(), spawnLocation.getY());
     }
 
     /**
