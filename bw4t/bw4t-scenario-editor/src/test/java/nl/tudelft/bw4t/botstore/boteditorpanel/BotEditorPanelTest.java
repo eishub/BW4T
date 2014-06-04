@@ -238,7 +238,7 @@ public class BotEditorPanelTest {
 	public void invalidFileName() {
 		BotEditorPanel bep = editor.getBotEditorPanel();
 		bep.getFileNameField().setText("test.txt");
-		bep.getApplyButton().doClick();
+		bep.getSaveButton().doClick();
 		verify(prompt).showMessageDialog(eq(bep), eq("The file name is invalid.\n"
 				+ "File names should end in .goal."));
 	}
@@ -250,7 +250,7 @@ public class BotEditorPanelTest {
 	public void tooShortFileName() {
 		BotEditorPanel bep = editor.getBotEditorPanel();
 		bep.getFileNameField().setText(goalExtension);
-		bep.getApplyButton().doClick();
+		bep.getSaveButton().doClick();
 		verify(prompt).showMessageDialog(eq(bep), eq("Please specify a file name."));
 	}
 	/**
@@ -261,7 +261,7 @@ public class BotEditorPanelTest {
 	public void nonAlphaNumericFileName() {
 		BotEditorPanel bep = editor.getBotEditorPanel();
 		bep.getFileNameField().setText("#$%.goal");
-		bep.getApplyButton().doClick();
+		bep.getSaveButton().doClick();
 		verify(prompt).showMessageDialog(eq(bep), eq("Please specify a file name"
 				+ " consisting of valid alphanumeric characters"
 				+ " or use an existing file."));
@@ -274,7 +274,7 @@ public class BotEditorPanelTest {
 		BotEditorPanel bep = editor.getBotEditorPanel();
 		bep.getFileNameField().setText(goalTest);
 		bep.getBotNameField().setText("");
-		bep.getApplyButton().doClick();
+		bep.getSaveButton().doClick();
 		verify(prompt).showMessageDialog(eq(bep), eq("Please specify a reference name."));
 	}
 	/**
@@ -285,7 +285,7 @@ public class BotEditorPanelTest {
 		BotEditorPanel bep = editor.getBotEditorPanel();
 		bep.getFileNameField().setText(goalTest);
 		bep.getBotNameField().setText("#$%");
-		bep.getApplyButton().doClick();
+		bep.getSaveButton().doClick();
 		verify(prompt).showMessageDialog(eq(bep), eq("Please specify a reference name consisting "
 				+ "of valid alphanumeric characters."));
 	}
@@ -298,7 +298,7 @@ public class BotEditorPanelTest {
 		BotEditorPanel bep = editor.getBotEditorPanel();
 		bep.getFileNameField().setText(goalTest);
 		bep.getBotNameField().setText("a");
-		bep.getApplyButton().doClick();
+		bep.getSaveButton().doClick();
 		verify(prompt).showMessageDialog(eq(bep), eq("Bot configuration succesfully created."));
 		//editor.setParent(mp);
 	}

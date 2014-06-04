@@ -55,6 +55,8 @@ public class EpartnerFrame extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param panel the scenario gui main panel
+	 * @param row the row to be updated on close
 	 */
 	public EpartnerFrame(MainPanel panel, int row) {
 		setTitle("E-Partner");
