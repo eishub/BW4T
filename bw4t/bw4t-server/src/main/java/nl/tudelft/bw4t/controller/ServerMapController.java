@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import nl.tudelft.bw4t.MapLoader;
+import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.handicap.IRobot;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
@@ -106,6 +107,16 @@ public class ServerMapController extends AbstractMapController {
             }
         }
         return entities;
+    }
+
+    @Override
+    public Set<EPartner> getVisibleEPartners() {
+        Set<EPartner> epartners = new HashSet<>();
+        for (Object epartner : serverContext.getObjects(EPartner.class)) {
+            EPartner epartnerTemp = (EPartner) epartner;
+            epartners.add(epartnerTemp);
+        }
+        return epartners;
     }
 
     @Override

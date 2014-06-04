@@ -45,20 +45,6 @@ public class EPartner extends BoundedMoveableObject {
         this.name = n;
         setTypeList(new ArrayList<String>());
     }
-    
-    /**
-     * called when e-Partner becomes connected and should now be injected in repast.
-     */
-    public void connect() {
-        this.connected = true;
-    }
-
-    /**
-     * called when e-Partner should be disconnected.
-     */
-    public void disconnect() {
-        this.connected = false;
-    }
 
     public IRobot getHolder() {
         return this.holder;
