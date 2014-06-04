@@ -47,6 +47,7 @@ public class EPartner extends BoundedMoveableObject {
     public EPartner(String n, ContinuousSpace<Object> space, Context<Object> context) {
         super(space, context);
         
+        view.setId(getId());
         this.setName(n);
         setTypeList(new ArrayList<String>());
     }
@@ -65,7 +66,6 @@ public class EPartner extends BoundedMoveableObject {
 
 	public void setName(String name) {
 		this.name = name;
-		view.setName(name);
 	}
 
 	public List<String> getTypeList() {

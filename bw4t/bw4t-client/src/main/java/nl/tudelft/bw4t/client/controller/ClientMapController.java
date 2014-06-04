@@ -101,6 +101,15 @@ public class ClientMapController extends AbstractMapController {
     public Set<ViewEPartner> getVisibleEPartners() {
         return visibleEPartners;
     }
+    
+    public ViewEPartner getViewEPartner(long id) {
+        for (ViewEPartner ep : getVisibleEPartners()) {
+            if (ep.getId() == id) {
+                return ep;
+            }
+        }
+        return null;
+    }
 
     public ViewEntity getTheBot() {
         return theBot;
@@ -144,6 +153,10 @@ public class ClientMapController extends AbstractMapController {
             ViewBlock b = getBlock(id);
             b.setObjectId(id);
             b.setPosition(new Point2D.Double(x, y));
+            ViewEPartner ep = getViewEPartner(id);
+            if (ep != null) {
+                ep.setLocation(b.getPosition());
+            }
         }
         else if (name.equals("color")) {
             long id = ((Numeral) parameters.get(0)).getValue().longValue();
@@ -155,7 +168,19 @@ public class ClientMapController extends AbstractMapController {
         }
         // Update the state of the epartners
         else if (name.equals("epartner")) {
+            long id = ((Numeral) parameters.get(0)).getValue().longValue();
+            long holderId = ((Numeral) parameters.get(1)).getValue().longValue();
             
+            ViewEPartner epartner = getViewEPartner(id);
+            if (epartner == null) {
+                epartner = new ViewEPartner();
+                epartner.setId(id);
+                getVisibleEPartners().add(epartner);
+            }
+            if (allBlocks.containsKey(id)) {
+                epartner.setLocation(allBlocks.get(id).getPosition());
+            }
+            epartner.setPickedUp(holderId >= 0);
         }
         // Update group goal sequence
         else if (name.equals("sequence")) {
