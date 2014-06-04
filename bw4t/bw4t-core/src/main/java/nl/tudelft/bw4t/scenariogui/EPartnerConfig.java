@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public final class EPartnerConfig {
 
-	public static final String DEFAULT_GOAL_FILENAME_REFERENCE = "robot";
+	public static final String DEFAULT_GOAL_FILENAME_REFERENCE = "epartner";
 
-	public static final String DEFAULT_GOAL_FILENAME = "robot.goal";
+	public static final String DEFAULT_GOAL_FILENAME = "epartner.goal";
 
 	private String name = "E-Partner";
 
