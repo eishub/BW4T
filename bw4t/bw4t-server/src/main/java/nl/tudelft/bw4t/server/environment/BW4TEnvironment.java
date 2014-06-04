@@ -540,7 +540,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
      * 
      * @return the coordinates of the spawn point
      */
-    public Point2D getNextBotSpawnPoint() {
+    private Point2D getNextBotSpawnPoint() {
         List<Entity> ents = getMap().getEntities();
         Point2D p = ents.get(nextBotSpawnIndex++).getPosition().asPoint2D();
         if (nextBotSpawnIndex  > ents.size()) {
@@ -550,25 +550,24 @@ public class BW4TEnvironment extends AbstractEnvironment {
     }
 
     /**
-     * Spawns a new EPartner according to the given specifications and notifies the given client.
-     * 
-     * @param c
-     *            the configuration to use
-     * @throws EntityException
-     *             when we are unable to register EPartner
+     * @return
+     * The list of points the humans are right now. 
      */
-    public void spawn(EPartnerConfig c) throws EntityException {
-        EntityFactory entityFactory = Launcher.getInstance().getEntityFactory();
-        // create robot from request
-        EPartner epartner = entityFactory.makeEPartner(c);
-        // create the entity for the environment
-        EPartnerEntity ee = new EPartnerEntity(epartner);
-        // register the entity in the environment
-        this.registerEntity(epartner.getName(), ee);
-        // TODO: Place the EPartner
-
+    private List<Point2D> getHumanWithoutEPartners() {
+        List<Point2D> points = new ArrayList<Point2D>();
+        
+        for (Object robot : context.getObjects(IRobot.class)) {
+            IRobot robotTemp = (IRobot) robot;
+            
+            if (robotTemp.isHuman() && !robotTemp.isHoldingEPartner()) {
+                NdPoint location = robotTemp.getLocation();
+                points.add(new Point2D.Double(location.getX(), location.getY()));
+            }
+        }
+        
+        return points;
     }
-    
+
     /**
      * Spawns a new Robot according to the given specifications and notifies the given client.
      * 
@@ -604,7 +603,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
      * @throws EntityException
      *             when we are unable to register Robot
      */
-    protected void spawn(BotConfig c) throws EntityException {
+    private void spawn(BotConfig c) throws EntityException {
         EntityFactory entityFactory = Launcher.getInstance().getEntityFactory();
         // create robot from request
         IRobot bot = entityFactory.makeRobot(c);
@@ -618,42 +617,64 @@ public class BW4TEnvironment extends AbstractEnvironment {
     }
     
     /**
-     * @return
-     * The list of points the humans are right now. 
+     * Spawns a new e-Partner according to the given specifications and notifies the given client.
+     * 
+     * @param epartners
+     *            list of epartners to spawn
+     * @param client the client to notify
      */
-    public List<Point2D> getHumanSpawningPoints() {
-        List<Point2D> points = new ArrayList<Point2D>();
-        
-        for (Object robot : context.getObjects(IRobot.class)) {
-            IRobot robotTemp = (IRobot) robot;
-            
-            if (robotTemp.isHuman() && !robotTemp.isHoldingEPartner()) {
-                NdPoint location = robotTemp.getLocation();
-                points.add(new Point2D.Double(location.getX(), location.getY()));
-            }
-        }
-        
-        return points;
-    }
-
     public void spawnEPartners(List<EPartnerConfig> epartners, BW4TClientActions client) {
+        
+        List<Point2D> points = getHumanWithoutEPartners();
+        int index = 0;
+        
         for (EPartnerConfig c : epartners) {
+            
             int created = 0;
             String name = c.getEpartnerName();
-
+    
             while (created < c.getEpartnerAmount()) {
                 c.setEpartnerName(String.format(ENTITY_NAME_FORMAT, name, created + 1));
                 try {
-                    spawn(c);
+                    // if we run out of humans who don't have an e-Partner. 
+                    if (index >= points.size()) {
+                        spawn(c, getNextBotSpawnPoint());
+                    } else {
+                        spawn(c, points.get(index));
+                    }
                     
-                    // assign robot to client
+                    // assign e-Partner to client
                     server.notifyFreeEpartner(client, c);
                 } catch (EntityException e) {
                     LOGGER.error("Failed to register new Robot in the environment.", e);
                 }
+                index++;
                 created++;
             }
         }
+    }
+
+    /**
+     * Spawns a new EPartner according to the given specifications and notifies the given client.
+     * 
+     * @param c
+     *            the configuration to use
+     * @param point
+     *            the point the e-Partner should spawn at
+     * @throws EntityException
+     *             when we are unable to register EPartner
+     */
+    private void spawn(EPartnerConfig c, Point2D point) throws EntityException {
+        EntityFactory entityFactory = Launcher.getInstance().getEntityFactory();
+        // create robot from request
+        EPartner epartner = entityFactory.makeEPartner(c);
+        // create the entity for the environment
+        EPartnerEntity ee = new EPartnerEntity(epartner);
+        // register the entity in the environment
+        this.registerEntity(epartner.getName(), ee);
+        // TODO: Place the EPartner
+        epartner.moveTo(point.getX(), point.getY());
+    
     }
 
 }
