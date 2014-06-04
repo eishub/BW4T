@@ -126,14 +126,16 @@ public abstract class AbstractMenuOption implements ActionListener {
 				String extension = ".xml";
 				if (!path.endsWith(extension)) {
 					path += extension;
+                    file = new File(path);
 				}
-			} else {
+                controller.getMainView().setWindowTitle(file.getName());
+            } else {
 				return;
 			}
 		}
 		try {
 			saveXMLFile(path);
-		} catch (JAXBException e) {
+        } catch (JAXBException e) {
 			ScenarioEditor.handleException(e,
 					"Error: Saving to XML has failed.");
 		} catch (FileNotFoundException e) {
