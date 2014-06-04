@@ -53,8 +53,8 @@ public class MenuBar extends JMenuBar {
 
         file.addSeparator();
 
-        exportGOAL = new JMenuItem("Export To GOAL");
-        exportGOAL.setToolTipText("Export to Scenario to a GOAL project");
+        exportGOAL = new JMenuItem("Export as MAS Project");
+        exportGOAL.setToolTipText("Export to Scenario as a MAS project");
         file.add(exportGOAL);
 
         file.addSeparator();
