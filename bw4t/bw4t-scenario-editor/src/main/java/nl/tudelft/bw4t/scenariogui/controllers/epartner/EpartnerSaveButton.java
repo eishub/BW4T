@@ -3,13 +3,15 @@ package nl.tudelft.bw4t.scenariogui.controllers.epartner;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.gui.epartner.EpartnerFrame;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
  * Handles actions of the ApplyButton
  */
-class EpartnerApplyButton implements ActionListener {
+class EpartnerSaveButton implements ActionListener {
 
 	private EpartnerFrame view;
 
@@ -21,7 +23,7 @@ class EpartnerApplyButton implements ActionListener {
 	 * @param pview
 	 *            The frame with the button in it.
 	 */
-	public EpartnerApplyButton(EpartnerFrame pview) {
+	public EpartnerSaveButton(EpartnerFrame pview) {
 		this.view = pview;
 		mpanel = pview.getPanel();
 	}
@@ -39,6 +41,26 @@ class EpartnerApplyButton implements ActionListener {
 		view.getDataObject().setForgetMeNot(
 				view.getLeftAloneCheckbox().isSelected());
 		view.getDataObject().setGps(view.getGPSCheckbox().isSelected());
+
+		updateEpartnerTable();
+
 		view.dispose();
+	}
+
+	/**
+	 * Updates the epartner list in the scenario editor.
+	 */
+	private void updateEpartnerTable() {
+		view.getPanel().getEntityPanel().getEPartnerTableModel().setRowCount(0);
+		int rows = view.getPanel().getEntityPanel().getEPartnerConfigs().size();
+
+		for (int i = 0; i < rows; i++) {
+			EPartnerConfig epartnerConfig = view.getPanel().getEntityPanel()
+					.getEPartnerConfig(i);
+			Object[] newEPartnerObject = { epartnerConfig.getEpartnerName(),
+					epartnerConfig.getEpartnerAmount() };
+			view.getPanel().getEntityPanel().getEPartnerTableModel()
+					.addRow(newEPartnerObject);
+		}
 	}
 }
