@@ -39,15 +39,6 @@ public class Human extends AbstractRobotDecorator {
     }
     
     /**
-     * The Human picks up an e-Partner.
-     * @param eP the picked up e-Partner. 
-     */
-    @Override
-    public void pickUpEPartner(EPartner eP) {
-    	this.ePartner = eP;
-    }
-    
-    /**
      * The Human drops the e-Partner they are holding. 
      */
     @Override
