@@ -36,9 +36,6 @@ class EpartnerApplyButton implements ActionListener {
 		view.getDataObject().setEpartnerName(view.getEpartnerName().getText());
 		view.getDataObject().setEpartnerAmount(
 				Integer.parseInt(view.getEpartnerAmount().getText()));
-		view.getDataObject().setForgetMeNot(
-				view.getLeftAloneCheckbox().isSelected());
-		view.getDataObject().setGps(view.getGPSCheckbox().isSelected());
 		view.dispose();
 	}
 }
