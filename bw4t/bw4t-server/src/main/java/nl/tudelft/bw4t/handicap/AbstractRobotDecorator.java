@@ -7,7 +7,7 @@ import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.doors.Door;
-import nl.tudelft.bw4t.map.view.Entity;
+import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.robots.AbstractRobot;
 import nl.tudelft.bw4t.robots.AgentRecord;
 import nl.tudelft.bw4t.robots.Battery;
@@ -174,7 +174,7 @@ public abstract class AbstractRobotDecorator implements IRobot {
 	}
 	
     @Override
-	public Entity getView() {
+	public ViewEntity getView() {
 		return parent.getView();
 	}
 	
