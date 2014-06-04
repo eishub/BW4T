@@ -31,6 +31,9 @@ public class EpartnerController {
 		view.getApplyButton().addActionListener(
 				new EpartnerSaveButton(getMainView()));
 
+		view.getFileButton().addActionListener(
+				new EGoalFileButton(getMainView()));
+
 		view.getLeftAloneCheckbox().addActionListener(
 				new LeftAloneCheckBox(getMainView()));
 
