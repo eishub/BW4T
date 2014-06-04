@@ -276,7 +276,7 @@ public class BotEditorPanel extends JPanel {
 		batterySlider.setValue(dataObject.getBotBatteryCapacity());
 
 		if (dataObject.isBatteryEnabled()) {
-			speedSlider.setEnabled(true);
+			batterySlider.setEnabled(true);
 		}
 		batteryPanel.add(batterySlider);
 
