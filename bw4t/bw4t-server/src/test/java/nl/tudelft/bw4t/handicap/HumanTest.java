@@ -122,7 +122,7 @@ public class HumanTest {
     @Test
     public void canPickUpEPartnerTest() {
         Human h = new Human(outBot);
-        when(ePartner.getLocation()).thenReturn(new NdPoint(10,10));
+        when(ePartner.getLocation()).thenReturn(new NdPoint(10, 10));
         assertFalse(h.canPickUp(ePartner));
     }
     /**
