@@ -75,6 +75,13 @@ public interface MapController extends Runnable {
      * @return the set of visible entities
      */
     public Set<Entity> getVisibleEntities();
+    
+    /**
+     * Get the set of e-Partners currently visible.
+     * 
+     * @return the set of visible e-Partners.
+     */
+    public Set<EPartner> getVisibleEPartners();
 
     /**
      * Adds an {@link MapRendererInterface} to the list of renderers to be updated every 100ms.

@@ -225,4 +225,12 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
             }
         }
     }
+    
+    public void drawEPartners(Graphics2D g2d) {
+    	MapRenderSettings set = getController().getRenderSettings();
+    	
+    	for (Epartner eP : getController().getVisibleEPartners()) {
+    		g2d.setColor(eP.getColor());
+    	}
+    }
 }

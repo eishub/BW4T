@@ -99,14 +99,12 @@ public class EPartnerEntity implements RobotEntityInt {
     @Override
     public void connect() {
         spawnLocation = new Point2D.Double(ourEPartner.getLocation().getX(), ourEPartner.getLocation().getY());
-        ourEPartner.connect();
     }
     
     /**
      * Disconnects the robot from repast.
      */
     public void disconnect(){
-        ourEPartner.disconnect();
     }
 
     /**
