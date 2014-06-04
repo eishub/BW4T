@@ -203,6 +203,14 @@ public class ClientMapController extends AbstractMapController {
             double y = ((Numeral) parameters.get(1)).getValue().doubleValue();
             theBot.setLocation(x, y);
         }
+        else if (name.equals("robotSize")) {
+            long id = ((Numeral) parameters.get(0)).getValue().longValue();
+            int x = ((Numeral) parameters.get(1)).getValue().intValue();
+            
+            if (id == theBot.getId()) {
+                theBot.setSize(x);
+            }
+        }
     }
 
 
