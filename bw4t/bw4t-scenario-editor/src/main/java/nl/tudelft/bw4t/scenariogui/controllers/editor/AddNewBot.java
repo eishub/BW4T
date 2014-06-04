@@ -32,7 +32,6 @@ class AddNewBot implements ActionListener {
      */
     public AddNewBot(final MainPanel newView) {
         this.view = newView;
-        //botCount = 
     }
 
     /**

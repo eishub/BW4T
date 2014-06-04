@@ -248,7 +248,7 @@ public class EntityPanel extends JPanel {
     /**
      * The list with the last saved BotConfigs.
      */
-    private List<BotConfig> oldBotConfigs = botConfigList;
+    private List<BotConfig> oldBotConfigs = new ArrayList<BotConfig>();
 
     /**
      * Create an EntityPanel object.
@@ -685,12 +685,16 @@ public class EntityPanel extends JPanel {
      * Updates the BotConfig list.
      */
     public void updateBotConfigs() {
-        oldBotConfigs = botConfigList;
+        oldBotConfigs.clear();
+        for (int i = 0; i < botConfigList.size(); i++) {
+            oldBotConfigs.add(botConfigList.get(i));
+        }
     }
 
     /**
      * Compares the BotConfig lists.
-     * @return If the BotConfigs lists are equal.
+     * @param config The list of bots to check 
+     * @return Whether the BotConfigs lists are equal.
      */
     public boolean compareBotConfigs(List<BotConfig> config) {
         if (botConfigList.size() != config.size()) {
