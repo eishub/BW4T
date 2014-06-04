@@ -46,7 +46,7 @@ public class MoveSpeedHandicap extends AbstractRobotDecorator {
                 double movingDistance = Math.min(distance, AbstractRobot.MAX_MOVE_DISTANCE * speedMod);
     
                 // Angle at which to move
-                double angle = SpatialMath.calcAngleFor2DMovement(robot.space,
+                double angle = SpatialMath.calcAngleFor2DMovement(robot.getSpace(),
                         robot.getLocation(), robot.getTargetLocation());
     
                 // The displacement of the robot
