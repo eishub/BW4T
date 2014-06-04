@@ -17,7 +17,7 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  * Handles actions of the applybutton
  * @author Arun
  */
-class ApplyButton implements ActionListener {
+class SaveButton implements ActionListener {
     /**
      * The BotEditorPanel to request components from.
      */
@@ -32,7 +32,7 @@ class ApplyButton implements ActionListener {
      * @param pview The BotEditorPanel in which the button listening
      * to this listener is situated.
      */
-    public ApplyButton(BotEditorPanel pview) {
+    public SaveButton(BotEditorPanel pview) {
         this.view = pview;
         BotEditor be = (BotEditor) SwingUtilities.getWindowAncestor(view);
         mp = be.getParent();
@@ -70,8 +70,7 @@ class ApplyButton implements ActionListener {
 	    			        view.getDataObject().setReferenceName(view.getBotReferenceField().getText());
 	    			        view.getDataObject().setFileName(view.getFileNameField().getText());
 				        	
-				        	ScenarioEditor.getOptionPrompt().showMessageDialog(view, 
-		        					"Bot configuration succesfully created.");
+				        	view.getBotEditor().dispose();
 	    				}
 	    				else {
 	    					ScenarioEditor.getOptionPrompt().showMessageDialog(view, 
