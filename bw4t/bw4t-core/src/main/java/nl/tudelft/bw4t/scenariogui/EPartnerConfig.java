@@ -93,4 +93,13 @@ public final class EPartnerConfig {
 	public void setForgetMeNot(boolean fmn) {
 		this.forgetmenot = fmn;
 	}
+
+	/**
+	 * Returns all the properties as a String.
+	 * 
+	 * @return All the EPartnerConfig properties.
+	 */
+	public String ecToString() {
+		return name + amount + gps + forgetmenot;
+	}
 }

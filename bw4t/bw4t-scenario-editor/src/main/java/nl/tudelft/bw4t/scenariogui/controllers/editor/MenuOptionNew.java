@@ -41,7 +41,7 @@ class MenuOptionNew extends AbstractMenuOption {
 
         // Check if current config is different from last saved config
         if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())
-                || !entityPanel.compareBotConfigs(entityPanel.getOldBotConfigs())) {
+                || !entityPanel.compareBotConfigs(entityPanel.getOldBotConfigs()) || !entityPanel.compareEpartnerConfigs(entityPanel.getOldEPartnerConfigs())) {
             // Check if user wants to save current configuration
             int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
                     null,
@@ -62,7 +62,9 @@ class MenuOptionNew extends AbstractMenuOption {
         super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
         super.getController().getMainView().getMainPanel().getEntityPanel().getBotConfigs().clear();
         super.getController().getMainView().getMainPanel().getEntityPanel().updateBotConfigs();
-
+        super.getController().getMainView().getMainPanel().getEntityPanel().getEPartnerConfigs().clear();
+        super.getController().getMainView().getMainPanel().getEntityPanel().updateEpartnerConfigs();
+        
         //set last file location to null so that the previous saved file won't get
         //overwritten when the new config is saved.
         super.getMenuView().setLastFileLocation(null);

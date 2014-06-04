@@ -125,11 +125,11 @@ public class EntityPanel extends JPanel {
 
 	private List<EPartnerConfig> epartnerConfigList = new ArrayList<EPartnerConfig>();
 
-	private List<EPartnerConfig> oldEpartnerConfigs = new ArrayList<EPartnerConfig>();//epartnerConfigList;
+	private List<EPartnerConfig> oldEpartnerConfigs = new ArrayList<EPartnerConfig>();
 
 	private List<BotConfig> botConfigList = new ArrayList<BotConfig>();
 
-	private List<BotConfig> oldBotConfigs = new ArrayList<BotConfig>();//botConfigList;
+	private List<BotConfig> oldBotConfigs = new ArrayList<BotConfig>();
 
 	/**
 	 * Create an EntityPanel object.
@@ -593,6 +593,26 @@ public class EntityPanel extends JPanel {
 		for (int i = 0; i < botConfigList.size(); i++) {
 			if (!botConfigList.get(i).bcToString()
 					.equals(config.get(i).bcToString())) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+	
+	/**
+	 * Compares the EpartnerConfig lists.
+	 * 
+	 * @return If the EpartnerConfigs lists are equal.
+	 */
+	public boolean compareEpartnerConfigs(List<EPartnerConfig> config) {
+		if (epartnerConfigList.size() != config.size()) {
+			return false;
+		}
+
+		for (int i = 0; i < epartnerConfigList.size(); i++) {
+			if (!epartnerConfigList.get(i).ecToString()
+					.equals(config.get(i).ecToString())) {
 				return false;
 			}
 		}

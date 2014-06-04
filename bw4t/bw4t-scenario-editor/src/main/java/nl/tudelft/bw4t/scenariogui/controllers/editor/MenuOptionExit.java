@@ -11,61 +11,74 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 /**
  * Handles the event to exit the program.
  * <p>
- * @author      Seu Man To
- * @author      Xander Zonneveld
- * @version     0.1                
- * @since       12-05-2014        
+ * 
+ * @author Seu Man To
+ * @author Xander Zonneveld
+ * @version 0.1
+ * @since 12-05-2014
  */
 class MenuOptionExit extends AbstractMenuOption {
 
-    /**
-     * Constructs a new menu option exit object.
-     *
-     * @param view     The view.
-     * @param mainView The controlling main view.
-     */
-    public MenuOptionExit(final MenuBar view, final ScenarioEditorController mainView) {
-        super(view, mainView);
-    }
+	/**
+	 * Constructs a new menu option exit object.
+	 * 
+	 * @param view
+	 *            The view.
+	 * @param mainView
+	 *            The controlling main view.
+	 */
+	public MenuOptionExit(final MenuBar view,
+			final ScenarioEditorController mainView) {
+		super(view, mainView);
+	}
 
-    /**
-     * Gets called when the exit button is pressed.
-     *
-     * @param e The action event.
-     */
-    public void actionPerformed(final ActionEvent e) {
-        ConfigurationPanel configPanel = super.getController().getMainView().getMainPanel().getConfigurationPanel();
+	/**
+	 * Gets called when the exit button is pressed.
+	 * 
+	 * @param e
+	 *            The action event.
+	 */
+	public void actionPerformed(final ActionEvent e) {
+		ConfigurationPanel configPanel = super.getController().getMainView()
+				.getMainPanel().getConfigurationPanel();
 
-        // Check if current config is different from last saved config
-        if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())
-                || !super.getController().getMainView().getMainPanel().getEntityPanel().compareBotConfigs(super.getController().getMainView().getMainPanel().getEntityPanel().getOldBotConfigs())) {
-            // Check if user wants to save current configuration
-            int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
-                    null,
-                    ScenarioEditorController.CONFIRM_SAVE_TXT,
-                    "",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// Check if current config is different from last saved config
+		if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())
+				|| !super
+						.getController()
+						.getMainView()
+						.getMainPanel()
+						.getEntityPanel()
+						.compareBotConfigs(
+								super.getController().getMainView()
+										.getMainPanel().getEntityPanel()
+										.getOldBotConfigs())) {
+			// Check if user wants to save current configuration
+			int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
+					null, ScenarioEditorController.CONFIRM_SAVE_TXT, "",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-            if (response == JOptionPane.YES_OPTION) {
-                saveFile();
-                super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
-                getController().getMainView().closeScenarioEditor();
-            }
-            else {
-                getController().getMainView().closeScenarioEditor();
-            }
-        }
-        else {
-            int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
-                    null, 
-                    "Are you sure you want to exit the program?",
-                    "",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            
-            if (response == JOptionPane.YES_OPTION) {
-                getController().getMainView().closeScenarioEditor();
-            }
-        }
-        getController().getMainView().closeScenarioEditor();
-    }
+			if (response == JOptionPane.YES_OPTION) {
+				saveFile();
+				super.getController().getMainView().getMainPanel()
+						.getConfigurationPanel().updateOldValues();
+				super.getController().getMainView().getMainPanel()
+						.getEntityPanel().updateBotConfigs();
+				super.getController().getMainView().getMainPanel()
+						.getEntityPanel().updateEpartnerConfigs();
+				getController().getMainView().closeScenarioEditor();
+			} else {
+				getController().getMainView().closeScenarioEditor();
+			}
+		} else {
+			int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
+					null, "Are you sure you want to exit the program?", "",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+			if (response == JOptionPane.YES_OPTION) {
+				getController().getMainView().closeScenarioEditor();
+			}
+		}
+		getController().getMainView().closeScenarioEditor();
+	}
 }
