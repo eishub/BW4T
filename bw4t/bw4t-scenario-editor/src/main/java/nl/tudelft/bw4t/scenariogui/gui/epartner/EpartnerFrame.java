@@ -74,6 +74,7 @@ public class EpartnerFrame extends JFrame {
 		contentPane.add(optionPane, BorderLayout.CENTER);
 		contentPane.add(buttonPane, BorderLayout.SOUTH);
 
+		setResizable(false);
 		pack();
 		setVisible(true);
 
