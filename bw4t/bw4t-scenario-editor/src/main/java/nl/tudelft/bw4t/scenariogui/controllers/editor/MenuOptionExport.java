@@ -10,7 +10,7 @@ import javax.xml.bind.JAXBException;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
-import nl.tudelft.bw4t.scenariogui.util.ExportToGOAL;
+import nl.tudelft.bw4t.scenariogui.util.ExportToMAS;
 
 /**
  * Handles the event to export the project to mas2g.
@@ -52,7 +52,7 @@ class MenuOptionExport extends AbstractMenuOption {
                 saveXMLFile(saveDirectory);
                 BW4TClientConfig configuration = BW4TClientConfig.fromXML(saveDirectory);
 
-                ExportToGOAL.export(directory, configuration);
+                ExportToMAS.export(directory, configuration);
             } catch (JAXBException ex) {
                 ScenarioEditor.handleException(
                         ex, "Error: Saving to XML has failed.");

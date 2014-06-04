@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
  * @author Calvin Wong Loi Sing
  *         Created on 3-6-2014.
  */
-public class ExportToGOALTest {
+public class ExportToMASTest {
 
     /**
      * Root for testing files
@@ -58,8 +58,9 @@ public class ExportToGOALTest {
     private static final String XML_SRC = "source.xml";
     /**
      * The goal files as defined in the test xml.
+     * Only robot.goal because the other files are not generated anymore.
      */
-    private static final String[] GOAL_FILES = {"robot.goal", "grace.goal"};
+    private static final String[] GOAL_FILES = {"robot.goal"};
 
     /**
      * The BW4T Configuration File
@@ -87,7 +88,7 @@ public class ExportToGOALTest {
         FileUtils.copyFile(new File(AGENT_GOAL_FILE), new File(AGENT_GOAL_FILE_WORKING));
 
         // The actual export.
-        ExportToGOAL.export(EXPORT_DIR, configuration);
+        ExportToMAS.export(EXPORT_DIR, configuration);
     }
 
     @After
