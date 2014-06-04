@@ -1,5 +1,7 @@
 package nl.tudelft.bw4t.scenariogui;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlElement;
 
 import nl.tudelft.bw4t.agent.EntityType;
@@ -14,9 +16,10 @@ import nl.tudelft.bw4t.agent.EntityType;
  * @since 12-05-2014
  */
 
-public final class BotConfig {
+public final class BotConfig implements Serializable {
+	private static final long serialVersionUID = -4261058226493472776L;
 
-    /** The default reference names for the goal files */
+	/** The default reference names for the goal files */
     public static final String DEFAULT_GOAL_FILENAME_REFERENCE = "robot";
 
     /** The Default filename for the robot goal files */
