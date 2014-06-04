@@ -118,7 +118,7 @@ public abstract class AbstractMenuOption implements ActionListener {
 			currentFileChooser.setFileFilter(FileFilters.xmlFilter());
 
 			if (currentFileChooser
-					.showSaveDialog(getController().getMainView()) == JFileChooser.APPROVE_OPTION) {
+					.showDialog(getController().getMainView(), "Save Scenario") == JFileChooser.APPROVE_OPTION) {
 				File file = currentFileChooser.getSelectedFile();
 
 				path = file.getAbsolutePath();
