@@ -15,6 +15,7 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.BW4TBuilder;
 import nl.tudelft.bw4t.blocks.EPartner;
+import nl.tudelft.bw4t.client.BW4TClientActions;
 import nl.tudelft.bw4t.eis.EPartnerEntity;
 import nl.tudelft.bw4t.eis.RobotEntity;
 import nl.tudelft.bw4t.handicap.IRobot;
@@ -60,6 +61,8 @@ import eis.iilang.Percept;
 public class BW4TEnvironment extends AbstractEnvironment {
 
     public static final String VERSION = "@PROJECT_VERSION@";
+
+    private static final String ENTITY_NAME_FORMAT = "%s_%d";
 
     private static final long serialVersionUID = -279637264069930353L;
     private static BW4TEnvironment instance;
@@ -561,6 +564,33 @@ public class BW4TEnvironment extends AbstractEnvironment {
         // TODO: Place the EPartner
 
     }
+    
+    /**
+     * Spawns a new Robot according to the given specifications and notifies the given client.
+     * 
+     * @param bots
+     *            list of bots to spawn
+     * @param client the client to notify
+     */
+    public void spawnBots(List<BotConfig> bots, BW4TClientActions client) {
+        for (BotConfig c : bots) {
+            int created = 0;
+            String name = c.getBotName();
+
+            while (created < c.getBotAmount()) {
+                c.setBotName(String.format(ENTITY_NAME_FORMAT, name, created + 1));
+                try {
+                    spawn(c);
+                    
+                    // assign robot to client
+                    server.notifyFreeRobot(client, c);
+                } catch (EntityException e) {
+                    LOGGER.error("Failed to register new Robot in the environment.", e);
+                }
+                created++;
+            }
+        }
+    }
 
     /**
      * Spawns a new Robot according to the given specifications and notifies the given client.
@@ -570,7 +600,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
      * @throws EntityException
      *             when we are unable to register Robot
      */
-    public void spawn(BotConfig c) throws EntityException {
+    protected void spawn(BotConfig c) throws EntityException {
         EntityFactory entityFactory = Launcher.getInstance().getEntityFactory();
         // create robot from request
         IRobot bot = entityFactory.makeRobot(c);
@@ -581,6 +611,26 @@ public class BW4TEnvironment extends AbstractEnvironment {
         // Place the Robot
         Point2D p = getNextBotSpawnPoint();
         bot.moveTo(p.getX(), p.getY());
+    }
+
+    public void spawnEPartners(List<EPartnerConfig> epartners, BW4TClientActions client) {
+        for (EPartnerConfig c : epartners) {
+            int created = 0;
+            String name = c.getEpartnerName();
+
+            while (created < c.getEpartnerAmount()) {
+                c.setEpartnerName(String.format(ENTITY_NAME_FORMAT, name, created + 1));
+                try {
+                    spawn(c);
+                    
+                    // assign robot to client
+                    server.notifyFreeEpartner(client, c);
+                } catch (EntityException e) {
+                    LOGGER.error("Failed to register new Robot in the environment.", e);
+                }
+                created++;
+            }
+        }
     }
 
 }
