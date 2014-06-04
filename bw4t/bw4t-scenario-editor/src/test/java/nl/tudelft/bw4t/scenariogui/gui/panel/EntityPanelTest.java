@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.scenariogui.gui.panel;
 
 import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
@@ -111,8 +112,8 @@ public class EntityPanelTest {
     public final void testEPartnerCountListener() {
         Object[] data = {"d1", "1"};
         
-        spyEntityPanel.getEPartnerTableModel().addRow(data);
-        spyEntityPanel.getEPartnerTableModel().setValueAt(12, 0, 1);
+        spyEntityPanel.getNewEPartnerButton().doClick();
+        spyEntityPanel.getEPartnerTableModel().setValueAt("12", 0, 1);
 
         assertEquals(12, spyEntityPanel.getEPartnerCount());
     }
@@ -369,19 +370,35 @@ public class EntityPanelTest {
     }
 
     /**
-     * Tests the compare and the update functions.
+     * Tests the BotConfig compare and the update functions.
      */
     @Test
-    public void testCompareBotConfigs() {
-        assertTrue(entityPanel.compareBotConfigs());
+    public void testBotConfigs() {
+        assertTrue(entityPanel.compareBotConfigs(entityPanel.getOldBotConfigs()));
         
         entityPanel.getBotConfigs().add(new BotConfig());
         
-        assertFalse(entityPanel.compareBotConfigs());
+        assertFalse(entityPanel.compareBotConfigs(entityPanel.getOldBotConfigs()));
         
         entityPanel.updateBotConfigs();
         
-        assertTrue(entityPanel.compareBotConfigs());
+        assertTrue(entityPanel.compareBotConfigs(entityPanel.getOldBotConfigs()));
+    }
+    
+    /**
+     * Tests the EPartnerConfig compare and the update functions.
+     */
+    @Test
+    public void testEPartnerConfigs() {
+        assertTrue(entityPanel.compareEpartnerConfigs(entityPanel.getOldEPartnerConfigs()));
+        
+        entityPanel.getEPartnerConfigs().add(new EPartnerConfig());
+        
+        assertFalse(entityPanel.compareEpartnerConfigs(entityPanel.getOldEPartnerConfigs()));
+        
+        entityPanel.updateEpartnerConfigs();
+        
+        assertTrue(entityPanel.compareEpartnerConfigs(entityPanel.getOldEPartnerConfigs()));
     }
 
     /**

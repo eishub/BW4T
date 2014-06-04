@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
@@ -18,11 +19,13 @@ import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
@@ -56,6 +59,11 @@ public class MenuBarTest {
     private static final String FILE_OPEN_PATH = BASE + "open.xml";
 
     /**
+     * The path of the xml file used to test the open button.
+     */
+    private static final String FILE_EXPORT_PATH = BASE + "export/";
+
+    /**
      * The path of the xml file used to save dummy data
      */
     private static final String FILE_SAVE_PATH = BASE + "dummy.xml";
@@ -75,7 +83,7 @@ public class MenuBarTest {
      * assigning the editor attribute to a spy object of the ScenarioEditor.
      */
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         editor = spy(new ScenarioEditor());
 
         filechooser = mock(JFileChooser.class);
@@ -93,7 +101,7 @@ public class MenuBarTest {
      * the screen during the running of the tests
      */
     @After
-    public final void closeEditor() {
+    public final void closeEditor() throws IOException {
         editor.dispose();
     }
 
@@ -452,6 +460,55 @@ public class MenuBarTest {
         verify(filechooser, times(1)).showSaveDialog((Component) any());
         verify(filechooser, times(1)).getSelectedFile();
     }
+
+    /**
+     * Test if the export function executes when the user chooses to do so.
+     * @throws FileNotFoundException
+     * @throws JAXBException
+     */
+    @Test
+    public void testExportButtonYes() throws IOException, JAXBException {
+        // Setup the behaviour
+        when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
+        when(filechooser.getSelectedFile()).thenReturn(new File(FILE_EXPORT_PATH));
+
+        new File(FILE_EXPORT_PATH).mkdir();
+
+        ActionListener[] listeners = editor.getTopMenuBar().getMenuItemFileExport().getActionListeners();
+        AbstractMenuOption menuOption = (AbstractMenuOption) listeners[0];
+        menuOption.setCurrentFileChooser(filechooser);
+
+        editor.getTopMenuBar().getMenuItemFileExport().doClick();
+
+        assertTrue("mas2g Exists", new File(FILE_EXPORT_PATH + "bw4t.mas2g").exists());
+        FileUtils.forceDelete(new File(FILE_EXPORT_PATH));
+
+    }
+
+    /**
+     * Test if the export function does nothing when the user cancels the filechooser.
+     * @throws FileNotFoundException
+     * @throws JAXBException
+     */
+    @Test
+    public void testExportButtonNo() throws IOException, JAXBException {
+        // Setup the behaviour
+        when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.CANCEL_OPTION);
+
+        new File(FILE_EXPORT_PATH).mkdir();
+
+        ActionListener[] listeners = editor.getTopMenuBar().getMenuItemFileExport().getActionListeners();
+        AbstractMenuOption menuOption = (AbstractMenuOption) listeners[0];
+        menuOption.setCurrentFileChooser(filechooser);
+
+        editor.getTopMenuBar().getMenuItemFileExport().doClick();
+
+        assertFalse("mas2g Exists", new File(FILE_EXPORT_PATH + "bw4t.mas2g").exists());
+        FileUtils.forceDelete(new File(FILE_EXPORT_PATH));
+
+    }
+
+
 
 
 }
