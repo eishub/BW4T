@@ -4,6 +4,7 @@ package nl.tudelft.bw4t.scenariogui.controllers.editor;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
+import nl.tudelft.bw4t.agent.EntityType;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
@@ -40,17 +41,19 @@ public class EditBotTable implements TableModelListener {
         if (event.getColumn() == -1) 
             return;
         BotConfig config = view.getEntityPanel().getBotConfigs().get(event.getFirstRow());
-        String value = (String) view.getEntityPanel().getBotTable().getValueAt(
+        Object value =  view.getEntityPanel().getBotTable().getValueAt(
                 event.getFirstRow(), event.getColumn());
         switch (event.getColumn()) {
         case 0:
-            config.setBotName(value);
+            config.setBotName((String) value);
             break;
         case 1:
-            config.setBotController(value);
+            EntityType botController = EntityType.getType((String) value);
+
+            config.setBotController(botController);
             break;
         case 2:
-            config.setBotAmount(Integer.parseInt(value));
+            config.setBotAmount(Integer.parseInt((String) value));
             break;
          default:
             break;

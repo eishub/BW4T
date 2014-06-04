@@ -78,4 +78,33 @@ public final class Format {
                 .setDocumentFilter(intDocumentFilter);
     }
 
+    /**
+     * Returns the non-negative integer value of a string.
+     * @param intRepresentation The string.
+     * @return The integer value of the string.
+     */
+    public static int getNonNegativeIntValue(String intRepresentation) {
+        return getIntValue(intRepresentation, false);
+    }
+    
+    /**
+     * Gets the integer value of a string.
+     * @param intRepresentation The string.
+     * @param canBeNegative TODO
+     * @return The integer value of the string.
+     */
+    public static int getIntValue(String intRepresentation, boolean canBeNegative) {
+        long amount = Integer.MAX_VALUE;
+        if (intRepresentation == null) {
+            amount = 0;
+        } else if (intRepresentation.length() < (Long.MAX_VALUE + "").length())
+            amount = Long.parseLong(intRepresentation);
+        if (amount > Integer.MAX_VALUE)
+            amount = Integer.MAX_VALUE;
+        else if (amount < Integer.MIN_VALUE)
+            amount = Integer.MIN_VALUE;
+        if (!canBeNegative && amount < 0)
+            amount *= -1;
+        return (int) amount;
+    }
 }

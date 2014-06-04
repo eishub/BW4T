@@ -1,7 +1,7 @@
 package nl.tudelft.bw4t.scenariogui.controllers.botstore;
 
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
 
@@ -9,7 +9,7 @@ import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
  * Handles actions of the batteryslider
  * @author Arun
  */
-class BatterySlider implements MouseListener {
+class BatterySlider extends MouseAdapter {
     /**
      * The BotEditorPanel to get components from.
      */
@@ -21,25 +21,5 @@ class BatterySlider implements MouseListener {
      */
     public BatterySlider(BotEditorPanel pview) {
         this.view = pview;
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent arg0) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent arg0) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent arg0) {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent arg0) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent arg0) {
     }
 }
