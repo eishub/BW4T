@@ -137,6 +137,10 @@ public class ClientMapController extends AbstractMapController {
             }
         }
         // Prepare updated occupied rooms list
+        else if (name.equals("robot")) {
+            theBot.setId(((Numeral) parameters.get(0)).getValue().longValue());
+        }
+        // Prepare updated occupied rooms list
         else if (name.equals("occupied")) {
             addOccupiedRoom(((Identifier) parameters.get(0)).getValue());
         }
