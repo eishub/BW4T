@@ -392,6 +392,7 @@ public class RobotDecoratorTest {
         gh.isHoldingEPartner();
         verify(bot).isHoldingEPartner();
     }
+
     /**
      * Test for pick up e partner
      */
