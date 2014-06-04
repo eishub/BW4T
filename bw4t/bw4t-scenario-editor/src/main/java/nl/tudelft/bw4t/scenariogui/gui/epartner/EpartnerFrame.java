@@ -64,6 +64,7 @@ public class EpartnerFrame extends JFrame {
 
 		this.panel = panel;
 		this.row = row;
+		this.dataObject = panel.getEntityPanel().getEPartnerConfig(row);
 
 		createInfoPanel();
 		createOptionPanel();
@@ -96,7 +97,15 @@ public class EpartnerFrame extends JFrame {
 		optionPane.setLayout(new GridLayout(0, 1));
 
 		optionPane.add(new JLabel(""));
+		
+		if (dataObject.isForgetMeNot()) {
+			leftAloneCheckbox.setSelected(true);
+		}
 		optionPane.add(leftAloneCheckbox);
+		
+		if (dataObject.isGps()) {
+			gpsCheckBox.setSelected(true);
+		}
 		optionPane.add(gpsCheckBox);
 		optionPane.add(new JLabel(""));
 	}

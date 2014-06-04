@@ -33,7 +33,7 @@ class EpartnerApplyButton implements ActionListener {
 	 *            The action event triggering this method.
 	 */
 	public void actionPerformed(ActionEvent ae) {
-		view.getDataObject().setEpartnerName(view.getName());
+		view.getDataObject().setEpartnerName(view.getEpartnerName().getText());
 		view.getDataObject().setEpartnerAmount(
 				Integer.parseInt(view.getEpartnerAmount().getText()));
 		view.getDataObject().setForgetMeNot(
