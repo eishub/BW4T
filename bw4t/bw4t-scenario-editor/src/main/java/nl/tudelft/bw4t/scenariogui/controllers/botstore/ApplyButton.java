@@ -58,15 +58,7 @@ class ApplyButton implements ActionListener {
 	    			    	view.getDataObject().setBotName(view.getBotNameField().getText());
 	    					view.getDataObject().setBotController(EntityType.getType((String) view.getBotControllerSelector().getSelectedItem()));
 	    					view.getDataObject().setBotAmount(Integer.parseInt(view.getBotAmountTextField().getText()));
-	    			        view.getDataObject().setBotSize(view.getSizeSlider().getValue());
-	    			        view.getDataObject().setBotSpeed(view.getSpeedSlider().getValue());
-	    			        view.getDataObject().setBotBatteryCapacity(view.getBatterySlider().getValue());
 	    			        view.getDataObject().setGrippers(view.getNumberOfGrippersSlider().getValue());
-	    			        view.getDataObject().setBatteryEnabled(view.getBatteryEnabledCheckbox().isSelected());
-	    			        view.getDataObject().setColorBlindHandicap(view.getColorblindCheckbox().isSelected());
-	    			        view.getDataObject().setGripperHandicap(view.getGripperCheckbox().isSelected());
-	    			        view.getDataObject().setMoveSpeedHandicap(view.getmovespeedCheckbox().isSelected());
-	    			        view.getDataObject().setSizeOverloadHandicap(view.getsizeoverloadCheckbox().isSelected());
 	    			        view.getDataObject().setReferenceName(view.getBotReferenceField().getText());
 	    			        view.getDataObject().setFileName(view.getFileNameField().getText());
 	    			        view.getBotEditor().dispose();

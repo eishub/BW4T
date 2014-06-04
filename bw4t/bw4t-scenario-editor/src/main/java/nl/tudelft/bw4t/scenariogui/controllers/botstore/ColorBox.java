@@ -29,6 +29,6 @@ class ColorBox implements ActionListener {
      * @param ae The action event invoking this method.
      */
     public void actionPerformed(ActionEvent ae) {
-
+        view.getDataObject().setColorBlindHandicap(view.getColorblindCheckbox().isSelected());
     }
 }

@@ -32,6 +32,7 @@ class SpeedSlider extends MouseAdapter {
 	        String value = df.format(res);
 	        view.getBatteryUseValueLabel().setText(padString(value));
     	}
+    	view.getDataObject().setBotSpeed(view.getSpeedSlider().getValue());
     }
     
     /**
