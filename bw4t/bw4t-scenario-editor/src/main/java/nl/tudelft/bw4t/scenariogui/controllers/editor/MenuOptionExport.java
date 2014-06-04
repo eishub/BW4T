@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
@@ -38,28 +39,36 @@ class MenuOptionExport extends AbstractMenuOption {
      */
     //TODO: Split up in multiple shorter methods
     public void actionPerformed(final ActionEvent e) {
-        JFileChooser filechooser = getCurrentFileChooser();
+        saveFile();
+        if(getMenuView().hasLastFileLocation()) {
+            File saveLocation = new File(getMenuView().getLastFileLocation());
 
-        filechooser.setCurrentDirectory(new File("."));
-        filechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        filechooser.setAcceptAllFileFilterUsed(false);
+            JFileChooser filechooser = getCurrentFileChooser();
 
-        if (filechooser.showOpenDialog(getController().getMainView()) == JFileChooser.APPROVE_OPTION) {
-            String directory = filechooser.getSelectedFile().getAbsolutePath();
-            try {
-                String saveDirectory = directory + "/source.xml";
+            filechooser.setCurrentDirectory(new File("."));
+            filechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            filechooser.setAcceptAllFileFilterUsed(false);
 
-                saveXMLFile(saveDirectory);
-                BW4TClientConfig configuration = BW4TClientConfig.fromXML(saveDirectory);
+            if (filechooser.showOpenDialog(getController().getMainView()) == JFileChooser.APPROVE_OPTION) {
+                String directory = filechooser.getSelectedFile().getAbsolutePath();
+                try {
+                    String saveDirectory = directory + "/" + saveLocation.getName();
 
-                ExportToMAS.export(directory, configuration);
-            } catch (JAXBException ex) {
-                ScenarioEditor.handleException(
-                        ex, "Error: Saving to XML has failed.");
-            } catch (FileNotFoundException ex) {
-                ScenarioEditor.handleException(
-                        ex, "Error: No file has been found.");
+                    saveXMLFile(saveDirectory);
+                    BW4TClientConfig configuration = BW4TClientConfig.fromXML(saveDirectory);
+
+                    /* Split the name into two around the ., and pass the name without the extension */
+                    ExportToMAS.export(directory, configuration, saveLocation.getName().split("\\.")[0]);
+                } catch (JAXBException ex) {
+                    ScenarioEditor.handleException(
+                            ex, "Error: Saving to XML has failed.");
+                } catch (FileNotFoundException ex) {
+                    ScenarioEditor.handleException(
+                            ex, "Error: No file has been found.");
+                }
             }
+        } else {
+            ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Error: Can not export an unsaved scenario.");
         }
 
     }
