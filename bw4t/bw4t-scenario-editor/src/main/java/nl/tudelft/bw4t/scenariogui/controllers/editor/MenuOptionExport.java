@@ -12,6 +12,7 @@ import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.util.ExportToMAS;
+import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 
 /**
  * Handles the event to export the project to mas2g.
@@ -45,20 +46,27 @@ class MenuOptionExport extends AbstractMenuOption {
 
             JFileChooser filechooser = getCurrentFileChooser();
 
-            filechooser.setCurrentDirectory(new File("."));
-            filechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            filechooser.setSelectedFile(new File(saveLocation.getName().split("\\.")[0]));
+            filechooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
             filechooser.setAcceptAllFileFilterUsed(false);
+            filechooser.setFileFilter(FileFilters.masFilter());
 
-            if (filechooser.showOpenDialog(getController().getMainView()) == JFileChooser.APPROVE_OPTION) {
-                String directory = filechooser.getSelectedFile().getAbsolutePath();
+            if (filechooser.showDialog(getController().getMainView(), "Export MAS project") == JFileChooser.APPROVE_OPTION) {
+                File masFile = filechooser.getSelectedFile();
+                String directory = masFile.getAbsolutePath();
                 try {
-                    String saveDirectory = directory + "/" + saveLocation.getName();
+                    String saveDirectory = masFile.getAbsolutePath();
+
+                    String extension = ".xml";
+                    if (!saveDirectory.endsWith(extension)) {
+                        saveDirectory += extension;
+                    }
 
                     saveXMLFile(saveDirectory);
                     BW4TClientConfig configuration = BW4TClientConfig.fromXML(saveDirectory);
 
                     /* Split the name into two around the ., and pass the name without the extension */
-                    ExportToMAS.export(directory, configuration, saveLocation.getName().split("\\.")[0]);
+                    ExportToMAS.export(masFile.getParent(), configuration, masFile.getName().split("\\.")[0]);
                 } catch (JAXBException ex) {
                     ScenarioEditor.handleException(
                             ex, "Error: Saving to XML has failed.");
@@ -67,6 +75,7 @@ class MenuOptionExport extends AbstractMenuOption {
                             ex, "Error: No file has been found.");
                 }
             }
+
         } else {
             ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Error: Can not export an unsaved scenario.");
         }
