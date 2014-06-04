@@ -122,7 +122,7 @@ public class MainPanel extends JPanel {
      *
      * @return The entity panel object.
      */
-    public final EntityPanel getEntityPanel() {
+    public EntityPanel getEntityPanel() {
         return entityPanel;
     }
 

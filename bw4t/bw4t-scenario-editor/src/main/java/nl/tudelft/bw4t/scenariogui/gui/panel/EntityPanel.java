@@ -495,7 +495,7 @@ public class EntityPanel extends JPanel {
 	 * 
 	 * @return The selected row.
 	 */
-	public final int getSelectedBotRow() {
+	public int getSelectedBotRow() {
 		return botTable.getSelectedRow();
 	}
 
