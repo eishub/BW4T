@@ -80,7 +80,7 @@ public final class EPartnerConfig {
 	 * 
 	 * @return
 	 */
-	public boolean isForgotMeNot() {
+	public boolean isForgetMeNot() {
 		return forgetmenot;
 	}
 
