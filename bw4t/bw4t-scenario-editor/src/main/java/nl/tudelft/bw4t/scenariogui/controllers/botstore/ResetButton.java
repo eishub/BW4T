@@ -34,8 +34,14 @@ class ResetButton implements ActionListener {
         view.getSizeSlider().setEnabled(view.getDataObject().getSizeOverloadHandicap());
         view.getBatterySlider().setEnabled(view.getDataObject().isBatteryEnabled());
         view.getSpeedSlider().setEnabled(view.getDataObject().getMoveSpeedHandicap());
-        view.getNumberOfGrippersSlider().setEnabled(view.getDataObject().getGripperHandicap());
-        view.getGripperCheckbox().setSelected(view.getDataObject().getGripperHandicap());
+        if(view.getDataObject().getGripperHandicap()){
+            view.getGripperCheckbox().setSelected(true);
+            view.getNumberOfGrippersSlider().setEnabled(false);
+        }
+        else {
+        	view.getGripperCheckbox().setSelected(false);
+        	view.getNumberOfGrippersSlider().setEnabled(true);
+        }
         view.getColorblindCheckbox().setSelected(view.getDataObject().getColorBlindHandicap());
         view.getsizeoverloadCheckbox().setSelected(view.getDataObject().getSizeOverloadHandicap());
         view.getmovespeedCheckbox().setSelected(view.getDataObject().getMoveSpeedHandicap());
