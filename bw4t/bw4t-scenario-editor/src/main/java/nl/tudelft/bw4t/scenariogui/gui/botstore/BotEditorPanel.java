@@ -34,7 +34,7 @@ public class BotEditorPanel extends JPanel {
 
 	private JPanel botInfo = new JPanel();
 
-	private JButton applyButton = new JButton("Apply");
+	private JButton saveButton = new JButton("Save");
 
 	private JButton resetButton = new JButton("Reset");
 
@@ -299,7 +299,7 @@ public class BotEditorPanel extends JPanel {
 	private void addButtonPanel() {
 		JPanel buttonPanel = new JPanel();
 
-		buttonPanel.add(applyButton);
+		buttonPanel.add(saveButton);
 		buttonPanel.add(resetButton);
 		buttonPanel.add(cancelButton);
 
@@ -380,8 +380,8 @@ public class BotEditorPanel extends JPanel {
 	 * 
 	 * @return the applyButton
 	 */
-	public JButton getApplyButton() {
-		return applyButton;
+	public JButton getSaveButton() {
+		return saveButton;
 	}
 
 	/**
@@ -563,5 +563,13 @@ public class BotEditorPanel extends JPanel {
 	 */
 	public JTextField getBotReferenceField() {
 		return botReferenceField;
+	}
+
+	/**
+	 * Returns the BotEditor.
+	 * @return The BotEditor.
+	 */
+	public BotEditor getBotEditor() {
+		return botEditor;
 	}
 }
