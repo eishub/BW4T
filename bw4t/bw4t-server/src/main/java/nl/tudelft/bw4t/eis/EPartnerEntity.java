@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import org.apache.log4j.Logger;
 import org.omg.CORBA.Environment;
+
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.util.collections.IndexedIterable;
@@ -29,6 +31,7 @@ import nl.tudelft.bw4t.eis.translators.ColorTranslator;
 import nl.tudelft.bw4t.eis.translators.ObjectInformationTranslator;
 import nl.tudelft.bw4t.eis.translators.PointTranslator;
 import nl.tudelft.bw4t.eis.translators.ZoneTranslator;
+import nl.tudelft.bw4t.map.Entity;
 import nl.tudelft.bw4t.robots.NavigatingRobot;
 import nl.tudelft.bw4t.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.RobotEntityInt;
@@ -117,15 +120,28 @@ public class EPartnerEntity implements RobotEntityInt {
     }
     
     /**
-     * Percept if the e-Partner was dropped.
+     * @return
+     * The functionalities of the e-Partner
      */
-    @AsPercept(name = "dropped", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
-    public boolean wasDropped() {
-    	return ourEPartner.isDropped();
-    	//TODO does this actually work? replacewith percept heldBy(Enitity), with on change negation filter?!
+    @AsPercept(name = "functionalities", multiplePercepts = true, filter = Filter.Type.ONCE)
+    public List<String> getFunctionalities() {
+        return ourEPartner.getTypeList();
     }
     
-    //TODO how does the goal agent know what we selected in the epartner gui? it needs tobestored somewhere and sent as percept
+    /**
+     * Percept if the e-Partner was dropped.
+     * @throws PerceiveException 
+     */
+    @AsPercept(name = "heldBy", multiplePercepts = false, filter = Filter.Type.ON_CHANGE_NEG)
+    public String heldBy(Entity e) throws PerceiveException {
+        if (ourEPartner.getTypeList().contains("Forget-me-not")) {
+            return e.getName();
+        } else {
+            throw new PerceiveException(
+                    "perceiving 'heldBy' percept failed, because this e-Partner does not have this functionality.");
+        }
+    }
+    
 
     /**
      * Percept for navpoints the robot is at. Send on change. If robot is in a {@link Zone}, that zone name is returned.
@@ -136,14 +152,19 @@ public class EPartnerEntity implements RobotEntityInt {
      */
     @AsPercept(name = "at", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
     public String getAt() throws PerceiveException {
-
-        Zone navpt = ZoneLocator.getNearestZone(ourEPartner.getLocation());
-        if (navpt == null) {
+        if (ourEPartner.getTypeList().contains("GPS")) {
+          
+            Zone navpt = ZoneLocator.getNearestZone(ourEPartner.getLocation());
+            if (navpt == null) {
+                throw new PerceiveException(
+                        "perceiving 'at' percept failed, because map has no suitable navpoint for position "
+                                + ourEPartnerLocation);
+            }
+            return navpt.getName();
+        } else {
             throw new PerceiveException(
-                    "perceiving 'at' percept failed, because map has no suitable navpoint for position "
-                            + ourEPartnerLocation);
+                    "perceiving 'at' percept failed, because this e-Partner does not have this functionality.");
         }
-        return navpt.getName();
     }
 
     /**
@@ -160,16 +181,22 @@ public class EPartnerEntity implements RobotEntityInt {
 
     /**
      * Percept for the places in the world. Send at the beginning
+     * @throws PerceiveException 
      */
     @AsPercept(name = "place", multiplePercepts = true, filter = Filter.Type.ONCE)
-    public List<String> getRooms() {
-        List<String> places = new ArrayList<String>();
-        for (Object o : context.getObjects(Zone.class)) {
-            Zone zone = (Zone) o;
-            places.add(zone.getName());
+    public List<String> getRooms() throws PerceiveException {
+        if (ourEPartner.getTypeList().contains("GPS")) {
+            List<String> places = new ArrayList<String>();
+            for (Object o : context.getObjects(Zone.class)) {
+                Zone zone = (Zone) o;
+                places.add(zone.getName());
+            }
+    
+            return places;
+        } else {
+            throw new PerceiveException(
+                    "perceiving 'at' percept failed, because this e-Partner does not have this functionality.");
         }
-
-        return places;
     }
 
 

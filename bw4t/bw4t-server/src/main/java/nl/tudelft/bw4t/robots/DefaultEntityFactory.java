@@ -15,6 +15,10 @@ import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.server.environment.Launcher;
 
+/**
+ * @author Jan Giesenberg
+ * @author Valentine Mairet
+ */
 public class DefaultEntityFactory implements EntityFactory {
 
 	private Context<Object> context;
@@ -55,7 +59,7 @@ public class DefaultEntityFactory implements EntityFactory {
 		if (config.getSizeOverloadHandicap()) {
 			r = new SizeOverloadHandicap(r, config.getBotSize());
 		}
-		if (EntityType.HUMAN.isA(config.getBotController())) {
+		if (config.getBotController() == EntityType.HUMAN) {
 			r = new Human(r);
 		}
 		r.getSuperParent().setBattery(
@@ -70,8 +74,15 @@ public class DefaultEntityFactory implements EntityFactory {
 
     @Override
     public EPartner makeEPartner(EPartnerConfig c) {
-        EPartner ep = makeDefaultEPartner(c.getName());
-        //TODO actually configure the e-partner
+        EPartner ep = makeDefaultEPartner(c.getEpartnerName());
+        
+        if (c.isGps()) {
+            ep.getTypeList().add("GPS");
+        }
+        if (c.isForgetMeNot()) {
+            ep.getTypeList().add("Forget-me-not");
+        }
+        
         return ep;
     }
 

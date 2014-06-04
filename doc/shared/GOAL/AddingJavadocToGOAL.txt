@@ -1,0 +1,4 @@
+k, so right click your referenced goal.jar in Eclipse.
+press Properties and go to Javadoc Location.
+Paste the following link after the Javadoc location path text field:
+	https://ii.tudelft.nl/trac/goal/export/HEAD/GOAL/doc/api/
