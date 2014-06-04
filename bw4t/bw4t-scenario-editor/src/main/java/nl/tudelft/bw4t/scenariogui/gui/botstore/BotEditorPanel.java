@@ -111,6 +111,7 @@ public class BotEditorPanel extends JPanel {
 		botInfo.setLayout(new GridLayout(10, 0));
 
 		botNameField.setText(dataObject.getBotName());
+		
 		botControllerSelector.setModel(new DefaultComboBoxModel(new String[] {
                 EntityType.AGENT.toString(), EntityType.HUMAN.toString() }));
 		botAmountTextField.setText("" + dataObject.getBotAmount());
@@ -118,12 +119,17 @@ public class BotEditorPanel extends JPanel {
 		botInfo.add(new JLabel("Bot name:"));
 		botNameField.setText(dataObject.getBotName());
 		botInfo.add(botNameField);
+		
 		JPanel controllerpanel = new JPanel();
 		controllerpanel.setLayout(new GridLayout(1, 0));
+		if (dataObject.getBotController().equals(EntityType.HUMAN)) {
+			botControllerSelector.setSelectedIndex(1);
+		}
 		controllerpanel.add(botControllerSelector);
 		controllerpanel.add(new JLabel("   Amount of this type:"));
 		controllerpanel.add(botAmountTextField);
 		botInfo.add(controllerpanel);
+		
 		botInfo.add(new JLabel(""));
 		JLabel goalLabel = new JLabel("GOAL options");
 		goalLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
