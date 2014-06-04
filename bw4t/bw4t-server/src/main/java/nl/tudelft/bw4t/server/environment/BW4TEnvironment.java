@@ -195,10 +195,10 @@ public class BW4TEnvironment extends AbstractEnvironment {
         if(totalTime>60000){
         	int totalMin = (int)totalTime / 60000;
         	int totalSec = (int)totalTime / 1000 %60;
-        	LOGGER.log(BotLog.BOTLOG, "time to finish sequence is " + totalMin + " minutes and " + totalSec + " seconds");
+        	LOGGER.log(BotLog.BOTLOG, "total time is " + totalMin + " minutes and " + totalSec + " seconds");
         }
         else
-        	LOGGER.log(BotLog.BOTLOG, "time to finish sequence is " + totalTime/1000 + "seconds");
+        	LOGGER.log(BotLog.BOTLOG, "total time is " + totalTime/1000 + "seconds");
     }
 
     @Override
