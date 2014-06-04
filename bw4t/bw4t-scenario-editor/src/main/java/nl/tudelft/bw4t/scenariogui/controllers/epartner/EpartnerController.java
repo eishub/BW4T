@@ -29,7 +29,7 @@ public class EpartnerController {
 				new EpartnerCancelButton(getMainView()));
 
 		view.getApplyButton().addActionListener(
-				new EpartnerApplyButton(getMainView()));
+				new EpartnerSaveButton(getMainView()));
 
 		view.getLeftAloneCheckbox().addActionListener(
 				new LeftAloneCheckBox(getMainView()));
