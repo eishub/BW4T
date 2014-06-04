@@ -12,7 +12,6 @@ import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
 /**
  * Handles actions of the batteryslider
  * @author Arun
- * @author Wendy Bolier
  */
 class BatterySlider extends MouseAdapter {
     /**
