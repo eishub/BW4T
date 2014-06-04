@@ -7,7 +7,14 @@ import org.junit.Test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.spy;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
+import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditor;
+import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
 import nl.tudelft.bw4t.scenariogui.gui.epartner.EpartnerFrame;
+import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 public class EpartnerFrameTest {
 	
@@ -16,8 +23,11 @@ public class EpartnerFrameTest {
 	
 	@Before
 	public final void setupEpartnerFrame() {
-		frame = new EpartnerFrame();
-		spyframe = spy(frame);
+        EntityPanel entityPanel = new EntityPanel();
+        entityPanel.getEPartnerConfigs().add(new EPartnerConfig());
+        MainPanel parent = new MainPanel(new ConfigurationPanel(), entityPanel);
+        frame = new EpartnerFrame(parent, 0);
+        spyframe= spy(frame);
 	}
 	
 	@After
@@ -30,15 +40,7 @@ public class EpartnerFrameTest {
 		assertFalse(spyframe.getLeftAloneCheckbox().isSelected());
 		assertFalse(spyframe.getGPSCheckbox().isSelected());
 	}
-	
-	@Test
-	public final void testModifyCheckBoxes() {
-		spyframe.getLeftAloneCheckbox().setSelected(true);
-		spyframe.getGPSCheckbox().setSelected(true);
-		assertTrue(spyframe.getLeftAloneCheckbox().isSelected());
-		assertTrue(spyframe.getGPSCheckbox().isSelected());
-	}
-	
+		
 	@Test
 	public final void testResetButton() {
 		spyframe.getResetButton().doClick();
