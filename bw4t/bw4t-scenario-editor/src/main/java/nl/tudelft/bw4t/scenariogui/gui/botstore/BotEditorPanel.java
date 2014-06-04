@@ -563,4 +563,8 @@ public class BotEditorPanel extends JPanel {
     public JTextField getBotReferenceField() {
         return botReferenceField;
     }
+
+	public BotEditor getBotEditor() {
+		return botEditor;
+	}
 }
