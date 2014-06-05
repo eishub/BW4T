@@ -1,11 +1,10 @@
 package nl.tudelft.bw4t.scenariogui.controllers.editor;
 
-import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
+import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
 
 /**
  * Handles the event to update the bot count.

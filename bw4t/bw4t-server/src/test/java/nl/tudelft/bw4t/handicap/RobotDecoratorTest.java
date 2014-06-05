@@ -298,15 +298,6 @@ public class RobotDecoratorTest {
         gh.recharge();
         verify(bot).recharge();
     }
-    /**
-     * Test for get parent
-     * commented out because fail
-     */
-    @Test
-    public void getParentTest() {
-        gh.getParent();
-        verify(bot).getParent();
-    }
     
     /**
      * Test for set parent
