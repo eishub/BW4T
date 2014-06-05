@@ -32,9 +32,6 @@ public abstract class AbstractMenuOption implements ActionListener {
 
 	// made a variable for this so we can call it during testing
 
-	/**
-	 * The file chooser.
-	 */
 	private JFileChooser currentFileChooser;
 
 	/**

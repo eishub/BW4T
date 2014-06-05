@@ -14,7 +14,9 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  * @since 05-06-2014
  */
 public class UpdateBotCount implements TableModelListener {
+	
 	private MainPanel view;
+	
 	private BW4TClientConfig model;
 	
 	/**

@@ -33,12 +33,7 @@ import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
  * of bots and a list of e-partners and the actions that are possible to edit
  * bots and e-partners.
  * <p>
-<<<<<<< HEAD
  * 
-=======
- *
- * @author Katia Asmoredjo
->>>>>>> f850462ee158d3cdfcc5c81ca1befbededfa3d1d
  * @version 0.1
  * @since 12-05-2014
  */
@@ -362,37 +357,9 @@ public class EntityPanel extends JPanel {
 	}
 
 	/**
-<<<<<<< HEAD
 	 * Updates the bot count on the EntityPanel.
 	 * 
 	 * @param count The total bot count.
-=======
-	 * Returns the amount of bots.
-	 *
-	 * @return The amount of bots.
-	 */
-	public final int getBotCount() {
-		int numBots = 0;
-
-		for (int i = 0; i < botList.getRowCount(); i++) {
-			numBots += Integer.valueOf(botList.getValueAt(i, 2).toString());
-		}
-		return numBots;
-	}
-
-	/**
-	 * Updates the bot count on the EntityPanel.
-	 */
-	public final void updateBotCount() {
-		Integer bots = getBotCount();
-		botCountField.setText(bots.toString());
-	}
-
-	/**
-	 * Returns the amount of epartners.
-	 *
-	 * @return The amount of epartners.
->>>>>>> f850462ee158d3cdfcc5c81ca1befbededfa3d1d
 	 */
 	public final void updateBotCount(Integer count) {
 		botCountField.setText(count.toString());

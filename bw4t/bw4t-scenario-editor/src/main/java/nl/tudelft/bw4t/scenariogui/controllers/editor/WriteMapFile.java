@@ -13,10 +13,7 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  *
  */
 public class WriteMapFile implements DocumentListener {
-    
-    /**
-     * The {@link MainPanel} serving as the content pane.
-     */
+
     private MainPanel view;
 
     /**
