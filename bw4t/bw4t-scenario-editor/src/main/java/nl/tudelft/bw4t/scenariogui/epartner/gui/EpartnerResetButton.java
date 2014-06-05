@@ -1,9 +1,7 @@
-package nl.tudelft.bw4t.scenariogui.epartner.controller;
+package nl.tudelft.bw4t.scenariogui.epartner.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import nl.tudelft.bw4t.scenariogui.epartner.gui.EpartnerFrame;
 
 /**
  * Handles actions of the ResetButton
@@ -26,7 +24,6 @@ class EpartnerResetButton implements ActionListener {
      * @param ae The action event triggering this method.
      */
     public void actionPerformed(ActionEvent ae) {
-        view.getLeftAloneCheckbox().setSelected(false);
-        view.getGPSCheckbox().setSelected(false);
+        view.updateView();
     }
 }
