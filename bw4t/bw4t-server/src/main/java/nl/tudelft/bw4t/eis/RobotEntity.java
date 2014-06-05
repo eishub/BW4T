@@ -576,7 +576,7 @@ public class RobotEntity implements RobotEntityInt {
      * Give the robot a list of all the EPartners on the map.
      * @return the list of EPartners
      */
-    @AsPercept(name = "epartner", multiplePercepts = true, filter = Type.ON_CHANGE)
+    @AsPercept(name = "epartner", multiplePercepts = true, filter = Type.ALWAYS)
     public List<EPartner> getEPartners() {
         if (!ourRobot.isHuman()) {
             return new ArrayList<>();
