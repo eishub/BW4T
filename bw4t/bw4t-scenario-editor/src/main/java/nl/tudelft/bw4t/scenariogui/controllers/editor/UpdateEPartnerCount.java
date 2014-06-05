@@ -5,6 +5,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
@@ -14,10 +15,12 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  * @since 05-06-2014
  */
 public class UpdateEPartnerCount implements TableModelListener {
-	
+
 	private MainPanel view;
 	
 	private BW4TClientConfig model;
+	
+	private boolean hasShownEpartnerWarning = false;
 	
 	/**
 	 * Create an UpdateEPartnerCount event handler.
@@ -36,10 +39,25 @@ public class UpdateEPartnerCount implements TableModelListener {
 	 */
 	@Override
 	public void tableChanged(TableModelEvent e) {
-	    SwingUtilities.invokeLater(new Runnable() {
-	        public void run() {
-        		view.getEntityPanel().updateEPartnerCount(model.getAmountEPartner());
-	        }
-	    });
+	    System.out.println("Test 1");
+	    view.getEntityPanel().updateEPartnerCount(model.getAmountEPartner());
+        if (model.getAmountEPartner() > model.getAmountBot()) {
+            if (!hasShownEpartnerWarning) {
+                System.out.println("Test 2");
+                hasShownEpartnerWarning = true;
+                ScenarioEditor.getOptionPrompt().showMessageDialog(
+                        view,
+                        "You are using more e-Partners than bots, "
+                        + "which might not be supported by your map.");
+                System.out.println("Test 3");
+            }
+        } else {
+            hasShownEpartnerWarning = false;
+        }
 	}
+	
+	public boolean hasShownEpartnerWarning() {
+	    return hasShownEpartnerWarning;
+	}
+	
 }
