@@ -55,10 +55,7 @@ class MenuOptionOpen extends AbstractMenuOption {
 				.getMainPanel().getEntityPanel();
 
 		// Check if current config is different from last saved config
-		if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())
-				|| !super.getModel().compareBotConfigs(super.getModel().getOldBots())
-				|| !super.getModel().compareEpartnerConfigs(super.getModel()
-						.getOldEpartners())) {
+		if (getController().hasConfigBeenModified()) {
 			// Check if user wants to save current configuration
 			int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
 					null, ScenarioEditorController.CONFIRM_SAVE_TXT, "",
