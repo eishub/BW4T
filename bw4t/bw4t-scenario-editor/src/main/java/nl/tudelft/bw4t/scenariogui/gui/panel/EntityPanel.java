@@ -222,7 +222,7 @@ public class EntityPanel extends JPanel {
 		botTable = new JTable();
 		botTable.getTableHeader().setReorderingAllowed(false);
 
-		botList = new EntityTableModel();
+		botList = new EntityTableModel(EntityType.AGENT);
 
 		botTable.setModel(botList);
 		botList.addColumn("Bot");
@@ -307,7 +307,7 @@ public class EntityPanel extends JPanel {
 
 		ePartnerTable = new JTable();
 		ePartnerTable.getTableHeader().setReorderingAllowed(false);
-		epartnerList = new EntityTableModel();
+		epartnerList = new EntityTableModel(EntityType.EPARTNER);
 
 		ePartnerTable.setModel(epartnerList);
 		epartnerList.addColumn("E-partner");
