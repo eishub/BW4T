@@ -49,6 +49,7 @@ public class BotEditorPanelTest {
     /** dispose the frame after testing */
     @After
     public final void dispose() {
+        scenarioEditor.dispose();
         editor.dispose();
     }
 
