@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
@@ -170,6 +171,19 @@ public abstract class AbstractMenuOption implements ActionListener {
 		configuration.toXML();
 		view.setLastFileLocation(path);
 	}
+
+    /**
+     * Update the model with the new bot and epartners, and update the counts in the view.
+     */
+    public void updateModelAndView() {
+        getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
+        getModel().updateBotConfigs();
+        getController().getMainView().getMainPanel().getEntityPanel().updateEPartnerCount(
+                getModel().getAmountEPartner());
+        getModel().updateEpartnerConfigs();
+    }
+
+
 
 	/**
 	 * Returns the MenuBar

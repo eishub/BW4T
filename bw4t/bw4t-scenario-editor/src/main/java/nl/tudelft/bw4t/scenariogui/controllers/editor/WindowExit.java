@@ -30,11 +30,8 @@ class WindowExit extends WindowAdapter {
     
     @Override
     public void windowClosing(WindowEvent e) {
-        ConfigurationPanel configPanel = 
-                view.getController().getMainView().getMainPanel().getConfigurationPanel();
-        
         // Check if current config is different from last saved config
-        if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())) {
+        if (view.getController().hasConfigBeenModified()) {
             int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
                     null,
                     "You have not saved your current configuration. \n"
@@ -52,15 +49,9 @@ class WindowExit extends WindowAdapter {
             }
         }
         else {
-            int response = JOptionPane.showConfirmDialog(
-                    null,
-                    "Are you sure you want to exit the program?",
-                    "",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE
-            );
+            boolean doQuit = view.getController().promptUserToQuit();
 
-            if (response == JOptionPane.YES_OPTION) {
+            if (doQuit) {
                 view.closeScenarioEditor();
             }
 

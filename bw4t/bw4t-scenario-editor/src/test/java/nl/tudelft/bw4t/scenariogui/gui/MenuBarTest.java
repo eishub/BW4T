@@ -234,6 +234,9 @@ public class MenuBarTest {
      */
     @Test
     public void testFlushEntityLists() {
+        // Mock the option prompt.
+        ScenarioEditor.setOptionPrompt(new NoMockOptionPrompt());
+
         //add bots and epartners
         editor.getMainPanel().getEntityPanel().getNewBotButton().doClick();
         editor.getMainPanel().getEntityPanel().getNewBotButton().doClick();
@@ -264,6 +267,8 @@ public class MenuBarTest {
 
         AbstractMenuOption menuOption = (AbstractMenuOption) listeners[0];
         menuOption.setController(new ScenarioEditorController(editor, new BW4TClientConfig()));
+
+        ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
 
         /* Don't actually close the jvm */
         doNothing().when(editor).closeScenarioEditor();
