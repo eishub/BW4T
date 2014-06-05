@@ -4,6 +4,8 @@ import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import org.apache.log4j.Logger;
+
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
@@ -15,6 +17,7 @@ import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 
 public class ActionPopUpMenu {
+    private static final Logger LOGGER = Logger.getLogger(ActionPopUpMenu.class);
     /**
      * Used for building the pop up menu that displays the actions a user can undertake
      */
@@ -34,9 +37,10 @@ public class ActionPopUpMenu {
             startPosX += set.getSequenceBlockSize();
         }
         
-        if(cmc.getTheBot().getHoldingEpartner() >= 0) {
+        if (cmc.getTheBot().getHoldingEpartner() >= 0) {
+            LOGGER.info("We are now holding the e-partner: " + cmc.getTheBot().getHoldingEpartner());
             ViewEPartner ep = cmc.getViewEPartner(cmc.getTheBot().getHoldingEpartner());
-            if(ep != null) {
+            if (ep != null) {
                 final Point2D location = ep.getLocation();
                 Shape ePartnerBox = set.transformCenterRectangle(new Rectangle2D.Double(location.getX(), location.getY(), ep.EPARTNER_SIZE, ep.EPARTNER_SIZE));
                 if (ePartnerBox.contains(gui.getSelectedLocation())) {

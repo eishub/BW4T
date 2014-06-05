@@ -611,7 +611,7 @@ public class RobotEntity implements RobotEntityInt {
      * Only available for the human:
      * drops the e-Partner they are currently holding. 
      */
-    @AsAction(name = "dropEPartner")
+    @AsAction(name = "putDownEPartner")
     public void dropEPartner() {
     	if (ourRobot.isHuman()) {
     		ourRobot.dropEPartner();
