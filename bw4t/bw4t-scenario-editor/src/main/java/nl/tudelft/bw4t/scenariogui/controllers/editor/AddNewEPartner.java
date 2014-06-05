@@ -3,6 +3,7 @@ package nl.tudelft.bw4t.scenariogui.controllers.editor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
@@ -17,6 +18,8 @@ class AddNewEPartner implements ActionListener {
 	private MainPanel view;
 
 	private int eCount;
+	
+	private BW4TClientConfig model;
 
 	/**
 	 * Create an AddNewEpartner event handler.
@@ -24,8 +27,9 @@ class AddNewEPartner implements ActionListener {
 	 * @param newView
 	 *            The parent view.
 	 */
-	public AddNewEPartner(final MainPanel newView) {
+	public AddNewEPartner(final MainPanel newView, BW4TClientConfig model) {
 		this.view = newView;
+		this.model = model;
 	}
 
 	/**
@@ -37,11 +41,13 @@ class AddNewEPartner implements ActionListener {
 	 *            The action
 	 */
 	public void actionPerformed(ActionEvent ae) {
-		eCount = view.getEntityPanel().getEPartnerConfigs().size() + 1;
+		eCount = model.getEpartners().size() + 1;
 		Object[] newEPartnerObject = { "E-partner " + eCount, 1 };
 		view.getEntityPanel().getEPartnerTableModel().addRow(newEPartnerObject);
 		EPartnerConfig config = new EPartnerConfig();
 		config.setEpartnerName("E-Partner " + eCount);
-		view.getEntityPanel().getEPartnerConfigs().add(config);
+		
+		model.addEpartner(config);
+		//view.getEntityPanel().getEPartnerConfigs().add(config);
 	}
 }

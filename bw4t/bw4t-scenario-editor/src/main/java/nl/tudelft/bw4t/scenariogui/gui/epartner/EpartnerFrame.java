@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.controllers.epartner.EpartnerController;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
@@ -52,11 +53,15 @@ public class EpartnerFrame extends JFrame {
 	private int row;
 
 	private EpartnerController controller;
+	
+	private BW4TClientConfig model;
 
 	/**
 	 * Create the frame.
 	 */
-	public EpartnerFrame(MainPanel panel, int row) {
+	public EpartnerFrame(MainPanel panel, int row, BW4TClientConfig model) {
+		this.model = model;
+		
 		setTitle("E-Partner");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		contentPane.setLayout(new BorderLayout(5, 5));
@@ -64,7 +69,7 @@ public class EpartnerFrame extends JFrame {
 
 		this.panel = panel;
 		this.row = row;
-		this.dataObject = panel.getEntityPanel().getEPartnerConfig(row);
+		this.dataObject = this.model.getEpartner(row);
 
 		createInfoPanel();
 		createOptionPanel();

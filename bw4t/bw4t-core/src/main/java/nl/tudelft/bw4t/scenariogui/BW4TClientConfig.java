@@ -72,6 +72,8 @@ public class BW4TClientConfig {
 	@XmlElementWrapper(name = "bots")
 	@XmlElement(name = "bot")
 	private List<BotConfig> bots = new ArrayList<BotConfig>();
+	
+	private List<BotConfig> oldBots = new ArrayList<BotConfig>();
 
 	/**
 	 * The XML element wrapper for the list of epartners.
@@ -79,6 +81,11 @@ public class BW4TClientConfig {
 	@XmlElementWrapper(name = "epartners")
 	@XmlElement(name = "epartner")
 	private List<EPartnerConfig> epartners = new ArrayList<EPartnerConfig>();
+	
+	private List<EPartnerConfig> oldEpartners = new ArrayList<EPartnerConfig>();
+	
+	private int botCount;
+	private int epartnerCount;
 
 	/**
 	 * An empty <code>BW4TClientConfig</code> object.
@@ -277,14 +284,6 @@ public class BW4TClientConfig {
 		this.mapFile = newMapFile;
 	}
 
-	// public LinkedList<BotConfig> getBots() {
-	// return bots;
-	// }
-	//
-	// public void setBots(LinkedList<BotConfig> bots) {
-	// this.bots = bots;
-	// }
-
 	/**
 	 * Add a bot to the configuration file.
 	 * 
@@ -313,6 +312,15 @@ public class BW4TClientConfig {
 	public List<BotConfig> getBots() {
 		return bots;
 	}
+	
+	/**
+	 * Returns the previous saved BotConfig list.
+	 * 
+	 * @return The previous saved BotConfig list.
+	 */
+	public List<BotConfig> getOldBots() {
+		return oldBots;
+	}
 
 	/**
 	 * Returns the index'th bot.
@@ -325,6 +333,47 @@ public class BW4TClientConfig {
 		return bots.get(index);
 	}
 
+	public void updateBotConfigs() {
+		oldBots = bots;
+	}
+	
+	/**
+	 * Returns the amount of bots in the bot list.
+	 * 
+	 * @return The amount of bots in the bot list.
+	 */
+	public int getAmountBot() {
+		return botCount;
+	}
+	
+	public void updateAmountBot() {
+		botCount = 0;
+		
+		for (int i = 0; i < bots.size(); i ++) {
+			botCount = botCount + bots.get(i).getBotAmount();
+		}
+	}
+	
+	/**
+	 * Compares the BotConfig lists.
+	 * 
+	 * @return If the BotConfigs lists are equal.
+	 */
+	public boolean compareBotConfigs(List<BotConfig> config) {
+		if (bots.size() != config.size()) {
+			return false;
+		}
+
+		for (int i = 0; i < bots.size(); i++) {
+			if (!bots.get(i).bcToString()
+					.equals(config.get(i).bcToString())) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+	
 	/**
 	 * Add an epartner to the configuration file.
 	 * 
@@ -353,6 +402,15 @@ public class BW4TClientConfig {
 	public List<EPartnerConfig> getEpartners() {
 		return epartners;
 	}
+	
+	/**
+	 * Returns the previous saved EpartnerConfig list.
+	 * 
+	 * @return The previous saved EpartnerConfig list.
+	 */
+	public List<EPartnerConfig> getOldEpartners() {
+		return oldEpartners;
+	}
 
 	/**
 	 * Returns the index'th epartner.
@@ -363,5 +421,49 @@ public class BW4TClientConfig {
 	 */
 	public EPartnerConfig getEpartner(int index) {
 		return epartners.get(index);
+	}
+	
+	/**
+	 * Updates the EpartnerConfig list.
+	 */
+	public void updateEpartnerConfigs() {
+		oldEpartners = epartners;
+	}
+	
+	/**
+	 * Returns the amount of epartners in the epartner list.
+	 * 
+	 * @return The amount of epartners in the epartner list.
+	 */
+	public int getAmountEPartner() {
+		return epartnerCount;
+	}
+	
+	public void updateAmountEPartner() {
+		epartnerCount = 0;
+		
+		for (int i = 0; i < epartners.size(); i ++) {
+			epartnerCount = epartnerCount + epartners.get(i).getEpartnerAmount();
+		}
+	}
+	
+	/**
+	 * Compares the EpartnerConfig lists.
+	 * 
+	 * @return If the EpartnerConfigs lists are equal.
+	 */
+	public boolean compareEpartnerConfigs(List<EPartnerConfig> config) {
+		if (epartners.size() != config.size()) {
+			return false;
+		}
+
+		for (int i = 0; i < epartners.size(); i++) {
+			if (!epartners.get(i).ecToString()
+					.equals(config.get(i).ecToString())) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 }
