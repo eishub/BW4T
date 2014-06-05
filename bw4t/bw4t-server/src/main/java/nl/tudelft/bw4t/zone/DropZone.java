@@ -5,15 +5,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import nl.tudelft.bw4t.blocks.Block;
+import nl.tudelft.bw4t.map.BlockColor;
+import nl.tudelft.bw4t.robots.AbstractRobot;
+import nl.tudelft.bw4t.server.logging.BW4TFileAppender;
+import nl.tudelft.bw4t.server.logging.BotLog;
+
 import org.apache.log4j.Logger;
 
-import nl.tudelft.bw4t.server.logging.BW4TFileAppender;
-import nl.tudelft.bw4t.blocks.Block;
-import nl.tudelft.bw4t.eis.RobotEntity;
-import nl.tudelft.bw4t.map.BlockColor;
-import nl.tudelft.bw4t.robots.Robot;
-import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
-import nl.tudelft.bw4t.server.logging.BotLog;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 
@@ -95,7 +94,7 @@ public class DropZone extends Room {
      *            The robot that drops the block
      * @return true if bot is in dropzone, else false.
      */
-    public boolean dropped(Block block, Robot robot) {
+    public boolean dropped(Block block, AbstractRobot robot) {
         if (!getBoundingBox().intersects(robot.getBoundingBox())) {
             // The block isn't dropped in this zone
             return false;

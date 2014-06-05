@@ -4,8 +4,12 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.panel.gui.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.panel.gui.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -60,7 +64,7 @@ public class ConfigurationPanelTest {
         fileChooser = mock(JFileChooser.class);
         configPanel = new ConfigurationPanel();
 
-        editor = new ScenarioEditor(configPanel, new EntityPanel());
+        editor = new ScenarioEditor(configPanel, new EntityPanel(), new BW4TClientConfig());
 
         // Set the fileChooser used to the mocked one.
         configPanel.setFileChooser(fileChooser);

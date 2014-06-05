@@ -1,15 +1,16 @@
 package nl.tudelft.bw4t.handicap;
 
 import nl.tudelft.bw4t.doors.Door;
-import nl.tudelft.bw4t.robots.Robot.MoveType;
+import nl.tudelft.bw4t.robots.MoveType;
 import nl.tudelft.bw4t.zone.Corridor;
+import nl.tudelft.bw4t.zone.Room;
 import nl.tudelft.bw4t.zone.Zone;
 /**
  * 
  * @author Valentine Mairet & Ruben Starmans
  *
  */
-public class SizeOverloadHandicap extends AbstractHandicapFactory {
+public class SizeOverloadHandicap extends AbstractRobotDecorator {
 	
 	/**
 	 * This variable indicates the size of the robot. 
@@ -23,7 +24,7 @@ public class SizeOverloadHandicap extends AbstractHandicapFactory {
      * @param p HandicapInterface the SizeOverloadHandicap wraps around.
      * @param s Size the bot is gonna be.
      */
-    public SizeOverloadHandicap(HandicapInterface p, int s) {
+    public SizeOverloadHandicap(IRobot p, int s) {
         super(p);
         size = s;
         robot.setSize(s);
@@ -48,6 +49,8 @@ public class SizeOverloadHandicap extends AbstractHandicapFactory {
                     return MoveType.ENTER_CORRIDOR;
                 }
                 return MoveType.HIT_OCCUPIED_ZONE;
+            } else if (endzone instanceof Room) {
+            	return MoveType.HIT_CLOSED_DOOR;
             }
         } else {
             super.checkZoneAccess(startzone, endzone, door);

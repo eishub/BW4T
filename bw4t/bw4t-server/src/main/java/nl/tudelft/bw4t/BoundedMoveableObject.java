@@ -63,7 +63,12 @@ public abstract class BoundedMoveableObject {
      * @return The location of the object, if currently in a space.
      */
     public NdPoint getLocation() {
-        return space.getLocation(this);
+        NdPoint location = space.getLocation(this);
+        //ugly fix for NullPointerException when adding entity after the display was setup
+        if (location == null) {
+            return new NdPoint(0, 0);
+        }
+        return location;
     }
     
     /**
