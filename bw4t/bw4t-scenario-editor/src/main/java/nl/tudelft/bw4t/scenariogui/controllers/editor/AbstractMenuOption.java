@@ -19,7 +19,6 @@ import nl.tudelft.bw4t.scenariogui.util.MapSpec;
  * Handles the event of the menu.
  * <p>
  * 
- * @author Nick Feddes
  * @version 0.1
  * @since 12-05-2014
  */

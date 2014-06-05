@@ -33,7 +33,6 @@ import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
  * bots and e-partners.
  * <p>
  * 
- * @author Katia Asmoredjo
  * @version 0.1
  * @since 12-05-2014
  */
@@ -357,20 +356,6 @@ public class EntityPanel extends JPanel {
 	}
 
 	/**
-	 * Returns the amount of bots.
-	 * 
-	 * @return The amount of bots.
-	 */
-	/*public final int getBotCount() {
-		int numBots = 0;
-
-		for (int i = 0; i < botList.getRowCount(); i++) {
-			numBots += Integer.valueOf(botList.getValueAt(i, 2).toString());
-		}
-		return numBots;
-	}*/
-
-	/**
 	 * Updates the bot count on the EntityPanel.
 	 * 
 	 * @param count The total bot count.
@@ -378,21 +363,6 @@ public class EntityPanel extends JPanel {
 	public final void updateBotCount(Integer count) {
 		botCountField.setText(count.toString());
 	}
-
-	/**
-	 * Returns the amount of epartners.
-	 * 
-	 * @return The amount of epartners.
-	 */
-	/*public final int getEPartnerCount() {
-		int numEPartner = 0;
-
-		for (int i = 0; i < epartnerList.getRowCount(); i++) {
-			numEPartner += Integer.valueOf(epartnerList.getValueAt(i, 1)
-					.toString());
-		}
-		return numEPartner;
-	}*/
 
 	/**
 	 * Updates the entities count on the EntityPanel.

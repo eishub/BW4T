@@ -17,9 +17,6 @@ import nl.tudelft.bw4t.util.XMLManager;
  * XML.
  * <p>
  * 
- * @author Nick Feddes
- * @author Calvin Wong Loi Sing
- * @author Katia Asmoredjo
  * @version 0.1
  * @since 12-05-2014
  */

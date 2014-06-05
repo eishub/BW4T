@@ -15,8 +15,6 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
  * Handles the event to start a new file.
  * <p>
  * 
- * @author Katia Asmoredjo
- * @author Xander Zonneveld
  * @version 0.1
  * @since 12-05-2014
  */

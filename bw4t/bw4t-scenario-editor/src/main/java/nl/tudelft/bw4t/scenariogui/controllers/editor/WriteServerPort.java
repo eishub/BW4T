@@ -9,8 +9,6 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  * Listens to the server port text field and updates
  * the {@link nl.tudelft.bw4t.scenariogui.BW4TClientConfig} object
  * with the update in the text field.
- * 
- * @author Nick
  *
  */
 public class WriteServerPort implements DocumentListener {

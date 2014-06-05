@@ -11,7 +11,6 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  * Handles the event when a cell in the bot table is edited.
  * <p>
  * 
- * @author Nick Feddes
  * @version 0.1
  * @since 27-05-2014
  */
