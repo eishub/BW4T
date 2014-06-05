@@ -65,9 +65,6 @@ public class BW4TClientConfig {
 	private List<EPartnerConfig> epartners = new ArrayList<EPartnerConfig>();
 	
 	private List<EPartnerConfig> oldEpartners = new ArrayList<EPartnerConfig>();
-	
-	private int botCount;
-	private int epartnerCount;
 
 	/**
 	 * An empty <code>BW4TClientConfig</code> object.
@@ -328,18 +325,11 @@ public class BW4TClientConfig {
 	 * @return The amount of bots in the bot list.
 	 */
 	public int getAmountBot() {
-		return botCount;
-	}
-	
-	/**
-	 * Updates the total amount of bots in the bot list.
-	 */
-	public void updateAmountBot() {
-		botCount = 0;
-		
-		for (int i = 0; i < bots.size(); i++) {
-			botCount = botCount + bots.get(i).getBotAmount();
-		}
+	    int  botCount = 0;
+        for (int i = 0; i < bots.size(); i++) {
+            botCount = botCount + bots.get(i).getBotAmount();
+        }
+        return botCount;
 	}
 	
 	/**
@@ -427,18 +417,11 @@ public class BW4TClientConfig {
 	 * @return The amount of epartners in the epartner list.
 	 */
 	public int getAmountEPartner() {
-		return epartnerCount;
-	}
-	
-	/**
-	 * Updates the total amount of epartners in the epartner list.
-	 */
-	public void updateAmountEPartner() {
-		epartnerCount = 0;
-		
-		for (int i = 0; i < epartners.size(); i++) {
-			epartnerCount = epartnerCount + epartners.get(i).getEpartnerAmount();
-		}
+	     int  epartnerCount = 0;
+	     for (int i = 0; i < epartners.size(); i++) {
+             epartnerCount = epartnerCount + epartners.get(i).getEpartnerAmount();
+         }
+         return epartnerCount;
 	}
 	
 	/**

@@ -37,8 +37,7 @@ public class UpdateEPartnerCount implements TableModelListener {
 	public void tableChanged(TableModelEvent e) {
 	    SwingUtilities.invokeLater(new Runnable() {
 	        public void run() {
-    		model.updateAmountEPartner();
-    		view.getEntityPanel().updateEPartnerCount(model.getAmountEPartner());
+        		view.getEntityPanel().updateEPartnerCount(model.getAmountEPartner());
 	        }
 	    });
 	}
