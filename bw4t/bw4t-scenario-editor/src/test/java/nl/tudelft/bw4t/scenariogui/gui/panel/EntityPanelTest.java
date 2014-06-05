@@ -3,6 +3,8 @@ package nl.tudelft.bw4t.scenariogui.gui.panel;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.panel.gui.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.panel.gui.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
 
