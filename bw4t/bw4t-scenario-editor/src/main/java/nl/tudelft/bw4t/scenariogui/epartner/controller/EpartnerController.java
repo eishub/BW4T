@@ -24,11 +24,6 @@ public class EpartnerController {
 	private Set<EPartnerViewInterface> views = new HashSet<>();
 	
 	private EPartnerConfig epConfig;
-	
-	private String ePartnerName;
-	private int ePartnerAmount;
-	private boolean ePartnerGPS;
-	private boolean ePartnerFMN;
 
 
 	/**
@@ -55,7 +50,7 @@ public class EpartnerController {
 	 */
 	public void addView(EPartnerViewInterface view) {
 		views.add(view);
-		view.update();
+		view.updateView();
 	}
 	
 	/**
@@ -65,7 +60,6 @@ public class EpartnerController {
 	 */
 	public void removeView(EPartnerViewInterface view) {
 		views.remove(view);
-		view.update();
 	}
 	
 	/**
@@ -74,7 +68,7 @@ public class EpartnerController {
 	 * @return The epartner name.
 	 */
 	public String getEpartnerName() {
-		return ePartnerName;
+		return epConfig.getEpartnerName();
 	}
 
 	/**
@@ -83,7 +77,7 @@ public class EpartnerController {
 	 * @return The epartner amount.
 	 */
 	public int getEpartnerAmount() {
-		return ePartnerAmount;
+		return epConfig.getEpartnerAmount();
 	}
 
 	/**
@@ -92,7 +86,7 @@ public class EpartnerController {
 	 * @return If gps is enabled.
 	 */
 	public boolean isGps() {
-		return ePartnerGPS;
+		return epConfig.isGps();
 	}
 
 	/**
@@ -101,18 +95,20 @@ public class EpartnerController {
 	 * @return
 	 */
 	public boolean isForgetMeNot() {
-		return ePartnerFMN;
+		return epConfig.isForgetMeNot();
 	}
 
-	// VRAAG VOOR JAN
-	// CONTROLLER UPDATEN MET WAARDEN UIT EPF
-	// OF
-	// EPF UPDATEN MET WAARDEN UIT CONTROLLER?
-	// ????????????????????????????????????????????
-	public void update(EpartnerFrame epf) {
-		setEpartnerName(epf.getName());
-		setEpartnerAmount(epf.getEpartnerAmount());
-		setGps(epf.getGPSCheckbox().isSelected());
-		setForgetMeNot(epf.getForgetMeNotCheckbox().isSelected());
+	/**
+	 * 
+	 * @param epf
+	 */
+	public void updateConfig(EpartnerFrame epf) {
+		epConfig.setEpartnerName(epf.getName());
+		epConfig.setEpartnerAmount(epf.getEpartnerAmount());
+		epConfig.setGps(epf.getGPS());
+		epConfig.setForgetMeNot(epf.getForgetMeNot());
+		for(EPartnerViewInterface evi: views){
+			evi.updateView();
+		}
 	}
 }

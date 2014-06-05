@@ -11,12 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
-import nl.tudelft.bw4t.scenariogui.epartner.controller.EpartnerApplyButton;
-import nl.tudelft.bw4t.scenariogui.epartner.controller.EpartnerCancelButton;
 import nl.tudelft.bw4t.scenariogui.epartner.controller.EpartnerController;
-import nl.tudelft.bw4t.scenariogui.epartner.controller.EpartnerResetButton;
-import nl.tudelft.bw4t.scenariogui.epartner.controller.LeftAloneCheckBox;
-import nl.tudelft.bw4t.scenariogui.epartner.controller.gpsCheckBox;
 import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
 
 /**
@@ -60,7 +55,7 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 		contentPane.setLayout(new BorderLayout(5, 5));
 		setContentPane(contentPane);
 
-		this.controller = controller;
+		this.setController(controller);
 
 		createInfoPanel();
 		createOptionPanel();
@@ -72,34 +67,29 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 		
 
 
-		view.getResetButton().addActionListener(
-				new EpartnerResetButton(getMainView()));
+		getResetButton().addActionListener(
+				new EpartnerResetButton(this));
 
-		view.getCancelButton().addActionListener(
-				new EpartnerCancelButton(getMainView()));
+		getCancelButton().addActionListener(
+				new EpartnerCancelButton(this));
 
-		view.getApplyButton().addActionListener(
-				new EpartnerApplyButton(getMainView()));
-
-		view.getLeftAloneCheckbox().addActionListener(
-				new LeftAloneCheckBox(getMainView()));
-
-		view.getGPSCheckbox().addActionListener(new gpsCheckBox(getMainView()));
+		getApplyButton().addActionListener(
+			new EpartnerApplyButton(this));
 
 		pack();
 		
 		controller.addView(this);
 		
 		setVisible(true);
+		
+		
 	}
 
 	/** Create the panel which contains the epartner info. */
 	private void createInfoPanel() {
 		infoPane.setLayout(new GridLayout(1, 0));
-		epartnerNameField.setText(controller.getEpartnerName());
 		infoPane.add(epartnerNameField);
 		infoPane.add(new JLabel("  Amount of this type:"));
-		epartnerAmountField.setText("" + dataObject.getEpartnerAmount());
 		infoPane.add(epartnerAmountField);
 	}
 
@@ -111,14 +101,8 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 
 		optionPane.add(new JLabel(""));
 		
-		if (dataObject.isForgetMeNot()) {
-			leftAloneCheckbox.setSelected(true);
-		}
-		optionPane.add(leftAloneCheckbox);
+		optionPane.add(forgetMeNotCheckbox);
 		
-		if (dataObject.isGps()) {
-			gpsCheckBox.setSelected(true);
-		}
 		optionPane.add(gpsCheckBox);
 		optionPane.add(new JLabel(""));
 	}
@@ -139,8 +123,8 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 	 * 
 	 * @return The JTextField containing the epartner name.
 	 */
-	public JTextField getEpartnerName() {
-		return this.epartnerNameField;
+	public String getEpartnerName() {
+		return this.epartnerNameField.getText();
 	}
 
 	/**
@@ -148,8 +132,8 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 	 * 
 	 * @return The JTextField containing the epartner amount.
 	 */
-	public JTextField getEpartnerAmount() {
-		return this.epartnerAmountField;
+	public int getEpartnerAmount() {
+		return Integer.parseInt(this.epartnerAmountField.getText());
 	}
 
 	/**
@@ -199,9 +183,37 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 	}
 
 	/**
-	 * 
+	 * (update frame)
 	 */
-	public void update() {
+	public void updateView() {
 		// hier moeten alle setters komen
+		epartnerNameField.setText(getEpartnerController().getEpartnerName());
+		epartnerAmountField.setText("" + getEpartnerController().getEpartnerAmount());
+		forgetMeNotCheckbox.setSelected(controller.isForgetMeNot());
+		gpsCheckBox.setSelected(getEpartnerController().isGps());
+	}
+	
+	protected EpartnerController getEpartnerController() {
+		return controller;
+	}
+
+	public void setController(EpartnerController controller) {
+		this.controller = controller;
+	}
+	
+	@Override
+	public void dispose() {
+		controller.removeView(this);
+		super.dispose();
+	}
+
+	@Override
+	public boolean getForgetMeNot() {
+		return forgetMeNotCheckbox.isSelected();
+	}
+
+	@Override
+	public boolean getGPS() {
+		return gpsCheckBox.isSelected();
 	}
 }
