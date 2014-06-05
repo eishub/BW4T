@@ -15,6 +15,8 @@ import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.controllers.editor.AbstractMenuOption;
 import nl.tudelft.bw4t.scenariogui.controllers.editor.ScenarioEditorController;
+import nl.tudelft.bw4t.scenariogui.util.ExportToMAS;
+import nl.tudelft.bw4t.scenariogui.util.ExportToMASTest;
 import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
@@ -476,7 +478,7 @@ public class MenuBarTest {
         // Setup the behaviour
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
-        when(filechooser.getSelectedFile()).thenReturn(new File(FILE_EXPORT_PATH));
+        when(filechooser.getSelectedFile()).thenReturn(new File(FILE_EXPORT_PATH + ExportToMASTest.CONFIG_NAME + ".mas2g"));
 
         new File(FILE_EXPORT_PATH).mkdir();
 
@@ -486,8 +488,8 @@ public class MenuBarTest {
 
         editor.getTopMenuBar().getMenuItemFileExport().doClick();
 
-        assertTrue("mas2g Exists", new File(FILE_EXPORT_PATH + "bw4t.mas2g").exists());
-        FileUtils.forceDelete(new File(FILE_EXPORT_PATH));
+        assertTrue("mas2g Exists", new File(FILE_EXPORT_PATH + ExportToMASTest.CONFIG_NAME + ".mas2g").exists());
+        FileUtils.forceDelete(new File(FILE_EXPORT_PATH + ExportToMASTest.CONFIG_NAME + ".mas2g"));
 
     }
 
@@ -500,8 +502,12 @@ public class MenuBarTest {
     public void testExportButtonNo() throws IOException, JAXBException {
         // Setup the behaviour
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.CANCEL_OPTION);
-        when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
-        when(filechooser.getSelectedFile()).thenReturn(new File(FILE_EXPORT_PATH));
+        when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.CANCEL_OPTION);
+        when(filechooser.getSelectedFile()).thenReturn(new File(FILE_EXPORT_PATH + ExportToMASTest.CONFIG_NAME + ".mas2g"));
+
+        // Spy the message
+        OptionPrompt spyPrompt = spy(new YesMockOptionPrompt());
+        ScenarioEditor.setOptionPrompt(spyPrompt);
 
         new File(FILE_EXPORT_PATH).mkdir();
 
@@ -511,9 +517,7 @@ public class MenuBarTest {
 
         editor.getTopMenuBar().getMenuItemFileExport().doClick();
 
-        assertFalse("mas2g Exists", new File(FILE_EXPORT_PATH + "bw4t.mas2g").exists());
-        FileUtils.forceDelete(new File(FILE_EXPORT_PATH));
-
+        verify(spyPrompt, times(1)).showMessageDialog(null, "Error: Can not export an unsaved scenario.");
     }
 
 
