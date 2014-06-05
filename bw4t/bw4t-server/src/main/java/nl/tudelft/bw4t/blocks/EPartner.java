@@ -58,6 +58,7 @@ public class EPartner extends BoundedMoveableObject {
     
     public void setHolder(IRobot human) {
         this.holder = human;
+        view.setPickedUp(holder != null);
     }
 
 	public String getName() {
