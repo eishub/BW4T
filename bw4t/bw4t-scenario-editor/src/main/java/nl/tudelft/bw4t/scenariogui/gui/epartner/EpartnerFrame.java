@@ -11,14 +11,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.controllers.epartner.EpartnerController;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
  * This class creates the frame for the e-Partner GUI.
- * 
- * @author Katia
+ * @author Wendy Bolier
  */
 
 public class EpartnerFrame extends JFrame {
@@ -61,13 +61,17 @@ public class EpartnerFrame extends JFrame {
 	private int row;
 
 	private EpartnerController controller;
+	
+	private BW4TClientConfig model;
 
 	/**
 	 * Create the frame.
 	 * @param panel the scenario gui main panel
 	 * @param row the row to be updated on close
 	 */
-	public EpartnerFrame(MainPanel panel, int row) {
+	public EpartnerFrame(MainPanel panel, int row, BW4TClientConfig model) {
+		this.model = model;
+		
 		setTitle("E-Partner");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		contentPane.setLayout(new BorderLayout(5, 5));
@@ -75,7 +79,7 @@ public class EpartnerFrame extends JFrame {
 
 		this.panel = panel;
 		this.row = row;
-		this.dataObject = panel.getEntityPanel().getEPartnerConfig(row);
+		this.dataObject = this.model.getEpartner(row);
 
 		createInfoPanel();
 		createOptionPanel();
@@ -275,5 +279,9 @@ public class EpartnerFrame extends JFrame {
 	public JButton getFileButton() {
 		return fileButton;
 	}
-
+	
+	public BW4TClientConfig getModel() {
+	    return model;
+	}
+	
 }

@@ -10,9 +10,8 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfigIntegration;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
-import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
+import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 import nl.tudelft.bw4t.scenariogui.util.MapSpec;
 
@@ -20,20 +19,15 @@ import nl.tudelft.bw4t.scenariogui.util.MapSpec;
  * Handles the event of the menu.
  * <p>
  * 
- * @author Nick Feddes
  * @version 0.1
  * @since 12-05-2014
  */
 public abstract class AbstractMenuOption implements ActionListener {
 
-	/**
-	 * The menu bar as view.
-	 */
 	private MenuBar view;
+	
+	private BW4TClientConfig model;
 
-	/**
-	 * The current controllers that is controlling this.
-	 */
 	private ScenarioEditorController controller;
 
 	// made a variable for this so we can call it during testing
@@ -50,11 +44,14 @@ public abstract class AbstractMenuOption implements ActionListener {
 	 *            The new view.
 	 * @param mainView
 	 *            The main view controllers.
+	 * @param model
+	 *            The model.
 	 */
 	public AbstractMenuOption(final MenuBar newView,
-			final ScenarioEditorController mainView) {
+			final ScenarioEditorController mainView, BW4TClientConfig model) {
 		this.view = newView;
 		this.setController(mainView);
+		this.model = model;
 
 		/*
 		 * Set the intial file chooser and option prompt, can eventually be
@@ -99,8 +96,7 @@ public abstract class AbstractMenuOption implements ActionListener {
 	public void saveFile(final boolean saveAs) {
 		MapSpec map = controller.getMainView().getMainPanel()
 				.getConfigurationPanel().getMapSpecifications();
-		int botCount = controller.getMainView().getMainPanel().getEntityPanel()
-				.getBotCount();
+		int botCount = getModel().getAmountBot();
 		if (map.isSet() && botCount > map.getEntitiesAllowedInMap()) {
 			ScenarioEditor.getOptionPrompt().showMessageDialog(
 					view,
@@ -145,25 +141,23 @@ public abstract class AbstractMenuOption implements ActionListener {
 
 	public void saveXMLFile(String path) throws JAXBException,
 			FileNotFoundException {
-		BW4TClientConfig configuration = BW4TClientConfigIntegration
-				.createConfigFromPanel((MainPanel) (getController()
-						.getMainView()).getContentPane(), path);
+		BW4TClientConfig configuration = getController().getMainView().getMainPanel().getClientConfig();
+		configuration.setFileLocation(path);
+		configuration.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
 
 		// SAVE BOTS & EPARTNERS HERE
 		int botRows = getController().getMainView().getMainPanel()
 				.getEntityPanel().getBotTableModel().getRowCount();
 
 		for (int i = 0; i < botRows; i++) {
-			configuration.addBot(getController().getMainView().getMainPanel()
-					.getEntityPanel().getBotConfig(i));
+			configuration.addBot(getModel().getBot(i));
 		}
 
 		int epartnerRows = getController().getMainView().getMainPanel()
 				.getEntityPanel().getEPartnerTableModel().getRowCount();
 
 		for (int i = 0; i < epartnerRows; i++) {
-			configuration.addEpartner(getController().getMainView()
-					.getMainPanel().getEntityPanel().getEPartnerConfig(i));
+			configuration.addEpartner(getModel().getEpartner(i));
 		}
 
 		configuration.toXML();
@@ -204,6 +198,16 @@ public abstract class AbstractMenuOption implements ActionListener {
 	 */
 	public void setController(final ScenarioEditorController newController) {
 		controller = newController;
+	}
+	
+	/**
+	 * Gets the BW4TClientConfig model.
+	 * 
+	 * @return model
+	 * 			The model being used.
+	 */
+	public BW4TClientConfig getModel() {
+		return model;
 	}
 
 }

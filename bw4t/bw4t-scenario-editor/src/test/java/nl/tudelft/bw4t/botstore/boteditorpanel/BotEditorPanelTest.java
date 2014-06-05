@@ -1,6 +1,8 @@
 package nl.tudelft.bw4t.botstore.boteditorpanel;
 
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditor;
 import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
@@ -24,6 +26,7 @@ import static org.mockito.Mockito.spy;
  */
 public class BotEditorPanelTest {
 
+    private ScenarioEditor scenarioEditor;
     /** the frame on which we put the panel */
     private BotEditor editor;
     /** the panel we test */
@@ -35,10 +38,11 @@ public class BotEditorPanelTest {
     @Before
     public final void setUp() {
         EntityPanel entityPanel = new EntityPanel();
-        entityPanel.getBotConfigs().add(new BotConfig());
-        MainPanel parent = new MainPanel(new ConfigurationPanel(), entityPanel);
-        editor = new BotEditor(parent, 0);
-        panel = new BotEditorPanel(editor, parent);
+        scenarioEditor = new ScenarioEditor(new ConfigurationPanel(), entityPanel, new BW4TClientConfig());
+        scenarioEditor.getController().getModel().getBots().add(new BotConfig());
+        MainPanel parent = scenarioEditor.getMainPanel();
+        editor = new BotEditor(parent, 0, scenarioEditor.getController().getModel());
+        panel = new BotEditorPanel(editor, parent, scenarioEditor.getController().getModel());
         spypanel = spy(panel);
     }
 

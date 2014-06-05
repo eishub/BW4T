@@ -54,13 +54,12 @@ class EpartnerSaveButton implements ActionListener {
 	 */
 	private void updateEpartnerTable() {
 		view.getPanel().getEntityPanel().getEPartnerTableModel().setRowCount(0);
-		int rows = view.getPanel().getEntityPanel().getEPartnerConfigs().size();
+		int rows = view.getModel().getEpartners().size();
 
 		for (int i = 0; i < rows; i++) {
-			EPartnerConfig epartnerConfig = view.getPanel().getEntityPanel()
-					.getEPartnerConfig(i);
-			Object[] newEPartnerObject = { epartnerConfig.getEpartnerName(),
-					epartnerConfig.getEpartnerAmount() };
+			EPartnerConfig epartnerConfig = view.getModel().getEpartner(i);
+			Object[] newEPartnerObject = {epartnerConfig.getEpartnerName(),
+					epartnerConfig.getEpartnerAmount()};
 			view.getPanel().getEntityPanel().getEPartnerTableModel()
 					.addRow(newEPartnerObject);
 		}

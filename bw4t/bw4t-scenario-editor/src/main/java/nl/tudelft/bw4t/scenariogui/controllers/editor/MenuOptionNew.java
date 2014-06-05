@@ -1,4 +1,3 @@
-
 package nl.tudelft.bw4t.scenariogui.controllers.editor;
 
 import java.awt.event.ActionEvent;
@@ -6,6 +5,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
@@ -15,8 +15,6 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
  * Handles the event to start a new file.
  * <p>
  * 
- * @author Katia Asmoredjo
- * @author Xander Zonneveld
  * @version 0.1
  * @since 12-05-2014
  */
@@ -29,10 +27,12 @@ class MenuOptionNew extends AbstractMenuOption {
 	 *            The view.
 	 * @param mainView
 	 *            The controlling main view.
+	 * @param model           
+	 *            The model.
 	 */
 	public MenuOptionNew(final MenuBar view,
-			final ScenarioEditorController mainView) {
-		super(view, mainView);
+			final ScenarioEditorController mainView, BW4TClientConfig model) {
+		super(view, mainView, model);
 	}
 
 	/**
@@ -49,10 +49,9 @@ class MenuOptionNew extends AbstractMenuOption {
 
 		// Check if current config is different from last saved config
 		if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())
-				|| !entityPanel.compareBotConfigs(entityPanel
-						.getOldBotConfigs())
-				|| !entityPanel.compareEpartnerConfigs(entityPanel
-						.getOldEPartnerConfigs())) {
+				|| !super.getModel().compareBotConfigs(super.getModel().getOldBots())
+				|| !super.getModel().compareEpartnerConfigs(super.getModel()
+						.getOldEpartners())) {
 			// Check if user wants to save current configuration
 			int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
 					null, ScenarioEditorController.CONFIRM_SAVE_TXT, "",
@@ -62,8 +61,7 @@ class MenuOptionNew extends AbstractMenuOption {
 				saveFile();
 				super.getController().getMainView().getMainPanel()
 						.getConfigurationPanel().updateOldValues();
-				super.getController().getMainView().getMainPanel()
-						.getEntityPanel().updateBotConfigs();
+				super.getModel().updateBotConfigs();
 			}
 		}
 
@@ -72,14 +70,10 @@ class MenuOptionNew extends AbstractMenuOption {
 		// save the default values as the "old" values
 		super.getController().getMainView().getMainPanel()
 				.getConfigurationPanel().updateOldValues();
-		super.getController().getMainView().getMainPanel().getEntityPanel()
-				.getBotConfigs().clear();
-		super.getController().getMainView().getMainPanel().getEntityPanel()
-				.updateBotConfigs();
-		super.getController().getMainView().getMainPanel().getEntityPanel()
-				.getEPartnerConfigs().clear();
-		super.getController().getMainView().getMainPanel().getEntityPanel()
-				.updateEpartnerConfigs();
+		super.getModel().getBots().clear();
+		super.getModel().updateBotConfigs();
+		super.getModel().getEpartners().clear();
+		super.getModel().updateEpartnerConfigs();
 
 		// set last file location to null so that the previous saved file won't
 		// get
@@ -115,7 +109,6 @@ class MenuOptionNew extends AbstractMenuOption {
 						.getValue());
 		configPanel.setUseGui(ConfigurationPanel.DEFAULT_VALUES.USE_GUI
 				.getBooleanValue());
-		// configPanel.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
 		configPanel.setMapFile(ConfigurationPanel.DEFAULT_VALUES.MAP_FILE
 				.getValue());
 

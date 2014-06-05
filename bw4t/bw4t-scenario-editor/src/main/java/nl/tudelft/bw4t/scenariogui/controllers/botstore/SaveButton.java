@@ -137,15 +137,13 @@ class SaveButton implements ActionListener {
 	private void updateBotTable() {
 		view.getBotEditor().getParent().getEntityPanel().getBotTableModel()
 				.setRowCount(0);
-		int rows = view.getBotEditor().getParent().getEntityPanel()
-				.getBotConfigs().size();
+		int rows = view.getModel().getBots().size();
 
 		for (int i = 0; i < rows; i++) {
-			BotConfig botConfig = view.getBotEditor().getParent()
-					.getEntityPanel().getBotConfig(i);
-			Object[] newBotObject = { botConfig.getBotName(),
+			BotConfig botConfig = view.getModel().getBot(i);
+			Object[] newBotObject = {botConfig.getBotName(),
 					botConfig.getBotController().toString(),
-					botConfig.getBotAmount() };
+					botConfig.getBotAmount()};
 			view.getBotEditor().getParent().getEntityPanel().getBotTableModel()
 					.addRow(newBotObject);
 		}

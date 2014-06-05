@@ -11,7 +11,6 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.agent.EntityType;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
@@ -22,8 +21,6 @@ import nl.tudelft.bw4t.scenariogui.util.FileFilters;
  * Handles the event to open a file.
  * <p>
  * 
- * @author Katia Asmoredjo
- * @author Xander Zonneveld
  * @version 0.1
  * @since 12-05-2014
  */
@@ -36,10 +33,12 @@ class MenuOptionOpen extends AbstractMenuOption {
 	 *            The view.
 	 * @param mainView
 	 *            The controlling main view.
+	 * @param model           
+	 *            The model.
 	 */
 	public MenuOptionOpen(final MenuBar view,
-			final ScenarioEditorController mainView) {
-		super(view, mainView);
+			final ScenarioEditorController mainView, BW4TClientConfig model) {
+		super(view, mainView, model);
 	}
 
 	/**
@@ -57,10 +56,9 @@ class MenuOptionOpen extends AbstractMenuOption {
 
 		// Check if current config is different from last saved config
 		if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())
-				|| !entityPanel.compareBotConfigs(entityPanel
-						.getOldBotConfigs())
-				|| !entityPanel.compareEpartnerConfigs(entityPanel
-						.getOldEPartnerConfigs())) {
+				|| !super.getModel().compareBotConfigs(super.getModel().getOldBots())
+				|| !super.getModel().compareEpartnerConfigs(super.getModel()
+						.getOldEpartners())) {
 			// Check if user wants to save current configuration
 			int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
 					null, ScenarioEditorController.CONFIRM_SAVE_TXT, "",
@@ -70,8 +68,8 @@ class MenuOptionOpen extends AbstractMenuOption {
 				saveFile();
 				super.getController().getMainView().getMainPanel()
 						.getConfigurationPanel().updateOldValues();
-				super.getController().getMainView().getMainPanel().getEntityPanel().updateBotConfigs();
-				super.getController().getMainView().getMainPanel().getEntityPanel().updateEpartnerConfigs();
+				super.getController().getModel().updateBotConfigs();
+				super.getController().getModel().updateEpartnerConfigs();
 			}
 		}
 
@@ -93,16 +91,14 @@ class MenuOptionOpen extends AbstractMenuOption {
 				configPanel.setServerIP(configuration.getServerIp());
 				configPanel.setServerPort("" + configuration.getServerPort());
 				configPanel.setUseGui(configuration.isLaunchGui());
-				// configPanel.setUseGoal(temp.isUseGoal());
 				configPanel.setMapFile(configuration.getMapFile());
 
 				// clear bots/epartners from the previous config
 				resetBotTable(entityPanel);
 				resetEpartnerTable(entityPanel);
-				super.getController().getMainView().getMainPanel()
-						.getEntityPanel().getBotConfigs().clear();
-				super.getController().getMainView().getMainPanel()
-						.getEntityPanel().getEPartnerConfigs().clear();
+				
+				super.getModel().getBots().clear();
+                super.getModel().getEpartners().clear();
 
 				// Fill the bot panel
 				int botRows = configuration.getBots().size();
@@ -113,9 +109,9 @@ class MenuOptionOpen extends AbstractMenuOption {
 							.getBotController();
 					String botAmount = Integer.toString(configuration.getBot(i)
 							.getBotAmount());
-					Object[] botObject = { botName, botController, botAmount };
+					Object[] botObject = {botName, botController, botAmount };
 					entityPanel.getBotTableModel().addRow(botObject);
-					entityPanel.getBotConfigs().add(configuration.getBot(i));
+					super.getModel().getBots().add(configuration.getBot(i));
 				}
 				
 				// Fill the epartner panel
@@ -125,9 +121,9 @@ class MenuOptionOpen extends AbstractMenuOption {
 					String epartnerName = configuration.getEpartner(i).getEpartnerName();
 					String epartnerAmount = Integer.toString(configuration.getEpartner(i)
 							.getEpartnerAmount());
-					Object[] epartnerObject = { epartnerName, epartnerAmount };
+					Object[] epartnerObject = {epartnerName, epartnerAmount };
 					entityPanel.getEPartnerTableModel().addRow(epartnerObject);
-					entityPanel.getEPartnerConfigs().add(configuration.getEpartner(i));
+					super.getModel().getEpartners().add(configuration.getEpartner(i));
 				}
 			} catch (JAXBException e1) {
 				ScenarioEditor.handleException(e1,
@@ -145,10 +141,8 @@ class MenuOptionOpen extends AbstractMenuOption {
 		}
 		super.getController().getMainView().getMainPanel()
 				.getConfigurationPanel().updateOldValues();
-		super.getController().getMainView().getMainPanel().getEntityPanel()
-				.updateBotConfigs();
-		super.getController().getMainView().getMainPanel().getEntityPanel()
-				.updateEpartnerConfigs();
+		super.getModel().updateBotConfigs();
+		super.getModel().updateEpartnerConfigs();
 	}
 
 	/**
