@@ -26,6 +26,8 @@ class DeleteEPartner implements ActionListener {
 	 * 
 	 * @param newView
 	 *            The parent view.
+	 * @param model           
+	 *            The model.
 	 */
 	public DeleteEPartner(MainPanel newView, BW4TClientConfig model) {
 		this.view = newView;

@@ -11,7 +11,6 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.agent.EntityType;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
@@ -36,6 +35,8 @@ class MenuOptionOpen extends AbstractMenuOption {
 	 *            The view.
 	 * @param mainView
 	 *            The controlling main view.
+	 * @param model           
+	 *            The model.
 	 */
 	public MenuOptionOpen(final MenuBar view,
 			final ScenarioEditorController mainView, BW4TClientConfig model) {
@@ -90,7 +91,6 @@ class MenuOptionOpen extends AbstractMenuOption {
 				configPanel.setServerIP(configuration.getServerIp());
 				configPanel.setServerPort("" + configuration.getServerPort());
 				configPanel.setUseGui(configuration.isLaunchGui());
-				// configPanel.setUseGoal(temp.isUseGoal());
 				configPanel.setMapFile(configuration.getMapFile());
 
 				// clear bots/epartners from the previous config
@@ -107,7 +107,7 @@ class MenuOptionOpen extends AbstractMenuOption {
 							.getBotController();
 					String botAmount = Integer.toString(configuration.getBot(i)
 							.getBotAmount());
-					Object[] botObject = { botName, botController, botAmount };
+					Object[] botObject = {botName, botController, botAmount };
 					entityPanel.getBotTableModel().addRow(botObject);
 					super.getModel().getBots().add(configuration.getBot(i));
 				}
@@ -119,7 +119,7 @@ class MenuOptionOpen extends AbstractMenuOption {
 					String epartnerName = configuration.getEpartner(i).getEpartnerName();
 					String epartnerAmount = Integer.toString(configuration.getEpartner(i)
 							.getEpartnerAmount());
-					Object[] epartnerObject = { epartnerName, epartnerAmount };
+					Object[] epartnerObject = {epartnerName, epartnerAmount };
 					entityPanel.getEPartnerTableModel().addRow(epartnerObject);
 					super.getModel().getEpartners().add(configuration.getEpartner(i));
 				}

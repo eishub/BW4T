@@ -18,9 +18,6 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  */
 public class EditBotTable implements TableModelListener {
 
-    /**
-     * The <code>MainPanel</code> serving as the content pane.
-     */
     private MainPanel view;
     
     private BW4TClientConfig model;
@@ -29,6 +26,7 @@ public class EditBotTable implements TableModelListener {
      * Create a EditBotTable event handler.
      *
      * @param newView The parent view.
+     * @param model The model.
      */
     public EditBotTable(final MainPanel newView, BW4TClientConfig model) {
         this.view = newView;

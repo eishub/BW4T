@@ -27,6 +27,8 @@ class MenuOptionExit extends AbstractMenuOption {
 	 *            The view.
 	 * @param mainView
 	 *            The controlling main view.
+	 * @param model           
+	 *            The model.
 	 */
 	public MenuOptionExit(final MenuBar view,
 			final ScenarioEditorController mainView, BW4TClientConfig model) {

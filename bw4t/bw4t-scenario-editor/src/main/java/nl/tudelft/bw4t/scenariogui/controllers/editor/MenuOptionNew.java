@@ -29,6 +29,8 @@ class MenuOptionNew extends AbstractMenuOption {
 	 *            The view.
 	 * @param mainView
 	 *            The controlling main view.
+	 * @param model           
+	 *            The model.
 	 */
 	public MenuOptionNew(final MenuBar view,
 			final ScenarioEditorController mainView, BW4TClientConfig model) {
@@ -109,7 +111,6 @@ class MenuOptionNew extends AbstractMenuOption {
 						.getValue());
 		configPanel.setUseGui(ConfigurationPanel.DEFAULT_VALUES.USE_GUI
 				.getBooleanValue());
-		// configPanel.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
 		configPanel.setMapFile(ConfigurationPanel.DEFAULT_VALUES.MAP_FILE
 				.getValue());
 

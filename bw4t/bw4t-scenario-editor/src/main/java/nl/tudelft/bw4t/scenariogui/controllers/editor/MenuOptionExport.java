@@ -26,6 +26,7 @@ class MenuOptionExport extends AbstractMenuOption {
      *
      * @param view     The view.
      * @param mainView The controlling main view.
+     * @param model    The model.
      */
     public MenuOptionExport(final MenuBar view, final ScenarioEditorController mainView, BW4TClientConfig model) {
         super(view, mainView, model);

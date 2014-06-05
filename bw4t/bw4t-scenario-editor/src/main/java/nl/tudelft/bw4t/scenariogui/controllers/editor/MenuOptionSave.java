@@ -20,6 +20,7 @@ class MenuOptionSave extends AbstractMenuOption {
      *
      * @param view     The view.
      * @param mainView The controlling main view.
+     * @param model    The model.
      */
     public MenuOptionSave(final MenuBar view, final ScenarioEditorController mainView, BW4TClientConfig model) {
         super(view, mainView, model);
@@ -34,7 +35,6 @@ class MenuOptionSave extends AbstractMenuOption {
         saveFile();
         super.getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
         super.getModel().updateBotConfigs();
-        //super.getController().getMainView().getMainPanel().getEntityPanel().updateBotConfigs());
         super.getController().getMainView().getMainPanel().getEntityPanel().updateEPartnerCount(
         		super.getModel().getAmountEPartner());
         super.getModel().updateEpartnerConfigs();
