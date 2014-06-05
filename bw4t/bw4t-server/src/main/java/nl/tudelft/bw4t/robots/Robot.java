@@ -33,6 +33,9 @@ import repast.simphony.space.continuous.NdPoint;
  */
 public class Robot extends BoundedMoveableObject implements HandicapInterface {
 	
+	/**
+	 * logger used to log in console and in logfile
+	 */
 	private static final Logger LOGGER = Logger.getLogger(Robot.class);
 
     /**
@@ -89,7 +92,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
     /**
      * AgentRecord object for this Robot, needed for logging
      */
-    AgentRecord agentRecord;
+    private AgentRecord agentRecord;
 
     /**
      * Creates a new robot.
@@ -125,6 +128,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
         this.grippercap = cap;
         this.holding = new ArrayList<Block>(grippercap);
         this.handicapsList = new ArrayList<String>();
+        this.agentRecord = new AgentRecord(name);
     }
 
     /**
@@ -139,12 +143,6 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
 			LOGGER.error("Unable to get the associated agent for this entity", e);
 		}
         connected = true;
-		try {
-			agentRecord = new AgentRecord((associatedAgents != null && !associatedAgents.isEmpty())?associatedAgents.iterator().next(): "no agents", env.getType(this.getName()));
-		} catch (EntityException e) {
-			LOGGER.error("Unable to get the type of this entity", e);
-			agentRecord = new AgentRecord("unkown", "unkown");
-		}
     }
 
     /**
@@ -337,8 +335,8 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
         /**
          * Merge the move type if multiple zones are entered at once. The result is the 'worst' event that happens
          * 
-         * @param other
-         * @return
+         * @param other MoveType
+         * @return MoveType
          */
         public MoveType merge(MoveType other) {
             if (this.isHit())
@@ -359,12 +357,13 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
      * Check motion type for robot to move to <endx, endy>. The {@link #MoveType} gives the actual type / possibility of
      * the move, plus the details why it is (not) possible.
      * 
-     * @param end
+     * @param endx double
      *            is x position of target
-     * @param endy
+     * @param endy doubles
      *            is y position of target
+     *            
+     * @return MoveType
      */
-
     public MoveType getMoveType(double endx, double endy) {
         double startx = getLocation().getX();
         double starty = getLocation().getY();
@@ -622,7 +621,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
     /**
      * Sets the size of a robot to a certain integer
      * 
-     * @param s
+     * @param s int
      */
     public void setSize(int s) {
         this.size = s;
@@ -667,11 +666,6 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
         return this.collided;
     }
 
-    /**
-     * gets AgentRecord
-     * 
-     * @return AgentRecord
-     */
     public AgentRecord getAgentRecord() {
         return agentRecord;
 
