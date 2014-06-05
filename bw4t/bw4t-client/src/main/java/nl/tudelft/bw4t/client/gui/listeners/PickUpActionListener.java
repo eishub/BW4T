@@ -1,29 +1,24 @@
 package nl.tudelft.bw4t.client.gui.listeners;
 
+import eis.exceptions.ActException;
+import eis.iilang.Percept;
 import java.awt.event.ActionEvent;
 import java.util.LinkedList;
 import java.util.List;
-
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.startup.Launcher;
-
 import org.apache.log4j.Logger;
 
-import eis.iilang.Percept;
-
 /**
- * ActionListener that performs the pick up action when that command is pressed
- * in the pop up menu
- * 
+ * ActionListener that performs the pick up action when that command is pressed in the pop up menu.
  * @author trens
  */
-public class PickUpActionListener extends ClientActionListener {
-    /**
-     * The log4j Logger which displays logs on console
-     */
+public class PickUpActionListener extends AbstractClientActionListener {
+    /** Logger to report error messages to. */
     private final static Logger LOGGER = Logger.getLogger(BW4TClientGUI.class);
 
+    /** @param controller - The {@link ClientController} to listen to and interact with. */
     public PickUpActionListener(ClientController controller) {
         super(controller);
     }
@@ -33,7 +28,7 @@ public class PickUpActionListener extends ClientActionListener {
         if (!Launcher.getEnvironment().isConnectedToGoal()) {
             try {
                 getController().getHumanAgent().pickUp();
-            } catch (Exception e1) {
+            } catch (ActException e1) {
                 LOGGER.error("Could tell the agent to perform a pickUp action.", e1);
             }
         } else {

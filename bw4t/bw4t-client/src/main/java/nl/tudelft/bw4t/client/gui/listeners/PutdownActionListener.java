@@ -1,14 +1,12 @@
 package nl.tudelft.bw4t.client.gui.listeners;
 
+import eis.exceptions.ActException;
+import eis.iilang.Percept;
 import java.awt.event.ActionEvent;
 import java.util.LinkedList;
-
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.startup.Launcher;
-
 import org.apache.log4j.Logger;
-
-import eis.iilang.Percept;
 
 /**
  * ActionListener that performs the put down action when that command is pressed
@@ -16,10 +14,11 @@ import eis.iilang.Percept;
  * 
  * @author trens
  */
-public class PutdownActionListener extends ClientActionListener {
-
+public class PutdownActionListener extends AbstractClientActionListener {
+    /** Logger to report error messages to. */
     private static final Logger LOGGER = Logger.getLogger(GoToBlockActionListener.class);
 
+    /** @param controller - The {@link ClientController} to listen to and interact with. */
     public PutdownActionListener(ClientController controller) {
         super(controller);
     }
@@ -29,8 +28,7 @@ public class PutdownActionListener extends ClientActionListener {
         if (!Launcher.getEnvironment().isConnectedToGoal()) {
             try {
                 getController().getHumanAgent().putDown();
-            } catch (Exception e1) {
-                // Also catch NoServerException. Nothing we can do really.
+            } catch (ActException e1) {
             	LOGGER.error(e1);
             }
         } else {
