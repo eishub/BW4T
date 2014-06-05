@@ -27,11 +27,11 @@ import java.util.Map;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.eis.RobotEntity;
-import nl.tudelft.bw4t.logger.BotLog;
 import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.robots.Robot;
 import nl.tudelft.bw4t.server.BW4TServer;
 import nl.tudelft.bw4t.server.RobotEntityInt;
+import nl.tudelft.bw4t.server.logging.BW4TFileAppender;
+import nl.tudelft.bw4t.server.logging.BotLog;
 import nl.tudelft.bw4t.visualizations.ServerContextDisplay;
 
 import org.apache.log4j.Logger;
@@ -58,7 +58,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
     private static BW4TEnvironment instance;
 
     /**
-     * The log4j logger, logs to the console.
+     * The log4j logger, logs to the console and file
      */
     private static final Logger LOGGER = Logger.getLogger(BW4TEnvironment.class);
 
@@ -150,23 +150,21 @@ public class BW4TEnvironment extends AbstractEnvironment {
      * reports errors and proceeds.
      */
     public void removeAllEntities() throws ManagementException {
-        LOGGER.info("Closing the log file.");
-
-        // TODO check if total time is calculated same way as before
+      
+    	BW4TFileAppender.logFinish(System.currentTimeMillis(), "total time is ");
         // FIXME: BOTLOG gives nullpointer exception if no bots.
-        // LOGGER.log(BotLog.BOTLOG, "total time: " + (System.currentTimeMillis() - starttime));
-        // TODO log AgentRecord, each toSummaryArray of agentRecord of object of each bot
 
         setState(EnvironmentState.KILLED);
 
         LOGGER.debug("Removing all entities");
         for (String entity : this.getEntities()) {
-            try {
+        	try {
                 this.deleteEntity(entity);
             } catch (EntityException | RelationException e) {
                 LOGGER.error("Failure to delete entity: " + entity, e);
             }
         }
+        
         LOGGER.debug("Remove all (remaining) agents");
         for (String agent : this.getAgents()) {
             try {
@@ -321,7 +319,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
      */
     public Percept performClientAction(String entity, Action action) throws ActException {
         Long time = System.currentTimeMillis();
-        LOGGER.log(BotLog.BOTLOG, String.format("action %d %s %s", time, entity, action.toProlog()));
+        LOGGER.log(BotLog.BOTLOG, String.format("action %s %s", entity, action.toProlog()));
 
         if (starttime == null) {
             starttime = time;
@@ -518,6 +516,8 @@ public class BW4TEnvironment extends AbstractEnvironment {
         return theMap;
     }
     
- 
+    public long getStarttime() {
+    	return starttime;
+    }
 
 }
