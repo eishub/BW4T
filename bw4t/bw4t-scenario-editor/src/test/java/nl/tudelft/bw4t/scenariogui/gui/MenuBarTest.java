@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.concurrent.Callable;
 
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
@@ -19,6 +20,7 @@ import nl.tudelft.bw4t.scenariogui.util.ExportToMAS;
 import nl.tudelft.bw4t.scenariogui.util.ExportToMASTest;
 import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
+import nl.tudelft.bw4t.scenariogui.util.TestUtils;
 import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
 
 import org.apache.commons.io.FileUtils;
@@ -36,6 +38,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -453,17 +456,7 @@ public class MenuBarTest {
      */
     @Test
     public void testSaveAs() {
-        /* Mock the file chooser for saving */
-        when(filechooser.showSaveDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
-        when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
-        when(filechooser.getSelectedFile()).thenReturn(new File(FILE_SAVE_PATH));
-
-        ActionListener[] listeners = editor.getTopMenuBar().getMenuItemFileSaveAs().getActionListeners();
-        AbstractMenuOption menuOption = (AbstractMenuOption) listeners[0];
-        menuOption.setCurrentFileChooser(filechooser);
-
-        editor.getTopMenuBar().getMenuItemFileSaveAs().doClick();
-
+        saveWithMockedFileChooser();
         verify(filechooser, times(1)).showDialog((Component) any(), (String) any());
         verify(filechooser, times(1)).getSelectedFile();
     }
@@ -519,8 +512,89 @@ public class MenuBarTest {
 
         verify(spyPrompt, times(1)).showMessageDialog(null, "Error: Can not export an unsaved scenario.");
     }
+    
+    /**
+     * Checks if it's allowed to save when a correct amount
+     * of bots have been selected for the selected map.
+     */
+    @Test
+    public void checkProperAmountOfBotsInMap() {
+        
+        //The banana map can hold 3 bots:
+        setMapFile("Banana");
+        addBotsToTable(2);
+        
+        //should not be able to save due to too many bots
+        saveWithMockedFileChooser();
 
+        verify(filechooser, times(1)).showDialog((Component) any(), (String) any());
+        
+    }
 
+    /**
+     * Checks if it's not allowed to save when an incorrect amount
+     * of bots have been selected for the selected map.
+     */
+    @Test
+    public void checkTooManyBotsInMap() {
+        
+        //The banana map can hold 3 bots:
+        setMapFile("Banana");
+        addBotsToTable(10);
+        
+        //Once the option prompt is set, we know that the 'too many' bots
+        //message was sent, so we can close the GUI when that happens:
+        TestUtils.prepareGUIClose(editor, new Callable<Boolean>() {
+
+            @Override
+            public Boolean call() throws Exception {
+                return ScenarioEditor.getOptionPrompt() != null;
+            }
+            
+        });
+        
+        //Should not be able to save due to too many bots
+        saveWithMockedFileChooser();
+
+        verify(filechooser, never()).showDialog((Component) any(), (String) any());
+        
+    }
+    
+    /**
+     * Sets the map file path in the GUI.
+     * @param mapName The new map file path to select.
+     */
+    private void setMapFile(String mapName) {
+        editor.getMainPanel().getConfigurationPanel().setMapFile(BASE + "maps/" + mapName);
+    }
+    
+    /**
+     * Adds a specified amount of bots to the entity table.
+     * @param amount The amount of bots to add.
+     */
+    private void addBotsToTable(int amount) {
+        for (int i = 0; i < amount; i++)
+            editor.getMainPanel().getEntityPanel().getNewBotButton().doClick();
+    }
+    
+    /**
+     * Saves the config as XML file using the mocked file chooser to save.
+     */
+    private void saveWithMockedFileChooser() {
+        
+        /** Mocks the file chooser to react without user input: */
+        when(filechooser.showSaveDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
+        when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
+        when(filechooser.getSelectedFile()).thenReturn(new File(FILE_SAVE_PATH));
+
+        /** Sets the mocked file chooser for the listener to the menu option: */
+        ActionListener[] listeners = editor.getTopMenuBar().getMenuItemFileSaveAs().getActionListeners();
+        AbstractMenuOption menuOption = (AbstractMenuOption) listeners[0];
+        menuOption.setCurrentFileChooser(filechooser);
+        
+        /** Saves the config as XML: */
+        editor.getTopMenuBar().getMenuItemFileSaveAs().doClick();
+    }
 
 
 }
