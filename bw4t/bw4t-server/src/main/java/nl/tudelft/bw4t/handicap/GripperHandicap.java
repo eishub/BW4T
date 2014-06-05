@@ -35,4 +35,8 @@ public class GripperHandicap extends AbstractRobotDecorator {
     public int getGripperCapacity() {
     	return 0;
     }
+
+	@Override
+	public void setGripperCapacity(int newcap) {
+	}
 }

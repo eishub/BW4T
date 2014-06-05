@@ -31,7 +31,7 @@ public class EpartnerController {
 		view.getApplyButton().addActionListener(
 				new EpartnerSaveButton(getMainView()));
 
-		view.getLeftAloneCheckbox().addActionListener(
+		view.getForgetCheckbox().addActionListener(
 				new LeftAloneCheckBox(getMainView()));
 
 		view.getGPSCheckbox().addActionListener(new gpsCheckBox(getMainView()));
