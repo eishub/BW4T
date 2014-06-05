@@ -137,14 +137,15 @@ public class MenuBarTest {
     }
 
     /**
-     * Test if the open button works after changing the defaults and clicking yes on the prompt.
+     * Test if the open button works after changing the defaults and clicking yes on the prompt,
+     *  it will also ask if we want to save without a map
      *
      * @throws FileNotFoundException File not found exception
      * @throws JAXBException         JAXBException, also called in some cases when a file is not found
      *                               by JAXB itself.
      */
     @Test
-    public void testOpenButtonNonDefaultYes() throws FileNotFoundException, JAXBException {
+    public void testOpenButtonNonDefaultSaveNoMap() throws FileNotFoundException, JAXBException {
         // Create a YesMockOptionPrompt object to spy on.
         YesMockOptionPrompt yesMockOption = spy(new YesMockOptionPrompt());
 
@@ -175,7 +176,59 @@ public class MenuBarTest {
         assertEquals(editor.getMainPanel().getConfigurationPanel().getServerIP(), temp.getServerIp());
         assertEquals(editor.getMainPanel().getConfigurationPanel().getServerPort(), temp.getServerPort());
 
-        // Finally make sure the confirmation dialog was called.
+        // Finally make sure the confirmation dialog was called twice, once complaining about the map.
+        verify(yesMockOption, times(2))
+                .showConfirmDialog((Component) any(), anyObject(), anyString(), anyInt(), anyInt());
+        // And the file dialog  for saving and opening
+        verify(filechooser, times(1)).showOpenDialog((Component) any());
+        verify(filechooser, times(1)).showDialog((Component) any(), (String) any());
+
+    }
+
+    /**
+     * Test if the open button works after changing the defaults and clicking yes on the prompt.
+     * It will not ask if we want to save with a map.
+     *
+     * @throws FileNotFoundException File not found exception
+     * @throws JAXBException         JAXBException, also called in some cases when a file is not found
+     *                               by JAXB itself.
+     */
+    @Test
+    public void testOpenButtonNonDefaultSaveYesMap() throws FileNotFoundException, JAXBException {
+        // Create a YesMockOptionPrompt object to spy on.
+        YesMockOptionPrompt yesMockOption = spy(new YesMockOptionPrompt());
+
+        // Setup the behaviour
+        when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
+        when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
+        when(filechooser.getSelectedFile()).thenReturn(new File(FILE_SAVE_PATH)).thenReturn(new File(FILE_OPEN_PATH));
+
+        // Set the controllers to mock yes.
+        ActionListener[] listeners = editor.getTopMenuBar().getMenuItemFileOpen().getActionListeners();
+
+        // There should be one listener, so we check that and then change the option pane.
+        assert listeners.length == 1;
+        ScenarioEditor.setOptionPrompt(yesMockOption);
+
+        // Change the defaults
+        editor.getMainPanel().getConfigurationPanel().setClientIP("randomvalue");
+
+        // Set a map.
+        editor.getMainPanel().getConfigurationPanel().setMapFile(BASE + "maps/Banana");
+
+        editor.getTopMenuBar().getMenuItemFileOpen().doClick();
+
+        // Open the actual file with the xml reader.
+        BW4TClientConfig temp = BW4TClientConfig.fromXML(FILE_OPEN_PATH);
+
+        // Check the final state. The opened configurational file should be equal to the one in the program.
+        assertEquals(editor.getMainPanel().getConfigurationPanel().getClientIP(), temp.getClientIp());
+        assertEquals(editor.getMainPanel().getConfigurationPanel().getClientPort(), temp.getClientPort());
+
+        assertEquals(editor.getMainPanel().getConfigurationPanel().getServerIP(), temp.getServerIp());
+        assertEquals(editor.getMainPanel().getConfigurationPanel().getServerPort(), temp.getServerPort());
+
+        // Finally make sure the confirmation dialog was called once.
         verify(yesMockOption, times(1))
                 .showConfirmDialog((Component) any(), anyObject(), anyString(), anyInt(), anyInt());
         // And the file dialog  for saving and opening
@@ -234,6 +287,9 @@ public class MenuBarTest {
      */
     @Test
     public void testFlushEntityLists() {
+        // Mock the option prompt.
+        ScenarioEditor.setOptionPrompt(new NoMockOptionPrompt());
+
         //add bots and epartners
         editor.getMainPanel().getEntityPanel().getNewBotButton().doClick();
         editor.getMainPanel().getEntityPanel().getNewBotButton().doClick();
@@ -264,6 +320,8 @@ public class MenuBarTest {
 
         AbstractMenuOption menuOption = (AbstractMenuOption) listeners[0];
         menuOption.setController(new ScenarioEditorController(editor, new BW4TClientConfig()));
+
+        ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
 
         /* Don't actually close the jvm */
         doNothing().when(editor).closeScenarioEditor();
@@ -544,19 +602,14 @@ public class MenuBarTest {
         
         //Once the option prompt is set, we know that the 'too many' bots
         //message was sent, so we can close the GUI when that happens:
-        TestUtils.prepareGUIClose(editor, new Callable<Boolean>() {
-
-            @Override
-            public Boolean call() throws Exception {
-                return ScenarioEditor.getOptionPrompt() != null;
-            }
-            
-        });
+        OptionPrompt noPrompt = spy(new NoMockOptionPrompt());
+        ScenarioEditor.setOptionPrompt(noPrompt);
         
         //Should not be able to save due to too many bots
         saveWithMockedFileChooser();
 
         verify(filechooser, never()).showDialog((Component) any(), (String) any());
+        verify(noPrompt, times(1)).showMessageDialog((Component) any(), anyString());
         
     }
     
