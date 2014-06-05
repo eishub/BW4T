@@ -1,7 +1,10 @@
 package nl.tudelft.bw4t.client.gui.menu;
 
 import java.awt.Shape;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+
+import org.apache.log4j.Logger;
 
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.controller.ClientMapController;
@@ -10,9 +13,11 @@ import nl.tudelft.bw4t.client.gui.operations.MapOperations;
 import nl.tudelft.bw4t.controller.MapRenderSettings;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.view.Block;
+import nl.tudelft.bw4t.map.view.ViewBlock;
+import nl.tudelft.bw4t.map.view.ViewEPartner;
 
 public class ActionPopUpMenu {
+    private static final Logger LOGGER = Logger.getLogger(ActionPopUpMenu.class);
     /**
      * Used for building the pop up menu that displays the actions a user can undertake
      */
@@ -31,15 +36,43 @@ public class ActionPopUpMenu {
             }
             startPosX += set.getSequenceBlockSize();
         }
+        
+        if (cmc.getTheBot().getHoldingEpartner() >= 0) {
+            LOGGER.info("We are now holding the e-partner: " + cmc.getTheBot().getHoldingEpartner());
+            ViewEPartner ep = cmc.getViewEPartner(cmc.getTheBot().getHoldingEpartner());
+            if (ep != null) {
+                final Point2D location = ep.getLocation();
+                Shape ePartnerBox = set.transformCenterRectangle(new Rectangle2D.Double(location.getX(), location.getY(), ep.EPARTNER_SIZE, ep.EPARTNER_SIZE));
+                if (ePartnerBox.contains(gui.getSelectedLocation())) {
+                    EPartnerMenu.buildPopUpMenuForEPartner(ep, gui);
+                    gui.getjPopupMenu().show(gui, (int) gui.getSelectedLocation().getX(), (int) gui.getSelectedLocation().getY());
+                    return;
+                }
+            }
+        } else {
+            for (ViewEPartner ep : cmc.getVisibleEPartners()) {
+                Shape ePartnerBox = set.transformCenterRectangle(new Rectangle2D.Double(ep.getLocation().getX(), ep.getLocation().getY(), ep.EPARTNER_SIZE, ep.EPARTNER_SIZE));
+                if (ePartnerBox.contains(gui.getSelectedLocation())) {
+                    if (MapOperations.closeToBox(ep, gui.getController())) {
+                        EPartnerMenu.buildPopUpMenuPickUpEPartner(ep, gui);
+                    }
+                    else {
+                        EPartnerMenu.buildPopUpMenuMoveToEPartner(ep, gui);
+                    }
+                    gui.getjPopupMenu().show(gui, (int) gui.getSelectedLocation().getX(), (int) gui.getSelectedLocation().getY());
+                    return;
+                }
+            }
+        }
 
         // Check if pressing on a room
         for (Zone room : cmc.getRooms()) {
             Shape roomBoundaries = set.transformRectangle(room.getBoundingbox().getRectangle());
             if (roomBoundaries.contains(gui.getSelectedLocation())) {
                 // Check if pressing on a block
-                for (Block box : cmc.getVisibleBlocks()) {
+                for (ViewBlock box : cmc.getVisibleBlocks()) {
 
-                    Shape boxBoundaries = set.transformCenterRectangle(new Rectangle2D.Double(box.getPosition().getX(), box.getPosition().getY(), Block.BLOCK_SIZE, Block.BLOCK_SIZE));
+                    Shape boxBoundaries = set.transformCenterRectangle(new Rectangle2D.Double(box.getPosition().getX(), box.getPosition().getY(), ViewBlock.BLOCK_SIZE, ViewBlock.BLOCK_SIZE));
                     if (boxBoundaries.contains(gui.getSelectedLocation())) {
                         if (MapOperations.closeToBox(box, gui.getController())) {
                             RoomMenus.buildPopUpMenuForBeingAtBlock(box, room, gui);

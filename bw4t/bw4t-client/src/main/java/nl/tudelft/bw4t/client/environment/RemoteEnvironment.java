@@ -384,7 +384,8 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
     }
 
     /**
-     * {@inheritDoc.
+     * {@inheritDoc.
+
      */
     @Override
     public void kill() throws ManagementException {

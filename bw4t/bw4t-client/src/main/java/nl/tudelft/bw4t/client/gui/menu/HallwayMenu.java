@@ -15,7 +15,7 @@ import nl.tudelft.bw4t.client.gui.listeners.PutdownActionListener;
 import nl.tudelft.bw4t.controller.MapRenderSettings;
 import nl.tudelft.bw4t.map.ColorTranslator;
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.view.Block;
+import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.message.BW4TMessage;
 import nl.tudelft.bw4t.message.MessageType;
 
@@ -28,7 +28,7 @@ public class HallwayMenu {
         ClientMapController cmc = gui.getController().getMapController();
         MapRenderSettings set = cmc.getRenderSettings();
 
-        Block holdingID = cmc.getTheBot().getFirstHolding();
+        ViewBlock holdingID = cmc.getTheBot().getFirstHolding();
         Color entityColor = cmc.getTheBot().getColor();
 
         // Robot commands
