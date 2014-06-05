@@ -137,6 +137,7 @@ class MenuOptionOpen extends AbstractMenuOption {
 			// saved file won't get
 			// overwritten when the new config is saved.
 			super.getMenuView().setLastFileLocation(openedFile);
+            getController().getMainView().setWindowTitle(file.getName());
 		}
 		super.getController().getMainView().getMainPanel()
 				.getConfigurationPanel().updateOldValues();

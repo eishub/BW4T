@@ -26,7 +26,7 @@ public class BotStoreController {
         view.getBotEditorPanel().getResetButton().addActionListener(
                 new ResetButton(getMainView().getBotEditorPanel()));
 
-        view.getBotEditorPanel().getApplyButton().addActionListener(
+        view.getBotEditorPanel().getSaveButton().addActionListener(
                 new ApplyButton(getMainView().getBotEditorPanel()));
 
         view.getBotEditorPanel().getSpeedSlider().addMouseListener(

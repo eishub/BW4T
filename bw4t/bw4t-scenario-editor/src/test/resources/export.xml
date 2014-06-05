@@ -3,21 +3,20 @@
     <bots>
         <bot>
             <batteryEnabled>false</batteryEnabled>
-            <botAmount>2</botAmount>
+            <botAmount>1</botAmount>
             <botBatteryCapacity>10</botBatteryCapacity>
             <botBatteryDischargeRate>0</botBatteryDischargeRate>
-            <botController>HUMAN</botController>
-            <botName>Grace</botName>
+            <botController>AGENT</botController>
+            <botGripperCapacity>1</botGripperCapacity>
+            <botName>Bot 1</botName>
             <botSize>2</botSize>
             <botSpeed>100</botSpeed>
             <colorBlindHandicap>false</colorBlindHandicap>
-            <fileName>grace.goal</fileName>
-            <GPS>false</GPS>
+            <fileName>robot.goal</fileName>
             <gripperHandicap>false</gripperHandicap>
             <grippers>1</grippers>
-            <leftAlone>false</leftAlone>
             <moveSpeedHandicap>false</moveSpeedHandicap>
-            <referenceName>jh</referenceName>
+            <referenceName>hope</referenceName>
             <sizeOverloadHandicap>false</sizeOverloadHandicap>
         </bot>
         <bot>
@@ -26,24 +25,24 @@
             <botBatteryCapacity>10</botBatteryCapacity>
             <botBatteryDischargeRate>0</botBatteryDischargeRate>
             <botController>AGENT</botController>
-            <botName>Hope</botName>
+            <botGripperCapacity>1</botGripperCapacity>
+            <botName>Bot 1</botName>
             <botSize>2</botSize>
             <botSpeed>100</botSpeed>
             <colorBlindHandicap>false</colorBlindHandicap>
-            <fileName>robot.goal</fileName>
-            <GPS>false</GPS>
+            <fileName>grace.goal</fileName>
             <gripperHandicap>false</gripperHandicap>
             <grippers>1</grippers>
-            <leftAlone>false</leftAlone>
             <moveSpeedHandicap>false</moveSpeedHandicap>
-            <referenceName></referenceName>
+            <referenceName>grace</referenceName>
             <sizeOverloadHandicap>false</sizeOverloadHandicap>
         </bot>
     </bots>
+    <epartners/>
     <clientIp>localhost</clientIp>
     <clientPort>2000</clientPort>
     <fileLocation>NULL</fileLocation>
-    <launchGui>false</launchGui>
+    <launchGui>true</launchGui>
     <mapFile></mapFile>
     <serverIp>localhost</serverIp>
     <serverPort>8000</serverPort>

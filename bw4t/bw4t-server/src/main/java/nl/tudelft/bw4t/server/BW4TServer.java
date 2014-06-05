@@ -44,8 +44,6 @@ import eis.iilang.Percept;
  */
 public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenActions {
 
-    private static final String ENTITY_NAME_FORMAT = "%s_%d";
-
     /**
      * The log4j logger, logs to the console.
      */
@@ -128,40 +126,10 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
         client.handleStateChange(getState());
 
         // for every request and attach them
-        for (BotConfig c : cInfo.getRequestedBots()) {
-            int created = 0;
-            String name = c.getBotName();
-
-            while (created < c.getBotAmount()) {
-                c.setBotName(String.format(ENTITY_NAME_FORMAT, name, created + 1));
-                try {
-                    env.spawn(c);
-                    // assign robot to client
-                    notifyFreeRobot(client, c);
-                } catch (EntityException e) {
-                    LOGGER.error("Failed to register new Robot in the environment.", e);
-                }
-                created++;
-            }
-        }
+        env.spawnBots(cInfo.getRequestedBots(), client);
 
         // for every request and attach them
-        for (EPartnerConfig c : cInfo.getRequestedEPartners()) {
-            int created = 0;
-            String name = c.getEpartnerName();
-            while (created < c.getEpartnerAmount()) {
-                c.setEpartnerName(String.format(ENTITY_NAME_FORMAT, name, created + 1));
-                try {
-                    env.spawn(c);
-                    // assign epartner to client
-                    notifyFreeEpartner(client, c);
-                } catch (EntityException e) {
-                    LOGGER.error("Failed to register new Epartner in the environment.", e);
-                }
-
-                created++;
-            }
-        }
+        env.spawnEPartners(cInfo.getRequestedEPartners(), client);
     }
 
     @Override
