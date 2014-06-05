@@ -107,12 +107,6 @@ public class DropZone extends Room {
                 robot.getAgentRecord().addGoodDrop();
                 
                 BW4TEnvironment env = BW4TEnvironment.getInstance();
-                for (String entity : env.getEntities()) {
-                	System.out.println("entity " + entity.toString() + " " + entity.getClass().toString());
-                }
-                for (String entity : env.getFreeEntities()) {
-                	System.out.println("entity " + entity.toString() + " " + entity.getClass().toString());
-                }
                 
                 if (sequenceIndex == sequence.size()) {
                 	 logTime();
