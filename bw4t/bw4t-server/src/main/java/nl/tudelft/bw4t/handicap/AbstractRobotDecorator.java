@@ -41,6 +41,7 @@ public abstract class AbstractRobotDecorator implements IRobot {
     public AbstractRobotDecorator(IRobot p) {
         parent = p;
         robot = getSuperParent();
+        robot.setTopMostHandicap(this);
     }
     
     @Override

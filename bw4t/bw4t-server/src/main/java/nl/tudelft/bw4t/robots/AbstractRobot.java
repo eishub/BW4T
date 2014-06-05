@@ -100,6 +100,8 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
      * true if max 1 bot in a zone.
      */
     private boolean oneBotPerZone;
+    
+    private IRobot topMostHandicap = this;
 
     /**
      * Creates a new robot.
@@ -134,6 +136,10 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         this.holding = new ArrayList<Block>(grippercap);
         this.handicapsList = new ArrayList<String>();
     }
+
+	public void setTopMostHandicap(IRobot topMostHandicap) {
+		this.topMostHandicap = topMostHandicap;
+	}
 
 	@Override
 	public String getName() {
@@ -202,6 +208,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     public boolean canPickUp(BoundedMoveableObject obj) {
         if(obj instanceof Block) {
             Block b = (Block) obj;
+            LOGGER.info("gripcap" + grippercap);
             return (distanceTo(obj.getLocation()) <= ARM_DISTANCE) && b.isFree() && (holding.size() < grippercap);
         }
         return false;
@@ -212,6 +219,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         holding.add(b);
         b.setHeldBy(this);
         b.removeFromContext();
+        LOGGER.info("blocks held: " + holding.size());
     }
 
     @Override
@@ -291,7 +299,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         MoveType result = MoveType.ENTERING_FREESPACE;
 
         for (Zone endzone : endzones) {
-            result = result.merge(checkZoneAccess(startzone, endzone, door));
+            result = result.merge(topMostHandicap.checkZoneAccess(startzone, endzone, door));
         }
         return result;
 
@@ -376,37 +384,41 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     @Override
     @ScheduledMethod(start = 0, duration = 0, interval = 1)
     public synchronized void move() {
-        if (targetLocation != null) {
-            // Calculate the distance that the robot is allowed to move.
-            double distance = distanceTo(targetLocation);
-            if (distance < MIN_MOVE_DISTANCE) {
-                // we're there
-                stopRobot();
-            }
-            else {
-                double movingDistance = Math.min(distance, MAX_MOVE_DISTANCE * speedMod);
-
-                // Angle at which to move
-                double angle = SpatialMath.calcAngleFor2DMovement(space, getLocation(), targetLocation);
-
-                // The displacement of the robot
-                double[] displacement = SpatialMath.getDisplacement(2, 0, movingDistance, angle);
-
-                try {
-                    // Move the robot to the new position using the displacement
-                    moveByDisplacement(displacement[0], displacement[1]);
-                    agentRecord.setStartedMoving();
-
-                    /**
-                     * The robot's battery discharges when it moves.
-                     */
-                    this.battery.discharge();
-                } catch (SpatialException e) {
-                    collided = true;
-                    stopRobot();
-                }
-            }
-        }
+    	if (battery.getCurrentCapacity() > 0) {
+		    if (targetLocation != null) {
+		        // Calculate the distance that the robot is allowed to move.
+		        double distance = distanceTo(targetLocation);
+		        if (distance < MIN_MOVE_DISTANCE) {
+		            // we're there
+		            stopRobot();
+		        }
+		        else {
+		            double movingDistance = Math.min(distance, MAX_MOVE_DISTANCE * speedMod);
+		
+		            // Angle at which to move
+		            double angle = SpatialMath.calcAngleFor2DMovement(space, getLocation(), targetLocation);
+		
+		            // The displacement of the robot
+		            double[] displacement = SpatialMath.getDisplacement(2, 0, movingDistance, angle);
+		
+		            try {
+		                // Move the robot to the new position using the displacement
+		                moveByDisplacement(displacement[0], displacement[1]);
+		                agentRecord.setStartedMoving();
+		
+		                /**
+		                 * The robot's battery discharges when it moves.
+		                 */
+		                this.battery.discharge();
+		            } catch (SpatialException e) {
+		                collided = true;
+		                stopRobot();
+		            }
+		        }
+		    }
+    	} else {
+    		stopRobot();
+    	}
     }
 
 

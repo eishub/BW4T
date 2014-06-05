@@ -141,7 +141,7 @@ public class NewHandicapTest {
         		new SizeOverloadHandicap(
         		new ColorBlindHandicap(
         		new GripperHandicap(
-        		new NavigatingRobot("", space, context, true, 1))), 2);
+        	    new NavigatingRobot("", space, context, true, 1))), 2);
         
         assertTrue(r.getHandicapsList().size() == 4);
  
