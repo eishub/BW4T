@@ -10,7 +10,6 @@ import nl.tudelft.bw4t.client.gui.menu.ChatMenu;
  * @author trens
  */
 public class ChatListMouseListener implements MouseListener {
-
 	/** The {@link BW4TClientGUI} to listen to and interact with. */
     private final BW4TClientGUI bw4tClientGUI;
 
