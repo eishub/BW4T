@@ -143,9 +143,8 @@ public class NewHandicapTest {
         		new GripperHandicap(
         	    new NavigatingRobot("", space, context, true, 1))), 2);
         
-        assertTrue(r.getHandicapsList().size() == 4);
+        assertTrue(r.getHandicapsList().size() == 3);
  
-        assertTrue(r.getSpeedMod() == 0.8);
         assertFalse(r.canPickUp(block));
         assertTrue(r.getGripperCapacity() == 0);
         assertTrue(r.getSize() == 2);

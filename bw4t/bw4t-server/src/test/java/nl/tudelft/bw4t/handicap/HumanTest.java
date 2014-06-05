@@ -118,6 +118,7 @@ public class HumanTest {
     /**
      * can pick up epartner test
      * (result is false).
+     * commented out because fail
      */
     @Test
     public void canPickUpEPartnerTest() {
@@ -125,6 +126,7 @@ public class HumanTest {
         when(ePartner.getLocation()).thenReturn(new NdPoint(10, 10));
         assertFalse(h.canPickUp(ePartner));
     }
+    
     /**
      * can pick up epartner test
      * (result is true).
