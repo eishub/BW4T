@@ -90,7 +90,7 @@ public class BotEditor extends JFrame {
      * @return The row number of the bot that is currently selected.
      */
     public int getRow() {
-    	return this.row;
+        return this.row;
     }
     
     /**

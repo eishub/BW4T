@@ -23,12 +23,13 @@ class LeftAloneCheckBox implements ActionListener {
 	}
 
 	/**
-	 * Perform the required action (nothing at the moment).
+	 * Perform the required action (save the setting).
 	 * 
 	 * @param ae
 	 *            The action event triggering this method.
 	 */
 	public void actionPerformed(ActionEvent ae) {
-
+		view.getDataObject().setForgetMeNot(
+				view.getLeftAloneCheckbox().isSelected());
 	}
 }

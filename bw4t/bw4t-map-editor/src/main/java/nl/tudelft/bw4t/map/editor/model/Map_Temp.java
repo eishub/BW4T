@@ -96,7 +96,7 @@ public class Map_Temp implements TableModel {
         this.numberOfEntities = entities;
         this.randomize = rand;
         //TODO change method to get rooms array[][] from GUI.
-        rooms = getRoomsFromGUI();
+        //rooms = getRoomsFromGUI();
 
     }
 
@@ -177,6 +177,7 @@ public class Map_Temp implements TableModel {
      * @param file
      * @throws IOException
      * @throws JAXBException
+     * TODO remove comments after createmap is fixed
      */
     public void save(File file) throws IOException, JAXBException {
         System.out.println("SAVE to " + file);
@@ -186,13 +187,13 @@ public class Map_Temp implements TableModel {
             throw new IllegalStateException("save failed: " + error);
         }
 
-        NewMap map = createMap();
+        //NewMap map = createMap();
         JAXBContext context = JAXBContext.newInstance(NewMap.class);
 
         Marshaller m = context.createMarshaller();
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-        m.marshal(map, new FileOutputStream(file));
+        //m.marshal(map, new FileOutputStream(file));
 
     }
 
@@ -233,7 +234,6 @@ public class Map_Temp implements TableModel {
      * Create the real map object using the settings
      * 
      * @return
-     */
     NewMap createMap() {
         NewMap map = new NewMap();
 
@@ -339,6 +339,7 @@ public class Map_Temp implements TableModel {
 
         return map;
     }
+    */
 
     /**
      * Set all the render options of the map.

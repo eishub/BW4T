@@ -49,6 +49,29 @@ public class ScenarioEditorController {
         getMainView().getMainPanel().getConfigurationPanel().getChooseMapFile().addActionListener(
                 new ChooseMapFileListener(getMainView().getMainPanel())
         );
+        
+        /** Adds the listeners for the items on the configuration panel: */
+        getMainView().getMainPanel().getConfigurationPanel().getClientIPTextField().getDocument().addDocumentListener(
+                new WriteClientIP(getMainView().getMainPanel())
+        );
+        getMainView().getMainPanel().getConfigurationPanel().getClientPortTextField().getDocument().addDocumentListener(
+                new WriteClientPort(getMainView().getMainPanel())
+        );
+        getMainView().getMainPanel().getConfigurationPanel().getServerIPTextField().getDocument().addDocumentListener(
+                new WriteServerIP(getMainView().getMainPanel())
+        );
+        getMainView().getMainPanel().getConfigurationPanel().getServerPortTextField().getDocument().addDocumentListener(
+                new WriteServerPort(getMainView().getMainPanel())
+        );
+        getMainView().getMainPanel().getConfigurationPanel().getGUIYesCheckbox().addItemListener(
+                new SelectLaunchGUIYes(getMainView().getMainPanel())
+        );
+        getMainView().getMainPanel().getConfigurationPanel().getGUINoCheckbox().addItemListener(
+                new SelectLaunchGUINo(getMainView().getMainPanel())
+        );
+        getMainView().getMainPanel().getConfigurationPanel().getMapFileTextField().getDocument().addDocumentListener(
+                new WriteMapFile(getMainView().getMainPanel())
+        );
 
         /** Adds the listeners for the items in the MenuBar: */
         getMainView().getTopMenuBar().getMenuItemFileExit().addActionListener(
@@ -85,11 +108,11 @@ public class ScenarioEditorController {
                         new DeleteBot(getMainView().getMainPanel(), getModel())
                 );
         
-        getMainView().getMainPanel().getEntityPanel().getBotList().
+        getMainView().getMainPanel().getEntityPanel().getBotTableModel().
         		addTableModelListener(
         				new UpdateBotCount(getMainView().getMainPanel(), getModel())
         		);
-        getMainView().getMainPanel().getEntityPanel().getEpartnerList().
+        getMainView().getMainPanel().getEntityPanel().getEPartnerTableModel().
         		addTableModelListener(
         				new UpdateEPartnerCount(getMainView().getMainPanel(), getModel())
         		);

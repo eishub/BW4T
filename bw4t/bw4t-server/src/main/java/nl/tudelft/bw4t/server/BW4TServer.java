@@ -148,9 +148,9 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
         // for every request and attach them
         for (EPartnerConfig c : cInfo.getRequestedEPartners()) {
             int created = 0;
-            String name = c.getName();
-            while (created < c.getAmount()) {
-                c.setName(String.format(ENTITY_NAME_FORMAT, name, created + 1));
+            String name = c.getEpartnerName();
+            while (created < c.getEpartnerAmount()) {
+                c.setEpartnerName(String.format(ENTITY_NAME_FORMAT, name, created + 1));
                 try {
                     env.spawn(c);
                     // assign epartner to client
@@ -179,7 +179,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
      */
     public void notifyFreeEpartner(BW4TClientActions client, EPartnerConfig ci) throws EntityException {
         try {
-            String entity = ci.getName();
+            String entity = ci.getEpartnerName();
             if ("unknown".equals(Launcher.getEnvironment().getType(entity))) {
                 BW4TEnvironment.getInstance().setType(entity, EntityType.EPARTNER.nameLower());
             }

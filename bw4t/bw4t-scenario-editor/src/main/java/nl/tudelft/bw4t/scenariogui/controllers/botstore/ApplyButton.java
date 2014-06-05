@@ -69,6 +69,7 @@ class ApplyButton implements ActionListener {
 	    			        view.getDataObject().setSizeOverloadHandicap(view.getsizeoverloadCheckbox().isSelected());
 	    			        view.getDataObject().setReferenceName(view.getBotReferenceField().getText());
 	    			        view.getDataObject().setFileName(view.getFileNameField().getText());
+	    			        view.getBotEditor().dispose();
 				        	
 				        	ScenarioEditor.getOptionPrompt().showMessageDialog(view, 
 		        					"Bot configuration succesfully created.");

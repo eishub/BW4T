@@ -74,12 +74,12 @@ public class DefaultEntityFactory implements EntityFactory {
 
     @Override
     public EPartner makeEPartner(EPartnerConfig c) {
-        EPartner ep = makeDefaultEPartner(c.getName());
+        EPartner ep = makeDefaultEPartner(c.getEpartnerName());
         
         if (c.isGps()) {
             ep.getTypeList().add("GPS");
         }
-        if (c.isForgotMeNot()) {
+        if (c.isForgetMeNot()) {
             ep.getTypeList().add("Forget-me-not");
         }
         

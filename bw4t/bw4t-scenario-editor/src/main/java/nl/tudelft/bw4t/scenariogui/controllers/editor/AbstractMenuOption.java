@@ -12,6 +12,7 @@ import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfigIntegration;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
+import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 import nl.tudelft.bw4t.scenariogui.util.MapSpec;
@@ -146,9 +147,9 @@ public abstract class AbstractMenuOption implements ActionListener {
 
 	public void saveXMLFile(String path) throws JAXBException,
 			FileNotFoundException {
-		BW4TClientConfig configuration = BW4TClientConfigIntegration
-				.createConfigFromPanel((MainPanel) (getController()
-						.getMainView()).getContentPane(), path);
+		BW4TClientConfig configuration = getController().getMainView().getMainPanel().getClientConfig();
+		configuration.setFileLocation(path);
+		configuration.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
 
 		// SAVE BOTS & EPARTNERS HERE
 		int botRows = getController().getMainView().getMainPanel()
