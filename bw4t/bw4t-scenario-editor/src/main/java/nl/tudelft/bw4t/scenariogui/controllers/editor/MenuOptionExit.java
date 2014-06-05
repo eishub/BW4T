@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
 
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
@@ -12,8 +13,6 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
  * Handles the event to exit the program.
  * <p>
  * 
- * @author Seu Man To
- * @author Xander Zonneveld
  * @version 0.1
  * @since 12-05-2014
  */
@@ -26,10 +25,12 @@ class MenuOptionExit extends AbstractMenuOption {
 	 *            The view.
 	 * @param mainView
 	 *            The controlling main view.
+	 * @param model           
+	 *            The model.
 	 */
 	public MenuOptionExit(final MenuBar view,
-			final ScenarioEditorController mainView) {
-		super(view, mainView);
+			final ScenarioEditorController mainView, BW4TClientConfig model) {
+		super(view, mainView, model);
 	}
 
 	/**
@@ -44,24 +45,9 @@ class MenuOptionExit extends AbstractMenuOption {
 
 		// Check if current config is different from last saved config
 		if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())
-				|| !super
-						.getController()
-						.getMainView()
-						.getMainPanel()
-						.getEntityPanel()
-						.compareBotConfigs(
-								super.getController().getMainView()
-										.getMainPanel().getEntityPanel()
-										.getOldBotConfigs())
-				|| !super
-						.getController()
-						.getMainView()
-						.getMainPanel()
-						.getEntityPanel()
-						.compareEpartnerConfigs(
-								super.getController().getMainView()
-										.getMainPanel().getEntityPanel()
-										.getOldEPartnerConfigs())) {
+				|| !super.getModel().compareBotConfigs(super.getModel().getOldBots())
+				|| !super.getModel().compareEpartnerConfigs(
+								super.getModel().getOldEpartners())) {
 			// Check if user wants to save current configuration
 			int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
 					null, ScenarioEditorController.CONFIRM_SAVE_TXT, "",
@@ -71,10 +57,8 @@ class MenuOptionExit extends AbstractMenuOption {
 				saveFile();
 				super.getController().getMainView().getMainPanel()
 						.getConfigurationPanel().updateOldValues();
-				super.getController().getMainView().getMainPanel()
-						.getEntityPanel().updateBotConfigs();
-				super.getController().getMainView().getMainPanel()
-						.getEntityPanel().updateEpartnerConfigs();
+				super.getModel().updateBotConfigs();
+				super.getModel().updateEpartnerConfigs();
 				getController().getMainView().closeScenarioEditor();
 			} else {
 				getController().getMainView().closeScenarioEditor();

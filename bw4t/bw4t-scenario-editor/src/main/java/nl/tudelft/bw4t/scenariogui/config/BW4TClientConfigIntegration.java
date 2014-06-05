@@ -42,4 +42,5 @@ public final class BW4TClientConfigIntegration {
         config.setFileLocation(newOutputFile);
         return config;
     }
+
 }

@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
@@ -16,18 +17,19 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  */
 class DeleteBot implements ActionListener {
 
-    /**
-     * The <code>MainPanel</code> serving as the content pane.
-     */
     private MainPanel view;
+    
+    private BW4TClientConfig model;
 
     /**
      * Create an DeleteBot event handler.
      *
      * @param newView The parent view.
+     * @param model The model.
      */
-    public DeleteBot(final MainPanel newView) {
+    public DeleteBot(final MainPanel newView, BW4TClientConfig model) {
         this.view = newView;
+        this.model = model;
     }
 
     /**
@@ -51,7 +53,8 @@ class DeleteBot implements ActionListener {
 
         if (response == JOptionPane.YES_OPTION) {
             view.getEntityPanel().getBotTableModel().removeRow(row);
-            view.getEntityPanel().getBotConfigs().remove(row);
+            
+            model.removeBot(model.getBot(row));
         }
     }
 }

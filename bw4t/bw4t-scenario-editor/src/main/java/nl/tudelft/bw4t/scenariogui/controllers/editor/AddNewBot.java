@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import nl.tudelft.bw4t.agent.EntityType;
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
-import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
@@ -16,23 +16,21 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  */
 class AddNewBot implements ActionListener {
 
-    /**
-     * The <code>MainPanel</code> serving as the content pane.
-     */
     private MainPanel view;
     
-    /**
-     * Keeps track of the amount of bots created
-     */
     private int botCount;
+    
+    private BW4TClientConfig model;
 
     /**
      * Create an AddNewBot event handler.
      *
      * @param newView The parent view.
+     * @param model The model.
      */
-    public AddNewBot(final MainPanel newView) {
+    public AddNewBot(final MainPanel newView, BW4TClientConfig model) {
         this.view = newView;
+        this.model = model;
     }
 
     /**
@@ -43,16 +41,16 @@ class AddNewBot implements ActionListener {
      * @param ae The action event.
      */
     public void actionPerformed(final ActionEvent ae) {
-        botCount = view.getEntityPanel().getBotConfigs().size() + 1;
+        botCount = model.getBots().size() + 1;
         Object[] newBotObject = {"Bot" + " " + botCount, EntityType.AGENT.toString(), 1};
-        view.getEntityPanel().getBotTableModel().addRow(newBotObject);
         BotConfig newBotConfig = new BotConfig();
 
         newBotConfig.setFileName(BotConfig.DEFAULT_GOAL_FILENAME);
         newBotConfig.setReferenceName(BotConfig.DEFAULT_GOAL_FILENAME_REFERENCE);
-
         newBotConfig.setBotName("Bot " + botCount);
-        view.getEntityPanel().getBotConfigs().add(newBotConfig);
+        
+        model.addBot(newBotConfig);
+        view.getEntityPanel().getBotTableModel().addRow(newBotObject);
     }
 
 }

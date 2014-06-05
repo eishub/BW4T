@@ -263,7 +263,7 @@ public class MenuBarTest {
         assert listeners.length == 1;
 
         AbstractMenuOption menuOption = (AbstractMenuOption) listeners[0];
-        menuOption.setController(new ScenarioEditorController(editor));
+        menuOption.setController(new ScenarioEditorController(editor, new BW4TClientConfig()));
 
         /* Don't actually close the jvm */
         doNothing().when(editor).closeScenarioEditor();
@@ -287,7 +287,7 @@ public class MenuBarTest {
 
         AbstractMenuOption menuOption = (AbstractMenuOption) listeners[0];
         editor.getTopMenuBar().getMenuItemFileExit().removeActionListener(listeners[0]);
-        menuOption.setController(new ScenarioEditorController(editor));
+        menuOption.setController(new ScenarioEditorController(editor, new BW4TClientConfig()));
 
         /* Fake the prompt to no */
         OptionPrompt option = spy(new NoMockOptionPrompt());
@@ -329,7 +329,7 @@ public class MenuBarTest {
         AbstractMenuOption menuOption = (AbstractMenuOption) exit.getActionListeners()[0];
         exit.removeActionListener(exit.getActionListeners()[0]);
 
-        menuOption.setController(new ScenarioEditorController(editor));
+        menuOption.setController(new ScenarioEditorController(editor, new BW4TClientConfig()));
         menuOption = (AbstractMenuOption) exit.getActionListeners()[0];
         menuOption.setCurrentFileChooser(filechooser);
 
@@ -369,7 +369,7 @@ public class MenuBarTest {
         assert listeners.length == 1;
 
         AbstractMenuOption menuOption = (AbstractMenuOption) listeners[0];
-        menuOption.setController(new ScenarioEditorController(editor));
+        menuOption.setController(new ScenarioEditorController(editor, new BW4TClientConfig()));
 
         /* Click the new button */
         editor.getTopMenuBar().getMenuItemFileNew().doClick();
@@ -396,7 +396,7 @@ public class MenuBarTest {
         ScenarioEditor.setOptionPrompt(option);
 
         AbstractMenuOption menuOption = (AbstractMenuOption) listeners[0];
-        menuOption.setController(new ScenarioEditorController(editor));
+        menuOption.setController(new ScenarioEditorController(editor, new BW4TClientConfig()));
 
         /* Click the new button */
         editor.getTopMenuBar().getMenuItemFileNew().doClick();
@@ -427,7 +427,7 @@ public class MenuBarTest {
         AbstractMenuOption menuOption = (AbstractMenuOption) newfile.getActionListeners()[0];
         newfile.removeActionListener(newfile.getActionListeners()[0]);
 
-        menuOption.setController(new ScenarioEditorController(editor));
+        menuOption.setController(new ScenarioEditorController(editor, new BW4TClientConfig()));
         menuOption = (AbstractMenuOption) newfile.getActionListeners()[0];
         menuOption.setCurrentFileChooser(filechooser);
 
