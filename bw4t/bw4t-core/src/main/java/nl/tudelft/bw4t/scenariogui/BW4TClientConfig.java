@@ -31,34 +31,16 @@ public class BW4TClientConfig {
 	 */
 	private String outputFile;
 
-	/**
-	 * The clientIP.
-	 */
 	private String clientIp = "";
 
-	/**
-	 * The client port.
-	 */
 	private int clientPort;
 
-	/**
-	 * The serverIP.
-	 */
 	private String serverIp = "";
 
-	/**
-	 * The server port.
-	 */
 	private int serverPort;
 
-	/**
-	 * Boolean indicating if a GUI should be launched.
-	 */
 	private boolean launchGui;
 
-	/**
-	 * Boolean indicating if a GOAL should be used.
-	 */
 	private boolean useGoal;
 
 	/**
@@ -333,6 +315,9 @@ public class BW4TClientConfig {
 		return bots.get(index);
 	}
 
+	/**
+	 * Updates the bot list with the new bots.
+	 */
 	public void updateBotConfigs() {
 		oldBots = bots;
 	}
@@ -346,16 +331,22 @@ public class BW4TClientConfig {
 		return botCount;
 	}
 	
+	/**
+	 * Updates the total amount of bots in the bot list.
+	 */
 	public void updateAmountBot() {
 		botCount = 0;
 		
-		for (int i = 0; i < bots.size(); i ++) {
+		for (int i = 0; i < bots.size(); i++) {
 			botCount = botCount + bots.get(i).getBotAmount();
 		}
 	}
 	
 	/**
 	 * Compares the BotConfig lists.
+	 * 
+	 * @param config
+	 * 			The BotConfig list to be compared.
 	 * 
 	 * @return If the BotConfigs lists are equal.
 	 */
@@ -439,16 +430,22 @@ public class BW4TClientConfig {
 		return epartnerCount;
 	}
 	
+	/**
+	 * Updates the total amount of epartners in the epartner list.
+	 */
 	public void updateAmountEPartner() {
 		epartnerCount = 0;
 		
-		for (int i = 0; i < epartners.size(); i ++) {
+		for (int i = 0; i < epartners.size(); i++) {
 			epartnerCount = epartnerCount + epartners.get(i).getEpartnerAmount();
 		}
 	}
 	
 	/**
 	 * Compares the EpartnerConfig lists.
+	 * 
+	 * @param config
+	 * 			The EpartnerConfig list to be compared.
 	 * 
 	 * @return If the EpartnerConfigs lists are equal.
 	 */

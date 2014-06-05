@@ -19,9 +19,6 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
  */
 class WindowExit extends WindowAdapter {
     
-    /**
-     * The view being controlled.
-     */
     private ScenarioEditor view;
 
     /**

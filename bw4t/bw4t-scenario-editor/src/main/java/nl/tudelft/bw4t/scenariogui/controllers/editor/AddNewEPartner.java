@@ -26,6 +26,8 @@ class AddNewEPartner implements ActionListener {
 	 * 
 	 * @param newView
 	 *            The parent view.
+	 * @param model
+	 *            The model.
 	 */
 	public AddNewEPartner(final MainPanel newView, BW4TClientConfig model) {
 		this.view = newView;
@@ -42,12 +44,11 @@ class AddNewEPartner implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent ae) {
 		eCount = model.getEpartners().size() + 1;
-		Object[] newEPartnerObject = { "E-partner " + eCount, 1 };
+		Object[] newEPartnerObject = {"E-partner " + eCount, 1 };
 		view.getEntityPanel().getEPartnerTableModel().addRow(newEPartnerObject);
 		EPartnerConfig config = new EPartnerConfig();
 		config.setEpartnerName("E-Partner " + eCount);
 		
 		model.addEpartner(config);
-		//view.getEntityPanel().getEPartnerConfigs().add(config);
 	}
 }

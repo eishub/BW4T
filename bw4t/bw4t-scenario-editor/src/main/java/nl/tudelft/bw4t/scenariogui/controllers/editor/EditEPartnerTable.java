@@ -26,6 +26,8 @@ public class EditEPartnerTable implements TableModelListener {
 	 * 
 	 * @param newView
 	 *            The parent view.
+	 * @param model           
+	 *            The model.
 	 */
 	public EditEPartnerTable(final MainPanel newView, BW4TClientConfig model) {
 		this.view = newView;

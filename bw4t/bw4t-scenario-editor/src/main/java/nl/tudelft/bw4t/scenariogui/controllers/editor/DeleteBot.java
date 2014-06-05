@@ -17,9 +17,6 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  */
 class DeleteBot implements ActionListener {
 
-    /**
-     * The <code>MainPanel</code> serving as the content pane.
-     */
     private MainPanel view;
     
     private BW4TClientConfig model;
@@ -28,6 +25,7 @@ class DeleteBot implements ActionListener {
      * Create an DeleteBot event handler.
      *
      * @param newView The parent view.
+     * @param model The model.
      */
     public DeleteBot(final MainPanel newView, BW4TClientConfig model) {
         this.view = newView;

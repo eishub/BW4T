@@ -26,36 +26,18 @@ import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
  */
 public class ScenarioEditor extends JFrame {
 
-    /**
-     * Randomly generated serial version.
-     */
     private static final long serialVersionUID = 3291131921268747169L;
-    
-    /**
-     * The name of the window, as displayed in the title.
-     */
+
     private String windowName = "Scenario Editor";
-    
-    /**
-     * The <code>MainPanel</code> serving as the content pane.
-     */
+
     private MainPanel mPanel;
-    
-    /**
-     * The <code>MenuBar</code> at the top of the screen.
-     */
+
     private MenuBar menuBar;
-    
-    /**
-     * The <code>Controller</code> containing all the ActionEvents.
-     */
+
     private ScenarioEditorController controller;
     
     private static BW4TClientConfig model;
-    
-    /**
-     * The OptionPrompt used to handle all thread blocking GUI objects.
-     */
+
     private static OptionPrompt option = new DefaultOptionPrompt();
 
     /**
@@ -96,6 +78,7 @@ public class ScenarioEditor extends JFrame {
      *
      * @param configurationPanel The ConfigurationPanel object used in the frame.
      * @param entityPanel        The EntityPanel object used in the frame.
+     * @param model              The BW4TClientConfig object.
      */
     public ScenarioEditor(final ConfigurationPanel configurationPanel, 
     		final EntityPanel entityPanel, BW4TClientConfig model) {

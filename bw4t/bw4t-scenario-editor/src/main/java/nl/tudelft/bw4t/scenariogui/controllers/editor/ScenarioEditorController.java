@@ -1,9 +1,6 @@
 package nl.tudelft.bw4t.scenariogui.controllers.editor;
 
-import javax.swing.event.TableModelListener;
-
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 
 /**
@@ -20,15 +17,8 @@ import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
  */
 public class ScenarioEditorController {
 
-    /**
-     * The text shown on the dialog when asked whether or not to save
-     * the current configuration.
-     */
     public static final String CONFIRM_SAVE_TXT = "Do you want to save the current configuration?";
 
-    /**
-     * The view being controlled.
-     */
     private ScenarioEditor view;
     
     private BW4TClientConfig model;
@@ -38,6 +28,7 @@ public class ScenarioEditorController {
      * Create a controllers object to control all ActionEvents.
      *
      * @param newView used to call relevant functions by the event listeners.
+     * @param model The model used.
      */
     public ScenarioEditorController(final ScenarioEditor newView, BW4TClientConfig model) {
         this.view = newView;

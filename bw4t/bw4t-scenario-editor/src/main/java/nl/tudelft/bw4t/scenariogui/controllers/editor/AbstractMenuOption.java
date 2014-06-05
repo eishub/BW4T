@@ -10,10 +10,8 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfigIntegration;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
-import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 import nl.tudelft.bw4t.scenariogui.util.MapSpec;
 
@@ -27,19 +25,13 @@ import nl.tudelft.bw4t.scenariogui.util.MapSpec;
  */
 public abstract class AbstractMenuOption implements ActionListener {
 
-	/**
-	 * The menu bar as view.
-	 */
 	private MenuBar view;
+	
+	private BW4TClientConfig model;
 
-	/**
-	 * The current controllers that is controlling this.
-	 */
 	private ScenarioEditorController controller;
 
 	// made a variable for this so we can call it during testing
-	
-	private BW4TClientConfig model;
 
 	/**
 	 * The file chooser.
@@ -53,6 +45,8 @@ public abstract class AbstractMenuOption implements ActionListener {
 	 *            The new view.
 	 * @param mainView
 	 *            The main view controllers.
+	 * @param model
+	 *            The model.
 	 */
 	public AbstractMenuOption(final MenuBar newView,
 			final ScenarioEditorController mainView, BW4TClientConfig model) {
@@ -103,8 +97,7 @@ public abstract class AbstractMenuOption implements ActionListener {
 	public void saveFile(final boolean saveAs) {
 		MapSpec map = controller.getMainView().getMainPanel()
 				.getConfigurationPanel().getMapSpecifications();
-		int botCount = controller.getMainView().getMainPanel().getEntityPanel()
-				.getBotCount();
+		int botCount = getModel().getAmountBot();
 		if (map.isSet() && botCount > map.getEntitiesAllowedInMap()) {
 			ScenarioEditor.getOptionPrompt().showMessageDialog(
 					view,
@@ -206,6 +199,12 @@ public abstract class AbstractMenuOption implements ActionListener {
 		controller = newController;
 	}
 	
+	/**
+	 * Gets the BW4TClientConfig model.
+	 * 
+	 * @return model
+	 * 			The model being used.
+	 */
 	public BW4TClientConfig getModel() {
 		return model;
 	}

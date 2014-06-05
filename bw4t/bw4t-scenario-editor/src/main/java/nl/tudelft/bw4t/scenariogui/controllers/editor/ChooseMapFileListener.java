@@ -18,9 +18,6 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  */
 class ChooseMapFileListener implements ActionListener {
 
-    /**
-     * The <code>MainPanel</code> serving as the content pane.
-     */
     private MainPanel view;
 
     /**
