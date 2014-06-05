@@ -38,8 +38,8 @@ class MenuOptionOpen extends AbstractMenuOption {
 	 *            The controlling main view.
 	 */
 	public MenuOptionOpen(final MenuBar view,
-			final ScenarioEditorController mainView) {
-		super(view, mainView);
+			final ScenarioEditorController mainView, BW4TClientConfig model) {
+		super(view, mainView, model);
 	}
 
 	/**
@@ -57,10 +57,9 @@ class MenuOptionOpen extends AbstractMenuOption {
 
 		// Check if current config is different from last saved config
 		if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())
-				|| !entityPanel.compareBotConfigs(entityPanel
-						.getOldBotConfigs())
-				|| !entityPanel.compareEpartnerConfigs(entityPanel
-						.getOldEPartnerConfigs())) {
+				|| !super.getModel().compareBotConfigs(super.getModel().getOldBots())
+				|| !super.getModel().compareEpartnerConfigs(super.getModel()
+						.getOldEpartners())) {
 			// Check if user wants to save current configuration
 			int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
 					null, ScenarioEditorController.CONFIRM_SAVE_TXT, "",
@@ -97,8 +96,7 @@ class MenuOptionOpen extends AbstractMenuOption {
 				// clear bots/epartners from the previous config
 				resetBotTable(entityPanel);
 				resetEpartnerTable(entityPanel);
-				super.getController().getMainView().getMainPanel()
-						.getEntityPanel().getBotConfigs().clear();
+				super.getModel().getBots().clear();
 
 				// Fill the bot panel
 				int botRows = configuration.getBots().size();
@@ -111,7 +109,7 @@ class MenuOptionOpen extends AbstractMenuOption {
 							.getBotAmount());
 					Object[] botObject = { botName, botController, botAmount };
 					entityPanel.getBotTableModel().addRow(botObject);
-					entityPanel.getBotConfigs().add(configuration.getBot(i));
+					super.getModel().getBots().add(configuration.getBot(i));
 				}
 				
 				// Fill the epartner panel
@@ -123,7 +121,7 @@ class MenuOptionOpen extends AbstractMenuOption {
 							.getEpartnerAmount());
 					Object[] epartnerObject = { epartnerName, epartnerAmount };
 					entityPanel.getEPartnerTableModel().addRow(epartnerObject);
-					entityPanel.getEPartnerConfigs().add(configuration.getEpartner(i));
+					super.getModel().getEpartners().add(configuration.getEpartner(i));
 				}
 			} catch (JAXBException e1) {
 				ScenarioEditor.handleException(e1,
@@ -140,10 +138,8 @@ class MenuOptionOpen extends AbstractMenuOption {
 		}
 		super.getController().getMainView().getMainPanel()
 				.getConfigurationPanel().updateOldValues();
-		super.getController().getMainView().getMainPanel().getEntityPanel()
-				.updateBotConfigs();
-		super.getController().getMainView().getMainPanel().getEntityPanel()
-				.updateEpartnerConfigs();
+		super.getModel().updateBotConfigs();
+		super.getModel().updateEpartnerConfigs();
 	}
 
 	/**

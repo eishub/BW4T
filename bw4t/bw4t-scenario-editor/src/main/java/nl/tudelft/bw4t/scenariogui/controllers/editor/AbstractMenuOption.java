@@ -37,6 +37,8 @@ public abstract class AbstractMenuOption implements ActionListener {
 	private ScenarioEditorController controller;
 
 	// made a variable for this so we can call it during testing
+	
+	private BW4TClientConfig model;
 
 	/**
 	 * The file chooser.
@@ -52,9 +54,10 @@ public abstract class AbstractMenuOption implements ActionListener {
 	 *            The main view controllers.
 	 */
 	public AbstractMenuOption(final MenuBar newView,
-			final ScenarioEditorController mainView) {
+			final ScenarioEditorController mainView, BW4TClientConfig model) {
 		this.view = newView;
 		this.setController(mainView);
+		this.model = model;
 
 		/*
 		 * Set the intial file chooser and option prompt, can eventually be
@@ -152,16 +155,14 @@ public abstract class AbstractMenuOption implements ActionListener {
 				.getEntityPanel().getBotTableModel().getRowCount();
 
 		for (int i = 0; i < botRows; i++) {
-			configuration.addBot(getController().getMainView().getMainPanel()
-					.getEntityPanel().getBotConfig(i));
+			configuration.addBot(getModel().getBot(i));
 		}
 
 		int epartnerRows = getController().getMainView().getMainPanel()
 				.getEntityPanel().getEPartnerTableModel().getRowCount();
 
 		for (int i = 0; i < epartnerRows; i++) {
-			configuration.addEpartner(getController().getMainView()
-					.getMainPanel().getEntityPanel().getEPartnerConfig(i));
+			configuration.addEpartner(getModel().getEpartner(i));
 		}
 
 		configuration.toXML();
@@ -202,6 +203,10 @@ public abstract class AbstractMenuOption implements ActionListener {
 	 */
 	public void setController(final ScenarioEditorController newController) {
 		controller = newController;
+	}
+	
+	public BW4TClientConfig getModel() {
+		return model;
 	}
 
 }

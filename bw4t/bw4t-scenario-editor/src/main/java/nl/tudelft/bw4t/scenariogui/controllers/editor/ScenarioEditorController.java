@@ -1,5 +1,9 @@
 package nl.tudelft.bw4t.scenariogui.controllers.editor;
 
+import javax.swing.event.TableModelListener;
+
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 
 /**
@@ -26,6 +30,8 @@ public class ScenarioEditorController {
      * The view being controlled.
      */
     private ScenarioEditor view;
+    
+    private BW4TClientConfig model;
 
     /**
      * TODO: Split up into multiple methods
@@ -33,8 +39,9 @@ public class ScenarioEditorController {
      *
      * @param newView used to call relevant functions by the event listeners.
      */
-    public ScenarioEditorController(final ScenarioEditor newView) {
+    public ScenarioEditorController(final ScenarioEditor newView, BW4TClientConfig model) {
         this.view = newView;
+        this.model = model;
 
         /** Create the action listeners for the ConfigurationPanel. */
 
@@ -45,47 +52,56 @@ public class ScenarioEditorController {
 
         /** Adds the listeners for the items in the MenuBar: */
         getMainView().getTopMenuBar().getMenuItemFileExit().addActionListener(
-                new MenuOptionExit(getMainView().getTopMenuBar(), this)
+                new MenuOptionExit(getMainView().getTopMenuBar(), this, getModel())
         );
 
         getMainView().getTopMenuBar().getMenuItemFileNew().addActionListener(
-                new MenuOptionNew(getMainView().getTopMenuBar(), this)
+                new MenuOptionNew(getMainView().getTopMenuBar(), this, getModel())
         );
         getMainView().getTopMenuBar().getMenuItemFileOpen().addActionListener(
-                new MenuOptionOpen(getMainView().getTopMenuBar(), this)
+                new MenuOptionOpen(getMainView().getTopMenuBar(), this, getModel())
         );
         getMainView().getTopMenuBar().getMenuItemFileSave().addActionListener(
-                new MenuOptionSave(getMainView().getTopMenuBar(), this)
+                new MenuOptionSave(getMainView().getTopMenuBar(), this, getModel())
         );
         getMainView().getTopMenuBar().getMenuItemFileSaveAs().addActionListener(
-                new MenuOptionSaveAs(getMainView().getTopMenuBar(), this)
+                new MenuOptionSaveAs(getMainView().getTopMenuBar(), this, getModel())
         );
         getMainView().getTopMenuBar().getMenuItemFileExport().addActionListener(
-                new MenuOptionExport(getMainView().getTopMenuBar(), this)
+                new MenuOptionExport(getMainView().getTopMenuBar(), this, getModel())
         );
 
         /** Adds the listeners for the EntityPanel */
         getMainView().getMainPanel().getEntityPanel().getNewBotButton().
                 addActionListener(
-                        new AddNewBot(getMainView().getMainPanel())
+                        new AddNewBot(getMainView().getMainPanel(), getModel())
                 );
         getMainView().getMainPanel().getEntityPanel().getModifyBotButton().
                 addActionListener(
-                        new ModifyBot(getMainView().getMainPanel())
+                        new ModifyBot(getMainView().getMainPanel(), getModel())
                 );
         getMainView().getMainPanel().getEntityPanel().getDeleteBotButton().
                 addActionListener(
-                        new DeleteBot(getMainView().getMainPanel())
+                        new DeleteBot(getMainView().getMainPanel(), getModel())
                 );
+        
+        getMainView().getMainPanel().getEntityPanel().getBotList().
+        		addTableModelListener(
+        				new UpdateBotCount(getMainView().getMainPanel(), getModel())
+        		);
+        getMainView().getMainPanel().getEntityPanel().getEpartnerList().
+        		addTableModelListener(
+        				new UpdateEPartnerCount(getMainView().getMainPanel(), getModel())
+        		);
 
         getMainView().getMainPanel().getEntityPanel().getNewEPartnerButton().addActionListener(
-                new AddNewEPartner(getMainView().getMainPanel())
+                new AddNewEPartner(getMainView().getMainPanel(), getModel())
         );
         getMainView().getMainPanel().getEntityPanel().getModifyEPartnerButton().addActionListener(
-                new ModifyEPartner(getMainView().getMainPanel())
+                new ModifyEPartner(getMainView().getMainPanel(), getModel())
         );
         getMainView().getMainPanel().getEntityPanel().getDeleteEPartnerButton().addActionListener(
-                new DeleteEPartner(getMainView().getMainPanel())
+                new DeleteEPartner(getMainView().getMainPanel(), getModel())
         );
         getMainView().getMainPanel().getEntityPanel().getDropDownButton().addActionListener(
                 new BotDropDownButton(getMainView().getMainPanel())
@@ -97,9 +113,9 @@ public class ScenarioEditorController {
         
         /** Adds the listener for the bot and e-partner table: */
         getMainView().getMainPanel().getEntityPanel().getBotTable().getModel().addTableModelListener(
-                new EditBotTable(getMainView().getMainPanel()));
+                new EditBotTable(getMainView().getMainPanel(), getModel()));
         getMainView().getMainPanel().getEntityPanel().getEPartnerTable().getModel().addTableModelListener(
-                new EditEPartnerTable(getMainView().getMainPanel()));
+                new EditEPartnerTable(getMainView().getMainPanel(), getModel()));
         
     }
 
@@ -110,6 +126,10 @@ public class ScenarioEditorController {
      */
     public final ScenarioEditor getMainView() {
         return view;
+    }
+    
+    public final BW4TClientConfig getModel() {
+    	return model;
     }
 }
 

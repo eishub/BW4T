@@ -5,6 +5,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import nl.tudelft.bw4t.agent.EntityType;
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
@@ -21,14 +22,17 @@ public class EditBotTable implements TableModelListener {
      * The <code>MainPanel</code> serving as the content pane.
      */
     private MainPanel view;
+    
+    private BW4TClientConfig model;
 
     /**
      * Create a EditBotTable event handler.
      *
      * @param newView The parent view.
      */
-    public EditBotTable(final MainPanel newView) {
+    public EditBotTable(final MainPanel newView, BW4TClientConfig model) {
         this.view = newView;
+        this.model = model;
     }
 
     /**
@@ -40,7 +44,8 @@ public class EditBotTable implements TableModelListener {
     public void tableChanged(TableModelEvent event) {
         if (event.getColumn() == -1) 
             return;
-        BotConfig config = view.getEntityPanel().getBotConfigs().get(event.getFirstRow());
+        model.getAmountBot();
+        BotConfig config = model.getBots().get(event.getFirstRow());
         Object value =  view.getEntityPanel().getBotTable().getValueAt(
                 event.getFirstRow(), event.getColumn());
         switch (event.getColumn()) {

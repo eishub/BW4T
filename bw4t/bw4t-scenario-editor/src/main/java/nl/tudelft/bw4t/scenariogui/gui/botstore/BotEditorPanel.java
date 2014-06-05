@@ -15,6 +15,7 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
@@ -77,6 +78,8 @@ public class BotEditorPanel extends JPanel {
 	private MainPanel mainPanel;
 
 	private BotEditor botEditor;
+	
+	private BW4TClientConfig model;
 
 	/**
 	 * Create the botEditorPanel.
@@ -86,12 +89,13 @@ public class BotEditorPanel extends JPanel {
 	 * @param mainPanel
 	 *            The MainPanel.
 	 */
-	public BotEditorPanel(BotEditor botEditor, MainPanel mainPanel) {
+	public BotEditorPanel(BotEditor botEditor, MainPanel mainPanel, BW4TClientConfig model) {
+		this.model = model;
 		setLayout(new BorderLayout(20, 20));
 
 		this.mainPanel = mainPanel;
 		this.botEditor = botEditor;
-		this.dataObject = mainPanel.getEntityPanel().getBotConfig(
+		this.dataObject = this.model.getBot(
 				botEditor.getRow());
 
 		createBotInfoPanel();

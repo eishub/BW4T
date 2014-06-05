@@ -51,6 +51,8 @@ public class ScenarioEditor extends JFrame {
      */
     private ScenarioEditorController controller;
     
+    private static BW4TClientConfig model;
+    
     /**
      * The OptionPrompt used to handle all thread blocking GUI objects.
      */
@@ -83,7 +85,8 @@ public class ScenarioEditor extends JFrame {
         // Setting the location relative to null centers the frame.
         setLocationRelativeTo(null);
 
-        controller = new ScenarioEditorController(this);
+        model = new BW4TClientConfig();
+        controller = new ScenarioEditorController(this, model);
         setVisible(true);
     }
 
@@ -94,13 +97,14 @@ public class ScenarioEditor extends JFrame {
      * @param configurationPanel The ConfigurationPanel object used in the frame.
      * @param entityPanel        The EntityPanel object used in the frame.
      */
-    public ScenarioEditor(final ConfigurationPanel configurationPanel, final EntityPanel entityPanel) {
+    public ScenarioEditor(final ConfigurationPanel configurationPanel, 
+    		final EntityPanel entityPanel, BW4TClientConfig model) {
         this();
         mPanel.setConfigurationPanel(configurationPanel);
         mPanel.setEntityPanel(entityPanel);
 
         // Recreate the controllers.
-        controller = new ScenarioEditorController(this);
+        controller = new ScenarioEditorController(this, model);
     }
 
     /**

@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
@@ -17,6 +18,8 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 class DeleteEPartner implements ActionListener {
 
 	private MainPanel view;
+	
+	private BW4TClientConfig model;
 
 	/**
 	 * Create an DeleteEPartner event handler.
@@ -24,8 +27,9 @@ class DeleteEPartner implements ActionListener {
 	 * @param newView
 	 *            The parent view.
 	 */
-	public DeleteEPartner(MainPanel newView) {
+	public DeleteEPartner(MainPanel newView, BW4TClientConfig model) {
 		this.view = newView;
+		this.model = model;
 	}
 
 	/**
@@ -50,7 +54,8 @@ class DeleteEPartner implements ActionListener {
 
 			if (response == JOptionPane.YES_OPTION) {
 				view.getEntityPanel().getEPartnerTableModel().removeRow(row);
-				view.getEntityPanel().getEPartnerConfigs().remove(row);
+				
+				model.removeEpartner(model.getEpartner(row));
 			}
 		}
 	}
