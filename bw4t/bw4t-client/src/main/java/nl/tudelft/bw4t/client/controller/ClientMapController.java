@@ -181,6 +181,11 @@ public class ClientMapController extends AbstractMapController {
                 epartner.setId(id);
                 getVisibleEPartners().add(epartner);
             }
+            if (holderId == theBot.getId()) {
+                theBot.setHoldingEpartner(holderId);
+            } else if(id == theBot.getHoldingEpartner()) {
+                theBot.setHoldingEpartner(-1);
+            }
             if (allBlocks.containsKey(id)) {
                 epartner.setLocation(allBlocks.get(id).getPosition());
             }

@@ -11,6 +11,7 @@ import nl.tudelft.bw4t.controller.MapRenderSettings;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
+import nl.tudelft.bw4t.map.view.ViewEPartner;
 
 public class ActionPopUpMenu {
     /**
@@ -30,6 +31,30 @@ public class ActionPopUpMenu {
                 return;
             }
             startPosX += set.getSequenceBlockSize();
+        }
+        
+        if(cmc.getTheBot().getHoldingEpartner() >= 0) {
+            ViewEPartner ep = cmc.getViewEPartner(cmc.getTheBot().getHoldingEpartner());
+            Shape ePartnerBox = set.transformCenterRectangle(new Rectangle2D.Double(ep.getLocation().getX(), ep.getLocation().getY(), ep.EPARTNER_SIZE, ep.EPARTNER_SIZE));
+            if (ePartnerBox.contains(gui.getSelectedLocation())) {
+                EPartnerMenu.buildPopUpMenuForEPartner(ep, gui);
+                gui.getjPopupMenu().show(gui, (int) gui.getSelectedLocation().getX(), (int) gui.getSelectedLocation().getY());
+                return;
+            }
+        } else {
+            for (ViewEPartner ep : cmc.getVisibleEPartners()) {
+                Shape ePartnerBox = set.transformCenterRectangle(new Rectangle2D.Double(ep.getLocation().getX(), ep.getLocation().getY(), ep.EPARTNER_SIZE, ep.EPARTNER_SIZE));
+                if (ePartnerBox.contains(gui.getSelectedLocation())) {
+                    if (MapOperations.closeToBox(ep, gui.getController())) {
+                        EPartnerMenu.buildPopUpMenuPickUpEPartner(ep, gui);
+                    }
+                    else {
+                        EPartnerMenu.buildPopUpMenuMoveToEPartner(ep, gui);
+                    }
+                    gui.getjPopupMenu().show(gui, (int) gui.getSelectedLocation().getX(), (int) gui.getSelectedLocation().getY());
+                    return;
+                }
+            }
         }
 
         // Check if pressing on a room
