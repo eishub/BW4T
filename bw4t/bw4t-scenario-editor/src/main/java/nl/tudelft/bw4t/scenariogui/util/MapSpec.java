@@ -11,9 +11,6 @@ import nl.tudelft.bw4t.map.NewMap;
 /**
  * Holds some of the map specifications that are useful to know, such
  * as the amount of entities allowed in a map.
- * 
- * @author Nick
- *
  */
 public class MapSpec {
     

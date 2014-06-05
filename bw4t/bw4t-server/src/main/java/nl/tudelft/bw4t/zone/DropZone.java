@@ -20,8 +20,6 @@ import repast.simphony.space.continuous.ContinuousSpace;
 
 /**
  * Representation of a room where blocks can be dropped into.
- * 
- * @author Lennard de Rijk
  */
 public class DropZone extends Room {
 

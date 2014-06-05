@@ -5,8 +5,6 @@ import eis.exceptions.ActException;
 
 /**
  * Interface for the actions that an agent should be able to perform
- * 
- * @author trens
  */
 public interface ActionInterface {
 

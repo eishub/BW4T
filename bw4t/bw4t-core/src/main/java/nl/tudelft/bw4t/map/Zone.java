@@ -12,8 +12,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  * A zone is a square area in the map. The zone also functions as a 'navpoint'
  * in that the bot uses these zones for navigation. The navpoint is the middle
  * of the area. Zones can be rooms or corridor areas.
- * 
- * @author W.Pasman
  */
 @SuppressWarnings("serial")
 @XmlRootElement

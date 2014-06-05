@@ -10,8 +10,6 @@ import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 /**
  * The action listener for the GOAL file chooser button.
- * @author Tim
- *
  */
 public class GoalFileButton implements ActionListener {
 	/**

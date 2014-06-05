@@ -18,12 +18,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-/**
- * <p>
- * @author      Calvin Wong Loi Sing  
- * @version     0.1                
- * @since       12-05-2014        
- */
 public class BW4TClientConfigIntegrityTest {
 
     /** The custom config object used in this test. */

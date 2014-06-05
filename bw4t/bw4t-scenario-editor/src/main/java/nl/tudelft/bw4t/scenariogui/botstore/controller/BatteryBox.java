@@ -7,8 +7,6 @@ import javax.swing.JSlider;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 /**
  * Handles actions of the battery checkbox.
- * @author Tim
- *
  */
 public class BatteryBox implements ActionListener {
     /**

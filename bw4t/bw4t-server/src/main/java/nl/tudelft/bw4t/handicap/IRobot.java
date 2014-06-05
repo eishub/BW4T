@@ -19,8 +19,6 @@ import repast.simphony.context.Context;
 import repast.simphony.space.continuous.NdPoint;
 /**
  * This interface contains all the methods from the original Robot class.  
- * @author Valentine Mairet & Ruben Starmans
- *
  */
 public interface IRobot {
     

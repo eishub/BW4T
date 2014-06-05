@@ -12,9 +12,6 @@ import repast.simphony.space.continuous.NdPoint;
 /**
  * A zone is a square area on the map with a name, neighbours and access restrictions. This mirrors the
  * {@link nl.tudelft.bw4t.map.Zone} in the map.
- * 
- * @author W.Pasman 4nov2013
- * 
  */
 public abstract class Zone extends BoundedMoveableObject {
 

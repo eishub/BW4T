@@ -10,12 +10,6 @@ import repast.simphony.space.continuous.NdPoint;
 /**
  * Represents an object in the world that can be moved around if needed. It forms the basis for all kinds of objects
  * like robots, blocks and rooms.
- * 
- * 
- * 
- * @author Lennard de Rijk.
- * @author W.Pasman modified coordinate system so that both the maps and GOAL use the center-of-object as the
- *         coordinate.
  */
 public abstract class BoundedMoveableObject {
 

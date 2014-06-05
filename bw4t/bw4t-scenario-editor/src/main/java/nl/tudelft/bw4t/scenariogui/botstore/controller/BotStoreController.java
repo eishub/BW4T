@@ -5,8 +5,6 @@ import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditor;
 /**
  * The BotStoreController class is in charge of all events that happen on the BotStoreGUI. It delegates all events
  * to classes implementing ActionListener, sending the view along as an argument.
- *
- * @author Arun
  */
 public class BotStoreController {
 

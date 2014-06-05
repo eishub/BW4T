@@ -4,9 +4,6 @@ import nl.tudelft.bw4t.map.editor.ColorSequence;
 
 /**
  * This contains the room information: the blocks that the room contains.
- * 
- * @author W.Pasman
- * 
  */
 public class Room_Temp {
 

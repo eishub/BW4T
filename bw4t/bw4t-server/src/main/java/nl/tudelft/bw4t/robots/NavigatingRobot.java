@@ -19,8 +19,6 @@ import repast.simphony.space.continuous.NdPoint;
 /**
  * Represents a self navigating robot in the BW4T environment. The self navigation means that you can go to a Zone which
  * then does path planning and keeps driving till destination reached.
- * 
- * @author W.Pasman 22aug
  */
 public class NavigatingRobot extends AbstractRobot {
 

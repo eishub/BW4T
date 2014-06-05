@@ -15,9 +15,6 @@ import repast.simphony.space.SpatialException;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 
-/**
- * @author Valentine Mairet
- */
 public class EPartner extends BoundedMoveableObject {
 	
 	private static final Logger LOGGER = Logger.getLogger(EPartner.class);
