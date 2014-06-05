@@ -31,10 +31,6 @@ public abstract class AbstractMenuOption implements ActionListener {
 	private ScenarioEditorController controller;
 
 	// made a variable for this so we can call it during testing
-
-	/**
-	 * The file chooser.
-	 */
 	private JFileChooser currentFileChooser;
 
 	/**

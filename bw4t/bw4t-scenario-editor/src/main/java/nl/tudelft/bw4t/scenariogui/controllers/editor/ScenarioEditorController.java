@@ -139,6 +139,11 @@ public class ScenarioEditorController {
         return view;
     }
     
+    /**
+     * Return the BW4TClientConfig model.
+     * 
+     * @return The BW4TClientConfig model.
+     */
     public final BW4TClientConfig getModel() {
     	return model;
     }
