@@ -7,7 +7,10 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.editor.controller.MenuOptionSave;
+import nl.tudelft.bw4t.scenariogui.editor.controller.MenuOptionSaveAs;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
+
 import org.junit.Ignore;
 import org.junit.Test;
 
