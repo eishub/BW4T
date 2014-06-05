@@ -328,4 +328,5 @@ public final class BotConfig implements Serializable {
 	public void setFileName(String _fileName) {
 		this.fileName = _fileName;
 	}
+
 }

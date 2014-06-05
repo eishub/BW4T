@@ -19,6 +19,9 @@ public class FormatTest {
     /** The correction of the 'number' above after going through the filter. */
     private String numbersCorrected = "123456";
 
+    private String negativeInteger = "-1";
+    private String nonNegativeInteger = "1";
+
     /**
      * Tests whether a correct format is left unchanged.
      */
@@ -68,6 +71,75 @@ public class FormatTest {
         Format.addIntegerDocumentFilterForTextField(field);
         field.getDocument().insertString(0, numbersInvalid, null);
         assertEquals(numbersCorrected, field.getText());
+    }
+
+    /**
+     * Tests getNonNegativeIntValue() method by feeding it a negative
+     * string
+     */
+    @Test
+    public final void testGetNonNegativeIntValue() {
+    	assertEquals(1, Format.getNonNegativeIntValue(negativeInteger));
+    }
+
+    /**
+     * Tests getIntValue() by feeding it NULL as string
+     */
+    @Test
+    public final void testGetIntValueNULL() {
+    	assertEquals(0, Format.getIntValue(null, true));
+    }
+
+    /**
+     * Tests getIntValue() by feeding it a to long Long
+     */
+    @Test
+    public final void testGetIntValueToLongLong() {
+    	assertEquals(2147483647, Format.getIntValue("1000000000000000000", false));
+    }
+
+    /**
+     * Tests getIntValue() by feeding it a to long Integer
+     */
+    @Test
+    public final void testGetIntValueToLongInt() {
+    	assertEquals(2147483647, Format.getIntValue("10000000000", false));
+    }
+
+    /**
+     * Tests getIntValue() by feeding it NULL to long negative Integer
+     * without allowing negative Integers
+     */
+    @Test
+    public final void testGetIntValueToSmallInt() {
+    	assertEquals(-2147483648, Format.getIntValue("-10000000000", false));
+    }
+
+    /**
+     * Tests getIntValue() by feeding it NULL to long negative Integer
+     * and allowing negative Integers
+     */
+    @Test
+    public final void testGetIntValueToSmallIntNegative() {
+    	assertEquals(-2147483648, Format.getIntValue("-10000000000", true));
+    }
+
+    /**
+     * Tests getIntValue() by feeding it a ligit Integer
+     * without allowing negative Integers
+     */
+    @Test
+    public final void testGetIntValueNormal() {
+    	assertEquals(1, Format.getIntValue(nonNegativeInteger, false));
+    }
+
+    /**
+     * Tests getIntValue() by feeding it a ligit Integer
+     * and allowing negative Integers
+     */
+    @Test
+    public final void testGetIntValueNormalNegative() {
+    	assertEquals(1, Format.getIntValue(nonNegativeInteger, true));
     }
 
 }

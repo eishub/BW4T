@@ -41,6 +41,8 @@ class EpartnerSaveButton implements ActionListener {
 		view.getDataObject().setForgetMeNot(
 				view.getForgetCheckbox().isSelected());
 		view.getDataObject().setGps(view.getGPSCheckbox().isSelected());
+		view.getDataObject().setReferenceName(view.getEpartnerReferenceField().getText());
+		view.getDataObject().setFileName(view.getEpartnerGoalFileField().getText());
 
 		updateEpartnerTable();
 
