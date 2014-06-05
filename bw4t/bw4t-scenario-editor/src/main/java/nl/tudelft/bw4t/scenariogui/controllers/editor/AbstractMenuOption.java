@@ -145,6 +145,14 @@ public abstract class AbstractMenuOption implements ActionListener {
 	public void saveXMLFile(String path) throws JAXBException,
 			FileNotFoundException {
 		BW4TClientConfig configuration = getController().getMainView().getMainPanel().getClientConfig();
+
+		configuration.setClientIp(getController().getMainView().getMainPanel().getConfigurationPanel().getClientIP());
+		configuration.setClientPort(getController().getMainView().getMainPanel().getConfigurationPanel().getClientPort());
+		configuration.setServerIp(getController().getMainView().getMainPanel().getConfigurationPanel().getServerIP());
+		configuration.setServerPort(getController().getMainView().getMainPanel().getConfigurationPanel().getServerPort());
+		configuration.setLaunchGui(getController().getMainView().getMainPanel().getConfigurationPanel().getGUIYesCheckbox().getState());
+		configuration.setMapFile(getController().getMainView().getMainPanel().getConfigurationPanel().getMapFile());
+		
 		configuration.setFileLocation(path);
 		configuration.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
 
