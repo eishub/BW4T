@@ -116,6 +116,7 @@ public class MenuBarTest {
     public void testOpenButton() throws FileNotFoundException, JAXBException {
         // Setup the behaviour
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
+        when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.getSelectedFile()).thenReturn(new File(FILE_OPEN_PATH));
 
         editor.getTopMenuBar().getMenuItemFileOpen().doClick();
@@ -144,6 +145,7 @@ public class MenuBarTest {
 
         // Setup the behaviour
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
+        when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.getSelectedFile()).thenReturn(new File(FILE_SAVE_PATH)).thenReturn(new File(FILE_OPEN_PATH));
 
         // Set the controllers to mock yes.
@@ -173,7 +175,7 @@ public class MenuBarTest {
                 .showConfirmDialog((Component) any(), anyObject(), anyString(), anyInt(), anyInt());
         // And the file dialog  for saving and opening
         verify(filechooser, times(1)).showOpenDialog((Component) any());
-        verify(filechooser, times(1)).showSaveDialog((Component) any());
+        verify(filechooser, times(1)).showDialog((Component) any(), (String) any());
 
     }
 
@@ -312,6 +314,7 @@ public class MenuBarTest {
     public void testExitSaveChanges() {
         /* Mock the file chooser for saving */
         when(filechooser.showSaveDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
+        when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.getSelectedFile()).thenReturn(new File(FILE_SAVE_PATH));
 
         /* Remove the old controller, recreate the new one using the mocked editor and
@@ -409,6 +412,7 @@ public class MenuBarTest {
     public void testNewChangesSave() {
         /* Mock the file chooser for saving */
         when(filechooser.showSaveDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
+        when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.getSelectedFile()).thenReturn(new File(FILE_SAVE_PATH));
 
         /* Remove the old controller, recreate the new one using the mocked editor and
@@ -449,6 +453,7 @@ public class MenuBarTest {
     public void testSaveAs() {
         /* Mock the file chooser for saving */
         when(filechooser.showSaveDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
+        when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.getSelectedFile()).thenReturn(new File(FILE_SAVE_PATH));
 
         ActionListener[] listeners = editor.getTopMenuBar().getMenuItemFileSaveAs().getActionListeners();
@@ -457,7 +462,7 @@ public class MenuBarTest {
 
         editor.getTopMenuBar().getMenuItemFileSaveAs().doClick();
 
-        verify(filechooser, times(1)).showSaveDialog((Component) any());
+        verify(filechooser, times(1)).showDialog((Component) any(), (String) any());
         verify(filechooser, times(1)).getSelectedFile();
     }
 
@@ -470,6 +475,7 @@ public class MenuBarTest {
     public void testExportButtonYes() throws IOException, JAXBException {
         // Setup the behaviour
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
+        when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.getSelectedFile()).thenReturn(new File(FILE_EXPORT_PATH));
 
         new File(FILE_EXPORT_PATH).mkdir();
@@ -494,6 +500,8 @@ public class MenuBarTest {
     public void testExportButtonNo() throws IOException, JAXBException {
         // Setup the behaviour
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.CANCEL_OPTION);
+        when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
+        when(filechooser.getSelectedFile()).thenReturn(new File(FILE_EXPORT_PATH));
 
         new File(FILE_EXPORT_PATH).mkdir();
 

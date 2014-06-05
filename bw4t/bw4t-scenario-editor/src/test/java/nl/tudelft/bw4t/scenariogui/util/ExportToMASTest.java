@@ -22,44 +22,15 @@ import static org.junit.Assert.assertTrue;
  */
 public class ExportToMASTest {
 
-    /**
-     * Root for testing files
-     */
     private static final String FILE_ROOT = System.getProperty("user.dir");
-
-    /**
-     * The BW4T Configuration used for thisd test.
-     */
     private static final String CONFIG_PATH = FILE_ROOT + "/src/test/resources/export.xml";
-
-    /**
-     * The export directory
-     */
     private static final String EXPORT_DIR = FILE_ROOT + "/src/test/resources/export/";
-    /**
-     * The directory which holds the agent files
-     */
     private static final String AGENT_DIR = EXPORT_DIR + "agents/";
-    /**
-     * The GOAL file for the agent.
-     */
     private static final String AGENT_GOAL_FILE = FILE_ROOT + "/src/test/resources/robot.goal";
-    /**
-     * The location of the GOAL file in the working directory.
-     */
     private static final String AGENT_GOAL_FILE_WORKING = FILE_ROOT + "/robot.goal";
-    /**
-     * The MAS2G filename
-     */
-    private static final String MAS2G = "bw4t.mas2g";
-    /**
-     * The XML source name
-     */
-    private static final String XML_SRC = "source.xml";
-    /**
-     * The goal files as defined in the test xml.
-     * Only robot.goal because the other files are not generated anymore.
-     */
+    private static final String CONFIG_NAME = "testname";
+    private static final String MAS2G = CONFIG_NAME + ".mas2g";
+    private static final String XML_SRC = CONFIG_NAME + ".xml";
     private static final String[] GOAL_FILES = {"robot.goal"};
 
     /**
@@ -88,7 +59,7 @@ public class ExportToMASTest {
         FileUtils.copyFile(new File(AGENT_GOAL_FILE), new File(AGENT_GOAL_FILE_WORKING));
 
         // The actual export.
-        ExportToMAS.export(EXPORT_DIR, configuration);
+        ExportToMAS.export(EXPORT_DIR, configuration, CONFIG_NAME);
     }
 
     @After
