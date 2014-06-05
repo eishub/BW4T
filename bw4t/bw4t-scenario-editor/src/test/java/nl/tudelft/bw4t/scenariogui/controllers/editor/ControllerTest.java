@@ -2,6 +2,7 @@ package nl.tudelft.bw4t.scenariogui.controllers.editor;
 
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
@@ -52,7 +53,9 @@ public class ControllerTest {
      * save location is known).
      */
     @Test
-    public final void testSaveAfterHavingSavedBefore() {
+    public final void testSaveAfterHavingSavedBefore() throws IOException {
+        // Create the file so that the check if the file exists doesn't get triggered.
+        new File(FILE_PATH).createNewFile();
         // set the last file location, so the quick save is possible
         getMenu().setLastFileLocation(FILE_PATH);
         // press save (open dialogue)

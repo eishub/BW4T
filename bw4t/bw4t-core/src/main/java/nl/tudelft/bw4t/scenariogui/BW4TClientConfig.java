@@ -22,9 +22,7 @@ import nl.tudelft.bw4t.util.XMLManager;
  */
 @XmlRootElement
 public class BW4TClientConfig {
-	/**
-	 * The file in which the configuration in this class will be stored.
-	 */
+
 	private String outputFile;
 
 	private String clientIp = "";
