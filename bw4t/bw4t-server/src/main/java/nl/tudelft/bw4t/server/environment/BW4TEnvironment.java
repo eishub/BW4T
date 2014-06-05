@@ -158,7 +158,9 @@ public class BW4TEnvironment extends AbstractEnvironment {
         	
         	if (this.getEntity(entity) instanceof RobotEntity) {
         		RobotEntity rEntity = (RobotEntity) this.getEntity(entity);
-        		rEntity.getRobotObject().getAgentRecord().logSummary(); 
+        		if(!this.getFreeEntities().contains(entity)){
+            		rEntity.getRobotObject().getAgentRecord().logSummary();
+            	}
         	}
            
         	try {
