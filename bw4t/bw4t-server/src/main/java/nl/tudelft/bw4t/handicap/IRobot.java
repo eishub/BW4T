@@ -306,6 +306,12 @@ public interface IRobot {
 	double getSpeedMod();
 	
 	/**
+	 * @param speedMod
+	 * changes the speed modifier of the robot.
+	 */
+	void setSpeedMod(double speedMod);
+	
+	/**
 	 * @return
 	 * whether the robot is controlled by a human agent (is human, essentially)
 	 */

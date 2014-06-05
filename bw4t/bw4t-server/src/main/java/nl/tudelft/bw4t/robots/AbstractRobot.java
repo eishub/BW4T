@@ -57,14 +57,17 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     /** The distance which it can reach with its arm to pick up a block. */
     public static final double ARM_DISTANCE = 1;
     
-    /** The name of the robot */
+    /** The name of the robot. */
     private final String name;
 
-    /** The width and height of the robot */
+    /** The width and height of the robot. */
 	private int size = 2;
+	
+	/** The speed modifier of the robot, default being 1. */
+    private double speedMod = 1;
 
 	/** The max. amount of blocks a robot can hold, default is 1. */
-	private int grippercap = 3;
+	private int grippercap = 1;
 
 	/**
 	 * a robot has a battery a battery has a power value of how much the capacity should increment or decrement.
@@ -381,7 +384,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
                 stopRobot();
             }
             else {
-                double movingDistance = Math.min(distance, MAX_MOVE_DISTANCE);
+                double movingDistance = Math.min(distance, MAX_MOVE_DISTANCE * speedMod);
 
                 // Angle at which to move
                 double angle = SpatialMath.calcAngleFor2DMovement(space, getLocation(), targetLocation);
@@ -522,7 +525,12 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 
 	@Override
 	public double getSpeedMod() {
-		return 1;
+		return speedMod;
+	}
+	
+	@Override
+	public void setSpeedMod(double speedMod) {
+		this.speedMod = speedMod;
 	}
 
 	@Override
