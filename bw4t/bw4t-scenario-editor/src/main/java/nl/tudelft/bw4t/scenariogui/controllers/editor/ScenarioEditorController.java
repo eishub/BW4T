@@ -1,5 +1,7 @@
 package nl.tudelft.bw4t.scenariogui.controllers.editor;
 
+import javax.swing.JOptionPane;
+
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 
@@ -142,6 +144,45 @@ public class ScenarioEditorController {
     public final BW4TClientConfig getModel() {
     	return model;
     }
+
+    /**
+     * Checks if the configuration has been changed.
+     * @return returns true if either the configuration, the bot list of the epartners list has been changed.
+     */
+    public boolean hasConfigBeenModified() {
+        boolean configurationEqual = getMainView().getMainPanel().getConfigurationPanel().getOldValues()
+                .equals(getMainView().getMainPanel().getConfigurationPanel().getCurrentValues());
+        boolean botsEqual = getModel().compareBotConfigs(getModel().getOldBots());
+        boolean epartnersEqual= getModel().compareEpartnerConfigs(model.getOldEpartners());
+
+        return !(configurationEqual && botsEqual && epartnersEqual);
+    }
+
+    /**
+     * Ask the user if (s)he wishes to save the scenario.
+     * @return True if the user wishes to save the scenario.
+     */
+    public boolean promptUserToSave() {
+        // Check if user wants to save current configuration
+        int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
+                null, ScenarioEditorController.CONFIRM_SAVE_TXT, "",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        return response == JOptionPane.YES_OPTION;
+    }
+
+    /**
+     * Ask the user if (s)he wishes to quit the program.
+     * @return True if the user wishes to quit.
+     */
+    public boolean promptUserToQuit() {
+        int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
+                null, "Are you sure you want to exit the program?", "",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+       return response == JOptionPane.YES_OPTION;
+    }
+
 }
 
 
