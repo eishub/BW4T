@@ -543,7 +543,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
     private Point2D getNextBotSpawnPoint() {
         List<Entity> ents = getMap().getEntities();
         Point2D p = ents.get(nextBotSpawnIndex++).getPosition().asPoint2D();
-        if (nextBotSpawnIndex  > ents.size()) {
+        if (nextBotSpawnIndex  >= ents.size()) {
             nextBotSpawnIndex = 0;
         }
         return p;

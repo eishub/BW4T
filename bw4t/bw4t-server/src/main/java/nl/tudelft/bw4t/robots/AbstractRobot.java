@@ -100,6 +100,8 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
      * true if max 1 bot in a zone.
      */
     private boolean oneBotPerZone;
+    
+    private IRobot topMostHandicap = this;
 
     /**
      * Creates a new robot.
@@ -134,6 +136,10 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         this.holding = new ArrayList<Block>(grippercap);
         this.handicapsList = new ArrayList<String>();
     }
+
+	public void setTopMostHandicap(IRobot topMostHandicap) {
+		this.topMostHandicap = topMostHandicap;
+	}
 
 	@Override
 	public String getName() {
@@ -202,6 +208,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     public boolean canPickUp(BoundedMoveableObject obj) {
         if(obj instanceof Block) {
             Block b = (Block) obj;
+            LOGGER.info("gripcap" + grippercap);
             return (distanceTo(obj.getLocation()) <= ARM_DISTANCE) && b.isFree() && (holding.size() < grippercap);
         }
         return false;
@@ -212,6 +219,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         holding.add(b);
         b.setHeldBy(this);
         b.removeFromContext();
+        LOGGER.info("blocks held: " + holding.size());
     }
 
     @Override
@@ -291,7 +299,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         MoveType result = MoveType.ENTERING_FREESPACE;
 
         for (Zone endzone : endzones) {
-            result = result.merge(checkZoneAccess(startzone, endzone, door));
+            result = result.merge(topMostHandicap.checkZoneAccess(startzone, endzone, door));
         }
         return result;
 
@@ -402,7 +410,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		                 * The robot's battery discharges when it moves.
 		                 */
 		                this.battery.discharge();
-		                LOGGER.info("current battery " + battery.getCurrentCapacity());
 		            } catch (SpatialException e) {
 		                collided = true;
 		                stopRobot();
@@ -410,7 +417,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		        }
 		    }
     	} else {
-    		LOGGER.info("move, current battery: " + battery.getCurrentCapacity());
     		stopRobot();
     	}
     }
