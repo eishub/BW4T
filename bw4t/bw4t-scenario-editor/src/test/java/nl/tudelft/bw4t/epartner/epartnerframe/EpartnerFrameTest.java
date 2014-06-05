@@ -11,6 +11,7 @@ import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditor;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
+import nl.tudelft.bw4t.scenariogui.epartner.controller.EpartnerController;
 import nl.tudelft.bw4t.scenariogui.epartner.gui.EpartnerFrame;
 import nl.tudelft.bw4t.scenariogui.panel.gui.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.panel.gui.EntityPanel;
@@ -23,10 +24,7 @@ public class EpartnerFrameTest {
 	
 	@Before
 	public final void setupEpartnerFrame() {
-        EntityPanel entityPanel = new EntityPanel();
-        entityPanel.getEPartnerConfigs().add(new EPartnerConfig());
-        MainPanel parent = new MainPanel(new ConfigurationPanel(), entityPanel);
-        frame = new EpartnerFrame(parent, 0);
+        frame = new EpartnerFrame(new EpartnerController(new EPartnerConfig()));
         spyframe= spy(frame);
 	}
 	
@@ -37,14 +35,7 @@ public class EpartnerFrameTest {
 	
 	@Test
 	public final void testInititalSetup() {
-		assertFalse(spyframe.getLeftAloneCheckbox().isSelected());
-		assertFalse(spyframe.getGPSCheckbox().isSelected());
-	}
-		
-	@Test
-	public final void testResetButton() {
-		spyframe.getResetButton().doClick();
-		assertFalse(spyframe.getLeftAloneCheckbox().isSelected());
+		assertFalse(spyframe.getForgetMeNot());
 		assertFalse(spyframe.getGPSCheckbox().isSelected());
 	}
 }

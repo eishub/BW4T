@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.epartner.controller.EpartnerController;
 import nl.tudelft.bw4t.scenariogui.epartner.gui.EpartnerFrame;
 import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
 
@@ -45,7 +46,7 @@ class ModifyEPartner implements ActionListener {
         } 
         else {
         	String data = (String) view.getEntityPanel().getEPartnerTable().getModel().getValueAt(row, 0);
-            new EpartnerFrame(view, row);
+            new EpartnerFrame(new EpartnerController(view, row));
         }
     }
 }
