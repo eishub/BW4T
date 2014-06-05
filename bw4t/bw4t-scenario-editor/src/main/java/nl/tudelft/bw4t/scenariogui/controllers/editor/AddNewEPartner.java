@@ -47,6 +47,8 @@ class AddNewEPartner implements ActionListener {
 		Object[] newEPartnerObject = {"E-partner " + eCount, 1 };
 		EPartnerConfig config = new EPartnerConfig();
 		config.setEpartnerName("E-Partner " + eCount);
+        config.setFileName(EPartnerConfig.DEFAULT_GOAL_FILENAME);
+        config.setReferenceName(EPartnerConfig.DEFAULT_GOAL_FILENAME_REFERENCE);
 		
 		model.addEpartner(config);
 	    view.getEntityPanel().getEPartnerTableModel().addRow(newEPartnerObject);

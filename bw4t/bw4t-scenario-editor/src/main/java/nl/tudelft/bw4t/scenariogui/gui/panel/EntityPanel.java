@@ -25,6 +25,7 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import nl.tudelft.bw4t.agent.EntityType;
 import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
 
 /**
@@ -32,7 +33,12 @@ import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
  * of bots and a list of e-partners and the actions that are possible to edit
  * bots and e-partners.
  * <p>
+<<<<<<< HEAD
  * 
+=======
+ *
+ * @author Katia Asmoredjo
+>>>>>>> f850462ee158d3cdfcc5c81ca1befbededfa3d1d
  * @version 0.1
  * @since 12-05-2014
  */
@@ -207,7 +213,7 @@ public class EntityPanel extends JPanel {
 		botTable = new JTable();
 		botTable.getTableHeader().setReorderingAllowed(false);
 
-		botList = new EntityTableModel();
+		botList = new EntityTableModel(EntityType.AGENT);
 
 		botTable.setModel(botList);
 		botList.addColumn("Bot");
@@ -225,8 +231,8 @@ public class EntityPanel extends JPanel {
 	 */
 	public void setUpControllerColumn() {
 		JComboBox<String> controllers = new JComboBox<String>();
-		controllers.addItem("Agent");
-		controllers.addItem("Human");
+		controllers.addItem(EntityType.AGENT.toString());
+		controllers.addItem(EntityType.HUMAN.toString());
 		botTable.getColumnModel().getColumn(1)
 				.setCellEditor(new DefaultCellEditor(controllers));
 
@@ -284,7 +290,7 @@ public class EntityPanel extends JPanel {
 
 		ePartnerTable = new JTable();
 		ePartnerTable.getTableHeader().setReorderingAllowed(false);
-		epartnerList = new EntityTableModel();
+		epartnerList = new EntityTableModel(EntityType.EPARTNER);
 
 		ePartnerTable.setModel(epartnerList);
 		epartnerList.addColumn("E-partner");
@@ -312,7 +318,7 @@ public class EntityPanel extends JPanel {
 
 	/**
 	 * Returns the table with the list of bots.
-	 * 
+	 *
 	 * @return The table that contains the bots.
 	 */
 	public final JTable getBotTable() {
@@ -321,7 +327,7 @@ public class EntityPanel extends JPanel {
 
 	/**
 	 * Returns the table model with the list of bots.
-	 * 
+	 *
 	 * @return The table model that contains the bots.
 	 */
 	public final DefaultTableModel getBotTableModel() {
@@ -330,7 +336,7 @@ public class EntityPanel extends JPanel {
 
 	/**
 	 * Returns the table with the list of E-partners.
-	 * 
+	 *
 	 * @return The table that contains the E-partners.
 	 */
 	public final JTable getEPartnerTable() {
@@ -339,7 +345,7 @@ public class EntityPanel extends JPanel {
 
 	/**
 	 * Returns the table with the list of E-partners.
-	 * 
+	 *
 	 * @return The table that contains the E-partners.
 	 */
 	public final DefaultTableModel getEPartnerTableModel() {
@@ -348,7 +354,7 @@ public class EntityPanel extends JPanel {
 
 	/**
 	 * Returns the "arrow" button.
-	 * 
+	 *
 	 * @return The "arrow" button.
 	 */
 	public JButton getDropDownButton() {
@@ -356,9 +362,37 @@ public class EntityPanel extends JPanel {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * Updates the bot count on the EntityPanel.
 	 * 
 	 * @param count The total bot count.
+=======
+	 * Returns the amount of bots.
+	 *
+	 * @return The amount of bots.
+	 */
+	public final int getBotCount() {
+		int numBots = 0;
+
+		for (int i = 0; i < botList.getRowCount(); i++) {
+			numBots += Integer.valueOf(botList.getValueAt(i, 2).toString());
+		}
+		return numBots;
+	}
+
+	/**
+	 * Updates the bot count on the EntityPanel.
+	 */
+	public final void updateBotCount() {
+		Integer bots = getBotCount();
+		botCountField.setText(bots.toString());
+	}
+
+	/**
+	 * Returns the amount of epartners.
+	 *
+	 * @return The amount of epartners.
+>>>>>>> f850462ee158d3cdfcc5c81ca1befbededfa3d1d
 	 */
 	public final void updateBotCount(Integer count) {
 		botCountField.setText(count.toString());
@@ -375,7 +409,7 @@ public class EntityPanel extends JPanel {
 
 	/**
 	 * Returns the button to create a new E-partner.
-	 * 
+	 *
 	 * @return The button to create a new E-partner.
 	 */
 	public JButton getNewEPartnerButton() {
@@ -384,7 +418,7 @@ public class EntityPanel extends JPanel {
 
 	/**
 	 * Returns the button to delete an E-partner.
-	 * 
+	 *
 	 * @return The button to delete an E-partner.
 	 */
 	public JButton getDeleteEPartnerButton() {
@@ -393,7 +427,7 @@ public class EntityPanel extends JPanel {
 
 	/**
 	 * Returns the button to modify an E-partner.
-	 * 
+	 *
 	 * @return The button to modify an E-partner.
 	 */
 	public JButton getModifyEPartnerButton() {
@@ -402,7 +436,7 @@ public class EntityPanel extends JPanel {
 
 	/**
 	 * Returns the button to add a bot.
-	 * 
+	 *
 	 * @return The add bot button.
 	 */
 	public JButton getNewBotButton() {
@@ -411,7 +445,7 @@ public class EntityPanel extends JPanel {
 
 	/**
 	 * Returns the button to modify a bot.
-	 * 
+	 *
 	 * @return The modify bot button.
 	 */
 	public JButton getModifyBotButton() {
@@ -420,7 +454,7 @@ public class EntityPanel extends JPanel {
 
 	/**
 	 * Returns the button to delete a bot.
-	 * 
+	 *
 	 * @return The delete bot button.
 	 */
 	public JButton getDeleteBotButton() {
@@ -429,16 +463,16 @@ public class EntityPanel extends JPanel {
 
 	/**
 	 * Returns the selected row in the bot table.
-	 * 
+	 *
 	 * @return The selected row.
 	 */
-	public final int getSelectedBotRow() {
+	public int getSelectedBotRow() {
 		return botTable.getSelectedRow();
 	}
 
 	/**
 	 * Returns the selected row in the E-partner table.
-	 * 
+	 *
 	 * @return The selected row.
 	 */
 	public final int getSelectedEPartnerRow() {
@@ -447,7 +481,7 @@ public class EntityPanel extends JPanel {
 
 	/**
 	 * Returns if changes has been made to the default configuration.
-	 * 
+	 *
 	 * @return whether changes have been made.
 	 */
 	public final boolean isDefault() {

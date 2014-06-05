@@ -7,7 +7,7 @@ import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.doors.Door;
-import nl.tudelft.bw4t.map.view.Entity;
+import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.robots.AbstractRobot;
 import nl.tudelft.bw4t.robots.AgentRecord;
 import nl.tudelft.bw4t.robots.Battery;
@@ -69,7 +69,7 @@ public interface IRobot {
      * @return 
      * true if the block is within reach and if the bot isn't holding a block already
      */
-	boolean canPickUp(Block b);
+	boolean canPickUp(BoundedMoveableObject b);
 	
     /**
      * Pick up a block
@@ -232,7 +232,7 @@ public interface IRobot {
 	 * @return
 	 * translates the robot object to a map entity which can be drawn by the map renderer
 	 */
-	Entity getView();
+	ViewEntity getView();
 	
     /**
      * @return 
@@ -306,6 +306,12 @@ public interface IRobot {
 	double getSpeedMod();
 	
 	/**
+	 * @param speedMod
+	 * changes the speed modifier of the robot.
+	 */
+	void setSpeedMod(double speedMod);
+	
+	/**
 	 * @return
 	 * whether the robot is controlled by a human agent (is human, essentially)
 	 */
@@ -324,15 +330,6 @@ public interface IRobot {
 	 * only used if the robot has a Human wrapped around it
 	 */
 	boolean isHoldingEPartner();
-	
-	/**
-	 * @param eP
-	 * the e-Partner the human could pick up
-	 * @return
-	 * true if the human is holding e-Partner eP
-	 * only used if the robot has a Human wrapped around it
-	 */
-	boolean canPickUpEPartner(EPartner eP);
 	
 	/**
 	 * @param eP
@@ -385,7 +382,7 @@ public interface IRobot {
      * @return
      * the distance in question
      */
-    double distanceTo(Block b);
+    double distanceTo(BoundedMoveableObject b);
 
     /**
      * get the {@link NavigatingRobot} at the head of the chain.

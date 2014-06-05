@@ -26,7 +26,11 @@ class EpartnerResetButton implements ActionListener {
      * @param ae The action event triggering this method.
      */
     public void actionPerformed(ActionEvent ae) {
-        view.getLeftAloneCheckbox().setSelected(false);
-        view.getGPSCheckbox().setSelected(false);
+    	view.getEpartnerName().setText(view.getDataObject().getEpartnerName());
+    	view.getEpartnerAmount().setText(""+ view.getDataObject().getEpartnerAmount());
+    	view.getGPSCheckbox().setSelected(view.getDataObject().isGps());
+    	view.getForgetCheckbox().setSelected(view.getDataObject().isForgetMeNot());
+    	view.getEpartnerReferenceField().setText(view.getDataObject().getReferenceName());
+    	view.getEpartnerGoalFileField().setText(view.getDataObject().getFileName());
     }
 }

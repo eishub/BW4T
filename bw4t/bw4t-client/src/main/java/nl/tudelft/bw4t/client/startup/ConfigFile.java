@@ -76,8 +76,12 @@ public class ConfigFile {
      * Whether an init configuration file has been read.
      * @return Whether an init configuration file has been read.
      */
-    private static boolean hasReadInitFile() {
+    public static boolean hasReadInitFile() {
         return config != null;
+    }
+
+    public static BW4TClientConfig getConfig() {
+        return config;
     }
 
 }

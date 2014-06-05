@@ -13,8 +13,10 @@ import java.util.Set;
 
 import nl.tudelft.bw4t.client.environment.EntityNotifiers;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.client.startup.ConfigFile;
 import nl.tudelft.bw4t.client.startup.InitParam;
 import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.server.BW4TServerActions;
 import nl.tudelft.bw4t.server.BW4TServerHiddenActions;
 
@@ -157,11 +159,18 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
      * @throws RemoteException
      */
     public void register() throws RemoteException {
-        int agentCountInt = Integer.parseInt(InitParam.AGENTCOUNT.getValue());
-        int humanCountInt = Integer.parseInt(InitParam.HUMANCOUNT.getValue());
+        if (ConfigFile.hasReadInitFile()) {
+            BW4TClientConfig conf = ConfigFile.getConfig();
+            
+            LOGGER.info(String.format("Requesting %d robots and %d e-partners.", conf.countBots(), conf.countEpartners()));
+            server.registerClient(this, conf.getBots(), conf.getEpartners());
+        } else {
+            int agentCountInt = Integer.parseInt(InitParam.AGENTCOUNT.getValue());
+            int humanCountInt = Integer.parseInt(InitParam.HUMANCOUNT.getValue());
 
-        LOGGER.info("Requesting " + agentCountInt + " automated agent(s) and " + humanCountInt + " human agent(s).");
-        server.registerClient(this, agentCountInt, humanCountInt);
+            LOGGER.info("Requesting " + agentCountInt + " automated agent(s) and " + humanCountInt + " human agent(s).");
+            server.registerClient(this, agentCountInt, humanCountInt);
+        }
     }
 
     /**
@@ -192,24 +201,6 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
     public Percept performEntityAction(String entity, Action action) throws RemoteException {
         LOGGER.debug("Entity " + entity + " performing action: " + action.toProlog());
         return server.performEntityAction(entity, action);
-    }
-
-    /**
-     * @param serverIP
-     *            , the ip address of the server
-     * @param serverPort
-     *            , the port where the server is listening
-     * @param expectedCount
-     *            , the amount of entities the client wants to receive
-     * @throws RemoteException
-     *             if an exception occurs during the execution of a remote object call
-     * @throws MalformedURLException
-     *             if the given url could not be parsed
-     * @throws NotBoundException
-     *             if the server was not bound at the given address
-     */
-    protected void connectToServer(int agentCount, int humanCount) throws RemoteException, MalformedURLException,
-            NotBoundException {
     }
 
     /**

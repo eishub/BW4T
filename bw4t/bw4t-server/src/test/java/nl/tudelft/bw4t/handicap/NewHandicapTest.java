@@ -7,7 +7,6 @@ import nl.tudelft.bw4t.handicap.AbstractRobotDecorator;
 import nl.tudelft.bw4t.handicap.ColorBlindHandicap;
 import nl.tudelft.bw4t.handicap.GripperHandicap;
 import nl.tudelft.bw4t.handicap.IRobot;
-import nl.tudelft.bw4t.handicap.MoveSpeedHandicap;
 import nl.tudelft.bw4t.handicap.SizeOverloadHandicap;
 import nl.tudelft.bw4t.robots.NavigatingRobot;
 import nl.tudelft.bw4t.zone.DropZone;
@@ -117,19 +116,6 @@ public class NewHandicapTest {
     }
     
     /**
-     * - the MoveSpeedHandicap was nicely added to the Handicaps List;
-     * - the robot's speed mod is 1.1.
-     */
-    @Test
-    public void testMoveSpeedHandicap() {
-    	IRobot r = new MoveSpeedHandicap(new NavigatingRobot("", space, context, true, 1), 1.1);
-    	
-        assertTrue(r.getHandicapsList().contains("MoveSpeed"));
-        
-    	assertTrue(r.getSpeedMod() == 1.1);
-    }
-    
-    /**
      * - the SizeOverloadHandicap was nicely added to the Handicaps List;
      * - the robot's size is 5.
      */
@@ -155,12 +141,10 @@ public class NewHandicapTest {
         		new SizeOverloadHandicap(
         		new ColorBlindHandicap(
         		new GripperHandicap(
-        		new MoveSpeedHandicap(
-        	    new NavigatingRobot("", space, context, true, 1), 0.8))), 2);
+        	    new NavigatingRobot("", space, context, true, 1))), 2);
         
-        assertTrue(r.getHandicapsList().size() == 4);
+        assertTrue(r.getHandicapsList().size() == 3);
  
-        assertTrue(r.getSpeedMod() == 0.8);
         assertFalse(r.canPickUp(block));
         assertTrue(r.getGripperCapacity() == 0);
         assertTrue(r.getSize() == 2);
@@ -177,8 +161,7 @@ public class NewHandicapTest {
         		new SizeOverloadHandicap(
         		new ColorBlindHandicap(
         		new GripperHandicap(
-        		new MoveSpeedHandicap(
-        	    new NavigatingRobot("", space, context, true, 1), 1.0))), 3);
+        	    new NavigatingRobot("", space, context, true, 1))), 3);
         
         assertTrue(r instanceof IRobot);
         assertTrue(r instanceof AbstractRobotDecorator);

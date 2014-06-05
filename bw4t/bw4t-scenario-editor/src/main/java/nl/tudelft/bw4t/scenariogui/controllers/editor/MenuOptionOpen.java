@@ -68,6 +68,8 @@ class MenuOptionOpen extends AbstractMenuOption {
 				saveFile();
 				super.getController().getMainView().getMainPanel()
 						.getConfigurationPanel().updateOldValues();
+				super.getController().getModel().updateBotConfigs();
+				super.getController().getModel().updateEpartnerConfigs();
 			}
 		}
 
@@ -94,7 +96,9 @@ class MenuOptionOpen extends AbstractMenuOption {
 				// clear bots/epartners from the previous config
 				resetBotTable(entityPanel);
 				resetEpartnerTable(entityPanel);
+				
 				super.getModel().getBots().clear();
+                super.getModel().getEpartners().clear();
 
 				// Fill the bot panel
 				int botRows = configuration.getBots().size();
@@ -133,6 +137,7 @@ class MenuOptionOpen extends AbstractMenuOption {
 			// saved file won't get
 			// overwritten when the new config is saved.
 			super.getMenuView().setLastFileLocation(openedFile);
+            getController().getMainView().setWindowTitle(file.getName());
 		}
 		super.getController().getMainView().getMainPanel()
 				.getConfigurationPanel().updateOldValues();

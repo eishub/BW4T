@@ -7,7 +7,7 @@ import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.doors.Door;
-import nl.tudelft.bw4t.map.view.Entity;
+import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.robots.AbstractRobot;
 import nl.tudelft.bw4t.robots.AgentRecord;
 import nl.tudelft.bw4t.robots.Battery;
@@ -41,6 +41,7 @@ public abstract class AbstractRobotDecorator implements IRobot {
     public AbstractRobotDecorator(IRobot p) {
         parent = p;
         robot = getSuperParent();
+        robot.setTopMostHandicap(this);
     }
     
     @Override
@@ -74,7 +75,7 @@ public abstract class AbstractRobotDecorator implements IRobot {
 	}
 	
     @Override
-	public boolean canPickUp(Block b) {
+	public boolean canPickUp(BoundedMoveableObject b) {
 		return parent.canPickUp(b);
 	}
 	
@@ -174,7 +175,7 @@ public abstract class AbstractRobotDecorator implements IRobot {
 	}
 	
     @Override
-	public Entity getView() {
+	public ViewEntity getView() {
 		return parent.getView();
 	}
 	
@@ -210,7 +211,7 @@ public abstract class AbstractRobotDecorator implements IRobot {
 	
     @Override
 	public IRobot getParent() {
-		return parent.getParent();
+		return parent;
 	}
 	
     @Override
@@ -237,6 +238,11 @@ public abstract class AbstractRobotDecorator implements IRobot {
 	public double getSpeedMod() {
 		return parent.getSpeedMod();
 	}
+    
+    @Override
+    public void setSpeedMod(double speedMod) {
+    	parent.setSpeedMod(speedMod);
+    }
 	
     @Override
 	public boolean isHuman() {
@@ -251,11 +257,6 @@ public abstract class AbstractRobotDecorator implements IRobot {
     @Override
 	public boolean isHoldingEPartner() {
 		return parent.isHoldingEPartner();
-	}
-	
-    @Override
-	public boolean canPickUpEPartner(EPartner eP) {
-		return parent.canPickUpEPartner(eP);
 	}
 	
     @Override
@@ -294,7 +295,7 @@ public abstract class AbstractRobotDecorator implements IRobot {
     }
 
     @Override
-    public double distanceTo(Block b) {
+    public double distanceTo(BoundedMoveableObject b) {
         return parent.distanceTo(b);
     }
 
