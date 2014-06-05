@@ -237,6 +237,11 @@ public abstract class AbstractRobotDecorator implements IRobot {
 	public double getSpeedMod() {
 		return parent.getSpeedMod();
 	}
+    
+    @Override
+    public void setSpeedMod(double speedMod) {
+    	parent.setSpeedMod(speedMod);
+    }
 	
     @Override
 	public boolean isHuman() {

@@ -8,13 +8,13 @@
             <botBatteryDischargeRate>0</botBatteryDischargeRate>
             <botController>HUMAN</botController>
             <botGripperCapacity>1</botGripperCapacity>
-            <botName>Birna</botName>
+            <botName>Size</botName>
             <botSize>5</botSize>
             <botSpeed>100</botSpeed>
-            <colorBlindHandicap>true</colorBlindHandicap>
+            <colorBlindHandicap>false</colorBlindHandicap>
             <fileName>robot.goal</fileName>
             <gripperHandicap>false</gripperHandicap>
-            <grippers>2</grippers>
+            <grippers>1</grippers>
             <moveSpeedHandicap>false</moveSpeedHandicap>
             <referenceName>robot</referenceName>
             <sizeOverloadHandicap>true</sizeOverloadHandicap>
@@ -26,29 +26,40 @@
             <botBatteryDischargeRate>0</botBatteryDischargeRate>
             <botController>HUMAN</botController>
             <botGripperCapacity>1</botGripperCapacity>
-            <botName>Koen</botName>
-            <botSize>1</botSize>
-            <botSpeed>70</botSpeed>
+            <botName>Speed</botName>
+            <botSize>2</botSize>
+            <botSpeed>140</botSpeed>
             <colorBlindHandicap>false</colorBlindHandicap>
             <fileName>robot.goal</fileName>
-            <gripperHandicap>true</gripperHandicap>
+            <gripperHandicap>false</gripperHandicap>
             <grippers>1</grippers>
             <moveSpeedHandicap>true</moveSpeedHandicap>
             <referenceName>robot</referenceName>
-            <sizeOverloadHandicap>true</sizeOverloadHandicap>
+            <sizeOverloadHandicap>false</sizeOverloadHandicap>
+        </bot>
+        <bot>
+            <batteryEnabled>false</batteryEnabled>
+            <botAmount>1</botAmount>
+            <botBatteryCapacity>10</botBatteryCapacity>
+            <botBatteryDischargeRate>0</botBatteryDischargeRate>
+            <botController>HUMAN</botController>
+            <botGripperCapacity>1</botGripperCapacity>
+            <botName>Low speed</botName>
+            <botSize>2</botSize>
+            <botSpeed>70</botSpeed>
+            <colorBlindHandicap>false</colorBlindHandicap>
+            <fileName>robot.goal</fileName>
+            <gripperHandicap>false</gripperHandicap>
+            <grippers>1</grippers>
+            <moveSpeedHandicap>true</moveSpeedHandicap>
+            <referenceName>robot</referenceName>
+            <sizeOverloadHandicap>false</sizeOverloadHandicap>
         </bot>
     </bots>
-    <epartners>
-        <epartner>
-            <epartnerAmount>2</epartnerAmount>
-            <epartnerName>E-Partner 1</epartnerName>
-            <forgetMeNot>true</forgetMeNot>
-            <gps>true</gps>
-        </epartner>
-    </epartners>
+    <epartners/>
     <clientIp>localhost</clientIp>
     <clientPort>2000</clientPort>
-    <fileLocation>C:\Projects\Contextproject\BW4T3Redesign\BW4T Launcher\bw4t\bw4t-client\test.xml</fileLocation>
+    <fileLocation>C:\Users\Contextproject\Documents\GitHub\BW4T\bw4t\bw4t-client\test.xml</fileLocation>
     <launchGui>true</launchGui>
     <mapFile></mapFile>
     <serverIp>localhost</serverIp>

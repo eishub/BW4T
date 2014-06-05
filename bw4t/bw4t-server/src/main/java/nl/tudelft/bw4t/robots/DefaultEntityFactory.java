@@ -1,5 +1,7 @@
 package nl.tudelft.bw4t.robots;
 
+import org.apache.log4j.Logger;
+
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import nl.tudelft.bw4t.agent.EntityType;
@@ -8,7 +10,6 @@ import nl.tudelft.bw4t.handicap.ColorBlindHandicap;
 import nl.tudelft.bw4t.handicap.GripperHandicap;
 import nl.tudelft.bw4t.handicap.IRobot;
 import nl.tudelft.bw4t.handicap.Human;
-import nl.tudelft.bw4t.handicap.MoveSpeedHandicap;
 import nl.tudelft.bw4t.handicap.SizeOverloadHandicap;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
@@ -20,6 +21,8 @@ import nl.tudelft.bw4t.server.environment.Launcher;
  * @author Valentine Mairet
  */
 public class DefaultEntityFactory implements EntityFactory {
+	
+	private static final Logger LOGGER = Logger.getLogger(DefaultEntityFactory.class);
 
 	private Context<Object> context;
 	private ContinuousSpace<Object> space;
@@ -50,11 +53,11 @@ public class DefaultEntityFactory implements EntityFactory {
 			r = new GripperHandicap(r);
 		} else {
 			// if the robot does not have a gripper handicap, it grabs the value set in the UI. 
-			r.getSuperParent().setGripperCapacity(config.getBotGripperCapacity());
+			r.setGripperCapacity(config.getBotGripperCapacity());
 		}
 		if (config.getMoveSpeedHandicap()) {
 			//TODO figure out if the magic number is correct
-			r = new MoveSpeedHandicap(r, config.getBotSpeed() / 100.);
+			r.setSpeedMod((double) config.getBotSpeed() / 100.0); 
 		}
 		if (config.getSizeOverloadHandicap()) {
 			r = new SizeOverloadHandicap(r, config.getBotSize());
