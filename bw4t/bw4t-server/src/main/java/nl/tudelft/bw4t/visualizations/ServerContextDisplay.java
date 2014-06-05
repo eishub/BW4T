@@ -24,7 +24,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.xml.bind.ValidationException;
 
 import nl.tudelft.bw4t.BW4TBuilder;
 import nl.tudelft.bw4t.controller.ServerMapController;
@@ -234,7 +233,7 @@ class MapSelector extends JPanel {
         final JComboBox mapselector = new JComboBox(maps);
 
         // find the current map in the list and highlight it
-        String mapname = BW4TEnvironment.getMapLocation();
+        String mapname = BW4TEnvironment.getInstance().getMapLocation();
         mapselector.setSelectedItem(mapname);
 
         add(mapselector, BorderLayout.CENTER);

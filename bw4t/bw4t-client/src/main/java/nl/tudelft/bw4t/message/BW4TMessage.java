@@ -176,22 +176,19 @@ public class BW4TMessage {
         if (color == null) {
             if (other.color != null)
                 return false;
-        }
-        else if (!color.equals(other.color))
+        } else if (!color.equals(other.color))
             return false;
         if (number != other.number)
             return false;
         if (playerId == null) {
             if (other.playerId != null)
                 return false;
-        }
-        else if (!playerId.equals(other.playerId))
+        } else if (!playerId.equals(other.playerId))
             return false;
         if (room == null) {
             if (other.room != null)
                 return false;
-        }
-        else if (!room.equals(other.room))
+        } else if (!room.equals(other.room))
             return false;
         if (type != other.type)
             return false;

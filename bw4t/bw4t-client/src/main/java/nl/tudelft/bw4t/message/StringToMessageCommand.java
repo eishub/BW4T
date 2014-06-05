@@ -2,13 +2,13 @@ package nl.tudelft.bw4t.message;
 
 import java.util.StringTokenizer;
 
-public interface MessageCommand {
+public interface StringToMessageCommand {
 
     BW4TMessage exec(String message);
 
 }
 
-class CommandType implements MessageCommand {
+class CommandType implements StringToMessageCommand {
     MessageType type;
 
     public CommandType(MessageType type) {
@@ -21,7 +21,7 @@ class CommandType implements MessageCommand {
     }
 }
 
-class CommandRoom implements MessageCommand {
+class CommandRoom implements StringToMessageCommand {
 
     MessageType type;
 
@@ -35,7 +35,7 @@ class CommandRoom implements MessageCommand {
     }
 }
 
-class CommandColor implements MessageCommand {
+class CommandColor implements StringToMessageCommand {
 
     MessageType type;
 
@@ -49,7 +49,7 @@ class CommandColor implements MessageCommand {
     }
 }
 
-class CommandRoomColor implements MessageCommand {
+class CommandRoomColor implements StringToMessageCommand {
 
     MessageType type;
 
@@ -64,7 +64,7 @@ class CommandRoomColor implements MessageCommand {
     }
 }
 
-class CommandRoomColorPlayer implements MessageCommand {
+class CommandRoomColorPlayer implements StringToMessageCommand {
 
     String message;
     MessageType type;
@@ -82,7 +82,7 @@ class CommandRoomColorPlayer implements MessageCommand {
     }
 }
 
-class CommandRoomColorNumber implements MessageCommand {
+class CommandRoomColorNumber implements StringToMessageCommand {
 
     MessageType type;
 
@@ -97,7 +97,7 @@ class CommandRoomColorNumber implements MessageCommand {
     }
 }
 
-class CommandContainsBy implements MessageCommand {
+class CommandContainsBy implements StringToMessageCommand {
 
     MessageType type;
     String playerId;
@@ -117,7 +117,7 @@ class CommandContainsBy implements MessageCommand {
     }
 }
 
-class CommandContains implements MessageCommand {
+class CommandContains implements StringToMessageCommand {
     
     MessageType type;
 
@@ -129,9 +129,9 @@ class CommandContains implements MessageCommand {
 
         int number = MessageTranslator.findNumber(message);
         if (number == Integer.MAX_VALUE)
-            type = MessageType.roomContains;
+            type = MessageType.ROOMCONTAINS;
         else
-            type = MessageType.roomContainsAmount;
+            type = MessageType.ROOMCONTAINSAMOUNT;
 
         return new BW4TMessage(type, MessageTranslator.findRoomId(message), MessageTranslator.findColorId(message),
                 number);
