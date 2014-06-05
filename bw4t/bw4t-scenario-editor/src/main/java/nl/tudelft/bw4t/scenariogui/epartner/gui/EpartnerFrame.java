@@ -10,9 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.epartner.controller.EpartnerController;
-import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
 
 /**
  * This class creates the frame for the e-Partner GUI.
@@ -48,6 +46,7 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 
 	/**
 	 * Create the frame.
+	 * @param controller : the EpartnerController
 	 */
 	public EpartnerFrame(EpartnerController controller) {
 		setTitle("E-Partner");
@@ -64,8 +63,6 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 		contentPane.add(infoPane, BorderLayout.NORTH);
 		contentPane.add(optionPane, BorderLayout.CENTER);
 		contentPane.add(buttonPane, BorderLayout.SOUTH);
-		
-
 
 		getResetButton().addActionListener(
 				new EpartnerResetButton(this));
@@ -81,8 +78,6 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 		controller.addView(this);
 		
 		setVisible(true);
-		
-		
 	}
 
 	/** Create the panel which contains the epartner info. */
@@ -98,11 +93,8 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 	 */
 	private void createOptionPanel() {
 		optionPane.setLayout(new GridLayout(0, 1));
-
 		optionPane.add(new JLabel(""));
-		
 		optionPane.add(forgetMeNotCheckbox);
-		
 		optionPane.add(gpsCheckBox);
 		optionPane.add(new JLabel(""));
 	}
@@ -112,25 +104,24 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 	 */
 	private void createButtonPanel() {
 		buttonPane.setLayout(new GridLayout(1, 0));
-
 		buttonPane.add(applyButton);
 		buttonPane.add(resetButton);
 		buttonPane.add(cancelButton);
 	}
 
 	/**
-	 * Returns the JTextField containing the epartner name.
+	 * Returns the ePartner name.
 	 * 
-	 * @return The JTextField containing the epartner name.
+	 * @return The ePartner name.
 	 */
 	public String getEpartnerName() {
 		return this.epartnerNameField.getText();
 	}
 
 	/**
-	 * Returns the JTextField containing the epartner amount.
+	 * Returns the ePartner amount.
 	 * 
-	 * @return The JTextField containing the epartner amount.
+	 * @return The ePartner amount.
 	 */
 	public int getEpartnerAmount() {
 		return Integer.parseInt(this.epartnerAmountField.getText());
@@ -183,16 +174,18 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 	}
 
 	/**
-	 * (update frame)
+	 * Updates the EpartnerFrame with the values from the controller
 	 */
 	public void updateView() {
-		// hier moeten alle setters komen
 		epartnerNameField.setText(getEpartnerController().getEpartnerName());
 		epartnerAmountField.setText("" + getEpartnerController().getEpartnerAmount());
 		forgetMeNotCheckbox.setSelected(controller.isForgetMeNot());
 		gpsCheckBox.setSelected(getEpartnerController().isGps());
 	}
 	
+	/**
+	 * @return the ePartnerController
+	 */
 	protected EpartnerController getEpartnerController() {
 		return controller;
 	}
@@ -207,11 +200,17 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 		super.dispose();
 	}
 
+	/**
+	 * Return true if the forgetMeNot function is used.
+	 */
 	@Override
 	public boolean getForgetMeNot() {
 		return forgetMeNotCheckbox.isSelected();
 	}
 
+	/**
+	 * Return true if the GPS function is used.
+	 */
 	@Override
 	public boolean getGPS() {
 		return gpsCheckBox.isSelected();

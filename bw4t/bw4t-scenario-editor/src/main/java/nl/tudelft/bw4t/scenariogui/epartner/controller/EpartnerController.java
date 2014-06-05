@@ -3,11 +3,6 @@ package nl.tudelft.bw4t.scenariogui.epartner.controller;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JTextField;
-import javax.xml.bind.annotation.XmlElement;
-
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.epartner.gui.EPartnerViewInterface;
 import nl.tudelft.bw4t.scenariogui.epartner.gui.EpartnerFrame;
@@ -21,14 +16,21 @@ import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
 
 public class EpartnerController {
 
+	/**
+	 * Create a set with all views.
+	 */
 	private Set<EPartnerViewInterface> views = new HashSet<>();
 	
+	/**
+	 * Create an EPartnerConfig.
+	 */
 	private EPartnerConfig epConfig;
 
 
 	/**
-	 * Create the Epartner controller
-	 * 
+	 * Create the Epartner controller.
+	 * @param panel the MainPanel
+	 * @param row row
 	 */
 	public EpartnerController(MainPanel panel, int row) {
 		epConfig = panel.getEntityPanel().getEPartnerConfig(row);
@@ -37,7 +39,7 @@ public class EpartnerController {
 	/**
 	 * Create the Epartner controller 
 	 * (this one is temporary and has to be deleted when everything is MVC)
-	 * @param config
+	 * @param config : the epartner config file
 	 */
 	public EpartnerController(EPartnerConfig config) {
 		epConfig = config;
@@ -46,7 +48,7 @@ public class EpartnerController {
 	/**
 	 * Add a view to the set of views.
 	 * 
-	 * @param view: the view that is added to the set
+	 * @param view : the view that is added to the set
 	 */
 	public void addView(EPartnerViewInterface view) {
 		views.add(view);
@@ -56,7 +58,7 @@ public class EpartnerController {
 	/**
 	 * Delete a view from the set of views.
 	 * 
-	 * @param view: the view that is deleted from the set
+	 * @param view : the view that is deleted from the set
 	 */
 	public void removeView(EPartnerViewInterface view) {
 		views.remove(view);
@@ -81,33 +83,34 @@ public class EpartnerController {
 	}
 
 	/**
-	 * Returns the use of gps.
+	 * Returns true if the GPS is used.
 	 * 
-	 * @return If gps is enabled.
+	 * @return true if the GPS is used.
 	 */
 	public boolean isGps() {
 		return epConfig.isGps();
 	}
 
 	/**
-	 * ??
+	 * Returns true if the ForgetMeNot function is used.
 	 * 
-	 * @return
+	 * @return true if the ForgetMeNot function is used.
 	 */
 	public boolean isForgetMeNot() {
 		return epConfig.isForgetMeNot();
 	}
 
 	/**
+	 * Updates the epartner config file with the values from the EpartnerFrame
 	 * 
-	 * @param epf
+	 * @param epf is the Epartnerframe the values are taken from.
 	 */
 	public void updateConfig(EpartnerFrame epf) {
 		epConfig.setEpartnerName(epf.getName());
 		epConfig.setEpartnerAmount(epf.getEpartnerAmount());
 		epConfig.setGps(epf.getGPS());
 		epConfig.setForgetMeNot(epf.getForgetMeNot());
-		for(EPartnerViewInterface evi: views){
+		for (EPartnerViewInterface evi: views) {
 			evi.updateView();
 		}
 	}

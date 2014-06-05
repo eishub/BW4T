@@ -1,51 +1,46 @@
 package nl.tudelft.bw4t.scenariogui.epartner.gui;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JTextField;
-
 import nl.tudelft.bw4t.scenariogui.epartner.controller.EpartnerController;
 
 public interface EPartnerViewInterface {
 	
 	/**
-	 * 
+	 * Updates the EpartnerFrame with the values from the controller
 	 */
 	void updateView();
 	
 	/**
-	 * 
-	 * @param epc
+	 * Set the controller
+	 * @param epc 
 	 */
 	void setController(EpartnerController epc);
 	
 	/**
-	 * Returns the JTextField containing the epartner name.
+	 * Returns the ePartner name.
 	 * 
-	 * @return The JTextField containing the epartner name.
+	 * @return the ePartner name.
 	 */
-	public String getEpartnerName();
+	String getEpartnerName();
 
 	/**
-	 * Returns the JTextField containing the epartner amount.
+	 * Returns the ePartner amount.
 	 * 
-	 * @return The JTextField containing the epartner amount.
+	 * @return the ePartner amount.
 	 */
-	public int getEpartnerAmount();
+	int getEpartnerAmount();
 
 	/**
-	 * Returns the checkbox enabling or disabling warnings when the bot is left
-	 * alone.
+	 * Return true if the forgetMeNot function is used.
 	 * 
-	 * @return The checkbox.
+	 * @return true or false
 	 */
-	public boolean getForgetMeNot();
+	boolean getForgetMeNot();
 
 	/**
-	 * Returns the checkbox enabling or disabling GPS functionality.
+	 * Returns true if the GPS function is used.
 	 * 
-	 * @return The checkbox.
+	 * @return true or false
 	 */
-	public boolean getGPS();
+	boolean getGPS();
 
 }

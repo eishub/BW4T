@@ -23,7 +23,7 @@ class EpartnerApplyButton implements ActionListener {
 	}
 
 	/**
-	 * Perform the required action (save the settings).
+	 * Perform the required action 
 	 * 
 	 * @param ae
 	 *            The action event triggering this method.
