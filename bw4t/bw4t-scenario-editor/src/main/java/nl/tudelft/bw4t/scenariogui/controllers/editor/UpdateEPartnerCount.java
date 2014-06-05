@@ -19,7 +19,7 @@ public class UpdateEPartnerCount implements TableModelListener {
 	private MainPanel view;
 	private BW4TClientConfig model;
 	
-	private boolean hasShowEpartnerWarning;
+	private boolean hasShownEpartnerWarning = false;
 	
 	/**
 	 * Create an UpdateEPartnerCount event handler.
@@ -42,9 +42,15 @@ public class UpdateEPartnerCount implements TableModelListener {
 	        public void run() {
         		view.getEntityPanel().updateEPartnerCount(model.getAmountEPartner());
         		if (model.getAmountEPartner() > model.getAmountBot()) {
-        	          ScenarioEditor.getOptionPrompt().showMessageDialog(
-        	                    view,
-        	                    "Y");
+        		    if (!hasShownEpartnerWarning) {
+            		    hasShownEpartnerWarning = true;
+            		    ScenarioEditor.getOptionPrompt().showMessageDialog(
+            		            view,
+            		            "You are using more e-Partners than bots, "
+            		            + "which might not be supported by your map.");
+        		    }
+        		} else {
+        		    hasShownEpartnerWarning = false;
         		}
 	        }
 	    });
