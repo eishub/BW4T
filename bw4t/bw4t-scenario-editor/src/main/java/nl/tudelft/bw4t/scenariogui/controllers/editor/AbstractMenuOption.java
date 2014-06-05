@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
@@ -90,17 +91,13 @@ public abstract class AbstractMenuOption implements ActionListener {
 	 *            Whether or not to open a file chooser.
 	 */
 	public void saveFile(final boolean saveAs) {
-		MapSpec map = controller.getMainView().getMainPanel()
-				.getConfigurationPanel().getMapSpecifications();
-		int botCount = getModel().getAmountBot();
-		if (map.isSet() && botCount > map.getEntitiesAllowedInMap()) {
-			ScenarioEditor.getOptionPrompt().showMessageDialog(
-					view,
-					"The selected map can only hold "
-							+ map.getEntitiesAllowedInMap()
-							+ " bots. Please delete some first.");
-			return;
-		}
+        if(!validateBotCount()) {
+            return;
+        }
+
+        if(!verifyMapSelected()) {
+            return;
+        }
 
 		String path = view.getLastFileLocation();
 
@@ -142,6 +139,36 @@ public abstract class AbstractMenuOption implements ActionListener {
 		}
 	}
 
+
+    private boolean validateBotCount() {
+        MapSpec map = controller.getMainView().getMainPanel()
+                .getConfigurationPanel().getMapSpecifications();
+        int botCount = getModel().getAmountBot();
+        if (map.isSet() && botCount > map.getEntitiesAllowedInMap()) {
+            ScenarioEditor.getOptionPrompt().showMessageDialog(
+                    view,
+                    "The selected map can only hold "
+                            + map.getEntitiesAllowedInMap()
+                            + " bots. Please delete some first.");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean verifyMapSelected() {
+        String map = getController().getMainView().getMainPanel().getConfigurationPanel().getMapFile();
+        if(map.trim().isEmpty()) {
+            int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(getController().getMainView(),
+                    "Warning: No map file has been selected. Press OK to continue.",
+                    "",
+                    JOptionPane.OK_CANCEL_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
+
+            return response == JOptionPane.OK_OPTION;
+        }
+        return true;
+    }
+
 	public void saveXMLFile(String path) throws JAXBException,
 			FileNotFoundException {
 		BW4TClientConfig configuration = getController().getMainView().getMainPanel().getClientConfig();
@@ -166,6 +193,19 @@ public abstract class AbstractMenuOption implements ActionListener {
 		configuration.toXML();
 		view.setLastFileLocation(path);
 	}
+
+    /**
+     * Update the model with the new bot and epartners, and update the counts in the view.
+     */
+    public void updateModelAndView() {
+        getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
+        getModel().updateBotConfigs();
+        getController().getMainView().getMainPanel().getEntityPanel().updateEPartnerCount(
+                getModel().getAmountEPartner());
+        getModel().updateEpartnerConfigs();
+    }
+
+
 
 	/**
 	 * Returns the MenuBar

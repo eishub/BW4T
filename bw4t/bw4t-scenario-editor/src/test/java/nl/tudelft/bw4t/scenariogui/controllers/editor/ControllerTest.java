@@ -9,6 +9,7 @@ import javax.swing.JMenuItem;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
+import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -54,6 +55,7 @@ public class ControllerTest {
      */
     @Test
     public final void testSaveAfterHavingSavedBefore() throws IOException {
+        ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
         // Create the file so that the check if the file exists doesn't get triggered.
         new File(FILE_PATH).createNewFile();
         // set the last file location, so the quick save is possible
