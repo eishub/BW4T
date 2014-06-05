@@ -44,13 +44,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-/**
- * <p>
- * @author      Calvin Wong Loi Sing  
- * @author        Katia Asmoredjo
- * @version     0.1                
- * @since       21-05-2014        
- */
 public class MenuBarTest {
 
     /**

@@ -12,8 +12,6 @@ import eis.iilang.Percept;
 /**
  * ActionListener that performs the goTo action when that command is pressed in
  * the pop up menu
- * 
- * @author trens
  */
 public class GotoPositionActionListener extends ClientActionListener {
     private final Point position;

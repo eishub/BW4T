@@ -7,7 +7,6 @@ import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 
 /**
  * Handles actions of the numberOfGrippersSlider
- * @author Wendy
  */
 public class GripperSlider extends MouseAdapter {
     /**

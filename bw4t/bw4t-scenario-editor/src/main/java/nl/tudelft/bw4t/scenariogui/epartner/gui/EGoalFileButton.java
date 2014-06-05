@@ -11,9 +11,6 @@ import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 
 /**
  * Handles actions of the GoalFileButton.
- * 
- * @author Katia
- * 
  */
 public class EGoalFileButton implements ActionListener {
 	private EpartnerFrame view;

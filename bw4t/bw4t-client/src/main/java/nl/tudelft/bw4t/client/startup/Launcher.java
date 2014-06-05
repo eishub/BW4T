@@ -26,8 +26,6 @@ import eis.iilang.Parameter;
 /**
  * This class is used to startup the remote environment to interact with the
  * server
- * 
- * @author Jan Giesenberg
  */
 public final class Launcher {
 

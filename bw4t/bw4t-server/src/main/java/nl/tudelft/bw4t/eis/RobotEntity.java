@@ -50,10 +50,6 @@ import eis.iilang.Parameter;
 
 /**
  * EIS entity for a {@link AbstractRobot}.
- * 
- * @author Lennard de Rijk
- * @modified W.Pasman #2318 #2291 "lock" robot position at start of perception cycle.
- * @modified W.Pasman #2326 robots are injected into EIS only after their entity has been connected with an agent.
  */
 public class RobotEntity implements RobotEntityInt {
 

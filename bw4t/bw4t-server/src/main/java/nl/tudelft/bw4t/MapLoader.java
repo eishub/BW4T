@@ -39,12 +39,7 @@ import repast.simphony.space.continuous.SimpleCartesianAdder;
 import repast.simphony.space.continuous.StickyBorders;
 import eis.exceptions.EntityException;
 
-/**
- * @author Lennard
- * @author W.Pasman added doors 15aug2011
- * @author W.Pasman added navpoints 22aug
- * 
- */
+
 public final class MapLoader {
 
     /** Identifier used for the space projections, matched in context.xml */

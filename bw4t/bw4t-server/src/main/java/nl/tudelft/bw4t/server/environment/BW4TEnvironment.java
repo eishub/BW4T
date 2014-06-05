@@ -55,12 +55,8 @@ import eis.iilang.Percept;
  * The central environment which runs the data model and performs actions received from remote environments through the
  * server. Remote environments also poll percepts from this environment. Remote environments are notified of entity and
  * environment events also using the server.
- * <p>
+ * 
  * This is a singleton. Needed because we store the map info here.
- * 
- * @author trens
- * @modified W.Pasman #1997 #2236 #2422
- * 
  */
 public class BW4TEnvironment extends AbstractEnvironment {
 

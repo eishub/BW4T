@@ -51,11 +51,6 @@ import eis.iilang.Percept;
  * </code> to run 2 HumanGUIs. Note though that these agents will not be coupled
  * to GOAL, and will not appear to GOAL as entities. So you can not communicate
  * with them from GOAL by using the GOAL send action.
- * 
- * @author trens
- * @modified W.Pasman 8feb2012 this object is an EIS environment and therefore
- *           can not be a singleton. This has considerable implications for the
- *           design.
  */
 public class RemoteEnvironment implements EnvironmentInterfaceStandard {
     /**

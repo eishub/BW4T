@@ -18,9 +18,6 @@ import nl.tudelft.bw4t.zone.Zone;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.NdPoint;
 
-/**
- * @author Valentine Mairet & Ruben Starmans
- */
 public abstract class AbstractRobotDecorator implements IRobot {
     
     /**

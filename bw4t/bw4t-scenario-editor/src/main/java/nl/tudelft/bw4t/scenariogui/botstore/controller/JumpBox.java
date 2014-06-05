@@ -7,7 +7,6 @@ import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 
 /**
  * Handles actions of the jumpingcheckbox
- * @author Arun
  */
 class JumpBox implements ActionListener {
     /**

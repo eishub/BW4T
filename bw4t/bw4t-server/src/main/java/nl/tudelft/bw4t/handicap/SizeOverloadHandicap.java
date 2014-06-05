@@ -5,11 +5,7 @@ import nl.tudelft.bw4t.robots.MoveType;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.Room;
 import nl.tudelft.bw4t.zone.Zone;
-/**
- * 
- * @author Valentine Mairet & Ruben Starmans
- *
- */
+
 public class SizeOverloadHandicap extends AbstractRobotDecorator {
 	
 	/**

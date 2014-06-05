@@ -8,8 +8,6 @@ import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 
 /**
  * Class that represents an agent that is controlled via the BW4TRenderer
- * 
- * @author trens
  */
 public class HumanAgent extends BW4TAgent {
 

@@ -15,10 +15,6 @@ import org.junit.Test;
 /**
  * The class <code>ZoneTest</code> contains tests for the class
  * <code>{@link Zone}</code>.
- * 
- * @generatedBy CodePro at 25.05.14 16:25
- * @author 749
- * @version $Revision: 1.0 $
  */
 public class ZoneTest {
     /**

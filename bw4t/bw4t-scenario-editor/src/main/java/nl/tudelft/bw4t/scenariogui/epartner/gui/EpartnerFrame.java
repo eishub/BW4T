@@ -17,7 +17,6 @@ import nl.tudelft.bw4t.scenariogui.epartner.controller.EpartnerController;
 
 /**
  * This class creates the frame for the e-Partner GUI.
- * @author Wendy Bolier
  */
 
 public class EpartnerFrame extends JFrame implements EPartnerViewInterface {

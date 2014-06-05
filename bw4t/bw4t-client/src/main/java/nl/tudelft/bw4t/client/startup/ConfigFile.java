@@ -8,9 +8,6 @@ import nl.tudelft.bw4t.util.XMLManager;
 /**
  * Reads the config file that can be passed to the client to
  * overwrite the InitParam variables.
- * 
- * @author Nick Feddes
- *
  */
 public class ConfigFile {
     

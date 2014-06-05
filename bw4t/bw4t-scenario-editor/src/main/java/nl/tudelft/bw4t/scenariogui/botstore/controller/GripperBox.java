@@ -10,7 +10,6 @@ import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 
 /**
  * Handles actions of the gripperbox
- * @author Arun
  */
 class GripperBox implements ActionListener {
     /**

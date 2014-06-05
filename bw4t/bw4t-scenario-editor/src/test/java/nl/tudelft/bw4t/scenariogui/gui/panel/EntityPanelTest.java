@@ -22,12 +22,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 
-/**
- * <p>
- * @author        
- * @version     0.1                
- * @since       14-05-2014        
- */
 public class EntityPanelTest {
 
     /**

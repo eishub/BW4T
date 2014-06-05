@@ -8,7 +8,6 @@ import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 
 /**
  * Handles actions of the sizeslider
- * @author Arun
  */
 class SizeSlider extends MouseAdapter {
     /**

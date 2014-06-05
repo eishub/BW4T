@@ -4,8 +4,6 @@ import nl.tudelft.bw4t.blocks.Block;
 
 /**
  * Wraps around a block to pass along the color percept
- * 
- * @author Lennard de Rijk
  */
 public class BlockColor {
 

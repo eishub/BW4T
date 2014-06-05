@@ -5,9 +5,6 @@ import java.util.List;
 
 /**
  * This class stores performance information of an agent.
- * 
- * @author W.Pasman 1dec2011
- * 
  */
 public class AgentRecord {
     // name of agent

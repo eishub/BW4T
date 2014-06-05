@@ -8,8 +8,6 @@ import eis.iilang.Parameter;
 
 /**
  * Translates {@link BoundedMoveableObject} into a list of {@link Parameter}.
- * 
- * @author Lennard de Rijk
  */
 public class BoundedMovableObjectTranslator implements Java2Parameter<BoundedMoveableObject> {
 

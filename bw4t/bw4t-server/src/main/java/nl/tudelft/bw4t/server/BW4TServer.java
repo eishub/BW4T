@@ -38,9 +38,6 @@ import eis.iilang.Percept;
 /**
  * Server that allows connected client to perform actions and receive percepts from the central {@link BW4TEnvironment}
  * and notifies clients of new entities at the central {@link BW4TEnvironment}, all using RMI
- * 
- * @author trens
- * @Modified W.Pasman feb2012 added unregisterClient, and moved doc to interface.
  */
 public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenActions {
 

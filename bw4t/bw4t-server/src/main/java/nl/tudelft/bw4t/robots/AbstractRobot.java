@@ -32,8 +32,6 @@ import repast.simphony.space.continuous.NdPoint;
 
 /**
  * Represents a robot in the BW4T environment.
- * 
- * @author Lennard de Rijk
  */
 public abstract class AbstractRobot extends BoundedMoveableObject implements IRobot {
 	

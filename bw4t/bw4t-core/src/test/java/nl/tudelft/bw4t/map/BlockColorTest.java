@@ -11,18 +11,10 @@ import org.junit.Test;
 
 /**
  * The class <code>BlockColorTest</code> contains tests for the class <code>{@link BlockColor}</code>.
- *
- * @generatedBy CodePro at 25.05.14 12:11
- * @author 749
- * @version $Revision: 1.0 $
  */
 public class BlockColorTest {
     /**
      * Run the Color getColor() method test.
-     *
-     * @throws Exception
-     *
-     * @generatedBy CodePro at 25.05.14 12:11
      */
     @Test
     public void testGetColor_blue()

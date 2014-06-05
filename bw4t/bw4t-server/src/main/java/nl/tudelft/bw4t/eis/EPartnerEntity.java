@@ -44,9 +44,6 @@ import nl.tudelft.bw4t.zone.DropZone;
 import nl.tudelft.bw4t.zone.Room;
 import nl.tudelft.bw4t.zone.Zone;
 
-/**
- * @author Valentine Mairet
- */
 public class EPartnerEntity implements RobotEntityInt {
 
 	static {

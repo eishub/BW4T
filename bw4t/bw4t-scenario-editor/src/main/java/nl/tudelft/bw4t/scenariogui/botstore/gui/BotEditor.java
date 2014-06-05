@@ -12,8 +12,6 @@ import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
 
 /**
  * This class serves as frame for the BotEditorPanel
-
- * @author Arun
  */
 public class BotEditor extends JFrame {
 	

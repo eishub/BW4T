@@ -3,9 +3,6 @@ package nl.tudelft.bw4t.handicap;
 import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.blocks.Block;
 
-/**
- * @author Valentine Mairet & Ruben Starmans
- */
 public class GripperHandicap extends AbstractRobotDecorator {
 
     /**
