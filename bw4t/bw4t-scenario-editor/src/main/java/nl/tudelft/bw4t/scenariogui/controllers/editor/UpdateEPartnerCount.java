@@ -5,6 +5,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
@@ -14,8 +15,11 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  * @since 05-06-2014
  */
 public class UpdateEPartnerCount implements TableModelListener {
+    
 	private MainPanel view;
 	private BW4TClientConfig model;
+	
+	private boolean hasShowEpartnerWarning;
 	
 	/**
 	 * Create an UpdateEPartnerCount event handler.
@@ -37,6 +41,11 @@ public class UpdateEPartnerCount implements TableModelListener {
 	    SwingUtilities.invokeLater(new Runnable() {
 	        public void run() {
         		view.getEntityPanel().updateEPartnerCount(model.getAmountEPartner());
+        		if (model.getAmountEPartner() > model.getAmountBot()) {
+        	          ScenarioEditor.getOptionPrompt().showMessageDialog(
+        	                    view,
+        	                    "Y");
+        		}
 	        }
 	    });
 	}

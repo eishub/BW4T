@@ -24,7 +24,7 @@ import static org.junit.Assert.assertTrue;
  * @version     0.1                
  * @since       12-05-2014        
  */
-public class BW4TClientConfigIntegrationTest {
+public class BW4TClientConfigIntegrityTest {
 
     /** The custom config object used in this test. */
     private static BW4TClientConfig config;
