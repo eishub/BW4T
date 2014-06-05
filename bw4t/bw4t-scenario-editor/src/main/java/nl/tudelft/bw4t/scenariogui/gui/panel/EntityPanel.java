@@ -490,7 +490,7 @@ public class EntityPanel extends JPanel {
 	 *
 	 * @return The selected row.
 	 */
-	public final int getSelectedBotRow() {
+	public int getSelectedBotRow() {
 		return botTable.getSelectedRow();
 	}
 
@@ -578,6 +578,7 @@ public class EntityPanel extends JPanel {
 	/**
 	 * Compares the BotConfig lists.
 	 *
+	 * @param config the bot configurations to be compared with the current ones
 	 * @return If the BotConfigs lists are equal.
 	 */
 	public boolean compareBotConfigs(List<BotConfig> config) {
@@ -598,6 +599,7 @@ public class EntityPanel extends JPanel {
 	/**
 	 * Compares the EpartnerConfig lists.
 	 *
+	 * @param config the epartner configurations to be compared with the current ones
 	 * @return If the EpartnerConfigs lists are equal.
 	 */
 	public boolean compareEpartnerConfigs(List<EPartnerConfig> config) {

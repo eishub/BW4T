@@ -1,11 +1,17 @@
 package nl.tudelft.bw4t.scenariogui;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlElement;
 
 /**
+ * @author Valentine Mairet
+ * @author Jan Giesenberg
+ * 
  * Information about an EPartner to be created by the server.
  */
-public final class EPartnerConfig {
+public final class EPartnerConfig implements Serializable {
+	private static final long serialVersionUID = -8235429942348638859L;
 
 	public static final String DEFAULT_GOAL_FILENAME_REFERENCE = "epartner";
 

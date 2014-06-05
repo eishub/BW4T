@@ -12,7 +12,7 @@ import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.handicap.IRobot;
-import nl.tudelft.bw4t.map.view.Entity;
+import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.Corridor;
@@ -57,14 +57,17 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     /** The distance which it can reach with its arm to pick up a block. */
     public static final double ARM_DISTANCE = 1;
     
-    /** The name of the robot */
+    /** The name of the robot. */
     private final String name;
 
-    /** The width and height of the robot */
+    /** The width and height of the robot. */
 	private int size = 2;
+	
+	/** The speed modifier of the robot, default being 1. */
+    private double speedMod = 1;
 
 	/** The max. amount of blocks a robot can hold, default is 1. */
-	private int grippercap = 3;
+	private int grippercap = 1;
 
 	/**
 	 * a robot has a battery a battery has a power value of how much the capacity should increment or decrement.
@@ -97,6 +100,8 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
      * true if max 1 bot in a zone.
      */
     private boolean oneBotPerZone;
+    
+    private IRobot topMostHandicap = this;
 
     /**
      * Creates a new robot.
@@ -131,6 +136,10 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         this.holding = new ArrayList<Block>(grippercap);
         this.handicapsList = new ArrayList<String>();
     }
+
+	public void setTopMostHandicap(IRobot topMostHandicap) {
+		this.topMostHandicap = topMostHandicap;
+	}
 
 	@Override
 	public String getName() {
@@ -196,8 +205,13 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     }
 
     @Override
-    public boolean canPickUp(Block b) {
-        return (distanceTo(b.getLocation()) <= ARM_DISTANCE) && b.isFree() && (holding.size() < grippercap);
+    public boolean canPickUp(BoundedMoveableObject obj) {
+        if(obj instanceof Block) {
+            Block b = (Block) obj;
+            LOGGER.info("gripcap" + grippercap);
+            return (distanceTo(obj.getLocation()) <= ARM_DISTANCE) && b.isFree() && (holding.size() < grippercap);
+        }
+        return false;
     }
 
     @Override
@@ -205,6 +219,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         holding.add(b);
         b.setHeldBy(this);
         b.removeFromContext();
+        LOGGER.info("blocks held: " + holding.size());
     }
 
     @Override
@@ -284,7 +299,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         MoveType result = MoveType.ENTERING_FREESPACE;
 
         for (Zone endzone : endzones) {
-            result = result.merge(checkZoneAccess(startzone, endzone, door));
+            result = result.merge(topMostHandicap.checkZoneAccess(startzone, endzone, door));
         }
         return result;
 
@@ -369,37 +384,49 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     @Override
     @ScheduledMethod(start = 0, duration = 0, interval = 1)
     public synchronized void move() {
-        if (targetLocation != null) {
-            // Calculate the distance that the robot is allowed to move.
-            double distance = distanceTo(targetLocation);
-            if (distance < MIN_MOVE_DISTANCE) {
-                // we're there
-                stopRobot();
-            }
-            else {
-                double movingDistance = Math.min(distance, MAX_MOVE_DISTANCE);
-
-                // Angle at which to move
-                double angle = SpatialMath.calcAngleFor2DMovement(space, getLocation(), targetLocation);
-
-                // The displacement of the robot
-                double[] displacement = SpatialMath.getDisplacement(2, 0, movingDistance, angle);
-
-                try {
-                    // Move the robot to the new position using the displacement
-                    moveByDisplacement(displacement[0], displacement[1]);
-                    agentRecord.setStartedMoving();
-
-                    /**
-                     * The robot's battery discharges when it moves.
-                     */
-                    this.battery.discharge();
-                } catch (SpatialException e) {
-                    collided = true;
-                    stopRobot();
-                }
-            }
-        }
+    	if (battery.getCurrentCapacity() > 0) {
+		    if (targetLocation != null) {
+		        // Calculate the distance that the robot is allowed to move.
+		        double distance = distanceTo(targetLocation);
+		        if (distance < MIN_MOVE_DISTANCE) {
+		            // we're there
+		            stopRobot();
+		        }
+		        else {
+		            double movingDistance = Math.min(distance, MAX_MOVE_DISTANCE * speedMod);
+		
+		            // Angle at which to move
+		            double angle = SpatialMath.calcAngleFor2DMovement(space, getLocation(), targetLocation);
+		
+		            // The displacement of the robot
+		            double[] displacement = SpatialMath.getDisplacement(2, 0, movingDistance, angle);
+		
+		            try {
+		                // Move the robot to the new position using the displacement
+		                moveByDisplacement(displacement[0], displacement[1]);
+		                agentRecord.setStartedMoving();
+		
+		                /**
+		                 * The robot's battery discharges when it moves.
+		                 */
+		                this.battery.discharge();
+		                LOGGER.info("The current battery level is: " + this.battery.getCurrentCapacity());
+		                LOGGER.info("the robot is human: " + this.isHuman());
+		                
+		                if (topMostHandicap.isHuman() && topMostHandicap.isHoldingEPartner()) {
+		                	NdPoint location = topMostHandicap.getLocation();
+		                	topMostHandicap.getEPartner().moveTo(location.getX() + 1, location.getY() + 1);
+		                	LOGGER.info("e-Partner on the move");
+		                }
+		            } catch (SpatialException e) {
+		                collided = true;
+		                stopRobot();
+		            }
+		        }
+		    }
+    	} else {
+    		stopRobot();
+    	}
     }
 
 
@@ -449,13 +476,13 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     }
 
     @Override
-    public Entity getView() {
-        Collection<nl.tudelft.bw4t.map.view.Block> bs = new HashSet<>();
+    public ViewEntity getView() {
+        Collection<nl.tudelft.bw4t.map.view.ViewBlock> bs = new HashSet<>();
         for (Block block : holding) {
             bs.add(block.getView());
         }
         NdPoint loc = getSpace().getLocation(this);
-        return new Entity(getName(), loc.getX(), loc.getY(), bs);
+        return new ViewEntity(getId(), getName(), loc.getX(), loc.getY(), bs, getSize());
     }
     
 	@Override
@@ -518,7 +545,12 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 
 	@Override
 	public double getSpeedMod() {
-		return 1;
+		return speedMod;
+	}
+	
+	@Override
+	public void setSpeedMod(double speedMod) {
+		this.speedMod = speedMod;
 	}
 
 	@Override
@@ -537,11 +569,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	}
 
 	@Override
-	public boolean canPickUpEPartner(EPartner eP) {
-		return false;
-	}
-
-	@Override
 	public void pickUpEPartner(EPartner eP) {
 	}
 
@@ -550,7 +577,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	}
 	
 	@Override
-    public double distanceTo(Block b) {
+    public double distanceTo(BoundedMoveableObject b) {
         return super.distanceTo(b);
     }
 

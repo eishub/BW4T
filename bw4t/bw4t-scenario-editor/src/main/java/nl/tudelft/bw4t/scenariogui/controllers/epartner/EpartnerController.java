@@ -31,11 +31,12 @@ public class EpartnerController {
 		view.getApplyButton().addActionListener(
 				new EpartnerSaveButton(getMainView()));
 
-		view.getFileButton().addActionListener(
+		view.getForgetCheckbox().addActionListener(
+                new LeftAloneCheckBox(getMainView()));
+
+        view.getFileButton().addActionListener(
 				new EGoalFileButton(getMainView()));
 
-		view.getLeftAloneCheckbox().addActionListener(
-				new LeftAloneCheckBox(getMainView()));
 
 		view.getGPSCheckbox().addActionListener(new gpsCheckBox(getMainView()));
 	}

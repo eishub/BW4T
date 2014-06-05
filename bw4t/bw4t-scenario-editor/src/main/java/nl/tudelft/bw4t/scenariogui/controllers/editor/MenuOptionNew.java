@@ -1,3 +1,4 @@
+
 package nl.tudelft.bw4t.scenariogui.controllers.editor;
 
 import java.awt.event.ActionEvent;

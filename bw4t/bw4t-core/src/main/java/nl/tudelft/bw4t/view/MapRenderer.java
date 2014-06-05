@@ -16,8 +16,9 @@ import nl.tudelft.bw4t.controller.MapRenderSettings;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Door;
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.view.Block;
-import nl.tudelft.bw4t.map.view.Entity;
+import nl.tudelft.bw4t.map.view.ViewBlock;
+import nl.tudelft.bw4t.map.view.ViewEPartner;
+import nl.tudelft.bw4t.map.view.ViewEntity;
 
 public class MapRenderer extends JPanel implements MapRendererInterface {
     /**
@@ -75,6 +76,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
         drawBlocks(g2d);
         drawEntity(g2d);
         drawSequence(g2d);
+        drawEPartners(g2d);
     }
 
     /**
@@ -194,10 +196,10 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
     public void drawBlocks(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
 
-        for (Block box : getController().getVisibleBlocks()) {
+        for (ViewBlock box : getController().getVisibleBlocks()) {
             g2d.setColor(box.getColor().getColor());
             g2d.fill(set.transformCenterRectangle(new Rectangle2D.Double(box.getPosition().getX(), box.getPosition()
-                    .getY(), Block.BLOCK_SIZE, Block.BLOCK_SIZE)));
+                    .getY(), ViewBlock.BLOCK_SIZE, ViewBlock.BLOCK_SIZE)));
         }
     }
 
@@ -210,11 +212,11 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
     public void drawEntity(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
 
-        for (Entity e : getController().getVisibleEntities()) {
+        for (ViewEntity e : getController().getVisibleEntities()) {
             g2d.setColor(e.getColor());
             Point2D loc = e.getLocation();
-            g2d.fill(set.transformCenterRectangle(new Rectangle2D.Double(loc.getX(), loc.getY(), Entity.ROBOT_SIZE,
-                    Entity.ROBOT_SIZE)));
+            g2d.fill(set.transformCenterRectangle(new Rectangle2D.Double(loc.getX(), loc.getY(), e.getRobotSize(),
+                    e.getRobotSize())));
 
             if (set.isRenderEntityName()) {
                 g2d.setColor(Color.RED);
@@ -224,5 +226,22 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
                         (int) set.scale(e.getLocation().getY()) + set.getEntityNameOffset());
             }
         }
+    }
+    
+    public void drawEPartners(Graphics2D g2d) {
+    	MapRenderSettings set = getController().getRenderSettings();
+    	
+    	for (ViewEPartner eP : getController().getVisibleEPartners()) {
+    		g2d.setColor(eP.getColor());
+    		Point2D loc = eP.getLocation();
+    		int x = (int) set.scale(loc.getX());
+    		int y = (int) set.scale(loc.getY());
+    		final int size = set.scale(eP.EPARTNER_SIZE);
+            int[] xpoints = new int[] { x, x - size, x + size };
+            int[] ypoints = new int[] { y + size, y - size, y - size };
+            g2d.fillPolygon(xpoints, ypoints, 3);
+            g2d.setColor(Color.BLACK);
+            g2d.drawPolygon(xpoints, ypoints, 3);;
+    	}
     }
 }

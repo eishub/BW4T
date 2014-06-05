@@ -47,10 +47,10 @@ public class EpartnerFrame extends JFrame {
 	private JButton resetButton = new JButton("Reset");
 
 	private JButton cancelButton = new JButton("Cancel");
+	
+	private JCheckBox forgetCheckbox = new JCheckBox("Forget-me-not");
 
 	private JButton fileButton = new JButton("Use existing GOAL file");
-
-	private JCheckBox leftAloneCheckbox = new JCheckBox("Left-alone Warning");
 
 	private JCheckBox gpsCheckBox = new JCheckBox("Geolocator");
 
@@ -64,6 +64,8 @@ public class EpartnerFrame extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param panel the scenario gui main panel
+	 * @param row the row to be updated on close
 	 */
 	public EpartnerFrame(MainPanel panel, int row) {
 		setTitle("E-Partner");
@@ -113,9 +115,10 @@ public class EpartnerFrame extends JFrame {
 		optionPane.add(propertiesLabel);
 
 		if (dataObject.isForgetMeNot()) {
-			leftAloneCheckbox.setSelected(true);
+			forgetCheckbox.setSelected(true);
 		}
-		optionPane.add(leftAloneCheckbox);
+
+		optionPane.add(forgetCheckbox);
 
 		if (dataObject.isGps()) {
 			gpsCheckBox.setSelected(true);
@@ -206,8 +209,8 @@ public class EpartnerFrame extends JFrame {
 	 * 
 	 * @return The checkbox.
 	 */
-	public JCheckBox getLeftAloneCheckbox() {
-		return leftAloneCheckbox;
+	public JCheckBox getForgetCheckbox() {
+		return forgetCheckbox;
 	}
 
 	/**

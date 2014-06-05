@@ -4,18 +4,21 @@ import java.awt.geom.Point2D;
 
 import nl.tudelft.bw4t.map.BlockColor;
 
-public class Block {
+/**
+ * information about a block for the map renderer
+ */
+public class ViewBlock {
     /** The width and height of the blocks */
     public final static int BLOCK_SIZE = 1;
 
     private long objectId = 0;
     private BlockColor color = null;
     private Point2D position = new Point2D.Double();
-    public Block() {
+    public ViewBlock() {
         super();
     }
 
-    public Block(long objectId, BlockColor color, Point2D position) {
+    public ViewBlock(long objectId, BlockColor color, Point2D position) {
         super();
         this.objectId = objectId;
         this.color = color;
