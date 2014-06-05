@@ -10,7 +10,6 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 /**
  * Handles the event to update the bot count.
  * 
- * @author Seu Man To
  * @version 0.1
  * @since 05-06-2014
  */

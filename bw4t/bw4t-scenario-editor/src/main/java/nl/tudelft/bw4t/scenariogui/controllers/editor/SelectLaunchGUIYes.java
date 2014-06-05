@@ -10,7 +10,6 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  * the {@link nl.tudelft.bw4t.scenariogui.BW4TClientConfig} object
  * with the update in the checkbox.
  * 
- * @author Nick
  *
  */
 public class SelectLaunchGUIYes implements ItemListener {

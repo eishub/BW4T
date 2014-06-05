@@ -14,9 +14,6 @@ import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
  * latter the EntityPanel.
  * <p/>
  *
- * @author Katia Asmoredjo
- * @author Joop Aué
- * @author Nick Feddes
  * @version 0.1
  * @since 12-05-2014
  */

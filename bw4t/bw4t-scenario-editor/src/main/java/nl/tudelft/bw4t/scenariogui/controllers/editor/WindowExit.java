@@ -12,7 +12,6 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
  * The WindowExit class makes sure that on clicking the default exit button,
  * a warning pops up.
  * <p>
- * @author      Seu Man To
  * @version     0.1
  * @since       26-05-2014
  *

@@ -14,8 +14,7 @@ import nl.tudelft.bw4t.scenariogui.util.ExportToGOAL;
 
 /**
  * Handles the event to export the project to mas2g.
-  * <p>
- * @author      Calvin Wong Loi Sing
+ * <p>
  * @version     0.1                
  * @since       02-06-2014
  */
