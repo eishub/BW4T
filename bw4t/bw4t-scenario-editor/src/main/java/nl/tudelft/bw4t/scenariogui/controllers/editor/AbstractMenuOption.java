@@ -95,17 +95,13 @@ public abstract class AbstractMenuOption implements ActionListener {
 	 *            Whether or not to open a file chooser.
 	 */
 	public void saveFile(final boolean saveAs) {
-		MapSpec map = controller.getMainView().getMainPanel()
-				.getConfigurationPanel().getMapSpecifications();
-		int botCount = getModel().getAmountBot();
-		if (map.isSet() && botCount > map.getEntitiesAllowedInMap()) {
-			ScenarioEditor.getOptionPrompt().showMessageDialog(
-					view,
-					"The selected map can only hold "
-							+ map.getEntitiesAllowedInMap()
-							+ " bots. Please delete some first.");
-			return;
-		}
+        if(!validateBotCount()) {
+            return;
+        }
+
+        if(!verifyMapSelected()) {
+            return;
+        }
 
 		String path = view.getLastFileLocation();
 
@@ -146,6 +142,36 @@ public abstract class AbstractMenuOption implements ActionListener {
 			ScenarioEditor.handleException(e, "Error: No file has been found.");
 		}
 	}
+
+
+    private boolean validateBotCount() {
+        MapSpec map = controller.getMainView().getMainPanel()
+                .getConfigurationPanel().getMapSpecifications();
+        int botCount = getModel().getAmountBot();
+        if (map.isSet() && botCount > map.getEntitiesAllowedInMap()) {
+            ScenarioEditor.getOptionPrompt().showMessageDialog(
+                    view,
+                    "The selected map can only hold "
+                            + map.getEntitiesAllowedInMap()
+                            + " bots. Please delete some first.");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean verifyMapSelected() {
+        String map = getController().getMainView().getMainPanel().getConfigurationPanel().getMapFile();
+        if(map.trim().isEmpty()) {
+            int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(getController().getMainView(),
+                    "Warning: No map file has been selected. Press OK to continue.",
+                    "",
+                    JOptionPane.OK_CANCEL_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
+
+            return response == JOptionPane.OK_OPTION;
+        }
+        return true;
+    }
 
 	public void saveXMLFile(String path) throws JAXBException,
 			FileNotFoundException {
