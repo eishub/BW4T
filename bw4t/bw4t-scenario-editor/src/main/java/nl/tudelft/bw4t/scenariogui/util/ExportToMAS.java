@@ -63,7 +63,8 @@ public final class ExportToMAS {
 		ExportToMAS.configuration = configuration;
 		goalFiles = new HashMap<String, String>();
 
-		init = String.format(INIT, configurationName);
+		init = String
+				.format(INIT, directory + "/" + configurationName + ".xml");
 
 		agentCount = 0;
 		humanCount = 0;
@@ -208,7 +209,7 @@ public final class ExportToMAS {
 					epartner.getEpartnerName().toLowerCase().replace(" ", "_"),
 					epartner.getReferenceName()));
 			launchPolicyBuilder.append(NEWLINE);
-			
+
 			goalFiles.put(epartner.getFileName(), epartner.getReferenceName());
 		}
 	}
