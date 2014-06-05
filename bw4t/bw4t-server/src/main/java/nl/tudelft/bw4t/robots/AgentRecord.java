@@ -17,8 +17,6 @@ import org.apache.log4j.Logger;
 public class AgentRecord {
     // name of agent
     private String name; 
-    // human or bot?
-    private String type; 
      // number of good drops.
     private Integer goodDrops = 0;
     // number of wrong drops
@@ -47,9 +45,8 @@ public class AgentRecord {
      * @param tp
      *            is the type (human/bot).
      */
-    public AgentRecord(String agentName, String tp) {
+    public AgentRecord(String agentName) {
         name = agentName;
-        type = tp;
     }
 
     public void addGoodDrop() {
@@ -98,7 +95,6 @@ public class AgentRecord {
      * Write summary in logfile.
      */
     public void logSummary(){
-    	 summary("type", type);
     	 summary("gooddrops", "" + goodDrops);
          summary("wrongdrops", "" + wrongDrops);
          summary("nmessage", "" + nMessages);

@@ -105,12 +105,12 @@ public class DropZone extends Room {
                 // Correct block has been dropped in
                 sequenceIndex++;
                 robot.getAgentRecord().addGoodDrop();
-                
-                BW4TEnvironment env = BW4TEnvironment.getInstance();
+                logTime();                    
+           	 	logBot();
                 
                 if (sequenceIndex == sequence.size()) {
-                	 logTime();
-                     logBot();
+                	 logTime();                    
+                	 logBot();
                 }
             }
             else {
@@ -145,19 +145,36 @@ public class DropZone extends Room {
      */
      private void logBot() {
     	BW4TEnvironment env = BW4TEnvironment.getInstance();
-    	int countBot = 0;
     	
         for (String entity : env.getEntities()) {
         	if (env.getEntity(entity) instanceof RobotEntity) {
             	RobotEntity rEntity = (RobotEntity) env.getEntity(entity);
             	if (!env.getFreeEntities().contains(entity)) {
+            		LOGGER.log(BotLog.BOTLOG, "agentsummary " + stringHandicap(rEntity));
             		rEntity.getRobotObject().getAgentRecord().logSummary();
-            		countBot++;
             	}
         	}
         }
-        LOGGER.log(BotLog.BOTLOG, "Team: " + countBot + "robots");
     }
+     
+     /**
+      * Gets all handicaps and make a String of it, which can be used for the logfile.
+      * 
+      * @param bot RobotEntity
+      * @return String
+      */
+     private String stringHandicap(RobotEntity bot) {
+    	 List<String> handicap = bot.getRobotObject().getHandicapsList();
+    	 String handicaps = bot.getRobotObject().getName() + " handicaps ";
+    	 if (handicap.isEmpty())
+    		 handicaps = handicaps + "none";
+    	 else {
+    		 for (int i = 0; i < handicap.size(); i++) {
+    		 handicaps = handicaps + handicap.get(i);
+    		 }
+    	 }
+    	 return handicaps;
+     }
 
     /**
      * check if the full sequence has been completed

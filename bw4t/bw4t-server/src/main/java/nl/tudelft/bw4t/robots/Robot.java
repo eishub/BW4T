@@ -128,7 +128,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
         this.grippercap = cap;
         this.holding = new ArrayList<Block>(grippercap);
         this.handicapsList = new ArrayList<String>();
-        this.agentRecord = new AgentRecord(name, "unknown");
+        this.agentRecord = new AgentRecord(name);
     }
 
     /**
