@@ -3,6 +3,11 @@ package nl.tudelft.bw4t.robots;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.logging.BotLog;
+
+import org.apache.log4j.Logger;
+
 /**
  * This class stores performance information of an agent.
  * 
@@ -12,8 +17,6 @@ import java.util.List;
 public class AgentRecord {
     // name of agent
     private String name; 
-    // human or bot?
-    private String type; 
      // number of good drops.
     private Integer goodDrops = 0;
     // number of wrong drops
@@ -31,15 +34,19 @@ public class AgentRecord {
     private Long currentStandingStillMillis = System.currentTimeMillis();
 
     /**
+     * The log4j logger, logs to the console and file
+     */
+    private static final Logger LOGGER = Logger.getLogger(BW4TEnvironment.class);
+    
+    /**
      * create new Agent record
      * 
      * @param agentName
      * @param tp
      *            is the type (human/bot).
      */
-    public AgentRecord(String agentName, String tp) {
+    public AgentRecord(String agentName) {
         name = agentName;
-        type = tp;
     }
 
     public void addGoodDrop() {
@@ -78,39 +85,24 @@ public class AgentRecord {
     }
 
     /**
-     * should be called when agent sends message
+     * should be called when agent sends message.
      */
     public void addSentMessage() {
         nMessages++;
     }
-
+    
     /**
-     * Convert this record to a summary list for in the log file. The list is a number of lines for in the log, each
-     * element of the top list having a list of items for one log line.
-     * 
-     * @return
-     * 
-     * TODO log this at the end
+     * Write summary in logfile.
      */
-    public List<List<String>> toSummaryArray() {
-        List<List<String>> summaries = new ArrayList<List<String>>();
-
-        summaries.add(summary("type", type));
-        summaries.add(summary("gooddrops", "" + goodDrops));
-        summaries.add(summary("wrongdrops", "" + wrongDrops));
-        summaries.add(summary("nmessage", "" + nMessages));
-        summaries.add(summary("idletime", "" + (float) totalStandingStillMillis / 1000.));
-        summaries.add(summary("nroomsentered", "" + nRoomsEntered));
-
-        return summaries;
+    public void logSummary(){
+    	 summary("gooddrops", "" + goodDrops);
+         summary("wrongdrops", "" + wrongDrops);
+         summary("nmessage", "" + nMessages);
+         summary("idletime", "" + (float) totalStandingStillMillis / 1000.);
+         summary("nroomsentered", "" + nRoomsEntered);
     }
-
-    private List<String> summary(String label, String value) {
-        List<String> summary = new ArrayList<String>();
-        summary.add("agentsummary");
-        summary.add(name);
-        summary.add(label);
-        summary.add(value);
-        return summary;
+    
+    private void summary(String label, String value){
+    	LOGGER.log(BotLog.BOTLOG, String.format("agentsummary %s %s %s", name, label, value));
     }
 }
