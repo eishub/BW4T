@@ -37,14 +37,14 @@ class MenuOptionNew extends AbstractMenuOption {
 
 	/**
 	 * Gets called when the new file menu item is pressed.
-	 * 
+	 *
 	 * @param e
 	 *            The action event.
 	 */
 	public void actionPerformed(final ActionEvent e) {
-		ConfigurationPanel configPanel = super.getController().getMainView()
+		ConfigurationPanel configPanel = getController().getMainView()
 				.getMainPanel().getConfigurationPanel();
-		EntityPanel entityPanel = super.getController().getMainView()
+		EntityPanel entityPanel = getController().getMainView()
 				.getMainPanel().getEntityPanel();
 
 		// Check if current config is different from last saved config
@@ -56,20 +56,20 @@ class MenuOptionNew extends AbstractMenuOption {
 
 			if (response == JOptionPane.YES_OPTION) {
 				saveFile();
-				super.getController().getMainView().getMainPanel()
+				getController().getMainView().getMainPanel()
 						.getConfigurationPanel().updateOldValues();
-				super.getModel().updateBotConfigs();
+				getModel().updateBotConfigs();
 			}
 		}
 
 		resetConfigPanel(configPanel);
-		super.getModel().getBots().clear();
-		super.getModel().getEpartners().clear();
+		getModel().getBots().clear();
+		getModel().getEpartners().clear();
 
 		// set last file location to null so that the previous saved file won't
 		// get
 		// overwritten when the new config is saved.
-		super.getMenuView().setLastFileLocation(null);
+		getMenuView().setLastFileLocation(null);
 
 		// Reset the bot panel
 		resetBotTable(entityPanel);
