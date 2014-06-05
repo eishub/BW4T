@@ -1,11 +1,11 @@
 package nl.tudelft.bw4t.botstore.boteditor;
 
 import nl.tudelft.bw4t.scenariogui.BotConfig;
-import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditor;
-import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
-import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
-import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
-import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
+import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditor;
+import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
+import nl.tudelft.bw4t.scenariogui.panel.gui.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.panel.gui.EntityPanel;
+import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
 
 import org.junit.Test;
 
