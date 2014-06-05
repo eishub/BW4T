@@ -95,15 +95,6 @@ public class ScenarioEditorController {
                 addActionListener(
                         new DeleteBot(getMainView().getMainPanel(), getModel())
                 );
-        
-        getMainView().getMainPanel().getEntityPanel().getBotTableModel().
-        		addTableModelListener(
-        				new UpdateBotCount(getMainView().getMainPanel(), getModel())
-        		);
-        getMainView().getMainPanel().getEntityPanel().getEPartnerTableModel().
-        		addTableModelListener(
-        				new UpdateEPartnerCount(getMainView().getMainPanel(), getModel())
-        		);
 
         getMainView().getMainPanel().getEntityPanel().getNewEPartnerButton().addActionListener(
                 new AddNewEPartner(getMainView().getMainPanel(), getModel())
@@ -120,6 +111,15 @@ public class ScenarioEditorController {
         
         getMainView().addWindowListener(
                 new WindowExit(getMainView())
+        );
+        
+        getMainView().getMainPanel().getEntityPanel().getBotTableModel().
+        addTableModelListener(
+                new UpdateBotCount(getMainView().getMainPanel(), getModel())
+        );
+        getMainView().getMainPanel().getEntityPanel().getEPartnerTableModel().
+        addTableModelListener(
+                new UpdateEPartnerCount(getMainView().getMainPanel(), getModel())
         );
         
         /** Adds the listener for the bot and e-partner table: */
