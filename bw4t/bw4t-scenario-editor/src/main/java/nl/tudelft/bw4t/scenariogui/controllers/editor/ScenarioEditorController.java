@@ -158,7 +158,7 @@ public class ScenarioEditorController {
         boolean configurationEqual = getMainView().getMainPanel().getConfigurationPanel().getOldValues()
                 .equals(getMainView().getMainPanel().getConfigurationPanel().getCurrentValues());
         boolean botsEqual = getModel().compareBotConfigs(getModel().getOldBots());
-        boolean epartnersEqual= getModel().compareEpartnerConfigs(model.getOldEpartners());
+        boolean epartnersEqual= getModel().compareEpartnerConfigs(getModel().getOldEpartners());
 
         return !(configurationEqual && botsEqual && epartnersEqual);
     }
