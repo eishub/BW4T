@@ -14,7 +14,7 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
 /**
  * Handles the event to start a new file.
  * <p>
- * 
+ *
  * @version 0.1
  * @since 12-05-2014
  */
@@ -22,12 +22,12 @@ class MenuOptionNew extends AbstractMenuOption {
 
 	/**
 	 * Constructs a new menu option new object.
-	 * 
+	 *
 	 * @param view
 	 *            The view.
 	 * @param mainView
 	 *            The controlling main view.
-	 * @param model           
+	 * @param model
 	 *            The model.
 	 */
 	public MenuOptionNew(final MenuBar view,
@@ -65,6 +65,8 @@ class MenuOptionNew extends AbstractMenuOption {
 		resetConfigPanel(configPanel);
 		getModel().getBots().clear();
 		getModel().getEpartners().clear();
+        getModel().updateBotConfigs();
+        getModel().updateEpartnerConfigs();
 
 		// set last file location to null so that the previous saved file won't
 		// get
@@ -80,7 +82,7 @@ class MenuOptionNew extends AbstractMenuOption {
 
 	/**
 	 * Resets the given configPanel to it's default values.
-	 * 
+	 *
 	 * @param configPanel
 	 *            The configPanel to be reset.
 	 */
@@ -107,7 +109,7 @@ class MenuOptionNew extends AbstractMenuOption {
 
 	/**
 	 * Reset the list with bots.
-	 * 
+	 *
 	 * @param entityPanel
 	 *            The EntityPanel which contains the bot list.
 	 */
@@ -122,7 +124,7 @@ class MenuOptionNew extends AbstractMenuOption {
 
 	/**
 	 * Reset the list with epartners.
-	 * 
+	 *
 	 * @param entityPanel
 	 *            The EntityPanel which contains the epartner list.
 	 */
