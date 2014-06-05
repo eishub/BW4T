@@ -1,7 +1,6 @@
 package nl.tudelft.bw4t.client.gui.menu;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
 import org.apache.log4j.Logger;

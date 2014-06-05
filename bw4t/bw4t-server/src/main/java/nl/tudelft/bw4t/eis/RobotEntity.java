@@ -594,15 +594,17 @@ public class RobotEntity implements RobotEntityInt {
      */
     @AsAction(name = "pickUpEPartner")
     public void pickUpEPartner() {
-        LOGGER.debug(String.format("%s is trying to pick up an e-partner.", ourRobot.getName()));
-
-        EPartner nearest = getClosest(EPartner.class);
-        if (nearest == null) {
-            LOGGER.debug(String.format("%s can not pickup any e-partners.", ourRobot.getName()));
-            return;
-        }
-        LOGGER.debug(String.format("%s will pickup e-partner %d.", ourRobot.getName(), nearest.getId()));
-        ourRobot.pickUpEPartner(nearest);
+    	if(ourRobot.isHuman()) {
+	        LOGGER.debug(String.format("%s is trying to pick up an e-partner.", ourRobot.getName()));
+	
+	        EPartner nearest = getClosest(EPartner.class);
+	        if (nearest == null) {
+	            LOGGER.debug(String.format("%s can not pickup any e-partners.", ourRobot.getName()));
+	            return;
+	        }
+	        LOGGER.debug(String.format("%s will pickup e-partner %d.", ourRobot.getName(), nearest.getId()));
+	        ourRobot.pickUpEPartner(nearest);
+    	}
     }
     
     /**
