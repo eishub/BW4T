@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.scenariogui.gui.panel;
 
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
@@ -56,7 +57,7 @@ public class EntityPanelTest {
         ConfigurationPanel config = new ConfigurationPanel();
         /* The editor itself isn't used. It's simple so the BotPanel
          * gets handled by a controller. */
-        editor = new ScenarioEditor(config, spyEntityPanel);
+        editor = new ScenarioEditor(config, spyEntityPanel, new BW4TClientConfig());
     }
 
     /**
@@ -76,9 +77,9 @@ public class EntityPanelTest {
     public final void testBotCount() {
         Object[] data = {"d1", "d2", "1"};
 
-        spyEntityPanel.getBotTableModel().addRow(data);
+        spyEntityPanel.getNewBotButton().doClick();
 
-        assertEquals(spyEntityPanel.getBotCount(), 1);
+        assertEquals(1, editor.getController().getModel().getAmountBot());
     }
 
     /**
@@ -90,7 +91,7 @@ public class EntityPanelTest {
         spyEntityPanel.getNewBotButton().doClick();
         spyEntityPanel.getBotTableModel().setValueAt("12", 0, 2);
 
-        assertEquals(12, spyEntityPanel.getBotCount());
+        assertEquals(12, editor.getController().getModel().getAmountBot());
     }
 
     /**
@@ -101,9 +102,9 @@ public class EntityPanelTest {
     public final void testEPartnerCount() {
         Object[] data = {"D1", "1"};
 
-        spyEntityPanel.getEPartnerTableModel().addRow(data);
+        spyEntityPanel.getNewEPartnerButton().doClick();
 
-        assertEquals(spyEntityPanel.getEPartnerCount(), 1);
+        assertEquals(1, editor.getController().getModel().getAmountEPartner());
     }
 
     /**
@@ -117,7 +118,7 @@ public class EntityPanelTest {
         spyEntityPanel.getNewEPartnerButton().doClick();
         spyEntityPanel.getEPartnerTableModel().setValueAt("12", 0, 1);
 
-        assertEquals(12, spyEntityPanel.getEPartnerCount());
+        assertEquals(12, editor.getController().getModel().getAmountEPartner());
     }
 
     /**
@@ -127,7 +128,7 @@ public class EntityPanelTest {
     @Test
     public void testAddNewBot() {
         spyEntityPanel.getNewBotButton().doClick();
-        assertEquals(spyEntityPanel.getBotCount(), 1);
+        assertEquals(editor.getController().getModel().getAmountBot(), 1);
     }
 
     /**
@@ -180,7 +181,7 @@ public class EntityPanelTest {
         spyEntityPanel.getDeleteBotButton().doClick();
 
         /* check if the bot count is zero */
-        assertEquals(spyEntityPanel.getBotCount(), 0);
+        assertEquals(editor.getController().getModel().getAmountBot(), 0);
     }
 
     /**
@@ -202,7 +203,7 @@ public class EntityPanelTest {
         spyEntityPanel.getDeleteBotButton().doClick();
 
         /* check if the bot count is still 1. */
-        assertEquals(spyEntityPanel.getBotCount(), 1);
+        assertEquals(editor.getController().getModel().getAmountBot(), 1);
     }
 
 
@@ -222,7 +223,7 @@ public class EntityPanelTest {
         spyEntityPanel.getDeleteBotButton().doClick();
 
         /* check if the bot count is still 1. */
-        assertEquals(spyEntityPanel.getBotCount(), 1);
+        assertEquals(editor.getController().getModel().getAmountBot(), 1);
         
         /* Check if the warning message is shown */
         verify(spyOption, times(1)).showMessageDialog(null, "Please select the bot you want to delete.");
@@ -235,7 +236,7 @@ public class EntityPanelTest {
     @Test
     public void testAddEPartner() {
         spyEntityPanel.getNewEPartnerButton().doClick();
-        assertEquals(spyEntityPanel.getEPartnerCount(), 1);
+        assertEquals(editor.getController().getModel().getAmountEPartner(), 1);
     }
 
 
@@ -311,7 +312,7 @@ public class EntityPanelTest {
         spyEntityPanel.getDeleteEPartnerButton().doClick();
 
         /* Check if the E-partner count is zero */
-        assertEquals(spyEntityPanel.getBotCount(), 0);
+        assertEquals(editor.getController().getModel().getAmountBot(), 0);
     }
 
     /**
@@ -334,7 +335,7 @@ public class EntityPanelTest {
         spyEntityPanel.getDeleteEPartnerButton().doClick();
 
         /* Check if the E-partner count is still one */
-        assertEquals(spyEntityPanel.getEPartnerCount(), 1);
+        assertEquals(editor.getController().getModel().getAmountEPartner(), 1);
     }
 
     /**
@@ -353,7 +354,7 @@ public class EntityPanelTest {
         spyEntityPanel.getDeleteEPartnerButton().doClick();
 
         /* Check if the E-partner count is still one */
-        assertEquals(spyEntityPanel.getEPartnerCount(), 1);
+        assertEquals(editor.getController().getModel().getAmountEPartner(), 1);
         
         /* Check if the warning message is shown */
         verify(spyOption, times(1)).showMessageDialog(
@@ -376,15 +377,19 @@ public class EntityPanelTest {
      */
     @Test
     public void testBotConfigs() {
-        assertTrue(entityPanel.compareBotConfigs(entityPanel.getOldBotConfigs()));
         
-        entityPanel.getBotConfigs().add(new BotConfig());
+        assertTrue(editor.getController().getModel().compareBotConfigs(
+                editor.getController().getModel().getOldBots()));
         
-        assertFalse(entityPanel.compareBotConfigs(entityPanel.getOldBotConfigs()));
+        editor.getController().getModel().getBots().add(new BotConfig());
         
-        entityPanel.updateBotConfigs();
+        assertFalse(editor.getController().getModel().compareBotConfigs(
+                editor.getController().getModel().getOldBots()));
         
-        assertTrue(entityPanel.compareBotConfigs(entityPanel.getOldBotConfigs()));
+        editor.getController().getModel().updateBotConfigs();
+        
+        assertTrue(editor.getController().getModel().compareBotConfigs(
+                editor.getController().getModel().getOldBots()));
     }
     
     /**
@@ -392,15 +397,18 @@ public class EntityPanelTest {
      */
     @Test
     public void testEPartnerConfigs() {
-        assertTrue(entityPanel.compareEpartnerConfigs(entityPanel.getOldEPartnerConfigs()));
+        assertTrue(editor.getController().getModel().compareEpartnerConfigs(
+                editor.getController().getModel().getOldEpartners()));
         
-        entityPanel.getEPartnerConfigs().add(new EPartnerConfig());
+        editor.getController().getModel().getEpartners().add(new EPartnerConfig());
         
-        assertFalse(entityPanel.compareEpartnerConfigs(entityPanel.getOldEPartnerConfigs()));
+        assertFalse(editor.getController().getModel().compareEpartnerConfigs(
+                editor.getController().getModel().getOldEpartners()));
         
-        entityPanel.updateEpartnerConfigs();
+        editor.getController().getModel().updateEpartnerConfigs();
         
-        assertTrue(entityPanel.compareEpartnerConfigs(entityPanel.getOldEPartnerConfigs()));
+        assertTrue(editor.getController().getModel().compareEpartnerConfigs(
+                editor.getController().getModel().getOldEpartners()));
     }
 
     /**

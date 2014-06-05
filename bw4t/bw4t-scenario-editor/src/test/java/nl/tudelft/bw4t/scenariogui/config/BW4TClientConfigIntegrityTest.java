@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.panel.gui.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.panel.gui.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
@@ -23,7 +24,7 @@ import static org.junit.Assert.assertTrue;
  * @version     0.1                
  * @since       12-05-2014        
  */
-public class BW4TClientConfigIntegrationTest {
+public class BW4TClientConfigIntegrityTest {
 
     /** The custom config object used in this test. */
     private static BW4TClientConfig config;
@@ -117,8 +118,8 @@ public class BW4TClientConfigIntegrationTest {
     @Test
     public final void testSaveIntegrity()
             throws FileNotFoundException, JAXBException {
-        MainPanel panel = new MainPanel(
-                new ConfigurationPanel(), new EntityPanel());
+        ScenarioEditor main = new ScenarioEditor();
+        MainPanel panel = main.getMainPanel();
 
         // Set some dummy changes.
 
@@ -128,8 +129,8 @@ public class BW4TClientConfigIntegrationTest {
         panel.getConfigurationPanel().setClientIP(dummyIP);
         panel.getConfigurationPanel().setClientPort(dummyPort);
 
-        BW4TClientConfig configuration = BW4TClientConfigIntegration.
-                createConfigFromPanel(panel, FILE_PATH);
+        BW4TClientConfig configuration = panel.getClientConfig();
+        configuration.setFileLocation(FILE_PATH);
 
         configuration.toXML();
 
@@ -138,6 +139,7 @@ public class BW4TClientConfigIntegrationTest {
         BW4TClientConfig loadedConfiguration = BW4TClientConfig
                 .fromXML(FILE_PATH);
 
+        //view.getConfigurationPanel().getClientIPTextField().getText()
         assertEquals(panel.getConfigurationPanel().getClientIP(),
                 loadedConfiguration.getClientIp());
         assertEquals(panel.getConfigurationPanel().getClientPort(),

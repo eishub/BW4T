@@ -7,7 +7,6 @@ import javax.swing.JSlider;
 
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
-import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfigIntegration;
 
 /**
  * Handles actions of the gripperbox
