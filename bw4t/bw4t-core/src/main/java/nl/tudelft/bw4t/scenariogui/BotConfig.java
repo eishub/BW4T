@@ -8,7 +8,6 @@ import nl.tudelft.bw4t.agent.EntityType;
 
 /**
  * This class stores all the date from the BotEditorUI.
- * <p>
  * 
  * @author Valentine Mairet
  * @author Katia Asmoredjo
@@ -30,8 +29,6 @@ public final class BotConfig implements Serializable {
 	private EntityType controller = EntityType.AGENT;
 
 	private int amount = 1;
-
-	private int botGripperCapacity = 1;
 
 	private int botSize = 2;
 
@@ -115,22 +112,6 @@ public final class BotConfig implements Serializable {
 	 */
 	public int getBotAmount() {
 		return this.amount;
-	}
-
-	/**
-	 * @return the bot gripper capacity.
-	 */
-	public int getBotGripperCapacity() {
-		return botGripperCapacity;
-	}
-
-	/**
-	 * @param newgripcap
-	 *            , the new gripper capacity.
-	 */
-	@XmlElement
-	public void setBotGripperCapacity(int newgripcap) {
-		botGripperCapacity = newgripcap;
 	}
 
 	/**
@@ -307,7 +288,7 @@ public final class BotConfig implements Serializable {
 	 * @return All the BotConfig properties.
 	 */
 	public String bcToString() {
-		return name + controller + amount + botGripperCapacity + botSize
+		return name + controller + amount + botSize
 				+ botSpeed + botBatteryCapacity + botBatteryDischargeRate
 				+ numberOfGrippers + batteryEnabled + hasColorBlindHandicap
 				+ hasGripperHandicap + hasMoveSpeedHandicap

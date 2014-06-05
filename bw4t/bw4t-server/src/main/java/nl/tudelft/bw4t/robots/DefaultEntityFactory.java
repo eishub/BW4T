@@ -50,7 +50,7 @@ public class DefaultEntityFactory implements EntityFactory {
 			r = new GripperHandicap(r);
 		} else {
 			// if the robot does not have a gripper handicap, it grabs the value set in the UI. 
-			r.getSuperParent().setGripperCapacity(config.getBotGripperCapacity());
+			r.getSuperParent().setGripperCapacity(config.getGrippers());
 		}
 		if (config.getMoveSpeedHandicap()) {
 			//TODO figure out if the magic number is correct
