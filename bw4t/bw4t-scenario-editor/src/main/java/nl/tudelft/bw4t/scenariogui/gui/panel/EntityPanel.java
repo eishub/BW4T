@@ -61,8 +61,6 @@ public class EntityPanel extends JPanel {
 
 	private static final int BOT_OPTION_PANEL_GRID_ROWS_AMT = 15;
 
-	private static final int BOT_OPTION_PANEL_MARGIN_WIDTH = 8;
-
 	private static final int SCROLL_PANE_WIDTH = 500;
 
 	private static final int SCROLL_PANE_HEIGHT = 200;
@@ -123,6 +121,8 @@ public class EntityPanel extends JPanel {
 	private JButton modifyEpartner = new JButton("Modify E-partner");
 
 	private JButton deleteEpartner = new JButton("Delete E-partner");
+
+	private static final int BOT_OPTION_PANEL_MARGIN_WIDTH = 8;
 
 	//private List<EPartnerConfig> epartnerConfigList = new ArrayList<EPartnerConfig>();
 
@@ -637,13 +637,5 @@ public class EntityPanel extends JPanel {
 		}
 
 		return isDefault;
-	}
-	
-	public DefaultTableModel getBotList() {
-		return botList;
-	}
-	
-	public DefaultTableModel getEpartnerList() {
-		return epartnerList;
 	}
 }

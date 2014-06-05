@@ -15,11 +15,11 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  */
 class AddNewEPartner implements ActionListener {
 
-	private MainPanel view;
-
-	private int eCount;
+    private MainPanel view;
 	
 	private BW4TClientConfig model;
+	
+	private int eCount;
 
 	/**
 	 * Create an AddNewEpartner event handler.

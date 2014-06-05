@@ -17,8 +17,7 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
 
 /**
  * This class creates the frame for the e-Partner GUI.
- * 
- * @author Katia
+ * @author Wendy Bolier
  */
 
 public class EpartnerFrame extends JFrame {
@@ -216,5 +215,4 @@ public class EpartnerFrame extends JFrame {
 	public EPartnerConfig getDataObject() {
 		return dataObject;
 	}
-
 }

@@ -571,4 +571,32 @@ public class ConfigurationPanel extends JPanel {
         return mapSpec;
     }
     
+    public JTextField getClientIPTextField() {
+        return clientIP;
+    }
+    
+    public JTextField getClientPortTextField() {
+        return clientPort;
+    }
+    
+    public JTextField getServerIPTextField() {
+        return serverIP;
+    }
+    
+    public JTextField getServerPortTextField() {
+        return serverPort;
+    }
+    
+    public Checkbox getGUIYesCheckbox() {
+        return guiYes;
+    }
+    
+    public Checkbox getGUINoCheckbox() {
+        return guiNo;
+    }
+    
+    public JTextField getMapFileTextField() {
+        return mapFileTextField;
+    }
+    
 }
