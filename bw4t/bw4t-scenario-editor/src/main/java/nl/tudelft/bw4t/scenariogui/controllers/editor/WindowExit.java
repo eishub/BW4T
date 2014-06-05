@@ -45,7 +45,7 @@ class WindowExit extends WindowAdapter {
             );
             
             if (response == JOptionPane.YES_OPTION) {
-                super.windowClosed(e);
+                view.closeScenarioEditor();
             }
         }
         else {
