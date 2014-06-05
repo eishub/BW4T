@@ -99,6 +99,10 @@ public class RobotEntity implements RobotEntityInt {
         this.ourRobot = robot;
         this.context = ourRobot.getContext();
     }
+    
+    public IRobot getRobotObject() {
+        return ourRobot;
+    }
 
     /**
      * Connect robot to repast (to be called when an agent is connected to this entity)
@@ -617,7 +621,7 @@ public class RobotEntity implements RobotEntityInt {
     		ourRobot.dropEPartner();
     	}
     }
-    
+
     /**
      * Find the closest {@link BoundedMoveableObject} that can be picked up by the Robot.
      * @param type the type of {@link BoundedMoveableObject} we are looking for 

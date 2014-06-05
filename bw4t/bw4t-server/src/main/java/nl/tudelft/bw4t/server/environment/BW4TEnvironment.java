@@ -1,42 +1,5 @@
 package nl.tudelft.bw4t.server.environment;
 
-import java.awt.geom.Point2D;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.xml.bind.JAXBException;
-
-import nl.tudelft.bw4t.BW4TBuilder;
-import nl.tudelft.bw4t.blocks.EPartner;
-import nl.tudelft.bw4t.client.BW4TClientActions;
-import nl.tudelft.bw4t.eis.EPartnerEntity;
-import nl.tudelft.bw4t.eis.RobotEntity;
-import nl.tudelft.bw4t.handicap.IRobot;
-import nl.tudelft.bw4t.logger.BotLog;
-import nl.tudelft.bw4t.map.Entity;
-import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.robots.EntityFactory;
-import nl.tudelft.bw4t.scenariogui.BotConfig;
-import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
-import nl.tudelft.bw4t.server.BW4TServer;
-import nl.tudelft.bw4t.server.RobotEntityInt;
-import nl.tudelft.bw4t.visualizations.ServerContextDisplay;
-
-import org.apache.log4j.Logger;
-
-import repast.simphony.context.Context;
-import repast.simphony.scenario.ScenarioLoadException;
-import repast.simphony.space.continuous.NdPoint;
 import eis.eis2java.environment.AbstractEnvironment;
 import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
@@ -50,6 +13,43 @@ import eis.iilang.EnvironmentState;
 import eis.iilang.Identifier;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
+
+import java.awt.geom.Point2D;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.bind.JAXBException;
+
+import nl.tudelft.bw4t.BW4TBuilder;
+import nl.tudelft.bw4t.blocks.EPartner;
+import nl.tudelft.bw4t.client.BW4TClientActions;
+import nl.tudelft.bw4t.eis.EPartnerEntity;
+import nl.tudelft.bw4t.eis.RobotEntity;
+import nl.tudelft.bw4t.handicap.IRobot;
+import nl.tudelft.bw4t.map.Entity;
+import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.robots.EntityFactory;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
+import nl.tudelft.bw4t.server.BW4TServer;
+import nl.tudelft.bw4t.server.RobotEntityInt;
+import nl.tudelft.bw4t.server.logging.BW4TFileAppender;
+import nl.tudelft.bw4t.server.logging.BotLog;
+import nl.tudelft.bw4t.visualizations.ServerContextDisplay;
+
+import org.apache.log4j.Logger;
+
+import repast.simphony.context.Context;
+import repast.simphony.scenario.ScenarioLoadException;
+import repast.simphony.space.continuous.NdPoint;
 
 /**
  * The central environment which runs the data model and performs actions received from remote environments through the
@@ -72,11 +72,11 @@ public class BW4TEnvironment extends AbstractEnvironment {
     private static BW4TEnvironment instance;
 
     /**
-     * The log4j logger, logs to the console.
+     * The log4j logger, logs to the console and file
      */
     private static final Logger LOGGER = Logger.getLogger(BW4TEnvironment.class);
 
-    private static String mapName;
+    private String mapName;
 
     /**
      * start time of the first action.
@@ -114,14 +114,16 @@ public class BW4TEnvironment extends AbstractEnvironment {
     BW4TEnvironment(BW4TServer server2, String scenarioLocation, String mapLocation, boolean guiEnabled,
             String shutdownKey) throws IOException, ManagementException, ScenarioLoadException, JAXBException {
         super();
-        instance = this;
+        setInstance(this); 
         this.server = server2;
-        BW4TEnvironment.mapName = mapLocation;
+     	mapName = mapLocation;
         this.scenarioLocation = System.getProperty("user.dir") + "/" + scenarioLocation;
         this.guiEnabled = guiEnabled;
         this.shutdownKey = shutdownKey;
     }
-
+    private static void setInstance(BW4TEnvironment env){
+    	instance = env;  
+    }
     /**
      * Launch server and start repast.
      * 
@@ -164,23 +166,21 @@ public class BW4TEnvironment extends AbstractEnvironment {
      * reports errors and proceeds.
      */
     public void removeAllEntities() throws ManagementException {
-        LOGGER.info("Closing the log file.");
-
-        // TODO check if total time is calculated same way as before
+      
+    	BW4TFileAppender.logFinish(System.currentTimeMillis(), "total time is ");
         // FIXME: BOTLOG gives nullpointer exception if no bots.
-        // LOGGER.log(BotLog.BOTLOG, "total time: " + (System.currentTimeMillis() - starttime));
-        // TODO log AgentRecord, each toSummaryArray of agentRecord of object of each bot
 
         setState(EnvironmentState.KILLED);
 
         LOGGER.debug("Removing all entities");
         for (String entity : this.getEntities()) {
-            try {
+        	try {
                 this.deleteEntity(entity);
             } catch (EntityException | RelationException e) {
                 LOGGER.error("Failure to delete entity: " + entity, e);
             }
         }
+        
         LOGGER.debug("Remove all (remaining) agents");
         for (String agent : this.getAgents()) {
             try {
@@ -212,7 +212,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
         String error = "launch of Repast failed";
         Parameter map = parameters.get("map");
         if (map != null) {
-            BW4TEnvironment.setMapName(((Identifier) map).getValue());
+            setMapName(((Identifier) map).getValue());
         }
         try {
             launchRepast();
@@ -258,7 +258,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
      */
     private void launchRepast() throws IOException, ScenarioLoadException, JAXBException {
         theMap = NewMap.create(new FileInputStream(new File(System.getProperty("user.dir") + "/maps/"
-                + BW4TEnvironment.mapName)));
+                + mapName)));
         stepper = new Stepper(scenarioLocation, this);
         new Thread(stepper).start();
     }
@@ -275,12 +275,12 @@ public class BW4TEnvironment extends AbstractEnvironment {
         return instance;
     }
 
-    public static String getMapLocation() {
+    public String getMapLocation() {
         return mapName;
     }
 
-    public static void setMapName(String mapName) {
-        BW4TEnvironment.mapName = mapName;
+    public void setMapName(String mapName) {
+         this.mapName = mapName;
     }
 
     /**
@@ -335,7 +335,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
      */
     public Percept performClientAction(String entity, Action action) throws ActException {
         Long time = System.currentTimeMillis();
-        LOGGER.log(BotLog.BOTLOG, String.format("action %d %s %s", time, entity, action.toProlog()));
+        LOGGER.log(BotLog.BOTLOG, String.format("action %s %s", entity, action.toProlog()));
 
         if (starttime == null) {
             starttime = time;
@@ -411,9 +411,9 @@ public class BW4TEnvironment extends AbstractEnvironment {
     @Override
     public void reset(Map<String, Parameter> parameters) throws ManagementException {
         try {
-            BW4TEnvironment.setMapName(((Identifier) parameters.get("map")).getValue());
-            if (BW4TEnvironment.mapName == null) {
-                BW4TEnvironment.setMapName("Random");
+            setMapName(((Identifier) parameters.get("map")).getValue());
+            if (mapName == null) {
+                setMapName("Random");
             }
             reset();
         } catch (Exception e) {
@@ -483,8 +483,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
             } catch (Exception e) {
                 LOGGER.error("BW4T Server started ok but failed to launch display.", e);
             }
-        }
-        else {
+        } else {
             LOGGER.info("Launching the BW4T Server without a graphical user interface.");
         }
     }
@@ -520,8 +519,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
             server.takeDown();
             server = null;
             System.exit(0);
-        }
-        else {
+        } else {
             LOGGER.warn("Server shutdown attempted with wrong key: " + key);
         }
     }
@@ -532,6 +530,10 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
     public NewMap getMap() {
         return theMap;
+    }
+    
+    public long getStarttime() {
+    	return starttime;
     }
     
     /**
@@ -674,7 +676,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
         this.registerEntity(epartner.getName(), ee);
         // TODO: Place the EPartner
         epartner.moveTo(point.getX(), point.getY());
-    
     }
 
 }

@@ -193,11 +193,11 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
      */
     @Override
     public void init(Map<String, Parameter> parameters) throws ManagementException {
-        if (!LOGGER.getAllAppenders().hasMoreElements()) {
-            BasicConfigurator.configure();
-        }
         InitParam.setParameters(parameters);
         connectedToGoal = Boolean.parseBoolean(InitParam.GOAL.getValue());
+        if (connectedToGoal) {
+            BasicConfigurator.configure();
+        }
         try {
             LOGGER.info("Connecting to BW4T Server.");
             client = new BW4TClient(this);
