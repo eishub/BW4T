@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -23,15 +21,11 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import nl.tudelft.bw4t.agent.EntityType;
-import nl.tudelft.bw4t.scenariogui.BotConfig;
-import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
 
 /**
@@ -39,8 +33,7 @@ import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
  * of bots and a list of e-partners and the actions that are possible to edit
  * bots and e-partners.
  * <p>
- *
- * @author Katia Asmoredjo
+ * 
  * @version 0.1
  * @since 12-05-2014
  */
@@ -55,8 +48,6 @@ public class EntityPanel extends JPanel {
 	private static final int FONT_SIZE = 16;
 
 	private static final int BOT_OPTION_PANEL_GRID_ROWS_AMT = 15;
-
-	private static final int BOT_OPTION_PANEL_MARGIN_WIDTH = 8;
 
 	private static final int SCROLL_PANE_WIDTH = 500;
 
@@ -119,18 +110,13 @@ public class EntityPanel extends JPanel {
 
 	private JButton deleteEpartner = new JButton("Delete E-partner");
 
-	private List<EPartnerConfig> epartnerConfigList = new ArrayList<EPartnerConfig>();
-
-	private List<EPartnerConfig> oldEpartnerConfigs = new ArrayList<EPartnerConfig>();
-
-	private List<BotConfig> botConfigList = new ArrayList<BotConfig>();
-
-	private List<BotConfig> oldBotConfigs = new ArrayList<BotConfig>();
+	private static final int BOT_OPTION_PANEL_MARGIN_WIDTH = 8;	
 
 	/**
 	 * Create an EntityPanel object.
 	 */
 	public EntityPanel() {
+		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		Border loweredetched = BorderFactory
@@ -222,7 +208,7 @@ public class EntityPanel extends JPanel {
 		botTable = new JTable();
 		botTable.getTableHeader().setReorderingAllowed(false);
 
-		botList = new EntityTableModel();
+		botList = new EntityTableModel(EntityType.AGENT);
 
 		botTable.setModel(botList);
 		botList.addColumn("Bot");
@@ -233,14 +219,6 @@ public class EntityPanel extends JPanel {
 		botScrollPane.setPreferredSize(new Dimension(SCROLL_PANE_WIDTH,
 				SCROLL_PANE_HEIGHT));
 		setUpControllerColumn();
-
-		botList.addTableModelListener(new TableModelListener() {
-
-			@Override
-			public void tableChanged(TableModelEvent e) {
-				updateBotCount();
-			}
-		});
 	}
 
 	/**
@@ -307,7 +285,7 @@ public class EntityPanel extends JPanel {
 
 		ePartnerTable = new JTable();
 		ePartnerTable.getTableHeader().setReorderingAllowed(false);
-		epartnerList = new EntityTableModel();
+		epartnerList = new EntityTableModel(EntityType.EPARTNER);
 
 		ePartnerTable.setModel(epartnerList);
 		epartnerList.addColumn("E-partner");
@@ -316,14 +294,6 @@ public class EntityPanel extends JPanel {
 		epartnerScrollPane = new JScrollPane(ePartnerTable);
 		epartnerScrollPane.setPreferredSize(new Dimension(SCROLL_PANE_WIDTH,
 				SCROLL_PANE_HEIGHT));
-
-		epartnerList.addTableModelListener(new TableModelListener() {
-
-			@Override
-			public void tableChanged(TableModelEvent e) {
-				updateEPartnerCount();
-			}
-		});
 	}
 
 	/**
@@ -387,48 +357,21 @@ public class EntityPanel extends JPanel {
 	}
 
 	/**
-	 * Returns the amount of bots.
-	 *
-	 * @return The amount of bots.
-	 */
-	public final int getBotCount() {
-		int numBots = 0;
-
-		for (int i = 0; i < botList.getRowCount(); i++) {
-			numBots += Integer.valueOf(botList.getValueAt(i, 2).toString());
-		}
-		return numBots;
-	}
-
-	/**
 	 * Updates the bot count on the EntityPanel.
+	 * 
+	 * @param count The total bot count.
 	 */
-	public final void updateBotCount() {
-		Integer bots = getBotCount();
-		botCountField.setText(bots.toString());
-	}
-
-	/**
-	 * Returns the amount of epartners.
-	 *
-	 * @return The amount of epartners.
-	 */
-	public final int getEPartnerCount() {
-		int numEPartner = 0;
-
-		for (int i = 0; i < epartnerList.getRowCount(); i++) {
-			numEPartner += Integer.valueOf(epartnerList.getValueAt(i, 1)
-					.toString());
-		}
-		return numEPartner;
+	public final void updateBotCount(Integer count) {
+		botCountField.setText(count.toString());
 	}
 
 	/**
 	 * Updates the entities count on the EntityPanel.
+	 * 
+	 * @param count The total epartner count.
 	 */
-	public final void updateEPartnerCount() {
-		Integer epartners = getEPartnerCount();
-		epartnerCountField.setText(epartners.toString());
+	public final void updateEPartnerCount(Integer count) {
+		epartnerCountField.setText(count.toString());
 	}
 
 	/**
@@ -501,120 +444,6 @@ public class EntityPanel extends JPanel {
 	 */
 	public final int getSelectedEPartnerRow() {
 		return ePartnerTable.getSelectedRow();
-	}
-
-	/**
-	 * Returns the list with BotConfigs.
-	 *
-	 * @return The list with BotConfigs.
-	 */
-	public List<BotConfig> getBotConfigs() {
-		return botConfigList;
-	}
-
-	/**
-	 * Returns the list with EpartnerConfigs.
-	 *
-	 * @return The list with EpartnerConfigs.
-	 */
-	public List<EPartnerConfig> getEPartnerConfigs() {
-		return epartnerConfigList;
-	}
-
-	/**
-	 * Returns the BotConfig at the index'th place.
-	 *
-	 * @param index
-	 *            The index of the bot.
-	 * @return The BotConfig at the index'th place.
-	 */
-	public BotConfig getBotConfig(int index) {
-		return botConfigList.get(index);
-	}
-
-	/**
-	 * Returns the EpartnerConfig at the index'th place.
-	 *
-	 * @param index
-	 *            The index of the bot.
-	 * @return The EpartnerConfig at the index'th place.
-	 */
-	public EPartnerConfig getEPartnerConfig(int index) {
-		return epartnerConfigList.get(index);
-	}
-
-	/**
-	 * Returns the previous saved BotConfig list.
-	 *
-	 * @return The previous saved BotConfig list.
-	 */
-	public List<BotConfig> getOldBotConfigs() {
-		return oldBotConfigs;
-	}
-
-	/**
-	 * Returns the previous saved EpartnerConfig list.
-	 *
-	 * @return The previous saved EpartnerConfig list.
-	 */
-	public List<EPartnerConfig> getOldEPartnerConfigs() {
-		return oldEpartnerConfigs;
-	}
-
-	/**
-	 * Updates the BotConfig list.
-	 */
-	public void updateBotConfigs() {
-		oldBotConfigs = botConfigList;
-	}
-
-	/**
-	 * Updates the EpartnerConfig list.
-	 */
-	public void updateEpartnerConfigs() {
-		oldEpartnerConfigs = epartnerConfigList;
-	}
-
-	/**
-	 * Compares the BotConfig lists.
-	 *
-	 * @param config the bot configurations to be compared with the current ones
-	 * @return If the BotConfigs lists are equal.
-	 */
-	public boolean compareBotConfigs(List<BotConfig> config) {
-		if (botConfigList.size() != config.size()) {
-			return false;
-		}
-
-		for (int i = 0; i < botConfigList.size(); i++) {
-			if (!botConfigList.get(i).bcToString()
-					.equals(config.get(i).bcToString())) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Compares the EpartnerConfig lists.
-	 *
-	 * @param config the epartner configurations to be compared with the current ones
-	 * @return If the EpartnerConfigs lists are equal.
-	 */
-	public boolean compareEpartnerConfigs(List<EPartnerConfig> config) {
-		if (epartnerConfigList.size() != config.size()) {
-			return false;
-		}
-
-		for (int i = 0; i < epartnerConfigList.size(); i++) {
-			if (!epartnerConfigList.get(i).ecToString()
-					.equals(config.get(i).ecToString())) {
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	/**

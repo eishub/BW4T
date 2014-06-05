@@ -6,14 +6,13 @@ import java.awt.Insets;
 
 import javax.swing.JPanel;
 
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+
 /**
  * MainPanel which serves as the content pane for the ScenarioEditor frame.
  * Creates a 1/3 - 2/3 division, the former for the ConfigurationPanel, and the
  * latter the EntityPanel.
  *
- * @author Katia Asmoredjo
- * @author Joop Aué
- * @author Nick Feddes
  * @version 0.1
  * @since 12-05-2014
  */
@@ -46,9 +45,9 @@ public class MainPanel extends JPanel {
     private EntityPanel entityPanel;
     /**  */
     private GridBagLayout gbl;
-    /**
-     * The XML element wrapper for the list of bots. 
-     */
+    
+    private BW4TClientConfig clientConfig = new BW4TClientConfig();
+    
 
     /**
      * Create a MainPanel consisting of a ConfigurationPanel and a EntityPanel.
@@ -133,4 +132,9 @@ public class MainPanel extends JPanel {
     public final void setEntityPanel(final EntityPanel newEntityPanel) {
         this.entityPanel = newEntityPanel;
     }
+
+    public BW4TClientConfig getClientConfig() {
+        return clientConfig;
+    }
+    
 }

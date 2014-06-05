@@ -12,15 +12,11 @@ import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
 /**
  * Handles the event to choose a map file.
  * <p>
- * @author      Nick Feddes
  * @version     0.1                
  * @since       12-05-2014        
  */
 class ChooseMapFileListener implements ActionListener {
 
-    /**
-     * The <code>MainPanel</code> serving as the content pane.
-     */
     private MainPanel view;
 
     /**

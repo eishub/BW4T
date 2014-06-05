@@ -24,48 +24,34 @@ import nl.tudelft.bw4t.scenariogui.util.MapSpec;
 /**
  * The ConfigurationPanel class represents the left pane of the MainPanel. It
  * shows the options the user can configure.
+ * 
  */
 public class ConfigurationPanel extends JPanel {
     
-    /** Randomly generated serial version. */
     private static final long serialVersionUID = 2925174902776539436L;
 
-    /** Localhost. */
     private static final String LOCALHOST = "localhost";
-    /** True. */
+
     private static final String TRUE = "true";
-    
-    /** The font name. */
+
     private static final String FONT_NAME = "Sans-Serif";
-    
-    /** The insets used. */
+
     private static final int INSET = 8;
 
-    /** The weight used for the grid bag constraints. */
     private static final double GRID_BAG_CONSTRAINTS_WEIGHT = 0.5;
 
     /**
      * The default values for in the GUI.
-     * @author Nick
-     *
      */
     public static enum DEFAULT_VALUES {
-        /** The default server ip. */
         DEFAULT_SERVER_IP(LOCALHOST),
-        /** The default client ip. */
         DEFAULT_CLIENT_IP(LOCALHOST),
-        /** The default server port. */
         DEFAULT_SERVER_PORT("8000"),
-        /** The default client port. */
         DEFAULT_CLIENT_PORT("2000"),
-        /** Whether to use a GUI's for the client on default. */
         USE_GUI(TRUE),
-        /** Whether the goal is used on default. */
         USE_GOAL(TRUE),
-        /** The default location of the map file. */
         MAP_FILE("");
 
-        /** The string value of the default value. */
         private String value;
 
         /**
@@ -102,79 +88,67 @@ public class ConfigurationPanel extends JPanel {
 
     }
 
-    /** The column size of the big text fields. */
     private static final int TEXT_FIELD_COLUMN_SIZE_BIG = 15;
-    /** The column size of the small text fields. */
+
     private static final int TEXT_FIELD_COLUMN_SIZE_SMALL = 6;
 
-    /** The specifications of the currently selected map file. */
+    
     private MapSpec mapSpec;
 
-    /** The text field holding the client ip. */
+
     private JTextField clientIP = new JTextField(
             DEFAULT_VALUES.DEFAULT_CLIENT_IP.getValue(),
             TEXT_FIELD_COLUMN_SIZE_BIG);
-    /** The text field for the client port. */
+
     private JTextField clientPort = new JTextField(
             DEFAULT_VALUES.DEFAULT_CLIENT_PORT.getValue(),
             TEXT_FIELD_COLUMN_SIZE_SMALL);
     {
         Format.addIntegerDocumentFilterForTextField(clientPort);
     }
-    /** The text field holding the server ip. */
+
     private JTextField serverIP = new JTextField(
             DEFAULT_VALUES.DEFAULT_SERVER_IP.getValue(),
             TEXT_FIELD_COLUMN_SIZE_BIG);
-    /** The text field holding the server port. */
+
     private JTextField serverPort = new JTextField(
             DEFAULT_VALUES.DEFAULT_SERVER_PORT.getValue(),
             TEXT_FIELD_COLUMN_SIZE_SMALL);
     {
         Format.addIntegerDocumentFilterForTextField(serverPort);
     }
-    /** The text filed holding the location to the map file. */
+
     private JTextField mapFileTextField = new JTextField(
             DEFAULT_VALUES.MAP_FILE.getValue());
 
-    /** The checkbox group for enabling the GUI. */
     private CheckboxGroup guiCheckBox = new CheckboxGroup();
-    /** The yes option of the checkbox. */
+
     private Checkbox guiYes = new Checkbox("Yes",
             DEFAULT_VALUES.USE_GUI.getBooleanValue(), guiCheckBox);
-    /** The no option of the checkbox. */
+
     private Checkbox guiNo = new Checkbox("No",
             !DEFAULT_VALUES.USE_GUI.getBooleanValue(), guiCheckBox);
 
-    /** The button to open a file chooser. */
     private JButton chooseMapFile = new JButton("Open File");
 
-    /** A file chooser (to for instance select a map). */
     private JFileChooser fileChooser;
 
-    /** The gridbag constraints. */
     private GridBagConstraints c;
 
-    /** The normal font size used. */
     private static final int FONT_SIZE = 16;
-    /** The small font size used. */
+
     private static final int FONT_SIZE_SMALL = 14;
 
-    /** The old client IP. */
     private String oldClientIP = clientIP.getText();
 
-    /** The old client port. */
     private String oldClientPort = clientPort.getText();
 
-    /** The old server IP. */
     private String oldServerIP = serverIP.getText();
 
-    /** The old server port. */
     private String oldServerPort = serverPort.getText();
 
-    /** The old checked box. */
     private Checkbox oldGui = guiCheckBox.getSelectedCheckbox();
 
-    /** The old map file. */
     private String oldMapFile = mapFileTextField.getText();
 
     /**
@@ -506,9 +480,6 @@ public class ConfigurationPanel extends JPanel {
         }
         else if (this.useGui() != DEFAULT_VALUES.USE_GUI.getBooleanValue()) {
             isDefault = false;
-        // if(this.useGoal() != DEFAULT_VALUES.USE_GOAL.getBooleanValue() &&
-        // isDefault)
-        // isDefault = false;
         }
         else if (!this.getMapFile().equals(DEFAULT_VALUES.MAP_FILE.getValue())) {
             isDefault = false;
@@ -534,20 +505,10 @@ public class ConfigurationPanel extends JPanel {
      */
     public void updateOldValues() {
         this.oldClientIP = clientIP.getText();
-
-        /** The old client port. */
         this.oldClientPort = clientPort.getText();
-
-        /** The old server IP. */
         this.oldServerIP = serverIP.getText();
-
-        /** The old server port. */
         this.oldServerPort = serverPort.getText();
-
-        /** The old checked box. */
         this.oldGui = guiCheckBox.getSelectedCheckbox();
-
-        /** The old map file. */
         this.oldMapFile = mapFileTextField.getText();
     }
 
@@ -569,6 +530,34 @@ public class ConfigurationPanel extends JPanel {
      */
     public MapSpec getMapSpecifications() {
         return mapSpec;
+    }
+    
+    public JTextField getClientIPTextField() {
+        return clientIP;
+    }
+    
+    public JTextField getClientPortTextField() {
+        return clientPort;
+    }
+    
+    public JTextField getServerIPTextField() {
+        return serverIP;
+    }
+    
+    public JTextField getServerPortTextField() {
+        return serverPort;
+    }
+    
+    public Checkbox getGUIYesCheckbox() {
+        return guiYes;
+    }
+    
+    public Checkbox getGUINoCheckbox() {
+        return guiNo;
+    }
+    
+    public JTextField getMapFileTextField() {
+        return mapFileTextField;
     }
     
 }

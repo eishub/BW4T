@@ -33,7 +33,7 @@ public class EpartnerController {
 	 * @param row row
 	 */
 	public EpartnerController(MainPanel panel, int row) {
-		epConfig = panel.getEntityPanel().getEPartnerConfig(row);
+		epConfig = panel.getClientConfig().getEpartner(row);
 	}
 	
 	/**
@@ -99,6 +99,14 @@ public class EpartnerController {
 	public boolean isForgetMeNot() {
 		return epConfig.isForgetMeNot();
 	}
+
+    public String getReferenceName() {
+        return epConfig.getReferenceName();
+    }
+
+    public String getFileName() {
+        return epConfig.getFileName();
+    }
 
 	/**
 	 * Updates the epartner config file with the values from the EpartnerFrame
