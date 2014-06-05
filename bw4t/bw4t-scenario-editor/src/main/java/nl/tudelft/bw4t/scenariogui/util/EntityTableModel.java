@@ -20,10 +20,6 @@ public class EntityTableModel extends DefaultTableModel {
      */
     @Override
     public Class<?> getColumnClass(int column) {
-        if (column == 1) {
-            return Integer.class;
-        }
-
         return String.class;
     }
 }
