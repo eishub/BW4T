@@ -1,29 +1,36 @@
 package nl.tudelft.bw4t.client.environment.handlers;
 
+import eis.exceptions.EntityException;
+import eis.exceptions.PerceiveException;
+import eis.iilang.Percept;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
-
 import nl.tudelft.bw4t.client.BW4TClient;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.startup.InitParam;
-import eis.exceptions.EntityException;
-import eis.exceptions.PerceiveException;
-import eis.iilang.Percept;
 
-public class PerceptsHandler {
+/** The ActionHandler Class handles the getAllPerceptsFromEntity function of the RemoteEnvironment. */
+public final class PerceptsHandler {
+	
+	/** Should never be instantiated. */
+	private PerceptsHandler() { }
+	
     /**
      * Get all percepts for a certain entity, is passed through the server.
      * 
      * @param entity
-     *            The entity for which the percepts are requested.
+     *            - The entity for which the percepts are requested.
+     * @param env
+     *            - {@link RemoteEnvironment} to fetch required data from.
      * @return The list of received percepts.
      * @throws PerceiveException
      *             The NoEnvironmentException is thrown if an attempt to perform
      *             an action or to retrieve percepts has failed.
      */
-    public static List<Percept> getAllPerceptsFromEntity(String entity, RemoteEnvironment env) throws PerceiveException {
+    public static List<Percept> getAllPerceptsFromEntity(String entity, RemoteEnvironment env) 
+    		throws PerceiveException {
         try {
             RemoteEnvironment remoteEnvironment = env;
             BW4TClientGUI clientEntity = remoteEnvironment.getEntityToGUI().get(entity);

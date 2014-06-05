@@ -1,41 +1,40 @@
 package nl.tudelft.bw4t.client.environment.handlers;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
-import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
 import eis.iilang.Action;
 import eis.iilang.Percept;
+import java.rmi.RemoteException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 
-/**
- * The ActionHandler Class handles the performAction function of the Remote
- * Environment.
- */
-public class ActionHandler {
+/** The ActionHandler Class handles the performAction function of the RemoteEnvironment. */
+public final class ActionHandler {
+	
+	/** Should never be instantiated. */
+	private ActionHandler() { }
+	
     /**
-     * Handles the performAction function from the Remote Environment. All
-     * actions which are requested are routed through this function.
+     * Handles the performAction function from the {@link RemoteEnvironment}. 
+     * All actions which are requested are routed through this function.
      * 
      * @param agent
-     *            the agent requesting the action
+     *            - The agent requesting the action.
      * @param action
-     *            the action being requested
+     *            - The {@link Action} being requested.
      * @param remoteEnvironment
-     *            the remote environment which should be acted upon
+     *            - The RemoteEnvironment which should be acted upon.
      * @param entities
-     *            the entities that should perform the action
-     * @return a map of of entitynames -> percepts that have resulted by
-     *         Execution of the action
+     *            - The entities that should perform the action
+     * @return A map of entity names -> {@link Percept} that have resulted by Execution of the action.
      * @throws ActException
-     *             the act exception is thrown if the action cannot be
-     *             performed.
+     *             The act exception is thrown if the action cannot be performed.
      * @throws AgentException
-     *             the agent exception is thrown if the agent is not registered
+     *             The agent exception is thrown if the agent is not registered
      *             or does not have any entities assigned.
      */
     public static Map<String, Percept> performActionDelegated(String agent, Action action,
@@ -64,12 +63,12 @@ public class ActionHandler {
     }
 
     /**
-     * Gets the targeted entities(The entities which should perform the action).
+     * Gets the targeted entities(The entities which should perform the {@link Action}).
      * 
      * @param associatedEntities
-     *            All the entities associated in the remote environment.
+     *            - All the entities associated in the {@link RemoteEnvironment}.
      * @param entities
-     *            The entities which should perform the action.
+     *            - The entities which should perform the action.
      * @return The set of entities which should perform the action.
      * @throws ActException
      *             Thrown if the the entity is incorrect.
@@ -95,14 +94,13 @@ public class ActionHandler {
      * Check if the entity types and the entities are supported.
      * 
      * @param entities
-     *            The entities which need to be checked.
+     *            - The entities which need to be checked.
      * @param remoteEnvironment
-     *            The remote environment which is currently used.
+     *            - The {@link RemoteEnvironment} which is currently used.
      * @param action
-     *            The action which is requested to be performed.
+     *            - The {@link Action} which is requested to be performed.
      * @throws ActException
-     *             Thrown if the action is not support by the type of entity, or
-     *             by the entity.
+     *             Thrown if the action is not support by the type of entity, or by the entity.
      */
     private static void checkSupportedEntities(String[] entities, RemoteEnvironment remoteEnvironment, Action action)
             throws ActException {
@@ -123,17 +121,17 @@ public class ActionHandler {
     }
 
     /**
-     * Perform the action on the server and get the resulting percepts.
+     * Perform the action on the server and get the resulting {@link Percept}{@code s}.
      * 
      * @param targetEntities
-     *            The entities which should perform the action.
+     *            - The entities which should perform the action.
      * @param remoteEnvironment
-     *            The remote environment which is acted upon.
+     *            - The {@link RemoteEnvironment} which is acted upon.
      * @param action
-     *            The action to be performed.
+     *            - The {@link Action} to be performed.
      * @return The map of resulting percepts.
      * @throws ActException
-     *             thrown if the server could not perform the action.
+     *             Thrown if the server could not perform the action.
      */
     private static Map<String, Percept> getActionPercept(Set<String> targetEntities,
             RemoteEnvironment remoteEnvironment, Action action) throws ActException {
@@ -144,7 +142,7 @@ public class ActionHandler {
                 if (percept != null) {
                     actionPercepts.put(entity, percept);
                 }
-            } catch (Exception e) {
+            } catch (RemoteException e) {
                 throw new ActException(ActException.FAILURE, "performAction failed:", e);
             }
         }
