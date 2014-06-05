@@ -444,10 +444,16 @@ public class RobotEntity implements RobotEntityInt {
      */
     @AsAction(name = "goToBlock")
     public void goTo(long targetid) {
-        Block target = null;
+        BoundedMoveableObject target = null;
         for (Block b : getVisibleBlocks()) {
             if (b.getId() == targetid) {
                 target = b;
+            }
+        }
+        for (Object obj : context.getObjects(EPartner.class)) {
+            EPartner ep = (EPartner) obj;
+            if (targetid == ep.getId()) {
+                target = ep;
             }
         }
         if (target == null) {
