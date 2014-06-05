@@ -36,7 +36,7 @@ public final class BotConfig implements Serializable {
 
 	private int botBatteryCapacity = 10;
 
-	private int botBatteryDischargeRate = 0;
+	private double botBatteryDischargeRate = 0.1;
 
 	private int numberOfGrippers = 1;
 
@@ -185,7 +185,7 @@ public final class BotConfig implements Serializable {
 	/**
 	 * @return the robot's battery discharge rate.
 	 */
-	public int getBotBatteryDischargeRate() {
+	public double getBotBatteryDischargeRate() {
 		return botBatteryDischargeRate;
 	}
 
@@ -194,7 +194,7 @@ public final class BotConfig implements Serializable {
 	 *            , the new robot's battery discharge rate.
 	 */
 	@XmlElement
-	public void setBotBatteryDischargeRate(int newBatteryDischargeRate) {
+	public void setBotBatteryDischargeRate(double newBatteryDischargeRate) {
 		botBatteryDischargeRate = newBatteryDischargeRate;
 	}
 

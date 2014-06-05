@@ -376,37 +376,43 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     @Override
     @ScheduledMethod(start = 0, duration = 0, interval = 1)
     public synchronized void move() {
-        if (targetLocation != null) {
-            // Calculate the distance that the robot is allowed to move.
-            double distance = distanceTo(targetLocation);
-            if (distance < MIN_MOVE_DISTANCE) {
-                // we're there
-                stopRobot();
-            }
-            else {
-                double movingDistance = Math.min(distance, MAX_MOVE_DISTANCE * speedMod);
-
-                // Angle at which to move
-                double angle = SpatialMath.calcAngleFor2DMovement(space, getLocation(), targetLocation);
-
-                // The displacement of the robot
-                double[] displacement = SpatialMath.getDisplacement(2, 0, movingDistance, angle);
-
-                try {
-                    // Move the robot to the new position using the displacement
-                    moveByDisplacement(displacement[0], displacement[1]);
-                    agentRecord.setStartedMoving();
-
-                    /**
-                     * The robot's battery discharges when it moves.
-                     */
-                    this.battery.discharge();
-                } catch (SpatialException e) {
-                    collided = true;
-                    stopRobot();
-                }
-            }
-        }
+    	if (battery.getCurrentCapacity() > 0) {
+		    if (targetLocation != null) {
+		        // Calculate the distance that the robot is allowed to move.
+		        double distance = distanceTo(targetLocation);
+		        if (distance < MIN_MOVE_DISTANCE) {
+		            // we're there
+		            stopRobot();
+		        }
+		        else {
+		            double movingDistance = Math.min(distance, MAX_MOVE_DISTANCE * speedMod);
+		
+		            // Angle at which to move
+		            double angle = SpatialMath.calcAngleFor2DMovement(space, getLocation(), targetLocation);
+		
+		            // The displacement of the robot
+		            double[] displacement = SpatialMath.getDisplacement(2, 0, movingDistance, angle);
+		
+		            try {
+		                // Move the robot to the new position using the displacement
+		                moveByDisplacement(displacement[0], displacement[1]);
+		                agentRecord.setStartedMoving();
+		
+		                /**
+		                 * The robot's battery discharges when it moves.
+		                 */
+		                this.battery.discharge();
+		                LOGGER.info("current battery " + battery.getCurrentCapacity());
+		            } catch (SpatialException e) {
+		                collided = true;
+		                stopRobot();
+		            }
+		        }
+		    }
+    	} else {
+    		LOGGER.info("move, current battery: " + battery.getCurrentCapacity());
+    		stopRobot();
+    	}
     }
 
 

@@ -65,8 +65,9 @@ public class DefaultEntityFactory implements EntityFactory {
 		if (config.getBotController() == EntityType.HUMAN) {
 			r = new Human(r);
 		}
-		r.getSuperParent().setBattery(
+		r.setBattery(
 				new Battery(config.getBotBatteryCapacity(), config.getBotBatteryDischargeRate()));
+		LOGGER.info("Battery capacity is: " + r.getBattery().getCurrentCapacity());
 		return r;
 	}
 
