@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.scenariogui.controllers.editor;
 
+import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
@@ -22,9 +23,11 @@ public class UpdateBotCount implements TableModelListener {
 	
 	@Override
 	public void tableChanged(TableModelEvent e) {
-		model.updateAmountBot();
-		System.out.println("updateBotCount");
-		view.getEntityPanel().updateBotCount(model.getAmountBot());
-		System.out.println(model.getAmountBot());
+	    SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+        		model.updateAmountBot();
+        		view.getEntityPanel().updateBotCount(model.getAmountBot());
+            }
+	    });
 	}
 }

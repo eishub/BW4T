@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.scenariogui.controllers.editor;
 
+import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
@@ -22,7 +23,11 @@ public class UpdateEPartnerCount implements TableModelListener {
 	
 	@Override
 	public void tableChanged(TableModelEvent e) {
-		model.updateAmountEPartner();
-		view.getEntityPanel().updateEPartnerCount(model.getAmountEPartner());
+	    SwingUtilities.invokeLater(new Runnable() {
+	        public void run() {
+    		model.updateAmountEPartner();
+    		view.getEntityPanel().updateEPartnerCount(model.getAmountEPartner());
+	        }
+	    });
 	}
 }
