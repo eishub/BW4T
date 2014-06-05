@@ -4,7 +4,7 @@
     <epartners/>
     <clientIp>localhost</clientIp>
     <clientPort>2000</clientPort>
-    <fileLocation>C:\Users\Contextproject\Documents\GitHub\BW4T\bw4t\bw4t-scenario-editor\src\test\resources/export.xml</fileLocation>
+    <fileLocation>C:\Projects\Contextproject\BW4T3Redesign\BW4T Launcher\bw4t\bw4t-scenario-editor\src\test\resources/export.xml</fileLocation>
     <launchGui>true</launchGui>
     <mapFile></mapFile>
     <serverIp>localhost</serverIp>

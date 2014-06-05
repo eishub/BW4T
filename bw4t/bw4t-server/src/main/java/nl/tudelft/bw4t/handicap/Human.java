@@ -1,5 +1,7 @@
 package nl.tudelft.bw4t.handicap;
 
+import org.apache.log4j.Logger;
+
 import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.robots.AbstractRobot;
@@ -9,6 +11,7 @@ import repast.simphony.random.RandomHelper;
  * @author Valentine Mairet
  */
 public class Human extends AbstractRobotDecorator {
+    private static final Logger LOGGER = Logger.getLogger(Human.class);
     
     /**
      * The e-Partner the human is holding.
@@ -26,6 +29,14 @@ public class Human extends AbstractRobotDecorator {
         this.ePartner = null;
     }
     
+    @Override
+    public void pickUpEPartner(EPartner eP) {
+        if (canPickUp(eP)) {
+            this.ePartner = eP;
+            eP.setHolder(this);
+        }
+    }
+    
     /**
      * @param eP the ePartner to be picked up.
      * @return true if the human can pick it up. 
@@ -33,7 +44,7 @@ public class Human extends AbstractRobotDecorator {
     @Override
     public boolean canPickUp(BoundedMoveableObject eP) {
         if (eP instanceof EPartner){
-            return (robot.distanceTo(eP) <= AbstractRobot.ARM_DISTANCE);
+            return (robot.distanceTo(eP) <= AbstractRobot.ARM_DISTANCE) && this.ePartner == null;
         }
         return getParent().canPickUp(eP);
     }
@@ -48,13 +59,14 @@ public class Human extends AbstractRobotDecorator {
     		return;
     	}
     	
-    	this.ePartner.addToContext();
+    	//this.ePartner.addToContext();
     	
-        double x = robot.getLocation().getX();
-        double y = robot.getLocation().getY();
-        
-        this.ePartner.moveTo(RandomHelper.nextDoubleFromTo(x - 5, x + 5), RandomHelper.nextDoubleFromTo(y - 5, y + 5));
-        
+//        double x = robot.getLocation().getX();
+//        double y = robot.getLocation().getY();
+
+//        this.ePartner.moveTo(RandomHelper.nextDoubleFromTo(x - 5, x + 5), RandomHelper.nextDoubleFromTo(y - 5, y + 5));
+    	ePartner.setHolder(null);
+    	
         this.ePartner = null;
     }
 
