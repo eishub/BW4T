@@ -15,19 +15,19 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  */
 class AddNewEPartner implements ActionListener {
 
-	private MainPanel view;
+    private MainPanel view;
 
-	private int eCount;
+    private int eCount;
 
-	/**
-	 * Create an AddNewEpartner event handler.
-	 * 
-	 * @param newView
-	 *            The parent view.
-	 */
-	public AddNewEPartner(final MainPanel newView) {
-		this.view = newView;
-	}
+    /**
+     * Create an AddNewEpartner event handler.
+     * 
+     * @param newView
+     *            The parent view.
+     */
+    public AddNewEPartner(final MainPanel newView) {
+        this.view = newView;
+    }
 
 	/**
 	 * Executes action that needs to happen when the "New E-partner" button is

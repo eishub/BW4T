@@ -37,7 +37,7 @@ public class BotEditor extends JFrame {
     /**
      * creates the BotEditor frame
      * @param pparent the parent of the frame
-     * @param row
+     * @param row the row to be updated in the scenario gui
      */
     public BotEditor(MainPanel pparent, int row) {
         setLookAndFeel();
@@ -85,7 +85,7 @@ public class BotEditor extends JFrame {
      * @return The row number of the bot that is currently selected.
      */
     public int getRow() {
-    	return this.row;
+        return this.row;
     }
     
     /**

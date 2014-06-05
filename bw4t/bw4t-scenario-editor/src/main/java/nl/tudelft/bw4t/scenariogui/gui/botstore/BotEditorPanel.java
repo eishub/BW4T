@@ -26,44 +26,44 @@ import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
  */
 public class BotEditorPanel extends JPanel {
 
-	private static final long serialVersionUID = 1850617931893202292L;
+    private static final long serialVersionUID = 1850617931893202292L;
 
-	private JPanel botCheckables = new JPanel();
+    private JPanel botCheckables = new JPanel();
 
-	private JPanel botSliders = new JPanel();
+    private JPanel botSliders = new JPanel();
 
-	private JPanel botInfo = new JPanel();
+    private JPanel botInfo = new JPanel();
 
 	private JButton saveButton = new JButton("Save");
 
-	private JButton resetButton = new JButton("Reset");
+    private JButton resetButton = new JButton("Reset");
 
-	private JButton cancelButton = new JButton("Cancel");
+    private JButton cancelButton = new JButton("Cancel");
 
-	private JButton fileButton = new JButton("Use existing GOAL file");
+    private JButton fileButton = new JButton("Use existing GOAL file");
 
-	private JComboBox botControllerSelector = new JComboBox();
+    private JComboBox botControllerSelector = new JComboBox();
 
-	private JTextField botNameField = new JTextField();
+    private JTextField botNameField = new JTextField();
 
-	private JTextField botAmountTextField = new JTextField();
+    private JTextField botAmountTextField = new JTextField();
 
-	private JCheckBox gripperCheckbox = new JCheckBox("Gripper Disabled");
+    private JCheckBox gripperCheckbox = new JCheckBox("Gripper Disabled");
 
-	private JCheckBox colorblindCheckbox = new JCheckBox("Color Blind Handicap");
+    private JCheckBox colorblindCheckbox = new JCheckBox("Color Blind Handicap");
 
-	private JCheckBox customSizeCheckbox = new JCheckBox("Custom Bot Size");
+    private JCheckBox customSizeCheckbox = new JCheckBox("Custom Bot Size");
 
-	private JCheckBox movespeedCheckbox = new JCheckBox("Custom Bot Speed");
+    private JCheckBox movespeedCheckbox = new JCheckBox("Custom Bot Speed");
 
-	private JCheckBox batteryEnabledCheckbox = new JCheckBox(
-			"Battery Capacity enabled");
+    private JCheckBox batteryEnabledCheckbox = new JCheckBox(
+            "Battery Capacity enabled");
 
 	private JTextField fileNameField = new JTextField(BotConfig.DEFAULT_GOAL_FILENAME);
 
 	private JTextField botReferenceField = new JTextField(BotConfig.DEFAULT_GOAL_FILENAME_REFERENCE);
 
-	private JSlider sizeSlider = new JSlider();
+    private JSlider sizeSlider = new JSlider();
 
 	private JSlider speedSlider = new JSlider();
 

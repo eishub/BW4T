@@ -19,6 +19,7 @@ import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.startup.InitParam;
 import nl.tudelft.bw4t.client.startup.Launcher;
 
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
 import eis.AgentListener;
@@ -192,6 +193,9 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
      */
     @Override
     public void init(Map<String, Parameter> parameters) throws ManagementException {
+        if (!LOGGER.getAllAppenders().hasMoreElements()) {
+            BasicConfigurator.configure();
+        }
         InitParam.setParameters(parameters);
         connectedToGoal = Boolean.parseBoolean(InitParam.GOAL.getValue());
         try {
@@ -384,7 +388,8 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
     }
 
     /**
-     * {@inheritDoc.
+     * {@inheritDoc.
+
      */
     @Override
     public void kill() throws ManagementException {

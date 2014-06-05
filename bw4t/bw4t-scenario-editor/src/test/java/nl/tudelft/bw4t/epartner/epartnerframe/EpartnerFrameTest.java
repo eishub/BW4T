@@ -37,14 +37,14 @@ public class EpartnerFrameTest {
 	
 	@Test
 	public final void testInititalSetup() {
-		assertFalse(spyframe.getLeftAloneCheckbox().isSelected());
+		assertFalse(spyframe.getForgetCheckbox().isSelected());
 		assertFalse(spyframe.getGPSCheckbox().isSelected());
 	}
 		
 	@Test
 	public final void testResetButton() {
 		spyframe.getResetButton().doClick();
-		assertFalse(spyframe.getLeftAloneCheckbox().isSelected());
+		assertFalse(spyframe.getForgetCheckbox().isSelected());
 		assertFalse(spyframe.getGPSCheckbox().isSelected());
 	}
 }

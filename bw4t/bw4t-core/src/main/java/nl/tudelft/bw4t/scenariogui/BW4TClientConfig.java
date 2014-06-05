@@ -25,7 +25,6 @@ import nl.tudelft.bw4t.util.XMLManager;
  */
 @XmlRootElement
 public class BW4TClientConfig {
-
 	/**
 	 * The file in which the configuration in this class will be stored.
 	 */
@@ -364,4 +363,28 @@ public class BW4TClientConfig {
 	public EPartnerConfig getEpartner(int index) {
 		return epartners.get(index);
 	}
+
+    /**
+     * calculate the total number of Robots to be requested.
+     * @return the count
+     */
+    public int countBots() {
+        int count = 0;
+        for (BotConfig bot : bots) {
+            count += bot.getBotAmount();
+        }
+        return count;
+    }
+
+    /**
+     * calculate the total number of Robots to be requested.
+     * @return the count
+     */
+    public int countEpartners() {
+        int count = 0;
+        for (EPartnerConfig bot : getEpartners()) {
+            count += bot.getEpartnerAmount();
+        }
+        return count;
+    }
 }

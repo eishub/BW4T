@@ -1,12 +1,13 @@
 package nl.tudelft.bw4t.scenariogui;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlElement;
 
 import nl.tudelft.bw4t.agent.EntityType;
 
 /**
  * This class stores all the date from the BotEditorUI.
- * <p>
  * 
  * @author Valentine Mairet
  * @author Katia Asmoredjo
@@ -14,9 +15,10 @@ import nl.tudelft.bw4t.agent.EntityType;
  * @since 12-05-2014
  */
 
-public final class BotConfig {
+public final class BotConfig implements Serializable {
+	private static final long serialVersionUID = -4261058226493472776L;
 
-    /** The default reference names for the goal files */
+	/** The default reference names for the goal files */
     public static final String DEFAULT_GOAL_FILENAME_REFERENCE = "robot";
 
     /** The Default filename for the robot goal files */
@@ -28,15 +30,13 @@ public final class BotConfig {
 
 	private int amount = 1;
 
-	private int botGripperCapacity = 1;
-
 	private int botSize = 2;
 
 	private int botSpeed = 100;
 
 	private int botBatteryCapacity = 10;
 
-	private int botBatteryDischargeRate = 0;
+	private double botBatteryDischargeRate = 0.1;
 
 	private int numberOfGrippers = 1;
 
@@ -115,22 +115,6 @@ public final class BotConfig {
 	}
 
 	/**
-	 * @return the bot gripper capacity.
-	 */
-	public int getBotGripperCapacity() {
-		return botGripperCapacity;
-	}
-
-	/**
-	 * @param newgripcap
-	 *            , the new gripper capacity.
-	 */
-	@XmlElement
-	public void setBotGripperCapacity(int newgripcap) {
-		botGripperCapacity = newgripcap;
-	}
-
-	/**
 	 * @return the size of the robot.
 	 */
 	public int getBotSize() {
@@ -201,7 +185,7 @@ public final class BotConfig {
 	/**
 	 * @return the robot's battery discharge rate.
 	 */
-	public int getBotBatteryDischargeRate() {
+	public double getBotBatteryDischargeRate() {
 		return botBatteryDischargeRate;
 	}
 
@@ -210,7 +194,7 @@ public final class BotConfig {
 	 *            , the new robot's battery discharge rate.
 	 */
 	@XmlElement
-	public void setBotBatteryDischargeRate(int newBatteryDischargeRate) {
+	public void setBotBatteryDischargeRate(double newBatteryDischargeRate) {
 		botBatteryDischargeRate = newBatteryDischargeRate;
 	}
 
@@ -304,7 +288,7 @@ public final class BotConfig {
 	 * @return All the BotConfig properties.
 	 */
 	public String bcToString() {
-		return name + controller + amount + botGripperCapacity + botSize
+		return name + controller + amount + botSize
 				+ botSpeed + botBatteryCapacity + botBatteryDischargeRate
 				+ numberOfGrippers + batteryEnabled + hasColorBlindHandicap
 				+ hasGripperHandicap + hasMoveSpeedHandicap
