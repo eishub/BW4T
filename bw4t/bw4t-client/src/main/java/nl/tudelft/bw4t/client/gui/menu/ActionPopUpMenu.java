@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.client.gui.menu;
 
 import java.awt.Shape;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 import nl.tudelft.bw4t.client.controller.ClientController;
@@ -35,11 +36,14 @@ public class ActionPopUpMenu {
         
         if(cmc.getTheBot().getHoldingEpartner() >= 0) {
             ViewEPartner ep = cmc.getViewEPartner(cmc.getTheBot().getHoldingEpartner());
-            Shape ePartnerBox = set.transformCenterRectangle(new Rectangle2D.Double(ep.getLocation().getX(), ep.getLocation().getY(), ep.EPARTNER_SIZE, ep.EPARTNER_SIZE));
-            if (ePartnerBox.contains(gui.getSelectedLocation())) {
-                EPartnerMenu.buildPopUpMenuForEPartner(ep, gui);
-                gui.getjPopupMenu().show(gui, (int) gui.getSelectedLocation().getX(), (int) gui.getSelectedLocation().getY());
-                return;
+            if(ep != null) {
+                final Point2D location = ep.getLocation();
+                Shape ePartnerBox = set.transformCenterRectangle(new Rectangle2D.Double(location.getX(), location.getY(), ep.EPARTNER_SIZE, ep.EPARTNER_SIZE));
+                if (ePartnerBox.contains(gui.getSelectedLocation())) {
+                    EPartnerMenu.buildPopUpMenuForEPartner(ep, gui);
+                    gui.getjPopupMenu().show(gui, (int) gui.getSelectedLocation().getX(), (int) gui.getSelectedLocation().getY());
+                    return;
+                }
             }
         } else {
             for (ViewEPartner ep : cmc.getVisibleEPartners()) {

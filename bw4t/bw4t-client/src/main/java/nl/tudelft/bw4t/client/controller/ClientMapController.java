@@ -175,6 +175,9 @@ public class ClientMapController extends AbstractMapController {
             long id = ((Numeral) parameters.get(0)).getValue().longValue();
             long holderId = ((Numeral) parameters.get(1)).getValue().longValue();
             
+            //LOGGER.info(name + "("+id + ", " + holderId + ")");
+            
+            
             ViewEPartner epartner = getViewEPartner(id);
             if (epartner == null) {
                 epartner = new ViewEPartner();
@@ -183,7 +186,7 @@ public class ClientMapController extends AbstractMapController {
             }
             if (holderId == theBot.getId()) {
                 theBot.setHoldingEpartner(holderId);
-            } else if(id == theBot.getHoldingEpartner()) {
+            } else if (id == theBot.getHoldingEpartner()) {
                 theBot.setHoldingEpartner(-1);
             }
             if (allBlocks.containsKey(id)) {
