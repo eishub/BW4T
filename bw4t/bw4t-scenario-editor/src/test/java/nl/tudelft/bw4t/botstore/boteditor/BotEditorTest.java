@@ -36,6 +36,7 @@ public class BotEditorTest {
         botEditor.setParent(parent);
         assertEquals(parent, botEditor.getParent());
         assertEquals(panel, botEditor.getBotEditorPanel());
+        botEditor.setVisible(false);
     }
 
 }

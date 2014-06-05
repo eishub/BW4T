@@ -15,6 +15,7 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import nl.tudelft.bw4t.agent.EntityType;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
@@ -34,7 +35,7 @@ public class BotEditorPanel extends JPanel {
 
     private JPanel botInfo = new JPanel();
 
-    private JButton applyButton = new JButton("Apply");
+	private JButton saveButton = new JButton("Save");
 
     private JButton resetButton = new JButton("Reset");
 
@@ -59,9 +60,9 @@ public class BotEditorPanel extends JPanel {
     private JCheckBox batteryEnabledCheckbox = new JCheckBox(
             "Battery Capacity enabled");
 
-    private JTextField fileNameField = new JTextField(".goal");
+	private JTextField fileNameField = new JTextField(BotConfig.DEFAULT_GOAL_FILENAME);
 
-    private JTextField botReferenceField = new JTextField();
+	private JTextField botReferenceField = new JTextField(BotConfig.DEFAULT_GOAL_FILENAME_REFERENCE);
 
     private JSlider sizeSlider = new JSlider();
 
@@ -115,7 +116,7 @@ public class BotEditorPanel extends JPanel {
 
 		botNameField.setText(dataObject.getBotName());
 		botControllerSelector.setModel(new DefaultComboBoxModel(new String[] {
-				"Agent", "Human" }));
+		        EntityType.AGENT.toString(), EntityType.HUMAN.toString() }));
 		botAmountTextField.setText("" + dataObject.getBotAmount());
 
 		botInfo.add(new JLabel("Bot name:"));
@@ -123,6 +124,9 @@ public class BotEditorPanel extends JPanel {
 		botInfo.add(botNameField);
 		JPanel controllerpanel = new JPanel();
 		controllerpanel.setLayout(new GridLayout(1, 0));
+		if (dataObject.getBotController().equals(EntityType.HUMAN)) {
+	        botControllerSelector.setSelectedIndex(1);
+	    } 
 		controllerpanel.add(botControllerSelector);
 		controllerpanel.add(new JLabel("   Amount of this type:"));
 		controllerpanel.add(botAmountTextField);
@@ -273,7 +277,7 @@ public class BotEditorPanel extends JPanel {
 		batterySlider.setValue(dataObject.getBotBatteryCapacity());
 
 		if (dataObject.isBatteryEnabled()) {
-			speedSlider.setEnabled(true);
+		    batterySlider.setEnabled(true);
 		}
 		batteryPanel.add(batterySlider);
 
@@ -302,7 +306,7 @@ public class BotEditorPanel extends JPanel {
 	private void addButtonPanel() {
 		JPanel buttonPanel = new JPanel();
 
-		buttonPanel.add(applyButton);
+		buttonPanel.add(saveButton);
 		buttonPanel.add(resetButton);
 		buttonPanel.add(cancelButton);
 
@@ -379,12 +383,12 @@ public class BotEditorPanel extends JPanel {
 	}
 
 	/**
-	 * Returns the applybutton
+	 * Returns the save button
 	 * 
-	 * @return the applyButton
+	 * @return the save button.
 	 */
-	public JButton getApplyButton() {
-		return applyButton;
+	public JButton getSaveButton() {
+		return saveButton;
 	}
 
 	/**
@@ -568,7 +572,15 @@ public class BotEditorPanel extends JPanel {
 		return botReferenceField;
     }
 
+	/**
+	 * Returns the BotEditor.
+	 * @return The BotEditor.
+	 */
 	public BotEditor getBotEditor() {
 		return botEditor;
+	}
+	
+	public BW4TClientConfig getModel() {
+	    return model;
 	}
 }

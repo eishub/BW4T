@@ -30,6 +30,6 @@ class LeftAloneCheckBox implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent ae) {
 		view.getDataObject().setForgetMeNot(
-				view.getLeftAloneCheckbox().isSelected());
+				view.getForgetCheckbox().isSelected());
 	}
 }

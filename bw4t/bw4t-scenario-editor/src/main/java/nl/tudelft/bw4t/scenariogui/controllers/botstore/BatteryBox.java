@@ -33,7 +33,7 @@ public class BatteryBox implements ActionListener {
         JSlider batterySlider = view.getBatterySlider();
         if (view.getBatteryEnabledCheckbox().isSelected()) {
             batterySlider.setEnabled(true);
-            view.getBatteryUseValueLabel().setText("0,006500");
+            view.getBatteryUseValueLabel().setText("0,1");
         }
         else {
             batterySlider.setEnabled(false);

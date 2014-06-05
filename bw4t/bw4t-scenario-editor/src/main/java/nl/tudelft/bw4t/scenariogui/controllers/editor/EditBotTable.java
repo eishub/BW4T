@@ -43,19 +43,19 @@ public class EditBotTable implements TableModelListener {
             return;
         model.getAmountBot();
         BotConfig config = model.getBots().get(event.getFirstRow());
-        Object value =  view.getEntityPanel().getBotTable().getValueAt(
+        String value =  "" + view.getEntityPanel().getBotTable().getValueAt(
                 event.getFirstRow(), event.getColumn());
         switch (event.getColumn()) {
         case 0:
-            config.setBotName((String) value);
+            config.setBotName(value);
             break;
         case 1:
-            EntityType botController = EntityType.getType((String) value);
+            EntityType botController = EntityType.getType(value);
 
             config.setBotController(botController);
             break;
         case 2:
-            config.setBotAmount(Integer.parseInt((String) value));
+            config.setBotAmount(Integer.parseInt(value));
             break;
          default:
             break;

@@ -35,7 +35,7 @@ public class ScenarioEditor extends JFrame {
     private ScenarioEditorController controller;
     
     private static BW4TClientConfig model;
-
+    
     private static OptionPrompt option = new DefaultOptionPrompt();
 
     /**
@@ -44,7 +44,7 @@ public class ScenarioEditor extends JFrame {
      */
     public ScenarioEditor() {
         setLookAndFeel();
-        setTitle(windowName);
+        setWindowTitle("Untitled");
 
         setResizable(false);
         setLayout(null);
@@ -228,5 +228,9 @@ public class ScenarioEditor extends JFrame {
      */
     public void closeScenarioEditor() {
         System.exit(0);
+    }
+
+    public void setWindowTitle(String filenameBeingEdited) {
+        setTitle(windowName + " - " + filenameBeingEdited);
     }
 }
