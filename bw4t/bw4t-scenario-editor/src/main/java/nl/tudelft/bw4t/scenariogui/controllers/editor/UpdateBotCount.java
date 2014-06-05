@@ -36,10 +36,6 @@ public class UpdateBotCount implements TableModelListener {
 	 */
 	@Override
 	public void tableChanged(TableModelEvent e) {
-	    SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-        		view.getEntityPanel().updateBotCount(model.getAmountBot());
-            }
-	    });
+	    view.getEntityPanel().updateBotCount(model.getAmountBot());
 	}
 }
