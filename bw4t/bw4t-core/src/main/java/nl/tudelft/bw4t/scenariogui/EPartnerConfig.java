@@ -7,9 +7,17 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public final class EPartnerConfig {
 
+	public static final String DEFAULT_GOAL_FILENAME_REFERENCE = "epartner";
+
+	public static final String DEFAULT_GOAL_FILENAME = "epartner.goal";
+
 	private String name = "E-Partner";
 
 	private int amount = 1;
+
+	private String epartnerReferenceName = "";
+
+	private String epartnerGoalFileName = "*.goal";
 
 	private boolean gps = false;
 
@@ -102,4 +110,45 @@ public final class EPartnerConfig {
 	public String ecToString() {
 		return name + amount + gps + forgetmenot;
 	}
+
+	/**
+	 * Returns the reference name in goal.
+	 * 
+	 * @return The reference name in goal.
+	 */
+	public String getReferenceName() {
+		return epartnerReferenceName;
+	}
+
+	/**
+	 * Sets the reference name in goal.
+	 * 
+	 * @param _referenceName
+	 *            The reference name in goal.
+	 */
+	@XmlElement
+	public void setReferenceName(String _referenceName) {
+		this.epartnerReferenceName = _referenceName;
+	}
+
+	/**
+	 * Returns the goal file name.
+	 * 
+	 * @return The goal file name.
+	 */
+	public String getFileName() {
+		return epartnerGoalFileName;
+	}
+
+	/**
+	 * Sets the goal file name.
+	 * 
+	 * @param _fileName
+	 *            The goal file name.
+	 */
+	@XmlElement
+	public void setFileName(String _fileName) {
+		this.epartnerGoalFileName = _fileName;
+	}
+
 }

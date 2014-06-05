@@ -344,6 +344,5 @@ public final class BotConfig {
 	public void setFileName(String _fileName) {
 		this.fileName = _fileName;
 	}
-	/*
-*/
+
 }
