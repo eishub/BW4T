@@ -66,10 +66,6 @@ class MenuOptionOpen extends AbstractMenuOption {
 
 			if (response == JOptionPane.YES_OPTION) {
 				saveFile();
-				super.getController().getMainView().getMainPanel()
-						.getConfigurationPanel().updateOldValues();
-				super.getController().getModel().updateBotConfigs();
-				super.getController().getModel().updateEpartnerConfigs();
 			}
 		}
 

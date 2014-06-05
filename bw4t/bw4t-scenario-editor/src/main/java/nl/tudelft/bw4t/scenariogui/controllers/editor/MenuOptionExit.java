@@ -55,10 +55,6 @@ class MenuOptionExit extends AbstractMenuOption {
 
 			if (response == JOptionPane.YES_OPTION) {
 				saveFile();
-				super.getController().getMainView().getMainPanel()
-						.getConfigurationPanel().updateOldValues();
-				super.getModel().updateBotConfigs();
-				super.getModel().updateEpartnerConfigs();
 				getController().getMainView().closeScenarioEditor();
 			} else {
 				getController().getMainView().closeScenarioEditor();

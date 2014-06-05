@@ -59,13 +59,16 @@ class MenuOptionNew extends AbstractMenuOption {
 
 			if (response == JOptionPane.YES_OPTION) {
 				saveFile();
-				super.getController().getMainView().getMainPanel()
-						.getConfigurationPanel().updateOldValues();
-				super.getModel().updateBotConfigs();
 			}
 		}
 
 		resetConfigPanel(configPanel);
+
+		// Reset the bot panel
+		resetBotTable(entityPanel);
+
+		// reset the epartner panel
+		resetEpartnerTable(entityPanel);
 
 		// save the default values as the "old" values
 		super.getController().getMainView().getMainPanel()
@@ -79,12 +82,6 @@ class MenuOptionNew extends AbstractMenuOption {
 		// get
 		// overwritten when the new config is saved.
 		super.getMenuView().setLastFileLocation(null);
-
-		// Reset the bot panel
-		resetBotTable(entityPanel);
-
-		// reset the epartner panel
-		resetEpartnerTable(entityPanel);
 	}
 
 	/**
