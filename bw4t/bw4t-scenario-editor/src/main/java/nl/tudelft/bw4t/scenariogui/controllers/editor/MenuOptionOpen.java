@@ -70,6 +70,8 @@ class MenuOptionOpen extends AbstractMenuOption {
 				saveFile();
 				super.getController().getMainView().getMainPanel()
 						.getConfigurationPanel().updateOldValues();
+				super.getController().getMainView().getMainPanel().getEntityPanel().updateBotConfigs();
+				super.getController().getMainView().getMainPanel().getEntityPanel().updateEpartnerConfigs();
 			}
 		}
 
@@ -99,6 +101,8 @@ class MenuOptionOpen extends AbstractMenuOption {
 				resetEpartnerTable(entityPanel);
 				super.getController().getMainView().getMainPanel()
 						.getEntityPanel().getBotConfigs().clear();
+				super.getController().getMainView().getMainPanel()
+						.getEntityPanel().getEPartnerConfigs().clear();
 
 				// Fill the bot panel
 				int botRows = configuration.getBots().size();
