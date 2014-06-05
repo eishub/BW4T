@@ -141,8 +141,6 @@ public abstract class AbstractMenuOption implements ActionListener {
 		}
 		try {
             // Check if the file path was not externally deleted.
-
-
             saveXMLFile(path);
         } catch (JAXBException e) {
 			ScenarioEditor.handleException(e,
