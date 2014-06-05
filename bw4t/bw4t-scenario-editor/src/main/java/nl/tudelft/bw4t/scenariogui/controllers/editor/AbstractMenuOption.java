@@ -31,10 +31,6 @@ public abstract class AbstractMenuOption implements ActionListener {
 	private ScenarioEditorController controller;
 
 	// made a variable for this so we can call it during testing
-
-	/**
-	 * The file chooser.
-	 */
 	private JFileChooser currentFileChooser;
 
 	/**
@@ -107,6 +103,12 @@ public abstract class AbstractMenuOption implements ActionListener {
 		}
 
 		String path = view.getLastFileLocation();
+
+        if (view.hasLastFileLocation() && !new File(path).exists()) {
+            view.setLastFileLocation(null);
+            currentFileChooser.setCurrentDirectory(new File("."));
+        }
+
 		if (saveAs || !view.hasLastFileLocation()) {
 			currentFileChooser = getCurrentFileChooser();
 
@@ -130,7 +132,8 @@ public abstract class AbstractMenuOption implements ActionListener {
 			}
 		}
 		try {
-			saveXMLFile(path);
+            // Check if the file path was not externally deleted.
+            saveXMLFile(path);
         } catch (JAXBException e) {
 			ScenarioEditor.handleException(e,
 					"Error: Saving to XML has failed.");
