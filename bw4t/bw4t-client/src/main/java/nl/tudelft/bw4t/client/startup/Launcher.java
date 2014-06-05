@@ -6,7 +6,6 @@ import java.util.Map;
 import nl.tudelft.bw4t.client.environment.BW4TEnvironmentListener;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.message.MessageTranslator;
-import nl.tudelft.bw4t.logger.BotLog;
 import nl.tudelft.bw4t.startup.LauncherException;
 
 import org.apache.log4j.BasicConfigurator;
@@ -17,7 +16,6 @@ import eis.exceptions.ManagementException;
 import eis.exceptions.NoEnvironmentException;
 import eis.iilang.Identifier;
 import eis.iilang.Parameter;
-
 import eis.exceptions.ManagementException;
 import eis.exceptions.NoEnvironmentException;
 import eis.iilang.Identifier;

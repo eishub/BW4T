@@ -15,17 +15,17 @@ public class ChatMenu {
 
         BasicMenuOperations.addSectionTitleToPopupMenu("Answer:", bw4tClientGUI.getjPopupMenu());
 
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.yes), bw4tClientGUI);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.no), bw4tClientGUI);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.iDoNotKnow), bw4tClientGUI);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.ok), bw4tClientGUI);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.iDo), bw4tClientGUI);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.iDoNot), bw4tClientGUI);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.wait), bw4tClientGUI);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.onTheWay), bw4tClientGUI);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.almostThere), bw4tClientGUI);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.farAway), bw4tClientGUI);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.delayed), bw4tClientGUI);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.YES), bw4tClientGUI);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.NO), bw4tClientGUI);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.IDONOTKNOW), bw4tClientGUI);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.OK), bw4tClientGUI);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.IDO), bw4tClientGUI);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.IDONOT), bw4tClientGUI);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.WAIT), bw4tClientGUI);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.ONTHEWAY), bw4tClientGUI);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.ALMOSTTHERE), bw4tClientGUI);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.FARAWAY), bw4tClientGUI);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.DELAYED), bw4tClientGUI);
 
         bw4tClientGUI.getjPopupMenu().addSeparator();
         JMenuItem menuItem = new JMenuItem("Close menu");

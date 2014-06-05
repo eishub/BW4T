@@ -135,24 +135,21 @@ public abstract class BoundedMoveableObject {
             if (other.boundingBox != null) {
                 return false;
             }
-        }
-        else if (!boundingBox.equals(other.boundingBox)) {
+        } else if (!boundingBox.equals(other.boundingBox)) {
             return false;
         }
         if (context == null) {
             if (other.context != null) {
                 return false;
             }
-        }
-        else if (!context.equals(other.context)) {
+        } else if (!context.equals(other.context)) {
             return false;
         }
         if (space == null) {
             if (other.space != null) {
                 return false;
             }
-        }
-        else if (!space.equals(other.space)) {
+        } else if (!space.equals(other.space)) {
             return false;
         }
         return true;

@@ -5,6 +5,9 @@ import java.util.LinkedList;
 
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.startup.Launcher;
+
+import org.apache.log4j.Logger;
+
 import eis.iilang.Percept;
 
 /**
@@ -12,6 +15,8 @@ import eis.iilang.Percept;
  * in the pop up menu
  */
 public class PutdownActionListener extends ClientActionListener {
+
+    private static final Logger LOGGER = Logger.getLogger(GoToBlockActionListener.class);
 
     public PutdownActionListener(ClientController controller) {
         super(controller);
@@ -24,7 +29,7 @@ public class PutdownActionListener extends ClientActionListener {
                 getController().getHumanAgent().putDown();
             } catch (Exception e1) {
                 // Also catch NoServerException. Nothing we can do really.
-                e1.printStackTrace();
+            	LOGGER.error(e1);
             }
         } else {
             LinkedList<Percept> percepts = new LinkedList<Percept>();
