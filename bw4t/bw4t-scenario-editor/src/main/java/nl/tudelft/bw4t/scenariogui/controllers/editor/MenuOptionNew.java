@@ -63,14 +63,8 @@ class MenuOptionNew extends AbstractMenuOption {
 		}
 
 		resetConfigPanel(configPanel);
-
-		// save the default values as the "old" values
-		super.getController().getMainView().getMainPanel()
-				.getConfigurationPanel().updateOldValues();
 		super.getModel().getBots().clear();
-		super.getModel().updateBotConfigs();
 		super.getModel().getEpartners().clear();
-		super.getModel().updateEpartnerConfigs();
 
 		// set last file location to null so that the previous saved file won't
 		// get
