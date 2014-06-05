@@ -85,6 +85,8 @@ class MenuOptionNew extends AbstractMenuOption {
 
 		// reset the epartner panel
 		resetEpartnerTable(entityPanel);
+
+        getController().getMainView().setWindowTitle("Untitled");
 	}
 
 	/**
