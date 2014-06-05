@@ -30,6 +30,7 @@ import nl.tudelft.bw4t.eis.RobotEntity;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.server.BW4TServer;
 import nl.tudelft.bw4t.server.RobotEntityInt;
+import nl.tudelft.bw4t.server.logging.BW4TFileAppender;
 import nl.tudelft.bw4t.server.logging.BotLog;
 import nl.tudelft.bw4t.visualizations.ServerContextDisplay;
 
@@ -148,21 +149,13 @@ public class BW4TEnvironment extends AbstractEnvironment {
      */
     public void removeAllEntities() throws ManagementException {
       
-    	logTime();
+    	BW4TFileAppender.logFinish(System.currentTimeMillis(), "total time is ");
         // FIXME: BOTLOG gives nullpointer exception if no bots.
 
         setState(EnvironmentState.KILLED);
 
         LOGGER.debug("Removing all entities");
         for (String entity : this.getEntities()) {
-        	
-        	if (this.getEntity(entity) instanceof RobotEntity) {
-        		RobotEntity rEntity = (RobotEntity) this.getEntity(entity);
-        		if(!this.getFreeEntities().contains(entity)){
-            		rEntity.getRobotObject().getAgentRecord().logSummary();
-            	}
-        	}
-           
         	try {
                 this.deleteEntity(entity);
             } catch (EntityException | RelationException e) {
@@ -179,25 +172,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
             }
         }
         mapFullyLoaded = false;
-    }
-    
-    /**
-     * Writing total time needed to finish sequence into logfile.
-     */
-    private void logTime() {
-
-    	BW4TEnvironment env = BW4TEnvironment.getInstance();
-    	
-    	//totalTime is in miliseconds
-        double totalTime = (System.currentTimeMillis() - env.getStarttime());
-        
-        if (totalTime > 60000) {
-        	int totalMin = (int) totalTime / 60000;
-        	int totalSec = (int) totalTime / 1000 % 60;
-        	LOGGER.log(BotLog.BOTLOG, "total time is " + totalMin + " minutes and " + totalSec + " seconds");
-        }
-        else
-        	LOGGER.log(BotLog.BOTLOG, "total time is " + totalTime / 1000 + "seconds");
     }
 
     @Override
@@ -542,7 +516,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
         return theMap;
     }
     
-    public long getStarttime(){
+    public long getStarttime() {
     	return starttime;
     }
 

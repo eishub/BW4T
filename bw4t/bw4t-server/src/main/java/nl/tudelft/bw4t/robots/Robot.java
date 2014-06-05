@@ -336,7 +336,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
         /**
          * Merge the move type if multiple zones are entered at once. The result is the 'worst' event that happens
          * 
-         * @param other
+         * @param other MoveType
          * @return MoveType
          */
         public MoveType merge(MoveType other) {
@@ -358,12 +358,13 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
      * Check motion type for robot to move to <endx, endy>. The {@link #MoveType} gives the actual type / possibility of
      * the move, plus the details why it is (not) possible.
      * 
-     * @param end
+     * @param endx double
      *            is x position of target
-     * @param endy
+     * @param endy doubles
      *            is y position of target
+     *            
+     * @return MoveType
      */
-
     public MoveType getMoveType(double endx, double endy) {
         double startx = getLocation().getX();
         double starty = getLocation().getY();
@@ -622,7 +623,7 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
     /**
      * Sets the size of a robot to a certain integer
      * 
-     * @param s
+     * @param s int
      */
     public void setSize(int s) {
         this.size = s;
@@ -667,11 +668,6 @@ public class Robot extends BoundedMoveableObject implements HandicapInterface {
         return this.collided;
     }
 
-    /**
-     * gets AgentRecord
-     * 
-     * @return AgentRecord
-     */
     public AgentRecord getAgentRecord() {
         return agentRecord;
 

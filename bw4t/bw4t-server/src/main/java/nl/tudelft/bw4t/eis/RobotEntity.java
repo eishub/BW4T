@@ -579,10 +579,7 @@ public class RobotEntity implements RobotEntityInt {
     	}
     }
     
-    /**
-     * get ourRobot object
-     */
-    public NavigatingRobot getRobotObject(){
+    public NavigatingRobot getRobotObject() {
     	return ourRobot;
     }
 
