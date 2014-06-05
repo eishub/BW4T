@@ -13,7 +13,7 @@ import nl.tudelft.bw4t.client.gui.listeners.PickUpActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.PutdownActionListener;
 import nl.tudelft.bw4t.map.ColorTranslator;
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.view.Block;
+import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.message.BW4TMessage;
 import nl.tudelft.bw4t.message.MessageType;
 
@@ -24,7 +24,7 @@ public class RoomMenus {
      * @param box
      *            , the box that the robot is at.
      */
-    public static void buildPopUpMenuForBeingAtBlock(Block box, Zone room, BW4TClientGUI bw4tClientMapRenderer) {
+    public static void buildPopUpMenuForBeingAtBlock(ViewBlock box, Zone room, BW4TClientGUI bw4tClientMapRenderer) {
         String label = room.getName();
 
         bw4tClientMapRenderer.getjPopupMenu().removeAll();
@@ -57,7 +57,7 @@ public class RoomMenus {
      * @param box
      *            , the box that was clicked on
      */
-    public static void buildPopUpMenuForBlock(Block box, Zone room, BW4TClientGUI gui) {
+    public static void buildPopUpMenuForBlock(ViewBlock box, Zone room, BW4TClientGUI gui) {
         String label = room.getName();
 
         gui.getjPopupMenu().removeAll();
@@ -90,7 +90,7 @@ public class RoomMenus {
      */
     public static void buildPopUpMenuRoom(Zone room, BW4TClientGUI gui) {
         ClientMapController cmc = gui.getController().getMapController();
-        Block holding = cmc.getTheBot().getFirstHolding();
+        ViewBlock holding = cmc.getTheBot().getFirstHolding();
         String label = room.getName();
         gui.getjPopupMenu().removeAll();
 

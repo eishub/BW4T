@@ -47,5 +47,6 @@ public enum MessageType {
     COULDNOT, 
     PUTDOWN, 
     ROOMCONTAINSAMOUNT, 
-    CHECKED
+    CHECKED,
+    IWANTTOGO
 };
