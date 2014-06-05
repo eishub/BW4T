@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import nl.tudelft.bw4t.server.logging.BW4TFileAppender;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.eis.RobotEntity;
 import nl.tudelft.bw4t.map.BlockColor;
@@ -105,13 +106,9 @@ public class DropZone extends Room {
                 // Correct block has been dropped in
                 sequenceIndex++;
                 robot.getAgentRecord().addGoodDrop();
-                logTime();                    
-           	 	logBot();
                 
-                if (sequenceIndex == sequence.size()) {
-                	 logTime();                    
-                	 logBot();
-                }
+                if (sequenceIndex == sequence.size()) 
+                	 BW4TFileAppender.logFinish(System.currentTimeMillis(), "Time to finish sequence is ");
             }
             else {
                 robot.getAgentRecord().addWrongDrop();
@@ -120,61 +117,6 @@ public class DropZone extends Room {
 
         return true;
     }
-    
-    /**
-     * Writing total time needed to finish sequence into logfile.
-     */
-    private void logTime() {
-
-    	BW4TEnvironment env = BW4TEnvironment.getInstance();
-    	
-    	//totalTime is in miliseconds
-        double totalTime = (System.currentTimeMillis() - env.getStarttime());
-        
-        if (totalTime > 60000) {
-        	int totalMin = (int) totalTime / 60000;
-        	int totalSec = (int) totalTime / 1000 % 60;
-        	LOGGER.log(BotLog.BOTLOG, "time to finish sequence is " + totalMin + " minutes and " + totalSec + " seconds");
-        }
-        else
-        	LOGGER.log(BotLog.BOTLOG, "time to finish sequence is " + totalTime / 1000 + "seconds");
-    }
-    
-    /**
-     * Writing sumarry of all bots into logfile.
-     */
-     private void logBot() {
-    	BW4TEnvironment env = BW4TEnvironment.getInstance();
-    	
-        for (String entity : env.getEntities()) {
-        	if (env.getEntity(entity) instanceof RobotEntity) {
-            	RobotEntity rEntity = (RobotEntity) env.getEntity(entity);
-            	if (!env.getFreeEntities().contains(entity)) {
-            		LOGGER.log(BotLog.BOTLOG, "agentsummary " + stringHandicap(rEntity));
-            		rEntity.getRobotObject().getAgentRecord().logSummary();
-            	}
-        	}
-        }
-    }
-     
-     /**
-      * Gets all handicaps and make a String of it, which can be used for the logfile.
-      * 
-      * @param bot RobotEntity
-      * @return String
-      */
-     private String stringHandicap(RobotEntity bot) {
-    	 List<String> handicap = bot.getRobotObject().getHandicapsList();
-    	 String handicaps = bot.getRobotObject().getName() + " handicaps ";
-    	 if (handicap.isEmpty())
-    		 handicaps = handicaps + "none";
-    	 else {
-    		 for (int i = 0; i < handicap.size(); i++) {
-    		 handicaps = handicaps + handicap.get(i);
-    		 }
-    	 }
-    	 return handicaps;
-     }
 
     /**
      * check if the full sequence has been completed
