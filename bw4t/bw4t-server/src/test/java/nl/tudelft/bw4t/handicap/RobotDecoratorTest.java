@@ -23,11 +23,6 @@ import static org.mockito.Mockito.when;
  */
 public class RobotDecoratorTest {
     /**
-     * A move speed handicap
-     * (this extends the abstract robot decorator).
-     */
-    private MoveSpeedHandicap msh;
-    /**
      * A gripper handicap
      * (for testing the move method).
      */
@@ -53,7 +48,6 @@ public class RobotDecoratorTest {
         when(bot.getSuperParent()).thenReturn(returnRobot);
         when(returnRobot.getHandicapsList()).thenReturn(new ArrayList<String>());
         gh = new GripperHandicap(bot);
-        msh = new MoveSpeedHandicap(bot, 1.0);
     }
     /**
      * test for getName().
@@ -103,22 +97,6 @@ public class RobotDecoratorTest {
         NdPoint ndp = new NdPoint(0.0, 0.0);
         gh.setTargetLocation(ndp);
         verify(bot).setTargetLocation(ndp);
-    }
-    /**
-     * Test for can pick up ().
-     */
-    @Test
-    public void canPickUpTest() {
-        msh.canPickUp(b);
-        verify(bot).canPickUp(b);
-    }
-    /**
-     * Test for pickUp().
-     */
-    @Test
-    public void pickUpTest() {
-        msh.pickUp(b);
-        verify(bot).pickUp(b);
     }
     /**
      * Test for drop().
@@ -320,14 +298,7 @@ public class RobotDecoratorTest {
         gh.recharge();
         verify(bot).recharge();
     }
-    /**
-     * Test for get parent
-     */
-    @Test
-    public void getParentTest() {
-        gh.getParent();
-        verify(bot).getParent();
-    }
+    
     /**
      * Test for set parent
      */
@@ -343,22 +314,6 @@ public class RobotDecoratorTest {
     public void getHandicapsTest() {
         gh.getHandicapsList();
         verify(bot).getHandicapsList();
-    }
-    /**
-     * Test for get gripper capacity
-     */
-    @Test
-    public void getGripperTest() {
-        msh.getGripperCapacity();
-        verify(bot).getGripperCapacity();
-    }
-    /**
-     * Test for set gripper capacity
-     */
-    @Test
-    public void setGripperTest() {
-        msh.setGripperCapacity(5);
-        verify(bot).setGripperCapacity(5);
     }
     /**
      * Test for speed mod
@@ -392,14 +347,7 @@ public class RobotDecoratorTest {
         gh.isHoldingEPartner();
         verify(bot).isHoldingEPartner();
     }
-    /**
-     * Test for can pick up e partner
-     */
-    @Test
-    public void canPickUpEPartnerTest() {
-        gh.canPickUpEPartner(null);
-        verify(bot).canPickUpEPartner(null);
-    }
+
     /**
      * Test for pick up e partner
      */

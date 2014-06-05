@@ -22,7 +22,7 @@ public class Block extends BoundedMoveableObject {
     private final BlockColor colorId;
     private Color color;
     private AbstractRobot heldBy;
-    private final nl.tudelft.bw4t.map.view.Block view;
+    private final nl.tudelft.bw4t.map.view.ViewBlock view;
 
     /**
      * Creates a new block with the given color.
@@ -39,7 +39,7 @@ public class Block extends BoundedMoveableObject {
         this.colorId = colorId;
         this.color = colorId.getColor();
         setSize(SIZE, SIZE);
-        this.view = new nl.tudelft.bw4t.map.view.Block(getId(), getColorId(), new Point2D.Double());
+        this.view = new nl.tudelft.bw4t.map.view.ViewBlock(getId(), getColorId(), new Point2D.Double());
     }
 
     /**
@@ -106,7 +106,7 @@ public class Block extends BoundedMoveableObject {
         return getHeldBy() == null;
     }
 
-    public nl.tudelft.bw4t.map.view.Block getView() {
+    public nl.tudelft.bw4t.map.view.ViewBlock getView() {
         this.getLocation();
         return this.view;
     }

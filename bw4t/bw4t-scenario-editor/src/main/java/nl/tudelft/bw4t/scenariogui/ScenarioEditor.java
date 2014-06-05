@@ -26,34 +26,11 @@ import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
  */
 public class ScenarioEditor extends JFrame {
 
-    /**
-     * Randomly generated serial version.
-     */
     private static final long serialVersionUID = 3291131921268747169L;
-    
-    /**
-     * The name of the window, as displayed in the title.
-     */
-    private String windowName = "Scenario Editor";
-    
-    /**
-     * The <code>MainPanel</code> serving as the content pane.
-     */
+    private static String windowName = "Scenario Editor";
     private MainPanel mPanel;
-    
-    /**
-     * The <code>MenuBar</code> at the top of the screen.
-     */
     private MenuBar menuBar;
-    
-    /**
-     * The <code>Controller</code> containing all the ActionEvents.
-     */
     private ScenarioEditorController controller;
-    
-    /**
-     * The OptionPrompt used to handle all thread blocking GUI objects.
-     */
     private static OptionPrompt option = new DefaultOptionPrompt();
 
     /**
@@ -62,7 +39,7 @@ public class ScenarioEditor extends JFrame {
      */
     public ScenarioEditor() {
         setLookAndFeel();
-        setTitle(windowName);
+        setWindowTitle("Untitled");
 
         setResizable(false);
         setLayout(null);
@@ -243,5 +220,9 @@ public class ScenarioEditor extends JFrame {
      */
     public void closeScenarioEditor() {
         System.exit(0);
+    }
+
+    public void setWindowTitle(String filenameBeingEdited) {
+        setTitle(windowName + " - " + filenameBeingEdited);
     }
 }

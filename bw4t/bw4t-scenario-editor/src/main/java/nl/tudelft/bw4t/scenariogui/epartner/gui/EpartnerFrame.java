@@ -37,7 +37,7 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 	private JButton resetButton = new JButton("Reset");
 
 	private JButton cancelButton = new JButton("Cancel");
-
+	
 	private JCheckBox forgetMeNotCheckbox = new JCheckBox("Left-alone Warning");
 
 	private JCheckBox gpsCheckBox = new JCheckBox("Geolocator");
@@ -73,6 +73,7 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 		getApplyButton().addActionListener(
 			new EpartnerApplyButton(this));
 
+		setResizable(false);
 		pack();
 		
 		controller.addView(this);
