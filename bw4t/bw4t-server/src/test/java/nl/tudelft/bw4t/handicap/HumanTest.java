@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.handicap;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -123,8 +124,10 @@ public class HumanTest {
     @Test
     public void canPickUpEPartnerTest() {
         Human h = new Human(outBot);
-        when(ePartner.getLocation()).thenReturn(new NdPoint(10, 10));
-        assertFalse(h.canPickUp(ePartner));
+        when(ePartner.getLocation()).thenReturn(new NdPoint(4));
+        when(h.getSuperParent().getLocation()).thenReturn(new NdPoint(1));
+        assertNotSame(h.getLocation(), ePartner.getLocation());
+        assertFalse(h.getParent().canPickUp(ePartner));
     }
     
     /**
