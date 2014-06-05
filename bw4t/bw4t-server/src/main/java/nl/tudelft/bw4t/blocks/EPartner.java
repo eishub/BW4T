@@ -11,6 +11,7 @@ import nl.tudelft.bw4t.map.view.ViewEPartner;
 import org.apache.log4j.Logger;
 
 import repast.simphony.context.Context;
+import repast.simphony.space.SpatialException;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 
@@ -85,6 +86,5 @@ public class EPartner extends BoundedMoveableObject {
         final NdPoint location = getLocation();
         this.view.setLocation(new Point2D.Double(location.getX(), location.getY()));
         return this.view;
-    }
-    
+    } 
 }
