@@ -24,6 +24,8 @@ public class ViewEntity {
     private Point2D location;
     
     private int robotsize = 2;
+    
+    private long holdingEpartner = -1;
 
     public ViewEntity(){
         location = new Point2D.Double();
@@ -93,5 +95,13 @@ public class ViewEntity {
     
     public void setSize(int robotsize) {
     	this.robotsize = robotsize;
+    }
+
+    public long getHoldingEpartner() {
+        return holdingEpartner;
+    }
+
+    public void setHoldingEpartner(long holdingEpartner) {
+        this.holdingEpartner = holdingEpartner;
     }
 }
