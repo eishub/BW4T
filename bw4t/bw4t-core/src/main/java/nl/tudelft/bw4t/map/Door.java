@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Door implements Serializable {
   public enum Orientation {
       HORIZONTAL, VERTICAL
-  };
+  }
 
     /** width of doors. */
     public static final int DOOR_WIDTH = 4;

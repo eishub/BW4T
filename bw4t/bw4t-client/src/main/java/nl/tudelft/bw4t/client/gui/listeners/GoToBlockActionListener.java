@@ -3,6 +3,8 @@ package nl.tudelft.bw4t.client.gui.listeners;
 import java.awt.event.ActionEvent;
 import java.util.LinkedList;
 
+import org.apache.log4j.Logger;
+
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.startup.Launcher;
 import eis.iilang.Numeral;
@@ -14,6 +16,7 @@ import eis.iilang.Percept;
  */
 public class GoToBlockActionListener extends ClientActionListener {
     private final long boxID;
+    private static final Logger LOGGER = Logger.getLogger(GoToBlockActionListener.class);
 
     public GoToBlockActionListener(Long boxID, ClientController control) {
         super(control);
@@ -26,7 +29,7 @@ public class GoToBlockActionListener extends ClientActionListener {
             try {
                 getController().getHumanAgent().goToBlock(boxID);
             } catch (Exception e1) {
-                e1.printStackTrace();
+                LOGGER.error(e); 
             }
         } else {
             LinkedList<Percept> percepts = new LinkedList<Percept>();

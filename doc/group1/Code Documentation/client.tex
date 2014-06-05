@@ -1,0 +1,4 @@
+\section*{Client}
+The Client project is the 3rd sub-project in the BW4T project. The client puts an Agent in the  environment by connecting to the Server. It contains a RemoteEnvironment, which is an extension of the EIS RemoteEnvironment class. It communicates directly with the Enviroment using EnvironmentListeners. This does not go through the server! The Server class is only used to register connected clients. 
+
+A very large part of the client is once again in the visualizations. The BW4TClientMapRenderer is mostly unexplored, but uses a large number of listeners to collect all data required to draw the map. 

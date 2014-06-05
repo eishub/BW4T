@@ -8,6 +8,9 @@
 	</parent>
 	<groupId>nl.tudelft.bw4t</groupId>
 	<artifactId>bw4t-server</artifactId>
+  <properties>
+    <checkstyle.config.location>../checkstyle.xml</checkstyle.config.location>
+  </properties>
 	<packaging>jar</packaging>
 
 	<build>
