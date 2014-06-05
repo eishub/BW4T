@@ -3,6 +3,7 @@ package nl.tudelft.bw4t.handicap;
 import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.robots.MoveType;
 import nl.tudelft.bw4t.zone.Corridor;
+import nl.tudelft.bw4t.zone.Room;
 import nl.tudelft.bw4t.zone.Zone;
 /**
  * 
@@ -49,6 +50,8 @@ public class SizeOverloadHandicap extends AbstractRobotDecorator {
                     return MoveType.ENTER_CORRIDOR;
                 }
                 return MoveType.HIT_OCCUPIED_ZONE;
+            } else if (endzone instanceof Room) {
+            	return MoveType.HIT_CLOSED_DOOR;
             }
         } 
         else {

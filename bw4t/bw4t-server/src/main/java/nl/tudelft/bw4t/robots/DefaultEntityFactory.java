@@ -21,8 +21,6 @@ import nl.tudelft.bw4t.server.environment.Launcher;
  * @author Valentine Mairet
  */
 public class DefaultEntityFactory implements EntityFactory {
-	
-	private static final Logger LOGGER = Logger.getLogger(DefaultEntityFactory.class);
 
 	private Context<Object> context;
 	private ContinuousSpace<Object> space;
@@ -56,7 +54,6 @@ public class DefaultEntityFactory implements EntityFactory {
 			r.setGripperCapacity(config.getGrippers());
 		}
 		if (config.getMoveSpeedHandicap()) {
-			//TODO figure out if the magic number is correct
 			r.setSpeedMod((double) config.getBotSpeed() / 100.0); 
 		}
 		if (config.getSizeOverloadHandicap()) {
@@ -65,9 +62,14 @@ public class DefaultEntityFactory implements EntityFactory {
 		if (config.getBotController() == EntityType.HUMAN) {
 			r = new Human(r);
 		}
-		r.setBattery(
-				new Battery(config.getBotBatteryCapacity(), config.getBotBatteryDischargeRate()));
-		LOGGER.info("Battery capacity is: " + r.getBattery().getCurrentCapacity());
+		if (config.isBatteryEnabled()) {
+			r.setBattery(
+					new Battery(config.getBotBatteryCapacity(), 
+							config.getBotBatteryDischargeRate()));			
+		} else {
+			r.setBattery(new Battery(1, 0));
+		}
+
 		return r;
 	}
 
