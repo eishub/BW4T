@@ -64,7 +64,7 @@ public final class ExportToMAS {
 		goalFiles = new HashMap<String, String>();
 
 		init = String
-				.format(INIT, directory + "/" + configurationName + ".xml");
+				.format(INIT, new File(directory + "/" + configurationName).getAbsolutePath());
 
 		agentCount = 0;
 		humanCount = 0;
