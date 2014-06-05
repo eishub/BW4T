@@ -40,10 +40,10 @@ public class EpartnerFrame extends JFrame {
 	private JButton resetButton = new JButton("Reset");
 
 	private JButton cancelButton = new JButton("Cancel");
+	
+	private JCheckBox forgetCheckbox = new JCheckBox("Forget-me-not");
 
-	private JCheckBox leftAloneCheckbox = new JCheckBox("Left-alone Warning");
-
-	private JCheckBox gpsCheckBox = new JCheckBox("Geolocator");
+	private JCheckBox gpsCheckBox = new JCheckBox("GPS");
 
 	private EPartnerConfig dataObject = new EPartnerConfig();
 
@@ -102,9 +102,9 @@ public class EpartnerFrame extends JFrame {
 		optionPane.add(new JLabel(""));
 		
 		if (dataObject.isForgetMeNot()) {
-			leftAloneCheckbox.setSelected(true);
+			forgetCheckbox.setSelected(true);
 		}
-		optionPane.add(leftAloneCheckbox);
+		optionPane.add(forgetCheckbox);
 		
 		if (dataObject.isGps()) {
 			gpsCheckBox.setSelected(true);
@@ -175,8 +175,8 @@ public class EpartnerFrame extends JFrame {
 	 * 
 	 * @return The checkbox.
 	 */
-	public JCheckBox getLeftAloneCheckbox() {
-		return leftAloneCheckbox;
+	public JCheckBox getForgetCheckbox() {
+		return forgetCheckbox;
 	}
 
 	/**
