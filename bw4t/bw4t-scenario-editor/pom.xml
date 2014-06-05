@@ -14,8 +14,8 @@
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <sonar.projectKey>nl.tudelft.bw4t</sonar.projectKey>
-        <sonar.projectName>BW4T</sonar.projectName>
+        <sonar.projectKey>nl.tudelft.bw4t.scenariogui</sonar.projectKey>
+        <sonar.projectName>BW4T Scenario Editor</sonar.projectName>
         <sonar.projectVersion>3.2.0</sonar.projectVersion>
         <sonar.language>java</sonar.language>
         <sonar.sources>src/main</sonar.sources>
@@ -24,7 +24,6 @@
         <sonar.cobertura.reportPath>target/site/cobertura/coverage.xml</sonar.cobertura.reportPath>
         <sonar.junit.reportsPath>target/surefire-reports</sonar.junit.reportsPath>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-        <powermock.version>1.5.4</powermock.version>
     </properties>
     <build>
         <plugins>
