@@ -6,12 +6,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.config.BW4TClientConfigIntegration;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
+import nl.tudelft.bw4t.scenariogui.panel.gui.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 import nl.tudelft.bw4t.scenariogui.util.MapSpec;
@@ -20,27 +21,18 @@ import nl.tudelft.bw4t.scenariogui.util.MapSpec;
  * Handles the event of the menu.
  * <p>
  * 
- * @author Nick Feddes
  * @version 0.1
  * @since 12-05-2014
  */
 public abstract class AbstractMenuOption implements ActionListener {
 
-	/**
-	 * The menu bar as view.
-	 */
 	private MenuBar view;
+	
+	private BW4TClientConfig model;
 
-	/**
-	 * The current controllers that is controlling this.
-	 */
 	private ScenarioEditorController controller;
 
 	// made a variable for this so we can call it during testing
-
-	/**
-	 * The file chooser.
-	 */
 	private JFileChooser currentFileChooser;
 
 	/**
@@ -50,11 +42,14 @@ public abstract class AbstractMenuOption implements ActionListener {
 	 *            The new view.
 	 * @param mainView
 	 *            The main view controllers.
+	 * @param model
+	 *            The model.
 	 */
 	public AbstractMenuOption(final MenuBar newView,
-			final ScenarioEditorController mainView) {
+			final ScenarioEditorController mainView, BW4TClientConfig model) {
 		this.view = newView;
 		this.setController(mainView);
+		this.model = model;
 
 		/*
 		 * Set the intial file chooser and option prompt, can eventually be
@@ -97,20 +92,21 @@ public abstract class AbstractMenuOption implements ActionListener {
 	 *            Whether or not to open a file chooser.
 	 */
 	public void saveFile(final boolean saveAs) {
-		MapSpec map = controller.getMainView().getMainPanel()
-				.getConfigurationPanel().getMapSpecifications();
-		int botCount = controller.getMainView().getMainPanel().getEntityPanel()
-				.getBotCount();
-		if (map.isSet() && botCount > map.getEntitiesAllowedInMap()) {
-			ScenarioEditor.getOptionPrompt().showMessageDialog(
-					view,
-					"The selected map can only hold "
-							+ map.getEntitiesAllowedInMap()
-							+ " bots. Please delete some first.");
-			return;
-		}
+        if(!validateBotCount()) {
+            return;
+        }
+
+        if(!verifyMapSelected()) {
+            return;
+        }
 
 		String path = view.getLastFileLocation();
+
+        if (view.hasLastFileLocation() && !new File(path).exists()) {
+            view.setLastFileLocation(null);
+            currentFileChooser.setCurrentDirectory(new File("."));
+        }
+
 		if (saveAs || !view.hasLastFileLocation()) {
 			currentFileChooser = getCurrentFileChooser();
 
@@ -134,7 +130,8 @@ public abstract class AbstractMenuOption implements ActionListener {
 			}
 		}
 		try {
-			saveXMLFile(path);
+            // Check if the file path was not externally deleted.
+            saveXMLFile(path);
         } catch (JAXBException e) {
 			ScenarioEditor.handleException(e,
 					"Error: Saving to XML has failed.");
@@ -143,32 +140,73 @@ public abstract class AbstractMenuOption implements ActionListener {
 		}
 	}
 
+
+    private boolean validateBotCount() {
+        MapSpec map = controller.getMainView().getMainPanel()
+                .getConfigurationPanel().getMapSpecifications();
+        int botCount = getModel().getAmountBot();
+        if (map.isSet() && botCount > map.getEntitiesAllowedInMap()) {
+            ScenarioEditor.getOptionPrompt().showMessageDialog(
+                    view,
+                    "The selected map can only hold "
+                            + map.getEntitiesAllowedInMap()
+                            + " bots. Please delete some first.");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean verifyMapSelected() {
+        String map = getController().getMainView().getMainPanel().getConfigurationPanel().getMapFile();
+        if(map.trim().isEmpty()) {
+            int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(getController().getMainView(),
+                    "Warning: No map file has been selected. Press OK to continue.",
+                    "",
+                    JOptionPane.OK_CANCEL_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
+
+            return response == JOptionPane.OK_OPTION;
+        }
+        return true;
+    }
+
 	public void saveXMLFile(String path) throws JAXBException,
 			FileNotFoundException {
-		BW4TClientConfig configuration = BW4TClientConfigIntegration
-				.createConfigFromPanel((MainPanel) (getController()
-						.getMainView()).getContentPane(), path);
+		BW4TClientConfig configuration = getController().getMainView().getMainPanel().getClientConfig();
+		configuration.setFileLocation(path);
+		configuration.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
 
 		// SAVE BOTS & EPARTNERS HERE
 		int botRows = getController().getMainView().getMainPanel()
 				.getEntityPanel().getBotTableModel().getRowCount();
 
 		for (int i = 0; i < botRows; i++) {
-			configuration.addBot(getController().getMainView().getMainPanel()
-					.getEntityPanel().getBotConfig(i));
+			configuration.addBot(getModel().getBot(i));
 		}
 
 		int epartnerRows = getController().getMainView().getMainPanel()
 				.getEntityPanel().getEPartnerTableModel().getRowCount();
 
 		for (int i = 0; i < epartnerRows; i++) {
-			configuration.addEpartner(getController().getMainView()
-					.getMainPanel().getEntityPanel().getEPartnerConfig(i));
+			configuration.addEpartner(getModel().getEpartner(i));
 		}
 
 		configuration.toXML();
 		view.setLastFileLocation(path);
 	}
+
+    /**
+     * Update the model with the new bot and epartners, and update the counts in the view.
+     */
+    public void updateModelAndView() {
+        getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
+        getModel().updateBotConfigs();
+        getController().getMainView().getMainPanel().getEntityPanel().updateEPartnerCount(
+                getModel().getAmountEPartner());
+        getModel().updateEpartnerConfigs();
+    }
+
+
 
 	/**
 	 * Returns the MenuBar
@@ -204,6 +242,16 @@ public abstract class AbstractMenuOption implements ActionListener {
 	 */
 	public void setController(final ScenarioEditorController newController) {
 		controller = newController;
+	}
+	
+	/**
+	 * Gets the BW4TClientConfig model.
+	 * 
+	 * @return model
+	 * 			The model being used.
+	 */
+	public BW4TClientConfig getModel() {
+		return model;
 	}
 
 }

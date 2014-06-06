@@ -6,8 +6,6 @@ import java.io.Serializable;
 /**
  * Stupid replacement for Rectangle2D.Double. The problem with Rectangle2D.Double is that the XML serializer can not
  * handle it, it gets stuck in an infinite recursion if you try to serialize it.
- * 
- * @author W.Pasman
  */
 public class Rectangle implements Serializable {
     private final Rectangle2D.Double rectangle = new Rectangle2D.Double();

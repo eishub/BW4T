@@ -4,13 +4,11 @@ import java.io.Serializable;
 
 /**
  * Initial entity
- * 
- * @author W.Pasman
  */
 public class Entity implements Serializable {
     public enum EntityType {
         NORMAL, JAVA
-    };
+    }
 
     private String name = "-";
     /**

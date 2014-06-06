@@ -76,8 +76,7 @@ public class ActionPopUpMenu {
                     if (boxBoundaries.contains(gui.getSelectedLocation())) {
                         if (MapOperations.closeToBox(box, gui.getController())) {
                             RoomMenus.buildPopUpMenuForBeingAtBlock(box, room, gui);
-                        }
-                        else {
+                        } else {
                             RoomMenus.buildPopUpMenuForBlock(box, room, gui);
                         }
                         gui.getjPopupMenu().show(gui, (int) gui.getSelectedLocation().getX(), (int) gui.getSelectedLocation().getY());

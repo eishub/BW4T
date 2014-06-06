@@ -18,8 +18,6 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
  * Testing functionalities of the handicaps.
- * @author Tim van Rossum
- *
  */
 public class SizeOverloadTest {
     /**

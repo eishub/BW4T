@@ -26,9 +26,6 @@ import repast.simphony.scenario.ScenarioLoadException;
  * how often, and pausing etc. This is modified copy of TestRunner_2 (see #2009 and #2236). I did not give this much
  * thought, I just plugged it in and it did what I hoped for - being able to control Repast. Otherwise,
  * scheduling/running is not done here at all, but from the {@link BW4TEnvironment} directly by calling {@link #step()}.
- * 
- * @author W.Pasman 11mar13
- * 
  */
 public class BW4TRunner extends AbstractRunner {
 
@@ -55,8 +52,7 @@ public class BW4TRunner extends AbstractRunner {
             BatchScenarioLoader loader = new BatchScenarioLoader(scenarioDir);
             ControllerRegistry registry = loader.load(runEnvironmentBuilder);
             bw4tController.setControllerRegistry(registry);
-        }
-        else {
+        } else {
             LOGGER.fatal("Scenario directory was not found.");
             return;
         }

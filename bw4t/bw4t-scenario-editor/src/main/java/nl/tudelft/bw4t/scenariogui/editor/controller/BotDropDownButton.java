@@ -13,9 +13,6 @@ import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
  */
 class BotDropDownButton implements ActionListener {
 
-    /**
-     * The <code>MainPanel</code> serving as the content pane.
-     */
     private MainPanel view;
 
     /**

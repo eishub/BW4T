@@ -5,8 +5,6 @@ import repast.simphony.context.Context;
 
 /**
  * Utility class to get an object given its ID.
- * 
- * @author W.Pasman
  */
 public final class Id2Object {
 

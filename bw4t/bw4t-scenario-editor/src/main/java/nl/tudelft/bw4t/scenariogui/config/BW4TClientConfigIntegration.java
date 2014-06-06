@@ -8,9 +8,6 @@ import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
 /**
  * Allows a BW4TClientConfig object to be created from
  * a main panel.
- * 
- * @author Nick Feddes
- *
  */
 public final class BW4TClientConfigIntegration {
     

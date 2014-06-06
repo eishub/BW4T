@@ -100,8 +100,7 @@ public abstract class AbstractMapController implements MapController, Runnable {
     public void setRunning(boolean run) {
         if (!run) {
             setForceRunning(run);
-        }
-        else if (!running) {
+        } else if (!running) {
             startupUpdateThread();
         }
     }
