@@ -28,7 +28,7 @@ public class EntityTableModel extends DefaultTableModel {
     @Override
     public Class<?> getColumnClass(int column) {
     	if (type.equals(EntityType.EPARTNER)) {
-    		if (column == 1) {
+    		if (column == 2) {
     			return Integer.class;
     		}
     	} else {

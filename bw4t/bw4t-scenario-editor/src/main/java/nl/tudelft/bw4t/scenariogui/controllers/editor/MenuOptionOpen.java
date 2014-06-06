@@ -120,9 +120,10 @@ class MenuOptionOpen extends AbstractMenuOption {
 
 				for (int i = 0; i < epartnerRows; i++) {
 					String epartnerName = configuration.getEpartner(i).getEpartnerName();
+					String epartnerFileName = configuration.getEpartner(i).getFileName();
 					String epartnerAmount = Integer.toString(configuration.getEpartner(i)
 							.getEpartnerAmount());
-					Object[] epartnerObject = {epartnerName, epartnerAmount };
+					Object[] epartnerObject = {epartnerName, epartnerFileName, epartnerAmount };
 					entityPanel.getEPartnerTableModel().addRow(epartnerObject);
 					super.getModel().getEpartners().add(configuration.getEpartner(i));
 				}
