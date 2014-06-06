@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.scenariogui.botstore.controller;
 
+import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditor;
 
 /**
@@ -11,8 +12,13 @@ public class BotStoreController {
     /**
      * the view being controlled
      */
-    private BotEditor view;
+    private Set<BotStoreViewInterface> views = new HashSet<>();
 
+    /**
+     * Create a BotConfig.
+     */
+    private BotConfig botConfig;
+    
     /**
      * Create the BotStore controllers
      *
