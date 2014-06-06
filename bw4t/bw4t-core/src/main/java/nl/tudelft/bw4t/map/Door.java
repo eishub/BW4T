@@ -7,8 +7,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * A door that can be placed in a {@link Zone} in a {@link NewMap}
- * 
- * @author W.Pasman
  */
 @XmlRootElement
 public class Door implements Serializable {

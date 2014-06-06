@@ -7,8 +7,6 @@ import repast.simphony.space.continuous.ContinuousSpace;
 
 /**
  * A room which might have block in it on initialization.
- * 
- * @author Lennard de Rijk
  */
 public class BlocksRoom extends Room {
 

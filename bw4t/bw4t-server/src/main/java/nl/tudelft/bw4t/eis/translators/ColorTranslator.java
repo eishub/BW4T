@@ -8,9 +8,6 @@ import eis.iilang.Parameter;
 
 /**
  * Translates a pure {@link BlockColor} to EIS
- * 
- * @author W.Pasman
- * 
  */
 public class ColorTranslator implements Java2Parameter<BlockColor> {
 

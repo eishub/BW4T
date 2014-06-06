@@ -13,9 +13,6 @@ import nl.tudelft.bw4t.map.editor.model.Room;
 
 /**
  * This is a renderer for a room.
- * 
- * @author W.Pasman
- * 
  */
 @SuppressWarnings("serial")
 public class RoomCellRenderer extends JPanel implements TableCellRenderer {

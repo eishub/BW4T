@@ -8,10 +8,10 @@ import java.io.FileNotFoundException;
 import javax.swing.JFileChooser;
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.scenariogui.controllers.editor.AbstractMenuOption;
-import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
-import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
-import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
+import nl.tudelft.bw4t.scenariogui.editor.controller.AbstractMenuOption;
+import nl.tudelft.bw4t.scenariogui.panel.gui.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.panel.gui.EntityPanel;
+import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
 import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
 
 import org.junit.After;
@@ -72,6 +72,14 @@ public class ScenarioEditorTest {
     }
 
     /**
+     * Dispose of the editor.
+     */
+    @After
+    public void breakItDooooown() {
+        editor.dispose();
+    }
+
+    /**
      * Tests whether the active pane gets set correctly.
      */
     @Test
@@ -105,5 +113,24 @@ public class ScenarioEditorTest {
         // Finally make sure the confirmation dialog was called.
         verify(yesMockOption, times(1))
                 .showMessageDialog((Component) any(), anyString());
+    }
+
+    /**
+     * Test the default window name.
+     */
+    @Test
+    public void testWindowNameDefault() {
+        assertEquals("Scenario Editor - Untitled", editor.getTitle());
+    }
+
+    /**
+     * Test if the window name changes work.
+     */
+    @Test
+    public void testWindowNameChanged() {
+        String filename = "Caramba.xml";
+
+        editor.setWindowTitle(filename);
+        assertEquals("Scenario Editor - " + filename, editor.getTitle());
     }
 }

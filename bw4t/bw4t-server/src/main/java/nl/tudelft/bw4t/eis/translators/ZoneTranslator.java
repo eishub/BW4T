@@ -14,8 +14,6 @@ import eis.iilang.ParameterList;
 /**
  * Translates {@link Zone} into a list of {@link Parameter} specifying the navpoint id, name, location and a list of
  * neighbour names.
- * 
- * @author W.Pasman
  */
 public class ZoneTranslator implements Java2Parameter<Zone> {
 

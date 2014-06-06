@@ -1,34 +1,30 @@
 package nl.tudelft.bw4t.zone;
 
 import java.awt.Color;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.management.RuntimeErrorException;
+import nl.tudelft.bw4t.blocks.Block;
+import nl.tudelft.bw4t.map.BlockColor;
+import nl.tudelft.bw4t.robots.AbstractRobot;
+import nl.tudelft.bw4t.server.logging.BW4TFileAppender;
+import nl.tudelft.bw4t.server.logging.BotLog;
 
 import org.apache.log4j.Logger;
 
-import nl.tudelft.bw4t.blocks.Block;
-import nl.tudelft.bw4t.logger.BotLog;
-import nl.tudelft.bw4t.map.BlockColor;
-import nl.tudelft.bw4t.robots.Robot;
-import nl.tudelft.bw4t.server.environment.Launcher;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 
 /**
  * Representation of a room where blocks can be dropped into.
- * 
- * @author Lennard de Rijk
  */
 public class DropZone extends Room {
 
     /**
      * The log4j logger, logs to the console.
      */
-    private static final Logger LOGGER = Logger.getLogger(Launcher.class);
+    private static final Logger LOGGER = Logger.getLogger(DropZone.class);
 
     /** The sequence of blocks that are to be dropped in here */
     private List<BlockColor> sequence = new ArrayList<BlockColor>();
@@ -73,6 +69,8 @@ public class DropZone extends Room {
 
     /**
      * Returns the color identifiers of blocks that need to be delivered in order to this dropzone.
+     * 
+     * @return List<BlockColor>
      */
     public List<BlockColor> getSequence() {
         return sequence;
@@ -94,7 +92,7 @@ public class DropZone extends Room {
      *            The robot that drops the block
      * @return true if bot is in dropzone, else false.
      */
-    public boolean dropped(Block block, Robot robot) {
+    public boolean dropped(Block block, AbstractRobot robot) {
         if (!getBoundingBox().intersects(robot.getBoundingBox())) {
             // The block isn't dropped in this zone
             return false;
@@ -105,13 +103,11 @@ public class DropZone extends Room {
                 // Correct block has been dropped in
                 sequenceIndex++;
                 robot.getAgentRecord().addGoodDrop();
-                if (sequenceIndex == sequence.size()) {
-                    //TODO
-                    String message = " ";
-                    LOGGER.log(BotLog.BOTLOG, message);
-                    //BW4TLogger.getInstance().logCompletedSequence();
-                }
-            } else {
+                
+                if (sequenceIndex == sequence.size()) 
+                	 BW4TFileAppender.logFinish(System.currentTimeMillis(), "Time to finish sequence is ");
+            }
+            else {
                 robot.getAgentRecord().addWrongDrop();
             }
         }

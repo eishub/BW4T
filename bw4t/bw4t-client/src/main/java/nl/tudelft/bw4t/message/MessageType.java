@@ -2,8 +2,6 @@ package nl.tudelft.bw4t.message;
 
 /**
  * Enumeration containing all message types supported in the environment
- * 
- * @author trens
  */
 public enum MessageType {
     GOINGTOROOM, 
@@ -47,5 +45,6 @@ public enum MessageType {
     COULDNOT, 
     PUTDOWN, 
     ROOMCONTAINSAMOUNT, 
-    CHECKED
+    CHECKED,
+    IWANTTOGO
 };

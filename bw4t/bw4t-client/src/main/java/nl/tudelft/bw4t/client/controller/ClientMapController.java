@@ -1,15 +1,5 @@
 package nl.tudelft.bw4t.client.controller;
 
-import java.awt.geom.Point2D;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.log4j.Logger;
-
 import eis.exceptions.NoEnvironmentException;
 import eis.exceptions.PerceiveException;
 import eis.iilang.Function;
@@ -18,16 +8,26 @@ import eis.iilang.Numeral;
 import eis.iilang.Parameter;
 import eis.iilang.ParameterList;
 import eis.iilang.Percept;
+
+import java.awt.geom.Point2D;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import nl.tudelft.bw4t.client.environment.handlers.PerceptsHandler;
-import nl.tudelft.bw4t.client.gui.ClientGUI;
-import nl.tudelft.bw4t.client.startup.Launcher;
 import nl.tudelft.bw4t.controller.AbstractMapController;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.view.Block;
-import nl.tudelft.bw4t.map.view.Entity;
+import nl.tudelft.bw4t.map.view.ViewBlock;
+import nl.tudelft.bw4t.map.view.ViewEPartner;
+import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.view.MapRendererInterface;
+
+import org.apache.log4j.Logger;
 
 public class ClientMapController extends AbstractMapController {
     /**
@@ -41,10 +41,11 @@ public class ClientMapController extends AbstractMapController {
     private final ClientController clientController;
 
     private Set<Zone> occupiedRooms = new HashSet<Zone>();
-    private Entity theBot = new Entity();
+    private ViewEntity theBot = new ViewEntity();
     private int sequenceIndex = 0;
-    private Set<Block> visibleBlocks = new HashSet<>();
-    private Map<Long, Block> allBlocks = new HashMap<>();
+    private Set<ViewBlock> visibleBlocks = new HashSet<>();
+    private Set<ViewEPartner> visibleEPartners = new HashSet<>();
+    private Map<Long, ViewBlock> allBlocks = new HashMap<>();
     private List<BlockColor> sequence = new LinkedList<>();
 
     public ClientMapController(NewMap map, ClientController controller) {
@@ -84,25 +85,39 @@ public class ClientMapController extends AbstractMapController {
     }
 
     @Override
-    public Set<Block> getVisibleBlocks() {
+    public Set<ViewBlock> getVisibleBlocks() {
         return visibleBlocks;
     }
 
     @Override
-    public Set<Entity> getVisibleEntities() {
-        Set<Entity> entities = new HashSet<>();
+    public Set<ViewEntity> getVisibleEntities() {
+        Set<ViewEntity> entities = new HashSet<>();
         entities.add(theBot);
         return entities;
     }
+    
+    @Override
+    public Set<ViewEPartner> getVisibleEPartners() {
+        return visibleEPartners;
+    }
+    
+    public ViewEPartner getViewEPartner(long id) {
+        for (ViewEPartner ep : getVisibleEPartners()) {
+            if (ep.getId() == id) {
+                return ep;
+            }
+        }
+        return null;
+    }
 
-    public Entity getTheBot() {
+    public ViewEntity getTheBot() {
         return theBot;
     }
 
-    private Block getBlock(Long id) {
-        Block b = allBlocks.get(id);
+    private ViewBlock getBlock(Long id) {
+        ViewBlock b = allBlocks.get(id);
         if (b == null) {
-            b = new Block();
+            b = new ViewBlock();
             allBlocks.put(id, b);
         }
         return b;
@@ -118,8 +133,13 @@ public class ClientMapController extends AbstractMapController {
             }else if (function.getName().equals("holding")) {
                 theBot.getHolding().remove(((Numeral) function.getParameters().get(0)).getValue());
             }
+        }
+        // Receive our robots blockId
+        else if (name.equals("robot")) {
+            theBot.setId(((Numeral) parameters.get(0)).getValue().longValue());
+        }
         // Prepare updated occupied rooms list
-    	} else if (name.equals("occupied")) {
+        else if (name.equals("occupied")) {
             addOccupiedRoom(((Identifier) parameters.get(0)).getValue());
         
         // Check if holding a block
@@ -131,17 +151,44 @@ public class ClientMapController extends AbstractMapController {
             double x = ((Numeral) parameters.get(1)).getValue().doubleValue();
             double y = ((Numeral) parameters.get(2)).getValue().doubleValue();
 
-            Block b = getBlock(id);
+            ViewBlock b = getBlock(id);
             b.setObjectId(id);
             b.setPosition(new Point2D.Double(x, y));
+            ViewEPartner ep = getViewEPartner(id);
+            if (ep != null) {
+                ep.setLocation(b.getPosition());
+            }
         } else if (name.equals("color")) {
             long id = ((Numeral) parameters.get(0)).getValue().longValue();
             char color = ((Identifier) parameters.get(1)).getValue().charAt(0);
 
-            Block b = getBlock(id);
+            ViewBlock b = getBlock(id);
             b.setColor(BlockColor.toAvailableColor(color));
             getVisibleBlocks().add(b);
-        
+        // Update the state of the epartners
+        } else if (name.equals("epartner")) {
+            long id = ((Numeral) parameters.get(0)).getValue().longValue();
+            long holderId = ((Numeral) parameters.get(1)).getValue().longValue();
+            
+            ViewEPartner epartner = getViewEPartner(id);
+            if (epartner == null) {
+                LOGGER.info("creating " +name + "("+id + ", " + holderId + ")");
+                epartner = new ViewEPartner();
+                epartner.setId(id);
+                getVisibleEPartners().add(epartner);
+            }
+            if (holderId == theBot.getId()) {
+                if(id != theBot.getHoldingEpartner()){
+                    LOGGER.info("We are now holding the e-partner: " + id);
+                }
+                theBot.setHoldingEpartner(id);
+            } else if (id == theBot.getHoldingEpartner()) {
+                theBot.setHoldingEpartner(-1);
+            }
+            if (allBlocks.containsKey(id)) {
+                epartner.setLocation(allBlocks.get(id).getPosition());
+            }
+            epartner.setPickedUp(holderId >= 0);
         // Update group goal sequence
         } else if (name.equals("sequence")) {
             for (Parameter i : parameters) {
@@ -163,6 +210,14 @@ public class ClientMapController extends AbstractMapController {
             double y = ((Numeral) parameters.get(1)).getValue().doubleValue();
             theBot.setLocation(x, y);
         }
+        else if (name.equals("robotSize")) {
+            long id = ((Numeral) parameters.get(0)).getValue().longValue();
+            int x = ((Numeral) parameters.get(1)).getValue().intValue();
+            
+            if (id == theBot.getId()) {
+                theBot.setSize(x);
+            }
+        }
     }
 
 
@@ -172,7 +227,7 @@ public class ClientMapController extends AbstractMapController {
         List<Percept> percepts;
         try {
             percepts = PerceptsHandler.getAllPerceptsFromEntity(getTheBot().getName() + "gui",
-                    Launcher.getEnvironment());
+                    clientController.getEnvironment());
             if (percepts != null) {
                 clientController.handlePercepts(percepts);
             }

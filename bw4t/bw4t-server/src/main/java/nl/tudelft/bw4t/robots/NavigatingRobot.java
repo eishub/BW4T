@@ -19,10 +19,8 @@ import repast.simphony.space.continuous.NdPoint;
 /**
  * Represents a self navigating robot in the BW4T environment. The self navigation means that you can go to a Zone which
  * then does path planning and keeps driving till destination reached.
- * 
- * @author W.Pasman 22aug
  */
-public class NavigatingRobot extends Robot {
+public class NavigatingRobot extends AbstractRobot {
 
     /**
      * The log4j logger, logs to the console.
@@ -120,12 +118,7 @@ public class NavigatingRobot extends Robot {
         super.setTargetLocation(currentMove);
     }
 
-    /**
-     * Set a target for the navigating robot. If your start and/or target is not near a Zone, we go through the nearest
-     * Zone.
-     * 
-     * @param target
-     */
+    @Override
     public void setTarget(BoundedMoveableObject target) {
         // clear old path.
         plannedMoves.clear(); 
@@ -155,6 +148,7 @@ public class NavigatingRobot extends Robot {
         ARRIVED, COLLIDED, TRAVELING
     }
 
+    @Override
     public State getState() {
         if (isCollided()) {
             return State.COLLIDED;
@@ -164,5 +158,4 @@ public class NavigatingRobot extends Robot {
         }
         return State.TRAVELING;
     }
-
 }
