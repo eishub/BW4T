@@ -28,7 +28,7 @@ public class EpartnerFrameTest {
         EntityPanel entityPanel = new EntityPanel();
 	    ScenarioEditor main = new ScenarioEditor(new ConfigurationPanel(), entityPanel, new BW4TClientConfig());
         main.getController().getModel().getEpartners().add(new EPartnerConfig());
-        MainPanel parent = new MainPanel(new ConfigurationPanel(), entityPanel);
+        MainPanel parent = new MainPanel(main, new ConfigurationPanel(), entityPanel);
         frame = new EpartnerFrame(parent, 0, main.getController().getModel());
         spyframe= spy(frame);
 	}

@@ -2,7 +2,6 @@ package nl.tudelft.bw4t.scenariogui;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.xml.bind.JAXBException;
@@ -26,17 +25,17 @@ public class BW4TClientConfig {
 
 	private String outputFile;
 
-	private String clientIp = "";
+	private String clientIp = DefaultConfigurationValues.DEFAULT_CLIENT_IP.getValue();
 
-	private int clientPort;
+	private int clientPort = DefaultConfigurationValues.DEFAULT_CLIENT_PORT.getIntValue();
 
-	private String serverIp = "";
+	private String serverIp = DefaultConfigurationValues.DEFAULT_SERVER_IP.getValue();
 
-	private int serverPort;
+	private int serverPort = DefaultConfigurationValues.DEFAULT_SERVER_PORT.getIntValue();
 
-	private boolean launchGui;
+	private boolean launchGui = DefaultConfigurationValues.USE_GUI.getBooleanValue();
 
-	private boolean useGoal;
+	private boolean useGoal = DefaultConfigurationValues.USE_GOAL.getBooleanValue();
 
 	/**
 	 * The location of the map file.

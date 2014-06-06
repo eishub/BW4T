@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.DefaultConfigurationValues;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
@@ -89,20 +90,20 @@ class MenuOptionNew extends AbstractMenuOption {
 	public void resetConfigPanel(ConfigurationPanel configPanel) {
 		// Reset the config panel
 		configPanel
-				.setClientIP(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_CLIENT_IP
+				.setClientIP(DefaultConfigurationValues.DEFAULT_CLIENT_IP
+                        .getValue());
+		configPanel
+				.setClientPort(DefaultConfigurationValues.DEFAULT_CLIENT_PORT
 						.getValue());
 		configPanel
-				.setClientPort(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_CLIENT_PORT
+				.setServerIP(DefaultConfigurationValues.DEFAULT_SERVER_IP
 						.getValue());
 		configPanel
-				.setServerIP(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_SERVER_IP
+				.setServerPort(DefaultConfigurationValues.DEFAULT_SERVER_PORT
 						.getValue());
-		configPanel
-				.setServerPort(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_SERVER_PORT
-						.getValue());
-		configPanel.setUseGui(ConfigurationPanel.DEFAULT_VALUES.USE_GUI
+		configPanel.setUseGui(DefaultConfigurationValues.USE_GUI
 				.getBooleanValue());
-		configPanel.setMapFile(ConfigurationPanel.DEFAULT_VALUES.MAP_FILE
+		configPanel.setMapFile(DefaultConfigurationValues.MAP_FILE
 				.getValue());
 
 	}
