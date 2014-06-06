@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import nl.tudelft.bw4t.eis.RobotEntity;
+import nl.tudelft.bw4t.robots.AgentRecord;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.zone.DropZone;
 
@@ -100,7 +101,7 @@ public class BW4TFileAppender extends FileAppender {
         	LOGGER.log(BotLog.BOTLOG, typeTime + totalMin + " minutes and " + totalSec + " seconds");
         }
         else
-        	LOGGER.log(BotLog.BOTLOG, typeTime + totalTime / 1000 + "seconds");
+        	LOGGER.log(BotLog.BOTLOG, typeTime + totalTime / 1000 + " seconds");
     }
     
     /**
@@ -114,7 +115,7 @@ public class BW4TFileAppender extends FileAppender {
             	RobotEntity rEntity = (RobotEntity) env.getEntity(entity);
             	if (!env.getFreeEntities().contains(entity)) {
             		LOGGER.log(BotLog.BOTLOG, "agentsummary " + stringHandicap(rEntity));
-            		rEntity.getRobotObject().getAgentRecord().logSummary();
+            		logSummary(rEntity.getRobotObject().getAgentRecord());
             	}
         	}
         }
@@ -137,5 +138,30 @@ public class BW4TFileAppender extends FileAppender {
     		 }
     	 }
     	 return handicaps;
+     }
+     
+     /**
+      * Write summary in logfile.
+      * 
+      * @param agentRecord AgentRecord
+      */
+     private static void logSummary(AgentRecord agentRecord) {
+    	  String name = agentRecord.getName();
+     	  summary(name, "gooddrops", "" + agentRecord.getGoodDrops());
+          summary(name, "wrongdrops", "" + agentRecord.getWrongDrops());
+          summary(name, "nmessage", "" + agentRecord.getNMessages());
+          summary(name, "idletime", "" + (float) agentRecord.getTotalStandingStillMillis() / 1000.);
+          summary(name, "nroomsentered", "" + agentRecord.getNRoomsEntered());
+     }
+     
+     /**
+      * Format of prints in logFile.
+      * 
+      * @param name 
+      * @param label String
+      * @param value String
+      */
+     private static void summary(String name, String label, String value) {
+     	LOGGER.log(BotLog.BOTLOG, "agentsummary " + name + " " + label + " " + value);
      }
 }
