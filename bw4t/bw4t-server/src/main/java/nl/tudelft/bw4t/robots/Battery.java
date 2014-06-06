@@ -52,12 +52,11 @@ public class Battery {
     }
     
     /**
-     * Returns percentage. TODO: make this function more accurate.
-     * Cast to double and reformat maybe?
+     * Returns percentage.
      * @return the percentage of battery power left.
      */
-    public int getPercentage() {
-        return (int) ((this.current * 100.0) / ((double) this.max));
+    public double getPercentage() {
+        return (this.current * 100.0) / this.max;
     }
     
     /**

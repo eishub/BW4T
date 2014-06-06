@@ -192,16 +192,6 @@ public abstract class AbstractRobotDecorator implements IRobot {
 	}
 	
     @Override
-	public int getBatteryPercentage() {
-		return parent.getBatteryPercentage();
-	}
-	
-    @Override
-	public double getDischargeRate() {
-		return parent.getDischargeRate();
-	}
-	
-    @Override
 	public void recharge() {
 		parent.recharge();
 	}
