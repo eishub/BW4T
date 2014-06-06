@@ -218,6 +218,7 @@ public class EntityPanel extends JPanel {
 		botTable.setModel(botList);
 		botList.addColumn("Bot");
 		botList.addColumn("Controller");
+		botList.addColumn("Agent file");
 		botList.addColumn(NUMBER_BOTS_COLUMN);
 
 		botScrollPane = new JScrollPane(botTable);
