@@ -1,11 +1,11 @@
-package nl.tudelft.bw4t.scenariogui.controllers.editor;
+package nl.tudelft.bw4t.scenariogui.editor.controller;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
  * Handles the event to update the epartner count.
@@ -38,17 +38,14 @@ public class UpdateEPartnerCount implements TableModelListener {
 	 */
 	@Override
 	public void tableChanged(TableModelEvent e) {
-	    System.out.println("Test 1");
 	    view.getEntityPanel().updateEPartnerCount(model.getAmountEPartner());
         if (model.getAmountEPartner() > model.getAmountBot()) {
             if (!hasShownEpartnerWarning) {
-                System.out.println("Test 2");
                 hasShownEpartnerWarning = true;
                 ScenarioEditor.getOptionPrompt().showMessageDialog(
                         view,
                         "You are using more e-Partners than bots, "
                         + "which might not be supported by your map.");
-                System.out.println("Test 3");
             }
         } else {
             hasShownEpartnerWarning = false;

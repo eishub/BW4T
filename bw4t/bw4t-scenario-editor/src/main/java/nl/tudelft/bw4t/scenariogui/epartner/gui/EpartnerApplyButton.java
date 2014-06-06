@@ -3,8 +3,6 @@ package nl.tudelft.bw4t.scenariogui.epartner.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
-
 /**
  * Handles actions of the ApplyButton
  */

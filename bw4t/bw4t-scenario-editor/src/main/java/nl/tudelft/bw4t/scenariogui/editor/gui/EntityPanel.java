@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.panel.gui;
+package nl.tudelft.bw4t.scenariogui.editor.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
