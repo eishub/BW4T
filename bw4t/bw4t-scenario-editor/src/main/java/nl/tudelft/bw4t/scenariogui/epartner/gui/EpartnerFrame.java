@@ -40,7 +40,7 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 
 	private JTextField epartnerGoalFileField = new JTextField();
 
-	private JButton applyButton = new JButton("Apply");
+	private JButton saveButton = new JButton("Save");
 
 	private JButton resetButton = new JButton("Reset");
 
@@ -84,7 +84,7 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 				new EpartnerCancelButton(this));
 
 		getApplyButton().addActionListener(
-			new EpartnerApplyButton(this));
+			new EpartnerSaveButton(this));
 
 		setResizable(false);
 		pack();
@@ -143,7 +143,7 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 	 */
 	private void createButtonPanel() {
 		buttonPane.setLayout(new GridLayout(1, 0));
-		buttonPane.add(applyButton);
+		buttonPane.add(saveButton);
 		buttonPane.add(resetButton);
 		buttonPane.add(cancelButton);
 	}
@@ -172,7 +172,7 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 	 * @return The apply button.
 	 */
 	public JButton getApplyButton() {
-		return applyButton;
+		return saveButton;
 	}
 
 	/**
