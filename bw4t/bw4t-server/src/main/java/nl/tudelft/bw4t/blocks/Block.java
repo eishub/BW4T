@@ -5,15 +5,13 @@ import java.awt.geom.Point2D;
 
 import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.map.BlockColor;
-import nl.tudelft.bw4t.robots.Robot;
+import nl.tudelft.bw4t.robots.AbstractRobot;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 
 /**
- * Represents a block in the environment that can be picked up by a {@link Robot}.
- * 
- * @author Lennard de Rijk
+ * Represents a block in the environment that can be picked up by a {@link AbstractRobot}.
  */
 public class Block extends BoundedMoveableObject {
 
@@ -21,8 +19,8 @@ public class Block extends BoundedMoveableObject {
 
     private final BlockColor colorId;
     private Color color;
-    private Robot heldBy;
-    private final nl.tudelft.bw4t.map.view.Block view;
+    private AbstractRobot heldBy;
+    private final nl.tudelft.bw4t.map.view.ViewBlock view;
 
     /**
      * Creates a new block with the given color.
@@ -39,7 +37,7 @@ public class Block extends BoundedMoveableObject {
         this.colorId = colorId;
         this.color = colorId.getColor();
         setSize(SIZE, SIZE);
-        this.view = new nl.tudelft.bw4t.map.view.Block(getId(), getColorId(), new Point2D.Double());
+        this.view = new nl.tudelft.bw4t.map.view.ViewBlock(getId(), getColorId(), new Point2D.Double());
     }
 
     /**
@@ -72,8 +70,7 @@ public class Block extends BoundedMoveableObject {
         NdPoint p;
         if (heldBy != null) {
             p = heldBy.getLocation();
-        }
-        else {
+        } else {
             p = super.getLocation();
         }
         if (p != null) {
@@ -83,30 +80,30 @@ public class Block extends BoundedMoveableObject {
     }
 
     /**
-     * Returns the {@link Robot} that is holding this block if any.
+     * Returns the {@link AbstractRobot} that is holding this block if any.
      */
-    public Robot getHeldBy() {
+    public AbstractRobot getHeldBy() {
         return heldBy;
     }
 
     /**
-     * Sets the {@link Robot} that is holding this block.
+     * Sets the {@link AbstractRobot} that is holding this block.
      * 
      * @param heldBy
      *            The Robot that is holding this Block, use null to release the block.
      */
-    public void setHeldBy(Robot heldBy) {
+    public void setHeldBy(AbstractRobot heldBy) {
         this.heldBy = heldBy;
     }
 
     /**
-     * Returns true if this block is not held by a {@link Robot}.
+     * Returns true if this block is not held by a {@link AbstractRobot}.
      */
     public boolean isFree() {
         return getHeldBy() == null;
     }
 
-    public nl.tudelft.bw4t.map.view.Block getView() {
+    public nl.tudelft.bw4t.map.view.ViewBlock getView() {
         this.getLocation();
         return this.view;
     }

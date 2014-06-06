@@ -5,8 +5,9 @@ import java.util.Set;
 
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.view.Block;
-import nl.tudelft.bw4t.map.view.Entity;
+import nl.tudelft.bw4t.map.view.ViewBlock;
+import nl.tudelft.bw4t.map.view.ViewEPartner;
+import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.view.MapRendererInterface;
 
 public interface MapController extends Runnable {
@@ -63,18 +64,26 @@ public interface MapController extends Runnable {
     public boolean isOccupied(Zone room);
 
     /**
-     * Get the set of {@link Block}s currently visible.
+     * Get the set of {@link ViewBlock}s currently visible.
      * 
      * @return the set of blocks
      */
-    public Set<Block> getVisibleBlocks();
+    public Set<ViewBlock> getVisibleBlocks();
 
     /**
-     * Get the set of {@link Entity}s currently visible.
+     * Get the set of {@link ViewEntity}s currently visible.
      * 
      * @return the set of visible entities
      */
-    public Set<Entity> getVisibleEntities();
+    public Set<ViewEntity> getVisibleEntities();
+    
+    /**
+     * Get the set of e-Partners currently visible.
+     * 
+     * @return the set of visible e-Partners.
+     */
+    public Set<ViewEPartner> getVisibleEPartners();
+    
 
     /**
      * Adds an {@link MapRendererInterface} to the list of renderers to be updated every 100ms.

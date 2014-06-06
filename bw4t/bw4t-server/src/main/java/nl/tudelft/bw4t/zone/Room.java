@@ -8,11 +8,6 @@ import repast.simphony.space.continuous.ContinuousSpace;
 
 /**
  * Abstract definition of a room in the environment.
- * 
- * @author Lennard de Rijk
- * @author W.Pasman added isOccupied 16aug2011
- * @author W.Pasman 4nov2013 Room is now a {@link Zone}
- * @author W.Pasman 10dec2013 added RenderOptions.
  */
 public abstract class Room extends Zone {
 

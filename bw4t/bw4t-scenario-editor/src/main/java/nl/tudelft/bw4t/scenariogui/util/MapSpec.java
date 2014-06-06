@@ -8,12 +8,12 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.map.NewMap;
 
+import org.apache.log4j.Logger;
+
+
 /**
  * Holds some of the map specifications that are useful to know, such
  * as the amount of entities allowed in a map.
- * 
- * @author Nick
- *
  */
 public class MapSpec {
     
@@ -22,6 +22,8 @@ public class MapSpec {
     /** The amount of entities that are allowed in a map. */
     private int entitiesAllowedInMap;
     
+    private static final Logger LOGGER = Logger.getLogger(MapSpec.class);
+
     /**
      * Creates a new map specification object.
      * @param newMapFileLocation The path to the map file.
@@ -38,7 +40,7 @@ public class MapSpec {
             NewMap map = NewMap.create(new FileInputStream(new File(mapFileLocation)));
             entitiesAllowedInMap = map.getEntities().size();
         } catch (FileNotFoundException | JAXBException e) {
-            e.printStackTrace();
+            LOGGER.error(e);
         }
     }
     
