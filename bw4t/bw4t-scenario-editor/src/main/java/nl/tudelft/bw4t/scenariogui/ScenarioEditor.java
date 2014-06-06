@@ -54,7 +54,7 @@ public class ScenarioEditor extends JFrame {
         setJMenuBar(menuBar);
 
         // Attach the MainPanel, consisting of the configuration- and botpanel.
-        mPanel = new MainPanel(new ConfigurationPanel(), new EntityPanel());
+        mPanel = new MainPanel(this, new ConfigurationPanel(), new EntityPanel());
         setActivePane(mPanel);
         
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

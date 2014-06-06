@@ -43,7 +43,7 @@ public class WriteServerIP implements DocumentListener {
      */
     private void handleUpdate() {
         view.getClientConfig().setServerIp(
-                view.getConfigurationPanel().getServerIPTextField().getText());
+                view.getConfigurationPanel().getServerIP());
     }
     
 }
