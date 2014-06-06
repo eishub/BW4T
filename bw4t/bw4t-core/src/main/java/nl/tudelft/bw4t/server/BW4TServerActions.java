@@ -24,8 +24,6 @@ import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 /**
  * This interface defines the calls that the clients can make to the server. Note, this interface does not support kill
  * of the server, since we want the server to stay alive if the client is killed.
- * 
- * @author trens
  */
 public interface BW4TServerActions extends Remote {
 

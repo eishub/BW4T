@@ -5,25 +5,21 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.agent.EntityType;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
-import nl.tudelft.bw4t.scenariogui.panel.gui.ConfigurationPanel;
-import nl.tudelft.bw4t.scenariogui.panel.gui.EntityPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MenuBar;
+import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 
 /**
  * Handles the event to open a file.
  * <p>
  * 
- * @author Katia Asmoredjo
- * @author Xander Zonneveld
  * @version 0.1
  * @since 12-05-2014
  */
@@ -36,10 +32,12 @@ class MenuOptionOpen extends AbstractMenuOption {
 	 *            The view.
 	 * @param mainView
 	 *            The controlling main view.
+	 * @param model           
+	 *            The model.
 	 */
 	public MenuOptionOpen(final MenuBar view,
-			final ScenarioEditorController mainView) {
-		super(view, mainView);
+			final ScenarioEditorController mainView, BW4TClientConfig model) {
+		super(view, mainView, model);
 	}
 
 	/**
@@ -56,20 +54,15 @@ class MenuOptionOpen extends AbstractMenuOption {
 				.getMainPanel().getEntityPanel();
 
 		// Check if current config is different from last saved config
-		if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())
-				|| !entityPanel.compareBotConfigs(entityPanel
-						.getOldBotConfigs())
-				|| !entityPanel.compareEpartnerConfigs(entityPanel
-						.getOldEPartnerConfigs())) {
-			// Check if user wants to save current configuration
-			int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
-					null, ScenarioEditorController.CONFIRM_SAVE_TXT, "",
-					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		if (getController().hasConfigBeenModified()) {
+            boolean doSave = getController().promptUserToSave();
 
-			if (response == JOptionPane.YES_OPTION) {
+			if (doSave) {
 				saveFile();
-				super.getController().getMainView().getMainPanel()
+				getController().getMainView().getMainPanel()
 						.getConfigurationPanel().updateOldValues();
+				getController().getModel().updateBotConfigs();
+				getController().getModel().updateEpartnerConfigs();
 			}
 		}
 
@@ -85,20 +78,22 @@ class MenuOptionOpen extends AbstractMenuOption {
 				BW4TClientConfig configuration = BW4TClientConfig.fromXML(file
 						.getAbsolutePath());
 
-				// Fill the configuration panel
-				configPanel.setClientIP(configuration.getClientIp());
-				configPanel.setClientPort("" + configuration.getClientPort());
-				configPanel.setServerIP(configuration.getServerIp());
-				configPanel.setServerPort("" + configuration.getServerPort());
-				configPanel.setUseGui(configuration.isLaunchGui());
-				// configPanel.setUseGoal(temp.isUseGoal());
-				configPanel.setMapFile(configuration.getMapFile());
+                updateConfigurationInModel(configuration);
+
+				// Fill the configuration panel from the panel
+                reloadConfiguration(configPanel);
 
 				// clear bots/epartners from the previous config
 				resetBotTable(entityPanel);
 				resetEpartnerTable(entityPanel);
-				super.getController().getMainView().getMainPanel()
-						.getEntityPanel().getBotConfigs().clear();
+				
+				getModel().getBots().clear();
+                getModel().getEpartners().clear();
+
+                // Delete the history as well.
+                getModel().updateBotConfigs();
+                getModel().updateEpartnerConfigs();
+
 
 				// Fill the bot panel
 				int botRows = configuration.getBots().size();
@@ -109,9 +104,9 @@ class MenuOptionOpen extends AbstractMenuOption {
 							.getBotController();
 					String botAmount = Integer.toString(configuration.getBot(i)
 							.getBotAmount());
-					Object[] botObject = { botName, botController, botAmount };
+					Object[] botObject = {botName, botController, botAmount };
 					entityPanel.getBotTableModel().addRow(botObject);
-					entityPanel.getBotConfigs().add(configuration.getBot(i));
+					getModel().getBots().add(configuration.getBot(i));
 				}
 				
 				// Fill the epartner panel
@@ -121,9 +116,9 @@ class MenuOptionOpen extends AbstractMenuOption {
 					String epartnerName = configuration.getEpartner(i).getEpartnerName();
 					String epartnerAmount = Integer.toString(configuration.getEpartner(i)
 							.getEpartnerAmount());
-					Object[] epartnerObject = { epartnerName, epartnerAmount };
+					Object[] epartnerObject = {epartnerName, epartnerAmount };
 					entityPanel.getEPartnerTableModel().addRow(epartnerObject);
-					entityPanel.getEPartnerConfigs().add(configuration.getEpartner(i));
+					getModel().getEpartners().add(configuration.getEpartner(i));
 				}
 			} catch (JAXBException e1) {
 				ScenarioEditor.handleException(e1,
@@ -136,15 +131,13 @@ class MenuOptionOpen extends AbstractMenuOption {
 			// set last file location to the opened file so that the previous
 			// saved file won't get
 			// overwritten when the new config is saved.
-			super.getMenuView().setLastFileLocation(openedFile);
+			getMenuView().setLastFileLocation(openedFile);
             getController().getMainView().setWindowTitle(file.getName());
 		}
-		super.getController().getMainView().getMainPanel()
+		getController().getMainView().getMainPanel()
 				.getConfigurationPanel().updateOldValues();
-		super.getController().getMainView().getMainPanel().getEntityPanel()
-				.updateBotConfigs();
-		super.getController().getMainView().getMainPanel().getEntityPanel()
-				.updateEpartnerConfigs();
+		getModel().updateBotConfigs();
+		getModel().updateEpartnerConfigs();
 	}
 
 	/**
@@ -180,4 +173,22 @@ class MenuOptionOpen extends AbstractMenuOption {
 			}
 		}
 	}
+
+    private void updateConfigurationInModel(BW4TClientConfig loadedModel) {
+        getModel().setClientIp(loadedModel.getClientIp());
+        getModel().setClientPort(loadedModel.getClientPort());
+        getModel().setServerIp(loadedModel.getServerIp());
+        getModel().setServerPort(loadedModel.getServerPort());
+        getModel().setLaunchGui(loadedModel.isLaunchGui());
+        getModel().setMapFile(loadedModel.getMapFile());
+    }
+
+    private void reloadConfiguration(ConfigurationPanel configPanel) {
+        configPanel.setClientIP(getModel().getClientIp());
+        configPanel.setClientPort(getModel().getClientPort() + "");
+        configPanel.setServerIP(getModel().getServerIp());
+        configPanel.setServerPort(getModel().getServerPort() + "");
+        configPanel.setUseGui(getModel().isLaunchGui());
+        configPanel.setMapFile(getModel().getMapFile());
+    }
 }

@@ -5,30 +5,31 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import nl.tudelft.bw4t.agent.EntityType;
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
-import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
  * Handles the event when a cell in the bot table is edited.
  * <p>
- * @author      Nick Feddes
  * @version     0.1                
  * @since       27-05-2014        
  */
 public class EditBotTable implements TableModelListener {
 
-    /**
-     * The <code>MainPanel</code> serving as the content pane.
-     */
     private MainPanel view;
+    
+    private BW4TClientConfig model;
 
     /**
      * Create a EditBotTable event handler.
      *
      * @param newView The parent view.
+     * @param model The model.
      */
-    public EditBotTable(final MainPanel newView) {
+    public EditBotTable(final MainPanel newView, BW4TClientConfig model) {
         this.view = newView;
+        this.model = model;
     }
 
     /**
@@ -40,20 +41,21 @@ public class EditBotTable implements TableModelListener {
     public void tableChanged(TableModelEvent event) {
         if (event.getColumn() == -1) 
             return;
-        BotConfig config = view.getEntityPanel().getBotConfigs().get(event.getFirstRow());
-        Object value =  view.getEntityPanel().getBotTable().getValueAt(
+        model.getAmountBot();
+        BotConfig config = model.getBots().get(event.getFirstRow());
+        String value =  "" + view.getEntityPanel().getBotTable().getValueAt(
                 event.getFirstRow(), event.getColumn());
         switch (event.getColumn()) {
         case 0:
-            config.setBotName((String) value);
+            config.setBotName(value);
             break;
         case 1:
-            EntityType botController = EntityType.getType((String) value);
+            EntityType botController = EntityType.getType(value);
 
             config.setBotController(botController);
             break;
         case 2:
-            config.setBotAmount(Integer.parseInt((String) value));
+            config.setBotAmount(Integer.parseInt(value));
             break;
          default:
             break;

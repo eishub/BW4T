@@ -5,17 +5,17 @@ import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.DefaultConfigurationValues;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
-import nl.tudelft.bw4t.scenariogui.panel.gui.ConfigurationPanel;
-import nl.tudelft.bw4t.scenariogui.panel.gui.EntityPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MenuBar;
+import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
 
 /**
  * Handles the event to start a new file.
  * <p>
- * 
- * @author Katia Asmoredjo
- * @author Xander Zonneveld
+ *
  * @version 0.1
  * @since 12-05-2014
  */
@@ -23,35 +23,33 @@ class MenuOptionNew extends AbstractMenuOption {
 
 	/**
 	 * Constructs a new menu option new object.
-	 * 
+	 *
 	 * @param view
 	 *            The view.
 	 * @param mainView
 	 *            The controlling main view.
+	 * @param model
+	 *            The model.
 	 */
 	public MenuOptionNew(final MenuBar view,
-			final ScenarioEditorController mainView) {
-		super(view, mainView);
+			final ScenarioEditorController mainView, BW4TClientConfig model) {
+		super(view, mainView, model);
 	}
 
 	/**
 	 * Gets called when the new file menu item is pressed.
-	 * 
+	 *
 	 * @param e
 	 *            The action event.
 	 */
 	public void actionPerformed(final ActionEvent e) {
-		ConfigurationPanel configPanel = super.getController().getMainView()
+		ConfigurationPanel configPanel = getController().getMainView()
 				.getMainPanel().getConfigurationPanel();
-		EntityPanel entityPanel = super.getController().getMainView()
+		EntityPanel entityPanel = getController().getMainView()
 				.getMainPanel().getEntityPanel();
 
 		// Check if current config is different from last saved config
-		if (!configPanel.getOldValues().equals(configPanel.getCurrentValues())
-				|| !entityPanel.compareBotConfigs(entityPanel
-						.getOldBotConfigs())
-				|| !entityPanel.compareEpartnerConfigs(entityPanel
-						.getOldEPartnerConfigs())) {
+		if (getController().hasConfigBeenModified()) {
 			// Check if user wants to save current configuration
 			int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
 					null, ScenarioEditorController.CONFIRM_SAVE_TXT, "",
@@ -59,70 +57,62 @@ class MenuOptionNew extends AbstractMenuOption {
 
 			if (response == JOptionPane.YES_OPTION) {
 				saveFile();
-				super.getController().getMainView().getMainPanel()
+				getController().getMainView().getMainPanel()
 						.getConfigurationPanel().updateOldValues();
-				super.getController().getMainView().getMainPanel()
-						.getEntityPanel().updateBotConfigs();
+				getModel().updateBotConfigs();
 			}
 		}
 
 		resetConfigPanel(configPanel);
-
-		// save the default values as the "old" values
-		super.getController().getMainView().getMainPanel()
-				.getConfigurationPanel().updateOldValues();
-		super.getController().getMainView().getMainPanel().getEntityPanel()
-				.getBotConfigs().clear();
-		super.getController().getMainView().getMainPanel().getEntityPanel()
-				.updateBotConfigs();
-		super.getController().getMainView().getMainPanel().getEntityPanel()
-				.getEPartnerConfigs().clear();
-		super.getController().getMainView().getMainPanel().getEntityPanel()
-				.updateEpartnerConfigs();
+		getModel().getBots().clear();
+		getModel().getEpartners().clear();
+        getModel().updateBotConfigs();
+        getModel().updateEpartnerConfigs();
 
 		// set last file location to null so that the previous saved file won't
 		// get
 		// overwritten when the new config is saved.
-		super.getMenuView().setLastFileLocation(null);
+		getMenuView().setLastFileLocation(null);
 
 		// Reset the bot panel
 		resetBotTable(entityPanel);
 
 		// reset the epartner panel
 		resetEpartnerTable(entityPanel);
+
+        getController().getMainView().setWindowTitle("Untitled");
 	}
 
 	/**
 	 * Resets the given configPanel to it's default values.
-	 * 
+	 *
 	 * @param configPanel
 	 *            The configPanel to be reset.
 	 */
 	public void resetConfigPanel(ConfigurationPanel configPanel) {
 		// Reset the config panel
 		configPanel
-				.setClientIP(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_CLIENT_IP
+				.setClientIP(DefaultConfigurationValues.DEFAULT_CLIENT_IP
+                        .getValue());
+		configPanel
+				.setClientPort(DefaultConfigurationValues.DEFAULT_CLIENT_PORT
 						.getValue());
 		configPanel
-				.setClientPort(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_CLIENT_PORT
+				.setServerIP(DefaultConfigurationValues.DEFAULT_SERVER_IP
 						.getValue());
 		configPanel
-				.setServerIP(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_SERVER_IP
+				.setServerPort(DefaultConfigurationValues.DEFAULT_SERVER_PORT
 						.getValue());
-		configPanel
-				.setServerPort(ConfigurationPanel.DEFAULT_VALUES.DEFAULT_SERVER_PORT
-						.getValue());
-		configPanel.setUseGui(ConfigurationPanel.DEFAULT_VALUES.USE_GUI
+		configPanel.setUseGui(DefaultConfigurationValues.USE_GUI
 				.getBooleanValue());
-		// configPanel.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
-		configPanel.setMapFile(ConfigurationPanel.DEFAULT_VALUES.MAP_FILE
+		configPanel.setMapFile(DefaultConfigurationValues.MAP_FILE
 				.getValue());
 
 	}
 
 	/**
 	 * Reset the list with bots.
-	 * 
+	 *
 	 * @param entityPanel
 	 *            The EntityPanel which contains the bot list.
 	 */
@@ -137,7 +127,7 @@ class MenuOptionNew extends AbstractMenuOption {
 
 	/**
 	 * Reset the list with epartners.
-	 * 
+	 *
 	 * @param entityPanel
 	 *            The EntityPanel which contains the epartner list.
 	 */

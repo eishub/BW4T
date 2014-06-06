@@ -25,11 +25,6 @@ import repast.simphony.space.continuous.NdPoint;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-/**
- * @author Joost Rothweiler
- * @author Valentine Mairet
- * 
- */
 @RunWith(MockitoJUnitRunner.class)
 
 public class NewHandicapTest {

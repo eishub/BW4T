@@ -3,7 +3,7 @@ package nl.tudelft.bw4t.scenariogui.editor.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
  * Handles the event to show the dropdown menu with the standard bots.
@@ -13,9 +13,6 @@ import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
  */
 class BotDropDownButton implements ActionListener {
 
-    /**
-     * The <code>MainPanel</code> serving as the content pane.
-     */
     private MainPanel view;
 
     /**

@@ -5,11 +5,7 @@ import nl.tudelft.bw4t.robots.MoveType;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.Room;
 import nl.tudelft.bw4t.zone.Zone;
-/**
- * 
- * @author Valentine Mairet & Ruben Starmans
- *
- */
+
 public class SizeOverloadHandicap extends AbstractRobotDecorator {
 	
 	/**
@@ -44,8 +40,7 @@ public class SizeOverloadHandicap extends AbstractRobotDecorator {
         if (robot.getSize() >= 4) {
             if (startzone == endzone) {
                 return MoveType.SAME_AREA;
-            } 
-            else if (endzone instanceof Corridor) {
+            } else if (endzone instanceof Corridor) {
                 if (!robot.isOneBotPerZone() || endzone.containsMeOrNothing(robot)) {
                     return MoveType.ENTER_CORRIDOR;
                 }
@@ -53,8 +48,7 @@ public class SizeOverloadHandicap extends AbstractRobotDecorator {
             } else if (endzone instanceof Room) {
             	return MoveType.HIT_CLOSED_DOOR;
             }
-        } 
-        else {
+        } else {
             super.checkZoneAccess(startzone, endzone, door);
         }
         return MoveType.ENTERING_FREESPACE;

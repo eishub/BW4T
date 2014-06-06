@@ -3,32 +3,33 @@ package nl.tudelft.bw4t.scenariogui.editor.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.epartner.controller.EpartnerController;
 import nl.tudelft.bw4t.scenariogui.epartner.gui.EpartnerFrame;
-import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
  * Handles the event to modify an E-partner.
  * <p>
- * @author      Seu Man To
  * @version     0.1                
  * @since       12-05-2014        
  */
 class ModifyEPartner implements ActionListener {
 
-    /**
-     * The <code>MainPanel</code> serving as the content pane.
-     */
     private MainPanel view;
+    
+    private BW4TClientConfig model;
 
     /**
      * Create an ModifyEPartner event handler.
      *
      * @param newView The parent view.
+     * @param model The model.
      */
-    public ModifyEPartner(final MainPanel newView) {
+    public ModifyEPartner(final MainPanel newView, BW4TClientConfig model) {
         this.view = newView;
+        this.model = model;
     }
 
     /**
@@ -45,7 +46,6 @@ class ModifyEPartner implements ActionListener {
             ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select the E-partner you want to modify.");
         } 
         else {
-        	String data = (String) view.getEntityPanel().getEPartnerTable().getModel().getValueAt(row, 0);
             new EpartnerFrame(new EpartnerController(view, row));
         }
     }

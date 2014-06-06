@@ -6,12 +6,10 @@ import java.util.Set;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.epartner.gui.EPartnerViewInterface;
 import nl.tudelft.bw4t.scenariogui.epartner.gui.EpartnerFrame;
-import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
  * EpartnerController is in charge of all events that happen on the EpartnerGUI.
- * 
- * @author Wendy Bolier
  */
 
 public class EpartnerController {
@@ -33,7 +31,7 @@ public class EpartnerController {
 	 * @param row row
 	 */
 	public EpartnerController(MainPanel panel, int row) {
-		epConfig = panel.getEntityPanel().getEPartnerConfig(row);
+		epConfig = panel.getClientConfig().getEpartner(row);
 	}
 	
 	/**
@@ -99,6 +97,14 @@ public class EpartnerController {
 	public boolean isForgetMeNot() {
 		return epConfig.isForgetMeNot();
 	}
+
+    public String getReferenceName() {
+        return epConfig.getReferenceName();
+    }
+
+    public String getFileName() {
+        return epConfig.getFileName();
+    }
 
 	/**
 	 * Updates the epartner config file with the values from the EpartnerFrame

@@ -7,15 +7,13 @@ import java.io.File;
 import javax.swing.SwingUtilities;
 
 import nl.tudelft.bw4t.agent.EntityType;
-import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditor;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
-import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
  * Handles actions of the applybutton
- * @author Arun
  */
 class ApplyButton implements ActionListener {
     /**

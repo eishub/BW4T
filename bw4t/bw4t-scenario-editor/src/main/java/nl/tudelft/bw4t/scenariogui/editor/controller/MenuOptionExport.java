@@ -5,19 +5,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.util.ExportToMAS;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 
 /**
  * Handles the event to export the project to mas2g.
-  * <p>
- * @author      Calvin Wong Loi Sing
+ * <p>
  * @version     0.1                
  * @since       02-06-2014
  */
@@ -28,9 +26,10 @@ class MenuOptionExport extends AbstractMenuOption {
      *
      * @param view     The view.
      * @param mainView The controlling main view.
+     * @param model    The model.
      */
-    public MenuOptionExport(final MenuBar view, final ScenarioEditorController mainView) {
-        super(view, mainView);
+    public MenuOptionExport(final MenuBar view, final ScenarioEditorController mainView, BW4TClientConfig model) {
+        super(view, mainView, model);
     }
 
     /**

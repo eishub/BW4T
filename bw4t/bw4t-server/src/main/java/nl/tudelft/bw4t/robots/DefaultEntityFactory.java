@@ -16,10 +16,6 @@ import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.server.environment.Launcher;
 
-/**
- * @author Jan Giesenberg
- * @author Valentine Mairet
- */
 public class DefaultEntityFactory implements EntityFactory {
 
 	private Context<Object> context;

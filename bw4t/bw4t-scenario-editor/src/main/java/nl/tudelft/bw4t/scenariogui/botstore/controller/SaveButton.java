@@ -11,12 +11,10 @@ import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditor;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
-import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
  * Handles actions of the applybutton
- * 
- * @author Arun
  */
 class SaveButton implements ActionListener {
 
@@ -137,15 +135,13 @@ class SaveButton implements ActionListener {
 	private void updateBotTable() {
 		view.getBotEditor().getParent().getEntityPanel().getBotTableModel()
 				.setRowCount(0);
-		int rows = view.getBotEditor().getParent().getEntityPanel()
-				.getBotConfigs().size();
+		int rows = view.getModel().getBots().size();
 
 		for (int i = 0; i < rows; i++) {
-			BotConfig botConfig = view.getBotEditor().getParent()
-					.getEntityPanel().getBotConfig(i);
-			Object[] newBotObject = { botConfig.getBotName(),
+			BotConfig botConfig = view.getModel().getBot(i);
+			Object[] newBotObject = {botConfig.getBotName(),
 					botConfig.getBotController().toString(),
-					botConfig.getBotAmount() };
+					botConfig.getBotAmount()};
 			view.getBotEditor().getParent().getEntityPanel().getBotTableModel()
 					.addRow(newBotObject);
 		}

@@ -17,7 +17,6 @@ import org.apache.log4j.Logger;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.eis.RobotEntity;
-import nl.tudelft.bw4t.logger.BotLog;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Door.Orientation;
 import nl.tudelft.bw4t.map.Entity;
@@ -27,6 +26,7 @@ import nl.tudelft.bw4t.robots.NavigatingRobot;
 import nl.tudelft.bw4t.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.Launcher;
+import nl.tudelft.bw4t.server.logging.BotLog;
 import nl.tudelft.bw4t.zone.BlocksRoom;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.DropZone;
@@ -39,12 +39,7 @@ import repast.simphony.space.continuous.SimpleCartesianAdder;
 import repast.simphony.space.continuous.StickyBorders;
 import eis.exceptions.EntityException;
 
-/**
- * @author Lennard
- * @author W.Pasman added doors 15aug2011
- * @author W.Pasman added navpoints 22aug
- * 
- */
+
 public final class MapLoader {
 
     /** Identifier used for the space projections, matched in context.xml */
@@ -358,13 +353,13 @@ public final class MapLoader {
     private static void createBlocksForRoom(Room room, Context<Object> context, ContinuousSpace<Object> space,
             List<BlockColor> args) {
         
-        String logRoom = room.getName();
-        
+        String letter = "";
         for (BlockColor c : args) {
-            logRoom = logRoom + c.getLetter().toString();
+            letter = letter + " " + c.getLetter().toString();
         }
         
-        LOGGER.log(BotLog.BOTLOG, logRoom);
+        LOGGER.log(BotLog.BOTLOG, String.format("room %s contains blocks: %s", room.getName(), letter));
+
 
         Rectangle2D roomBox = room.getBoundingBox();
         List<Rectangle2D> newblocks = new ArrayList<Rectangle2D>();

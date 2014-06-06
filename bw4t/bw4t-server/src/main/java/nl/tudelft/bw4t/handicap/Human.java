@@ -7,9 +7,6 @@ import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.robots.AbstractRobot;
 import repast.simphony.random.RandomHelper;
 
-/**
- * @author Valentine Mairet
- */
 public class Human extends AbstractRobotDecorator {
     private static final Logger LOGGER = Logger.getLogger(Human.class);
     

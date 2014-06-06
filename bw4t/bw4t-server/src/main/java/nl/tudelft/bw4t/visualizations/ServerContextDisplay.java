@@ -24,7 +24,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.xml.bind.ValidationException;
 
 import nl.tudelft.bw4t.BW4TBuilder;
 import nl.tudelft.bw4t.controller.ServerMapController;
@@ -49,10 +48,6 @@ import eis.iilang.Parameter;
  * <p>
  * Also note that this is a runnable and runs in its own thread with a refresh rate of 10Hz, started by
  * {@link BW4TBuilder}, see {@link #run()}.
- * 
- * @author trens
- * 
- * @modified W.Pasman 11mar13 pulled out the {@link ServerMapRenderer}.
  */
 @SuppressWarnings("serial")
 public class ServerContextDisplay extends JFrame {
@@ -110,9 +105,6 @@ public class ServerContextDisplay extends JFrame {
 
 /**
  * local speed panel at top of the window.
- * 
- * @author W.Pasman
- * 
  */
 @SuppressWarnings("serial")
 class ControlPanel extends JPanel {
@@ -215,9 +207,6 @@ class ControlPanel extends JPanel {
  * This combo box allows user to select a new map. Doing that will reset the server and reload the new map.
  * <p>
  * We assume that a directory named "Maps" is available in the current directory, and that it only contains maps.
- * 
- * @author W.Pasman 13mar13
- * 
  */
 @SuppressWarnings("serial")
 class MapSelector extends JPanel {
@@ -234,7 +223,7 @@ class MapSelector extends JPanel {
         final JComboBox mapselector = new JComboBox(maps);
 
         // find the current map in the list and highlight it
-        String mapname = BW4TEnvironment.getMapLocation();
+        String mapname = BW4TEnvironment.getInstance().getMapLocation();
         mapselector.setSelectedItem(mapname);
 
         add(mapselector, BorderLayout.CENTER);

@@ -16,13 +16,12 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import nl.tudelft.bw4t.agent.EntityType;
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
-import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
  * BotEditorPanel which serves as the content pane for the BotEditor frame
- * 
- * @author Arun
  */
 public class BotEditorPanel extends JPanel {
 
@@ -78,6 +77,8 @@ public class BotEditorPanel extends JPanel {
 	private MainPanel mainPanel;
 
 	private BotEditor botEditor;
+	
+	private BW4TClientConfig model;
 
 	/**
 	 * Create the botEditorPanel.
@@ -87,12 +88,13 @@ public class BotEditorPanel extends JPanel {
 	 * @param mainPanel
 	 *            The MainPanel.
 	 */
-	public BotEditorPanel(BotEditor botEditor, MainPanel mainPanel) {
+	public BotEditorPanel(BotEditor botEditor, MainPanel mainPanel, BW4TClientConfig model) {
+		this.model = model;
 		setLayout(new BorderLayout(20, 20));
 
 		this.mainPanel = mainPanel;
 		this.botEditor = botEditor;
-		this.dataObject = mainPanel.getEntityPanel().getBotConfig(
+		this.dataObject = this.model.getBot(
 				botEditor.getRow());
 
 		createBotInfoPanel();
@@ -111,25 +113,22 @@ public class BotEditorPanel extends JPanel {
 		botInfo.setLayout(new GridLayout(10, 0));
 
 		botNameField.setText(dataObject.getBotName());
-		
 		botControllerSelector.setModel(new DefaultComboBoxModel(new String[] {
-                EntityType.AGENT.toString(), EntityType.HUMAN.toString() }));
+		        EntityType.AGENT.toString(), EntityType.HUMAN.toString() }));
 		botAmountTextField.setText("" + dataObject.getBotAmount());
 
 		botInfo.add(new JLabel("Bot name:"));
 		botNameField.setText(dataObject.getBotName());
 		botInfo.add(botNameField);
-		
 		JPanel controllerpanel = new JPanel();
 		controllerpanel.setLayout(new GridLayout(1, 0));
 		if (dataObject.getBotController().equals(EntityType.HUMAN)) {
-			botControllerSelector.setSelectedIndex(1);
-		}
+	        botControllerSelector.setSelectedIndex(1);
+	    } 
 		controllerpanel.add(botControllerSelector);
 		controllerpanel.add(new JLabel("   Amount of this type:"));
 		controllerpanel.add(botAmountTextField);
 		botInfo.add(controllerpanel);
-		
 		botInfo.add(new JLabel(""));
 		JLabel goalLabel = new JLabel("GOAL options");
 		goalLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -276,7 +275,7 @@ public class BotEditorPanel extends JPanel {
 		batterySlider.setValue(dataObject.getBotBatteryCapacity());
 
 		if (dataObject.isBatteryEnabled()) {
-			batterySlider.setEnabled(true);
+		    batterySlider.setEnabled(true);
 		}
 		batteryPanel.add(batterySlider);
 
@@ -382,9 +381,9 @@ public class BotEditorPanel extends JPanel {
 	}
 
 	/**
-	 * Returns the applybutton
+	 * Returns the save button
 	 * 
-	 * @return the applyButton
+	 * @return the save button.
 	 */
 	public JButton getSaveButton() {
 		return saveButton;
@@ -569,7 +568,7 @@ public class BotEditorPanel extends JPanel {
 	 */
 	public JTextField getBotReferenceField() {
 		return botReferenceField;
-	}
+    }
 
 	/**
 	 * Returns the BotEditor.
@@ -577,5 +576,9 @@ public class BotEditorPanel extends JPanel {
 	 */
 	public BotEditor getBotEditor() {
 		return botEditor;
+	}
+	
+	public BW4TClientConfig getModel() {
+	    return model;
 	}
 }

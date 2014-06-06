@@ -16,54 +16,31 @@ import nl.tudelft.bw4t.util.XMLManager;
  * GUI and is meant to be directly convertible to XML and constructible from
  * XML.
  * <p>
- * 
- * @author Nick Feddes
- * @author Calvin Wong Loi Sing
- * @author Katia Asmoredjo
+ *
  * @version 0.1
  * @since 12-05-2014
  */
 @XmlRootElement
 public class BW4TClientConfig {
-	/**
-	 * The file in which the configuration in this class will be stored.
-	 */
+
 	private String outputFile;
 
-	/**
-	 * The clientIP.
-	 */
-	private String clientIp;
+	private String clientIp = DefaultConfigurationValues.DEFAULT_CLIENT_IP.getValue();
 
-	/**
-	 * The client port.
-	 */
-	private int clientPort;
+	private int clientPort = DefaultConfigurationValues.DEFAULT_CLIENT_PORT.getIntValue();
 
-	/**
-	 * The serverIP.
-	 */
-	private String serverIp;
+	private String serverIp = DefaultConfigurationValues.DEFAULT_SERVER_IP.getValue();
 
-	/**
-	 * The server port.
-	 */
-	private int serverPort;
+	private int serverPort = DefaultConfigurationValues.DEFAULT_SERVER_PORT.getIntValue();
 
-	/**
-	 * Boolean indicating if a GUI should be launched.
-	 */
-	private boolean launchGui;
+	private boolean launchGui = DefaultConfigurationValues.USE_GUI.getBooleanValue();
 
-	/**
-	 * Boolean indicating if a GOAL should be used.
-	 */
-	private boolean useGoal;
+	private boolean useGoal = DefaultConfigurationValues.USE_GOAL.getBooleanValue();
 
 	/**
 	 * The location of the map file.
 	 */
-	private String mapFile;
+	private String mapFile = "";
 
 	/**
 	 * The XML element wrapper for the list of bots.
@@ -72,12 +49,16 @@ public class BW4TClientConfig {
 	@XmlElement(name = "bot")
 	private List<BotConfig> bots = new ArrayList<BotConfig>();
 
+	private List<BotConfig> oldBots = new ArrayList<BotConfig>();
+
 	/**
 	 * The XML element wrapper for the list of epartners.
 	 */
 	@XmlElementWrapper(name = "epartners")
 	@XmlElement(name = "epartner")
 	private List<EPartnerConfig> epartners = new ArrayList<EPartnerConfig>();
+
+	private List<EPartnerConfig> oldEpartners = new ArrayList<EPartnerConfig>();
 
 	/**
 	 * An empty <code>BW4TClientConfig</code> object.
@@ -87,7 +68,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Converts Java Object into XML file.
-	 * 
+	 *
 	 * @throws FileNotFoundException
 	 *             Signals that an attempt to open the file denoted by a
 	 *             specified pathname has failed.
@@ -100,7 +81,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Construct Java Object from XML file.
-	 * 
+	 *
 	 * @param inputFile
 	 *            The file location of the XML-file
 	 * @return The BW4TClientConfig object
@@ -118,7 +99,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Gets the location to store the XML version of this file in.
-	 * 
+	 *
 	 * @return The path of the file to store this object in as XML.
 	 */
 	public final String getFileLocation() {
@@ -127,7 +108,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Sets the location to store the XML version of this file in.
-	 * 
+	 *
 	 * @param newFileLocation
 	 *            The path of the file to store this object in as XML.
 	 */
@@ -137,7 +118,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Gets the clientIP.
-	 * 
+	 *
 	 * @return The clientIP.
 	 */
 	public final String getClientIp() {
@@ -146,7 +127,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Sets the clientIP.
-	 * 
+	 *
 	 * @param newClientIp
 	 *            The clientIP.
 	 */
@@ -158,7 +139,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Gets the clientPort.
-	 * 
+	 *
 	 * @return The clientPort.
 	 */
 	public final int getClientPort() {
@@ -167,7 +148,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Sets the clientPort.
-	 * 
+	 *
 	 * @param newClientPort
 	 *            The clientPort.
 	 */
@@ -178,7 +159,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Gets the serverIP.
-	 * 
+	 *
 	 * @return The serverIP.
 	 */
 	public final String getServerIp() {
@@ -187,7 +168,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Sets the serverIP.
-	 * 
+	 *
 	 * @param newServerIp
 	 *            The serverIP.
 	 */
@@ -198,7 +179,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Gets the serverPort.
-	 * 
+	 *
 	 * @return The serverPort.
 	 */
 	public final int getServerPort() {
@@ -207,7 +188,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Sets the serverPort.
-	 * 
+	 *
 	 * @param newServerPort
 	 *            The serverPort.
 	 */
@@ -218,7 +199,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Gets if GUI should be launched.
-	 * 
+	 *
 	 * @return if a GUI should be launched.
 	 */
 	public final boolean isLaunchGui() {
@@ -227,7 +208,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Sets if a GUI should be launched.
-	 * 
+	 *
 	 * @param newLaunchGui
 	 *            Boolean indicating if a GUI should be launched.
 	 */
@@ -238,7 +219,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Gets if Goal should be used.
-	 * 
+	 *
 	 * @return if Goal should be used.
 	 */
 	public final boolean isUseGoal() {
@@ -247,7 +228,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Sets if GOAL should be used.
-	 * 
+	 *
 	 * @param newUseGoal
 	 *            Boolean indicating if GOAL should be used.
 	 */
@@ -258,7 +239,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Gets location of the MapFile.
-	 * 
+	 *
 	 * @return mapFile The MapFile location.
 	 */
 	public final String getMapFile() {
@@ -267,7 +248,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Sets the MapFile.
-	 * 
+	 *
 	 * @param newMapFile
 	 *            The MapFile location.
 	 */
@@ -276,17 +257,9 @@ public class BW4TClientConfig {
 		this.mapFile = newMapFile;
 	}
 
-	// public LinkedList<BotConfig> getBots() {
-	// return bots;
-	// }
-	//
-	// public void setBots(LinkedList<BotConfig> bots) {
-	// this.bots = bots;
-	// }
-
 	/**
 	 * Add a bot to the configuration file.
-	 * 
+	 *
 	 * @param theBot
 	 *            The bot that is to be added.
 	 */
@@ -296,7 +269,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Remove a bot from the configuration file.
-	 * 
+	 *
 	 * @param theBot
 	 *            The bot that is to be removed.
 	 */
@@ -306,7 +279,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Return all the bots loaded.
-	 * 
+	 *
 	 * @return The <code>List<BotConfig></code> of bots.
 	 */
 	public List<BotConfig> getBots() {
@@ -314,8 +287,17 @@ public class BW4TClientConfig {
 	}
 
 	/**
+	 * Returns the previous saved BotConfig list.
+	 *
+	 * @return The previous saved BotConfig list.
+	 */
+	public List<BotConfig> getOldBots() {
+		return oldBots;
+	}
+
+	/**
 	 * Returns the index'th bot.
-	 * 
+	 *
 	 * @param index
 	 *            The bot index.
 	 * @return The index'th bot.
@@ -325,8 +307,51 @@ public class BW4TClientConfig {
 	}
 
 	/**
+	 * Updates the bot list with the new bots.
+	 */
+	public void updateBotConfigs() {
+		oldBots = new ArrayList<BotConfig>(bots);
+	}
+
+	/**
+	 * Returns the amount of bots in the bot list.
+	 *
+	 * @return The amount of bots in the bot list.
+	 */
+	public int getAmountBot() {
+	    int  botCount = 0;
+        for (int i = 0; i < bots.size(); i++) {
+            botCount = botCount + bots.get(i).getBotAmount();
+        }
+        return botCount;
+	}
+
+	/**
+	 * Compares the BotConfig lists.
+	 *
+	 * @param config
+	 * 			The BotConfig list to be compared.
+	 *
+	 * @return If the BotConfigs lists are equal.
+	 */
+	public boolean compareBotConfigs(List<BotConfig> config) {
+		if (bots.size() != config.size()) {
+			return false;
+		}
+
+		for (int i = 0; i < bots.size(); i++) {
+			if (!bots.get(i).bcToString()
+					.equals(config.get(i).bcToString())) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * Add an epartner to the configuration file.
-	 * 
+	 *
 	 * @param theEpartner
 	 *            The epartner that is to be added.
 	 */
@@ -336,7 +361,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Remove an epartner from the configuration file.
-	 * 
+	 *
 	 * @param theEpartner
 	 *            The epartner that is to be removed.
 	 */
@@ -346,7 +371,7 @@ public class BW4TClientConfig {
 
 	/**
 	 * Return all the epartners loaded.
-	 * 
+	 *
 	 * @return The <code>List<EpartnerConfig></code> of epartners.
 	 */
 	public List<EPartnerConfig> getEpartners() {
@@ -354,8 +379,17 @@ public class BW4TClientConfig {
 	}
 
 	/**
+	 * Returns the previous saved EpartnerConfig list.
+	 *
+	 * @return The previous saved EpartnerConfig list.
+	 */
+	public List<EPartnerConfig> getOldEpartners() {
+		return oldEpartners;
+	}
+
+	/**
 	 * Returns the index'th epartner.
-	 * 
+	 *
 	 * @param index
 	 *            The epartner index.
 	 * @return The index'th epartner.
@@ -364,27 +398,47 @@ public class BW4TClientConfig {
 		return epartners.get(index);
 	}
 
-    /**
-     * calculate the total number of Robots to be requested.
-     * @return the count
-     */
-    public int countBots() {
-        int count = 0;
-        for (BotConfig bot : bots) {
-            count += bot.getBotAmount();
-        }
-        return count;
-    }
+	/**
+	 * Updates the EpartnerConfig list.
+	 */
+	public void updateEpartnerConfigs() {
+        oldEpartners = new ArrayList<EPartnerConfig>(epartners);
+	}
 
-    /**
-     * calculate the total number of Robots to be requested.
-     * @return the count
-     */
-    public int countEpartners() {
-        int count = 0;
-        for (EPartnerConfig bot : getEpartners()) {
-            count += bot.getEpartnerAmount();
-        }
-        return count;
-    }
+	/**
+	 * Returns the amount of epartners in the epartner list.
+	 *
+	 * @return The amount of epartners in the epartner list.
+	 */
+	public int getAmountEPartner() {
+	     int  epartnerCount = 0;
+	     for (int i = 0; i < epartners.size(); i++) {
+             epartnerCount = epartnerCount + epartners.get(i).getEpartnerAmount();
+         }
+         return epartnerCount;
+	}
+
+	/**
+	 * Compares the EpartnerConfig lists.
+	 *
+	 * @param config
+	 * 			The EpartnerConfig list to be compared.
+	 *
+	 * @return If the EpartnerConfigs lists are equal.
+	 */
+	public boolean compareEpartnerConfigs(List<EPartnerConfig> config) {
+		if (epartners.size() != config.size()) {
+			return false;
+		}
+
+		for (int i = 0; i < epartners.size(); i++) {
+			if (!epartners.get(i).ecToString()
+					.equals(config.get(i).ecToString())) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 }
