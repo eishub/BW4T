@@ -88,6 +88,7 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 
 		setResizable(false);
 		pack();
+		setLocationRelativeTo(null);
 		
 		controller.addView(this);
 		
