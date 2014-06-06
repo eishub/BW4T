@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 /**
  * Handles actions of the ApplyButton
  */
-class EpartnerApplyButton implements ActionListener {
+class EpartnerSaveButton implements ActionListener {
 
 	private EpartnerFrame view;
 
@@ -16,7 +16,7 @@ class EpartnerApplyButton implements ActionListener {
 	 * @param pview
 	 *            The frame with the button in it.
 	 */
-	public EpartnerApplyButton(EpartnerFrame pview) {
+	public EpartnerSaveButton(EpartnerFrame pview) {
 		this.view = pview;
 	}
 
