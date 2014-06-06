@@ -107,19 +107,19 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 	 */
 	private void createOptionPanel() {
 		optionPane.setLayout(new GridLayout(0, 1));
+		
+		optionPane.add(new JLabel(""));
+
+		addGoalOptions();
+
 		optionPane.add(new JLabel(""));
 
 		JLabel propertiesLabel = new JLabel("Properties");
 		propertiesLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		optionPane.add(propertiesLabel);
-
 		optionPane.add(forgetMeNotCheckbox);
-
 		optionPane.add(gpsCheckBox);
-		optionPane.add(new JLabel(""));
-
-		addGoalOptions();
-
+		
 		optionPane.add(new JLabel(""));
 	}
 
