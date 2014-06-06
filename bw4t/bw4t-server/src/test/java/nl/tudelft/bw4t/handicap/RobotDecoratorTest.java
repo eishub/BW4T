@@ -18,8 +18,6 @@ import static org.mockito.Mockito.when;
  * Test suite for the AbstractRobotDecorator class.
  * Tests functionality (calling the methods of the
  * robot in the class).
- * @author Tim
- *
  */
 public class RobotDecoratorTest {
     /**

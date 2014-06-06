@@ -14,9 +14,6 @@ import nl.tudelft.bw4t.map.editor.model.Room;
 /**
  * This is a cell editor for a room. It renders a table cell for the room. The
  * cell contains the room name (x,y numbers) and a ColorSequenceEditor.
- * 
- * @author W.Pasman
- * 
  */
 @SuppressWarnings("serial")
 public class RoomCellEditor extends AbstractCellEditor implements

@@ -11,8 +11,6 @@ import eis.iilang.EnvironmentState;
 /**
  * This is a listener at the client side that allows the server to do callbacks
  * to the client.
- * 
- * @author wouter
  */
 public interface BW4TClientActions extends Remote {
 

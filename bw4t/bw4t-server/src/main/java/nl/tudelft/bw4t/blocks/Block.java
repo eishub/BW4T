@@ -12,8 +12,6 @@ import repast.simphony.space.continuous.NdPoint;
 
 /**
  * Represents a block in the environment that can be picked up by a {@link AbstractRobot}.
- * 
- * @author Lennard de Rijk
  */
 public class Block extends BoundedMoveableObject {
 
@@ -72,8 +70,7 @@ public class Block extends BoundedMoveableObject {
         NdPoint p;
         if (heldBy != null) {
             p = heldBy.getLocation();
-        }
-        else {
+        } else {
             p = super.getLocation();
         }
         if (p != null) {

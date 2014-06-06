@@ -37,7 +37,7 @@ public class EPartnerMenu {
         
         for (Zone room : gui.getController().getMapController().getRooms()) {
             menuItem = new JMenuItem(room.getName());
-            menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.iWantToGoTo, room.getName(), "", 0), gui.getController()));
+            menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.IWANTTOGO, room.getName(), "", 0), gui.getController()));
             submenu.add(menuItem);
         }
         

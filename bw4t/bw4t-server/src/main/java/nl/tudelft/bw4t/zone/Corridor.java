@@ -5,9 +5,6 @@ import repast.simphony.space.continuous.ContinuousSpace;
 
 /**
  * A corridor is a zone outside the rooms.
- * 
- * @author W.Pasman
- * 
  */
 public class Corridor extends Zone {
 

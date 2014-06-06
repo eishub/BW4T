@@ -14,6 +14,7 @@ public class ViewBlock {
     private long objectId = 0;
     private BlockColor color = null;
     private Point2D position = new Point2D.Double();
+    
     public ViewBlock() {
         super();
     }

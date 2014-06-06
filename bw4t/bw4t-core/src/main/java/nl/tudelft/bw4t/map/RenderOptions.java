@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 /**
  * Render options for map elements.
- * 
- * @author W.Pasman 10 dec 2013
  */
 @SuppressWarnings("serial")
 public class RenderOptions implements Serializable {

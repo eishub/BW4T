@@ -43,4 +43,8 @@ public interface EPartnerViewInterface {
 	 */
 	boolean getGPS();
 
+    String getEpartnerReference();
+
+    String getEpartnerGoalFile();
+
 }

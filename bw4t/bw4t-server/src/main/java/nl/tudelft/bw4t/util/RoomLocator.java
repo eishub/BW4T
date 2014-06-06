@@ -9,8 +9,6 @@ import nl.tudelft.bw4t.zone.Room;
 
 /**
  * Utility class to locate in which rooms an object is.
- * 
- * @author Lennard de Rijk
  */
 public final class RoomLocator {
 

@@ -11,9 +11,6 @@ import javax.swing.SpinnerNumberModel;
 
 /**
  * shows the user a dialog where he can enter size of the map
- * 
- * @author W.Pasman
- * 
  */
 @SuppressWarnings("serial")
 public class SizeDialog extends JPanel {
