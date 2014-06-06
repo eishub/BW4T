@@ -9,9 +9,9 @@ import javax.swing.JFileChooser;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.editor.controller.AbstractMenuOption;
-import nl.tudelft.bw4t.scenariogui.panel.gui.ConfigurationPanel;
-import nl.tudelft.bw4t.scenariogui.panel.gui.EntityPanel;
-import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
 
 import org.junit.After;
