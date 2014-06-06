@@ -9,9 +9,9 @@
 	</parent>
 	<groupId>nl.tudelft.bw4t</groupId>
 	<artifactId>bw4t-client</artifactId>
-  <properties>
-    <checkstyle.config.location>../checkstyle.xml</checkstyle.config.location>
-  </properties>
+	<properties>
+		<checkstyle.config.location>../checkstyle.xml</checkstyle.config.location>
+	</properties>
 	<repositories>
 		<repository>
 			<id>martin-private-dependency-repository</id>
@@ -26,7 +26,7 @@
 			<artifactId>bw4t-core</artifactId>
 			<version>3.2.0</version>
 		</dependency>
-		
+
 	</dependencies>
 	<build>
 		<plugins>

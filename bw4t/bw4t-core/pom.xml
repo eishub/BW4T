@@ -10,9 +10,9 @@
 	<groupId>nl.tudelft.bw4t.core</groupId>
 	<artifactId>bw4t-core</artifactId>
 	<name>bw4t-core</name>
-  <properties>
-    <checkstyle.config.location>../checkstyle.xml</checkstyle.config.location>
-  </properties>
+	<properties>
+		<checkstyle.config.location>../checkstyle.xml</checkstyle.config.location>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>repast.simphony</groupId>
