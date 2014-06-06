@@ -14,8 +14,6 @@ import org.junit.Test;
 
 /**
  * Test for boteditor
- * @author Arun
- *
  */
 public class BotEditorTest {
 

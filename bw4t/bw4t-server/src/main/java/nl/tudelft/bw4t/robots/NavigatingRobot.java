@@ -19,8 +19,6 @@ import repast.simphony.space.continuous.NdPoint;
 /**
  * Represents a self navigating robot in the BW4T environment. The self navigation means that you can go to a Zone which
  * then does path planning and keeps driving till destination reached.
- * 
- * @author W.Pasman 22aug
  */
 public class NavigatingRobot extends AbstractRobot {
 
@@ -92,7 +90,7 @@ public class NavigatingRobot extends AbstractRobot {
         }
         // plan the path between the Zones
         List<Zone> path = PathPlanner.findPath(allnavs, startpt, targetpt);
-        if (path == null) {
+        if (path.isEmpty()) {
             throw new IllegalArgumentException("target " + p + " is unreachable from " + this);
         }
         // and copy Zone path to our stack.
@@ -132,7 +130,7 @@ public class NavigatingRobot extends AbstractRobot {
         }
         // plan the path between the Zones
         List<Zone> path = PathPlanner.findPath(allnavs, startpt, targetpt);
-        if (path == null) {
+        if (path.isEmpty()) {
             throw new IllegalArgumentException("target " + target + " is unreachable from " + this);
         }
         // and copy Zone path to our stack.

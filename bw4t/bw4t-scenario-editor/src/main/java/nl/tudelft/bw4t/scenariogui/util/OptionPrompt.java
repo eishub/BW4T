@@ -4,11 +4,7 @@ import java.awt.Component;
 
 /**
  * An interface for showConfirmDialog, used to make the mocking of responses
- * simpler.
- * <p>
- * @author      Calvin Wong Loi Sing
- * @version     0.1                
- * @since       12-05-2014        
+ * simpler.     
  */
 public interface OptionPrompt {
 

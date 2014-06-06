@@ -14,8 +14,6 @@ import nl.tudelft.bw4t.map.Entity.EntityType;
 
 /**
  * New map structure, using Zones and stronger typechecking
- * 
- * @author W.Pasman 30oct2013
  */
 @XmlRootElement
 public class NewMap implements Serializable {

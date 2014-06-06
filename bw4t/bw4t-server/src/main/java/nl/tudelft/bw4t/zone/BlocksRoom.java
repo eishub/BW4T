@@ -7,8 +7,6 @@ import repast.simphony.space.continuous.ContinuousSpace;
 
 /**
  * A room which might have block in it on initialization.
- * 
- * @author Lennard de Rijk
  */
 public class BlocksRoom extends Room {
 
@@ -26,6 +24,10 @@ public class BlocksRoom extends Room {
      */
     public BlocksRoom(ContinuousSpace<Object> space, Context<Object> context, nl.tudelft.bw4t.map.Zone roomzone) {
         super(cycle[count % cycle.length], roomzone, space, context);
-        count++;
+        setCount(); 
+    }
+    
+    private static void setCount(){
+    	count++; 
     }
 }

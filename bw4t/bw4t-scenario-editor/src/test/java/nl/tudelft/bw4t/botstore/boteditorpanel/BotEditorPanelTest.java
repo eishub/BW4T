@@ -21,8 +21,6 @@ import org.junit.Test;
 
 /**
  * Test the boteditorpanel
- * @author Arun
- * @author Tim
  */
 public class BotEditorPanelTest {
 

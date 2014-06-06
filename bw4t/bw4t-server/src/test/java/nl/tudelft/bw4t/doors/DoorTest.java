@@ -27,10 +27,6 @@ import repast.simphony.space.continuous.NdPoint;
 
 /**
  * The class <code>DoorTest</code> contains tests for the class <code>{@link Door}</code>.
- *
- * @generatedBy CodePro at 24.05.14 15:09
- * @author 749
- * @version $Revision: 1.0 $
  */
 @RunWith(MockitoJUnitRunner.class)
 public class DoorTest {

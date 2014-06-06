@@ -11,9 +11,6 @@ import org.jgrapht.graph.SimpleWeightedGraph;
 
 /**
  * Path planner that uses the Zones.
- * 
- * @author W.Pasman 22aug2011
- * 
  */
 public class PathPlanner {
     private PathPlanner() {

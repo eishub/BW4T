@@ -10,8 +10,6 @@ import eis.iilang.Parameter;
 
 /**
  * Translates {@link Block} into a list of {@link Parameter} specifying the id and color of the block.
- * 
- * @author Lennard de Rijk
  */
 public class BlockWithColorTranslator implements Java2Parameter<BlockColor> {
 

@@ -17,10 +17,6 @@ import static org.mockito.Mockito.when;
 
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
-/**
- * @author Joost Rothweiler
- *
- */
 @RunWith(MockitoJUnitRunner.class)
 public class BatteryTest {
     /**

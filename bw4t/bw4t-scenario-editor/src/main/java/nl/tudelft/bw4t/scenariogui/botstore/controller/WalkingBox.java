@@ -9,7 +9,6 @@ import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 
 /**
  * Handles actions of the walkingcheckbox
- * @author Arun
  */
 class WalkingBox implements ActionListener {
     /**

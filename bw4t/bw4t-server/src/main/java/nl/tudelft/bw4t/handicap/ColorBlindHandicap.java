@@ -1,9 +1,5 @@
 package nl.tudelft.bw4t.handicap;
-/**
- * 
- * @author Valentine Mairet & Ruben Starmans
- *
- */
+
 public class ColorBlindHandicap extends AbstractRobotDecorator {
     
     /**

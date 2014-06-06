@@ -7,7 +7,6 @@ import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditor;
 
 /**
  * Handles actions of the cancelbutton
- * @author Arun
  */
 class CancelButton implements ActionListener {
     /**

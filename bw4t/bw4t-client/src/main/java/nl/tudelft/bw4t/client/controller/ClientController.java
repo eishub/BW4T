@@ -109,9 +109,9 @@ public class ClientController {
             // Should only be done one time
             if (name.equals("player")) {
                 getOtherPlayers().add(((Identifier) parameters.get(0)).getValue());
-            }
+            
             // Update chat history
-            else if (name.equals("message")) {
+            } else if (name.equals("message")) {
                 handleMessagePercept(parameters);
             }
         }
@@ -146,9 +146,7 @@ public class ClientController {
     public void updateRenderer(MapRendererInterface mri) {
         if (updateNextFrame && mri instanceof ClientGUI) {
             ClientGUI gui = (ClientGUI) mri;
-            if (gui != null) {
-                gui.update();
-            }
+            gui.update();
         }
     }
 

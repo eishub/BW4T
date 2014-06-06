@@ -32,18 +32,15 @@ import repast.simphony.space.continuous.NdPoint;
 
 /**
  * Represents a robot in the BW4T environment.
- * 
- * @author Lennard de Rijk
  */
 public abstract class AbstractRobot extends BoundedMoveableObject implements IRobot {
-	
 	private static final Logger LOGGER = Logger.getLogger(AbstractRobot.class);
 
     /**
      * AgentRecord object for this Robot, needed for logging. It needs to be set up at the initialization of the object,
      * because we otherwise get an Exception when adding Robots after we have added the rooms to the environment.
      */
-	AgentRecord agentRecord = new AgentRecord("", "");
+	AgentRecord agentRecord = new AgentRecord("");
 
 	/**
      * The distance which it can move per tick. This should never be larger than the door width because that might cause
@@ -135,6 +132,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         this.grippercap = cap;
         this.holding = new ArrayList<Block>(grippercap);
         this.handicapsList = new ArrayList<String>();
+        this.agentRecord = new AgentRecord(name);
     }
 
 	public void setTopMostHandicap(IRobot topMostHandicap) {
@@ -156,16 +154,12 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 			LOGGER.error("Unable to get the associated agent for this entity", e);
 		}
         connected = true;
-		try {
-			agentRecord = 
-			        new AgentRecord(
-			                (associatedAgents != null && !associatedAgents.isEmpty())
-			                ? associatedAgents.iterator().next() : "no agents", 
-			                        env.getType(this.getName()));
-		} catch (EntityException e) {
-			LOGGER.error("Unable to get the type of this entity", e);
-			agentRecord = new AgentRecord("unkown", "unkown");
-		}
+        String agent = "no agents";
+        if (associatedAgents != null && !associatedAgents.isEmpty()) {
+            agent = associatedAgents.iterator().next();
+        }
+        agentRecord = new AgentRecord(agent);
+
     }
 
     @Override
@@ -177,8 +171,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     public boolean equals(Object obj) {
         if (obj instanceof AbstractRobot) {
             return super.equals(obj);
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -334,12 +327,12 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
             }
 
             return MoveType.HIT_CLOSED_DOOR;
-        }
+        
 
         /**
          * Both sides are not a room. Check if target accesible
          */
-        else if (endzone instanceof Corridor) {
+        } else if (endzone instanceof Corridor) {
             if (!oneBotPerZone || endzone.containsMeOrNothing(this)) {
                 return MoveType.ENTER_CORRIDOR;
             }
@@ -469,6 +462,11 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	}
 
 
+    /**
+     * Sets the size of a robot to a certain integer
+     * 
+     * @param s int
+     */
     @Override
     public void setSize(int s) {
         this.size = s;
@@ -517,7 +515,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	        this.battery.recharge();
 	    }
 	}
-
 	@Override
 	public IRobot getParent() {
 	    return null;
