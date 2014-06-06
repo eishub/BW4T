@@ -38,17 +38,14 @@ public class UpdateEPartnerCount implements TableModelListener {
 	 */
 	@Override
 	public void tableChanged(TableModelEvent e) {
-	    System.out.println("Test 1");
 	    view.getEntityPanel().updateEPartnerCount(model.getAmountEPartner());
         if (model.getAmountEPartner() > model.getAmountBot()) {
             if (!hasShownEpartnerWarning) {
-                System.out.println("Test 2");
                 hasShownEpartnerWarning = true;
                 ScenarioEditor.getOptionPrompt().showMessageDialog(
                         view,
                         "You are using more e-Partners than bots, "
                         + "which might not be supported by your map.");
-                System.out.println("Test 3");
             }
         } else {
             hasShownEpartnerWarning = false;
