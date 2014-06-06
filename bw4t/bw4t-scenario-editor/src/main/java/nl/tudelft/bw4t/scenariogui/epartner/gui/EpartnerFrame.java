@@ -46,11 +46,11 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 
 	private JButton cancelButton = new JButton("Cancel");
 	
-	private JCheckBox forgetMeNotCheckbox = new JCheckBox("Left-alone Warning");
+	private JCheckBox forgetMeNotCheckbox = new JCheckBox("Forget-me-not");
 
 	private JButton fileButton = new JButton("Use existing GOAL file");
 
-	private JCheckBox gpsCheckBox = new JCheckBox("Geolocator");
+	private JCheckBox gpsCheckBox = new JCheckBox("GPS");
 
 	private EPartnerConfig dataObject = new EPartnerConfig();
 

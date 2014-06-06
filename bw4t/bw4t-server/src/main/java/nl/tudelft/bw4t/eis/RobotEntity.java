@@ -419,6 +419,14 @@ public class RobotEntity implements RobotEntityInt {
     public String getState() {
         return ourRobot.getState().toString().toLowerCase();
     }
+    
+    /**
+     * The battery level of the robot. 
+     */
+    @AsPercept(name = "battery", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
+    public double getBatteryPercentage() {
+        return ourRobot.getBattery().getPercentage();
+    }
 
     /**
      * Instructs the robot to move to the given location.
