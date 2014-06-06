@@ -1,7 +1,5 @@
 package nl.tudelft.bw4t.robots;
 
-import eis.exceptions.EntityException;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -14,6 +12,7 @@ import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.handicap.IRobot;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.logging.BotLog;
 import nl.tudelft.bw4t.util.ZoneLocator;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.DropZone;
@@ -29,6 +28,7 @@ import repast.simphony.space.SpatialException;
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
+import eis.exceptions.EntityException;
 
 /**
  * Represents a robot in the BW4T environment.
@@ -383,6 +383,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		        double distance = distanceTo(targetLocation);
 		        if (distance < MIN_MOVE_DISTANCE) {
 		            // we're there
+		            LOGGER.log(BotLog.BOTLOG, "Bot " + this + " reached destination. Battery left: " + this.battery.getCurrentCapacity());
 		            stopRobot();
 		        }
 		        else {
@@ -413,11 +414,13 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		                }
 		            } catch (SpatialException e) {
 		                collided = true;
+		                LOGGER.log(BotLog.BOTLOG, "Bot " + this + " collided.");
 		                stopRobot();
 		            }
 		        }
 		    }
     	} else {
+    	    LOGGER.log(BotLog.BOTLOG, "Bot " + this + " could not move because of empty battery.");
     		stopRobot();
     	}
     }
