@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.panel.gui;
+package nl.tudelft.bw4t.scenariogui.editor.gui;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -7,6 +7,7 @@ import java.awt.Insets;
 import javax.swing.JPanel;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 
 /**
  * MainPanel which serves as the content pane for the ScenarioEditor frame.
@@ -18,35 +19,15 @@ import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
  */
 public class MainPanel extends JPanel {
 
-    /**
-     * The inset used.
-     */
     private static final int INSET = 10;
-    /**
-     * The weights used.
-     */
     private static final double WEIGHT_1 = 0.1;
-    /**
-     * The bigger weight used.
-     */
     private static final double WEIGHT_2 = 0.8;
-
-    /**
-     * Randomly generated serial version.
-     */
     private static final long serialVersionUID = 475250876795906302L;
-    /**
-     * The configuration panel.
-     */
+
+    private ScenarioEditor parent;
     private ConfigurationPanel configurationPanel;
-    /**
-     * The entity panel.
-     */
     private EntityPanel entityPanel;
-    /**  */
     private GridBagLayout gbl;
-    
-    private BW4TClientConfig clientConfig = new BW4TClientConfig();
     
 
     /**
@@ -55,7 +36,7 @@ public class MainPanel extends JPanel {
      * @param newConfigurationPanel The configuration panel
      * @param newEntityPanel        The entity panel
      */
-    public MainPanel(final ConfigurationPanel newConfigurationPanel,
+    public MainPanel(final ScenarioEditor parent, final ConfigurationPanel newConfigurationPanel,
                      final EntityPanel newEntityPanel) {
         gbl = new GridBagLayout();
         this.setLayout(gbl);
@@ -66,6 +47,7 @@ public class MainPanel extends JPanel {
 
         this.configurationPanel = newConfigurationPanel;
         this.entityPanel = newEntityPanel;
+        this.parent = parent;
     }
 
     /**
@@ -134,7 +116,7 @@ public class MainPanel extends JPanel {
     }
 
     public BW4TClientConfig getClientConfig() {
-        return clientConfig;
+        return parent.getController().getModel();
     }
     
 }

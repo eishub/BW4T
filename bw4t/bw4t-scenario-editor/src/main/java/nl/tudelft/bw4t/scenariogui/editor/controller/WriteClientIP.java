@@ -1,17 +1,17 @@
-package nl.tudelft.bw4t.scenariogui.controllers.editor;
+package nl.tudelft.bw4t.scenariogui.editor.controller;
 
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
- * Listens to the server port text field and updates
+ * Listens to the client ip text field and updates
  * the {@link nl.tudelft.bw4t.scenariogui.BW4TClientConfig} object
  * with the update in the text field.
  *
  */
-public class WriteServerPort implements DocumentListener {
+public class WriteClientIP implements DocumentListener {
     
     private MainPanel view;
 
@@ -19,7 +19,7 @@ public class WriteServerPort implements DocumentListener {
      * Create a new listener to the client ip text field
      * @param newView The parent view.
      */
-    public WriteServerPort(final MainPanel newView) {
+    public WriteClientIP(final MainPanel newView) {
         this.view = newView;
     }
 
@@ -39,12 +39,11 @@ public class WriteServerPort implements DocumentListener {
     }
     
     /**
-     * Stores the server port in the client config when its field is changed.
+     * Stores the client ip in the client config when its field is changed.
      */
     private void handleUpdate() {
-        int serverPort = view.getConfigurationPanel().getServerPortTextField().getText().equals("") ? 0 :
-            view.getConfigurationPanel().getServerPort();
-        view.getClientConfig().setServerPort(serverPort);
+        view.getClientConfig().setClientIp(
+                view.getConfigurationPanel().getClientIPTextField().getText());
     }
     
 }

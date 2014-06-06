@@ -6,7 +6,6 @@ import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.panel.gui.ConfigurationPanel;
 
 /**
  * The WindowExit class makes sure that on clicking the default exit button,

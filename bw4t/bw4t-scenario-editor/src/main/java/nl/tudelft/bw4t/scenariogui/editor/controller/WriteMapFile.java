@@ -1,25 +1,26 @@
-package nl.tudelft.bw4t.scenariogui.controllers.editor;
+package nl.tudelft.bw4t.scenariogui.editor.controller;
+
 
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
- * Listens to the client ip text field and updates
+ * Listens to the map file text field and updates
  * the {@link nl.tudelft.bw4t.scenariogui.BW4TClientConfig} object
  * with the update in the text field.
  *
  */
-public class WriteClientIP implements DocumentListener {
-    
+public class WriteMapFile implements DocumentListener {
+
     private MainPanel view;
 
     /**
-     * Create a new listener to the client ip text field
+     * Create a new listener to the server ip text field
      * @param newView The parent view.
      */
-    public WriteClientIP(final MainPanel newView) {
+    public WriteMapFile(final MainPanel newView) {
         this.view = newView;
     }
 
@@ -39,11 +40,11 @@ public class WriteClientIP implements DocumentListener {
     }
     
     /**
-     * Stores the client ip in the client config when its field is changed.
+     * Stores the map file path in the client config when its field is changed.
      */
     private void handleUpdate() {
-        view.getClientConfig().setClientIp(
-                view.getConfigurationPanel().getClientIPTextField().getText());
+        view.getClientConfig().setMapFile(
+                view.getConfigurationPanel().getMapFileTextField().getText());
     }
     
 }
