@@ -42,7 +42,7 @@ public class WriteServerPort implements DocumentListener {
      * Stores the server port in the client config when its field is changed.
      */
     private void handleUpdate() {
-        int serverPort = view.getConfigurationPanel().getServerPortTextField().getText().equals("") ? 0 :
+        int serverPort = view.getConfigurationPanel().getServerPortTextField().getText().isEmpty() ? 0 :
             view.getConfigurationPanel().getServerPort();
         view.getClientConfig().setServerPort(serverPort);
     }
