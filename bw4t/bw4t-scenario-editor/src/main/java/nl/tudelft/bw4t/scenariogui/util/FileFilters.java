@@ -2,9 +2,6 @@ package nl.tudelft.bw4t.scenariogui.util;
 
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-/**
- * Created by on 20-5-2014.
- */
 public final class FileFilters {
 
     /** Prevents this class from being instantiated. */
@@ -24,5 +21,22 @@ public final class FileFilters {
      */
     public static FileNameExtensionFilter mapFilter() {
         return new FileNameExtensionFilter("MAP file", "map");
+    }
+    
+    /**
+     * 
+     * Returns an extension filter for GOAL files.
+     * @return an extension filter for GOAL files.
+     */
+    public static FileNameExtensionFilter goalFilter() {
+    	return new FileNameExtensionFilter("GOAL File (*.goal)", "goal");
+    }
+
+    /**
+     * Returns an extension filter for MAS files.
+     * @return an extension filter for MAS files.
+     */
+    public static FileNameExtensionFilter masFilter() {
+        return new FileNameExtensionFilter("mas2g file (*.mas2g)", "mas2g");
     }
 }

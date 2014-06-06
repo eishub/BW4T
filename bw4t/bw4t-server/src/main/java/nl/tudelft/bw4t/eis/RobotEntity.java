@@ -7,15 +7,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.blocks.Block;
+import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.eis.translators.BlockWithColorTranslator;
 import nl.tudelft.bw4t.eis.translators.BoundedMovableObjectTranslator;
 import nl.tudelft.bw4t.eis.translators.ColorTranslator;
+import nl.tudelft.bw4t.eis.translators.EPartnerTranslator;
 import nl.tudelft.bw4t.eis.translators.ObjectInformationTranslator;
 import nl.tudelft.bw4t.eis.translators.PointTranslator;
 import nl.tudelft.bw4t.eis.translators.ZoneTranslator;
+import nl.tudelft.bw4t.handicap.IRobot;
 import nl.tudelft.bw4t.robots.NavigatingRobot;
-import nl.tudelft.bw4t.robots.Robot;
+import nl.tudelft.bw4t.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.RobotEntityInt;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.util.RoomLocator;
@@ -36,6 +40,7 @@ import eis.eis2java.annotation.AsAction;
 import eis.eis2java.annotation.AsPercept;
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Filter;
+import eis.eis2java.translation.Filter.Type;
 import eis.eis2java.translation.Translator;
 import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
@@ -44,11 +49,7 @@ import eis.iilang.Action;
 import eis.iilang.Parameter;
 
 /**
- * EIS entity for a {@link Robot}.
- * 
- * @author Lennard de Rijk
- * @modified W.Pasman #2318 #2291 "lock" robot position at start of perception cycle.
- * @modified W.Pasman #2326 robots are injected into EIS only after their entity has been connected with an agent.
+ * EIS entity for a {@link AbstractRobot}.
  */
 public class RobotEntity implements RobotEntityInt {
 
@@ -61,7 +62,7 @@ public class RobotEntity implements RobotEntityInt {
         translator.registerJava2ParameterTranslator(new PointTranslator());
         translator.registerJava2ParameterTranslator(new ObjectInformationTranslator());
         translator.registerJava2ParameterTranslator(new ColorTranslator());
-
+        translator.registerJava2ParameterTranslator(new EPartnerTranslator());
     }
 
     /**
@@ -69,7 +70,7 @@ public class RobotEntity implements RobotEntityInt {
      */
     private static final Logger LOGGER = Logger.getLogger(RobotEntity.class);
 
-    private final NavigatingRobot ourRobot;
+    private final IRobot ourRobot;
     private final Context<Object> context;
 
     /**
@@ -82,18 +83,21 @@ public class RobotEntity implements RobotEntityInt {
     /**
      * each item in messages is a list with two items: the sender and the messagetext.
      */
-    private List<ArrayList<String>> messages;
+    private List<ArrayList<String>> messages = new ArrayList<ArrayList<String>>();
 
     /**
      * Creates a new {@link RobotEntity} that can be launched by an EIS compatible {@link Environment}.
      * 
      * @param robot
-     *            The {@link Robot} that this entity can put up for controlling in EIS.
+     *            The {@link AbstractRobot} that this entity can put up for controlling in EIS.
      */
-    public RobotEntity(NavigatingRobot robot) {
+    public RobotEntity(IRobot robot) {
         this.ourRobot = robot;
-        this.context = robot.getContext();
-        messages = new ArrayList<ArrayList<String>>();
+        this.context = ourRobot.getContext();
+    }
+    
+    public IRobot getRobotObject() {
+        return ourRobot;
     }
 
     /**
@@ -151,6 +155,23 @@ public class RobotEntity implements RobotEntityInt {
 
         return blocks;
     }
+    
+    /**
+     * Percepts for the sizes of all the robots.
+     */
+    @AsPercept(name = "robotSize", multiplePercepts = true, filter = Filter.Type.ON_CHANGE)
+    public List<ObjectInformation> getSizes() {
+        List<ObjectInformation> sizes = new ArrayList<ObjectInformation>();
+        
+        IndexedIterable<Object> allRobots = context.getObjects(IRobot.class);
+        
+        for (Object obj : allRobots) {
+            IRobot robot = (IRobot) obj;
+            sizes.add(new ObjectInformation(robot.getSize(), robot.getSize(), robot.getId()));
+        }
+        
+        return sizes;       
+    }
 
     /**
      * Percepts for the location of rooms and the dropzone and the blocks Send on change
@@ -161,19 +182,25 @@ public class RobotEntity implements RobotEntityInt {
 
         // Add the dropzone
         DropZone dropZone = (DropZone) context.getObjects(DropZone.class).get(0);
-        objects.add(new ObjectInformation(dropZone.getLocation().getX(), dropZone.getLocation().getY(), dropZone
-                .getId()));
+        objects.add(new ObjectInformation(dropZone));
 
         // Add rooms
         IndexedIterable<Object> allRooms = context.getObjects(BlocksRoom.class);
         for (Object object : allRooms) {
             Room r = (Room) object;
-            objects.add(new ObjectInformation(r.getLocation().getX(), r.getLocation().getY(), r.getId()));
+            objects.add(new ObjectInformation(r));
         }
 
         // Add blocks
         for (Block block : getVisibleBlocks()) {
-            objects.add(new ObjectInformation(block.getLocation().getX(), block.getLocation().getY(), block.getId()));
+            objects.add(new ObjectInformation(block));
+        }
+        
+        // Add EPartners
+        IndexedIterable<Object> allEPartners = context.getObjects(EPartner.class);
+        for (Object object : allEPartners) {
+            EPartner ep = (EPartner) object;
+            objects.add(new ObjectInformation(ep));
         }
 
         // #2830 add robots own position
@@ -417,10 +444,16 @@ public class RobotEntity implements RobotEntityInt {
      */
     @AsAction(name = "goToBlock")
     public void goTo(long targetid) {
-        Block target = null;
+        BoundedMoveableObject target = null;
         for (Block b : getVisibleBlocks()) {
             if (b.getId() == targetid) {
                 target = b;
+            }
+        }
+        for (Object obj : context.getObjects(EPartner.class)) {
+            EPartner ep = (EPartner) obj;
+            if (targetid == ep.getId()) {
+                target = ep;
             }
         }
         if (target == null) {
@@ -453,36 +486,16 @@ public class RobotEntity implements RobotEntityInt {
      */
     @AsAction(name = "pickUp")
     public void pickUp() {
-        List<Block> canPickUp = new ArrayList<Block>();
-
         LOGGER.debug(String.format("%s is trying to pick up a block.", ourRobot.getName()));
-        
-        Iterable<Object> allBlocks = context.getObjects(Block.class);
-        for (Object o : allBlocks) {
-            Block aBlock = (Block) o;
 
-            LOGGER.trace(String.format("%s is %f units away from block %d.", ourRobot.getName(), ourRobot.distanceTo(aBlock), aBlock.getId()));
-            if (ourRobot.canPickUp(aBlock)) {
-                canPickUp.add(aBlock);
-                LOGGER.trace(String.format("%s can pick up block %d.", ourRobot.getName(), aBlock.getId()));
-            }
-        }
-
-        Block nearest;
+        Block nearest = getClosest(Block.class);
         // Pick up closest block in canPickUp list
-        if (canPickUp.isEmpty()) {
+        if (nearest == null) {
         	LOGGER.debug(String.format("%s can not pickup any blocks.", ourRobot.getName()));
             return;
-        } else {
-            nearest = canPickUp.get(0);
-            for (int i = 1; i < canPickUp.size(); i++) {
-                if (ourRobot.distanceTo(nearest) > ourRobot.distanceTo(canPickUp.get(i))) {
-                    nearest = canPickUp.get(i);
-                }
-            }
         }
     	LOGGER.debug(String.format("%s will pickup block %d.", ourRobot.getName(), nearest.getId()));
-        ourRobot.pickUp(nearest);
+    	ourRobot.pickUp(nearest);
     }
 
     /**
@@ -560,23 +573,74 @@ public class RobotEntity implements RobotEntityInt {
     }
     
     /**
+     * Give the robot a list of all the EPartners on the map.
+     * @return the list of EPartners
+     */
+    @AsPercept(name = "epartner", multiplePercepts = true, filter = Type.ALWAYS)
+    public List<EPartner> getEPartners() {
+        if (!ourRobot.isHuman()) {
+            return new ArrayList<>();
+        }
+        List<EPartner> eps = new ArrayList<>();
+        for (Object obj : context.getObjects(EPartner.class)) {
+            eps.add((EPartner) obj);
+        }
+        return eps;
+    }
+    
+    /**
      * Only available for the human:
      * picks up the e-Partner. 
      */
     @AsAction(name = "pickUpEPartner")
     public void pickUpEPartner() {
-    	
+    	if(ourRobot.isHuman()) {
+	        LOGGER.debug(String.format("%s is trying to pick up an e-partner.", ourRobot.getName()));
+	
+	        EPartner nearest = getClosest(EPartner.class);
+	        if (nearest == null) {
+	            LOGGER.debug(String.format("%s can not pickup any e-partners.", ourRobot.getName()));
+	            return;
+	        }
+	        LOGGER.debug(String.format("%s will pickup e-partner %d.", ourRobot.getName(), nearest.getId()));
+	        ourRobot.pickUpEPartner(nearest);
+    	}
     }
     
     /**
      * Only available for the human:
      * drops the e-Partner they are currently holding. 
      */
-    @AsAction(name = "dropEPartner")
+    @AsAction(name = "putDownEPartner")
     public void dropEPartner() {
     	if (ourRobot.isHuman()) {
     		ourRobot.dropEPartner();
     	}
+    }
+
+    /**
+     * Find the closest {@link BoundedMoveableObject} that can be picked up by the Robot.
+     * @param type the type of {@link BoundedMoveableObject} we are looking for 
+     * @return null if non were found, otherwise the closest
+     */
+    private <T extends BoundedMoveableObject> T getClosest(Class<T> type) {
+        Iterable<Object> allBlocks = context.getObjects(type);
+        T nearest = null;
+        double nearestDistance = Integer.MAX_VALUE;
+        for (Object o : allBlocks) {
+            T aBlock = (T) o;
+            double distance = ourRobot.distanceTo(aBlock);
+
+            LOGGER.trace(String.format("%s is %f units away from %d.", ourRobot.getName(), distance, aBlock.getId()));
+            if (ourRobot.canPickUp(aBlock)) {
+                LOGGER.trace(String.format("%s can pick up %d checking distance.", ourRobot.getName(), aBlock.getId()));
+                if (nearest == null || distance < nearestDistance) {
+                    nearest = aBlock;
+                    nearestDistance = distance;
+                }
+            }
+        }
+        return nearest;
     }
 
 }

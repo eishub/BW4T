@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 import nl.tudelft.bw4t.agent.HumanAgent;
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.ClientGUI;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.view.MapRendererInterface;
@@ -28,20 +29,23 @@ public class ClientController {
     private HumanAgent humanAgent;
 
     private List<Percept> toBePerformedAction = new LinkedList<>();
+    
+    private RemoteEnvironment environment;
 
     /**
      * if set to true the update function of the gui will be called the next frame.
      */
     private boolean updateNextFrame = true;
 
-    public ClientController(NewMap map, String entityId) {
+    public ClientController(RemoteEnvironment env, NewMap map, String entityId) {
+        environment = env;
         mapController = new ClientMapController(map, this);
         getMapController().getTheBot().setName(entityId);
         humanAgent = null;
     }
 
-    public ClientController(NewMap map, String entityId, HumanAgent humanAgent2) {
-        this(map, entityId);
+    public ClientController(RemoteEnvironment env, NewMap map, String entityId, HumanAgent humanAgent2) {
+        this(env, map, entityId);
         humanAgent = humanAgent2;
     }
 
@@ -63,6 +67,10 @@ public class ClientController {
 
     public HumanAgent getHumanAgent() {
         return humanAgent;
+    }
+
+    public RemoteEnvironment getEnvironment() {
+        return environment;
     }
 
     public void setToBePerformedAction(List<Percept> toBePerformedAction) {
@@ -101,9 +109,9 @@ public class ClientController {
             // Should only be done one time
             if (name.equals("player")) {
                 getOtherPlayers().add(((Identifier) parameters.get(0)).getValue());
-            }
+            
             // Update chat history
-            else if (name.equals("message")) {
+            } else if (name.equals("message")) {
                 handleMessagePercept(parameters);
             }
         }
@@ -138,9 +146,7 @@ public class ClientController {
     public void updateRenderer(MapRendererInterface mri) {
         if (updateNextFrame && mri instanceof ClientGUI) {
             ClientGUI gui = (ClientGUI) mri;
-            if (gui != null) {
-                gui.update();
-            }
+            gui.update();
         }
     }
 

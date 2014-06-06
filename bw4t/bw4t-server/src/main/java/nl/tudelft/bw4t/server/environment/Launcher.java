@@ -7,8 +7,8 @@ import java.rmi.RemoteException;
 
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.robots.DefaultRobotFactory;
-import nl.tudelft.bw4t.robots.RobotFactory;
+import nl.tudelft.bw4t.robots.DefaultEntityFactory;
+import nl.tudelft.bw4t.robots.EntityFactory;
 import nl.tudelft.bw4t.server.BW4TServer;
 import nl.tudelft.bw4t.startup.LauncherException;
 import nl.tudelft.bw4t.util.FileUtils;
@@ -74,12 +74,12 @@ public class Launcher {
     private String paramKey;
     
     /**
-     * stores a reference to the robot faactory being used to create new robots.
+     * stores a reference to the robot factory being used to create new robots.
      */
-    private RobotFactory robotFactory;
+    private EntityFactory entityFactory;
 
     /**
-     * This class cannot be externally instanciated, it is a utility startup class.
+     * This class cannot be externally instantiated, it is a utility startup class.
      * 
      * @param args
      *            The arguments received from the commandline
@@ -199,7 +199,7 @@ public class Launcher {
      * Setup the factories used by the system.
      */
     private void setupFactories() {
-		robotFactory = new DefaultRobotFactory();
+		entityFactory = new DefaultEntityFactory();
 	}
 
     /**
@@ -228,8 +228,8 @@ public class Launcher {
         }
     }
 
-    public RobotFactory getRobotFactory() {
-    	return robotFactory;
+    public EntityFactory getEntityFactory() {
+    	return entityFactory;
     }
 
     /**

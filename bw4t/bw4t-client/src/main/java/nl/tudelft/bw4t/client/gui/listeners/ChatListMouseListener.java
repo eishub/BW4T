@@ -9,8 +9,6 @@ import nl.tudelft.bw4t.client.gui.menu.ChatMenu;
 /**
  * Listens for mouse events on the chat text area and builds a pop up menu
  * accordingly
- * 
- * @author trens
  */
 public class ChatListMouseListener implements MouseListener {
 

@@ -14,9 +14,6 @@ import repast.simphony.space.continuous.ContinuousSpace;
  * 
  * Only when a door is open, someone from outside can go onto the door. From inside, you are always allowed to go onto
  * the door.
- * 
- * 
- * @author W.Pasman
  */
 public class Door extends BoundedMoveableObject {
 
