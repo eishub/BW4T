@@ -7,7 +7,10 @@ import javax.swing.JFileChooser;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.DefaultConfigurationValues;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.panel.gui.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.panel.gui.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

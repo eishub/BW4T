@@ -14,8 +14,8 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.controllers.editor.AbstractMenuOption;
-import nl.tudelft.bw4t.scenariogui.controllers.editor.ScenarioEditorController;
+import nl.tudelft.bw4t.scenariogui.editor.controller.AbstractMenuOption;
+import nl.tudelft.bw4t.scenariogui.editor.controller.ScenarioEditorController;
 import nl.tudelft.bw4t.scenariogui.util.ExportToMAS;
 import nl.tudelft.bw4t.scenariogui.util.ExportToMASTest;
 import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;

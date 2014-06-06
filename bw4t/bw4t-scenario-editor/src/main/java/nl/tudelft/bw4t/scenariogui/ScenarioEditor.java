@@ -8,11 +8,11 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.scenariogui.controllers.editor.ScenarioEditorController;
+import nl.tudelft.bw4t.scenariogui.editor.controller.ScenarioEditorController;
 import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
-import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
-import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
-import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
+import nl.tudelft.bw4t.scenariogui.panel.gui.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.panel.gui.EntityPanel;
+import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
 import nl.tudelft.bw4t.scenariogui.util.DefaultOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
 
