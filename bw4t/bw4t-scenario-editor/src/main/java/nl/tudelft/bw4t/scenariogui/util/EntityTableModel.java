@@ -32,7 +32,7 @@ public class EntityTableModel extends DefaultTableModel {
     			return Integer.class;
     		}
     	} else {
-    		if (column == 2) {
+    		if (column == 3) {
     			return Integer.class;
     		}
     	}

@@ -87,7 +87,7 @@ public class EntityPanelTest {
     @Test
     public final void testBotCountListener() {
         spyEntityPanel.getNewBotButton().doClick();
-        spyEntityPanel.getBotTableModel().setValueAt("12", 0, 2);
+        spyEntityPanel.getBotTableModel().setValueAt("12", 0, 3);
 
         assertEquals(12, editor.getController().getModel().getAmountBot());
     }

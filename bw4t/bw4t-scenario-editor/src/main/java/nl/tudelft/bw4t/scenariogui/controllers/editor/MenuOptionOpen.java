@@ -107,9 +107,10 @@ class MenuOptionOpen extends AbstractMenuOption {
 					String botName = configuration.getBot(i).getBotName();
 					EntityType botController = configuration.getBot(i)
 							.getBotController();
+					String agentFileName = configuration.getBot(i).getFileName();
 					String botAmount = Integer.toString(configuration.getBot(i)
 							.getBotAmount());
-					Object[] botObject = {botName, botController, botAmount };
+					Object[] botObject = {botName, botController, agentFileName, botAmount };
 					entityPanel.getBotTableModel().addRow(botObject);
 					super.getModel().getBots().add(configuration.getBot(i));
 				}
