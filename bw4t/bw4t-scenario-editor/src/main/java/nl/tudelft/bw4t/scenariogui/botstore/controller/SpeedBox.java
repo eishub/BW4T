@@ -8,7 +8,6 @@ import javax.swing.JSlider;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 /**
  * Enables the speed slider.
- * @author Tim
  */
 public class SpeedBox implements ActionListener {
     /**

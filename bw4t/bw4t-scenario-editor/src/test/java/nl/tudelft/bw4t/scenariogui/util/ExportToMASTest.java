@@ -16,9 +16,6 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Test the ExportToGoal class.
- *
- * @author Calvin Wong Loi Sing
- *         Created on 3-6-2014.
  */
 public class ExportToMASTest {
     /** The name used as the "name" for the files.

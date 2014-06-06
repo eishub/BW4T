@@ -9,6 +9,9 @@
 	</parent>
 	<groupId>nl.tudelft.bw4t</groupId>
 	<artifactId>bw4t-client</artifactId>
+  <properties>
+    <checkstyle.config.location>../checkstyle.xml</checkstyle.config.location>
+  </properties>
 	<repositories>
 		<repository>
 			<id>martin-private-dependency-repository</id>
@@ -92,16 +95,6 @@
 					<linkJavadoc>true</linkJavadoc>
 				</configuration>
 				<version>2.4</version>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.12</version>
-				<configuration>
-					<configLocation>${basedir}/checkstyle.xml</configLocation>
-					<includeTestSourceDirectory> true </includeTestSourceDirectory>
-				</configuration>
 			</plugin>
 
 			<plugin>

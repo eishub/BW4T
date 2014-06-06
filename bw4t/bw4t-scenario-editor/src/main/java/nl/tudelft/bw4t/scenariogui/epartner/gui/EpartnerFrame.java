@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.scenariogui.epartner.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
@@ -10,11 +11,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.epartner.controller.EpartnerController;
 
 /**
  * This class creates the frame for the e-Partner GUI.
- * @author Wendy Bolier
  */
 
 public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
@@ -28,9 +30,15 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 
 	private JPanel optionPane = new JPanel();
 
+	private JPanel goalPane = new JPanel();
+
 	private JTextField epartnerNameField = new JTextField();
 
 	private JTextField epartnerAmountField = new JTextField();
+
+	private JTextField epartnerReferenceField = new JTextField();
+
+	private JTextField epartnerGoalFileField = new JTextField();
 
 	private JButton applyButton = new JButton("Apply");
 
@@ -40,9 +48,15 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 	
 	private JCheckBox forgetMeNotCheckbox = new JCheckBox("Left-alone Warning");
 
+	private JButton fileButton = new JButton("Use existing GOAL file");
+
 	private JCheckBox gpsCheckBox = new JCheckBox("Geolocator");
 
+	private EPartnerConfig dataObject = new EPartnerConfig();
+
 	private EpartnerController controller;
+	
+	private BW4TClientConfig model;
 
 	/**
 	 * Create the frame.
@@ -53,7 +67,6 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		contentPane.setLayout(new BorderLayout(5, 5));
 		setContentPane(contentPane);
-
 		this.setController(controller);
 
 		createInfoPanel();
@@ -95,9 +108,33 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 	private void createOptionPanel() {
 		optionPane.setLayout(new GridLayout(0, 1));
 		optionPane.add(new JLabel(""));
+
+		JLabel propertiesLabel = new JLabel("Properties");
+		propertiesLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		optionPane.add(propertiesLabel);
+
 		optionPane.add(forgetMeNotCheckbox);
+
 		optionPane.add(gpsCheckBox);
 		optionPane.add(new JLabel(""));
+
+		addGoalOptions();
+
+		optionPane.add(new JLabel(""));
+	}
+
+	/**
+	 * Add the goal options to the option panel.
+	 */
+	private void addGoalOptions() {
+		JLabel goalLabel = new JLabel("GOAL options");
+		goalLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		optionPane.add(goalLabel);
+		optionPane.add(new JLabel("E-partner reference name:"));
+		optionPane.add(epartnerReferenceField);
+		optionPane.add(new JLabel("GOAL file name:"));
+		optionPane.add(epartnerGoalFileField);
+		optionPane.add(fileButton);
 	}
 
 	/**
@@ -182,6 +219,8 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 		epartnerAmountField.setText("" + getEpartnerController().getEpartnerAmount());
 		forgetMeNotCheckbox.setSelected(controller.isForgetMeNot());
 		gpsCheckBox.setSelected(getEpartnerController().isGps());
+        epartnerReferenceField.setText(getEpartnerController().getReferenceName());
+        epartnerGoalFileField.setText(getEpartnerController().getFileName());
 	}
 	
 	/**
@@ -216,4 +255,46 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 	public boolean getGPS() {
 		return gpsCheckBox.isSelected();
 	}
+
+	@Override
+    public String getEpartnerReference() {
+        return epartnerReferenceField.getText();
+    }
+
+	@Override
+    public String getEpartnerGoalFile() {
+        return epartnerGoalFileField.getText();
+    }
+
+	/**
+	 * Returns the JTextField which contains the goal reference name.
+	 * 
+	 * @return The JTextField which contains the goal reference name.
+	 */
+	public JTextField getEpartnerReferenceField() {
+		return epartnerReferenceField;
+	}
+
+	/**
+	 * Returns the JTextField which contains the goal file name.
+	 * 
+	 * @return The JTextField which contains the goal file name.
+	 */
+	public JTextField getEpartnerGoalFileField() {
+		return epartnerGoalFileField;
+	}
+
+	/**
+	 * Returns the JButton for adding a goal file.
+	 * 
+	 * @return The JButton for adding a goal file.
+	 */
+	public JButton getFileButton() {
+		return fileButton;
+	}
+	
+	public BW4TClientConfig getModel() {
+	    return model;
+	}
+	
 }

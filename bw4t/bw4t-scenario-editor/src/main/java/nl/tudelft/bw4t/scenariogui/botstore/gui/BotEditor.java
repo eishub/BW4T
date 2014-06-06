@@ -6,17 +6,16 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.botstore.controller.BotStoreController;
-import nl.tudelft.bw4t.scenariogui.panel.gui.ConfigurationPanel;
-import nl.tudelft.bw4t.scenariogui.panel.gui.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
 
 /**
  * This class serves as frame for the BotEditorPanel
-
- * @author Arun
  */
 public class BotEditor extends JFrame {
+	
+	private BW4TClientConfig model;
     
     /**
      * Random generated serial version UID.
@@ -39,14 +38,16 @@ public class BotEditor extends JFrame {
      * @param pparent the parent of the frame
      * @param row the row to be updated in the scenario gui
      */
-    public BotEditor(MainPanel pparent, int row) {
+    public BotEditor(MainPanel pparent, int row, BW4TClientConfig model) {
+    	this.model = model;
+    	
         setLookAndFeel();
         setTitle(windowName);
         setResizable(false);
         setLayout(null);
         this.parent = pparent;
         this.row = row;
-        bPanel = new BotEditorPanel(this, this.parent);
+        bPanel = new BotEditorPanel(this, this.parent, this.model);
         bPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
         setContentPane(bPanel);
 

@@ -11,9 +11,6 @@ import eis.iilang.EnvironmentState;
 /**
  * Stepper is the thread that schedules the bot stepping according to the environment run mode and the loopDelay
  * setting.
- * 
- * @author W.Pasman 12mar13
- * 
  */
 public class Stepper implements Runnable {
 

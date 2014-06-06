@@ -26,9 +26,6 @@ import nl.tudelft.bw4t.map.editor.ColorSequence;
 /**
  * THis holds the map that the user designed. This is an abstract map contianing
  * only number of rows and columns, do not confuse with {@link NewMap}.
- * 
- * @author W.Pasman 11sep2012
- * 
  */
 public class Map_Temp implements TableModel {
 
