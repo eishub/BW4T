@@ -35,12 +35,7 @@ import eis.iilang.Percept;
 
 /**
  * A client remote object that can be registered to a BW4TServer. This object lives at the client side.
- * <p>
  * This object is a listener for server events, and forwards them to the owner: the {@link RemoteEnvironment}.
- * 
- * @author trens
- * @author W.Pasman 8feb2012 changed to make this an explicit child of a {@link RemoteEnvironment}.
- * @author W.Pasman 13feb2012 added start and pause calls.
  */
 public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions {
     private static final long serialVersionUID = -7174958200299731682L;

@@ -50,10 +50,6 @@ import eis.iilang.Parameter;
 
 /**
  * EIS entity for a {@link AbstractRobot}.
- * 
- * @author Lennard de Rijk
- * @modified W.Pasman #2318 #2291 "lock" robot position at start of perception cycle.
- * @modified W.Pasman #2326 robots are injected into EIS only after their entity has been connected with an agent.
  */
 public class RobotEntity implements RobotEntityInt {
 
@@ -98,6 +94,10 @@ public class RobotEntity implements RobotEntityInt {
     public RobotEntity(IRobot robot) {
         this.ourRobot = robot;
         this.context = ourRobot.getContext();
+    }
+    
+    public IRobot getRobotObject() {
+        return ourRobot;
     }
 
     /**
@@ -617,7 +617,7 @@ public class RobotEntity implements RobotEntityInt {
     		ourRobot.dropEPartner();
     	}
     }
-    
+
     /**
      * Find the closest {@link BoundedMoveableObject} that can be picked up by the Robot.
      * @param type the type of {@link BoundedMoveableObject} we are looking for 

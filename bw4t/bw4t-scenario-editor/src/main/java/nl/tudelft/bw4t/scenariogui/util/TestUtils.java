@@ -7,9 +7,6 @@ import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 
 /**
  * A class with utilities to be used in the test suite.
- * 
- * @author Nick
- *
  */
 public final class TestUtils {
     

@@ -6,10 +6,6 @@ import static org.junit.Assert.*;
 
 /**
  * The class <code>PointTest</code> contains tests for the class <code>{@link Point}</code>.
- *
- * @generatedBy CodePro at 25.05.14 11:53
- * @author 749
- * @version $Revision: 1.0 $
  */
 public class PointTest {
     /**

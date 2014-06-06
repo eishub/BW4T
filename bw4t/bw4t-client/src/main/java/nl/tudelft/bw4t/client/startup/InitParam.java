@@ -12,8 +12,6 @@ import org.apache.log4j.Logger;
 
 /**
  * Available init parameters and default values for {@link BW4TEnvironment}.
- * 
- * @author W.Pasman 20mar13
  */
 public enum InitParam {
     /**

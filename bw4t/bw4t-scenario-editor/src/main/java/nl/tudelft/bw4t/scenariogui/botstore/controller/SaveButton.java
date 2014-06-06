@@ -15,8 +15,6 @@ import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
 
 /**
  * Handles actions of the applybutton
- * 
- * @author Arun
  */
 class SaveButton implements ActionListener {
 

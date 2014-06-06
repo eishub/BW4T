@@ -8,7 +8,6 @@ import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 
 /**
  * Handles actions of the sizeslider
- * @author Arun
  */
 class SizeSlider extends MouseAdapter {
     /**
@@ -45,9 +44,10 @@ class SizeSlider extends MouseAdapter {
      * @return The padded string.
      */
     public String padString(String value) {
+        StringBuffer buf = new StringBuffer(); 
         while (value.length() < 8) {
-            value += "0";
+            buf.append("0");
         }
-        return value;
+        return buf.toString();
     }
 }

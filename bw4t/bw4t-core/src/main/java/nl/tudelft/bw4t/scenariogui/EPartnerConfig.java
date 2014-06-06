@@ -5,9 +5,6 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlElement;
 
 /**
- * @author Valentine Mairet
- * @author Jan Giesenberg
- * 
  * Information about an EPartner to be created by the server.
  */
 public final class EPartnerConfig implements Serializable {

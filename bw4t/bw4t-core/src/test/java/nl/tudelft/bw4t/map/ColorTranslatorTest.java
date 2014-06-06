@@ -13,10 +13,6 @@ import org.junit.Test;
 
 /**
  * The class <code>ColorTranslatorTest</code> contains tests for the class <code>{@link ColorTranslator}</code>.
- *
- * @generatedBy CodePro at 25.05.14 12:54
- * @author 749
- * @version $Revision: 1.0 $
  */
 public class ColorTranslatorTest {
     /**

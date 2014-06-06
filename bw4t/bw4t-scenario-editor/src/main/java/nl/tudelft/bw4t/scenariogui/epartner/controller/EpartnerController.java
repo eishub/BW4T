@@ -10,8 +10,6 @@ import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
 
 /**
  * EpartnerController is in charge of all events that happen on the EpartnerGUI.
- * 
- * @author Wendy Bolier
  */
 
 public class EpartnerController {

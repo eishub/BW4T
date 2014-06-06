@@ -21,10 +21,6 @@ import static org.junit.Assert.*;
 
 /**
  * The class <code>BlockTest</code> contains tests for the class <code>{@link Block}</code>.
- *
- * @generatedBy CodePro at 24.05.14 19:21
- * @author 749
- * @version $Revision: 1.0 $
  */
 @RunWith(MockitoJUnitRunner.class)
 public class BlockTest {

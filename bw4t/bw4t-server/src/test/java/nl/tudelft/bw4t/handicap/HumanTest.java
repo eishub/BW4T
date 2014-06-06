@@ -20,11 +20,8 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 
 /**
- * @author Valentine Mairet
- * @author Tim
  * This test tests the Human bot. It currently tests whether a 
  * human bot can pick up and drop an epartner.
- *
 */
 public class HumanTest {
 	

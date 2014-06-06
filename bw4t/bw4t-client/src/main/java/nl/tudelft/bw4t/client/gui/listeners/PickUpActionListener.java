@@ -15,8 +15,6 @@ import eis.iilang.Percept;
 /**
  * ActionListener that performs the pick up action when that command is pressed
  * in the pop up menu
- * 
- * @author trens
  */
 public class PickUpActionListener extends ClientActionListener {
     /**

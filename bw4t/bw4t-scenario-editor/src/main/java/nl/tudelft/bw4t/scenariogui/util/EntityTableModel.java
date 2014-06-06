@@ -5,9 +5,6 @@ import javax.swing.table.DefaultTableModel;
 import nl.tudelft.bw4t.agent.EntityType;
 
 /**
- * @author Katia Asmoredjo
- * @author Calvin Wong Loi Sing
- *
  * The table model for the entity panel.
  */
 public class EntityTableModel extends DefaultTableModel {

@@ -135,8 +135,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 
         if (closed) {
             g2d.setColor(Door.COLOR_CLOSED);
-        }
-        else {
+        } else {
             g2d.setColor(Door.COLOR_OPEN);
         }
 
@@ -159,7 +158,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
         for (Zone zone : getController().getZones()) {
             Rectangle2D bbox = zone.getBoundingbox().getRectangle();
             g2d.drawString(zone.getName(),
-                    (int) (set.scale(bbox.getCenterX()) - (g2d.getFontMetrics().stringWidth(zone.getName()) / 2)),
+                    (int) (set.scale(bbox.getCenterX()) - (g2d.getFontMetrics().stringWidth(zone.getName()) / 2.0)),
                     (int) set.scale(bbox.getCenterY()));
         }
     }
