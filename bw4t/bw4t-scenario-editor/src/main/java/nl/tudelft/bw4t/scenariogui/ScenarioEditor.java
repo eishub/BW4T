@@ -9,10 +9,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.editor.controller.ScenarioEditorController;
-import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
-import nl.tudelft.bw4t.scenariogui.panel.gui.ConfigurationPanel;
-import nl.tudelft.bw4t.scenariogui.panel.gui.EntityPanel;
-import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MenuBar;
+import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 import nl.tudelft.bw4t.scenariogui.util.DefaultOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
 
@@ -54,7 +54,7 @@ public class ScenarioEditor extends JFrame {
         setJMenuBar(menuBar);
 
         // Attach the MainPanel, consisting of the configuration- and botpanel.
-        mPanel = new MainPanel(new ConfigurationPanel(), new EntityPanel());
+        mPanel = new MainPanel(this, new ConfigurationPanel(), new EntityPanel());
         setActivePane(mPanel);
         
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

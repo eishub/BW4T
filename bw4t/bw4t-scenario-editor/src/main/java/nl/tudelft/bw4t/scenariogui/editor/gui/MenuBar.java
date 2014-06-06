@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.gui;
+package nl.tudelft.bw4t.scenariogui.editor.gui;
 
 import java.awt.event.KeyEvent;
 
