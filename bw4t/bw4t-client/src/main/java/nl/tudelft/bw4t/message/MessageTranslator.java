@@ -14,8 +14,6 @@ import eis.iilang.Parameter;
 /**
  * Class used for translating messages (String->BW4TMessage and
  * BW4TMessage->String)
- * 
- * @author trens
  */
 public class MessageTranslator {
     public static Map<String, StringToMessageCommand> stringToMessage = new HashMap<String, StringToMessageCommand>();

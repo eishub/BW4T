@@ -11,9 +11,6 @@ import repast.simphony.space.continuous.NdPoint;
 
 /**
  * Util class to find back zones based on location, name etc
- * 
- * @author W.Pasman 4nov2013
- * 
  */
 public class ZoneLocator {
     /**

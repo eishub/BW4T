@@ -8,9 +8,6 @@ import org.apache.log4j.Logger;
 
 /**
  * Utility class to translate colors.
- * 
- * @author Lennard de Rijk
- * @author W.Pasman removed magenta and cyan
  */
 public final class ColorTranslator {
     /**

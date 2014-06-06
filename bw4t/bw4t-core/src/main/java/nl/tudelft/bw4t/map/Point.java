@@ -7,8 +7,6 @@ import java.io.Serializable;
  * Stupid coverr around Point2D.Double. The problem with Point2D.Double is that
  * the XML serializer can not handle it, it gets stuck in an infinite recursion
  * if you try to serialize it.
- * 
- * @author W.Pasman
  */
 public class Point implements Serializable {
 

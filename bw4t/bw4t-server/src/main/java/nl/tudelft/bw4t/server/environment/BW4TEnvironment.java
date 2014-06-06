@@ -14,11 +14,13 @@ import eis.iilang.Identifier;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
 
+import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,39 +28,47 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBException;
 
+import nl.tudelft.bw4t.BW4TBuilder;
+import nl.tudelft.bw4t.blocks.EPartner;
+import nl.tudelft.bw4t.client.BW4TClientActions;
+import nl.tudelft.bw4t.eis.EPartnerEntity;
 import nl.tudelft.bw4t.eis.RobotEntity;
-import nl.tudelft.bw4t.logger.BotLog;
+import nl.tudelft.bw4t.handicap.IRobot;
+import nl.tudelft.bw4t.map.Entity;
 import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.robots.Robot;
+import nl.tudelft.bw4t.robots.EntityFactory;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.server.BW4TServer;
 import nl.tudelft.bw4t.server.RobotEntityInt;
+import nl.tudelft.bw4t.server.logging.BW4TFileAppender;
+import nl.tudelft.bw4t.server.logging.BotLog;
 import nl.tudelft.bw4t.visualizations.ServerContextDisplay;
 
 import org.apache.log4j.Logger;
 
 import repast.simphony.context.Context;
 import repast.simphony.scenario.ScenarioLoadException;
+import repast.simphony.space.continuous.NdPoint;
 
 /**
  * The central environment which runs the data model and performs actions received from remote environments through the
  * server. Remote environments also poll percepts from this environment. Remote environments are notified of entity and
  * environment events also using the server.
- * <p>
+ * 
  * This is a singleton. Needed because we store the map info here.
- * 
- * @author trens
- * @modified W.Pasman #1997 #2236 #2422
- * 
  */
 public class BW4TEnvironment extends AbstractEnvironment {
 
     public static final String VERSION = "@PROJECT_VERSION@";
 
+    private static final String ENTITY_NAME_FORMAT = "%s_%d";
+
     private static final long serialVersionUID = -279637264069930353L;
     private static BW4TEnvironment instance;
 
     /**
-     * The log4j logger, logs to the console.
+     * The log4j logger, logs to the console and file
      */
     private static final Logger LOGGER = Logger.getLogger(BW4TEnvironment.class);
 
@@ -78,6 +88,8 @@ public class BW4TEnvironment extends AbstractEnvironment {
     private ServerContextDisplay contextDisplay;
     private final boolean guiEnabled;
     private final String shutdownKey;
+
+    private int nextBotSpawnIndex = 0;
 
     /**
      * Create a new instance of this environment
@@ -150,23 +162,21 @@ public class BW4TEnvironment extends AbstractEnvironment {
      * reports errors and proceeds.
      */
     public void removeAllEntities() throws ManagementException {
-        LOGGER.info("Closing the log file.");
-
-        // TODO check if total time is calculated same way as before
+      
+    	BW4TFileAppender.logFinish(System.currentTimeMillis(), "total time is ");
         // FIXME: BOTLOG gives nullpointer exception if no bots.
-        // LOGGER.log(BotLog.BOTLOG, "total time: " + (System.currentTimeMillis() - starttime));
-        // TODO log AgentRecord, each toSummaryArray of agentRecord of object of each bot
 
         setState(EnvironmentState.KILLED);
 
         LOGGER.debug("Removing all entities");
         for (String entity : this.getEntities()) {
-            try {
+        	try {
                 this.deleteEntity(entity);
             } catch (EntityException | RelationException e) {
                 LOGGER.error("Failure to delete entity: " + entity, e);
             }
         }
+        
         LOGGER.debug("Remove all (remaining) agents");
         for (String agent : this.getAgents()) {
             try {
@@ -321,7 +331,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
      */
     public Percept performClientAction(String entity, Action action) throws ActException {
         Long time = System.currentTimeMillis();
-        LOGGER.log(BotLog.BOTLOG, String.format("action %d %s %s", time, entity, action.toProlog()));
+        LOGGER.log(BotLog.BOTLOG, String.format("action %s %s", entity, action.toProlog()));
 
         if (starttime == null) {
             starttime = time;
@@ -473,14 +483,14 @@ public class BW4TEnvironment extends AbstractEnvironment {
             LOGGER.info("Launching the BW4T Server without a graphical user interface.");
         }
     }
-    
+
     @Override
     public void freeEntity(String entity) throws RelationException, EntityException {
         super.freeEntity(entity);
         this.deleteEntity(entity);
-        //this.registerEntity(entity, entity);
+        // this.registerEntity(entity, entity);
     }
-    
+
     @Override
     public void freePair(String agent, String entity) throws RelationException {
         RobotEntity robot = (RobotEntity) getEntity(entity);
@@ -498,10 +508,10 @@ public class BW4TEnvironment extends AbstractEnvironment {
         if (key.equals(this.shutdownKey)) {
             LOGGER.info("Server shutdown requested with correct key");
             try {
-				this.setState(EnvironmentState.KILLED);
-			} catch (ManagementException e) {
-				LOGGER.warn("failed to notify clients that the server is going down...", e);
-			}
+                this.setState(EnvironmentState.KILLED);
+            } catch (ManagementException e) {
+                LOGGER.warn("failed to notify clients that the server is going down...", e);
+            }
             server.takeDown();
             server = null;
             System.exit(0);
@@ -518,6 +528,150 @@ public class BW4TEnvironment extends AbstractEnvironment {
         return theMap;
     }
     
- 
+    public long getStarttime() {
+    	return starttime;
+    }
+    
+    /**
+     * Selects a spawn point from the list of entities in the map.
+     * Using an index that rotates through the number of spawns.
+     * 
+     * @return the coordinates of the spawn point
+     */
+    private Point2D getNextBotSpawnPoint() {
+        List<Entity> ents = getMap().getEntities();
+        Point2D p = ents.get(nextBotSpawnIndex++).getPosition().asPoint2D();
+        if (nextBotSpawnIndex  >= ents.size()) {
+            nextBotSpawnIndex = 0;
+        }
+        return p;
+    }
+
+    /**
+     * @return
+     * The list of points the humans are right now. 
+     */
+    private List<Point2D> getHumanWithoutEPartners() {
+        List<Point2D> points = new ArrayList<Point2D>();
+        
+        for (Object robot : context.getObjects(IRobot.class)) {
+            IRobot robotTemp = (IRobot) robot;
+            
+            if (robotTemp.isHuman() && !robotTemp.isHoldingEPartner()) {
+                NdPoint location = robotTemp.getLocation();
+                points.add(new Point2D.Double(location.getX(), location.getY()));
+            }
+        }
+        
+        return points;
+    }
+
+    /**
+     * Spawns a new Robot according to the given specifications and notifies the given client.
+     * 
+     * @param bots
+     *            list of bots to spawn
+     * @param client the client to notify
+     */
+    public void spawnBots(List<BotConfig> bots, BW4TClientActions client) {
+        for (BotConfig c : bots) {
+            int created = 0;
+            String name = c.getBotName();
+
+            while (created < c.getBotAmount()) {
+                c.setBotName(String.format(ENTITY_NAME_FORMAT, name, created + 1));
+                try {
+                    spawn(c);
+                    
+                    // assign robot to client
+                    server.notifyFreeRobot(client, c);
+                } catch (EntityException e) {
+                    LOGGER.error("Failed to register new Robot in the environment.", e);
+                }
+                created++;
+            }
+        }
+    }
+
+    /**
+     * Spawns a new Robot according to the given specifications and notifies the given client.
+     * 
+     * @param c
+     *            the configuration to use
+     * @throws EntityException
+     *             when we are unable to register Robot
+     */
+    private void spawn(BotConfig c) throws EntityException {
+        EntityFactory entityFactory = Launcher.getInstance().getEntityFactory();
+        // create robot from request
+        IRobot bot = entityFactory.makeRobot(c);
+        // create the entity for the environment
+        RobotEntity be = new RobotEntity(bot);
+        // register the entity in the environment
+        this.registerEntity(c.getBotName(), be);
+        // Place the Robot
+        Point2D p = getNextBotSpawnPoint();
+        bot.moveTo(p.getX(), p.getY());
+    }
+    
+    /**
+     * Spawns a new e-Partner according to the given specifications and notifies the given client.
+     * 
+     * @param epartners
+     *            list of epartners to spawn
+     * @param client the client to notify
+     */
+    public void spawnEPartners(List<EPartnerConfig> epartners, BW4TClientActions client) {
+        
+        List<Point2D> points = getHumanWithoutEPartners();
+        int index = 0;
+        
+        for (EPartnerConfig c : epartners) {
+            
+            int created = 0;
+            String name = c.getEpartnerName();
+    
+            while (created < c.getEpartnerAmount()) {
+                c.setEpartnerName(String.format(ENTITY_NAME_FORMAT, name, created + 1));
+                try {
+                    // if we run out of humans who don't have an e-Partner. 
+                    if (index >= points.size()) {
+                        spawn(c, getNextBotSpawnPoint());
+                    } else {
+                        spawn(c, points.get(index));
+                    }
+                    
+                    // assign e-Partner to client
+                    server.notifyFreeEpartner(client, c);
+                } catch (EntityException e) {
+                    LOGGER.error("Failed to register new Robot in the environment.", e);
+                }
+                index++;
+                created++;
+            }
+        }
+    }
+
+    /**
+     * Spawns a new EPartner according to the given specifications and notifies the given client.
+     * 
+     * @param c
+     *            the configuration to use
+     * @param point
+     *            the point the e-Partner should spawn at
+     * @throws EntityException
+     *             when we are unable to register EPartner
+     */
+    private void spawn(EPartnerConfig c, Point2D point) throws EntityException {
+        EntityFactory entityFactory = Launcher.getInstance().getEntityFactory();
+        // create robot from request
+        EPartner epartner = entityFactory.makeEPartner(c);
+        // create the entity for the environment
+        EPartnerEntity ee = new EPartnerEntity(epartner);
+        // register the entity in the environment
+        this.registerEntity(epartner.getName(), ee);
+        // TODO: Place the EPartner
+        epartner.moveTo(point.getX(), point.getY());
+    }
 
 }

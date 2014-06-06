@@ -17,16 +17,16 @@ import org.apache.log4j.Logger;
 import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.eis.RobotEntity;
-import nl.tudelft.bw4t.logger.BotLog;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Door.Orientation;
 import nl.tudelft.bw4t.map.Entity;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.robots.NavigatingRobot;
-import nl.tudelft.bw4t.robots.Robot;
+import nl.tudelft.bw4t.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.Launcher;
+import nl.tudelft.bw4t.server.logging.BotLog;
 import nl.tudelft.bw4t.zone.BlocksRoom;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.DropZone;
@@ -39,12 +39,7 @@ import repast.simphony.space.continuous.SimpleCartesianAdder;
 import repast.simphony.space.continuous.StickyBorders;
 import eis.exceptions.EntityException;
 
-/**
- * @author Lennard
- * @author W.Pasman added doors 15aug2011
- * @author W.Pasman added navpoints 22aug
- * 
- */
+
 public final class MapLoader {
 
     /** Identifier used for the space projections, matched in context.xml */
@@ -97,7 +92,7 @@ public final class MapLoader {
 
         ContinuousSpace<Object> space = createSpace(context, (int) map.getArea().getX(), (int) map.getArea().getY());
         
-        Launcher.getInstance().getRobotFactory().setSpace(space);
+        Launcher.getInstance().getEntityFactory().setSpace(space);
 
         // make the extra random blocks.
         List<BlockColor> extraSequenceBlocks = makeRandomSequence(map.getRandomSequence());
@@ -154,13 +149,14 @@ public final class MapLoader {
 
         }
 
-        for (Entity entityparams : map.getEntities()) {
+        /*for (Entity entityparams : map.getEntities()) {
             if (entityparams.getType() == Entity.EntityType.NORMAL) {
                 createEisEntityRobot(context, space, entityparams);
             } else {
+                //FIXME useless the robot is never used anywhere it gets created and then garbage collected
                 createJavaRobot(context, space, entityparams);
             }
-        }
+        }*/
 
         BW4TEnvironment.getInstance().setMapFullyLoaded();
     }
@@ -242,7 +238,7 @@ public final class MapLoader {
     }
 
     /**
-     * Creates a new {@link Robot} in the context according to the data in the tokenizer and adds it to the EIS
+     * Creates a new {@link AbstractRobot} in the context according to the data in the tokenizer and adds it to the EIS
      * environment.
      * 
      * @param context
@@ -271,7 +267,7 @@ public final class MapLoader {
     }
 
     /**
-     * Creates a new {@link Robot} in the context according to the data in the tokenizer.
+     * Creates a new {@link AbstractRobot} in the context according to the data in the tokenizer.
      * 
      * @param context
      *            The context in which the robot should be placed.
@@ -356,14 +352,14 @@ public final class MapLoader {
      */
     private static void createBlocksForRoom(Room room, Context<Object> context, ContinuousSpace<Object> space,
             List<BlockColor> args) {
-                
-        StringBuffer buf = new StringBuffer(); 
-        buf.append(room.getName());
+        
+        String letter = "";
         for (BlockColor c : args) {
-            buf.append(c.getLetter().toString());
+            letter = letter + " " + c.getLetter().toString();
         }
-        String logRoom = buf.toString();
-        LOGGER.log(BotLog.BOTLOG, logRoom);
+        
+        LOGGER.log(BotLog.BOTLOG, String.format("room %s contains blocks: %s", room.getName(), letter));
+
 
         Rectangle2D roomBox = room.getBoundingBox();
         List<Rectangle2D> newblocks = new ArrayList<Rectangle2D>();

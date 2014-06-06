@@ -27,10 +27,6 @@ import repast.simphony.space.continuous.NdPoint;
 
 /**
  * The class <code>BoundedMoveableObjectTest</code> contains tests for the class <code>{@link BoundedMoveableObject}</code>.
- *
- * @generatedBy CodePro at 23.05.14 16:47
- * @author Jan Giesenberg
- * @version $Revision: 1.0 $
  */
 @RunWith(MockitoJUnitRunner.class)
 public class BoundedMoveableObjectTest {

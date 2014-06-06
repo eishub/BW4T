@@ -2,9 +2,6 @@ package nl.tudelft.bw4t.robots;
 
 /**
  * Represents the robot's battery.
- * 
- * @author Valentine
- * @author Wendy
  */
 public class Battery {
     /**
