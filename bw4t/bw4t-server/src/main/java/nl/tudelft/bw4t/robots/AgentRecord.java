@@ -88,18 +88,27 @@ public class AgentRecord {
         nMessages++;
     }
     
-    /**
-     * Write summary in logfile.
-     */
-    public void logSummary(){
-    	 summary("gooddrops", "" + goodDrops);
-         summary("wrongdrops", "" + wrongDrops);
-         summary("nmessage", "" + nMessages);
-         summary("idletime", "" + (float) totalStandingStillMillis / 1000.);
-         summary("nroomsentered", "" + nRoomsEntered);
+    public String getName() {
+    	return name;
     }
     
-    private void summary(String label, String value){
-    	LOGGER.log(BotLog.BOTLOG, String.format("agentsummary %s %s %s", name, label, value));
-    }
+   public Integer getGoodDrops() {
+	   return goodDrops;
+   }
+   
+   public Integer getWrongDrops() {
+	   return wrongDrops;
+   }
+   
+   public Integer getNMessages() {
+	   return nMessages;
+   }
+  
+   public Integer getNRoomsEntered() {
+	   return nRoomsEntered;
+   }
+   
+   public long getTotalStandingStillMillis() {
+	   return totalStandingStillMillis;
+   }
 }
