@@ -3,7 +3,7 @@ package nl.tudelft.bw4t.scenariogui.editor.controller;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
  * Listens to the server ip text field and updates
