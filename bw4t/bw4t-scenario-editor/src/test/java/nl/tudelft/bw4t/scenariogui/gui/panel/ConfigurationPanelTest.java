@@ -5,6 +5,7 @@ import java.io.File;
 import javax.swing.JFileChooser;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.DefaultConfigurationValues;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.panel.gui.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.panel.gui.EntityPanel;
@@ -241,7 +242,7 @@ public class ConfigurationPanelTest {
      */
     @Test
     public void testChangesClientIP() {
-        configPanel.setClientIP("New IP");
+        configPanel.setClientIP(DefaultConfigurationValues.DEFAULT_CLIENT_IP.getValue() + "t");
 
         assertFalse(configPanel.isDefault());
     }
@@ -251,7 +252,7 @@ public class ConfigurationPanelTest {
      */
     @Test
     public void testChangesClientPort() {
-        configPanel.setClientPort("7777");
+        configPanel.setClientPort(DefaultConfigurationValues.DEFAULT_CLIENT_PORT.getValue() + "2");
 
         assertFalse(configPanel.isDefault());
     }
@@ -261,7 +262,7 @@ public class ConfigurationPanelTest {
      */
     @Test
     public void testChangesServerIP() {
-        configPanel.setServerIP("New IP");
+        configPanel.setServerIP(DefaultConfigurationValues.DEFAULT_SERVER_IP.getValue() + "t");
 
         assertFalse(configPanel.isDefault());
     }
@@ -271,7 +272,7 @@ public class ConfigurationPanelTest {
      */
     @Test
     public void testChangesServerPort() {
-        configPanel.setServerPort("1010");
+        configPanel.setServerPort(DefaultConfigurationValues.DEFAULT_SERVER_PORT.getValue() + "1");
 
         assertFalse(configPanel.isDefault());
     }
@@ -281,7 +282,7 @@ public class ConfigurationPanelTest {
      */
     @Test
     public void testChangesLaunchGUI() {
-        configPanel.setUseGui(false);
+        configPanel.setUseGui(!DefaultConfigurationValues.USE_GUI.getBooleanValue());
 
         assertFalse(configPanel.isDefault());
     }

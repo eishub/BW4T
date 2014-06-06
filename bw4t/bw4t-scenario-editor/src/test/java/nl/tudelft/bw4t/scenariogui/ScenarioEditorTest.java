@@ -85,7 +85,7 @@ public class ScenarioEditorTest {
     @Test
     public final void checkActivePane() {
         editor = new ScenarioEditor();
-        MainPanel panel = new MainPanel(
+        MainPanel panel = new MainPanel(editor,
                 new ConfigurationPanel(), new EntityPanel());
         editor.setActivePane(panel);
         assertEquals(panel, editor.getActivePane());
