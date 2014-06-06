@@ -58,7 +58,7 @@ class EpartnerSaveButton implements ActionListener {
 
 		for (int i = 0; i < rows; i++) {
 			EPartnerConfig epartnerConfig = view.getModel().getEpartner(i);
-			Object[] newEPartnerObject = {epartnerConfig.getEpartnerName(),
+			Object[] newEPartnerObject = {epartnerConfig.getEpartnerName(), epartnerConfig.getFileName(),
 					epartnerConfig.getEpartnerAmount()};
 			view.getPanel().getEntityPanel().getEPartnerTableModel()
 					.addRow(newEPartnerObject);
