@@ -112,24 +112,32 @@ public class BotEditorPanel extends JPanel {
 	private void createBotInfoPanel() {
 		botInfo.setLayout(new GridLayout(10, 0));
 
-		botNameField.setText(dataObject.getBotName());
 		botControllerSelector.setModel(new DefaultComboBoxModel(new String[] {
 		        EntityType.AGENT.toString(), EntityType.HUMAN.toString() }));
-		botAmountTextField.setText("" + dataObject.getBotAmount());
 
 		botInfo.add(new JLabel("Bot name:"));
 		botNameField.setText(dataObject.getBotName());
+	    botAmountTextField.setText("" + dataObject.getBotAmount());
 		botInfo.add(botNameField);
+		
 		JPanel controllerpanel = new JPanel();
 		controllerpanel.setLayout(new GridLayout(1, 0));
 		if (dataObject.getBotController().equals(EntityType.HUMAN)) {
 	        botControllerSelector.setSelectedIndex(1);
-	    } 
+	    }
 		controllerpanel.add(botControllerSelector);
 		controllerpanel.add(new JLabel("   Amount of this type:"));
 		controllerpanel.add(botAmountTextField);
 		botInfo.add(controllerpanel);
-		botInfo.add(new JLabel(""));
+		
+		createGOALOptions();
+	}
+
+	/**
+	 * Shows the GOAL options on the panel.
+	 */
+    private void createGOALOptions() {
+        botInfo.add(new JLabel(""));
 		JLabel goalLabel = new JLabel("GOAL options");
 		goalLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		botInfo.add(goalLabel);
@@ -140,7 +148,7 @@ public class BotEditorPanel extends JPanel {
 		fileNameField.setText(dataObject.getFileName());
 		botInfo.add(fileNameField);
 		botInfo.add(fileButton);
-	}
+    }
 
 	/**
 	 * create the checkables panel
@@ -155,28 +163,36 @@ public class BotEditorPanel extends JPanel {
 				BoxLayout.PAGE_AXIS));
 		checkablesPanel.add(checkablesLabel);
 		checkablesPanel.add(new JLabel("Handicaps:"));
-		if (dataObject.getGripperHandicap()) {
-			gripperCheckbox.setSelected(true);
-		}
 		checkablesPanel.add(gripperCheckbox);
-		if (dataObject.getColorBlindHandicap()) {
-			colorblindCheckbox.setSelected(true);
-		}
 		checkablesPanel.add(colorblindCheckbox);
 		checkablesPanel.add(new JLabel("Other options:"));
-		if (dataObject.getSizeOverloadHandicap()) {
-			customSizeCheckbox.setSelected(true);
-		}
 		checkablesPanel.add(customSizeCheckbox);
-		if (dataObject.getMoveSpeedHandicap()) {
-			movespeedCheckbox.setSelected(true);
-		}
 		checkablesPanel.add(movespeedCheckbox);
-		if (dataObject.isBatteryEnabled()) {
-			batteryEnabledCheckbox.setSelected(true);
-		}
 		checkablesPanel.add(batteryEnabledCheckbox);
 		botCheckables.add(checkablesPanel);
+		fillInBotSpecsFromModel();
+	}
+	
+	/**
+	 * Checks the checkboxes in the bot spec section of the panel
+	 * if they're true in the model.
+	 */
+	private void fillInBotSpecsFromModel() {
+	    if (dataObject.getGripperHandicap()) {
+            gripperCheckbox.setSelected(true);
+        }
+        if (dataObject.getColorBlindHandicap()) {
+            colorblindCheckbox.setSelected(true);
+        }
+        if (dataObject.getSizeOverloadHandicap()) {
+            customSizeCheckbox.setSelected(true);
+        }
+        if (dataObject.getMoveSpeedHandicap()) {
+            movespeedCheckbox.setSelected(true);
+        }
+        if (dataObject.isBatteryEnabled()) {
+            batteryEnabledCheckbox.setSelected(true);
+        }
 	}
 
 	/**
