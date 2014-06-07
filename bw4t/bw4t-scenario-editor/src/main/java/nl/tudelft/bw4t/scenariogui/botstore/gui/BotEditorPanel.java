@@ -20,8 +20,6 @@ import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.botstore.controller.BotStoreController;
 
-
-
 /**
  * BotEditorPanel which serves as the content pane for the BotEditor frame
  */
@@ -75,9 +73,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
 	private JLabel batteryUseValueLabel = new JLabel("0");
 
 	private BotConfig dataObject = new BotConfig();
-	
-	
-
 
 	private BotEditor botEditor;
 	
