@@ -1,11 +1,10 @@
-package nl.tudelft.bw4t.scenariogui.gui;
+package nl.tudelft.bw4t.scenariogui.editor.gui;
 
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.concurrent.Callable;
 
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
@@ -16,11 +15,9 @@ import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.editor.controller.AbstractMenuOption;
 import nl.tudelft.bw4t.scenariogui.editor.controller.ScenarioEditorController;
-import nl.tudelft.bw4t.scenariogui.util.ExportToMAS;
 import nl.tudelft.bw4t.scenariogui.util.ExportToMASTest;
 import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
-import nl.tudelft.bw4t.scenariogui.util.TestUtils;
 import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
 
 import org.apache.commons.io.FileUtils;

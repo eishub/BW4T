@@ -19,7 +19,8 @@ import nl.tudelft.bw4t.agent.EntityType;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.botstore.controller.BotStoreController;
-import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
+
+
 
 /**
  * BotEditorPanel which serves as the content pane for the BotEditor frame
@@ -77,7 +78,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
 	
 	
 
-	private MainPanel mainPanel;
 
 	private BotEditor botEditor;
 	
@@ -585,5 +585,13 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
 	
 	public BW4TClientConfig getModel() {
 	    return model;
+	}
+	
+	public void updateView() {
+		
+	}
+	
+	public void setController(BotStoreController bsc) {
+		
 	}
 }

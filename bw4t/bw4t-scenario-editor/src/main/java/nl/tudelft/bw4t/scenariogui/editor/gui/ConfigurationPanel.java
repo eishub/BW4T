@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.panel.gui;
+package nl.tudelft.bw4t.scenariogui.editor.gui;
 
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
@@ -17,6 +17,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import nl.tudelft.bw4t.scenariogui.DefaultConfigurationValues;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 import nl.tudelft.bw4t.scenariogui.util.Format;
 import nl.tudelft.bw4t.scenariogui.util.MapSpec;
@@ -30,104 +31,51 @@ public class ConfigurationPanel extends JPanel {
     
     private static final long serialVersionUID = 2925174902776539436L;
 
-    private static final String LOCALHOST = "localhost";
-
-    private static final String TRUE = "true";
-
     private static final String FONT_NAME = "Sans-Serif";
 
     private static final int INSET = 8;
 
     private static final double GRID_BAG_CONSTRAINTS_WEIGHT = 0.5;
 
-    /**
-     * The default values for in the GUI.
-     */
-    public static enum DEFAULT_VALUES {
-        DEFAULT_SERVER_IP(LOCALHOST),
-        DEFAULT_CLIENT_IP(LOCALHOST),
-        DEFAULT_SERVER_PORT("8000"),
-        DEFAULT_CLIENT_PORT("2000"),
-        USE_GUI(TRUE),
-        USE_GOAL(TRUE),
-        MAP_FILE("");
-
-        private String value;
-
-        /**
-         * Constructs a new default configuration.
-         * @param newValue The new default value.
-         */
-        DEFAULT_VALUES(final String newValue) {
-            this.value = newValue;
-        }
-
-        /**
-         * Gets the value as a string.
-         * @return The value.
-         */
-        public String getValue() {
-            return value;
-        }
-
-        /**
-         * Gets the value as an int.
-         * @return The value as an int.
-         */
-        public int getIntValue() {
-            return Integer.parseInt(value);
-        }
-
-        /**
-         * Gets the value as a boolean.
-         * @return The value as a boolean.
-         */
-        public boolean getBooleanValue() {
-            return Boolean.parseBoolean(value);
-        }
-
-    }
-
     private static final int TEXT_FIELD_COLUMN_SIZE_BIG = 15;
 
     private static final int TEXT_FIELD_COLUMN_SIZE_SMALL = 6;
 
-    
     private MapSpec mapSpec;
 
 
     private JTextField clientIP = new JTextField(
-            DEFAULT_VALUES.DEFAULT_CLIENT_IP.getValue(),
+            DefaultConfigurationValues.DEFAULT_CLIENT_IP.getValue(),
             TEXT_FIELD_COLUMN_SIZE_BIG);
 
     private JTextField clientPort = new JTextField(
-            DEFAULT_VALUES.DEFAULT_CLIENT_PORT.getValue(),
+            DefaultConfigurationValues.DEFAULT_CLIENT_PORT.getValue(),
             TEXT_FIELD_COLUMN_SIZE_SMALL);
     {
         Format.addIntegerDocumentFilterForTextField(clientPort);
     }
 
     private JTextField serverIP = new JTextField(
-            DEFAULT_VALUES.DEFAULT_SERVER_IP.getValue(),
+            DefaultConfigurationValues.DEFAULT_SERVER_IP.getValue(),
             TEXT_FIELD_COLUMN_SIZE_BIG);
 
     private JTextField serverPort = new JTextField(
-            DEFAULT_VALUES.DEFAULT_SERVER_PORT.getValue(),
+            DefaultConfigurationValues.DEFAULT_SERVER_PORT.getValue(),
             TEXT_FIELD_COLUMN_SIZE_SMALL);
     {
         Format.addIntegerDocumentFilterForTextField(serverPort);
     }
 
     private JTextField mapFileTextField = new JTextField(
-            DEFAULT_VALUES.MAP_FILE.getValue());
+            DefaultConfigurationValues.MAP_FILE.getValue());
 
     private CheckboxGroup guiCheckBox = new CheckboxGroup();
 
     private Checkbox guiYes = new Checkbox("Yes",
-            DEFAULT_VALUES.USE_GUI.getBooleanValue(), guiCheckBox);
+            DefaultConfigurationValues.USE_GUI.getBooleanValue(), guiCheckBox);
 
     private Checkbox guiNo = new Checkbox("No",
-            !DEFAULT_VALUES.USE_GUI.getBooleanValue(), guiCheckBox);
+            !DefaultConfigurationValues.USE_GUI.getBooleanValue(), guiCheckBox);
 
     private JButton chooseMapFile = new JButton("Open File");
 
@@ -170,7 +118,7 @@ public class ConfigurationPanel extends JPanel {
         title.setTitleFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE));
         setBorder(title);
 
-        mapSpec = new MapSpec(DEFAULT_VALUES.MAP_FILE.getValue());
+        mapSpec = new MapSpec(DefaultConfigurationValues.MAP_FILE.getValue());
 
         // showConfigLabel();
         showClientOptions();
@@ -466,22 +414,22 @@ public class ConfigurationPanel extends JPanel {
     public final boolean isDefault() {
         boolean isDefault = true;
 
-        if (!this.getClientIP().equals(DEFAULT_VALUES.DEFAULT_CLIENT_IP.getValue())) {
+        if (!this.getClientIP().equals(DefaultConfigurationValues.DEFAULT_CLIENT_IP.getValue())) {
             isDefault = false;
         }
-        else if (this.getClientPort() != DEFAULT_VALUES.DEFAULT_CLIENT_PORT.getIntValue()) {
+        else if (this.getClientPort() != DefaultConfigurationValues.DEFAULT_CLIENT_PORT.getIntValue()) {
             isDefault = false;
         }
-        else if (!this.getServerIP().equals(DEFAULT_VALUES.DEFAULT_SERVER_IP.getValue())) {
+        else if (!this.getServerIP().equals(DefaultConfigurationValues.DEFAULT_SERVER_IP.getValue())) {
             isDefault = false;
         }
-        else if (this.getServerPort() != DEFAULT_VALUES.DEFAULT_SERVER_PORT.getIntValue()) {
+        else if (this.getServerPort() != DefaultConfigurationValues.DEFAULT_SERVER_PORT.getIntValue()) {
             isDefault = false;
         }
-        else if (this.useGui() != DEFAULT_VALUES.USE_GUI.getBooleanValue()) {
+        else if (this.useGui() != DefaultConfigurationValues.USE_GUI.getBooleanValue()) {
             isDefault = false;
         }
-        else if (!this.getMapFile().equals(DEFAULT_VALUES.MAP_FILE.getValue())) {
+        else if (!this.getMapFile().equals(DefaultConfigurationValues.MAP_FILE.getValue())) {
             isDefault = false;
         }
 
