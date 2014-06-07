@@ -4,15 +4,6 @@ import javax.swing.JOptionPane;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.controllers.editor.SelectLaunchGUINo;
-import nl.tudelft.bw4t.scenariogui.controllers.editor.SelectLaunchGUIYes;
-import nl.tudelft.bw4t.scenariogui.controllers.editor.UpdateBotCount;
-import nl.tudelft.bw4t.scenariogui.controllers.editor.UpdateEPartnerCount;
-import nl.tudelft.bw4t.scenariogui.controllers.editor.WriteClientIP;
-import nl.tudelft.bw4t.scenariogui.controllers.editor.WriteClientPort;
-import nl.tudelft.bw4t.scenariogui.controllers.editor.WriteMapFile;
-import nl.tudelft.bw4t.scenariogui.controllers.editor.WriteServerIP;
-import nl.tudelft.bw4t.scenariogui.controllers.editor.WriteServerPort;
 
 /**
  * The Controller class is in charge of all events that happen on the GUI.
@@ -167,7 +158,7 @@ public class ScenarioEditorController {
         boolean configurationEqual = getMainView().getMainPanel().getConfigurationPanel().getOldValues()
                 .equals(getMainView().getMainPanel().getConfigurationPanel().getCurrentValues());
         boolean botsEqual = getModel().compareBotConfigs(getModel().getOldBots());
-        boolean epartnersEqual= getModel().compareEpartnerConfigs(model.getOldEpartners());
+        boolean epartnersEqual= getModel().compareEpartnerConfigs(getModel().getOldEpartners());
 
         return !(configurationEqual && botsEqual && epartnersEqual);
     }

@@ -500,16 +500,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	}
 
 	@Override
-	public int getBatteryPercentage() {
-	    return this.battery.getPercentage();
-	}
-
-	@Override
-	public double getDischargeRate() {
-	    return this.battery.getDischargeRate();
-	}
-
-	@Override
 	public void recharge() {
 	    if ("chargingzone".equals(this.getZone().getName())) {
 	        this.battery.recharge();
