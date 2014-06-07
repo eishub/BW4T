@@ -46,5 +46,4 @@ public interface EPartnerViewInterface {
     String getEpartnerReference();
 
     String getEpartnerGoalFile();
-
 }
