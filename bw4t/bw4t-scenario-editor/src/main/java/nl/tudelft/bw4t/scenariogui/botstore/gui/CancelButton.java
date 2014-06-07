@@ -10,7 +10,7 @@ class CancelButton implements ActionListener {
     /**
      * The GUI to be disposed.
      */
-    private BotEditor view;
+    private BotEditorPanel view;
 
     /**
      * Constructor.
