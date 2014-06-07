@@ -18,12 +18,13 @@ import javax.swing.SwingConstants;
 import nl.tudelft.bw4t.agent.EntityType;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.botstore.controller.BotStoreController;
 import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
 
 /**
  * BotEditorPanel which serves as the content pane for the BotEditor frame
  */
-public class BotEditorPanel extends JPanel {
+public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
 
     private static final long serialVersionUID = 1850617931893202292L;
 
@@ -73,6 +74,8 @@ public class BotEditorPanel extends JPanel {
 	private JLabel batteryUseValueLabel = new JLabel("0");
 
 	private BotConfig dataObject = new BotConfig();
+	
+	
 
 	private MainPanel mainPanel;
 
@@ -88,14 +91,16 @@ public class BotEditorPanel extends JPanel {
 	 * @param mainPanel
 	 *            The MainPanel.
 	 */
-	public BotEditorPanel(BotEditor botEditor, MainPanel mainPanel, BW4TClientConfig model) {
-		this.model = model;
+	//public BotEditorPanel(BotEditor botEditor, MainPanel mainPanel, BW4TClientConfig model) {
+	  public BotEditorPanel(BotStoreController controller) {
+		//BotStoreController bsc = new BotStoreController(this);
+		//BotStoreController(this) = controller;
 		setLayout(new BorderLayout(20, 20));
 
-		this.mainPanel = mainPanel;
+		/*this.mainPanel = mainPanel;
 		this.botEditor = botEditor;
 		this.dataObject = this.model.getBot(
-				botEditor.getRow());
+				botEditor.getRow()); */
 
 		createBotInfoPanel();
 		createBotCheckablesPanel();
