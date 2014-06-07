@@ -26,6 +26,6 @@ public class GripperSlider extends MouseAdapter {
      * @param arg0 The action event caused by releasing the mouse.
      */
     public void mouseReleased(MouseEvent arg0) {
-    	view.getDataObject().setGrippers(view.getNumberOfGrippersSlider().getValue());
+    	view.getTempBotConfig().setGrippers(view.getNumberOfGrippersSlider().getValue());
     }
 }

@@ -504,6 +504,8 @@ public class MenuBarTest {
      */
     @Test
     public void testSaveAs() {
+        editor.getMainPanel().getConfigurationPanel().getMapFileTextField().setText(
+                "Prevents no map file warning.");
         saveWithMockedFileChooser();
         verify(filechooser, times(1)).showDialog((Component) any(), (String) any());
         verify(filechooser, times(1)).getSelectedFile();

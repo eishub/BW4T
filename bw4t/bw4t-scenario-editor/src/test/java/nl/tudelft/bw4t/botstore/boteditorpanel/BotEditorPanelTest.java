@@ -189,7 +189,7 @@ public class BotEditorPanelTest {
     @Test
     public final void testResetButtonClick() {
         BotEditorPanel botEditorPanel = editor.getBotEditorPanel();
-        BotConfig config = botEditorPanel.getDataObject();
+        BotConfig config = botEditorPanel.getTempBotConfig();
         
         botEditorPanel.getResetButton().doClick();
         

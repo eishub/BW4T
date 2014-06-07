@@ -31,7 +31,7 @@ class SizeSlider extends MouseAdapter {
 	        String value = df.format(res);
 	        view.getBatteryUseValueLabel().setText(padString(value));
     	}
-    	view.getDataObject().setBotSize(view.getSizeSlider().getValue());
+    	view.getTempBotConfig().setBotSize(view.getSizeSlider().getValue());
     }
     
     /**
