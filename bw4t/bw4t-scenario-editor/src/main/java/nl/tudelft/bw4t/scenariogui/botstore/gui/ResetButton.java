@@ -1,10 +1,9 @@
-package nl.tudelft.bw4t.scenariogui.botstore.controller;
+package nl.tudelft.bw4t.scenariogui.botstore.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import nl.tudelft.bw4t.agent.EntityType;
-import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 
 /**
  * Handles actions of the resetbutton

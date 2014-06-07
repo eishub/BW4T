@@ -88,16 +88,10 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
 	 * @param mainPanel
 	 *            The MainPanel.
 	 */
-	//public BotEditorPanel(BotEditor botEditor, MainPanel mainPanel, BW4TClientConfig model) {
 	  public BotEditorPanel(BotStoreController controller) {
-		//BotStoreController bsc = new BotStoreController(this);
-		//BotStoreController(this) = controller;
 		setLayout(new BorderLayout(20, 20));
-
-		/*this.mainPanel = mainPanel;
-		this.botEditor = botEditor;
-		this.dataObject = this.model.getBot(
-				botEditor.getRow()); */
+		
+		this.setController(controller);
 
 		createBotInfoPanel();
 		createBotCheckablesPanel();
@@ -106,6 +100,18 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
 		add(botInfo, BorderLayout.NORTH);
 		add(botSliders, BorderLayout.EAST);
 		add(botCheckables, BorderLayout.WEST);
+		
+		getResetButton().addActionListener(
+                new ResetButton(this));
+
+        getSaveButton().addActionListener(
+                new ApplyButton(this));
+
+        getCancelButton().addActionListener(
+                new CancelButton(this));
+        
+        controller.addView(this);
+        setVisible(true);
 	}
 
 	/**
@@ -114,7 +120,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
 	private void createBotInfoPanel() {
 		botInfo.setLayout(new GridLayout(10, 0));
 
-		botNameField.setText(dataObject.getBotName());
+		botNameField.setText(controller.getBotName());
 		botControllerSelector.setModel(new DefaultComboBoxModel(new String[] {
 		        EntityType.AGENT.toString(), EntityType.HUMAN.toString() }));
 		botAmountTextField.setText("" + dataObject.getBotAmount());
@@ -412,37 +418,37 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
 	/**
 	 * Get the currently used gripper checkbox.
 	 * 
-	 * @return The checkbox for setting the gripper handicap.
+	 * @return true if the gripperCheckbox is selected
 	 */
-	public JCheckBox getGripperCheckbox() {
-		return gripperCheckbox;
+	public boolean getGripperCheckbox() {
+		return gripperCheckbox.isSelected();
 	}
 
 	/**
 	 * Get the currently used color blindness checkbox.
 	 * 
-	 * @return The checkbox for setting the color blind handicap.
+	 * @return true if the getColorblindCheckbox is selected
 	 */
-	public JCheckBox getColorblindCheckbox() {
-		return colorblindCheckbox;
+	public boolean getColorblindCheckbox() {
+		return colorblindCheckbox.isSelected();
 	}
 
 	/**
 	 * Returns the currently used move speed checkbox.
 	 * 
-	 * @return The move speed checkbox.
+	 * @return true if the getmovespeedCheckbox is selected
 	 */
-	public JCheckBox getmovespeedCheckbox() {
-		return movespeedCheckbox;
+	public boolean getmovespeedCheckbox() {
+		return movespeedCheckbox.isSelected();
 	}
 
 	/**
 	 * Returns the used custom size checkbox.
 	 * 
-	 * @return The custom size checkbox.
+	 * @return true if the custom size checkbox is selected.
 	 */
-	public JCheckBox getsizeoverloadCheckbox() {
-		return customSizeCheckbox;
+	public boolean getsizeoverloadCheckbox() {
+		return customSizeCheckbox.isSelected();
 	}
 
 	/**
@@ -451,7 +457,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
 	 * @return The size slider.
 	 */
 	public JSlider getSizeSlider() {
-		return sizeSlider;
+		return sizeSlider.;
 	}
 
 	/**

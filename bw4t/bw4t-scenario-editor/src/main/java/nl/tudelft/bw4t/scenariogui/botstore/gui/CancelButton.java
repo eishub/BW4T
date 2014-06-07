@@ -1,9 +1,7 @@
-package nl.tudelft.bw4t.scenariogui.botstore.controller;
+package nl.tudelft.bw4t.scenariogui.botstore.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditor;
 
 /**
  * Handles actions of the cancelbutton
@@ -18,7 +16,7 @@ class CancelButton implements ActionListener {
      * Constructor.
      * @param pview The GUI to be disposed.
      */
-    public CancelButton(BotEditor pview) {
+    public CancelButton(BotEditorPanel pview) {
         this.view = pview;
     }
     /**
