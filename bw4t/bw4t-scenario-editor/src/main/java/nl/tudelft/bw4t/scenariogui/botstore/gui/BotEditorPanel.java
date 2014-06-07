@@ -21,6 +21,8 @@ import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.botstore.controller.BotStoreController;
 
 /**
+ * commit test
+ * 
  * BotEditorPanel which serves as the content pane for the BotEditor frame
  */
 public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
