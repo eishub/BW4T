@@ -143,15 +143,10 @@ public class ControllerTest {
                             MenuOptionSaveAs.class
                     )).getCurrentFileChooser();
                     if (fc != null) {
-                        System.out.println("Not null! Executing..");
                         fc.setSelectedFile(new File(FILE_PATH));
                         fc.approveSelection();
-                        System.out.println("..done!!");
                         break;
                     } 
-                    else {
-                        System.out.println("Is still null.");
-                    }
                 }
             }
 

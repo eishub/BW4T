@@ -187,9 +187,9 @@ public class BotEditorPanelTest {
 
     /** Test the reset button */
     @Test
-    public final void testResetButtonClick() {
+    public final void testResetButtonForBotSpecClick() {
         BotEditorPanel botEditorPanel = editor.getBotEditorPanel();
-        BotConfig config = botEditorPanel.getTempBotConfig();
+        BotConfig config = editor.getBotEditorPanel().getTempBotConfig();
         
         botEditorPanel.getResetButton().doClick();
         
@@ -206,6 +206,16 @@ public class BotEditorPanelTest {
         assertEquals(botEditorPanel.getsizeoverloadCheckbox().isSelected(), config.getSizeOverloadHandicap());
         assertEquals(botEditorPanel.getmovespeedCheckbox().isSelected(), config.getMoveSpeedHandicap());
         assertEquals(botEditorPanel.getBatteryEnabledCheckbox().isSelected(), config.isBatteryEnabled());
+    }
+    
+    /** Test the reset button */
+    @Test
+    public final void testResetButtonForBotDefClick() {
+        BotEditorPanel botEditorPanel = editor.getBotEditorPanel();
+        BotConfig config = editor.getBotEditorPanel().getTempBotConfig();
+        
+        botEditorPanel.getResetButton().doClick();
+        
         assertEquals(botEditorPanel.getFileNameField().getText(), config.getFileName());
         assertEquals(botEditorPanel.getBotNameField().getText(), config.getBotName());
         assertEquals(botEditorPanel.getBotReferenceField().getText(), config.getReferenceName());

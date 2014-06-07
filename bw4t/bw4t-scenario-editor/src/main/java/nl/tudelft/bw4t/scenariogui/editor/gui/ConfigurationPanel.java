@@ -153,6 +153,13 @@ public class ConfigurationPanel extends JPanel {
 
         c.insets = new Insets(0, INSET, 0, 0);
 
+        showClientBoxContent();
+    }
+
+    /**
+     * Shows the contents of the client box (IP and Port boxes).
+     */
+    private void showClientBoxContent() {
         c.weightx = GRID_BAG_CONSTRAINTS_WEIGHT;
         c.gridx = 0;
         c.gridy += 1;
@@ -187,6 +194,13 @@ public class ConfigurationPanel extends JPanel {
         server.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE_SMALL));
         add(server, c);
 
+        showServerBoxContent();
+    }
+
+    /**
+     * Shows the contents of the server box (IP and Port boxes).
+     */
+    private void showServerBoxContent() {
         c.insets = new Insets(0, INSET, 0, 0);
 
         c.weightx = GRID_BAG_CONSTRAINTS_WEIGHT;
