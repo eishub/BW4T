@@ -102,7 +102,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
                 new ResetButton(this));
 
         getSaveButton().addActionListener(
-                new ApplyButton(this));
+                new SaveButton(this));
 
         getCancelButton().addActionListener(
                 new CancelButton(this));
@@ -474,7 +474,17 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
 	public boolean isBatteryEnabled() {
 		return batteryEnabledCheckbox.isSelected();
 	}
-
+	
+	/**
+	 * Return the label describing what the robot uses regarding battery
+	 * potential per tick.
+	 * 
+	 * @return The aforementioned label.
+	 */
+	public JLabel getBatteryUseValueLabel() {
+		return batteryUseValueLabel;
+	}
+	
 	/**
 	 * Return the label describing what the robot uses regarding battery
 	 * potential per tick.

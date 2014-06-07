@@ -28,8 +28,8 @@ public class BatteryBox implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        JSlider batterySlider = view.getBatterySlider();
-        if (view.getBatteryEnabledCheckbox().isSelected()) {
+        JSlider batterySlider = view.getBotBatteryCapacity();
+        if (view.isBatteryEnabled()) {
             batterySlider.setEnabled(true);
             view.getBatteryUseValueLabel().setText("0,1");
         }
@@ -37,6 +37,6 @@ public class BatteryBox implements ActionListener {
             batterySlider.setEnabled(false);
             view.getBatteryUseValueLabel().setText("0");
         }
-        view.getDataObject().setBatteryEnabled(view.getBatteryEnabledCheckbox().isSelected());
+        view.getDataObject().setBatteryEnabled(view.isBatteryEnabled());
     }
 }
