@@ -20,6 +20,7 @@ import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.map.Rectangle;
 import nl.tudelft.bw4t.map.RenderOptions;
 import nl.tudelft.bw4t.map.Zone;
+import nl.tudelft.bw4t.map.Zone.Type;
 import nl.tudelft.bw4t.map.editor.AlertBox;
 import nl.tudelft.bw4t.map.editor.ColorSequence;
 
@@ -341,6 +342,33 @@ public class Map implements TableModel {
 
         return map;
     }
+    /**
+     * This method should create a random map from given row- and column
+     * sizes.
+     * @param rows The amount of rows in the map.
+     * @param cols The amount of columns in the map.
+     * @return
+     */
+    NewMap createRandomMap(int rows, int cols) {
+    	Node[][] map = createRandomGraph(rows, cols);
+		return null;
+    }
+    /**
+     * This method returns a 2D array of nodes which
+     * should represent the random map in graph form.
+     */
+    private Node[][] createRandomGraph(int rows, int cols) {
+    	// The map is one-indexed, and has another row and
+    	// column lying on the right of the map, this is easier for making the map.
+    	Node[][] map = new Node[rows + 2][cols + 2];
+    	for (int i = 1; i <= rows; i++) {
+    		for (int j = 1; j <= cols; j++) {
+    			map[i][j] = new Node(Zone.Type.CORRIDOR);
+    			map[i][j].setNorth(map[i + 1][j]);
+    		}
+    	}
+    	return null;
+    }
 
     /**
      * Set all the render options of the map.
@@ -560,5 +588,73 @@ public class Map implements TableModel {
         }
         rooms.get(rowIndex).get(columnIndex).setValue((Room) aValue);
     }
-
+    /**
+     * The node class to be used in the random map generator.
+     *
+     */
+    public class Node {
+    	/**
+    	 * The required nodes.
+    	 */
+    	private Node north, east, south, west;
+    	/**
+    	 * The type of room this node represents.
+    	 */
+    	private Zone.Type type;
+    	/**
+    	 * Constructs the Node object with only the type of the room
+    	 * the node is representing.
+    	 * @param t The type of room this node should represent.
+    	 */
+    	public Node(Zone.Type t) {
+    		type = t;
+    	}
+    	/**
+    	 * Constructs the node object with the type of room known as
+    	 * well as a list of the neighbours
+    	 * @param t The type of room this node should represent.
+    	 * @param list The list of neighbours, with the northern one
+    	 * on the first position, the eastern one on the second, the southern
+    	 * one on the third, and the western one on the fourth.
+    	 */
+    	public Node(Zone.Type t, List<Node> list) {
+    		assert list.size() == 4 : "Please use a list containing exactly"
+    				+ " four elements.";
+    		type = t;
+    		north = list.get(0);
+    		east = list.get(1);
+    		south = list.get(2);
+    		west = list.get(3);
+    	}
+		public Node getNorth() {
+			return north;
+		}
+		public void setNorth(Node north) {
+			this.north = north;
+		}
+		public Node getEast() {
+			return east;
+		}
+		public void setEast(Node east) {
+			this.east = east;
+		}
+		public Node getSouth() {
+			return south;
+		}
+		public void setSouth(Node south) {
+			this.south = south;
+		}
+		public Node getWest() {
+			return west;
+		}
+		public void setWest(Node west) {
+			this.west = west;
+		}
+		public Zone.Type getType() {
+			return type;
+		}
+		public void setType(Zone.Type type) {
+			this.type = type;
+		}
+    }
 }
