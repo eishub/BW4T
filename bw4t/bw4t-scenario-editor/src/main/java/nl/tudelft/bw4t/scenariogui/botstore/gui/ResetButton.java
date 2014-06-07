@@ -26,7 +26,14 @@ class ResetButton implements ActionListener {
      * @param ae The action event causing this.
      */
     public void actionPerformed(ActionEvent ae) {
-        view.getSpeedSlider().setValue(view.getDataObject().getBotSpeed());
+    	view.updateView();
+    }   
+}
+    
+/**
+ * IF EVERYTHING WORKS, THIS CAN BE DELETED - wendy
+ *
+ *  view.getSpeedSlider().setValue(view.getDataObject().getBotSpeed());
         view.getSizeSlider().setValue(view.getDataObject().getBotSize());
         view.getBatterySlider().setValue(view.getDataObject().getBotBatteryCapacity());
         view.getSizeSlider().setEnabled(view.getDataObject().getSizeOverloadHandicap());
@@ -57,4 +64,4 @@ class ResetButton implements ActionListener {
         }
         
     }
-}
+*/
