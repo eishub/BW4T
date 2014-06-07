@@ -1,9 +1,12 @@
 package nl.tudelft.bw4t.scenariogui.botstore.gui;
 
-import javax.xml.bind.annotation.XmlElement;
-
 import nl.tudelft.bw4t.scenariogui.botstore.controller.BotStoreController;
 
+/**
+ * BotStoreViewInterface for the BotEditorPanel.
+ * @author Wendy
+ *
+ */
 public interface BotStoreViewInterface {
 	
 	/**
