@@ -35,6 +35,6 @@ class WalkingBox implements ActionListener {
             sizeSlider.setEnabled(false);
             sizeSlider.setValue(2);
         }
-        view.getDataObject().setSizeOverloadHandicap(view.getsizeoverloadCheckbox().isSelected());
+        view.getTempBotConfig().setSizeOverloadHandicap(view.getsizeoverloadCheckbox().isSelected());
     }
 }

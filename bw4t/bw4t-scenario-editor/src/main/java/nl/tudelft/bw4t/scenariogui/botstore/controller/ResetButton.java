@@ -27,13 +27,13 @@ class ResetButton implements ActionListener {
      * @param ae The action event causing this.
      */
     public void actionPerformed(ActionEvent ae) {
-        view.getSpeedSlider().setValue(view.getDataObject().getBotSpeed());
-        view.getSizeSlider().setValue(view.getDataObject().getBotSize());
-        view.getBatterySlider().setValue(view.getDataObject().getBotBatteryCapacity());
-        view.getSizeSlider().setEnabled(view.getDataObject().getSizeOverloadHandicap());
-        view.getBatterySlider().setEnabled(view.getDataObject().isBatteryEnabled());
-        view.getSpeedSlider().setEnabled(view.getDataObject().getMoveSpeedHandicap());
-        if(view.getDataObject().getGripperHandicap()){
+        view.getSpeedSlider().setValue(view.getTempBotConfig().getBotSpeed());
+        view.getSizeSlider().setValue(view.getTempBotConfig().getBotSize());
+        view.getBatterySlider().setValue(view.getTempBotConfig().getBotBatteryCapacity());
+        view.getSizeSlider().setEnabled(view.getTempBotConfig().getSizeOverloadHandicap());
+        view.getBatterySlider().setEnabled(view.getTempBotConfig().isBatteryEnabled());
+        view.getSpeedSlider().setEnabled(view.getTempBotConfig().getMoveSpeedHandicap());
+        if(view.getTempBotConfig().getGripperHandicap()){
             view.getGripperCheckbox().setSelected(true);
             view.getNumberOfGrippersSlider().setEnabled(false);
         }
@@ -41,17 +41,17 @@ class ResetButton implements ActionListener {
         	view.getGripperCheckbox().setSelected(false);
         	view.getNumberOfGrippersSlider().setEnabled(true);
         }
-        view.getColorblindCheckbox().setSelected(view.getDataObject().getColorBlindHandicap());
-        view.getsizeoverloadCheckbox().setSelected(view.getDataObject().getSizeOverloadHandicap());
-        view.getmovespeedCheckbox().setSelected(view.getDataObject().getMoveSpeedHandicap());
-        view.getBatteryEnabledCheckbox().setSelected(view.getDataObject().isBatteryEnabled());
-        view.getNumberOfGrippersSlider().setValue(view.getDataObject().getGrippers());
-        view.getFileNameField().setText(view.getDataObject().getFileName());
-        view.getBotNameField().setText(view.getDataObject().getBotName());
+        view.getColorblindCheckbox().setSelected(view.getTempBotConfig().getColorBlindHandicap());
+        view.getsizeoverloadCheckbox().setSelected(view.getTempBotConfig().getSizeOverloadHandicap());
+        view.getmovespeedCheckbox().setSelected(view.getTempBotConfig().getMoveSpeedHandicap());
+        view.getBatteryEnabledCheckbox().setSelected(view.getTempBotConfig().isBatteryEnabled());
+        view.getNumberOfGrippersSlider().setValue(view.getTempBotConfig().getGrippers());
+        view.getFileNameField().setText(view.getTempBotConfig().getFileName());
+        view.getBotNameField().setText(view.getTempBotConfig().getBotName());
         view.getBatteryUseValueLabel().setText("0");
-        view.getBotReferenceField().setText(view.getDataObject().getReferenceName());
-        view.getBotAmountTextField().setText(""+view.getDataObject().getBotAmount());  
-        if (view.getDataObject().getBotController().equals(EntityType.HUMAN)){
+        view.getBotReferenceField().setText(view.getTempBotConfig().getReferenceName());
+        view.getBotAmountTextField().setText(""+view.getTempBotConfig().getBotAmount());  
+        if (view.getTempBotConfig().getBotController().equals(EntityType.HUMAN)){
         	view.getBotControllerSelector().setSelectedIndex(1);
         } else {
         	view.getBotControllerSelector().setSelectedIndex(0);
