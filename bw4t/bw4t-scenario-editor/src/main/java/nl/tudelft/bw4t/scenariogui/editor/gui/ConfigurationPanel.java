@@ -412,30 +412,12 @@ public class ConfigurationPanel extends JPanel {
      * @return whether changes have been made.
      */
     public final boolean isDefault() {
-        boolean isDefault = true;
-
-        if (!this.getClientIP().equals(DefaultConfigurationValues.DEFAULT_CLIENT_IP.getValue())) {
-            isDefault = false;
-        }
-        else if (this.getClientPort() != DefaultConfigurationValues.DEFAULT_CLIENT_PORT.getIntValue()) {
-            isDefault = false;
-        }
-        else if (!this.getServerIP().equals(DefaultConfigurationValues.DEFAULT_SERVER_IP.getValue())) {
-            isDefault = false;
-        }
-        else if (this.getServerPort() != DefaultConfigurationValues.DEFAULT_SERVER_PORT.getIntValue()) {
-            isDefault = false;
-        }
-        else if (this.useGui() != DefaultConfigurationValues.USE_GUI.getBooleanValue()) {
-            isDefault = false;
-        }
-        else if (!this.getMapFile().equals(DefaultConfigurationValues.MAP_FILE.getValue())) {
-            isDefault = false;
-        }
-
-        // TODO: check if the bot list is empty (since that is default too)
-
-        return isDefault;
+        return this.getClientIP().equals(DefaultConfigurationValues.DEFAULT_CLIENT_IP.getValue())
+                && this.getClientPort() == DefaultConfigurationValues.DEFAULT_CLIENT_PORT.getIntValue()
+                && this.getServerIP().equals(DefaultConfigurationValues.DEFAULT_SERVER_IP.getValue())
+                && this.getServerPort() == DefaultConfigurationValues.DEFAULT_SERVER_PORT.getIntValue()
+                && this.useGui() == DefaultConfigurationValues.USE_GUI.getBooleanValue()
+                && this.getMapFile().equals(DefaultConfigurationValues.MAP_FILE.getValue());
     }
 
     /**
