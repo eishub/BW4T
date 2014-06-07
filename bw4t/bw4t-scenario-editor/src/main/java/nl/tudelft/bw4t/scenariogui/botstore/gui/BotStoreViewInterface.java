@@ -99,4 +99,6 @@ public interface BotStoreViewInterface {
 	 * @return The goal file name.
 	 */
 	String getFileName();
+
+	void dispose();
 }
