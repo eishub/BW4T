@@ -4,9 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 import nl.tudelft.bw4t.scenariogui.epartner.gui.EPartnerViewInterface;
 import nl.tudelft.bw4t.scenariogui.epartner.gui.EpartnerFrame;
-import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
  * EpartnerController is in charge of all events that happen on the EpartnerGUI.
