@@ -73,6 +73,7 @@ public class BotEditorPanel extends JPanel {
 	private JLabel batteryUseValueLabel = new JLabel("0");
 
 	private BotConfig tempBotConfig;
+	private BotConfig originalBotConfig;
 
 	private MainPanel mainPanel;
 
@@ -94,7 +95,8 @@ public class BotEditorPanel extends JPanel {
 
 		this.mainPanel = mainPanel;
 		this.botEditor = botEditor;
-		this.tempBotConfig = model.getBot(botEditor.getRow()).clone();
+	    this.originalBotConfig = model.getBot(botEditor.getRow());
+		this.tempBotConfig = originalBotConfig.clone();
 
 		createBotInfoPanel();
 		createBotCheckablesPanel();
@@ -511,6 +513,15 @@ public class BotEditorPanel extends JPanel {
 	public BotConfig getTempBotConfig() {
 		return tempBotConfig;
 	}
+	
+	/**
+	 * Gets the bot config as it was before it was modified using
+	 * the bot editor panel.
+	 * @return The original bot config.
+	 */
+	public BotConfig getOriginalBotConfig() {
+        return originalBotConfig;
+    }
 
 	/**
 	 * Returns the slider determining the amount of grippers the bot can use.
@@ -595,4 +606,54 @@ public class BotEditorPanel extends JPanel {
 	public BW4TClientConfig getModel() {
 	    return model;
 	}
+	
+	/**
+	 * Updates the whole panel with the contents of the configuration.
+	 * @param config The configuratiom.
+	 */
+	public void updateToConfig(BotConfig config) {
+	    updateBotSpecsToConfig(config);
+        updateBotDefToConfig(config);
+	}
+
+	/**
+	 * Updates the part of the panel about the bot definition with
+	 * the contents of the configuration.
+	 * @param config The configuration.
+	 */
+    private void updateBotDefToConfig(BotConfig config) {
+        getFileNameField().setText(config.getFileName());
+        getBotNameField().setText(config.getBotName());
+        getBotReferenceField().setText(config.getReferenceName());
+        getBotAmountTextField().setText(""+config.getBotAmount());  
+        if (config.getBotController().equals(EntityType.HUMAN)){
+            getBotControllerSelector().setSelectedIndex(1);
+        } else {
+            getBotControllerSelector().setSelectedIndex(0);
+        }
+    }
+
+    /**
+     * Updates the part of the panel about the bot specs with
+     * the contents of the configuration.
+     * @param config The configuration.
+     */
+    private void updateBotSpecsToConfig(BotConfig config) {
+        getSpeedSlider().setValue(config.getBotSpeed());
+        getSizeSlider().setValue(config.getBotSize());
+        getBatterySlider().setValue(config.getBotBatteryCapacity());
+        getNumberOfGrippersSlider().setValue(config.getGrippers());
+        
+        getSizeSlider().setEnabled(config.getSizeOverloadHandicap());
+        getBatterySlider().setEnabled(config.isBatteryEnabled());
+        getSpeedSlider().setEnabled(config.getMoveSpeedHandicap());
+        getGripperCheckbox().setSelected(config.getGripperHandicap());
+        getNumberOfGrippersSlider().setEnabled(!config.getGripperHandicap());
+        getColorblindCheckbox().setSelected(config.getColorBlindHandicap());
+        getsizeoverloadCheckbox().setSelected(config.getSizeOverloadHandicap());
+        getmovespeedCheckbox().setSelected(config.getMoveSpeedHandicap());
+        getBatteryEnabledCheckbox().setSelected(config.isBatteryEnabled());
+        getBatteryUseValueLabel().setText("0");
+    }
+	
 }
