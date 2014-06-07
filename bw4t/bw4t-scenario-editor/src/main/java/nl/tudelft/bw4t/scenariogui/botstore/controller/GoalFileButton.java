@@ -39,7 +39,7 @@ public class GoalFileButton implements ActionListener {
 		if (jfc.showOpenDialog(view) == jfc.APPROVE_OPTION) {
 			File f = jfc.getSelectedFile();
 			String path = f.getAbsolutePath();
-			view.getFileNameField().setText(path);
+			view.getFileName().setText(path);
 		}
 	}
 

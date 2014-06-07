@@ -61,7 +61,6 @@ class ResetButton implements ActionListener {
         	view.getBotControllerSelector().setSelectedIndex(1);
         } else {
         	view.getBotControllerSelector().setSelectedIndex(0);
-        }
-        
+        }  
     }
 */

@@ -31,6 +31,6 @@ class BatterySlider extends MouseAdapter {
      * @param arg0 The action event caused by releasing the mouse.
      */
     public void mouseReleased(MouseEvent arg0) {
-    	view.getDataObject().setBotBatteryCapacity(view.getBatterySlider().getValue());
+    	view.getDataObject().setBotBatteryCapacity(view.getBotBatteryCapacity());
     }
 }
