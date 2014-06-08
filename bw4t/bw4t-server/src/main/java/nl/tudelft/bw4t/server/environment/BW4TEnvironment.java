@@ -77,7 +77,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
     /**
      * start time of the first action.
      */
-    private static Long starttime = null;
+    private static long starttime = 0;
 
     private BW4TServer server;
     private boolean mapFullyLoaded;
@@ -333,7 +333,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
         Long time = System.currentTimeMillis();
         LOGGER.log(BotLog.BOTLOG, String.format("action %s %s", entity, action.toProlog()));
 
-        if (starttime == null) {
+        if (starttime == 0) {
             starttime = time;
         }
 
