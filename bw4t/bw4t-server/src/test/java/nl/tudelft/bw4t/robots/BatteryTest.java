@@ -55,8 +55,8 @@ public class BatteryTest {
     @Test
     public void robotBatteryTest() {
         AbstractRobot r = new NavigatingRobot("", space, context, true, 0);
-        assertTrue(r.getBatteryPercentage() == 100);
-        assertTrue(r.getDischargeRate() == 0);
+        assertTrue(r.getBattery().getPercentage() == 100);
+        assertTrue(r.getBattery().getDischargeRate() == 0);
     }
     /**
      * A bot with infinite battery should not discharge.

@@ -9,7 +9,7 @@
 		</layout>
 		<filter class="org.apache.log4j.varia.LevelRangeFilter">
 			<param name="levelMin" value="DEBUG" />
-
+			<param name="levelMax" value="FATAL" />
 		</filter>
 	</appender>
 	

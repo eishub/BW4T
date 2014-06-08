@@ -251,17 +251,6 @@ public interface IRobot {
 	void setBattery(Battery battery);
 	
 	/**
-     * @return This method returns the battery percentage.
-     */
-	int getBatteryPercentage();
-	
-	/**
-     * 
-     * @return discharge rate of battery.
-     */
-	double getDischargeRate();
-	
-	/**
      * The robot is in a charging zone. The robot charges.
      */
 	void recharge();
