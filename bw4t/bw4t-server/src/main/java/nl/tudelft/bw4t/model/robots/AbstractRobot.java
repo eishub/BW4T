@@ -202,7 +202,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     public boolean canPickUp(BoundedMoveableObject obj) {
         if(obj instanceof Block) {
             Block b = (Block) obj;
-            LOGGER.info("gripcap" + grippercap);
             return (distanceTo(obj.getLocation()) <= ARM_DISTANCE) && b.isFree() && (holding.size() < grippercap);
         }
         return false;
@@ -213,7 +212,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         holding.add(b);
         b.setHeldBy(this);
         b.removeFromContext();
-        LOGGER.info("blocks held: " + holding.size());
     }
 
     @Override
@@ -409,12 +407,10 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		                 */
 		                this.battery.discharge();
 		                LOGGER.info("The current battery level is: " + this.battery.getCurrentCapacity());
-		                LOGGER.info("the robot is human: " + this.isHuman());
 		                
 		                if (topMostHandicap.isHuman() && topMostHandicap.isHoldingEPartner()) {
 		                	NdPoint location = topMostHandicap.getLocation();
 		                	topMostHandicap.getEPartner().moveTo(location.getX() + 1, location.getY() + 1);
-		                	LOGGER.info("e-Partner on the move");
 		                }
 		            } catch (SpatialException e) {
 		                collided = true;

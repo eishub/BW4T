@@ -38,10 +38,10 @@
             <x>5.0</x>
             <y>5.0</y>
         </boundingbox>
-        <name>LeftHallA</name>
+        <name>ChargingZoneA</name>
         <neighbours>FrontRoomA1</neighbours>
         <neighbours>LeftHallB</neighbours>
-        <type>CORRIDOR</type>
+        <type>CHARGINGZONE</type>
     </zones>
     <zones>
         <boundingbox>
@@ -50,10 +50,10 @@
             <x>45.0</x>
             <y>5.0</y>
         </boundingbox>
-        <name>RightHallA</name>
+        <name>BlockadeA</name>
         <neighbours>FrontRoomA3</neighbours>
         <neighbours>RightHallB</neighbours>
-        <type>CORRIDOR</type>
+        <type>BLOCKADE</type>
     </zones>
     <zones>
         <boundingbox>
