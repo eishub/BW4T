@@ -93,29 +93,18 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
      */
     @Override
     public void registerClient(BW4TClientActions client, int agentCount, int humanCount) throws RemoteException {
-        // translating old function to new system
-        List<BotConfig> bots = new ArrayList<BotConfig>();
-        if (agentCount > 0) {
-            BotConfig bot = new BotConfig();
-            bot.setBotAmount(agentCount);
-            bot.setBotController(EntityType.AGENT);
-            bots.add(bot);
-        }
-        if (humanCount > 0) {
-            BotConfig bot = new BotConfig();
-            bot.setBotAmount(humanCount);
-            bot.setBotController(EntityType.HUMAN);
-            bots.add(bot);
-        }
-        registerClient(client, bots, null);
+        registerClient(client, new ClientInfo(agentCount, humanCount));
     }
 
     @Override
     public void registerClient(BW4TClientActions client, List<BotConfig> bots, List<EPartnerConfig> partners)
             throws RemoteException {
+        registerClient(client, new ClientInfo(bots, partners));
+    }
+    
+    private void registerClient(BW4TClientActions client, ClientInfo cInfo) throws RemoteException{
         BW4TEnvironment env = Launcher.getEnvironment();
         LOGGER.info("Registering client: " + client);
-        ClientInfo cInfo = new ClientInfo(bots, partners);
         clients.put(client, cInfo);
 
         // send the client our map
@@ -127,6 +116,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 
         // for every request and attach them
         env.spawnEPartners(cInfo.getRequestedEPartners(), client);
+        
     }
 
     @Override

@@ -32,7 +32,7 @@ public final class BotConfig implements Serializable, Cloneable {
 
 	private int botBatteryCapacity = 10;
 
-	private double botBatteryDischargeRate = 0.1;
+	private double botBatteryDischargeRate = 0;
 
 	private int numberOfGrippers = 1;
 
@@ -332,6 +332,24 @@ public final class BotConfig implements Serializable, Cloneable {
         } catch (CloneNotSupportedException e) {
             return null;
         }
+	}
+
+	/**
+	 * @return the default configuration of a Human
+	 */
+	public static BotConfig createDefaultHumans() {
+        BotConfig bot = new BotConfig();
+        bot.setBotController(EntityType.HUMAN);
+        return bot;
+	}
+	
+	/**
+	 * @return the default configuration of a robot
+	 */
+	public static BotConfig createDefaultRobot() {
+        BotConfig bot = new BotConfig();
+        bot.setBotController(EntityType.AGENT);
+        return bot;
 	}
 
 }

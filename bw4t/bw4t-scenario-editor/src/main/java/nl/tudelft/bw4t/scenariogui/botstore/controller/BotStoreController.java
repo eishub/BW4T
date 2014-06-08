@@ -62,6 +62,12 @@ public class BotStoreController {
     }
     
     /**
+    public double getDischargeRate() {
+		return 0.0002 * botSize + 0.0004 * botSpeed;
+    }
+    */
+    
+    /**
      * Return the BotEditor-object passed in the constructor.
      * @return the object passed in the constructor.
      */
