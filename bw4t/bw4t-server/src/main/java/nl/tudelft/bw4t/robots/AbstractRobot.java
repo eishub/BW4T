@@ -15,6 +15,7 @@ import nl.tudelft.bw4t.handicap.IRobot;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.util.ZoneLocator;
+import nl.tudelft.bw4t.zone.ChargingZone;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.DropZone;
 import nl.tudelft.bw4t.zone.Room;
@@ -98,6 +99,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
      */
     private boolean oneBotPerZone;
     
+    /** Returns the top most handicap a robot has. */
     private IRobot topMostHandicap = this;
 
     /**
@@ -377,6 +379,10 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     @Override
     @ScheduledMethod(start = 0, duration = 0, interval = 1)
     public synchronized void move() {
+        // When the robot is in a charging zone, the battery recharges.
+        if (getZone() instanceof ChargingZone) {
+            getBattery().recharge();
+        }
     	if (battery.getCurrentCapacity() > 0) {
 		    if (targetLocation != null) {
 		        // Calculate the distance that the robot is allowed to move.

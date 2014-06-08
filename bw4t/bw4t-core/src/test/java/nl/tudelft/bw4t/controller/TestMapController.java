@@ -10,6 +10,8 @@ import java.util.Set;
 import javax.swing.JFrame;
 import javax.xml.bind.JAXBException;
 
+import org.apache.log4j.BasicConfigurator;
+
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
@@ -75,6 +77,7 @@ public class TestMapController extends AbstractMapController {
     }
     
     public static void main(String[] args) throws JAXBException {
+    	BasicConfigurator.configure();
     	NewMap map = NewMap.create(TestMapController.class.getResourceAsStream("/Rainbow"));
     	JFrame jan = new JFrame("Pédé");
     	jan.add(new MapRenderer(new TestMapController(map)));

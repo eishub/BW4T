@@ -24,7 +24,11 @@ public class Zone implements Serializable {
         /** Room. Only 1 bot allowed */
         ROOM,
         /** Corridor. Adjustable 1 bot or multiple bots allowed */
-        CORRIDOR
+        CORRIDOR,
+        /** Charging zone. Where robots charge */
+        CHARGINGZONE,
+        /** Blockade. Obstacle in the path of robots */
+        BLOCKADE
     }
 
     /**
