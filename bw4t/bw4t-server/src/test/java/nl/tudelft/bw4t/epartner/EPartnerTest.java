@@ -1,11 +1,11 @@
 package nl.tudelft.bw4t.epartner;
 
 import static org.junit.Assert.*;
-import nl.tudelft.bw4t.blocks.EPartner;
-import nl.tudelft.bw4t.handicap.IRobot;
-import nl.tudelft.bw4t.handicap.Human;
-import nl.tudelft.bw4t.robots.NavigatingRobot;
-import nl.tudelft.bw4t.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.blocks.EPartner;
+import nl.tudelft.bw4t.model.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.robots.NavigatingRobot;
+import nl.tudelft.bw4t.model.robots.handicap.Human;
+import nl.tudelft.bw4t.model.robots.handicap.IRobot;
 
 import org.junit.Before;
 import org.junit.Test;

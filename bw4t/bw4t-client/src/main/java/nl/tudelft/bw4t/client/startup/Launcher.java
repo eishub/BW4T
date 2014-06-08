@@ -53,7 +53,9 @@ public final class Launcher {
         /**
          * Set up the logging environment to log on the console.
          */
-        BasicConfigurator.configure();
+        if (!LOGGER.getAllAppenders().hasMoreElements()) {
+            BasicConfigurator.configure();
+        }
         LOGGER.info("Starting up BW4T Client.");
         LOGGER.info("Reading initialization parameters...");
         /**
@@ -64,8 +66,6 @@ public final class Launcher {
         for (InitParam param : InitParam.values()) {
             init.put(param.nameLower(), new Identifier(findArgument(args, param)));
         }
-        
-        MessageTranslator.init();
 
         startupEnvironment(init);
     }
