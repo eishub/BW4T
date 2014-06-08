@@ -3,7 +3,7 @@ package nl.tudelft.bw4t.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.tudelft.bw4t.zone.Zone;
+import nl.tudelft.bw4t.model.zone.Zone;
 
 import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
