@@ -185,5 +185,4 @@ public class RoomMenus {
         menuItem = new JMenuItem("Close menu");
         gui.getjPopupMenu().add(menuItem);
     }
-
 }

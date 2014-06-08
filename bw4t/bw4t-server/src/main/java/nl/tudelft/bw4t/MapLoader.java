@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t;
 
+import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,6 +23,7 @@ import nl.tudelft.bw4t.model.blocks.Block;
 import nl.tudelft.bw4t.model.doors.Door;
 import nl.tudelft.bw4t.model.robots.AbstractRobot;
 import nl.tudelft.bw4t.model.robots.NavigatingRobot;
+import nl.tudelft.bw4t.model.zone.Blockade;
 import nl.tudelft.bw4t.model.zone.BlocksRoom;
 import nl.tudelft.bw4t.model.zone.ChargingZone;
 import nl.tudelft.bw4t.model.zone.Corridor;
@@ -30,7 +32,9 @@ import nl.tudelft.bw4t.model.zone.Room;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.server.logging.BotLog;
+
 import org.apache.log4j.Logger;
+
 import repast.simphony.context.Context;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactory;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
@@ -124,6 +128,11 @@ public final class MapLoader {
                 createDoor(context, space, door, room);
             }
             zones.put(roomzone.getName(), room);
+        }
+        
+        for (Zone blockzone : map.getZones(Zone.Type.BLOCKADE)) {
+            Blockade blockade = createBlockade(context, space, blockzone);
+            zones.put(blockzone.getName(), blockade);
         }
         
         for (Zone chargingzone : map.getZones(Zone.Type.CHARGINGZONE)) {
@@ -326,6 +335,23 @@ public final class MapLoader {
      */
     private static ChargingZone createChargingZone(Context<Object> context, ContinuousSpace<Object> space, Zone chargezone) {
         return new ChargingZone(chargezone, space, context);
+    }
+
+    /**
+     * Creates a blockade to block the robots' path.
+     * 
+     * @param c
+     *            The color.
+     * @param context
+     *            The context in which the room should be placed.
+     * @param space
+     *            the space in which the room should be placed.
+     * @param chargezone
+     *            the room {@link Zone}.
+     * @return
+     */
+    private static Blockade createBlockade(Context<Object> context, ContinuousSpace<Object> space, Zone chargezone) {
+        return new Blockade(chargezone, space, context);
     }
 
     /**
