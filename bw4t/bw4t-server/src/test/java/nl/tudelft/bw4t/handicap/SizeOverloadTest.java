@@ -1,10 +1,12 @@
 package nl.tudelft.bw4t.handicap;
 
-import nl.tudelft.bw4t.doors.Door;
-import nl.tudelft.bw4t.robots.AbstractRobot;
-import nl.tudelft.bw4t.robots.MoveType;
-import nl.tudelft.bw4t.zone.Corridor;
-import nl.tudelft.bw4t.zone.Zone;
+import nl.tudelft.bw4t.model.doors.Door;
+import nl.tudelft.bw4t.model.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.robots.MoveType;
+import nl.tudelft.bw4t.model.robots.handicap.IRobot;
+import nl.tudelft.bw4t.model.robots.handicap.SizeOverloadHandicap;
+import nl.tudelft.bw4t.model.zone.Corridor;
+import nl.tudelft.bw4t.model.zone.Zone;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +15,6 @@ import org.mockito.Mock;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
