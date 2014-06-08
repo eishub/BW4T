@@ -66,8 +66,6 @@ public final class Launcher {
         for (InitParam param : InitParam.values()) {
             init.put(param.nameLower(), new Identifier(findArgument(args, param)));
         }
-        
-        MessageTranslator.init();
 
         startupEnvironment(init);
     }
