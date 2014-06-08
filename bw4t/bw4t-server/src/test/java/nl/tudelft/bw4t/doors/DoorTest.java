@@ -10,9 +10,10 @@ import static org.mockito.Mockito.when;
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 
-import nl.tudelft.bw4t.robots.AbstractRobot;
-import nl.tudelft.bw4t.zone.BlocksRoom;
-import nl.tudelft.bw4t.zone.Room;
+import nl.tudelft.bw4t.model.doors.Door;
+import nl.tudelft.bw4t.model.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.zone.BlocksRoom;
+import nl.tudelft.bw4t.model.zone.Room;
 
 import org.junit.After;
 import org.junit.Before;
@@ -27,10 +28,6 @@ import repast.simphony.space.continuous.NdPoint;
 
 /**
  * The class <code>DoorTest</code> contains tests for the class <code>{@link Door}</code>.
- *
- * @generatedBy CodePro at 24.05.14 15:09
- * @author 749
- * @version $Revision: 1.0 $
  */
 @RunWith(MockitoJUnitRunner.class)
 public class DoorTest {

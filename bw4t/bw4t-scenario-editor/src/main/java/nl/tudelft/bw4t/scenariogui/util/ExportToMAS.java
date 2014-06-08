@@ -20,8 +20,6 @@ import nl.tudelft.bw4t.util.FileUtils;
 /**
  * Loads the BW4TClientConfiguration and exports it as a mas2g file, creating
  * all the necessary files.
- * 
- * @author Calvin Wong Loi Sing Created by on 2-6-2014.
  */
 public final class ExportToMAS {
 

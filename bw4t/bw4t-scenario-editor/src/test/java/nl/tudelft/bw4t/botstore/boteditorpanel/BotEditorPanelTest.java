@@ -1,28 +1,26 @@
+
 package nl.tudelft.bw4t.botstore.boteditorpanel;
-
-import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.BotConfig;
-import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditor;
-import nl.tudelft.bw4t.scenariogui.gui.botstore.BotEditorPanel;
-import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
-import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
-import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.spy;
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditor;
+import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 
 /**
  * Test the boteditorpanel
- * @author Arun
- * @author Tim
  */
 public class BotEditorPanelTest {
 
@@ -49,6 +47,7 @@ public class BotEditorPanelTest {
     /** dispose the frame after testing */
     @After
     public final void dispose() {
+        scenarioEditor.dispose();
         editor.dispose();
     }
 
@@ -189,23 +188,27 @@ public class BotEditorPanelTest {
     /** Test the reset button */
     @Test
     public final void testResetButtonClick() {
-        editor.getBotEditorPanel().getResetButton().doClick();
-        assertEquals(editor.getBotEditorPanel().getSpeedSlider().getValue(), editor.getBotEditorPanel().getDataObject().getBotSpeed());
-        assertEquals(editor.getBotEditorPanel().getSizeSlider().getValue(), editor.getBotEditorPanel().getDataObject().getBotSize());
-        assertEquals(editor.getBotEditorPanel().getBatterySlider().getValue(), editor.getBotEditorPanel().getDataObject().getBotBatteryCapacity());
-        assertEquals(editor.getBotEditorPanel().getNumberOfGrippersSlider().getValue(), editor.getBotEditorPanel().getDataObject().getGrippers());
-        assertEquals(editor.getBotEditorPanel().getSizeSlider().isEnabled(), editor.getBotEditorPanel().getDataObject().getSizeOverloadHandicap());
-        assertEquals(editor.getBotEditorPanel().getSpeedSlider().isEnabled(), editor.getBotEditorPanel().getDataObject().getMoveSpeedHandicap());
-        assertEquals(editor.getBotEditorPanel().getBatterySlider().isEnabled(), editor.getBotEditorPanel().getDataObject().isBatteryEnabled());
-        assertEquals(editor.getBotEditorPanel().getNumberOfGrippersSlider().isEnabled(), !editor.getBotEditorPanel().getDataObject().getGripperHandicap());
-        assertEquals(editor.getBotEditorPanel().getGripperCheckbox().isSelected(), editor.getBotEditorPanel().getDataObject().getGripperHandicap());
-        assertEquals(editor.getBotEditorPanel().getColorblindCheckbox().isSelected(), editor.getBotEditorPanel().getDataObject().getColorBlindHandicap());
-        assertEquals(editor.getBotEditorPanel().getsizeoverloadCheckbox().isSelected(), editor.getBotEditorPanel().getDataObject().getSizeOverloadHandicap());
-        assertEquals(editor.getBotEditorPanel().getmovespeedCheckbox().isSelected(), editor.getBotEditorPanel().getDataObject().getMoveSpeedHandicap());
-        assertEquals(editor.getBotEditorPanel().getBatteryEnabledCheckbox().isSelected(), editor.getBotEditorPanel().getDataObject().isBatteryEnabled());
-        assertEquals(editor.getBotEditorPanel().getFileNameField().getText(), editor.getBotEditorPanel().getDataObject().getFileName());
-        assertEquals(editor.getBotEditorPanel().getBotNameField().getText(), editor.getBotEditorPanel().getDataObject().getBotName());
-        assertEquals(editor.getBotEditorPanel().getBotReferenceField().getText(), editor.getBotEditorPanel().getDataObject().getReferenceName());
+        BotEditorPanel botEditorPanel = editor.getBotEditorPanel();
+        BotConfig config = botEditorPanel.getDataObject();
+        
+        botEditorPanel.getResetButton().doClick();
+        
+        assertEquals(botEditorPanel.getSpeedSlider().getValue(), config.getBotSpeed());
+        assertEquals(botEditorPanel.getSizeSlider().getValue(), config.getBotSize());
+        assertEquals(botEditorPanel.getBatterySlider().getValue(), config.getBotBatteryCapacity());
+        assertEquals(botEditorPanel.getNumberOfGrippersSlider().getValue(), config.getGrippers());
+        assertEquals(botEditorPanel.getSizeSlider().isEnabled(), config.getSizeOverloadHandicap());
+        assertEquals(botEditorPanel.getSpeedSlider().isEnabled(), config.getMoveSpeedHandicap());
+        assertEquals(botEditorPanel.getBatterySlider().isEnabled(), config.isBatteryEnabled());
+        assertEquals(botEditorPanel.getNumberOfGrippersSlider().isEnabled(), !config.getGripperHandicap());
+        assertEquals(botEditorPanel.getGripperCheckbox().isSelected(), config.getGripperHandicap());
+        assertEquals(botEditorPanel.getColorblindCheckbox().isSelected(), config.getColorBlindHandicap());
+        assertEquals(botEditorPanel.getsizeoverloadCheckbox().isSelected(), config.getSizeOverloadHandicap());
+        assertEquals(botEditorPanel.getmovespeedCheckbox().isSelected(), config.getMoveSpeedHandicap());
+        assertEquals(botEditorPanel.getBatteryEnabledCheckbox().isSelected(), config.isBatteryEnabled());
+        assertEquals(botEditorPanel.getFileNameField().getText(), config.getFileName());
+        assertEquals(botEditorPanel.getBotNameField().getText(), config.getBotName());
+        assertEquals(botEditorPanel.getBotReferenceField().getText(), config.getReferenceName());
     }
 
 

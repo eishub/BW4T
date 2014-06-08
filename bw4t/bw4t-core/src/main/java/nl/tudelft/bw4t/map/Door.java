@@ -7,14 +7,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * A door that can be placed in a {@link Zone} in a {@link NewMap}
- * 
- * @author W.Pasman
  */
 @XmlRootElement
 public class Door implements Serializable {
   public enum Orientation {
       HORIZONTAL, VERTICAL
-  };
+  }
 
     /** width of doors. */
     public static final int DOOR_WIDTH = 4;

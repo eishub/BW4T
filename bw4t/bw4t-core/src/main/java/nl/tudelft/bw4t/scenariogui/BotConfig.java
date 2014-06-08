@@ -9,8 +9,6 @@ import nl.tudelft.bw4t.agent.EntityType;
 /**
  * This class stores all the date from the BotEditorUI.
  * 
- * @author Valentine Mairet
- * @author Katia Asmoredjo
  * @version 0.1
  * @since 12-05-2014
  */
@@ -18,10 +16,8 @@ import nl.tudelft.bw4t.agent.EntityType;
 public final class BotConfig implements Serializable {
 	private static final long serialVersionUID = -4261058226493472776L;
 
-	/** The default reference names for the goal files */
     public static final String DEFAULT_GOAL_FILENAME_REFERENCE = "robot";
 
-    /** The Default filename for the robot goal files */
     public static final String DEFAULT_GOAL_FILENAME = "robot.goal";
 
 	private String name = "Bot";
@@ -36,7 +32,7 @@ public final class BotConfig implements Serializable {
 
 	private int botBatteryCapacity = 10;
 
-	private double botBatteryDischargeRate = 0.1;
+	private double botBatteryDischargeRate = 0;
 
 	private int numberOfGrippers = 1;
 
@@ -327,6 +323,24 @@ public final class BotConfig implements Serializable {
 	@XmlElement
 	public void setFileName(String _fileName) {
 		this.fileName = _fileName;
+	}
+	
+	/**
+	 * @return the default configuration of a Human
+	 */
+	public static BotConfig createDefaultHumans() {
+        BotConfig bot = new BotConfig();
+        bot.setBotController(EntityType.HUMAN);
+        return bot;
+	}
+	
+	/**
+	 * @return the default configuration of a robot
+	 */
+	public static BotConfig createDefaultRobot() {
+        BotConfig bot = new BotConfig();
+        bot.setBotController(EntityType.AGENT);
+        return bot;
 	}
 
 }

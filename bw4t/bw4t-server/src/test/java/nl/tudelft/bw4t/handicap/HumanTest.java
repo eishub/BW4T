@@ -1,12 +1,15 @@
 package nl.tudelft.bw4t.handicap;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
-import nl.tudelft.bw4t.blocks.EPartner;
-import nl.tudelft.bw4t.robots.NavigatingRobot;
+import nl.tudelft.bw4t.model.blocks.EPartner;
+import nl.tudelft.bw4t.model.robots.NavigatingRobot;
+import nl.tudelft.bw4t.model.robots.handicap.Human;
+import nl.tudelft.bw4t.model.robots.handicap.IRobot;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
@@ -19,11 +22,8 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 
 /**
- * @author Valentine Mairet
- * @author Tim
  * This test tests the Human bot. It currently tests whether a 
  * human bot can pick up and drop an epartner.
- *
 */
 public class HumanTest {
 	
@@ -123,8 +123,10 @@ public class HumanTest {
     @Test
     public void canPickUpEPartnerTest() {
         Human h = new Human(outBot);
-        when(ePartner.getLocation()).thenReturn(new NdPoint(10, 10));
-        assertFalse(h.canPickUp(ePartner));
+        when(ePartner.getLocation()).thenReturn(new NdPoint(4));
+        when(h.getSuperParent().getLocation()).thenReturn(new NdPoint(1));
+        assertNotSame(h.getLocation(), ePartner.getLocation());
+        assertFalse(h.getParent().canPickUp(ePartner));
     }
     
     /**

@@ -4,6 +4,10 @@ import javax.swing.JFrame;
 
 import nl.tudelft.bw4t.controller.MapRenderSettings;
 
+/**
+ * TODO: Configuration screen for the map renderer.
+ *
+ */
 public class MapRenderSettingsConfiguration extends JFrame {
 
     private final MapRenderSettings renderSettings;
@@ -11,11 +15,7 @@ public class MapRenderSettingsConfiguration extends JFrame {
     public MapRenderSettingsConfiguration(MapRenderSettings settings){
         this.renderSettings = settings;
     }
-
-    private void init() {
-
-    }
-
+    
     public static void main(String[] args) {
         MapRenderSettingsConfiguration screen = new MapRenderSettingsConfiguration(new MapRenderSettings());
         screen.setVisible(true);

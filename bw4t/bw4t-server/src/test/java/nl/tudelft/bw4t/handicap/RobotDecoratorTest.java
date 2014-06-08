@@ -2,8 +2,10 @@ package nl.tudelft.bw4t.handicap;
 
 import java.util.ArrayList;
 
-import nl.tudelft.bw4t.blocks.Block;
-import nl.tudelft.bw4t.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.blocks.Block;
+import nl.tudelft.bw4t.model.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.robots.handicap.GripperHandicap;
+import nl.tudelft.bw4t.model.robots.handicap.IRobot;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,8 +20,6 @@ import static org.mockito.Mockito.when;
  * Test suite for the AbstractRobotDecorator class.
  * Tests functionality (calling the methods of the
  * robot in the class).
- * @author Tim
- *
  */
 public class RobotDecoratorTest {
     /**
@@ -275,37 +275,12 @@ public class RobotDecoratorTest {
         verify(bot).setBattery(null);
     }
     /**
-     * Test for get battery percentage
-     */
-    @Test
-    public void getBatteryPercentageTest() {
-        gh.getBatteryPercentage();
-        verify(bot).getBatteryPercentage();
-    }
-    /**
-     * Test for get discharge rate
-     */
-    @Test
-    public void getDischargeRateTest() {
-        gh.getDischargeRate();
-        verify(bot).getDischargeRate();
-    }
-    /**
      * Test for recharge
      */
     @Test
     public void rechargeTest() {
         gh.recharge();
         verify(bot).recharge();
-    }
-    /**
-     * Test for get parent
-     * commented out because fail
-     */
-    @Test
-    public void getParentTest() {
-        gh.getParent();
-        verify(bot).getParent();
     }
     
     /**

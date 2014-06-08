@@ -23,11 +23,8 @@ import eis.iilang.EnvironmentState;
 /**
  * Class that can be registered to BW4TRemoteEnvironment as EnvironmentListener and will launch new agents when new
  * entities are available
- * <p>
  * This is needed when the BW4TRemoteEnvironment is runned stand-alone. Do not start this when running GOAL, as GOAL
  * already is an environment runner and will associate agents to entities if entities appear.
- * 
- * @author trens
  */
 public class BW4TEnvironmentListener implements EnvironmentListener {
 
@@ -134,8 +131,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
             agentCount++;
 
             agentData.put(agent, renderer);
-        }
-        else {
+        } else {
             String agentClassName = InitParam.AGENTCLASS.getValue();
             Class<? extends BW4TAgent> c = Class.forName(agentClassName).asSubclass(BW4TAgent.class);
             Class[] types = new Class[] { String.class, RemoteEnvironment.class };

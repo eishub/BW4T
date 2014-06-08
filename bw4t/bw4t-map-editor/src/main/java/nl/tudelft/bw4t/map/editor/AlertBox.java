@@ -4,9 +4,6 @@ import javax.swing.JOptionPane;
 
 /**
  * Simple box to show warnings to user.
- * 
- * @author W.Pasman
- * 
  */
 public class AlertBox {
 
