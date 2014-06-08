@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.visualizations;
+package nl.tudelft.bw4t.server.view;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -26,7 +26,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import nl.tudelft.bw4t.BW4TBuilder;
-import nl.tudelft.bw4t.controller.ServerMapController;
+import nl.tudelft.bw4t.server.controller.ServerMapController;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.server.environment.Stepper;

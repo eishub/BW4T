@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.robots;
+package nl.tudelft.bw4t.model.robots;
 
 import eis.exceptions.EntityException;
 
@@ -8,17 +8,17 @@ import java.util.HashSet;
 import java.util.List;
 
 import nl.tudelft.bw4t.BoundedMoveableObject;
-import nl.tudelft.bw4t.blocks.Block;
-import nl.tudelft.bw4t.blocks.EPartner;
-import nl.tudelft.bw4t.doors.Door;
-import nl.tudelft.bw4t.handicap.IRobot;
 import nl.tudelft.bw4t.map.view.ViewEntity;
+import nl.tudelft.bw4t.model.blocks.Block;
+import nl.tudelft.bw4t.model.blocks.EPartner;
+import nl.tudelft.bw4t.model.doors.Door;
+import nl.tudelft.bw4t.model.robots.handicap.IRobot;
+import nl.tudelft.bw4t.model.zone.Corridor;
+import nl.tudelft.bw4t.model.zone.DropZone;
+import nl.tudelft.bw4t.model.zone.Room;
+import nl.tudelft.bw4t.model.zone.Zone;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.util.ZoneLocator;
-import nl.tudelft.bw4t.zone.Corridor;
-import nl.tudelft.bw4t.zone.DropZone;
-import nl.tudelft.bw4t.zone.Room;
-import nl.tudelft.bw4t.zone.Zone;
 
 import org.apache.log4j.Logger;
 

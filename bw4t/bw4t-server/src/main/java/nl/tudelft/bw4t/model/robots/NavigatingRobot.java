@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.robots;
+package nl.tudelft.bw4t.model.robots;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import nl.tudelft.bw4t.BoundedMoveableObject;
+import nl.tudelft.bw4t.model.zone.Zone;
 import nl.tudelft.bw4t.util.PathPlanner;
 import nl.tudelft.bw4t.util.ZoneLocator;
-import nl.tudelft.bw4t.zone.Zone;
 
 import org.apache.log4j.Logger;
 

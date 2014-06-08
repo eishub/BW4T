@@ -1,13 +1,13 @@
-package nl.tudelft.bw4t.zone;
+package nl.tudelft.bw4t.model.zone;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.map.BlockColor;
-import nl.tudelft.bw4t.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.blocks.Block;
+import nl.tudelft.bw4t.model.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.logging.BW4TFileAppender;
 import nl.tudelft.bw4t.server.logging.BotLog;
 

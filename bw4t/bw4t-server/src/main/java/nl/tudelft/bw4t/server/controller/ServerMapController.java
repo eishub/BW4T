@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.controller;
+package nl.tudelft.bw4t.server.controller;
 
 import eis.iilang.EnvironmentState;
 
@@ -8,19 +8,21 @@ import java.util.List;
 import java.util.Set;
 
 import nl.tudelft.bw4t.MapLoader;
-import nl.tudelft.bw4t.blocks.EPartner;
-import nl.tudelft.bw4t.handicap.IRobot;
+import nl.tudelft.bw4t.controller.AbstractMapController;
+import nl.tudelft.bw4t.controller.MapController;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
-import nl.tudelft.bw4t.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.blocks.EPartner;
+import nl.tudelft.bw4t.model.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.robots.handicap.IRobot;
+import nl.tudelft.bw4t.model.zone.DropZone;
+import nl.tudelft.bw4t.model.zone.Room;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.view.MapRendererInterface;
-import nl.tudelft.bw4t.zone.DropZone;
-import nl.tudelft.bw4t.zone.Room;
 import repast.simphony.context.Context;
 import repast.simphony.space.Dimensions;
 import repast.simphony.space.continuous.ContinuousSpace;
@@ -92,8 +94,8 @@ public class ServerMapController extends AbstractMapController {
     @Override
     public Set<ViewBlock> getVisibleBlocks() {
         Set<ViewBlock> blocks = new HashSet<>();
-        for (Object block : serverContext.getObjects(nl.tudelft.bw4t.blocks.Block.class)) {
-            blocks.add(((nl.tudelft.bw4t.blocks.Block) block).getView());
+        for (Object block : serverContext.getObjects(nl.tudelft.bw4t.model.blocks.Block.class)) {
+            blocks.add(((nl.tudelft.bw4t.model.blocks.Block) block).getView());
         }
         return blocks;
     }

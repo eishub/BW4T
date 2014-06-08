@@ -1,17 +1,17 @@
-package nl.tudelft.bw4t.robots;
+package nl.tudelft.bw4t.model.robots;
 
 import org.apache.log4j.Logger;
 
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import nl.tudelft.bw4t.agent.EntityType;
-import nl.tudelft.bw4t.blocks.EPartner;
-import nl.tudelft.bw4t.handicap.ColorBlindHandicap;
-import nl.tudelft.bw4t.handicap.GripperHandicap;
-import nl.tudelft.bw4t.handicap.IRobot;
-import nl.tudelft.bw4t.handicap.Human;
-import nl.tudelft.bw4t.handicap.SizeOverloadHandicap;
 import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.model.blocks.EPartner;
+import nl.tudelft.bw4t.model.robots.handicap.ColorBlindHandicap;
+import nl.tudelft.bw4t.model.robots.handicap.GripperHandicap;
+import nl.tudelft.bw4t.model.robots.handicap.Human;
+import nl.tudelft.bw4t.model.robots.handicap.IRobot;
+import nl.tudelft.bw4t.model.robots.handicap.SizeOverloadHandicap;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.server.environment.Launcher;

@@ -29,21 +29,21 @@ import java.util.Map;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.BW4TBuilder;
-import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.client.BW4TClientActions;
 import nl.tudelft.bw4t.eis.EPartnerEntity;
 import nl.tudelft.bw4t.eis.RobotEntity;
-import nl.tudelft.bw4t.handicap.IRobot;
 import nl.tudelft.bw4t.map.Entity;
 import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.robots.EntityFactory;
+import nl.tudelft.bw4t.model.blocks.EPartner;
+import nl.tudelft.bw4t.model.robots.EntityFactory;
+import nl.tudelft.bw4t.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.server.BW4TServer;
 import nl.tudelft.bw4t.server.RobotEntityInt;
 import nl.tudelft.bw4t.server.logging.BW4TFileAppender;
 import nl.tudelft.bw4t.server.logging.BotLog;
-import nl.tudelft.bw4t.visualizations.ServerContextDisplay;
+import nl.tudelft.bw4t.server.view.ServerContextDisplay;
 
 import org.apache.log4j.Logger;
 

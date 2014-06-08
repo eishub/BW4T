@@ -1,11 +1,11 @@
-package nl.tudelft.bw4t.blocks;
+package nl.tudelft.bw4t.model.blocks;
 
 import java.awt.Color;
 import java.awt.geom.Point2D;
 
 import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.map.BlockColor;
-import nl.tudelft.bw4t.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.robots.AbstractRobot;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;

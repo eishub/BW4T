@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.robots;
+package nl.tudelft.bw4t.model.robots;
 
 public enum MoveType {
     /**

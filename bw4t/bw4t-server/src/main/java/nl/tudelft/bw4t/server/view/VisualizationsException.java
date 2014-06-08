@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.visualizations;
+package nl.tudelft.bw4t.server.view;
 
 public class VisualizationsException extends Exception {
 
