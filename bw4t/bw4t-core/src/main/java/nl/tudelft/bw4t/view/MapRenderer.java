@@ -77,6 +77,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
         Graphics2D g2d = (Graphics2D) g;
         drawRooms(g2d);
         drawChargingZones(g2d);
+        drawBlockades(g2d);
         drawLabels(g2d);
         drawDropZone(g2d);
         drawBlocks(g2d);
@@ -120,20 +121,14 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
         MapRenderSettings set = getController().getRenderSettings();
 
         for (Zone room : getController().getRooms()) {
-    		LOGGER.info("Found room, type is:" + room.getType());
-        	if (room.getType() == Type.ROOM) {
-		        boolean occupied = getController().isOccupied(room);
-		
-		        for (Door door : room.getDoors()) {
-		            drawDoor(g2d, door, occupied);
-		        }
-		        
-		        // paint the room
-		        g2d.setColor(Color.GRAY);  
-        	} else if (room.getType() == Type.BLOCKADE) {
-        		g2d.setColor(new Color(0.6f, 0f, 0f, 0.5f));
-        	}
-        	
+	        boolean occupied = getController().isOccupied(room);
+	
+	        for (Door door : room.getDoors()) {
+	            drawDoor(g2d, door, occupied);
+	        }
+	        
+	        // paint the room
+	        g2d.setColor(Color.GRAY);  
         	Shape roomDisplayCoordinates = set.transformRectangle(room.getBoundingbox().getRectangle());
         	g2d.fill(roomDisplayCoordinates);
             g2d.setColor(Color.BLACK);
@@ -150,6 +145,19 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
             g2d.setColor(new Color(0f, 0.5f, 0f, 0.6f));
             Shape roomDisplayCoordinates = set.transformRectangle(chargingzone.getBoundingbox().getRectangle());
             g2d.fill(roomDisplayCoordinates);
+        }
+    }
+    
+    public void drawBlockades(Graphics2D g2d) {
+        MapRenderSettings set = getController().getRenderSettings();
+
+        for (Zone blockade : getController().getBlockades()) {
+            // paint the charging zone in transparent green
+            g2d.setColor(new Color(0.6f, 0f, 0f, 0.6f));
+            Shape roomDisplayCoordinates = set.transformRectangle(blockade.getBoundingbox().getRectangle());
+            g2d.fill(roomDisplayCoordinates);
+            g2d.setColor(Color.BLACK);
+            g2d.draw(roomDisplayCoordinates);
         }
     }
 

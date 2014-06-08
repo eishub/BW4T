@@ -53,6 +53,13 @@ public interface MapController extends Runnable {
      * @return the set of zones
      */
     public Set<Zone> getChargingZones();
+    
+    /**
+     * Get all the {@link Zone} that are blockades, that block the way of robots. 
+     * 
+     * @return the set of blockades
+     */
+    public Set<Zone> getBlockades();
 
     /**
      * Get all the {@link Zone}s.

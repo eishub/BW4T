@@ -16,8 +16,6 @@ import nl.tudelft.bw4t.view.MapRendererInterface;
  * or server-specific code.
  */
 public abstract class AbstractMapController implements MapController, Runnable {
-	
-	private static final Logger LOGGER = Logger.getLogger(AbstractMapController.class);
     /**
      * The map to be rendered.
      */
@@ -153,8 +151,7 @@ public abstract class AbstractMapController implements MapController, Runnable {
         Set<Zone> rooms = new HashSet<Zone>();
 
         for (Zone zone : map.getZones()) {
-            if (zone.getType() == Type.ROOM || zone.getType() == Type.BLOCKADE) {
-            	LOGGER.info("room found");
+            if (zone.getType() == Type.ROOM) {
                 rooms.add(zone);
             }
         }
@@ -166,15 +163,26 @@ public abstract class AbstractMapController implements MapController, Runnable {
     public Set<Zone> getChargingZones() {
     	Set<Zone> chargingzones = new HashSet<Zone>();
     	
-    	LOGGER.info("looking for charging zone...");
     	for (Zone zone : map.getZones()) {
     		if (zone.getType() == Type.CHARGINGZONE) {
-    			LOGGER.info("charging zone found");
     			chargingzones.add(zone);
     		}
     	}
     	
     	return chargingzones;
+    }
+    
+    @Override
+    public Set<Zone> getBlockades() {
+        Set<Zone> blockades = new HashSet<Zone>();
+
+        for (Zone zone : map.getZones()) {
+            if (zone.getType() == Type.BLOCKADE) {
+                blockades.add(zone);
+            }
+        }
+
+        return blockades;   	
     }
 
     @Override
