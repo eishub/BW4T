@@ -14,15 +14,11 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 public class EpartnerController {
 
-	/**
-	 * Create a set with all views.
-	 */
 	private Set<EPartnerViewInterface> views = new HashSet<>();
 	
-	/**
-	 * Create an EPartnerConfig.
-	 */
 	private EPartnerConfig epConfig;
+	
+	private MainPanel parent;
 
 
 	/**
@@ -32,6 +28,7 @@ public class EpartnerController {
 	 */
 	public EpartnerController(MainPanel panel, int row) {
 		epConfig = panel.getClientConfig().getEpartner(row);
+		this.parent = panel;
 	}
 	
 	/**
@@ -119,5 +116,9 @@ public class EpartnerController {
 		for (EPartnerViewInterface evi: views) {
 			evi.updateView();
 		}
+	}
+
+	public MainPanel getParent() {
+		return parent;
 	}
 }

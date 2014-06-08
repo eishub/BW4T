@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 
 import nl.tudelft.bw4t.agent.EntityType;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
@@ -133,8 +134,8 @@ class SaveButton implements ActionListener {
 	 * Updates the bot list in the scenario editor.
 	 */
 	private void updateBotTable() {
-		view.getBotEditor().getParent().getEntityPanel().getBotTableModel()
-				.setRowCount(0);
+		DefaultTableModel botTable = view.getBotEditor().getParent().getEntityPanel().getBotTableModel();
+		botTable.setRowCount(0);
 		int rows = view.getModel().getBots().size();
 
 		for (int i = 0; i < rows; i++) {
@@ -142,8 +143,7 @@ class SaveButton implements ActionListener {
 			Object[] newBotObject = {botConfig.getBotName(),
 					botConfig.getBotController().toString(),
 					botConfig.getBotAmount()};
-			view.getBotEditor().getParent().getEntityPanel().getBotTableModel()
-					.addRow(newBotObject);
+			botTable.addRow(newBotObject);
 		}
 	}
 }
