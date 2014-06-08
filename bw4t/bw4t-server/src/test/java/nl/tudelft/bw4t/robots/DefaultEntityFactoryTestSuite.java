@@ -1,17 +1,17 @@
 package nl.tudelft.bw4t.robots;
 
-import nl.tudelft.bw4t.handicap.ColorBlindHandicap;
-import nl.tudelft.bw4t.handicap.IRobot;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
+import nl.tudelft.bw4t.model.robots.DefaultEntityFactory;
+import nl.tudelft.bw4t.model.robots.handicap.ColorBlindHandicap;
+import nl.tudelft.bw4t.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
 
 /**
  * Test the default entity factory.

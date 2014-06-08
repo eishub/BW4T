@@ -1,23 +1,17 @@
 package nl.tudelft.bw4t.robots;
 
 import java.util.ArrayList;
-
 import nl.tudelft.bw4t.agent.EntityType;
-import nl.tudelft.bw4t.handicap.IRobot;
+import nl.tudelft.bw4t.model.robots.DefaultEntityFactory;
+import nl.tudelft.bw4t.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 /**

@@ -12,26 +12,25 @@ import java.util.Random;
 
 import javax.xml.bind.JAXBException;
 
-import org.apache.log4j.Logger;
-
-import nl.tudelft.bw4t.blocks.Block;
-import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.eis.RobotEntity;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Door.Orientation;
 import nl.tudelft.bw4t.map.Entity;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.robots.NavigatingRobot;
-import nl.tudelft.bw4t.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.blocks.Block;
+import nl.tudelft.bw4t.model.doors.Door;
+import nl.tudelft.bw4t.model.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.robots.NavigatingRobot;
+import nl.tudelft.bw4t.model.zone.BlocksRoom;
+import nl.tudelft.bw4t.model.zone.ChargingZone;
+import nl.tudelft.bw4t.model.zone.Corridor;
+import nl.tudelft.bw4t.model.zone.DropZone;
+import nl.tudelft.bw4t.model.zone.Room;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.server.logging.BotLog;
-import nl.tudelft.bw4t.zone.BlocksRoom;
-import nl.tudelft.bw4t.zone.ChargingZone;
-import nl.tudelft.bw4t.zone.Corridor;
-import nl.tudelft.bw4t.zone.DropZone;
-import nl.tudelft.bw4t.zone.Room;
+import org.apache.log4j.Logger;
 import repast.simphony.context.Context;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactory;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
@@ -80,7 +79,7 @@ public final class MapLoader {
          * Temp list of all zones, because we can not yet use BW4TEnvironment.getInstance().getContext() ... (returns
          * null)
          */
-        Map<String, nl.tudelft.bw4t.zone.Zone> zones = new HashMap<String, nl.tudelft.bw4t.zone.Zone>();
+        Map<String, nl.tudelft.bw4t.model.zone.Zone> zones = new HashMap<String, nl.tudelft.bw4t.model.zone.Zone>();
 
         /**
          * List of planned blocks for a room. We copy the map params and add the extra blocks to this map.
@@ -174,11 +173,11 @@ public final class MapLoader {
      *            the map of all zones in repast. We can't yet access the BW4T context, therefore we need to pass this
      *            explicitly..
      */
-    private static void connectAllZones(Map<String, nl.tudelft.bw4t.zone.Zone> zones) {
+    private static void connectAllZones(Map<String, nl.tudelft.bw4t.model.zone.Zone> zones) {
         for (Zone zone : map.getZones()) {
-            nl.tudelft.bw4t.zone.Zone z = zones.get(zone.getName());
+            nl.tudelft.bw4t.model.zone.Zone z = zones.get(zone.getName());
             for (Zone mapneigh : zone.getNeighbours()) {
-                nl.tudelft.bw4t.zone.Zone neigh = zones.get(mapneigh.getName());
+                nl.tudelft.bw4t.model.zone.Zone neigh = zones.get(mapneigh.getName());
                 z.addNeighbour(neigh);
             }
         }

@@ -2,8 +2,10 @@ package nl.tudelft.bw4t.handicap;
 
 import java.util.ArrayList;
 
-import nl.tudelft.bw4t.blocks.Block;
-import nl.tudelft.bw4t.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.blocks.Block;
+import nl.tudelft.bw4t.model.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.robots.handicap.GripperHandicap;
+import nl.tudelft.bw4t.model.robots.handicap.IRobot;
 
 import org.junit.Before;
 import org.junit.Test;
