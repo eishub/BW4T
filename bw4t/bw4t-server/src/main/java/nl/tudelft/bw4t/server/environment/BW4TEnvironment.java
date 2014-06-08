@@ -45,7 +45,9 @@ import nl.tudelft.bw4t.server.logging.BW4TFileAppender;
 import nl.tudelft.bw4t.server.logging.BotLog;
 import nl.tudelft.bw4t.server.view.ServerContextDisplay;
 
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import repast.simphony.context.Context;
 import repast.simphony.scenario.ScenarioLoadException;
@@ -433,6 +435,12 @@ public class BW4TEnvironment extends AbstractEnvironment {
             server.takeDown();
             server = null;
         }
+        
+     // LOGGER.removeAllAppenders();
+     // LogManager.shutdown();
+     //  LogManager.getRootLogger().removeAllAppenders();
+     // PropertyConfigurator.configure(BW4TEnvironment.class.getResource("/log4j.xml"));
+        
         try {
             launchAll();
         } catch (ManagementException | IOException | ScenarioLoadException | JAXBException e) {
