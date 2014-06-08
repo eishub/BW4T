@@ -1,12 +1,12 @@
-package nl.tudelft.bw4t.blocks;
+package nl.tudelft.bw4t.model.blocks;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
 import nl.tudelft.bw4t.BoundedMoveableObject;
-import nl.tudelft.bw4t.handicap.IRobot;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
+import nl.tudelft.bw4t.model.robots.handicap.IRobot;
 
 import org.apache.log4j.Logger;
 

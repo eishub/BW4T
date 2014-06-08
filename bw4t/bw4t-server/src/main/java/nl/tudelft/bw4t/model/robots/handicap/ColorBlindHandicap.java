@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.handicap;
+package nl.tudelft.bw4t.model.robots.handicap;
 
 public class ColorBlindHandicap extends AbstractRobotDecorator {
     

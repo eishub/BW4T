@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.zone;
+package nl.tudelft.bw4t.model.zone;
 
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;

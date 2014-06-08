@@ -1,20 +1,20 @@
-package nl.tudelft.bw4t.handicap;
+package nl.tudelft.bw4t.model.robots.handicap;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import nl.tudelft.bw4t.BoundedMoveableObject;
-import nl.tudelft.bw4t.blocks.Block;
-import nl.tudelft.bw4t.blocks.EPartner;
-import nl.tudelft.bw4t.doors.Door;
 import nl.tudelft.bw4t.map.view.ViewEntity;
-import nl.tudelft.bw4t.robots.AbstractRobot;
-import nl.tudelft.bw4t.robots.AgentRecord;
-import nl.tudelft.bw4t.robots.Battery;
-import nl.tudelft.bw4t.robots.MoveType;
-import nl.tudelft.bw4t.robots.NavigatingRobot.State;
-import nl.tudelft.bw4t.zone.Room;
-import nl.tudelft.bw4t.zone.Zone;
+import nl.tudelft.bw4t.model.blocks.Block;
+import nl.tudelft.bw4t.model.blocks.EPartner;
+import nl.tudelft.bw4t.model.doors.Door;
+import nl.tudelft.bw4t.model.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.robots.AgentRecord;
+import nl.tudelft.bw4t.model.robots.Battery;
+import nl.tudelft.bw4t.model.robots.MoveType;
+import nl.tudelft.bw4t.model.robots.NavigatingRobot.State;
+import nl.tudelft.bw4t.model.zone.Room;
+import nl.tudelft.bw4t.model.zone.Zone;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.NdPoint;
 /**

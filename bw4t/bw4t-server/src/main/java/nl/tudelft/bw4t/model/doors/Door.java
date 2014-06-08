@@ -1,10 +1,10 @@
-package nl.tudelft.bw4t.doors;
+package nl.tudelft.bw4t.model.doors;
 
 import java.awt.Color;
 
 import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.map.Door.Orientation;
-import nl.tudelft.bw4t.zone.Room;
+import nl.tudelft.bw4t.model.zone.Room;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 

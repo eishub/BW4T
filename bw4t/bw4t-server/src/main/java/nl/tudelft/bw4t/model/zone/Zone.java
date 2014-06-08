@@ -1,10 +1,10 @@
-package nl.tudelft.bw4t.zone;
+package nl.tudelft.bw4t.model.zone;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import nl.tudelft.bw4t.BoundedMoveableObject;
-import nl.tudelft.bw4t.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.robots.AbstractRobot;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
@@ -57,7 +57,7 @@ public abstract class Zone extends BoundedMoveableObject {
      * @param neigh
      *            new neighbour for this zone.
      */
-    public void addNeighbour(nl.tudelft.bw4t.zone.Zone neigh) {
+    public void addNeighbour(nl.tudelft.bw4t.model.zone.Zone neigh) {
         neighbours.add(neigh);
     }
 

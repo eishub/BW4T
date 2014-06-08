@@ -1,7 +1,7 @@
-package nl.tudelft.bw4t.robots;
+package nl.tudelft.bw4t.model.robots;
 
-import nl.tudelft.bw4t.blocks.EPartner;
-import nl.tudelft.bw4t.handicap.IRobot;
+import nl.tudelft.bw4t.model.blocks.EPartner;
+import nl.tudelft.bw4t.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import repast.simphony.context.Context;

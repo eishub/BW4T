@@ -1,10 +1,10 @@
-package nl.tudelft.bw4t.handicap;
+package nl.tudelft.bw4t.model.robots.handicap;
 
-import nl.tudelft.bw4t.doors.Door;
-import nl.tudelft.bw4t.robots.MoveType;
-import nl.tudelft.bw4t.zone.Corridor;
-import nl.tudelft.bw4t.zone.Room;
-import nl.tudelft.bw4t.zone.Zone;
+import nl.tudelft.bw4t.model.doors.Door;
+import nl.tudelft.bw4t.model.robots.MoveType;
+import nl.tudelft.bw4t.model.zone.Corridor;
+import nl.tudelft.bw4t.model.zone.Room;
+import nl.tudelft.bw4t.model.zone.Zone;
 
 public class SizeOverloadHandicap extends AbstractRobotDecorator {
 	
