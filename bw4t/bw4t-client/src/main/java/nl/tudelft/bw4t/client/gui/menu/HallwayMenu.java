@@ -15,7 +15,7 @@ import nl.tudelft.bw4t.client.gui.listeners.PutdownActionListener;
 import nl.tudelft.bw4t.controller.MapRenderSettings;
 import nl.tudelft.bw4t.map.ColorTranslator;
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.view.Block;
+import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.message.BW4TMessage;
 import nl.tudelft.bw4t.message.MessageType;
 
@@ -28,7 +28,7 @@ public class HallwayMenu {
         ClientMapController cmc = gui.getController().getMapController();
         MapRenderSettings set = cmc.getRenderSettings();
 
-        Block holdingID = cmc.getTheBot().getFirstHolding();
+        ViewBlock holdingID = cmc.getTheBot().getFirstHolding();
         Color entityColor = cmc.getTheBot().getColor();
 
         // Robot commands
@@ -51,15 +51,15 @@ public class HallwayMenu {
 
         for (Zone roomInfo : cmc.getRooms()) {
             BasicMenuOperations.addMenuItemToPopupMenu(
-                    new BW4TMessage(MessageType.amWaitingOutsideRoom, roomInfo.getName(), null, null), gui);
+                    new BW4TMessage(MessageType.AMWAITINGOUTSIDEROOM, roomInfo.getName(), null, null), gui);
         }
 
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.amWaitingOutsideRoom, cmc.getDropZone()
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.AMWAITINGOUTSIDEROOM, cmc.getDropZone()
                 .getName(), null, null), gui);
 
         if (holdingID != null) {
             BasicMenuOperations.addMenuItemToPopupMenu(
-                    new BW4TMessage(MessageType.hasColor, null, ColorTranslator.translate2ColorString(entityColor),
+                    new BW4TMessage(MessageType.HASCOLOR, null, ColorTranslator.translate2ColorString(entityColor),
                             null), gui);
 
             JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu(
@@ -68,7 +68,7 @@ public class HallwayMenu {
 
             for (Zone roomInfo : cmc.getRooms()) {
                 menuItem = new JMenuItem(roomInfo.getName());
-                menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.hasColor,
+                menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.HASCOLOR,
                         roomInfo.getName(), ColorTranslator.translate2ColorString(entityColor), null), gui
                         .getController()));
                 submenu.add(menuItem);

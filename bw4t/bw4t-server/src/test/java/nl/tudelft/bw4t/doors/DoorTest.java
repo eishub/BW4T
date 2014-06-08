@@ -10,9 +10,10 @@ import static org.mockito.Mockito.when;
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 
-import nl.tudelft.bw4t.robots.Robot;
-import nl.tudelft.bw4t.zone.BlocksRoom;
-import nl.tudelft.bw4t.zone.Room;
+import nl.tudelft.bw4t.model.doors.Door;
+import nl.tudelft.bw4t.model.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.zone.BlocksRoom;
+import nl.tudelft.bw4t.model.zone.Room;
 
 import org.junit.After;
 import org.junit.Before;
@@ -23,13 +24,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
+import repast.simphony.space.continuous.NdPoint;
 
 /**
  * The class <code>DoorTest</code> contains tests for the class <code>{@link Door}</code>.
- *
- * @generatedBy CodePro at 24.05.14 15:09
- * @author 749
- * @version $Revision: 1.0 $
  */
 @RunWith(MockitoJUnitRunner.class)
 public class DoorTest {
@@ -37,7 +35,7 @@ public class DoorTest {
     @Mock private ContinuousSpace<Object> space;
     @Mock private Context<Object> context;
     @Mock private BlocksRoom room;
-    @Mock private Robot robot;
+    @Mock private AbstractRobot robot;
     
     /**
      * Run the Door(ContinuousSpace<Object>,Context<Object>) constructor test.
@@ -53,7 +51,7 @@ public class DoorTest {
 
         assertNotNull(result);
         assertTrue(result.isOpen());
-        assertEquals(null, result.getLocation());
+        assertEquals(new NdPoint(0, 0), result.getLocation());
         assertEquals(0L, result.getId());
     }
 

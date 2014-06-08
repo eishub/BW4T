@@ -6,10 +6,12 @@ import eis.iilang.Parameter;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.bind.JAXBException;
+
+import org.apache.log4j.Logger;
+
 /**
  * Available init parameters and default values for {@link BW4TEnvironment}.
- * 
- * @author W.Pasman 20mar13
  */
 public enum InitParam {
     /**
@@ -52,8 +54,14 @@ public enum InitParam {
     /**
      * The key we should try to use to kill the remote server.
      */
-    KILL("");
-
+    KILL(""),
+    /**
+     * The file from which the client reads the configuration.
+     */
+    CONFIGFILE("");
+    
+    private static final Logger LOGGER = Logger.getLogger(InitParam.class);
+    
     private String defaultvalue;
 
     /**
@@ -85,8 +93,6 @@ public enum InitParam {
     /**
      * Extract the value of a setting from the given Map.
      * 
-     * @param params
-     *            the map of parameters
      * @return the value of the parameter or the default value.
      */
     public String getValue() {
@@ -105,7 +111,19 @@ public enum InitParam {
      */
     public static void setParameters(Map<String, Parameter> params) {
         parameters = params;
+        
+        final String cfile = CONFIGFILE.getValue();
+        if (!cfile.isEmpty()) {
+            LOGGER.info(String.format("Reading configuration file '%s'", cfile));
+            try {
+                ConfigFile.readConfigFile(cfile);
+            } catch (JAXBException e) {
+                LOGGER.error(String.format("Unable to load configuration file: '%s'", cfile), e);
+            }
+        }
     }
+    
+    
 
     /**
      * Get all program-wide parameters.
@@ -121,8 +139,6 @@ public enum InitParam {
      * parameters. We do this by removing all parameters that we can handle as
      * client; the remaining ones must be server parameters.
      * 
-     * @param parameters
-     *            a set of parameters for both client and server
      * @return parameters for the server
      */
     public static Map<String, Parameter> getServerParameters() {

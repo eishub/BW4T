@@ -14,11 +14,7 @@ import static org.junit.Assert.assertTrue;
 
 
 /**
- * A test class for the XMLManager.
- * <p>
- * @author      Nick Feddes  
- * @version     0.1                
- * @since       12-05-2014        
+ * A test class for the XMLManager.     
  */
 public class XMLManagerTest {
 

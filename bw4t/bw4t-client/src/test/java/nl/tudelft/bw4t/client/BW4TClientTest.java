@@ -1,10 +1,8 @@
 package nl.tudelft.bw4t.client;
 
 import static org.easymock.EasyMock.expect;
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertNotNull;
-import static org.powermock.api.easymock.PowerMock.mockStatic;
-import static org.powermock.api.easymock.PowerMock.mockStaticPartial;
+import static org.junit.Assert.assertTrue;
 
 import java.net.MalformedURLException;
 import java.rmi.AccessException;
@@ -21,6 +19,8 @@ import java.util.Map;
 import java.util.Set;
 
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.server.BW4TServerActions;
 
 import org.easymock.EasyMock;
@@ -28,7 +28,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.powermock.api.easymock.PowerMock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -192,6 +191,13 @@ public class BW4TClientTest {
 			@Override
 			public void associateEntity(String agentId, String entityId) throws RelationException, RemoteException {		
 			}
+
+            @Override
+            public void registerClient(BW4TClientActions client, List<BotConfig> bots, List<EPartnerConfig> partners)
+                    throws RemoteException {
+                // TODO Auto-generated method stub
+                
+            }
 		};
 	}
 

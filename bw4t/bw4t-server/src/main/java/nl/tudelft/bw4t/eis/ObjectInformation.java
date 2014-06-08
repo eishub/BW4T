@@ -1,5 +1,8 @@
 package nl.tudelft.bw4t.eis;
 
+import repast.simphony.space.continuous.NdPoint;
+import nl.tudelft.bw4t.BoundedMoveableObject;
+
 public class ObjectInformation {
     private double X, Y;
     private long id;
@@ -8,6 +11,13 @@ public class ObjectInformation {
         this.X = X;
         this.Y = Y;
         this.id = id;
+    }
+    
+    public ObjectInformation(BoundedMoveableObject obj) {
+        final NdPoint loc = obj.getLocation();
+        this.X = loc.getX();
+        this.Y = loc.getY();
+        this.id = obj.getId();
     }
 
     public double getX() {
@@ -37,7 +47,10 @@ public class ObjectInformation {
 
     @Override
     public boolean equals(Object obj) {
-        ObjectInformation other = (ObjectInformation) obj;
+    	if (!(obj instanceof ObjectInformation)) {
+    		return false; 
+    	}
+    	ObjectInformation other = (ObjectInformation) obj;
         if (Double.doubleToLongBits(X) != Double.doubleToLongBits(other.X))
             return false;
         if (Double.doubleToLongBits(Y) != Double.doubleToLongBits(other.Y))
