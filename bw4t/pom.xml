@@ -15,9 +15,9 @@
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<sonar.projectKey>{$project.groupId}.{$project.artifactId}</sonar.projectKey>
+		<sonar.projectKey>nl.tudelft.bw4t</sonar.projectKey>
 		<sonar.projectName>BW4T</sonar.projectName>
-		<sonar.projectVersion>{$project.version}</sonar.projectVersion>
+		<sonar.projectVersion>3.3.0</sonar.projectVersion>
 		<sonar.language>java</sonar.language>
 		<sonar.sources>src/main</sonar.sources>
 		<sonar.tests>src/test</sonar.tests>
