@@ -1,7 +1,7 @@
 package nl.tudelft.bw4t.eis.translators;
 
-import nl.tudelft.bw4t.blocks.Block;
 import nl.tudelft.bw4t.eis.BlockColor;
+import nl.tudelft.bw4t.model.blocks.Block;
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Java2Parameter;
 import eis.iilang.Identifier;

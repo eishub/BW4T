@@ -21,7 +21,7 @@ public class MessageTranslator {
     
     public static Map<MessageType, TypeToStringCommand> messageToString = new HashMap<MessageType, TypeToStringCommand>();
     
-    public static void init(){
+    static{
         
         stringToMessage.put("I am going to ", new CommandRoomColor(MessageType.GOINGTOROOM));
         stringToMessage.put("I have a ", new CommandRoomColor(MessageType.HASCOLOR));
@@ -63,6 +63,8 @@ public class MessageTranslator {
         stringToMessageEquals.put("I am far away", new CommandType(MessageType.FARAWAY));
         stringToMessageEquals.put("I am delayed", new CommandType(MessageType.DELAYED));
         
+        stringToMessage.put("I want to go to", new CommandRoom(MessageType.IWANTTOGO));
+        
         
     }
     
@@ -91,7 +93,7 @@ public class MessageTranslator {
         }
         return null; 
     }
-    
+
     /**
      * Translate a message (String) to a message (BW4TMessage)
      * 
@@ -266,6 +268,8 @@ public class MessageTranslator {
     	messageToString.put(MessageType.GOINGTOROOM, new CommandGoingToRoom());
     	messageToString.put(MessageType.HASCOLOR, new CommandHasColor());
     	
+  
+    	
     	return null;
     }
 
@@ -400,6 +404,9 @@ public class MessageTranslator {
             return message.getPlayerId() + ", are you close?";
         } else if (message.getType() == MessageType.WILLYOUBELONG) {
             return message.getPlayerId() + ", will you be long?";
+            
+        } else if (message.getType() == MessageType.IWANTTOGO) {
+            return "I want to go to room " + message.getRoom();
         }
 
         return null;
