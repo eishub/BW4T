@@ -3,7 +3,7 @@ package nl.tudelft.bw4t.eis.translators;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.tudelft.bw4t.zone.Zone;
+import nl.tudelft.bw4t.model.zone.Zone;
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Java2Parameter;
 import eis.iilang.Identifier;

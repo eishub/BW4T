@@ -2,19 +2,19 @@ package nl.tudelft.bw4t.handicap;
 
 import java.util.ArrayList;
 
-import nl.tudelft.bw4t.blocks.Block;
-import nl.tudelft.bw4t.handicap.AbstractRobotDecorator;
-import nl.tudelft.bw4t.handicap.ColorBlindHandicap;
-import nl.tudelft.bw4t.handicap.GripperHandicap;
-import nl.tudelft.bw4t.handicap.IRobot;
-import nl.tudelft.bw4t.handicap.SizeOverloadHandicap;
-import nl.tudelft.bw4t.robots.NavigatingRobot;
-import nl.tudelft.bw4t.zone.DropZone;
+import nl.tudelft.bw4t.model.blocks.Block;
+import nl.tudelft.bw4t.model.robots.NavigatingRobot;
+import nl.tudelft.bw4t.model.robots.handicap.AbstractRobotDecorator;
+import nl.tudelft.bw4t.model.robots.handicap.ColorBlindHandicap;
+import nl.tudelft.bw4t.model.robots.handicap.GripperHandicap;
+import nl.tudelft.bw4t.model.robots.handicap.Human;
+import nl.tudelft.bw4t.model.robots.handicap.IRobot;
+import nl.tudelft.bw4t.model.robots.handicap.SizeOverloadHandicap;
+import nl.tudelft.bw4t.model.zone.DropZone;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
