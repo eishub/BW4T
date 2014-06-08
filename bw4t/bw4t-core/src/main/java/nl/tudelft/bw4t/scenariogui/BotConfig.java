@@ -32,7 +32,7 @@ public final class BotConfig implements Serializable {
 
 	private int botBatteryCapacity = 10;
 
-	private double botBatteryDischargeRate = 0.1;
+	private double botBatteryDischargeRate = 0;
 
 	private int numberOfGrippers = 1;
 

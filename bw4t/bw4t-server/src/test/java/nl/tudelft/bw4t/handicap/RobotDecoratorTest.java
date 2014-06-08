@@ -275,22 +275,6 @@ public class RobotDecoratorTest {
         verify(bot).setBattery(null);
     }
     /**
-     * Test for get battery percentage
-     */
-    @Test
-    public void getBatteryPercentageTest() {
-        gh.getBatteryPercentage();
-        verify(bot).getBatteryPercentage();
-    }
-    /**
-     * Test for get discharge rate
-     */
-    @Test
-    public void getDischargeRateTest() {
-        gh.getDischargeRate();
-        verify(bot).getDischargeRate();
-    }
-    /**
      * Test for recharge
      */
     @Test
