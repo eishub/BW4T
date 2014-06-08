@@ -7,8 +7,8 @@ import java.rmi.RemoteException;
 
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.robots.DefaultEntityFactory;
-import nl.tudelft.bw4t.robots.EntityFactory;
+import nl.tudelft.bw4t.model.robots.DefaultEntityFactory;
+import nl.tudelft.bw4t.model.robots.EntityFactory;
 import nl.tudelft.bw4t.server.BW4TServer;
 import nl.tudelft.bw4t.startup.LauncherException;
 import nl.tudelft.bw4t.util.FileUtils;
