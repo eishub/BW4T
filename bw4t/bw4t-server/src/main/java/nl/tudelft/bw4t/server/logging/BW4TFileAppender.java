@@ -9,7 +9,6 @@ import java.util.List;
 
 import nl.tudelft.bw4t.eis.RobotEntity;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
-import nl.tudelft.bw4t.zone.DropZone;
 
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Layout;
@@ -21,7 +20,7 @@ public class BW4TFileAppender extends FileAppender {
 	/**
      * The log4j logger, logs to the file
      */
-    private static final Logger LOGGER = Logger.getLogger(DropZone.class);
+    private static final Logger LOGGER = Logger.getLogger(BW4TFileAppender.class);
     
     public BW4TFileAppender() {
     }
