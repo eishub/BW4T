@@ -3,7 +3,7 @@ package nl.tudelft.bw4t.eis.translators;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.tudelft.bw4t.zone.Zone;
+import nl.tudelft.bw4t.model.zone.Zone;
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Java2Parameter;
 import eis.iilang.Identifier;
@@ -14,8 +14,6 @@ import eis.iilang.ParameterList;
 /**
  * Translates {@link Zone} into a list of {@link Parameter} specifying the navpoint id, name, location and a list of
  * neighbour names.
- * 
- * @author W.Pasman
  */
 public class ZoneTranslator implements Java2Parameter<Zone> {
 

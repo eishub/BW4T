@@ -1,10 +1,11 @@
 package nl.tudelft.bw4t.robots;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import nl.tudelft.bw4t.handicap.AbstractRobotDecorator;
-import nl.tudelft.bw4t.handicap.IRobot;
-import nl.tudelft.bw4t.robots.Battery;
-import nl.tudelft.bw4t.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.robots.Battery;
+import nl.tudelft.bw4t.model.robots.NavigatingRobot;
+import nl.tudelft.bw4t.model.robots.handicap.AbstractRobotDecorator;
+import nl.tudelft.bw4t.model.robots.handicap.IRobot;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,13 +15,8 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.when;
-
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
-/**
- * @author Joost Rothweiler
- *
- */
 @RunWith(MockitoJUnitRunner.class)
 public class BatteryTest {
     /**
@@ -59,8 +55,8 @@ public class BatteryTest {
     @Test
     public void robotBatteryTest() {
         AbstractRobot r = new NavigatingRobot("", space, context, true, 0);
-        assertTrue(r.getBatteryPercentage() == 100);
-        assertTrue(r.getDischargeRate() == 0);
+        assertTrue(r.getBattery().getPercentage() == 100);
+        assertTrue(r.getBattery().getDischargeRate() == 0);
     }
     /**
      * A bot with infinite battery should not discharge.

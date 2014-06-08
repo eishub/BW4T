@@ -4,16 +4,13 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.tudelft.bw4t.model.zone.Corridor;
+import nl.tudelft.bw4t.model.zone.Zone;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
-import nl.tudelft.bw4t.zone.Corridor;
-import nl.tudelft.bw4t.zone.Zone;
 import repast.simphony.space.continuous.NdPoint;
 
 /**
  * Util class to find back zones based on location, name etc
- * 
- * @author W.Pasman 4nov2013
- * 
  */
 public class ZoneLocator {
     /**

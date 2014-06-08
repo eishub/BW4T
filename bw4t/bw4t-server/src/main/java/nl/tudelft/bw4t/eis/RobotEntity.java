@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Set;
 
 import nl.tudelft.bw4t.BoundedMoveableObject;
-import nl.tudelft.bw4t.blocks.Block;
-import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.eis.translators.BlockWithColorTranslator;
 import nl.tudelft.bw4t.eis.translators.BoundedMovableObjectTranslator;
 import nl.tudelft.bw4t.eis.translators.ColorTranslator;
@@ -17,18 +15,20 @@ import nl.tudelft.bw4t.eis.translators.EPartnerTranslator;
 import nl.tudelft.bw4t.eis.translators.ObjectInformationTranslator;
 import nl.tudelft.bw4t.eis.translators.PointTranslator;
 import nl.tudelft.bw4t.eis.translators.ZoneTranslator;
-import nl.tudelft.bw4t.handicap.IRobot;
-import nl.tudelft.bw4t.robots.NavigatingRobot;
-import nl.tudelft.bw4t.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.blocks.Block;
+import nl.tudelft.bw4t.model.blocks.EPartner;
+import nl.tudelft.bw4t.model.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.robots.NavigatingRobot;
+import nl.tudelft.bw4t.model.robots.handicap.IRobot;
+import nl.tudelft.bw4t.model.zone.BlocksRoom;
+import nl.tudelft.bw4t.model.zone.Corridor;
+import nl.tudelft.bw4t.model.zone.DropZone;
+import nl.tudelft.bw4t.model.zone.Room;
+import nl.tudelft.bw4t.model.zone.Zone;
 import nl.tudelft.bw4t.server.RobotEntityInt;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.util.RoomLocator;
 import nl.tudelft.bw4t.util.ZoneLocator;
-import nl.tudelft.bw4t.zone.BlocksRoom;
-import nl.tudelft.bw4t.zone.Corridor;
-import nl.tudelft.bw4t.zone.DropZone;
-import nl.tudelft.bw4t.zone.Room;
-import nl.tudelft.bw4t.zone.Zone;
 
 import org.apache.log4j.Logger;
 import org.omg.CORBA.Environment;
@@ -50,10 +50,6 @@ import eis.iilang.Parameter;
 
 /**
  * EIS entity for a {@link AbstractRobot}.
- * 
- * @author Lennard de Rijk
- * @modified W.Pasman #2318 #2291 "lock" robot position at start of perception cycle.
- * @modified W.Pasman #2326 robots are injected into EIS only after their entity has been connected with an agent.
  */
 public class RobotEntity implements RobotEntityInt {
 
@@ -98,6 +94,10 @@ public class RobotEntity implements RobotEntityInt {
     public RobotEntity(IRobot robot) {
         this.ourRobot = robot;
         this.context = ourRobot.getContext();
+    }
+    
+    public IRobot getRobotObject() {
+        return ourRobot;
     }
 
     /**
@@ -419,6 +419,14 @@ public class RobotEntity implements RobotEntityInt {
     public String getState() {
         return ourRobot.getState().toString().toLowerCase();
     }
+    
+    /**
+     * The battery level of the robot. 
+     */
+    @AsPercept(name = "battery", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
+    public double getBatteryPercentage() {
+        return ourRobot.getBattery().getPercentage();
+    }
 
     /**
      * Instructs the robot to move to the given location.
@@ -617,7 +625,7 @@ public class RobotEntity implements RobotEntityInt {
     		ourRobot.dropEPartner();
     	}
     }
-    
+
     /**
      * Find the closest {@link BoundedMoveableObject} that can be picked up by the Robot.
      * @param type the type of {@link BoundedMoveableObject} we are looking for 

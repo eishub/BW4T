@@ -9,8 +9,9 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.context.SmallDefaultContext;
 import repast.simphony.space.continuous.DefaultContinuousSpace;
 import nl.tudelft.bw4t.map.BlockColor;
+import nl.tudelft.bw4t.model.blocks.Block;
+import nl.tudelft.bw4t.model.robots.AbstractRobot;
 import repast.simphony.space.continuous.NdPoint;
-import nl.tudelft.bw4t.robots.AbstractRobot;
 
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -21,10 +22,6 @@ import static org.junit.Assert.*;
 
 /**
  * The class <code>BlockTest</code> contains tests for the class <code>{@link Block}</code>.
- *
- * @generatedBy CodePro at 24.05.14 19:21
- * @author 749
- * @version $Revision: 1.0 $
  */
 @RunWith(MockitoJUnitRunner.class)
 public class BlockTest {

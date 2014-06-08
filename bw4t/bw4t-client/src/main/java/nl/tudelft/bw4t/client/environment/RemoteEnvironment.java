@@ -51,11 +51,6 @@ import eis.iilang.Percept;
  * </code> to run 2 HumanGUIs. Note though that these agents will not be coupled
  * to GOAL, and will not appear to GOAL as entities. So you can not communicate
  * with them from GOAL by using the GOAL send action.
- * 
- * @author trens
- * @modified W.Pasman 8feb2012 this object is an EIS environment and therefore
- *           can not be a singleton. This has considerable implications for the
- *           design.
  */
 public class RemoteEnvironment implements EnvironmentInterfaceStandard {
     /**
@@ -193,11 +188,11 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
      */
     @Override
     public void init(Map<String, Parameter> parameters) throws ManagementException {
-        if (!LOGGER.getAllAppenders().hasMoreElements()) {
-            BasicConfigurator.configure();
-        }
         InitParam.setParameters(parameters);
         connectedToGoal = Boolean.parseBoolean(InitParam.GOAL.getValue());
+        if (connectedToGoal) {
+            BasicConfigurator.configure();
+        }
         try {
             LOGGER.info("Connecting to BW4T Server.");
             client = new BW4TClient(this);

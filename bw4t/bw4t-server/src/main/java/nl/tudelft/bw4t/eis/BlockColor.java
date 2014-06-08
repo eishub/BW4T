@@ -1,11 +1,9 @@
 package nl.tudelft.bw4t.eis;
 
-import nl.tudelft.bw4t.blocks.Block;
+import nl.tudelft.bw4t.model.blocks.Block;
 
 /**
  * Wraps around a block to pass along the color percept
- * 
- * @author Lennard de Rijk
  */
 public class BlockColor {
 
@@ -38,11 +36,14 @@ public class BlockColor {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj == null 
+                || !(obj instanceof BlockColor)){
+        	return false; 
+        }
         BlockColor other = (BlockColor) obj;
         if (this == obj) {
             return true;
-        } else if (obj == null 
-                || getClass() != obj.getClass() 
+        } else if (getClass() != obj.getClass() 
                 || (block == null && other.block != null) 
                 || !block.equals(other.block)) {
             return false;

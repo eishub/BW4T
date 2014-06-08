@@ -17,13 +17,8 @@ import repast.simphony.engine.environment.RunListener;
 /**
  * This builds the BW4T environment, by calling {@link MapLoader#loadMap(String, Context)}. It also listens to runmode
  * changes in the Repast environment. Finally the created new {@link Context} is passed to the {@link BW4TEnvironment}.
- * <p>
  * BW4TBuilder is called by repast, as it is referred to as the dataLoader in the xml files. This class then loads the
  * map and starts up the renderer.
- * 
- * @author trens
- * @modified W.Pasman 13mar13 removed repast {@link RunListener} since we have our own {@link Stepper} that controls the
- *           run mode. Removed the singleton stuff.
  */
 public class BW4TBuilder implements ContextBuilder<Object> {
     /**

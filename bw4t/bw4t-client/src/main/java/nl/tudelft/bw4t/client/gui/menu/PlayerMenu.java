@@ -31,13 +31,13 @@ public class PlayerMenu {
             receiver = playerId;
         }
 
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.putDown, null, null, receiver), gui);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.PUTDOWN, null, null, receiver), gui);
 
         JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu(receiver + " go to room", gui.getjPopupMenu());
 
         for (Zone room : cmc.getRooms()) {
             JMenuItem menuItem = new JMenuItem(room.getName());
-            menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.goToRoom, room.getName(),
+            menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.GOTOROOM, room.getName(),
                     null, receiver), gui.getController()));
             submenu.add(menuItem);
         }
@@ -46,7 +46,7 @@ public class PlayerMenu {
 
         for (String color : ColorTranslator.getAllColors()) {
             JMenuItem menuItem = new JMenuItem(color);
-            menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.findColor, null,
+            menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.FINDCOLOR, null,
                     color, receiver), gui.getController()));
             submenu.add(menuItem);
         }
@@ -61,15 +61,15 @@ public class PlayerMenu {
             for (Zone room : cmc.getRooms()) {
                 JMenuItem menuItem = new JMenuItem(room.getName());
                 menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(
-                        MessageType.getColorFromRoom, room.getName(), color, receiver), gui.getController()));
+                        MessageType.GETCOLORFROMROOM, room.getName(), color, receiver), gui.getController()));
                 submenu2.add(menuItem);
             }
         }
 
         BasicMenuOperations.addSectionTitleToPopupMenu("Ask:", gui.getjPopupMenu());
         BasicMenuOperations
-        .addMenuItemToPopupMenu(new BW4TMessage(MessageType.areYouClose, null, null, receiver), gui);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.willYouBeLong, null, null, receiver),
+        .addMenuItemToPopupMenu(new BW4TMessage(MessageType.AREYOUCLOSE, null, null, receiver), gui);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.WILLYOUBELONG, null, null, receiver),
                 gui);
 
         gui.getjPopupMenu().addSeparator();
