@@ -1,6 +1,6 @@
 package nl.tudelft.bw4t.eis;
 
-import nl.tudelft.bw4t.blocks.Block;
+import nl.tudelft.bw4t.model.blocks.Block;
 
 /**
  * Wraps around a block to pass along the color percept

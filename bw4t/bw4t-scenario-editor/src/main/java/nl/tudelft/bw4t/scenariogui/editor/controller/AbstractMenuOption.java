@@ -10,10 +10,9 @@ import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.DefaultConfigurationValues;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
-import nl.tudelft.bw4t.scenariogui.panel.gui.ConfigurationPanel;
-import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 import nl.tudelft.bw4t.scenariogui.util.MapSpec;
 
@@ -92,6 +91,7 @@ public abstract class AbstractMenuOption implements ActionListener {
 	 *            Whether or not to open a file chooser.
 	 */
 	public void saveFile(final boolean saveAs) {
+
         if(!validateBotCount()) {
             return;
         }
@@ -172,24 +172,9 @@ public abstract class AbstractMenuOption implements ActionListener {
 
 	public void saveXMLFile(String path) throws JAXBException,
 			FileNotFoundException {
-		BW4TClientConfig configuration = getController().getMainView().getMainPanel().getClientConfig();
+		BW4TClientConfig configuration = getModel();
 		configuration.setFileLocation(path);
-		configuration.setUseGoal(ConfigurationPanel.DEFAULT_VALUES.USE_GOAL.getBooleanValue());
-
-		// SAVE BOTS & EPARTNERS HERE
-		int botRows = getController().getMainView().getMainPanel()
-				.getEntityPanel().getBotTableModel().getRowCount();
-
-		for (int i = 0; i < botRows; i++) {
-			configuration.addBot(getModel().getBot(i));
-		}
-
-		int epartnerRows = getController().getMainView().getMainPanel()
-				.getEntityPanel().getEPartnerTableModel().getRowCount();
-
-		for (int i = 0; i < epartnerRows; i++) {
-			configuration.addEpartner(getModel().getEpartner(i));
-		}
+		configuration.setUseGoal(DefaultConfigurationValues.USE_GOAL.getBooleanValue());
 
 		configuration.toXML();
 		view.setLastFileLocation(path);
@@ -205,8 +190,6 @@ public abstract class AbstractMenuOption implements ActionListener {
                 getModel().getAmountEPartner());
         getModel().updateEpartnerConfigs();
     }
-
-
 
 	/**
 	 * Returns the MenuBar
