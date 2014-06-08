@@ -16,8 +16,6 @@ import eis.iilang.Percept;
 
 /**
  * ActionListener that sends a message when the connected menu item is pressed.
- * 
- * @author trens
  */
 public class MessageSenderActionListener extends ClientActionListener {
     /**

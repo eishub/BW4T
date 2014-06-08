@@ -1,5 +1,5 @@
-#Blocks World for Teams - v3.2.0
-Blocks World for Teams (BW4T) is a testbed for team coordination. BW4T allows for games with human-human, agent-agent and human-agent teams of variable sizes. The goal is to jointly deliver a sequence of colored blocks in a particularorder as fast as possible. A complicating factor is that the players cannot see each other.
+#Blocks World for Teams - v3.3.0
+Blocks World for Teams (BW4T) is a testbed for team coordination. BW4T allows for games with human-human, agent-agent and human-agent teams of variable sizes. The goal is to jointly deliver a sequence of colored blocks in a particular order as fast as possible. A complicating factor is that the players cannot see each other.
 
 [[Self-explaining Agents - A Study in the BW4T Testbed for Team Coordination]](http://www.dtic.mil/dtic/tr/fulltext/u2/a550537.pdf)
 
@@ -13,6 +13,35 @@ First compile and install the `bw4t-core` to your local maven repository.
 
 Then test or install the rest of `bw4t` as follows:
  > mvn test
+ 
+### Updating the version in the pom file (making a new release)
+Change your current working directory to `${repository_root}/bw4t`
+ > cd ./bw4t/
+
+Make sure you have the newest master
+ > git checkout master
+ > git pull
+
+Make a new branch to update the version of the branch
+ > git checkout -b master_release
+ > git push --set-upstream origin master_release
+
+Use maven to update the pom files, replace `${version-number}` with the new version number
+ > mvn versions:set "-DnewVersion=${version-number}"
+
+Ensure that the system will still build with the changed pom files
+ > mvn clean install
+
+If no errors occur we can remove the backups of the old pom files
+ > mvn versions:commit
+
+Upload your changes to github and create a pull request
+ > git commit -a -m "Releasing version ${version-number}!"
+ > git push
+
+The local branch can now be deleted
+ > git checkout master
+ > git branch -D master_release
 
 #  GitHub <i class="icon-provider-github"></i>
 The **BW4T Git Repository** can be found at [GitHub](https://github.com/MartinRogalla/BW4T/).
