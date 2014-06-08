@@ -2,6 +2,7 @@ package nl.tudelft.bw4t.controller;
 
 import java.util.HashSet;
 import java.util.Set;
+import org.apache.log4j.*;
 
 import nl.tudelft.bw4t.map.MapFormatException;
 import nl.tudelft.bw4t.map.NewMap;
@@ -15,6 +16,8 @@ import nl.tudelft.bw4t.view.MapRendererInterface;
  * or server-specific code.
  */
 public abstract class AbstractMapController implements MapController, Runnable {
+	
+	private static final Logger LOGGER = Logger.getLogger(AbstractMapController.class);
     /**
      * The map to be rendered.
      */
@@ -150,12 +153,28 @@ public abstract class AbstractMapController implements MapController, Runnable {
         Set<Zone> rooms = new HashSet<Zone>();
 
         for (Zone zone : map.getZones()) {
-            if (zone.getType() == Type.ROOM) {
+            if (zone.getType() == Type.ROOM || zone.getType() == Type.BLOCKADE) {
+            	LOGGER.info("room found");
                 rooms.add(zone);
             }
         }
 
         return rooms;
+    }
+    
+    @Override
+    public Set<Zone> getChargingZones() {
+    	Set<Zone> chargingzones = new HashSet<Zone>();
+    	
+    	LOGGER.info("looking for charging zone...");
+    	for (Zone zone : map.getZones()) {
+    		if (zone.getType() == Type.CHARGINGZONE) {
+    			LOGGER.info("charging zone found");
+    			chargingzones.add(zone);
+    		}
+    	}
+    	
+    	return chargingzones;
     }
 
     @Override

@@ -28,6 +28,7 @@ import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.server.logging.BotLog;
 import nl.tudelft.bw4t.zone.BlocksRoom;
+import nl.tudelft.bw4t.zone.ChargingZone;
 import nl.tudelft.bw4t.zone.Corridor;
 import nl.tudelft.bw4t.zone.DropZone;
 import nl.tudelft.bw4t.zone.Room;
@@ -125,6 +126,11 @@ public final class MapLoader {
             }
             zones.put(roomzone.getName(), room);
         }
+        
+        for (Zone chargingzone : map.getZones(Zone.Type.CHARGINGZONE)) {
+            ChargingZone czone = createChargingZone(context, space, chargingzone);
+            zones.put(chargingzone.getName(), czone);
+        }
 
         connectAllZones(zones);
 
@@ -148,7 +154,7 @@ public final class MapLoader {
             createBlocksForRoom((Room) zones.get(room), context, space, roomblocks.get(room));
 
         }
-
+        
         /*for (Entity entityparams : map.getEntities()) {
             if (entityparams.getType() == Entity.EntityType.NORMAL) {
                 createEisEntityRobot(context, space, entityparams);
@@ -306,6 +312,21 @@ public final class MapLoader {
      */
     private static Room createRoom(Context<Object> context, ContinuousSpace<Object> space, Zone roomzone) {
         return new BlocksRoom(space, context, roomzone);
+    }
+    
+    /**
+     * Creates a charging zone where multiple robots can charge. 
+     * 
+     * @param context
+     *            The context in which the room should be placed.
+     * @param space
+     *            the space in which the room should be placed.
+     * @param chargezone
+     *            the room {@link Zone}.
+     * @return
+     */
+    private static ChargingZone createChargingZone(Context<Object> context, ContinuousSpace<Object> space, Zone chargezone) {
+        return new ChargingZone(chargezone, space, context);
     }
 
     /**

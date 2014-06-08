@@ -46,6 +46,13 @@ public interface MapController extends Runnable {
      * @return the set of zones
      */
     public Set<Zone> getRooms();
+    
+    /**
+     * Get all the {@link Zone}s that are Charging Zones, that can recharge robots.
+     * 
+     * @return the set of zones
+     */
+    public Set<Zone> getChargingZones();
 
     /**
      * Get all the {@link Zone}s.
