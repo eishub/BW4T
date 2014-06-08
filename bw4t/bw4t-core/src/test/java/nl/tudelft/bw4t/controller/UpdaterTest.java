@@ -3,6 +3,10 @@ package nl.tudelft.bw4t.controller;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
+import java.util.HashSet;
+
+import nl.tudelft.bw4t.view.MapRendererInterface;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -20,6 +24,7 @@ public class UpdaterTest {
     @Test
     public void failToStart() {
         when(mc.isRunning()).thenReturn(true);
+        when(mc.getRenderers()).thenReturn(new HashSet<MapRendererInterface>());
         Updater upd = new Updater(mc);
         
         upd.run();
