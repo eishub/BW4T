@@ -27,7 +27,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(MockitoJUnitRunner.class)
 
-public class NewHandicapTest {
+public class HandicapTest {
 	
     /**
      * space Mock
