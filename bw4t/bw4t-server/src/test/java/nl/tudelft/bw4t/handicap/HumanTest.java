@@ -6,8 +6,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
-import nl.tudelft.bw4t.blocks.EPartner;
-import nl.tudelft.bw4t.robots.NavigatingRobot;
+import nl.tudelft.bw4t.model.blocks.EPartner;
+import nl.tudelft.bw4t.model.robots.NavigatingRobot;
+import nl.tudelft.bw4t.model.robots.handicap.Human;
+import nl.tudelft.bw4t.model.robots.handicap.IRobot;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;

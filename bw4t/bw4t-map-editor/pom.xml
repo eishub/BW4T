@@ -4,22 +4,22 @@
 	<parent>
 		<groupId>nl.tudelft</groupId>
 		<artifactId>bw4t</artifactId>
-		<version>3.2.0</version>
+		<version>3.3.0</version>
 		<relativePath>..</relativePath>
 	</parent>
 	<groupId>nl.tudelft.bw4t</groupId>
 	<artifactId>bw4t-map-editor</artifactId>
 	<name>bw4t-map-editor</name>
-  <properties>
-    <checkstyle.config.location>../checkstyle.xml</checkstyle.config.location>
-  </properties>
+	<properties>
+		<checkstyle.config.location>../checkstyle.xml</checkstyle.config.location>
+	</properties>
 	<packaging>jar</packaging>
 
 	<dependencies>
 		<dependency>
 			<groupId>nl.tudelft.bw4t.core</groupId>
 			<artifactId>bw4t-core</artifactId>
-			<version>3.2.0</version>
+			<version>3.3.0</version>
 		</dependency>
 	</dependencies>
 
