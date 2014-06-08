@@ -324,5 +324,23 @@ public final class BotConfig implements Serializable {
 	public void setFileName(String _fileName) {
 		this.fileName = _fileName;
 	}
+	
+	/**
+	 * @return the default configuration of a Human
+	 */
+	public static BotConfig createDefaultHumans() {
+        BotConfig bot = new BotConfig();
+        bot.setBotController(EntityType.HUMAN);
+        return bot;
+	}
+	
+	/**
+	 * @return the default configuration of a robot
+	 */
+	public static BotConfig createDefaultRobot() {
+        BotConfig bot = new BotConfig();
+        bot.setBotController(EntityType.AGENT);
+        return bot;
+	}
 
 }
