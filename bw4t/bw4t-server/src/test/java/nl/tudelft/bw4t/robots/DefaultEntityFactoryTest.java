@@ -1,18 +1,34 @@
 package nl.tudelft.bw4t.robots;
 
 import java.util.ArrayList;
+
 import nl.tudelft.bw4t.agent.EntityType;
+import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.model.robots.DefaultEntityFactory;
+import nl.tudelft.bw4t.model.robots.handicap.Human;
 import nl.tudelft.bw4t.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.environment.Launcher;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mock;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+
+import repast.simphony.context.Context;
+import repast.simphony.space.continuous.ContinuousSpace;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+
 
 /**
  * This class tests the DefaultEntityFactory.
@@ -20,41 +36,136 @@ import static org.mockito.Mockito.when;
  * Whether e-Partners can be made with the right settings. 
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(BotConfig.class)
+@PrepareForTest({BotConfig.class, Launcher.class})
 public class DefaultEntityFactoryTest {
     
     private DefaultEntityFactory factory;
-    private ArrayList<String> choices;
+    private ArrayList<String> options;
     
     private BotConfig config = PowerMockito.mock(BotConfig.class);
+    
+    @Mock
+    private BW4TEnvironment env;
+    
+    @Mock
+    private NewMap map;
+    
+    @Mock
+    private Context<Object> context;
+    @Mock
+    private ContinuousSpace<Object> space;
 
     /**
      * Set up the test suite.
      */
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
-        factory = new DefaultEntityFactory();
-        choices = new ArrayList<String>();
+        setUpEnvironment();
+        setUpMap();
+        setUpConfig();
+        setUpFactory();
+        setUpOptions();     
     }
     
     @Test
-    public void makeColorBlindRobotTest() {
-        setHandicaps(makeNonGripper());
-        IRobot r = factory.makeRobot(config);
-        //assertEquals(r.getGripperCapacity(), 0);
+    public void gripperHandicapRobotTest() {
+        IRobot r = initializeRobot(makeNonGripper());
+        assertEquals(r.getGripperCapacity(), 0);
+        assertTrue(r.getHandicapsList().contains("Gripper"));
     }
-   
+    
+    @Test
+    public void speedRobotTest() {
+        IRobot r = initializeRobot(makeSpeed());
+        assertEquals(r.getSpeedMod(), 0.5, 1);
+    }
+    
+    @Test
+    public void sizeRobotTest() {
+        IRobot r = initializeRobot(makeSize());
+        assertEquals(r.getSize(), 3);
+        assertTrue(r.getHandicapsList().contains("SizeOverload"));
+    }
+    
+    @Test
+    public void humanRobotTest() {
+        IRobot r = initializeRobot(makeHuman());
+        assertTrue(r instanceof Human);
+        assertTrue(r.getHandicapsList().contains("Human"));
+        assertTrue(r.getEPartner() == null);
+    }
+    
+    @Test
+    public void batteryRobotTest() {
+        IRobot r = initializeRobot(makeBattery());
+        assertFalse(r.getBattery() == null);
+        assertEquals(r.getBattery().getCurrentCapacity(), 100, 1);
+        assertEquals(r.getBattery().getDischargeRate(), 0.1, 1);
+        assertEquals(r.getBattery().getPercentage(), 100, 1);
+    }
+    
+    private void setUpEnvironment() {
+        PowerMockito.mockStatic(Launcher.class);
+        when(Launcher.getEnvironment()).thenReturn(env);
+    }
+    
+    private void setUpMap() {
+        when(env.getMap()).thenReturn(map);
+        when(map.getOneBotPerCorridorZone()).thenReturn(true);
+    }
+    
+    private void setUpConfig() {
+        when(config.getBotName()).thenReturn("Bastiaan");
+        when(config.getBotSpeed()).thenReturn(50);
+        when(config.getBotSize()).thenReturn(3);
+        when(config.getBotBatteryCapacity()).thenReturn(100);
+        when(config.getBotBatteryDischargeRate()).thenReturn(0.1);
+    }
+    
+    private void setUpFactory() {
+        factory = new DefaultEntityFactory();
+        factory.setContext(context);
+        factory.setSpace(space);
+    }
+    
+    private void setUpOptions() {
+        options = new ArrayList<String>();
+    }
+    
+    private IRobot initializeRobot(ArrayList<String> options) {
+        setHandicaps(options);
+        IRobot r = factory.makeRobot(config);
+        return r;
+    }
+    
     private ArrayList<String> makeColorBlind() {
-        choices.add("colorblind");
-        
-        return choices;
+        options.add("colorblind"); 
+        return options;
     }
     
     private ArrayList<String> makeNonGripper() {
-        choices.add("gripper");
-        
-        return choices;
+        options.add("gripper");
+        return options;
+    }
+    
+    private ArrayList<String> makeSpeed() {
+        options.add("speed");
+        return options;
+    }
+    
+    private ArrayList<String> makeSize() {
+        options.add("size");
+        return options;
+    }
+    
+    private ArrayList<String> makeHuman() {
+        options.add("human");
+        return options;
+    }
+    
+    private ArrayList<String> makeBattery() {
+        options.add("battery");
+        return options;
     }
     
     private void setHandicaps(ArrayList<String> choices) {
@@ -63,7 +174,6 @@ public class DefaultEntityFactoryTest {
         }
         if (choices.contains("gripper")) {
             when(config.getGripperHandicap()).thenReturn(true);
-            debug("" + config.getGripperHandicap());
         }
         if (choices.contains("speed")) {
             when(config.getMoveSpeedHandicap()).thenReturn(true);
@@ -77,9 +187,5 @@ public class DefaultEntityFactoryTest {
         if (choices.contains("battery")) {
             when(config.isBatteryEnabled()).thenReturn(true);
         } 
-    }
-    
-    private void debug(String s) {
-        System.out.println(s);
     }
 }
