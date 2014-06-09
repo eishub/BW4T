@@ -20,7 +20,7 @@ import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.map.Rectangle;
 import nl.tudelft.bw4t.map.RenderOptions;
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.editor.MapEditor;
+import nl.tudelft.bw4t.map.editor.ExtensiveEditor;
 import nl.tudelft.bw4t.map.editor.controller.ColorSequence;
 import nl.tudelft.bw4t.map.editor.controller.Room;
 
@@ -442,7 +442,7 @@ public class Map implements TableModel {
 
         // first check if there are blocks while random is on
         if (randomize && (!allblocks.isEmpty() || !sequence.isEmpty())) {
-            MapEditor.showDialog("There are blocks on the map\nbut the map is set to random.\nWe proceed anyway.");
+            ExtensiveEditor.showDialog("There are blocks on the map\nbut the map is set to random.\nWe proceed anyway.");
         }
 
         // remove all colors from the sequence. That will throw exception if
@@ -475,7 +475,7 @@ public class Map implements TableModel {
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
-            MapEditor.showDialog(e, "Save failed: " + e.getMessage());
+            ExtensiveEditor.showDialog(e, "Save failed: " + e.getMessage());
         }
     }
 
