@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.map.editor;
+package nl.tudelft.bw4t.map.editor.gui;
 
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -8,10 +8,11 @@ import javax.swing.JPanel;
 
 import nl.tudelft.bw4t.map.BlockColor;
 
-@SuppressWarnings("serial")
-public class ColorLegenda extends JPanel {
+public class ColorLegendaPanel extends JPanel {
 
-    public ColorLegenda() {
+	private static final long serialVersionUID = -748109518409415372L;
+
+	public ColorLegendaPanel() {
         setLayout(new GridLayout(0, 2));
         setBackground(Color.CYAN);
 
