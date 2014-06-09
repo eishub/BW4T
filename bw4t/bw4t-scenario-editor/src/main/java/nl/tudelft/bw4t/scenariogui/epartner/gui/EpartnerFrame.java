@@ -84,8 +84,8 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 		getCancelButton().addActionListener(
 				new EpartnerCancelButton(this));
 
-		getApplyButton().addActionListener(
-			new EpartnerSaveButton(this));
+		getSaveButton().addActionListener(
+				new EpartnerSaveButton(this));
 
 		setResizable(false);
 		pack();
@@ -172,7 +172,7 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 	 * 
 	 * @return The apply button.
 	 */
-	public JButton getApplyButton() {
+	public JButton getSaveButton() {
 		return saveButton;
 	}
 
@@ -297,6 +297,14 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 	
 	public BW4TClientConfig getModel() {
 	    return model;
+	}
+
+	public JTextField getEpartnerNameField() {
+		return epartnerNameField;
+	}
+
+	public JTextField getEpartnerAmountField() {
+		return epartnerAmountField;
 	}
 	
 }
