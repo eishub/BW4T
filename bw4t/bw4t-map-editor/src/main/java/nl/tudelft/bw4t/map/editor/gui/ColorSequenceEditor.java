@@ -3,7 +3,7 @@ package nl.tudelft.bw4t.map.editor.gui;
 import javax.swing.JTextField;
 
 import nl.tudelft.bw4t.map.BlockColor;
-import nl.tudelft.bw4t.map.editor.MapEditor;
+import nl.tudelft.bw4t.map.editor.ExtensiveEditor;
 import nl.tudelft.bw4t.map.editor.controller.ColorSequence;
 
 /**
@@ -36,7 +36,7 @@ public class ColorSequenceEditor extends JTextField {
     public ColorSequence getColors() {
         String letters = getText();
         if (letters.length() > 10) {
-            MapEditor.showDialog("More than 10 letters, ignoring them");
+            ExtensiveEditor.showDialog("More than 10 letters, ignoring them");
             letters = letters.substring(0, 9);
         }
 
@@ -49,7 +49,7 @@ public class ColorSequenceEditor extends JTextField {
             		throw new IllegalArgumentException("unknown color letter " + letter);
             	}
             } catch (IllegalArgumentException e) {
-                MapEditor.showDialog(e, e.getMessage()); // and continue the loop.
+                ExtensiveEditor.showDialog(e, e.getMessage()); // and continue the loop.
             }
         }
         return colors;
