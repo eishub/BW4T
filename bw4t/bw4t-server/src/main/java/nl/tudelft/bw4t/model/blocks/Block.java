@@ -55,16 +55,6 @@ public class Block extends BoundedMoveableObject {
         return color;
     }
 
-    /**
-     * @return set the color of the block
-     */
-    public void setColorGrey() {
-        Color c = getColorId().getColor();
-        // The sRGB color space is defined in terms of the CIE 1931 linear luminance Y
-        int bright = (int) Math.round(0.2126 * c.getRed() + 0.7152 * c.getBlue() + 0.0722 * c.getGreen());
-        this.color = new Color(bright, bright, bright);
-    }
-
     @Override
     public NdPoint getLocation() {
         NdPoint p;
