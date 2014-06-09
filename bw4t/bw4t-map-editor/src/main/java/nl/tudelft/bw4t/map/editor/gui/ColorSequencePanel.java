@@ -8,7 +8,7 @@ import java.awt.event.FocusListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import nl.tudelft.bw4t.map.editor.model.Map;
+import nl.tudelft.bw4t.map.editor.controller.Map;
 
 public class ColorSequencePanel extends JPanel {
 

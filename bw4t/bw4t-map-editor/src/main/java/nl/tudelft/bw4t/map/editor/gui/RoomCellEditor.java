@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.map.editor.controller;
+package nl.tudelft.bw4t.map.editor.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -9,8 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
-import nl.tudelft.bw4t.map.editor.gui.ColorSequenceEditor;
-import nl.tudelft.bw4t.map.editor.model.Room;
+import nl.tudelft.bw4t.map.editor.controller.Room;
 
 /**
  * This is a cell editor for a room. It renders a table cell for the room. The

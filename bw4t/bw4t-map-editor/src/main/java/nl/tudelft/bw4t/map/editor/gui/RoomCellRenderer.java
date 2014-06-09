@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.map.editor.controller;
+package nl.tudelft.bw4t.map.editor.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -9,7 +9,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableCellRenderer;
 
-import nl.tudelft.bw4t.map.editor.model.Room;
+import nl.tudelft.bw4t.map.editor.controller.Room;
 
 /**
  * This is a renderer for a room.

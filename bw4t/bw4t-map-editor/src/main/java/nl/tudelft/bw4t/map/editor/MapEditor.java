@@ -11,15 +11,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
-import nl.tudelft.bw4t.map.editor.controller.RoomCellEditor;
-import nl.tudelft.bw4t.map.editor.controller.RoomCellRenderer;
+import nl.tudelft.bw4t.map.editor.controller.Map;
+import nl.tudelft.bw4t.map.editor.controller.Room;
 import nl.tudelft.bw4t.map.editor.gui.ColorLegendaPanel;
 import nl.tudelft.bw4t.map.editor.gui.ColorSequencePanel;
 import nl.tudelft.bw4t.map.editor.gui.ExplanationPanel;
-import nl.tudelft.bw4t.map.editor.gui.SizeDialog;
 import nl.tudelft.bw4t.map.editor.gui.MenuBar;
-import nl.tudelft.bw4t.map.editor.model.Map;
-import nl.tudelft.bw4t.map.editor.model.Room;
+import nl.tudelft.bw4t.map.editor.gui.RoomCellEditor;
+import nl.tudelft.bw4t.map.editor.gui.RoomCellRenderer;
+import nl.tudelft.bw4t.map.editor.gui.SizeDialog;
 import nl.tudelft.bw4t.map.editor.util.DefaultOptionPrompt;
 import nl.tudelft.bw4t.map.editor.util.OptionPrompt;
 
@@ -65,7 +65,7 @@ public class MapEditor extends JFrame {
         setLayout(new BorderLayout());
         
         // Attach the menu bar.
-        menuBar = new MenuBar();
+        menuBar = new MenuBar(themap);
         setJMenuBar(menuBar);
         
         // TODO: Change to DO_NOTHING_ON_CLOSE when we want to ask the user whether he is sure to exit.

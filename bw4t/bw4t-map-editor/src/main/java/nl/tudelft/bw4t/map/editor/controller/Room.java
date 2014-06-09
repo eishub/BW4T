@@ -1,4 +1,5 @@
-package nl.tudelft.bw4t.map.editor.model;
+package nl.tudelft.bw4t.map.editor.controller;
+
 
 
 /**
