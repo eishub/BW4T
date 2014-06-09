@@ -21,7 +21,6 @@ import nl.tudelft.bw4t.map.Rectangle;
 import nl.tudelft.bw4t.map.RenderOptions;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.editor.MapEditor;
-import nl.tudelft.bw4t.map.editor.controller.ColorSequence;
 
 /**
  * This holds the map that the user designed. This is an abstract map contianing

@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.map.editor.controller;
+package nl.tudelft.bw4t.map.editor.model;
 
 import java.util.ArrayList;
 import java.util.List;
