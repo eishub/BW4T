@@ -41,9 +41,13 @@ public class ColorSequenceEditor extends JTextField {
         }
 
         ColorSequence colors = new ColorSequence();
-        for (Character letter : letters.toCharArray()) {
+        for (Character letter : letters.toUpperCase().toCharArray()) {
             try {
-                colors.add(BlockColor.toAvailableColor(letter));
+            	if (letter != 'D') {
+            		colors.add(BlockColor.toAvailableColor(letter));
+            	} else {
+            		throw new IllegalArgumentException("unknown color letter " + letter);
+            	}
             } catch (IllegalArgumentException e) {
                 MapEditor.showDialog(e, e.getMessage()); // and continue the loop.
             }

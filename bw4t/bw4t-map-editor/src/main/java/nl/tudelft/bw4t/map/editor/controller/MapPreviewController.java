@@ -10,7 +10,6 @@ import java.util.Set;
 import nl.tudelft.bw4t.controller.AbstractMapController;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Entity;
-import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;

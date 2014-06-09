@@ -20,9 +20,11 @@ public class ColorLegendaPanel extends JPanel {
         add(new JLabel("Color"));
         // the table is two wide, we put two values each round.
         for (BlockColor blockcol : BlockColor.values()) {
-            String colorname = blockcol.toString();
-            add(new JLabel(colorname.substring(0, 1)));
-            add(new JLabel(blockcol.getName()));
+        	if (blockcol != BlockColor.DARK_GRAY) {
+	            String colorname = blockcol.toString();
+	            add(new JLabel(colorname.substring(0, 1)));
+	            add(new JLabel(blockcol.getName()));
+        	}
         }
     }
 }

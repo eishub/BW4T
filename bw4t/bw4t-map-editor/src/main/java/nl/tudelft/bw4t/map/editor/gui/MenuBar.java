@@ -9,13 +9,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import nl.tudelft.bw4t.controller.TestMapController;
-import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.editor.controller.Map;
 import nl.tudelft.bw4t.map.editor.controller.MapPreviewController;
 import nl.tudelft.bw4t.view.MapRenderer;
-
-import org.apache.log4j.BasicConfigurator;
 
 /**
  * The MenuBar class extends JMenuBar. Used in the Map Editor Frame.
