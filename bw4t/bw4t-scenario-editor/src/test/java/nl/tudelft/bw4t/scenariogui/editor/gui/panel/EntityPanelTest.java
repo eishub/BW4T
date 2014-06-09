@@ -145,7 +145,7 @@ public class EntityPanelTest {
      * when edited in entitypanel.
      */
     @Test
-    public void testChangeFileName() {
+    public void testChangeFileNameBot() {
         spyEntityPanel.getNewBotButton().doClick();
         String testFileName = "testRobot.goal";
         spyEntityPanel.getBotTableModel().setValueAt(testFileName, 0, 2);
@@ -290,7 +290,46 @@ public class EntityPanelTest {
         assertEquals(editor.getController().getModel().getAmountEPartner(), 1);
     }
 
+    /**
+     * Test whether a epartners name is succesfully changed 
+     * when edited in entitypanel.
+     */
+    @Test
+    public void testChangeEPartnerName() {
+        spyEntityPanel.getNewEPartnerButton().doClick();
+        String testEPartnerName = "testEPartnerName";
+        spyEntityPanel.getEPartnerTableModel().setValueAt(testEPartnerName, 0, 0);
+        
+        assertTrue(editor.getController().getModel().getEpartner(0).getEpartnerName().equals(testEPartnerName));
+    }
 
+    /**
+     * Test whether a bot's agent filename is succesfully changed 
+     * when edited in entitypanel.
+     */
+    @Test
+    public void testChangeFileNameEPartner() {
+        spyEntityPanel.getNewEPartnerButton().doClick();
+        String testFileName = "testEpartner.goal";
+        spyEntityPanel.getEPartnerTableModel().setValueAt(testFileName, 0, 1);
+        assertFalse(editor.getController().getModel().getEpartner(0).getFileName().equals("testRobot2.goal"));
+        assertTrue(editor.getController().getModel().getEpartner(0).getFileName().equals(testFileName));
+    }
+    
+    /**
+     * Test whether a the number of bots is succesfully changed 
+     * when edited in entitypanel.
+     */
+    @Test
+    public void testChangeEpartnerNumber() {
+        spyEntityPanel.getNewEPartnerButton().doClick();
+        int testNumber = 5;
+        spyEntityPanel.getEPartnerTableModel().setValueAt(testNumber, 0, 2);
+        assertFalse(editor.getController().getModel().getEpartner(0).getEpartnerAmount() == 4);
+        assertTrue(editor.getController().getModel().getEpartner(0).getEpartnerAmount() == testNumber);
+    }
+        
+    
     /**
      * Test if an E-partner is successfully modified when the
      * modify E-partner button is clicked.
