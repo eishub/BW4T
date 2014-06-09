@@ -19,7 +19,7 @@ public class RoomCellEditor extends AbstractCellEditor implements TableCellEdito
 
 	private static final long serialVersionUID = -6620921724261764896L;
 	private Room room; // the room currently edited.
-    private ColorSequenceEditor colorEditor; // and the editor that we have
+    private ColorSequenceEditorCell colorEditor; // and the editor that we have
 
     @Override
     /**
@@ -46,7 +46,7 @@ public class RoomCellEditor extends AbstractCellEditor implements TableCellEdito
         room = (Room) arg1;
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(new JLabel(room.toString()), BorderLayout.NORTH);
-        colorEditor = new ColorSequenceEditor(room.getColors());
+        colorEditor = new ColorSequenceEditorCell(room.getColors());
         panel.add(colorEditor, BorderLayout.CENTER);
         return panel;
     }

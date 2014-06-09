@@ -10,20 +10,20 @@ import javax.swing.JPanel;
 
 import nl.tudelft.bw4t.map.editor.controller.Map;
 
-public class ColorSequencePanel extends JPanel {
+public class ColorSequencePanelCell extends JPanel {
 
 	private static final long serialVersionUID = 7898118456497448363L;
 	
-    private ColorSequenceEditor seqEdit;
+    private ColorSequenceEditorCell seqEdit;
     
 	private Map map;
 	
-	public ColorSequencePanel(Map theMap) {
+	public ColorSequencePanelCell(Map theMap) {
 		this.map = theMap;
 		setLayout(new BorderLayout());
 
         add(new JLabel("Target sequence: "), BorderLayout.WEST);
-        seqEdit = new ColorSequenceEditor(map.getSequence());
+        seqEdit = new ColorSequenceEditorCell(map.getSequence());
         add(seqEdit, BorderLayout.CENTER);
         // the only way to enforce small sequence panel??
         setMaximumSize(new Dimension(400, 20));

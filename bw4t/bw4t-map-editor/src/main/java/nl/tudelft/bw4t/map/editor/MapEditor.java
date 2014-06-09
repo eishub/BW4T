@@ -14,7 +14,7 @@ import javax.swing.JTable;
 import nl.tudelft.bw4t.map.editor.controller.Map;
 import nl.tudelft.bw4t.map.editor.controller.Room;
 import nl.tudelft.bw4t.map.editor.gui.ColorLegendaPanel;
-import nl.tudelft.bw4t.map.editor.gui.ColorSequencePanel;
+import nl.tudelft.bw4t.map.editor.gui.ColorSequencePanelCell;
 import nl.tudelft.bw4t.map.editor.gui.ExplanationPanel;
 import nl.tudelft.bw4t.map.editor.gui.MenuBar;
 import nl.tudelft.bw4t.map.editor.gui.RoomCellEditor;
@@ -44,7 +44,7 @@ public class MapEditor extends JFrame {
 	
 	private JPanel roomsPanel;
 	
-	private ColorSequencePanel sequencePanel;
+	private ColorSequencePanelCell sequencePanel;
 	
 	private MenuBar menuBar;
 
@@ -78,7 +78,7 @@ public class MapEditor extends JFrame {
         legendaPanel = new ColorLegendaPanel();
         
         // Create the colorSequencePanel to be added to the roomsPanel.
-        sequencePanel = new ColorSequencePanel(map);   
+        sequencePanel = new ColorSequencePanelCell(map);   
         
         // Both the mapTable and sequencePanel are added to a rooms panel.
         // TODO: Create a roomsTable class that creates both MapTable and SequencePanel. Problems: map Data model in mapTable and boxLayout in roomsPanel.
