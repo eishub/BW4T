@@ -108,10 +108,10 @@ public class EntityPanelTest {
      */
     @Test
     public final void testEPartnerCountListener() {
-        Object[] data = {"d1", "1"};
+        ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
         
         spyEntityPanel.getNewEPartnerButton().doClick();
-        spyEntityPanel.getEPartnerTableModel().setValueAt("12", 0, 1);
+        spyEntityPanel.getEPartnerTableModel().setValueAt("12", 0, 2);
 
         assertEquals(12, editor.getController().getModel().getAmountEPartner());
     }
