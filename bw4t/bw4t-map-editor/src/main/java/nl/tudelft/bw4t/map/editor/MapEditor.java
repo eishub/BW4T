@@ -12,16 +12,16 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 
 import nl.tudelft.bw4t.map.editor.controller.RoomCellEditor;
+import nl.tudelft.bw4t.map.editor.controller.RoomCellRenderer;
 import nl.tudelft.bw4t.map.editor.gui.ColorLegendaPanel;
 import nl.tudelft.bw4t.map.editor.gui.ColorSequencePanel;
 import nl.tudelft.bw4t.map.editor.gui.ExplanationPanel;
-import nl.tudelft.bw4t.map.editor.gui.RoomCellRenderer;
 import nl.tudelft.bw4t.map.editor.gui.SizeDialog;
+import nl.tudelft.bw4t.map.editor.gui.MenuBar;
 import nl.tudelft.bw4t.map.editor.model.Map;
 import nl.tudelft.bw4t.map.editor.model.Room;
 import nl.tudelft.bw4t.map.editor.util.DefaultOptionPrompt;
 import nl.tudelft.bw4t.map.editor.util.OptionPrompt;
-import nl.tudelft.bw4t.map.editor.gui.MenuBar;
 
 /**
  * The MapEditor class serves as a frame for the Panels and tables.
@@ -111,6 +111,7 @@ public class MapEditor extends JFrame {
         });
 
         pack();
+        setLocationRelativeTo(null);
         setVisible(true);
     }
     
