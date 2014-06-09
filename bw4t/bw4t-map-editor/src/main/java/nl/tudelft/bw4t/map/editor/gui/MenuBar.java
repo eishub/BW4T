@@ -1,10 +1,21 @@
 package nl.tudelft.bw4t.map.editor.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
+import nl.tudelft.bw4t.controller.TestMapController;
+import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.map.editor.controller.Map;
+import nl.tudelft.bw4t.map.editor.controller.MapPreviewController;
+import nl.tudelft.bw4t.view.MapRenderer;
+
+import org.apache.log4j.BasicConfigurator;
 
 /**
  * The MenuBar class extends JMenuBar. Used in the Map Editor Frame.
@@ -16,11 +27,15 @@ public class MenuBar extends JMenuBar {
 	private String lastFileLocation;
 
     private JMenuItem fileNew, fileOpen, fileSave, fileSaveAs, preview, fileExit;
+    
+    private Map map;
 
     /**
      * Construct a menu bar for the Map Editor
      */
-    public MenuBar() {
+    public MenuBar(Map themap) {
+    	this.map = themap;
+    	
         JMenu file;
 
         // Build the menu.
@@ -51,6 +66,20 @@ public class MenuBar extends JMenuBar {
 
         preview = new JMenuItem("Preview Map");
         preview.setToolTipText("Preview Current Map");
+        //TODO: Refactor for MVC
+        preview.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {		    	
+		    	NewMap newmap = map.createMap();
+		    	JFrame preview = new JFrame("Map Preview");
+		    	preview.add(new MapRenderer(new MapPreviewController(newmap)));
+		    	preview.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		    	preview.pack();
+		    	preview.setVisible(true);
+			}
+		});
+        
         file.add(preview);
 
         file.addSeparator();

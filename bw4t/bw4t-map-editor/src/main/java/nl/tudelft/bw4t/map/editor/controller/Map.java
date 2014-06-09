@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.map.editor.model;
+package nl.tudelft.bw4t.map.editor.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -21,6 +21,8 @@ import nl.tudelft.bw4t.map.Rectangle;
 import nl.tudelft.bw4t.map.RenderOptions;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.editor.MapEditor;
+import nl.tudelft.bw4t.map.editor.controller.ColorSequence;
+import nl.tudelft.bw4t.map.editor.controller.Room;
 
 /**
  * This holds the map that the user designed. This is an abstract map contianing
@@ -230,7 +232,7 @@ public class Map implements TableModel {
      * 
      * @return
      */
-    NewMap createMap() {
+    public NewMap createMap() {
         NewMap map = new NewMap();
 
         // compute a number of key values
