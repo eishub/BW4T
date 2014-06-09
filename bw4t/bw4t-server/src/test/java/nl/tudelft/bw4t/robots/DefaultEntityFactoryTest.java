@@ -33,7 +33,6 @@ import static org.mockito.Mockito.when;
 /**
  * This class tests the DefaultEntityFactory.
  * Whether robots can be made with or without handicaps properly.
- * Whether e-Partners can be made with the right settings. 
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({BotConfig.class, Launcher.class})
