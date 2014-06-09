@@ -91,53 +91,49 @@ public abstract class AbstractMenuOption implements ActionListener {
 	 *            Whether or not to open a file chooser.
 	 */
 	public void saveFile(final boolean saveAs) {
-
-        if(!validateBotCount()) {
+        if (!validateBotCount() || !verifyMapSelected()) {
             return;
         }
-
-        if(!verifyMapSelected()) {
-            return;
-        }
-
+        
 		String path = view.getLastFileLocation();
-
         if (view.hasLastFileLocation() && !new File(path).exists()) {
             view.setLastFileLocation(null);
             currentFileChooser.setCurrentDirectory(new File("."));
         }
 
 		if (saveAs || !view.hasLastFileLocation()) {
-			currentFileChooser = getCurrentFileChooser();
-
-			/** Adds an xml filter for the file chooser: */
-			currentFileChooser.setFileFilter(FileFilters.xmlFilter());
-
-			if (currentFileChooser
-					.showDialog(getController().getMainView(), "Save Scenario") == JFileChooser.APPROVE_OPTION) {
-				File file = currentFileChooser.getSelectedFile();
-
-				path = file.getAbsolutePath();
-
-				String extension = ".xml";
-				if (!path.endsWith(extension)) {
-					path += extension;
-                    file = new File(path);
-				}
-                controller.getMainView().setWindowTitle(file.getName());
-            } else {
-				return;
-			}
+		    path = getPathToSaveFromUser();
+		    if (path == null)
+		        return;
 		}
-		try {
-            // Check if the file path was not externally deleted.
-            saveXMLFile(path);
-        } catch (JAXBException e) {
-			ScenarioEditor.handleException(e,
-					"Error: Saving to XML has failed.");
-		} catch (FileNotFoundException e) {
-			ScenarioEditor.handleException(e, "Error: No file has been found.");
-		}
+		saveConfigAsXMLFile(path);
+	}
+	
+	/**
+	 * Gets the path to save the file to from the user via a file chooser.
+	 * @return The path to save the file, null if the user closed the file chooser.
+	 */
+	private String getPathToSaveFromUser() {
+	    String path = null;
+        currentFileChooser = getCurrentFileChooser();
+
+        /** Adds an xml filter for the file chooser: */
+        currentFileChooser.setFileFilter(FileFilters.xmlFilter());
+
+        if (currentFileChooser
+                .showDialog(getController().getMainView(), "Save Scenario") == JFileChooser.APPROVE_OPTION) {
+            File file = currentFileChooser.getSelectedFile();
+
+            path = file.getAbsolutePath();
+
+            String extension = ".xml";
+            if (!path.endsWith(extension)) {
+                path += extension;
+                file = new File(path);
+            }
+            controller.getMainView().setWindowTitle(file.getName());
+        }
+        return path;
 	}
 
 
@@ -170,14 +166,24 @@ public abstract class AbstractMenuOption implements ActionListener {
         return true;
     }
 
-	public void saveXMLFile(String path) throws JAXBException,
-			FileNotFoundException {
-		BW4TClientConfig configuration = getModel();
-		configuration.setFileLocation(path);
-		configuration.setUseGoal(DefaultConfigurationValues.USE_GOAL.getBooleanValue());
-
-		configuration.toXML();
-		view.setLastFileLocation(path);
+    /**
+     * Saves the config at the path specified as an XML file.
+     * @param destination The path.
+     */
+	public void saveConfigAsXMLFile(String destination) {
+        try {
+    		BW4TClientConfig configuration = getModel();
+    		configuration.setFileLocation(destination);
+    		configuration.setUseGoal(DefaultConfigurationValues.USE_GOAL.getBooleanValue());
+    
+    		configuration.toXML();
+    		view.setLastFileLocation(destination);
+        } catch (JAXBException e) {
+            ScenarioEditor.handleException(e,
+                    "Error: Saving to XML has failed.");
+        } catch (FileNotFoundException e) {
+            ScenarioEditor.handleException(e, "Error: No file has been found.");
+        }
 	}
 
     /**
@@ -185,10 +191,10 @@ public abstract class AbstractMenuOption implements ActionListener {
      */
     public void updateModelAndView() {
         getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
-        getModel().updateBotConfigs();
+        getModel().updateOldBotConfigs();
         getController().getMainView().getMainPanel().getEntityPanel().updateEPartnerCount(
                 getModel().getAmountEPartner());
-        getModel().updateEpartnerConfigs();
+        getModel().updateOldEpartnerConfigs();
     }
 
 	/**
