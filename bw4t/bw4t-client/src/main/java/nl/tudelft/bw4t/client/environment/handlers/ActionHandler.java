@@ -12,7 +12,6 @@ import eis.exceptions.EntityException;
 import eis.iilang.Action;
 import eis.iilang.Percept;
 
-// TODO: Auto-generated Javadoc
 /**
  * The ActionHandler Class handles the performAction function of the Remote
  * Environment.
