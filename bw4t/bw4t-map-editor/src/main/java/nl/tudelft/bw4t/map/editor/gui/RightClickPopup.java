@@ -5,14 +5,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
-
-import nl.tudelft.bw4t.map.editor.controller.MapPreviewController;
-import nl.tudelft.bw4t.view.MapRenderer;
 
 public class RightClickPopup extends JPopupMenu {
 
@@ -49,14 +45,14 @@ public class RightClickPopup extends JPopupMenu {
         blockade = new JMenuItem("Blockade");
         spaceType.add(blockade);
         
-        corridor = new JMenuItem("Start Zone");
-        spaceType.add(corridor);
+        startZone = new JMenuItem("Start Zone");
+        spaceType.add(startZone);
         
-        corridor = new JMenuItem("Charging Zone");
-        spaceType.add(corridor);
+        chargingZone = new JMenuItem("Charging Zone");
+        spaceType.add(chargingZone);
         
-        corridor = new JMenuItem("Drop Zone");
-        spaceType.add(corridor);
+        dropZone = new JMenuItem("Drop Zone");
+        spaceType.add(dropZone);
         
         // Create a Menu for Door Side
         doorSide = new JMenu("Door Side");
