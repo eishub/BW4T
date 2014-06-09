@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
+import nl.tudelft.bw4t.map.editor.gui.ColorSequenceEditor;
 import nl.tudelft.bw4t.map.editor.model.Room;
 
 /**

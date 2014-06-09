@@ -1,10 +1,10 @@
-package nl.tudelft.bw4t.map.editor.controller;
+package nl.tudelft.bw4t.map.editor.gui;
 
 import javax.swing.JTextField;
 
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.editor.MapEditor;
-import nl.tudelft.bw4t.map.editor.gui.ColorSequence;
+import nl.tudelft.bw4t.map.editor.controller.ColorSequence;
 
 /**
  * This class provides user a GUI where he can type letters. Each letter stands
