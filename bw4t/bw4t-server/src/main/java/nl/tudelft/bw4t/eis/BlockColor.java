@@ -8,15 +8,21 @@ import nl.tudelft.bw4t.model.blocks.Block;
 public class BlockColor {
 
     private final Block block;
+    
+    /** Boolean for when the robot is colorBlind */
+    private final boolean isColorBlind;
 
     /**
      * Create a new {@link BlockColor} for the given block.
      * 
      * @param b
      *            a {@link Block}.
+     * @param isCB
+     *            the concerned robot is color blind or not. 
      */
-    public BlockColor(Block b) {
+    public BlockColor(Block b, boolean isCB) {
         this.block = b;
+        this.isColorBlind = isCB;
     }
 
     /**
@@ -24,6 +30,10 @@ public class BlockColor {
      */
     public Block getBlock() {
         return block;
+    }
+    
+    public boolean isColorBlind() {
+        return isColorBlind;
     }
 
     @Override

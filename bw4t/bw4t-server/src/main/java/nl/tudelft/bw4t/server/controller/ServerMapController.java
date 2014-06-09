@@ -1,7 +1,5 @@
 package nl.tudelft.bw4t.server.controller;
 
-import eis.iilang.EnvironmentState;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -16,8 +14,7 @@ import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
-import nl.tudelft.bw4t.model.blocks.EPartner;
-import nl.tudelft.bw4t.model.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.epartners.EPartner;
 import nl.tudelft.bw4t.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.model.zone.DropZone;
 import nl.tudelft.bw4t.model.zone.Room;
@@ -27,6 +24,7 @@ import repast.simphony.context.Context;
 import repast.simphony.space.Dimensions;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.util.collections.IndexedIterable;
+import eis.iilang.EnvironmentState;
 
 /**
  * the {@link MapController} used by the server.
