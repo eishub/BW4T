@@ -19,8 +19,11 @@ import nl.tudelft.bw4t.view.MapRendererInterface;
 
 public class MapPreviewController extends AbstractMapController {
 
-	public MapPreviewController(NewMap theMap) {
-		super(theMap);
+	private Map map;
+	
+	public MapPreviewController(Map theMap) {
+		super(theMap.createMap());
+		this.map = theMap;
 		this.getRenderSettings().setUpdateDelay(1000);
 	}
 
@@ -78,6 +81,9 @@ public class MapPreviewController extends AbstractMapController {
 
 	@Override
 	protected void updateRenderer(MapRendererInterface mri) {
+		this.setMap(map.createMap());
+		mri.validate();
+		mri.repaint();
 	}
 	
 
