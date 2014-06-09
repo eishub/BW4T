@@ -34,7 +34,7 @@ public class MapEditor extends JFrame {
 
 	private Map map;
 	
-	private String windowName = "Map Editor";
+	private String windowName = "BW4T Map Editor";
 	
 	private ColorLegendaPanel legendaPanel;
 	

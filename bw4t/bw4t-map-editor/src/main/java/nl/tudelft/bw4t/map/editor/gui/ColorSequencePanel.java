@@ -8,7 +8,6 @@ import java.awt.event.FocusListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import nl.tudelft.bw4t.map.editor.controller.ColorSequenceEditor;
 import nl.tudelft.bw4t.map.editor.model.Map;
 
 public class ColorSequencePanel extends JPanel {
@@ -23,7 +22,7 @@ public class ColorSequencePanel extends JPanel {
 		this.map = theMap;
 		setLayout(new BorderLayout());
 
-        add(new JLabel("target sequence"), BorderLayout.WEST);
+        add(new JLabel("Target sequence: "), BorderLayout.WEST);
         seqEdit = new ColorSequenceEditor(map.getSequence());
         add(seqEdit, BorderLayout.CENTER);
         // the only way to enforce small sequence panel??

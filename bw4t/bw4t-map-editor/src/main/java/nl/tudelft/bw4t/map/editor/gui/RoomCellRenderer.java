@@ -14,10 +14,11 @@ import nl.tudelft.bw4t.map.editor.model.Room;
 /**
  * This is a renderer for a room.
  */
-@SuppressWarnings("serial")
 public class RoomCellRenderer extends JPanel implements TableCellRenderer {
 
-    /**
+	private static final long serialVersionUID = 971411194378104340L;
+
+	/**
      * {@inheritDoc}
      */
     @Override

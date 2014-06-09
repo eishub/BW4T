@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.map.editor.gui;
+package nl.tudelft.bw4t.map.editor.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,9 +64,8 @@ public class ColorSequence {
      * 
      * @param colors2
      */
-    public void addAll(ColorSequence colors2) {
-        colors.addAll(colors2.getColors());
-
+    public void addAll(ColorSequence theColors) {
+        colors.addAll(theColors.getColors());
     }
 
     /**
@@ -79,13 +78,14 @@ public class ColorSequence {
     }
 
     /**
+     * Removes all colors from this.
      * 
-     * @param seq2
+     * @param theSequence
      */
-    public void removeAll(ColorSequence seq2) {
-        for (BlockColor color : seq2.getColors()) {
+    public void removeAll(ColorSequence theSequence) {
+        for (BlockColor color : theSequence.getColors()) {
             if (colors.remove(color) == false) {
-                throw new IllegalArgumentException("lacking " + color);
+                throw new IllegalArgumentException("Lacking " + color);
             }
         }
     }

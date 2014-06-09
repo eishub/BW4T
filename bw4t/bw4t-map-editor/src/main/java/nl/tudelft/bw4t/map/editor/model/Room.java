@@ -1,6 +1,6 @@
 package nl.tudelft.bw4t.map.editor.model;
 
-import nl.tudelft.bw4t.map.editor.gui.ColorSequence;
+import nl.tudelft.bw4t.map.editor.controller.ColorSequence;
 
 /**
  * This contains the room information: the blocks that the room contains.
@@ -14,11 +14,11 @@ public class Room {
         if (r > 24 || r < 0) {
             // prepare to compare rows to 'A'..'Y'. we need r=24 for the
             // dropzone row and
-            throw new IllegalArgumentException("row should be in range 0..24");
+            throw new IllegalArgumentException("Row should be in range 0..24");
         }
         if (c < 0) {
             throw new IllegalArgumentException(
-                    "column should be bigger or equal to 0");
+                    "Column should be bigger or equal to 0");
         }
 
         row = r;
@@ -31,7 +31,7 @@ public class Room {
 
     public void setColors(ColorSequence colors) {
         if (colors == null) {
-            throw new NullPointerException("null list not allowed for colors");
+            throw new NullPointerException("Null list not allowed for colors");
         }
         this.colors = colors;
     }
