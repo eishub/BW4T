@@ -382,15 +382,9 @@ public class EntityPanel extends JPanel {
 	}
 
 	/**
-	 * Returns the amount of epartners.
-	 *
-	 * @return The amount of epartners.
-
-=======
 	 * Updates the bot count on the EntityPanel.
 	 * 
 	 * @param count The total bot count.
->>>>>>> master:bw4t/bw4t-scenario-editor/src/main/java/nl/tudelft/bw4t/scenariogui/editor/gui/EntityPanel.java
 	 */
 	public final void updateBotCount(Integer count) {
 		botCountField.setText(count.toString());
