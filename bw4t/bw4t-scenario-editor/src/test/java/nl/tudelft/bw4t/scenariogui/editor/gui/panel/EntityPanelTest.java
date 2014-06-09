@@ -1,11 +1,16 @@
 package nl.tudelft.bw4t.scenariogui.editor.gui.panel;
 
+import nl.tudelft.bw4t.agent.EntityType;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditor;
+import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
+import nl.tudelft.bw4t.scenariogui.epartner.controller.EpartnerController;
+import nl.tudelft.bw4t.scenariogui.epartner.gui.EpartnerFrame;
 import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
 
@@ -45,14 +50,11 @@ public class EntityPanelTest {
      */
     @Before
     public final void setUp() {
-        entityPanel = new EntityPanel();
-        spyEntityPanel = spy(entityPanel);
-
-        ConfigurationPanel config = new ConfigurationPanel();
-        /* The editor itself isn't used. It's simple so the BotPanel
-         * gets handled by a controller. */
-        editor = new ScenarioEditor(config, spyEntityPanel, new BW4TClientConfig());
-    }
+		entityPanel = new EntityPanel();
+		spyEntityPanel = spy(entityPanel);
+		editor = new ScenarioEditor(new ConfigurationPanel(),
+				spyEntityPanel, new BW4TClientConfig());
+	}
 
     /**
      * Close the ScenarioEditor to prevent to many windows from cluttering
@@ -450,4 +452,63 @@ public class EntityPanelTest {
         
         assertFalse(entityPanel.isDefault());
     }
+    
+    /**
+	 * Tests whether the bot list is being updated.
+	 */
+	@Test
+	public void testBotTableUpdate() {
+		spyEntityPanel.getNewBotButton().doClick();
+
+		assertEquals("Bot 1", spyEntityPanel.getBotTableModel().getValueAt(0, 0));
+		assertEquals(EntityType.AGENT.toString(), spyEntityPanel
+				.getBotTableModel().getValueAt(0, 1));
+		assertEquals(1, spyEntityPanel.getBotTableModel().getValueAt(0, 2));
+
+		BotEditor botEditor = new BotEditor(editor.getMainPanel(), 0,
+				editor.getController().getModel());
+		BotEditorPanel botEditorPanel = new BotEditorPanel(botEditor,
+				editor.getMainPanel(), editor.getController()
+						.getModel());
+		
+		botEditorPanel.getBotNameField().setText("TestBot");
+		botEditorPanel.getBotControllerSelector().setSelectedIndex(1);
+		botEditorPanel.getBotAmountTextField().setText("99");
+
+		botEditorPanel.getSaveButton().doClick();
+
+		//FIXME
+		/*assertEquals("Testbot", spyEntityPanel.getBotTableModel().getValueAt(0, 0));
+		assertEquals(EntityType.HUMAN.toString(), spyEntityPanel
+				.getBotTableModel().getValueAt(0, 1));
+		assertEquals(99, spyEntityPanel.getBotTableModel().getValueAt(0, 2));*/
+	}
+
+	/**
+	 * Tests whether the epartner list is being updated.
+	 */
+	@Test
+	public void testEpartnerTableUpdate() {
+		//deal with the dialog that shows up when there's more epartners than bots
+        NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
+        ScenarioEditor.setOptionPrompt(spyOption);
+
+		spyEntityPanel.getNewEPartnerButton().doClick();
+
+		assertEquals("E-partner 1", spyEntityPanel.getEPartnerTableModel()
+				.getValueAt(0, 0));
+		assertEquals(1, spyEntityPanel.getEPartnerTableModel().getValueAt(0, 1));
+
+		EpartnerFrame epartnerFrame = new EpartnerFrame(new EpartnerController(
+				editor.getMainPanel(), 0), editor.getController().getModel());
+		
+		epartnerFrame.getEpartnerNameField().setText("TestEPartner");
+		epartnerFrame.getEpartnerAmountField().setText("99");
+		
+		epartnerFrame.getSaveButton().doClick();
+
+		assertEquals("TestEPartner", spyEntityPanel.getEPartnerTableModel()
+				.getValueAt(0, 0));
+		assertEquals(99, spyEntityPanel.getEPartnerTableModel().getValueAt(0, 1));
+	}
 }
