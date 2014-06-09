@@ -22,13 +22,13 @@ import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.BW4TBuilder;
 import nl.tudelft.bw4t.client.BW4TClientActions;
 import nl.tudelft.bw4t.eis.EPartnerEntity;
 import nl.tudelft.bw4t.eis.RobotEntity;
@@ -45,9 +45,10 @@ import nl.tudelft.bw4t.server.logging.BW4TFileAppender;
 import nl.tudelft.bw4t.server.logging.BotLog;
 import nl.tudelft.bw4t.server.view.ServerContextDisplay;
 
-import org.apache.log4j.LogManager;
+import org.apache.log4j.Appender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.apache.log4j.RollingFileAppender;
 
 import repast.simphony.context.Context;
 import repast.simphony.scenario.ScenarioLoadException;
@@ -436,11 +437,8 @@ public class BW4TEnvironment extends AbstractEnvironment {
             server = null;
         }
         
-     // LOGGER.removeAllAppenders();
-     // LogManager.shutdown();
-     //  LogManager.getRootLogger().removeAllAppenders();
-     // PropertyConfigurator.configure(BW4TEnvironment.class.getResource("/log4j.xml"));
-        
+        BW4TFileAppender.resetNewFile();
+       
         try {
             launchAll();
         } catch (ManagementException | IOException | ScenarioLoadException | JAXBException e) {
