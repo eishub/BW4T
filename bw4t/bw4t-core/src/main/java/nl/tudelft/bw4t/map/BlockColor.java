@@ -3,6 +3,9 @@ package nl.tudelft.bw4t.map;
 import java.awt.Color;
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -19,6 +22,7 @@ public enum BlockColor implements Serializable {
      * The log4j logger which writes logs.
      */
     private static final Logger LOGGER = Logger.getLogger(BlockColor.class);
+    private static List<BlockColor> colors = null;
 
     private BlockColor() {
     }
@@ -93,6 +97,19 @@ public enum BlockColor implements Serializable {
     public String getName() {
         String name = name();
         return Character.toString(name.charAt(0)).toUpperCase() + name.substring(1).toLowerCase();
+    }
+    
+    /**
+     * Use this function instead of the values, it will skip over the dark grey option!
+     * @return list of available block colors
+     */
+    public static List<BlockColor> getAvailableColors() {
+        if (colors == null) {
+            List<BlockColor> cs = new ArrayList<>(Arrays.asList(BlockColor.values()));
+            cs.remove(BlockColor.DARK_GRAY);
+            colors = cs;
+        }
+        return colors;
     }
 
 };
