@@ -18,6 +18,23 @@
             <referenceName>robot</referenceName>
             <sizeOverloadHandicap>false</sizeOverloadHandicap>
         </bot>
+        <bot>
+            <batteryEnabled>false</batteryEnabled>
+            <botAmount>1</botAmount>
+            <botBatteryCapacity>10</botBatteryCapacity>
+            <botBatteryDischargeRate>0.0</botBatteryDischargeRate>
+            <botController>HUMAN</botController>
+            <botName>NonColorBlind</botName>
+            <botSize>2</botSize>
+            <botSpeed>100</botSpeed>
+            <colorBlindHandicap>false</colorBlindHandicap>
+            <fileName>robot.goal</fileName>
+            <gripperHandicap>false</gripperHandicap>
+            <grippers>1</grippers>
+            <moveSpeedHandicap>false</moveSpeedHandicap>
+            <referenceName>robot</referenceName>
+            <sizeOverloadHandicap>false</sizeOverloadHandicap>
+        </bot>
     </bots>
     <epartners/>
     <clientIp>localhost</clientIp>
