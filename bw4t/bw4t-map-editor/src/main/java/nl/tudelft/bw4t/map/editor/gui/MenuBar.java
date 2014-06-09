@@ -71,9 +71,8 @@ public class MenuBar extends JMenuBar {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {		    	
-		    	NewMap newmap = map.createMap();
 		    	JFrame preview = new JFrame("Map Preview");
-		    	preview.add(new MapRenderer(new MapPreviewController(newmap)));
+		    	preview.add(new MapRenderer(new MapPreviewController(map)));
 		    	preview.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		    	preview.pack();
 		    	preview.setVisible(true);
