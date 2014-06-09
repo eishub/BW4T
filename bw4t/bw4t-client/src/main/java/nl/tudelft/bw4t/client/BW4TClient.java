@@ -13,8 +13,10 @@ import java.util.Set;
 
 import nl.tudelft.bw4t.client.environment.EntityNotifiers;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.client.startup.ConfigFile;
 import nl.tudelft.bw4t.client.startup.InitParam;
 import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.server.BW4TServerActions;
 import nl.tudelft.bw4t.server.BW4TServerHiddenActions;
 
@@ -33,12 +35,7 @@ import eis.iilang.Percept;
 
 /**
  * A client remote object that can be registered to a BW4TServer. This object lives at the client side.
- * <p>
  * This object is a listener for server events, and forwards them to the owner: the {@link RemoteEnvironment}.
- * 
- * @author trens
- * @author W.Pasman 8feb2012 changed to make this an explicit child of a {@link RemoteEnvironment}.
- * @author W.Pasman 13feb2012 added start and pause calls.
  */
 public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions {
     private static final long serialVersionUID = -7174958200299731682L;
@@ -97,9 +94,7 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
      */
     public void connectServer() throws RemoteException, MalformedURLException, NotBoundException {
 
-        String clientPortString = InitParam.CLIENTPORT.getValue();
-
-        int portNumber = Integer.parseInt(clientPortString);
+        int portNumber = Integer.parseInt(InitParam.CLIENTPORT.getValue());
 
         // Launch the client and bind it
         Registry register = null;
@@ -108,7 +103,7 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
                 bindAddress = "rmi://" + InitParam.CLIENTIP.getValue() + ":" + portNumber + "/BW4TClient";
                 register = LocateRegistry.createRegistry(portNumber);
             } catch (Exception e) {
-                LOGGER.error("Registry was already created.", e);
+                LOGGER.warn("Registry was already created, trying the next port number.", e);
                 portNumber++;
             }
         }
@@ -159,11 +154,18 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
      * @throws RemoteException
      */
     public void register() throws RemoteException {
-        int agentCountInt = Integer.parseInt(InitParam.AGENTCOUNT.getValue());
-        int humanCountInt = Integer.parseInt(InitParam.HUMANCOUNT.getValue());
+        if (ConfigFile.hasReadInitFile()) {
+            BW4TClientConfig conf = ConfigFile.getConfig();
+            
+            LOGGER.info(String.format("Requesting %d robots and %d e-partners.", conf.getAmountBot(), conf.getAmountEPartner()));
+            server.registerClient(this, conf.getBots(), conf.getEpartners());
+        } else {
+            int agentCountInt = Integer.parseInt(InitParam.AGENTCOUNT.getValue());
+            int humanCountInt = Integer.parseInt(InitParam.HUMANCOUNT.getValue());
 
-        LOGGER.info("Requesting " + agentCountInt + " automated agent(s) and " + humanCountInt + " human agent(s).");
-        server.registerClient(this, agentCountInt, humanCountInt);
+            LOGGER.info("Requesting " + agentCountInt + " automated agent(s) and " + humanCountInt + " human agent(s).");
+            server.registerClient(this, agentCountInt, humanCountInt);
+        }
     }
 
     /**
@@ -194,24 +196,6 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
     public Percept performEntityAction(String entity, Action action) throws RemoteException {
         LOGGER.debug("Entity " + entity + " performing action: " + action.toProlog());
         return server.performEntityAction(entity, action);
-    }
-
-    /**
-     * @param serverIP
-     *            , the ip address of the server
-     * @param serverPort
-     *            , the port where the server is listening
-     * @param expectedCount
-     *            , the amount of entities the client wants to receive
-     * @throws RemoteException
-     *             if an exception occurs during the execution of a remote object call
-     * @throws MalformedURLException
-     *             if the given url could not be parsed
-     * @throws NotBoundException
-     *             if the server was not bound at the given address
-     */
-    protected void connectToServer(int agentCount, int humanCount) throws RemoteException, MalformedURLException,
-            NotBoundException {
     }
 
     /**

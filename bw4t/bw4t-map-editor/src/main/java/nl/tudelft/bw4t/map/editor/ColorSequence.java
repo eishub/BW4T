@@ -28,11 +28,11 @@ public class ColorSequence {
      * @return string with letters of the {@link #colors}
      */
     public String getLetters() {
-        String letters = "";
+        StringBuffer buf = new StringBuffer();
         for (BlockColor c : colors) {
-            letters = letters + c.toString().charAt(0);
+        	buf.append(c.toString().charAt(0)); 
         }
-        return letters;
+        return buf.toString();
     }
 
     /**
@@ -42,13 +42,12 @@ public class ColorSequence {
      * @return
      */
     public String toColorString() {
-        String string = "";
+        StringBuffer buf = new StringBuffer(); 
         for (BlockColor c : colors) {
             String colorstr = c.toString(); // all upper case.
-            string += colorstr.substring(0, 1)
-                    + colorstr.substring(1).toLowerCase() + " ";
+            buf.append(colorstr.substring(0, 1) + colorstr.substring(1).toLowerCase() + " ");
         }
-        return string;
+        return buf.toString();
     }
 
     /**

@@ -9,8 +9,9 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.context.SmallDefaultContext;
 import repast.simphony.space.continuous.DefaultContinuousSpace;
 import nl.tudelft.bw4t.map.BlockColor;
+import nl.tudelft.bw4t.model.blocks.Block;
+import nl.tudelft.bw4t.model.robots.AbstractRobot;
 import repast.simphony.space.continuous.NdPoint;
-import nl.tudelft.bw4t.robots.Robot;
 
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -21,17 +22,13 @@ import static org.junit.Assert.*;
 
 /**
  * The class <code>BlockTest</code> contains tests for the class <code>{@link Block}</code>.
- *
- * @generatedBy CodePro at 24.05.14 19:21
- * @author 749
- * @version $Revision: 1.0 $
  */
 @RunWith(MockitoJUnitRunner.class)
 public class BlockTest {
 
     @Mock private ContinuousSpace<Object> space;
     @Mock private Context<Object> context;
-    @Mock private Robot robot;
+    @Mock private AbstractRobot robot;
     
     /**
      * Run the Block(BlockColor,ContinuousSpace<Object>,Context<Object>) constructor test.
@@ -48,7 +45,7 @@ public class BlockTest {
         Block result = new Block(colorId, space, context);
 
         assertNotNull(result);
-        assertEquals(null, result.getLocation());
+        assertEquals(new NdPoint(0, 0), result.getLocation());
         assertTrue(result.isFree());
         assertEquals(null, result.getHeldBy());
         assertEquals(0L, result.getId());
@@ -114,7 +111,7 @@ public class BlockTest {
         Block fixture = new Block(BlockColor.BLUE, space, context);
         fixture.setHeldBy(robot);
 
-        Robot result = fixture.getHeldBy();
+        AbstractRobot result = fixture.getHeldBy();
 
         // add additional test code here
         assertNotNull(result);
@@ -152,12 +149,12 @@ public class BlockTest {
     public void testGetLocation_2()
         throws Exception {
         Block fixture = new Block(BlockColor.BLUE, space, context);
-        fixture.setHeldBy((Robot) null);
+        fixture.setHeldBy((AbstractRobot) null);
 
         NdPoint result = fixture.getLocation();
 
         // add additional test code here
-        assertEquals(null, result);
+        assertEquals(new NdPoint(0, 0), result);
         verify(space).getLocation(fixture);
         verifyNoMoreInteractions(robot);
     }
@@ -173,7 +170,7 @@ public class BlockTest {
     public void testIsFree_1()
         throws Exception {
         Block fixture = new Block(BlockColor.BLUE, space, context);
-        fixture.setHeldBy((Robot) null);
+        fixture.setHeldBy((AbstractRobot) null);
 
         boolean result = fixture.isFree();
 

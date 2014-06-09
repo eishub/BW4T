@@ -113,7 +113,7 @@ public class BW4TAgentTest {
     
     @Test
     public void testSendGenericMessage() throws ActException, RemoteException {
-        testAgent.sendMessage("Receiver", new BW4TMessage(MessageType.almostThere));
+        testAgent.sendMessage("Receiver", new BW4TMessage(MessageType.ALMOSTTHERE));
         verify(remoteEnvironment).performEntityAction(eq("Entity1"), captorAction.capture());
         assertEquals("sendMessage", captorAction.getValue().getName());
         assertEquals("Receiver", captorAction.getValue().getParameters().get(0).toProlog());
@@ -147,7 +147,7 @@ public class BW4TAgentTest {
     @Test(expected = ActException.class)
     public void testSendMessageEnvThrows() throws RemoteException, ActException {
         when(remoteEnvironment.performEntityAction(any(String.class), any(Action.class))).thenThrow(new RemoteException());
-        testAgent.sendMessage("receiver", new BW4TMessage(MessageType.areYouClose));
+        testAgent.sendMessage("receiver", new BW4TMessage(MessageType.AREYOUCLOSE));
     }
     
     @Test(expected = ActException.class)

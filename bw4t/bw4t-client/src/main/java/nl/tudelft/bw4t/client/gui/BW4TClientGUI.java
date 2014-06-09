@@ -111,7 +111,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
      */
     public BW4TClientGUI(RemoteEnvironment env, String entityId, boolean goal, boolean humanPlayer) throws IOException {
         environment = env;
-        controller = new ClientController(environment.getClient().getMap(), entityId);
+        controller = new ClientController(env, environment.getClient().getMap(), entityId);
         init();
     }
 
@@ -125,7 +125,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
      */
     public BW4TClientGUI(RemoteEnvironment env, String entityId, HumanAgent humanAgent) throws IOException {
         environment = env;
-        controller = new ClientController(environment.getClient().getMap(), entityId, humanAgent);
+        controller = new ClientController(env, environment.getClient().getMap(), entityId, humanAgent);
         init();
     }
 

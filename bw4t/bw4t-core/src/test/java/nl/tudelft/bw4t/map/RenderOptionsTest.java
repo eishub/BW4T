@@ -9,10 +9,6 @@ import org.junit.Test;
 /**
  * The class <code>RenderOptionsTest</code> contains tests for the class
  * <code>{@link RenderOptions}</code>.
- * 
- * @generatedBy CodePro at 25.05.14 16:20
- * @author 749
- * @version $Revision: 1.0 $
  */
 public class RenderOptionsTest {
     /**
