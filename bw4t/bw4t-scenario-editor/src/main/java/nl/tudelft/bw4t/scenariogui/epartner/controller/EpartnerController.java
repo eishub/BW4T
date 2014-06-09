@@ -111,6 +111,8 @@ public class EpartnerController {
 	public void updateConfig(EpartnerFrame epf) {
 		epConfig.setEpartnerName(epf.getEpartnerName());
 		epConfig.setEpartnerAmount(epf.getEpartnerAmount());
+		epConfig.setFileName(epf.getEpartnerGoalFile());
+		epConfig.setReferenceName(epf.getEpartnerReference());
 		epConfig.setGps(epf.getGPS());
 		epConfig.setForgetMeNot(epf.getForgetMeNot());
 		for (EPartnerViewInterface evi: views) {
