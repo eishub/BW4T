@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.map.editor.gui;
+package nl.tudelft.bw4t.map.editor.controller;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
