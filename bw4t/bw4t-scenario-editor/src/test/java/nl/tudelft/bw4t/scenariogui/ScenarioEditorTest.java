@@ -75,7 +75,7 @@ public class ScenarioEditorTest {
      * Dispose of the editor.
      */
     @After
-    public void breakItDooooown() {
+    public void breakItDown() {
         editor.dispose();
     }
 
