@@ -23,8 +23,6 @@ import eis.exceptions.AgentException;
 import eis.exceptions.PerceiveException;
 import eis.iilang.Action;
 import eis.iilang.Parameter;
-import nl.tudelft.bw4t.blocks.Block;
-import nl.tudelft.bw4t.blocks.EPartner;
 import nl.tudelft.bw4t.eis.translators.BlockWithColorTranslator;
 import nl.tudelft.bw4t.eis.translators.BoundedMovableObjectTranslator;
 import nl.tudelft.bw4t.eis.translators.ColorTranslator;
@@ -32,17 +30,19 @@ import nl.tudelft.bw4t.eis.translators.ObjectInformationTranslator;
 import nl.tudelft.bw4t.eis.translators.PointTranslator;
 import nl.tudelft.bw4t.eis.translators.ZoneTranslator;
 import nl.tudelft.bw4t.map.Entity;
-import nl.tudelft.bw4t.robots.NavigatingRobot;
-import nl.tudelft.bw4t.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.blocks.Block;
+import nl.tudelft.bw4t.model.blocks.EPartner;
+import nl.tudelft.bw4t.model.robots.AbstractRobot;
+import nl.tudelft.bw4t.model.robots.NavigatingRobot;
+import nl.tudelft.bw4t.model.zone.BlocksRoom;
+import nl.tudelft.bw4t.model.zone.Corridor;
+import nl.tudelft.bw4t.model.zone.DropZone;
+import nl.tudelft.bw4t.model.zone.Room;
+import nl.tudelft.bw4t.model.zone.Zone;
 import nl.tudelft.bw4t.server.RobotEntityInt;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.util.RoomLocator;
 import nl.tudelft.bw4t.util.ZoneLocator;
-import nl.tudelft.bw4t.zone.BlocksRoom;
-import nl.tudelft.bw4t.zone.Corridor;
-import nl.tudelft.bw4t.zone.DropZone;
-import nl.tudelft.bw4t.zone.Room;
-import nl.tudelft.bw4t.zone.Zone;
 
 public class EPartnerEntity implements RobotEntityInt {
 
