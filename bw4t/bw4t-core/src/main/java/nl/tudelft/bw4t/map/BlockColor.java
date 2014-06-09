@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
  * {@link Color}.
  */
 public enum BlockColor implements Serializable {
-    BLUE, ORANGE, RED, WHITE, GREEN, YELLOW, PINK;
+    BLUE, ORANGE, RED, WHITE, GREEN, YELLOW, PINK, DARK_GRAY;
 
     /**
      * The log4j logger which writes logs.

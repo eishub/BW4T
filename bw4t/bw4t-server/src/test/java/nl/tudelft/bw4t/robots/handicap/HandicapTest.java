@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.handicap;
+package nl.tudelft.bw4t.robots.handicap;
 
 import java.util.ArrayList;
 
