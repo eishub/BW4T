@@ -475,13 +475,13 @@ public class EntityPanelTest {
 		botEditorPanel.getBotControllerSelector().setSelectedIndex(1);
 		botEditorPanel.getBotAmountTextField().setText("99");
 
+		//FIXME save button isn't being clicked for some reason
 		botEditorPanel.getSaveButton().doClick();
 
-		//FIXME
-		/*assertEquals("Testbot", spyEntityPanel.getBotTableModel().getValueAt(0, 0));
+		assertEquals("Testbot", spyEntityPanel.getBotTableModel().getValueAt(0, 0));
 		assertEquals(EntityType.HUMAN.toString(), spyEntityPanel
 				.getBotTableModel().getValueAt(0, 1));
-		assertEquals(99, spyEntityPanel.getBotTableModel().getValueAt(0, 2));*/
+		assertEquals(99, spyEntityPanel.getBotTableModel().getValueAt(0, 2));
 	}
 
 	/**
@@ -490,8 +490,7 @@ public class EntityPanelTest {
 	@Test
 	public void testEpartnerTableUpdate() {
 		//deal with the dialog that shows up when there's more epartners than bots
-        NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
-        ScenarioEditor.setOptionPrompt(spyOption);
+        ScenarioEditor.setOptionPrompt(new NoMockOptionPrompt());
 
 		spyEntityPanel.getNewEPartnerButton().doClick();
 
