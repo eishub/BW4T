@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.map.editor.model;
+package nl.tudelft.bw4t.map.editor.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,11 +20,12 @@ import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.map.Rectangle;
 import nl.tudelft.bw4t.map.RenderOptions;
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.editor.AlertBox;
-import nl.tudelft.bw4t.map.editor.ColorSequence;
+import nl.tudelft.bw4t.map.editor.MapEditor;
+import nl.tudelft.bw4t.map.editor.controller.ColorSequence;
+import nl.tudelft.bw4t.map.editor.controller.Room;
 
 /**
- * THis holds the map that the user designed. This is an abstract map contianing
+ * This holds the map that the user designed. This is an abstract map contianing
  * only number of rows and columns, do not confuse with {@link NewMap}.
  */
 public class Map implements TableModel {
@@ -109,8 +110,8 @@ public class Map implements TableModel {
         return sequence;
     }
 
-    public void setSequence(ColorSequence sequence) {
-        this.sequence = sequence;
+    public void setSequence(ColorSequence colorSequence) {
+        this.sequence = colorSequence;
     }
 
     /**
@@ -231,7 +232,7 @@ public class Map implements TableModel {
      * 
      * @return
      */
-    NewMap createMap() {
+    public NewMap createMap() {
         NewMap map = new NewMap();
 
         // compute a number of key values
@@ -424,10 +425,10 @@ public class Map implements TableModel {
      */
     public String checkConsistency() {
         if (numberOfEntities < 1) {
-            return "there should be at least 1 entity";
+            return "There should be at least 1 entity";
         }
         if (sequence.size() <= 0 && !randomize) {
-            return "sequence must contain at least 1 block color";
+            return "Sequence must contain at least 1 block color";
         }
 
         // check if all blocks for sequence are there.
@@ -441,7 +442,7 @@ public class Map implements TableModel {
 
         // first check if there are blocks while random is on
         if (randomize && (!allblocks.isEmpty() || !sequence.isEmpty())) {
-            AlertBox.alert("There are blocks on the map\nbut the map is set to random.\nWe proceed anyway.");
+            MapEditor.showDialog("There are blocks on the map\nbut the map is set to random.\nWe proceed anyway.");
         }
 
         // remove all colors from the sequence. That will throw exception if
@@ -463,7 +464,7 @@ public class Map implements TableModel {
             // check before user puts effort in
             String state = checkConsistency();
             if (state != null) {
-                throw new IllegalStateException("map is not ready for save\n"
+                throw new IllegalStateException("Map is not ready for save.\n"
                         + state);
             }
             // TODO Auto-generated method stub
@@ -474,7 +475,7 @@ public class Map implements TableModel {
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
-            AlertBox.alert("save failed:" + e.getMessage());
+            MapEditor.showDialog(e, "Save failed: " + e.getMessage());
         }
     }
 
