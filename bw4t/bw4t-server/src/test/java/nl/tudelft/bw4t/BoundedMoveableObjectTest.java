@@ -12,7 +12,7 @@ import static org.mockito.Mockito.when;
 
 import java.awt.geom.Rectangle2D;
 
-import nl.tudelft.bw4t.doors.Door;
+import nl.tudelft.bw4t.model.doors.Door;
 
 import org.junit.After;
 import org.junit.Before;
@@ -27,10 +27,6 @@ import repast.simphony.space.continuous.NdPoint;
 
 /**
  * The class <code>BoundedMoveableObjectTest</code> contains tests for the class <code>{@link BoundedMoveableObject}</code>.
- *
- * @generatedBy CodePro at 23.05.14 16:47
- * @author Jan Giesenberg
- * @version $Revision: 1.0 $
  */
 @RunWith(MockitoJUnitRunner.class)
 public class BoundedMoveableObjectTest {

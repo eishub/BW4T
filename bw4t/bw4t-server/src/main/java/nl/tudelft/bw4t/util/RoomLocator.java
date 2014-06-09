@@ -2,15 +2,13 @@ package nl.tudelft.bw4t.util;
 
 import java.awt.geom.Point2D;
 
+import nl.tudelft.bw4t.model.zone.BlocksRoom;
+import nl.tudelft.bw4t.model.zone.DropZone;
+import nl.tudelft.bw4t.model.zone.Room;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
-import nl.tudelft.bw4t.zone.BlocksRoom;
-import nl.tudelft.bw4t.zone.DropZone;
-import nl.tudelft.bw4t.zone.Room;
 
 /**
  * Utility class to locate in which rooms an object is.
- * 
- * @author Lennard de Rijk
  */
 public final class RoomLocator {
 

@@ -7,9 +7,6 @@ import nl.tudelft.bw4t.map.BlockColor;
 /**
  * This class provides user a GUI where he can type letters. Each letter stands
  * for a block of some color. See also {@link BlockColor}
- * 
- * @author W.Pasman 12sep12
- * 
  */
 @SuppressWarnings("serial")
 public class ColorSequenceEditor extends JTextField {

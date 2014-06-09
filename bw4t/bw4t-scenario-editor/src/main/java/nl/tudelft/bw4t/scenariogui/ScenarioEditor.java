@@ -8,52 +8,34 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.scenariogui.controllers.editor.ScenarioEditorController;
-import nl.tudelft.bw4t.scenariogui.gui.MenuBar;
-import nl.tudelft.bw4t.scenariogui.gui.panel.ConfigurationPanel;
-import nl.tudelft.bw4t.scenariogui.gui.panel.EntityPanel;
-import nl.tudelft.bw4t.scenariogui.gui.panel.MainPanel;
+import nl.tudelft.bw4t.scenariogui.editor.controller.ScenarioEditorController;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MenuBar;
+import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 import nl.tudelft.bw4t.scenariogui.util.DefaultOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
 
 /**
  * The ScenarioEditor class serves as the Frame for the MenuBar and MainPanel.
  * <p>
- * @author      Calvin Wong Loi Sing
- * @author      Xander Zonneveld
  * @version     0.1                
  * @since       12-05-2014        
  */
 public class ScenarioEditor extends JFrame {
 
-    /**
-     * Randomly generated serial version.
-     */
     private static final long serialVersionUID = 3291131921268747169L;
-    
-    /**
-     * The name of the window, as displayed in the title.
-     */
+
     private String windowName = "Scenario Editor";
-    
-    /**
-     * The <code>MainPanel</code> serving as the content pane.
-     */
+
     private MainPanel mPanel;
-    
-    /**
-     * The <code>MenuBar</code> at the top of the screen.
-     */
+
     private MenuBar menuBar;
-    
-    /**
-     * The <code>Controller</code> containing all the ActionEvents.
-     */
+
     private ScenarioEditorController controller;
     
-    /**
-     * The OptionPrompt used to handle all thread blocking GUI objects.
-     */
+    private static BW4TClientConfig model;
+    
     private static OptionPrompt option = new DefaultOptionPrompt();
 
     /**
@@ -62,7 +44,7 @@ public class ScenarioEditor extends JFrame {
      */
     public ScenarioEditor() {
         setLookAndFeel();
-        setTitle(windowName);
+        setWindowTitle("Untitled");
 
         setResizable(false);
         setLayout(null);
@@ -72,7 +54,7 @@ public class ScenarioEditor extends JFrame {
         setJMenuBar(menuBar);
 
         // Attach the MainPanel, consisting of the configuration- and botpanel.
-        mPanel = new MainPanel(new ConfigurationPanel(), new EntityPanel());
+        mPanel = new MainPanel(this, new ConfigurationPanel(), new EntityPanel());
         setActivePane(mPanel);
         
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -83,7 +65,8 @@ public class ScenarioEditor extends JFrame {
         // Setting the location relative to null centers the frame.
         setLocationRelativeTo(null);
 
-        controller = new ScenarioEditorController(this);
+        model = new BW4TClientConfig();
+        controller = new ScenarioEditorController(this, model);
         setVisible(true);
     }
 
@@ -93,14 +76,16 @@ public class ScenarioEditor extends JFrame {
      *
      * @param configurationPanel The ConfigurationPanel object used in the frame.
      * @param entityPanel        The EntityPanel object used in the frame.
+     * @param model              The BW4TClientConfig object.
      */
-    public ScenarioEditor(final ConfigurationPanel configurationPanel, final EntityPanel entityPanel) {
+    public ScenarioEditor(final ConfigurationPanel configurationPanel, 
+    		final EntityPanel entityPanel, BW4TClientConfig model) {
         this();
         mPanel.setConfigurationPanel(configurationPanel);
         mPanel.setEntityPanel(entityPanel);
 
         // Recreate the controllers.
-        controller = new ScenarioEditorController(this);
+        controller = new ScenarioEditorController(this, model);
     }
 
     /**
@@ -243,5 +228,9 @@ public class ScenarioEditor extends JFrame {
      */
     public void closeScenarioEditor() {
         System.exit(0);
+    }
+
+    public void setWindowTitle(String filenameBeingEdited) {
+        setTitle(windowName + " - " + filenameBeingEdited);
     }
 }

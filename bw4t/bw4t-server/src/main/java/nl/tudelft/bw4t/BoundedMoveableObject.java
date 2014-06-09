@@ -10,12 +10,6 @@ import repast.simphony.space.continuous.NdPoint;
 /**
  * Represents an object in the world that can be moved around if needed. It forms the basis for all kinds of objects
  * like robots, blocks and rooms.
- * 
- * 
- * 
- * @author Lennard de Rijk.
- * @author W.Pasman modified coordinate system so that both the maps and GOAL use the center-of-object as the
- *         coordinate.
  */
 public abstract class BoundedMoveableObject {
 
@@ -63,7 +57,12 @@ public abstract class BoundedMoveableObject {
      * @return The location of the object, if currently in a space.
      */
     public NdPoint getLocation() {
-        return space.getLocation(this);
+        NdPoint location = space.getLocation(this);
+        //ugly fix for NullPointerException when adding entity after the display was setup
+        if (location == null) {
+            return new NdPoint(0, 0);
+        }
+        return location;
     }
     
     /**
@@ -136,24 +135,21 @@ public abstract class BoundedMoveableObject {
             if (other.boundingBox != null) {
                 return false;
             }
-        }
-        else if (!boundingBox.equals(other.boundingBox)) {
+        } else if (!boundingBox.equals(other.boundingBox)) {
             return false;
         }
         if (context == null) {
             if (other.context != null) {
                 return false;
             }
-        }
-        else if (!context.equals(other.context)) {
+        } else if (!context.equals(other.context)) {
             return false;
         }
         if (space == null) {
             if (other.space != null) {
                 return false;
             }
-        }
-        else if (!space.equals(other.space)) {
+        } else if (!space.equals(other.space)) {
             return false;
         }
         return true;

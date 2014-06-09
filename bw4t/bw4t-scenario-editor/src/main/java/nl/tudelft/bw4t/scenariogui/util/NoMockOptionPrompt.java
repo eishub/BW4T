@@ -7,11 +7,7 @@ import javax.swing.JOptionPane;
 /**
  * The OptionPrompt that always returns no, used when mocking the
  * objects during tests, to prevent the system from hanging due
- * to having to press a button on the prompt.
- * <p>
- * @author      Calvin Wong Loi Sing
- * @version     0.1                
- * @since       12-05-2014        
+ * to having to press a button on the prompt.    
  */
 public class NoMockOptionPrompt implements OptionPrompt {
 
