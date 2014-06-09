@@ -4,7 +4,7 @@ import javax.swing.JTextField;
 
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.editor.MapEditor;
-import nl.tudelft.bw4t.map.editor.controller.ColorSequence;
+import nl.tudelft.bw4t.map.editor.model.ColorSequence;
 
 /**
  * This class provides user a GUI where he can type letters. Each letter stands

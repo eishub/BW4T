@@ -1,6 +1,5 @@
 package nl.tudelft.bw4t.map.editor.model;
 
-import nl.tudelft.bw4t.map.editor.controller.ColorSequence;
 
 /**
  * This contains the room information: the blocks that the room contains.
