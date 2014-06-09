@@ -1,16 +1,19 @@
-package nl.tudelft.bw4t.handicap;
+package nl.tudelft.bw4t.robots.handicap;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 
-import nl.tudelft.bw4t.model.blocks.EPartner;
+import nl.tudelft.bw4t.model.epartners.EPartner;
 import nl.tudelft.bw4t.model.robots.NavigatingRobot;
 import nl.tudelft.bw4t.model.robots.handicap.Human;
 import nl.tudelft.bw4t.model.robots.handicap.IRobot;
-import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;

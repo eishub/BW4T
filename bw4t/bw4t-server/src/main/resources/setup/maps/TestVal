@@ -29,14 +29,8 @@
         <type>NORMAL</type>
     </entities>
     <oneBotPerCorridorZone>false</oneBotPerCorridorZone>
-    <randomBlocks>0</randomBlocks>
-    <randomSequence>0</randomSequence>
-    <sequence>BLUE</sequence>
-    <sequence>GREEN</sequence>
-    <sequence>YELLOW</sequence>
-    <sequence>PINK</sequence>
-    <sequence>ORANGE</sequence>
-    <sequence>RED</sequence>
+    <randomBlocks>22</randomBlocks>
+    <randomSequence>6</randomSequence>
     <zones>
         <boundingbox>
             <height>20.0</height>
@@ -44,7 +38,7 @@
             <x>5.0</x>
             <y>5.0</y>
         </boundingbox>
-        <name>LeftHallA</name>
+        <name>ChargingZoneA</name>
         <neighbours>FrontRoomA1</neighbours>
         <neighbours>LeftHallB</neighbours>
         <type>CHARGINGZONE</type>
@@ -62,9 +56,6 @@
         <type>BLOCKADE</type>
     </zones>
     <zones>
-        <blocks>BLUE</blocks>
-        <blocks>ORANGE</blocks>
-        <blocks>ORANGE</blocks>
         <boundingbox>
             <height>10.0</height>
             <width>10.0</width>
@@ -96,9 +87,6 @@
         <type>CORRIDOR</type>
     </zones>
     <zones>
-        <blocks>YELLOW</blocks>
-        <blocks>GREEN</blocks>
-        <blocks>GREEN</blocks>
         <boundingbox>
             <height>10.0</height>
             <width>10.0</width>
@@ -187,9 +175,6 @@
         <type>CORRIDOR</type>
     </zones>
     <zones>
-        <blocks>BLUE</blocks>
-        <blocks>RED</blocks>
-        <blocks>PINK</blocks>
         <boundingbox>
             <height>10.0</height>
             <width>10.0</width>
@@ -221,8 +206,6 @@
         <type>CORRIDOR</type>
     </zones>
     <zones>
-        <blocks>BLUE</blocks>
-        <blocks>YELLOW</blocks>
         <boundingbox>
             <height>10.0</height>
             <width>10.0</width>
@@ -254,8 +237,6 @@
         <type>CORRIDOR</type>
     </zones>
     <zones>
-        <blocks>PINK</blocks>
-        <blocks>YELLOW</blocks>
         <boundingbox>
             <height>10.0</height>
             <width>10.0</width>
@@ -313,12 +294,6 @@
         <type>CORRIDOR</type>
     </zones>
     <zones>
-        <blocks>YELLOW</blocks>
-        <blocks>RED</blocks>
-        <blocks>RED</blocks>
-        <blocks>WHITE</blocks>
-        <blocks>GREEN</blocks>
-        <blocks>PINK</blocks>
         <boundingbox>
             <height>10.0</height>
             <width>10.0</width>
@@ -350,8 +325,6 @@
         <type>CORRIDOR</type>
     </zones>
     <zones>
-        <blocks>WHITE</blocks>
-        <blocks>RED</blocks>
         <boundingbox>
             <height>10.0</height>
             <width>10.0</width>
@@ -383,7 +356,6 @@
         <type>CORRIDOR</type>
     </zones>
     <zones>
-        <blocks>RED</blocks>
         <boundingbox>
             <height>10.0</height>
             <width>10.0</width>

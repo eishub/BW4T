@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.model.blocks;
+package nl.tudelft.bw4t.model.epartners;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
