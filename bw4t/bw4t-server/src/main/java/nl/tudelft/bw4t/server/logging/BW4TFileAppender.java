@@ -5,18 +5,21 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
 
 import nl.tudelft.bw4t.eis.RobotEntity;
 import nl.tudelft.bw4t.model.robots.AgentRecord;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 
+import org.apache.log4j.Appender;
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Layout;
 import org.apache.log4j.Logger;
+import org.apache.log4j.RollingFileAppender;
 import org.apache.log4j.spi.ErrorCode;
 
-public class BW4TFileAppender extends FileAppender {
+public class BW4TFileAppender extends RollingFileAppender {
 
 	/**
      * The log4j logger, logs to the file
@@ -36,7 +39,7 @@ public class BW4TFileAppender extends FileAppender {
 
     public BW4TFileAppender(Layout layout, String filename, boolean append, boolean bufferedIO,
             int bufferSize) throws IOException {
-        super(layout, filename, append, bufferedIO, bufferSize);
+        super(layout, filename, append);
     }
 
     @Override
@@ -162,5 +165,20 @@ public class BW4TFileAppender extends FileAppender {
       */
      private static void summary(String name, String label, String value) {
      	LOGGER.log(BotLog.BOTLOG, "agentsummary " + name + " " + label + " " + value);
+     }
+     
+     /**
+      * when the reset button is presed; the logging goes on in new file.
+      */
+     public static void resetNewFile() {
+         for (Enumeration<Appender> e = Logger.getRootLogger().getAllAppenders(); e.hasMoreElements();) {
+             Appender a = e.nextElement();
+             if (a instanceof RollingFileAppender) {
+                 int index = ((RollingFileAppender) a).getMaxBackupIndex();
+                 index++;
+                 ((RollingFileAppender) a).setMaxBackupIndex(index);
+                 ((RollingFileAppender) a).rollOver();
+             }
+         }
      }
 }
