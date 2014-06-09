@@ -20,7 +20,6 @@ public enum BlockColor implements Serializable {
      */
     private static final Logger LOGGER = Logger.getLogger(BlockColor.class);
 
-
     private BlockColor() {
     }
 

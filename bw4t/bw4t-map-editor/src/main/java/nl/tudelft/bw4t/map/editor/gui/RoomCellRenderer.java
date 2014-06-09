@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.map.editor;
+package nl.tudelft.bw4t.map.editor.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -9,15 +9,16 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableCellRenderer;
 
-import nl.tudelft.bw4t.map.editor.model.Room;
+import nl.tudelft.bw4t.map.editor.controller.Room;
 
 /**
  * This is a renderer for a room.
  */
-@SuppressWarnings("serial")
 public class RoomCellRenderer extends JPanel implements TableCellRenderer {
 
-    /**
+	private static final long serialVersionUID = 971411194378104340L;
+
+	/**
      * {@inheritDoc}
      */
     @Override
@@ -27,6 +28,7 @@ public class RoomCellRenderer extends JPanel implements TableCellRenderer {
             Room room = (Room) arg1;
             JPanel panel = new JPanel(new BorderLayout());
             panel.add(new JLabel(room.toString()), BorderLayout.NORTH);
+            // panel.setBackground(Color.black);
             panel.add(new JTextField(room.getColors().getLetters()),
                     BorderLayout.CENTER);
             return panel;

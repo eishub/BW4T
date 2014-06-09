@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.map.editor.model;
+package nl.tudelft.bw4t.map.editor.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,14 +20,15 @@ import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.map.Rectangle;
 import nl.tudelft.bw4t.map.RenderOptions;
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.editor.AlertBox;
-import nl.tudelft.bw4t.map.editor.ColorSequence;
+import nl.tudelft.bw4t.map.editor.MapEditor;
+import nl.tudelft.bw4t.map.editor.controller.ColorSequence;
+import nl.tudelft.bw4t.map.editor.controller.Room;
 
 /**
- * THis holds the map that the user designed. This is an abstract map contianing
+ * This holds the map that the user designed. This is an abstract map contianing
  * only number of rows and columns, do not confuse with {@link NewMap}.
  */
-public class Map_Temp implements TableModel {
+public class Map implements TableModel {
 
     /** basic size of the map */
     private int rows;
@@ -58,12 +59,6 @@ public class Map_Temp implements TableModel {
     private static final String FRONTDROPZONE = "FrontDropZone";
 
     private boolean isLabelsVisible;
-    
-    /**
-     * Dropzone location
-     */
-    private double dropX;
-    private double dropY;
 
     /**
      * size of map is fixed, you can't change it after construction.
@@ -73,7 +68,7 @@ public class Map_Temp implements TableModel {
      * @param isLabelsVisible
      *            true if labels should be shown by renderers
      */
-    public Map_Temp(int rows, int columns, int entities, boolean rand,
+    public Map(int rows, int columns, int entities, boolean rand,
             boolean labelsVisible) {
         isLabelsVisible = labelsVisible;
         if (rows < 1 || rows > 100) {
@@ -92,9 +87,15 @@ public class Map_Temp implements TableModel {
         this.columns = columns;
         this.numberOfEntities = entities;
         this.randomize = rand;
-        //TODO change method to get rooms array[][] from GUI.
-        //rooms = getRoomsFromGUI();
+        rooms = new ArrayList<List<Room>>();
 
+        // fill new array with rooms
+        for (int row = 0; row < this.rows; row++) {
+            rooms.add(new ArrayList<Room>());
+            for (int col = 0; col < this.columns; col++) {
+                rooms.get(row).add(new Room(row, col));
+            }
+        }
     }
 
     public int getRows() {
@@ -109,8 +110,8 @@ public class Map_Temp implements TableModel {
         return sequence;
     }
 
-    public void setSequence(ColorSequence sequence) {
-        this.sequence = sequence;
+    public void setSequence(ColorSequence colorSequence) {
+        this.sequence = colorSequence;
     }
 
     /**
@@ -174,7 +175,6 @@ public class Map_Temp implements TableModel {
      * @param file
      * @throws IOException
      * @throws JAXBException
-     * TODO remove comments after createmap is fixed
      */
     public void save(File file) throws IOException, JAXBException {
         System.out.println("SAVE to " + file);
@@ -184,13 +184,13 @@ public class Map_Temp implements TableModel {
             throw new IllegalStateException("save failed: " + error);
         }
 
-        //NewMap map = createMap();
+        NewMap map = createMap();
         JAXBContext context = JAXBContext.newInstance(NewMap.class);
 
         Marshaller m = context.createMarshaller();
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-        //m.marshal(map, new FileOutputStream(file));
+        m.marshal(map, new FileOutputStream(file));
 
     }
 
@@ -231,15 +231,16 @@ public class Map_Temp implements TableModel {
      * Create the real map object using the settings
      * 
      * @return
-    NewMap createMap() {
+     */
+    public NewMap createMap() {
         NewMap map = new NewMap();
 
         // compute a number of key values
-        double mapwidth = columns;
-        double mapheight = rows;
-        double dropzonex = getDropX();
-        double dropzoney = getDropY();
-        double dropzonewidth = ROOMWIDTH;
+        double mapwidth = columns * ROOMWIDTH + 2 * CORRIDORWIDTH;
+        double mapheight = (rows + 1) * (ROOMHEIGHT + CORRIDORHEIGHT);
+        double dropzonex = mapwidth / 2;
+        double dropzoney = getY(rows);
+        double dropzonewidth = mapwidth / 2;
 
         // set the general fields of the map
         map.setArea(new Point(mapwidth, mapheight));
@@ -253,44 +254,49 @@ public class Map_Temp implements TableModel {
                 / 2);
 
         // generate zones for each row:
-        // write room zones with their doors in their respective directions
-        // also generate halls for locations without rooms.
+        // write room zones with their doors. and the zone in frront
+        // also generate the lefthall and righthall for each row.
         // connect room and corridor in front of it.
         // connect all corridor with each other and with left and right hall.
         for (int row = 0; row < rows; row++) {
-        	for (int col = 0; col < columns; col++) {
-        		//if the current location is a room, then add a room
-        		//else add a hall
-           		if (!rooms.get(row).get(col).isRoom()) {
-           			Room room = rooms.get(row).get(col);
-           			Zone roomzone = new Zone(room.toString(), new Rectangle(
-           					(row-1)*CORRIDORWIDTH,(col-1)*CORRIDORHEIGHT,CORRIDORWIDTH, 
-   							CORRIDORHEIGHT), Zone.Type.ROOM);
-           			map.addZone(roomzone);
-           			if (room.getDirection().equals("North")) {
-           				roomzone.addDoor(new Door(new Point(col, row+ROOMWIDTH/2), 
-           						Door.Orientation.HORIZONTAL));
-           			} else if (room.getDirection().equals("West")) {
-           				roomzone.addDoor(new Door(new Point(col+ROOMHEIGHT/2, row), 
-           						Door.Orientation.VERTICAL));
-           			} else if (room.getDirection().equals("South")) {
-           				roomzone.addDoor(new Door(new Point(col+ROOMHEIGHT, row-ROOMWIDTH/2), 
-           						Door.Orientation.HORIZONTAL));
-           			} else if (room.getDirection().equals("East")) {
-           				roomzone.addDoor(new Door(new Point(col+ROOMHEIGHT/2, row), 
-           						Door.Orientation.VERTICAL));
-           			}
-           			roomzone.setBlocks(room.getColors().getColors());
-           		} else {
-           			Zone hall = new Zone(CorridorLabel(row, col), 
-           					new Rectangle((row-1)*CORRIDORWIDTH,(col-1)*CORRIDORHEIGHT,CORRIDORWIDTH, 
-           							CORRIDORHEIGHT), Zone.Type.CORRIDOR);
-           			map.addZone(hall);
-           		}
-        	}
+            // add left and right hall corridor zones
+            Zone lefthall = new Zone(CorridorLabel(row, -1), new Rectangle(
+                    getX(-1), getNavY(row), ROOMWIDTH, CORRIDORHEIGHT
+                            + ROOMHEIGHT), Zone.Type.CORRIDOR);
+            Zone righthall = new Zone(CorridorLabel(row, columns),
+                    new Rectangle(getX(columns), getNavY(row), ROOMWIDTH,
+                            CORRIDORHEIGHT + ROOMHEIGHT), Zone.Type.CORRIDOR);
+            map.addZone(lefthall);
+            map.addZone(righthall);
+
+            for (int col = 0; col < columns; col++) {
+                Room room = rooms.get(row).get(col);
+                Zone roomzone = new Zone(room.toString(), new Rectangle(
+                        getX(col), getY(row), ROOMWIDTH, ROOMHEIGHT),
+                        Zone.Type.ROOM);
+                map.addZone(roomzone);
+                roomzone.addDoor(new Door(new Point(getX(col),
+                        (getY(row) - ROOMHEIGHT / 2)),
+                        Door.Orientation.HORIZONTAL));
+                roomzone.setBlocks(rooms.get(row).get(col).getColors()
+                        .getColors());
+
+                // add the zone in front of the room.
+                Zone corridor = new Zone(CorridorLabel(row, col),
+                        new Rectangle(getX(col), getNavY(row), ROOMWIDTH,
+                                CORRIDORHEIGHT), Zone.Type.CORRIDOR);
+                map.addZone(corridor);
+
+                // connect them wth each other
+                connect(roomzone, corridor);
+                Zone left = map.getZone(CorridorLabel(row, col - 1));
+                connect(corridor, left);
+            }
+            // and connect the last one to the right hall
+            Zone lastcorridor = map.getZone(CorridorLabel(row, columns - 1));
+            connect(righthall, lastcorridor);
         }
-        
-        //TODO Dropzone currently is still added to the bottom.
+
         // add drop zone with its door and zones left and rright
         Zone dropzone = new Zone(DROPZONE, new Rectangle(dropzonex, dropzoney,
                 dropzonewidth, ROOMHEIGHT), Zone.Type.ROOM);
@@ -336,7 +342,6 @@ public class Map_Temp implements TableModel {
 
         return map;
     }
-    */
 
     /**
      * Set all the render options of the map.
@@ -420,10 +425,10 @@ public class Map_Temp implements TableModel {
      */
     public String checkConsistency() {
         if (numberOfEntities < 1) {
-            return "there should be at least 1 entity";
+            return "There should be at least 1 entity";
         }
         if (sequence.size() <= 0 && !randomize) {
-            return "sequence must contain at least 1 block color";
+            return "Sequence must contain at least 1 block color";
         }
 
         // check if all blocks for sequence are there.
@@ -437,7 +442,7 @@ public class Map_Temp implements TableModel {
 
         // first check if there are blocks while random is on
         if (randomize && (!allblocks.isEmpty() || !sequence.isEmpty())) {
-            AlertBox.alert("There are blocks on the map\nbut the map is set to random.\nWe proceed anyway.");
+            MapEditor.showDialog("There are blocks on the map\nbut the map is set to random.\nWe proceed anyway.");
         }
 
         // remove all colors from the sequence. That will throw exception if
@@ -459,7 +464,7 @@ public class Map_Temp implements TableModel {
             // check before user puts effort in
             String state = checkConsistency();
             if (state != null) {
-                throw new IllegalStateException("map is not ready for save\n"
+                throw new IllegalStateException("Map is not ready for save.\n"
                         + state);
             }
             // TODO Auto-generated method stub
@@ -470,7 +475,7 @@ public class Map_Temp implements TableModel {
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
-            AlertBox.alert("save failed:" + e.getMessage());
+            MapEditor.showDialog(e, "Save failed: " + e.getMessage());
         }
     }
 
@@ -556,33 +561,5 @@ public class Map_Temp implements TableModel {
         }
         rooms.get(rowIndex).get(columnIndex).setValue((Room) aValue);
     }
-
-	/**
-	 * @return the dropX
-	 */
-	public double getDropX() {
-		return dropX;
-	}
-
-	/**
-	 * @param dropX the dropX to set
-	 */
-	public void setDropX(double dropX) {
-		this.dropX = dropX;
-	}
-
-	/**
-	 * @return the dropY
-	 */
-	public double getDropY() {
-		return dropY;
-	}
-
-	/**
-	 * @param dropY the dropY to set
-	 */
-	public void setDropY(double dropY) {
-		this.dropY = dropY;
-	}
 
 }
