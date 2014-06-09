@@ -13,7 +13,7 @@ import nl.tudelft.bw4t.agent.EntityType;
  * @since 12-05-2014
  */
 
-public final class BotConfig implements Serializable {
+public final class BotConfig implements Serializable, Cloneable {
 	private static final long serialVersionUID = -4261058226493472776L;
 
     public static final String DEFAULT_GOAL_FILENAME_REFERENCE = "robot";
@@ -325,6 +325,15 @@ public final class BotConfig implements Serializable {
 		this.fileName = _fileName;
 	}
 	
+	@Override
+	public BotConfig clone() {
+	    try {
+            return (BotConfig) super.clone();
+        } catch (CloneNotSupportedException e) {
+            return null;
+        }
+	}
+
 	/**
 	 * @return the default configuration of a Human
 	 */

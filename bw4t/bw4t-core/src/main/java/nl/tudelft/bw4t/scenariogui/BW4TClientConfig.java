@@ -305,11 +305,21 @@ public class BW4TClientConfig {
 	public BotConfig getBot(int index) {
 		return bots.get(index);
 	}
+	
+	/**
+	 * Overwrites the bot config at this index in the bot list
+	 * with the new bot config.
+	 * @param index The index of the bot config to overwrite.
+	 * @param newBotConfig The new bot config.
+	 */
+	public void setBot(int index, BotConfig newBotConfig) {
+        bots.set(index, newBotConfig);
+    }
 
 	/**
 	 * Updates the bot list with the new bots.
 	 */
-	public void updateBotConfigs() {
+	public void updateOldBotConfigs() {
 		oldBots = new ArrayList<BotConfig>(bots);
 	}
 
@@ -401,7 +411,7 @@ public class BW4TClientConfig {
 	/**
 	 * Updates the EpartnerConfig list.
 	 */
-	public void updateEpartnerConfigs() {
+	public void updateOldEpartnerConfigs() {
         oldEpartners = new ArrayList<EPartnerConfig>(epartners);
 	}
 
@@ -439,6 +449,19 @@ public class BW4TClientConfig {
 		}
 
 		return true;
+	}
+	
+	/**
+	 * Clears the bot and e-partner list
+	 * and the history that came with it.
+	 */
+	public void clearBotsAndEpartners() {
+        getBots().clear();
+        getEpartners().clear();
+
+        // Delete the history as well.
+        updateOldBotConfigs();
+        updateOldEpartnerConfigs();
 	}
 
 }
