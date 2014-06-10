@@ -8,9 +8,10 @@ import java.util.List;
 import nl.tudelft.bw4t.BoundedMoveableObject;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.model.blocks.Block;
-import nl.tudelft.bw4t.model.blocks.EPartner;
 import nl.tudelft.bw4t.model.doors.Door;
+import nl.tudelft.bw4t.model.epartners.EPartner;
 import nl.tudelft.bw4t.model.robots.handicap.IRobot;
+import nl.tudelft.bw4t.model.zone.ChargingZone;
 import nl.tudelft.bw4t.model.zone.Corridor;
 import nl.tudelft.bw4t.model.zone.DropZone;
 import nl.tudelft.bw4t.model.zone.Room;
@@ -98,6 +99,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
      */
     private boolean oneBotPerZone;
     
+    /** Returns the top most handicap a robot has. */
     private IRobot topMostHandicap = this;
 
     /**
@@ -201,7 +203,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     public boolean canPickUp(BoundedMoveableObject obj) {
         if(obj instanceof Block) {
             Block b = (Block) obj;
-            LOGGER.info("gripcap" + grippercap);
             return (distanceTo(obj.getLocation()) <= ARM_DISTANCE) && b.isFree() && (holding.size() < grippercap);
         }
         return false;
@@ -212,7 +213,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         holding.add(b);
         b.setHeldBy(this);
         b.removeFromContext();
-        LOGGER.info("blocks held: " + holding.size());
     }
 
     @Override
@@ -377,6 +377,10 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     @Override
     @ScheduledMethod(start = 0, duration = 0, interval = 1)
     public synchronized void move() {
+        // When the robot is in a charging zone, the battery recharges.
+        if (getZone() instanceof ChargingZone) {
+            getBattery().recharge();
+        }
     	if (battery.getCurrentCapacity() > 0) {
 		    if (targetLocation != null) {
 		        // Calculate the distance that the robot is allowed to move.
@@ -404,12 +408,10 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		                 */
 		                this.battery.discharge();
 		                LOGGER.info("The current battery level is: " + this.battery.getCurrentCapacity());
-		                LOGGER.info("the robot is human: " + this.isHuman());
 		                
 		                if (topMostHandicap.isHuman() && topMostHandicap.isHoldingEPartner()) {
 		                	NdPoint location = topMostHandicap.getLocation();
 		                	topMostHandicap.getEPartner().moveTo(location.getX() + 1, location.getY() + 1);
-		                	LOGGER.info("e-Partner on the move");
 		                }
 		            } catch (SpatialException e) {
 		                collided = true;

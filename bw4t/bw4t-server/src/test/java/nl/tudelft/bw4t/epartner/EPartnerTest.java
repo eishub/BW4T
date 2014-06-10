@@ -1,7 +1,8 @@
 package nl.tudelft.bw4t.epartner;
 
-import static org.junit.Assert.*;
-import nl.tudelft.bw4t.model.blocks.EPartner;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import nl.tudelft.bw4t.model.epartners.EPartner;
 import nl.tudelft.bw4t.model.robots.AbstractRobot;
 import nl.tudelft.bw4t.model.robots.NavigatingRobot;
 import nl.tudelft.bw4t.model.robots.handicap.Human;

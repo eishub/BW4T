@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.handicap;
+package nl.tudelft.bw4t.robots.handicap;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(MockitoJUnitRunner.class)
 
-public class NewHandicapTest {
+public class HandicapTest {
 	
     /**
      * space Mock

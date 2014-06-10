@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.handicap;
+package nl.tudelft.bw4t.robots.handicap;
 
 import nl.tudelft.bw4t.model.doors.Door;
 import nl.tudelft.bw4t.model.robots.AbstractRobot;
