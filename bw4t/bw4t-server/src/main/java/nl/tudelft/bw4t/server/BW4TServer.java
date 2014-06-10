@@ -17,7 +17,8 @@ import java.util.Map;
 import java.util.Set;
 
 import nl.tudelft.bw4t.agent.EntityType;
-import nl.tudelft.bw4t.client.BW4TClientActions;
+import nl.tudelft.bw4t.network.BW4TClientActions;
+import nl.tudelft.bw4t.network.BW4TServerHiddenActions;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
@@ -312,7 +313,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
      * {@inheritDoc}
      */
     @Override
-    public String queryProperty(String property) throws QueryException {
+    public String queryProperty(String property) throws RemoteException, QueryException {
         return BW4TEnvironment.getInstance().queryProperty(property);
     }
 
