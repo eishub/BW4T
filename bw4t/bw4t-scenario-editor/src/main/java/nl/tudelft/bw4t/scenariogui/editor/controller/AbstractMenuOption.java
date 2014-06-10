@@ -93,24 +93,28 @@ public abstract class AbstractMenuOption implements ActionListener {
 	 *            Whether or not to open a file chooser.
 	 */
 	public void saveFile(final boolean saveAs) {
-        if (!validateBotCount() || !verifyMapSelected()) {
-            return;
-        }
-        
-		String path = view.getLastFileLocation();
-        if (view.hasLastFileLocation() && !new File(path).exists()) {
-            view.setLastFileLocation(null);
-            currentFileChooser.setCurrentDirectory(new File("."));
-        }
+        if (validateBotCount() && verifyMapSelected()) {
 
-		if (saveAs || !view.hasLastFileLocation()) {
-		    path = getPathToSaveFromUser();
-		    if (path == null)
-		        return;
-		}
-		saveConfigAsXMLFile(path);
-	}
-	
+            String path = view.getLastFileLocation();
+            // Check if the previous save location exists.
+            if (wasPreviousSaveRemoved(path)) {
+                view.setLastFileLocation(null);
+                currentFileChooser.setCurrentDirectory(new File("."));
+            }
+
+            if (saveAs || !view.hasLastFileLocation()) {
+                path = getPathToSaveFromUser();
+                if (path == null)
+                    return;
+            }
+            saveConfigAsXMLFile(path);
+        }
+    }
+
+    private boolean wasPreviousSaveRemoved(String path) {
+        return view.hasLastFileLocation() && !new File(path).exists();
+    }
+
 	/**
 	 * Displays a file chooser and saves the response in fileChooserApprove.
 	 */
