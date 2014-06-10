@@ -1,27 +1,24 @@
 package nl.tudelft.bw4t.map.editor.gui;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.RenderingHints.Key;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import org.powermock.tests.utils.Keys;
 
 import nl.tudelft.bw4t.map.BlockColor;
 
@@ -65,6 +62,15 @@ public class ColorSequenceEditor extends JComponent {
                     removeColor();
                     return;
                 }
+                if (e.getKeyCode() == KeyEvent.VK_TAB && e.getSource() instanceof Component) {
+                    ( ( Component ) e.getSource () ).transferFocus ();
+                }
+            }
+        });
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                requestFocus();
             }
         });
     }
@@ -168,7 +174,8 @@ public class ColorSequenceEditor extends JComponent {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("TestFrame");
-        frame.add(new ColorSequenceEditor());
+        final ColorSequenceEditor cse = new ColorSequenceEditor();
+        frame.add(cse);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

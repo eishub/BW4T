@@ -24,7 +24,8 @@ public class ColorPalette extends JPanel implements MouseInputListener {
 
     public ColorPalette() {
         super();
-        Dimension d = new Dimension(BlockColor.getAvailableColors().size() * COLOR_SIZE + BORDER * 2, COLOR_SIZE + BORDER * 2);
+        Dimension d = new Dimension(BlockColor.getAvailableColors().size() * COLOR_SIZE + BORDER * 2, COLOR_SIZE
+                + BORDER * 2);
         setMinimumSize(d);
         setPreferredSize(d);
         addMouseListener(this);
@@ -59,14 +60,14 @@ public class ColorPalette extends JPanel implements MouseInputListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         Point p = e.getPoint();
-        if(p.y <= BORDER || p.y > BORDER+COLOR_SIZE)
+        if (p.y <= BORDER || p.y > BORDER + COLOR_SIZE)
             return;
-        
+
         int startX = BORDER;
         for (BlockColor c : BlockColor.getAvailableColors()) {
-            if(p.x >= startX && p.x < startX+COLOR_SIZE){
-                 notifyColorClick(c);
-                 return;
+            if (p.x >= startX && p.x < startX + COLOR_SIZE) {
+                notifyColorClick(c);
+                return;
             }
             startX += COLOR_SIZE;
         }
@@ -97,19 +98,16 @@ public class ColorPalette extends JPanel implements MouseInputListener {
     }
 
     public static void main(String[] args) {
+        JFrame frame = getColorPaletteWindow(new ColorPalette());
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+
+    public static JFrame getColorPaletteWindow(ColorPalette cp) {
         JFrame frame = new JFrame("Color Palette");
-        final ColorPalette cp = new ColorPalette();
-        cp.addColorClickListener(new ColorPaletteListener() {
-            
-            @Override
-            public void colorClicked(BlockColor c) {
-                System.out.println(String.format("Clicked on color %s", c.toString()));
-            }
-        });
         frame.add(cp);
         frame.setUndecorated(true);
         frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        return frame;
     }
 }
