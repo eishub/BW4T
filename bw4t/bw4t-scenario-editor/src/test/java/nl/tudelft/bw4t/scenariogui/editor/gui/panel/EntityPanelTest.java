@@ -467,18 +467,15 @@ public class EntityPanelTest {
 
 		BotEditor botEditor = new BotEditor(editor.getMainPanel(), 0,
 				editor.getController().getModel());
-		BotEditorPanel botEditorPanel = new BotEditorPanel(botEditor,
-				editor.getMainPanel(), editor.getController()
-						.getModel());
+		BotEditorPanel botEditorPanel = botEditor.getbPanel();
 		
 		botEditorPanel.getBotNameField().setText("TestBot");
 		botEditorPanel.getBotControllerSelector().setSelectedIndex(1);
 		botEditorPanel.getBotAmountTextField().setText("99");
 
-		//FIXME save button isn't being clicked for some reason
 		botEditorPanel.getSaveButton().doClick();
 
-		assertEquals("Testbot", spyEntityPanel.getBotTableModel().getValueAt(0, 0));
+		assertEquals("TestBot", spyEntityPanel.getBotTableModel().getValueAt(0, 0));
 		assertEquals(EntityType.HUMAN.toString(), spyEntityPanel
 				.getBotTableModel().getValueAt(0, 1));
 		assertEquals(99, spyEntityPanel.getBotTableModel().getValueAt(0, 2));

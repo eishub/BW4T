@@ -27,7 +27,8 @@ public class BotEditor extends JFrame {
     private MainPanel parent;
     /** the panel in the frame*/
     private BotEditorPanel bPanel;
-    /** the controller for the frame*/
+
+	/** the controller for the frame*/
     private BotStoreController controller;
 
     /** The row number of the selected bot. */
@@ -120,4 +121,8 @@ public class BotEditor extends JFrame {
     public void setBotEditorPanel(BotEditorPanel pbPanel) {
         this.bPanel = pbPanel;
     }
+
+    public BotEditorPanel getbPanel() {
+		return bPanel;
+	}
 }
