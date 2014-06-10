@@ -415,13 +415,13 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		                }
 		            } catch (SpatialException e) {
 		                collided = true;
-		                LOGGER.log(BotLog.BOTLOG, "Bot " + this + " collided.");
+		                LOGGER.log(BotLog.BOTLOG, "Bot " + this.name + " collided.");
 		                stopRobot();
 		            }
 		        }
 		    }
     	} else {
-    	    LOGGER.log(BotLog.BOTLOG, "Bot " + this + " could not move because of empty battery.");
+    	    LOGGER.log(BotLog.BOTLOG, "Bot " + this.name + " could not move because of empty battery.");
     		stopRobot();
     	}
     }
