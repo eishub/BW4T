@@ -115,7 +115,7 @@ public final class Launcher {
      * @return the value for the parameter. Returns default value if not in the
      *         array.
      */
-    private static String findArgument(String[] args, InitParam param) {
+    public static String findArgument(String[] args, InitParam param) {
         return findArgument(args, "-" + param.nameLower(), param.getDefaultValue());
     }
 
