@@ -14,7 +14,7 @@ public class RightClickPopup extends JPopupMenu {
 
 	private static final long serialVersionUID = -5335591852441574491L;
 	
-	private JMenu spaceType, doorSide;
+	private JMenu areaType, doorSide;
 	
 	private JMenuItem randomize;
 	private JMenuItem corridor, room, blockade, startZone, chargingZone, dropZone;
@@ -23,9 +23,9 @@ public class RightClickPopup extends JPopupMenu {
 	public RightClickPopup(JTable table) {
 		
 		// Create a Menu for Type Of Space
-		spaceType = new JMenu("Type of Space");
-		spaceType.setToolTipText("Set the type of space");
-        add(spaceType);
+		areaType = new JMenu("Type of Area");
+		areaType.setToolTipText("Set the type of area");
+        add(areaType);
         
         // Add all MenuItems for type of Space
         corridor = new JMenuItem("Corridor");
@@ -33,26 +33,26 @@ public class RightClickPopup extends JPopupMenu {
 		// TODO: Refactor for MVC
         corridor.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {		    	
+			public void actionPerformed(ActionEvent arg0) {
 		    	System.out.println("Change to Corridor");
 			}
 		});
-        spaceType.add(corridor);
+        areaType.add(corridor);
         
         room = new JMenuItem("Room");
-        spaceType.add(room);
+        areaType.add(room);
 
         blockade = new JMenuItem("Blockade");
-        spaceType.add(blockade);
+        areaType.add(blockade);
         
         startZone = new JMenuItem("Start Zone");
-        spaceType.add(startZone);
+        areaType.add(startZone);
         
         chargingZone = new JMenuItem("Charging Zone");
-        spaceType.add(chargingZone);
+        areaType.add(chargingZone);
         
         dropZone = new JMenuItem("Drop Zone");
-        spaceType.add(dropZone);
+        areaType.add(dropZone);
         
         // Create a Menu for Door Side
         doorSide = new JMenu("Door Side");

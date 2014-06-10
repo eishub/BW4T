@@ -28,6 +28,7 @@ public class MenuBar extends JMenuBar {
 
     /**
      * Construct a menu bar for the Map Editor
+     * TODO: LastFileLocation Fix
      */
     public MenuBar(Map themap) {
     	this.map = themap;
@@ -56,6 +57,14 @@ public class MenuBar extends JMenuBar {
 
         fileSaveAs = new JMenuItem("Save As..");
         fileSaveAs.setToolTipText(toolTipText);
+        // ActionListener fileSaveAs
+        // TODO: Refactor for MVC
+        fileSaveAs.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {		    	
+		    	map.saveAsFile();
+			}
+        });
         file.add(fileSaveAs);
 
         file.addSeparator();
