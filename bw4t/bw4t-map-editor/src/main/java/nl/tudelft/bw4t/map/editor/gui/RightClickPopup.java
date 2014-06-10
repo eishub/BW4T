@@ -1,7 +1,5 @@
 package nl.tudelft.bw4t.map.editor.gui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -10,33 +8,29 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 
+import nl.tudelft.bw4t.map.editor.EnvironmentStore;
+
 public class RightClickPopup extends JPopupMenu {
 
 	private static final long serialVersionUID = -5335591852441574491L;
 	
 	private JMenu areaType, doorSide;
 	
+	private EnvironmentStore view;
+	
 	private JMenuItem randomize;
 	private JMenuItem corridor, room, blockade, startZone, chargingZone, dropZone;
 	private JMenuItem north, east, south, west;
 	
-	public RightClickPopup(JTable table) {
+	public RightClickPopup(EnvironmentStore theView) {
+		view = theView;
 		
 		// Create a Menu for Type Of Space
 		areaType = new JMenu("Type of Area");
-		areaType.setToolTipText("Set the type of area");
         add(areaType);
         
         // Add all MenuItems for type of Space
         corridor = new JMenuItem("Corridor");
-        
-		// TODO: Refactor for MVC
-        corridor.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-		    	System.out.println("Change to Corridor");
-			}
-		});
         areaType.add(corridor);
         
         room = new JMenuItem("Room");
@@ -56,7 +50,6 @@ public class RightClickPopup extends JPopupMenu {
         
         // Create a Menu for Door Side
         doorSide = new JMenu("Door Side");
-        doorSide.setToolTipText("Set the side of a rooms door");
         add(doorSide);
         
         // Add all MenuItems for Door Side
@@ -73,13 +66,13 @@ public class RightClickPopup extends JPopupMenu {
         doorSide.add(west);
         
         // Create a MenuItem for Randomize Blocks in Room
-        randomize = new JMenuItem("Randomize Room");
+        randomize = new JMenuItem("Randomize Blocks");
         randomize.setToolTipText("Randomize the blocks inside this room");
         add(randomize);
         
         // Add the right click to the table
         // TODO: Refactor to be MVC
-        table.addMouseListener( new MouseAdapter() {
+        view.getMapTable().addMouseListener( new MouseAdapter() {
             public void mouseReleased(MouseEvent e) {
                 if (e.isPopupTrigger()) {
                     JTable source = (JTable)e.getSource();
@@ -93,10 +86,97 @@ public class RightClickPopup extends JPopupMenu {
                 }
             }
         });
-		
-
         
 	}
+	
+    /**
+     * Return the view being controlled.     *
+     * @return The JFrame being controlled.
+     */
+    public final EnvironmentStore getMainView() {
+        return view;
+    }
+	
+    /**
+     * JMenuItem to change an area to a corridor.
+     * @return The JMenuItem to change an area to a corridor.
+     */
+    public final JMenuItem getMenuItemAreaCorridor() {
+        return corridor;
+    }
+    
+    /**
+     * JMenuItem to change an area to a room.
+     * @return The JMenuItem to change an area to a room.
+     */
+    public final JMenuItem getMenuItemAreaRoom() {
+        return room;
+    }
+    
+    /**
+     * JMenuItem to change an area to a blockade.
+     * @return The JMenuItem to change an area to a blockade.
+     */
+    public final JMenuItem getMenuItemAreaBlockade() {
+        return blockade;
+    }
+    
+    /**
+     * JMenuItem to change an area to a chargingZone.
+     * @return The JMenuItem to change an area to a chargingZone.
+     */
+    public final JMenuItem getMenuItemAreaChargingZone() {
+        return chargingZone;
+    }
+    
+    /**
+     * JMenuItem to change an area to a startZone.
+     * @return The JMenuItem to change an area to a startZone.
+     */
+    public final JMenuItem getMenuItemAreaStartZone() {
+        return startZone;
+    }
+    
+    /**
+     * JMenuItem to change an area to a dropZone.
+     * @return The JMenuItem to change an area to a dropZone.
+     */
+    public final JMenuItem getMenuItemAreaDropZone() {
+        return dropZone;
+    }
 
+    /**
+     * JMenuItem to change an area to a dropZone.
+     * @return The JMenuItem to change an area to a dropZone.
+     */
+    public final JMenuItem getMenuItemDoorSideNorth() {
+        return north;
+    }
+    
+    /**
+     * JMenuItem to change an area to a dropZone.
+     * @return The JMenuItem to change an area to a dropZone.
+     */
+    public final JMenuItem getMenuItemDoorSideEast() {
+        return east;
+    }
+    
+    /**
+     * JMenuItem to change an area to a dropZone.
+     * @return The JMenuItem to change an area to a dropZone.
+     */
+    public final JMenuItem getMenuItemDoorSideSouth() {
+        return south;
+    }
+    
+    /**
+     * JMenuItem to change an area to a dropZone.
+     * @return The JMenuItem to change an area to a dropZone.
+     */
+    public final JMenuItem getMenuItemDoorSideWest() {
+        return west;
+    }
+    
+    
 
 }
