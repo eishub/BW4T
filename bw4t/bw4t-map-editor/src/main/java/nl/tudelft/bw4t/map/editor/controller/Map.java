@@ -372,9 +372,40 @@ public class Map implements TableModel {
     	assert amountPossibleRooms >= roomCount : "The amount of rooms wanted"
     		+ " cannot be higher than the amount of rooms possible.";
     	List<Node> allRooms = getRooms(grid);
+    	List<Node> allCorridors = getCorridors(grid);
+    	randomizeCorridors(allCorridors);
     	randomizeRooms(allRooms, amountPossibleRooms - roomCount);
     	randomizeDoorDirs(allRooms);
     	return grid;
+    }
+    /**
+     * Uses a list of nodes classified as corridors and has a 15% chance
+     * to reclassify a node as a charge zone.
+     * @param corridors The list of corridors to be randomized.
+     */
+    private void randomizeCorridors(List<Node> corridors) {
+    	Random r = new Random(System.currentTimeMillis());
+    	for (Node n : corridors) {
+    		if (r.nextDouble() < 0.15) {
+    			n.setType(Zone.Type.CHARGINGZONE);
+    		}
+    	}
+    }
+    /**
+     * Returns a list with all corridors, used in randomization.
+     * @param grid The grid containing the corridors.
+     * @return A list containing all the nodes classified as a corridor in the given grid.
+     */
+    private List<Node> getCorridors(Node[][] grid) {
+    	List<Node> l = new LinkedList<Node>();
+    	for (int i = 0; i < grid.length; i++) {
+    		for (int j = 0; j < grid[0].length; j++) {
+    			if (grid[i][j].getType() == Zone.Type.CORRIDOR) {
+    				l.add(grid[i][j]);
+    			}
+    		}
+    	}
+    	return l;
     }
     /**
      * Randomize the door directions for all rooms in such a way that
