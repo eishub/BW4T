@@ -82,6 +82,48 @@ class CommandInsertRoom implements TypeToStringCommand {
 	}
 }
 
+/**
+ * Command to insert color between two given strings
+ * @author Sille
+ *
+ */
+class CommandInsertColor implements TypeToStringCommand {
+	
+	private final String pre;
+	private final String post;
+	
+	/**
+	 * Constructor that sets the prepend string.
+	 * @param pre
+	 * 			the string that should be placed before the room.
+	 */
+	public CommandInsertColor(String pre, String post) {
+		this.pre = pre;
+		this.post = post;
+	}
+
+	@Override
+	public String exec(BW4TMessage message) {
+		return pre + message.getColor() + post;
+	}
+}
+
+class CommandPrefixPlayerID implements TypeToStringCommand {
+	private final String post;
+	
+	public CommandPrefixPlayerID(String post) {
+		this.post = post;
+	}
+
+	@Override
+	public String exec(BW4TMessage message) {
+		 return message.getPlayerId()
+                 + post;
+	}
+}
+
+// Specific Commands
+
 class CommandGoingToRoom implements TypeToStringCommand {
 
 	@Override
@@ -110,5 +152,99 @@ class CommandHasColor implements TypeToStringCommand {
 	}
 }
 
+class CommandWillGetColor implements TypeToStringCommand {
+
+	@Override
+	public String exec(BW4TMessage message) {
+		 if (message.getRoom() == null){
+             return "I will get a " + message.getColor() + " block";
+		 } else {
+             return "I will get a " + message.getColor()
+                     + " block from room " + message.getRoom();
+		 }
+	}
+}
+
+class CommandAmGettingColor implements TypeToStringCommand {
+
+	@Override
+	public String exec(BW4TMessage message) {
+        if (message.getRoom() == null){
+            return "I am getting a " + message.getColor() + " block";
+        } else {
+            return "I am getting a " + message.getColor()
+                    + " block from room " + message.getRoom();
+        }
+	}
+}
+
+class CommandDroppedOffBlock implements TypeToStringCommand {
+
+	@Override
+	public String exec(BW4TMessage message) {
+        if (message.getColor() == null) {
+            return "I just dropped off a block";
+        } else {
+            return "I just dropped off a " + message.getColor() + " block";
+        }
+	}
+}
+
+class CommandAmWaitingOutsideRoom implements TypeToStringCommand {
+	private final String ret = "I am waiting outside room ";
+
+	@Override
+	public String exec(BW4TMessage message) {
+		if (message.getColor() != null) {
+		 return ret + message.getRoom()
+                 + " with a " + message.getColor() + " block";
+		} else {
+			return ret + message.getRoom();
+		}
+	}
+}
+
+class CommandRoomContains implements TypeToStringCommand {
+
+	@Override
+	public String exec(BW4TMessage message) {
+		if (message.getType() == MessageType.ROOMCONTAINS) {
+		return "room " + message.getRoom() + " contains a "
+                + message.getColor() + " block";
+		} else if (message.getType() == MessageType.ROOMCONTAINSAMOUNT) {
+			return "room " + message.getRoom() + " contains "
+                    + message.getNumber() + " " + message.getColor()
+                    + " blocks";
+		} else {
+			return null;
+		}
+		
+	}
+}
+
+class CommandGotoRoom implements TypeToStringCommand {
+
+	@Override
+	public String exec(BW4TMessage message) {
+		return message.getPlayerId() + ", go to room " + message.getRoom();
+	}
+}
+
+class CommandFindColor implements TypeToStringCommand {
+
+	@Override
+	public String exec(BW4TMessage message) {
+		 return message.getPlayerId() + ", find a " + message.getColor() + " block";
+	}
+}
+
+class CommandGetColorFromRoom implements TypeToStringCommand {
+
+	@Override
+	public String exec(BW4TMessage message) {
+		return message.getPlayerId() + ", get the " + message.getColor()
+                + " from room " + message.getRoom();
+	}
+}
 
 
