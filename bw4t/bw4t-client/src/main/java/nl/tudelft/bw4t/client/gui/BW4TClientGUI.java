@@ -23,8 +23,8 @@ import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 
-import nl.tudelft.bw4t.agent.HumanAgent;
 import nl.tudelft.bw4t.client.BW4TClientSettings;
+import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.listeners.ChatListMouseListener;

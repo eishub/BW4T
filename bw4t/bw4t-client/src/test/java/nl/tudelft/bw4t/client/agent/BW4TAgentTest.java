@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.agent;
+package nl.tudelft.bw4t.client.agent;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -11,6 +11,7 @@ import static org.mockito.Mockito.eq;
 
 import java.rmi.RemoteException;
 
+import nl.tudelft.bw4t.client.agent.BW4TAgent;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.message.BW4TMessage;
 import nl.tudelft.bw4t.message.MessageType;
