@@ -599,9 +599,9 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
 	}
 	
 	/**
-	 * @return the current BotStoreController
+	 * @return the current BotController
 	 */
-	protected BotController getBotStoreController() {
+	public BotController getBotController() {
 		return controller;
 	}
 	
