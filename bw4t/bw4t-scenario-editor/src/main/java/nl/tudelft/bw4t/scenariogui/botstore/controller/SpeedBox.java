@@ -23,6 +23,8 @@ public class SpeedBox implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent arg0) {
+    	
+    	
         JSlider speedSlider = view.getSpeedSlider();
         if (view.getmovespeedCheckbox().isSelected()) {
             speedSlider.setEnabled(true);

@@ -206,26 +206,13 @@ public class BotController {
   
 	/**
 	 * Calculate the dischargeRate from a bot by using his size and speed.
-	 * @param bot The bot we want to know the discharge rate from.
-	 * @return discharge rate from that bot
+	 * @param botSpeed the speed from the bot
+	 * @param botSize the size from the bot
+	 * @return discharge rate 
 	 */
-    public double getDischargeRate(BotConfig bot) {
-		return 0.0002 * bot.getBotSize() + 0.0004 * bot.getBotSpeed();
-    }     
-    
-    /**
-     
-    public void getNewBatteryValue(BotEditorPanel view) {
-    	if (bot.isBatteryEnabled()) {
-	        int speed = bot.getBotSpeed();
-	        int size = bot.getBotSize();
-	        double res = 0.002 * size + 0.000025 * speed;
-	        DecimalFormat df = new DecimalFormat("#.######");
-	        String value = df.format(res);
-	        view.getBatteryUseValueLabel().setText(padString(value));
-    	}
-    	view.getDataObject().setBotSpeed(view.getSpeedSlider().getValue());
-    }*/
+    public double getDischargeRate(int botSpeed, int botSize) {
+    	return 0.0002 * botSize + 0.0004 * botSpeed;
+    }
     
     /** 
      * When the speed or size slider is moved, calculate the new battery discharge rate
@@ -235,8 +222,8 @@ public class BotController {
      * @param view the BotEditorPanel
      */
     public void setNewBatteryValue(int botSpeed, int botSize, BotEditorPanel view) {
-    	if(view.isBatteryEnabled()) {
-    		double res = 0.002 * botSize + 0.000025 * botSize;
+    	if (view.isBatteryEnabled()) {
+    		double res = getDischargeRate(botSpeed, botSize);
     		DecimalFormat df = new DecimalFormat("#.######");
 	        String value = df.format(res);
 	        view.getBatteryUseValueLabel().setText(padString(value));
@@ -259,11 +246,4 @@ public class BotController {
         }
         return buf.toString();
     }
-    
-    
-    
-    
-    
-    
-    
 }
