@@ -112,11 +112,10 @@ public final class Format {
      * @return The padded string.
      */
     public static String padString(String value, int amount) {
-        StringBuffer buf = new StringBuffer(); 
         while (value.length() < amount) {
-            buf.append("0");
+            value += 0;
         }
-        return buf.toString();
+        return value;
     }
     
 }
