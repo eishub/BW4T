@@ -8,6 +8,8 @@ import java.util.HashSet;
 import java.util.LinkedList;
 
 
+
+import nl.tudelft.bw4t.client.environment.ActionHandler;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 
 import org.junit.After;
@@ -16,6 +18,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;

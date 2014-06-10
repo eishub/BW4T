@@ -9,15 +9,13 @@ import org.apache.log4j.Logger;
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
-import nl.tudelft.bw4t.client.gui.operations.MapOperations;
-import nl.tudelft.bw4t.controller.MapRenderSettings;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone;
+import nl.tudelft.bw4t.map.renderer.MapRenderSettings;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 
 public class ActionPopUpMenu {
-    private static final Logger LOGGER = Logger.getLogger(ActionPopUpMenu.class);
     /**
      * Used for building the pop up menu that displays the actions a user can undertake
      */
@@ -38,7 +36,6 @@ public class ActionPopUpMenu {
         }
         
         if (cmc.getTheBot().getHoldingEpartner() >= 0) {
-            LOGGER.info("We are now holding the e-partner: " + cmc.getTheBot().getHoldingEpartner());
             ViewEPartner ep = cmc.getViewEPartner(cmc.getTheBot().getHoldingEpartner());
             if (ep != null) {
                 final Point2D location = ep.getLocation();
@@ -88,6 +85,16 @@ public class ActionPopUpMenu {
                 return;
             }
         }
+        
+        // Check if pressing on a blockade
+        for (Zone blockade : cmc.getBlockades()) {
+            Shape blockBoundaries = set.transformRectangle(blockade.getBoundingbox().getRectangle());
+            if (blockBoundaries.contains(gui.getSelectedLocation())) {
+                BlockadeMenu.buildPopUpMenuForBlockade(gui);
+                gui.getjPopupMenu().show(gui, (int) gui.getSelectedLocation().getX(), (int) gui.getSelectedLocation().getY());
+                return;
+            }
+        }
         // Check for dropzone
         //      DropZoneInfo dropZone = gui.getEnvironmentDatabase().getDropZone();
         //      Shape dropZoneBoundaries = MapOperations.transformRectangle(new Rectangle2D.Double(dropZone.getX(), dropZone
@@ -98,8 +105,16 @@ public class ActionPopUpMenu {
         //          return;
         //      }
 
+        for (Zone chargingzone : cmc.getChargingZones()) {
+            Shape chargeBoundaries = set.transformRectangle(chargingzone.getBoundingbox().getRectangle());
+            if (chargeBoundaries.contains(gui.getSelectedLocation())) {
+                HallwayMenu.buildPopUpMenuForHallway(gui, "go recharge");
+                gui.getjPopupMenu().show(gui, (int) gui.getSelectedLocation().getX(), (int) gui.getSelectedLocation().getY());
+                return;
+            }  
+        }
         // Otherwise it is a hallway
-        HallwayMenu.buildPopUpMenuForHallway(gui);
+        HallwayMenu.buildPopUpMenuForHallway(gui, "go to here");
         gui.getjPopupMenu().show(gui, (int) gui.getSelectedLocation().getX(), (int) gui.getSelectedLocation().getY());
     }
 }

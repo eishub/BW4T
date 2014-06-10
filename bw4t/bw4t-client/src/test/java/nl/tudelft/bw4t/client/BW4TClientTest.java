@@ -19,9 +19,10 @@ import java.util.Map;
 import java.util.Set;
 
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.network.BW4TClientActions;
+import nl.tudelft.bw4t.network.BW4TServerActions;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
-import nl.tudelft.bw4t.server.BW4TServerActions;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
