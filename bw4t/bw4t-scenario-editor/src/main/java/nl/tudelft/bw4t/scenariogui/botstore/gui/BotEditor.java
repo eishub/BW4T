@@ -122,7 +122,7 @@ public class BotEditor extends JFrame {
         this.bPanel = pbPanel;
     }
 
-    public BotEditorPanel getbPanel() {
+    public BotEditorPanel getBoteditorPanel() {
 		return bPanel;
 	}
 }
