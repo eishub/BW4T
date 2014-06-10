@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.map.editor;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -91,9 +92,6 @@ public class EnvironmentStore extends JFrame {
         mapTable.setDefaultEditor(Room.class, new RoomCellEditor());
         mapTable.setRowHeight(55);
         mapTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
-        
-        // Create the RightClickPopup
-        popup = new RightClickPopup(mapTable);
 
         // Create a roomsPanel that has both the mapTable and the sequencePanel.
         roomsPanel = new JPanel();
@@ -105,7 +103,11 @@ public class EnvironmentStore extends JFrame {
         add(explanationPanel, BorderLayout.NORTH);
         add(roomsPanel, BorderLayout.CENTER);
         add(legendaPanel, BorderLayout.EAST);
+        
+        // Create the RightClickPopup
+        popup = new RightClickPopup(this);
 
+        // Create the controller
         controller = new EnvironmentStoreController(this, map);
         
         pack();
@@ -120,6 +122,24 @@ public class EnvironmentStore extends JFrame {
      */
     public final MenuBar getTopMenuBar() {
         return menuBar;
+    }
+    
+    /**
+     * Returns the mapTable
+     *
+     * @return The mapTable.
+     */
+    public final JTable getMapTable() {
+        return mapTable;
+    }
+    
+    /**
+     * Returns the PopupMenu
+     *
+     * @return The PopupMenu.
+     */
+    public final RightClickPopup getRightClickPopup() {
+        return popup;
     }
     
     /**
