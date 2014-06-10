@@ -47,11 +47,19 @@ public class MapPreviewController extends AbstractMapController {
 		
 		for (Zone z : getMap().getZones()) {
 	        Rectangle2D roomBox = z.getBoundingbox().getRectangle();
-	        List<Rectangle2D> newblocks = new ArrayList<Rectangle2D>();
 	        
-	        
+        	double x = roomBox.getMinX();
+        	double y = roomBox.getMinY() + 2;
+        	double roomsizeX = roomBox.getMinX() + roomBox.getWidth();
+        	
 	        for (BlockColor color : z.getBlocks()) {
-	            Rectangle2D newpos = findFreePlace(roomBox, newblocks);
+	        	if (x < roomsizeX - 2) {
+	        		x = x + 2;
+	        	} else {
+	        		x = roomBox.getMinX() + 2;
+	        		y = y + 3;
+	        	}
+	            Rectangle2D newpos = new Rectangle2D.Double(x, y, ViewBlock.BLOCK_SIZE, ViewBlock.BLOCK_SIZE);
 	            Point2D point = new Point2D.Double(newpos.getX(), newpos.getY());
 	            ViewBlock block = new ViewBlock(0, color, point);
 	            blocks.add(block);
@@ -84,40 +92,4 @@ public class MapPreviewController extends AbstractMapController {
 		mri.validate();
 		mri.repaint();
 	}
-	
-
-    /**
-     * find an unoccupied position for a new block in the given room, where the given list of blocks are already in that
-     * room. Basically this algorithm picks random points till a free position is found.
-     * 
-     * @param room
-     * @param blocks
-     */
-    private static Rectangle2D findFreePlace(Rectangle2D room, List<Rectangle2D> blocks) {
-        Rectangle2D block = null;
-        // max number of retries
-        int retryCounter = 100;
-        boolean blockPlacedOK = false;
-        while (!blockPlacedOK) {
-            double x = room.getMinX() + room.getWidth() * Math.random();
-            double y = room.getMinY() + room.getHeight() * Math.random();
-            block = new Rectangle2D.Double(x, y, ViewBlock.BLOCK_SIZE, ViewBlock.BLOCK_SIZE);
-
-            blockPlacedOK = room.contains(block);
-            for (Rectangle2D bl : blocks) {
-                /*
-                 * 2 blocks don't overlap if either their X or Y pos differs at least 2*SIZE.
-                 */
-                boolean noXoverlap = Math.abs(bl.getCenterX() - x) >= 2;
-                boolean noYoverlap = Math.abs(bl.getCenterY() - y) >= 2;
-                boolean noOverlap = noXoverlap || noYoverlap;
-                blockPlacedOK = blockPlacedOK && noOverlap;
-            }
-            if (retryCounter-- == 0 && !blockPlacedOK) {
-                throw new IllegalStateException("room is too small to fit more blocks");
-            }
-        }
-        return block;
-    }
-
 }
