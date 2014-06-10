@@ -429,14 +429,15 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     }
 
     private void checkIfDestinationVacant(double destX, double destY) throws DestinationOccupiedException {
-        Iterable<Object> objects = getSpace().getObjectsAt(destX, destY);
+        if(BW4TEnvironment.getInstance().isCollisionEnabled()) {
+            Iterable<Object> objects = getSpace().getObjectsAt(destX, destY);
 
-        for (Object el : objects) {
-            if (el instanceof IRobot) {
-                throw new DestinationOccupiedException("Grid [" + destX + "," + destY + "] is occupied by " + el);
+            for (Object el : objects) {
+                if (el instanceof IRobot) {
+                    throw new DestinationOccupiedException("Grid [" + destX + "," + destY + "] is occupied by " + el);
+                }
             }
         }
-
     }
 
 

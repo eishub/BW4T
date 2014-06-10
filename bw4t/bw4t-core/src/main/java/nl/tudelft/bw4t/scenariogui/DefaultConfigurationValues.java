@@ -13,7 +13,8 @@ public enum DefaultConfigurationValues {
     DEFAULT_CLIENT_PORT("2000"),
     USE_GUI("FALSE"),
     USE_GOAL("TRUE"),
-    MAP_FILE("");
+    MAP_FILE(""),
+    COLLISIONS_ENABLED("TRUE");
 
     private String value;
 
