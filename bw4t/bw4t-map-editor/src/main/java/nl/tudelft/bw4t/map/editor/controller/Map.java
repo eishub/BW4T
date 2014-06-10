@@ -28,12 +28,20 @@ import nl.tudelft.bw4t.map.editor.ExtensiveEditor;
 import nl.tudelft.bw4t.map.editor.controller.ColorSequence;
 import nl.tudelft.bw4t.map.editor.controller.Room;
 
-
 /**
  * This holds the map that the user designed. This is an abstract map contianing
  * only number of rows and columns, do not confuse with {@link NewMap}.
  */
 public class Map implements TableModel {
+	/**
+	 * Walls the door can be on, used in the Node class.
+	 */
+	public enum DoorDirection {
+		NORTH,
+		EAST,
+		SOUTH,
+		WEST
+	}
 
     /** basic size of the map */
     private int rows;
@@ -347,12 +355,70 @@ public class Map implements TableModel {
 
         return map;
     }
-    public Node[][] createRandomGrid(int rows, int cols) {
+    public Node[][] createRandomGrid(int rows, int cols, int roomCount) {
     	assert rows > 0 && cols > 0 : "The amount of rows and colums must be"
     		+ " greater than 0.";
     	Node[][] grid = new Node[rows][cols];
     	initGrid(grid);
+    	createRooms(grid);
+    	int amountPossibleRooms = countRooms(grid);
+    	assert amountPossibleRooms >= roomCount : "The amount of rooms wanted"
+    		+ " cannot be higher than the amount of rooms possible.";
+    	List<Node> allRooms = getRooms(grid);
+    	randomizeRooms(allRooms, amountPossibleRooms - roomCount);
+    	randomizeDoorDirs(allRooms);
     	return grid;
+    }
+    private void randomizeDoorDirs(List<Node> rooms) {
+    	for (Node n : rooms) {
+    		Random r = new Random(System.currentTimeMillis());
+    		n.setDir(n.getFreeDirs().get(r.nextInt(n.getFreeDirs().size())));
+    	}
+    }
+    private void randomizeRooms(List<Node> rooms, int changedRooms) {
+    	List<Zone.Type> typeList = new ArrayList<Zone.Type>();
+    	typeList.add(Zone.Type.CORRIDOR);
+    	typeList.add(Zone.Type.CHARGINGZONE);
+    	typeList.add(Zone.Type.BLOCKADE);
+    	Random typeSelector = new Random(System.currentTimeMillis());
+    	for (int i = 0; i < changedRooms; i++) {
+    		Random r = new Random(System.currentTimeMillis());
+    		Node n = rooms.remove(r.nextInt(rooms.size()));
+    		n.setType(typeList.get(typeSelector.nextInt(3)));
+    	}
+    }
+    private List<Node> getRooms(Node[][] grid) {
+    	List<Node> l = new LinkedList<Node>();
+    	for (int i = 0; i < grid.length; i++) {
+    		for (int j = 0; j < grid[0].length; j++) {
+    			if (grid[i][j].getType() == Zone.Type.ROOM) {
+    				l.add(grid[i][j]);
+    			}
+    		}
+    	}
+    	return l;
+    }
+    private int countRooms(Node[][] grid) {
+    	int count = 0;
+    	for (int i = 0; i < grid.length; i++) {
+    		for (int j = 0; j < grid[0].length; j++) {
+    			if (grid[i][j].getType() == Zone.Type.ROOM) {
+    				count++;
+    			}
+    		}
+    	}
+    	return count;
+    }
+    private void createRooms(Node[][] grid) {
+    	int lastCol = grid[0].length - 1;
+    	int lastRow = grid.length - 1;
+    	for (int i = 1; i < lastRow; i++) {
+    		for (int j = 1; j < lastCol; j++) {
+    			if (i % 2 == 1) {
+    				grid[i][j].setType(Zone.Type.ROOM);
+    			}
+    		}
+    	}
     }
     private void initGrid(Node[][] grid) {
     	for (int i = 0; i < grid.length; i++) {
@@ -368,8 +434,8 @@ public class Map implements TableModel {
     	configureInnerNodes(grid);
     }
     private void configureCorners(Node[][] grid) {
-    	int lastCol = grid.length - 1;
-    	int lastRow = grid[0].length - 1;
+    	int lastCol = grid[0].length - 1;
+    	int lastRow = grid.length - 1;
     	grid[0][0].setNorth(null);
     	grid[0][0].setWest(null);
     	grid[lastRow][0].setSouth(null);
@@ -380,8 +446,8 @@ public class Map implements TableModel {
     	grid[lastRow][lastCol].setSouth(null);
     }
     private void configureBorders(Node[][] grid) {
-    	int lastCol = grid.length - 1;
-    	int lastRow = grid[0].length - 1;
+    	int lastCol = grid[0].length - 1;
+    	int lastRow = grid.length - 1;
     	// Connect upper and lower rows.
     	for (int i = 1; i < lastCol; i++) {
     		grid[0][i].setNorth(null);
@@ -418,8 +484,8 @@ public class Map implements TableModel {
     	}
     }
     private void configureInnerNodes(Node[][] grid) {
-    	int lastCol = grid.length - 1;
-    	int lastRow = grid[0].length - 1;
+    	int lastCol = grid[0].length - 1;
+    	int lastRow = grid.length - 1;
     	for (int i = 1; i < lastRow; i++) {
     		for (int j = 1; j < lastCol; j++) {
     			grid[i][j].setNorth(grid[i - 1][j]);
@@ -665,9 +731,9 @@ public class Map implements TableModel {
     	 */
     	private Zone.Type type;
     	/**
-    	 * The cluster this node belongs to.
+    	 * The orientation of the door if the node represents a room.
     	 */
-    	private int clusterId = -1;
+    	private Map.DoorDirection dir = Map.DoorDirection.NORTH;
     	/**
     	 * Constructs the Node object with only the type of the room
     	 * the node is representing.
@@ -675,23 +741,6 @@ public class Map implements TableModel {
     	 */
     	public Node(Zone.Type t) {
     		type = t;
-    	}
-    	/**
-    	 * Constructs the node object with the type of room known as
-    	 * well as a list of the neighbours
-    	 * @param t The type of room this node should represent.
-    	 * @param list The list of neighbours, with the northern one
-    	 * on the first position, the eastern one on the second, the southern
-    	 * one on the third, and the western one on the fourth.
-    	 */
-    	public Node(Zone.Type t, List<Node> list) {
-    		assert list.size() == 4 : "Please use a list containing exactly"
-    				+ " four elements.";
-    		type = t;
-    		north = list.get(0);
-    		east = list.get(1);
-    		south = list.get(2);
-    		west = list.get(3);
     	}
 		public Node getNorth() {
 			return north;
@@ -723,11 +772,31 @@ public class Map implements TableModel {
 		public void setType(Zone.Type type) {
 			this.type = type;
 		}
-		public int getClusterId() {
-			return clusterId;
+		public Map.DoorDirection getDir() {
+			return dir;
 		}
-		public void setClusterId(int clusterId) {
-			this.clusterId = clusterId;
+		public void setDir(Map.DoorDirection dir) {
+			this.dir = dir;
+		}
+		public List<Map.DoorDirection> getFreeDirs() {
+			List<Map.DoorDirection> dirList = new ArrayList<Map.DoorDirection>();
+			if (north != null && north.isNotBlocking()) {
+				dirList.add(Map.DoorDirection.NORTH);
+			}
+			if (east != null && east.isNotBlocking()) {
+				dirList.add(Map.DoorDirection.EAST);
+			}
+			if (south != null && south.isNotBlocking()) {
+				dirList.add(Map.DoorDirection.SOUTH);
+			}
+			if (west != null && west.isNotBlocking()) {
+				dirList.add(Map.DoorDirection.WEST);
+			}
+			return dirList;
+		}
+		public boolean isNotBlocking() {
+			return type == Zone.Type.CHARGINGZONE ||
+					type == Zone.Type.CORRIDOR;
 		}
     }
 }
