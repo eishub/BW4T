@@ -112,7 +112,7 @@ public class EpartnerController {
 	 * @param epf is the Epartnerframe the values are taken from.
 	 */
 	public void updateConfig(EpartnerFrame epf) {
-		epConfig.setEpartnerName(epf.getName());
+		epConfig.setEpartnerName(epf.getEpartnerName());
 		epConfig.setEpartnerAmount(epf.getEpartnerAmount());
 		epConfig.setGps(epf.getGPS());
 		epConfig.setForgetMeNot(epf.getForgetMeNot());

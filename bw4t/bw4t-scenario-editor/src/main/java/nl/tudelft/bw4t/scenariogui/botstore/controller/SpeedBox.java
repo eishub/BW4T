@@ -31,6 +31,6 @@ public class SpeedBox implements ActionListener {
             speedSlider.setEnabled(false);
             speedSlider.setValue(100);
         }
-        view.getDataObject().setMoveSpeedHandicap(view.getmovespeedCheckbox().isSelected());
+        view.getTempBotConfig().setMoveSpeedHandicap(view.getmovespeedCheckbox().isSelected());
     }
 }
