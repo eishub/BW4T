@@ -19,11 +19,12 @@ import nl.tudelft.bw4t.agent.EntityType;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.botstore.controller.BotController;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
  * BotEditorPanel which serves as the content pane for the BotEditor frame
  */
-public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
+public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 
     private static final long serialVersionUID = 1850617931893202292L;
 
@@ -72,13 +73,13 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
 
 	private JLabel batteryUseValueLabel = new JLabel("0");
 
-	private BotConfig dataObject = new BotConfig();
-
 	private BotEditor botEditor;
 	
-	private BW4TClientConfig model;
-	
 	private BotController controller;
+	
+	private MainPanel mainpanel;
+	
+	private BW4TClientConfig clientconfig;
 
 	/**
 	 * Create the botEditorPanel.
@@ -89,6 +90,8 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
 		setLayout(new BorderLayout(20, 20));
 		
 		this.setController(controller);
+		mainpanel = controller.getMainPanel();
+		clientconfig = controller.getBW4TClientConfig();
 
 		createBotInfoPanel();
 		createBotCheckablesPanel();
@@ -575,8 +578,20 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
 		return botEditor;
 	}
 	
-	public BW4TClientConfig getModel() {
-	    return model;
+	/**
+	 * Return the MainPanel.
+	 * @return mainpanel
+	 */
+	public MainPanel getMainPanel() {
+		return mainpanel;
+	}
+	
+	/**
+	 * Return the BW4TClientConfig
+	 * @return cc
+	 */
+	public BW4TClientConfig getBW4TClientConfig() {
+		return clientconfig;
 	}
 	
 	/**
@@ -584,6 +599,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
 	 */
 	public void updateView() {
 		botNameField.setText(controller.getBotName());
+		
 		botAmountTextField.setText("" + controller.getBotAmount());
 		gripperCheckbox.setSelected(controller.getGripperHandicap());
 		colorblindCheckbox.setSelected(controller.getColorBlindHandicap());
@@ -598,6 +614,25 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
 		batterySlider.setValue(controller.getBotBatteryCapacity());
 	}
 	
+	botConfig.setBotName(bep.getBotName());
+	botConfig.setBotController(EntityType.getType((String) bep
+			.getBotControllerSelector()
+			.getSelectedItem()));
+	botConfig.setBotAmount(bep.getBotAmount());
+	botConfig.setBotSize(bep.getBotSize());
+	botConfig.setBotSpeed(bep.getBotSpeed());
+	botConfig.setBotBatteryCapacity(bep.getBotBatteryCapacity());
+	botConfig.setGrippers(bep.getGrippers());
+	botConfig.setBatteryEnabled(bep.isBatteryEnabled());
+	botConfig.setColorBlindHandicap(bep.getColorBlindHandicap());
+	botConfig.setGripperHandicap(bep.getGripperHandicap());
+	botConfig.setMoveSpeedHandicap(bep.getMoveSpeedHandicap());
+	botConfig.setSizeOverloadHandicap(bep.getSizeOverloadHandicap());
+	botConfig.setReferenceName(bep.getReferenceName());
+	botConfig.setFileName(bep.getFileName());
+	botConfig.setBotBatteryDischargeRate(bep.getBotBatteryDischargeRate());
+	
+	
 	/**
 	 * @return the current BotController
 	 */
@@ -607,6 +642,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
 	
 	/**
 	 * Set the current BotStoreController
+	 * @param bsc 
 	 */
 	public void setController(BotController bsc) {
 		this.controller = bsc;
