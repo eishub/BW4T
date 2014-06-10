@@ -33,6 +33,8 @@ public abstract class AbstractMenuOption implements ActionListener {
 
 	// made a variable for this so we can call it during testing
 	private JFileChooser currentFileChooser;
+	
+	private boolean fileChooserApprove = false;
 
 	/**
 	 * Constructs a menu option object.
@@ -114,18 +116,36 @@ public abstract class AbstractMenuOption implements ActionListener {
     }
 
 	/**
+	 * Displays a file chooser and saves the response in fileChooserApprove.
+	 */
+	public void setFileChooserApprove() {
+		currentFileChooser = getCurrentFileChooser();
+		
+		/** Adds an xml filter for the file chooser: */
+        currentFileChooser.setFileFilter(FileFilters.xmlFilter());
+        
+		fileChooserApprove = currentFileChooser
+		        .showDialog(getController().getMainView(), "Save Scenario") == JFileChooser.APPROVE_OPTION;
+	}
+	
+	/**
+	 * Returns whether APPROVE_OPTION was returned.
+	 * 
+	 * @return fileChooserApprove 
+	 */
+	public boolean getFileChooserApprove() {
+		return fileChooserApprove;
+	}
+	
+	/**
 	 * Gets the path to save the file to from the user via a file chooser.
 	 * @return The path to save the file, null if the user closed the file chooser.
 	 */
 	private String getPathToSaveFromUser() {
 	    String path = null;
-        currentFileChooser = getCurrentFileChooser();
 
-        /** Adds an xml filter for the file chooser: */
-        currentFileChooser.setFileFilter(FileFilters.xmlFilter());
-
-        if (currentFileChooser
-                .showDialog(getController().getMainView(), "Save Scenario") == JFileChooser.APPROVE_OPTION) {
+	    setFileChooserApprove();
+        if (fileChooserApprove) {
             File file = currentFileChooser.getSelectedFile();
 
             path = file.getAbsolutePath();
