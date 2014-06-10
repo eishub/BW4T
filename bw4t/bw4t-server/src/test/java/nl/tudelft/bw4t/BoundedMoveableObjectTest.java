@@ -12,7 +12,7 @@ import static org.mockito.Mockito.when;
 
 import java.awt.geom.Rectangle2D;
 
-import nl.tudelft.bw4t.doors.Door;
+import nl.tudelft.bw4t.model.doors.Door;
 
 import org.junit.After;
 import org.junit.Before;
