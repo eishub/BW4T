@@ -3,8 +3,6 @@ package nl.tudelft.bw4t.scenariogui.botstore.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JSlider;
-
 /**
  * Handles actions of the walkingcheckbox
  */

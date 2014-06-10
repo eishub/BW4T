@@ -50,25 +50,8 @@ class SaveButton implements ActionListener {
 				if (name.matches(nonAlphaNumericRegex) || f.exists()) {
 					if (botName.length() > 0) {
 						if (botName.matches(nonAlphaNumericRegex)) {
-							view.getDataObject().setBotName(view.getBotName());
-							view.getDataObject().setBotController(
-									EntityType.getType((String) view
-											.getBotControllerSelector()
-											.getSelectedItem()));
-							view.getDataObject().setBotAmount(view
-													.getBotAmount());
-							view.getDataObject().setBotSize(view.getBotSize());
-							view.getDataObject().setBotSpeed(view.getBotSpeed());
-							view.getDataObject().setBotBatteryCapacity(view.getBotBatteryCapacity());
-							view.getDataObject().setGrippers(view.getGrippers());
-							view.getDataObject().setBatteryEnabled(view.isBatteryEnabled());
-							view.getDataObject().setColorBlindHandicap(view.getColorBlindHandicap());
-							view.getDataObject().setGripperHandicap(view.getGripperHandicap());
-							view.getDataObject().setMoveSpeedHandicap(view.getMoveSpeedHandicap());
-							view.getDataObject().setSizeOverloadHandicap(view.getSizeOverloadHandicap());
-							view.getDataObject().setReferenceName(view.getReferenceName());
-							view.getDataObject().setFileName(view.getFileName());
-
+				
+							view.getBotController().updateConfig(view);
 							updateBotTable();
 
 							view.getBotEditor().dispose();
@@ -104,7 +87,6 @@ class SaveButton implements ActionListener {
 							+ "File names should end in .goal.");
 		}
 		
-		view.getBotStoreController().updateConfig(view);
 		view.dispose();
 	}
 
@@ -112,16 +94,16 @@ class SaveButton implements ActionListener {
 	 * Updates the bot list in the scenario editor.
 	 */
 	private void updateBotTable() {
-		view.getBotEditor().getParent().getEntityPanel().getBotTableModel()
-				.setRowCount(0);
-		int rows = view.getModel().getBots().size();
+		view.getMainPanel().getEntityPanel().getBotTableModel().setRowCount(0);
+		
+		int rows = view.getBW4TClientConfig().getBots().size();
 
 		for (int i = 0; i < rows; i++) {
-			BotConfig botConfig = view.getModel().getBot(i);
+			BotConfig botConfig = view.getBW4TClientConfig().getBot(i);
 			Object[] newBotObject = {botConfig.getBotName(),
 					botConfig.getBotController().toString(),
 					botConfig.getBotAmount()};
-			view.getBotEditor().getParent().getEntityPanel().getBotTableModel()
+			view.getMainPanel().getEntityPanel().getBotTableModel()
 					.addRow(newBotObject);
 		}
 	}

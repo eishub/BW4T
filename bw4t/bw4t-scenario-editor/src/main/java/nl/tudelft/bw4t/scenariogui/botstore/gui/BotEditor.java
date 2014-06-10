@@ -7,6 +7,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import nl.tudelft.bw4t.scenariogui.botstore.controller.BotController;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
  * This class serves as frame for the BotEditorPanel
@@ -20,12 +21,16 @@ public class BotEditor extends JFrame {
     /** the name of the window */
     private String windowName = "Bot Editor";
     
+    private MainPanel mainpanel;
+    
     /**
      * creates the BotEditor frame
      * @param bc the BotController in control of this frame
      */
   
     public BotEditor(BotController bc) {
+    	mainpanel = bc.getMainPanel();
+    	
         setLookAndFeel();
         setTitle(windowName);
         setResizable(false);
@@ -62,5 +67,13 @@ public class BotEditor extends JFrame {
             // pass
         }
     }
+    
+    /**
+	 * Return the MainPanel.
+	 * @return mainpanel
+	 */
+	public MainPanel getMainPanel() {
+		return mainpanel;
+	}
 }
 

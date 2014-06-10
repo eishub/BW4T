@@ -1,6 +1,5 @@
 package nl.tudelft.bw4t.scenariogui.botstore.controller;
 
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.HashSet;
@@ -8,6 +7,8 @@ import java.util.Set;
 
 import javax.swing.JFileChooser;
 
+import nl.tudelft.bw4t.agent.EntityType;
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditor;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
@@ -32,14 +33,26 @@ public class BotController {
     private BotConfig botConfig;
     
     /**
+     * Create a MainPanel.
+     */
+    private MainPanel mp;
+    
+    /**
+     * Create a BW4TClientConfig.
+     */
+    private BW4TClientConfig clientconfig;
+    
+    /**
      * Create the BotStore controllers
      *
      *@param botEditor The parent view, used to call relevant functions by the event listeners
      *@param mainPanel the main panel
      *@param row Index of the bot in BW4TClientConfig
      */
-    public BotController(BotEditor botEditor, MainPanel mainPanel, int row) {
+    public BotController(BotEditor botEditor, MainPanel mainPanel, int row, BW4TClientConfig cc) {
     	botConfig = mainPanel.getClientConfig().getBot(row);
+    	mp = mainPanel;
+    	clientconfig = cc;
     }
     
     /**
@@ -170,19 +183,45 @@ public class BotController {
 	}
 	
 	/**
+	 * Return the MainPanel.
+	 * @return mp
+	 */
+	public MainPanel getMainPanel() {
+		return mp;
+	}
+	
+	/**
+	 * Return the BW4TClientConfig
+	 * @return config
+	 */
+	public BW4TClientConfig getBW4TClientConfig() {
+		return clientconfig;
+	}
+	
+	/**
 	 * Updates the bot config file with the values from the BotEditorPanel
 	 * 
 	 * @param bep is the BotEditorPanel the values are taken from.
 	 */
 	public void updateConfig(BotEditorPanel bep) {
-		botConfig.setBatteryEnabled(bep.isBatteryEnabled());
-		botConfig.setBotAmount(bep.getBotAmount());
-		botConfig.setBotBatteryCapacity(bep.getBotBatteryCapacity());
-		botConfig.setBotBatteryDischargeRate(bep.getBotBatteryDischargeRate());
 		botConfig.setBotName(bep.getBotName());
+		botConfig.setBotController(EntityType.getType((String) bep
+				.getBotControllerSelector()
+				.getSelectedItem()));
+		botConfig.setBotAmount(bep.getBotAmount());
 		botConfig.setBotSize(bep.getBotSize());
 		botConfig.setBotSpeed(bep.getBotSpeed());
+		botConfig.setBotBatteryCapacity(bep.getBotBatteryCapacity());
+		botConfig.setGrippers(bep.getGrippers());
+		botConfig.setBatteryEnabled(bep.isBatteryEnabled());
 		botConfig.setColorBlindHandicap(bep.getColorBlindHandicap());
+		botConfig.setGripperHandicap(bep.getGripperHandicap());
+		botConfig.setMoveSpeedHandicap(bep.getMoveSpeedHandicap());
+		botConfig.setSizeOverloadHandicap(bep.getSizeOverloadHandicap());
+		botConfig.setReferenceName(bep.getReferenceName());
+		botConfig.setFileName(bep.getFileName());
+		botConfig.setBotBatteryDischargeRate(bep.getBotBatteryDischargeRate());
+
 		for (BotStoreViewInterface bsvi: views) {
 			bsvi.updateView();
 		}
