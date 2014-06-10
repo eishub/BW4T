@@ -382,7 +382,7 @@ public class EntityPanelTest {
         assertFalse(editor.getController().getModel().compareBotConfigs(
                 editor.getController().getModel().getOldBots()));
         
-        editor.getController().getModel().updateBotConfigs();
+        editor.getController().getModel().updateOldBotConfigs();
         
         assertTrue(editor.getController().getModel().compareBotConfigs(
                 editor.getController().getModel().getOldBots()));
@@ -401,7 +401,7 @@ public class EntityPanelTest {
         assertFalse(editor.getController().getModel().compareEpartnerConfigs(
                 editor.getController().getModel().getOldEpartners()));
         
-        editor.getController().getModel().updateEpartnerConfigs();
+        editor.getController().getModel().updateOldEpartnerConfigs();
         
         assertTrue(editor.getController().getModel().compareEpartnerConfigs(
                 editor.getController().getModel().getOldEpartners()));
