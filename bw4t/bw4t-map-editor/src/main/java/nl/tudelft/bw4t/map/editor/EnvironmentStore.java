@@ -21,7 +21,7 @@ import nl.tudelft.bw4t.map.editor.gui.MenuBar;
 import nl.tudelft.bw4t.map.editor.gui.RightClickPopup;
 import nl.tudelft.bw4t.map.editor.gui.RoomCellEditor;
 import nl.tudelft.bw4t.map.editor.gui.RoomCellRenderer;
-import nl.tudelft.bw4t.map.editor.gui.SizeDialog;
+import nl.tudelft.bw4t.map.editor.gui.OldSizeDialog;
 import nl.tudelft.bw4t.map.editor.util.DefaultOptionPrompt;
 import nl.tudelft.bw4t.map.editor.util.OptionPrompt;
 
@@ -179,7 +179,7 @@ public class EnvironmentStore extends JFrame {
      * @param args Unused parameter
      */
     public static void main(String[] args) {
-        SizeDialog dialog = new SizeDialog();
+        OldSizeDialog dialog = new OldSizeDialog();
         if (JOptionPane.CLOSED_OPTION == JOptionPane.showOptionDialog(null,
                 dialog, "BW4T Map Editor - Map Size Dialog",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
