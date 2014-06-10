@@ -6,7 +6,6 @@ import java.io.File;
 
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
  * Handles actions of the SaveButton
@@ -14,8 +13,6 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 class SaveButton implements ActionListener {
 
 	private BotEditorPanel view;
-
-	private MainPanel mp;
 
 	/**
 	 * Constructor.
