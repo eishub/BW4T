@@ -698,7 +698,7 @@ public class Map implements TableModel {
 			this.south = south;
 		}
 		public Node getWest() {
-			return west;
+			return west; 
 		}
 		public void setWest(Node west) {
 			this.west = west;
