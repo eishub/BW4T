@@ -77,6 +77,7 @@ class SaveButton implements ActionListener {
                         Integer.parseInt(view.getBotAmountTextField().getText()));
         view.getTempBotConfig().setReferenceName(
                 view.getBotReferenceField().getText());
+        view.getTempBotConfig().setFileName(view.getFileNameField().getText());
 	}
 	
 	/**
