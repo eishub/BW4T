@@ -16,9 +16,10 @@ import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.startup.ConfigFile;
 import nl.tudelft.bw4t.client.startup.InitParam;
 import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.network.BW4TClientActions;
+import nl.tudelft.bw4t.network.BW4TServerActions;
+import nl.tudelft.bw4t.network.BW4TServerHiddenActions;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
-import nl.tudelft.bw4t.server.BW4TServerActions;
-import nl.tudelft.bw4t.server.BW4TServerHiddenActions;
 
 import org.apache.log4j.Logger;
 
@@ -27,6 +28,7 @@ import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
 import eis.exceptions.ManagementException;
 import eis.exceptions.NoEnvironmentException;
+import eis.exceptions.QueryException;
 import eis.exceptions.RelationException;
 import eis.iilang.Action;
 import eis.iilang.EnvironmentState;
@@ -399,10 +401,10 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
      * @param property
      *            , the property to query
      * @return the property's value
-     * @throws RemoteException
-     *             , if an exception occurs during the execution of a remote object call
+     * @throws QueryException the server was unable to query
+     * @throws RemoteException if an exception occurs during the execution of a remote object call
      */
-    public String queryProperty(String property) throws RemoteException {
+    public String queryProperty(String property) throws QueryException, RemoteException {
         return server.queryProperty(property);
     }
 

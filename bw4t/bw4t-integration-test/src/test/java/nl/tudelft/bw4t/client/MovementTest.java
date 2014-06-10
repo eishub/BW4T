@@ -1,5 +1,13 @@
 package nl.tudelft.bw4t.client;
 
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
+
+import javax.xml.bind.JAXBException;
+
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import repast.simphony.scenario.ScenarioLoadException;
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Translator;
 import eis.exceptions.ActException;
@@ -7,12 +15,6 @@ import eis.exceptions.ManagementException;
 import eis.exceptions.PerceiveException;
 import eis.iilang.Action;
 import eis.iilang.Parameter;
-import java.io.IOException;
-import javax.xml.bind.JAXBException;
-import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-import repast.simphony.scenario.ScenarioLoadException;
-
-import static org.junit.Assert.assertTrue;
 
 /**
  * We test if we can properly move around the environment and receive percepts.
@@ -38,11 +40,10 @@ public class MovementTest {
             ScenarioLoadException, JAXBException, InterruptedException {        
         String[] clientArgs = new String[] {
                 "-map", "Banana",
-                "-agentclass", "nl.tudelft.bw4t.agent.BW4TAgent",
                 "-agentcount", "2",
                 "-humancount", "0"};
-        nl.tudelft.bw4t.client.startup.Launcher.launch(clientArgs);
-        client = nl.tudelft.bw4t.client.startup.Launcher.getEnvironment();
+        nl.tudelft.bw4t.client.environment.Launcher.launch(clientArgs);
+        client = nl.tudelft.bw4t.client.environment.Launcher.getEnvironment();
         TestFunctions.setClient(client);
     }
 
