@@ -620,4 +620,56 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
 		controller.removeView(this);
 		//super.dispose();
 	}
+	
+	/**
+	 * This function enables/disables the battery slider
+	 * @param enabled Boolean: true if BatterySlider should be enabled
+	 * and false if BatterySlider should be disabled.
+	 */
+	public void setBatterySliderEnabled(boolean enabled) {
+		if (enabled) { 
+			batterySlider.setEnabled(true);
+		} else {
+			batterySlider.setEnabled(false);
+		}	
+	}
+	
+	/**
+	 * This function enables/disables the gripper slider
+	 * @param enabled Boolean: true if numberOfGrippersSlider should be enabled
+	 * and false if numberOfGrippersSlider should be disabled.
+	 */
+	public void setGripperSliderEnabled(boolean enabled) {
+		if (enabled) { 
+			numberOfGrippersSlider.setEnabled(true);
+		} else {
+			numberOfGrippersSlider.setEnabled(false);
+		}	
+	}
+	
+	/**
+	 * This function enables/disables the speed slider
+	 * @param enabled Boolean: true if speedSlider should be enabled
+	 * and false if speedSlider should be disabled.
+	 */
+	public void setSpeedSliderEnabled(boolean enabled) {
+		if (enabled) { 
+			speedSlider.setEnabled(true);
+		} else {
+			speedSlider.setEnabled(false);
+		}	
+	}
+	
+	/**
+	 * This function enables/disables the size slider
+	 * @param enabled Boolean: true if sizeSlider should be enabled
+	 * and false if sizeSlider should be disabled.
+	 */
+	public void setSizeSliderEnabled(boolean enabled) {
+		if (enabled) { 
+			sizeSlider.setEnabled(true);
+		} else {
+			sizeSlider.setEnabled(false);
+		}	
+	}
 }
