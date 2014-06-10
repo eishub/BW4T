@@ -1,9 +1,6 @@
 package nl.tudelft.bw4t.message;
 
-import eis.iilang.Function;
-import eis.iilang.Identifier;
-import eis.iilang.Numeral;
-import eis.iilang.Parameter;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -18,7 +15,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import static org.junit.Assert.assertTrue;
+import eis.iilang.Function;
+import eis.iilang.Identifier;
+import eis.iilang.Numeral;
+import eis.iilang.Parameter;
  
 /**
  * Tests if the MessageTranslator class is working correctly.
@@ -38,9 +38,9 @@ public class MessageTranslatorTest {
         private static final Identifier UNKNOWN_ID = new Identifier("unknown");
         private static final Numeral NUMBER_ID = new Numeral(NUMBER);
    
-        private String stringMessage;
-        private BW4TMessage bw4tMessage;
-        private Parameter param;
+        private final String stringMessage;
+        private final BW4TMessage bw4tMessage;
+        private final Parameter param;
         
         /**
          * Initialize the Message Translator class
@@ -65,16 +65,14 @@ public class MessageTranslatorTest {
         /**
          * Tests whether the old function converts the messages from String->Message correctly.
          */
-        @SuppressWarnings("deprecation")
 		@Test
         public void testStringToMessage() {
-        	assertTrue(MessageTranslator.translateMessageLegacy(stringMessage).equals(bw4tMessage));
+        	assertTrue(MessageTranslator.translateMessage(stringMessage).equals(bw4tMessage));
         }
         
         /**
          * Tests whether the old function converts the message from Message->String correctly.
          */
-        @SuppressWarnings("deprecation")
 		@Test
         public void testMessageToString() {
         	assertTrue(MessageTranslator.translateMessage(bw4tMessage).equals(stringMessage));
@@ -87,16 +85,7 @@ public class MessageTranslatorTest {
         public void testMessageToParameter() {
         	assertTrue(MessageTranslator.translateMessage(bw4tMessage, AGENT).equals(param));
         }
-        
-        /**
-         * Tests whether the results of the new function equals the old one.
-         */
-        @SuppressWarnings("deprecation")
-		@Test
-        public void testNewMap() {
-            assertTrue(MessageTranslator.translateMessage(stringMessage).equals(
-            		MessageTranslator.translateMessageLegacy(stringMessage)));
-        }
+       
        
         /**
          * Returns the list of parameters to test on.
