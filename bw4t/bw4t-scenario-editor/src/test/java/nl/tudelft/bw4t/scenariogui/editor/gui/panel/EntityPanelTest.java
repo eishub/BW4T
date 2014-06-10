@@ -467,7 +467,7 @@ public class EntityPanelTest {
 
 		BotEditor botEditor = new BotEditor(editor.getMainPanel(), 0,
 				editor.getController().getModel());
-		BotEditorPanel botEditorPanel = botEditor.getbPanel();
+		BotEditorPanel botEditorPanel = botEditor.getBoteditorPanel();
 		
 		botEditorPanel.getBotNameField().setText("TestBot");
 		botEditorPanel.getBotControllerSelector().setSelectedIndex(1);
