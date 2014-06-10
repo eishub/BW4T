@@ -18,6 +18,7 @@ public class EpartnerFrameTest {
 	
 	@Before
 	public final void setupEpartnerFrame() {
+		//TODO: These tests need to be fixed. 
         frame = new EpartnerFrame(new EpartnerController(new EPartnerConfig()));
         spyframe= spy(frame);
 	}

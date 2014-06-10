@@ -45,6 +45,7 @@ class ModifyBot implements ActionListener {
             return;
         }
         String data = (String) view.getEntityPanel().getBotTable().getModel().getValueAt(row, 0);
+        //TODO: This error did not come from the merge. Please fix so I can merge your branch with EnvironmentStore.
         new BotEditor(view, row, model);
     }
 }
