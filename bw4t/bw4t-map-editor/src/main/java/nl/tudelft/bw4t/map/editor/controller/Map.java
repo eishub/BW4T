@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -344,82 +347,92 @@ public class Map implements TableModel {
 
         return map;
     }
-    /**
-     * This method should create a random map from given row- and column
-     * sizes.
-     * @param rows The amount of rows in the map.
-     * @param cols The amount of columns in the map.
-     * @return
-     */
-    NewMap createRandomMap(int rows, int cols, int roomCount) {
-    	Node[][] map = createRandomGraph(rows, cols, roomCount);
-		return null;
+    public Node[][] createRandomGrid(int rows, int cols) {
+    	assert rows > 0 && cols > 0 : "The amount of rows and colums must be"
+    		+ " greater than 0.";
+    	Node[][] grid = new Node[rows][cols];
+    	initGrid(grid);
+    	return grid;
     }
-    /**
-     * This method returns a 2D array of nodes which
-     * should represent the random map in graph form.
-     */
-    private Node[][] createRandomGraph(int rows, int cols, int roomCount) {
-    	assert rows > 0 && cols > 0;
-    	// The map is one-indexed, and has another row and
-    	// column lying on the right of the map, this is easier for making the map.
-    	Node[][] map = new Node[rows + 2][cols + 2];
-    	fillBorders(map);
-    	initGrid(rows, cols, map);
-    	cluster(map, roomCount, rows, cols);
-    	return map;
-    }
-    private void cluster(Node[][] map, int roomCount, int rows, int cols) {
-    	Random r = new Random(System.currentTimeMillis());
-    	for (int i = 1; i <= roomCount; i++) {
-	    	int randRow = r.nextInt(rows) + 1;
-	    	int randCol = r.nextInt(cols) + 1;
-	    	Node selected = map[randRow][randCol];
-	    	if (isInnerBorder(selected)) {
-	    		selected.setClusterId(i);
-	    	}
-    	}
-    	
-    }
-    private boolean isInnerBorder(Node n) {
-    	return n.getNorth().getClusterId() == -1 || n.getEast().getClusterId() == -1
-    			|| n.getSouth().getClusterId() == -1
-    			|| n.getWest().getClusterId() == -1;
-    }
-    private void initGrid(int rows, int cols, Node[][] map) {
-    	// First initialize all the squares, then connect them.
-    	for (int i = 1; i <= rows; i++) {
-    		for (int j = 1; j <= cols; j++) {
-    			map[i][j] = new Node(Zone.Type.CORRIDOR);
-    			map[i][j].setClusterId(0);
+    private void initGrid(Node[][] grid) {
+    	for (int i = 0; i < grid.length; i++) {
+    		for (int j = 0; j < grid[0].length; j++) {
+    			grid[i][j] = new Node(Zone.Type.CORRIDOR);
     		}
     	}
-    	for (int i = 1; i <= rows; i++) {
-    		for (int j = 1; j <= cols; j++) {
-    			map[i][j].setNorth(map[i + 1][j]);
-    			map[i + 1][j].setSouth(map[i][j]);
-    			map[i][j].setEast(map[i][j + 1]);
-    			map[i][j + 1].setWest(map[i][j]);
-    			map[i][j].setSouth(map[i - 1][j]);
-    			map[i - 1][j].setNorth(map[i][j]);
-    			map[i][j].setWest(map[i][j - 1]);
-    			map[i][j - 1].setEast(map[i][j]);
+    	connectTiles(grid);
+    }
+    private void connectTiles(Node[][] grid) {
+    	configureCorners(grid);
+    	configureBorders(grid);
+    	configureInnerNodes(grid);
+    }
+    private void configureCorners(Node[][] grid) {
+    	int lastCol = grid.length - 1;
+    	int lastRow = grid[0].length - 1;
+    	grid[0][0].setNorth(null);
+    	grid[0][0].setWest(null);
+    	grid[lastRow][0].setSouth(null);
+    	grid[lastRow][0].setWest(null);
+    	grid[0][lastCol].setEast(null);
+    	grid[0][lastCol].setNorth(null);
+    	grid[lastRow][lastCol].setEast(null);
+    	grid[lastRow][lastCol].setSouth(null);
+    }
+    private void configureBorders(Node[][] grid) {
+    	int lastCol = grid.length - 1;
+    	int lastRow = grid[0].length - 1;
+    	// Connect upper and lower rows.
+    	for (int i = 1; i < lastCol; i++) {
+    		grid[0][i].setNorth(null);
+    		grid[0][i].setEast(grid[0][i + 1]);
+    		grid[0][i + 1].setWest(grid[0][i]);
+    		grid[0][i].setWest(grid[0][i - 1]);
+    		grid[0][i - 1].setEast(grid[0][i]);
+    		grid[0][i].setSouth(grid[1][i]);
+    		grid[1][i].setNorth(grid[0][i]);
+    		grid[lastRow][i].setSouth(null);
+    		grid[lastRow][i].setEast(grid[lastRow][i + 1]);
+    		grid[lastRow][i + 1].setWest(grid[lastRow][i]);
+    		grid[lastRow][i].setWest(grid[lastRow][i - 1]);
+    		grid[lastRow][i - 1].setEast(grid[lastRow][i]);
+    		grid[lastRow][i].setNorth(grid[lastRow][i - 1]);
+    		grid[lastRow][i - 1].setSouth(grid[lastRow][i]);
+    	}
+    	// Connect leftmost and rightmost columns.
+    	for (int i = 1; i < lastRow; i++) {
+    		grid[i][0].setWest(null);
+    		grid[i][0].setNorth(grid[i - 1][0]);
+    		grid[i - 1][0].setSouth(grid[i][0]);
+    		grid[i][0].setSouth(grid[i + 1][0]);
+    		grid[i + 1][0].setNorth(grid[i][0]);
+    		grid[i][0].setEast(grid[i][1]);
+    		grid[i][1].setWest(grid[i][0]);
+    		grid[i][lastCol].setEast(null);
+    		grid[i][lastCol].setNorth(grid[i - 1][lastCol]);
+    		grid[i - 1][lastCol].setSouth(grid[i][lastCol]);
+    		grid[i][lastCol].setSouth(grid[i + 1][lastCol]);
+    		grid[i + 1][lastCol].setNorth(grid[i][lastCol]);
+    		grid[i][lastCol].setWest(grid[i][lastCol - 1]);
+    		grid[i][lastCol - 1].setEast(grid[i][lastCol]);
+    	}
+    }
+    private void configureInnerNodes(Node[][] grid) {
+    	int lastCol = grid.length - 1;
+    	int lastRow = grid[0].length - 1;
+    	for (int i = 1; i < lastRow; i++) {
+    		for (int j = 1; j < lastCol; j++) {
+    			grid[i][j].setNorth(grid[i - 1][j]);
+    			grid[i - 1][j].setSouth(grid[i][j]);
+    			grid[i][j].setEast(grid[i][j + 1]);
+    			grid[i][j + 1].setWest(grid[i][j]);
+    			grid[i][j].setSouth(grid[i + 1][j]);
+    			grid[i + 1][j].setNorth(grid[i][j]);
+    			grid[i][j].setWest(grid[i][j - 1]);
+    			grid[i][j - 1].setEast(grid[i][j]);
     		}
     	}
     }
-    private void fillBorders(Node[][] map) {
-    	int lowestRow = map.length;
-    	int mostRightColumn = map[0].length;
-    	for (int i = 0; i < mostRightColumn; i++) {
-    		map[0][i] = new Node(Zone.Type.CORRIDOR);
-    		map[lowestRow - 1][i] = new Node(Zone.Type.CORRIDOR);
-    	}
-    	for (int i = 0; i < lowestRow; i++) {
-    		map[i][0] = new Node(Zone.Type.CORRIDOR);
-    		map[i][mostRightColumn - 1] = new Node(Zone.Type.CORRIDOR);
-    	}
-    }
-
     /**
      * Set all the render options of the map.
      * 
