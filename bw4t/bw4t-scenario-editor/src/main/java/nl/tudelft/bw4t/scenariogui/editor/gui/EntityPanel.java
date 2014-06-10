@@ -26,6 +26,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import nl.tudelft.bw4t.agent.EntityType;
+import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditor;
 import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
 
 /**
@@ -112,6 +113,11 @@ public class EntityPanel extends JPanel {
 	private JButton deleteEpartner = new JButton("Delete E-partner");
 
 	private static final int BOT_OPTION_PANEL_MARGIN_WIDTH = 8;	
+	
+	//This is just for the modifyBot/modifyEpartner test,
+	//to see if the bot/epartner store actually opened
+	private boolean bs = false;
+	private boolean es = false;
 
 	/**
 	 * Create an EntityPanel object.
@@ -360,28 +366,6 @@ public class EntityPanel extends JPanel {
 	}
 
 	/**
-	 * Returns the amount of bots.
-	 *
-	 * @return The amount of bots.
-	 */
-	public final int getBotCount() {
-		int numBots = 0;
-
-		for (int i = 0; i < botList.getRowCount(); i++) {
-			numBots += Integer.valueOf(botList.getValueAt(i, 2).toString());
-		}
-		return numBots;
-	}
-
-	/**
-	 * Updates the bot count on the EntityPanel.
-	 */
-	public final void updateBotCount() {
-		Integer bots = getBotCount();
-		botCountField.setText(bots.toString());
-	}
-
-	/**
 	 * Updates the bot count on the EntityPanel.
 	 * 
 	 * @param count The total bot count.
@@ -487,4 +471,21 @@ public class EntityPanel extends JPanel {
 
 		return isDefault;
 	}
+
+	public boolean isBotStore() {
+		return bs;
+	}
+
+	public void setBotStore(boolean bs) {
+		this.bs = bs;
+	}
+
+	public boolean isEpartnerStore() {
+		return es;
+	}
+
+	public void setEpartnerStore(boolean es) {
+		this.es = es;
+	}
+
 }
