@@ -1,19 +1,5 @@
 package nl.tudelft.bw4t.server.environment;
 
-import eis.eis2java.environment.AbstractEnvironment;
-import eis.exceptions.ActException;
-import eis.exceptions.AgentException;
-import eis.exceptions.EntityException;
-import eis.exceptions.ManagementException;
-import eis.exceptions.NoEnvironmentException;
-import eis.exceptions.PerceiveException;
-import eis.exceptions.RelationException;
-import eis.iilang.Action;
-import eis.iilang.EnvironmentState;
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
-
 import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,7 +20,7 @@ import nl.tudelft.bw4t.eis.EPartnerEntity;
 import nl.tudelft.bw4t.eis.RobotEntity;
 import nl.tudelft.bw4t.map.Entity;
 import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.model.blocks.EPartner;
+import nl.tudelft.bw4t.model.epartners.EPartner;
 import nl.tudelft.bw4t.model.robots.EntityFactory;
 import nl.tudelft.bw4t.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
@@ -50,6 +36,19 @@ import org.apache.log4j.Logger;
 import repast.simphony.context.Context;
 import repast.simphony.scenario.ScenarioLoadException;
 import repast.simphony.space.continuous.NdPoint;
+import eis.eis2java.environment.AbstractEnvironment;
+import eis.exceptions.ActException;
+import eis.exceptions.AgentException;
+import eis.exceptions.EntityException;
+import eis.exceptions.ManagementException;
+import eis.exceptions.NoEnvironmentException;
+import eis.exceptions.PerceiveException;
+import eis.exceptions.RelationException;
+import eis.iilang.Action;
+import eis.iilang.EnvironmentState;
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
+import eis.iilang.Percept;
 
 /**
  * The central environment which runs the data model and performs actions received from remote environments through the
