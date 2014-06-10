@@ -1,6 +1,6 @@
 package nl.tudelft.bw4t.model.robots;
 
-import nl.tudelft.bw4t.model.blocks.EPartner;
+import nl.tudelft.bw4t.model.epartners.EPartner;
 import nl.tudelft.bw4t.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;

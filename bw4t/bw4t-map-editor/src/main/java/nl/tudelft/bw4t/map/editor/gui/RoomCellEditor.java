@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.map.editor;
+package nl.tudelft.bw4t.map.editor.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -9,17 +9,16 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
-import nl.tudelft.bw4t.map.editor.model.Room;
+import nl.tudelft.bw4t.map.editor.controller.Room;
 
 /**
  * This is a cell editor for a room. It renders a table cell for the room. The
  * cell contains the room name (x,y numbers) and a ColorSequenceEditor.
  */
-@SuppressWarnings("serial")
-public class RoomCellEditor extends AbstractCellEditor implements
-        TableCellEditor {
+public class RoomCellEditor extends AbstractCellEditor implements TableCellEditor {
 
-    private Room room; // the room currently edited.
+	private static final long serialVersionUID = -6620921724261764896L;
+	private Room room; // the room currently edited.
     private ColorSequenceEditor colorEditor; // and the editor that we have
 
     @Override
