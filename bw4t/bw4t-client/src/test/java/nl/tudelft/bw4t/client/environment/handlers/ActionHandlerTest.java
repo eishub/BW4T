@@ -14,6 +14,7 @@ import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -28,6 +29,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.eq;
 
+@Ignore("Not yet implemented.")
 @RunWith(MockitoJUnitRunner.class)
 public class ActionHandlerTest {
     
