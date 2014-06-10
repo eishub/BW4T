@@ -17,6 +17,7 @@ import nl.tudelft.bw4t.map.editor.gui.ColorLegendaPanel;
 import nl.tudelft.bw4t.map.editor.gui.ColorSequencePanel;
 import nl.tudelft.bw4t.map.editor.gui.ExplanationPanel;
 import nl.tudelft.bw4t.map.editor.gui.MenuBar;
+import nl.tudelft.bw4t.map.editor.gui.RightClickPopup;
 import nl.tudelft.bw4t.map.editor.gui.RoomCellEditor;
 import nl.tudelft.bw4t.map.editor.gui.RoomCellRenderer;
 import nl.tudelft.bw4t.map.editor.gui.SizeDialog;
@@ -28,29 +29,29 @@ import nl.tudelft.bw4t.map.editor.util.OptionPrompt;
  * @author Rothweiler
  *
  */
-public class MapEditor extends JFrame {
-
+public class EnvironmentStore extends JFrame {
+	
 	private static final long serialVersionUID = 8572609341436634787L;
 
 	private Map map;
-
-	private String windowName = "BW4T Map Editor";
-
+	
+	private String windowName = "BW4T Extensive Map Editor";
+	
 	private ColorLegendaPanel legendaPanel;
-
+	
 	private ExplanationPanel explanationPanel;
-
+	
 	private final JTable mapTable;
-
+	
 	private JPanel roomsPanel;
-
+	
 	private ColorSequencePanel sequencePanel;
-
+	
 	private MenuBar menuBar;
+	
+	private RightClickPopup popup;
 
 	private static OptionPrompt option = new DefaultOptionPrompt();
-    
-    private JButton savebutton = new JButton("Save as Repast Map");
     
     /**
      * Create the MapEditor frame which will hold all the panels, tables and buttons.
@@ -58,7 +59,7 @@ public class MapEditor extends JFrame {
      * @param themap is a map that contains: rows, cols, entities, randomize.
      * 
      */
-    public MapEditor(Map themap) {
+    public EnvironmentStore(Map themap) {
         this.map = themap;
         
         setWindowTitle("Untitled");
@@ -88,27 +89,27 @@ public class MapEditor extends JFrame {
         mapTable.setRowHeight(55);
         mapTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
         
+        // Create the RightClickPopup
+        popup = new RightClickPopup(mapTable);
+
         // Create a roomsPanel that has both the mapTable and the sequencePanel.
         roomsPanel = new JPanel();
         roomsPanel.setLayout(new BoxLayout(roomsPanel, BoxLayout.Y_AXIS));
         roomsPanel.add(mapTable);
         roomsPanel.add(sequencePanel);
         
-        
         // Attach all Panels to the Editor.
         add(explanationPanel, BorderLayout.NORTH);
         add(roomsPanel, BorderLayout.CENTER);
         add(legendaPanel, BorderLayout.EAST);
-        add(savebutton, BorderLayout.SOUTH);
 
-        // attach listeners
-        savebutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                map.saveAsFile();
-            }
-
-        });
+//        // attach listeners
+//        savebutton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                map.saveAsFile();
+//            }
+//        });
 
         pack();
         setLocationRelativeTo(null);
@@ -123,7 +124,7 @@ public class MapEditor extends JFrame {
      */
     public static void showDialog(final Exception e, final String s) {
 
-        MapEditor.option.showMessageDialog(null, s + "\n" + e.toString());
+        EnvironmentStore.option.showMessageDialog(null, s + "\n" + e.toString());
     }
     
     /**
@@ -133,7 +134,7 @@ public class MapEditor extends JFrame {
      */
     public static void showDialog(final String s) {
 
-        MapEditor.option.showMessageDialog(null, s);
+        EnvironmentStore.option.showMessageDialog(null, s);
     }
     
     /**
@@ -187,7 +188,7 @@ public class MapEditor extends JFrame {
         if (dialog.isRandomMap()) {
             themap.saveAsFile();
         } else {
-            new MapEditor(themap);
+            new EnvironmentStore(themap);
         }
     }
 }

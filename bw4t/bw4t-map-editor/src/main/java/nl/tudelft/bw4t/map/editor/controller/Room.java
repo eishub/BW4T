@@ -50,7 +50,7 @@ public class Room {
      * determines the number, starting at 0.
      */
     public String toString() {
-        return "Room" + (char) (row + 65) + (column + 1);
+        return "Area" + (char) (row + 65) + (column + 1);
     }
 
     /**
