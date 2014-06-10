@@ -8,12 +8,11 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 
-import nl.tudelft.bw4t.eis.RobotEntity;
-import nl.tudelft.bw4t.model.robots.AgentRecord;
+import nl.tudelft.bw4t.server.eis.RobotEntity;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.model.robots.AgentRecord;
 
 import org.apache.log4j.Appender;
-import org.apache.log4j.FileAppender;
 import org.apache.log4j.Layout;
 import org.apache.log4j.Logger;
 import org.apache.log4j.RollingFileAppender;
