@@ -2,7 +2,6 @@ package nl.tudelft.bw4t.scenariogui.botstore.controller;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.text.DecimalFormat;
 
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 
@@ -22,33 +21,13 @@ class SpeedSlider extends MouseAdapter {
         this.view = pview;
     }
     
-    @Override
-    public void mouseReleased(MouseEvent arg0) {
-    	if (view.getBatteryEnabledCheckbox().isSelected()) {
-	        int speed = view.getSpeedSlider().getValue();
-	        int size = view.getSizeSlider().getValue();
-	        double res = 0.002 * size + 0.000025 * speed;
-	        DecimalFormat df = new DecimalFormat("#.######");
-	        String value = df.format(res);
-	        view.getBatteryUseValueLabel().setText(padString(value));
-    	}
-    	view.getDataObject().setBotSpeed(view.getSpeedSlider().getValue());
-    }
-    
     /**
-     * Pad the string with zeros (the string with
-     * the value for the battery usage is aligned with
-     * the sliders, and will cause the sliders to resize
-     * when changed. This function keeps the string at a
-     * certain length, so the sliders aren't resized anymore).
-     * @param value The string to be padded.
-     * @return The padded string.
+     * Update the BatteryUseValueLabel with the correct value when the slider is moved.
+     * @param arg0 MouseEvent
      */
-    public String padString(String value) {
-        StringBuffer buf = new StringBuffer();
-        while (value.length() < 8) {
-            buf.append("0");
-        }
-        return buf.toString();
+    @Override 
+    public void mouseReleased(MouseEvent arg0) {
+    	BotController currentController = view.getBotController();
+    	currentController.setNewBatteryValue(view.getBotSpeed(), view.getBotSize(), view);
     }
 }

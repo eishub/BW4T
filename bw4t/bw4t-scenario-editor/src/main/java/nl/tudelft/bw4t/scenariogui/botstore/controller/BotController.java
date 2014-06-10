@@ -1,6 +1,8 @@
 package nl.tudelft.bw4t.scenariogui.botstore.controller;
 
+import java.awt.event.MouseEvent;
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -210,4 +212,58 @@ public class BotController {
     public double getDischargeRate(BotConfig bot) {
 		return 0.0002 * bot.getBotSize() + 0.0004 * bot.getBotSpeed();
     }     
+    
+    /**
+     
+    public void getNewBatteryValue(BotEditorPanel view) {
+    	if (bot.isBatteryEnabled()) {
+	        int speed = bot.getBotSpeed();
+	        int size = bot.getBotSize();
+	        double res = 0.002 * size + 0.000025 * speed;
+	        DecimalFormat df = new DecimalFormat("#.######");
+	        String value = df.format(res);
+	        view.getBatteryUseValueLabel().setText(padString(value));
+    	}
+    	view.getDataObject().setBotSpeed(view.getSpeedSlider().getValue());
+    }*/
+    
+    /** 
+     * When the speed or size slider is moved, calculate the new battery discharge rate
+     * and update the BatteryUseValueLabel
+     * @param botSpeed the (new) bot speed
+     * @param botSize the (new) bot size
+     * @param view the BotEditorPanel
+     */
+    public void setNewBatteryValue(int botSpeed, int botSize, BotEditorPanel view) {
+    	if(view.isBatteryEnabled()) {
+    		double res = 0.002 * botSize + 0.000025 * botSize;
+    		DecimalFormat df = new DecimalFormat("#.######");
+	        String value = df.format(res);
+	        view.getBatteryUseValueLabel().setText(padString(value));
+    	}
+    }
+    
+    /**
+     * Pad the string with zeros (the string with
+     * the value for the battery usage is aligned with
+     * the sliders, and will cause the sliders to resize
+     * when changed. This function keeps the string at a
+     * certain length, so the sliders aren't resized anymore).
+     * @param value The string to be padded.
+     * @return The padded string.
+     */
+    public String padString(String value) {
+        StringBuffer buf = new StringBuffer();
+        while (value.length() < 8) {
+            buf.append("0");
+        }
+        return buf.toString();
+    }
+    
+    
+    
+    
+    
+    
+    
 }
