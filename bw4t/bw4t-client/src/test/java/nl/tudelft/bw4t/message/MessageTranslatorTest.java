@@ -1,9 +1,6 @@
 package nl.tudelft.bw4t.message;
 
-import eis.iilang.Function;
-import eis.iilang.Identifier;
-import eis.iilang.Numeral;
-import eis.iilang.Parameter;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -18,7 +15,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import static org.junit.Assert.assertTrue;
+import eis.iilang.Function;
+import eis.iilang.Identifier;
+import eis.iilang.Numeral;
+import eis.iilang.Parameter;
  
 /**
  * Tests if the MessageTranslator class is working correctly.
