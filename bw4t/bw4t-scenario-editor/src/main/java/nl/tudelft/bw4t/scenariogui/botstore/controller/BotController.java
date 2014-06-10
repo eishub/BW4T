@@ -1,21 +1,23 @@
 package nl.tudelft.bw4t.scenariogui.botstore.controller;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
-import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import javax.swing.JFileChooser;
+
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditor;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotStoreViewInterface;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
-import nl.tudelft.bw4t.scenariogui.epartner.gui.EPartnerViewInterface;
+import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 
 /**
  * The BotStoreController class is in charge of all events that happen on the BotStoreGUI. It delegates all events
  * to classes implementing ActionListener, sending the view along as an argument.
  */
-public class BotStoreController {
+public class BotController {
 
     /**
      * Create a set with all views.
@@ -31,11 +33,11 @@ public class BotStoreController {
      * Create the BotStore controllers
      *
      *@param botEditor The parent view, used to call relevant functions by the event listeners
-     *@param mainPanel
-     *@param model
+     *@param mainPanel the main panel
+     *@param row Index of the bot in BW4TClientConfig
      */
-    public BotStoreController(BotEditor botEditor, MainPanel mainPanel, BW4TClientConfig model) {
-    	botConfig = model;
+    public BotController(BotEditor botEditor, MainPanel mainPanel, int row) {
+    	botConfig = mainPanel.getClientConfig().getBot(row);
     }
     
     /**
@@ -171,72 +173,41 @@ public class BotStoreController {
 	 * @param bep is the BotEditorPanel the values are taken from.
 	 */
 	public void updateConfig(BotEditorPanel bep) {
-		botConfig.setBatteryEnabled(bep.getBatteryEnabled());
-		botConfig.setBotAmount(bep.getBotAmountTextField());
-		botConfig.setBotBatteryCapacity(newBatteryCapacity);
-		botConfig.setBotBatteryDischargeRate(newBatteryDischargeRate);
-		botConfig.setBotName(name);
-		botConfig.setBotSize(newSize);
-		botConfig.setBotSpeed(newSpeed);
-		botConfig.setColorBlindHandicap(bool);
+		botConfig.setBatteryEnabled(bep.isBatteryEnabled());
+		botConfig.setBotAmount(bep.getBotAmount());
+		botConfig.setBotBatteryCapacity(bep.getBotBatteryCapacity());
+		botConfig.setBotBatteryDischargeRate(bep.getBotBatteryDischargeRate());
+		botConfig.setBotName(bep.getBotName());
+		botConfig.setBotSize(bep.getBotSize());
+		botConfig.setBotSpeed(bep.getBotSpeed());
+		botConfig.setColorBlindHandicap(bep.getColorBlindHandicap());
 		for (BotStoreViewInterface bsvi: views) {
 			bsvi.updateView();
 		}
 	}
-    
-    /**
-     * Do we still need this? Or is it already calculated somewhere else?
-     * 
-    public double getDischargeRate() {
-		return 0.0002 * botSize + 0.0004 * botSpeed;
-    }
-    */ 
+	
+	/**
+	 * Open a Goal file
+
+	 * @param view the BotEditorPanel.
+	 */
+	@SuppressWarnings("static-access")
+	public void openGoalFile(BotEditorPanel view) {
+		JFileChooser jfc = new JFileChooser();
+		jfc.setFileFilter(FileFilters.goalFilter());
+		if (jfc.showOpenDialog(view) == jfc.APPROVE_OPTION) {
+			File f = jfc.getSelectedFile();
+			String path = f.getAbsolutePath();
+			view.getFile().setText(path);
+		}
+	}
+  
+	/**
+	 * Calculate the dischargeRate from a bot by using his size and speed.
+	 * @param bot The bot we want to know the discharge rate from.
+	 * @return discharge rate from that bot
+	 */
+    public double getDischargeRate(BotConfig bot) {
+		return 0.0002 * bot.getBotSize() + 0.0004 * bot.getBotSpeed();
+    }     
 }
-
-/**
- * DIT KAN GEDELETED WORDEN ALS ALLES WERKT - wendy
- * 
- * 
- * 
- * this.view = pview;
-
-        view.getBotEditorPanel().getResetButton().addActionListener(
-                new ResetButton(getMainView().getBotEditorPanel()));
-
-        view.getBotEditorPanel().getSaveButton().addActionListener(
-                new ApplyButton(getMainView().getBotEditorPanel()));
-
-        view.getBotEditorPanel().getSpeedSlider().addMouseListener(
-                new SpeedSlider(getMainView().getBotEditorPanel()));
-
-        view.getBotEditorPanel().getSizeSlider().addMouseListener(
-                new SizeSlider(getMainView().getBotEditorPanel()));
-
-        view.getBotEditorPanel().getBatterySlider().addMouseListener(
-                new BatterySlider(getMainView().getBotEditorPanel()));
-
-        view.getBotEditorPanel().getGripperCheckbox().addActionListener(
-                new GripperBox(getMainView().getBotEditorPanel()));
-
-        view.getBotEditorPanel().getColorblindCheckbox().addActionListener(
-                new ColorBox(getMainView().getBotEditorPanel()));
-
-        view.getBotEditorPanel().getsizeoverloadCheckbox().addActionListener(
-                new WalkingBox(getMainView().getBotEditorPanel()));
-
-        view.getBotEditorPanel().getmovespeedCheckbox().addActionListener(
-                new JumpBox(getMainView().getBotEditorPanel()));
-        
-        view.getBotEditorPanel().getCancelButton().addActionListener(
-                new CancelButton(getMainView()));
-        
-        view.getBotEditorPanel().getBatteryEnabledCheckbox().addActionListener(
-                new BatteryBox(getMainView().getBotEditorPanel()));
-        
-        view.getBotEditorPanel().getmovespeedCheckbox().addActionListener(
-                new SpeedBox(getMainView().getBotEditorPanel()));
-        
-        view.getBotEditorPanel().getFileButton().addActionListener(
-        		new GoalFileButton(getMainView().getBotEditorPanel()));
- */
-
