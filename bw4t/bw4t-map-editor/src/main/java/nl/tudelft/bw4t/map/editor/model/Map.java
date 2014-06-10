@@ -167,7 +167,7 @@ public class Map implements TableModel {
      * set the number of entities on the map.
      */
     public void setNumberOfEntities(int numberOfEntities) {
-        this.numberOfEntities = numberOfEntities;
+        this.numberOfEntities = numberOfEntities; 
     }
 
     /**
