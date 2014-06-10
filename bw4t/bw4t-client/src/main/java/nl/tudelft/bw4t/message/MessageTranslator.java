@@ -50,6 +50,7 @@ public class MessageTranslator {
         stringToMessage.put("are you close", new CommandRoomColorPlayer(MessageType.AREYOUCLOSE));
         stringToMessage.put("will you be long", new CommandRoomColorPlayer(MessageType.WILLYOUBELONG));
         stringToMessage.put("I am at a", new CommandColor(MessageType.ATBOX));
+        stringToMessage.put("I want to go to", new CommandRoom(MessageType.IWANTTOGO));
         
         stringToMessageEquals.put("yes", new CommandType(MessageType.YES));
         stringToMessageEquals.put("no", new CommandType(MessageType.NO));
@@ -63,9 +64,49 @@ public class MessageTranslator {
         stringToMessageEquals.put("I am far away", new CommandType(MessageType.FARAWAY));
         stringToMessageEquals.put("I am delayed", new CommandType(MessageType.DELAYED));
         
-        stringToMessage.put("I want to go to", new CommandRoom(MessageType.IWANTTOGO));
-        
-        
+        messageToString.put(MessageType.WHERESHOULDIGO, new CommandString("Where should I go?"));
+    	messageToString.put(MessageType.CHECKED, new CommandChecked());
+    	messageToString.put(MessageType.WHATCOLORSHOULDIGET, new CommandString("What color should I get?"));
+    	messageToString.put(MessageType.YES, new CommandString("yes"));
+    	messageToString.put(MessageType.NO, new CommandString("no"));
+    	messageToString.put(MessageType.IDO, new CommandString("I do"));
+    	messageToString.put(MessageType.IDONOT, new CommandString("I don't"));
+    	messageToString.put(MessageType.IDONOTKNOW, new CommandString("I don't know"));
+    	messageToString.put(MessageType.OK, new CommandOK());
+    	messageToString.put(MessageType.WAIT, new CommandString("wait"));
+    	messageToString.put(MessageType.ONTHEWAY, new CommandString("I am on the way"));
+    	messageToString.put(MessageType.ALMOSTTHERE, new CommandString("I am almost there"));
+    	messageToString.put(MessageType.FARAWAY, new CommandString("I am far away"));
+    	messageToString.put(MessageType.DELAYED, new CommandString("I am delayed"));
+    	messageToString.put(MessageType.COULDNOT, new CommandString("I couldn't"));
+    	messageToString.put(MessageType.GOINGTOROOM, new CommandAppendRoom("I am going to room "));
+    	messageToString.put(MessageType.ROOMISEMPTY, new CommandRoomIsEmpty());
+    	messageToString.put(MessageType.ISANYBODYGOINGTOROOM, new CommandInsertRoom("Is anybody going to room "));
+    	messageToString.put(MessageType.WHATISINROOM, new CommandInsertRoom("What is in room "));
+    	messageToString.put(MessageType.HASANYBODYCHECKEDROOM, new CommandInsertRoom("Has anybody checked room "));
+    	messageToString.put(MessageType.WHOISINROOM, new CommandInsertRoom("Who is in room "));
+    	messageToString.put(MessageType.INROOM, new CommandAppendRoom("I am in room "));
+    	messageToString.put(MessageType.GOINGTOROOM, new CommandGoingToRoom());
+    	messageToString.put(MessageType.HASCOLOR, new CommandHasColor());
+    	messageToString.put(MessageType.WHOHASABLOCK, new CommandInsertColor("Who has a ", " block?"));
+    	messageToString.put(MessageType.WENEED, new CommandInsertColor("We need a ", " block"));
+    	messageToString.put(MessageType.LOOKINGFOR, new CommandInsertColor("I am looking for a ", " block"));
+    	messageToString.put(MessageType.WILLGETCOLOR, new CommandWillGetColor());
+    	messageToString.put(MessageType.AMGETTINGCOLOR, new CommandAmGettingColor());
+    	messageToString.put(MessageType.WHEREISCOLOR, new CommandInsertColor("Where is a ", " block?"));
+    	messageToString.put(MessageType.ABOUTTODROPOFFBLOCK, new CommandInsertColor("I am about to drop off a ", " block"));
+    	messageToString.put(MessageType.DROPPEDOFFBLOCK, new CommandDroppedOffBlock());
+    	messageToString.put(MessageType.ROOMCONTAINS, new CommandRoomContains());
+    	messageToString.put(MessageType.ROOMCONTAINSAMOUNT, new CommandRoomContains());
+    	messageToString.put(MessageType.ATBOX, new CommandInsertColor("I am at a " , " block"));
+    	messageToString.put(MessageType.AMWAITINGOUTSIDEROOM, new CommandAmWaitingOutsideRoom());
+    	messageToString.put(MessageType.PUTDOWN, new CommandPrefixPlayerID(", put down the block you are holding"));
+    	messageToString.put(MessageType.GOTOROOM, new CommandGotoRoom());
+    	messageToString.put(MessageType.FINDCOLOR, new CommandFindColor());
+    	messageToString.put(MessageType.GETCOLORFROMROOM, new CommandGetColorFromRoom());
+    	messageToString.put(MessageType.AREYOUCLOSE, new CommandPrefixPlayerID(", are you close?"));
+    	messageToString.put(MessageType.WILLYOUBELONG, new CommandPrefixPlayerID(", will you be long?"));
+    	messageToString.put(MessageType.IWANTTOGO, new CommandAppendRoom("I want to go to room "));
     }
     
     /**
@@ -95,321 +136,22 @@ public class MessageTranslator {
     }
 
     /**
-     * Translate a message (String) to a message (BW4TMessage)
-     * 
-     * @param message
-     *            , the message that should be translated
-     * @return the translated message
-     */
-    @Deprecated
-    public static BW4TMessage translateMessageLegacy(String message) {
-        BW4TMessage translatedMessage = null;
-        String room = null;
-        String color = null;
-        String playerId = null;
-        int number = Integer.MAX_VALUE;
-        MessageType type = null;
-
-        if (message.contains("I am going to ")) {
-            room = findRoomId(message);
-            color = findColorId(message);
-            type = MessageType.GOINGTOROOM;
-        } else if (message.contains("I have a ")) {
-            room = findRoomId(message);
-            color = findColorId(message);
-            type = MessageType.HASCOLOR;
-        } else if (message.contains("has been checked")) {
-            room = findRoomId(message);
-            if (message.contains("by")) {
-                String[] splitMessage = message.split(" ");
-                playerId = splitMessage[splitMessage.length - 1];
-            }
-            type = MessageType.CHECKED;
-        } else if (message.contains("contains")) {
-            room = findRoomId(message);
-            color = findColorId(message);
-            number = findNumber(message);
-            if (number == Integer.MAX_VALUE)
-                type = MessageType.ROOMCONTAINS;
-            else
-                type = MessageType.ROOMCONTAINSAMOUNT;
-        } else if (message.contains("empty")) {
-            room = findRoomId(message);
-            type = MessageType.ROOMISEMPTY;
-        } else if (message.contains("Is anybody going to")) {
-            room = findRoomId(message);
-            type = MessageType.ISANYBODYGOINGTOROOM;
-        } else if (message.contains("Who has a ")) {
-            color = findColorId(message);
-            type = MessageType.WHOHASABLOCK;
-        } else if (message.contains("We need")) {
-            color = findColorId(message);
-            type = MessageType.WENEED;
-        } else if (message.contains("I am looking for")) {
-            color = findColorId(message);
-            type = MessageType.LOOKINGFOR;
-        } else if (message.contains("I will get")) {
-            color = findColorId(message);
-            type = MessageType.WILLGETCOLOR;
-        } else if (message.contains("I am getting")) {
-            room = findRoomId(message);
-            color = findColorId(message);
-            type = MessageType.AMGETTINGCOLOR;
-        } else if (message.contains("go to")) {
-            room = findRoomId(message);
-            StringTokenizer st = new StringTokenizer(message, ", ");
-            playerId = st.nextToken();
-            type = MessageType.GOTOROOM;
-        } else if (message.contains("find a ")) {
-            color = findColorId(message);
-            StringTokenizer st = new StringTokenizer(message, ", ");
-            playerId = st.nextToken();
-            type = MessageType.FINDCOLOR;
-        } else if (message.contains("get the ")) {
-            room = findRoomId(message);
-            color = findColorId(message);
-            StringTokenizer st = new StringTokenizer(message, ", ");
-            playerId = st.nextToken();
-            type = MessageType.GETCOLORFROMROOM;
-        } else if (message.contains("Where should I go")) {
-            type = MessageType.WHERESHOULDIGO;
-        } else if (message.contains("What color should I ")) {
-            type = MessageType.WHATCOLORSHOULDIGET;
-        } else if (message.contains("Where is a ")) {
-            color = findColorId(message);
-            type = MessageType.WHEREISCOLOR;
-        } else if (message.contains("What is in ")) {
-            room = findRoomId(message);
-            type = MessageType.WHATISINROOM;
-        } else if (message.contains("Has anybody checked")) {
-            room = findRoomId(message);
-            type = MessageType.HASANYBODYCHECKEDROOM;
-        } else if (message.contains("Who is in ")) {
-            room = findRoomId(message);
-            type = MessageType.WHOISINROOM;
-        } else if (message.contains("I am in ")) {
-            room = findRoomId(message);
-            type = MessageType.INROOM;
-        } else if (message.contains("I am about to drop ")) {
-            color = findColorId(message);
-            type = MessageType.ABOUTTODROPOFFBLOCK;
-        } else if (message.contains("I just dropped off")) {
-            color = findColorId(message);
-            type = MessageType.DROPPEDOFFBLOCK;
-        } else if (message.contains("I am waiting outside")) {
-            room = findRoomId(message);
-            type = MessageType.AMWAITINGOUTSIDEROOM;
-        } else if (message.contains("are you close")) {
-            StringTokenizer st = new StringTokenizer(message, ", ");
-            playerId = st.nextToken();
-            type = MessageType.AREYOUCLOSE;
-        } else if (message.contains("will you be long")) {
-            StringTokenizer st = new StringTokenizer(message, ", ");
-            playerId = st.nextToken();
-            type = MessageType.WILLYOUBELONG;
-        } else if (message.contains("I am at a")) {
-            color = findColorId(message);
-            type = MessageType.ATBOX;
-        } else if (message.equals("yes")) {
-            type = MessageType.YES;
-        } else if (message.equals("no")) {
-            type = MessageType.NO;
-        } else if (message.equals("I do")) {
-            type = MessageType.IDO;
-        } else if (message.equals("I don't")) {
-            type = MessageType.IDONOT;
-        } else if (message.equals("I don't know")) {
-            type = MessageType.IDONOTKNOW;
-        } else if (message.equals("OK")) {
-            room = findRoomId(message);
-            type = MessageType.OK;
-        } else if (message.equals("wait")) {
-            type = MessageType.WAIT;
-        } else if (message.equals("I am on the way")) {
-            type = MessageType.ONTHEWAY;
-        } else if (message.equals("I am almost there")) {
-            type = MessageType.ALMOSTTHERE;
-        } else if (message.equals("I am far away")) {
-            type = MessageType.FARAWAY;
-        } else if (message.equals("I am delayed")) {
-            type = MessageType.DELAYED;
-        } else {
-            return null;
-        }
-        translatedMessage = new BW4TMessage(type, room, color, playerId, number);
-        return translatedMessage;
-    }
-    
-    public static String translateMessageMap(BW4TMessage message){
-    	
-    	messageToString.put(MessageType.WHERESHOULDIGO, new CommandString("Where should I go?"));
-    	messageToString.put(MessageType.CHECKED, new CommandChecked());
-    	messageToString.put(MessageType.WHATCOLORSHOULDIGET, new CommandString("What color should I get?"));
-    	messageToString.put(MessageType.YES, new CommandString("yes"));
-    	messageToString.put(MessageType.NO, new CommandString("no"));
-    	messageToString.put(MessageType.IDO, new CommandString("I do"));
-    	messageToString.put(MessageType.IDONOT, new CommandString("I don't"));
-    	messageToString.put(MessageType.IDONOTKNOW, new CommandString("I don't know"));
-    	messageToString.put(MessageType.OK, new CommandOK());
-    	messageToString.put(MessageType.WAIT, new CommandString("wait"));
-    	messageToString.put(MessageType.ONTHEWAY, new CommandString("I am on the way"));
-    	messageToString.put(MessageType.ALMOSTTHERE, new CommandString("I am almost there"));
-    	messageToString.put(MessageType.FARAWAY, new CommandString("I am far away"));
-    	messageToString.put(MessageType.DELAYED, new CommandString("I am delayed"));
-    	messageToString.put(MessageType.COULDNOT, new CommandString("I couldn't"));
-    	messageToString.put(MessageType.GOINGTOROOM, new CommandAppendRoom("I am going to room "));
-    	messageToString.put(MessageType.ROOMISEMPTY, new CommandRoomIsEmpty());
-    	messageToString.put(MessageType.ISANYBODYGOINGTOROOM, new CommandInsertRoom("Is anybody going to room "));
-    	messageToString.put(MessageType.WHATISINROOM, new CommandInsertRoom("What is in room "));
-    	messageToString.put(MessageType.HASANYBODYCHECKEDROOM, new CommandInsertRoom("Has anybody checked room "));
-    	messageToString.put(MessageType.WHOISINROOM, new CommandInsertRoom("Who is in room "));
-    	messageToString.put(MessageType.INROOM, new CommandAppendRoom("I am in room "));
-    	messageToString.put(MessageType.AMWAITINGOUTSIDEROOM, new CommandAppendRoom("I am waiting outside room "));
-    	messageToString.put(MessageType.GOINGTOROOM, new CommandGoingToRoom());
-    	messageToString.put(MessageType.HASCOLOR, new CommandHasColor());
-    	
-  
-    	
-    	return null;
-    }
-
-    /**
      * Translate a message (BW4TMessage) to a message (String)
      *
      * @param message
      *            , the message that should be translated
      * @return the translated message
-     * @deprecated
-     * 			Replaced by function with map
      */
-    @Deprecated
-    public static String translateMessage(BW4TMessage message) {
-        if (message.getType() == MessageType.WHERESHOULDIGO) {
-            return "Where should I go?";
-        } else if (message.getType() == MessageType.CHECKED) {
-            if (message.getPlayerId() == null) {
-                return "room " + message.getRoom() + " has been checked";
-            } else {
-                return "room " + message.getRoom() + " has been checked by "
-                        + message.getPlayerId();
+    public static String translateMessage(BW4TMessage message){
+    	
+        for(Entry<MessageType, TypeToStringCommand> e : messageToString.entrySet()){
+            MessageType key = e.getKey();
+            if(message.getType().equals(key)) {
+                String msg = messageToString.get(key).exec(message);
+                return msg;
             }
-        } else if (message.getType() == MessageType.WHATCOLORSHOULDIGET) {
-            return "What color should I get?";
-        } else if (message.getType() == MessageType.YES) {
-            return "yes";
-        } else if (message.getType() == MessageType.NO) {
-            return "no";
-        } else if (message.getType() == MessageType.IDO) {
-            return "I do";
-        } else if (message.getType() == MessageType.IDONOT) {
-            return "I don't";
-        } else if (message.getType() == MessageType.IDONOTKNOW) {
-            return "I don't know";
-        } else if (message.getType() == MessageType.OK
-                && message.getRoom() == null) {
-            return "OK";
-        } else if (message.getType() == MessageType.WAIT) {
-            return "wait";
-        } else if (message.getType() == MessageType.ONTHEWAY) {
-            return "I am on the way";
-        } else if (message.getType() == MessageType.ALMOSTTHERE) {
-            return "I am almost there";
-        } else if (message.getType() == MessageType.FARAWAY) {
-            return "I am far away";
-        } else if (message.getType() == MessageType.DELAYED) {
-            return "I am delayed";
-        } else if (message.getType() == MessageType.COULDNOT) {
-            return "I couldn't";
-        } else if (message.getType() == MessageType.GOINGTOROOM) {
-            return "I am going to room " + message.getRoom();
-        } else if (message.getType() == MessageType.ROOMISEMPTY) {
-            return "room " + message.getRoom() + " is empty";
-        } else if (message.getType() == MessageType.ISANYBODYGOINGTOROOM) {
-            return "Is anybody going to room " + message.getRoom() + "?";
-        } else if (message.getType() == MessageType.WHATISINROOM) {
-            return "What is in room " + message.getRoom() + "?";
-        } else if (message.getType() == MessageType.HASANYBODYCHECKEDROOM) {
-            return "Has anybody checked room " + message.getRoom() + "?";
-        } else if (message.getType() == MessageType.WHOISINROOM) {
-            return "Who is in room " + message.getRoom() + "?";
-        } else if (message.getType() == MessageType.INROOM) {
-            return "I am in room " + message.getRoom();
-        } else if (message.getType() == MessageType.AMWAITINGOUTSIDEROOM) {
-            return "I am waiting outside room " + message.getRoom();
-        } else if (message.getType() == MessageType.OK
-                && message.getRoom() != null) {
-            return "OK, room " + message.getRoom();
-        } else if (message.getType() == MessageType.GOINGTOROOM) {
-            if (message.getColor() == null)
-                return "I am going to room " + message.getRoom();
-            else
-                return "I am going to room " + message.getRoom() + " to get a "
-                        + message.getColor() + "  block";
-        } else if (message.getType() == MessageType.HASCOLOR) {
-            if (message.getRoom() == null)
-                return "I have a " + message.getColor() + " block";
-            else
-                return "I have a " + message.getColor() + " block from room "
-                        + message.getRoom();
-        } else if (message.getType() == MessageType.WHOHASABLOCK) {
-            return "Who has a " + message.getColor() + " block?";
-        } else if (message.getType() == MessageType.WENEED) {
-            return "We need a " + message.getColor() + " block";
-        } else if (message.getType() == MessageType.LOOKINGFOR) {
-            return "I am looking for a " + message.getColor() + " block";
-        } else if (message.getType() == MessageType.WILLGETCOLOR) {
-            if (message.getRoom() == null)
-                return "I will get a " + message.getColor() + " block";
-            else
-                return "I will get a " + message.getColor()
-                        + " block from room " + message.getRoom();
-        } else if (message.getType() == MessageType.AMGETTINGCOLOR) {
-            if (message.getRoom() == null)
-                return "I am getting a " + message.getColor() + " block";
-            else
-                return "I am getting a " + message.getColor()
-                        + " block from room " + message.getRoom();
-        } else if (message.getType() == MessageType.WHEREISCOLOR) {
-            return "Where is a " + message.getColor() + " block?";
-        } else if (message.getType() == MessageType.ABOUTTODROPOFFBLOCK) {
-            return "I am about to drop off a " + message.getColor() + " block";
-        } else if (message.getType() == MessageType.DROPPEDOFFBLOCK) {
-            if (message.getColor() == null)
-                return "I just dropped off a block";
-            else
-                return "I just dropped off a " + message.getColor() + " block";
-        } else if (message.getType() == MessageType.ROOMCONTAINS) {
-            return "room " + message.getRoom() + " contains a "
-                    + message.getColor() + " block";
-        } else if (message.getType() == MessageType.ROOMCONTAINSAMOUNT) {
-            return "room " + message.getRoom() + " contains "
-                    + message.getNumber() + " " + message.getColor()
-                    + " blocks";
-        } else if (message.getType() == MessageType.ATBOX) {
-            return "I am at a " + message.getColor() + " block";
-        } else if (message.getType() == MessageType.AMWAITINGOUTSIDEROOM) {
-            return "I am waiting outside room " + message.getRoom()
-                    + " with a " + message.getColor() + " block";
-        } else if (message.getType() == MessageType.PUTDOWN) {
-            return message.getPlayerId()
-                    + ", put down the block you are holding";
-        } else if (message.getType() == MessageType.GOTOROOM) {
-            return message.getPlayerId() + ", go to room " + message.getRoom();
-        } else if (message.getType() == MessageType.FINDCOLOR) {
-            return message.getPlayerId() + ", find a " + message.getColor() + " block";
-        } else if (message.getType() == MessageType.GETCOLORFROMROOM) {
-            return message.getPlayerId() + ", get the " + message.getColor()
-                    + " from room " + message.getRoom();
-        } else if (message.getType() == MessageType.AREYOUCLOSE) {
-            return message.getPlayerId() + ", are you close?";
-        } else if (message.getType() == MessageType.WILLYOUBELONG) {
-            return message.getPlayerId() + ", will you be long?";
-            
-        } else if (message.getType() == MessageType.IWANTTOGO) {
-            return "I want to go to room " + message.getRoom();
         }
-
-        return null;
+        return null; 
     }
 
     /**
