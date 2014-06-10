@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 
@@ -76,12 +77,34 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
     private final BW4TClientGUI that = this;
     private ClientController controller;
 
-    private JPanel buttonPanel;
+    //private JPanel buttonPanel;
+    private JPanel mainPanel = new JPanel();
+    private JPanel optionsMessagesPane = new JPanel();
+    private JPanel botOptions = new JPanel();
+    private JPanel epartnerOptions = new JPanel();
+    private JPanel botPanel = new JPanel();
+    private JPanel epartnerPanel = new JPanel();
+    private JPanel botChatPanel = new JPanel();
+    private JPanel epartnerChatPanel = new JPanel();
+    
+    private JLabel batteryLabel = new JLabel("Bot Battery: ");
+    private JLabel botMessageLabel = new JLabel("Send message to: ");
+    private JLabel epartnerMessageLabel = new JLabel("Send message to: ");
+    
+    private JTextField botBatteryField = new JTextField();
+    
+    private JButton botMessageButton = new JButton("Choose message");
+    private JButton epartnerMessageButton = new JButton("Choose message");
+    
     private JTextArea chatSession = new JTextArea(8, 1);
-    private JScrollPane chatPane;
+    private JTextArea epartnerChatSession = new JTextArea(8, 1);
+    
+    private JScrollPane botChatPane = new JScrollPane(getChatSession());
+    private JScrollPane epartnerChatPane = new JScrollPane();
     private JScrollPane mapRenderer;
 
     private JComboBox<ComboAgentModel> agentSelector;
+    //private JComboBox<ComboAgentModel> epartnerSelector;
 
     private JPopupMenu jPopupMenu;
 
@@ -94,6 +117,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
     }
 
     private Point selectedLocation;
+    
     /**
      * Most of the server interfacing goes through the std eis percepts
      */
@@ -176,39 +200,13 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
             }
         });
 
-        JPanel mainPanel = new JPanel(new BorderLayout());
-
-        buttonPanel = new JPanel();
-
-        JLabel jLabelMessage = new JLabel("Send message to:");
-        JButton jButton = new JButton("Choose Message");
-        buttonPanel.add(jLabelMessage);
-        agentSelector = new JComboBox<ComboAgentModel>(new ComboAgentModel(this));
-        buttonPanel.add(agentSelector);
-        buttonPanel.add(jButton);
-        jButton.addMouseListener(new TeamListMouseListener(this));
-
         MapRenderer renderer = new MapRenderer(controller.getMapController());
         mapRenderer = new JScrollPane(renderer);
-
-        // create short chat history window
-        JPanel chatPanel = new JPanel();
-        chatPanel.setLayout(new BoxLayout(chatPanel, BoxLayout.Y_AXIS));
-        chatPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        chatPanel.setFocusable(false);
-
-        getChatSession().setFocusable(false);
-        chatPane = new JScrollPane(getChatSession());
-        chatPanel.add(chatPane);
-        chatPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        chatPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        chatPane.setEnabled(true);
-        chatPane.setFocusable(false);
-        chatPane.setColumnHeaderView(new JLabel("Chat Session:"));
-
-        mainPanel.add(buttonPanel, BorderLayout.NORTH);
+        
+        createOverallFrame();
+        
         mainPanel.add(mapRenderer, BorderLayout.CENTER);
-        mainPanel.add(chatPane, BorderLayout.SOUTH);
+        mainPanel.add(optionsMessagesPane, BorderLayout.EAST);
 
         add(mainPanel);
 
@@ -266,6 +264,127 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
 
         setVisible(true);
     }
+    
+    /**
+     * Creates the overall frame.
+     */
+    public void createOverallFrame() {
+        mainPanel.setLayout(new BorderLayout());
+        
+        createOptionsMessagesPane();
+        
+        mainPanel.add(mapRenderer, BorderLayout.CENTER);
+        mainPanel.add(optionsMessagesPane, BorderLayout.EAST);
+    }
+    
+    /**
+     * Creates the right pane of the GUI, 
+     * where the options and messages are shown of bots (and epartner).
+     */
+    public void createOptionsMessagesPane() {
+        optionsMessagesPane.setLayout(new BorderLayout());
+        
+        createBotPane();
+        createEpartnerPane();
+        
+        optionsMessagesPane.add(botPanel, BorderLayout.NORTH);
+        optionsMessagesPane.add(epartnerPanel, BorderLayout.SOUTH);
+    }
+    
+    /**
+     * Creates the bot pane, where the bot options
+     * and bot chat session is being displayed.
+     */
+    public void createBotPane() {
+        botPanel.setLayout(new BoxLayout(botPanel, BoxLayout.Y_AXIS));
+        
+        createBotOptionsBar();
+        createBotChatSection();
+        
+        botPanel.add(botOptions);
+        botPanel.add(botChatPane);
+    }
+    
+    /**
+     * Creates the epartner pane, where the epartner options
+     * and epartner chat session is being displayed.
+     */
+    public void createEpartnerPane() {
+        epartnerPanel.setLayout(new BoxLayout(epartnerPanel, BoxLayout.Y_AXIS));
+        
+        createEpartnerOptionsBar();
+        createEpartnerChatSection();
+        
+        epartnerPanel.add(epartnerOptions);
+        epartnerPanel.add(epartnerChatPane);
+    }
+    
+    /**
+     * Creates the bar for the bot options.
+     */
+    public void createBotOptionsBar() {
+        botOptions.setLayout(new BoxLayout(botOptions, BoxLayout.X_AXIS));
+        botBatteryField.setEditable(false);
+        
+        agentSelector = new JComboBox<ComboAgentModel>(new ComboAgentModel(this));
+        
+        botOptions.add(batteryLabel);
+        botOptions.add(botBatteryField);
+        botOptions.add(botMessageLabel);
+        botOptions.add(agentSelector);
+        botOptions.add(botMessageButton);
+        
+        botMessageButton.addMouseListener(new TeamListMouseListener(this));
+    }
+    
+    /**
+     * Creates the bar for the epartner options.
+     */
+    public void createEpartnerOptionsBar() {
+        epartnerOptions.setLayout(new BoxLayout(epartnerOptions, BoxLayout.X_AXIS));
+
+        epartnerOptions.add(epartnerMessageLabel);
+        //epartnerOptions.add(epartnerSelector);
+        epartnerOptions.add(epartnerMessageButton);
+    }
+    
+    /**
+     * Creates the chat section of the bots.
+     */
+    public void createBotChatSection() {
+        botChatPanel.setLayout(new BoxLayout(botChatPanel, BoxLayout.Y_AXIS));
+        botChatPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        botChatPanel.setFocusable(false);
+
+        getChatSession().setFocusable(false);
+        
+        botChatPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        botChatPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        botChatPane.setEnabled(true);
+        botChatPane.setFocusable(false);
+        botChatPane.setColumnHeaderView(new JLabel("Bot Chat Session:"));
+        
+        botChatPanel.add(botChatPane);
+    }
+    
+    /**
+     * Creates the chat section of the epartners.
+     */
+    public void createEpartnerChatSection() {
+        epartnerChatPanel.setLayout(new BoxLayout(epartnerChatPanel, BoxLayout.Y_AXIS));
+        epartnerChatPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        epartnerChatPanel.setFocusable(false);
+        
+        //getEpartnerChatSession().setFocusable(false);
+        
+        epartnerChatPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        epartnerChatPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        epartnerChatPane.setEnabled(true);
+        epartnerChatPane.setFocusable(false);
+        epartnerChatPane.setColumnHeaderView(new JLabel("E-partner Chat Session:"));
+        
+        epartnerChatPanel.add(epartnerChatPane);
+    }
 
     /**
      * Adds a player by adding a new button to the button panel, facilitating sending messages to this player
@@ -277,7 +396,8 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         if (!playerId.equals(controller.getMapController().getTheBot().getName())) {
             JButton button = new JButton(playerId);
             button.addMouseListener(new TeamListMouseListener(this));
-            buttonPanel.add(button);
+            //buttonPanel.add(button);
+            botOptions.add(button);
         }
     }
 
@@ -323,9 +443,17 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
     public JTextArea getChatSession() {
         return chatSession;
     }
+    
+    public JTextArea getEpartnerChatSession() {
+        return epartnerChatSession;
+    }
 
     public void setChatSession(JTextArea chatSession) {
         this.chatSession = chatSession;
+    }
+    
+    public void setEpartnerChatSession(JTextArea chatSession) {
+        this.epartnerChatSession = chatSession;
     }
 
     public Point getSelectedLocation() {
