@@ -48,6 +48,7 @@ public class BotController {
      *@param botEditor The parent view, used to call relevant functions by the event listeners
      *@param mainPanel the main panel
      *@param row Index of the bot in BW4TClientConfig
+     *@param cc BW4TClientConfig
      */
     public BotController(BotEditor botEditor, MainPanel mainPanel, int row, BW4TClientConfig cc) {
     	botConfig = mainPanel.getClientConfig().getBot(row);

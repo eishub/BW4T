@@ -714,7 +714,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 	@Override
 	public void dispose() {
 		controller.removeView(this);
-		//super.dispose();
 	}
 	
 	/**
