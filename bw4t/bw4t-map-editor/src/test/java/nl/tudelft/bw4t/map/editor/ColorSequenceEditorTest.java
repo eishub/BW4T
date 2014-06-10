@@ -1,6 +1,5 @@
 package nl.tudelft.bw4t.map.editor;
 
-import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
@@ -48,6 +47,6 @@ public class ColorSequenceEditorTest {
     
     @Test
     public void testRun() throws Exception {
-        Thread.sleep(100000);
+        Thread.sleep(1000000);
     }
 }

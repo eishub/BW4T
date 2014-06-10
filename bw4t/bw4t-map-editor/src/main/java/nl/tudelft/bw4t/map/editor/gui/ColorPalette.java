@@ -20,6 +20,8 @@ public class ColorPalette extends JPanel implements MouseInputListener {
     private static final int COLOR_SIZE = 30;
     private static final int BORDER = 2;
 
+    private int mouseDownColorIndex = -1;
+
     private List<ColorPaletteListener> onColorClick = new LinkedList<>();
 
     public ColorPalette() {
@@ -59,18 +61,6 @@ public class ColorPalette extends JPanel implements MouseInputListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        Point p = e.getPoint();
-        if (p.y <= BORDER || p.y > BORDER + COLOR_SIZE)
-            return;
-
-        int startX = BORDER;
-        for (BlockColor c : BlockColor.getAvailableColors()) {
-            if (p.x >= startX && p.x < startX + COLOR_SIZE) {
-                notifyColorClick(c);
-                return;
-            }
-            startX += COLOR_SIZE;
-        }
     }
 
     @Override
@@ -83,10 +73,32 @@ public class ColorPalette extends JPanel implements MouseInputListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
+        Point p = e.getPoint();
+        if (p.y <= BORDER || p.y > BORDER + COLOR_SIZE)
+            return;
+
+        int startX = BORDER;
+        for (int i = 0; i < BlockColor.getAvailableColors().size(); i++) {
+            if (p.x >= startX && p.x < startX + COLOR_SIZE) {
+                mouseDownColorIndex = i;
+                return;
+            }
+            startX += COLOR_SIZE;
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        if (mouseDownColorIndex >= 0) {
+            Point p = e.getPoint();
+            if (p.y > BORDER && p.y <= BORDER + COLOR_SIZE) {
+                int startX = BORDER + COLOR_SIZE * mouseDownColorIndex;
+                if (p.x >= startX && p.x < startX + COLOR_SIZE) {
+                    notifyColorClick(BlockColor.getAvailableColors().get(mouseDownColorIndex));
+                }
+            }
+        }
+        mouseDownColorIndex = -1;
     }
 
     @Override

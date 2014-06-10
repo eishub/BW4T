@@ -26,7 +26,6 @@ public class ColorSequenceController implements FocusListener, ColorPaletteListe
     public ColorSequenceController() {
         setupWindow();
         colorPalette.addColorClickListener(this);
-        colorPaletteWindow.addFocusListener(this);
     }
 
     public static void setupWindow() {
@@ -40,6 +39,7 @@ public class ColorSequenceController implements FocusListener, ColorPaletteListe
             colorPaletteWindow.setAlwaysOnTop(true);
             colorPaletteWindow.pack();
             colorPaletteWindow.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            colorPaletteWindow.setFocusableWindowState(false);
         }
     }
 
@@ -64,34 +64,30 @@ public class ColorSequenceController implements FocusListener, ColorPaletteListe
         if (!(evt.getComponent() instanceof ColorSequenceEditor)) {
             return;
         }
-        System.out.println(evt.getComponent());
+
         positionColorPalette(evt.getComponent());
         colorPaletteWindow.setVisible(true);
         focus = (ColorSequenceEditor) evt.getComponent();
     }
-    
+
     private void positionColorPalette(Component comp) {
         colorPaletteWindow.setLocationRelativeTo(comp);
-        
+
         Point p = colorPaletteWindow.getLocation();
         Rectangle b = comp.getBounds();
         p.x += colorPaletteWindow.getWidth() / 2 - b.width / 2;
-        p.y += (colorPaletteWindow.getHeight() / 2) + b.height/2;
+        p.y += (colorPaletteWindow.getHeight() / 2) + b.height / 2;
         colorPaletteWindow.setLocation(p);
     }
 
     @Override
     public void focusLost(FocusEvent evt) {
-        if(colorPaletteWindow == evt.getComponent()){
-            colorPaletteWindow.setVisible(false);
-            focus = null;
-        } else {
-        }
+        colorPaletteWindow.setVisible(false);
+        focus = null;
     }
 
     @Override
     public void colorClicked(BlockColor c) {
-        System.out.println("Clicked on " + c);
         if (focus != null) {
             focus.addColor(c);
         }
