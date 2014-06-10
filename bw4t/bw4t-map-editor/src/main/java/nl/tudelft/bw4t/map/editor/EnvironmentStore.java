@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
+import nl.tudelft.bw4t.map.editor.controller.EnvironmentStoreController;
 import nl.tudelft.bw4t.map.editor.controller.Map;
 import nl.tudelft.bw4t.map.editor.controller.Room;
 import nl.tudelft.bw4t.map.editor.gui.ColorLegendaPanel;
@@ -37,6 +38,8 @@ public class EnvironmentStore extends JFrame {
 	
 	private String windowName = "BW4T Extensive Map Editor";
 	
+	private EnvironmentStoreController controller;
+	
 	private ColorLegendaPanel legendaPanel;
 	
 	private ExplanationPanel explanationPanel;
@@ -60,13 +63,13 @@ public class EnvironmentStore extends JFrame {
      * 
      */
     public EnvironmentStore(Map themap) {
-        this.map = themap;
+        map = themap;
         
         setWindowTitle("Untitled");
         setLayout(new BorderLayout());
         
         // Attach the menu bar.
-        menuBar = new MenuBar(themap);
+        menuBar = new MenuBar();
         setJMenuBar(menuBar);
         
         // TODO: Change to DO_NOTHING_ON_CLOSE when we want to ask the user whether he is sure to exit.
@@ -111,9 +114,20 @@ public class EnvironmentStore extends JFrame {
 //            }
 //        });
 
+        controller = new EnvironmentStoreController(this, map);
+        
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
+    }
+    
+    /**
+     * Returns the menu bar.
+     *
+     * @return The menu bar.
+     */
+    public final MenuBar getTopMenuBar() {
+        return menuBar;
     }
     
     /**
