@@ -432,6 +432,9 @@ public class BW4TEnvironment extends AbstractEnvironment {
             server.takeDown();
             server = null;
         }
+        
+        BW4TFileAppender.resetNewFile();
+       
         try {
             launchAll();
         } catch (ManagementException | IOException | ScenarioLoadException | JAXBException e) {
