@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.scenariogui.editor.gui.panel;
 
+import nl.tudelft.bw4t.agent.EntityType;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
@@ -83,7 +84,7 @@ public class EntityPanelTest {
     @Test
     public final void testBotCountListener() {
         spyEntityPanel.getNewBotButton().doClick();
-        spyEntityPanel.getBotTableModel().setValueAt("12", 0, 2);
+        spyEntityPanel.getBotTableModel().setValueAt("12", 0, 3);
 
         assertEquals(12, editor.getController().getModel().getAmountBot());
     }
@@ -107,10 +108,10 @@ public class EntityPanelTest {
      */
     @Test
     public final void testEPartnerCountListener() {
-        Object[] data = {"d1", "1"};
+        ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
         
         spyEntityPanel.getNewEPartnerButton().doClick();
-        spyEntityPanel.getEPartnerTableModel().setValueAt("12", 0, 1);
+        spyEntityPanel.getEPartnerTableModel().setValueAt("12", 0, 2);
 
         assertEquals(12, editor.getController().getModel().getAmountEPartner());
     }
@@ -125,6 +126,62 @@ public class EntityPanelTest {
         assertEquals(editor.getController().getModel().getAmountBot(), 1);
     }
 
+    
+    /**
+     * Test whether a bot's name is succesfully changed 
+     * when edited in entitypanel.
+     */
+    @Test
+    public void testChangeBotName() {
+        spyEntityPanel.getNewBotButton().doClick();
+        String testBotName = "testBotName";
+        spyEntityPanel.getBotTableModel().setValueAt(testBotName, 0, 0);
+        
+        assertTrue(editor.getController().getModel().getBot(0).getBotName().equals(testBotName));
+    }
+    
+    /**
+     * Test whether a bot's agent filename is succesfully changed 
+     * when edited in entitypanel.
+     */
+    @Test
+    public void testChangeFileNameBot() {
+        spyEntityPanel.getNewBotButton().doClick();
+        String testFileName = "testRobot.goal";
+        spyEntityPanel.getBotTableModel().setValueAt(testFileName, 0, 2);
+        assertFalse(editor.getController().getModel().getBot(0).getFileName().equals("testRobot2.goal"));
+        assertTrue(editor.getController().getModel().getBot(0).getFileName().equals(testFileName));
+    }
+    
+    /**
+     * Test whether a the number of bots is succesfully changed 
+     * when edited in entitypanel.
+     */
+    @Test
+    public void testChangeBotNumber() {
+        spyEntityPanel.getNewBotButton().doClick();
+        int testNumber = 5;
+        spyEntityPanel.getBotTableModel().setValueAt(testNumber, 0, 3);
+        assertFalse(editor.getController().getModel().getBot(0).getBotAmount() == 4);
+        assertTrue(editor.getController().getModel().getBot(0).getBotAmount() == testNumber);
+    }
+    
+    /**
+     * Test whether a the controller type of bots is succesfully changed 
+     * when edited in entitypanel.
+     */
+    @Test
+    public void testChangeBotType() {
+        spyEntityPanel.getNewBotButton().doClick();
+        EntityType testType = EntityType.HUMAN;
+        
+        
+        spyEntityPanel.getBotTableModel().setValueAt(testType, 0, 1);
+        assertFalse(editor.getController().getModel().getBot(0).getBotController().equals(EntityType.AGENT));
+        assertTrue(editor.getController().getModel().getBot(0).getBotController().equals(testType));
+    }    
+    
+    
     /**
      * Test if a bot is successfully modified when the
      * modify bot button is clicked.
@@ -233,7 +290,46 @@ public class EntityPanelTest {
         assertEquals(editor.getController().getModel().getAmountEPartner(), 1);
     }
 
+    /**
+     * Test whether a epartners name is succesfully changed 
+     * when edited in entitypanel.
+     */
+    @Test
+    public void testChangeEPartnerName() {
+        spyEntityPanel.getNewEPartnerButton().doClick();
+        String testEPartnerName = "testEPartnerName";
+        spyEntityPanel.getEPartnerTableModel().setValueAt(testEPartnerName, 0, 0);
+        
+        assertTrue(editor.getController().getModel().getEpartner(0).getEpartnerName().equals(testEPartnerName));
+    }
 
+    /**
+     * Test whether a bot's agent filename is succesfully changed 
+     * when edited in entitypanel.
+     */
+    @Test
+    public void testChangeFileNameEPartner() {
+        spyEntityPanel.getNewEPartnerButton().doClick();
+        String testFileName = "testEpartner.goal";
+        spyEntityPanel.getEPartnerTableModel().setValueAt(testFileName, 0, 1);
+        assertFalse(editor.getController().getModel().getEpartner(0).getFileName().equals("testRobot2.goal"));
+        assertTrue(editor.getController().getModel().getEpartner(0).getFileName().equals(testFileName));
+    }
+    
+    /**
+     * Test whether a the number of bots is succesfully changed 
+     * when edited in entitypanel.
+     */
+    @Test
+    public void testChangeEpartnerNumber() {
+        spyEntityPanel.getNewEPartnerButton().doClick();
+        int testNumber = 5;
+        spyEntityPanel.getEPartnerTableModel().setValueAt(testNumber, 0, 2);
+        assertFalse(editor.getController().getModel().getEpartner(0).getEpartnerAmount() == 4);
+        assertTrue(editor.getController().getModel().getEpartner(0).getEpartnerAmount() == testNumber);
+    }
+        
+    
     /**
      * Test if an E-partner is successfully modified when the
      * modify E-partner button is clicked.
@@ -418,7 +514,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testBotnonDefault() {
-        Object[] botData = {"d1", "d2", "1"};
+        Object[] botData = {"testName", "HUMAN", "Robot.goal", "1"};
         
         entityPanel.getBotTableModel().addRow(botData);
         
@@ -430,7 +526,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testEpartnernonDefault() {
-        Object[] epartnerData = {"d1", "1"};
+        Object[] epartnerData = {"d1", "e-partner.goal", "1"};
         
         entityPanel.getEPartnerTableModel().addRow(epartnerData);
         
@@ -442,8 +538,8 @@ public class EntityPanelTest {
      */
     @Test
     public void testBotAndEpartnernonDefault() {
-        Object[] botData = {"d1", "d2", "1"};
-        Object[] epartnerData = {"d1", "1"};
+        Object[] botData = {"testName", "HUMAN", "Robot.goal", "1"};
+        Object[] epartnerData = {"d1", "e-partner.goal", "1"};;
         
         entityPanel.getBotTableModel().addRow(botData);
         entityPanel.getEPartnerTableModel().addRow(epartnerData);
