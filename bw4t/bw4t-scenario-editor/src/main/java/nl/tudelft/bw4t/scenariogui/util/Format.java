@@ -103,4 +103,18 @@ public final class Format {
         }
         return amount;
     }
+    
+    /**
+     * Pad the string with zeros.
+     * @param value The string to be padded.
+     * @param amount The amount of zeroes to add.
+     * @return The padded string.
+     */
+    public static String padString(String value, int amount) {
+        while (value.length() < amount) {
+            value += 0;
+        }
+        return value;
+    }
+    
 }

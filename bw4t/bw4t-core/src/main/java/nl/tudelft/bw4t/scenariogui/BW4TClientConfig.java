@@ -8,6 +8,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import nl.tudelft.bw4t.util.XMLManager;
 
@@ -102,6 +103,7 @@ public class BW4TClientConfig {
 	 *
 	 * @return The path of the file to store this object in as XML.
 	 */
+	@XmlTransient
 	public final String getFileLocation() {
 		return outputFile;
 	}
@@ -112,6 +114,7 @@ public class BW4TClientConfig {
 	 * @param newFileLocation
 	 *            The path of the file to store this object in as XML.
 	 */
+	
 	public final void setFileLocation(final String newFileLocation) {
 		this.outputFile = newFileLocation;
 	}
