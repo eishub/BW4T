@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import nl.tudelft.bw4t.agent.EntityType;
+import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.network.BW4TClientActions;
 import nl.tudelft.bw4t.network.BW4TServerHiddenActions;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
