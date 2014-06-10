@@ -355,6 +355,13 @@ public class Map implements TableModel {
 
         return map;
     }
+    /**
+     * Create the entire random grid as a model for a randomized map.
+     * @param rows The amount of rows in the table.
+     * @param cols The amount of columns in the table.
+     * @param roomCount The amount of rooms that need to be in the map.
+     * @return A 2D array of nodes representing the randomized map.
+     */
     public Node[][] createRandomGrid(int rows, int cols, int roomCount) {
     	assert rows > 0 && cols > 0 : "The amount of rows and colums must be"
     		+ " greater than 0.";
@@ -369,12 +376,23 @@ public class Map implements TableModel {
     	randomizeDoorDirs(allRooms);
     	return grid;
     }
+    /**
+     * Randomize the door directions for all rooms in such a way that
+     * completing the map is still possible.
+     * @param rooms The rooms that need a random door direction.
+     */
     private void randomizeDoorDirs(List<Node> rooms) {
     	for (Node n : rooms) {
     		Random r = new Random(System.currentTimeMillis());
     		n.setDir(n.getFreeDirs().get(r.nextInt(n.getFreeDirs().size())));
     	}
     }
+    /**
+     * Reduce the amount of rooms by the given integer to get a desired map,
+     * by randomly selecting rooms from the list and reclassifying them.
+     * @param rooms The list of rooms.
+     * @param changedRooms The amount of rooms that need to be reclassified.
+     */
     private void randomizeRooms(List<Node> rooms, int changedRooms) {
     	List<Zone.Type> typeList = new ArrayList<Zone.Type>();
     	typeList.add(Zone.Type.CORRIDOR);
@@ -387,6 +405,11 @@ public class Map implements TableModel {
     		n.setType(typeList.get(typeSelector.nextInt(3)));
     	}
     }
+    /**
+     * Returns a list of all the rooms in the grid.
+     * @param grid The grid from which the rooms have to be extracted.
+     * @return A list containing every tile in the grid classified as a room.
+     */
     private List<Node> getRooms(Node[][] grid) {
     	List<Node> l = new LinkedList<Node>();
     	for (int i = 0; i < grid.length; i++) {
@@ -398,6 +421,11 @@ public class Map implements TableModel {
     	}
     	return l;
     }
+    /**
+     * Count the amount of tiles in the grid classified as a room.
+     * @param grid The grid where the rooms are counted.
+     * @return The amount of rooms.
+     */
     private int countRooms(Node[][] grid) {
     	int count = 0;
     	for (int i = 0; i < grid.length; i++) {
@@ -409,6 +437,13 @@ public class Map implements TableModel {
     	}
     	return count;
     }
+    /**
+     * Create the initial rooms according to the standard model
+     * of room creation (upper row no rooms, next row has rooms on
+     * all tiles except for the leftmost and rightmost ones, next row has
+     * no rooms, etc).
+     * @param grid The grid in question.
+     */
     private void createRooms(Node[][] grid) {
     	int lastCol = grid[0].length - 1;
     	int lastRow = grid.length - 1;
@@ -420,6 +455,11 @@ public class Map implements TableModel {
     		}
     	}
     }
+    /**
+     * Initialize the grid by creating a node object
+     * for every square and then connecting adjacent node objects.
+     * @param grid The grid to be initialized.
+     */
     private void initGrid(Node[][] grid) {
     	for (int i = 0; i < grid.length; i++) {
     		for (int j = 0; j < grid[0].length; j++) {
@@ -428,11 +468,21 @@ public class Map implements TableModel {
     	}
     	connectTiles(grid);
     }
+    /**
+     * Connect all tiles of a grid to their adjacent tiles
+     * in the grid.
+     * @param grid The grid of tiles that need to be connected.
+     */
     private void connectTiles(Node[][] grid) {
     	configureCorners(grid);
     	configureBorders(grid);
     	configureInnerNodes(grid);
     }
+    /**
+     * Set the tiles that would be out of bound to null.
+     * The corner nodes are connected to their adjacent grid tiles later.
+     * @param grid The grid containing the corner tiles to be configured.
+     */
     private void configureCorners(Node[][] grid) {
     	int lastCol = grid[0].length - 1;
     	int lastRow = grid.length - 1;
@@ -445,6 +495,10 @@ public class Map implements TableModel {
     	grid[lastRow][lastCol].setEast(null);
     	grid[lastRow][lastCol].setSouth(null);
     }
+    /**
+     * Connect all the borders, setting the tiles out of bound to null.
+     * @param grid The grid in question.
+     */
     private void configureBorders(Node[][] grid) {
     	int lastCol = grid[0].length - 1;
     	int lastRow = grid.length - 1;
@@ -483,6 +537,11 @@ public class Map implements TableModel {
     		grid[i][lastCol - 1].setEast(grid[i][lastCol]);
     	}
     }
+    /**
+     * Connect all the nodes within the outer areas to their adjacent
+     * tiles and vice versa.
+     * @param grid The grid in question.
+     */
     private void configureInnerNodes(Node[][] grid) {
     	int lastCol = grid[0].length - 1;
     	int lastRow = grid.length - 1;
