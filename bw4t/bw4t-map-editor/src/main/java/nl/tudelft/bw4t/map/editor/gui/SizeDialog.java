@@ -1,89 +1,96 @@
 package nl.tudelft.bw4t.map.editor.gui;
 
-import java.awt.GridLayout;
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
 
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import net.miginfocom.swing.MigLayout;
+
+import javax.swing.JLayeredPane;
+import javax.swing.JSplitPane;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JComboBox;
+import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
-/**
- * The SizeDialog show the user a dialog where he can enter size of the map.
- */
-public class SizeDialog extends JPanel {
-
-	private static final long serialVersionUID = -5021732242993235726L;
+public class SizeDialog extends JFrame {
 	
-	SpinnerModel rowmodel = new SpinnerNumberModel(5, // initial value
-            5, // min
-            24, // max
-            1); // step
-    JSpinner rows = new JSpinner(rowmodel);
+	private JPanel contentPane;
 
-    SpinnerModel colmodel = new SpinnerNumberModel(5, // initial value
-            3, // min
-            24, // max
-            1); // step
-    JSpinner cols = new JSpinner(colmodel);
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					SizeDialog frame = new SizeDialog();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
-    SpinnerModel entitymodel = new SpinnerNumberModel(2, // initial value
-            1, // min
-            15, // max
-            1); // step
-    JSpinner entities = new JSpinner(entitymodel);
+	/**
+	 * Create the frame.
+	 */
+	public SizeDialog() {
+		setTitle("Size Dialog");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 429, 192);
+		getContentPane().setLayout(new MigLayout("", "[grow][grow][][][][][][][][grow]", "[][][][grow]"));
+		
+		JPanel panel_1 = new JPanel();
+		getContentPane().add(panel_1, "cell 0 0 1 4,alignx left,growy");
+		panel_1.setLayout(new MigLayout("", "[113px]", "[23px]"));
+		
+		JButton btnEditExistingMap = new JButton("Edit existing map");
+		panel_1.add(btnEditExistingMap, "cell 0 0,alignx left,aligny top");
+		
+		JPanel panel = new JPanel();
+		getContentPane().add(panel, "cell 1 1 9 3,grow");
+		panel.setLayout(new MigLayout("", "[grow][grow]", "[][][][][]"));
+		
+		JLabel lblrows = new JLabel("#rows");
+		panel.add(lblrows, "cell 0 0,alignx trailing");
+		
+		SpinnerModel rowmodel = new SpinnerNumberModel(5, // initial value
+	            5, // min
+	            24, // max
+	            1); // step
+	    JSpinner rows = new JSpinner(rowmodel);
+	    panel.add(rows, "cell 1 0");
 
-    JCheckBox randomcheckbox = new JCheckBox();
-    JCheckBox labelcheckbox = new JCheckBox("", true);
+	    SpinnerModel colmodel = new SpinnerNumberModel(5, // initial value
+	            3, // min
+	            24, // max
+	            1); // step
+	    JSpinner cols = new JSpinner(colmodel);
+	    panel.add(cols, "cell 1 1");
+		
+		
+		JLabel lblcolumns = new JLabel("#columns");
+		panel.add(lblcolumns, "cell 0 1,alignx trailing");
+		
+		JCheckBox chckbxShowZoneLabels = new JCheckBox("Show Zone Labels");
+		panel.add(chckbxShowZoneLabels, "cell 1 2");
+		
+		JButton btnBeginFromScratch = new JButton("Begin from scratch");
+		panel.add(btnBeginFromScratch, "cell 0 4");
+		
+		JButton btnUseStandardBasis = new JButton("Use standard basis");
+		panel.add(btnUseStandardBasis, "cell 1 4");
+			
+	}
 
-    public SizeDialog() {
-        setLayout(new GridLayout(0, 2));
-        add(new JLabel("#Rows"));
-        add(rows);
-        add(new JLabel("#Columns"));
-        add(cols);
-        add(new JLabel("#Entities"));
-        add(entities);
-        add(new JLabel("Generate random sequence and blocks"));
-        add(randomcheckbox);
-        add(new JLabel("Show zone labels"));
-        add(labelcheckbox);
-        
-    }
-
-    public boolean isRandomMap() {
-        return randomcheckbox.isSelected();
-    }
-
-    public boolean isLabelsVisible() {
-        return labelcheckbox.isSelected();
-    }
-
-    /**
-     * get {@link #rows} as set by user
-     * 
-     * @return {@link #rows}
-     */
-    public Integer getRows() {
-        return (Integer) (rows.getValue());
-    }
-
-    /**
-     * get {@link #cols} as set by user
-     * 
-     * @return {@link #cols}
-     */
-    public Integer getColumns() {
-        return (Integer) (cols.getValue());
-    }
-
-    /**
-     * get {@link #entities} as set by user
-     * 
-     * @return {@link #entities}
-     */
-    public Integer getEntities() {
-        return (Integer) (entities.getValue());
-    }
 }
