@@ -5,6 +5,9 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
+
+import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,6 +26,8 @@ public class EntityNotifiersTest {
     private EnvironmentListener mockedEnvListener3 = Mockito.mock(eis.EnvironmentListener.class);
     private RemoteEnvironment mockedRemEnv = Mockito.mock(RemoteEnvironment.class);
     private Collection<String> mockedCollection = Mockito.mock(Collection.class);
+    private BW4TClientGUI mockedGUI = Mockito.mock(BW4TClientGUI.class);
+    private Map mockedMap = Mockito.mock(Map.class);
     
     @Before
     public void createRemotes() {
@@ -36,6 +41,7 @@ public class EntityNotifiersTest {
     @Test
     public void notifyFreeEntityTest() {
         EntityNotifiers.notifyFreeEntity("Bot1", mockedCollection, mockedRemEnv);
+        
         Mockito.verify(mockedEnvListener).handleFreeEntity(any(String.class), any(Collection.class));
         Mockito.verify(mockedEnvListener2).handleFreeEntity(any(String.class), any(Collection.class));
         Mockito.verify(mockedEnvListener3).handleFreeEntity(any(String.class), any(Collection.class));
@@ -44,6 +50,7 @@ public class EntityNotifiersTest {
     @Test
     public void notifyNewEntityTest() {        
         EntityNotifiers.notifyNewEntity("Bot1", mockedRemEnv);
+        
         Mockito.verify(mockedEnvListener).handleNewEntity(any(String.class));
         Mockito.verify(mockedEnvListener2).handleNewEntity(any(String.class));
         Mockito.verify(mockedEnvListener3).handleNewEntity(any(String.class));
@@ -51,6 +58,18 @@ public class EntityNotifiersTest {
     
     @Test
     public void notifyDeletedEntityTest() {
+
+        when(mockedRemEnv.getEntityToGUI()).thenReturn(mockedMap);
+        when(mockedMap.get("Bot1")).thenReturn(mockedGUI);
+        EntityNotifiers.notifyDeletedEntity("Bot1", mockedCollection, mockedRemEnv);
         
+        //if(mockedRemEnv.getEntityToGUI().get("Bot1") != null) {
+            Mockito.verify(mockedGUI).dispose();
+            Mockito.verify(mockedMap).remove("Bot1");
+        //}
+        
+        Mockito.verify(mockedEnvListener).handleDeletedEntity(any(String.class), any(Collection.class));
+        Mockito.verify(mockedEnvListener2).handleDeletedEntity(any(String.class), any(Collection.class));
+        Mockito.verify(mockedEnvListener3).handleDeletedEntity(any(String.class), any(Collection.class));
     }
 }
