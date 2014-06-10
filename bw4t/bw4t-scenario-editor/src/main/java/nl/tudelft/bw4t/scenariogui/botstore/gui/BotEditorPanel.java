@@ -28,57 +28,135 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 
     private static final long serialVersionUID = 1850617931893202292L;
 
+    /**
+     * Create a new panel for the checkboxes.
+     */
     private JPanel botCheckables = new JPanel();
 
+    /**
+     * Create a new panel for the sliders.
+     */
     private JPanel botSliders = new JPanel();
 
+    /**
+     * Create a new panel where the info will be.
+     */
     private JPanel botInfo = new JPanel();
 
+    /**
+     * Button to save the changes in the view.
+     */
 	private JButton saveButton = new JButton("Save");
 
+	/**
+	 * Button to reset the changes in the view.
+	 */
     private JButton resetButton = new JButton("Reset");
 
+    /**
+     * Button to go back to the last screen, changes will not be saved.
+     */
     private JButton cancelButton = new JButton("Cancel");
 
+    /**
+     * Open a Goal file.
+     */
     private JButton fileButton = new JButton("Use existing GOAL file");
 
+    /**
+     * Create a new combo-box for selecting bots.
+     */
     private JComboBox botControllerSelector = new JComboBox();
 
+    /**
+     * Textfield where you can fill in the name of the bot.
+     */
     private JTextField botNameField = new JTextField();
 
+    /**
+     * Textfield where you can fill in the amount of bots.
+     */
     private JTextField botAmountTextField = new JTextField();
 
+    /**
+     * Checkbox for enabling/disabling the gripper.
+     */
     private JCheckBox gripperCheckbox = new JCheckBox("Gripper Disabled");
 
+    /**
+     * Checkbox for enabling/disabling the colorblind handicap.
+     */
     private JCheckBox colorblindCheckbox = new JCheckBox("Color Blind Handicap");
 
+    /**
+     * Checkbox for enabling/disabling the size slider.
+     */
     private JCheckBox customSizeCheckbox = new JCheckBox("Custom Bot Size");
 
+    /**
+     * Checkbox for enabling/disabling the speed slider.
+     */
     private JCheckBox movespeedCheckbox = new JCheckBox("Custom Bot Speed");
 
+    /**
+     * Checkbox for enabling/disabling the battery.
+     */
     private JCheckBox batteryEnabledCheckbox = new JCheckBox(
             "Battery Capacity enabled");
 
+    /**
+     * TextField for displaying the file name.
+     */
 	private JTextField fileNameField = new JTextField(BotConfig.DEFAULT_GOAL_FILENAME);
 
+	/**
+	 * TextField for displaying the bot reference.
+	 */
 	private JTextField botReferenceField = new JTextField(BotConfig.DEFAULT_GOAL_FILENAME_REFERENCE);
 
+	/**
+	 * With this slider you can set the size of the bot.
+	 */
     private JSlider sizeSlider = new JSlider();
 
+    /**
+     * With this slider you can set the speed of the bot.
+     */
 	private JSlider speedSlider = new JSlider();
 
+	/**
+	 * With this slider you can set the battery capacity.
+	 */
 	private JSlider batterySlider = new JSlider();
 
+	/**
+	 * With this slider you can choose the number of grippers.
+	 */
 	private JSlider numberOfGrippersSlider = new JSlider();
 
+	/**
+	 * Label where the battery discharge rate will be.
+	 */
 	private JLabel batteryUseValueLabel = new JLabel("0");
 
+	/**
+	 * Create a new botEditor.
+	 */
 	private BotEditor botEditor;
 	
+	/**
+	 * Create a new BotController.
+	 */
 	private BotController controller;
 	
+	/**
+	 * Create a new MainPanel.
+	 */
 	private MainPanel mainpanel;
 	
+	/**
+	 * Create a new BW4TClientConfig.
+	 */
 	private BW4TClientConfig clientconfig;
 
 	/**
@@ -127,9 +205,10 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 		botInfo.add(botNameField);
 		JPanel controllerpanel = new JPanel();
 		controllerpanel.setLayout(new GridLayout(1, 0));
-		if (dataObject.getBotController().equals(EntityType.HUMAN)) {
+		if (this.getBotControllerSelector().getSelectedItem().equals(EntityType.HUMAN)) {
 	        botControllerSelector.setSelectedIndex(1);
 	    } 
+		
 		controllerpanel.add(botControllerSelector);
 		controllerpanel.add(new JLabel("   Amount of this type:"));
 		controllerpanel.add(botAmountTextField);
@@ -158,24 +237,24 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 				BoxLayout.PAGE_AXIS));
 		checkablesPanel.add(checkablesLabel);
 		checkablesPanel.add(new JLabel("Handicaps:"));
-		if (dataObject.getGripperHandicap()) {
+		if (controller.getGripperHandicap()) {
 			gripperCheckbox.setSelected(true);
 		}
 		checkablesPanel.add(gripperCheckbox);
-		if (dataObject.getColorBlindHandicap()) {
+		if (controller.getColorBlindHandicap()) {
 			colorblindCheckbox.setSelected(true);
 		}
 		checkablesPanel.add(colorblindCheckbox);
 		checkablesPanel.add(new JLabel("Other options:"));
-		if (dataObject.getSizeOverloadHandicap()) {
+		if (controller.getSizeOverloadHandicap()) {
 			customSizeCheckbox.setSelected(true);
 		}
 		checkablesPanel.add(customSizeCheckbox);
-		if (dataObject.getMoveSpeedHandicap()) {
+		if (controller.getMoveSpeedHandicap()) {
 			movespeedCheckbox.setSelected(true);
 		}
 		checkablesPanel.add(movespeedCheckbox);
-		if (dataObject.isBatteryEnabled()) {
+		if (controller.isBatteryEnabled()) {
 			batteryEnabledCheckbox.setSelected(true);
 		}
 		checkablesPanel.add(batteryEnabledCheckbox);
@@ -211,7 +290,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 		numberOfGrippersLabel.setToolTipText("default is 1");
 		gripperPanel.add(numberOfGrippersLabel);
 
-		if (dataObject.getGripperHandicap()) {
+		if (controller.getGripperHandicap()) {
 			numberOfGrippersSlider.setEnabled(false);
 		}
 		gripperPanel.add(numberOfGrippersSlider);
@@ -231,7 +310,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 		sizeLabel.setToolTipText("default is 2");
 		sizePanel.add(sizeLabel);
 
-		if (dataObject.getSizeOverloadHandicap()) {
+		if (controller.getSizeOverloadHandicap()) {
 			sizeSlider.setEnabled(true);
 		}
 		sizePanel.add(sizeSlider);
@@ -252,7 +331,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 		speedLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		speedPanel.add(speedLabel);
 
-		if (dataObject.getMoveSpeedHandicap()) {
+		if (controller.getMoveSpeedHandicap()) {
 			speedSlider.setEnabled(true);
 		}
 		speedPanel.add(speedSlider);
@@ -273,7 +352,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 		batteryCapacity.setToolTipText("Max capacity on a scale of 10-100");
 		batteryPanel.add(batteryCapacity);
 
-		if (dataObject.isBatteryEnabled()) {
+		if (controller.isBatteryEnabled()) {
 		    batterySlider.setEnabled(true);
 		}
 		batteryPanel.add(batterySlider);
@@ -599,7 +678,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 	 */
 	public void updateView() {
 		botNameField.setText(controller.getBotName());
-		
+		botControllerSelector.setSelectedItem(controller.getBotController());
 		botAmountTextField.setText("" + controller.getBotAmount());
 		gripperCheckbox.setSelected(controller.getGripperHandicap());
 		colorblindCheckbox.setSelected(controller.getColorBlindHandicap());
@@ -613,25 +692,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 		sizeSlider.setValue(controller.getBotSize());
 		batterySlider.setValue(controller.getBotBatteryCapacity());
 	}
-	
-	botConfig.setBotName(bep.getBotName());
-	botConfig.setBotController(EntityType.getType((String) bep
-			.getBotControllerSelector()
-			.getSelectedItem()));
-	botConfig.setBotAmount(bep.getBotAmount());
-	botConfig.setBotSize(bep.getBotSize());
-	botConfig.setBotSpeed(bep.getBotSpeed());
-	botConfig.setBotBatteryCapacity(bep.getBotBatteryCapacity());
-	botConfig.setGrippers(bep.getGrippers());
-	botConfig.setBatteryEnabled(bep.isBatteryEnabled());
-	botConfig.setColorBlindHandicap(bep.getColorBlindHandicap());
-	botConfig.setGripperHandicap(bep.getGripperHandicap());
-	botConfig.setMoveSpeedHandicap(bep.getMoveSpeedHandicap());
-	botConfig.setSizeOverloadHandicap(bep.getSizeOverloadHandicap());
-	botConfig.setReferenceName(bep.getReferenceName());
-	botConfig.setFileName(bep.getFileName());
-	botConfig.setBotBatteryDischargeRate(bep.getBotBatteryDischargeRate());
-	
 	
 	/**
 	 * @return the current BotController
