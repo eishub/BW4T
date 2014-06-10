@@ -8,6 +8,10 @@ import eis.iilang.Parameter;
 import java.util.Arrays;
 import java.util.Collection;
 
+import nl.tudelft.bw4t.client.message.BW4TMessage;
+import nl.tudelft.bw4t.client.message.MessageTranslator;
+import nl.tudelft.bw4t.client.message.MessageType;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
