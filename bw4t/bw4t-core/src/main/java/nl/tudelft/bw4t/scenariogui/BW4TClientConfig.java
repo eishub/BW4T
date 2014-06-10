@@ -37,6 +37,8 @@ public class BW4TClientConfig {
 
 	private boolean useGoal = DefaultConfigurationValues.USE_GOAL.getBooleanValue();
 
+    private boolean collisionEnabled = DefaultConfigurationValues.COLLISIONS_ENABLED.getBooleanValue();
+
 	/**
 	 * The location of the map file.
 	 */
@@ -440,5 +442,22 @@ public class BW4TClientConfig {
 
 		return true;
 	}
+
+    /**
+     * Set the state of the collision checking
+     * @param state True if collisions are to be enabled.
+     */
+    @XmlElement
+    public void setCollisionEnabled(boolean state) {
+        collisionEnabled = state;
+    }
+
+    /**
+     * Returns the state of collision checking
+     * @return True if collisions are enabled.
+     */
+    public boolean isCollisionEnabled() {
+        return collisionEnabled;
+    }
 
 }
