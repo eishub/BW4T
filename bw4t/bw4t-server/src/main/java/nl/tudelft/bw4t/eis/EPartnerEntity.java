@@ -1,48 +1,38 @@
 package nl.tudelft.bw4t.eis;
 
 import java.awt.geom.Point2D;
-import java.awt.geom.Point2D.Double;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import org.apache.log4j.Logger;
-import org.omg.CORBA.Environment;
-
-import repast.simphony.context.Context;
-import repast.simphony.space.continuous.NdPoint;
-import repast.simphony.util.collections.IndexedIterable;
-import eis.eis2java.annotation.AsAction;
-import eis.eis2java.annotation.AsPercept;
-import eis.eis2java.exception.TranslationException;
-import eis.eis2java.translation.Filter;
-import eis.eis2java.translation.Translator;
-import eis.exceptions.ActException;
-import eis.exceptions.AgentException;
-import eis.exceptions.PerceiveException;
-import eis.iilang.Action;
-import eis.iilang.Parameter;
 import nl.tudelft.bw4t.eis.translators.BlockWithColorTranslator;
 import nl.tudelft.bw4t.eis.translators.BoundedMovableObjectTranslator;
 import nl.tudelft.bw4t.eis.translators.ColorTranslator;
 import nl.tudelft.bw4t.eis.translators.ObjectInformationTranslator;
 import nl.tudelft.bw4t.eis.translators.PointTranslator;
 import nl.tudelft.bw4t.eis.translators.ZoneTranslator;
-import nl.tudelft.bw4t.map.Entity;
-import nl.tudelft.bw4t.model.blocks.Block;
-import nl.tudelft.bw4t.model.blocks.EPartner;
+import nl.tudelft.bw4t.model.epartners.EPartner;
 import nl.tudelft.bw4t.model.robots.AbstractRobot;
-import nl.tudelft.bw4t.model.robots.NavigatingRobot;
-import nl.tudelft.bw4t.model.zone.BlocksRoom;
 import nl.tudelft.bw4t.model.zone.Corridor;
-import nl.tudelft.bw4t.model.zone.DropZone;
 import nl.tudelft.bw4t.model.zone.Room;
 import nl.tudelft.bw4t.model.zone.Zone;
 import nl.tudelft.bw4t.server.RobotEntityInt;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.util.RoomLocator;
 import nl.tudelft.bw4t.util.ZoneLocator;
+
+import org.apache.log4j.Logger;
+import org.omg.CORBA.Environment;
+
+import repast.simphony.context.Context;
+import eis.eis2java.annotation.AsAction;
+import eis.eis2java.annotation.AsPercept;
+import eis.eis2java.exception.TranslationException;
+import eis.eis2java.translation.Filter;
+import eis.eis2java.translation.Translator;
+import eis.exceptions.ActException;
+import eis.exceptions.PerceiveException;
+import eis.iilang.Action;
+import eis.iilang.Parameter;
 
 public class EPartnerEntity implements RobotEntityInt {
 
