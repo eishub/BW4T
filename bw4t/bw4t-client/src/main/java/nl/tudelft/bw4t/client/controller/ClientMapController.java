@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import nl.tudelft.bw4t.client.environment.handlers.PerceptsHandler;
+import nl.tudelft.bw4t.client.environment.PerceptsHandler;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;

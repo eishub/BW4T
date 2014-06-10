@@ -13,8 +13,6 @@ import java.util.Map;
 import java.util.Set;
 
 import nl.tudelft.bw4t.client.BW4TClient;
-import nl.tudelft.bw4t.client.environment.handlers.ActionHandler;
-import nl.tudelft.bw4t.client.environment.handlers.PerceptsHandler;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.startup.InitParam;
 import nl.tudelft.bw4t.client.startup.Launcher;
