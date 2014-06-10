@@ -50,24 +50,11 @@ class MenuOptionNew extends AbstractMenuOption {
 
 		// Check if current config is different from last saved config
 		if (getController().hasConfigBeenModified()) {
-			// Check if user wants to save current configuration
-			int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
-					null, ScenarioEditorController.CONFIRM_SAVE_TXT, "",
-					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-			if (response == JOptionPane.YES_OPTION) {
-				saveFile();
-				getController().getMainView().getMainPanel()
-						.getConfigurationPanel().updateOldValues();
-				getModel().updateBotConfigs();
-			}
+			showSaveDialogOption();
 		}
 
 		resetConfigPanel(configPanel);
-		getModel().getBots().clear();
-		getModel().getEpartners().clear();
-        getModel().updateBotConfigs();
-        getModel().updateEpartnerConfigs();
+		getModel().clearBotsAndEpartners();
 
 		// set last file location to null so that the previous saved file won't
 		// get
@@ -82,6 +69,24 @@ class MenuOptionNew extends AbstractMenuOption {
 
         getController().getMainView().setWindowTitle("Untitled");
 	}
+
+	/**
+	 * Asks the user if they want to save and proceeds to do so
+	 * if the user selects yes.
+	 */
+    private void showSaveDialogOption() {
+        // Check if user wants to save current configuration
+        int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
+        		null, ScenarioEditorController.CONFIRM_SAVE_TXT, "",
+        		JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        if (response == JOptionPane.YES_OPTION) {
+        	saveFile();
+        	getController().getMainView().getMainPanel()
+        			.getConfigurationPanel().updateOldValues();
+        	getModel().updateOldBotConfigs();
+        }
+    }
 
 	/**
 	 * Resets the given configPanel to it's default values.

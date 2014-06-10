@@ -230,10 +230,6 @@ public class MenuBarTest {
         when(filechooser.getSelectedFile()).thenReturn(new File(FILE_SAVE_PATH)).thenReturn(new File(FILE_OPEN_PATH));
 
         // Set the controllers to mock yes.
-        ActionListener[] listeners = editor.getTopMenuBar().getMenuItemFileOpen().getActionListeners();
-
-        // There should be one listener, so we check that and then change the option pane.
-        assert listeners.length == 1;
         ScenarioEditor.setOptionPrompt(yesMockOption);
 
         // Change the defaults
@@ -261,6 +257,17 @@ public class MenuBarTest {
         verify(filechooser, times(1)).showOpenDialog((Component) any());
         verify(filechooser, times(1)).showDialog((Component) any(), (String) any());
 
+    }
+    
+    /**
+     * Tests if the menu option 'file open' has only one listener. 
+     */
+    @Test
+    public void testOneListenerForMenuFileOpen() {
+        ActionListener[] listeners = editor.getTopMenuBar().getMenuItemFileOpen().getActionListeners();
+
+        // There should be one listener, so we check that.
+        assert listeners.length == 1;
     }
 
     /**
@@ -365,18 +372,14 @@ public class MenuBarTest {
      */
     @Test
     public void testExitDontSaveChanges() {
+        assert editor.getTopMenuBar().getMenuItemFileExit().getActionListeners().length == 1;
+        
         /* Reset the controller to the spied objects controller */
-        ActionListener[] listeners = editor.getTopMenuBar().getMenuItemFileExit().getActionListeners();
-        assert listeners.length == 1;
-
-        AbstractMenuOption menuOption = (AbstractMenuOption) listeners[0];
-        editor.getTopMenuBar().getMenuItemFileExit().removeActionListener(listeners[0]);
-        menuOption.setController(new ScenarioEditorController(editor, new BW4TClientConfig()));
+        replaceListener(editor.getTopMenuBar().getMenuItemFileExit());
 
         /* Fake the prompt to no */
         OptionPrompt option = spy(new NoMockOptionPrompt());
         ScenarioEditor.setOptionPrompt(option);
-
 
         /* Change some random field */
         editor.getMainPanel().getConfigurationPanel().setClientIP("0.0");
@@ -401,26 +404,8 @@ public class MenuBarTest {
      */
     @Test
     public void testExitSaveChanges() {
-        /* Mock the file chooser for saving */
-        when(filechooser.showSaveDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
-        when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
-        when(filechooser.getSelectedFile()).thenReturn(new File(FILE_SAVE_PATH));
-
-        /* Remove the old controller, recreate the new one using the mocked editor and
-         * finally mock the filechooser.
-         */
-        JMenuItem exit = editor.getTopMenuBar().getMenuItemFileExit();
-        AbstractMenuOption menuOption = (AbstractMenuOption) exit.getActionListeners()[0];
-        exit.removeActionListener(exit.getActionListeners()[0]);
-
-        menuOption.setController(new ScenarioEditorController(editor, new BW4TClientConfig()));
-        menuOption = (AbstractMenuOption) exit.getActionListeners()[0];
-        menuOption.setCurrentFileChooser(filechooser);
-
-
-        /* Fake the prompt to no */
-        OptionPrompt option = spy(new YesMockOptionPrompt());
-        ScenarioEditor.setOptionPrompt(option);
+        OptionPrompt option = prepareForSave(editor.getTopMenuBar().getMenuItemFileExit(),
+                new YesMockOptionPrompt());
 
         /* Change some random field */
         editor.getMainPanel().getConfigurationPanel().setClientIP("0.0");
@@ -504,16 +489,7 @@ public class MenuBarTest {
         when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.getSelectedFile()).thenReturn(new File(FILE_SAVE_PATH));
 
-        /* Remove the old controller, recreate the new one using the mocked editor and
-         * finally mock the filechooser.
-         */
-        JMenuItem newfile = editor.getTopMenuBar().getMenuItemFileNew();
-        AbstractMenuOption menuOption = (AbstractMenuOption) newfile.getActionListeners()[0];
-        newfile.removeActionListener(newfile.getActionListeners()[0]);
-
-        menuOption.setController(new ScenarioEditorController(editor, new BW4TClientConfig()));
-        menuOption = (AbstractMenuOption) newfile.getActionListeners()[0];
-        menuOption.setCurrentFileChooser(filechooser);
+        replaceListener(editor.getTopMenuBar().getMenuItemFileNew());
 
         /* Some change */
         editor.getMainPanel().getConfigurationPanel().setClientIP("blaaas");
@@ -574,6 +550,8 @@ public class MenuBarTest {
      */
     @Test
     public void testSaveAs() {
+        editor.getMainPanel().getConfigurationPanel().getMapFileTextField().setText(
+                "Prevents no map file warning.");
         saveWithMockedFileChooser();
         verify(filechooser, times(1)).showDialog((Component) any(), (String) any());
         verify(filechooser, times(1)).getSelectedFile();
@@ -708,6 +686,43 @@ public class MenuBarTest {
         /** Saves the config as XML: */
         editor.getTopMenuBar().getMenuItemFileSaveAs().doClick();
     }
+    
+    /**
+     * Replaces the listener of the menu item.
+     * @param menuItem The menu item.
+     */
+    private void replaceListener(JMenuItem menuItem) {
+        AbstractMenuOption menuOption = (AbstractMenuOption) menuItem.getActionListeners()[0];
+        menuItem.removeActionListener(menuOption);
 
+        menuOption.setController(new ScenarioEditorController(editor, new BW4TClientConfig()));
+        menuOption = (AbstractMenuOption) menuItem.getActionListeners()[0];
+        menuOption.setCurrentFileChooser(filechooser);
+    }
+
+    /**
+     * Prepares the file chooser so that when it's opened it closes right away
+     * in the desired way.
+     * @param menuItem The menu item to replace the listener of (the menu item we're testing).
+     * @param option The mocked option prompt that could pop up during execution.
+     * @return The spied version of the option prompt.
+     */
+    private OptionPrompt prepareForSave(JMenuItem menuItem, OptionPrompt option) {
+        /* Mock the file chooser for saving */
+        when(filechooser.showSaveDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
+        when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
+        when(filechooser.getSelectedFile()).thenReturn(new File(FILE_SAVE_PATH));
+
+        /* Remove the old controller, recreate the new one using the mocked editor and
+         * finally mock the filechooser.
+         */
+        replaceListener(menuItem);
+
+        /* Fake the prompt */
+        option = spy(option);
+        ScenarioEditor.setOptionPrompt(option);
+        
+        return option;
+    }
 
 }

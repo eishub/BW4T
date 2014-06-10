@@ -153,6 +153,13 @@ public class ConfigurationPanel extends JPanel {
 
         c.insets = new Insets(0, INSET, 0, 0);
 
+        showClientBoxContent();
+    }
+
+    /**
+     * Shows the contents of the client box (IP and Port boxes).
+     */
+    private void showClientBoxContent() {
         c.weightx = GRID_BAG_CONSTRAINTS_WEIGHT;
         c.gridx = 0;
         c.gridy += 1;
@@ -187,6 +194,13 @@ public class ConfigurationPanel extends JPanel {
         server.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE_SMALL));
         add(server, c);
 
+        showServerBoxContent();
+    }
+
+    /**
+     * Shows the contents of the server box (IP and Port boxes).
+     */
+    private void showServerBoxContent() {
         c.insets = new Insets(0, INSET, 0, 0);
 
         c.weightx = GRID_BAG_CONSTRAINTS_WEIGHT;
@@ -412,30 +426,12 @@ public class ConfigurationPanel extends JPanel {
      * @return whether changes have been made.
      */
     public final boolean isDefault() {
-        boolean isDefault = true;
-
-        if (!this.getClientIP().equals(DefaultConfigurationValues.DEFAULT_CLIENT_IP.getValue())) {
-            isDefault = false;
-        }
-        else if (this.getClientPort() != DefaultConfigurationValues.DEFAULT_CLIENT_PORT.getIntValue()) {
-            isDefault = false;
-        }
-        else if (!this.getServerIP().equals(DefaultConfigurationValues.DEFAULT_SERVER_IP.getValue())) {
-            isDefault = false;
-        }
-        else if (this.getServerPort() != DefaultConfigurationValues.DEFAULT_SERVER_PORT.getIntValue()) {
-            isDefault = false;
-        }
-        else if (this.useGui() != DefaultConfigurationValues.USE_GUI.getBooleanValue()) {
-            isDefault = false;
-        }
-        else if (!this.getMapFile().equals(DefaultConfigurationValues.MAP_FILE.getValue())) {
-            isDefault = false;
-        }
-
-        // TODO: check if the bot list is empty (since that is default too)
-
-        return isDefault;
+        return this.getClientIP().equals(DefaultConfigurationValues.DEFAULT_CLIENT_IP.getValue())
+                && this.getClientPort() == DefaultConfigurationValues.DEFAULT_CLIENT_PORT.getIntValue()
+                && this.getServerIP().equals(DefaultConfigurationValues.DEFAULT_SERVER_IP.getValue())
+                && this.getServerPort() == DefaultConfigurationValues.DEFAULT_SERVER_PORT.getIntValue()
+                && this.useGui() == DefaultConfigurationValues.USE_GUI.getBooleanValue()
+                && this.getMapFile().equals(DefaultConfigurationValues.MAP_FILE.getValue());
     }
 
     /**
