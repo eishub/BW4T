@@ -35,15 +35,6 @@ public class EpartnerController {
 	}
 	
 	/**
-	 * Create the Epartner controller 
-	 * (this one is temporary and has to be deleted when everything is MVC)
-	 * @param config : the epartner config file
-	 */
-	public EpartnerController(EPartnerConfig config) {
-		epConfig = config;
-	}
-	
-	/**
 	 * Add a view to the set of views.
 	 * 
 	 * @param view : the view that is added to the set

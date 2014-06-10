@@ -18,7 +18,7 @@ import javax.swing.SwingConstants;
 import nl.tudelft.bw4t.agent.EntityType;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
-import nl.tudelft.bw4t.scenariogui.botstore.controller.BotStoreController;
+import nl.tudelft.bw4t.scenariogui.botstore.controller.BotController;
 
 /**
  * BotEditorPanel which serves as the content pane for the BotEditor frame
@@ -78,14 +78,14 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
 	
 	private BW4TClientConfig model;
 	
-	private BotStoreController controller;
+	private BotController controller;
 
 	/**
 	 * Create the botEditorPanel.
 	 * 
 	 * @param controller is the controller that will control this view
 	 */
-	  public BotEditorPanel(BotStoreController controller) {
+	  public BotEditorPanel(BotController controller) {
 		setLayout(new BorderLayout(20, 20));
 		
 		this.setController(controller);
@@ -494,15 +494,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
 	public double getBotBatteryDischargeRate() {
 		return Double.parseDouble(batteryUseValueLabel.getText());
 	}
-	
-	/**
-	 * Returns the created data object and the settings contained.
-	 * 
-	 * @return The data object.
-	 */
-	public BotConfig getDataObject() {
-		return dataObject;
-	}
 
 	/**
 	 * Returns the slider determining the amount of grippers the bot can use.
@@ -610,14 +601,14 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface{
 	/**
 	 * @return the current BotStoreController
 	 */
-	protected BotStoreController getBotStoreController() {
+	protected BotController getBotStoreController() {
 		return controller;
 	}
 	
 	/**
 	 * Set the current BotStoreController
 	 */
-	public void setController(BotStoreController bsc) {
+	public void setController(BotController bsc) {
 		this.controller = bsc;
 	}
 	

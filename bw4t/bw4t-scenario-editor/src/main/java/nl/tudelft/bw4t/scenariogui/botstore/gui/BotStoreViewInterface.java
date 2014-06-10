@@ -1,6 +1,6 @@
 package nl.tudelft.bw4t.scenariogui.botstore.gui;
 
-import nl.tudelft.bw4t.scenariogui.botstore.controller.BotStoreController;
+import nl.tudelft.bw4t.scenariogui.botstore.controller.BotController;
 
 /**
  * BotStoreViewInterface for the BotEditorPanel.
@@ -18,7 +18,7 @@ public interface BotStoreViewInterface {
 	 * Set the controller
 	 * @param bsc 
 	 */
-	void setController(BotStoreController bsc);
+	void setController(BotController bsc);
 	
 	/**
 	 * Returns the name of the bot.
