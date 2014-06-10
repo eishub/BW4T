@@ -40,7 +40,7 @@ public class Map implements TableModel {
     /**
      * the target sequence.
      * */
-    private ColorSequence sequence = new ColorSequence();
+    private ColorSequence sequence = new ColorSequence(); 
     private List<TableModelListener> listeners = new ArrayList<TableModelListener>();
 
     /**
