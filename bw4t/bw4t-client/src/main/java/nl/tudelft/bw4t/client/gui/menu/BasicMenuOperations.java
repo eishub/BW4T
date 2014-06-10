@@ -6,8 +6,8 @@ import javax.swing.JPopupMenu;
 
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
-import nl.tudelft.bw4t.message.BW4TMessage;
-import nl.tudelft.bw4t.message.MessageTranslator;
+import nl.tudelft.bw4t.client.message.BW4TMessage;
+import nl.tudelft.bw4t.client.message.MessageTranslator;
 
 public class BasicMenuOperations {
     BW4TClientGUI bw4tClientMapRenderer;
