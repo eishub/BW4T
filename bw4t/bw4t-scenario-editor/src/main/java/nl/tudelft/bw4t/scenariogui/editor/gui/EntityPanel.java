@@ -32,14 +32,15 @@ import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
  * The EntityPanel class represents right pane of the MainPanel. It shows a list
  * of bots and a list of e-partners and the actions that are possible to edit
  * bots and e-partners.
- * <p>
  * 
  * @version 0.1
  * @since 12-05-2014
  */
 public class EntityPanel extends JPanel {
 
-	private static final long serialVersionUID = 6488182242349086899L;
+	private static final String AGENT_FILE = "Agent file";
+
+    private static final long serialVersionUID = 6488182242349086899L;
 
 	private static final String NUMBER_BOTS_COLUMN = "Number of bots";
 
@@ -213,6 +214,7 @@ public class EntityPanel extends JPanel {
 		botTable.setModel(botList);
 		botList.addColumn("Bot");
 		botList.addColumn("Controller");
+		botList.addColumn(AGENT_FILE);
 		botList.addColumn(NUMBER_BOTS_COLUMN);
 
 		botScrollPane = new JScrollPane(botTable);
@@ -289,6 +291,7 @@ public class EntityPanel extends JPanel {
 
 		ePartnerTable.setModel(epartnerList);
 		epartnerList.addColumn("E-partner");
+		epartnerList.addColumn(AGENT_FILE);
 		epartnerList.addColumn(NUMBER_EPARTNERS_COLUMN);
 
 		epartnerScrollPane = new JScrollPane(ePartnerTable);
@@ -354,6 +357,28 @@ public class EntityPanel extends JPanel {
 	 */
 	public JButton getDropDownButton() {
 		return botDropDownButton;
+	}
+
+	/**
+	 * Returns the amount of bots.
+	 *
+	 * @return The amount of bots.
+	 */
+	public final int getBotCount() {
+		int numBots = 0;
+
+		for (int i = 0; i < botList.getRowCount(); i++) {
+			numBots += Integer.valueOf(botList.getValueAt(i, 2).toString());
+		}
+		return numBots;
+	}
+
+	/**
+	 * Updates the bot count on the EntityPanel.
+	 */
+	public final void updateBotCount() {
+		Integer bots = getBotCount();
+		botCountField.setText(bots.toString());
 	}
 
 	/**

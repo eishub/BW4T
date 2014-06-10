@@ -65,6 +65,9 @@ public class EditBotTable implements TableModelListener {
             config.setBotController(botController);
             break;
         case 2:
+            config.setFileName(newValue);
+            break;
+        case 3:
             config.setBotAmount(Integer.parseInt(newValue));
             break;
          default:
