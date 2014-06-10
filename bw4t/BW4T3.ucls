@@ -374,8 +374,8 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="45" language="java" name="nl.tudelft.bw4t.agent.TestAgent" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/agent/TestAgent.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="45" language="java" name="nl.tudelft.bw4t.client.agent.TestAgent" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/agent/TestAgent.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="306" y="456"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
@@ -404,8 +404,8 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="48" language="java" name="nl.tudelft.bw4t.agent.HumanAgent" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/agent/HumanAgent.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="48" language="java" name="nl.tudelft.bw4t.client.agent.HumanAgent" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/agent/HumanAgent.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="380" y="372"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
@@ -461,8 +461,8 @@
     <position height="50" width="464" x="36" y="121"/>    
     <display autosize="false" stereotype="true" accessors="true"/>  
   </package>  
-  <class id="56" language="java" name="nl.tudelft.bw4t.agent.BW4TAgent" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/agent/BW4TAgent.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="56" language="java" name="nl.tudelft.bw4t.client.agent.BW4TAgent" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/agent/BW4TAgent.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="251" y="378"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
@@ -470,8 +470,9 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <interface id="57" language="java" name="nl.tudelft.bw4t.agent.ActionInterface" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/agent/ActionInterface.java" binary="false" corner="BOTTOM_RIGHT">    
+  <interface id="57" language="java" name="nl.tudelft.bw4t.client.agent.ActionInterface" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/agent/ActionInterface.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="112" y="373"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
@@ -518,8 +519,8 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <package id="62" language="java" name="nl.tudelft.bw4t.agent" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/agent" binary="false" corner="BOTTOM_RIGHT">    
+  <package id="62" language="java" name="nl.tudelft.bw4t.client.agent" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/agent" binary="false" corner="BOTTOM_RIGHT">    
     <position height="50" width="385" x="41" y="281"/>    
     <display autosize="false" stereotype="true" accessors="true"/>  
   </package>  

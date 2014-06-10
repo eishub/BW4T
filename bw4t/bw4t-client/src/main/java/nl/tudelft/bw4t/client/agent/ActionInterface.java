@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.agent;
+package nl.tudelft.bw4t.client.agent;
 
 import eis.exceptions.ActException;
 import nl.tudelft.bw4t.message.BW4TMessage;

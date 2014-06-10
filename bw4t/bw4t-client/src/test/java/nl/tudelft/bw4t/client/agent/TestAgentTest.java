@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.agent;
+package nl.tudelft.bw4t.client.agent;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 
+import nl.tudelft.bw4t.client.agent.TestAgent;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 
 import org.junit.Before;

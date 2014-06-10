@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import nl.tudelft.bw4t.agent.HumanAgent;
+import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.ClientGUI;
 import nl.tudelft.bw4t.map.NewMap;
