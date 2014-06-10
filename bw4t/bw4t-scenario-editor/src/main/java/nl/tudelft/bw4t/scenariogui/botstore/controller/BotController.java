@@ -198,6 +198,10 @@ public class BotController {
 		return clientconfig;
 	}
 	
+	public EntityType getBotController() {
+		return botConfig.getBotController();
+	}
+	
 	/**
 	 * Updates the bot config file with the values from the BotEditorPanel
 	 * 
