@@ -55,6 +55,9 @@ public class EditEPartnerTable implements TableModelListener {
 			config.setEpartnerName(value);
 			break;
 		case 1:
+		    config.setFileName(value);
+		    break;
+		case 2:
 			config.setEpartnerAmount(Integer.parseInt(value));
 			break;
 		default:
