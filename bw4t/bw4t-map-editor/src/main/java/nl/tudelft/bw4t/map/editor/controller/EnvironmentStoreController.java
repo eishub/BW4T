@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import nl.tudelft.bw4t.map.editor.EnvironmentStore;
 import nl.tudelft.bw4t.view.MapRenderer;
 
-public class EnvironmentStoreController implements ActionListener {
+public class EnvironmentStoreController {
 	
 	private EnvironmentStore view;
 	
@@ -40,12 +40,6 @@ public class EnvironmentStoreController implements ActionListener {
 		    	preview.setVisible(true);
 			}
 		});
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 	
     /**
