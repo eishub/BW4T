@@ -102,7 +102,7 @@ public class RoomMenus {
         gui.getjPopupMenu().add(menuItem);
 
         if (holding != null) {
-            menuItem = new JMenuItem("Put down box");
+            menuItem = new JMenuItem("Put down block");
             menuItem.addActionListener(new PutdownActionListener(gui.getController()));
             gui.getjPopupMenu().add(menuItem);
         }
@@ -185,5 +185,4 @@ public class RoomMenus {
         menuItem = new JMenuItem("Close menu");
         gui.getjPopupMenu().add(menuItem);
     }
-
 }

@@ -1,12 +1,13 @@
 package nl.tudelft.bw4t.eis.translators;
 
-import nl.tudelft.bw4t.eis.BlockColor;
-import nl.tudelft.bw4t.model.blocks.Block;
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Java2Parameter;
 import eis.iilang.Identifier;
 import eis.iilang.Numeral;
 import eis.iilang.Parameter;
+import nl.tudelft.bw4t.eis.BlockColor;
+import nl.tudelft.bw4t.model.blocks.Block;
+
 
 /**
  * Translates {@link Block} into a list of {@link Parameter} specifying the id and color of the block.
@@ -19,8 +20,12 @@ public class BlockWithColorTranslator implements Java2Parameter<BlockColor> {
         // color(id, color)
         Parameter[] params = new Parameter[2];
         params[0] = new Numeral(block.getId());
-        params[1] = new Identifier(String.valueOf(block.getColorId()));
-
+        if (!blockColor.isColorBlind()) {
+            params[1] = new Identifier(String.valueOf(block.getColorId()));
+        } else {
+            params[1] = new Identifier(String.valueOf(nl.tudelft.bw4t.map.BlockColor.DARK_GRAY));
+        }
+        
         return params;
     }
 

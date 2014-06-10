@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.client.gui.menu;
+package nl.tudelft.bw4t.client.gui.listeners;
 
 import java.awt.event.ActionEvent;
 import java.util.LinkedList;
@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 
 import eis.iilang.Percept;
 import nl.tudelft.bw4t.client.controller.ClientController;
-import nl.tudelft.bw4t.client.gui.listeners.ClientActionListener;
 import nl.tudelft.bw4t.client.startup.Launcher;
 
 public class PickUpEPartnerActionListener extends ClientActionListener {
