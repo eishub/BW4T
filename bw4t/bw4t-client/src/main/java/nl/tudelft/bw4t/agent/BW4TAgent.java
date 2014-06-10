@@ -3,8 +3,8 @@ package nl.tudelft.bw4t.agent;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 
+import nl.tudelft.bw4t.client.environment.PerceptsHandler;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-import nl.tudelft.bw4t.client.environment.handlers.PerceptsHandler;
 import nl.tudelft.bw4t.message.BW4TMessage;
 import nl.tudelft.bw4t.message.MessageTranslator;
 import eis.eis2java.exception.TranslationException;

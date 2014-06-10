@@ -1,11 +1,10 @@
-package nl.tudelft.bw4t.client.environment.handlers;
+package nl.tudelft.bw4t.client.environment;
 
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
 
 import nl.tudelft.bw4t.client.BW4TClient;
-import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.startup.InitParam;
 import eis.exceptions.EntityException;

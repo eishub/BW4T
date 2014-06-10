@@ -1,11 +1,10 @@
-package nl.tudelft.bw4t.client.environment.handlers;
+package nl.tudelft.bw4t.client.environment;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
