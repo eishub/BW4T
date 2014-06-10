@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.JFileChooser;
 import javax.swing.event.TableModelListener;
@@ -349,25 +350,73 @@ public class Map implements TableModel {
      * @param cols The amount of columns in the map.
      * @return
      */
-    NewMap createRandomMap(int rows, int cols) {
-    	Node[][] map = createRandomGraph(rows, cols);
+    NewMap createRandomMap(int rows, int cols, int roomCount) {
+    	Node[][] map = createRandomGraph(rows, cols, roomCount);
 		return null;
     }
     /**
      * This method returns a 2D array of nodes which
      * should represent the random map in graph form.
      */
-    private Node[][] createRandomGraph(int rows, int cols) {
+    private Node[][] createRandomGraph(int rows, int cols, int roomCount) {
+    	assert rows > 0 && cols > 0;
     	// The map is one-indexed, and has another row and
     	// column lying on the right of the map, this is easier for making the map.
     	Node[][] map = new Node[rows + 2][cols + 2];
+    	fillBorders(map);
+    	initGrid(rows, cols, map);
+    	cluster(map, roomCount, rows, cols);
+    	return map;
+    }
+    private void cluster(Node[][] map, int roomCount, int rows, int cols) {
+    	Random r = new Random(System.currentTimeMillis());
+    	for (int i = 1; i <= roomCount; i++) {
+	    	int randRow = r.nextInt(rows) + 1;
+	    	int randCol = r.nextInt(cols) + 1;
+	    	Node selected = map[randRow][randCol];
+	    	if (isInnerBorder(selected)) {
+	    		selected.setClusterId(i);
+	    	}
+    	}
+    	
+    }
+    private boolean isInnerBorder(Node n) {
+    	return n.getNorth().getClusterId() == -1 || n.getEast().getClusterId() == -1
+    			|| n.getSouth().getClusterId() == -1
+    			|| n.getWest().getClusterId() == -1;
+    }
+    private void initGrid(int rows, int cols, Node[][] map) {
+    	// First initialize all the squares, then connect them.
     	for (int i = 1; i <= rows; i++) {
     		for (int j = 1; j <= cols; j++) {
     			map[i][j] = new Node(Zone.Type.CORRIDOR);
-    			map[i][j].setNorth(map[i + 1][j]);
+    			map[i][j].setClusterId(0);
     		}
     	}
-    	return null;
+    	for (int i = 1; i <= rows; i++) {
+    		for (int j = 1; j <= cols; j++) {
+    			map[i][j].setNorth(map[i + 1][j]);
+    			map[i + 1][j].setSouth(map[i][j]);
+    			map[i][j].setEast(map[i][j + 1]);
+    			map[i][j + 1].setWest(map[i][j]);
+    			map[i][j].setSouth(map[i - 1][j]);
+    			map[i - 1][j].setNorth(map[i][j]);
+    			map[i][j].setWest(map[i][j - 1]);
+    			map[i][j - 1].setEast(map[i][j]);
+    		}
+    	}
+    }
+    private void fillBorders(Node[][] map) {
+    	int lowestRow = map.length;
+    	int mostRightColumn = map[0].length;
+    	for (int i = 0; i < mostRightColumn; i++) {
+    		map[0][i] = new Node(Zone.Type.CORRIDOR);
+    		map[lowestRow - 1][i] = new Node(Zone.Type.CORRIDOR);
+    	}
+    	for (int i = 0; i < lowestRow; i++) {
+    		map[i][0] = new Node(Zone.Type.CORRIDOR);
+    		map[i][mostRightColumn - 1] = new Node(Zone.Type.CORRIDOR);
+    	}
     }
 
     /**
@@ -602,6 +651,10 @@ public class Map implements TableModel {
     	 */
     	private Zone.Type type;
     	/**
+    	 * The cluster this node belongs to.
+    	 */
+    	private int clusterId = -1;
+    	/**
     	 * Constructs the Node object with only the type of the room
     	 * the node is representing.
     	 * @param t The type of room this node should represent.
@@ -655,6 +708,12 @@ public class Map implements TableModel {
 		}
 		public void setType(Zone.Type type) {
 			this.type = type;
+		}
+		public int getClusterId() {
+			return clusterId;
+		}
+		public void setClusterId(int clusterId) {
+			this.clusterId = clusterId;
 		}
     }
 }
