@@ -3,6 +3,7 @@ package nl.tudelft.bw4t.model.robots;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.tudelft.bw4t.model.zone.Zone;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.logging.BotLog;
 
@@ -22,6 +23,8 @@ public class AgentRecord {
     private Integer nMessages = 0; 
     // number of rooms entered
     private Integer nRoomsEntered = 0; 
+    
+    private Zone lastZoneEntered = null;
 
     /** accumulated milliseconds of standing still */
     private Long totalStandingStillMillis = 0L;
@@ -33,7 +36,7 @@ public class AgentRecord {
     /**
      * The log4j logger, logs to the console and file
      */
-    private static final Logger LOGGER = Logger.getLogger(BW4TEnvironment.class);
+    private static final Logger LOGGER = Logger.getLogger(AgentRecord.class);
     
     /**
      * create new Agent record
@@ -64,9 +67,12 @@ public class AgentRecord {
     }
 
     /**
-     * should be called when agent enters room
+     * should be called when agent enters room ensures that the same room does not get printed twice.
      */
-    public void addEnteredRoom() {
+    public void addEnteredRoom(Zone entered) {
+        if(lastZoneEntered == entered) {
+            return;
+        }
         nRoomsEntered++;
     }
 

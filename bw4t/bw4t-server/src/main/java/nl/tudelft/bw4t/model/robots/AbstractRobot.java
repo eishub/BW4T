@@ -256,11 +256,11 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         // the check for getLocation is to always allow the initial moveTo
         if (getLocation() != null) {
             switch (getMoveType(x, y)) {
+            case ENTERING_ROOM:
+                agentRecord.addEnteredRoom(ZoneLocator.getZoneAt(x, y));
+                break;
             case ENTER_CORRIDOR:
             case ENTERING_FREESPACE:
-            case ENTERING_ROOM:
-                agentRecord.addEnteredRoom();
-                break;
             case SAME_AREA:
             	break;
             case HIT_CLOSED_DOOR:
@@ -383,7 +383,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		        double distance = distanceTo(targetLocation);
 		        if (distance < MIN_MOVE_DISTANCE) {
 		            // we're there
-		            LOGGER.log(BotLog.BOTLOG, "Bot " + this + " reached destination. Battery left: " + this.battery.getCurrentCapacity());
 		            stopRobot();
 		        }
 		        else {
