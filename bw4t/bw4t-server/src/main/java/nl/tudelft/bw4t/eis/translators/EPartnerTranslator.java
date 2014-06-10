@@ -4,9 +4,8 @@ import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Java2Parameter;
 import eis.iilang.Numeral;
 import eis.iilang.Parameter;
-
-import nl.tudelft.bw4t.blocks.EPartner;
-import nl.tudelft.bw4t.handicap.IRobot;
+import nl.tudelft.bw4t.model.blocks.EPartner;
+import nl.tudelft.bw4t.model.robots.handicap.IRobot;
 
 /**
  * Translates {@link EPartner} objects into parameters that can be used in eis.

@@ -43,7 +43,6 @@ public class MessageTranslatorTest {
          */
         @Before
         public void init() {
-            MessageTranslator.init();
         }
 
         /**

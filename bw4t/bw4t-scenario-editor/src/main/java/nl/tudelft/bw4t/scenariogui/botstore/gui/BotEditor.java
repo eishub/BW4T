@@ -8,7 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.botstore.controller.BotStoreController;
-import nl.tudelft.bw4t.scenariogui.panel.gui.MainPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
  * This class serves as frame for the BotEditorPanel
