@@ -10,10 +10,11 @@ import nl.tudelft.bw4t.client.gui.listeners.DropEPartnerActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.GoToBlockActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.PickUpActionListener;
+import nl.tudelft.bw4t.client.gui.listeners.PickUpEPartnerActionListener;
+import nl.tudelft.bw4t.client.message.BW4TMessage;
+import nl.tudelft.bw4t.client.message.MessageType;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
-import nl.tudelft.bw4t.message.BW4TMessage;
-import nl.tudelft.bw4t.message.MessageType;
 
 public class EPartnerMenu {
 
