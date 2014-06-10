@@ -22,6 +22,7 @@ import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.LineIterator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -565,6 +566,16 @@ public class MenuBarTest {
         editor.getTopMenuBar().getMenuItemFileOpen().doClick();
         
         saveWithMockedFileChooser();
+        LineIterator open = FileUtils.lineIterator(new File(FILE_OPEN_PATH));
+        LineIterator dummy = FileUtils.lineIterator(new File(FILE_SAVE_PATH));
+        System.out.println("open.xml");
+        while(open.hasNext()){
+            System.out.println(open.nextLine());
+        }
+        System.out.println("dummy.xml");
+        while(dummy.hasNext()){
+            System.out.println(dummy.nextLine());
+        }
         assertTrue(FileUtils.contentEquals(new File(FILE_OPEN_PATH), new File(FILE_SAVE_PATH))); 
     }
     
