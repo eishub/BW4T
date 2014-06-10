@@ -34,10 +34,18 @@
 			<url>http://repo1.maven.org/maven2</url>
 		</repository>
 		<repository>
-			<id>martin-private-dependency-repository</id>
-			<name>Martin Dependency</name>
-			<url>https://martinrogalla.com/bw4t/dependency/</url>
+			<id>git-bw4t-dependency-repository</id>
+			<name>Git BW4T Dependency Repository</name>
+      <url>https://martinrogalla.github.io/BW4T/repo/bw4t/dep/</url>
 		</repository>
+     <repository>
+        <id>eis-releases</id>
+        <url>https://raw.github.com/MartinRogalla/eis/releases/</url>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+        </snapshots>
+    </repository>
 	</repositories>
 
 	<build>
@@ -153,15 +161,10 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>apleis</groupId>
-			<artifactId>eis</artifactId>
-			<version>0.3</version>
-		</dependency>
-		<dependency>
 			<groupId>org.easymock</groupId>
 			<artifactId>easymock</artifactId>
 			<version>3.2</version>
-			<scope>provided</scope>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
