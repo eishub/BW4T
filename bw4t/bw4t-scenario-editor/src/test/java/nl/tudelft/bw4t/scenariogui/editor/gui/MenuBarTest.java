@@ -45,34 +45,18 @@ import static org.mockito.Mockito.when;
 
 public class MenuBarTest {
 
-    /**
-     * The base directory of all files used in the test.
-     */
     private static final String BASE = System.getProperty("user.dir") + "/src/test/resources/";
 
-    /**
-     * The path of the xml file used to test the open button.
-     */
     private static final String FILE_OPEN_PATH = BASE + "open.xml";
 
-    /**
-     * The path of the xml file used to test the open button.
-     */
     private static final String FILE_EXPORT_PATH = BASE + "export/";
 
-    /**
-     * The path of the xml file used to save dummy data
-     */
     private static final String FILE_SAVE_PATH = BASE + "dummy.xml";
 
-    /**
-     * The Scenario editor that is spied upon for this test.
-     */
+    private static final String FILE_MAP = BASE + "test.map";
+
     private ScenarioEditor editor;
 
-    /**
-     * File choose used to mock the behaviour of the user.
-     */
     private JFileChooser filechooser;
 
     /**
@@ -557,26 +541,30 @@ public class MenuBarTest {
      *
      */
     @Test
-    public void testSaveCorrectValues() throws IOException {
+    public void testSaveCorrectValues() throws IOException, JAXBException {
         // Setup the behaviour
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.getSelectedFile()).thenReturn(new File(FILE_OPEN_PATH));
 
         editor.getTopMenuBar().getMenuItemFileOpen().doClick();
-        
+
+        // Set it to an existing map file.
+        editor.getMainPanel().getConfigurationPanel().setMapFile(FILE_MAP);
+
         saveWithMockedFileChooser();
-        LineIterator open = FileUtils.lineIterator(new File(FILE_OPEN_PATH));
-        LineIterator dummy = FileUtils.lineIterator(new File(FILE_SAVE_PATH));
-        System.out.println("open.xml");
-        while(open.hasNext()){
-            System.out.println(open.nextLine());
-        }
-        System.out.println("dummy.xml");
-        while(dummy.hasNext()){
-            System.out.println(dummy.nextLine());
-        }
-        assertTrue(FileUtils.contentEquals(new File(FILE_OPEN_PATH), new File(FILE_SAVE_PATH))); 
+
+        BW4TClientConfig opened = BW4TClientConfig.fromXML(FILE_OPEN_PATH);
+        BW4TClientConfig saved = BW4TClientConfig.fromXML(FILE_SAVE_PATH);
+
+        assertTrue("Comparing Bot Config", opened.compareBotConfigs(saved.getBots()));
+        assertTrue("Comparing EPartner Config", opened.compareEpartnerConfigs(saved.getEpartners()));
+        assertEquals(opened.getClientPort(), saved.getClientPort());
+        assertEquals(opened.getClientIp(), saved.getClientIp());
+        assertEquals(opened.getServerPort(), saved.getServerPort());
+        assertEquals(opened.getServerIp(), saved.getServerIp());
+        assertEquals(opened.isLaunchGui(), saved.isLaunchGui());
+        // Ignore the map file during this test.
     }
     
     /**
@@ -715,7 +703,8 @@ public class MenuBarTest {
         ActionListener[] listeners = editor.getTopMenuBar().getMenuItemFileSaveAs().getActionListeners();
         AbstractMenuOption menuOption = (AbstractMenuOption) listeners[0];
         menuOption.setCurrentFileChooser(filechooser);
-        
+
+
         /** Saves the config as XML: */
         editor.getTopMenuBar().getMenuItemFileSaveAs().doClick();
     }
