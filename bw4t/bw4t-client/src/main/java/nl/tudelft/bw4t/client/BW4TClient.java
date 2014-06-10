@@ -27,6 +27,7 @@ import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
 import eis.exceptions.ManagementException;
 import eis.exceptions.NoEnvironmentException;
+import eis.exceptions.QueryException;
 import eis.exceptions.RelationException;
 import eis.iilang.Action;
 import eis.iilang.EnvironmentState;
@@ -399,10 +400,10 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
      * @param property
      *            , the property to query
      * @return the property's value
-     * @throws RemoteException
+     * @throws QueryException 
      *             , if an exception occurs during the execution of a remote object call
      */
-    public String queryProperty(String property) throws RemoteException {
+    public String queryProperty(String property) throws QueryException {
         return server.queryProperty(property);
     }
 
