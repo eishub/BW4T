@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.map.editor;
+package nl.tudelft.bw4t.map.editor.gui;
 
 import java.awt.GridLayout;
 
@@ -10,19 +10,21 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 /**
- * shows the user a dialog where he can enter size of the map
+ * The SizeDialog show the user a dialog where he can enter size of the map.
  */
-@SuppressWarnings("serial")
 public class SizeDialog extends JPanel {
-    SpinnerModel rowmodel = new SpinnerNumberModel(3, // initial value
+
+	private static final long serialVersionUID = -5021732242993235726L;
+	
+	SpinnerModel rowmodel = new SpinnerNumberModel(3, // initial value
             1, // min
-            10, // max
+            24, // max
             1); // step
     JSpinner rows = new JSpinner(rowmodel);
 
     SpinnerModel colmodel = new SpinnerNumberModel(3, // initial value
             1, // min
-            10, // max
+            24, // max
             1); // step
     JSpinner cols = new JSpinner(colmodel);
 
@@ -37,19 +39,17 @@ public class SizeDialog extends JPanel {
 
     public SizeDialog() {
         setLayout(new GridLayout(0, 2));
-        add(new JLabel("#rows"));
+        add(new JLabel("#Rows"));
         add(rows);
-        add(new JLabel("#columns"));
+        add(new JLabel("#Columns"));
         add(cols);
-        add(new JLabel("#entities"));
+        add(new JLabel("#Entities"));
         add(entities);
-        add(new JLabel("generate random sequence and blocks"));
+        add(new JLabel("Generate random sequence and blocks"));
         add(randomcheckbox);
-        add(new JLabel("show zone labels"));
+        add(new JLabel("Show zone labels"));
         add(labelcheckbox);
-
-        // pack();
-        // setVisible(true);
+        
     }
 
     public boolean isRandomMap() {

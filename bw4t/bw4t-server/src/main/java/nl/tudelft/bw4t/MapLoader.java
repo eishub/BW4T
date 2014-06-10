@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t;
 
+import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,8 +13,6 @@ import java.util.Random;
 
 import javax.xml.bind.JAXBException;
 
-import org.apache.log4j.Logger;
-
 import nl.tudelft.bw4t.eis.RobotEntity;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Door.Orientation;
@@ -24,13 +23,18 @@ import nl.tudelft.bw4t.model.blocks.Block;
 import nl.tudelft.bw4t.model.doors.Door;
 import nl.tudelft.bw4t.model.robots.AbstractRobot;
 import nl.tudelft.bw4t.model.robots.NavigatingRobot;
+import nl.tudelft.bw4t.model.zone.Blockade;
 import nl.tudelft.bw4t.model.zone.BlocksRoom;
+import nl.tudelft.bw4t.model.zone.ChargingZone;
 import nl.tudelft.bw4t.model.zone.Corridor;
 import nl.tudelft.bw4t.model.zone.DropZone;
 import nl.tudelft.bw4t.model.zone.Room;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.server.logging.BotLog;
+
+import org.apache.log4j.Logger;
+
 import repast.simphony.context.Context;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactory;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
@@ -125,6 +129,16 @@ public final class MapLoader {
             }
             zones.put(roomzone.getName(), room);
         }
+        
+        for (Zone blockzone : map.getZones(Zone.Type.BLOCKADE)) {
+            Blockade blockade = createBlockade(context, space, blockzone);
+            zones.put(blockzone.getName(), blockade);
+        }
+        
+        for (Zone chargingzone : map.getZones(Zone.Type.CHARGINGZONE)) {
+            ChargingZone czone = createChargingZone(context, space, chargingzone);
+            zones.put(chargingzone.getName(), czone);
+        }
 
         connectAllZones(zones);
 
@@ -148,7 +162,7 @@ public final class MapLoader {
             createBlocksForRoom((Room) zones.get(room), context, space, roomblocks.get(room));
 
         }
-
+        
         /*for (Entity entityparams : map.getEntities()) {
             if (entityparams.getType() == Entity.EntityType.NORMAL) {
                 createEisEntityRobot(context, space, entityparams);
@@ -306,6 +320,38 @@ public final class MapLoader {
      */
     private static Room createRoom(Context<Object> context, ContinuousSpace<Object> space, Zone roomzone) {
         return new BlocksRoom(space, context, roomzone);
+    }
+    
+    /**
+     * Creates a charging zone where multiple robots can charge. 
+     * 
+     * @param context
+     *            The context in which the room should be placed.
+     * @param space
+     *            the space in which the room should be placed.
+     * @param chargezone
+     *            the room {@link Zone}.
+     * @return
+     */
+    private static ChargingZone createChargingZone(Context<Object> context, ContinuousSpace<Object> space, Zone chargezone) {
+        return new ChargingZone(chargezone, space, context);
+    }
+
+    /**
+     * Creates a blockade to block the robots' path.
+     * 
+     * @param c
+     *            The color.
+     * @param context
+     *            The context in which the room should be placed.
+     * @param space
+     *            the space in which the room should be placed.
+     * @param chargezone
+     *            the room {@link Zone}.
+     * @return
+     */
+    private static Blockade createBlockade(Context<Object> context, ContinuousSpace<Object> space, Zone chargezone) {
+        return new Blockade(chargezone, space, context);
     }
 
     /**

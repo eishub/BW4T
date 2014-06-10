@@ -16,7 +16,7 @@ import nl.tudelft.bw4t.eis.translators.ObjectInformationTranslator;
 import nl.tudelft.bw4t.eis.translators.PointTranslator;
 import nl.tudelft.bw4t.eis.translators.ZoneTranslator;
 import nl.tudelft.bw4t.model.blocks.Block;
-import nl.tudelft.bw4t.model.blocks.EPartner;
+import nl.tudelft.bw4t.model.epartners.EPartner;
 import nl.tudelft.bw4t.model.robots.AbstractRobot;
 import nl.tudelft.bw4t.model.robots.NavigatingRobot;
 import nl.tudelft.bw4t.model.robots.handicap.IRobot;
@@ -329,10 +329,11 @@ public class RobotEntity implements RobotEntityInt {
     @AsPercept(name = "color", multiplePercepts = true, filter = Filter.Type.ALWAYS)
     public List<BlockColor> getColor() {
         Set<Block> blocks = getVisibleBlocks();
-
+        boolean isColorBlind = ourRobot.getHandicapsList().contains("ColorBlind");
+        
         List<BlockColor> colors = new ArrayList<BlockColor>();
         for (Block block : blocks) {
-            colors.add(new BlockColor(block));
+            colors.add(new BlockColor(block, isColorBlind));
         }
 
         return colors;

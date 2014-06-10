@@ -1,11 +1,10 @@
 package nl.tudelft.bw4t.model.robots.handicap;
 
-import org.apache.log4j.Logger;
-
 import nl.tudelft.bw4t.BoundedMoveableObject;
-import nl.tudelft.bw4t.model.blocks.EPartner;
+import nl.tudelft.bw4t.model.epartners.EPartner;
 import nl.tudelft.bw4t.model.robots.AbstractRobot;
-import repast.simphony.random.RandomHelper;
+
+import org.apache.log4j.Logger;
 
 public class Human extends AbstractRobotDecorator {
     private static final Logger LOGGER = Logger.getLogger(Human.class);
