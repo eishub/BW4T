@@ -21,6 +21,10 @@ class SizeSlider extends MouseAdapter {
         this.view = pview;
     }
     
+    /**
+     * Update the BatteryUseValueLabel with the correct value when the slider is moved.
+     * @param arg0 MouseEvent
+     */
     @Override
     public void mouseReleased(MouseEvent arg0) {
     	BotController currentController = view.getBotController();
