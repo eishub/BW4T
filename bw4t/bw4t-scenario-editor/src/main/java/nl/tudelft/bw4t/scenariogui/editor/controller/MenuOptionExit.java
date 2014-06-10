@@ -48,11 +48,7 @@ class MenuOptionExit extends AbstractMenuOption {
                 getController().getMainView().closeScenarioEditor();
             }
         } else {
-            boolean doQuit = getController().promptUserToQuit();
-
-            if (doQuit) {
-                getController().getMainView().closeScenarioEditor();
-            }
+        	getController().getMainView().closeScenarioEditor();
         }
     }
 }
