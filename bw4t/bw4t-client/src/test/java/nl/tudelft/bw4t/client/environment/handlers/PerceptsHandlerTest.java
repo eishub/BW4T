@@ -16,10 +16,14 @@ import nl.tudelft.bw4t.map.NewMap;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import eis.exceptions.PerceiveException;
 
+@RunWith(MockitoJUnitRunner.class)
 public class PerceptsHandlerTest {
 
     @Mock
@@ -39,17 +43,12 @@ public class PerceptsHandlerTest {
         HumanAgent humanAgent = new HumanAgent("agentID", remoteEnvironment);
         NewMap newMap = new NewMap();
         bw4tClient.useMap(newMap);
-        
+        when(remoteEnvironment.getClient()).thenReturn(bw4tClient);
         BW4TClientGUI bw4tClientGUI = new BW4TClientGUI(remoteEnvironment, "entityID", humanAgent);
         HashMap<String, BW4TClientGUI> entityToGui = new HashMap<String, BW4TClientGUI>();
-        
         entityToGui.put("entity", bw4tClientGUI);
-        
-        when(remoteEnvironment.getClient()).thenReturn(bw4tClient);
         when(remoteEnvironment.getEntityToGUI()).thenReturn(entityToGui);
-        
         String entity = "test";
-        
         PerceptsHandler.getAllPerceptsFromEntity(entity, remoteEnvironment);
     }
 }
