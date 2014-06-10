@@ -13,11 +13,8 @@ import java.util.Map;
 import java.util.Set;
 
 import nl.tudelft.bw4t.client.BW4TClient;
-import nl.tudelft.bw4t.client.environment.handlers.ActionHandler;
-import nl.tudelft.bw4t.client.environment.handlers.PerceptsHandler;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.startup.InitParam;
-import nl.tudelft.bw4t.client.startup.Launcher;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
@@ -676,7 +673,12 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
      */
     @Override
     public String queryProperty(String property) throws QueryException {
-        return getClient().queryProperty(property);
+        try {
+            return getClient().queryProperty(property);
+        } catch (RemoteException e) {
+            LOGGER.error("Failed to read property from server.", e);
+            return "";
+        }
     }
 
     /**
