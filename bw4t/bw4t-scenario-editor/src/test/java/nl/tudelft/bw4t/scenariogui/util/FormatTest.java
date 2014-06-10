@@ -79,7 +79,7 @@ public class FormatTest {
      */
     @Test
     public final void testGetNonNegativeIntValue() {
-    	assertEquals(1, Format.getNonNegativeIntValue(negativeInteger));
+    	assertEquals(0, Format.getNonNegativeIntValue(negativeInteger));
     }
 
     /**
@@ -95,15 +95,16 @@ public class FormatTest {
      */
     @Test
     public final void testGetIntValueToLongLong() {
-    	assertEquals(2147483647, Format.getIntValue("1000000000000000000", false));
+    	assertEquals(0, Format.getIntValue("1000000000000000000", false));
     }
 
     /**
      * Tests getIntValue() by feeding it a to long Integer
+     * Returns zero since the long cant be converted to an int.
      */
     @Test
     public final void testGetIntValueToLongInt() {
-    	assertEquals(2147483647, Format.getIntValue("10000000000", false));
+    	assertEquals(0, Format.getIntValue("10000000000", false));
     }
 
     /**
@@ -112,7 +113,7 @@ public class FormatTest {
      */
     @Test
     public final void testGetIntValueToSmallInt() {
-    	assertEquals(-2147483648, Format.getIntValue("-10000000000", false));
+    	assertEquals(0, Format.getIntValue("-10000000000", false));
     }
 
     /**
@@ -121,7 +122,7 @@ public class FormatTest {
      */
     @Test
     public final void testGetIntValueToSmallIntNegative() {
-    	assertEquals(-2147483648, Format.getIntValue("-10000000000", true));
+    	assertEquals(0, Format.getIntValue("-10000000000", true));
     }
 
     /**
