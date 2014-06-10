@@ -39,6 +39,7 @@ public class BotEditorPanelTest {
         scenarioEditor = new ScenarioEditor(new ConfigurationPanel(), entityPanel, new BW4TClientConfig());
         scenarioEditor.getController().getModel().getBots().add(new BotConfig());
         MainPanel parent = scenarioEditor.getMainPanel();
+        //TODO: These tests need to be fixed. 
         editor = new BotEditor(parent, 0, scenarioEditor.getController().getModel());
         panel = new BotEditorPanel(editor, parent, scenarioEditor.getController().getModel());
         spypanel = spy(panel);
