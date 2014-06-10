@@ -106,14 +106,6 @@ public class EnvironmentStore extends JFrame {
         add(roomsPanel, BorderLayout.CENTER);
         add(legendaPanel, BorderLayout.EAST);
 
-//        // attach listeners
-//        savebutton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                map.saveAsFile();
-//            }
-//        });
-
         controller = new EnvironmentStoreController(this, map);
         
         pack();
