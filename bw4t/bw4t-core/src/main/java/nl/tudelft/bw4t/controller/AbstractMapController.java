@@ -2,6 +2,7 @@ package nl.tudelft.bw4t.controller;
 
 import java.util.HashSet;
 import java.util.Set;
+import org.apache.log4j.*;
 
 import nl.tudelft.bw4t.map.MapFormatException;
 import nl.tudelft.bw4t.map.NewMap;
@@ -156,6 +157,32 @@ public abstract class AbstractMapController implements MapController, Runnable {
         }
 
         return rooms;
+    }
+    
+    @Override
+    public Set<Zone> getChargingZones() {
+    	Set<Zone> chargingzones = new HashSet<Zone>();
+    	
+    	for (Zone zone : map.getZones()) {
+    		if (zone.getType() == Type.CHARGINGZONE) {
+    			chargingzones.add(zone);
+    		}
+    	}
+    	
+    	return chargingzones;
+    }
+    
+    @Override
+    public Set<Zone> getBlockades() {
+        Set<Zone> blockades = new HashSet<Zone>();
+
+        for (Zone zone : map.getZones()) {
+            if (zone.getType() == Type.BLOCKADE) {
+                blockades.add(zone);
+            }
+        }
+
+        return blockades;   	
     }
 
     @Override
