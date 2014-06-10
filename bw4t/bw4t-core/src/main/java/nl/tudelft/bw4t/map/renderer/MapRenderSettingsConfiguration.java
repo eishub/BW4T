@@ -1,8 +1,6 @@
-package nl.tudelft.bw4t.view;
+package nl.tudelft.bw4t.map.renderer;
 
 import javax.swing.JFrame;
-
-import nl.tudelft.bw4t.controller.MapRenderSettings;
 
 /**
  * TODO: Configuration screen for the map renderer.

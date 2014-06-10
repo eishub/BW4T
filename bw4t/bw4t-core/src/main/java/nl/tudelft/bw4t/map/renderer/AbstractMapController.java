@@ -1,7 +1,8 @@
-package nl.tudelft.bw4t.controller;
+package nl.tudelft.bw4t.map.renderer;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import org.apache.log4j.*;
 
 import nl.tudelft.bw4t.map.MapFormatException;
@@ -9,7 +10,6 @@ import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.Zone.Type;
-import nl.tudelft.bw4t.view.MapRendererInterface;
 
 /**
  * An abstract {@link MapController} implementation, taking over as much functionality as possible. Without using client

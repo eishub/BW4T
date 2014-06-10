@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.controller;
+package nl.tudelft.bw4t.map.renderer;
 
 import javax.swing.SwingUtilities;
 

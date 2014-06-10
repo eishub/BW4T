@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.view;
+package nl.tudelft.bw4t.map.renderer;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,8 +13,6 @@ import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
 
-import nl.tudelft.bw4t.controller.MapController;
-import nl.tudelft.bw4t.controller.MapRenderSettings;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Door;
 import nl.tudelft.bw4t.map.Zone;
