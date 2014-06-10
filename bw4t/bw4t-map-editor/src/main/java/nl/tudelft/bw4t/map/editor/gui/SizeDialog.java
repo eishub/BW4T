@@ -21,9 +21,66 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
+/**
+ * The SizeDialog shows the user a dialog where he can enter the size of the map.
+ */
 public class SizeDialog extends JFrame {
 	
+	/**
+	 * The contentPane.
+	 */
 	private JPanel contentPane;
+	
+	/**
+	 * The left panel of the frame (which will hold the editExistingMapButton)
+	 */
+	private JPanel leftPanel;
+	
+	/**
+	 * The right panel of the frame (which will hold the rest)
+	 */
+	private JPanel rightPanel;
+	
+	/**
+	 * With this button the user can choose to edit an already existing map.
+	 */
+	private JButton editExistingMapButton = new JButton("Edit existing map");
+	
+	/**
+	 * With this button the user can choose to start building a map from scratch.
+	 */
+	private JButton beginFromScratchButton = new JButton("Begin from scratch");
+	
+	/**
+	 * With this button the user can choose to use a standard basis.
+	 */
+	private JButton useStandardBasisButton = new JButton("Use standard basis");
+	
+	/**
+	 * Checkbox which the user can check if he wants the zone labels to be showed.
+	 */
+	private JCheckBox showZoneLabelsCheckbox = new JCheckBox("Show Zone Labels");
+	
+	/**
+	 * Label with the text #rows
+	 */
+	private JLabel rowsLabel = new JLabel("#rows");
+	
+	/**
+	 * Label with the text #columns
+	 */
+	private JLabel columnsLabel = new JLabel("#columns");
+	
+	/**
+	 * Here can the user set the wanted numbers of rows.
+	 */
+	private JSpinner rows;
+	
+	/**
+	 * Here can the user set the wanted number of columns.
+	 */
+	private JSpinner cols;
+	
 
 	/**
 	 * Launch the application.
@@ -50,47 +107,56 @@ public class SizeDialog extends JFrame {
 		setBounds(100, 100, 429, 192);
 		getContentPane().setLayout(new MigLayout("", "[grow][grow][][][][][][][][grow]", "[][][][grow]"));
 		
-		JPanel panel_1 = new JPanel();
-		getContentPane().add(panel_1, "cell 0 0 1 4,alignx left,growy");
-		panel_1.setLayout(new MigLayout("", "[113px]", "[23px]"));
+		getContentPane().add(leftPanel, "cell 0 0 1 4,alignx left,growy");
+		leftPanel.setLayout(new MigLayout("", "[113px]", "[23px]"));
 		
-		JButton btnEditExistingMap = new JButton("Edit existing map");
-		panel_1.add(btnEditExistingMap, "cell 0 0,alignx left,aligny top");
+		leftPanel.add(editExistingMapButton, "cell 0 0,alignx left,aligny top");
 		
-		JPanel panel = new JPanel();
-		getContentPane().add(panel, "cell 1 1 9 3,grow");
-		panel.setLayout(new MigLayout("", "[grow][grow]", "[][][][][]"));
+		getContentPane().add(rightPanel, "cell 1 1 9 3,grow");
+		rightPanel.setLayout(new MigLayout("", "[grow][grow]", "[][][][][]"));
 		
-		JLabel lblrows = new JLabel("#rows");
-		panel.add(lblrows, "cell 0 0,alignx trailing");
+		rightPanel.add(rowsLabel, "cell 0 0,alignx trailing");
 		
 		SpinnerModel rowmodel = new SpinnerNumberModel(5, // initial value
 	            5, // min
 	            24, // max
 	            1); // step
-	    JSpinner rows = new JSpinner(rowmodel);
-	    panel.add(rows, "cell 1 0");
+	    rows = new JSpinner(rowmodel);
+	    rightPanel.add(rows, "cell 1 0");
 
 	    SpinnerModel colmodel = new SpinnerNumberModel(5, // initial value
 	            3, // min
 	            24, // max
 	            1); // step
-	    JSpinner cols = new JSpinner(colmodel);
-	    panel.add(cols, "cell 1 1");
-		
-		
-		JLabel lblcolumns = new JLabel("#columns");
-		panel.add(lblcolumns, "cell 0 1,alignx trailing");
-		
-		JCheckBox chckbxShowZoneLabels = new JCheckBox("Show Zone Labels");
-		panel.add(chckbxShowZoneLabels, "cell 1 2");
-		
-		JButton btnBeginFromScratch = new JButton("Begin from scratch");
-		panel.add(btnBeginFromScratch, "cell 0 4");
-		
-		JButton btnUseStandardBasis = new JButton("Use standard basis");
-		panel.add(btnUseStandardBasis, "cell 1 4");
+	    cols = new JSpinner(colmodel);
+	    rightPanel.add(cols, "cell 1 1");
+	
+		rightPanel.add(columnsLabel, "cell 0 1,alignx trailing");
+		rightPanel.add(showZoneLabelsCheckbox, "cell 1 2");
+		rightPanel.add(beginFromScratchButton, "cell 0 4");
+		rightPanel.add(useStandardBasisButton, "cell 1 4");
 			
 	}
+	
+	public boolean isLabelsVisible() {
+        return showZoneLabelsCheckbox.isSelected();
+    }
 
+    /**
+     * get {@link #rows} as set by user
+     * 
+     * @return {@link #rows}
+     */
+    public Integer getRows() {
+        return (Integer) (rows.getValue());
+    }
+
+    /**
+     * get {@link #cols} as set by user
+     * 
+     * @return {@link #cols}
+     */
+    public Integer getColumns() {
+        return (Integer) (cols.getValue());
+    }
 }
