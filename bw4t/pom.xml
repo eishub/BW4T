@@ -161,15 +161,10 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>apleis</groupId>
-			<artifactId>eis</artifactId>
-			<version>0.3.1</version>
-		</dependency>
-		<dependency>
 			<groupId>org.easymock</groupId>
 			<artifactId>easymock</artifactId>
 			<version>3.2</version>
-			<scope>provided</scope>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>

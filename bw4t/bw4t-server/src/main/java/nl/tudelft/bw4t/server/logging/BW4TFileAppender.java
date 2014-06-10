@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import nl.tudelft.bw4t.eis.RobotEntity;
+import nl.tudelft.bw4t.server.eis.RobotEntity;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 
 import org.apache.log4j.FileAppender;

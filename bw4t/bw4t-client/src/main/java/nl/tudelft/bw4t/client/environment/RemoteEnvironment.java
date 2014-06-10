@@ -676,7 +676,12 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
      */
     @Override
     public String queryProperty(String property) throws QueryException {
-        return getClient().queryProperty(property);
+        try {
+            return getClient().queryProperty(property);
+        } catch (RemoteException e) {
+            LOGGER.error("Failed to read property from server.", e);
+            return "";
+        }
     }
 
     /**
