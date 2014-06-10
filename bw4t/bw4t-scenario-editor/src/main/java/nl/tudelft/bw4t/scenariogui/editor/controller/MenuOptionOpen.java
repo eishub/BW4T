@@ -46,7 +46,6 @@ class MenuOptionOpen extends AbstractMenuOption {
 	 * @param e
 	 *            The action event.
 	 */
-	// TODO: Split up in multiple shorter methods
 	public void actionPerformed(final ActionEvent e) {
 		ConfigurationPanel configPanel = super.getController().getMainView()
 				.getMainPanel().getConfigurationPanel();
@@ -55,18 +54,34 @@ class MenuOptionOpen extends AbstractMenuOption {
 
 		// Check if current config is different from last saved config
 		if (getController().hasConfigBeenModified()) {
-            boolean doSave = getController().promptUserToSave();
-
-			if (doSave) {
+			if (getController().promptUserToSave()) {
 				saveFile();
-				getController().getMainView().getMainPanel()
-						.getConfigurationPanel().updateOldValues();
-				getController().getModel().updateBotConfigs();
-				getController().getModel().updateEpartnerConfigs();
+				updateOldConfig();
 			}
 		}
+		openFile(configPanel, entityPanel);
+		updateOldConfig();
+	}
 
-		// Open configuration file
+	/**
+	 * Updates the old config values.
+	 */
+    private void updateOldConfig() {
+        getController().getMainView().getMainPanel()
+        		.getConfigurationPanel().updateOldValues();
+        getController().getModel().updateOldBotConfigs();
+        getController().getModel().updateOldEpartnerConfigs();
+    }
+
+    /**
+     * Shows an open dialogue and proceeds with loading the file chosen
+     * into the GUI if the user confirmed to load in their chosen file.
+     * @param configPanel The configuration panel of the GUI.
+     * @param entityPanel The entity panel of the GUI.
+     */
+    private void openFile(ConfigurationPanel configPanel,
+            EntityPanel entityPanel) {
+        // Open configuration file
 		JFileChooser fileChooser = getCurrentFileChooser();
 		fileChooser.setFileFilter(FileFilters.xmlFilter());
 
@@ -74,59 +89,7 @@ class MenuOptionOpen extends AbstractMenuOption {
 			File file = fileChooser.getSelectedFile();
 			String openedFile = fileChooser.getSelectedFile().toString();
 
-			try {
-				BW4TClientConfig configuration = BW4TClientConfig.fromXML(file
-						.getAbsolutePath());
-
-                updateConfigurationInModel(configuration);
-
-				// Fill the configuration panel from the panel
-                reloadConfiguration(configPanel);
-
-				// clear bots/epartners from the previous config
-				resetBotTable(entityPanel);
-				resetEpartnerTable(entityPanel);
-				
-				getModel().getBots().clear();
-                getModel().getEpartners().clear();
-
-                // Delete the history as well.
-                getModel().updateBotConfigs();
-                getModel().updateEpartnerConfigs();
-
-
-				// Fill the bot panel
-				int botRows = configuration.getBots().size();
-
-				for (int i = 0; i < botRows; i++) {
-					String botName = configuration.getBot(i).getBotName();
-					EntityType botController = configuration.getBot(i)
-							.getBotController();
-					String botAmount = Integer.toString(configuration.getBot(i)
-							.getBotAmount());
-					Object[] botObject = {botName, botController, botAmount };
-					entityPanel.getBotTableModel().addRow(botObject);
-					getModel().getBots().add(configuration.getBot(i));
-				}
-				
-				// Fill the epartner panel
-				int epartnerRows = configuration.getEpartners().size();
-
-				for (int i = 0; i < epartnerRows; i++) {
-					String epartnerName = configuration.getEpartner(i).getEpartnerName();
-					String epartnerAmount = Integer.toString(configuration.getEpartner(i)
-							.getEpartnerAmount());
-					Object[] epartnerObject = {epartnerName, epartnerAmount };
-					entityPanel.getEPartnerTableModel().addRow(epartnerObject);
-					getModel().getEpartners().add(configuration.getEpartner(i));
-				}
-			} catch (JAXBException e1) {
-				ScenarioEditor.handleException(e1,
-						"Error: Opening the XML has failed.");
-			} catch (FileNotFoundException e1) {
-				ScenarioEditor.handleException(e1,
-						"Error: No file has been found. ");
-			}
+			parseXMLFileIntoGUI(configPanel, entityPanel, file);
 
 			// set last file location to the opened file so that the previous
 			// saved file won't get
@@ -134,11 +97,86 @@ class MenuOptionOpen extends AbstractMenuOption {
 			getMenuView().setLastFileLocation(openedFile);
             getController().getMainView().setWindowTitle(file.getName());
 		}
-		getController().getMainView().getMainPanel()
-				.getConfigurationPanel().updateOldValues();
-		getModel().updateBotConfigs();
-		getModel().updateEpartnerConfigs();
-	}
+    }
+
+    /**
+     * Loads an XML file into the GUI.
+     * @param configPanel The configuration panel of the GUI.
+     * @param entityPanel The entity panel of the GUI.
+     * @param file The XML file to load into the GUI.
+     */
+    private void parseXMLFileIntoGUI(ConfigurationPanel configPanel,
+            EntityPanel entityPanel, File file) {
+        try {
+        	BW4TClientConfig configuration = BW4TClientConfig.fromXML(file
+        			.getAbsolutePath());
+
+            updateConfigurationInModel(configuration);
+
+        	// Fill the configuration panel from the panel
+            reloadConfiguration(configPanel);
+
+        	// clear bots/epartners from the previous config
+        	resetBotTable(entityPanel);
+        	resetEpartnerTable(entityPanel);
+        	
+        	getModel().clearBotsAndEpartners();
+
+
+        	fillPanelWithBots(entityPanel, configuration);
+        	fillPanelWithEPartners(entityPanel, configuration);
+        } catch (JAXBException e1) {
+        	ScenarioEditor.handleException(e1,
+        			"Error: Opening the XML has failed.");
+        } catch (FileNotFoundException e1) {
+        	ScenarioEditor.handleException(e1,
+        			"Error: No file has been found. ");
+        }
+    }
+
+    /**
+     * Fills the bot panel with bots that are in the configuration
+     * to load in.
+     * @param entityPanel The entity panel.
+     * @param configuration The configuration to load in.
+     */
+    private void fillPanelWithBots(EntityPanel entityPanel,
+            BW4TClientConfig configuration) {
+        // Fill the bot panel
+        int botRows = configuration.getBots().size();
+
+        for (int i = 0; i < botRows; i++) {
+        	String botName = configuration.getBot(i).getBotName();
+        	EntityType botController = configuration.getBot(i)
+        			.getBotController();
+        	String botAmount = Integer.toString(configuration.getBot(i)
+        			.getBotAmount());
+        	Object[] botObject = {botName, botController, botAmount };
+        	entityPanel.getBotTableModel().addRow(botObject);
+        	getModel().getBots().add(configuration.getBot(i));
+        }
+    }
+
+    /**
+     * Fills the entity panel with e-partners that are in the configuration
+     * to load in.
+     * @param entityPanel The entity panel.
+     * @param configuration The configuration to load in.
+     */
+    private void fillPanelWithEPartners(EntityPanel entityPanel,
+            BW4TClientConfig configuration) {
+        // Fill the epartner panel
+        int epartnerRows = configuration.getEpartners().size();
+
+        for (int i = 0; i < epartnerRows; i++) {
+        	String epartnerName = configuration.getEpartner(i).getEpartnerName();
+        	String epartnerAmount = Integer.toString(configuration.getEpartner(i)
+        			.getEpartnerAmount());
+        	Object[] epartnerObject = {epartnerName, epartnerAmount };
+        	entityPanel.getEPartnerTableModel().addRow(epartnerObject);
+        	getModel().getEpartners().add(configuration.getEpartner(i));
+        }
+    }
 
 	/**
 	 * Reset the list with bots.

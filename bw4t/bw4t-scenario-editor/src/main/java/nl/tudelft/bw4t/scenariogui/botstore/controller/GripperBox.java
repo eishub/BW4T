@@ -39,7 +39,7 @@ class GripperBox implements ActionListener {
             gripSlider.setEnabled(true);
         }
         
-        BotConfig config = view.getDataObject();
+        BotConfig config = view.getTempBotConfig();
         config.setGripperHandicap(enabled);
     }
 }
