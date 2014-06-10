@@ -15,7 +15,6 @@ import java.util.Set;
 import nl.tudelft.bw4t.client.BW4TClient;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.startup.InitParam;
-import nl.tudelft.bw4t.client.startup.Launcher;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;

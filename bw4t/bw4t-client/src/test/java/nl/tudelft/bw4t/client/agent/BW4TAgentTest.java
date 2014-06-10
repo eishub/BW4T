@@ -13,8 +13,8 @@ import java.rmi.RemoteException;
 
 import nl.tudelft.bw4t.client.agent.BW4TAgent;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-import nl.tudelft.bw4t.message.BW4TMessage;
-import nl.tudelft.bw4t.message.MessageType;
+import nl.tudelft.bw4t.client.message.BW4TMessage;
+import nl.tudelft.bw4t.client.message.MessageType;
 
 import org.junit.After;
 import org.junit.Before;

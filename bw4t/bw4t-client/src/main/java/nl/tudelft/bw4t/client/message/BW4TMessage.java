@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.message;
+package nl.tudelft.bw4t.client.message;
 
 /**
  * Class containing all necessary information for a message Note that

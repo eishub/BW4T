@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.message;
+package nl.tudelft.bw4t.client.message;
 
 /**
  * Enumeration containing all message types supported in the environment
