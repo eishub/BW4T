@@ -38,6 +38,14 @@
 			<name>Git BW4T Dependency Repository</name>
       <url>https://martinrogalla.github.io/BW4T/repo/bw4t/dep/</url>
 		</repository>
+     <repository>
+        <id>eis-releases</id>
+        <url>https://raw.github.com/MartinRogalla/eis/releases/</url>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+        </snapshots>
+    </repository>
 	</repositories>
 
 	<build>
@@ -155,7 +163,7 @@
 		<dependency>
 			<groupId>apleis</groupId>
 			<artifactId>eis</artifactId>
-			<version>0.3</version>
+			<version>0.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.easymock</groupId>

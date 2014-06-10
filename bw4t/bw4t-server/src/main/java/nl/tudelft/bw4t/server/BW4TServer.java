@@ -29,6 +29,7 @@ import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
 import eis.exceptions.ManagementException;
+import eis.exceptions.QueryException;
 import eis.exceptions.RelationException;
 import eis.iilang.Action;
 import eis.iilang.EnvironmentState;
@@ -311,7 +312,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
      * {@inheritDoc}
      */
     @Override
-    public String queryProperty(String property) throws RemoteException {
+    public String queryProperty(String property) throws QueryException {
         return BW4TEnvironment.getInstance().queryProperty(property);
     }
 
