@@ -8,7 +8,7 @@ import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.agent.EntityType;
+import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MenuBar;
