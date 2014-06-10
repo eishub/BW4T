@@ -198,50 +198,6 @@ public class BlockTest {
     }
 
     /**
-     * Run the void setColorGrey() method test.
-     *
-     * @throws Exception
-     *
-     * @generatedBy CodePro at 24.05.14 19:21
-     */
-    @Test
-    public void testSetColorGrey_1()
-        throws Exception {
-        Block fixture = new Block(BlockColor.BLUE, space, context);
-
-        fixture.setColorGrey();
-        
-        Color result = fixture.getColor();
-
-        // add additional test code here
-        assertEquals(result.getBlue(), 182);
-        assertEquals(result.getRed(), 182);
-        assertEquals(result.getGreen(), 182);
-    }
-
-    /**
-     * Run the void setColorGrey() method test.
-     *
-     * @throws Exception
-     *
-     * @generatedBy CodePro at 24.05.14 19:21
-     */
-    @Test
-    public void testSetColorGrey_2()
-        throws Exception {
-        Block fixture = new Block(BlockColor.GREEN, space, context);
-
-        fixture.setColorGrey();
-        
-        Color result = fixture.getColor();
-
-        // add additional test code here
-        assertEquals(result.getBlue(), 18);
-        assertEquals(result.getRed(), 18);
-        assertEquals(result.getGreen(), 18);
-    }
-
-    /**
      * Run the void setHeldBy(Robot) method test.
      *
      * @throws Exception
