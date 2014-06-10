@@ -15,7 +15,7 @@ import nl.tudelft.bw4t.agent.HumanAgent;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.ClientGUI;
 import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.view.MapRendererInterface;
+import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
 
 public class ClientController {
     /**

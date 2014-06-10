@@ -1,11 +1,12 @@
-package nl.tudelft.bw4t.controller;
+package nl.tudelft.bw4t.map.renderer;
 
 import static org.junit.Assert.fail;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.util.HashSet;
-
-import nl.tudelft.bw4t.view.MapRendererInterface;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

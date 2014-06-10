@@ -10,9 +10,9 @@ import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.operations.MapOperations;
-import nl.tudelft.bw4t.controller.MapRenderSettings;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone;
+import nl.tudelft.bw4t.map.renderer.MapRenderSettings;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 

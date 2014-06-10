@@ -5,15 +5,16 @@ import java.awt.Point;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.GotoPositionActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.PutdownActionListener;
-import nl.tudelft.bw4t.controller.MapRenderSettings;
 import nl.tudelft.bw4t.map.ColorTranslator;
 import nl.tudelft.bw4t.map.Zone;
+import nl.tudelft.bw4t.map.renderer.MapRenderSettings;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.message.BW4TMessage;
 import nl.tudelft.bw4t.message.MessageType;

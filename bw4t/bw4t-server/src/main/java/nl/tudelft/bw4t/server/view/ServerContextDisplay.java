@@ -25,12 +25,12 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import nl.tudelft.bw4t.map.renderer.MapRenderer;
 import nl.tudelft.bw4t.server.controller.ServerMapController;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.server.environment.Stepper;
 import nl.tudelft.bw4t.server.repast.BW4TBuilder;
-import nl.tudelft.bw4t.view.MapRenderer;
 
 import org.apache.log4j.Logger;
 

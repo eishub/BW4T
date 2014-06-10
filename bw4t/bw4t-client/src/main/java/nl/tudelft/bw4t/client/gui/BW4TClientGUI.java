@@ -31,9 +31,9 @@ import nl.tudelft.bw4t.client.gui.listeners.ChatListMouseListener;
 import nl.tudelft.bw4t.client.gui.listeners.TeamListMouseListener;
 import nl.tudelft.bw4t.client.gui.menu.ActionPopUpMenu;
 import nl.tudelft.bw4t.client.gui.menu.ComboAgentModel;
-import nl.tudelft.bw4t.controller.MapRenderSettings;
-import nl.tudelft.bw4t.view.MapRenderer;
-import nl.tudelft.bw4t.view.MapRendererInterface;
+import nl.tudelft.bw4t.map.renderer.MapRenderSettings;
+import nl.tudelft.bw4t.map.renderer.MapRenderer;
+import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
 
 import org.apache.log4j.Logger;
 

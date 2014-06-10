@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.view;
+package nl.tudelft.bw4t.map.renderer;
 
 
 public interface MapRendererInterface {

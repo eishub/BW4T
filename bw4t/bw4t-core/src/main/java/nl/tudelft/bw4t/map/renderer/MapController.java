@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.controller;
+package nl.tudelft.bw4t.map.renderer;
 
 import java.util.List;
 import java.util.Set;
@@ -8,7 +8,6 @@ import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
-import nl.tudelft.bw4t.view.MapRendererInterface;
 
 public interface MapController extends Runnable {
 
