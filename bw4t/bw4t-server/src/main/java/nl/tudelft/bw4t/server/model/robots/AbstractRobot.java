@@ -7,6 +7,7 @@ import java.util.List;
 
 import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.logging.BotLog;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.doors.Door;
@@ -255,11 +256,11 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         // the check for getLocation is to always allow the initial moveTo
         if (getLocation() != null) {
             switch (getMoveType(x, y)) {
+            case ENTERING_ROOM:
+                agentRecord.addEnteredRoom(ZoneLocator.getZoneAt(x, y));
+                break;
             case ENTER_CORRIDOR:
             case ENTERING_FREESPACE:
-            case ENTERING_ROOM:
-                agentRecord.addEnteredRoom();
-                break;
             case SAME_AREA:
             	break;
             case HIT_CLOSED_DOOR:
@@ -414,11 +415,13 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		                }
 		            } catch (SpatialException e) {
 		                collided = true;
+		                LOGGER.log(BotLog.BOTLOG, "Bot " + this.name + " collided.");
 		                stopRobot();
 		            }
 		        }
 		    }
     	} else {
+    	    LOGGER.log(BotLog.BOTLOG, "Bot " + this.name + " could not move because of empty battery.");
     		stopRobot();
     	}
     }
