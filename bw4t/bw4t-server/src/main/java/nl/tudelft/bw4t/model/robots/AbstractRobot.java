@@ -398,7 +398,9 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		            double[] displacement = SpatialMath.getDisplacement(2, 0, movingDistance, angle);
 		
 		            try {
-		                // Move the robot to the new position using the displacement
+                        checkIfDestinationVacant(displacement[0], displacement[1]);
+
+                        // Move the robot to the new position using the displacement
 		                moveByDisplacement(displacement[0], displacement[1]);
 		                agentRecord.setStartedMoving();
 		
@@ -415,12 +417,26 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		            } catch (SpatialException e) {
 		                collided = true;
 		                stopRobot();
-		            }
+		            } catch(DestinationOccupiedException e) {
+                        collided = true;
+                        stopRobot();
+                    }
 		        }
 		    }
     	} else {
     		stopRobot();
     	}
+    }
+
+    private void checkIfDestinationVacant(double destX, double destY) throws DestinationOccupiedException {
+        Iterable<Object> objects = getSpace().getObjectsAt(destX, destY);
+
+        for (Object el : objects) {
+            if (el instanceof IRobot) {
+                throw new DestinationOccupiedException("Grid [" + destX + "," + destY + "] is occupied by " + el);
+            }
+        }
+
     }
 
 
