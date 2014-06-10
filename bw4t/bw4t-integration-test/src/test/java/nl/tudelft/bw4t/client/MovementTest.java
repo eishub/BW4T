@@ -41,8 +41,8 @@ public class MovementTest {
                 "-agentclass", "nl.tudelft.bw4t.agent.BW4TAgent",
                 "-agentcount", "2",
                 "-humancount", "0"};
-        nl.tudelft.bw4t.client.startup.Launcher.launch(clientArgs);
-        client = nl.tudelft.bw4t.client.startup.Launcher.getEnvironment();
+        nl.tudelft.bw4t.client.environment.Launcher.launch(clientArgs);
+        client = nl.tudelft.bw4t.client.environment.Launcher.getEnvironment();
         TestFunctions.setClient(client);
     }
 

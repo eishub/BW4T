@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.message;
+package nl.tudelft.bw4t.client.message;
 
 public interface TypeToStringCommand {
 	String exec(BW4TMessage message);

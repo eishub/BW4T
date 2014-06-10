@@ -1,11 +1,10 @@
-package nl.tudelft.bw4t.client.startup;
+package nl.tudelft.bw4t.client.environment;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import nl.tudelft.bw4t.client.environment.BW4TEnvironmentListener;
-import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-import nl.tudelft.bw4t.message.MessageTranslator;
+import nl.tudelft.bw4t.client.message.MessageTranslator;
+import nl.tudelft.bw4t.client.startup.InitParam;
 import nl.tudelft.bw4t.util.LauncherException;
 
 import org.apache.log4j.BasicConfigurator;

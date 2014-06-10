@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 
 import eis.iilang.Percept;
 import nl.tudelft.bw4t.client.controller.ClientController;
-import nl.tudelft.bw4t.client.startup.Launcher;
+import nl.tudelft.bw4t.client.environment.Launcher;
 
 public class DropEPartnerActionListener extends ClientActionListener {
     private static final Logger LOGGER = Logger.getLogger(DropEPartnerActionListener.class);
