@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>nl.tudelft</groupId>
 	<artifactId>bw4t</artifactId>
-	<version>3.2.0</version>
+	<version>3.3.0</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>bw4t-server</module>
@@ -17,7 +17,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<sonar.projectKey>nl.tudelft.bw4t</sonar.projectKey>
 		<sonar.projectName>BW4T</sonar.projectName>
-		<sonar.projectVersion>3.2.0</sonar.projectVersion>
+		<sonar.projectVersion>3.3.0</sonar.projectVersion>
 		<sonar.language>java</sonar.language>
 		<sonar.sources>src/main</sonar.sources>
 		<sonar.tests>src/test</sonar.tests>
@@ -25,7 +25,7 @@
 		<sonar.cobertura.reportPath>target/site/cobertura/coverage.xml</sonar.cobertura.reportPath>
 		<sonar.junit.reportsPath>target/surefire-reports</sonar.junit.reportsPath>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-		<powermock.version>1.5.4</powermock.version>
+		<powermock.version>1.5.5</powermock.version>
 	</properties>
 	<repositories>
 		<repository>
@@ -34,15 +34,28 @@
 			<url>http://repo1.maven.org/maven2</url>
 		</repository>
 		<repository>
-			<id>martin-private-dependency-repository</id>
-			<name>Martin Dependency</name>
-			<url>https://martinrogalla.com/bw4t/dependency/</url>
+			<id>git-bw4t-dependency-repository</id>
+			<name>Git BW4T Dependency Repository</name>
+      <url>https://martinrogalla.github.io/BW4T/repo/bw4t/dep/</url>
 		</repository>
+     <repository>
+        <id>eis-releases</id>
+        <url>https://raw.github.com/MartinRogalla/eis/releases/</url>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+        </snapshots>
+    </repository>
 	</repositories>
 
 	<build>
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.5</version>
+				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
@@ -148,15 +161,10 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>apleis</groupId>
-			<artifactId>eis</artifactId>
-			<version>0.3</version>
-		</dependency>
-		<dependency>
 			<groupId>org.easymock</groupId>
 			<artifactId>easymock</artifactId>
-			<version>3.1</version>
-			<scope>provided</scope>
+			<version>3.2</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
@@ -179,7 +187,7 @@
 		<dependency>
 			<groupId>org.powermock</groupId>
 			<artifactId>powermock</artifactId>
-			<version>1.5.4</version>
+			<version>${powermock.version}</version>
 			<type>pom</type>
 		</dependency>
 	</dependencies>

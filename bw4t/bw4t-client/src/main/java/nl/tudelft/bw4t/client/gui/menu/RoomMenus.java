@@ -9,11 +9,11 @@ import nl.tudelft.bw4t.client.gui.listeners.GoToRoomActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.PickUpActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.PutdownActionListener;
+import nl.tudelft.bw4t.client.message.BW4TMessage;
+import nl.tudelft.bw4t.client.message.MessageType;
 import nl.tudelft.bw4t.map.ColorTranslator;
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.view.Block;
-import nl.tudelft.bw4t.message.BW4TMessage;
-import nl.tudelft.bw4t.message.MessageType;
+import nl.tudelft.bw4t.map.view.ViewBlock;
 
 /** Responsible for building certain pop-up menus related to rooms. */
 public final class RoomMenus {
@@ -25,37 +25,33 @@ public final class RoomMenus {
      * Used for building the pop up menu when clicking on the agent while it is near a box
      * 
      * @param box
-     *            - The box that the robot is at.
-     * @param room
-     *            - The room the robot is in.
-     * @param gui
-     *            - The {@link BW4TClientGUI} to create the pop-up menu on.
+     *            , the box that the robot is at.
      */
-    public static void buildPopUpMenuForBeingAtBlock(Block box, Zone room, BW4TClientGUI gui) {
+    public static void buildPopUpMenuForBeingAtBlock(ViewBlock box, Zone room, BW4TClientGUI bw4tClientMapRenderer) {
         String label = room.getName();
 
-        gui.getjPopupMenu().removeAll();
+        bw4tClientMapRenderer.getjPopupMenu().removeAll();
 
         // Robot commands
-        BasicMenuOperations.addSectionTitleToPopupMenu("Command my robot to:", gui.getjPopupMenu());
+        BasicMenuOperations.addSectionTitleToPopupMenu("Command my robot to:", bw4tClientMapRenderer.getjPopupMenu());
 
         JMenuItem menuItem = new JMenuItem("Pick up " + box.getColor() + " block");
-        menuItem.addActionListener(new PickUpActionListener(gui.getController()));
-        gui.getjPopupMenu().add(menuItem);
+        menuItem.addActionListener(new PickUpActionListener(bw4tClientMapRenderer.getController()));
+        bw4tClientMapRenderer.getjPopupMenu().add(menuItem);
 
         // Message sending
-        gui.getjPopupMenu().addSeparator();
-        BasicMenuOperations.addSectionTitleToPopupMenu("Tell: ", gui.getjPopupMenu());
+        bw4tClientMapRenderer.getjPopupMenu().addSeparator();
+        BasicMenuOperations.addSectionTitleToPopupMenu("Tell: ", bw4tClientMapRenderer.getjPopupMenu());
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.ROOMCONTAINS, label, box.getColor()
-                .getName(), null), gui);
+                .getName(), null), bw4tClientMapRenderer);
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.AMGETTINGCOLOR, label, box.getColor()
-                .getName(), null), gui);
+                .getName(), null), bw4tClientMapRenderer);
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.ATBOX, null, box.getColor().getName(),
-                null), gui);
+                null), bw4tClientMapRenderer);
 
-        gui.getjPopupMenu().addSeparator();
+        bw4tClientMapRenderer.getjPopupMenu().addSeparator();
         menuItem = new JMenuItem("Close menu");
-        gui.getjPopupMenu().add(menuItem);
+        bw4tClientMapRenderer.getjPopupMenu().add(menuItem);
     }
 
     /**
@@ -68,7 +64,7 @@ public final class RoomMenus {
      * @param gui
      *            - The {@link BW4TClientGUI} to create the pop-up menu on.
      */
-    public static void buildPopUpMenuForBlock(Block box, Zone room, BW4TClientGUI gui) {
+    public static void buildPopUpMenuForBlock(ViewBlock box, Zone room, BW4TClientGUI gui) {
         String label = room.getName();
 
         gui.getjPopupMenu().removeAll();
@@ -103,7 +99,7 @@ public final class RoomMenus {
      */
     public static void buildPopUpMenuRoom(Zone room, BW4TClientGUI gui) {
         ClientMapController cmc = gui.getController().getMapController();
-        Block holding = cmc.getTheBot().getFirstHolding();
+        ViewBlock holding = cmc.getTheBot().getFirstHolding();
         String label = room.getName();
         gui.getjPopupMenu().removeAll();
 
@@ -115,7 +111,7 @@ public final class RoomMenus {
         gui.getjPopupMenu().add(menuItem);
 
         if (holding != null) {
-            menuItem = new JMenuItem("Put down box");
+            menuItem = new JMenuItem("Put down block");
             menuItem.addActionListener(new PutdownActionListener(gui.getController()));
             gui.getjPopupMenu().add(menuItem);
         }
@@ -198,5 +194,4 @@ public final class RoomMenus {
         menuItem = new JMenuItem("Close menu");
         gui.getjPopupMenu().add(menuItem);
     }
-
 }

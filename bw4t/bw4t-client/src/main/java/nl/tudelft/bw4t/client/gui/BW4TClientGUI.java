@@ -23,17 +23,17 @@ import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 
-import nl.tudelft.bw4t.agent.HumanAgent;
 import nl.tudelft.bw4t.client.BW4TClientSettings;
+import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.listeners.ChatListMouseListener;
 import nl.tudelft.bw4t.client.gui.listeners.TeamListMouseListener;
 import nl.tudelft.bw4t.client.gui.menu.ActionPopUpMenu;
 import nl.tudelft.bw4t.client.gui.menu.ComboAgentModel;
-import nl.tudelft.bw4t.controller.MapRenderSettings;
-import nl.tudelft.bw4t.view.MapRenderer;
-import nl.tudelft.bw4t.view.MapRendererInterface;
+import nl.tudelft.bw4t.map.renderer.MapRenderSettings;
+import nl.tudelft.bw4t.map.renderer.MapRenderer;
+import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
 
 import org.apache.log4j.Logger;
 
@@ -111,7 +111,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
      */
     public BW4TClientGUI(RemoteEnvironment env, String entityId, boolean goal, boolean humanPlayer) throws IOException {
         environment = env;
-        controller = new ClientController(environment.getClient().getMap(), entityId);
+        controller = new ClientController(env, environment.getClient().getMap(), entityId);
         init();
     }
 
@@ -125,7 +125,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
      */
     public BW4TClientGUI(RemoteEnvironment env, String entityId, HumanAgent humanAgent) throws IOException {
         environment = env;
-        controller = new ClientController(environment.getClient().getMap(), entityId, humanAgent);
+        controller = new ClientController(env, environment.getClient().getMap(), entityId, humanAgent);
         init();
     }
 

@@ -14,9 +14,6 @@ import org.apache.log4j.Logger;
 /**
  * Holds some of the map specifications that are useful to know, such
  * as the amount of entities allowed in a map.
- * 
- * @author Nick
- *
  */
 public class MapSpec {
     

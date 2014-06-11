@@ -11,17 +11,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import nl.tudelft.bw4t.agent.HumanAgent;
+import nl.tudelft.bw4t.client.agent.HumanAgent;
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.ClientGUI;
 import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.view.MapRendererInterface;
+import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
 
 /**
- * The client controller of the MVC pattern used to create the BW4T Client.
+ * The Class ClientController.
  */
 public class ClientController {
     /**
-     * The map controller used by this Client Controller.
+     * The map controller used by this client controller.
      */
     private final ClientMapController mapController;
 
@@ -36,19 +37,27 @@ public class ClientController {
 
     /** The to be performed action. */
     private List<Percept> toBePerformedAction = new LinkedList<>();
+    
+    /** The environment which should be read. */
+    private RemoteEnvironment environment;
 
     /**
-     * If set to true, the update function of the GUI will be called the next frame.
+     * if set to true the update function of the gui will be called the next frame.
      */
     private boolean updateNextFrame = true;
 
     /**
      * Instantiates a new client controller.
-     *
-     * @param map the map
-     * @param entityId the entity id
+     * 
+     * @param env
+     *            the environment
+     * @param map
+     *            the map
+     * @param entityId
+     *            the entity id
      */
-    public ClientController(NewMap map, String entityId) {
+    public ClientController(RemoteEnvironment env, NewMap map, String entityId) {
+        environment = env;
         mapController = new ClientMapController(map, this);
         getMapController().getTheBot().setName(entityId);
         humanAgent = null;
@@ -56,66 +65,45 @@ public class ClientController {
 
     /**
      * Instantiates a new client controller.
-     *
-     * @param map the map
-     * @param entityId the entity id
-     * @param humanAgent2 the human agent2
+     * 
+     * @param env
+     *            the environment
+     * @param map
+     *            the map
+     * @param entityId
+     *            the entity id
+     * @param humanAgent
+     *            the human agent
      */
-    public ClientController(NewMap map, String entityId, HumanAgent humanAgent2) {
-        this(map, entityId);
-        humanAgent = humanAgent2;
+    public ClientController(RemoteEnvironment env, NewMap map, String entityId, HumanAgent humanAgent) {
+        this(env, map, entityId);
+        this.humanAgent = humanAgent;
     }
 
-    /**
-     * Gets the map controller.
-     *
-     * @return the map controller
-     */
     public ClientMapController getMapController() {
         return mapController;
     }
 
-    /**
-     * Gets the other players.
-     *
-     * @return the other players
-     */
     public Set<String> getOtherPlayers() {
         return otherPlayers;
     }
 
-    /**
-     * Gets the chat history.
-     *
-     * @return the chat history
-     */
     public List<String> getChatHistory() {
         return chatHistory;
     }
 
-    /**
-     * Checks if is human.
-     *
-     * @return true, if is human
-     */
     public boolean isHuman() {
         return humanAgent != null;
     }
 
-    /**
-     * Gets the human agent.
-     *
-     * @return the human agent
-     */
     public HumanAgent getHumanAgent() {
         return humanAgent;
     }
 
-    /**
-     * Sets the to be performed action.
-     *
-     * @param toBePerformedAction the new to be performed action
-     */
+    public RemoteEnvironment getEnvironment() {
+        return environment;
+    }
+
     public void setToBePerformedAction(List<Percept> toBePerformedAction) {
         this.toBePerformedAction = toBePerformedAction;
     }
@@ -139,21 +127,13 @@ public class ClientController {
      *            the list of percepts
      */
     public void handlePercepts(List<Percept> percepts) {
-
         getMapController().getVisibleBlocks().clear();
-
         for (Percept percept : percepts) {
             String name = percept.getName();
             List<Parameter> parameters = percept.getParameters();
-
             mapController.handlePercept(name, parameters);
-
-            // Initialize room ids in all rooms gotten from the map loader
-            // Should only be done one time
             if (name.equals("player")) {
                 getOtherPlayers().add(((Identifier) parameters.get(0)).getValue());
-            
-            // Update chat history
             } else if (name.equals("message")) {
                 handleMessagePercept(parameters);
             }
@@ -168,28 +148,25 @@ public class ClientController {
      */
     private void handleMessagePercept(List<Parameter> parameters) {
         ParameterList parameterList = ((ParameterList) parameters.get(0));
-
         Iterator<Parameter> iterator = parameterList.iterator();
-
         String sender = ((Identifier) iterator.next()).getValue();
         String message = ((Identifier) iterator.next()).getValue();
-
         getChatHistory().add(sender + ": " + message);
-
         updateNextFrame = true;
     }
     
     /**
-     * The update request was finished.
+     * the update request was finished.
      */
     void updatedNextFrame() {
         updateNextFrame = false;
     }
 
     /**
-     * Update renderer.
-     *
-     * @param mri the Map Renderer, used to render the client GUI.
+     * Update the renderer.
+     * 
+     * @param mri
+     *            the map renderer interface
      */
     public void updateRenderer(MapRendererInterface mri) {
         if (updateNextFrame && mri instanceof ClientGUI) {

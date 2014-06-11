@@ -7,12 +7,12 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.util.LinkedList;
 import nl.tudelft.bw4t.client.controller.ClientController;
-import nl.tudelft.bw4t.client.startup.Launcher;
+import nl.tudelft.bw4t.client.environment.Launcher;
 import org.apache.log4j.Logger;
 
 /**
- * ActionListener that performs the goTo action when that command is pressed in the pop up menu.
- * @author trens
+ * ActionListener that performs the goTo action when that command is pressed in
+ * the pop up menu
  */
 public class GotoPositionActionListener extends AbstractClientActionListener {
 	/** The point to goTo when this listener is fired. */

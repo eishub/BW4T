@@ -15,10 +15,6 @@ import static org.junit.Assert.*;
 /**
  * The class <code>NewMapTest</code> contains tests for the class
  * <code>{@link NewMap}</code>.
- * 
- * @generatedBy CodePro at 25.05.14 10:59
- * @author 749
- * @version $Revision: 1.0 $
  */
 public class NewMapTest {
     /**
