@@ -5,8 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import nl.tudelft.bw4t.client.controller.ClientController;
+import nl.tudelft.bw4t.client.environment.Launcher;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
-import nl.tudelft.bw4t.client.startup.Launcher;
 
 import org.apache.log4j.Logger;
 
