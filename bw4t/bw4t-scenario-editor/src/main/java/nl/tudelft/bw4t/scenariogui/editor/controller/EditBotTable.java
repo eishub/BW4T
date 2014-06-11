@@ -1,13 +1,17 @@
 package nl.tudelft.bw4t.scenariogui.editor.controller;
 
 
+import java.awt.Point;
+
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import nl.tudelft.bw4t.agent.EntityType;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
+import nl.tudelft.bw4t.scenariogui.util.EntityTableCellRenderer;
 
 /**
  * Handles the event when a cell in the bot table is edited.
@@ -41,11 +45,12 @@ public class EditBotTable implements TableModelListener {
     public void tableChanged(TableModelEvent event) {
         if (event.getColumn() == -1) 
             return;
-        model.getAmountBot();
+        
         BotConfig config = model.getBots().get(event.getFirstRow());
         String value =  "" + view.getEntityPanel().getBotTable().getValueAt(
                 event.getFirstRow(), event.getColumn());
-        updateConfigFieldCorrespondingToTableColumn(event.getColumn(), config, value);
+
+        updateConfigFieldCorrespondingToTableColumn(event.getFirstRow(), event.getColumn(), config, value);
     }
     
     /**
@@ -55,7 +60,7 @@ public class EditBotTable implements TableModelListener {
      * @param config The {@link BotConfig} object to update.
      * @param newValue The new value for the field in the config.
      */
-    private void updateConfigFieldCorrespondingToTableColumn(int tableColumn, BotConfig config, String newValue) {
+    private void updateConfigFieldCorrespondingToTableColumn(int tableRow, int tableColumn, BotConfig config, String newValue) {
         switch (tableColumn) {
         case 0:
             config.setBotName(newValue);
@@ -65,7 +70,7 @@ public class EditBotTable implements TableModelListener {
             config.setBotController(botController);
             break;
         case 2:
-            config.setFileName(newValue);
+           config.setFileName(newValue);
             break;
         case 3:
             config.setBotAmount(Integer.parseInt(newValue));

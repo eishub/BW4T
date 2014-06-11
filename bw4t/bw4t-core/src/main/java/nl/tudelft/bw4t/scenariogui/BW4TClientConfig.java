@@ -65,6 +65,7 @@ public class BW4TClientConfig {
 	 * An empty <code>BW4TClientConfig</code> object.
 	 */
 	public BW4TClientConfig() {
+	    
 	}
 
 	/**

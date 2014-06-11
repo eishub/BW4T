@@ -26,6 +26,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import nl.tudelft.bw4t.agent.EntityType;
+import nl.tudelft.bw4t.scenariogui.util.BotJTable;
 import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
 
 /**
@@ -70,7 +71,9 @@ public class EntityPanel extends JPanel {
 	private DefaultTableModel botList;
 	// TODO add actionlisteners for the menu items
 
-	private JTable botTable;
+	private BotJTable botTable;
+	
+	private static String botTableName;
 
 	private JScrollPane botScrollPane;
 
@@ -99,7 +102,9 @@ public class EntityPanel extends JPanel {
 
 	private DefaultTableModel epartnerList;
 
-	private JTable ePartnerTable;
+	private BotJTable ePartnerTable;
+	
+	private static String ePartnerTableName;
 
 	private JScrollPane epartnerScrollPane;
 
@@ -112,7 +117,7 @@ public class EntityPanel extends JPanel {
 	private JButton deleteEpartner = new JButton("Delete E-partner");
 
 	private static final int BOT_OPTION_PANEL_MARGIN_WIDTH = 8;	
-
+	
 	/**
 	 * Create an EntityPanel object.
 	 */
@@ -206,11 +211,12 @@ public class EntityPanel extends JPanel {
 	 */
 	private void createBotTable() {
 
-		botTable = new JTable();
+		botTable = new BotJTable();
 		botTable.getTableHeader().setReorderingAllowed(false);
-
+		botTableName = "botTable";
+		botTable.setName(botTableName);
 		botList = new EntityTableModel(EntityType.AGENT);
-
+		
 		botTable.setModel(botList);
 		botList.addColumn("Bot");
 		botList.addColumn("Controller");
@@ -285,7 +291,9 @@ public class EntityPanel extends JPanel {
 	 */
 	private void createEpartnerTable() {
 
-		ePartnerTable = new JTable();
+		ePartnerTable = new BotJTable();
+		ePartnerTableName = "eparterTable";
+		ePartnerTable.setName(ePartnerTableName);
 		ePartnerTable.getTableHeader().setReorderingAllowed(false);
 		epartnerList = new EntityTableModel(EntityType.EPARTNER);
 
@@ -319,7 +327,7 @@ public class EntityPanel extends JPanel {
 	 *
 	 * @return The table that contains the bots.
 	 */
-	public final JTable getBotTable() {
+	public final BotJTable getBotTable() {
 		return botTable;
 	}
 
@@ -487,4 +495,20 @@ public class EntityPanel extends JPanel {
 
 		return isDefault;
 	}
+	
+    /**
+     * Used by the EnityTableCellRenderer for deciding which table it's dealing with.
+     * @return The name of the botTable
+     */
+    public static String getBotTableName() {
+        return botTableName;
+    }
+    
+    /**
+     * Used by the EnityTableCellRenderer for deciding which table it's dealing with.
+     * @return The name of the epartnerTable
+     */
+    public static String getePartnerTableName() {
+        return ePartnerTableName;
+    }
 }
