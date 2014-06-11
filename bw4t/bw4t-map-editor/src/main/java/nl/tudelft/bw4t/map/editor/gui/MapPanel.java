@@ -19,6 +19,9 @@ public class MapPanel extends JPanel implements UpdateableEditorInterface {
     public MapPanel(MapPanelController control) {
         assert control != null;
         this.controller = control;
+        
+        this.controller.setUpdateableEditorInterface(this);
+        
         setupGrid();
     }
 
@@ -34,6 +37,7 @@ public class MapPanel extends JPanel implements UpdateableEditorInterface {
         }
         
         dropSequence = new ColorSequenceEditor(MapPanelController.DROP_ZONE_SEQUENCE_LENGTH);
+        update();
     }
 
     @Override

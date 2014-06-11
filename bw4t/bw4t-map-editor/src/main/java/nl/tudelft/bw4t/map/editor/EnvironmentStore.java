@@ -1,27 +1,19 @@
 package nl.tudelft.bw4t.map.editor;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTable;
+import javax.swing.JScrollPane;
 
 import nl.tudelft.bw4t.map.editor.controller.EnvironmentStoreController;
 import nl.tudelft.bw4t.map.editor.controller.MapPanelController;
-import nl.tudelft.bw4t.map.editor.controller.ZoneController;
 import nl.tudelft.bw4t.map.editor.gui.ColorLegendaPanel;
-import nl.tudelft.bw4t.map.editor.gui.ColorSequencePanelCell;
 import nl.tudelft.bw4t.map.editor.gui.ExplanationPanel;
+import nl.tudelft.bw4t.map.editor.gui.MapPanel;
 import nl.tudelft.bw4t.map.editor.gui.MenuBar;
 import nl.tudelft.bw4t.map.editor.gui.RightClickPopup;
-import nl.tudelft.bw4t.map.editor.gui.RoomCellEditor;
-import nl.tudelft.bw4t.map.editor.gui.RoomCellRenderer;
 import nl.tudelft.bw4t.map.editor.gui.SizeDialog;
 import nl.tudelft.bw4t.map.editor.util.DefaultOptionPrompt;
 import nl.tudelft.bw4t.map.editor.util.OptionPrompt;
@@ -44,11 +36,9 @@ public class EnvironmentStore extends JFrame {
 	
 	private ExplanationPanel explanationPanel;
 	
-	private final JTable mapTable;
+	private final MapPanel mapTable;
 	
 	private JPanel roomsPanel;
-	
-	private ColorSequencePanelCell sequencePanel;
 	
 	private MenuBar menuBar;
 	
@@ -81,26 +71,13 @@ public class EnvironmentStore extends JFrame {
         // Create the colorLegendaPanel for the right side of the editor.
         legendaPanel = new ColorLegendaPanel();
         
-        // Create the colorSequencePanel to be added to the roomsPanel.
-        sequencePanel = new ColorSequencePanelCell(map);   
-        
         // Both the mapTable and sequencePanel are added to a rooms panel.
         // TODO: Create a roomsTable class that creates both MapTable and SequencePanel. Problems: map Data model in mapTable and boxLayout in roomsPanel.
-        mapTable = new JTable(map);
-        mapTable.setDefaultRenderer(ZoneController.class, new RoomCellRenderer());
-        mapTable.setDefaultEditor(ZoneController.class, new RoomCellEditor());
-        mapTable.setRowHeight(55);
-        mapTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
-
-        // Create a roomsPanel that has both the mapTable and the sequencePanel.
-        roomsPanel = new JPanel();
-        roomsPanel.setLayout(new BoxLayout(roomsPanel, BoxLayout.Y_AXIS));
-        roomsPanel.add(mapTable);
-        roomsPanel.add(sequencePanel);
+        mapTable = new MapPanel(map);
         
         // Attach all Panels to the Editor.
         add(explanationPanel, BorderLayout.NORTH);
-        add(roomsPanel, BorderLayout.CENTER);
+        add(new JScrollPane(mapTable), BorderLayout.CENTER);
         add(legendaPanel, BorderLayout.EAST);
         
         // Create the RightClickPopup
@@ -128,7 +105,7 @@ public class EnvironmentStore extends JFrame {
      *
      * @return The mapTable.
      */
-    public final JTable getMapTable() {
+    public final MapPanel getMapTable() {
         return mapTable;
     }
     
