@@ -1,6 +1,5 @@
 package nl.tudelft.bw4t.scenariogui;
 
-import java.io.File;
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlElement;
