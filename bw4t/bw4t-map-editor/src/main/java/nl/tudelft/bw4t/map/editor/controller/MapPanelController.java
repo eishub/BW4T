@@ -32,8 +32,6 @@ import nl.tudelft.bw4t.map.editor.controller.ZoneController;
 public class MapPanelController {
 
     /** basic size of the map */
-    private int rows;
-    private int columns;
     private ZoneController[][] zonecontrollers;
     private int numberOfEntities = 0;
     private boolean randomize;
@@ -41,7 +39,6 @@ public class MapPanelController {
      * the target sequence.
      * */
     private List<BlockColor> sequence = new ArrayList<>();
-    private List<TableModelListener> listeners = new ArrayList<TableModelListener>();
 
     /**
      * constants that map rooms to real positions on the map.
@@ -84,9 +81,7 @@ public class MapPanelController {
             throw new IllegalArgumentException("illegal value for entities:"
                     + entities);
         }
-
-        this.rows = rows;
-        this.columns = columns;
+        
         this.numberOfEntities = entities;
         this.randomize = rand;
         
@@ -100,11 +95,11 @@ public class MapPanelController {
     }
 
     public int getRows() {
-        return rows;
+        return zonecontrollers.length;
     }
 
     public int getColumns() {
-        return columns;
+        return zonecontrollers[0].length;
     }
 
     public List<BlockColor> getSequence() {
@@ -132,10 +127,10 @@ public class MapPanelController {
         if (c < 0) {
             throw new IllegalArgumentException("column is negative");
         }
-        if (r >= rows) {
+        if (r >= zonecontrollers.length) {
             throw new IllegalArgumentException("rownr is too high");
         }
-        if (c >= columns) {
+        if (c >= zonecontrollers[0].length) {
             throw new IllegalArgumentException("columnnr is too high");
         }
     }
@@ -224,18 +219,18 @@ public class MapPanelController {
         NewMap map = new NewMap();
 
         // compute a number of key values
-        double mapwidth = columns * ROOMWIDTH + 2 * CORRIDORWIDTH;
-        double mapheight = (rows + 1) * (ROOMHEIGHT + CORRIDORHEIGHT);
+        double mapwidth = zonecontrollers[0].length * ROOMWIDTH + 2 * CORRIDORWIDTH;
+        double mapheight = (zonecontrollers.length + 1) * (ROOMHEIGHT + CORRIDORHEIGHT);
         double dropzonex = mapwidth / 2;
-        double dropzoney = getY(rows);
+        double dropzoney = getY(zonecontrollers.length);
         double dropzonewidth = mapwidth / 2;
 
         // set the general fields of the map
         map.setArea(new Point(mapwidth, mapheight));
         map.setSequence(sequence);
         if (randomize) {
-            map.setRandomBlocks((int) (2.5 * rows * columns));
-            map.setRandomSequence(2 * rows * columns / 3);
+            map.setRandomBlocks((int) (2.5 * zonecontrollers.length * zonecontrollers[0].length));
+            map.setRandomSequence(2 * zonecontrollers.length * zonecontrollers[0].length / 3);
         }
 
         addEntities(map, dropzonex, dropzoney - ROOMHEIGHT / 2 - CORRIDORHEIGHT
@@ -246,18 +241,18 @@ public class MapPanelController {
         // also generate the lefthall and righthall for each row.
         // connect room and corridor in front of it.
         // connect all corridor with each other and with left and right hall.
-        for (int row = 0; row < rows; row++) {
+        for (int row = 0; row < zonecontrollers.length; row++) {
             // add left and right hall corridor zones
             Zone lefthall = new Zone(CorridorLabel(row, -1), new Rectangle(
                     getX(-1), getNavY(row), ROOMWIDTH, CORRIDORHEIGHT
                             + ROOMHEIGHT), Zone.Type.CORRIDOR);
-            Zone righthall = new Zone(CorridorLabel(row, columns),
-                    new Rectangle(getX(columns), getNavY(row), ROOMWIDTH,
+            Zone righthall = new Zone(CorridorLabel(row, zonecontrollers[0].length),
+                    new Rectangle(getX(zonecontrollers[0].length), getNavY(row), ROOMWIDTH,
                             CORRIDORHEIGHT + ROOMHEIGHT), Zone.Type.CORRIDOR);
             map.addZone(lefthall);
             map.addZone(righthall);
 
-            for (int col = 0; col < columns; col++) {
+            for (int col = 0; col < zonecontrollers[0].length; col++) {
                 ZoneController room = zonecontrollers[row][col];
                 Zone roomzone = new Zone(room.toString(), new Rectangle(
                         getX(col), getY(row), ROOMWIDTH, ROOMHEIGHT),
@@ -281,7 +276,7 @@ public class MapPanelController {
                 connect(corridor, left);
             }
             // and connect the last one to the right hall
-            Zone lastcorridor = map.getZone(CorridorLabel(row, columns - 1));
+            Zone lastcorridor = map.getZone(CorridorLabel(row, zonecontrollers[0].length - 1));
             connect(righthall, lastcorridor);
         }
 
@@ -293,16 +288,16 @@ public class MapPanelController {
         map.addZone(dropzone);
         // add the FrontDropZone and connect
         Zone frontdropzone = new Zone(FRONTDROPZONE, new Rectangle(dropzonex,
-                getNavY(rows), columns * ROOMWIDTH, CORRIDORHEIGHT),
+                getNavY(zonecontrollers.length), zonecontrollers[0].length * ROOMWIDTH, CORRIDORHEIGHT),
                 Zone.Type.CORRIDOR);
         map.addZone(frontdropzone);
         connect(frontdropzone, dropzone);
         // and add the last row
-        Zone lastrowleft = new Zone(CorridorLabel(rows, -1), new Rectangle(
-                getX(-1), getNavY(rows), ROOMWIDTH, CORRIDORHEIGHT),
+        Zone lastrowleft = new Zone(CorridorLabel(zonecontrollers.length, -1), new Rectangle(
+                getX(-1), getNavY(zonecontrollers.length), ROOMWIDTH, CORRIDORHEIGHT),
                 Zone.Type.CORRIDOR);
-        Zone lastrowright = new Zone(CorridorLabel(rows, columns),
-                new Rectangle(getX(columns), getNavY(rows), ROOMWIDTH,
+        Zone lastrowright = new Zone(CorridorLabel(zonecontrollers.length, zonecontrollers[0].length),
+                new Rectangle(getX(zonecontrollers[0].length), getNavY(zonecontrollers.length), ROOMWIDTH,
                         CORRIDORHEIGHT), Zone.Type.CORRIDOR);
         map.addZone(lastrowleft);
         map.addZone(lastrowright);
@@ -312,7 +307,7 @@ public class MapPanelController {
 
         // make vertical connection for left and right halls.
 
-        for (int row = 0; row < rows; row++) {
+        for (int row = 0; row < zonecontrollers.length; row++) {
             Zone below;
 
             // connect lefthall to below.
@@ -321,8 +316,8 @@ public class MapPanelController {
             connect(lefthall, below);
 
             // add all righthall to left and below.
-            Zone righthall = map.getZone(CorridorLabel(row, columns));
-            below = map.getZone(CorridorLabel(row + 1, columns));
+            Zone righthall = map.getZone(CorridorLabel(row, zonecontrollers[0].length));
+            below = map.getZone(CorridorLabel(row + 1, zonecontrollers[0].length));
             connect(righthall, below);
         }
 
@@ -399,7 +394,7 @@ public class MapPanelController {
         if (col == -1) {
             return "LeftHall" + (char) (row + 65);
         }
-        if (col == columns) {
+        if (col == zonecontrollers[0].length) {
             return "RightHall" + (char) (row + 65);
         }
         return "Front" + zonecontrollers[row][col].toString();
@@ -421,9 +416,9 @@ public class MapPanelController {
 
         // check if all blocks for sequence are there.
         // first accumulate all blocks from all rooms
-        ColorSequence allblocks = new ColorSequence();
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
+        List<BlockColor> allblocks = new ArrayList<BlockColor>();
+        for (int i = 0; i < zonecontrollers.length; i++) {
+            for (int j = 0; j < zonecontrollers[0].length; j++) {
                 allblocks.addAll(zonecontrollers[i][j].getColors());
             }
         }

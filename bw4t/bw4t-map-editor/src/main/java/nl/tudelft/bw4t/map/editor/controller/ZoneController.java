@@ -1,6 +1,10 @@
 package nl.tudelft.bw4t.map.editor.controller;
 
 
+import java.util.List;
+
+import nl.tudelft.bw4t.map.BlockColor;
+import nl.tudelft.bw4t.map.Zone.Type;
 import nl.tudelft.bw4t.map.editor.model.Zone;
 
 /**
@@ -36,12 +40,20 @@ public class ZoneController {
     public MapPanelController getMapController() {
     	return mapcontroller;
     }
+    
+    public Type getType() {
+    	return model.getType();
+    }
+    
+    public String getName() {
+    	return model.getName();
+    }
 
-    public ColorSequence getColors() {
+    public List<BlockColor> getColors() {
         return model.getColors();
     }
 
-    public void setColors(ColorSequence cs) {
+    public void setColors(List<BlockColor> cs) {
     	model.setColors(cs);
     }
 

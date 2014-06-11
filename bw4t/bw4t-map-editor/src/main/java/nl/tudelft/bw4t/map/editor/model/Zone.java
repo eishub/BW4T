@@ -1,12 +1,14 @@
 package nl.tudelft.bw4t.map.editor.model;
 
+import java.util.List;
+
+import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone.Type;
-import nl.tudelft.bw4t.map.editor.controller.ColorSequence;
 
 public class Zone {
 
 	private Type type = Type.CORRIDOR;
-	private ColorSequence colors;
+	private List<BlockColor> colors;
 	
 	public static final int NORTH = 0;
 	public static final int EAST = 1;
@@ -14,6 +16,8 @@ public class Zone {
 	public static final int WEST = 3;
 	
 	private boolean[] doorsbool = new boolean[4];
+	
+	private String name;
 	
 	public Type getType() {
 		return type;
@@ -23,11 +27,19 @@ public class Zone {
 		type = t;
 	}
 	
-	public ColorSequence getColors() {
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String n) {
+		name = n;
+	}
+	
+	public List<BlockColor> getColors() {
 		return colors;
 	}
 	
-	public void setColors(ColorSequence cs) {
+	public void setColors(List<BlockColor> cs) {
 		if (colors == null) {
 			throw new NullPointerException("Null list not allowed for colors");
 		}
