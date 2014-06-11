@@ -17,15 +17,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import nl.tudelft.bw4t.client.environment.handlers.PerceptsHandler;
-import nl.tudelft.bw4t.client.startup.Launcher;
-import nl.tudelft.bw4t.controller.AbstractMapController;
+import nl.tudelft.bw4t.client.environment.Launcher;
+import nl.tudelft.bw4t.client.environment.PerceptsHandler;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.view.Block;
-import nl.tudelft.bw4t.map.view.Entity;
-import nl.tudelft.bw4t.view.MapRendererInterface;
+import nl.tudelft.bw4t.map.renderer.AbstractMapController;
+import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
+import nl.tudelft.bw4t.map.view.ViewBlock;
+import nl.tudelft.bw4t.map.view.ViewEPartner;
+import nl.tudelft.bw4t.map.view.ViewEntity;
 
 import org.apache.log4j.Logger;
 
@@ -47,16 +48,16 @@ public class ClientMapController extends AbstractMapController {
     private Set<Zone> occupiedRooms = new HashSet<Zone>();
     
     /** The bot entity. */
-    private Entity theBot = new Entity();
+    private ViewEntity theBot = new ViewEntity();
     
     /** The sequence index. */
     private int sequenceIndex = 0;
     
     /** The visible blocks. */
-    private Set<Block> visibleBlocks = new HashSet<>();
+    private Set<ViewBlock> visibleBlocks = new HashSet<>();
     
     /** A map of all blocks, relating their ID to the actual block. */
-    private Map<Long, Block> allBlocks = new HashMap<>();
+    private Map<Long, ViewBlock> allBlocks = new HashMap<>();
     
     /** The sequence of the colors of blocks which should be retrieved. */
     private List<BlockColor> sequence = new LinkedList<>();
@@ -104,7 +105,7 @@ public class ClientMapController extends AbstractMapController {
      *
      * @return the the bot
      */
-    public Entity getTheBot() {
+    public ViewEntity getTheBot() {
         return theBot;
     }
 
@@ -114,10 +115,10 @@ public class ClientMapController extends AbstractMapController {
      * @param id the id
      * @return the block
      */
-    private Block getBlock(Long id) {
-        Block b = allBlocks.get(id);
+    private ViewBlock getBlock(Long id) {
+        ViewBlock b = allBlocks.get(id);
         if (b == null) {
-            b = new Block();
+            b = new ViewBlock();
             allBlocks.put(id, b);
         }
         return b;
@@ -151,13 +152,13 @@ public class ClientMapController extends AbstractMapController {
             double x = ((Numeral) parameters.get(1)).getValue().doubleValue();
             double y = ((Numeral) parameters.get(2)).getValue().doubleValue();
 
-            Block b = getBlock(id);
+            ViewBlock b = getBlock(id);
             b.setObjectId(id);
             b.setPosition(new Point2D.Double(x, y));
         } else if (name.equals("color")) {
             long id = ((Numeral) parameters.get(0)).getValue().longValue();
             char color = ((Identifier) parameters.get(1)).getValue().charAt(0);
-            Block b = getBlock(id);
+            ViewBlock b = getBlock(id);
             b.setColor(BlockColor.toAvailableColor(color));
             getVisibleBlocks().add(b);
         // Update group goal sequence
@@ -242,15 +243,21 @@ public class ClientMapController extends AbstractMapController {
 
 	/** {@inheritDoc} */
 	@Override
-	public Set<Block> getVisibleBlocks() {
+	public Set<ViewBlock> getVisibleBlocks() {
 	    return visibleBlocks;
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	public Set<Entity> getVisibleEntities() {
-	    Set<Entity> entities = new HashSet<>();
+	public Set<ViewEntity> getVisibleEntities() {
+	    Set<ViewEntity> entities = new HashSet<>();
 	    entities.add(theBot);
 	    return entities;
 	}
+
+    @Override
+    public Set<ViewEPartner> getVisibleEPartners() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }
