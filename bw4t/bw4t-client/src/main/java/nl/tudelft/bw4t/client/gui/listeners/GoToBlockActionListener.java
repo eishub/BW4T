@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.environment.Launcher;
+import eis.exceptions.ActException;
 import eis.iilang.Numeral;
 import eis.iilang.Percept;
 

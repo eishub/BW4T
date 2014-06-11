@@ -9,7 +9,7 @@ import eis.iilang.Percept;
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.environment.Launcher;
 
-public class PickUpEPartnerActionListener extends ClientActionListener {
+public class PickUpEPartnerActionListener extends AbstractClientActionListener {
     private static final Logger LOGGER = Logger.getLogger(PickUpEPartnerActionListener.class);
 
     public PickUpEPartnerActionListener(ClientController controller) {

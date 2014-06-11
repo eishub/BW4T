@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Set;
 import nl.tudelft.bw4t.client.environment.EntityNotifiers;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-import nl.tudelft.bw4t.client.startup.InitConfig.ConfigFile;
+import nl.tudelft.bw4t.client.startup.ConfigFile;
 import nl.tudelft.bw4t.client.startup.InitParam;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.network.BW4TClientActions;

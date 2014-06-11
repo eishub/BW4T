@@ -10,9 +10,9 @@ import eis.iilang.Percept;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-import nl.tudelft.bw4t.client.environment.handlers.PerceptsHandler;
+import nl.tudelft.bw4t.client.environment.PerceptsHandler;
 import nl.tudelft.bw4t.client.message.BW4TMessage;
-import nl.tudelft.bw4t.message.MessageTranslator;
+import nl.tudelft.bw4t.client.message.MessageTranslator;
 
 /**
  * Java agent that can control an entity.
