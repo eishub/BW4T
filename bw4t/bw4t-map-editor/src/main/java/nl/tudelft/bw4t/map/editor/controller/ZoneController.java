@@ -11,8 +11,12 @@ public class ZoneController {
     private int row, column; // should match the position in the map table
     
     private Zone model;
+    
+    private MapController mapcontroller;
 
-    public ZoneController(int r, int c, Zone m) {
+    public ZoneController(MapController mc, int r, int c, Zone m) {
+    	mapcontroller = mc;
+    	
         if (r > 24 || r < 0) {
             // prepare to compare rows to 'A'..'Y'. we need r=24 for the
             // dropzone row and
@@ -27,6 +31,10 @@ public class ZoneController {
         column = c;
         
         model = m;
+    }
+    
+    public MapController getMapController() {
+    	return mapcontroller;
     }
 
     public ColorSequence getColors() {
