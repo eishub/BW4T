@@ -3,6 +3,7 @@ package nl.tudelft.bw4t.client.controller;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Point;
 
@@ -20,12 +21,15 @@ public class ClientMapControllerTest {
     ClientController clientController;
     @Mock
     NewMap map;
+    @Mock
+    RemoteEnvironment remoteEnvironment;
 
     private ClientMapController clientMapController;
     
     @Before
     public void setUp() throws Exception {
         when(map.getArea()).thenReturn(new Point(1.0, 1.0));
+        when(clientController.getEnvironment()).thenReturn(remoteEnvironment);
         clientMapController = new ClientMapController(map, clientController);
     }
 
