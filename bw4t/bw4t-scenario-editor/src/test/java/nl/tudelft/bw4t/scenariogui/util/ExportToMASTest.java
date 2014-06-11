@@ -18,9 +18,6 @@ import static org.junit.Assert.assertTrue;
  * Test the ExportToGoal class.
  */
 public class ExportToMASTest {
-    /** The name used as the "name" for the files.
-     *  Equal to the chosen file when exporting using the GUI.
-     */
     public static final String CONFIG_NAME = "testname";
 
     private static final String FILE_ROOT = System.getProperty("user.dir");
@@ -33,10 +30,6 @@ public class ExportToMASTest {
     private static final String XML_SRC = CONFIG_NAME + ".xml";
     private static final String[] GOAL_FILES = {"robot.goal"};
 
-
-    /**
-     * The BW4T Configuration File
-     */
     private BW4TClientConfig configuration;
 
     @Before

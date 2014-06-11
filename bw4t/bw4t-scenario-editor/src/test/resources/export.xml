@@ -5,9 +5,8 @@
             <batteryEnabled>false</batteryEnabled>
             <botAmount>1</botAmount>
             <botBatteryCapacity>10</botBatteryCapacity>
-            <botBatteryDischargeRate>0</botBatteryDischargeRate>
+            <botBatteryDischargeRate>0.0</botBatteryDischargeRate>
             <botController>AGENT</botController>
-            <botGripperCapacity>1</botGripperCapacity>
             <botName>Bot 1</botName>
             <botSize>2</botSize>
             <botSpeed>100</botSpeed>
@@ -23,9 +22,8 @@
             <batteryEnabled>false</batteryEnabled>
             <botAmount>1</botAmount>
             <botBatteryCapacity>10</botBatteryCapacity>
-            <botBatteryDischargeRate>0</botBatteryDischargeRate>
-            <botController>AGENT</botController>
-            <botGripperCapacity>1</botGripperCapacity>
+            <botBatteryDischargeRate>0.0</botBatteryDischargeRate>
+            <botController>HUMAN</botController>
             <botName>Bot 1</botName>
             <botSize>2</botSize>
             <botSpeed>100</botSpeed>
@@ -38,10 +36,26 @@
             <sizeOverloadHandicap>false</sizeOverloadHandicap>
         </bot>
     </bots>
-    <epartners/>
+    <epartners>
+        <epartner>
+            <epartnerAmount>1</epartnerAmount>
+            <epartnerName>E-Partner 1</epartnerName>
+            <fileName>epartner.goal</fileName>
+            <forgetMeNot>false</forgetMeNot>
+            <gps>false</gps>
+            <referenceName>epartner</referenceName>
+        </epartner>
+        <epartner>
+            <epartnerAmount>1</epartnerAmount>
+            <epartnerName>E-Partner 2</epartnerName>
+            <fileName>robot.goal</fileName>
+            <forgetMeNot>false</forgetMeNot>
+            <gps>false</gps>
+            <referenceName>epartner</referenceName>
+        </epartner>
+    </epartners>
     <clientIp>localhost</clientIp>
     <clientPort>2000</clientPort>
-    <fileLocation>NULL</fileLocation>
     <launchGui>true</launchGui>
     <mapFile></mapFile>
     <serverIp>localhost</serverIp>
