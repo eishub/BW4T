@@ -14,7 +14,7 @@ public class ColorLegendaPanel extends JPanel {
 
 	public ColorLegendaPanel() {
         setLayout(new GridLayout(0, 2));
-        setBackground(Color.CYAN);
+        setBackground(Color.YELLOW);
 
         add(new JLabel("Letter"));
         add(new JLabel("Color"));
