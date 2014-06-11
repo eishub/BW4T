@@ -11,7 +11,6 @@ import javax.swing.text.DocumentFilter;
  */
 public final class Format {
     
-    /** The document filter used. */
     private static DocumentFilter intDocumentFilter =
             new IntegerDocumentFilter();
 
@@ -24,7 +23,6 @@ public final class Format {
      */
     private static class IntegerDocumentFilter extends DocumentFilter {
 
-        /** The digit regex used. */
         private static final String DIGIT_REGEX = "\\D++";
         
         @Override
@@ -99,7 +97,7 @@ public final class Format {
             amount = 0;
         }
         if(amount < 0 && !canBeNegative) {
-            amount = 0;
+            amount = Math.abs(amount);
         }
         return amount;
     }
