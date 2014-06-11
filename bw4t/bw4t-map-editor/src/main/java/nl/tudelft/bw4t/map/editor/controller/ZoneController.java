@@ -12,9 +12,9 @@ public class ZoneController {
     
     private Zone model;
     
-    private MapController mapcontroller;
+    private MapPanelController mapcontroller;
 
-    public ZoneController(MapController mc, int r, int c, Zone m) {
+    public ZoneController(MapPanelController mc, int r, int c, Zone m) {
     	mapcontroller = mc;
     	
         if (r > 24 || r < 0) {
@@ -33,7 +33,7 @@ public class ZoneController {
         model = m;
     }
     
-    public MapController getMapController() {
+    public MapPanelController getMapController() {
     	return mapcontroller;
     }
 
