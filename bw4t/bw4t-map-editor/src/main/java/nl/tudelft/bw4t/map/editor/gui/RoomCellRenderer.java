@@ -9,7 +9,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableCellRenderer;
 
-import nl.tudelft.bw4t.map.editor.controller.Room;
+import nl.tudelft.bw4t.map.editor.controller.ZoneController;
 
 /**
  * This is a renderer for a room.
@@ -24,8 +24,8 @@ public class RoomCellRenderer extends JPanel implements TableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(JTable arg0, Object arg1,
             boolean arg2, boolean arg3, int arg4, int arg5) {
-        if (arg1 instanceof Room) {
-            Room room = (Room) arg1;
+        if (arg1 instanceof ZoneController) {
+            ZoneController room = (ZoneController) arg1;
             JPanel panel = new JPanel(new BorderLayout());
             panel.add(new JLabel(room.toString()), BorderLayout.NORTH);
             // panel.setBackground(Color.black);

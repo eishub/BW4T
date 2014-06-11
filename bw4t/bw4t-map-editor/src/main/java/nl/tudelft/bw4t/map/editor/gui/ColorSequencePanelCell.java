@@ -8,7 +8,7 @@ import java.awt.event.FocusListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import nl.tudelft.bw4t.map.editor.controller.Map;
+import nl.tudelft.bw4t.map.editor.controller.MapController;
 
 public class ColorSequencePanelCell extends JPanel {
 
@@ -16,9 +16,9 @@ public class ColorSequencePanelCell extends JPanel {
 	
     private ColorSequenceEditorCell seqEdit;
     
-	private Map map;
+	private MapController map;
 	
-	public ColorSequencePanelCell(Map theMap) {
+	public ColorSequencePanelCell(MapController theMap) {
 		this.map = theMap;
 		setLayout(new BorderLayout());
 

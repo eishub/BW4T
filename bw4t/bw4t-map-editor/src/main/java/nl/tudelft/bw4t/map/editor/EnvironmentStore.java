@@ -13,8 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 
 import nl.tudelft.bw4t.map.editor.controller.EnvironmentStoreController;
-import nl.tudelft.bw4t.map.editor.controller.Map;
-import nl.tudelft.bw4t.map.editor.controller.Room;
+import nl.tudelft.bw4t.map.editor.controller.MapController;
+import nl.tudelft.bw4t.map.editor.controller.ZoneController;
 import nl.tudelft.bw4t.map.editor.gui.ColorLegendaPanel;
 import nl.tudelft.bw4t.map.editor.gui.ColorSequencePanelCell;
 import nl.tudelft.bw4t.map.editor.gui.ExplanationPanel;
@@ -34,7 +34,7 @@ public class EnvironmentStore extends JFrame {
 	
 	private static final long serialVersionUID = 8572609341436634787L;
 
-	private Map map;
+	private MapController map;
 	
 	private String windowName = "BW4T Extensive Map Editor";
 	
@@ -62,7 +62,7 @@ public class EnvironmentStore extends JFrame {
      * @param themap is a map that contains: rows, cols, entities, randomize.
      * 
      */
-    public EnvironmentStore(Map themap) {
+    public EnvironmentStore(MapController themap) {
         map = themap;
         
         setWindowTitle("Untitled");
@@ -87,8 +87,8 @@ public class EnvironmentStore extends JFrame {
         // Both the mapTable and sequencePanel are added to a rooms panel.
         // TODO: Create a roomsTable class that creates both MapTable and SequencePanel. Problems: map Data model in mapTable and boxLayout in roomsPanel.
         mapTable = new JTable(map);
-        mapTable.setDefaultRenderer(Room.class, new RoomCellRenderer());
-        mapTable.setDefaultEditor(Room.class, new RoomCellEditor());
+        mapTable.setDefaultRenderer(ZoneController.class, new RoomCellRenderer());
+        mapTable.setDefaultEditor(ZoneController.class, new RoomCellEditor());
         mapTable.setRowHeight(55);
         mapTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
 
@@ -206,7 +206,7 @@ public class EnvironmentStore extends JFrame {
             System.exit(0);
         }
 
-        Map themap = new Map(dialog.getRows(), dialog.getColumns(),
+        MapController themap = new MapController(dialog.getRows(), dialog.getColumns(),
                 dialog.getEntities(), dialog.isRandomMap(),
                 dialog.isLabelsVisible());
 

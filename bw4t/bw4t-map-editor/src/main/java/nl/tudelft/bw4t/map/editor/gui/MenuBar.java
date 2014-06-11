@@ -9,7 +9,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import nl.tudelft.bw4t.map.editor.controller.Map;
+import nl.tudelft.bw4t.map.editor.controller.MapController;
 import nl.tudelft.bw4t.map.editor.controller.MapPreviewController;
 import nl.tudelft.bw4t.map.renderer.MapRenderer;
 

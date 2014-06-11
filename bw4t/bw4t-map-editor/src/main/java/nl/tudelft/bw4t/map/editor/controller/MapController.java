@@ -22,18 +22,18 @@ import nl.tudelft.bw4t.map.RenderOptions;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.editor.EnvironmentStore;
 import nl.tudelft.bw4t.map.editor.controller.ColorSequence;
-import nl.tudelft.bw4t.map.editor.controller.Room;
+import nl.tudelft.bw4t.map.editor.controller.ZoneController;
 
 /**
  * This holds the map that the user designed. This is an abstract map contianing
  * only number of rows and columns, do not confuse with {@link NewMap}.
  */
-public class Map implements TableModel {
+public class MapController implements TableModel {
 
     /** basic size of the map */
     private int rows;
     private int columns;
-    private ArrayList<List<Room>> rooms;
+    private ArrayList<List<ZoneController>> rooms;
     private int numberOfEntities = 0;
     private boolean randomize;
     /**
@@ -68,7 +68,7 @@ public class Map implements TableModel {
      * @param isLabelsVisible
      *            true if labels should be shown by renderers
      */
-    public Map(int rows, int columns, int entities, boolean rand,
+    public MapController(int rows, int columns, int entities, boolean rand,
             boolean labelsVisible) {
         isLabelsVisible = labelsVisible;
         if (rows < 1 || rows > 100) {
@@ -87,13 +87,13 @@ public class Map implements TableModel {
         this.columns = columns;
         this.numberOfEntities = entities;
         this.randomize = rand;
-        rooms = new ArrayList<List<Room>>();
+        rooms = new ArrayList<List<ZoneController>>();
 
         // fill new array with rooms
         for (int row = 0; row < this.rows; row++) {
-            rooms.add(new ArrayList<Room>());
+            rooms.add(new ArrayList<ZoneController>());
             for (int col = 0; col < this.columns; col++) {
-                rooms.get(row).add(new Room(row, col));
+                rooms.get(row).add(new ZoneController(row, col));
             }
         }
     }
@@ -148,7 +148,7 @@ public class Map implements TableModel {
      *            is column
      * @return room at given position.
      */
-    public Room getRoom(int r, int c) {
+    public ZoneController getRoom(int r, int c) {
         checkCoord(r, c);
         return rooms.get(r).get(c);
     }
@@ -270,7 +270,7 @@ public class Map implements TableModel {
             map.addZone(righthall);
 
             for (int col = 0; col < columns; col++) {
-                Room room = rooms.get(row).get(col);
+                ZoneController room = rooms.get(row).get(col);
                 Zone roomzone = new Zone(room.toString(), new Rectangle(
                         getX(col), getY(row), ROOMWIDTH, ROOMHEIGHT),
                         Zone.Type.ROOM);
@@ -434,8 +434,8 @@ public class Map implements TableModel {
         // check if all blocks for sequence are there.
         // first accumulate all blocks from all rooms
         ColorSequence allblocks = new ColorSequence();
-        for (List<Room> row : rooms) {
-            for (Room room : row) {
+        for (List<ZoneController> row : rooms) {
+            for (ZoneController room : row) {
                 allblocks.addAll(room.getColors());
             }
         }
@@ -497,7 +497,7 @@ public class Map implements TableModel {
      * {@inheritDoc}
      */
     public Class<?> getColumnClass(int columnIndex) {
-        return Room.class;
+        return ZoneController.class;
     }
 
     @Override
@@ -554,12 +554,12 @@ public class Map implements TableModel {
      * {@inheritDoc}
      */
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        if (!(aValue instanceof Room)) {
+        if (!(aValue instanceof ZoneController)) {
             throw new IllegalArgumentException(
                     "value must be a Room but found " + aValue + " of type "
                             + aValue.getClass());
         }
-        rooms.get(rowIndex).get(columnIndex).setValue((Room) aValue);
+        rooms.get(rowIndex).get(columnIndex).setValue((ZoneController) aValue);
     }
 
 }
