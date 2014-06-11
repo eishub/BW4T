@@ -149,7 +149,6 @@ public final class ExportToMAS {
     private static void generateAgentHierarchyForBots(File directory) {
         for (BotConfig bot : ExportToMAS.configuration.getBots()) {
             // TODO: Change this to goal file implementation and existing files.
-            String botName = bot.getBotName();
             String botGoalFilename = bot.getFileName();
 
             File goalFile = new File(botGoalFilename);
@@ -220,8 +219,7 @@ public final class ExportToMAS {
 			} else {
 				humanCount += bot.getBotAmount();
 			}
-//			String goalFileSanitized = bot.getFileName().toLowerCase()
-//					.replace(" ", "_");
+
 			launchPolicyBuilder.append(TAB);
 			launchPolicyBuilder.append(String.format("when [type=%s,max=%d]@env do launch %s: %s .",
 			        type,
