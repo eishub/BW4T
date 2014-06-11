@@ -23,14 +23,12 @@ public class MenuBar extends JMenuBar {
 	private String lastFileLocation;
 
     private JMenuItem fileNew, fileOpen, fileSave, fileSaveAs, preview, fileExit;
-    
-    private Map map;
 
     /**
      * Construct a menu bar for the Map Editor
+     * TODO: LastFileLocation Fix
      */
-    public MenuBar(Map themap) {
-    	this.map = themap;
+    public MenuBar() {
     	
         JMenu file;
 
@@ -62,19 +60,6 @@ public class MenuBar extends JMenuBar {
 
         preview = new JMenuItem("Preview Map");
         preview.setToolTipText("Preview Current Map");
-        //TODO: Refactor for MVC
-        preview.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {		    	
-		    	JFrame preview = new JFrame("Map Preview");
-		    	preview.add(new MapRenderer(new MapPreviewController(map)));
-		    	preview.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		    	preview.pack();
-		    	preview.setVisible(true);
-			}
-		});
-        
         file.add(preview);
 
         file.addSeparator();
@@ -117,6 +102,14 @@ public class MenuBar extends JMenuBar {
      */
     public final JMenuItem getMenuItemFileSaveAs() {
         return fileSaveAs;
+    }
+    
+    /**
+     * JMenuItem used to preview the map.
+     * @return the JMenuItem to preview the map
+     */
+    public final JMenuItem getMenuItemPreview() {
+    	return preview;
     }
 
     /**

@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.map.editor;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,12 +12,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
+import nl.tudelft.bw4t.map.editor.controller.EnvironmentStoreController;
 import nl.tudelft.bw4t.map.editor.controller.Map;
 import nl.tudelft.bw4t.map.editor.controller.Room;
 import nl.tudelft.bw4t.map.editor.gui.ColorLegendaPanel;
 import nl.tudelft.bw4t.map.editor.gui.ColorSequencePanelCell;
 import nl.tudelft.bw4t.map.editor.gui.ExplanationPanel;
 import nl.tudelft.bw4t.map.editor.gui.MenuBar;
+import nl.tudelft.bw4t.map.editor.gui.RightClickPopup;
 import nl.tudelft.bw4t.map.editor.gui.RoomCellEditor;
 import nl.tudelft.bw4t.map.editor.gui.RoomCellRenderer;
 import nl.tudelft.bw4t.map.editor.gui.SizeDialog;
@@ -28,13 +31,15 @@ import nl.tudelft.bw4t.map.editor.util.OptionPrompt;
  * @author Rothweiler
  *
  */
-public class MapEditor extends JFrame {
+public class EnvironmentStore extends JFrame {
 	
 	private static final long serialVersionUID = 8572609341436634787L;
 
 	private Map map;
 	
-	private String windowName = "BW4T Map Editor";
+	private String windowName = "BW4T Extensive Map Editor";
+	
+	private EnvironmentStoreController controller;
 	
 	private ColorLegendaPanel legendaPanel;
 	
@@ -47,10 +52,10 @@ public class MapEditor extends JFrame {
 	private ColorSequencePanelCell sequencePanel;
 	
 	private MenuBar menuBar;
+	
+	private RightClickPopup popup;
 
 	private static OptionPrompt option = new DefaultOptionPrompt();
-    
-    private JButton savebutton = new JButton("Save as Repast Map");
     
     /**
      * Create the MapEditor frame which will hold all the panels, tables and buttons.
@@ -58,14 +63,14 @@ public class MapEditor extends JFrame {
      * @param themap is a map that contains: rows, cols, entities, randomize.
      * 
      */
-    public MapEditor(Map themap) {
-        this.map = themap;
+    public EnvironmentStore(Map themap) {
+        map = themap;
         
         setWindowTitle("Untitled");
         setLayout(new BorderLayout());
         
         // Attach the menu bar.
-        menuBar = new MenuBar(themap);
+        menuBar = new MenuBar();
         setJMenuBar(menuBar);
         
         // TODO: Change to DO_NOTHING_ON_CLOSE when we want to ask the user whether he is sure to exit.
@@ -87,32 +92,54 @@ public class MapEditor extends JFrame {
         mapTable.setDefaultEditor(Room.class, new RoomCellEditor());
         mapTable.setRowHeight(55);
         mapTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
-        
+
         // Create a roomsPanel that has both the mapTable and the sequencePanel.
         roomsPanel = new JPanel();
         roomsPanel.setLayout(new BoxLayout(roomsPanel, BoxLayout.Y_AXIS));
         roomsPanel.add(mapTable);
         roomsPanel.add(sequencePanel);
         
-        
         // Attach all Panels to the Editor.
         add(explanationPanel, BorderLayout.NORTH);
         add(roomsPanel, BorderLayout.CENTER);
         add(legendaPanel, BorderLayout.EAST);
-        add(savebutton, BorderLayout.SOUTH);
+        
+        // Create the RightClickPopup
+        popup = new RightClickPopup(this);
 
-        // attach listeners
-        savebutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                map.saveAsFile();
-            }
-
-        });
-
+        // Create the controller
+        controller = new EnvironmentStoreController(this, map);
+        
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
+    }
+    
+    /**
+     * Returns the menu bar.
+     *
+     * @return The menu bar.
+     */
+    public final MenuBar getTopMenuBar() {
+        return menuBar;
+    }
+    
+    /**
+     * Returns the mapTable
+     *
+     * @return The mapTable.
+     */
+    public final JTable getMapTable() {
+        return mapTable;
+    }
+    
+    /**
+     * Returns the PopupMenu
+     *
+     * @return The PopupMenu.
+     */
+    public final RightClickPopup getRightClickPopup() {
+        return popup;
     }
     
     /**
@@ -123,7 +150,7 @@ public class MapEditor extends JFrame {
      */
     public static void showDialog(final Exception e, final String s) {
 
-        MapEditor.option.showMessageDialog(null, s + "\n" + e.toString());
+        EnvironmentStore.option.showMessageDialog(null, s + "\n" + e.toString());
     }
     
     /**
@@ -133,7 +160,7 @@ public class MapEditor extends JFrame {
      */
     public static void showDialog(final String s) {
 
-        MapEditor.option.showMessageDialog(null, s);
+        EnvironmentStore.option.showMessageDialog(null, s);
     }
     
     /**
@@ -187,7 +214,7 @@ public class MapEditor extends JFrame {
         if (dialog.isRandomMap()) {
             themap.saveAsFile();
         } else {
-            new MapEditor(themap);
+            new EnvironmentStore(themap);
         }
     }
 }

@@ -16,21 +16,21 @@ public class SizeDialog extends JPanel {
 
 	private static final long serialVersionUID = -5021732242993235726L;
 	
-	SpinnerModel rowmodel = new SpinnerNumberModel(3, // initial value
-            1, // min
+	SpinnerModel rowmodel = new SpinnerNumberModel(5, // initial value
+            5, // min
             24, // max
             1); // step
     JSpinner rows = new JSpinner(rowmodel);
 
-    SpinnerModel colmodel = new SpinnerNumberModel(3, // initial value
-            1, // min
+    SpinnerModel colmodel = new SpinnerNumberModel(5, // initial value
+            3, // min
             24, // max
             1); // step
     JSpinner cols = new JSpinner(colmodel);
 
     SpinnerModel entitymodel = new SpinnerNumberModel(2, // initial value
             1, // min
-            11, // max
+            15, // max
             1); // step
     JSpinner entities = new JSpinner(entitymodel);
 
