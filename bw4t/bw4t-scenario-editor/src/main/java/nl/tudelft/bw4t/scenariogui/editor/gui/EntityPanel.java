@@ -346,7 +346,7 @@ public class EntityPanel extends JPanel {
 	 *
 	 * @return The table that contains the E-partners.
 	 */
-	public final JTable getEPartnerTable() {
+	public final BotJTable getEPartnerTable() {
 		return ePartnerTable;
 	}
 
