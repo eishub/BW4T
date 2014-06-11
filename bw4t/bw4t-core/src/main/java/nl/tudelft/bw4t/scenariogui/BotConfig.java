@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlElement;
 
-import nl.tudelft.bw4t.agent.EntityType;
+import nl.tudelft.bw4t.map.EntityType;
 
 /**
  * This class stores all the date from the BotEditorUI.

@@ -1,104 +1,107 @@
 package nl.tudelft.bw4t.map.editor;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.JTable;
 
-import nl.tudelft.bw4t.map.editor.model.Map;
-import nl.tudelft.bw4t.map.editor.model.Room;
+import nl.tudelft.bw4t.map.editor.controller.Map;
+import nl.tudelft.bw4t.map.editor.controller.Room;
+import nl.tudelft.bw4t.map.editor.gui.ColorLegendaPanel;
+import nl.tudelft.bw4t.map.editor.gui.ColorSequencePanel;
+import nl.tudelft.bw4t.map.editor.gui.ExplanationPanel;
+import nl.tudelft.bw4t.map.editor.gui.MenuBar;
+import nl.tudelft.bw4t.map.editor.gui.RoomCellEditor;
+import nl.tudelft.bw4t.map.editor.gui.RoomCellRenderer;
+import nl.tudelft.bw4t.map.editor.gui.SizeDialog;
+import nl.tudelft.bw4t.map.editor.util.DefaultOptionPrompt;
+import nl.tudelft.bw4t.map.editor.util.OptionPrompt;
 
-public class MapEditor {
-    private Map map;
-    private ColorSequenceEditor seqEdit;
+/**
+ * The MapEditor class serves as a frame for the Panels and tables.
+ * @author Rothweiler
+ *
+ */
+public class MapEditor extends JFrame {
+	
+	private static final long serialVersionUID = 8572609341436634787L;
+
+	private Map map;
+	
+	private String windowName = "BW4T Map Editor";
+	
+	private ColorLegendaPanel legendaPanel;
+	
+	private ExplanationPanel explanationPanel;
+	
+	private final JTable mapTable;
+	
+	private JPanel roomsPanel;
+	
+	private ColorSequencePanel sequencePanel;
+	
+	private MenuBar menuBar;
+
+	private static OptionPrompt option = new DefaultOptionPrompt();
+    
     private JButton savebutton = new JButton("Save as Repast Map");
-
-    // public so that others can access it for centering GUIs.
-    public static JFrame frame = new JFrame("BW4T Map Editor");
-
+    
     /**
-     * creates an editor for the given size of map
+     * Create the MapEditor frame which will hold all the panels, tables and buttons.
      * 
-     * @param rows
-     *            number of room rows on the map
-     * @param cols
-     *            number of room columns
-     * @param entities
-     *            number of entities to be placed on the map.
-     * @param randomize
-     *            is true if map should contain random blocks, else false.
+     * @param themap is a map that contains: rows, cols, entities, randomize.
+     * 
      */
     public MapEditor(Map themap) {
         this.map = themap;
-
-        frame.setLayout(new BorderLayout());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JPanel explanation = new JPanel(new BorderLayout());
-        explanation
-                .add(new JLabel(
-                        "To add blocks to the map, enter letters in rooms (up to 10) and target sequence."),
-                        BorderLayout.CENTER);
-        explanation.add(new JSeparator(), BorderLayout.SOUTH);
-
-        frame.add(explanation, BorderLayout.NORTH);
-
-        // the map
-        JTable table = new JTable(map);
-        table.setDefaultRenderer(Room.class, new RoomCellRenderer());
-        table.setDefaultEditor(Room.class, new RoomCellEditor());
-        table.setRowHeight(35);
-        table.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
-
-        // and the panel with the target sequence
-        JPanel sequencepanel = new JPanel(new BorderLayout());
-        sequencepanel.add(new JLabel("target sequence"), BorderLayout.WEST);
-        seqEdit = new ColorSequenceEditor(map.getSequence());
-        sequencepanel.add(seqEdit, BorderLayout.CENTER);
-        // the only way to enforce small sequence panel??
-        sequencepanel.setMaximumSize(new Dimension(400, 20));
-
-        // hang map and panel in the rooms panel
-        JPanel roomspanel = new JPanel();
-        roomspanel.setLayout(new BoxLayout(roomspanel, BoxLayout.Y_AXIS));
-        roomspanel.add(table);
-        roomspanel.add(sequencepanel);
-
-        frame.add(roomspanel, BorderLayout.CENTER);
-        frame.add(new ColorLegenda(), BorderLayout.EAST);
-
-        frame.add(savebutton, BorderLayout.SOUTH);
+        
+        setWindowTitle("Untitled");
+        setLayout(new BorderLayout());
+        
+        // Attach the menu bar.
+        menuBar = new MenuBar(themap);
+        setJMenuBar(menuBar);
+        
+        // TODO: Change to DO_NOTHING_ON_CLOSE when we want to ask the user whether he is sure to exit.
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        // Create the explainationPanel for on top of the editor.
+        explanationPanel = new ExplanationPanel();
+        
+        // Create the colorLegendaPanel for the right side of the editor.
+        legendaPanel = new ColorLegendaPanel();
+        
+        // Create the colorSequencePanel to be added to the roomsPanel.
+        sequencePanel = new ColorSequencePanel(map);   
+        
+        // Both the mapTable and sequencePanel are added to a rooms panel.
+        // TODO: Create a roomsTable class that creates both MapTable and SequencePanel. Problems: map Data model in mapTable and boxLayout in roomsPanel.
+        mapTable = new JTable(map);
+        mapTable.setDefaultRenderer(Room.class, new RoomCellRenderer());
+        mapTable.setDefaultEditor(Room.class, new RoomCellEditor());
+        mapTable.setRowHeight(55);
+        mapTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
+        
+        // Create a roomsPanel that has both the mapTable and the sequencePanel.
+        roomsPanel = new JPanel();
+        roomsPanel.setLayout(new BoxLayout(roomsPanel, BoxLayout.Y_AXIS));
+        roomsPanel.add(mapTable);
+        roomsPanel.add(sequencePanel);
+        
+        
+        // Attach all Panels to the Editor.
+        add(explanationPanel, BorderLayout.NORTH);
+        add(roomsPanel, BorderLayout.CENTER);
+        add(legendaPanel, BorderLayout.EAST);
+        add(savebutton, BorderLayout.SOUTH);
 
         // attach listeners
-        seqEdit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                map.setSequence(seqEdit.getColors());
-            }
-        });
-        seqEdit.addFocusListener(new FocusListener() {
-            @Override
-            public void focusLost(FocusEvent arg0) {
-                map.setSequence(seqEdit.getColors());
-
-            }
-
-            @Override
-            public void focusGained(FocusEvent e) {
-            }
-        });
-
         savebutton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -107,19 +110,70 @@ public class MapEditor {
 
         });
 
-        frame.pack();
-        frame.setVisible(true);
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+    
+    /**
+     * Opens a dialog showing the description of the error and the error itself as a String.
+     * 
+     * @param e The exception that is thrown.
+     * @param s A description that is specific for why the error occurred.
+     */
+    public static void showDialog(final Exception e, final String s) {
+
+        MapEditor.option.showMessageDialog(null, s + "\n" + e.toString());
+    }
+    
+    /**
+     * Opens a dialog showing a message, but no error.
+     * 
+     * @param s A message that is displayed to the user.
+     */
+    public static void showDialog(final String s) {
+
+        MapEditor.option.showMessageDialog(null, s);
+    }
+    
+    /**
+     * Used to set the OptionPrompt for the Map Editor.
+     * 
+     * @param o The OptionPrompt object to set option to.
+     */
+    public static void setOptionPrompt(OptionPrompt o) {
+        option = o;
+    }
+    
+    /**
+     * Used to get the OptionPrompt for the MapEditor GUI.
+     * @return option Used to handle all thread blocking GUI objects.
+     */
+    public static OptionPrompt getOptionPrompt() {
+        return option;
+    }
+    
+    public void setWindowTitle(String filenameBeingEdited) {
+        setTitle(windowName + " - " + filenameBeingEdited);
+    }
+    
+    /**
+     * Closes the MapEditor window and all child frames.
+     */
+    public void closeMapEditor() {
+        System.exit(0);
     }
 
+
     /**
-     * simple startup that asks user for map size and then creates the editor.
+     * Start first the dialog that gives us the options for the map.
+     * Then create the MapEditor with this options.
      * 
-     * @param args
-     *            not used.
+     * @param args Unused parameter
      */
     public static void main(String[] args) {
         SizeDialog dialog = new SizeDialog();
-        if (JOptionPane.CLOSED_OPTION == JOptionPane.showOptionDialog(frame,
+        if (JOptionPane.CLOSED_OPTION == JOptionPane.showOptionDialog(null,
                 dialog, "BW4T Map Editor - Map Size Dialog",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
                 null, null)) {
