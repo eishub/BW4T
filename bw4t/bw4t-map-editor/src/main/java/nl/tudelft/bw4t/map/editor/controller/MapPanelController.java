@@ -261,8 +261,7 @@ public class MapPanelController {
                 roomzone.addDoor(new Door(new Point(getX(col),
                         (getY(row) - ROOMHEIGHT / 2)),
                         Door.Orientation.HORIZONTAL));
-                roomzone.setBlocks(zonecontrollers[row][col].getColors()
-                        .getColors());
+                roomzone.setBlocks(zonecontrollers[row][col].getColors());
 
                 // add the zone in front of the room.
                 Zone corridor = new Zone(CorridorLabel(row, col),
