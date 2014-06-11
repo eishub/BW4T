@@ -17,6 +17,8 @@ public class ZoneController {
     private Zone model;
     
     private MapPanelController mapcontroller;
+    
+    private UpdateableEditorInterface uei;
 
     public ZoneController(MapPanelController mc, int r, int c, Zone m) {
     	mapcontroller = mc;
@@ -84,5 +86,13 @@ public class ZoneController {
     public void setValue(ZoneController otherRoom) {
         setColors(otherRoom.getColors());
     }
+
+	public UpdateableEditorInterface getUpdateableEditorInterface() {
+		return uei;
+	}
+
+	public void setUpdateableEditorInterface(UpdateableEditorInterface ui) {
+		uei = ui;
+	}
 
 }
