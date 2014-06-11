@@ -1,12 +1,13 @@
 package nl.tudelft.bw4t.message;
 
-import eis.iilang.Function;
-import eis.iilang.Identifier;
-import eis.iilang.Numeral;
-import eis.iilang.Parameter;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collection;
+
+import nl.tudelft.bw4t.client.message.BW4TMessage;
+import nl.tudelft.bw4t.client.message.MessageTranslator;
+import nl.tudelft.bw4t.client.message.MessageType;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +15,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import static org.junit.Assert.assertTrue;
+import eis.iilang.Function;
+import eis.iilang.Identifier;
+import eis.iilang.Numeral;
+import eis.iilang.Parameter;
  
 /**
  * Tests if the MessageTranslator class is working correctly.
@@ -34,16 +38,15 @@ public class MessageTranslatorTest {
         private static final Identifier UNKNOWN_ID = new Identifier("unknown");
         private static final Numeral NUMBER_ID = new Numeral(NUMBER);
    
-        private String stringMessage;
-        private BW4TMessage bw4tMessage;
-        private Parameter param;
+        private final String stringMessage;
+        private final BW4TMessage bw4tMessage;
+        private final Parameter param;
         
         /**
          * Initialize the Message Translator class
          */
         @Before
         public void init() {
-            MessageTranslator.init();
         }
 
         /**
@@ -62,16 +65,14 @@ public class MessageTranslatorTest {
         /**
          * Tests whether the old function converts the messages from String->Message correctly.
          */
-        @SuppressWarnings("deprecation")
 		@Test
         public void testStringToMessage() {
-        	assertTrue(MessageTranslator.translateMessageLegacy(stringMessage).equals(bw4tMessage));
+        	assertTrue(MessageTranslator.translateMessage(stringMessage).equals(bw4tMessage));
         }
         
         /**
          * Tests whether the old function converts the message from Message->String correctly.
          */
-        @SuppressWarnings("deprecation")
 		@Test
         public void testMessageToString() {
         	assertTrue(MessageTranslator.translateMessage(bw4tMessage).equals(stringMessage));
@@ -84,16 +85,7 @@ public class MessageTranslatorTest {
         public void testMessageToParameter() {
         	assertTrue(MessageTranslator.translateMessage(bw4tMessage, AGENT).equals(param));
         }
-        
-        /**
-         * Tests whether the results of the new function equals the old one.
-         */
-        @SuppressWarnings("deprecation")
-		@Test
-        public void testNewMap() {
-            assertTrue(MessageTranslator.translateMessage(stringMessage).equals(
-            		MessageTranslator.translateMessageLegacy(stringMessage)));
-        }
+       
        
         /**
          * Returns the list of parameters to test on.
@@ -102,67 +94,67 @@ public class MessageTranslatorTest {
         @Parameters(name = "{index}: String: {0}, Message: {1}")
         public static Collection<Object[]> data() {
                 return Arrays.asList(new Object[][]{
-                    {"I am going to room "+ROOM,
+                    {"I am going to room " + ROOM,
                     new BW4TMessage(MessageType.GOINGTOROOM, ROOM, null, null, Integer.MAX_VALUE),
                     new Function("imp", new Function("in", AGENT_ID, ROOM_ID))},
                     
-                    {"I have a "+COLOR+" block",
+                    {"I have a " + COLOR + " block",
                     new BW4TMessage(MessageType.HASCOLOR, null, COLOR, null, Integer.MAX_VALUE),
                     new Function("holding", AGENT_ID, COLOR_ID)},
                     
-                    {"room "+ROOM+" has been checked",
+                    {"room " + ROOM + " has been checked",
                     new BW4TMessage(MessageType.CHECKED, ROOM, null, null, Integer.MAX_VALUE),
-                    new Function("checked",ROOM_ID)},
+                    new Function("checked", ROOM_ID)},
                     
-                    {"room "+ROOM+" has been checked by "+AGENT,
+                    {"room " + ROOM + " has been checked by " + AGENT,
                     new BW4TMessage(MessageType.CHECKED, ROOM, null, AGENT, Integer.MAX_VALUE),
                     new Function("checked", AGENT_ID, ROOM_ID)},
                     
-                    {"room "+ROOM+" contains a "+COLOR+" block",
+                    {"room " + ROOM + " contains a " + COLOR + " block",
                     new BW4TMessage(MessageType.ROOMCONTAINS, ROOM, COLOR, null, Integer.MAX_VALUE),
                     new Function("at", COLOR_ID, ROOM_ID)},
                     
-                    {"room "+ROOM+" contains "+NUMBER+" "+COLOR+" blocks",
+                    {"room " + ROOM + " contains " + NUMBER + " " + COLOR + " blocks",
                     new BW4TMessage(MessageType.ROOMCONTAINSAMOUNT, ROOM, COLOR, null, NUMBER),
                     new Function("at", NUMBER_ID, COLOR_ID, ROOM_ID)},
                     
-                    {"room "+ROOM+" is empty",
+                    {"room " + ROOM + " is empty",
                     new BW4TMessage(MessageType.ROOMISEMPTY, ROOM, null, null, Integer.MAX_VALUE),
                     new Function("empty", ROOM_ID)},
                     
-                    {"Is anybody going to room "+ROOM+"?",
+                    {"Is anybody going to room " + ROOM + "?",
                     new BW4TMessage(MessageType.ISANYBODYGOINGTOROOM, ROOM, null, null, Integer.MAX_VALUE),
                     new Function("int", new Function("imp", new Function("in", UNKNOWN_ID, ROOM_ID)))},
                     
-                    {"Who has a "+COLOR+" block"+"?",
+                    {"Who has a " + COLOR + " block" + "?",
                     new BW4TMessage(MessageType.WHOHASABLOCK, null, COLOR, null, Integer.MAX_VALUE),
                     new Function("int", new Function("holding", UNKNOWN_ID, COLOR_ID))},
                     
-                    {"We need a "+COLOR+" block",
+                    {"We need a " + COLOR + " block",
                     new BW4TMessage(MessageType.WENEED, null, COLOR, null, Integer.MAX_VALUE),
                     new Function("need", COLOR_ID)},
                     
-                    {"I am looking for a "+COLOR+" block",
+                    {"I am looking for a " + COLOR + " block",
                     new BW4TMessage(MessageType.LOOKINGFOR, null, COLOR, null, Integer.MAX_VALUE),
                     new Function("imp", new Function("found", AGENT_ID, COLOR_ID))},
                     
-                    {"I will get a "+COLOR+" block",
+                    {"I will get a " + COLOR + " block",
                     new BW4TMessage(MessageType.WILLGETCOLOR, null, COLOR, null, Integer.MAX_VALUE),
                     new Function("imp", new Function("holding", AGENT_ID, COLOR_ID))},
                     
-                    {"I am getting a "+COLOR+" block from room "+ROOM,
+                    {"I am getting a " + COLOR + " block from room " + ROOM,
                     new BW4TMessage(MessageType.AMGETTINGCOLOR, ROOM, COLOR, null, Integer.MAX_VALUE),
                     new Function("imp", new Function("pickedUpFrom", AGENT_ID, COLOR_ID, ROOM_ID))},
                     
-                    {AGENT+", go to room "+ROOM,
+                    {AGENT + ", go to room " + ROOM,
                     new BW4TMessage(MessageType.GOTOROOM, ROOM, null, AGENT, Integer.MAX_VALUE),
                     new Function("imp", new Function("in", AGENT_ID, ROOM_ID))},
                     
-                    {AGENT+", find a "+COLOR+" block",
+                    {AGENT + ", find a " + COLOR + " block",
                     new BW4TMessage(MessageType.FINDCOLOR, null, COLOR, AGENT, Integer.MAX_VALUE),
                     new Function("imp", new Function("found", AGENT_ID, COLOR_ID))},
                     
-                    {AGENT+", get the "+COLOR+" from room "+ROOM,
+                    {AGENT + ", get the " + COLOR + " from room " + ROOM,
                     new BW4TMessage(MessageType.GETCOLORFROMROOM, ROOM, COLOR, AGENT, Integer.MAX_VALUE),
                     new Function("imp", new Function("pickedUpFrom", AGENT_ID, COLOR_ID, ROOM_ID))},
                     
@@ -174,47 +166,47 @@ public class MessageTranslatorTest {
                     new BW4TMessage(MessageType.WHATCOLORSHOULDIGET, null, null, null, Integer.MAX_VALUE),
                     new Function("int", new Function("imp", new Function("holding", AGENT_ID, new Identifier("unknown"))))},
                     
-                    {"Where is a "+COLOR+" block?",
+                    {"Where is a " + COLOR + " block?",
                     new BW4TMessage(MessageType.WHEREISCOLOR, null, COLOR, null, Integer.MAX_VALUE),
                     new Function("int", new Function("at", COLOR_ID, UNKNOWN_ID))},
                     
-                    {"What is in room "+ROOM+"?",
+                    {"What is in room " + ROOM + "?",
                     new BW4TMessage(MessageType.WHATISINROOM, ROOM, null, null, Integer.MAX_VALUE),
                     new Function("int", new Function("at", UNKNOWN_ID, ROOM_ID))},
                     
-                    {"Has anybody checked room "+ROOM+"?",
+                    {"Has anybody checked room " + ROOM + "?",
                     new BW4TMessage(MessageType.HASANYBODYCHECKEDROOM, ROOM, null, null, Integer.MAX_VALUE),
                     new Function("int", new Function("checked", UNKNOWN_ID, ROOM_ID))},
                     
-                    {"Who is in room "+ROOM+"?",
+                    {"Who is in room " + ROOM + "?",
                     new BW4TMessage(MessageType.WHOISINROOM, ROOM, null, null, Integer.MAX_VALUE),
                     new Function("int", new Function("in", UNKNOWN_ID, ROOM_ID))},
                     
-                    {"I am in room "+ROOM,
+                    {"I am in room " + ROOM,
                     new BW4TMessage(MessageType.INROOM, ROOM, null, null, Integer.MAX_VALUE),
                     new Function("in", AGENT_ID, ROOM_ID)},
                     
-                    {"I am about to drop off a "+COLOR+" block",
+                    {"I am about to drop off a " + COLOR + " block",
                     new BW4TMessage(MessageType.ABOUTTODROPOFFBLOCK, null, COLOR, null, Integer.MAX_VALUE),
                     new Function("imp", new Function("putDown", AGENT_ID))},
                     
-                    {"I just dropped off a "+COLOR+" block",
+                    {"I just dropped off a " + COLOR + " block",
                     new BW4TMessage(MessageType.DROPPEDOFFBLOCK, null, COLOR, null, Integer.MAX_VALUE),
                     new Function("putDown", AGENT_ID, COLOR_ID)},
                     
-                    {"I am waiting outside room "+ROOM,
+                    {"I am waiting outside room " + ROOM,
                     new BW4TMessage(MessageType.AMWAITINGOUTSIDEROOM, ROOM, null, null, Integer.MAX_VALUE),
                     new Function("waitingOutside", AGENT_ID, ROOM_ID)},
                     
-                    {AGENT+", are you close?",
+                    {AGENT + ", are you close?",
                     new BW4TMessage(MessageType.AREYOUCLOSE, null, null, AGENT, Integer.MAX_VALUE),
                     new Function("int", new Function("areClose", AGENT_ID))},
                     
-                    {AGENT+", will you be long?",
+                    {AGENT + ", will you be long?",
                     new BW4TMessage(MessageType.WILLYOUBELONG, null, null, AGENT, Integer.MAX_VALUE),
                     new Function("int", new Function("willBeLong", AGENT_ID))},
                     
-                    {"I am at a "+COLOR+" block",
+                    {"I am at a " + COLOR + " block",
                     new BW4TMessage(MessageType.ATBOX, null, COLOR, null, Integer.MAX_VALUE),
                     new Function("atBox", COLOR_ID)},
                     

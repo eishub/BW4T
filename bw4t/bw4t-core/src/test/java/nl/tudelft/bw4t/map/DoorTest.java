@@ -11,10 +11,6 @@ import org.junit.Test;
 /**
  * The class <code>DoorTest</code> contains tests for the class
  * <code>{@link Door}</code>.
- * 
- * @generatedBy CodePro at 25.05.14 13:12
- * @author 749
- * @version $Revision: 1.0 $
  */
 public class DoorTest {
     /**

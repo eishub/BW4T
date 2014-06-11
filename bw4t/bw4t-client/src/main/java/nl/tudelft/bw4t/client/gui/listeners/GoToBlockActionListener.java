@@ -1,17 +1,18 @@
 package nl.tudelft.bw4t.client.gui.listeners;
 
-import eis.exceptions.ActException;
-import eis.iilang.Numeral;
-import eis.iilang.Percept;
 import java.awt.event.ActionEvent;
 import java.util.LinkedList;
-import nl.tudelft.bw4t.client.controller.ClientController;
-import nl.tudelft.bw4t.client.startup.Launcher;
+
 import org.apache.log4j.Logger;
 
+import nl.tudelft.bw4t.client.controller.ClientController;
+import nl.tudelft.bw4t.client.environment.Launcher;
+import eis.iilang.Numeral;
+import eis.iilang.Percept;
+
 /**
- * ActionListener that performs the goTo action when that command is pressed in the pop up menu.
- * @author trens
+ * ActionListener that performs the goTo action when that command is pressed in
+ * the pop up menu
  */
 public class GoToBlockActionListener extends AbstractClientActionListener {
 	/** ID of the box to goTo when this listener is fired. */

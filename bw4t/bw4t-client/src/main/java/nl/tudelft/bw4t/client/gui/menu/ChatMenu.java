@@ -3,8 +3,8 @@ package nl.tudelft.bw4t.client.gui.menu;
 import javax.swing.JMenuItem;
 
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
-import nl.tudelft.bw4t.message.BW4TMessage;
-import nl.tudelft.bw4t.message.MessageType;
+import nl.tudelft.bw4t.client.message.BW4TMessage;
+import nl.tudelft.bw4t.client.message.MessageType;
 
 /** Responsible for building the pop-up menu of the chat. */
 public final class ChatMenu {

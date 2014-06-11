@@ -5,10 +5,12 @@ import eis.iilang.Parameter;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.bind.JAXBException;
+
+import org.apache.log4j.Logger;
+
 /**
  * Available init parameters and default values for {@link BW4TEnvironment}.
- * 
- * @author W.Pasman 20mar13
  */
 public enum InitParam {
     /** Our IP. Passed to server so server is able to find us with this IP. */
@@ -25,13 +27,25 @@ public enum InitParam {
     LAUNCHGUI("true"),
     /** Number of human bots (is this to connect GUIs?) */
     HUMANCOUNT("1"),
-    /** The java agent class to load when new entities appear. */
-    AGENTCLASS("nl.tudelft.bw4t.agent.BW4TAgent"),
-    /** Are we connected with GOAL? */
+    /**
+     * The java agent class to load when new entities appear.
+     */
+    AGENTCLASS("nl.tudelft.bw4t.client.agent.BW4TAgent"),
+    /**
+     * are we connected with GOAL?
+     */
     GOAL("false"),
-    /** The key we should try to use to kill the remote server. */
-    KILL("");
-    /** Default value of the this InitParam */
+    /**
+     * The key we should try to use to kill the remote server.
+     */
+    KILL(""),
+    /**
+     * The file from which the client reads the configuration.
+     */
+    CONFIGFILE("");
+    
+    private static final Logger LOGGER = Logger.getLogger(InitParam.class);
+    
     private String defaultvalue;
 
     /** Store the program-wide parameters given to the {@link RemoteEnvironment}. */
@@ -61,7 +75,7 @@ public enum InitParam {
     /**
      * Retrieve the value of this InitParam  EnumType.
      * 
-     * @return The String value for this InitParam EnumType.
+     * @return the value of the parameter or the default value.
      */
     public String getValue() {
         Parameter param = getParameter(this.nameLower());
@@ -79,7 +93,19 @@ public enum InitParam {
      */
     public static void setParameters(Map<String, Parameter> params) {
         parameters = params;
+        
+        final String cfile = CONFIGFILE.getValue();
+        if (!cfile.isEmpty()) {
+            LOGGER.info(String.format("Reading configuration file '%s'", cfile));
+            try {
+                ConfigFile.readConfigFile(cfile);
+            } catch (JAXBException e) {
+                LOGGER.error(String.format("Unable to load configuration file: '%s'", cfile), e);
+            }
+        }
     }
+    
+    
 
     /**
      * Get all program-wide parameters.
@@ -95,7 +121,7 @@ public enum InitParam {
      * parameters. We do this by removing all parameters that we can handle as
      * client; the remaining ones must be server parameters.
      * 
-     * @return A Map containing the Parameters used by for the server.
+     * @return parameters for the server
      */
     public static Map<String, Parameter> getServerParameters() {
         Map<String, Parameter> serverparams = new HashMap<String, Parameter>(

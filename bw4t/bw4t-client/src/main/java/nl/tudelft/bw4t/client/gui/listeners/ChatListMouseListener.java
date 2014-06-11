@@ -6,8 +6,8 @@ import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.menu.ChatMenu;
 
 /**
- * Listens for mouse events on the chat text area and builds a pop up menu accordingly.
- * @author trens
+ * Listens for mouse events on the chat text area and builds a pop up menu
+ * accordingly
  */
 public class ChatListMouseListener implements MouseListener {
 	/** The {@link BW4TClientGUI} to listen to and interact with. */

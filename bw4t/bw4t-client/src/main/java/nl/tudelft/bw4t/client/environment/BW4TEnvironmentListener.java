@@ -11,19 +11,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import nl.tudelft.bw4t.agent.BW4TAgent;
-import nl.tudelft.bw4t.agent.HumanAgent;
+import nl.tudelft.bw4t.client.agent.BW4TAgent;
+import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.startup.InitParam;
 import org.apache.log4j.Logger;
 
 /**
- * Class that can be registered to {@link RemoteEnvironment} as {@link BW4TEnvironmentListener}
- * and will launch new agents when new entities are available.
- * <p>
- * This is needed when the RemoteEnvironment is run stand-alone. Do not start this when running GOAL,
- * as GOAL already is an environment runner and will associate agents to entities if entities appear.
- * @author trens
+ * Class that can be registered to BW4TRemoteEnvironment as EnvironmentListener and will launch new agents when new
+ * entities are available
+ * This is needed when the BW4TRemoteEnvironment is runned stand-alone. Do not start this when running GOAL, as GOAL
+ * already is an environment runner and will associate agents to entities if entities appear.
  */
 public class BW4TEnvironmentListener implements EnvironmentListener {
 

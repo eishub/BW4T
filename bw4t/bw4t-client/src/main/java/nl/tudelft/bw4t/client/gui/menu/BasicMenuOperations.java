@@ -5,8 +5,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
-import nl.tudelft.bw4t.message.BW4TMessage;
-import nl.tudelft.bw4t.message.MessageTranslator;
+import nl.tudelft.bw4t.client.message.BW4TMessage;
+import nl.tudelft.bw4t.client.message.MessageTranslator;
 
 /** Utility class containing some operations to add various things to pop-up menu's. */
 public final class BasicMenuOperations {
