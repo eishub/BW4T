@@ -28,12 +28,12 @@ import nl.tudelft.bw4t.map.editor.controller.ZoneController;
  * This holds the map that the user designed. This is an abstract map contianing
  * only number of rows and columns, do not confuse with {@link NewMap}.
  */
-public class MapController implements TableModel {
+public class MapController {
 
     /** basic size of the map */
     private int rows;
     private int columns;
-    private ArrayList<List<ZoneController>> rooms;
+    private ZoneController[][] zonecontrollers;
     private int numberOfEntities = 0;
     private boolean randomize;
     /**
@@ -87,14 +87,13 @@ public class MapController implements TableModel {
         this.columns = columns;
         this.numberOfEntities = entities;
         this.randomize = rand;
-        rooms = new ArrayList<List<ZoneController>>();
-
-        // fill new array with rooms
-        for (int row = 0; row < this.rows; row++) {
-            rooms.add(new ArrayList<ZoneController>());
-            for (int col = 0; col < this.columns; col++) {
-                rooms.get(row).add(new ZoneController(row, col, new nl.tudelft.bw4t.map.editor.model.Zone()));
-            }
+        
+        zonecontrollers = new ZoneController[rows][columns];
+        
+        for (int i = 0; i < rows; i++) {
+        	for (int j = 0; j < columns; i++) {
+        		zonecontrollers[i][j] = new ZoneController(this, i, j, new nl.tudelft.bw4t.map.editor.model.Zone());
+        	}
         }
     }
 
@@ -139,19 +138,6 @@ public class MapController implements TableModel {
         }
     }
 
-    /**
-     * Get room at given row, col
-     * 
-     * @param r
-     *            is row
-     * @param c
-     *            is column
-     * @return room at given position.
-     */
-    public ZoneController getRoom(int r, int c) {
-        checkCoord(r, c);
-        return rooms.get(r).get(c);
-    }
 
     /**
      * get the number of entities on the map.
@@ -270,7 +256,7 @@ public class MapController implements TableModel {
             map.addZone(righthall);
 
             for (int col = 0; col < columns; col++) {
-                ZoneController room = rooms.get(row).get(col);
+                ZoneController room = zonecontrollers[row][col];
                 Zone roomzone = new Zone(room.toString(), new Rectangle(
                         getX(col), getY(row), ROOMWIDTH, ROOMHEIGHT),
                         Zone.Type.ROOM);
@@ -278,7 +264,7 @@ public class MapController implements TableModel {
                 roomzone.addDoor(new Door(new Point(getX(col),
                         (getY(row) - ROOMHEIGHT / 2)),
                         Door.Orientation.HORIZONTAL));
-                roomzone.setBlocks(rooms.get(row).get(col).getColors()
+                roomzone.setBlocks(zonecontrollers[row][col].getColors()
                         .getColors());
 
                 // add the zone in front of the room.
@@ -414,7 +400,7 @@ public class MapController implements TableModel {
         if (col == columns) {
             return "RightHall" + (char) (row + 65);
         }
-        return "Front" + rooms.get(row).get(col).toString();
+        return "Front" + zonecontrollers[row][col].toString();
     }
 
     /**
@@ -434,9 +420,9 @@ public class MapController implements TableModel {
         // check if all blocks for sequence are there.
         // first accumulate all blocks from all rooms
         ColorSequence allblocks = new ColorSequence();
-        for (List<ZoneController> row : rooms) {
-            for (ZoneController room : row) {
-                allblocks.addAll(room.getColors());
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                allblocks.addAll(zonecontrollers[i][j].getColors());
             }
         }
 
@@ -478,88 +464,8 @@ public class MapController implements TableModel {
             EnvironmentStore.showDialog(e, "Save failed: " + e.getMessage());
         }
     }
-
-    /*
-     * ************** IMPLEMENTS JTableModel ***************
-     */
-
-    @Override
-    /**
-     * {@inheritDoc}
-     */
-    public void addTableModelListener(TableModelListener l) {
-        listeners.add(l);
-
+    
+    public ZoneController getZone(int x, int y) {
+    	return zonecontrollers[x][y];
     }
-
-    @Override
-    /**
-     * {@inheritDoc}
-     */
-    public Class<?> getColumnClass(int columnIndex) {
-        return ZoneController.class;
-    }
-
-    @Override
-    /**
-     * {@inheritDoc}
-     */
-    public int getColumnCount() {
-        return columns;
-    }
-
-    @Override
-    /**
-     * {@inheritDoc}
-     */
-    public String getColumnName(int columnIndex) {
-        return null;
-    }
-
-    @Override
-    /**
-     * {@inheritDoc}
-     */
-    public int getRowCount() {
-        return rows;
-    }
-
-    @Override
-    /**
-     * {@inheritDoc}
-     */
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        return rooms.get(rowIndex).get(columnIndex);
-    }
-
-    @Override
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return true;
-    }
-
-    @Override
-    /**
-     * {@inheritDoc}
-     */
-    public void removeTableModelListener(TableModelListener l) {
-        listeners.remove(l);
-
-    }
-
-    @Override
-    /**
-     * {@inheritDoc}
-     */
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        if (!(aValue instanceof ZoneController)) {
-            throw new IllegalArgumentException(
-                    "value must be a Room but found " + aValue + " of type "
-                            + aValue.getClass());
-        }
-        rooms.get(rowIndex).get(columnIndex).setValue((ZoneController) aValue);
-    }
-
 }
