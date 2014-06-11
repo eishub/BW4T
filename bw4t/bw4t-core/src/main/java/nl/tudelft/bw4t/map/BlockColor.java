@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
  * {@link Color}.
  */
 public enum BlockColor implements Serializable {
-    BLUE, ORANGE, RED, WHITE, GREEN, YELLOW, PINK, DARK_GRAY;
+    RED, ORANGE, YELLOW, GREEN, BLUE, PINK, WHITE, DARK_GRAY;
 
     /**
      * The log4j logger which writes logs.
@@ -50,6 +50,15 @@ public enum BlockColor implements Serializable {
             LOGGER.fatal("Failed to find the field in the Color class.", e);
         }
         return null;
+    }
+    
+    /**
+     * Calculate the luminosity value using the CIE 1931({@link http://en.wikipedia.org/wiki/CIE_1931_color_space}).
+     * @return the luminosity value
+     */
+    public int getLuminosity() {
+        Color c = getColor();
+        return (int) (0.2126 * c.getRed() + 0.7152 * c.getGreen() + 0.0722 * c.getBlue());
     }
 
     /**
