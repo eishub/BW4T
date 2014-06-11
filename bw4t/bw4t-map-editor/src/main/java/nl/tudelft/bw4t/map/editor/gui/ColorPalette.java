@@ -1,6 +1,8 @@
 package nl.tudelft.bw4t.map.editor.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
@@ -52,10 +54,18 @@ public class ColorPalette extends JPanel implements MouseInputListener {
         super.paint(g);
 
         int startX = BORDER;
+        int number = 1;
         for (BlockColor c : BlockColor.getAvailableColors()) {
             g.setColor(c.getColor());
             g.fillRect(startX, BORDER, COLOR_SIZE, COLOR_SIZE);
+            
+            int cvalue = 255 - c.getLuminosity();
+            g.setColor(new Color(cvalue, cvalue, cvalue));
+            g.setFont(new Font("Arial", Font.BOLD, 20));
+            g.drawString(Integer.toString(number), startX+BORDER + 7, BORDER + COLOR_SIZE - 7);
+            
             startX += COLOR_SIZE;
+            number++;
         }
     }
 
@@ -107,12 +117,6 @@ public class ColorPalette extends JPanel implements MouseInputListener {
 
     @Override
     public void mouseMoved(MouseEvent e) {
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = getColorPaletteWindow(new ColorPalette());
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
     }
 
     public static JFrame getColorPaletteWindow(ColorPalette cp) {

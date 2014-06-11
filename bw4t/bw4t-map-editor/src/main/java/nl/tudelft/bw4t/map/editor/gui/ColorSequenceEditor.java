@@ -53,7 +53,14 @@ public class ColorSequenceEditor extends JComponent {
                 if (chr == 'D') {
                     return;
                 }
-                addColor(chr);
+                try {
+                    int n = Integer.parseInt(chr.toString());
+                    if (n > 0 && n <= BlockColor.getAvailableColors().size()) {
+                        addColor(BlockColor.getAvailableColors().get(n - 1));
+                    }
+                } catch (NumberFormatException exc) {
+                    addColor(chr);
+                }
             }
 
             @Override
@@ -63,7 +70,7 @@ public class ColorSequenceEditor extends JComponent {
                     return;
                 }
                 if (e.getKeyCode() == KeyEvent.VK_TAB && e.getSource() instanceof Component) {
-                    ( ( Component ) e.getSource () ).transferFocus ();
+                    ((Component) e.getSource()).transferFocus();
                 }
             }
         });
@@ -125,7 +132,7 @@ public class ColorSequenceEditor extends JComponent {
             this.sequence.clear();
         }
         else {
-            this.sequence = sequence;
+            this.sequence = new ArrayList<BlockColor>(sequence);
         }
     }
 
@@ -167,18 +174,8 @@ public class ColorSequenceEditor extends JComponent {
             g.setColor(c.getColor());
             g.fillRect(startX, BORDER, width, height);
             g.setColor(Color.BLACK);
-            g.drawRect(startX, BORDER, width-1, height-1);
+            g.drawRect(startX, BORDER, width - 1, height - 1);
             startX += width;
         }
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("TestFrame");
-        final ColorSequenceEditor cse = new ColorSequenceEditor();
-        frame.add(cse);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
     }
 }
