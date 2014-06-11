@@ -96,7 +96,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
     private JButton botMessageButton = new JButton("Choose message");
     private JButton epartnerMessageButton = new JButton("Choose message");
     
-    private JTextArea botChatSession = new JTextArea(8, 1);
+    private JTextArea botChatSession = new JTextArea(18, 1);
     private JTextArea epartnerChatSession = new JTextArea(8, 1);
     
     private JScrollPane botChatPane = new JScrollPane(getBotChatSession());
@@ -203,9 +203,6 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         mapRenderer = new JScrollPane(renderer);
         
         createOverallFrame();
-        
-        mainPanel.add(mapRenderer, BorderLayout.CENTER);
-        mainPanel.add(optionsMessagesPane, BorderLayout.EAST);
 
         add(mainPanel);
 
@@ -287,7 +284,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         createEpartnerPane();
         
         optionsMessagesPane.add(botPanel, BorderLayout.NORTH);
-        optionsMessagesPane.add(epartnerPanel, BorderLayout.SOUTH);
+        optionsMessagesPane.add(epartnerPanel, BorderLayout.CENTER);
     }
     
     /**
@@ -333,7 +330,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         botButtonPanel.add(botMessageLabel);
         botButtonPanel.add(agentSelector);
         botButtonPanel.add(botMessageButton);
-        
+    
         botMessageButton.addMouseListener(new TeamListMouseListener(this));
     }
     
@@ -346,6 +343,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
 
         epartnerButtonPanel.add(epartnerMessageButton);
         
+        epartnerMessageButton.setEnabled(false);
         epartnerMessageButton.addMouseListener(new EPartnerListMouseListener(this));
     }
     
@@ -444,6 +442,14 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         getEpartnerChatSession().setCaretPosition(getEpartnerChatSession().getDocument().getLength());
 
         return null;
+    }
+    
+    public JButton getBotMessageButton() {
+        return botMessageButton;
+    }
+    
+    public JButton getEpartnerMessageButton() {
+        return epartnerMessageButton;
     }
 
     public JTextArea getBotChatSession() {
