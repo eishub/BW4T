@@ -14,7 +14,7 @@ public class RightClickPopup extends JPopupMenu {
 
 	private static final long serialVersionUID = -5335591852441574491L;
 	
-	private JMenu areaType, doorSide;
+	private JMenu zoneType, doorSide;
 	
 	private EnvironmentStore view;
 	
@@ -26,27 +26,27 @@ public class RightClickPopup extends JPopupMenu {
 		view = theView;
 		
 		// Create a Menu for Type Of Space
-		areaType = new JMenu("Type of Area");
-        add(areaType);
+		zoneType = new JMenu("Type of Zone");
+        add(zoneType);
         
         // Add all MenuItems for type of Space
         corridor = new JMenuItem("Corridor");
-        areaType.add(corridor);
+        zoneType.add(corridor);
         
         room = new JMenuItem("Room");
-        areaType.add(room);
+        zoneType.add(room);
 
         blockade = new JMenuItem("Blockade");
-        areaType.add(blockade);
+        zoneType.add(blockade);
         
         startZone = new JMenuItem("Start Zone");
-        areaType.add(startZone);
+        zoneType.add(startZone);
         
         chargingZone = new JMenuItem("Charging Zone");
-        areaType.add(chargingZone);
+        zoneType.add(chargingZone);
         
         dropZone = new JMenuItem("Drop Zone");
-        areaType.add(dropZone);
+        zoneType.add(dropZone);
         
         // Create a Menu for Door Side
         doorSide = new JMenu("Door Side");

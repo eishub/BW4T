@@ -28,7 +28,6 @@ import nl.tudelft.bw4t.map.editor.util.OptionPrompt;
 
 /**
  * The MapEditor class serves as a frame for the Panels and tables.
- * @author Rothweiler
  *
  */
 public class EnvironmentStore extends JFrame {
