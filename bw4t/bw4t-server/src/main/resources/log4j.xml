@@ -17,6 +17,7 @@
 		class="nl.tudelft.bw4t.server.logging.BW4TFileAppender">
 		<param name="File" value="log/BW4T.log" />
 		<param name="Threshold" value="FATAL" />
+		<param name="Append" value="false" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d{HH:mm:ss,SSS} - %m%n" />
 		</layout>
