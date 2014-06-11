@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFileChooser;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -22,7 +20,6 @@ import nl.tudelft.bw4t.map.Rectangle;
 import nl.tudelft.bw4t.map.RenderOptions;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.editor.EnvironmentStore;
-import nl.tudelft.bw4t.map.editor.controller.ColorSequence;
 import nl.tudelft.bw4t.map.editor.controller.ZoneController;
 
 /**
