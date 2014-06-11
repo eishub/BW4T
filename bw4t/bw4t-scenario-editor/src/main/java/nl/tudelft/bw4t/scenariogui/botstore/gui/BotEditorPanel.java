@@ -178,23 +178,13 @@ public class BotEditorPanel extends JPanel {
 	 * Checks the checkboxes in the bot spec section of the panel
 	 * if they're true in the model.
 	 */
-	private void fillInBotSpecsFromModel() {
-	    if (tempBotConfig.getGripperHandicap()) {
-            gripperCheckbox.setSelected(true);
-        }
-        if (tempBotConfig.getColorBlindHandicap()) {
-            colorblindCheckbox.setSelected(true);
-        }
-        if (tempBotConfig.getSizeOverloadHandicap()) {
-            customSizeCheckbox.setSelected(true);
-        }
-        if (tempBotConfig.getMoveSpeedHandicap()) {
-            movespeedCheckbox.setSelected(true);
-        }
-        if (tempBotConfig.isBatteryEnabled()) {
-            batteryEnabledCheckbox.setSelected(true);
-        }
-	}
+    private void fillInBotSpecsFromModel() {
+        gripperCheckbox.setSelected(tempBotConfig.getGripperHandicap());
+        colorblindCheckbox.setSelected(tempBotConfig.getColorBlindHandicap());
+        customSizeCheckbox.setSelected(tempBotConfig.getSizeOverloadHandicap());
+        movespeedCheckbox.setSelected(tempBotConfig.getMoveSpeedHandicap());
+        batteryEnabledCheckbox.setSelected(tempBotConfig.isBatteryEnabled());
+    }
 
 	/**
 	 * creates the botSlidersPanel

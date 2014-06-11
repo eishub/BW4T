@@ -31,6 +31,8 @@ class MenuOptionSave extends AbstractMenuOption {
      */
     public void actionPerformed(final ActionEvent e) {
         saveFile();
-        updateModelAndView();
+        if (getFileChooserApprove()) {
+        	updateModelAndView();
+        }
     }
 }
