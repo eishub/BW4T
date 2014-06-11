@@ -28,8 +28,13 @@ public class EPartnerListMouseListener implements MouseListener {
     public void mousePressed(MouseEvent e) {
         ClientMapController cmc = clientRenderer.getController().getMapController();
         ViewEPartner ep = cmc.getViewEPartner(cmc.getTheBot().getHoldingEpartner());
-        EPartnerMenu.buildPopUpMenuForEPartner(ep, clientRenderer);
-        clientRenderer.getjPopupMenu().show((JButton) e.getSource(), e.getX(), e.getY());
+        if (cmc.getTheBot().getHoldingEpartner() != -1) {
+            clientRenderer.getEpartnerMessageButton().setEnabled(true);
+            EPartnerMenu.buildPopUpMenuForEPartner(ep, clientRenderer);
+            clientRenderer.getjPopupMenu().show((JButton) e.getSource(), e.getX(), e.getY());
+        } else {
+            clientRenderer.getEpartnerMessageButton().setEnabled(false);
+        }
     }
 
     @Override
