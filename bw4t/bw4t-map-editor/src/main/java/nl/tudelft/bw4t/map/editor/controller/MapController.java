@@ -93,7 +93,7 @@ public class MapController implements TableModel {
         for (int row = 0; row < this.rows; row++) {
             rooms.add(new ArrayList<ZoneController>());
             for (int col = 0; col < this.columns; col++) {
-                rooms.get(row).add(new ZoneController(row, col));
+                rooms.get(row).add(new ZoneController(row, col, new nl.tudelft.bw4t.map.editor.model.Zone()));
             }
         }
     }
