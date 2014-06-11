@@ -49,19 +49,23 @@ public class EditEPartnerTable implements TableModelListener {
 		String value = ""
 				+ view.getEntityPanel().getEPartnerTable()
 						.getValueAt(event.getFirstRow(), event.getColumn());
-		switch (event.getColumn()) {
-		case 0:
-			config.setEpartnerName(value);
-			break;
-		case 1:
-		    config.setFileName(value);
-		    break;
-		case 2:
-			config.setEpartnerAmount(Integer.parseInt(value));
-			break;
-		default:
-			break;
-		}
+        processEventChanges(config, event.getColumn(), value);
 	}
+
+    private void processEventChanges(EPartnerConfig config, int column, String value) {
+        switch (column) {
+            case 0:
+                config.setEpartnerName(value);
+                break;
+            case 1:
+                config.setFileName(value);
+                break;
+            case 2:
+                config.setEpartnerAmount(Integer.parseInt(value));
+                break;
+            default:
+                break;
+        }
+    }
 
 }

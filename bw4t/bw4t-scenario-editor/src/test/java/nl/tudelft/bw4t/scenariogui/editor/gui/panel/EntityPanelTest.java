@@ -558,7 +558,8 @@ public class EntityPanelTest {
 		assertEquals("Bot 1", spyEntityPanel.getBotTableModel().getValueAt(0, 0));
 		assertEquals(EntityType.AGENT.toString(), spyEntityPanel
 				.getBotTableModel().getValueAt(0, 1));
-		assertEquals(1, spyEntityPanel.getBotTableModel().getValueAt(0, 2));
+		assertEquals("robot.goal", spyEntityPanel.getBotTableModel().getValueAt(0, 2));
+		assertEquals(1, spyEntityPanel.getBotTableModel().getValueAt(0, 3));
 
 		BotEditor botEditor = new BotEditor(editor.getMainPanel(), 0,
 				editor.getController().getModel());
@@ -567,13 +568,15 @@ public class EntityPanelTest {
 		botEditorPanel.getBotNameField().setText("TestBot");
 		botEditorPanel.getBotControllerSelector().setSelectedIndex(1);
 		botEditorPanel.getBotAmountTextField().setText("99");
+		botEditorPanel.getFileNameField().setText("TestBot.goal");
 
 		botEditorPanel.getSaveButton().doClick();
 
 		assertEquals("TestBot", spyEntityPanel.getBotTableModel().getValueAt(0, 0));
 		assertEquals(EntityType.HUMAN.toString(), spyEntityPanel
 				.getBotTableModel().getValueAt(0, 1));
-		assertEquals(99, spyEntityPanel.getBotTableModel().getValueAt(0, 2));
+		assertEquals("TestBot.goal", spyEntityPanel.getBotTableModel().getValueAt(0, 2));
+		assertEquals(99, spyEntityPanel.getBotTableModel().getValueAt(0, 3));
 	}
 
 	/**
@@ -586,20 +589,23 @@ public class EntityPanelTest {
 
 		spyEntityPanel.getNewEPartnerButton().doClick();
 
-		assertEquals("E-partner 1", spyEntityPanel.getEPartnerTableModel()
+		assertEquals("E-Partner 1", spyEntityPanel.getEPartnerTableModel()
 				.getValueAt(0, 0));
-		assertEquals(1, spyEntityPanel.getEPartnerTableModel().getValueAt(0, 1));
+		assertEquals("epartner.goal", spyEntityPanel.getEPartnerTableModel().getValueAt(0, 1));
+		assertEquals(1, spyEntityPanel.getEPartnerTableModel().getValueAt(0, 2));
 
 		EpartnerFrame epartnerFrame = new EpartnerFrame(new EpartnerController(
 				editor.getMainPanel(), 0), editor.getController().getModel());
 		
 		epartnerFrame.getEpartnerNameField().setText("TestEPartner");
 		epartnerFrame.getEpartnerAmountField().setText("99");
+		epartnerFrame.getEpartnerGoalFileField().setText("TestEPartner.goal");
 		
 		epartnerFrame.getSaveButton().doClick();
 
 		assertEquals("TestEPartner", spyEntityPanel.getEPartnerTableModel()
 				.getValueAt(0, 0));
-		assertEquals(99, spyEntityPanel.getEPartnerTableModel().getValueAt(0, 1));
+		assertEquals("TestEPartner.goal", spyEntityPanel.getEPartnerTableModel().getValueAt(0, 1));
+		assertEquals(99, spyEntityPanel.getEPartnerTableModel().getValueAt(0, 2));
 	}
 }

@@ -152,13 +152,13 @@ public class ScenarioEditorController {
 
     /**
      * Checks if the configuration has been changed.
-     * @return returns true if either the configuration, the bot list of the epartners list has been changed.
+     * @return returns true if either the configuration, the bot list or the epartners list has been changed.
      */
     public boolean hasConfigBeenModified() {
         boolean configurationEqual = getMainView().getMainPanel().getConfigurationPanel().getOldValues()
                 .equals(getMainView().getMainPanel().getConfigurationPanel().getCurrentValues());
         boolean botsEqual = getModel().compareBotConfigs(getModel().getOldBots());
-        boolean epartnersEqual= getModel().compareEpartnerConfigs(getModel().getOldEpartners());
+        boolean epartnersEqual = getModel().compareEpartnerConfigs(getModel().getOldEpartners());
 
         return !(configurationEqual && botsEqual && epartnersEqual);
     }
@@ -175,19 +175,6 @@ public class ScenarioEditorController {
 
         return response == JOptionPane.YES_OPTION;
     }
-
-    /**
-     * Ask the user if (s)he wishes to quit the program.
-     * @return True if the user wishes to quit.
-     */
-    public boolean promptUserToQuit() {
-        int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
-                null, "Are you sure you want to exit the program?", "",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-       return response == JOptionPane.YES_OPTION;
-    }
-
 }
 
 
