@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.map;
 
+import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,10 @@ public class Zone implements Serializable {
      * Default render options: null.
      */
     private RenderOptions renderOptions = null;
+
+    public static final Color BLOCKADE_COLOR = new Color(0.6f, 0f, 0f, 0.6f);
+
+    public static final Color CHARGING_ZONE_COLOR = new Color(0f, 0.5f, 0f, 0.6f);
 
     public Zone() {
     }

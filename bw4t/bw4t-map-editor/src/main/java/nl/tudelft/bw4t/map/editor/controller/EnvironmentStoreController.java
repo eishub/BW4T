@@ -53,7 +53,6 @@ public class EnvironmentStoreController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 		    	System.out.println("Change to Corridor");
-		    	System.out.println(getMainView().getMapTable().getSelectedRow() + " : " + getMainView().getMapTable().getSelectedColumn());
 			}
 		});
 
