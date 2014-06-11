@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.util.LinkedList;
 
 import nl.tudelft.bw4t.client.controller.ClientController;
-import nl.tudelft.bw4t.client.startup.Launcher;
+import nl.tudelft.bw4t.client.environment.Launcher;
 
 import org.apache.log4j.Logger;
 

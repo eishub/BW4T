@@ -6,9 +6,10 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.controller.MapController;
-import nl.tudelft.bw4t.controller.TestMapController;
 import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.map.renderer.MapController;
+import nl.tudelft.bw4t.map.renderer.MapRenderer;
+import nl.tudelft.bw4t.map.renderer.TestMapController;
 
 public class MapRendererTest extends JFrame {
 
