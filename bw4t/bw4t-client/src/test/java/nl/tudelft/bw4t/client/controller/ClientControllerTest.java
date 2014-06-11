@@ -2,7 +2,8 @@ package nl.tudelft.bw4t.client.controller;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.*;
 
 import eis.iilang.Identifier;
 import eis.iilang.Parameter;
@@ -18,6 +19,7 @@ import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Point;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -52,12 +54,18 @@ public class ClientControllerTest {
 
     @Test
     public void testClientControllerRemoteEnvironmentNewMapString() {
-        new ClientController(remoteEnvironment, map, entityID);
+        ClientController testController = new ClientController(remoteEnvironment, map, entityID);
+        assertNotNull(testController);
+        assertEquals(remoteEnvironment, testController.getEnvironment());
+        assertEquals(map, testController.getMapController().getMap());
+        assertEquals(entityID, testController.getMapController().getTheBot().getName());
     }
 
     @Test
     public void testClientControllerRemoteEnvironmentNewMapStringHumanAgent() {
-        new ClientController(remoteEnvironment, map, entityID, humanAgent);
+        ClientController testController = new ClientController(remoteEnvironment, map, entityID, humanAgent);
+        assertEquals(humanAgent,testController.getHumanAgent());
+        
     }
 
     @Test
@@ -69,25 +77,33 @@ public class ClientControllerTest {
 
     @Test
     public void testHandlePerceptsPlayer() {
-        Parameter parameter = new Identifier("Test");
+        Parameter parameter = new Identifier("TestPlayer");
         Percept percept = new Percept("player");
         percept.addParameter(parameter);
         listOfPercepts.add(percept);
         clientController.setToBePerformedAction(listOfPercepts);
         clientController.handlePercepts(listOfPercepts);
+        assertEquals("TestPlayer", clientController.getOtherPlayers().iterator().next());
     }
     
     @Test
     public void testHandlePerceptsMessage() {
-        Parameter parameter1 = new Identifier("Test1");
-        Parameter parameter2 = new Identifier("Test2");
-        Parameter parameter3 = new Identifier("Test3");
+        Parameter parameter1 = new Identifier("TestSender");
+        Parameter parameter2 = new Identifier("TestMessage");
         ParameterList parameterList = new ParameterList();
         parameterList.add(parameter1);
         parameterList.add(parameter2);
-        parameterList.add(parameter3);
         Percept percept = new Percept("message");
         percept.addParameter(parameterList);
+        listOfPercepts.add(percept);
+        clientController.setToBePerformedAction(listOfPercepts);
+        clientController.handlePercepts(listOfPercepts);
+        assertEquals("TestSender: TestMessage", clientController.getChatHistory().get(0));
+    }
+    
+    @Test
+    public void testHandlePerceptsOther() {
+        Percept percept = new Percept("test");
         listOfPercepts.add(percept);
         clientController.setToBePerformedAction(listOfPercepts);
         clientController.handlePercepts(listOfPercepts);
@@ -97,6 +113,14 @@ public class ClientControllerTest {
     public void testUpdateRenderer() {
         testHandlePerceptsMessage();
         clientController.updateRenderer(clientGUI);
+        verify(clientGUI, times(1)).update();
+    }
+    
+    @Test
+    public void testUpdateRendererDoNot() {
+        clientController.updatedNextFrame();
+        clientController.updateRenderer(clientGUI);
+        verifyZeroInteractions(clientGUI);
     }
 
 }

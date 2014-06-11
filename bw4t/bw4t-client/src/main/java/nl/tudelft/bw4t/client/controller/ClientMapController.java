@@ -194,7 +194,7 @@ public class ClientMapController extends AbstractMapController {
             processColorPercept(perceptParameters);
             break;
         case "epartner":
-            processEpartnerPercept(name, perceptParameters);
+            processEPartnerPercept(name, perceptParameters);
             break;
         case "sequence":
             processSequencePercept(perceptParameters);
@@ -321,7 +321,7 @@ public class ClientMapController extends AbstractMapController {
      * @param perceptParameters
      *            the percept parameters
      */
-    private void processEpartnerPercept(String name, List<Parameter> perceptParameters) {
+    private void processEPartnerPercept(String name, List<Parameter> perceptParameters) {
         long id = ((Numeral) perceptParameters.get(0)).getValue().longValue();
         long holderId = ((Numeral) perceptParameters.get(1)).getValue().longValue();
         
