@@ -53,15 +53,18 @@ public class ClientMapController extends AbstractMapController {
     /** The sequence index. */
     private int sequenceIndex = 0;
     
+    /** The sequence of the colors of blocks which should be retrieved. */
+    private List<BlockColor> sequence = new LinkedList<>();
+    
     /** The visible blocks. */
     private Set<ViewBlock> visibleBlocks = new HashSet<>();
+    
+    /** The visible e-partners. */
+    private Set<ViewEPartner> visibleEPartners = new HashSet<>();
     
     /** A map of all blocks, relating their ID to the actual block. */
     private Map<Long, ViewBlock> allBlocks = new HashMap<>();
     
-    /** The sequence of the colors of blocks which should be retrieved. */
-    private List<BlockColor> sequence = new LinkedList<>();
-
     /**
      * Instantiates a new client map controller.
      *
@@ -254,10 +257,22 @@ public class ClientMapController extends AbstractMapController {
 	    entities.add(theBot);
 	    return entities;
 	}
-
+    
+	/** {@inheritDoc} */
     @Override
     public Set<ViewEPartner> getVisibleEPartners() {
-        // TODO Auto-generated method stub
+        return visibleEPartners;
+    }
+
+    /** gets viewEPartner which id equals @param id 
+     * @return id long
+     */
+    public ViewEPartner getViewEPartner(long id) {
+        for (ViewEPartner ep : getVisibleEPartners()) {
+            if (ep.getId() == id) {
+                return ep;
+            }
+        }
         return null;
     }
 }
