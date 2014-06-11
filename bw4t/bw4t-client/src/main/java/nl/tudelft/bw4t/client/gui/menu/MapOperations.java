@@ -1,10 +1,8 @@
 package nl.tudelft.bw4t.client.gui.menu;
 
 import java.awt.geom.Point2D;
-
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
@@ -17,12 +15,20 @@ import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 
-public class MapOperations {
+/** Responsible for building the pop-up menu when clicking on goal colors. */
+public final class MapOperations {
+	
+	/** Should never be instantiated. */
+	private MapOperations() { }
+	
     /**
-     * Build the pop up menu for clicking on a group goal color
+     * Used for building the pop-up menu that displays the actions
+     * a user can perform when clicking on a group goal color.
      * 
      * @param color
-     *            , the color that was clicked
+     *            - The color that was clicked.
+     * @param gui
+     *            - The {@link BW4TClientGUI} to create the pop-up menu on.
      */
     public static void buildPopUpMenuForGoalColor(BlockColor color, BW4TClientGUI gui) {
         ClientMapController cmc = gui.getController().getMapController();
@@ -90,8 +96,10 @@ public class MapOperations {
      * TODO change this to use the the size of the robot and its arm-length
      * 
      * @param boxID
-     *            the box that should be checked
-     * @return true if close to the box, false if not
+     *            - The box that should be checked.
+     * @param data
+     *            - {@link ClientController} to retrieve data from.
+     * @return {@code true} if close to the box, {@code false} if not.
      */
     public static boolean closeToBox(ViewBlock boxID, ClientController data) {
         return closeToBox(boxID.getPosition(), data);

@@ -1,12 +1,5 @@
 package nl.tudelft.bw4t.client.agent;
 
-import java.rmi.RemoteException;
-import java.util.LinkedList;
-
-import nl.tudelft.bw4t.client.environment.PerceptsHandler;
-import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-import nl.tudelft.bw4t.client.message.BW4TMessage;
-import nl.tudelft.bw4t.client.message.MessageTranslator;
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Translator;
 import eis.exceptions.ActException;
@@ -14,17 +7,27 @@ import eis.exceptions.PerceiveException;
 import eis.iilang.Action;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
+import java.rmi.RemoteException;
+import java.util.LinkedList;
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.client.environment.handlers.PerceptsHandler;
+import nl.tudelft.bw4t.client.message.BW4TMessage;
+import nl.tudelft.bw4t.message.MessageTranslator;
 
 /**
- * Java agent that can control an entity
+ * Java agent that can control an entity.
  */
 public class BW4TAgent extends Thread implements ActionInterface {
 
-	/**
-	 * Information storage about the agent.
-	 */
-    protected String agentId, entityId;
+    /** The agent id. */
+    protected String agentId;
+    /** The entity id */
+    protected String entityId;
+    
+    /** The environment killed. */
     protected boolean environmentKilled;
+    
+    /** The bw4tenv. */
     private RemoteEnvironment bw4tenv;
 
     /**
@@ -41,17 +44,16 @@ public class BW4TAgent extends Thread implements ActionInterface {
     }
     
     /**
-     * Register an entity to this agent
-     * 
-     * @param entityId
-     *            , the Id of the entity
+     * Register an entity to this agent.
+     *
+     * @param entityId            , the Id of the entity
      */
     public void registerEntity(String entityId) {
         this.entityId = entityId;
     }
 
     /**
-     * Run the reasoning process of this agent
+     * Run the reasoning process of this agent.
      */
     public void run() {
         if (environmentKilled) {
@@ -145,14 +147,11 @@ public class BW4TAgent extends Thread implements ActionInterface {
     }
 
     /**
-     * Sends a message to certain other agents
-     * 
-     * @param message
-     *            , the translated message (as String)
-     * @param receiver
-     *            , a receiver (can be either all or the id of another agent)
-     * @throws ActException
-     * 			  , if an attempt to perform an action has failed.
+     * Sends a message to certain other agents.
+     *
+     * @param receiver            , a receiver (can be either all or the id of another agent)
+     * @param message            , the translated message (as String)
+     * @throws ActException 			  , if an attempt to perform an action has failed.
      */
     private void sendMessage(String receiver, String message) throws ActException {
         try {
@@ -170,23 +169,36 @@ public class BW4TAgent extends Thread implements ActionInterface {
     }
 
     /**
-	 * Get all percepts for the associated entity
-	 * 
-	 * @return a list of percepts
-	 * @throws PerceiveException if there was a problem retrieving the percepts.
-	 */
+     * Get all percepts for the associated entity.
+     *
+     * @return a list of percepts
+     * @throws PerceiveException if there was a problem retrieving the percepts.
+     */
 	public LinkedList<Percept> getPercepts() throws PerceiveException {
 	    return (LinkedList<Percept>) PerceptsHandler.getAllPerceptsFromEntity(entityId, bw4tenv);
 	}
 
+	/**
+	 * Sets the killed.
+	 */
 	public void setKilled() {
         environmentKilled = true;
     }
 	
+	/**
+	 * Gets the agent id.
+	 *
+	 * @return the agent id
+	 */
 	public String getAgentId() {
 	    return agentId;
 	}
 
+	/**
+	 * Gets the environment.
+	 *
+	 * @return the environment
+	 */
 	public RemoteEnvironment getEnvironment() {
 	    return bw4tenv;
 	}
