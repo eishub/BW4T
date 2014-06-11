@@ -1,6 +1,6 @@
 package nl.tudelft.bw4t.scenariogui.editor.gui.panel;
 
-import nl.tudelft.bw4t.agent.EntityType;
+import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;

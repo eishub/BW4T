@@ -5,9 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import nl.tudelft.bw4t.client.controller.ClientController;
-import nl.tudelft.bw4t.client.startup.Launcher;
-import nl.tudelft.bw4t.message.BW4TMessage;
-import nl.tudelft.bw4t.message.MessageTranslator;
+import nl.tudelft.bw4t.client.environment.Launcher;
+import nl.tudelft.bw4t.client.message.BW4TMessage;
+import nl.tudelft.bw4t.client.message.MessageTranslator;
 
 import org.apache.log4j.Logger;
 
