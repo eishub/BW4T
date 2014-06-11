@@ -29,6 +29,7 @@ import nl.tudelft.bw4t.client.BW4TClientSettings;
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.listeners.ChatListMouseListener;
+import nl.tudelft.bw4t.client.gui.listeners.EPartnerListMouseListener;
 import nl.tudelft.bw4t.client.gui.listeners.TeamListMouseListener;
 import nl.tudelft.bw4t.client.gui.menu.ActionPopUpMenu;
 import nl.tudelft.bw4t.client.gui.menu.ComboAgentModel;
@@ -80,8 +81,8 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
     //private JPanel buttonPanel;
     private JPanel mainPanel = new JPanel();
     private JPanel optionsMessagesPane = new JPanel();
-    private JPanel botOptions = new JPanel();
-    private JPanel epartnerOptions = new JPanel();
+    private JPanel botButtonPanel = new JPanel();
+    private JPanel epartnerButtonPanel = new JPanel();
     private JPanel botPanel = new JPanel();
     private JPanel epartnerPanel = new JPanel();
     private JPanel botChatPanel = new JPanel();
@@ -89,22 +90,20 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
     
     private JLabel batteryLabel = new JLabel("Bot Battery: ");
     private JLabel botMessageLabel = new JLabel("Send message to: ");
-    private JLabel epartnerMessageLabel = new JLabel("Send message to: ");
     
     private JTextField botBatteryField = new JTextField();
     
     private JButton botMessageButton = new JButton("Choose message");
     private JButton epartnerMessageButton = new JButton("Choose message");
     
-    private JTextArea chatSession = new JTextArea(8, 1);
+    private JTextArea botChatSession = new JTextArea(8, 1);
     private JTextArea epartnerChatSession = new JTextArea(8, 1);
     
-    private JScrollPane botChatPane = new JScrollPane(getChatSession());
-    private JScrollPane epartnerChatPane = new JScrollPane();
+    private JScrollPane botChatPane = new JScrollPane(getBotChatSession());
+    private JScrollPane epartnerChatPane = new JScrollPane(getEpartnerChatSession());
     private JScrollPane mapRenderer;
 
     private JComboBox<ComboAgentModel> agentSelector;
-    //private JComboBox<ComboAgentModel> epartnerSelector;
 
     private JPopupMenu jPopupMenu;
 
@@ -257,7 +256,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
             renderer.addMouseListener(ma);
             renderer.addMouseWheelListener(ma);
 
-            getChatSession().addMouseListener(new ChatListMouseListener(this));
+            getBotChatSession().addMouseListener(new ChatListMouseListener(this));
         }
 
         pack();
@@ -301,7 +300,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         createBotOptionsBar();
         createBotChatSection();
         
-        botPanel.add(botOptions);
+        botPanel.add(botButtonPanel);
         botPanel.add(botChatPane);
     }
     
@@ -315,37 +314,39 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         createEpartnerOptionsBar();
         createEpartnerChatSection();
         
-        epartnerPanel.add(epartnerOptions);
+        epartnerPanel.add(epartnerButtonPanel);
         epartnerPanel.add(epartnerChatPane);
     }
     
     /**
-     * Creates the bar for the bot options.
+     * Creates the button panel for the bot options.
      */
     public void createBotOptionsBar() {
-        botOptions.setLayout(new BoxLayout(botOptions, BoxLayout.X_AXIS));
+        botButtonPanel.setLayout(new BoxLayout(botButtonPanel, BoxLayout.X_AXIS));
+        botButtonPanel.setFocusable(false);
         botBatteryField.setEditable(false);
         
         agentSelector = new JComboBox<ComboAgentModel>(new ComboAgentModel(this));
         
-        botOptions.add(batteryLabel);
-        botOptions.add(botBatteryField);
-        botOptions.add(botMessageLabel);
-        botOptions.add(agentSelector);
-        botOptions.add(botMessageButton);
+        botButtonPanel.add(batteryLabel);
+        botButtonPanel.add(botBatteryField);
+        botButtonPanel.add(botMessageLabel);
+        botButtonPanel.add(agentSelector);
+        botButtonPanel.add(botMessageButton);
         
         botMessageButton.addMouseListener(new TeamListMouseListener(this));
     }
     
     /**
-     * Creates the bar for the epartner options.
+     * Creates the button panel for the epartner options.
      */
     public void createEpartnerOptionsBar() {
-        epartnerOptions.setLayout(new BoxLayout(epartnerOptions, BoxLayout.X_AXIS));
+        epartnerButtonPanel.setLayout(new BoxLayout(epartnerButtonPanel, BoxLayout.X_AXIS));
+        epartnerButtonPanel.setFocusable(false);
 
-        epartnerOptions.add(epartnerMessageLabel);
-        //epartnerOptions.add(epartnerSelector);
-        epartnerOptions.add(epartnerMessageButton);
+        epartnerButtonPanel.add(epartnerMessageButton);
+        
+        epartnerMessageButton.addMouseListener(new EPartnerListMouseListener(this));
     }
     
     /**
@@ -356,7 +357,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         botChatPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         botChatPanel.setFocusable(false);
 
-        getChatSession().setFocusable(false);
+        getBotChatSession().setFocusable(false);
         
         botChatPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         botChatPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -375,7 +376,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         epartnerChatPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         epartnerChatPanel.setFocusable(false);
         
-        //getEpartnerChatSession().setFocusable(false);
+        getEpartnerChatSession().setFocusable(false);
         
         epartnerChatPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         epartnerChatPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -396,8 +397,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         if (!playerId.equals(controller.getMapController().getTheBot().getName())) {
             JButton button = new JButton(playerId);
             button.addMouseListener(new TeamListMouseListener(this));
-            //buttonPanel.add(button);
-            botOptions.add(button);
+            botButtonPanel.add(button);
         }
     }
 
@@ -410,8 +410,11 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
 
     @Override
     public void update() {
-        getChatSession().setText(join(getController().getChatHistory(), "\n"));
-        getChatSession().setCaretPosition(getChatSession().getDocument().getLength());
+        getBotChatSession().setText(join(getController().getBotChatHistory(), "\n"));
+        getBotChatSession().setCaretPosition(getBotChatSession().getDocument().getLength());
+        
+        getEpartnerChatSession().setText(join(getController().getEpartnerChatHistory(), "\n"));
+        getEpartnerChatSession().setCaretPosition(getEpartnerChatSession().getDocument().getLength());
     }
 
     private String join(Iterable<String> chatHistory, String filler) {
@@ -434,22 +437,25 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         String sender = ((Identifier) parameters.get(0)).getValue();
         String message = ((Identifier) parameters.get(1)).getValue();
 
-        getChatSession().append(sender + " : " + message + "\n");
-        getChatSession().setCaretPosition(getChatSession().getDocument().getLength());
+        getBotChatSession().append(sender + " : " + message + "\n");
+        getBotChatSession().setCaretPosition(getBotChatSession().getDocument().getLength());
+        
+        getEpartnerChatSession().append(sender + " : " + message + "\n");
+        getEpartnerChatSession().setCaretPosition(getEpartnerChatSession().getDocument().getLength());
 
         return null;
     }
 
-    public JTextArea getChatSession() {
-        return chatSession;
+    public JTextArea getBotChatSession() {
+        return botChatSession;
     }
     
     public JTextArea getEpartnerChatSession() {
         return epartnerChatSession;
     }
 
-    public void setChatSession(JTextArea chatSession) {
-        this.chatSession = chatSession;
+    public void setBotChatSession(JTextArea chatSession) {
+        this.botChatSession = chatSession;
     }
     
     public void setEpartnerChatSession(JTextArea chatSession) {
