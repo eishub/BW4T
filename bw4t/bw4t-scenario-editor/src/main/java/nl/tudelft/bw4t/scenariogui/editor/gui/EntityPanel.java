@@ -25,8 +25,7 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import nl.tudelft.bw4t.agent.EntityType;
-import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditor;
+import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
 
 /**

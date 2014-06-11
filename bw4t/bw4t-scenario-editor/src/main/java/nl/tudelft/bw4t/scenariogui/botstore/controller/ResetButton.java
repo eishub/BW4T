@@ -3,7 +3,7 @@ package nl.tudelft.bw4t.scenariogui.botstore.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import nl.tudelft.bw4t.agent.EntityType;
+import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 
 /**

@@ -11,11 +11,11 @@ import nl.tudelft.bw4t.client.gui.listeners.GoToRoomActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.PickUpActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.PutdownActionListener;
+import nl.tudelft.bw4t.client.message.BW4TMessage;
+import nl.tudelft.bw4t.client.message.MessageType;
 import nl.tudelft.bw4t.map.ColorTranslator;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
-import nl.tudelft.bw4t.message.BW4TMessage;
-import nl.tudelft.bw4t.message.MessageType;
 
 public class RoomMenus {
     /**
@@ -102,7 +102,7 @@ public class RoomMenus {
         gui.getjPopupMenu().add(menuItem);
 
         if (holding != null) {
-            menuItem = new JMenuItem("Put down box");
+            menuItem = new JMenuItem("Put down block");
             menuItem.addActionListener(new PutdownActionListener(gui.getController()));
             gui.getjPopupMenu().add(menuItem);
         }
@@ -185,5 +185,4 @@ public class RoomMenus {
         menuItem = new JMenuItem("Close menu");
         gui.getjPopupMenu().add(menuItem);
     }
-
 }

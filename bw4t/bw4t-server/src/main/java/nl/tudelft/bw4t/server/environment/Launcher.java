@@ -7,11 +7,11 @@ import java.rmi.RemoteException;
 
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.model.robots.DefaultEntityFactory;
-import nl.tudelft.bw4t.model.robots.EntityFactory;
 import nl.tudelft.bw4t.server.BW4TServer;
-import nl.tudelft.bw4t.startup.LauncherException;
+import nl.tudelft.bw4t.server.model.robots.DefaultEntityFactory;
+import nl.tudelft.bw4t.server.model.robots.EntityFactory;
 import nl.tudelft.bw4t.util.FileUtils;
+import nl.tudelft.bw4t.util.LauncherException;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.PropertyConfigurator;
