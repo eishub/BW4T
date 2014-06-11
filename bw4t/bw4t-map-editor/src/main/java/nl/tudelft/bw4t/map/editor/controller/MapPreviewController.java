@@ -18,9 +18,9 @@ import nl.tudelft.bw4t.map.view.ViewEntity;
 
 public class MapPreviewController extends AbstractMapController {
 
-	private Map map;
+	private MapController map;
 	
-	public MapPreviewController(Map theMap) {
+	public MapPreviewController(MapController theMap) {
 		super(theMap.createMap());
 		this.map = theMap;
 		this.getRenderSettings().setUpdateDelay(1000);
