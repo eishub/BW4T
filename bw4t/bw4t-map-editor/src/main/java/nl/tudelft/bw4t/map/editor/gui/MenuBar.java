@@ -11,7 +11,7 @@ import javax.swing.JMenuItem;
 
 import nl.tudelft.bw4t.map.editor.controller.Map;
 import nl.tudelft.bw4t.map.editor.controller.MapPreviewController;
-import nl.tudelft.bw4t.view.MapRenderer;
+import nl.tudelft.bw4t.map.renderer.MapRenderer;
 
 /**
  * The MenuBar class extends JMenuBar. Used in the Map Editor Frame.
