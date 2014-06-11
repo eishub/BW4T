@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 
 import nl.tudelft.bw4t.map.editor.controller.EnvironmentStoreController;
-import nl.tudelft.bw4t.map.editor.controller.MapController;
+import nl.tudelft.bw4t.map.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.map.editor.controller.ZoneController;
 import nl.tudelft.bw4t.map.editor.gui.ColorLegendaPanel;
 import nl.tudelft.bw4t.map.editor.gui.ColorSequencePanelCell;
@@ -34,7 +34,7 @@ public class EnvironmentStore extends JFrame {
 	
 	private static final long serialVersionUID = 8572609341436634787L;
 
-	private MapController map;
+	private MapPanelController map;
 	
 	private String windowName = "BW4T Extensive Map Editor";
 	
@@ -62,7 +62,7 @@ public class EnvironmentStore extends JFrame {
      * @param themap is a map that contains: rows, cols, entities, randomize.
      * 
      */
-    public EnvironmentStore(MapController themap) {
+    public EnvironmentStore(MapPanelController themap) {
         map = themap;
         
         setWindowTitle("Untitled");
@@ -206,7 +206,7 @@ public class EnvironmentStore extends JFrame {
             System.exit(0);
         }
 
-        MapController themap = new MapController(dialog.getRows(), dialog.getColumns(),
+        MapPanelController themap = new MapPanelController(dialog.getRows(), dialog.getColumns(),
                 dialog.getEntities(), dialog.isRandomMap(),
                 dialog.isLabelsVisible());
 

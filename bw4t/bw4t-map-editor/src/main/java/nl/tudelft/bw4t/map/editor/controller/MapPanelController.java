@@ -13,6 +13,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
+import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Door;
 import nl.tudelft.bw4t.map.Entity;
 import nl.tudelft.bw4t.map.NewMap;
@@ -28,7 +29,7 @@ import nl.tudelft.bw4t.map.editor.controller.ZoneController;
  * This holds the map that the user designed. This is an abstract map contianing
  * only number of rows and columns, do not confuse with {@link NewMap}.
  */
-public class MapController {
+public class MapPanelController {
 
     /** basic size of the map */
     private int rows;
@@ -39,7 +40,7 @@ public class MapController {
     /**
      * the target sequence.
      * */
-    private ColorSequence sequence = new ColorSequence();
+    private List<BlockColor> sequence = new ArrayList<>();
     private List<TableModelListener> listeners = new ArrayList<TableModelListener>();
 
     /**
@@ -57,6 +58,7 @@ public class MapController {
     static final int YDISP = 2;
     private static final String DROPZONE = "DropZone";
     private static final String FRONTDROPZONE = "FrontDropZone";
+    public static final int DROP_ZONE_SEQUENCE_LENGTH = 10;
 
     private boolean isLabelsVisible;
 
@@ -68,7 +70,7 @@ public class MapController {
      * @param isLabelsVisible
      *            true if labels should be shown by renderers
      */
-    public MapController(int rows, int columns, int entities, boolean rand,
+    public MapPanelController(int rows, int columns, int entities, boolean rand,
             boolean labelsVisible) {
         isLabelsVisible = labelsVisible;
         if (rows < 1 || rows > 100) {
@@ -105,11 +107,11 @@ public class MapController {
         return columns;
     }
 
-    public ColorSequence getSequence() {
+    public List<BlockColor> getSequence() {
         return sequence;
     }
 
-    public void setSequence(ColorSequence colorSequence) {
+    public void setSequence(List<BlockColor> colorSequence) {
         this.sequence = colorSequence;
     }
 
@@ -230,7 +232,7 @@ public class MapController {
 
         // set the general fields of the map
         map.setArea(new Point(mapwidth, mapheight));
-        map.setSequence(sequence.getColors());
+        map.setSequence(sequence);
         if (randomize) {
             map.setRandomBlocks((int) (2.5 * rows * columns));
             map.setRandomSequence(2 * rows * columns / 3);
@@ -465,7 +467,7 @@ public class MapController {
         }
     }
     
-    public ZoneController getZone(int x, int y) {
+    public ZoneController getZoneController(int x, int y) {
     	return zonecontrollers[x][y];
     }
 }

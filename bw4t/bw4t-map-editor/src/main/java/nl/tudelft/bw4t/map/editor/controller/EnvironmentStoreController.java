@@ -12,7 +12,7 @@ public class EnvironmentStoreController {
 	
 	private EnvironmentStore view;
 	
-	private MapController map;
+	private MapPanelController map;
 	
 	/**
 	 * The EnvironmentStoreController class takes care of all the ActionListeners.
@@ -20,7 +20,7 @@ public class EnvironmentStoreController {
 	 * @param theView is the JFrame from the environment store.
 	 * @param theMap is the map we would like to edit.
 	 */
-	public EnvironmentStoreController(EnvironmentStore theView, MapController theMap) {
+	public EnvironmentStoreController(EnvironmentStore theView, MapPanelController theMap) {
 		this.view = theView;
 		this.map = theMap;
 		
@@ -71,7 +71,7 @@ public class EnvironmentStoreController {
      * Return the map being edited.
      * @return The Map being edited.
      */
-    public final MapController getMap() {
+    public final MapPanelController getMap() {
     	return map;
     }
 }
