@@ -58,6 +58,8 @@ public class MapPanelController {
     public static final int DROP_ZONE_SEQUENCE_LENGTH = 10;
 
     private boolean isLabelsVisible;
+    
+    private UpdateableEditorInterface uei;
 
     /**
      * size of map is fixed, you can't change it after construction.
@@ -151,6 +153,14 @@ public class MapPanelController {
     public void setNumberOfEntities(int numberOfEntities) {
         this.numberOfEntities = numberOfEntities;
     }
+    
+	public UpdateableEditorInterface getUpdateableEditorInterface() {
+		return uei;
+	}
+
+	public void setUpdateableEditorInterface(UpdateableEditorInterface ui) {
+		uei = ui;
+	}
 
     /**
      * Save the real map to given file
