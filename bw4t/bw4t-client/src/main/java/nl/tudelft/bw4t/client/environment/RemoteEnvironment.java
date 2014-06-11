@@ -1,24 +1,5 @@
 package nl.tudelft.bw4t.client.environment;
 
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import nl.tudelft.bw4t.client.BW4TClient;
-import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
-import nl.tudelft.bw4t.client.startup.InitParam;
-
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
-
 import eis.AgentListener;
 import eis.EnvironmentInterfaceStandard;
 import eis.EnvironmentListener;
@@ -34,6 +15,22 @@ import eis.iilang.Action;
 import eis.iilang.EnvironmentState;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import nl.tudelft.bw4t.client.BW4TClient;
+import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
+import nl.tudelft.bw4t.client.startup.InitParam;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  * A remote BW4TEnvironment that delegates all actions towards the central
