@@ -28,11 +28,12 @@ public class ClientController {
 
     /** The other players. */
     private final Set<String> otherPlayers = new HashSet<>();
+    
+    /** The chat history. */
     private final List<String> botChatHistory = new LinkedList<>();
     private final List<String> epartnerChatHistory = new LinkedList<>();
     
     /** The chat history. */
-    private final List<String> chatHistory = new LinkedList<>();
 
     /** The human agent. */
     private HumanAgent humanAgent;
