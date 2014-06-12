@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.map;
 
+import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Zone implements Serializable {
     public static final String DROP_ZONE_NAME = "DropZone";
+    public static final String START_ZONE_NAME = "StartZone";
+    public static final String BLOCKADE_NAME = "Blockade";
+    public static final String CORRIDOR_NAME = "Corridor";
+    public static final String CHARGING_ZONE_NAME = "ChargeZone";
+    public static final String ROOM_NAME = "Room";
+    
     /**
      * Type of the zone
      */
@@ -50,6 +57,10 @@ public class Zone implements Serializable {
      * Default render options: null.
      */
     private RenderOptions renderOptions = null;
+
+    public static final Color BLOCKADE_COLOR = new Color(0.6f, 0f, 0f);
+
+    public static final Color CHARGING_ZONE_COLOR = new Color(0f, 0.5f, 0f);
 
     public Zone() {
     }
