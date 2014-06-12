@@ -29,7 +29,7 @@ public class EnvironmentStore extends JFrame {
 	
 	private EnvironmentStoreController controller;
 	
-	private ColorLegendaPanel legendaPanel;
+	//private ColorLegendaPanel legendaPanel;
 	
 	private ExplanationPanel explanationPanel;
 	
@@ -62,7 +62,7 @@ public class EnvironmentStore extends JFrame {
         explanationPanel = new ExplanationPanel();
         
         // Create the colorLegendaPanel for the right side of the editor.
-        legendaPanel = new ColorLegendaPanel();
+        //legendaPanel = new ColorLegendaPanel();
         
         // Both the mapTable and sequencePanel are added to a rooms panel.
         // TODO: Create a roomsTable class that creates both MapTable and SequencePanel. Problems: map Data model in mapTable and boxLayout in roomsPanel.
@@ -71,7 +71,7 @@ public class EnvironmentStore extends JFrame {
         // Attach all Panels to the Editor.
         add(explanationPanel, BorderLayout.NORTH);
         add(mapTable, BorderLayout.CENTER);
-        add(legendaPanel, BorderLayout.EAST);
+        //add(legendaPanel, BorderLayout.EAST);
 
         // Create the controller
         controller = new EnvironmentStoreController(this, map);
