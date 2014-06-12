@@ -24,7 +24,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import eis.exceptions.PerceiveException;
 
-//@Ignore("Not yet implemented.")
+@Ignore("Not yet implemented.")
 @RunWith(MockitoJUnitRunner.class)
 public class PerceptsHandlerTest {
 
