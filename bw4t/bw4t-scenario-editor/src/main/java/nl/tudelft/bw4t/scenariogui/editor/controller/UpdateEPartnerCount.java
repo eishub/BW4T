@@ -51,9 +51,5 @@ public class UpdateEPartnerCount implements TableModelListener {
             hasShownEpartnerWarning = false;
         }
 	}
-	
-	public boolean hasShownEpartnerWarning() {
-	    return hasShownEpartnerWarning;
-	}
-	
+
 }

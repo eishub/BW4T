@@ -119,9 +119,30 @@ public class ConfigurationPanelTest {
      */
     @Test
     public final void testMapFileActionBranch() {
+    	ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
         // Setup the mocks behaviour.
-        when(fileChooser.showOpenDialog(editor.getMainPanel())).thenReturn(1);
+        when(fileChooser.showOpenDialog(editor.getMainPanel())).thenReturn(
+                JFileChooser.APPROVE_OPTION);
         when(fileChooser.getSelectedFile()).thenReturn(new File("ss"));
+
+        // Original value
+        String startURI = configPanel.getMapFile();
+
+        // Trigger the event.
+        configPanel.getChooseMapFile().doClick();
+
+        assertEquals(startURI, configPanel.getMapFile());
+    }
+    
+    /**
+     * Tests if no map file is entered when map selection is cancelled.
+     */
+    @Test
+    public final void testMapFileCancel() {
+    	// Setup the mocks behaviour.
+        when(fileChooser.showOpenDialog(editor.getMainPanel())).thenReturn(
+                JFileChooser.CANCEL_OPTION);
+        when(fileChooser.getSelectedFile()).thenReturn(new File(filePathMap));
 
         // Original value
         String startURI = configPanel.getMapFile();

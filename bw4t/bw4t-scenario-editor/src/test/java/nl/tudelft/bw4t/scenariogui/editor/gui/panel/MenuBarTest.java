@@ -187,6 +187,20 @@ public class MenuBarTest {
     }
     
     /**
+     * Tests if clicking open and then cancelling doesn't change the configuration.
+     */
+    @Test
+    public void testOpenCancel() {
+        when(filechooser.getSelectedFile()).thenReturn(new File(FILE_OPEN_PATH));
+        when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.CANCEL_OPTION);
+        
+        editor.getTopMenuBar().getMenuItemFileOpen().doClick();
+        
+        assertTrue(editor.getMainPanel().getEntityPanel().isDefault());
+        assertTrue(editor.getMainPanel().getConfigurationPanel().isDefault());
+    }
+    
+    /**
      * Tests if saving a saved configuration doesn't show a dialog.
      * @throws IOException 
      */
@@ -210,13 +224,20 @@ public class MenuBarTest {
      */
     @Ignore
     public void testSaveAfterDeletedSave() throws IOException {
+    	OptionPrompt option = prepareForSave(editor.getTopMenuBar().getMenuItemFileSave(),
+                new YesMockOptionPrompt());
+    	
         // set the last file location without creating the file
-        editor.getTopMenuBar().setLastFileLocation("TestPath");
-
-        editor.getTopMenuBar().getMenuItemFileSave().doClick();
+    	String testPath = "TestPath";
+        assertFalse(new File(testPath).exists());
+        editor.getTopMenuBar().setLastFileLocation(testPath);
         
-        //verify if the filechooser doesn't open its dialog
-        verify(filechooser, never()).showDialog((Component) any(), (String) any());
+        editor.getMainPanel().getConfigurationPanel().getMapFileTextField().setText("map");
+        editor.getTopMenuBar().getMenuItemFileSaveAs().doClick();
+
+        /* Verify if it asked if we wanted to save */
+        verify(option, times(1)).showConfirmDialog(null, ScenarioEditorController.CONFIRM_SAVE_TXT, "",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
     }
     
     /**
