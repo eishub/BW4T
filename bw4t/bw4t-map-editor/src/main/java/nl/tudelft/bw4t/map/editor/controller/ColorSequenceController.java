@@ -17,17 +17,32 @@ import nl.tudelft.bw4t.map.editor.gui.ColorPalette;
 import nl.tudelft.bw4t.map.editor.gui.ColorPaletteListener;
 import nl.tudelft.bw4t.map.editor.gui.ColorSequenceEditor;
 
+/**
+ * The ColorSequenceController class serves as the controller for the ColorSequence
+ *
+ */
 public class ColorSequenceController implements FocusListener, ColorPaletteListener {
-    private static ColorPalette colorPalette;
-    private static JFrame colorPaletteWindow;
-    private ColorSequenceEditor focus = null;
-    private Set<ColorSequenceEditor> editors = new HashSet<>();
+    
+	private static ColorPalette colorPalette;
+    
+	private static JFrame colorPaletteWindow;
+    
+	private ColorSequenceEditor focus = null;
+    
+	private Set<ColorSequenceEditor> editors = new HashSet<>();
 
+    /**
+     * The constructor calls the setupWindow method to setup the color palette window.
+     * It also allows us to add colors to the colorPalette.
+     */
     public ColorSequenceController() {
         setupWindow();
         colorPalette.addColorClickListener(this);
     }
 
+    /**
+     * setupWindow creates the frame of the Color Palette Window
+     */
     public static void setupWindow() {
         if (colorPalette == null) {
             colorPalette = new ColorPalette();
@@ -43,6 +58,10 @@ public class ColorSequenceController implements FocusListener, ColorPaletteListe
         }
     }
 
+    /**
+     * addColorSequenceEditor adds a color to the editor.
+     * @param cse is the colorSequenceEditor being used.
+     */
     public void addColorSequenceEditor(ColorSequenceEditor cse) {
         if (this.editors.contains(cse)) {
             return;
@@ -51,6 +70,10 @@ public class ColorSequenceController implements FocusListener, ColorPaletteListe
         cse.addFocusListener(this);
     }
 
+    /**
+     * removeColorSequenceEditor removes a color from the editor.
+     * @param cse is the ColorSequenceEditor that we want to remove blocks from.
+     */
     public void removeColorSequenceEditor(ColorSequenceEditor cse) {
         if (!this.editors.contains(cse)) {
             return;
@@ -70,6 +93,10 @@ public class ColorSequenceController implements FocusListener, ColorPaletteListe
         focus = (ColorSequenceEditor) evt.getComponent();
     }
 
+    /**
+     * positionColorPalette sets the position of the color palette relative to its component.
+     * @param comp is the component the position of the color palette will be set relative to.
+     */
     private void positionColorPalette(Component comp) {
         colorPaletteWindow.setLocationRelativeTo(comp);
 

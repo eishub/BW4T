@@ -39,9 +39,13 @@ public class MapPanelController implements ChangeListener {
 
     /** basic size of the map */
     private ZoneController[][] zonecontrollers;
+    
     private ColorSequenceController cscontroller;
+    
     private int numberOfEntities = 0;
+    
     private boolean randomize;
+    
     private ZoneController selected = null;
     /**
      * the target sequence.
@@ -106,6 +110,9 @@ public class MapPanelController implements ChangeListener {
         attachListenersToZoneMenu();
     }
 
+    /**
+     * this method attaches all the listeners to the Zone Menu.
+     */
     public void attachListenersToZoneMenu() {
         this.getZoneMenu().getMenuItemZoneBlockade().addActionListener(new ActionListener() {
             @Override
@@ -150,6 +157,13 @@ public class MapPanelController implements ChangeListener {
         });
     }
 
+    /**
+     * The createZone method creates a Zone and updates the UpdateableEditorInterface.
+     * 
+     * @param t is the type of Zone that we would like to create.
+     * @param isDropZone is true if the Zone that we are creating is a dropZone.
+     * @param isStartZone is true if the Zone that we are creating is a startZone.
+     */
     public void createZone(Type t, boolean isDropZone, boolean isStartZone) {
         if (selected != null) {
             selected.setType(t);
@@ -203,16 +217,17 @@ public class MapPanelController implements ChangeListener {
     }
 
     /**
-     * get the number of entities on the map.
-     * 
-     * @return
+     * get the number of entities on the map.     * 
+     * @return the number of entities in the map.
      */
     public int getNumberOfEntities() {
         return numberOfEntities;
     }
 
+
     /**
-     * set the number of entities on the map.
+     * Set the maximum number of entities in the map.
+     * @param numberOfEntities is the maximum number of entities.
      */
     public void setNumberOfEntities(int numberOfEntities) {
         this.numberOfEntities = numberOfEntities;
@@ -303,7 +318,8 @@ public class MapPanelController implements ChangeListener {
     /**
      * Create the real map object using the settings
      * 
-     * @return
+     * @return NewMap the new map that has been created.
+     * @throws MapFormatException if no dropZone or no startZone is found.
      */
     public NewMap createMap() throws MapFormatException {
         NewMap map = new NewMap();
@@ -365,6 +381,13 @@ public class MapPanelController implements ChangeListener {
         return map;
     }
 
+    /**
+     * Try to connect the zones to a grid. through the tryConnect method.
+     * 
+     * @param zones
+     * @param row
+     * @param col
+     */
     private void connectToGrid(Zone[][] zones, int row, int col) {
         tryConnect(zones, row, col, row, col - 1);
         tryConnect(zones, row, col, row + 1, col);
@@ -372,6 +395,15 @@ public class MapPanelController implements ChangeListener {
         tryConnect(zones, row, col, row - 1, col);
     }
 
+    /**
+     * Try to connect the zones to the grid.
+     * 
+     * @param zones
+     * @param row1
+     * @param col1
+     * @param row2
+     * @param col2
+     */
     private void tryConnect(Zone[][] zones, int row1, int col1, int row2, int col2) {
         if (Math.abs(row1 - row2) + Math.abs(col1 - col2) != 1) {
             return;
@@ -413,6 +445,13 @@ public class MapPanelController implements ChangeListener {
     	}
     }
 
+    /**
+     * Get the zone from certain cordinates.
+     * @param zones
+     * @param row
+     * @param col
+     * @return the Zone if it is a valid zone, else return null.
+     */
     private Zone getZone(Zone[][] zones, int row, int col) {
         if (isValidZone(row, col)) {
             return zones[row][col];
@@ -442,6 +481,7 @@ public class MapPanelController implements ChangeListener {
     /**
      * get x coordinate of center of the room on the map.
      * 
+     * @param column is the column cordinate of the Zone.
      * @return x coordinate of room on the map.
      */
     public double calcX(int column) {
@@ -451,6 +491,7 @@ public class MapPanelController implements ChangeListener {
     /**
      * get y coordinate of center of room on the map.
      * 
+     * @param row is the row cordinate of the Zone.
      * @return y coordinate of room on the map.
      */
     public double calcY(int row) {
@@ -545,10 +586,23 @@ public class MapPanelController implements ChangeListener {
         return null;
     }
 
+    /**
+     * Checks if there is a Zone at certain row,col cordinates.
+     * @param row
+     * @param col
+     * @return
+     */
     public boolean isValidZone(int row, int col) {
         return row >= 0 && col >= 0 && row < getRows() && col < getColumns();
     }
 
+    /**
+     * Show the ZoneMenu popup at given cordinates.
+     * 
+     * @param component
+     * @param x
+     * @param y
+     */
     public void showPopup(Component component, int x, int y) {
         getZoneMenu().update();
         getZoneMenu().show(component, x, y);

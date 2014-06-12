@@ -15,7 +15,12 @@ import nl.tudelft.bw4t.map.editor.controller.ZoneController;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.Zone.Type;
 
+/**
+ * The ZonePanel is the panel added to the grid for each Zone.
+ *
+ */
 public class ZonePanel extends JPanel implements UpdateableEditorInterface {
+	
     private static final long serialVersionUID = 1568360768572796042L;
     
     private static final Dimension SIZE = new Dimension(100,70);
@@ -25,8 +30,13 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
     private final Color originalColor;
 
     private JLabel nameLabel = new JLabel();
+    
     private ColorSequenceEditor sequence = new ColorSequenceEditor();
 
+    /**
+     * Constructor for the ZonePanel based on the ZoneController.
+     * @param control is the ZoneController being used to construct the Panel.
+     */
     public ZonePanel(ZoneController control) {
         assert control != null;
         controller = control;

@@ -22,10 +22,18 @@ import javax.swing.event.ChangeListener;
 
 import nl.tudelft.bw4t.map.BlockColor;
 
+/**
+ * The ColorSequenceEditor class contains the sequence that should be completed by the agents.
+ *
+ */
 public class ColorSequenceEditor extends JComponent {
-    private static final int DEFAULT_LENGTH = 10;
+	
     private static final long serialVersionUID = 2112401621332684899L;
+	
+    private static final int DEFAULT_LENGTH = 10;
+    
     private static final int COLOR_SIZE = 15;
+    
     private static final int BORDER = 2;
 
     private int maxLength = DEFAULT_LENGTH;
@@ -34,16 +42,27 @@ public class ColorSequenceEditor extends JComponent {
 
     private Set<ChangeListener> onChange = new HashSet<>();
 
+    /**
+     * Constructor sets up listeners and aperance.
+     * calls setupListeners method and setupAperance method.
+     */
     public ColorSequenceEditor() {
         setupListeners();
         this.setupAperance();
     }
 
+    /**
+     * Constructor sets a sequence with a maximum length.
+     * @param maxLength is the maximum length of the sequence.
+     */
     public ColorSequenceEditor(int maxLength) {
         setupListeners();
         this.setMaxLength(maxLength);
     }
 
+    /**
+     * Setup all the listeners for the ColorSequenceEditor.
+     */
     private void setupListeners() {
         setFocusable(true);
         addKeyListener(new KeyAdapter() {
@@ -82,6 +101,9 @@ public class ColorSequenceEditor extends JComponent {
         });
     }
 
+    /**
+     * Set the dimensions and border of the ColorSequenceEditor.
+     */
     private void setupAperance() {
         this.setBackground(Color.WHITE);
         Dimension d = new Dimension(BORDER * 2 + COLOR_SIZE * maxLength, BORDER * 2 + COLOR_SIZE);
@@ -98,6 +120,9 @@ public class ColorSequenceEditor extends JComponent {
         onChange.remove(cl);
     }
 
+    /**
+     * Revalidate and Repaint on change.
+     */
     private void notifyValueChange() {
         ChangeEvent evt = new ChangeEvent(this);
         for (ChangeListener l : onChange) {
@@ -128,6 +153,11 @@ public class ColorSequenceEditor extends JComponent {
         return getSequence().size();
     }
 
+    /**
+     * If a sequence given as parameter, set the sequence to this given sequence.
+     * Else set it to clear.
+     * @param sequence is the sequence the current sequence is set to.
+     */
     public void setSequence(List<BlockColor> sequence) {
         if (sequence == null) {
             this.sequence.clear();
