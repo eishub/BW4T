@@ -78,16 +78,79 @@ public class FormatTest {
      * string
      */
     @Test
-    public final void testGetNonNegativeIntValue() {
-    	assertEquals(0, Format.getNonNegativeIntValue(negativeInteger));
+    public final void testGetNonNegativeIntValueNegative() {
+    	assertEquals(1, Format.getNonNegativeIntValue(negativeInteger));
+    }
+    
+    /**
+     * Tests getNonNegativeIntValue() method by feeding it a positive
+     * string
+     */
+    @Test
+    public final void testGetNonNegativeIntValuePositive() {
+    	assertEquals(1, Format.getNonNegativeIntValue(nonNegativeInteger));
+    }
+    
+    /**
+     * Tests getNonNegativeIntValue() method by feeding it NULL
+     */
+    @Test
+    public final void testGetNonNegativeIntValueNull() {
+    	assertEquals(0, Format.getNonNegativeIntValue(null));
     }
 
     /**
-     * Tests getIntValue() by feeding it NULL as string
+     * Tests getIntValue() by feeding it a negative String
+     * without allowing negative Integers
      */
     @Test
-    public final void testGetIntValueNULL() {
+    public final void testNegativeGetIntValueNoNegative() {
+    	assertEquals(1, Format.getIntValue(negativeInteger, false));
+    }
+
+    /**
+     * Tests getIntValue() by feeding it a negative String
+     * and allowing negative Integers
+     */
+    @Test
+    public final void testNegativeGetIntValueNegative() {
+    	assertEquals(-1, Format.getIntValue(negativeInteger, true));
+    }
+
+    /**
+     * Tests getIntValue() by feeding it a positive String
+     * without allowing negative Integers
+     */
+    @Test
+    public final void testPositiveGetIntValueNoNegative() {
+    	assertEquals(1, Format.getIntValue(nonNegativeInteger, false));
+    }
+
+    /**
+     * Tests getIntValue() by feeding it a positive String
+     * and allowing negative Integers
+     */
+    @Test
+    public final void testPositiveGetIntValueNegative() {
+    	assertEquals(1, Format.getIntValue(nonNegativeInteger, true));
+    }
+    
+    /**
+     * Tests getIntValue() by feeding it NULL as string
+     * and allowing negative Integers
+     */
+    @Test
+    public final void testGetIntValueNULLNegative() {
     	assertEquals(0, Format.getIntValue(null, true));
+    }
+    
+    /**
+     * Tests getIntValue() by feeding it NULL as string
+     * and not allowing negative Integers
+     */
+    @Test
+    public final void testGetIntValueNULLNoNegative() {
+    	assertEquals(0, Format.getIntValue(null, false));
     }
 
     /**
@@ -124,23 +187,38 @@ public class FormatTest {
     public final void testGetIntValueToSmallIntNegative() {
     	assertEquals(0, Format.getIntValue("-10000000000", true));
     }
-
+    
     /**
-     * Tests getIntValue() by feeding it a ligit Integer
-     * without allowing negative Integers
+     * Tests padString() by feeding it an empty String.
      */
     @Test
-    public final void testGetIntValueNormal() {
-    	assertEquals(1, Format.getIntValue(nonNegativeInteger, false));
+    public final void testPadStringEmpty() {
+    	assertEquals("0000", Format.padString("", 4));
     }
-
+    
     /**
-     * Tests getIntValue() by feeding it a ligit Integer
-     * and allowing negative Integers
+     * Tests padString() by feeding it a short String.
      */
     @Test
-    public final void testGetIntValueNormalNegative() {
-    	assertEquals(1, Format.getIntValue(nonNegativeInteger, true));
+    public final void testPadStringShort() {
+    	assertEquals("3000", Format.padString("3", 4));
+    }
+    
+    /**
+     * Tests padString() by feeding it a long String.
+     */
+    @Test
+    public final void testPadStringLong() {
+    	assertEquals("3000000", Format.padString("3000000", 4));
+    }
+    
+    /**
+     * Tests padString() by feeding it a String with
+     * its length equal to the amount.
+     */
+    @Test
+    public final void testPadStringEqual() {
+    	assertEquals("3000", Format.padString("3000", 4));
     }
 
 }
