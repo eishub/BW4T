@@ -41,10 +41,11 @@ public class EditBotTable implements TableModelListener {
     public void tableChanged(TableModelEvent event) {
         if (event.getColumn() == -1) 
             return;
-        model.getAmountBot();
+        
         BotConfig config = model.getBots().get(event.getFirstRow());
         String value =  "" + view.getEntityPanel().getBotTable().getValueAt(
                 event.getFirstRow(), event.getColumn());
+
         updateConfigFieldCorrespondingToTableColumn(event.getColumn(), config, value);
     }
     
@@ -65,7 +66,7 @@ public class EditBotTable implements TableModelListener {
             config.setBotController(botController);
             break;
         case 2:
-            config.setFileName(newValue);
+           config.setFileName(newValue);
             break;
         case 3:
             config.setBotAmount(Integer.parseInt(newValue));
