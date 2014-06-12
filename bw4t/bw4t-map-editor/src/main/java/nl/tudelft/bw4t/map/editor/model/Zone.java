@@ -17,6 +17,9 @@ public class Zone {
 	
 	private boolean[] doorsbool = new boolean[4];
 	
+	private boolean isDropZone;
+	private boolean isStartZone;
+	
 	private String name;
 	
 	public Type getType() {
@@ -52,5 +55,21 @@ public class Zone {
 	
 	public void setDoor(int index) {
 		doorsbool[index] = true;
+	}
+
+	public boolean isDropZone() {
+		return isDropZone;
+	}
+
+	public void setDropZone(boolean isDZ) {
+		isDropZone = isDZ;
+	}
+
+	public boolean isStartZone() {
+		return isStartZone;
+	}
+
+	public void setStartZone(boolean isSZ) {
+		isStartZone = isSZ;
 	}
 }

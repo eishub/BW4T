@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import nl.tudelft.bw4t.map.editor.controller.EnvironmentStoreController;
 import nl.tudelft.bw4t.map.editor.controller.MapPanelController;
@@ -13,7 +11,6 @@ import nl.tudelft.bw4t.map.editor.gui.ColorLegendaPanel;
 import nl.tudelft.bw4t.map.editor.gui.ExplanationPanel;
 import nl.tudelft.bw4t.map.editor.gui.MapPanel;
 import nl.tudelft.bw4t.map.editor.gui.MenuBar;
-import nl.tudelft.bw4t.map.editor.gui.ZonePopupMenu;
 import nl.tudelft.bw4t.map.editor.gui.SizeDialog;
 import nl.tudelft.bw4t.map.editor.util.DefaultOptionPrompt;
 import nl.tudelft.bw4t.map.editor.util.OptionPrompt;
