@@ -8,43 +8,53 @@ import javax.swing.JFrame;
 import nl.tudelft.bw4t.map.editor.EnvironmentStore;
 import nl.tudelft.bw4t.map.renderer.MapRenderer;
 
+/**
+ * The EnvironmentStoreController class serves as a controller for the EnvironmentStore
+ *
+ */
 public class EnvironmentStoreController {
 	
 	private EnvironmentStore view;
 	
-	private Map map;
+	private MapPanelController mapController;
 	
-	public EnvironmentStoreController(EnvironmentStore theView, Map theMap) {
-		this.view = theView;
-		this.map = theMap;
+	/**
+	 * The EnvironmentStoreController class takes care of all the ActionListeners.
+	 * 
+	 * @param es is the JFrame from the environment store.
+	 * @param mc is the map we would like to edit.
+	 */
+	public EnvironmentStoreController(EnvironmentStore es, MapPanelController mc) {
+		this.view = es;
+		this.mapController = mc;
 		
 		// Save As
 		// TODO: Move actionlistener to new class (MenuOptionSaveAs) for MVC
 		getMainView().getTopMenuBar().getMenuItemFileSaveAs().addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-		    	map.saveAsFile();
+			public void actionPerformed(ActionEvent e) {
+		    	mapController.saveAsFile();
 			}
         });
 		
-		// Preview Map
+		// Preview
 		// TODO: Move actionlistener to new class (MenuOptionPreview) for MVC
 		getMainView().getTopMenuBar().getMenuItemPreview().addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 				System.out.println("Preview");
 		    	JFrame preview = new JFrame("Map Preview");
-		    	preview.add(new MapRenderer(new MapPreviewController(map)));
+		    	preview.add(new MapRenderer(new MapPreviewController(mapController)));
 		    	preview.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		    	preview.pack();
 		    	preview.setVisible(true);
 			}
 		});
+
 	}
 	
     /**
      * Return the view being controlled.
-     *
      * @return The JFrame being controlled.
      */
     public final EnvironmentStore getMainView() {
@@ -52,11 +62,10 @@ public class EnvironmentStoreController {
     }
     
     /**
-     * Return the Map model.
-     * 
-     * @return The Map model.
+     * Return the map being edited.
+     * @return The Map being edited.
      */
-    public final Map getMap() {
-    	return map;
+    public final MapPanelController getMap() {
+    	return mapController;
     }
 }
