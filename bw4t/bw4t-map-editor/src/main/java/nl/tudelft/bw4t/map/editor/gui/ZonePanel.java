@@ -2,7 +2,9 @@ package nl.tudelft.bw4t.map.editor.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -27,8 +29,17 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
         originalColor = getBackground();
         controller.setUpdateableEditorInterface(this);
         
+        this.setBorder(BorderFactory.createEtchedBorder());
+        
+        this.addMouseListener(controller);
+        
         this.setLayout(new BorderLayout());
         this.add(nameLabel, BorderLayout.CENTER);
+        
+        Dimension d = new Dimension(75,50);
+        this.setSize(d);
+        this.setPreferredSize(d);
+        this.setMinimumSize(d);
         
         update();
     }

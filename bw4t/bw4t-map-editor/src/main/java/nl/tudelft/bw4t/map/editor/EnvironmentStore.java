@@ -13,7 +13,7 @@ import nl.tudelft.bw4t.map.editor.gui.ColorLegendaPanel;
 import nl.tudelft.bw4t.map.editor.gui.ExplanationPanel;
 import nl.tudelft.bw4t.map.editor.gui.MapPanel;
 import nl.tudelft.bw4t.map.editor.gui.MenuBar;
-import nl.tudelft.bw4t.map.editor.gui.RightClickPopup;
+import nl.tudelft.bw4t.map.editor.gui.ZonePopupMenu;
 import nl.tudelft.bw4t.map.editor.gui.SizeDialog;
 import nl.tudelft.bw4t.map.editor.util.DefaultOptionPrompt;
 import nl.tudelft.bw4t.map.editor.util.OptionPrompt;
@@ -38,11 +38,7 @@ public class EnvironmentStore extends JFrame {
 	
 	private final MapPanel mapTable;
 	
-	private JPanel roomsPanel;
-	
 	private MenuBar menuBar;
-	
-	private RightClickPopup popup;
 
 	private static OptionPrompt option = new DefaultOptionPrompt();
     
@@ -77,11 +73,8 @@ public class EnvironmentStore extends JFrame {
         
         // Attach all Panels to the Editor.
         add(explanationPanel, BorderLayout.NORTH);
-        add(new JScrollPane(mapTable), BorderLayout.CENTER);
+        add(mapTable, BorderLayout.CENTER);
         add(legendaPanel, BorderLayout.EAST);
-        
-        // Create the RightClickPopup
-        popup = new RightClickPopup(this);
 
         // Create the controller
         controller = new EnvironmentStoreController(this, map);
@@ -107,15 +100,6 @@ public class EnvironmentStore extends JFrame {
      */
     public final MapPanel getMapTable() {
         return mapTable;
-    }
-    
-    /**
-     * Returns the PopupMenu
-     *
-     * @return The PopupMenu.
-     */
-    public final RightClickPopup getRightClickPopup() {
-        return popup;
     }
     
     /**
