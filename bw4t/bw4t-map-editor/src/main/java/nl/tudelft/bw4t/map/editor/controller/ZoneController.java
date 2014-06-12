@@ -5,14 +5,18 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone.Type;
+import nl.tudelft.bw4t.map.editor.gui.ColorSequenceEditor;
 import nl.tudelft.bw4t.map.editor.model.Zone;
 
 /**
  * This contains the room information: the blocks that the room contains.
  */
-public class ZoneController extends MouseAdapter {
+public class ZoneController extends MouseAdapter implements ChangeListener {
 
     private int row, column; // should match the position in the map table
     
@@ -134,5 +138,10 @@ public class ZoneController extends MouseAdapter {
 	public void mouseReleased(MouseEvent e) {
 	    openPopup(e);
 	}
+
+    @Override
+    public void stateChanged(ChangeEvent arg0) {
+        this.model.setColors(((ColorSequenceEditor)arg0.getSource()).getSequence());
+    }
 
 }
