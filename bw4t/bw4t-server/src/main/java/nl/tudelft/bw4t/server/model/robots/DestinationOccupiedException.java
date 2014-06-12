@@ -1,6 +1,6 @@
 package nl.tudelft.bw4t.server.model.robots;
 
-import nl.tudelft.bw4t.model.robots.handicap.IRobot;
+import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 
 /**
  * Created by on 10-6-2014.
