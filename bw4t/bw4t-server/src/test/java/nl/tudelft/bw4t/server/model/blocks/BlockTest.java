@@ -97,7 +97,6 @@ public class BlockTest {
         assertEquals(new Character('B'), result.getLetter());
         assertEquals("BLUE", result.name());
         assertEquals("BLUE", result.toString());
-        assertEquals(0, result.ordinal());
     }
 
     /**
