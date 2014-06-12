@@ -5,17 +5,20 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
 
-import nl.tudelft.bw4t.eis.RobotEntity;
+import nl.tudelft.bw4t.server.eis.RobotEntity;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.model.robots.AgentRecord;
 
-import org.apache.log4j.FileAppender;
+import org.apache.log4j.Appender;
 import org.apache.log4j.Layout;
 import org.apache.log4j.Logger;
+import org.apache.log4j.RollingFileAppender;
 import org.apache.log4j.spi.ErrorCode;
 
-public class BW4TFileAppender extends FileAppender {
+public class BW4TFileAppender extends RollingFileAppender {
 
 	/**
      * The log4j logger, logs to the file
@@ -35,7 +38,7 @@ public class BW4TFileAppender extends FileAppender {
 
     public BW4TFileAppender(Layout layout, String filename, boolean append, boolean bufferedIO,
             int bufferSize) throws IOException {
-        super(layout, filename, append, bufferedIO, bufferSize);
+        super(layout, filename, append);
     }
 
     @Override
@@ -99,7 +102,7 @@ public class BW4TFileAppender extends FileAppender {
         	LOGGER.log(BotLog.BOTLOG, typeTime + totalMin + " minutes and " + totalSec + " seconds");
         }
         else
-        	LOGGER.log(BotLog.BOTLOG, typeTime + totalTime / 1000 + "seconds");
+        	LOGGER.log(BotLog.BOTLOG, typeTime + totalTime / 1000 + " seconds");
     }
     
     /**
@@ -113,7 +116,7 @@ public class BW4TFileAppender extends FileAppender {
             	RobotEntity rEntity = (RobotEntity) env.getEntity(entity);
             	if (!env.getFreeEntities().contains(entity)) {
             		LOGGER.log(BotLog.BOTLOG, "agentsummary " + stringHandicap(rEntity));
-            		rEntity.getRobotObject().getAgentRecord().logSummary();
+            		logSummary(rEntity.getRobotObject().getAgentRecord());
             	}
         	}
         }
@@ -136,5 +139,45 @@ public class BW4TFileAppender extends FileAppender {
     		 }
     	 }
     	 return handicaps;
+     }
+     
+     /**
+      * Write summary in logfile.
+      * 
+      * @param agentRecord AgentRecord
+      */
+     private static void logSummary(AgentRecord agentRecord) {
+    	  String name = agentRecord.getName();
+     	  summary(name, "gooddrops", "" + agentRecord.getGoodDrops());
+          summary(name, "wrongdrops", "" + agentRecord.getWrongDrops());
+          summary(name, "nmessage", "" + agentRecord.getNMessages());
+          summary(name, "idletime", "" + (float) agentRecord.getTotalStandingStillMillis() / 1000.);
+          summary(name, "nroomsentered", "" + agentRecord.getNRoomsEntered());
+     }
+     
+     /**
+      * Format of prints in logFile.
+      * 
+      * @param name 
+      * @param label String
+      * @param value String
+      */
+     private static void summary(String name, String label, String value) {
+     	LOGGER.log(BotLog.BOTLOG, "agentsummary " + name + " " + label + " " + value);
+     }
+     
+     /**
+      * when the reset button is presed; the logging goes on in new file.
+      */
+     public static void resetNewFile() {
+         for (Enumeration<Appender> e = Logger.getRootLogger().getAllAppenders(); e.hasMoreElements();) {
+             Appender a = e.nextElement();
+             if (a instanceof RollingFileAppender) {
+                 int index = ((RollingFileAppender) a).getMaxBackupIndex();
+                 index++;
+                 ((RollingFileAppender) a).setMaxBackupIndex(index);
+                 ((RollingFileAppender) a).rollOver();
+             }
+         }
      }
 }

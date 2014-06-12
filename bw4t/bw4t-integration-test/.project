@@ -3,6 +3,8 @@
 	<name>bw4t-integration-test</name>
 	<comment></comment>
 	<projects>
+		<project>bw4t-client</project>
+		<project>bw4t-server</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

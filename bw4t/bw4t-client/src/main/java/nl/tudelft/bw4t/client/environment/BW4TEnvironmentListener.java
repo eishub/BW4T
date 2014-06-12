@@ -7,8 +7,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import nl.tudelft.bw4t.agent.BW4TAgent;
-import nl.tudelft.bw4t.agent.HumanAgent;
+import nl.tudelft.bw4t.client.agent.BW4TAgent;
+import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.startup.InitParam;
 
