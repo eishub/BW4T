@@ -21,7 +21,7 @@ public class Zone {
 	private boolean isDropZone = false;
 	private boolean isStartZone = false;
 	
-	private String name = "";
+	private String coordiname = "";
 	
 	public Type getType() {
 		return type;
@@ -32,13 +32,25 @@ public class Zone {
 	}
 	
 	public String getName() {
-	    if(isDropZone())
-	        return nl.tudelft.bw4t.map.Zone.DROP_ZONE_NAME;
-		return name;
+	    if (isDropZone()) {
+	        return nl.tudelft.bw4t.map.Zone.DROP_ZONE_NAME + coordiname;
+	    } else if (isStartZone()) {
+	    	return nl.tudelft.bw4t.map.Zone.START_ZONE_NAME + coordiname;
+	    } else if (getType() == Type.BLOCKADE) {
+	    	return nl.tudelft.bw4t.map.Zone.BLOCKADE_NAME + coordiname;
+	    } else if (getType() == Type.CHARGINGZONE) {
+	    	return nl.tudelft.bw4t.map.Zone.CHARGING_ZONE_NAME + coordiname;
+	    } else if (getType() == Type.CORRIDOR) {
+	    	return nl.tudelft.bw4t.map.Zone.CORRIDOR_NAME + coordiname;
+	    } else if (getType() == Type.ROOM) {
+	    	return nl.tudelft.bw4t.map.Zone.ROOM_NAME + coordiname;
+	    } else {
+	    	return coordiname;
+	    }
 	}
 
 	public void setName(String n) {
-		name = n;
+		coordiname = n;
 	}
 	
 	public List<BlockColor> getColors() {
