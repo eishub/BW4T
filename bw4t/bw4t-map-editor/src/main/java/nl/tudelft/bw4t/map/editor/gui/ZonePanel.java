@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import nl.tudelft.bw4t.map.editor.controller.UpdateableEditorInterface;
 import nl.tudelft.bw4t.map.editor.controller.ZoneController;
@@ -32,6 +34,8 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
         this.setBorder(BorderFactory.createEtchedBorder());
         
         this.addMouseListener(controller);
+        controller.getMapController().getCSController().addColorSequenceEditor(sequence);
+        sequence.addChangeListener(controller);
         
         this.setLayout(new BorderLayout());
         this.add(nameLabel, BorderLayout.CENTER);
