@@ -25,15 +25,15 @@ public class EntityTableCellRenderer extends DefaultTableCellRenderer {
         
         if (table.getName().equals(EntityPanel.getBotTableName())) {
             if (column == 2 && !fileNameExists(value.toString())) {
-                c.setForeground( Color.red );
+                c.setForeground(Color.RED);
             } else {
-                c.setForeground(table.getForeground());
+                c.setForeground(Color.BLACK);
             }
         } else if (table.getName().equals(EntityPanel.getePartnerTableName())) { 
             if (column == 1 && !fileNameExists(value.toString())) {
-                c.setForeground( Color.red );
+                c.setForeground(Color.RED);
             } else {
-                c.setForeground(table.getForeground());
+                c.setForeground(Color.BLACK);
             }
         }
         return c;

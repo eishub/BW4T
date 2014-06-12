@@ -27,7 +27,7 @@ import javax.swing.table.DefaultTableModel;
 
 
 import nl.tudelft.bw4t.map.EntityType;
-import nl.tudelft.bw4t.scenariogui.util.BotJTable;
+import nl.tudelft.bw4t.scenariogui.util.EntityJTable;
 import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
 
 /**
@@ -72,7 +72,7 @@ public class EntityPanel extends JPanel {
 	private DefaultTableModel botList;
 	// TODO add actionlisteners for the menu items
 
-	private BotJTable botTable;
+	private EntityJTable botTable;
 	
 	private static String botTableName;
 
@@ -103,7 +103,7 @@ public class EntityPanel extends JPanel {
 
 	private DefaultTableModel epartnerList;
 
-	private BotJTable ePartnerTable;
+	private EntityJTable ePartnerTable;
 	
 	private static String ePartnerTableName;
 
@@ -212,7 +212,7 @@ public class EntityPanel extends JPanel {
 	 */
 	private void createBotTable() {
 
-		botTable = new BotJTable();
+		botTable = new EntityJTable();
 		botTable.getTableHeader().setReorderingAllowed(false);
 		botTableName = "botTable";
 		botTable.setName(botTableName);
@@ -292,7 +292,7 @@ public class EntityPanel extends JPanel {
 	 */
 	private void createEpartnerTable() {
 
-		ePartnerTable = new BotJTable();
+		ePartnerTable = new EntityJTable();
 		ePartnerTableName = "eparterTable";
 		ePartnerTable.setName(ePartnerTableName);
 		ePartnerTable.getTableHeader().setReorderingAllowed(false);
@@ -328,7 +328,7 @@ public class EntityPanel extends JPanel {
 	 *
 	 * @return The table that contains the bots.
 	 */
-	public final BotJTable getBotTable() {
+	public final EntityJTable getBotTable() {
 		return botTable;
 	}
 
@@ -346,7 +346,7 @@ public class EntityPanel extends JPanel {
 	 *
 	 * @return The table that contains the E-partners.
 	 */
-	public final BotJTable getEPartnerTable() {
+	public final EntityJTable getEPartnerTable() {
 		return ePartnerTable;
 	}
 
