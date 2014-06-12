@@ -25,7 +25,7 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
     
     private static final Dimension SIZE = new Dimension(100,70);
 
-    private ZoneController controller;
+    private ZoneController zoneController;
     
     private final Color originalColor;
 
@@ -39,15 +39,15 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
      */
     public ZonePanel(ZoneController control) {
         assert control != null;
-        controller = control;
+        zoneController = control;
         originalColor = getBackground();
-        controller.setUpdateableEditorInterface(this);
+        zoneController.setUpdateableEditorInterface(this);
         
         this.setBorder(BorderFactory.createEtchedBorder());
         
-        this.addMouseListener(controller);
-        controller.getMapController().getCSController().addColorSequenceEditor(sequence);
-        sequence.addChangeListener(controller);
+        this.addMouseListener(zoneController);
+        zoneController.getMapController().getCSController().addColorSequenceEditor(sequence);
+        sequence.addChangeListener(zoneController);
         
         this.setLayout(new BorderLayout());
         
@@ -62,17 +62,17 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
     }
     
     public ZoneController getController() {
-        return this.controller;
+        return this.zoneController;
     }
 
     @Override
     public void update() {
-        nameLabel.setText(controller.getName());
+        nameLabel.setText(zoneController.getName());
         nameLabel.setForeground(Color.BLACK);
         this.remove(sequence);
-        switch (controller.getType()) {
+        switch (zoneController.getType()) {
         case ROOM:
-            if (controller.isDropZone()) {
+            if (zoneController.isDropZone()) {
                 nameLabel.setForeground(Color.WHITE);
                 this.setBackground(Color.DARK_GRAY);
             } else {
@@ -87,7 +87,7 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
             this.setBackground(Zone.BLOCKADE_COLOR);
             break;
         case CORRIDOR:
-        	if (controller.isStartZone()) {
+        	if (zoneController.isStartZone()) {
         		this.setBackground(Color.CYAN);
         	} else {
         		this.setBackground(originalColor);

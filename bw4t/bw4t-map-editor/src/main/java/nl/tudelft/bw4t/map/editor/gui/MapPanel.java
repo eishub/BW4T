@@ -17,7 +17,7 @@ public class MapPanel extends JPanel implements UpdateableEditorInterface {
 	
     private static final long serialVersionUID = -5921838296315289933L;
 
-    private MapPanelController controller;
+    private MapPanelController mapController;
 
     private ZonePanel[][] zones;
     
@@ -31,9 +31,9 @@ public class MapPanel extends JPanel implements UpdateableEditorInterface {
      */
     public MapPanel(MapPanelController control) {
         assert control != null;
-        this.controller = control;
+        this.mapController = control;
         
-        this.controller.setUpdateableEditorInterface(this);
+        this.mapController.setUpdateableEditorInterface(this);
         
         setupGrid();
     }
@@ -43,26 +43,26 @@ public class MapPanel extends JPanel implements UpdateableEditorInterface {
      */
     private void setupGrid() {
         this.setLayout(new BorderLayout());
-        zones = new ZonePanel[controller.getRows()][controller.getColumns()];
-        mapGrid.setLayout(new GridLayout(controller.getRows(), controller.getColumns()));
+        zones = new ZonePanel[mapController.getRows()][mapController.getColumns()];
+        mapGrid.setLayout(new GridLayout(mapController.getRows(), mapController.getColumns()));
 
-        for (int row = 0; row < controller.getRows(); row++) {
-            for (int col = 0; col < controller.getColumns(); col++) {
-                zones[row][col] = new ZonePanel(controller.getZoneController(row, col));
+        for (int row = 0; row < mapController.getRows(); row++) {
+            for (int col = 0; col < mapController.getColumns(); col++) {
+                zones[row][col] = new ZonePanel(mapController.getZoneController(row, col));
                 mapGrid.add(zones[row][col]);
             }
         }
         this.add(new JScrollPane(mapGrid), BorderLayout.CENTER);
         
         dropSequence = new ColorSequenceEditor(MapPanelController.DROP_ZONE_SEQUENCE_LENGTH);
-        dropSequence.addChangeListener(controller);
-        controller.getCSController().addColorSequenceEditor(dropSequence);
+        dropSequence.addChangeListener(mapController);
+        mapController.getCSController().addColorSequenceEditor(dropSequence);
         this.add(dropSequence, BorderLayout.SOUTH);
         update();
     }
 
     @Override
     public void update() {
-        dropSequence.setSequence(controller.getSequence());
+        dropSequence.setSequence(mapController.getSequence());
     }
 }

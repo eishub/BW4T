@@ -22,11 +22,9 @@ public class EnvironmentStore extends JFrame {
 	
 	private static final long serialVersionUID = 8572609341436634787L;
 
-	private MapPanelController map;
+	private MapPanelController mapController;
 	
 	private String windowName = "BW4T Extensive Map Editor";
-	
-	private EnvironmentStoreController controller;
 	
 	private ExplanationPanel explanationPanel;
 	
@@ -42,8 +40,8 @@ public class EnvironmentStore extends JFrame {
      * @param themap is a map that contains: rows, cols, entities, randomize.
      * 
      */
-    public EnvironmentStore(MapPanelController themap) {
-        map = themap;
+    public EnvironmentStore(MapPanelController mc) {
+        mapController = mc;
         
         setWindowTitle("Untitled");
         setLayout(new BorderLayout());
@@ -59,15 +57,14 @@ public class EnvironmentStore extends JFrame {
         explanationPanel = new ExplanationPanel();
         
         // Both the mapTable and sequencePanel are added to a rooms panel.
-        mapTable = new MapPanel(map);
+        mapTable = new MapPanel(mapController);
         
         // Attach all Panels to the Editor.
         add(explanationPanel, BorderLayout.NORTH);
         add(mapTable, BorderLayout.CENTER);
         //add(legendaPanel, BorderLayout.EAST);
 
-        // Create the controller
-        controller = new EnvironmentStoreController(this, map);
+        new EnvironmentStoreController(this, mapController);
         
         pack();
         setLocationRelativeTo(null);
