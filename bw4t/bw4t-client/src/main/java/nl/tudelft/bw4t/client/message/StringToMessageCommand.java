@@ -4,7 +4,7 @@ import java.util.StringTokenizer;
 
 public interface StringToMessageCommand {
 
-    BW4TMessage exec(String message);
+    BW4TMessage getMessage(String message);
 
 }
 
@@ -16,7 +16,7 @@ class CommandType implements StringToMessageCommand {
     }
 
     @Override
-    public BW4TMessage exec(String message) {
+    public BW4TMessage getMessage(String message) {
         return new BW4TMessage(type);
     }
 }
@@ -30,7 +30,7 @@ class CommandRoom implements StringToMessageCommand {
     }
 
     @Override
-    public BW4TMessage exec(String message) {
+    public BW4TMessage getMessage(String message) {
         return new BW4TMessage(type, MessageTranslator.findRoomId(message), MessageTranslator.findColorId(message), Integer.MAX_VALUE);
     }
 }
@@ -44,7 +44,7 @@ class CommandColor implements StringToMessageCommand {
     }
 
     @Override
-    public BW4TMessage exec(String message) {
+    public BW4TMessage getMessage(String message) {
         return new BW4TMessage(type, MessageTranslator.findRoomId(message), MessageTranslator.findColorId(message), Integer.MAX_VALUE);
     }
 }
@@ -58,7 +58,7 @@ class CommandRoomColor implements StringToMessageCommand {
     }
 
     @Override
-    public BW4TMessage exec(String message) {
+    public BW4TMessage getMessage(String message) {
         return new BW4TMessage(type, MessageTranslator.findRoomId(message), MessageTranslator.findColorId(message),
                 Integer.MAX_VALUE);
     }
@@ -75,7 +75,7 @@ class CommandRoomColorPlayer implements StringToMessageCommand {
     }
 
     @Override
-    public BW4TMessage exec(String message) {
+    public BW4TMessage getMessage(String message) {
         playerId = new StringTokenizer(message, ", ").nextToken();
         return new BW4TMessage(type, MessageTranslator.findRoomId(message), MessageTranslator.findColorId(message),
                 playerId);
@@ -91,7 +91,7 @@ class CommandRoomColorNumber implements StringToMessageCommand {
     }
 
     @Override
-    public BW4TMessage exec(String message) {
+    public BW4TMessage getMessage(String message) {
         return new BW4TMessage(type, MessageTranslator.findRoomId(message), MessageTranslator.findColorId(message),
                 MessageTranslator.findNumber(message));
     }
@@ -107,7 +107,7 @@ class CommandContainsBy implements StringToMessageCommand {
     }
 
     @Override
-    public BW4TMessage exec(String message) {
+    public BW4TMessage getMessage(String message) {
         if (message.contains("by")) {
             String[] splitMessage = message.split(" ");
             playerId = splitMessage[splitMessage.length - 1];
@@ -125,7 +125,7 @@ class CommandContains implements StringToMessageCommand {
     }
 
     @Override
-    public BW4TMessage exec(String message) {
+    public BW4TMessage getMessage(String message) {
 
         int number = MessageTranslator.findNumber(message);
         if (number == Integer.MAX_VALUE)
