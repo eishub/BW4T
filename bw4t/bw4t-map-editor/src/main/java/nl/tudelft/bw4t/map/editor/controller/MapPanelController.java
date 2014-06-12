@@ -383,7 +383,7 @@ public class MapPanelController implements ChangeListener {
         }
         // TODO figure out how to handle doors
         if (z1.getType() == Type.CORRIDOR || z1.getType() == Type.CHARGINGZONE) {
-            if (z1.getType() == Type.CORRIDOR || z1.getType() == Type.CHARGINGZONE) {
+            if (z2.getType() == Type.CORRIDOR || z2.getType() == Type.CHARGINGZONE) {
                 z2.addNeighbour(z1);
                 z1.addNeighbour(z2);
             }
