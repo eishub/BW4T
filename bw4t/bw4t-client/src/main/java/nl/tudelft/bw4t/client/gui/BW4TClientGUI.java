@@ -78,7 +78,6 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
     private final BW4TClientGUI that = this;
     private ClientController controller;
 
-    //private JPanel buttonPanel;
     private JPanel mainPanel = new JPanel();
     private JPanel optionsMessagesPane = new JPanel();
     private JPanel botButtonPanel = new JPanel();
