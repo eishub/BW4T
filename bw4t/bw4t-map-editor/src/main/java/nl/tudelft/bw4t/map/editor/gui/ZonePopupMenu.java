@@ -11,8 +11,11 @@ import nl.tudelft.bw4t.map.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.map.editor.controller.UpdateableEditorInterface;
 import nl.tudelft.bw4t.map.editor.controller.ZoneController;
 import nl.tudelft.bw4t.map.editor.model.Zone;
-import nl.tudelft.bw4t.map.renderer.MapController;
 
+/**
+ * The ZonePopupMenu shows us the options for the different Zones through right click.
+ *
+ */
 public class ZonePopupMenu extends JPopupMenu implements UpdateableEditorInterface {
 
     private static final long serialVersionUID = -5335591852441574491L;
@@ -20,11 +23,17 @@ public class ZonePopupMenu extends JPopupMenu implements UpdateableEditorInterfa
     private JMenu zoneType, doorSide;
 
     private JMenuItem randomize;
+    
     private JRadioButtonMenuItem corridor, room, blockade, startZone, chargingZone, dropZone;
+    
     private JCheckBoxMenuItem north, east, south, west;
 
     private final MapPanelController controller;
 
+    /**
+     * Constructor adds all the options to the menu.
+     * @param mpc is the MapPanelController used.
+     */
     public ZonePopupMenu(MapPanelController mpc) {
         controller = mpc;
 

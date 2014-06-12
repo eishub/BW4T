@@ -1,17 +1,10 @@
 package nl.tudelft.bw4t.map.editor.gui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-
-import nl.tudelft.bw4t.map.editor.controller.MapPanelController;
-import nl.tudelft.bw4t.map.editor.controller.MapPreviewController;
-import nl.tudelft.bw4t.map.renderer.MapRenderer;
 
 /**
  * The MenuBar class extends JMenuBar. Used in the Map Editor Frame.

@@ -16,10 +16,19 @@ import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 
+/**
+ * The MapPreviewController class controls the map preview that is generated.
+ *
+ */
 public class MapPreviewController extends AbstractMapController {
 
 	private MapPanelController map;
 	
+	/**
+	 * Constructor for the MapPreviewController.
+	 * 
+	 * @param theMap
+	 */
 	public MapPreviewController(MapPanelController theMap) {
 		super(theMap.createMap());
 		this.map = theMap;
@@ -74,7 +83,8 @@ public class MapPreviewController extends AbstractMapController {
 		Set<ViewEntity> entities = new HashSet<ViewEntity>();
 		
 		for (Entity e : getMap().getEntities()) {
-			ViewEntity viewe = new ViewEntity(0, e.getName(), e.getPosition().getX(), e.getPosition().getY(), new ArrayList<ViewBlock>(), 2);
+			ViewEntity viewe = new ViewEntity(0, e.getName(), 
+					e.getPosition().getX(), e.getPosition().getY(), new ArrayList<ViewBlock>(), 2);
 			entities.add(viewe);
 		}
 		

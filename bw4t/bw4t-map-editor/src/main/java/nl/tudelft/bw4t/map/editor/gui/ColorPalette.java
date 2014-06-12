@@ -17,15 +17,25 @@ import javax.swing.event.MouseInputListener;
 
 import nl.tudelft.bw4t.map.BlockColor;
 
+/**
+ * The ColorPalette class creates the window that is used for the Palette.
+ *
+ */
 public class ColorPalette extends JPanel implements MouseInputListener {
+	
     private static final long serialVersionUID = -1931059148668661725L;
+    
     private static final int COLOR_SIZE = 30;
+    
     private static final int BORDER = 2;
 
     private int mouseDownColorIndex = -1;
 
     private List<ColorPaletteListener> onColorClick = new LinkedList<>();
 
+    /**
+     * The constructor sets the superclass, dimensions and adds a mouselistener.
+     */
     public ColorPalette() {
         super();
         Dimension d = new Dimension(BlockColor.getAvailableColors().size() * COLOR_SIZE + BORDER * 2, COLOR_SIZE
@@ -35,10 +45,18 @@ public class ColorPalette extends JPanel implements MouseInputListener {
         addMouseListener(this);
     }
 
+    /**
+     * Add a ColorPaletteListener to the color that has been clicked.
+     * @param cpl
+     */
     public void addColorClickListener(ColorPaletteListener cpl) {
         this.onColorClick.add(cpl);
     }
 
+    /**
+     * Remove a ColorPaletteListener from the color.
+     * @param cpl
+     */
     public void removeColorClickListener(ColorPaletteListener cpl) {
         this.onColorClick.remove(cpl);
     }
@@ -119,6 +137,11 @@ public class ColorPalette extends JPanel implements MouseInputListener {
     public void mouseMoved(MouseEvent e) {
     }
 
+    /**
+     * Create the window that holds the ColorPalette.
+     * @param cp is the colorPalette used.
+     * @return frame is the frame that has been created from the ColorPalette.
+     */
     public static JFrame getColorPaletteWindow(ColorPalette cp) {
         JFrame frame = new JFrame("Color Palette");
         frame.add(cp);

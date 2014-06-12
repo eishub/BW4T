@@ -18,7 +18,8 @@ import nl.tudelft.bw4t.map.editor.model.Zone;
  */
 public class ZoneController extends MouseAdapter implements ChangeListener {
 
-    private int row, column; // should match the position in the map table
+    /** should match the position in the map table */
+    private int row, column;
     
     private Zone model;
     
@@ -26,6 +27,12 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
     
     private UpdateableEditorInterface uei;
 
+    /** Create a new ZoneController from the MapPanelController, rows, columns, and Zone model.
+     * @param mc MapPanelController
+     * @param r rows
+     * @param c columns
+     * @param m Zone model
+     */
     public ZoneController(MapPanelController mc, int r, int c, Zone m) {
     	mapcontroller = mc;
     	
