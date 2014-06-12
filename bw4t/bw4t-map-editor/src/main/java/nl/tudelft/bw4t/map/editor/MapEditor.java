@@ -23,6 +23,7 @@ import nl.tudelft.bw4t.map.editor.gui.SizeDialog;
 import nl.tudelft.bw4t.map.editor.util.DefaultOptionPrompt;
 import nl.tudelft.bw4t.map.editor.util.OptionPrompt;
 
+
 /**
  * The MapEditor class serves as a frame for the Panels and tables.
  * @author Rothweiler
