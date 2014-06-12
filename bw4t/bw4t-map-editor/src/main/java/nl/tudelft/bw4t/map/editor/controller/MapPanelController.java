@@ -30,6 +30,7 @@ public class MapPanelController {
 
     /** basic size of the map */
     private ZoneController[][] zonecontrollers;
+    private ColorSequenceController cscontroller;
     private int numberOfEntities = 0;
     private boolean randomize;
     /**
@@ -84,10 +85,11 @@ public class MapPanelController {
         this.numberOfEntities = entities;
         this.randomize = rand;
         
+        cscontroller = new ColorSequenceController();
         zonecontrollers = new ZoneController[rows][columns];
         
         for (int i = 0; i < rows; i++) {
-        	for (int j = 0; j < columns; i++) {
+        	for (int j = 0; j < columns; j++) {
         		zonecontrollers[i][j] = new ZoneController(this, i, j, new nl.tudelft.bw4t.map.editor.model.Zone());
         	}
         }
@@ -157,6 +159,10 @@ public class MapPanelController {
 
 	public void setUpdateableEditorInterface(UpdateableEditorInterface ui) {
 		uei = ui;
+	}
+	
+	public ColorSequenceController getCSController() {
+		return cscontroller;
 	}
 
     /**
