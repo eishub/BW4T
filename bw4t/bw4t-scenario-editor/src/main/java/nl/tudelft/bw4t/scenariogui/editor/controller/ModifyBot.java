@@ -45,5 +45,7 @@ class ModifyBot implements ActionListener {
             return;
         }
         new BotEditor(view, row, model);
+        
+        view.getEntityPanel().setBotStore(true);
     }
 }

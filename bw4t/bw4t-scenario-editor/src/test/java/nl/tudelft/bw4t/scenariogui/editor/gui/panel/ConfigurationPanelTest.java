@@ -26,33 +26,20 @@ import static org.mockito.Mockito.when;
 
 public class ConfigurationPanelTest {
 
-    /**
-     * The base directory of all files used in the test.
-     */
     private static final String BASE = System.getProperty("user.dir") + "/src/test/resources/";
-    /**
-     * The file that has to be opened.
-     */
+
     private final String filePathMap = BASE + "test.map";
-    /**
-     * The selected file that cannot be opened.
-     */
+
     private final String fileMapFail = BASE + "test.fail";
-    /**
-     * The main GUI.
-     */
+
     private ScenarioEditor editor;
-    /**
-     * The configuration panel to be tested.
-     */
+
     private ConfigurationPanel configPanel;
-    /**
-     * The file chooser object.
-     */
+
     private JFileChooser fileChooser;
 
     /**
-     * Initialized the variables.
+     * Initialize the variables.
      */
     @Before
     public final void setUp() {
@@ -82,8 +69,7 @@ public class ConfigurationPanelTest {
     public final void testSetMapFile() {
         configPanel.setMapFile(filePathMap);
 
-        assertEquals(filePathMap, configPanel
-                .getMapFile());
+        assertEquals(filePathMap, configPanel.getMapFile());
     }
 
     /**
@@ -100,8 +86,7 @@ public class ConfigurationPanelTest {
         when(fileChooser.getSelectedFile()).thenReturn(mapFile);
 
         // Trigger the event.
-        configPanel.getChooseMapFile()
-                .doClick();
+        configPanel.getChooseMapFile().doClick();
 
         /* Replace the backward slashes with forward slashes */
         assertEquals(mapFile.getAbsolutePath(), configPanel
@@ -109,8 +94,8 @@ public class ConfigurationPanelTest {
     }
 
     /**
-     * Tests the choosing of an incorrect map file.
-     * Shows a pop-up message with an error.
+     * Tests if the choosing of an incorrect map file
+     * shows a pop-up message with an error.
      */
     @Test
     public final void testMapFileActionIncorrect() {
@@ -123,8 +108,7 @@ public class ConfigurationPanelTest {
         ScenarioEditor.setOptionPrompt(spyOption);
 
         // Trigger the event.
-        configPanel.getChooseMapFile()
-                .doClick();
+        configPanel.getChooseMapFile().doClick();
 
         // Verify that the pop-up message was shown.
         verify(spyOption, times(1)).showMessageDialog(editor.getMainPanel(), "This is not a valid file.");
@@ -135,20 +119,38 @@ public class ConfigurationPanelTest {
      */
     @Test
     public final void testMapFileActionBranch() {
+    	ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
         // Setup the mocks behaviour.
-        when(fileChooser.showOpenDialog(editor.getMainPanel())).thenReturn(1);
+        when(fileChooser.showOpenDialog(editor.getMainPanel())).thenReturn(
+                JFileChooser.APPROVE_OPTION);
         when(fileChooser.getSelectedFile()).thenReturn(new File("ss"));
 
         // Original value
-        String startURI = configPanel
-                .getMapFile();
+        String startURI = configPanel.getMapFile();
 
         // Trigger the event.
-        configPanel.getChooseMapFile()
-                .doClick();
+        configPanel.getChooseMapFile().doClick();
 
-        assertEquals(startURI, configPanel
-                .getMapFile());
+        assertEquals(startURI, configPanel.getMapFile());
+    }
+    
+    /**
+     * Tests if no map file is entered when map selection is cancelled.
+     */
+    @Test
+    public final void testMapFileCancel() {
+    	// Setup the mocks behaviour.
+        when(fileChooser.showOpenDialog(editor.getMainPanel())).thenReturn(
+                JFileChooser.CANCEL_OPTION);
+        when(fileChooser.getSelectedFile()).thenReturn(new File(filePathMap));
+
+        // Original value
+        String startURI = configPanel.getMapFile();
+
+        // Trigger the event.
+        configPanel.getChooseMapFile().doClick();
+
+        assertEquals(startURI, configPanel.getMapFile());
     }
 
     /**
@@ -184,6 +186,10 @@ public class ConfigurationPanelTest {
     @Test
     public void testDefault() {
         assertTrue(configPanel.isDefault());
+
+    	configPanel.setClientIP("Other IP");
+    	
+        assertFalse(configPanel.isDefault());
     }
 
     /**
@@ -191,10 +197,14 @@ public class ConfigurationPanelTest {
      */
     @Test
     public void testSetClientIP() {
-        configPanel.setClientIP("New IP");
+        assertTrue(configPanel.isDefault());
+    	assertEquals(DefaultConfigurationValues.DEFAULT_CLIENT_IP.getValue(), configPanel.getClientIP());
+    	
+    	String newIP = "New IP";
+        configPanel.setClientIP(newIP);
 
-        assertEquals("New IP", configPanel
-                .getClientIP());
+        assertEquals(newIP, configPanel.getClientIP());
+        assertFalse(configPanel.isDefault());
     }
 
     /**
@@ -202,11 +212,14 @@ public class ConfigurationPanelTest {
      */
     @Test
     public void testSetClientPort() {
-        configPanel.setClientPort("8888");
-
-        String res = "" + configPanel.getClientPort();
-
-        assertEquals("8888", res);
+        assertTrue(configPanel.isDefault());
+    	assertEquals(DefaultConfigurationValues.DEFAULT_CLIENT_PORT.getValue(), "" + configPanel.getClientPort());
+    	
+    	String newIP = "8888";
+        configPanel.setClientPort(newIP);
+        
+        assertEquals(newIP, "" + configPanel.getClientPort());
+        assertFalse(configPanel.isDefault());
     }
 
     /**
@@ -214,10 +227,14 @@ public class ConfigurationPanelTest {
      */
     @Test
     public void testSetServerIP() {
-        configPanel.setServerIP("New IP");
+        assertTrue(configPanel.isDefault());
+    	assertEquals(DefaultConfigurationValues.DEFAULT_SERVER_IP.getValue(), configPanel.getServerIP());
+    	
+    	String newIP = "New IP";
+        configPanel.setServerIP(newIP);
 
-        assertEquals("New IP", configPanel
-                .getServerIP());
+        assertEquals(newIP, configPanel.getServerIP());
+        assertFalse(configPanel.isDefault());
     }
 
     /**
@@ -225,50 +242,13 @@ public class ConfigurationPanelTest {
      */
     @Test
     public void testSetServerPort() {
-        configPanel.setServerPort("9999");
+        assertTrue(configPanel.isDefault());
+    	assertEquals(DefaultConfigurationValues.DEFAULT_SERVER_PORT.getValue(), "" + configPanel.getServerPort());
+    	
+    	String newPort = "9999";
+        configPanel.setServerPort(newPort);
 
-        String res = "" + configPanel.getServerPort();
-
-        assertEquals("9999", res);
-    }
-
-    /**
-     * Tests whether changes have been made to the Client IP field.
-     */
-    @Test
-    public void testChangesClientIP() {
-        configPanel.setClientIP(DefaultConfigurationValues.DEFAULT_CLIENT_IP.getValue() + "t");
-
-        assertFalse(configPanel.isDefault());
-    }
-
-    /**
-     * Tests whether changes have been made to the Client Port field.
-     */
-    @Test
-    public void testChangesClientPort() {
-        configPanel.setClientPort(DefaultConfigurationValues.DEFAULT_CLIENT_PORT.getValue() + "2");
-
-        assertFalse(configPanel.isDefault());
-    }
-
-    /**
-     * Tests whether changes have been made to the Server IP field.
-     */
-    @Test
-    public void testChangesServerIP() {
-        configPanel.setServerIP(DefaultConfigurationValues.DEFAULT_SERVER_IP.getValue() + "t");
-
-        assertFalse(configPanel.isDefault());
-    }
-
-    /**
-     * Tests whether changes have been made to the Server Port field.
-     */
-    @Test
-    public void testChangesServerPort() {
-        configPanel.setServerPort(DefaultConfigurationValues.DEFAULT_SERVER_PORT.getValue() + "1");
-
+        assertEquals(newPort, "" + configPanel.getServerPort());
         assertFalse(configPanel.isDefault());
     }
 
@@ -277,8 +257,14 @@ public class ConfigurationPanelTest {
      */
     @Test
     public void testChangesLaunchGUI() {
+        assertTrue(configPanel.isDefault());
+    	assertEquals(DefaultConfigurationValues.USE_GUI.getBooleanValue(), configPanel.getGUIYesCheckbox().getState());
+    	assertEquals(!DefaultConfigurationValues.USE_GUI.getBooleanValue(), configPanel.getGUINoCheckbox().getState());
+    	
         configPanel.setUseGui(!DefaultConfigurationValues.USE_GUI.getBooleanValue());
 
+        assertEquals(!DefaultConfigurationValues.USE_GUI.getBooleanValue(), configPanel.getGUIYesCheckbox().getState());
+        assertEquals(DefaultConfigurationValues.USE_GUI.getBooleanValue(), configPanel.getGUINoCheckbox().getState());
         assertFalse(configPanel.isDefault());
     }
 
@@ -287,8 +273,12 @@ public class ConfigurationPanelTest {
      */
     @Test
     public void testChangesMapFile() {
+        assertTrue(configPanel.isDefault());
+        assertEquals(DefaultConfigurationValues.MAP_FILE.getValue(), configPanel.getMapFile());
+        
         configPanel.setMapFile(filePathMap);
 
+        assertEquals(filePathMap, configPanel.getMapFile());
         assertFalse(configPanel.isDefault());
     }
 }
