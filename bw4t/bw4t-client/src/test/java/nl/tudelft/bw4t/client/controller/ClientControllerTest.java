@@ -70,7 +70,7 @@ public class ClientControllerTest {
 
     @Test
     public void testGetToBePerformedAction() {
-        listOfPercepts.add(new Percept("TestPercept"));
+        listOfPercepts.add(new Percept("testPercept"));
         clientController.setToBePerformedAction(listOfPercepts);
         assertEquals(listOfPercepts,clientController.getToBePerformedAction());
     }
