@@ -7,6 +7,7 @@ import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
+import repast.simphony.space.grid.GridPoint;
 
 /**
  * Represents an object in the world that can be moved around if needed. It forms the basis for all kinds of objects
@@ -66,12 +67,32 @@ public abstract class BoundedMoveableObject {
         }
         return location;
     }
+
+    /**
+     *  Returns the location on the grid space.
+     * @return The location of the object, if currently in the grid space.
+     */
+    public GridPoint getGridLocation() {
+        GridPoint location = grid.getLocation(this);
+
+        if(location == null) {
+            return new GridPoint(0, 0);
+        }
+        return location;
+    }
     
     /**
      * @return The space of an object.
      */
     public ContinuousSpace<Object> getSpace(){
         return this.space;
+    }
+
+    /**
+     * @return The grid of an object.
+     */
+    public Grid<Object> getGrid() {
+        return this.grid;
     }
 
     /**
@@ -197,13 +218,4 @@ public abstract class BoundedMoveableObject {
 
     }
 
-
-    /**
-     * Checks if the given point is in the rectangle that defines this bounded moveable object.
-     * @param point The point whose location is checked.
-     * @return True iff the point is in the the box of this object.
-     */
-    public boolean isPointInObject(NdPoint point) {
-        return boundingBox.contains(point.getX(), point.getY());
-    }
 }
