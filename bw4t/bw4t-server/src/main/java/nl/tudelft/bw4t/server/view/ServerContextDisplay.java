@@ -28,17 +28,19 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import eis.exceptions.ManagementException;
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
-import nl.tudelft.bw4t.BW4TBuilder;
+import nl.tudelft.bw4t.map.renderer.MapRenderer;
 import nl.tudelft.bw4t.server.controller.ServerMapController;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.server.environment.Stepper;
-import nl.tudelft.bw4t.view.MapRenderer;
+import nl.tudelft.bw4t.server.repast.BW4TBuilder;
+
 import org.apache.log4j.Logger;
+
 import repast.simphony.context.Context;
+import eis.exceptions.ManagementException;
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
 
 /**
  * Used for directly displaying the simulation from the context, unlike BW4TRenderer does not use percepts and can show
