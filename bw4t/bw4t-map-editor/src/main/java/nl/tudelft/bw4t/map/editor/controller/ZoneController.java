@@ -3,6 +3,7 @@ package nl.tudelft.bw4t.map.editor.controller;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.event.ChangeEvent;
@@ -23,7 +24,7 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
     
     private Zone model;
     
-    private MapPanelController mapcontroller;
+    private MapPanelController mapController;
     
     private UpdateableEditorInterface uei;
 
@@ -34,7 +35,7 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
      * @param m Zone model
      */
     public ZoneController(MapPanelController mc, int r, int c, Zone m) {
-    	mapcontroller = mc;
+    	mapController = mc;
     	
         if (r > 24 || r < 0) {
             // prepare to compare rows to 'A'..'Y'. we need r=24 for the
@@ -55,7 +56,7 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
     }
     
     public MapPanelController getMapController() {
-    	return mapcontroller;
+    	return mapController;
     }
     
     public Type getType() {
@@ -64,6 +65,10 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
     
     public void setType(Type t) {
     	model.setType(t);
+    	if(!t.equals(Type.ROOM)) {
+    		List<BlockColor> empty = new ArrayList<BlockColor>();
+    		model.setColors(empty);
+    	}
     }
     
     public boolean isDropZone() {

@@ -22,16 +22,16 @@ import nl.tudelft.bw4t.map.view.ViewEntity;
  */
 public class MapPreviewController extends AbstractMapController {
 
-	private MapPanelController map;
+	private MapPanelController mapController;
 	
 	/**
 	 * Constructor for the MapPreviewController.
 	 * 
-	 * @param theMap
+	 * @param mc
 	 */
-	public MapPreviewController(MapPanelController theMap) {
-		super(theMap.createMap());
-		this.map = theMap;
+	public MapPreviewController(MapPanelController mc) {
+		super(mc.createMap());
+		this.mapController = mc;
 		this.getRenderSettings().setUpdateDelay(1000);
 	}
 
@@ -98,7 +98,7 @@ public class MapPreviewController extends AbstractMapController {
 
 	@Override
 	protected void updateRenderer(MapRendererInterface mri) {
-		this.setMap(map.createMap());
+		this.setMap(mapController.createMap());
 		mri.validate();
 		mri.repaint();
 	}

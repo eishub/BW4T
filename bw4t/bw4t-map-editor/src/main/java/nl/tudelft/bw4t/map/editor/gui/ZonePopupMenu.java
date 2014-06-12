@@ -28,14 +28,14 @@ public class ZonePopupMenu extends JPopupMenu implements UpdateableEditorInterfa
     
     private JCheckBoxMenuItem north, east, south, west;
 
-    private final MapPanelController controller;
+    private final MapPanelController mapController;
 
     /**
      * Constructor adds all the options to the menu.
      * @param mpc is the MapPanelController used.
      */
     public ZonePopupMenu(MapPanelController mpc) {
-        controller = mpc;
+        mapController = mpc;
 
         // Create a Menu for Type Of Space
         zoneType = new JMenu("Type of Zone");
@@ -184,7 +184,7 @@ public class ZonePopupMenu extends JPopupMenu implements UpdateableEditorInterfa
 
     @Override
     public void update() {
-        ZoneController zone = controller.getSelected();
+        ZoneController zone = mapController.getSelected();
 
         corridor.setSelected(true);
 
