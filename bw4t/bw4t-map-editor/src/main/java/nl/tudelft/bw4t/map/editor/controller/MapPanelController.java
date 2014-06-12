@@ -17,6 +17,7 @@ import javax.xml.bind.Marshaller;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Door;
 import nl.tudelft.bw4t.map.Entity;
+import nl.tudelft.bw4t.map.MapFormatException;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.map.Rectangle;
@@ -28,8 +29,8 @@ import nl.tudelft.bw4t.map.editor.controller.ZoneController;
 import nl.tudelft.bw4t.map.editor.gui.ZonePopupMenu;
 
 /**
- * This holds the map that the user designed. This is an abstract map contianing
- * only number of rows and columns, do not confuse with {@link NewMap}.
+ * This holds the map that the user designed. This is an abstract map contianing only number of rows and columns, do not
+ * confuse with {@link NewMap}.
  */
 public class MapPanelController {
 
@@ -62,9 +63,9 @@ public class MapPanelController {
     public static final int DROP_ZONE_SEQUENCE_LENGTH = 12;
 
     private boolean isLabelsVisible;
-    
+
     private UpdateableEditorInterface uei;
-    
+
     private ZonePopupMenu zoneMenu = new ZonePopupMenu();
 
     /**
@@ -75,31 +76,28 @@ public class MapPanelController {
      * @param isLabelsVisible
      *            true if labels should be shown by renderers
      */
-    public MapPanelController(int rows, int columns, int entities, boolean rand,
-            boolean labelsVisible) {
+    public MapPanelController(int rows, int columns, int entities, boolean rand, boolean labelsVisible) {
         isLabelsVisible = labelsVisible;
         if (rows < 1 || rows > 100) {
             throw new IllegalArgumentException("illegal value for row:" + rows);
         }
         if (columns < 1 || columns > 100) {
-            throw new IllegalArgumentException("illegal value for columns:"
-                    + columns);
+            throw new IllegalArgumentException("illegal value for columns:" + columns);
         }
         if (entities < 1 || entities > 20) {
-            throw new IllegalArgumentException("illegal value for entities:"
-                    + entities);
+            throw new IllegalArgumentException("illegal value for entities:" + entities);
         }
-        
+
         this.numberOfEntities = entities;
         this.randomize = rand;
-        
+
         cscontroller = new ColorSequenceController();
         zonecontrollers = new ZoneController[rows][columns];
-        
+
         for (int i = 0; i < rows; i++) {
-        	for (int j = 0; j < columns; j++) {
-        		zonecontrollers[i][j] = new ZoneController(this, i, j, new nl.tudelft.bw4t.map.editor.model.Zone());
-        	}
+            for (int j = 0; j < columns; j++) {
+                zonecontrollers[i][j] = new ZoneController(this, i, j, new nl.tudelft.bw4t.map.editor.model.Zone());
+            }
         }
         
         attachListenersToZoneMenu();
@@ -201,7 +199,6 @@ public class MapPanelController {
         }
     }
 
-
     /**
      * get the number of entities on the map.
      * 
@@ -217,18 +214,18 @@ public class MapPanelController {
     public void setNumberOfEntities(int numberOfEntities) {
         this.numberOfEntities = numberOfEntities;
     }
-    
-	public UpdateableEditorInterface getUpdateableEditorInterface() {
-		return uei;
-	}
 
-	public void setUpdateableEditorInterface(UpdateableEditorInterface ui) {
-		uei = ui;
-	}
-	
-	public ColorSequenceController getCSController() {
-		return cscontroller;
-	}
+    public UpdateableEditorInterface getUpdateableEditorInterface() {
+        return uei;
+    }
+
+    public void setUpdateableEditorInterface(UpdateableEditorInterface ui) {
+        uei = ui;
+    }
+
+    public ColorSequenceController getCSController() {
+        return cscontroller;
+    }
 
     public ZoneController getSelected() {
         return selected;
@@ -305,15 +302,12 @@ public class MapPanelController {
      * 
      * @return
      */
-    public NewMap createMap() {
+    public NewMap createMap() throws MapFormatException{
         NewMap map = new NewMap();
 
         // compute a number of key values
-        double mapwidth = zonecontrollers[0].length * ROOMWIDTH + 2 * CORRIDORWIDTH;
-        double mapheight = (zonecontrollers.length + 1) * (ROOMHEIGHT + CORRIDORHEIGHT);
-        double dropzonex = mapwidth / 2;
-        double dropzoney = getY(zonecontrollers.length);
-        double dropzonewidth = mapwidth / 2;
+        double mapwidth = getColumns() * ROOMWIDTH;
+        double mapheight = getRows() * ROOMHEIGHT;
 
         // set the general fields of the map
         map.setArea(new Point(mapwidth, mapheight));
@@ -323,96 +317,81 @@ public class MapPanelController {
             map.setRandomSequence(2 * zonecontrollers.length * zonecontrollers[0].length / 3);
         }
 
-        addEntities(map, dropzonex, dropzoney - ROOMHEIGHT / 2 - CORRIDORHEIGHT
-                / 2);
+        //addEntities(map, dropzonex, dropzoney - ROOMHEIGHT / 2 - CORRIDORHEIGHT / 2);
 
         // generate zones for each row:
         // write room zones with their doors. and the zone in frront
         // also generate the lefthall and righthall for each row.
         // connect room and corridor in front of it.
         // connect all corridor with each other and with left and right hall.
-        for (int row = 0; row < zonecontrollers.length; row++) {
-            // add left and right hall corridor zones
-            Zone lefthall = new Zone(CorridorLabel(row, -1), new Rectangle(
-                    getX(-1), getNavY(row), ROOMWIDTH, CORRIDORHEIGHT
-                            + ROOMHEIGHT), Zone.Type.CORRIDOR);
-            Zone righthall = new Zone(CorridorLabel(row, zonecontrollers[0].length),
-                    new Rectangle(getX(zonecontrollers[0].length), getNavY(row), ROOMWIDTH,
-                            CORRIDORHEIGHT + ROOMHEIGHT), Zone.Type.CORRIDOR);
-            map.addZone(lefthall);
-            map.addZone(righthall);
-
-            for (int col = 0; col < zonecontrollers[0].length; col++) {
-                ZoneController room = zonecontrollers[row][col];
-                Zone roomzone = new Zone(room.toString(), new Rectangle(
-                        getX(col), getY(row), ROOMWIDTH, ROOMHEIGHT),
-                        Zone.Type.ROOM);
-                map.addZone(roomzone);
-                roomzone.addDoor(new Door(new Point(getX(col),
-                        (getY(row) - ROOMHEIGHT / 2)),
-                        Door.Orientation.HORIZONTAL));
-                roomzone.setBlocks(zonecontrollers[row][col].getColors());
-
-                // add the zone in front of the room.
-                Zone corridor = new Zone(CorridorLabel(row, col),
-                        new Rectangle(getX(col), getNavY(row), ROOMWIDTH,
-                                CORRIDORHEIGHT), Zone.Type.CORRIDOR);
-                map.addZone(corridor);
+        boolean foundDropzone = false;
+        boolean foundStartzone = false;
+        Zone[][] output = new Zone[getRows()][getColumns()];
+        for (int row = 0; row < getRows(); row++) {
+            for (int col = 0; col < getColumns(); col++) {
+                ZoneController room = getZoneController(row, col);
+                if(room.isDropZone()) {
+                    if(foundDropzone) {
+                        throw new MapFormatException("Only one DropZone allowed per map!");
+                    }
+                    foundDropzone = true;
+                }
+                if(room.isStartZone()) {
+                    foundStartzone = true;
+                }
+                output[row][col] = new Zone(room.getName(), new Rectangle(calcX(col), calcY(row), ROOMWIDTH, ROOMHEIGHT),
+                        room.getType());
+                map.addZone(output[row][col]);
+                //TODO add the doors to the map
+                //TODO add Entity spawn points on Startzones
+                output[row][col].setBlocks(room.getColors());
 
                 // connect them wth each other
-                connect(roomzone, corridor);
-                Zone left = map.getZone(CorridorLabel(row, col - 1));
-                connect(corridor, left);
+                connectToGrid(output, row, col);
             }
-            // and connect the last one to the right hall
-            Zone lastcorridor = map.getZone(CorridorLabel(row, zonecontrollers[0].length - 1));
-            connect(righthall, lastcorridor);
         }
-
-        // add drop zone with its door and zones left and rright
-        Zone dropzone = new Zone(DROPZONE, new Rectangle(dropzonex, dropzoney,
-                dropzonewidth, ROOMHEIGHT), Zone.Type.ROOM);
-        dropzone.addDoor(new Door(new Point(dropzonex,
-                (dropzoney - ROOMHEIGHT / 2)), Door.Orientation.HORIZONTAL));
-        map.addZone(dropzone);
-        // add the FrontDropZone and connect
-        Zone frontdropzone = new Zone(FRONTDROPZONE, new Rectangle(dropzonex,
-                getNavY(zonecontrollers.length), zonecontrollers[0].length * ROOMWIDTH, CORRIDORHEIGHT),
-                Zone.Type.CORRIDOR);
-        map.addZone(frontdropzone);
-        connect(frontdropzone, dropzone);
-        // and add the last row
-        Zone lastrowleft = new Zone(CorridorLabel(zonecontrollers.length, -1), new Rectangle(
-                getX(-1), getNavY(zonecontrollers.length), ROOMWIDTH, CORRIDORHEIGHT),
-                Zone.Type.CORRIDOR);
-        Zone lastrowright = new Zone(CorridorLabel(zonecontrollers.length, zonecontrollers[0].length),
-                new Rectangle(getX(zonecontrollers[0].length), getNavY(zonecontrollers.length), ROOMWIDTH,
-                        CORRIDORHEIGHT), Zone.Type.CORRIDOR);
-        map.addZone(lastrowleft);
-        map.addZone(lastrowright);
-        // connect the three
-        connect(lastrowleft, frontdropzone);
-        connect(lastrowright, frontdropzone);
-
-        // make vertical connection for left and right halls.
-
-        for (int row = 0; row < zonecontrollers.length; row++) {
-            Zone below;
-
-            // connect lefthall to below.
-            Zone lefthall = map.getZone(CorridorLabel(row, -1));
-            below = map.getZone(CorridorLabel(row + 1, -1));
-            connect(lefthall, below);
-
-            // add all righthall to left and below.
-            Zone righthall = map.getZone(CorridorLabel(row, zonecontrollers[0].length));
-            below = map.getZone(CorridorLabel(row + 1, zonecontrollers[0].length));
-            connect(righthall, below);
+        if(!foundDropzone) {
+            throw new MapFormatException("No DropZone found on the map!");
+        }
+        if (!foundStartzone) {
+            throw new MapFormatException("No StartZone found on the map!");
         }
 
         setRenderOptions(map);
 
         return map;
+    }
+
+    private void connectToGrid(Zone[][] zones, int x, int y) {
+        tryConnect(zones, x, y, x, y-1);
+        tryConnect(zones, x, y, x+1, y);
+        tryConnect(zones, x, y, x, y+1);
+        tryConnect(zones, x, y, x-1, y);
+    }
+    
+    private void tryConnect(Zone[][] zones, int x1, int y1, int x2, int y2) {
+        if(Math.abs(x1-x2) + Math.abs(y1-y2) != 1) {
+            return;
+        }
+        Zone z1 = getZone(zones, x1, y1);
+        Zone z2 = getZone(zones, x2, y2);
+        if(z1 == null || z2 == null){
+            return;
+        }
+        //TODO figure out how to handle doors
+        if(z1.getType() == Type.CORRIDOR || z1.getType() == Type.CHARGINGZONE) {
+            if(z1.getType() == Type.CORRIDOR || z1.getType() == Type.CHARGINGZONE) {
+                z2.addNeighbour(z1);
+                z1.addNeighbour(z2);
+            }
+        }
+    }
+    
+    private Zone getZone(Zone[][] zones, int x, int y) {
+        if(isValidZone(x, y)) {
+            return zones[x][y];
+        }
+        return null;
     }
 
     /**
@@ -434,18 +413,13 @@ public class MapPanelController {
 
     }
 
-    private void connect(Zone a, Zone b) {
-        a.addNeighbour(b);
-        b.addNeighbour(a);
-    }
-
     /**
      * get x coordinate of center of the room on the map.
      * 
      * @return x coordinate of room on the map.
      */
-    public double getX(int column) {
-        return CORRIDORWIDTH + column * ROOMWIDTH + ROOMWIDTH / 2;
+    public double calcX(int column) {
+        return column * ROOMWIDTH + ROOMWIDTH / 2;
     }
 
     /**
@@ -453,9 +427,8 @@ public class MapPanelController {
      * 
      * @return y coordinate of room on the map.
      */
-    public double getY(int row) {
-        return row * (CORRIDORHEIGHT + ROOMHEIGHT) + ROOMHEIGHT / 2
-                + CORRIDORHEIGHT;
+    public double calcY(int row) {
+        return row * ROOMHEIGHT + ROOMHEIGHT / 2;
     }
 
     /**
@@ -475,11 +448,10 @@ public class MapPanelController {
      * @param row
      *            allowed is 0..{@link #rows}-1
      * @param col
-     *            col=-1 means the LeftHall, col={@link #columns} means
-     *            RightHall.
+     *            col=-1 means the LeftHall, col={@link #columns} means RightHall.
      * @return
      */
-    private String CorridorLabel(int row, int col) {
+    private String corridorLabel(int row, int col) {
         if (col == -1) {
             return "LeftHall" + (char) (row + 65);
         }
@@ -490,8 +462,8 @@ public class MapPanelController {
     }
 
     /**
-     * check consistency of the map. The sequence length must be 1 at least.
-     * returns string with error message, or null if all ok
+     * check consistency of the map. The sequence length must be 1 at least. returns string with error message, or null
+     * if all ok
      * 
      * @return null, or string with error message.
      */
@@ -514,7 +486,8 @@ public class MapPanelController {
 
         // first check if there are blocks while random is on
         if (randomize && (!allblocks.isEmpty() || !sequence.isEmpty())) {
-            EnvironmentStore.showDialog("There are blocks on the map\nbut the map is set to random.\nWe proceed anyway.");
+            EnvironmentStore
+                    .showDialog("There are blocks on the map\nbut the map is set to random.\nWe proceed anyway.");
         }
 
         // remove all colors from the sequence. That will throw exception if
@@ -536,8 +509,7 @@ public class MapPanelController {
             // check before user puts effort in
             String state = checkConsistency();
             if (state != null) {
-                throw new IllegalStateException("Map is not ready for save.\n"
-                        + state);
+                throw new IllegalStateException("Map is not ready for save.\n" + state);
             }
             // TODO Auto-generated method stub
             JFileChooser chooser = new JFileChooser();
@@ -550,9 +522,16 @@ public class MapPanelController {
             EnvironmentStore.showDialog(e, "Save failed: " + e.getMessage());
         }
     }
-    
+
     public ZoneController getZoneController(int x, int y) {
-    	return zonecontrollers[x][y];
+        if(isValidZone(x, y)) {
+            return zonecontrollers[x][y];
+        }
+        return null;
+    }
+
+    public boolean isValidZone(int x, int y) {
+        return x >= 0 && y >= 0 && x < getColumns() && y < getRows();
     }
 
     public void showPopup(Component component, int x, int y) {

@@ -7,7 +7,6 @@ import java.util.List;
 
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone.Type;
-import nl.tudelft.bw4t.map.editor.gui.ZonePanel;
 import nl.tudelft.bw4t.map.editor.model.Zone;
 
 /**

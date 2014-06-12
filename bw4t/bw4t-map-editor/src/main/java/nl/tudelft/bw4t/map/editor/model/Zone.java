@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.map.editor.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import nl.tudelft.bw4t.map.BlockColor;
@@ -8,7 +9,7 @@ import nl.tudelft.bw4t.map.Zone.Type;
 public class Zone {
 
 	private Type type = Type.CORRIDOR;
-	private List<BlockColor> colors;
+	private List<BlockColor> colors = new ArrayList<>();
 	
 	public static final int NORTH = 0;
 	public static final int EAST = 1;
@@ -17,10 +18,10 @@ public class Zone {
 	
 	private boolean[] doorsbool = new boolean[4];
 	
-	private boolean isDropZone;
-	private boolean isStartZone;
+	private boolean isDropZone = false;
+	private boolean isStartZone = false;
 	
-	private String name;
+	private String name = "";
 	
 	public Type getType() {
 		return type;
@@ -31,6 +32,8 @@ public class Zone {
 	}
 	
 	public String getName() {
+	    if(isDropZone())
+	        return nl.tudelft.bw4t.map.Zone.DROP_ZONE_NAME;
 		return name;
 	}
 

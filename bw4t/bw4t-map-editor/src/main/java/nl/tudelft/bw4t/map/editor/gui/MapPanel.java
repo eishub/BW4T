@@ -34,10 +34,10 @@ public class MapPanel extends JPanel implements UpdateableEditorInterface {
         zones = new ZonePanel[controller.getRows()][controller.getColumns()];
         mapGrid.setLayout(new GridLayout(controller.getRows(), controller.getColumns()));
 
-        for (int x = 0; x < controller.getRows(); x++) {
-            for (int y = 0; y < controller.getColumns(); y++) {
-                zones[x][y] = new ZonePanel(controller.getZoneController(x, y));
-                mapGrid.add(zones[x][y]);
+        for (int row = 0; row < controller.getRows(); row++) {
+            for (int col = 0; col < controller.getColumns(); col++) {
+                zones[row][col] = new ZonePanel(controller.getZoneController(row, col));
+                mapGrid.add(zones[row][col]);
             }
         }
         this.add(new JScrollPane(mapGrid), BorderLayout.CENTER);
