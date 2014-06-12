@@ -50,6 +50,26 @@ public class ZoneController extends MouseAdapter {
     	return model.getType();
     }
     
+    public void setType(Type t) {
+    	model.setType(t);
+    }
+    
+    public boolean isDropZone() {
+    	return model.isDropZone();
+    }
+    
+    public void setDropZone(boolean isDZ) {
+    	model.setDropZone(isDZ);
+    }
+    
+    public boolean isStartZone() {
+    	return model.isStartZone();
+    }
+    
+    public void setStartZone(boolean isSZ) {
+    	model.setStartZone(isSZ);
+    }
+    
     public String getName() {
     	return model.getName();
     }

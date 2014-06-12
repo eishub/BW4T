@@ -63,80 +63,80 @@ public class ZonePopupMenu extends JPopupMenu {
 	}
 	
     /**
-     * JMenuItem to change an area to a corridor.
-     * @return The JMenuItem to change an area to a corridor.
+     * JMenuItem to change an zone to a corridor.
+     * @return The JMenuItem to change an zone to a corridor.
      */
-    public final JMenuItem getMenuItemAreaCorridor() {
+    public final JMenuItem getMenuItemZoneCorridor() {
         return corridor;
     }
     
     /**
-     * JMenuItem to change an area to a room.
-     * @return The JMenuItem to change an area to a room.
+     * JMenuItem to change an zone to a room.
+     * @return The JMenuItem to change an zone to a room.
      */
-    public final JMenuItem getMenuItemAreaRoom() {
+    public final JMenuItem getMenuItemZoneRoom() {
         return room;
     }
     
     /**
-     * JMenuItem to change an area to a blockade.
-     * @return The JMenuItem to change an area to a blockade.
+     * JMenuItem to change an zone to a blockade.
+     * @return The JMenuItem to change an zone to a blockade.
      */
-    public final JMenuItem getMenuItemAreaBlockade() {
+    public final JMenuItem getMenuItemZoneBlockade() {
         return blockade;
     }
     
     /**
-     * JMenuItem to change an area to a chargingZone.
-     * @return The JMenuItem to change an area to a chargingZone.
+     * JMenuItem to change an zone to a chargingZone.
+     * @return The JMenuItem to change an zone to a chargingZone.
      */
-    public final JMenuItem getMenuItemAreaChargingZone() {
+    public final JMenuItem getMenuItemZoneChargingZone() {
         return chargingZone;
     }
     
     /**
-     * JMenuItem to change an area to a startZone.
-     * @return The JMenuItem to change an area to a startZone.
+     * JMenuItem to change an zone to a startZone.
+     * @return The JMenuItem to change an zone to a startZone.
      */
-    public final JMenuItem getMenuItemAreaStartZone() {
+    public final JMenuItem getMenuItemZoneStartZone() {
         return startZone;
     }
     
     /**
-     * JMenuItem to change an area to a dropZone.
-     * @return The JMenuItem to change an area to a dropZone.
+     * JMenuItem to change an zone to a dropZone.
+     * @return The JMenuItem to change an zone to a dropZone.
      */
-    public final JMenuItem getMenuItemAreaDropZone() {
+    public final JMenuItem getMenuItemZoneDropZone() {
         return dropZone;
     }
 
     /**
-     * JMenuItem to change an area to a dropZone.
-     * @return The JMenuItem to change an area to a dropZone.
+     * JMenuItem to change an zone to a dropZone.
+     * @return The JMenuItem to change an zone to a dropZone.
      */
     public final JMenuItem getMenuItemDoorSideNorth() {
         return north;
     }
     
     /**
-     * JMenuItem to change an area to a dropZone.
-     * @return The JMenuItem to change an area to a dropZone.
+     * JMenuItem to change an zone to a dropZone.
+     * @return The JMenuItem to change an zone to a dropZone.
      */
     public final JMenuItem getMenuItemDoorSideEast() {
         return east;
     }
     
     /**
-     * JMenuItem to change an area to a dropZone.
-     * @return The JMenuItem to change an area to a dropZone.
+     * JMenuItem to change an zone to a dropZone.
+     * @return The JMenuItem to change an zone to a dropZone.
      */
     public final JMenuItem getMenuItemDoorSideSouth() {
         return south;
     }
     
     /**
-     * JMenuItem to change an area to a dropZone.
-     * @return The JMenuItem to change an area to a dropZone.
+     * JMenuItem to change an zone to a dropZone.
+     * @return The JMenuItem to change an zone to a dropZone.
      */
     public final JMenuItem getMenuItemDoorSideWest() {
         return west;

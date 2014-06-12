@@ -1,6 +1,8 @@
 package nl.tudelft.bw4t.map.editor.controller;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -20,6 +22,7 @@ import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.map.Rectangle;
 import nl.tudelft.bw4t.map.RenderOptions;
 import nl.tudelft.bw4t.map.Zone;
+import nl.tudelft.bw4t.map.Zone.Type;
 import nl.tudelft.bw4t.map.editor.EnvironmentStore;
 import nl.tudelft.bw4t.map.editor.controller.ZoneController;
 import nl.tudelft.bw4t.map.editor.gui.ZonePopupMenu;
@@ -98,6 +101,63 @@ public class MapPanelController {
         		zonecontrollers[i][j] = new ZoneController(this, i, j, new nl.tudelft.bw4t.map.editor.model.Zone());
         	}
         }
+        
+        attachListenersToZoneMenu();
+    }
+    
+    public void attachListenersToZoneMenu() {
+    	this.getZoneMenu().getMenuItemZoneBlockade().addActionListener(new ActionListener() {
+    		@Override
+    		public void actionPerformed(ActionEvent ae) {
+    			createZone(Type.BLOCKADE, false, false);
+    		}
+    	});
+    	
+    	this.getZoneMenu().getMenuItemZoneChargingZone().addActionListener(new ActionListener() {
+    		@Override
+    		public void actionPerformed(ActionEvent ae) {
+    			createZone(Type.CHARGINGZONE, false, false);
+    		}
+    	});
+    	
+    	this.getZoneMenu().getMenuItemZoneCorridor().addActionListener(new ActionListener() {
+    		@Override
+    		public void actionPerformed(ActionEvent ae) {
+    			createZone(Type.CORRIDOR, false, false);
+    		}
+    	});
+    	
+    	this.getZoneMenu().getMenuItemZoneDropZone().addActionListener(new ActionListener() {
+    		@Override
+    		public void actionPerformed(ActionEvent ae) {
+    			createZone(Type.ROOM, true, false);
+    		}
+    	});
+    	
+    	this.getZoneMenu().getMenuItemZoneRoom().addActionListener(new ActionListener() {
+    		@Override
+    		public void actionPerformed(ActionEvent ae) {
+    			createZone(Type.ROOM, false, false);
+    		}
+    	});
+    	
+    	this.getZoneMenu().getMenuItemZoneStartZone().addActionListener(new ActionListener() {
+    		@Override
+    		public void actionPerformed(ActionEvent ae) {
+    			createZone(Type.CORRIDOR, false, true);
+    		}
+    	});
+    }
+    
+    public void createZone(Type t, boolean isDropZone, boolean isStartZone) {
+    	if (selected != null) {
+    		selected.setType(t);
+    		selected.setDropZone(isDropZone);
+    		selected.setStartZone(isStartZone);
+   			System.out.println(t + " at (" + selected.getRow() + ", " + selected.getColumn() + ")" );
+   	    	selected.getUpdateableEditorInterface().update();
+    	}
+    	selected = null;
     }
 
     public int getRows() {

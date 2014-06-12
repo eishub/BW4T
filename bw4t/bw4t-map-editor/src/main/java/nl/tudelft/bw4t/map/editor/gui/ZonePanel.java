@@ -54,10 +54,9 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
         this.remove(sequence);
         switch (controller.getType()) {
         case ROOM:
-            if (controller.getName().equals(Zone.DROP_ZONE_NAME)) {
+            if (controller.isDropZone()) {
                 this.setBackground(Color.DARK_GRAY);
-            }
-            else {
+            } else {
                 this.setBackground(Color.GRAY);
                 this.add(sequence, BorderLayout.SOUTH);
             }
@@ -69,10 +68,17 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
             this.setBackground(Zone.BLOCKADE_COLOR);
             break;
         case CORRIDOR:
+        	if (controller.isStartZone()) {
+        		this.setBackground(Color.CYAN);
+        	} else {
+        		this.setBackground(originalColor);
+        	}
         default:
-            this.setBackground(originalColor);
             break;
         }
+        
+        revalidate();
+        repaint();
     }
 
 }
