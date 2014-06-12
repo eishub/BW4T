@@ -417,7 +417,7 @@ public class MapPanelController implements ChangeListener {
         if (z1.getType() == Type.CORRIDOR || z1.getType() == Type.CHARGINGZONE) {
             if (z2.getType() == Type.CORRIDOR || z2.getType() == Type.CHARGINGZONE) {
                 z2.addNeighbour(z1);
-                z1.addNeighbour(z2);
+                z1.addNeighbour(z2); 
             }
         }
         else {
