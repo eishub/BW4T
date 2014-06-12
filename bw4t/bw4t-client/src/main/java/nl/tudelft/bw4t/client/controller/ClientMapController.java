@@ -283,7 +283,10 @@ public class ClientMapController extends AbstractMapController {
     }
 
     /**
-     * Process sequence percept.
+     * Process sequence percept. 
+     * 
+     * TODO: This function process a list of lists, seems like it should only process a list,
+     * why is this?
      * 
      * @param perceptParameters
      *            the percept parameters
@@ -327,13 +330,13 @@ public class ClientMapController extends AbstractMapController {
         
         ViewEPartner epartner = getViewEPartner(id);
         if (epartner == null) {
-            LOGGER.info("creating " +name + "("+id + ", " + holderId + ")");
+            LOGGER.info("creating " + name + "(" + id + ", " + holderId + ")");
             epartner = new ViewEPartner();
             epartner.setId(id);
             getVisibleEPartners().add(epartner);
         }
         if (holderId == theBot.getId()) {
-            if(id != theBot.getHoldingEpartner()){
+            if (id != theBot.getHoldingEpartner()){
                 LOGGER.info("We are now holding the e-partner: " + id);
             }
             theBot.setHoldingEpartner(id);
@@ -377,7 +380,7 @@ public class ClientMapController extends AbstractMapController {
         if (function.getName().equals("occupied")) {
             LinkedList<Parameter> paramOcc = function.getParameters();
             removeOccupiedRoom(((Identifier) paramOcc.get(0)).getValue());
-        }else if (function.getName().equals("holding")) {
+        } else if (function.getName().equals("holding")) {
             theBot.getHolding().remove(((Numeral) function.getParameters().get(0)).getValue());
         }
     }
