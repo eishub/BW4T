@@ -64,6 +64,7 @@ public class ClientMapControllerTest {
     public void tearDown() throws Exception {
     }
 
+    @Ignore
     @Test
     public void testRun() {
         clientMapController.run();
