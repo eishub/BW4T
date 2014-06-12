@@ -33,7 +33,7 @@ public class Zone {
 	
 	public String getName() {
 	    if (isDropZone()) {
-	        return nl.tudelft.bw4t.map.Zone.DROP_ZONE_NAME + coordiname;
+	        return nl.tudelft.bw4t.map.Zone.DROP_ZONE_NAME;
 	    } else if (isStartZone()) {
 	    	return nl.tudelft.bw4t.map.Zone.START_ZONE_NAME + coordiname;
 	    } else if (getType() == Type.BLOCKADE) {
