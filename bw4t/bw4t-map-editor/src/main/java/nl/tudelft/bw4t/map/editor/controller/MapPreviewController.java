@@ -7,14 +7,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import nl.tudelft.bw4t.controller.AbstractMapController;
+import nl.tudelft.bw4t.map.renderer.AbstractMapController;
+import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Entity;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
-import nl.tudelft.bw4t.view.MapRendererInterface;
 
 public class MapPreviewController extends AbstractMapController {
 
