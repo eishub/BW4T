@@ -52,7 +52,7 @@ public class PerceptsHandler {
         } else if (guiEntity && humanType) {
             return tryGetAllPerceptsFromEntity(entity, remoteEnvironment);
         } else if (runningGUI) {
-            return tryGetAllPerceptsFromEntity(entity, remoteEnvironment);
+            return tryGetGUIPercepts(entity, remoteEnvironment);
         } else {
             return tryClientGetAllPerceptsFromEntity(entity, remoteEnvironment);
         }
