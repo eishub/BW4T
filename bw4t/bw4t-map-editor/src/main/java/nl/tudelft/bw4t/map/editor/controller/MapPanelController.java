@@ -388,6 +388,29 @@ public class MapPanelController implements ChangeListener {
                 z1.addNeighbour(z2);
             }
         }
+        else {
+        	int doorPos = determineDoorIndex(row1, col1, row2, col2);
+        	// TODO use the map.editor.model.Zone class instead of the map.Zone class.
+        }
+    }
+    
+    public int determineDoorIndex(int row1, int col1, int row2, int col2) {
+    	if (col1 == col2) {
+    		if (row1 > row2) {
+    			return 0;
+    		}
+    		else {
+    			return 2;
+    		}
+    	}
+    	else {
+    		if (col1 > col2) {
+    			return 3;
+    		} 
+    		else {
+    			return 1;
+    		}
+    	}
     }
 
     private Zone getZone(Zone[][] zones, int row, int col) {
