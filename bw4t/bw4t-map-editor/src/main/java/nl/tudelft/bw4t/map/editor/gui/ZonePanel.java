@@ -17,6 +17,8 @@ import nl.tudelft.bw4t.map.Zone.Type;
 
 public class ZonePanel extends JPanel implements UpdateableEditorInterface {
     private static final long serialVersionUID = 1568360768572796042L;
+    
+    private static final Dimension SIZE = new Dimension(100,70);
 
     private ZoneController controller;
     
@@ -38,12 +40,13 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
         sequence.addChangeListener(controller);
         
         this.setLayout(new BorderLayout());
+        
+        nameLabel.setHorizontalAlignment(JLabel.CENTER);
         this.add(nameLabel, BorderLayout.CENTER);
         
-        Dimension d = new Dimension(75,50);
-        this.setSize(d);
-        this.setPreferredSize(d);
-        this.setMinimumSize(d);
+        this.setSize(SIZE);
+        this.setPreferredSize(SIZE);
+        this.setMinimumSize(SIZE);
         
         update();
     }
@@ -55,10 +58,12 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
     @Override
     public void update() {
         nameLabel.setText(controller.getName());
+        nameLabel.setForeground(Color.BLACK);
         this.remove(sequence);
         switch (controller.getType()) {
         case ROOM:
             if (controller.isDropZone()) {
+                nameLabel.setForeground(Color.WHITE);
                 this.setBackground(Color.DARK_GRAY);
             } else {
                 this.setBackground(Color.GRAY);

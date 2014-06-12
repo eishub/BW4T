@@ -43,6 +43,7 @@ public class MapPanel extends JPanel implements UpdateableEditorInterface {
         this.add(new JScrollPane(mapGrid), BorderLayout.CENTER);
         
         dropSequence = new ColorSequenceEditor(MapPanelController.DROP_ZONE_SEQUENCE_LENGTH);
+        dropSequence.addChangeListener(controller);
         controller.getCSController().addColorSequenceEditor(dropSequence);
         this.add(dropSequence, BorderLayout.SOUTH);
         update();

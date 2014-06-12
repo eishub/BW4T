@@ -146,4 +146,8 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
         this.model.setColors(((ColorSequenceEditor)arg0.getSource()).getSequence());
     }
 
+    public boolean hasDoor(int dir) {
+        return this.model.hasDoor(dir);
+    }
+
 }
