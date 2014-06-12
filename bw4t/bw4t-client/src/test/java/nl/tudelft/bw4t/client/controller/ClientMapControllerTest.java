@@ -16,6 +16,7 @@ import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -45,6 +46,7 @@ public class ClientMapControllerTest {
         clientMapController = new ClientMapController(map, clientController);
     }
 
+    @Ignore
     @Test
     public void testRun() {
         clientMapController.run();
