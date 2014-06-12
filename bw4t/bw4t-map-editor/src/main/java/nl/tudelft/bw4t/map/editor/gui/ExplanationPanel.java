@@ -13,7 +13,7 @@ public class ExplanationPanel extends JPanel {
 	public ExplanationPanel() {
 		setLayout(new BorderLayout());
 		
-		JLabel message = new JLabel("To add blocks to the map, enter letters in rooms (up to 10) and target sequence.");
+		JLabel message = new JLabel("To add blocks to the map, enter the corresponding numbers in rooms (up to 10) and target sequence.");
 		
 		add(message, BorderLayout.CENTER);
 		add(new JSeparator(), BorderLayout.SOUTH);
