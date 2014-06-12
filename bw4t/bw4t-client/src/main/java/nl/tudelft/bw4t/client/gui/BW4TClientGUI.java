@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.client.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -18,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -91,7 +93,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
     private JLabel batteryLabel = new JLabel("Bot Battery: ");
     private JLabel botMessageLabel = new JLabel("Send message to: ");
     
-    private JTextField botBatteryField = new JTextField();
+    private JProgressBar batteryProgressBar = new JProgressBar(0, 100); 
     
     private JButton botMessageButton = new JButton("Choose message");
     private JButton epartnerMessageButton = new JButton("Choose message");
@@ -321,13 +323,16 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
     public void createBotOptionsBar() {
         botButtonPanel.setLayout(new BoxLayout(botButtonPanel, BoxLayout.X_AXIS));
         botButtonPanel.setFocusable(false);
-        botBatteryField.setEditable(false);
+        
+        batteryProgressBar.setForeground(Color.green);
+        batteryProgressBar.setStringPainted(true);
+        batteryProgressBar.setValue(100);
         
         agentSelector = new JComboBox<ComboAgentModel>(new ComboAgentModel(this));
-        
+
         botButtonPanel.add(batteryLabel);
-        botButtonPanel.add(botBatteryField);
-        botButtonPanel.add(botMessageLabel);
+        botButtonPanel.add(batteryProgressBar);
+        botButtonPanel.add(botMessageLabel); //TODO: uitzoeken waar de events worden afgehandeld.
         botButtonPanel.add(agentSelector);
         botButtonPanel.add(botMessageButton);
     
@@ -481,5 +486,13 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
      */
     public ClientController getController() {
         return controller;
+    }
+    
+    public JProgressBar getBatteryProgressBar() {
+        return batteryProgressBar;
+    }
+    
+    public void setBatteryProgressBar(JProgressBar progressBar) {
+        batteryProgressBar = progressBar;
     }
 }
