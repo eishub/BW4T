@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.model.robots;
 
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -23,6 +24,8 @@ import org.apache.log4j.Logger;
 
 import repast.simphony.context.Context;
 import repast.simphony.engine.schedule.ScheduledMethod;
+import repast.simphony.query.space.grid.GridCell;
+import repast.simphony.query.space.grid.GridCellNgh;
 import repast.simphony.random.RandomHelper;
 import repast.simphony.space.SpatialException;
 import repast.simphony.space.SpatialMath;
@@ -30,6 +33,7 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import eis.exceptions.EntityException;
 import repast.simphony.space.grid.Grid;
+import repast.simphony.space.grid.GridPoint;
 
 /**
  * Represents a robot in the BW4T environment.
@@ -440,17 +444,55 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     	}
     }
 
+    /**
+     * Check if the destination location is vacant, if not throw an exception.
+     * Only relevant if collisions are enabled.
+     * @param destination
+     * @throws DestinationOccupiedException
+     */
     private void checkIfDestinationVacant(NdPoint destination) throws DestinationOccupiedException {
         if(BW4TEnvironment.getInstance().isCollisionEnabled()) {
-            Iterable<Object> objects = getSpace().getObjectsAt(destination.getX(), destination.getY());
-
-            for (Object el : objects) {
-                if (el instanceof IRobot) {
-                    throw new DestinationOccupiedException("Grid [" + destination.getX() + "," + destination.getY()
-                            + "] is occupied by " + el, (IRobot) el);
+            Rectangle2D.Double box = getBoundingBoxCenteredAt(destination);
+            for(GridCell<AbstractRobot> cell : getNeighbours()) {
+                for(AbstractRobot bot : cell.items()) {
+                    if(this != bot) {
+                        if(box.intersects(bot.getBoundingBox())) {
+                                throw new DestinationOccupiedException("Grid [" + destination.getX() + "," + destination.getY()
+                                        + "] is occupied by " + bot, bot);
+                        }
+                    }
                 }
             }
         }
+    }
+
+    /**
+     * Function that creates a rectangle the same size as the bot centered
+     * at the destination locations.
+     * @param destination The destination its centered at.
+     * @return
+     */
+    private Rectangle2D.Double getBoundingBoxCenteredAt(NdPoint destination) {
+        Rectangle2D.Double box = new Rectangle2D.Double();
+        box.x = destination.getX();
+        box.y = destination.getY();
+        box.width = getSize();
+        box.height = getSize();
+        return box;
+    }
+
+    /**
+     * Retrieve all neighbouring robots.
+     * @return
+     */
+    private List<GridCell<AbstractRobot>> getNeighbours() {
+        Grid<Object> grid = getGrid();
+        GridPoint location = getGridLocation();
+
+        // Check one block further than your own size for other bots.
+        GridCellNgh<AbstractRobot> nghCreator = new GridCellNgh<AbstractRobot>(grid, location, AbstractRobot.class, getSize() + 1, getSize() + 1);
+        List<GridCell<AbstractRobot>> gridCells = nghCreator.getNeighborhood(true);
+        return gridCells;
     }
 
 
