@@ -10,7 +10,7 @@ import nl.tudelft.bw4t.map.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.map.editor.gui.ExplanationPanel;
 import nl.tudelft.bw4t.map.editor.gui.MapPanel;
 import nl.tudelft.bw4t.map.editor.gui.MenuBar;
-import nl.tudelft.bw4t.map.editor.gui.OldSizeDialog;
+import nl.tudelft.bw4t.map.editor.gui.SizeDialog;
 import nl.tudelft.bw4t.map.editor.gui.SizeDialog;
 import nl.tudelft.bw4t.map.editor.util.DefaultOptionPrompt;
 import nl.tudelft.bw4t.map.editor.util.OptionPrompt;
@@ -151,13 +151,13 @@ public class EnvironmentStore extends JFrame {
      * @param args Unused parameter
      */
     public static void main(String[] args) {
-        OldSizeDialog dialog = new OldSizeDialog();
+        SizeDialog dialog = new SizeDialog();
         if (JOptionPane.CLOSED_OPTION == JOptionPane.showOptionDialog(null,
                 dialog, "BW4T Map Editor - Map Size Dialog",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
                 null, null)) {
             System.exit(0);
-        }
+        
 
         MapPanelController themap = new MapPanelController(dialog.getRows(), dialog.getColumns(),
                 dialog.getEntities(), dialog.isRandomMap(),
