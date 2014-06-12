@@ -3,7 +3,7 @@ package nl.tudelft.bw4t.scenariogui.util;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
-public class BotJTable extends JTable {
+public class EntityJTable extends JTable {
     
     /**
      * BotJTable extends JTable in order to use a custom cell renderer.
@@ -13,7 +13,7 @@ public class BotJTable extends JTable {
     private EntityTableCellRenderer cellRenderer;
     
 
-    public BotJTable() {
+    public EntityJTable() {
         cellRenderer = new EntityTableCellRenderer();
     }
 
