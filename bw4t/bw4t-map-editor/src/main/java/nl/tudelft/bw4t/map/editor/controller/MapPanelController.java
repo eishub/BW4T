@@ -169,7 +169,6 @@ public class MapPanelController implements ChangeListener {
             selected.setType(t);
             selected.setDropZone(isDropZone);
             selected.setStartZone(isStartZone);
-            System.out.println(t + " at (" + selected.getRow() + ", " + selected.getColumn() + ")");
             selected.getUpdateableEditorInterface().update();
         }
         selected = null;
