@@ -363,11 +363,10 @@ public class MapPanelController implements ChangeListener {
                 // TODO add the doors to the map
                 // TODO add Entity spawn points on Startzones
                 output[row][col].setBlocks(room.getColors());
-
-                // connect them wth each other
-                connectToGrid(output, row, col);
             }
         }
+        // connect all the zones
+        connect(output);
         if (!foundDropzone) {
             throw new MapFormatException("No DropZone found on the map!");
         }
@@ -376,53 +375,127 @@ public class MapPanelController implements ChangeListener {
         }
 
         setRenderOptions(map);
-
         return map;
     }
-
     /**
-     * Try to connect the zones to a grid. through the tryConnect method.
-     * 
-     * @param zones
-     * @param row
-     * @param col
+     * Check what type of zone the current zone is. Then call the correct connect method.
+     * @param zones - matrix of the map
      */
-    private void connectToGrid(Zone[][] zones, int row, int col) {
-        tryConnect(zones, row, col, row, col - 1);
-        tryConnect(zones, row, col, row + 1, col);
-        tryConnect(zones, row, col, row, col + 1);
-        tryConnect(zones, row, col, row - 1, col);
+    private void connect(Zone[][] zones){
+    	for(int row = 0; row < zones.length; row++){
+    		for( int col = 0; col < zones[0].length; col++){
+    			if(zones[row][col].getType() == Type.CORRIDOR || zones[row][col].getType() == Type.CHARGINGZONE){
+    				connectCorridor(zones, row, col);
+    			} else if(zones[row][col].getType() == Type.ROOM){
+    				connectRoom(zones, row, col);
+    			} else {
+    				//it is a blockade and thus it should not be connected.
+    			}
+    		}
+    	}
     }
-
+    
     /**
-     * Try to connect the zones to the grid.
-     * 
-     * @param zones
-     * @param row1
-     * @param col1
-     * @param row2
-     * @param col2
+     * For a corridor all adjacent zones should be added.
+     * @param zones - matrix of the map
+     * @param row indicates where the current zone is
+     * @param col indicates where the current zone is
      */
-    private void tryConnect(Zone[][] zones, int row1, int col1, int row2, int col2) {
-        if (Math.abs(row1 - row2) + Math.abs(col1 - col2) != 1) {
-            return;
-        }
-        Zone z1 = getZone(zones, row1, col1);
-        Zone z2 = getZone(zones, row2, col2);
-        if (z1 == null || z2 == null) {
-            return;
-        }
-        // TODO figure out how to handle doors
-        if (z1.getType() == Type.CORRIDOR || z1.getType() == Type.CHARGINGZONE) {
-            if (z2.getType() == Type.CORRIDOR || z2.getType() == Type.CHARGINGZONE) {
-                z2.addNeighbour(z1);
-                z1.addNeighbour(z2); 
-            }
-        }
-        else {
-        	int doorPos = determineDoorIndex(row1, col1, row2, col2);
-        	// TODO use the map.editor.model.Zone class instead of the map.Zone class.
-        }
+    private void connectCorridor(Zone[][] zones, int row, int col) {
+    	connectWest(zones, row, col);
+    	connectNorth(zones, row, col);
+    	connectEast(zones, row, col);
+    	connectSouth(zones, row, col);
+    }
+    
+    /**
+     * For a room, only adjacent zones where a door is positioned should be added.
+     * @param zones - matrix of the map
+     * @param row indicates where the current zone is
+     * @param col indicates where the current zone is
+     */
+    private void connectRoom(Zone[][] zones, int row, int col){
+    	if (zones[row][col].hasEast()) {
+    		connectEast(zones, row, col);
+    	}
+    	if (zones[row][col].hasNorth()) {
+    		connectNorth(zones, row, col);
+    	}
+    	if (zones[row][col].hasWest()) {
+    		connectWest(zones, row, col);
+    	}
+    	if (zones[row][col].hasSouth()) {
+    		connectSouth(zones, row, col);
+    	}
+    }
+    
+    /**
+     * Connect the west neighbour
+     * @param zones - matrix of the map
+     * @param row indicates where the current zone is
+     * @param col indicates where the current zone is
+     */
+    private void connectWest(Zone[][] zones, int row, int col){
+    	try{
+    		if ((zones[row][col - 1].getType() == Type.ROOM && zones[row][col - 1].hasEast()) || 
+    				zones[row][col - 1].getType() == Type.CORRIDOR || 
+    				zones[row][col - 1].getType() == Type.CHARGINGZONE){
+    			zones[row][col].addNeighbour(zones[row][col - 1]);
+    		}
+    	} catch(IndexOutOfBoundsException e){
+    		//Do nothing.
+    	}
+    }
+    /**
+     * Connect the north neighbour
+     * @param zones - matrix of the map
+     * @param row indicates where the current zone is
+     * @param col indicates where the current zone is
+     */
+    private void connectNorth(Zone[][] zones, int row, int col){
+    	try{
+    		if ((zones[row - 1][col].getType() == Type.ROOM && zones[row - 1][col].hasSouth()) || 
+    				zones[row - 1][col].getType() == Type.CORRIDOR || 
+    				zones[row - 1][col].getType() == Type.CHARGINGZONE){
+    			zones[row][col].addNeighbour(zones[row - 1][col]);
+    		}
+    	} catch(IndexOutOfBoundsException e){
+    		//Do nothing.
+    	}
+    }
+    /**
+     * Connect the east neighbour
+     * @param zones - matrix of the map
+     * @param row indicates where the current zone is
+     * @param col indicates where the current zone is
+     */
+    private void connectEast(Zone[][] zones, int row, int col){
+    	try{
+    		if ((zones[row][col + 1].getType() == Type.ROOM && zones[row][col + 1].hasWest()) || 
+    				zones[row][col + 1].getType() == Type.CORRIDOR || 
+    				zones[row][col + 1].getType() == Type.CHARGINGZONE){
+    			zones[row][col].addNeighbour(zones[row][col + 1]);
+    		}
+    	} catch(IndexOutOfBoundsException e){
+    		//Do nothing.
+    	}
+    }
+    /**
+     * Connect the south neighbour
+     * @param zones - matrix of the map
+     * @param row indicates where the current zone is
+     * @param col indicates where the current zone is
+     */
+    private void connectSouth(Zone[][] zones, int row, int col){
+    	try{
+    		if ((zones[row + 1][col].getType() == Type.ROOM && zones[row + 1][col].hasNorth()) || 
+    				zones[row + 1][col].getType() == Type.CORRIDOR || 
+    				zones[row + 1][col].getType() == Type.CHARGINGZONE){
+    			zones[row][col].addNeighbour(zones[row + 1][col]);
+    		}
+    	} catch(IndexOutOfBoundsException e){
+    		//Do nothing.
+    	}
     }
     
     public int determineDoorIndex(int row1, int col1, int row2, int col2) {
@@ -445,7 +518,7 @@ public class MapPanelController implements ChangeListener {
     }
 
     /**
-     * Get the zone from certain cordinates.
+     * Get the zone from certain coordinates.
      * @param zones
      * @param row
      * @param col

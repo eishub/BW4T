@@ -9,6 +9,8 @@ import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import nl.tudelft.bw4t.map.Door.Orientation;
+
 /**
  * A zone is a square area in the map. The zone also functions as a 'navpoint'
  * in that the bot uses these zones for navigation. The navpoint is the middle
@@ -176,6 +178,54 @@ public class Zone implements Serializable {
 
     public void setRenderOptions(RenderOptions renderOptions) {
         this.renderOptions = renderOptions;
+    }
+    /**
+     * 
+     * @return true if the zone has a door on its north side.
+     */
+    public boolean hasNorth() {
+    	for (Door d : doors) {
+    		if (d.getOrientation() == Orientation.HORIZONTAL) {
+    			return (d.getPosition().getY() == boundingbox.getY());
+    		}
+    	}
+    	return false;
+    }
+    /**
+     * 
+     * @return true if the zone has a door on its east side.
+     */
+    public boolean hasEast() {
+    	for (Door d : doors) {
+    		if (d.getOrientation() == Orientation.VERTICAL) {
+    			return (d.getPosition().getX() != boundingbox.getX());
+    		}
+    	}
+    	return false;
+    }
+    /**
+     * 
+     * @return true if the zone has a door on its south side.
+     */
+    public boolean hasSouth() {
+    	for (Door d : doors) {
+    		if (d.getOrientation() == Orientation.HORIZONTAL) {
+    			return (d.getPosition().getY() != boundingbox.getY());
+    		}
+    	}
+    	return false;
+    }
+    /**
+     * 
+     * @return true if the zone has a door on its west side.
+     */
+    public boolean hasWest() {
+    	for (Door d : doors) {
+    		if (d.getOrientation() == Orientation.VERTICAL) {
+    			return (d.getPosition().getX() == boundingbox.getX());
+    		}
+    	}
+    	return false;
     }
 
 }
