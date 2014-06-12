@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.scenariogui.editor.gui;
+package nl.tudelft.bw4t.scenariogui.editor.gui.panel;
 
 import java.awt.Component;
 import java.awt.event.ActionListener;
@@ -16,6 +16,8 @@ import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.editor.controller.AbstractMenuOption;
 import nl.tudelft.bw4t.scenariogui.editor.controller.ScenarioEditorController;
+import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.util.ExportToMASTest;
 import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
@@ -25,6 +27,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -181,6 +184,63 @@ public class MenuBarTest {
         
         assertEquals(config.getEpartner(0).getEpartnerAmount(), Integer.parseInt(ePartnerTableModel.getValueAt(0, 2).toString()));
         assertEquals(config.getEpartner(1).getEpartnerAmount(), Integer.parseInt(ePartnerTableModel.getValueAt(1, 2).toString()));
+    }
+    
+    /**
+     * Tests if saving a saved configuration doesn't show a dialog.
+     * @throws IOException 
+     */
+    @Test
+    public void testSaveAfterSave() throws IOException {
+        // Create the file so that the check if the file exists doesn't get triggered.
+        new File(FILE_SAVE_PATH).createNewFile();
+        // set the last file location, so the quick save is possible
+        editor.getTopMenuBar().setLastFileLocation(FILE_SAVE_PATH);
+
+        editor.getTopMenuBar().getMenuItemFileSave().doClick();
+        
+        //verify if the filechooser doesn't open its dialog
+        verify(filechooser, never()).showDialog((Component) any(), (String) any());
+    }
+    
+    /**
+     * Tests if saving a saved configuration which has been deleted
+     * saves correctly.
+     * @throws IOException 
+     */
+    @Ignore
+    public void testSaveAfterDeletedSave() throws IOException {
+        // set the last file location without creating the file
+        editor.getTopMenuBar().setLastFileLocation("TestPath");
+
+        editor.getTopMenuBar().getMenuItemFileSave().doClick();
+        
+        //verify if the filechooser doesn't open its dialog
+        verify(filechooser, never()).showDialog((Component) any(), (String) any());
+    }
+    
+    /**
+     * Tests if the configuration doesn't ask to save when save is clicked
+     * if there is no map given and clicking no on the prompt.
+     */
+    @Test
+    public void testSaveNoMapCancel() {
+        // Create a NoMockOptionPrompt object to spy on.
+        NoMockOptionPrompt noMockOption = spy(new NoMockOptionPrompt());
+
+        // Set the controllers to mock no.
+        ActionListener[] listeners = editor.getTopMenuBar().getMenuItemFileOpen().getActionListeners();
+
+        // There should be one listener, so we check that and then change the option pane.
+        assert listeners.length == 1;
+        ScenarioEditor.setOptionPrompt(noMockOption);
+        
+        editor.getTopMenuBar().getMenuItemFileSave().doClick();
+        
+        //verify if the confirmation dialog opened once
+        verify(noMockOption, times(1)).showConfirmDialog((Component) any(), anyObject(), anyString(), anyInt(), anyInt());
+        //verify if the filechooser doesn't open its dialog
+        verify(filechooser, never()).showDialog((Component) any(), (String) any());
     }
        
     /**
