@@ -47,6 +47,7 @@ class ModifyEPartner implements ActionListener {
         } 
         else {
             new EpartnerFrame(new EpartnerController(view, row), model);
+            view.getEntityPanel().setEpartnerStore(true);
         }
     }
 }

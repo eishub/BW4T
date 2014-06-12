@@ -120,22 +120,11 @@ public class ConfigurationPanel extends JPanel {
 
         mapSpec = new MapSpec(DefaultConfigurationValues.MAP_FILE.getValue());
 
-        // showConfigLabel();
         showClientOptions();
         showServerOptions();
         showGuiOptions();
         showMapOptions();
 
-    }
-
-    /**
-     * Show the "Configuration" label in the panel.
-     */
-    private void showConfigLabel() {
-        c.gridx = 0;
-        c.gridy = 0;
-        c.weightx = 1;
-        add(new JLabel("Configuration"), c);
     }
 
     /**
