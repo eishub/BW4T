@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.JFileChooser;
 import javax.swing.event.ChangeEvent;
@@ -684,5 +685,19 @@ public class MapPanelController implements ChangeListener {
     public void stateChanged(ChangeEvent e) {
         this.sequence = ((ColorSequenceEditor) e.getSource()).getSequence();
 
+    }
+    
+    /**
+     * Creates a random sequence
+     * @param input	the list of available colors
+     * @param sequencelength how long you want the sequence to be
+     * @return the random sequence
+     */
+    public List<BlockColor> makeRandomSequence(ArrayList<BlockColor> input, int sequencelength) {
+        Random random = new Random();
+        for (int n = 0; n < sequencelength; n++) {
+            sequence.add(input.get(random.nextInt(input.size())));
+        }
+        return sequence;
     }
 }
