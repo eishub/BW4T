@@ -93,7 +93,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
     private JLabel batteryLabel = new JLabel("Bot Battery: ");
     private JLabel botMessageLabel = new JLabel("Send message to: ");
     
-    private JProgressBar batteryProgressBar = new JProgressBar(0, 100); 
+    private JProgressBar batteryProgressBar = new JProgressBar(0, 1); 
     
     private JButton botMessageButton = new JButton("Choose message");
     private JButton epartnerMessageButton = new JButton("Choose message");
