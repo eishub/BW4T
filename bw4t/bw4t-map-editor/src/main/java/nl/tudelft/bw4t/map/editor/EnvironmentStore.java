@@ -7,7 +7,6 @@ import javax.swing.JOptionPane;
 
 import nl.tudelft.bw4t.map.editor.controller.EnvironmentStoreController;
 import nl.tudelft.bw4t.map.editor.controller.MapPanelController;
-import nl.tudelft.bw4t.map.editor.gui.ColorLegendaPanel;
 import nl.tudelft.bw4t.map.editor.gui.ExplanationPanel;
 import nl.tudelft.bw4t.map.editor.gui.MapPanel;
 import nl.tudelft.bw4t.map.editor.gui.MenuBar;
