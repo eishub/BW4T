@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.map.editor.controller;
 
+import java.awt.Component;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,6 +22,7 @@ import nl.tudelft.bw4t.map.RenderOptions;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.editor.EnvironmentStore;
 import nl.tudelft.bw4t.map.editor.controller.ZoneController;
+import nl.tudelft.bw4t.map.editor.gui.ZonePopupMenu;
 
 /**
  * This holds the map that the user designed. This is an abstract map contianing
@@ -33,6 +35,7 @@ public class MapPanelController {
     private ColorSequenceController cscontroller;
     private int numberOfEntities = 0;
     private boolean randomize;
+    private ZoneController selected = null;
     /**
      * the target sequence.
      * */
@@ -53,11 +56,13 @@ public class MapPanelController {
     static final int YDISP = 2;
     private static final String DROPZONE = "DropZone";
     private static final String FRONTDROPZONE = "FrontDropZone";
-    public static final int DROP_ZONE_SEQUENCE_LENGTH = 10;
+    public static final int DROP_ZONE_SEQUENCE_LENGTH = 12;
 
     private boolean isLabelsVisible;
     
     private UpdateableEditorInterface uei;
+    
+    private ZonePopupMenu zoneMenu = new ZonePopupMenu();
 
     /**
      * size of map is fixed, you can't change it after construction.
@@ -164,6 +169,18 @@ public class MapPanelController {
 	public ColorSequenceController getCSController() {
 		return cscontroller;
 	}
+
+    public ZoneController getSelected() {
+        return selected;
+    }
+
+    public void setSelected(ZoneController selected) {
+        this.selected = selected;
+    }
+
+    public ZonePopupMenu getZoneMenu() {
+        return zoneMenu;
+    }
 
     /**
      * Save the real map to given file
@@ -476,5 +493,9 @@ public class MapPanelController {
     
     public ZoneController getZoneController(int x, int y) {
     	return zonecontrollers[x][y];
+    }
+
+    public void showPopup(Component component, int x, int y) {
+        getZoneMenu().show(component, x, y);
     }
 }

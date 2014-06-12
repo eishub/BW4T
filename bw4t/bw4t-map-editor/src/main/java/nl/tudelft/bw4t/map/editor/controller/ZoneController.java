@@ -1,16 +1,19 @@
 package nl.tudelft.bw4t.map.editor.controller;
 
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone.Type;
+import nl.tudelft.bw4t.map.editor.gui.ZonePanel;
 import nl.tudelft.bw4t.map.editor.model.Zone;
 
 /**
  * This contains the room information: the blocks that the room contains.
  */
-public class ZoneController {
+public class ZoneController extends MouseAdapter {
 
     private int row, column; // should match the position in the map table
     
@@ -93,6 +96,17 @@ public class ZoneController {
 
 	public void setUpdateableEditorInterface(UpdateableEditorInterface ui) {
 		uei = ui;
+	}
+	
+	@Override
+	public void mousePressed(MouseEvent e) {
+	    System.out.println("fuck");
+	    if (e.isPopupTrigger()) {
+	        System.out.println("pooping");
+            getMapController().setSelected(this);
+            
+            getMapController().showPopup(e.getComponent(), e.getX(), e.getY());
+        }
 	}
 
 }

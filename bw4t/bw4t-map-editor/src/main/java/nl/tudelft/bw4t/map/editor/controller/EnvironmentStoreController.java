@@ -49,7 +49,7 @@ public class EnvironmentStoreController {
 		
 		// Change Area to corridor
 		// TODO: Move actionlistener to new class (AreaChangeToCorridor) for MVC
-		getMainView().getRightClickPopup().getMenuItemAreaCorridor().addActionListener(new ActionListener() {
+		theMap.getZoneMenu().getMenuItemAreaCorridor().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 		    	System.out.println("Change to Corridor");

@@ -83,6 +83,7 @@ public class ColorSequenceEditor extends JComponent {
     }
 
     private void setupAperance() {
+        this.setBackground(Color.WHITE);
         Dimension d = new Dimension(BORDER * 2 + COLOR_SIZE * maxLength, BORDER * 2 + COLOR_SIZE);
         setMinimumSize(d);
         setPreferredSize(d);
@@ -164,7 +165,8 @@ public class ColorSequenceEditor extends JComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+        g.setColor(getBackground());
+        g.clearRect(BORDER, BORDER, getWidth() - BORDER * 2, getHeight() - BORDER * 2);
         Dimension s = this.getSize();
         int width = Math.max(1, (s.width - BORDER * 2) / maxLength);
         int height = s.height - BORDER * 2;

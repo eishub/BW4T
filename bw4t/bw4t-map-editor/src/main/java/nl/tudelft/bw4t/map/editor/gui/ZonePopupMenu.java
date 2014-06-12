@@ -1,30 +1,20 @@
 package nl.tudelft.bw4t.map.editor.gui;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.JTable;
 
-import nl.tudelft.bw4t.map.editor.EnvironmentStore;
-
-public class RightClickPopup extends JPopupMenu {
+public class ZonePopupMenu extends JPopupMenu {
 
 	private static final long serialVersionUID = -5335591852441574491L;
 	
 	private JMenu zoneType, doorSide;
 	
-	private EnvironmentStore view;
-	
 	private JMenuItem randomize;
 	private JMenuItem corridor, room, blockade, startZone, chargingZone, dropZone;
 	private JMenuItem north, east, south, west;
 	
-	public RightClickPopup(EnvironmentStore theView) {
-		view = theView;
-		
+	public ZonePopupMenu() {
 		// Create a Menu for Type Of Space
 		zoneType = new JMenu("Type of Zone");
         add(zoneType);
@@ -70,32 +60,7 @@ public class RightClickPopup extends JPopupMenu {
         randomize.setToolTipText("Randomize the blocks inside this room");
         add(randomize);
         
-        // Add the right click to the table
-        // TODO: Refactor to be MVC
-        view.getMapTable().addMouseListener( new MouseAdapter() {
-            public void mouseReleased(MouseEvent e) {
-                if (e.isPopupTrigger()) {
-                    JTable source = (JTable)e.getSource();
-                    int row = source.rowAtPoint(e.getPoint() );
-                    int column = source.columnAtPoint(e.getPoint() );
-
-                    if (!source.isRowSelected(row))
-                        source.changeSelection(row, column, false, false);
-
-                    show(e.getComponent(), e.getX(), e.getY());
-                }
-            }
-        });
-        
 	}
-	
-    /**
-     * Return the view being controlled.     *
-     * @return The JFrame being controlled.
-     */
-    public final EnvironmentStore getMainView() {
-        return view;
-    }
 	
     /**
      * JMenuItem to change an area to a corridor.
