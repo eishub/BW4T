@@ -65,10 +65,6 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
     
     public void setType(Type t) {
     	model.setType(t);
-    	if(!t.equals(Type.ROOM)) {
-    		List<BlockColor> empty = new ArrayList<BlockColor>();
-    		model.setColors(empty);
-    	}
     }
     
     public boolean isDropZone() {
