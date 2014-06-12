@@ -1,9 +1,5 @@
 package nl.tudelft.bw4t.client.environment;
 
-import eis.exceptions.EntityException;
-import eis.exceptions.PerceiveException;
-import eis.iilang.Percept;
-
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,6 +7,9 @@ import java.util.List;
 import nl.tudelft.bw4t.client.BW4TClient;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.startup.InitParam;
+import eis.exceptions.EntityException;
+import eis.exceptions.PerceiveException;
+import eis.iilang.Percept;
 
 /**
  * The Percepts Handler, which should retrieve the percepts from the environment.
@@ -45,25 +44,52 @@ public class PerceptsHandler {
      *            The NoEnvironmentException is thrown if an attempt to perform
      *            an action or to retrieve percepts has failed.
      */
-    public static List<Percept> getAllPerceptsFromEntity(String entity, RemoteEnvironment remoteEnvironment)
-            throws PerceiveException {
+    public static List<Percept> getAllPerceptsFromEntity(String entity, RemoteEnvironment remoteEnvironment) throws PerceiveException {
+        tryGetEntityConfig(entity, remoteEnvironment);
+        
+        if (remoteEnvironment.isConnectedToGoal() && !guiEntity && humanType) {
+            return clientEntity.getController().getToBePerformedAction();
+        } else if (guiEntity && humanType) {
+            return tryGetAllPerceptsFromEntity(entity, remoteEnvironment);
+        } else if (runningGUI) {
+            return tryGetAllPerceptsFromEntity(entity, remoteEnvironment);
+        } else {
+            return tryClientGetAllPerceptsFromEntity(entity, remoteEnvironment);
+        }
+        
+    }
+    
+    public static void tryGetEntityConfig(String entity, RemoteEnvironment remoteEnvironment) throws PerceiveException {
         try {
             getEntityConfig(entity, remoteEnvironment);
-            if (remoteEnvironment.isConnectedToGoal() && !guiEntity && humanType) {
-                return clientEntity.getController().getToBePerformedAction();
-            } else if (guiEntity && humanType) {
-                return client.getAllPerceptsFromEntity(entity.replace("gui", ""));
-            } else if (runningGUI) {
-                return getGUIPercepts(entity);
-            }
-            return client.getAllPerceptsFromEntity(entity);
-        } catch (RemoteException e) {
-            throw remoteEnvironment.environmentSuddenDeath(e);
         } catch (EntityException e) {
             throw new PerceiveException("getAllPerceptsFromEntity failed for " + entity, e);
         }
     }
-
+    
+    public static List<Percept> tryGetAllPerceptsFromEntity(String entity, RemoteEnvironment remoteEnvironment) {
+        try {
+            return client.getAllPerceptsFromEntity(entity.replace("gui", ""));
+        } catch (RemoteException e) {
+            throw remoteEnvironment.environmentSuddenDeath(e);
+        }
+    }
+    
+    public static List<Percept> tryGetGUIPercepts(String entity, RemoteEnvironment remoteEnvironment ) {
+        try {
+            return getGUIPercepts(entity);
+        } catch (RemoteException e) {
+            throw remoteEnvironment.environmentSuddenDeath(e);
+        }
+    }
+    
+    public static List<Percept> tryClientGetAllPerceptsFromEntity(String entity, RemoteEnvironment remoteEnvironment ) {
+        try {
+            return client.getAllPerceptsFromEntity(entity);
+        } catch (RemoteException e) {
+            throw remoteEnvironment.environmentSuddenDeath(e);
+        }
+    }
 
     /**
      * Gets the percepts if the entity in question is running a GUI.
