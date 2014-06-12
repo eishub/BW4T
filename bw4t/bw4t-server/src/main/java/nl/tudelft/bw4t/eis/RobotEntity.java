@@ -489,9 +489,6 @@ public class RobotEntity implements RobotEntityInt {
 
     /**
      * Instructs the robot to pick up a block.
-     * 
-     * @param id
-     *            The identifier of the block.
      */
     @AsAction(name = "pickUp")
     public void pickUp() {
@@ -625,6 +622,19 @@ public class RobotEntity implements RobotEntityInt {
     	if (ourRobot.isHuman()) {
     		ourRobot.dropEPartner();
     	}
+    }
+
+    /**
+     * Send the robot a bumped percept, informing it that the path is blocked by the given robot.
+     * @return Bump percept with the name of the robot in the way, if any.
+     */
+    @AsPercept(name = "bumped", filter = Type.ON_CHANGE)
+    public List<String> getBumped() {
+        List<String> bumpedList = new ArrayList<String>();
+        if(ourRobot.isCollided() && ourRobot.getRobotInPath() != null) {
+            bumpedList.add(ourRobot.getRobotInPath().getName());
+        }
+        return bumpedList;
     }
 
     /**

@@ -1,15 +1,20 @@
 package nl.tudelft.bw4t.model.robots;
 
+import nl.tudelft.bw4t.model.robots.handicap.IRobot;
+
 /**
  * Created by on 10-6-2014.
  */
 public class DestinationOccupiedException extends Exception {
 
-    public DestinationOccupiedException() {
+    private IRobot tileOccupiedBy;
 
+    public DestinationOccupiedException(String message, IRobot tileOccupiedBy) {
+        super(message);
+        this.tileOccupiedBy = tileOccupiedBy;
     }
 
-    public DestinationOccupiedException(String message) {
-        super(message);
+    public IRobot getTileOccupiedBy() {
+        return tileOccupiedBy;
     }
 }

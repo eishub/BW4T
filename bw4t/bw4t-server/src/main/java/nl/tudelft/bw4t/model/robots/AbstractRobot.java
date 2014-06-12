@@ -101,6 +101,9 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     /** Returns the top most handicap a robot has. */
     private IRobot topMostHandicap = this;
 
+    /** Returns the robot in this robots path. */
+    private IRobot robotInPath;
+
     /**
      * Creates a new robot.
      * 
@@ -134,8 +137,9 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         this.holding = new ArrayList<Block>(grippercap);
         this.handicapsList = new ArrayList<String>();
         this.agentRecord = new AgentRecord(name);
-    }
 
+        robotInPath = null;
+    }
 	public void setTopMostHandicap(IRobot topMostHandicap) {
 		this.topMostHandicap = topMostHandicap;
 	}
@@ -382,6 +386,9 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         }
     	if (battery.getCurrentCapacity() > 0) {
 		    if (targetLocation != null) {
+                // Set the robot in path to null, if there is a bot it will be re-added.
+                robotInPath = null;
+
 		        // Calculate the distance that the robot is allowed to move.
 		        double distance = distanceTo(targetLocation);
 		        if (distance < MIN_MOVE_DISTANCE) {
@@ -398,7 +405,8 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		            double[] displacement = SpatialMath.getDisplacement(2, 0, movingDistance, angle);
 		
 		            try {
-                        checkIfDestinationVacant(displacement[0], displacement[1]);
+                        NdPoint destination = new NdPoint(getLocation().getX() + displacement[0], getLocation().getY() + displacement[1]);
+                        checkIfDestinationVacant(destination);
 
                         // Move the robot to the new position using the displacement
 		                moveByDisplacement(displacement[0], displacement[1]);
@@ -415,10 +423,13 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		                	topMostHandicap.getEPartner().moveTo(location.getX() + 1, location.getY() + 1);
 		                }
 		            } catch (SpatialException e) {
+                        LOGGER.debug("Spatial Exception");
 		                collided = true;
 		                stopRobot();
 		            } catch(DestinationOccupiedException e) {
+                        LOGGER.debug("Collision!");
                         collided = true;
+                        robotInPath = e.getTileOccupiedBy();
                         stopRobot();
                     }
 		        }
@@ -428,13 +439,14 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     	}
     }
 
-    private void checkIfDestinationVacant(double destX, double destY) throws DestinationOccupiedException {
+    private void checkIfDestinationVacant(NdPoint destination) throws DestinationOccupiedException {
         if(BW4TEnvironment.getInstance().isCollisionEnabled()) {
-            Iterable<Object> objects = getSpace().getObjectsAt(destX, destY);
+            Iterable<Object> objects = getSpace().getObjectsAt(destination.getX(), destination.getY());
 
             for (Object el : objects) {
                 if (el instanceof IRobot) {
-                    throw new DestinationOccupiedException("Grid [" + destX + "," + destY + "] is occupied by " + el);
+                    throw new DestinationOccupiedException("Grid [" + destination.getX() + "," + destination.getY()
+                            + "] is occupied by " + el, (IRobot) el);
                 }
             }
         }
@@ -590,4 +602,9 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	public AbstractRobot getSuperParent() {
 	    return this;
 	}
+
+    @Override
+    public IRobot getRobotInPath() {
+        return robotInPath;
+    }
 }
