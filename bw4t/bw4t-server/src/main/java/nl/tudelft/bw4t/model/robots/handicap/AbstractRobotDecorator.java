@@ -294,4 +294,7 @@ public abstract class AbstractRobotDecorator implements IRobot {
     	
     	return robot;
     }
+
+    @Override
+    public IRobot getRobotInPath() { return parent.getRobotInPath(); }
 }

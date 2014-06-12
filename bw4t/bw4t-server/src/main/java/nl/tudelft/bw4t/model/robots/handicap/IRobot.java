@@ -378,4 +378,9 @@ public interface IRobot {
      * @return the Robot
      */
     AbstractRobot getSuperParent();
+
+    /**
+     * Retrieve the other robot in this robot's path.
+     */
+    IRobot getRobotInPath();
 }
