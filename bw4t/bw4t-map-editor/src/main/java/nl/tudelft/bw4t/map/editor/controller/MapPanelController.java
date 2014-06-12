@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFileChooser;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -26,13 +28,14 @@ import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.Zone.Type;
 import nl.tudelft.bw4t.map.editor.EnvironmentStore;
 import nl.tudelft.bw4t.map.editor.controller.ZoneController;
+import nl.tudelft.bw4t.map.editor.gui.ColorSequenceEditor;
 import nl.tudelft.bw4t.map.editor.gui.ZonePopupMenu;
 
 /**
  * This holds the map that the user designed. This is an abstract map contianing only number of rows and columns, do not
  * confuse with {@link NewMap}.
  */
-public class MapPanelController {
+public class MapPanelController implements ChangeListener {
 
     /** basic size of the map */
     private ZoneController[][] zonecontrollers;
@@ -66,7 +69,7 @@ public class MapPanelController {
 
     private UpdateableEditorInterface uei;
 
-    private ZonePopupMenu zoneMenu = new ZonePopupMenu();
+    private ZonePopupMenu zoneMenu = new ZonePopupMenu(this);
 
     /**
      * size of map is fixed, you can't change it after construction.
@@ -99,63 +102,63 @@ public class MapPanelController {
                 zonecontrollers[i][j] = new ZoneController(this, i, j, new nl.tudelft.bw4t.map.editor.model.Zone());
             }
         }
-        
+
         attachListenersToZoneMenu();
     }
-    
+
     public void attachListenersToZoneMenu() {
-    	this.getZoneMenu().getMenuItemZoneBlockade().addActionListener(new ActionListener() {
-    		@Override
-    		public void actionPerformed(ActionEvent ae) {
-    			createZone(Type.BLOCKADE, false, false);
-    		}
-    	});
-    	
-    	this.getZoneMenu().getMenuItemZoneChargingZone().addActionListener(new ActionListener() {
-    		@Override
-    		public void actionPerformed(ActionEvent ae) {
-    			createZone(Type.CHARGINGZONE, false, false);
-    		}
-    	});
-    	
-    	this.getZoneMenu().getMenuItemZoneCorridor().addActionListener(new ActionListener() {
-    		@Override
-    		public void actionPerformed(ActionEvent ae) {
-    			createZone(Type.CORRIDOR, false, false);
-    		}
-    	});
-    	
-    	this.getZoneMenu().getMenuItemZoneDropZone().addActionListener(new ActionListener() {
-    		@Override
-    		public void actionPerformed(ActionEvent ae) {
-    			createZone(Type.ROOM, true, false);
-    		}
-    	});
-    	
-    	this.getZoneMenu().getMenuItemZoneRoom().addActionListener(new ActionListener() {
-    		@Override
-    		public void actionPerformed(ActionEvent ae) {
-    			createZone(Type.ROOM, false, false);
-    		}
-    	});
-    	
-    	this.getZoneMenu().getMenuItemZoneStartZone().addActionListener(new ActionListener() {
-    		@Override
-    		public void actionPerformed(ActionEvent ae) {
-    			createZone(Type.CORRIDOR, false, true);
-    		}
-    	});
+        this.getZoneMenu().getMenuItemZoneBlockade().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                createZone(Type.BLOCKADE, false, false);
+            }
+        });
+
+        this.getZoneMenu().getMenuItemZoneChargingZone().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                createZone(Type.CHARGINGZONE, false, false);
+            }
+        });
+
+        this.getZoneMenu().getMenuItemZoneCorridor().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                createZone(Type.CORRIDOR, false, false);
+            }
+        });
+
+        this.getZoneMenu().getMenuItemZoneDropZone().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                createZone(Type.ROOM, true, false);
+            }
+        });
+
+        this.getZoneMenu().getMenuItemZoneRoom().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                createZone(Type.ROOM, false, false);
+            }
+        });
+
+        this.getZoneMenu().getMenuItemZoneStartZone().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                createZone(Type.CORRIDOR, false, true);
+            }
+        });
     }
-    
+
     public void createZone(Type t, boolean isDropZone, boolean isStartZone) {
-    	if (selected != null) {
-    		selected.setType(t);
-    		selected.setDropZone(isDropZone);
-    		selected.setStartZone(isStartZone);
-   			System.out.println(t + " at (" + selected.getRow() + ", " + selected.getColumn() + ")" );
-   	    	selected.getUpdateableEditorInterface().update();
-    	}
-    	selected = null;
+        if (selected != null) {
+            selected.setType(t);
+            selected.setDropZone(isDropZone);
+            selected.setStartZone(isStartZone);
+            System.out.println(t + " at (" + selected.getRow() + ", " + selected.getColumn() + ")");
+            selected.getUpdateableEditorInterface().update();
+        }
+        selected = null;
     }
 
     public int getRows() {
@@ -302,7 +305,7 @@ public class MapPanelController {
      * 
      * @return
      */
-    public NewMap createMap() throws MapFormatException{
+    public NewMap createMap() throws MapFormatException {
         NewMap map = new NewMap();
 
         // compute a number of key values
@@ -317,7 +320,7 @@ public class MapPanelController {
             map.setRandomSequence(2 * zonecontrollers.length * zonecontrollers[0].length / 3);
         }
 
-        //addEntities(map, dropzonex, dropzoney - ROOMHEIGHT / 2 - CORRIDORHEIGHT / 2);
+        // addEntities(map, dropzonex, dropzoney - ROOMHEIGHT / 2 - CORRIDORHEIGHT / 2);
 
         // generate zones for each row:
         // write room zones with their doors. and the zone in frront
@@ -330,27 +333,27 @@ public class MapPanelController {
         for (int row = 0; row < getRows(); row++) {
             for (int col = 0; col < getColumns(); col++) {
                 ZoneController room = getZoneController(row, col);
-                if(room.isDropZone()) {
-                    if(foundDropzone) {
+                if (room.isDropZone()) {
+                    if (foundDropzone) {
                         throw new MapFormatException("Only one DropZone allowed per map!");
                     }
                     foundDropzone = true;
                 }
-                if(room.isStartZone()) {
+                if (room.isStartZone()) {
                     foundStartzone = true;
                 }
-                output[row][col] = new Zone(room.getName(), new Rectangle(calcX(col), calcY(row), ROOMWIDTH, ROOMHEIGHT),
-                        room.getType());
+                output[row][col] = new Zone(room.getName(),
+                        new Rectangle(calcX(col), calcY(row), ROOMWIDTH, ROOMHEIGHT), room.getType());
                 map.addZone(output[row][col]);
-                //TODO add the doors to the map
-                //TODO add Entity spawn points on Startzones
+                // TODO add the doors to the map
+                // TODO add Entity spawn points on Startzones
                 output[row][col].setBlocks(room.getColors());
 
                 // connect them wth each other
                 connectToGrid(output, row, col);
             }
         }
-        if(!foundDropzone) {
+        if (!foundDropzone) {
             throw new MapFormatException("No DropZone found on the map!");
         }
         if (!foundStartzone) {
@@ -362,34 +365,34 @@ public class MapPanelController {
         return map;
     }
 
-    private void connectToGrid(Zone[][] zones, int x, int y) {
-        tryConnect(zones, x, y, x, y-1);
-        tryConnect(zones, x, y, x+1, y);
-        tryConnect(zones, x, y, x, y+1);
-        tryConnect(zones, x, y, x-1, y);
+    private void connectToGrid(Zone[][] zones, int row, int col) {
+        tryConnect(zones, row, col, row, col - 1);
+        tryConnect(zones, row, col, row + 1, col);
+        tryConnect(zones, row, col, row, col + 1);
+        tryConnect(zones, row, col, row - 1, col);
     }
-    
-    private void tryConnect(Zone[][] zones, int x1, int y1, int x2, int y2) {
-        if(Math.abs(x1-x2) + Math.abs(y1-y2) != 1) {
+
+    private void tryConnect(Zone[][] zones, int row1, int col1, int row2, int col2) {
+        if (Math.abs(row1 - row2) + Math.abs(col1 - col2) != 1) {
             return;
         }
-        Zone z1 = getZone(zones, x1, y1);
-        Zone z2 = getZone(zones, x2, y2);
-        if(z1 == null || z2 == null){
+        Zone z1 = getZone(zones, row1, col1);
+        Zone z2 = getZone(zones, row2, col2);
+        if (z1 == null || z2 == null) {
             return;
         }
-        //TODO figure out how to handle doors
-        if(z1.getType() == Type.CORRIDOR || z1.getType() == Type.CHARGINGZONE) {
-            if(z1.getType() == Type.CORRIDOR || z1.getType() == Type.CHARGINGZONE) {
+        // TODO figure out how to handle doors
+        if (z1.getType() == Type.CORRIDOR || z1.getType() == Type.CHARGINGZONE) {
+            if (z1.getType() == Type.CORRIDOR || z1.getType() == Type.CHARGINGZONE) {
                 z2.addNeighbour(z1);
                 z1.addNeighbour(z2);
             }
         }
     }
-    
-    private Zone getZone(Zone[][] zones, int x, int y) {
-        if(isValidZone(x, y)) {
-            return zones[x][y];
+
+    private Zone getZone(Zone[][] zones, int row, int col) {
+        if (isValidZone(row, col)) {
+            return zones[row][col];
         }
         return null;
     }
@@ -429,17 +432,6 @@ public class MapPanelController {
      */
     public double calcY(int row) {
         return row * ROOMHEIGHT + ROOMHEIGHT / 2;
-    }
-
-    /**
-     * get the y coordinate of the navpoints for a given row.
-     * 
-     * @param row
-     *            is the row
-     * @return y coordinate of the navpoints for a given row
-     */
-    private double getNavY(int row) {
-        return row * (CORRIDORHEIGHT + ROOMHEIGHT) + CORRIDORHEIGHT / 2;
     }
 
     /**
@@ -523,18 +515,25 @@ public class MapPanelController {
         }
     }
 
-    public ZoneController getZoneController(int x, int y) {
-        if(isValidZone(x, y)) {
-            return zonecontrollers[x][y];
+    public ZoneController getZoneController(int row, int col) {
+        if (isValidZone(row, col)) {
+            return zonecontrollers[row][col];
         }
         return null;
     }
 
-    public boolean isValidZone(int x, int y) {
-        return x >= 0 && y >= 0 && x < getColumns() && y < getRows();
+    public boolean isValidZone(int row, int col) {
+        return row >= 0 && col >= 0 && row < getRows() && col < getColumns();
     }
 
     public void showPopup(Component component, int x, int y) {
+        getZoneMenu().update();
         getZoneMenu().show(component, x, y);
+    }
+
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        this.sequence = ((ColorSequenceEditor) e.getSource()).getSequence();
+
     }
 }
