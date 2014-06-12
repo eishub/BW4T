@@ -8,6 +8,10 @@ import javax.swing.JFrame;
 import nl.tudelft.bw4t.map.editor.EnvironmentStore;
 import nl.tudelft.bw4t.map.renderer.MapRenderer;
 
+/**
+ * The EnvironmentStoreController class serves as a controller for the EnvironmentStore
+ *
+ */
 public class EnvironmentStoreController {
 	
 	private EnvironmentStore view;

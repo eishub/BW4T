@@ -9,7 +9,12 @@ import javax.swing.JScrollPane;
 import nl.tudelft.bw4t.map.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.map.editor.controller.UpdateableEditorInterface;
 
+/**
+ * The mapPanel class contains the map that is being edited in a grid.
+ *
+ */
 public class MapPanel extends JPanel implements UpdateableEditorInterface {
+	
     private static final long serialVersionUID = -5921838296315289933L;
 
     private MapPanelController controller;
@@ -20,6 +25,10 @@ public class MapPanel extends JPanel implements UpdateableEditorInterface {
     
     private ColorSequenceEditor dropSequence;
 
+    /**
+     * Constructor sets the controller and calls the setupGrid method.
+     * @param control is the MapPanelController that is being used.
+     */
     public MapPanel(MapPanelController control) {
         assert control != null;
         this.controller = control;
@@ -29,6 +38,9 @@ public class MapPanel extends JPanel implements UpdateableEditorInterface {
         setupGrid();
     }
 
+    /**
+     * Setup the grid that we are going to use, based on information from the controller.
+     */
     private void setupGrid() {
         this.setLayout(new BorderLayout());
         zones = new ZonePanel[controller.getRows()][controller.getColumns()];

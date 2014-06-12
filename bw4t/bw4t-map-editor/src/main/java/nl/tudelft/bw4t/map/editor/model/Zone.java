@@ -6,9 +6,14 @@ import java.util.List;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone.Type;
 
+/**
+ * Every space in the map is a Zone that is later changed to a corridor, room etc.
+ *
+ */
 public class Zone {
 
 	private Type type = Type.CORRIDOR;
+	
 	private List<BlockColor> colors = new ArrayList<>();
 	
 	public static final int NORTH = 0;
@@ -31,6 +36,10 @@ public class Zone {
 		type = t;
 	}
 	
+	/**
+	 * Gets the name of the Zone based on the type of Zone.
+	 * @return the name of the zone based on its type.
+	 */
 	public String getName() {
 	    if (isDropZone()) {
 	        return nl.tudelft.bw4t.map.Zone.DROP_ZONE_NAME;

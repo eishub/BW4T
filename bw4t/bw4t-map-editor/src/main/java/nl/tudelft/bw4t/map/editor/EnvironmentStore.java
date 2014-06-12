@@ -15,7 +15,7 @@ import nl.tudelft.bw4t.map.editor.util.DefaultOptionPrompt;
 import nl.tudelft.bw4t.map.editor.util.OptionPrompt;
 
 /**
- * The MapEditor class serves as a frame for the Panels and tables.
+ * The EnvironmentStore class serves as a frame for the Panels and tables.
  *
  */
 public class EnvironmentStore extends JFrame {
@@ -59,7 +59,6 @@ public class EnvironmentStore extends JFrame {
         explanationPanel = new ExplanationPanel();
         
         // Both the mapTable and sequencePanel are added to a rooms panel.
-        // TODO: Create a roomsTable class that creates both MapTable and SequencePanel. Problems: map Data model in mapTable and boxLayout in roomsPanel.
         mapTable = new MapPanel(map);
         
         // Attach all Panels to the Editor.
@@ -131,6 +130,10 @@ public class EnvironmentStore extends JFrame {
         return option;
     }
     
+    /**
+     * Used to set the window title of the frame with the filename.
+     * @param filenameBeingEdited is the filename of the map that is being edited.
+     */
     public void setWindowTitle(String filenameBeingEdited) {
         setTitle(windowName + " - " + filenameBeingEdited);
     }
