@@ -1,56 +1,41 @@
 package nl.tudelft.bw4t.client.controller;
 
-import static org.junit.Assert.*;
-import static org.junit.Assert.assertFalse;
-import static org.mockito.Mockito.*;
-
 import eis.iilang.Function;
 import eis.iilang.Identifier;
 import eis.iilang.Numeral;
 import eis.iilang.Parameter;
 import eis.iilang.ParameterList;
-
-import java.awt.geom.Point2D;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.rmi.RemoteException;
-import java.util.HashMap;
 import java.util.LinkedList;
-
 import nl.tudelft.bw4t.client.BW4TClient;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
-import nl.tudelft.bw4t.client.startup.InitParam;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Point;
-import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
-
-import org.apache.log4j.net.ZeroConfSupport;
-import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 @RunWith(MockitoJUnitRunner.class)
 public class ClientMapControllerTest {
     
-    @Mock
-    ClientController clientController;
-    @Mock
-    NewMap map;
-    @Mock
-    RemoteEnvironment remoteEnvironment;
-    @Mock
-    BW4TClientGUI clientGUI;
-    @Mock
-    BW4TClient client;
+    @Mock private ClientController clientController;
+    @Mock private NewMap map;
+    @Mock private RemoteEnvironment remoteEnvironment;
+    @Mock private BW4TClientGUI clientGUI;
+    @Mock private BW4TClient client;
     
-
     private ClientMapController clientMapController;
     
     @Before
@@ -60,11 +45,6 @@ public class ClientMapControllerTest {
         clientMapController = new ClientMapController(map, clientController);
     }
 
-    @After
-    public void tearDown() throws Exception {
-    }
-
-    @Ignore
     @Test
     public void testRun() {
         clientMapController.run();
@@ -115,7 +95,7 @@ public class ClientMapControllerTest {
         LinkedList<Parameter> parameters = new LinkedList<Parameter>();
         parameters.add(new Identifier("DropZone"));
         clientMapController.handlePercept("occupied", parameters);
-        verify(map,times(1)).getZone("DropZone");
+        verify(map, times(1)).getZone("DropZone");
     }
     
     @Test
@@ -127,8 +107,8 @@ public class ClientMapControllerTest {
     }
     
     @Test
-    public void testHandlePerceptPosition() throws IllegalAccessException, IllegalArgumentException,
-            InvocationTargetException, NoSuchMethodException, SecurityException {
+    public void testHandlePerceptPosition() throws IllegalAccessException,
+            InvocationTargetException, NoSuchMethodException {
         LinkedList<Parameter> parameters = new LinkedList<Parameter>();
         parameters.add(new Numeral(3));
         parameters.add(new Numeral(3));
@@ -138,14 +118,6 @@ public class ClientMapControllerTest {
         ViewBlock block = getBlock(blockID);
         assertEquals(3.0, block.getPosition().getX(), 0.001);
         assertEquals(4.0, block.getPosition().getY(), 0.001);
-    }
-
-    private ViewBlock getBlock(Long blockID) throws NoSuchMethodException, IllegalAccessException,
-            InvocationTargetException {
-        Method method = ClientMapController.class.getDeclaredMethod("getBlock", Long.class);
-        method.setAccessible(true);
-        ViewBlock block = (ViewBlock) method.invoke(clientMapController, blockID);
-        return block;
     }
     
     @Test
@@ -161,7 +133,8 @@ public class ClientMapControllerTest {
     }
     
     @Test
-    public void testHandlePerceptColor() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    public void testHandlePerceptColor() throws NoSuchMethodException, IllegalAccessException,
+            InvocationTargetException {
         LinkedList<Parameter> parameters = new LinkedList<Parameter>();
         parameters.add(new Numeral(3));
         parameters.add(new Identifier("blue"));
@@ -176,7 +149,7 @@ public class ClientMapControllerTest {
         parameters.add(new Numeral(3));
         parameters.add(new Numeral(3));
         clientMapController.handlePercept("epartner", parameters);
-        assertEquals(3,clientMapController.getViewEPartner(3).getId());
+        assertEquals(3, clientMapController.getViewEPartner(3).getId());
     }
     
     @Test
@@ -237,10 +210,10 @@ public class ClientMapControllerTest {
         parameterList.add(new Identifier("y"));
         parameters.add(parameterList);
         clientMapController.handlePercept("sequence", parameters);
-        assertEquals(BlockColor.BLUE,clientMapController.getSequence().get(0));
-        assertEquals(BlockColor.RED,clientMapController.getSequence().get(1));
-        assertEquals(BlockColor.GREEN,clientMapController.getSequence().get(2));
-        assertEquals(BlockColor.YELLOW,clientMapController.getSequence().get(3));
+        assertEquals(BlockColor.BLUE, clientMapController.getSequence().get(0));
+        assertEquals(BlockColor.RED, clientMapController.getSequence().get(1));
+        assertEquals(BlockColor.GREEN, clientMapController.getSequence().get(2));
+        assertEquals(BlockColor.YELLOW, clientMapController.getSequence().get(3));
     }
     
     @Test
@@ -289,4 +262,11 @@ public class ClientMapControllerTest {
         clientMapController.handlePercept("tudelft", parameters);
     }
 
+    private ViewBlock getBlock(Long blockID) throws NoSuchMethodException, IllegalAccessException,
+            InvocationTargetException {
+        Method method = ClientMapController.class.getDeclaredMethod("getBlock", Long.class);
+        method.setAccessible(true);
+        ViewBlock block = (ViewBlock) method.invoke(clientMapController, blockID);
+        return block;
+    }
 }
