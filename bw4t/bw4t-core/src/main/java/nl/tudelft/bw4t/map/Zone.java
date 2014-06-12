@@ -21,7 +21,7 @@ public class Zone implements Serializable {
     public static final String START_ZONE_NAME = "StartZone";
     public static final String BLOCKADE_NAME = "Blockade";
     public static final String CORRIDOR_NAME = "Corridor";
-    public static final String CHARGING_ZONE_NAME = "ChargingZone";
+    public static final String CHARGING_ZONE_NAME = "ChargeZone";
     public static final String ROOM_NAME = "Room";
     
     /**

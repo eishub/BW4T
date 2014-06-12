@@ -63,7 +63,12 @@ public class Zone {
 	}
 	
 	public List<BlockColor> getColors() {
-		return colors;
+		if (type == Type.ROOM) {
+			return colors;
+		} else {
+			return new ArrayList<BlockColor>();
+		}
+		
 	}
 	
 	public void setColors(List<BlockColor> cs) {
