@@ -25,6 +25,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
+import repast.simphony.space.grid.Grid;
 
 /**
  * The class <code>DoorTest</code> contains tests for the class <code>{@link Door}</code>.
@@ -33,6 +34,7 @@ import repast.simphony.space.continuous.NdPoint;
 public class DoorTest {
 
     @Mock private ContinuousSpace<Object> space;
+    @Mock private Grid<Object> grid;
     @Mock private Context<Object> context;
     @Mock private BlocksRoom room;
     @Mock private AbstractRobot robot;
@@ -47,7 +49,7 @@ public class DoorTest {
     @Test
     public void testDoor_1() {
         when(context.isEmpty()).thenReturn(true);
-        Door result = new Door(space, context);
+        Door result = new Door(space, grid, context);
 
         assertNotNull(result);
         assertTrue(result.isOpen());
@@ -64,7 +66,7 @@ public class DoorTest {
      */
     @Test
     public void testGetColor_1() {
-        Door fixture = new Door(space, context);
+        Door fixture = new Door(space, grid,context);
         fixture.connectTo(null);
 
         Color result = fixture.getColor();
@@ -83,7 +85,7 @@ public class DoorTest {
     public void testGetColor_2() {
         when(room.getOccupier()).thenReturn(robot);
         
-        Door fixture = new Door(space, context);
+        Door fixture = new Door(space, grid, context);
         fixture.connectTo(room);
 
         
@@ -101,7 +103,7 @@ public class DoorTest {
      */
     @Test
     public void testIsOpen_1() {
-        Door fixture = new Door(space, context);
+        Door fixture = new Door(space, grid, context);
         fixture.connectTo((Room) null);
 
         boolean result = fixture.isOpen();
@@ -119,7 +121,7 @@ public class DoorTest {
     public void testIsOpen_2() {
         when(room.getOccupier()).thenReturn(robot);
         
-        Door fixture = new Door(space, context);
+        Door fixture = new Door(space, grid, context);
         fixture.connectTo(room);
 
         boolean result = fixture.isOpen();
@@ -134,7 +136,7 @@ public class DoorTest {
      */
     @Test
     public void testIsOpen_3() {
-        Door fixture = new Door(space, context);
+        Door fixture = new Door(space, grid, context);
         fixture.connectTo(room);
 
         boolean result = fixture.isOpen();
@@ -151,7 +153,7 @@ public class DoorTest {
      */
     @Test
     public void testSetPos_1() {
-        Door fixture = new Door(space, context);
+        Door fixture = new Door(space, grid, context);
         double x = 1.0;
         double y = 1.0;
         nl.tudelft.bw4t.map.Door.Orientation ori = nl.tudelft.bw4t.map.Door.Orientation.HORIZONTAL;
@@ -173,7 +175,7 @@ public class DoorTest {
      */
     @Test
     public void testSetPos_2() {
-        Door fixture = new Door(space, context);
+        Door fixture = new Door(space, grid, context);
         double x = 1.0;
         double y = 1.0;
         nl.tudelft.bw4t.map.Door.Orientation ori = nl.tudelft.bw4t.map.Door.Orientation.VERTICAL;

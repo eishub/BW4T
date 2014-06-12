@@ -6,6 +6,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
+import repast.simphony.space.grid.Grid;
 
 /**
  * Represents an object in the world that can be moved around if needed. It forms the basis for all kinds of objects
@@ -17,23 +18,24 @@ public abstract class BoundedMoveableObject {
 
     private final long id;
     public final ContinuousSpace<Object> space;
+    public final Grid<Object> grid;
     protected final Context<Object> context;
     protected final Rectangle2D.Double boundingBox;
 
     /**
      * Creates a new object bounded by a box at (0,0) with size (0,0).
-     * 
-     * @param space
+     *  @param space
      *            the space in which the object should be placed.
+     * @param grid
      * @param context
-     *            the context in which the object should be placed.
      */
-    public BoundedMoveableObject(ContinuousSpace<Object> space, Context<Object> context) {
+    public BoundedMoveableObject(ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context) {
         if (context.isEmpty()) {
             COUNTER.set(0);
         }
         this.id = COUNTER.getAndIncrement();
         this.space = space;
+        this.grid = grid;
         this.context = context;
         this.boundingBox = new Rectangle2D.Double();
         context.add(this);
@@ -104,6 +106,7 @@ public abstract class BoundedMoveableObject {
         boundingBox.x = x - boundingBox.width / 2;
         boundingBox.y = y - boundingBox.height / 2;
         space.moveTo(this, x, y);
+        grid.moveTo(this, (int)x, (int)y);
     }
 
 
@@ -173,12 +176,11 @@ public abstract class BoundedMoveableObject {
         NdPoint here = getLocation();
         return Math.sqrt(Math.pow(there.getX() - here.getX(), 2)
                 + Math.pow(there.getY() - here.getY(), 2));
-
     }
 
     /**
      * As {@link #distanceTo(NdPoint)}
-     * 
+     * n
      * @param o
      *            is the object to compute the distance to
      * @return distance to center of o. Note that the distance to the bounding box of o may be smaller than this.
@@ -195,4 +197,13 @@ public abstract class BoundedMoveableObject {
 
     }
 
+
+    /**
+     * Checks if the given point is in the rectangle that defines this bounded moveable object.
+     * @param point The point whose location is checked.
+     * @return True iff the point is in the the box of this object.
+     */
+    public boolean isPointInObject(NdPoint point) {
+        return boundingBox.contains(point.getX(), point.getY());
+    }
 }

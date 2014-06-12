@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
+import repast.simphony.space.grid.Grid;
 
 /**
  * Representation of a room where blocks can be dropped into.
@@ -42,8 +43,8 @@ public class DropZone extends Room {
      * @param context
      *            The context in which the dropzone should be located.
      */
-    public DropZone(nl.tudelft.bw4t.map.Zone dropzone, ContinuousSpace<Object> space, Context<Object> context) {
-        super(Color.GRAY, dropzone, space, context);
+    public DropZone(nl.tudelft.bw4t.map.Zone dropzone, ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context) {
+        super(Color.GRAY, dropzone, space, grid, context);
         sequence = new LinkedList<BlockColor>();
         sequenceIndex = 0;
     }

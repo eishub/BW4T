@@ -8,6 +8,7 @@ import nl.tudelft.bw4t.model.robots.AbstractRobot;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
+import repast.simphony.space.grid.Grid;
 
 /**
  * A zone is a square area on the map with a name, neighbours and access restrictions. This mirrors the
@@ -23,8 +24,8 @@ public abstract class Zone extends BoundedMoveableObject {
      */
     private Set<Zone> neighbours = new HashSet<Zone>();
 
-    public Zone(nl.tudelft.bw4t.map.Zone zone, ContinuousSpace<Object> space, Context<Object> context) {
-        super(space, context);
+    public Zone(nl.tudelft.bw4t.map.Zone zone, ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context) {
+        super(space, grid, context);
         name = zone.getName();
         if (zone.getRenderOptions() != null) {
             isLabelVisible = zone.getRenderOptions().isLabelVisible();

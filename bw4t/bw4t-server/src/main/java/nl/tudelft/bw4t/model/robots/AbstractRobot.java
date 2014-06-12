@@ -29,6 +29,7 @@ import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import eis.exceptions.EntityException;
+import repast.simphony.space.grid.Grid;
 
 /**
  * Represents a robot in the BW4T environment.
@@ -118,8 +119,8 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
      * @param cap
      *            The holding capacity of the robot.
      */
-    public AbstractRobot(String pname, ContinuousSpace<Object> space, Context<Object> context, boolean poneBotPerZone, int cap) {
-        super(space, context);
+    public AbstractRobot(String pname, ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context, boolean poneBotPerZone, int cap) {
+        super(space, grid, context);
 
         this.name = pname;
         this.oneBotPerZone = poneBotPerZone;
