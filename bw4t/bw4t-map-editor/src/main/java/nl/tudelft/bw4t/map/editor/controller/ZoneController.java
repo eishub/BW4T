@@ -43,6 +43,8 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
         column = c;
         
         model = m;
+        
+        m.setName("" + (char)('A' + c) + (r + 1));
     }
     
     public MapPanelController getMapController() {
