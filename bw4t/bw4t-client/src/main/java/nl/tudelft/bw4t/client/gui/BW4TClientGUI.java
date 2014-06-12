@@ -1,5 +1,9 @@
 package nl.tudelft.bw4t.client.gui;
 
+import eis.exceptions.ManagementException;
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
+import eis.iilang.Percept;
 import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -9,7 +13,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -21,8 +24,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.BevelBorder;
-
 import nl.tudelft.bw4t.client.BW4TClientSettings;
 import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.controller.ClientController;
@@ -34,12 +37,7 @@ import nl.tudelft.bw4t.client.gui.menu.ComboAgentModel;
 import nl.tudelft.bw4t.map.renderer.MapRenderSettings;
 import nl.tudelft.bw4t.map.renderer.MapRenderer;
 import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
-
 import org.apache.log4j.Logger;
-
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
 
 /**
  * Render the current state of the world at a fixed rate (10 times per second, see run()) for a client. It connects to
@@ -68,9 +66,7 @@ import eis.iilang.Percept;
 public class BW4TClientGUI extends JFrame implements MapRendererInterface, ClientGUI {
     private static final long serialVersionUID = 2938950289045953493L;
 
-    /**
-     * The log4j Logger which displays logs on console
-     */
+    /** The log4j Logger which displays logs on console */
     private static final Logger LOGGER = Logger.getLogger(BW4TClientGUI.class);
 
     private final BW4TClientGUI that = this;
@@ -85,29 +81,21 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
 
     private JPopupMenu jPopupMenu;
 
-    public JPopupMenu getjPopupMenu() {
-        return jPopupMenu;
-    }
-
-    public JComboBox<ComboAgentModel> getAgentSelector() {
-        return agentSelector;
-    }
-
     private Point selectedLocation;
-    /**
-     * Most of the server interfacing goes through the std eis percepts
-     */
+    /** Most of the server interfacing goes through the std EIS Percepts. */
     public RemoteEnvironment environment;
 
     /**
      * @param env
-     *            the BW4TRemoteEnvironment that we are rendering
+     *            - The {@link RemoteEnvironment} that we are rendering.
      * @param entityId
-     *            , the id of the entity that needs to be displayed
+     *            - The id of the entity that needs to be displayed.
      * @param goal
-     *            , if this gui is for displaying a goal agent
+     *            - {@code true} if this GUI is for displaying a goal agent, otherwise {@code false}.
+     * @param humanPlayer
+     *            - {@code true} if the entity is human, otherwise {@code false}.
      * @throws IOException
-     *             if map can't be loaded.
+     *             Thrown if map can't be loaded.
      */
     public BW4TClientGUI(RemoteEnvironment env, String entityId, boolean goal, boolean humanPlayer) throws IOException {
         environment = env;
@@ -116,12 +104,14 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
     }
 
     /**
+     * @param env
+     *            - The {@link RemoteEnvironment} that we are rendering.
      * @param entityId
-     *            , the id of the entity that needs to be displayed
+     *            - The id of the entity that needs to be displayed.
      * @param humanAgent
-     *            , whether a human is supposed to control this panel
+     *            - Whether a human is supposed to control this panel.
      * @throws IOException
-     *             if map can't be loaded.
+     *             Thrown if map can't be loaded.
      */
     public BW4TClientGUI(RemoteEnvironment env, String entityId, HumanAgent humanAgent) throws IOException {
         environment = env;
@@ -129,23 +119,27 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         init();
     }
 
+    /**
+     * @param cc
+     *            - The {@link ClientController} that we are rendering.
+     * @throws IOException
+     *             Thrown if map can't be loaded.
+     */
     public BW4TClientGUI(ClientController cc) throws IOException {
+        environment = cc.getEnvironment();
         this.controller = cc;
         init();
     }
 
     /**
-     * @param entityId
-     *            the id of the entity that needs to be displayed
-     * @param humanPlayer
-     *            whether a human is supposed to control this panel
-     * @throws IOException
+     * Creates and initializes all neccessary elements of the GUI.
      */
     private void init() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            LOGGER.error("Could not properly set the Native Look and Feel for the BW4T Client", e);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                | UnsupportedLookAndFeelException e1) {
+            LOGGER.error("Could not properly set the Native Look and Feel for the BW4T Client", e1);
         }
         LOGGER.debug("Attaching to ClientController");
         controller.getMapController().addRenderer(this);
@@ -170,8 +164,8 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
                 controller.getMapController().removeRenderer(that);
                 try {
                     environment.kill();
-                } catch (Exception e1) {
-                    LOGGER.error("Could not correctly kill the environment.", e1);
+                } catch (ManagementException e2) {
+                    LOGGER.error("Could not correctly kill the environment.", e2);
                 }
             }
         });
@@ -244,9 +238,9 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
 
                 @Override
                 public void mouseWheelMoved(MouseWheelEvent mwe) {
-                    if(mouseOver && mwe.isControlDown()){
+                    if (mouseOver && mwe.isControlDown()) {
                         MapRenderSettings settings = that.getController().getMapController().getRenderSettings();
-                        if(mwe.getUnitsToScroll() >= 0) {
+                        if (mwe.getUnitsToScroll() >= 0) {
                             settings.setScale(settings.getScale() + 0.1);
                         } else {
                             settings.setScale(settings.getScale() - 0.1);
@@ -294,6 +288,13 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         getChatSession().setCaretPosition(getChatSession().getDocument().getLength());
     }
 
+    /**
+     * Creates a string containing each element of chatHistory with the filler appended to them.
+     * 
+     * @param chatHistory A String {@link Iterator} to containing the elements to combine.
+     * @param filler A filler String to append after each String.
+     * @return The String elements with fillers.
+     */
     private String join(Iterable<String> chatHistory, String filler) {
         StringBuilder sb = new StringBuilder();
         for (String string : chatHistory) {
@@ -307,7 +308,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
      * chat window contained in the GUI.
      * 
      * @param parameters
-     *            , the action parameters containing the message sender and the message itself.
+     *            - The action parameters containing the message sender and the message itself.
      * @return a null percept as no real percept should be returned
      */
     public Percept sendToGUI(List<Parameter> parameters) {
@@ -320,20 +321,28 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         return null;
     }
 
-    public JTextArea getChatSession() {
-        return chatSession;
-    }
-
     public void setChatSession(JTextArea chatSession) {
         this.chatSession = chatSession;
+    }
+
+    public void setSelectedLocation(int x, int y) {
+        this.selectedLocation = new Point(x, y);
+    }
+
+    public JTextArea getChatSession() {
+        return chatSession;
     }
 
     public Point getSelectedLocation() {
         return selectedLocation;
     }
 
-    public void setSelectedLocation(int x, int y) {
-        this.selectedLocation = new Point(x, y);
+    public JPopupMenu getjPopupMenu() {
+        return jPopupMenu;
+    }
+
+    public JComboBox<ComboAgentModel> getAgentSelector() {
+        return agentSelector;
     }
 
     /**
