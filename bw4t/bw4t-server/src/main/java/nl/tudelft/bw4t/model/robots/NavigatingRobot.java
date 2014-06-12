@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
+import repast.simphony.space.grid.Grid;
 
 /**
  * Represents a self navigating robot in the BW4T environment. The self navigation means that you can go to a Zone which
@@ -46,8 +47,8 @@ public class NavigatingRobot extends AbstractRobot {
      * @param oneBotPerZone
      *            true if max 1 bot in a zone
      */
-    public NavigatingRobot(String name, ContinuousSpace<Object> space, Context<Object> context, boolean oneBotPerZone, int cap) {
-        super(name, space, context, oneBotPerZone, cap);
+    public NavigatingRobot(String name, ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context, boolean oneBotPerZone, int cap) {
+        super(name, space, grid, context, oneBotPerZone, cap);
     }
 
     /**

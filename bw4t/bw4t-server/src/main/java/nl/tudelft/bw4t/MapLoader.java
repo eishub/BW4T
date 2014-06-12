@@ -1,6 +1,5 @@
 package nl.tudelft.bw4t;
 
-import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,10 +37,16 @@ import org.apache.log4j.Logger;
 import repast.simphony.context.Context;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactory;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
+import repast.simphony.context.space.grid.GridFactory;
+import repast.simphony.context.space.grid.GridFactoryFinder;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.SimpleCartesianAdder;
 import repast.simphony.space.continuous.StickyBorders;
 import eis.exceptions.EntityException;
+import repast.simphony.space.grid.Grid;
+import repast.simphony.space.grid.GridBuilderParameters;
+import repast.simphony.space.grid.SimpleGridAdder;
+import repast.simphony.space.grid.StrictBorders;
 
 
 public final class MapLoader {
@@ -49,6 +54,7 @@ public final class MapLoader {
     /** Identifier used for the space projections, matched in context.xml */
 
     public static final String PROJECTION_ID = "BW4T_Projection";
+    public static final String GRID_PROJECTION_ID = "BW4T_Grid_Projection";
 
     private static NewMap map;
 
@@ -69,7 +75,7 @@ public final class MapLoader {
      * </ul>
      * 
      * 
-     * @param location
+     * @param tmpLocation
      *            The location of the file
      * @param context
      *            The context to load to.
@@ -94,9 +100,13 @@ public final class MapLoader {
         location = System.getProperty("user.dir") + "/maps/" + tmpLocation;
         map = NewMap.create(new FileInputStream(new File(location)));
 
-        ContinuousSpace<Object> space = createSpace(context, (int) map.getArea().getX(), (int) map.getArea().getY());
+        int mapWidth = (int) map.getArea().getX();
+                int mapHeight = (int) map.getArea().getY();
+
+        ContinuousSpace<Object> space = createSpace(context, mapWidth, mapHeight);
+        Grid<Object> grid = createGridSpace(context, mapWidth, mapHeight);
         
-        Launcher.getInstance().getEntityFactory().setSpace(space);
+        Launcher.getInstance().getEntityFactory().setSpace(space, grid);
 
         // make the extra random blocks.
         List<BlockColor> extraSequenceBlocks = makeRandomSequence(map.getRandomSequence());
@@ -110,33 +120,33 @@ public final class MapLoader {
         sequence.addAll(extraSequenceBlocks);
 
         for (Zone corridor : map.getZones(Zone.Type.CORRIDOR)) {
-            Corridor corr = createCorridor(context, space, corridor);
+            Corridor corr = createCorridor(context, space, grid, corridor);
             zones.put(corr.getName(), corr);
         }
 
         for (Zone roomzone : map.getZones(Zone.Type.ROOM)) {
             Room room;
             if ("DropZone".equals(roomzone.getName())) {
-                room = new DropZone(roomzone, space, context);
+                room = new DropZone(roomzone, space, grid, context);
                 ((DropZone) room).setSequence(sequence);
             } else {
-                room = createRoom(context, space, roomzone);
+                room = createRoom(context, space, grid, roomzone);
                 roomblocks.put(room.getName(), new ArrayList<BlockColor>(roomzone.getBlocks()));
             }
 
             for (nl.tudelft.bw4t.map.Door door : roomzone.getDoors()) {
-                createDoor(context, space, door, room);
+                createDoor(context, space, grid, door, room);
             }
             zones.put(roomzone.getName(), room);
         }
         
         for (Zone blockzone : map.getZones(Zone.Type.BLOCKADE)) {
-            Blockade blockade = createBlockade(context, space, blockzone);
+            Blockade blockade = createBlockade(context, space, grid, blockzone);
             zones.put(blockzone.getName(), blockade);
         }
         
         for (Zone chargingzone : map.getZones(Zone.Type.CHARGINGZONE)) {
-            ChargingZone czone = createChargingZone(context, space, chargingzone);
+            ChargingZone czone = createChargingZone(context, space, grid, chargingzone);
             zones.put(chargingzone.getName(), czone);
         }
 
@@ -159,7 +169,7 @@ public final class MapLoader {
 
         // place the blocks in the rooms.
         for (String room : roomblocks.keySet()) {
-            createBlocksForRoom((Room) zones.get(room), context, space, roomblocks.get(room));
+            createBlocksForRoom((Room) zones.get(room), context, space, grid, roomblocks.get(room));
 
         }
         
@@ -215,8 +225,10 @@ public final class MapLoader {
      * 
      * @param context
      *            the context in which this space operates.
-     * @param size
-     *            the unparsed size from the input file.
+     * @param width
+     *            The width of the space
+     * @param height
+     *            The height of the space
      * @return the created space
      */
     private static ContinuousSpace<Object> createSpace(Context<Object> context, int width, int height) {
@@ -227,25 +239,42 @@ public final class MapLoader {
     }
 
     /**
+     * Creates the {@link Grid} in which all objects will be placed, in conjuction with the
+     * continuous space. The grid space allows for querying for Von Neumann and Moore neighborhoods.
+     * @param context
+     *            the context in which this space operates.
+     * @param width
+     *            The width of the space
+     * @param height
+     *            The height of the space
+     */
+    private static Grid<Object> createGridSpace(Context<Object> context, int width, int height) {
+        GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
+        GridBuilderParameters params = new GridBuilderParameters(new StrictBorders(), new SimpleGridAdder<Object>(),
+                true, width, height);
+        return gridFactory.createGrid(GRID_PROJECTION_ID, context, params);
+    }
+
+    /**
      * Creates a new {@link DropZone} in the context according to the data in the tokenizer.
      * 
      * @param context
      *            The context in which the room should be placed.
      * @param space
      *            the space in which the bin should be placed.
-     * @param tokenizer
-     *            StringTokenizer containing the description of the room.
+     * @param grid
+     * @param dropzone
      * @throws IllegalStateException
      *             if a drop off location has already been defined in the given context.
      */
-    private static void createDropZone(Context<Object> context, ContinuousSpace<Object> space, Zone dropzone,
+    private static void createDropZone(Context<Object> context, ContinuousSpace<Object> space, Grid<Object> grid, Zone dropzone,
             List<BlockColor> sequence) {
 
         if (context.getObjects(DropZone.class).size() > 0) {
             throw new IllegalStateException("A drop zone has already been defined");
         }
 
-        DropZone dropZone = new DropZone(dropzone, space, context);
+        DropZone dropZone = new DropZone(dropzone, space, grid, context);
 
         dropZone.setSequence(sequence);
 
@@ -263,7 +292,8 @@ public final class MapLoader {
      *            The {@link Entity} on the map.
      * @return The created robot
      */
-    private static void createEisEntityRobot(Context<Object> context, ContinuousSpace<Object> space, Entity mapentity) {
+    private static void createEisEntityRobot(Context<Object> context, ContinuousSpace<Object> space,
+                                             Grid<Object> grid, Entity mapentity) {
         BW4TEnvironment environment = BW4TEnvironment.getInstance();
 
         if (environment == null) {
@@ -271,7 +301,7 @@ public final class MapLoader {
                     "Tried to create a Robot to put in an EIS environment but no EIS environment was launched");
         }
 
-        NavigatingRobot robot = createJavaRobot(context, space, mapentity);
+        NavigatingRobot robot = createJavaRobot(context, space, grid, mapentity);
         RobotEntity entity = new RobotEntity(robot);
         try {
             environment.registerEntity(robot.getName(), entity);
@@ -292,10 +322,10 @@ public final class MapLoader {
      * @return The created robot
      */
     private static NavigatingRobot createJavaRobot(Context<Object> context, ContinuousSpace<Object> space,
-            Entity mapentity) {
+            Grid<Object> grid, Entity mapentity) {
         String name = mapentity.getName();
 
-        NavigatingRobot robot = new NavigatingRobot(name, space, context, map.getOneBotPerCorridorZone(), 1);
+        NavigatingRobot robot = new NavigatingRobot(name, space, grid, context, map.getOneBotPerCorridorZone(), 1);
 
         double x = mapentity.getPosition().getX();
         double y = mapentity.getPosition().getY();
@@ -318,8 +348,8 @@ public final class MapLoader {
      * @param roomzone
      *            the room {@link Zone}.
      */
-    private static Room createRoom(Context<Object> context, ContinuousSpace<Object> space, Zone roomzone) {
-        return new BlocksRoom(space, context, roomzone);
+    private static Room createRoom(Context<Object> context, ContinuousSpace<Object> space, Grid<Object> grid, Zone roomzone) {
+        return new BlocksRoom(space, grid, context, roomzone);
     }
     
     /**
@@ -333,15 +363,13 @@ public final class MapLoader {
      *            the room {@link Zone}.
      * @return
      */
-    private static ChargingZone createChargingZone(Context<Object> context, ContinuousSpace<Object> space, Zone chargezone) {
-        return new ChargingZone(chargezone, space, context);
+    private static ChargingZone createChargingZone(Context<Object> context, ContinuousSpace<Object> space, Grid<Object> grid, Zone chargezone) {
+        return new ChargingZone(chargezone, space, grid, context);
     }
 
     /**
      * Creates a blockade to block the robots' path.
      * 
-     * @param c
-     *            The color.
      * @param context
      *            The context in which the room should be placed.
      * @param space
@@ -350,8 +378,8 @@ public final class MapLoader {
      *            the room {@link Zone}.
      * @return
      */
-    private static Blockade createBlockade(Context<Object> context, ContinuousSpace<Object> space, Zone chargezone) {
-        return new Blockade(chargezone, space, context);
+    private static Blockade createBlockade(Context<Object> context, ContinuousSpace<Object> space, Grid<Object> grid, Zone chargezone) {
+        return new Blockade(chargezone, space, grid, context);
     }
 
     /**
@@ -360,8 +388,8 @@ public final class MapLoader {
      * @param context
      * @param space
      */
-    private static Corridor createCorridor(Context<Object> context, ContinuousSpace<Object> space, Zone zone) {
-        return new Corridor(zone, space, context);
+    private static Corridor createCorridor(Context<Object> context, ContinuousSpace<Object> space, Grid<Object> grid, Zone zone) {
+        return new Corridor(zone, space, grid, context);
     }
 
     /**
@@ -375,8 +403,8 @@ public final class MapLoader {
      *            {@link nl.tudelft.bw4t.map.Door} object.
      */
     private static void createDoor(Context<Object> context, ContinuousSpace<Object> space,
-            nl.tudelft.bw4t.map.Door args, Room room) {
-        Door door = new Door(space, context);
+            Grid<Object> grid, nl.tudelft.bw4t.map.Door args, Room room) {
+        Door door = new Door(space, grid, context);
 
         double x = args.getPosition().getX();
         double y = args.getPosition().getY();
@@ -393,11 +421,12 @@ public final class MapLoader {
      * @param room
      * @param context
      * @param space
+     * @param grid
      * @param args
      *            is a list of colors to be added.
      */
     private static void createBlocksForRoom(Room room, Context<Object> context, ContinuousSpace<Object> space,
-            List<BlockColor> args) {
+            Grid<Object> grid, List<BlockColor> args) {
         
         String letter = "";
         for (BlockColor c : args) {
@@ -413,7 +442,7 @@ public final class MapLoader {
         for (BlockColor color : args) {
             Rectangle2D newpos = findFreePlace(roomBox, newblocks);
 
-            Block block = new Block(color, space, context);
+            Block block = new Block(color, space, grid, context);
 
             block.moveTo(newpos.getCenterX(), newpos.getCenterY());
             newblocks.add(newpos);

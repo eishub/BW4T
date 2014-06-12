@@ -23,6 +23,7 @@ import org.mockito.MockitoAnnotations;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
+import repast.simphony.space.grid.Grid;
 
 /**
  * This test tests the Human bot. It currently tests whether a 
@@ -34,6 +35,8 @@ public class HumanTest {
      * space Mock
      */
     @Mock private ContinuousSpace<Object> space;
+    @Mock private Grid<Object> grid;
+
     /**
      * context Mock
      */
@@ -83,7 +86,7 @@ public class HumanTest {
      */
     @Test
     public void testPickUpEPartner() {
-        IRobot r = new Human(new NavigatingRobot("", space, context, true, 1));
+        IRobot r = new Human(new NavigatingRobot("", space, grid, context, true, 1));
 
         assertTrue(r.getHandicapsList().contains("Human"));
 
@@ -96,7 +99,7 @@ public class HumanTest {
      */
     @Test
     public void testDropEPartner() {
-        NavigatingRobot robot = spy(new NavigatingRobot("", space, context, true, 1));
+        NavigatingRobot robot = spy(new NavigatingRobot("", space, grid, context, true, 1));
         
 		IRobot r = new Human(robot);
 
@@ -113,7 +116,7 @@ public class HumanTest {
      */
     @Test
     public void testDropEPartnerNotHolding() {
-        NavigatingRobot robot = spy(new NavigatingRobot("", space, context, true, 1));
+        NavigatingRobot robot = spy(new NavigatingRobot("", space, grid, context, true, 1));
         IRobot r = new Human(robot);
         r.dropEPartner();
         verifyNoMoreInteractions(ePartner);
@@ -146,7 +149,7 @@ public class HumanTest {
      */
     @Test
     public void getEPartnerTest() {
-        NavigatingRobot robot = spy(new NavigatingRobot("", space, context, true, 1));
+        NavigatingRobot robot = spy(new NavigatingRobot("", space, grid, context, true, 1));
         IRobot r = new Human(robot);
         r.pickUpEPartner(ePartner);
         assertTrue(r.getEPartner() == ePartner);

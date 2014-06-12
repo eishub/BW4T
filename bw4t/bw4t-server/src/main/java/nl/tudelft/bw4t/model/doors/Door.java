@@ -7,6 +7,7 @@ import nl.tudelft.bw4t.map.Door.Orientation;
 import nl.tudelft.bw4t.model.zone.Room;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
+import repast.simphony.space.grid.Grid;
 
 /**
  * A door is a platform between a room and the outside. You can enter rooms only through a door. This is implemented by
@@ -31,8 +32,8 @@ public class Door extends BoundedMoveableObject {
      * @param context
      *            The context in which the room will be located.
      */
-    public Door(ContinuousSpace<Object> space, Context<Object> context) {
-        super(space, context);
+    public Door(ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context) {
+        super(space, grid, context);
     }
 
     public Color getColor() {
