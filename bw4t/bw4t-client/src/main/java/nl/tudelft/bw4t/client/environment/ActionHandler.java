@@ -39,27 +39,45 @@ public class ActionHandler {
      */
     public static Map<String, Percept> performActionDelegated(String agent, Action action,
             RemoteEnvironment remoteEnvironment, String... entities) throws ActException, AgentException {
-
+        Set<String> associatedEntities = getAssociatedEntities(remoteEnvironment, action, agent);
+        Set<String> targetEntities     = getTargetEntities(associatedEntities, entities);
+        
+        checkSupportedEntities(entities, remoteEnvironment, action);
+        return getActionPercept(targetEntities, remoteEnvironment, action);
+    }
+    
+    /**
+     * Gets the associated entities and performs a series of checks regarding prerequisites.
+     *
+     * @param remoteEnvironment 
+     *              the remote environment which should be acted upon
+     * @param action 
+     *              the action being requested
+     * @param agent 
+     *              the agent requesting the action
+     * @return the associated entities
+     *              which belong to the agent
+     * @throws ActException the act exception
+     *              which is thrown if something is wrong with the prerequisites
+     * @throws AgentException the agent exception
+     *              which is thrown if the environment is suddenly disconnected.
+     */
+    private static Set<String> getAssociatedEntities(RemoteEnvironment remoteEnvironment, Action action, String agent)
+            throws ActException, AgentException {
         /** Check to see if the agent is actually registered. */
         if (!remoteEnvironment.getAgents().contains(agent)) {
             throw new ActException(ActException.NOTREGISTERED);
         }
-
+        /** Check if the action is supported by the environment. */
+        if (!remoteEnvironment.isSupportedByEnvironment(action)) {
+            throw new ActException(ActException.NOTSUPPORTEDBYENVIRONMENT);
+        }
         /** Get a list of associated entities and target entities. */
         Set<String> associatedEntities = remoteEnvironment.getAssociatedEntities(agent);
         if ((associatedEntities == null) || associatedEntities.isEmpty()) {
             throw new ActException(ActException.NOENTITIES);
         }
-        Set<String> targetEntities = getTargetEntities(associatedEntities, entities);
-
-        /** Check if the action is supported by the environment. */
-        if (!remoteEnvironment.isSupportedByEnvironment(action)) {
-            throw new ActException(ActException.NOTSUPPORTEDBYENVIRONMENT);
-        }
-
-        checkSupportedEntities(entities, remoteEnvironment, action);
-
-        return getActionPercept(targetEntities, remoteEnvironment, action);
+        return associatedEntities;
     }
 
     /**
@@ -75,17 +93,15 @@ public class ActionHandler {
      */
     private static Set<String> getTargetEntities(Set<String> associatedEntities, String... entities)
             throws ActException {
-        Set<String> targetEntities = null;
         if (entities.length == 0) {
-            targetEntities = associatedEntities;
-        } else {
-            targetEntities = new HashSet<String>();
-            for (String entity : entities) {
-                if (!associatedEntities.contains(entity)) {
-                    throw new ActException(ActException.WRONGENTITY);
-                }
-                targetEntities.add(entity);
+            return associatedEntities;
+        }
+        Set<String> targetEntities = new HashSet<String>();
+        for (String entity : entities) {
+            if (!associatedEntities.contains(entity)) {
+                throw new ActException(ActException.WRONGENTITY);
             }
+            targetEntities.add(entity);
         }
         return targetEntities;
     }
@@ -106,17 +122,16 @@ public class ActionHandler {
     private static void checkSupportedEntities(String[] entities, RemoteEnvironment remoteEnvironment, Action action)
             throws ActException {
         for (String entity : entities) {
-            String type;
             try {
-                type = remoteEnvironment.getType(entity);
+                String type = remoteEnvironment.getType(entity);
+                if (!remoteEnvironment.isSupportedByType(action, type)) {
+                    throw new ActException(ActException.NOTSUPPORTEDBYTYPE);
+                }
+                if (!remoteEnvironment.isSupportedByEntity(action, type)) {
+                    throw new ActException(ActException.NOTSUPPORTEDBYENTITY);
+                }
             } catch (EntityException e) {
-                throw new ActException("can't get entity type", e);
-            }
-            if (!remoteEnvironment.isSupportedByType(action, type)) {
-                throw new ActException(ActException.NOTSUPPORTEDBYTYPE);
-            }
-            if (!remoteEnvironment.isSupportedByEntity(action, type)) {
-                throw new ActException(ActException.NOTSUPPORTEDBYENTITY);
+                throw new ActException("Can't get entity type", e);
             }
         }
     }
