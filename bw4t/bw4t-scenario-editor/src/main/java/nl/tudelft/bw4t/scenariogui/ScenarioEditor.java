@@ -29,9 +29,9 @@ public class ScenarioEditor extends JFrame {
     private String windowName = "Scenario Editor";
 
     private MainPanel mPanel;
-
+    
     private MenuBar menuBar;
-
+    
     private ScenarioEditorController controller;
     
     private static BW4TClientConfig model;
