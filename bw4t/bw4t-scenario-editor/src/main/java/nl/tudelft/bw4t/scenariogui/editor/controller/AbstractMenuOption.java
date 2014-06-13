@@ -12,6 +12,9 @@ import javax.xml.bind.JAXBException;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.DefaultConfigurationValues;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 import nl.tudelft.bw4t.scenariogui.util.MapSpec;
@@ -162,8 +165,10 @@ public abstract class AbstractMenuOption implements ActionListener {
 
 
     private boolean validateBotCount() {
-        MapSpec map = controller.getMainView().getMainPanel()
-                .getConfigurationPanel().getMapSpecifications();
+        ScenarioEditor se = controller.getMainView();
+        MainPanel mp = se.getMainPanel();
+        ConfigurationPanel cp = mp.getConfigurationPanel();
+        MapSpec map = cp.getMapSpecifications();
         int botCount = getModel().getAmountBot();
         if (map.isSet() && botCount > map.getEntitiesAllowedInMap()) {
             ScenarioEditor.getOptionPrompt().showMessageDialog(
@@ -177,7 +182,10 @@ public abstract class AbstractMenuOption implements ActionListener {
     }
 
     private boolean verifyMapSelected() {
-        String map = getController().getMainView().getMainPanel().getConfigurationPanel().getMapFile();
+    	ScenarioEditor se = controller.getMainView();
+        MainPanel mp = se.getMainPanel();
+        ConfigurationPanel cp = mp.getConfigurationPanel();
+        String map = cp.getMapFile();
         if(map.trim().isEmpty()) {
             int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(getController().getMainView(),
                     "Warning: No map file has been selected. Press OK to continue.",
@@ -214,10 +222,13 @@ public abstract class AbstractMenuOption implements ActionListener {
      * Update the model with the new bot and epartners, and update the counts in the view.
      */
     public void updateModelAndView() {
-        getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
+    	ScenarioEditor se = controller.getMainView();
+        MainPanel mp = se.getMainPanel();
+        ConfigurationPanel cp = mp.getConfigurationPanel();
+        cp.updateOldValues();
         getModel().updateOldBotConfigs();
-        getController().getMainView().getMainPanel().getEntityPanel().updateEPartnerCount(
-                getModel().getAmountEPartner());
+        EntityPanel ep = mp.getEntityPanel();
+        ep.updateEPartnerCount(getModel().getAmountEPartner());
         getModel().updateOldEpartnerConfigs();
     }
 
