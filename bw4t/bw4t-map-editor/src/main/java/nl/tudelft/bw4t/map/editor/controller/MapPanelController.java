@@ -169,7 +169,7 @@ public class MapPanelController implements ChangeListener {
         
         this.getZoneMenu().getRandomize().addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent ae) {
-        		
+        		makeRandomColorMap();
         	}
         });
     }
@@ -186,7 +186,7 @@ public class MapPanelController implements ChangeListener {
             selected.setType(t);
             selected.setDropZone(isDropZone);
             selected.setStartZone(isStartZone);
-            if(selected.getType() == Type.ROOM) {
+            if(selected.getType() == Type.ROOM && !selected.isDropZone() && !selected.isStartZone()) {
             	rooms.add(selected);
             }
             selected.getUpdateableEditorInterface().update();
@@ -806,6 +806,7 @@ public class MapPanelController implements ChangeListener {
     	Random random = new Random();
 		ArrayList<BlockColor> colors = new ArrayList<BlockColor>();
 		colors.addAll(BlockColor.getAvailableColors());
+		colors.remove(BlockColor.DARK_GRAY);
     	for (ZoneController zc: rooms) {
     		int amount = random.nextInt(10);
     		zc.makeRandomColorRoom(amount, colors);
