@@ -5,12 +5,13 @@ import java.util.List;
 
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone.Type;
+import nl.tudelft.bw4t.map.editor.model.Node.DoorDirection;
 
 /**
  * Every space in the map is a Zone that is later changed to a corridor, room etc.
  *
  */
-public class Zone {
+public class ZoneModel {
 
 	private Type type = Type.CORRIDOR;
 	
@@ -27,6 +28,31 @@ public class Zone {
 	private boolean isStartZone = false;
 	
 	private String coordiname = "";
+	
+	public ZoneModel() {
+		
+	}
+	
+	public ZoneModel(Node n) {
+		type = n.getType();
+		Node.DoorDirection dir = n.getDir();
+		int index;
+		if (type == Type.ROOM) {
+			if (dir == DoorDirection.NORTH) {
+				index = 0;
+			} 
+			else if (dir == DoorDirection.EAST) {
+				index = 1;
+			} 
+			else if (dir == DoorDirection.SOUTH) {
+				index = 2;
+			} 
+			else {
+				index = 3;
+			}
+			doorsbool[index] = true;
+		}
+	}
 	
 	public Type getType() {
 		return type;

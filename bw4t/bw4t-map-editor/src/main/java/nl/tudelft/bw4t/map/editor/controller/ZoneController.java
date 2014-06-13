@@ -13,7 +13,7 @@ import javax.swing.event.ChangeListener;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone.Type;
 import nl.tudelft.bw4t.map.editor.gui.ColorSequenceEditor;
-import nl.tudelft.bw4t.map.editor.model.Zone;
+import nl.tudelft.bw4t.map.editor.model.ZoneModel;
 
 /**
  * This contains the room information: the blocks that the room contains.
@@ -23,7 +23,7 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
     /** should match the position in the map table */
     private int row, column;
     
-    private Zone model;
+    private ZoneModel model;
     
     private MapPanelController mapController;
     
@@ -35,7 +35,7 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
      * @param c columns
      * @param m Zone model
      */
-    public ZoneController(MapPanelController mc, int r, int c, Zone m) {
+    public ZoneController(MapPanelController mc, int r, int c, ZoneModel m) {
     	mapController = mc;
     	
         if (r > 24 || r < 0) {
