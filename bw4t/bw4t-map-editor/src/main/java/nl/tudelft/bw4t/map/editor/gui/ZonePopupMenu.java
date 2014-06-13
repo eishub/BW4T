@@ -181,6 +181,10 @@ public class ZonePopupMenu extends JPopupMenu implements UpdateableEditorInterfa
     public final JMenuItem getMenuItemDoorSideWest() {
         return west;
     }
+    
+	public JMenuItem getRandomize() {
+		return randomize;
+	}
 
     @Override
     public void update() {
