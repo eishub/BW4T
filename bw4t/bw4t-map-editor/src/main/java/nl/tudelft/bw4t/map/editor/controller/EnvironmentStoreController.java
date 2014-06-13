@@ -42,7 +42,6 @@ public class EnvironmentStoreController {
 		getMainView().getTopMenuBar().getMenuItemPreview().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Preview");
 		    	JFrame preview = new JFrame("Map Preview");
 		    	preview.add(new MapRenderer(new MapPreviewController(mapController)));
 		    	preview.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
