@@ -21,13 +21,21 @@ public class ExportToMASTest {
     public static final String CONFIG_NAME = "testname";
 
     private static final String FILE_ROOT = System.getProperty("user.dir");
+    
     private static final String CONFIG_PATH = FILE_ROOT + "/src/test/resources/export.xml";
+    
     private static final String EXPORT_DIR = FILE_ROOT + "/src/test/resources/export/";
+    
     private static final String AGENT_DIR = EXPORT_DIR + "agents/";
+    
     private static final String AGENT_GOAL_FILE = FILE_ROOT + "/src/test/resources/robot.goal";
+    
     private static final String AGENT_GOAL_FILE_WORKING = FILE_ROOT + "/robot.goal";
+    
     private static final String MAS2G = CONFIG_NAME + ".mas2g";
+    
     private static final String XML_SRC = CONFIG_NAME + ".xml";
+    
     private static final String[] GOAL_FILES = {"robot.goal"};
 
     private BW4TClientConfig configuration;

@@ -25,7 +25,9 @@ import nl.tudelft.bw4t.util.FileUtils;
 public final class ExportToMAS {
 
 	private static final String TAB = "\t";
+	
 	private static final String NEWLINE = "\n";
+	
 	private static final String ENVIRONMENT = "env = \"BW4T3/BW4TClient.jar\" ."
 			+ NEWLINE;
 
@@ -33,12 +35,19 @@ public final class ExportToMAS {
 			+ "configfile = \"%s.xml\" ] ." + NEWLINE;
 
 	private static String init = "";
+	
 	private static BW4TClientConfig configuration;
+	
 	private static String directory;
+	
 	private static File mas2gFile;
+	
 	private static int agentCount;
+	
 	private static int humanCount;
+	
 	private static StringBuilder launchPolicyBuilder;
+	
 	private static Map<String, String> goalFiles;
 
 	/**
