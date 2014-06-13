@@ -5,6 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -12,7 +13,7 @@ import javax.swing.event.ChangeListener;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone.Type;
 import nl.tudelft.bw4t.map.editor.gui.ColorSequenceEditor;
-import nl.tudelft.bw4t.map.editor.model.Zone;
+import nl.tudelft.bw4t.map.editor.model.ZoneModel;
 
 /**
  * This contains the room information: the blocks that the room contains.
@@ -22,7 +23,7 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
     /** should match the position in the map table */
     private int row, column;
     
-    private Zone model;
+    private ZoneModel model;
     
     private MapPanelController mapController;
     
@@ -34,7 +35,7 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
      * @param c columns
      * @param m Zone model
      */
-    public ZoneController(MapPanelController mc, int r, int c, Zone m) {
+    public ZoneController(MapPanelController mc, int r, int c, ZoneModel m) {
     	mapController = mc;
     	
         if (r > 24 || r < 0) {
@@ -157,5 +158,23 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
     public boolean hasDoor(int dir) {
         return this.model.hasDoor(dir);
     }
+    
+	public ZoneModel getZoneModel() {
+		return model;
+	}
+	
+	public void setZoneModel(ZoneModel model) {
+		this.model = model;
+	}
 
+    
+    public void makeRandomColorRoom(int amount, ArrayList<BlockColor> validcolors) {
+    	Random random = new Random();
+		ArrayList<BlockColor> colors = new ArrayList<BlockColor>();
+    	for(int i = 0; i <  amount; i++) {
+    		colors.add(validcolors.get(random.nextInt(validcolors.size())));
+    	}
+    	model.setColors(colors);
+    	uei.update();
+    }
 }

@@ -10,7 +10,7 @@ import javax.swing.JRadioButtonMenuItem;
 import nl.tudelft.bw4t.map.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.map.editor.controller.UpdateableEditorInterface;
 import nl.tudelft.bw4t.map.editor.controller.ZoneController;
-import nl.tudelft.bw4t.map.editor.model.Zone;
+import nl.tudelft.bw4t.map.editor.model.ZoneModel;
 
 /**
  * The ZonePopupMenu shows us the options for the different Zones through right click.
@@ -181,6 +181,10 @@ public class ZonePopupMenu extends JPopupMenu implements UpdateableEditorInterfa
     public final JMenuItem getMenuItemDoorSideWest() {
         return west;
     }
+    
+	public JMenuItem getRandomize() {
+		return randomize;
+	}
 
     @Override
     public void update() {
@@ -214,9 +218,9 @@ public class ZonePopupMenu extends JPopupMenu implements UpdateableEditorInterfa
             break;
         }
         
-        north.setSelected(zone.hasDoor(Zone.NORTH));
-        east.setSelected(zone.hasDoor(Zone.EAST));
-        south.setSelected(zone.hasDoor(Zone.SOUTH));
-        west.setSelected(zone.hasDoor(Zone.WEST));
+        north.setSelected(zone.hasDoor(ZoneModel.NORTH));
+        east.setSelected(zone.hasDoor(ZoneModel.EAST));
+        south.setSelected(zone.hasDoor(ZoneModel.SOUTH));
+        west.setSelected(zone.hasDoor(ZoneModel.WEST));
     }
 }
