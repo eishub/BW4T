@@ -24,11 +24,16 @@ public class EpartnerFrameTest {
 	
 	@Before
 	public final void setupEpartnerFrame() {
+		//TODO: figure out which one is the correct one. 
+//old
+		//TODO: These tests need to be fixed. 
+        frame = new EpartnerFrame(new EpartnerController(new EPartnerConfig()));
+        spyframe= spy(frame);
+//new
 		config = new EPartnerConfig();
 		controller = new EpartnerController(config);
         frame = new EpartnerFrame(controller);
         spyframe = spy(frame);
-        
 	}
 	
 	@After

@@ -1,18 +1,14 @@
 package nl.tudelft.bw4t.map.editor;
 
 import java.awt.BorderLayout;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 import nl.tudelft.bw4t.map.editor.controller.EnvironmentStoreController;
 import nl.tudelft.bw4t.map.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.map.editor.gui.ExplanationPanel;
 import nl.tudelft.bw4t.map.editor.gui.MapPanel;
 import nl.tudelft.bw4t.map.editor.gui.MenuBar;
-import nl.tudelft.bw4t.map.editor.gui.SizeDialog;
 import nl.tudelft.bw4t.map.editor.gui.SizeDialog;
 import nl.tudelft.bw4t.map.editor.util.DefaultOptionPrompt;
 import nl.tudelft.bw4t.map.editor.util.OptionPrompt;
