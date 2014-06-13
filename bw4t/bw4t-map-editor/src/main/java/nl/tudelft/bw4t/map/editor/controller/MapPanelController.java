@@ -186,6 +186,9 @@ public class MapPanelController implements ChangeListener {
             selected.setType(t);
             selected.setDropZone(isDropZone);
             selected.setStartZone(isStartZone);
+            if(selected.getType() == Type.ROOM) {
+            	rooms.add(selected);
+            }
             selected.getUpdateableEditorInterface().update();
         }
         selected = null;
@@ -799,7 +802,6 @@ public class MapPanelController implements ChangeListener {
         return sequence;
     }
    
-    //TODO rooms needs to be updated every time a room is created
     public void makeRandomColorMap() {
     	Random random = new Random();
 		ArrayList<BlockColor> colors = new ArrayList<BlockColor>();
