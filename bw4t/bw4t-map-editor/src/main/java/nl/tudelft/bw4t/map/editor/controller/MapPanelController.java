@@ -740,6 +740,7 @@ public class MapPanelController implements ChangeListener {
         return sequence;
     }
    
+    //TODO rooms needs to be updated every time a room is created
     public void makeRandomColorMap() {
     	Random random = new Random();
 		ArrayList<BlockColor> colors = new ArrayList<BlockColor>();

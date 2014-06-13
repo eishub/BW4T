@@ -20,8 +20,8 @@ public class RandomizeFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JTextField textField;
+	private JPanel contentPane = new JPanel();
+	private JTextField textField = new JTextField(); 
 	
 	private JLabel lblRoomA = new JLabel("Room A1 / Sequence");
 	private JLabel lblNumberOfBlocks = new JLabel("Number of blocks created:");
@@ -96,6 +96,7 @@ public class RandomizeFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[272px]", "[20px][14px][][20px][14px][23px][23px][23px][23px][23px][23px][23px][23px][14px][20px][23px]"));
+		setResizable(false);
 		
 		lblRoomA.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
@@ -118,6 +119,7 @@ public class RandomizeFrame extends JFrame {
 		
 		contentPane.add(applyButton, "flowx,cell 0 15,alignx left,aligny top");
 		contentPane.add(cancelButton, "cell 0 15");
+		pack();
 	}
 	
 	public boolean isRed() {
