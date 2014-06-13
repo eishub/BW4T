@@ -390,13 +390,13 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
      * @param playerId
      *            , the Id of the player to be added
      */
-    public void addPlayer(String playerId) {
+  /*  public void addPlayer(String playerId) {
         if (!playerId.equals(controller.getMapController().getTheBot().getName())) {
             JButton button = new JButton(playerId);
             button.addMouseListener(new TeamListMouseListener(this));
             botButtonPanel.add(button);
         }
-    }
+    }*/
 
     @Override
     public void dispose() {
