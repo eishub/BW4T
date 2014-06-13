@@ -66,13 +66,25 @@ public abstract class AbstractMenuOption implements ActionListener {
 	}
 	
 	/**
+	 * Opens a new size Dialog that lets the user start from scratch.
 	 * TODO: to write and implement.
 	 */
 	public void newMap() {
-		System.out.println("Creating a new map.");
+        boolean doSave = envController.promptUserToSave();
+
+        if (doSave) {
+        	saveAsFile();
+        } else {
+        	// Close Environmenst Store
+        	envController.getMainView().dispose();
+        	// TODO: Also dispose all other windows and reset value like lastFileLocation
+        	SizeDialog dialog = new SizeDialog();
+        	dialog.setVisible(true);
+        }		
 	}
 	
 	/**
+	 * Opens a dialog that allows the user to choose a map to edit.
 	 * TODO: to write and implement.
 	 */
 	public void openMap() {
