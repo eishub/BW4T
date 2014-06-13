@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
+import nl.tudelft.bw4t.map.editor.controller.MapPanelController;
+import nl.tudelft.bw4t.map.editor.controller.SizeDialogController;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JSplitPane;
@@ -91,27 +93,17 @@ public class SizeDialog extends JFrame {
 	 */
 	private JSpinner entities = new JSpinner();
 	
-
 	/**
-	 * Launch the application.
+	 * SizeDialogController
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					SizeDialog frame = new SizeDialog();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private SizeDialogController sdc;
 
 	/**
 	 * Create the frame.
 	 */
 	public SizeDialog() {
+		sdc = new SizeDialogController(this);
+		
 		setTitle("Size Dialog");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 200);
@@ -190,4 +182,18 @@ public class SizeDialog extends JFrame {
     public int getEntities() {
     	return (Integer) (entities.getValue());
     }
+    
+    
+    public JButton getExistingMapButton() {
+    	return editExistingMapButton;
+    }
+	
+	public JButton getBeginFromScratchButton() {
+		return beginFromScratchButton;
+	}
+	
+	public JButton getStandardBasisButton() {
+		return useStandardBasisButton;
+	}
+    
 }

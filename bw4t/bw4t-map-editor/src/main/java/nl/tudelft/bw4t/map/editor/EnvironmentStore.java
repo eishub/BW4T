@@ -143,21 +143,15 @@ public class EnvironmentStore extends JFrame {
         System.exit(0);
     }
 
-
     /**
-     * Start first the dialog that gives us the options for the map.
-     * Then create the MapEditor with this options.
-     * 
-     * @param args Unused parameter
-     */
-    public static void main(String[] args) {
-    	SizeDialog dialog = new SizeDialog();
-    	dialog.setVisible(true);
-      
-        MapPanelController themap = new MapPanelController(dialog.getRows(),
-        			dialog.getColumns(),
-	                dialog.getEntities(), true,
-	                dialog.isLabelsVisible());
-    }
+	 * Start first the dialog that gives us the options for the map.
+	 * Then create the MapEditor with this options.
+	 * 
+	 * @param args Unused parameter
+	 */
+	public static void main(String[] args) {
+		SizeDialog dialog = new SizeDialog();
+		dialog.setVisible(true);
+	}
 }
 
