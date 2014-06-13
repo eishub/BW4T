@@ -30,6 +30,7 @@ import nl.tudelft.bw4t.map.editor.EnvironmentStore;
 import nl.tudelft.bw4t.map.editor.controller.ZoneController;
 import nl.tudelft.bw4t.map.editor.gui.ColorSequenceEditor;
 import nl.tudelft.bw4t.map.editor.gui.ZonePopupMenu;
+import nl.tudelft.bw4t.map.editor.model.RandomMapCreator;
 import nl.tudelft.bw4t.map.editor.model.ZoneModel;
 
 /**
@@ -382,14 +383,20 @@ public class MapPanelController implements ChangeListener {
         return map;
     }
     /**
-     * Create the real map object using the settings
+     * Create a random map object using the given settings.
      * 
      * @return NewMap the new map that has been created.
      * @throws MapFormatException if no dropZone or no startZone is found.
      */
-    public NewMap createRandomMap(ZoneModel[][] modelGrid) throws MapFormatException {
+    public NewMap createRandomMap(int roomCount) throws MapFormatException {
         NewMap map = new NewMap();
-
+        ZoneModel[][] models = RandomMapCreator.createRandomGrid(
+        		zonecontrollers.length, zonecontrollers[0].length, roomCount);
+        for (int i = 0; i < zonecontrollers.length; i++) {
+        	for (int j = 0; j < zonecontrollers[0].length; j++) {
+        		zonecontrollers[i][j] = new ZoneController(this, i, j, models[i][j]);
+        	}
+        }
         // compute a number of key values
         double mapwidth = getColumns() * ROOMWIDTH;
         double mapheight = getRows() * ROOMHEIGHT;
@@ -572,25 +579,6 @@ public class MapPanelController implements ChangeListener {
     	}
     }
     
-    public int determineDoorIndex(int row1, int col1, int row2, int col2) {
-    	if (col1 == col2) {
-    		if (row1 > row2) {
-    			return 0;
-    		}
-    		else {
-    			return 2;
-    		}
-    	}
-    	else {
-    		if (col1 > col2) {
-    			return 3;
-    		} 
-    		else {
-    			return 1;
-    		}
-    	}
-    }
-
     /**
      * Get the zone from certain coordinates.
      * @param zones
