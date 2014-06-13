@@ -27,6 +27,7 @@ import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.editor.ExtensiveEditor;
 import nl.tudelft.bw4t.map.editor.controller.ColorSequence;
 import nl.tudelft.bw4t.map.editor.controller.Room;
+import nl.tudelft.bw4t.map.editor.model.Node;
 import nl.tudelft.bw4t.map.editor.model.ZoneModel;
 
 /**
@@ -807,87 +808,5 @@ public class Map implements TableModel {
                             + aValue.getClass());
         }
         rooms.get(rowIndex).get(columnIndex).setValue((Room) aValue);
-    }
-    /**
-     * The node class to be used in the random map generator.
-     *
-     */
-    public class Node {
-    	/**
-    	 * The required nodes.
-    	 */
-    	private Node north, east, south, west;
-    	/**
-    	 * The type of room this node represents.
-    	 */
-    	private Zone.Type type;
-    	/**
-    	 * The orientation of the door if the node represents a room.
-    	 */
-    	private Map.DoorDirection dir = Map.DoorDirection.NORTH;
-    	/**
-    	 * Constructs the Node object with only the type of the room
-    	 * the node is representing.
-    	 * @param t The type of room this node should represent.
-    	 */
-    	public Node(Zone.Type t) {
-    		type = t;
-    	}
-		public Node getNorth() {
-			return north;
-		}
-		public void setNorth(Node north) {
-			this.north = north;
-		}
-		public Node getEast() {
-			return east;
-		}
-		public void setEast(Node east) {
-			this.east = east;
-		}
-		public Node getSouth() {
-			return south;
-		}
-		public void setSouth(Node south) {
-			this.south = south;
-		}
-		public Node getWest() {
-			return west; 
-		}
-		public void setWest(Node west) {
-			this.west = west;
-		}
-		public Zone.Type getType() {
-			return type;
-		}
-		public void setType(Zone.Type type) {
-			this.type = type;
-		}
-		public Map.DoorDirection getDir() {
-			return dir;
-		}
-		public void setDir(Map.DoorDirection dir) {
-			this.dir = dir;
-		}
-		public List<Map.DoorDirection> getFreeDirs() {
-			List<Map.DoorDirection> dirList = new ArrayList<Map.DoorDirection>();
-			if (north != null && north.isNotBlocking()) {
-				dirList.add(Map.DoorDirection.NORTH);
-			}
-			if (east != null && east.isNotBlocking()) {
-				dirList.add(Map.DoorDirection.EAST);
-			}
-			if (south != null && south.isNotBlocking()) {
-				dirList.add(Map.DoorDirection.SOUTH);
-			}
-			if (west != null && west.isNotBlocking()) {
-				dirList.add(Map.DoorDirection.WEST);
-			}
-			return dirList;
-		}
-		public boolean isNotBlocking() {
-			return type == Zone.Type.CHARGINGZONE ||
-					type == Zone.Type.CORRIDOR;
-		}
     }
 }
