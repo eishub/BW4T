@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 import nl.tudelft.bw4t.map.editor.EnvironmentStore;
-import nl.tudelft.bw4t.map.renderer.MapRenderer;
+import nl.tudelft.bw4t.view.MapRenderer;
 
 public class EnvironmentStoreController {
 	

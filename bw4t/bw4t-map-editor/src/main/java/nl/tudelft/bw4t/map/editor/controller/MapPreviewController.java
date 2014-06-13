@@ -7,22 +7,31 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import nl.tudelft.bw4t.map.renderer.AbstractMapController;
+import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Entity;
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.renderer.AbstractMapController;
-import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 
+/**
+ * The MapPreviewController class controls the map preview that is generated.
+ *
+ */
 public class MapPreviewController extends AbstractMapController {
 
-	private Map map;
+	private MapPanelController mapController;
 	
-	public MapPreviewController(Map theMap) {
-		super(theMap.createMap());
-		this.map = theMap;
+	/**
+	 * Constructor for the MapPreviewController.
+	 * 
+	 * @param mc
+	 */
+	public MapPreviewController(MapPanelController mc) {
+		super(mc.createMap());
+		this.mapController = mc;
 		this.getRenderSettings().setUpdateDelay(1000);
 	}
 
@@ -74,7 +83,8 @@ public class MapPreviewController extends AbstractMapController {
 		Set<ViewEntity> entities = new HashSet<ViewEntity>();
 		
 		for (Entity e : getMap().getEntities()) {
-			ViewEntity viewe = new ViewEntity(0, e.getName(), e.getPosition().getX(), e.getPosition().getY(), new ArrayList<ViewBlock>(), 2);
+			ViewEntity viewe = new ViewEntity(0, e.getName(), 
+					e.getPosition().getX(), e.getPosition().getY(), new ArrayList<ViewBlock>(), 2);
 			entities.add(viewe);
 		}
 		
@@ -88,7 +98,7 @@ public class MapPreviewController extends AbstractMapController {
 
 	@Override
 	protected void updateRenderer(MapRendererInterface mri) {
-		this.setMap(map.createMap());
+		this.setMap(mapController.createMap());
 		mri.validate();
 		mri.repaint();
 	}

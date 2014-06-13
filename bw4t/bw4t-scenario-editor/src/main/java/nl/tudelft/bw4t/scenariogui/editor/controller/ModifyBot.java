@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.botstore.controller.BotController;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditor;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
@@ -45,7 +46,8 @@ class ModifyBot implements ActionListener {
             return;
         }
         String data = (String) view.getEntityPanel().getBotTable().getModel().getValueAt(row, 0);
-        //TODO: This error did not come from the merge. Please fix so I can merge your branch with EnvironmentStore.
-        new BotEditor(view, row, model);
+       
+        BotController bc = new BotController(view, row, model);		
+        new BotEditor(bc);
     }
 }
