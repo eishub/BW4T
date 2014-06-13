@@ -4,6 +4,8 @@ package nl.tudelft.bw4t.botstore.boteditorpanel;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.spy;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
@@ -13,14 +15,15 @@ import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
+import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-
 /**
  * Test the boteditorpanel
+ * @author Arun
+ * @author Tim
  */
 public class BotEditorPanelTest {
 
@@ -47,7 +50,6 @@ public class BotEditorPanelTest {
     /** dispose the frame after testing */
     @After
     public final void dispose() {
-        scenarioEditor.dispose();
         editor.dispose();
     }
 
@@ -189,27 +191,71 @@ public class BotEditorPanelTest {
     @Test
     public final void testResetButtonClick() {
         BotEditorPanel botEditorPanel = editor.getBotEditorPanel();
-        BotConfig config = botEditorPanel.getDataObject();
-        
+        BotConfig dataObject = botEditorPanel.getDataObject();
         botEditorPanel.getResetButton().doClick();
-        
-        assertEquals(botEditorPanel.getSpeedSlider().getValue(), config.getBotSpeed());
-        assertEquals(botEditorPanel.getSizeSlider().getValue(), config.getBotSize());
-        assertEquals(botEditorPanel.getBatterySlider().getValue(), config.getBotBatteryCapacity());
-        assertEquals(botEditorPanel.getNumberOfGrippersSlider().getValue(), config.getGrippers());
-        assertEquals(botEditorPanel.getSizeSlider().isEnabled(), config.getSizeOverloadHandicap());
-        assertEquals(botEditorPanel.getSpeedSlider().isEnabled(), config.getMoveSpeedHandicap());
-        assertEquals(botEditorPanel.getBatterySlider().isEnabled(), config.isBatteryEnabled());
-        assertEquals(botEditorPanel.getNumberOfGrippersSlider().isEnabled(), !config.getGripperHandicap());
-        assertEquals(botEditorPanel.getGripperCheckbox().isSelected(), config.getGripperHandicap());
-        assertEquals(botEditorPanel.getColorblindCheckbox().isSelected(), config.getColorBlindHandicap());
-        assertEquals(botEditorPanel.getsizeoverloadCheckbox().isSelected(), config.getSizeOverloadHandicap());
-        assertEquals(botEditorPanel.getmovespeedCheckbox().isSelected(), config.getMoveSpeedHandicap());
-        assertEquals(botEditorPanel.getBatteryEnabledCheckbox().isSelected(), config.isBatteryEnabled());
-        assertEquals(botEditorPanel.getFileNameField().getText(), config.getFileName());
-        assertEquals(botEditorPanel.getBotNameField().getText(), config.getBotName());
-        assertEquals(botEditorPanel.getBotReferenceField().getText(), config.getReferenceName());
+		assertEquals(botEditorPanel.getSpeedSlider().getValue(), dataObject.getBotSpeed());
+        assertEquals(botEditorPanel.getSizeSlider().getValue(), dataObject.getBotSize());
+        assertEquals(botEditorPanel.getBatterySlider().getValue(), dataObject.getBotBatteryCapacity());
+        assertEquals(botEditorPanel.getNumberOfGrippersSlider().getValue(), dataObject.getGrippers());
+        assertEquals(botEditorPanel.getSizeSlider().isEnabled(), dataObject.getSizeOverloadHandicap());
+        assertEquals(botEditorPanel.getSpeedSlider().isEnabled(), dataObject.getMoveSpeedHandicap());
+        assertEquals(botEditorPanel.getBatterySlider().isEnabled(), dataObject.isBatteryEnabled());
+        assertEquals(botEditorPanel.getBatterySlider().getValue(), dataObject.getBotBatteryCapacity());
+        assertEquals(botEditorPanel.getNumberOfGrippersSlider().isEnabled(), !dataObject.getGripperHandicap());
+        assertEquals(botEditorPanel.getGripperCheckbox().isSelected(), dataObject.getGripperHandicap());
+        assertEquals(botEditorPanel.getColorblindCheckbox().isSelected(), dataObject.getColorBlindHandicap());
+        assertEquals(botEditorPanel.getsizeoverloadCheckbox().isSelected(), dataObject.getSizeOverloadHandicap());
+        assertEquals(botEditorPanel.getmovespeedCheckbox().isSelected(), dataObject.getMoveSpeedHandicap());
+        assertEquals(botEditorPanel.getBatteryEnabledCheckbox().isSelected(), dataObject.isBatteryEnabled());
+        assertEquals(botEditorPanel.getFileNameField().getText(), dataObject.getFileName());
+        assertEquals(botEditorPanel.getBotNameField().getText(), dataObject.getBotName());
+        assertEquals(botEditorPanel.getBotReferenceField().getText(), dataObject.getReferenceName());
     }
 
-
+    @Test
+    public final void testValidFileNamePrompt() {
+        NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
+        ScenarioEditor.setOptionPrompt(spyOption);
+    	editor.getBotEditorPanel().getBotNameField().setText("");
+    	editor.getBotEditorPanel().getSaveButton().doClick();
+    	verify(spyOption, times(1)).showMessageDialog(editor.getBotEditorPanel(), "Please specify a file name"
+				+ " consisting of valid alphanumeric characters"
+				+ " or use an existing file.");
+    }
+    
+    @Test
+    public final void testFileNameEndPrompt() {
+        NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
+        ScenarioEditor.setOptionPrompt(spyOption);
+        editor.getBotEditorPanel().getBotNameField().setText("bob");
+        editor.getBotEditorPanel().getFileNameField().setText("bob");
+        editor.getBotEditorPanel().getSaveButton().doClick();
+    	verify(spyOption, times(1)).showMessageDialog(editor.getBotEditorPanel(), "The file name is invalid.\n"
+				+ "File names should end in .goal.");
+    }
+    
+    @Test
+    public final void testNoFileNameEndPrompt() {
+        NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
+        ScenarioEditor.setOptionPrompt(spyOption);
+        editor.getBotEditorPanel().getBotNameField().setText("bob");
+        editor.getBotEditorPanel().getFileNameField().setText(".goal");
+        editor.getBotEditorPanel().getSaveButton().doClick();
+    	verify(spyOption, times(1)).showMessageDialog(editor.getBotEditorPanel(), "Please specify a file name.");
+    }
+    
+    @Test 
+    public final void testSaveButton() {
+        BotEditorPanel botEditorPanel = editor.getBotEditorPanel();
+        BotConfig dataObject = botEditorPanel.getDataObject();
+    	editor.getBotEditorPanel().getBotNameField().setText("bob");
+    	editor.getBotEditorPanel().getBotAmountTextField().setText("10");
+    	editor.getBotEditorPanel().getBotReferenceField().setText("bobrobot");
+    	editor.getBotEditorPanel().getFileNameField().setText("bob.goal");
+    	editor.getBotEditorPanel().getSaveButton().doClick();
+        assertEquals(botEditorPanel.getBotNameField().getText(), dataObject.getBotName());
+        assertEquals(Integer.parseInt(botEditorPanel.getBotAmountTextField().getText()), dataObject.getBotAmount());
+        assertEquals(botEditorPanel.getBotReferenceField().getText(), dataObject.getReferenceName());
+        assertEquals(botEditorPanel.getFileNameField().getText(), dataObject.getFileName());
+    }
 }

@@ -1,56 +1,39 @@
 package nl.tudelft.bw4t.map.editor;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTable;
 
-import nl.tudelft.bw4t.map.editor.controller.Map;
-import nl.tudelft.bw4t.map.editor.controller.Room;
-import nl.tudelft.bw4t.map.editor.gui.ColorLegendaPanel;
-import nl.tudelft.bw4t.map.editor.gui.ColorSequencePanel;
+import nl.tudelft.bw4t.map.editor.controller.EnvironmentStoreController;
+import nl.tudelft.bw4t.map.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.map.editor.gui.ExplanationPanel;
+import nl.tudelft.bw4t.map.editor.gui.MapPanel;
 import nl.tudelft.bw4t.map.editor.gui.MenuBar;
-import nl.tudelft.bw4t.map.editor.gui.RoomCellEditor;
-import nl.tudelft.bw4t.map.editor.gui.RoomCellRenderer;
+import nl.tudelft.bw4t.map.editor.gui.OldSizeDialog;
 import nl.tudelft.bw4t.map.editor.gui.SizeDialog;
 import nl.tudelft.bw4t.map.editor.util.DefaultOptionPrompt;
 import nl.tudelft.bw4t.map.editor.util.OptionPrompt;
 
 /**
- * The MapEditor class serves as a frame for the Panels and tables.
- * @author Rothweiler
+ * The EnvironmentStore class serves as a frame for the Panels and tables.
  *
  */
-public class MapEditor extends JFrame {
-
+public class EnvironmentStore extends JFrame {
+	
 	private static final long serialVersionUID = 8572609341436634787L;
 
-	private Map map;
-
-	private String windowName = "BW4T Map Editor";
-
-	private ColorLegendaPanel legendaPanel;
-
+	private MapPanelController mapController;
+	
+	private String windowName = "BW4T Extensive Map Editor";
+	
 	private ExplanationPanel explanationPanel;
-
-	private final JTable mapTable;
-
-	private JPanel roomsPanel;
-
-	private ColorSequencePanel sequencePanel;
-
+	
+	private final MapPanel mapTable;
+	
 	private MenuBar menuBar;
 
 	private static OptionPrompt option = new DefaultOptionPrompt();
-    
-    private JButton savebutton = new JButton("Save as Repast Map");
     
     /**
      * Create the MapEditor frame which will hold all the panels, tables and buttons.
@@ -58,14 +41,14 @@ public class MapEditor extends JFrame {
      * @param themap is a map that contains: rows, cols, entities, randomize.
      * 
      */
-    public MapEditor(Map themap) {
-        this.map = themap;
+    public EnvironmentStore(MapPanelController mc) {
+        mapController = mc;
         
         setWindowTitle("Untitled");
         setLayout(new BorderLayout());
         
         // Attach the menu bar.
-        menuBar = new MenuBar(themap);
+        menuBar = new MenuBar();
         setJMenuBar(menuBar);
         
         // TODO: Change to DO_NOTHING_ON_CLOSE when we want to ask the user whether he is sure to exit.
@@ -74,45 +57,37 @@ public class MapEditor extends JFrame {
         // Create the explainationPanel for on top of the editor.
         explanationPanel = new ExplanationPanel();
         
-        // Create the colorLegendaPanel for the right side of the editor.
-        legendaPanel = new ColorLegendaPanel();
-        
-        // Create the colorSequencePanel to be added to the roomsPanel.
-        sequencePanel = new ColorSequencePanel(map);   
-        
         // Both the mapTable and sequencePanel are added to a rooms panel.
-        // TODO: Create a roomsTable class that creates both MapTable and SequencePanel. Problems: map Data model in mapTable and boxLayout in roomsPanel.
-        mapTable = new JTable(map);
-        mapTable.setDefaultRenderer(Room.class, new RoomCellRenderer());
-        mapTable.setDefaultEditor(Room.class, new RoomCellEditor());
-        mapTable.setRowHeight(55);
-        mapTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
-        
-        // Create a roomsPanel that has both the mapTable and the sequencePanel.
-        roomsPanel = new JPanel();
-        roomsPanel.setLayout(new BoxLayout(roomsPanel, BoxLayout.Y_AXIS));
-        roomsPanel.add(mapTable);
-        roomsPanel.add(sequencePanel);
-        
+        mapTable = new MapPanel(mapController);
         
         // Attach all Panels to the Editor.
         add(explanationPanel, BorderLayout.NORTH);
-        add(roomsPanel, BorderLayout.CENTER);
-        add(legendaPanel, BorderLayout.EAST);
-        add(savebutton, BorderLayout.SOUTH);
+        add(mapTable, BorderLayout.CENTER);
+        //add(legendaPanel, BorderLayout.EAST);
 
-        // attach listeners
-        savebutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                map.saveAsFile();
-            }
-
-        });
-
+        new EnvironmentStoreController(this, mapController);
+        
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
+    }
+    
+    /**
+     * Returns the menu bar.
+     *
+     * @return The menu bar.
+     */
+    public final MenuBar getTopMenuBar() {
+        return menuBar;
+    }
+    
+    /**
+     * Returns the mapTable
+     *
+     * @return The mapTable.
+     */
+    public final MapPanel getMapTable() {
+        return mapTable;
     }
     
     /**
@@ -123,7 +98,7 @@ public class MapEditor extends JFrame {
      */
     public static void showDialog(final Exception e, final String s) {
 
-        MapEditor.option.showMessageDialog(null, s + "\n" + e.toString());
+        EnvironmentStore.option.showMessageDialog(null, s + "\n" + e.toString());
     }
     
     /**
@@ -133,7 +108,7 @@ public class MapEditor extends JFrame {
      */
     public static void showDialog(final String s) {
 
-        MapEditor.option.showMessageDialog(null, s);
+        EnvironmentStore.option.showMessageDialog(null, s);
     }
     
     /**
@@ -153,6 +128,10 @@ public class MapEditor extends JFrame {
         return option;
     }
     
+    /**
+     * Used to set the window title of the frame with the filename.
+     * @param filenameBeingEdited is the filename of the map that is being edited.
+     */
     public void setWindowTitle(String filenameBeingEdited) {
         setTitle(windowName + " - " + filenameBeingEdited);
     }
@@ -172,7 +151,7 @@ public class MapEditor extends JFrame {
      * @param args Unused parameter
      */
     public static void main(String[] args) {
-        SizeDialog dialog = new SizeDialog();
+        OldSizeDialog dialog = new OldSizeDialog();
         if (JOptionPane.CLOSED_OPTION == JOptionPane.showOptionDialog(null,
                 dialog, "BW4T Map Editor - Map Size Dialog",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
@@ -180,14 +159,14 @@ public class MapEditor extends JFrame {
             System.exit(0);
         }
 
-        Map themap = new Map(dialog.getRows(), dialog.getColumns(),
+        MapPanelController themap = new MapPanelController(dialog.getRows(), dialog.getColumns(),
                 dialog.getEntities(), dialog.isRandomMap(),
                 dialog.isLabelsVisible());
 
         if (dialog.isRandomMap()) {
             themap.saveAsFile();
         } else {
-            new MapEditor(themap);
+            new EnvironmentStore(themap);
         }
     }
 }
