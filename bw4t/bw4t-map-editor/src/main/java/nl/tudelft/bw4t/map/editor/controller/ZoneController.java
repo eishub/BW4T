@@ -159,11 +159,11 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
         return this.model.hasDoor(dir);
     }
     
-	public Zone getZoneModel() {
+	public ZoneModel getZoneModel() {
 		return model;
 	}
 	
-	public void setZoneModel(Zone model) {
+	public void setZoneModel(ZoneModel model) {
 		this.model = model;
 	}
 
