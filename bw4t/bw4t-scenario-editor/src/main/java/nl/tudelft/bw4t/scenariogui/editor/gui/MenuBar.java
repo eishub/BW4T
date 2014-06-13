@@ -12,12 +12,10 @@ import javax.swing.JMenuItem;
  */
 public class MenuBar extends JMenuBar {
 
-    /** Randomly generated serial version. */
     private static final long serialVersionUID = -7693079154027274860L;
-    /** The last known file location used to save the configuration. */
+
     private String lastFileLocation;
 
-    /** The items in the menu. */
     private JMenuItem fileNew, fileOpen, fileSave, fileSaveAs, exportGOAL, fileExit;
 
     /**

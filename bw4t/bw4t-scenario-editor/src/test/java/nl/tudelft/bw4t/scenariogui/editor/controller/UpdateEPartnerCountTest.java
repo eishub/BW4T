@@ -27,7 +27,9 @@ import org.junit.Test;
 public class UpdateEPartnerCountTest {
     
     private ScenarioEditor scenarioEditor;
+    
     private EntityPanel entityPanel;
+    
     private NoMockOptionPrompt spyOption;
     
     @Before

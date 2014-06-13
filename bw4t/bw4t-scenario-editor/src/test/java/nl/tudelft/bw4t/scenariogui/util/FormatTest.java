@@ -12,14 +12,15 @@ import static org.junit.Assert.assertEquals;
  */
 public class FormatTest {
 
-    /** A valid number for an integer only text field. */
     private String numbersValid = "1234567";
-    /** An invalid 'number' for an integer only text field. */
+
     private String numbersInvalid = "123caramba456";
-    /** The correction of the 'number' above after going through the filter. */
+    
+    //The correction of the 'number' above after going through the filter.
     private String numbersCorrected = "123456";
 
     private String negativeInteger = "-1";
+    
     private String nonNegativeInteger = "1";
 
     /**
