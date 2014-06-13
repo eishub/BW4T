@@ -29,50 +29,31 @@ public class EnvironmentStoreController {
 		this.view = es;
 		this.mapcontroller = mc;
 		
+		/** Create all action listeners for the File Menu */
 		// New
-		// TODO: Move actionlistener to new class (MenuOptionSaveAs) for MVC
-		getMainView().getTopMenuBar().getMenuItemFileNew().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-		    	view.closeEnvironmentStore();
-		    	// TODO: add check and start new sizeDialog
-			}
-        });
-		
+		getMainView().getTopMenuBar().getMenuItemFileNew().addActionListener(
+			new MenuOptionNew(getMainView().getTopMenuBar(), this)
+		);		
+		// Open
+		getMainView().getTopMenuBar().getMenuItemFileOpen().addActionListener(
+			new MenuOptionOpen(getMainView().getTopMenuBar(), this)
+        );		
+		// Save
+		getMainView().getTopMenuBar().getMenuItemFileSave().addActionListener(
+			new MenuOptionSave(getMainView().getTopMenuBar(), this)
+        );		
 		// Save As
-		// TODO: Move actionlistener to new class (MenuOptionSaveAs) for MVC
-		getMainView().getTopMenuBar().getMenuItemFileSaveAs().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-		    	mapcontroller.saveAsFile();
-			}
-        });
-		
+		getMainView().getTopMenuBar().getMenuItemFileSaveAs().addActionListener(
+			new MenuOptionSaveAs(getMainView().getTopMenuBar(), this)
+        );		
 		// Preview
-		// TODO: Move actionlistener to new class (MenuOptionPreview) for MVC
-		getMainView().getTopMenuBar().getMenuItemPreview().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-		    	JFrame preview = new JFrame("Map Preview");
-		    	preview.add(new MapRenderer(new MapPreviewController(mapcontroller)));
-		    	preview.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		    	preview.pack();
-		    	preview.setVisible(true);
-			}
-		});
-		
+		getMainView().getTopMenuBar().getMenuItemPreview().addActionListener(
+			new MenuOptionPreview(getMainView().getTopMenuBar(), this)
+		);		
 		// Exit
-		// TODO: Move actionlistener to new class (MenuOptionSaveAs) for MVC
-		getMainView().getTopMenuBar().getMenuItemFileExit().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-	            boolean doQuit = promptUserToQuit();
-
-	            if (doQuit) {
-	                view.closeEnvironmentStore();
-	            }
-			}
-        });
+		getMainView().getTopMenuBar().getMenuItemFileExit().addActionListener(
+			new MenuOptionExit(getMainView().getTopMenuBar(), this)
+        );
 
 	}
 	
@@ -113,7 +94,7 @@ public class EnvironmentStoreController {
      * Return the map being edited.
      * @return The Map being edited.
      */
-    public final MapPanelController getMap() {
+    public final MapPanelController getMapController() {
     	return mapcontroller;
     }
 }
