@@ -8,13 +8,18 @@ import javax.swing.JPanel;
 
 import nl.tudelft.bw4t.map.BlockColor;
 
+/**
+ * The ColorLegendaPanel used to be on the East side of the View, can be deleted?
+ * TODO: Can be deleted? Not being used.
+ *
+ */
 public class ColorLegendaPanel extends JPanel {
 
 	private static final long serialVersionUID = -748109518409415372L;
 
 	public ColorLegendaPanel() {
         setLayout(new GridLayout(0, 2));
-        setBackground(Color.CYAN);
+        setBackground(Color.YELLOW);
 
         add(new JLabel("Letter"));
         add(new JLabel("Color"));

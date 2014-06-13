@@ -1,60 +1,59 @@
 package nl.tudelft.bw4t.map.editor.controller;
 
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 import javax.swing.JFileChooser;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
+import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Door;
 import nl.tudelft.bw4t.map.Entity;
+import nl.tudelft.bw4t.map.MapFormatException;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.map.Rectangle;
 import nl.tudelft.bw4t.map.RenderOptions;
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.editor.ExtensiveEditor;
-import nl.tudelft.bw4t.map.editor.controller.ColorSequence;
-import nl.tudelft.bw4t.map.editor.controller.Room;
-import nl.tudelft.bw4t.map.editor.model.ZoneModel;
+import nl.tudelft.bw4t.map.Zone.Type;
+import nl.tudelft.bw4t.map.editor.EnvironmentStore;
+import nl.tudelft.bw4t.map.editor.controller.ZoneController;
+import nl.tudelft.bw4t.map.editor.controller.Map.Node;
+import nl.tudelft.bw4t.map.editor.gui.ColorSequenceEditor;
+import nl.tudelft.bw4t.map.editor.gui.ZonePopupMenu;
 
 /**
- * This holds the map that the user designed. This is an abstract map contianing
- * only number of rows and columns, do not confuse with {@link NewMap}.
+ * This holds the map that the user designed. This is an abstract map containing only number of rows and columns, do not
+ * confuse with {@link NewMap}.
  */
-public class Map implements TableModel {
-	/**
-	 * Walls the door can be on, used in the Node class.
-	 */
-	public enum DoorDirection {
-		NORTH,
-		EAST,
-		SOUTH,
-		WEST
-	}
+public class MapPanelController implements ChangeListener {
 
     /** basic size of the map */
-    private int rows;
-    private int columns;
-    private ArrayList<List<Room>> rooms;
+    private ZoneController[][] zonecontrollers;
+    
+    private ColorSequenceController cscontroller;
+    
     private int numberOfEntities = 0;
+    
     private boolean randomize;
+    
+    private ZoneController selected = null;
     /**
      * the target sequence.
      * */
-    private ColorSequence sequence = new ColorSequence(); 
-    private List<TableModelListener> listeners = new ArrayList<TableModelListener>();
+    private List<BlockColor> sequence = new ArrayList<>();
 
     /**
      * constants that map rooms to real positions on the map.
@@ -71,8 +70,13 @@ public class Map implements TableModel {
     static final int YDISP = 2;
     private static final String DROPZONE = "DropZone";
     private static final String FRONTDROPZONE = "FrontDropZone";
+    public static final int DROP_ZONE_SEQUENCE_LENGTH = 12;
 
     private boolean isLabelsVisible;
+
+    private UpdateableEditorInterface uei;
+
+    private ZonePopupMenu zoneMenu = new ZonePopupMenu(this);
 
     /**
      * size of map is fixed, you can't change it after construction.
@@ -82,49 +86,110 @@ public class Map implements TableModel {
      * @param isLabelsVisible
      *            true if labels should be shown by renderers
      */
-    public Map(int rows, int columns, int entities, boolean rand,
-            boolean labelsVisible) {
+    public MapPanelController(int rows, int columns, int entities, boolean rand, boolean labelsVisible) {
         isLabelsVisible = labelsVisible;
         if (rows < 1 || rows > 100) {
             throw new IllegalArgumentException("illegal value for row:" + rows);
         }
         if (columns < 1 || columns > 100) {
-            throw new IllegalArgumentException("illegal value for columns:"
-                    + columns);
+            throw new IllegalArgumentException("illegal value for columns:" + columns);
         }
         if (entities < 1 || entities > 20) {
-            throw new IllegalArgumentException("illegal value for entities:"
-                    + entities);
+            throw new IllegalArgumentException("illegal value for entities:" + entities);
         }
 
-        this.rows = rows;
-        this.columns = columns;
         this.numberOfEntities = entities;
         this.randomize = rand;
-        rooms = new ArrayList<List<ZoneModel>>();
 
-        // fill new array with rooms
-        for (int row = 0; row < this.rows; row++) {
-            rooms.add(new ArrayList<Room>());
-            for (int col = 0; col < this.columns; col++) {
-                rooms.get(row).add(new ZoneModel(row, col));
+        cscontroller = new ColorSequenceController();
+        zonecontrollers = new ZoneController[rows][columns];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                zonecontrollers[i][j] = new ZoneController(this, i, j, new nl.tudelft.bw4t.map.editor.model.ZoneModel());
             }
         }
+
+        attachListenersToZoneMenu();
+    }
+
+    /**
+     * this method attaches all the listeners to the Zone Menu.
+     */
+    public void attachListenersToZoneMenu() {
+        this.getZoneMenu().getMenuItemZoneBlockade().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                createZone(Type.BLOCKADE, false, false);
+            }
+        });
+
+        this.getZoneMenu().getMenuItemZoneChargingZone().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                createZone(Type.CHARGINGZONE, false, false);
+            }
+        });
+
+        this.getZoneMenu().getMenuItemZoneCorridor().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                createZone(Type.CORRIDOR, false, false);
+            }
+        });
+
+        this.getZoneMenu().getMenuItemZoneDropZone().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                createZone(Type.ROOM, true, false);
+            }
+        });
+
+        this.getZoneMenu().getMenuItemZoneRoom().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                createZone(Type.ROOM, false, false);
+            }
+        });
+
+        this.getZoneMenu().getMenuItemZoneStartZone().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                createZone(Type.CORRIDOR, false, true);
+            }
+        });
+    }
+
+    /**
+     * The createZone method creates a Zone and updates the UpdateableEditorInterface.
+     * 
+     * @param t is the type of Zone that we would like to create.
+     * @param isDropZone is true if the Zone that we are creating is a dropZone.
+     * @param isStartZone is true if the Zone that we are creating is a startZone.
+     */
+    public void createZone(Type t, boolean isDropZone, boolean isStartZone) {
+        if (selected != null) {
+            selected.setType(t);
+            selected.setDropZone(isDropZone);
+            selected.setStartZone(isStartZone);
+            selected.getUpdateableEditorInterface().update();
+        }
+        selected = null;
     }
 
     public int getRows() {
-        return rows;
+        return zonecontrollers.length;
     }
 
     public int getColumns() {
-        return columns;
+        return zonecontrollers[0].length;
     }
 
-    public ColorSequence getSequence() {
+    public List<BlockColor> getSequence() {
         return sequence;
     }
 
-    public void setSequence(ColorSequence colorSequence) {
+    public void setSequence(List<BlockColor> colorSequence) {
         this.sequence = colorSequence;
     }
 
@@ -145,42 +210,53 @@ public class Map implements TableModel {
         if (c < 0) {
             throw new IllegalArgumentException("column is negative");
         }
-        if (r >= rows) {
+        if (r >= zonecontrollers.length) {
             throw new IllegalArgumentException("rownr is too high");
         }
-        if (c >= columns) {
+        if (c >= zonecontrollers[0].length) {
             throw new IllegalArgumentException("columnnr is too high");
         }
     }
 
     /**
-     * Get room at given row, col
-     * 
-     * @param r
-     *            is row
-     * @param c
-     *            is column
-     * @return room at given position.
-     */
-    public ZoneModel getRoom(int r, int c) {
-        checkCoord(r, c);
-        return rooms.get(r).get(c);
-    }
-
-    /**
-     * get the number of entities on the map.
-     * 
-     * @return
+     * get the number of entities on the map.     * 
+     * @return the number of entities in the map.
      */
     public int getNumberOfEntities() {
         return numberOfEntities;
     }
 
+
     /**
-     * set the number of entities on the map.
+     * Set the maximum number of entities in the map.
+     * @param numberOfEntities is the maximum number of entities.
      */
     public void setNumberOfEntities(int numberOfEntities) {
-        this.numberOfEntities = numberOfEntities; 
+        this.numberOfEntities = numberOfEntities;
+    }
+
+    public UpdateableEditorInterface getUpdateableEditorInterface() {
+        return uei;
+    }
+
+    public void setUpdateableEditorInterface(UpdateableEditorInterface ui) {
+        uei = ui;
+    }
+
+    public ColorSequenceController getCSController() {
+        return cscontroller;
+    }
+
+    public ZoneController getSelected() {
+        return selected;
+    }
+
+    public void setSelected(ZoneController selected) {
+        this.selected = selected;
+    }
+
+    public ZonePopupMenu getZoneMenu() {
+        return zoneMenu;
     }
 
     /**
@@ -244,118 +320,70 @@ public class Map implements TableModel {
     /**
      * Create the real map object using the settings
      * 
-     * @return
+     * @return NewMap the new map that has been created.
+     * @throws MapFormatException if no dropZone or no startZone is found.
      */
-    public NewMap createMap() {
+    public NewMap createMap() throws MapFormatException {
         NewMap map = new NewMap();
 
         // compute a number of key values
-        double mapwidth = columns * ROOMWIDTH + 2 * CORRIDORWIDTH;
-        double mapheight = (rows + 1) * (ROOMHEIGHT + CORRIDORHEIGHT);
-        double dropzonex = mapwidth / 2;
-        double dropzoney = getY(rows);
-        double dropzonewidth = mapwidth / 2;
+        double mapwidth = getColumns() * ROOMWIDTH;
+        double mapheight = getRows() * ROOMHEIGHT;
 
         // set the general fields of the map
         map.setArea(new Point(mapwidth, mapheight));
-        map.setSequence(sequence.getColors());
+        map.setSequence(sequence);
         if (randomize) {
-            map.setRandomBlocks((int) (2.5 * rows * columns));
-            map.setRandomSequence(2 * rows * columns / 3);
+            map.setRandomBlocks((int) (2.5 * zonecontrollers.length * zonecontrollers[0].length));
+            map.setRandomSequence(2 * zonecontrollers.length * zonecontrollers[0].length / 3);
         }
 
-        addEntities(map, dropzonex, dropzoney - ROOMHEIGHT / 2 - CORRIDORHEIGHT
-                / 2);
+        // addEntities(map, dropzonex, dropzoney - ROOMHEIGHT / 2 - CORRIDORHEIGHT / 2);
 
         // generate zones for each row:
         // write room zones with their doors. and the zone in frront
         // also generate the lefthall and righthall for each row.
         // connect room and corridor in front of it.
         // connect all corridor with each other and with left and right hall.
-        for (int row = 0; row < rows; row++) {
-            // add left and right hall corridor zones
-            Zone lefthall = new Zone(CorridorLabel(row, -1), new Rectangle(
-                    getX(-1), getNavY(row), ROOMWIDTH, CORRIDORHEIGHT
-                            + ROOMHEIGHT), Zone.Type.CORRIDOR);
-            Zone righthall = new Zone(CorridorLabel(row, columns),
-                    new Rectangle(getX(columns), getNavY(row), ROOMWIDTH,
-                            CORRIDORHEIGHT + ROOMHEIGHT), Zone.Type.CORRIDOR);
-            map.addZone(lefthall);
-            map.addZone(righthall);
-
-            for (int col = 0; col < columns; col++) {
-                Room room = rooms.get(row).get(col);
-                Zone roomzone = new Zone(room.toString(), new Rectangle(
-                        getX(col), getY(row), ROOMWIDTH, ROOMHEIGHT),
-                        Zone.Type.ROOM);
-                map.addZone(roomzone);
-                roomzone.addDoor(new Door(new Point(getX(col),
-                        (getY(row) - ROOMHEIGHT / 2)),
-                        Door.Orientation.HORIZONTAL));
-                roomzone.setBlocks(rooms.get(row).get(col).getColors()
-                        .getColors());
-
-                // add the zone in front of the room.
-                Zone corridor = new Zone(CorridorLabel(row, col),
-                        new Rectangle(getX(col), getNavY(row), ROOMWIDTH,
-                                CORRIDORHEIGHT), Zone.Type.CORRIDOR);
-                map.addZone(corridor);
-
-                // connect them wth each other
-                connect(roomzone, corridor);
-                Zone left = map.getZone(CorridorLabel(row, col - 1));
-                connect(corridor, left);
+        boolean foundDropzone = false;
+        boolean foundStartzone = false;
+        Zone[][] output = new Zone[getRows()][getColumns()];
+        for (int row = 0; row < getRows(); row++) {
+            for (int col = 0; col < getColumns(); col++) {
+                ZoneController room = getZoneController(row, col);
+                if (room.isDropZone()) {
+                    if (foundDropzone) {
+                        throw new MapFormatException("Only one DropZone allowed per map!");
+                    }
+                    foundDropzone = true;
+                }
+                if (room.isStartZone()) {
+                    foundStartzone = true;
+                }
+                output[row][col] = new Zone(room.getName(),
+                        new Rectangle(calcX(col), calcY(row), ROOMWIDTH, ROOMHEIGHT), room.getType());
+                //TODO DOORS
+                if (output[row][col].getType() == Type.ROOM){
+                	
+                }
+                map.addZone(output[row][col]);
+                // TODO add Entity spawn points on Startzones
+                output[row][col].setBlocks(room.getColors());
             }
-            // and connect the last one to the right hall
-            Zone lastcorridor = map.getZone(CorridorLabel(row, columns - 1));
-            connect(righthall, lastcorridor);
         }
-
-        // add drop zone with its door and zones left and rright
-        Zone dropzone = new Zone(DROPZONE, new Rectangle(dropzonex, dropzoney,
-                dropzonewidth, ROOMHEIGHT), Zone.Type.ROOM);
-        dropzone.addDoor(new Door(new Point(dropzonex,
-                (dropzoney - ROOMHEIGHT / 2)), Door.Orientation.HORIZONTAL));
-        map.addZone(dropzone);
-        // add the FrontDropZone and connect
-        Zone frontdropzone = new Zone(FRONTDROPZONE, new Rectangle(dropzonex,
-                getNavY(rows), columns * ROOMWIDTH, CORRIDORHEIGHT),
-                Zone.Type.CORRIDOR);
-        map.addZone(frontdropzone);
-        connect(frontdropzone, dropzone);
-        // and add the last row
-        Zone lastrowleft = new Zone(CorridorLabel(rows, -1), new Rectangle(
-                getX(-1), getNavY(rows), ROOMWIDTH, CORRIDORHEIGHT),
-                Zone.Type.CORRIDOR);
-        Zone lastrowright = new Zone(CorridorLabel(rows, columns),
-                new Rectangle(getX(columns), getNavY(rows), ROOMWIDTH,
-                        CORRIDORHEIGHT), Zone.Type.CORRIDOR);
-        map.addZone(lastrowleft);
-        map.addZone(lastrowright);
-        // connect the three
-        connect(lastrowleft, frontdropzone);
-        connect(lastrowright, frontdropzone);
-
-        // make vertical connection for left and right halls.
-
-        for (int row = 0; row < rows; row++) {
-            Zone below;
-
-            // connect lefthall to below.
-            Zone lefthall = map.getZone(CorridorLabel(row, -1));
-            below = map.getZone(CorridorLabel(row + 1, -1));
-            connect(lefthall, below);
-
-            // add all righthall to left and below.
-            Zone righthall = map.getZone(CorridorLabel(row, columns));
-            below = map.getZone(CorridorLabel(row + 1, columns));
-            connect(righthall, below);
+        // connect all the zones
+        connect(output);
+        if (!foundDropzone) {
+            throw new MapFormatException("No DropZone found on the map!");
+        }
+        if (!foundStartzone) {
+            throw new MapFormatException("No StartZone found on the map!");
         }
 
         setRenderOptions(map);
-
         return map;
     }
+    
     /**
      * Create the entire random grid as a model for a randomized map.
      * @param rows The amount of rows in the table.
@@ -379,6 +407,7 @@ public class Map implements TableModel {
     	randomizeDoorDirs(allRooms);
     	return grid;
     }
+    
     /**
      * Uses a list of nodes classified as corridors and has a 15% chance
      * to reclassify a node as a charge zone.
@@ -392,6 +421,7 @@ public class Map implements TableModel {
     		}
     	}
     }
+    
     /**
      * Returns a list with all corridors, used in randomization.
      * @param grid The grid containing the corridors.
@@ -408,6 +438,7 @@ public class Map implements TableModel {
     	}
     	return l;
     }
+    
     /**
      * Randomize the door directions for all rooms in such a way that
      * completing the map is still possible.
@@ -419,6 +450,7 @@ public class Map implements TableModel {
     		n.setDir(n.getFreeDirs().get(r.nextInt(n.getFreeDirs().size())));
     	}
     }
+    
     /**
      * Reduce the amount of rooms by the given integer to get a desired map,
      * by randomly selecting rooms from the list and reclassifying them.
@@ -437,6 +469,7 @@ public class Map implements TableModel {
     		n.setType(typeList.get(typeSelector.nextInt(3)));
     	}
     }
+    
     /**
      * Returns a list of all the rooms in the grid.
      * @param grid The grid from which the rooms have to be extracted.
@@ -453,6 +486,7 @@ public class Map implements TableModel {
     	}
     	return l;
     }
+    
     /**
      * Count the amount of tiles in the grid classified as a room.
      * @param grid The grid where the rooms are counted.
@@ -469,6 +503,7 @@ public class Map implements TableModel {
     	}
     	return count;
     }
+    
     /**
      * Create the initial rooms according to the standard model
      * of room creation (upper row no rooms, next row has rooms on
@@ -487,6 +522,7 @@ public class Map implements TableModel {
     		}
     	}
     }
+    
     /**
      * Initialize the grid by creating a node object
      * for every square and then connecting adjacent node objects.
@@ -500,6 +536,7 @@ public class Map implements TableModel {
     	}
     	connectTiles(grid);
     }
+    
     /**
      * Connect all tiles of a grid to their adjacent tiles
      * in the grid.
@@ -510,6 +547,7 @@ public class Map implements TableModel {
     	configureBorders(grid);
     	configureInnerNodes(grid);
     }
+    
     /**
      * Set the tiles that would be out of bound to null.
      * The corner nodes are connected to their adjacent grid tiles later.
@@ -527,6 +565,7 @@ public class Map implements TableModel {
     	grid[lastRow][lastCol].setEast(null);
     	grid[lastRow][lastCol].setSouth(null);
     }
+    
     /**
      * Connect all the borders, setting the tiles out of bound to null.
      * @param grid The grid in question.
@@ -569,6 +608,7 @@ public class Map implements TableModel {
     		grid[i][lastCol - 1].setEast(grid[i][lastCol]);
     	}
     }
+    
     /**
      * Connect all the nodes within the outer areas to their adjacent
      * tiles and vice versa.
@@ -590,6 +630,164 @@ public class Map implements TableModel {
     		}
     	}
     }
+    
+    /**
+     * Check what type of zone the current zone is. Then call the correct connect method.
+     * @param zones - matrix of the map
+     */
+    private void connect(Zone[][] zones){
+    	for(int row = 0; row < zones.length; row++){
+    		for( int col = 0; col < zones[0].length; col++){
+    			if(zones[row][col].getType() == Type.CORRIDOR || zones[row][col].getType() == Type.CHARGINGZONE){
+    				connectCorridor(zones, row, col);
+    			} else if(zones[row][col].getType() == Type.ROOM){
+    				connectRoom(zones, row, col);
+    			} else {
+    				//it is a blockade and thus it should not be connected.
+    			}
+    		}
+    	}
+    }
+    
+    /**
+     * For a corridor all adjacent zones should be added.
+     * @param zones - matrix of the map
+     * @param row indicates where the current zone is
+     * @param col indicates where the current zone is
+     */
+    private void connectCorridor(Zone[][] zones, int row, int col) {
+    	connectWest(zones, row, col);
+    	connectNorth(zones, row, col);
+    	connectEast(zones, row, col);
+    	connectSouth(zones, row, col);
+    }
+    
+    /**
+     * For a room, only adjacent zones where a door is positioned should be added.
+     * @param zones - matrix of the map
+     * @param row indicates where the current zone is
+     * @param col indicates where the current zone is
+     */
+    private void connectRoom(Zone[][] zones, int row, int col){
+    	if (zones[row][col].hasEast()) {
+    		connectEast(zones, row, col);
+    	}
+    	if (zones[row][col].hasNorth()) {
+    		connectNorth(zones, row, col);
+    	}
+    	if (zones[row][col].hasWest()) {
+    		connectWest(zones, row, col);
+    	}
+    	if (zones[row][col].hasSouth()) {
+    		connectSouth(zones, row, col);
+    	}
+    }
+    
+    /**
+     * Connect the west neighbour
+     * @param zones - matrix of the map
+     * @param row indicates where the current zone is
+     * @param col indicates where the current zone is
+     */
+    private void connectWest(Zone[][] zones, int row, int col){
+    	try{
+    		if ((zones[row][col - 1].getType() == Type.ROOM && zones[row][col - 1].hasEast()) || 
+    				zones[row][col - 1].getType() == Type.CORRIDOR || 
+    				zones[row][col - 1].getType() == Type.CHARGINGZONE){
+    			zones[row][col].addNeighbour(zones[row][col - 1]);
+    		}
+    	} catch(IndexOutOfBoundsException e){
+    		//Do nothing.
+    	}
+    }
+    
+    /**
+     * Connect the north neighbour
+     * @param zones - matrix of the map
+     * @param row indicates where the current zone is
+     * @param col indicates where the current zone is
+     */
+    private void connectNorth(Zone[][] zones, int row, int col){
+    	try{
+    		if ((zones[row - 1][col].getType() == Type.ROOM && zones[row - 1][col].hasSouth()) || 
+    				zones[row - 1][col].getType() == Type.CORRIDOR || 
+    				zones[row - 1][col].getType() == Type.CHARGINGZONE){
+    			zones[row][col].addNeighbour(zones[row - 1][col]);
+    		}
+    	} catch(IndexOutOfBoundsException e){
+    		//Do nothing.
+    	}
+    }
+    
+    /**
+     * Connect the east neighbour
+     * @param zones - matrix of the map
+     * @param row indicates where the current zone is
+     * @param col indicates where the current zone is
+     */
+    private void connectEast(Zone[][] zones, int row, int col){
+    	try{
+    		if ((zones[row][col + 1].getType() == Type.ROOM && zones[row][col + 1].hasWest()) || 
+    				zones[row][col + 1].getType() == Type.CORRIDOR || 
+    				zones[row][col + 1].getType() == Type.CHARGINGZONE){
+    			zones[row][col].addNeighbour(zones[row][col + 1]);
+    		}
+    	} catch(IndexOutOfBoundsException e){
+    		//Do nothing.
+    	}
+    }
+    
+    /**
+     * Connect the south neighbour
+     * @param zones - matrix of the map
+     * @param row indicates where the current zone is
+     * @param col indicates where the current zone is
+     */
+    private void connectSouth(Zone[][] zones, int row, int col){
+    	try{
+    		if ((zones[row + 1][col].getType() == Type.ROOM && zones[row + 1][col].hasNorth()) || 
+    				zones[row + 1][col].getType() == Type.CORRIDOR || 
+    				zones[row + 1][col].getType() == Type.CHARGINGZONE){
+    			zones[row][col].addNeighbour(zones[row + 1][col]);
+    		}
+    	} catch(IndexOutOfBoundsException e){
+    		//Do nothing.
+    	}
+    }
+    
+    public int determineDoorIndex(int row1, int col1, int row2, int col2) {
+    	if (col1 == col2) {
+    		if (row1 > row2) {
+    			return 0;
+    		}
+    		else {
+    			return 2;
+    		}
+    	}
+    	else {
+    		if (col1 > col2) {
+    			return 3;
+    		} 
+    		else {
+    			return 1;
+    		}
+    	}
+    }
+
+    /**
+     * Get the zone from certain coordinates.
+     * @param zones
+     * @param row
+     * @param col
+     * @return the Zone if it is a valid zone, else return null.
+     */
+    private Zone getZone(Zone[][] zones, int row, int col) {
+        if (isValidZone(row, col)) {
+            return zones[row][col];
+        }
+        return null;
+    }
+
     /**
      * Set all the render options of the map.
      * 
@@ -609,39 +807,24 @@ public class Map implements TableModel {
 
     }
 
-    private void connect(Zone a, Zone b) {
-        a.addNeighbour(b);
-        b.addNeighbour(a);
-    }
-
     /**
      * get x coordinate of center of the room on the map.
      * 
+     * @param column is the column cordinate of the Zone.
      * @return x coordinate of room on the map.
      */
-    public double getX(int column) {
-        return CORRIDORWIDTH + column * ROOMWIDTH + ROOMWIDTH / 2;
+    public double calcX(int column) {
+        return column * ROOMWIDTH + ROOMWIDTH / 2;
     }
 
     /**
      * get y coordinate of center of room on the map.
      * 
+     * @param row is the row cordinate of the Zone.
      * @return y coordinate of room on the map.
      */
-    public double getY(int row) {
-        return row * (CORRIDORHEIGHT + ROOMHEIGHT) + ROOMHEIGHT / 2
-                + CORRIDORHEIGHT;
-    }
-
-    /**
-     * get the y coordinate of the navpoints for a given row.
-     * 
-     * @param row
-     *            is the row
-     * @return y coordinate of the navpoints for a given row
-     */
-    private double getNavY(int row) {
-        return row * (CORRIDORHEIGHT + ROOMHEIGHT) + CORRIDORHEIGHT / 2;
+    public double calcY(int row) {
+        return row * ROOMHEIGHT + ROOMHEIGHT / 2;
     }
 
     /**
@@ -650,23 +833,22 @@ public class Map implements TableModel {
      * @param row
      *            allowed is 0..{@link #rows}-1
      * @param col
-     *            col=-1 means the LeftHall, col={@link #columns} means
-     *            RightHall.
+     *            col=-1 means the LeftHall, col={@link #columns} means RightHall.
      * @return
      */
-    private String CorridorLabel(int row, int col) {
+    private String corridorLabel(int row, int col) {
         if (col == -1) {
             return "LeftHall" + (char) (row + 65);
         }
-        if (col == columns) {
+        if (col == zonecontrollers[0].length) {
             return "RightHall" + (char) (row + 65);
         }
-        return "Front" + rooms.get(row).get(col).toString();
+        return "Front" + zonecontrollers[row][col].toString();
     }
 
     /**
-     * check consistency of the map. The sequence length must be 1 at least.
-     * returns string with error message, or null if all ok
+     * check consistency of the map. The sequence length must be 1 at least. returns string with error message, or null
+     * if all ok
      * 
      * @return null, or string with error message.
      */
@@ -680,16 +862,17 @@ public class Map implements TableModel {
 
         // check if all blocks for sequence are there.
         // first accumulate all blocks from all rooms
-        ColorSequence allblocks = new ColorSequence();
-        for (List<Room> row : rooms) {
-            for (Room room : row) {
-                allblocks.addAll(room.getColors());
+        List<BlockColor> allblocks = new ArrayList<BlockColor>();
+        for (int i = 0; i < zonecontrollers.length; i++) {
+            for (int j = 0; j < zonecontrollers[0].length; j++) {
+                allblocks.addAll(zonecontrollers[i][j].getColors());
             }
         }
 
         // first check if there are blocks while random is on
         if (randomize && (!allblocks.isEmpty() || !sequence.isEmpty())) {
-            ExtensiveEditor.showDialog("There are blocks on the map\nbut the map is set to random.\nWe proceed anyway.");
+            EnvironmentStore
+                    .showDialog("There are blocks on the map\nbut the map is set to random.\nWe proceed anyway.");
         }
 
         // remove all colors from the sequence. That will throw exception if
@@ -711,8 +894,7 @@ public class Map implements TableModel {
             // check before user puts effort in
             String state = checkConsistency();
             if (state != null) {
-                throw new IllegalStateException("Map is not ready for save.\n"
-                        + state);
+                throw new IllegalStateException("Map is not ready for save.\n" + state);
             }
             // TODO Auto-generated method stub
             JFileChooser chooser = new JFileChooser();
@@ -722,92 +904,59 @@ public class Map implements TableModel {
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
-            ExtensiveEditor.showDialog(e, "Save failed: " + e.getMessage());
+            EnvironmentStore.showDialog(e, "Save failed: " + e.getMessage());
         }
     }
 
-    /*
-     * ************** IMPLEMENTS JTableModel ***************
-     */
-
-    @Override
-    /**
-     * {@inheritDoc}
-     */
-    public void addTableModelListener(TableModelListener l) {
-        listeners.add(l);
-
-    }
-
-    @Override
-    /**
-     * {@inheritDoc}
-     */
-    public Class<?> getColumnClass(int columnIndex) {
-        return Room.class;
-    }
-
-    @Override
-    /**
-     * {@inheritDoc}
-     */
-    public int getColumnCount() {
-        return columns;
-    }
-
-    @Override
-    /**
-     * {@inheritDoc}
-     */
-    public String getColumnName(int columnIndex) {
+    public ZoneController getZoneController(int row, int col) {
+        if (isValidZone(row, col)) {
+            return zonecontrollers[row][col];
+        }
         return null;
     }
 
-    @Override
     /**
-     * {@inheritDoc}
+     * Checks if there is a Zone at certain row,col cordinates.
+     * @param row
+     * @param col
+     * @return
      */
-    public int getRowCount() {
-        return rows;
+    public boolean isValidZone(int row, int col) {
+        return row >= 0 && col >= 0 && row < getRows() && col < getColumns();
+    }
+
+    /**
+     * Show the ZoneMenu popup at given cordinates.
+     * 
+     * @param component
+     * @param x
+     * @param y
+     */
+    public void showPopup(Component component, int x, int y) {
+        getZoneMenu().update();
+        getZoneMenu().show(component, x, y);
     }
 
     @Override
-    /**
-     * {@inheritDoc}
-     */
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        return rooms.get(rowIndex).get(columnIndex);
-    }
-
-    @Override
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return true;
-    }
-
-    @Override
-    /**
-     * {@inheritDoc}
-     */
-    public void removeTableModelListener(TableModelListener l) {
-        listeners.remove(l);
+    public void stateChanged(ChangeEvent e) {
+        this.sequence = ((ColorSequenceEditor) e.getSource()).getSequence();
 
     }
-
-    @Override
+    
     /**
-     * {@inheritDoc}
+     * Creates a random sequence
+     * @param input	the list of available colors
+     * @param sequencelength how long you want the sequence to be
+     * @return the random sequence
      */
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        if (!(aValue instanceof Room)) {
-            throw new IllegalArgumentException(
-                    "value must be a Room but found " + aValue + " of type "
-                            + aValue.getClass());
+    public List<BlockColor> makeRandomSequence(ArrayList<BlockColor> input, int sequencelength) {
+        Random random = new Random();
+        for (int n = 0; n < sequencelength; n++) {
+            sequence.add(input.get(random.nextInt(input.size())));
         }
-        rooms.get(rowIndex).get(columnIndex).setValue((Room) aValue);
+        return sequence;
     }
+    
     /**
      * The node class to be used in the random map generator.
      *
