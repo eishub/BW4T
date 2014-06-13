@@ -24,7 +24,8 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
     
     private Zone model;
     
-    private MapPanelController mapController;
+
+	private MapPanelController mapController;
     
     private UpdateableEditorInterface uei;
 
@@ -157,5 +158,13 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
     public boolean hasDoor(int dir) {
         return this.model.hasDoor(dir);
     }
+    
+	public Zone getZoneModel() {
+		return model;
+	}
+	
+	public void setZoneModel(Zone model) {
+		this.model = model;
+	}
 
 }

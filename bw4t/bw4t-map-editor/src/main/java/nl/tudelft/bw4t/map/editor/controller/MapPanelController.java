@@ -60,6 +60,11 @@ public class MapPanelController implements ChangeListener {
     static final double ROOMWIDTH = 10;
     static final int CORRIDORWIDTH = 10;
     static final int CORRIDORHEIGHT = 10;
+    
+    public static final int NORTH = 0;
+	public static final int EAST = 1;
+	public static final int SOUTH = 2;
+	public static final int WEST = 3;
 
     /**
      * bot initial displacements
@@ -356,13 +361,33 @@ public class MapPanelController implements ChangeListener {
                     foundDropzone = true;
                 }
                 if (room.isStartZone()) {
+                	if (foundStartzone) {
+                		throw new MapFormatException("Only one StartZone allowed per map!");
+                	}
                     foundStartzone = true;
                 }
                 output[row][col] = new Zone(room.getName(),
                         new Rectangle(calcX(col), calcY(row), ROOMWIDTH, ROOMHEIGHT), room.getType());
-                //TODO DOORS
-                if (output[row][col].getType() == Type.ROOM){
-                	
+                
+                if (output[row][col].getType() == Type.ROOM) {
+                	int x = (int) output[row][col].getBoundingbox().getX();
+            		int y = (int) output[row][col].getBoundingbox().getY();
+                	if (room.getZoneModel().hasDoor(NORTH)) {
+                		output[row][col].addDoor(new Door(new Point(x+ROOMWIDTH/2, y), 
+           						Door.Orientation.HORIZONTAL));
+                	}
+                	if (room.getZoneModel().hasDoor(EAST)) {
+                		output[row][col].addDoor(new Door(new Point(x+ROOMWIDTH, y+ROOMHEIGHT/2), 
+           						Door.Orientation.HORIZONTAL));
+                	}
+                	if (room.getZoneModel().hasDoor(SOUTH)) {
+                		output[row][col].addDoor(new Door(new Point(x+ROOMWIDTH/2, y+ROOMHEIGHT), 
+           						Door.Orientation.HORIZONTAL));
+                	}
+                	if (room.getZoneModel().hasDoor(WEST)) {
+                		output[row][col].addDoor(new Door(new Point(x, y+ROOMHEIGHT/2), 
+           						Door.Orientation.HORIZONTAL));
+                	}
                 }
                 map.addZone(output[row][col]);
                 // TODO add Entity spawn points on Startzones
