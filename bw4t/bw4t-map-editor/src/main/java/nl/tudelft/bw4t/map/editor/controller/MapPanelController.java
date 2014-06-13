@@ -212,6 +212,14 @@ public class MapPanelController implements ChangeListener {
     public void setSequence(List<BlockColor> colorSequence) {
         this.sequence = colorSequence;
     }
+    
+    public boolean getRandomize() {
+    	return randomize;
+    }
+    
+    public ZoneController[][] getZoneController() {
+    	return zonecontrollers;
+    }
 
     /**
      * Check that given row and column are inside the actual map.
@@ -246,7 +254,6 @@ public class MapPanelController implements ChangeListener {
         return numberOfEntities;
     }
 
-
     /**
      * Set the maximum number of entities in the map.
      * @param numberOfEntities is the maximum number of entities.
@@ -279,30 +286,6 @@ public class MapPanelController implements ChangeListener {
         return zoneMenu;
     }
 
-    /**
-     * Save the real map to given file
-     * 
-     * @param file
-     * @throws IOException
-     * @throws JAXBException
-     */
-    public void save(File file) throws IOException, JAXBException {
-        System.out.println("SAVE to " + file);
-
-        String error = checkConsistency();
-        if (error != null) {
-            throw new IllegalStateException("save failed: " + error);
-        }
-
-        NewMap map = createMap();
-        JAXBContext context = JAXBContext.newInstance(NewMap.class);
-
-        Marshaller m = context.createMarshaller();
-        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-        m.marshal(map, new FileOutputStream(file));
-
-    }
 
     /**
      * Add entities to map
@@ -425,6 +408,7 @@ public class MapPanelController implements ChangeListener {
         setRenderOptions(map);
         return map;
     }
+    
     /**
      * Create a random map object using the given settings.
      * 
@@ -693,68 +677,7 @@ public class MapPanelController implements ChangeListener {
         }
         return "Front" + zonecontrollers[row][col].toString();
     }
-
-    /**
-     * check consistency of the map. The sequence length must be 1 at least. returns string with error message, or null
-     * if all ok
-     * 
-     * @return null, or string with error message.
-     */
-    public String checkConsistency() {
-        if (numberOfEntities < 1) {
-            return "There should be at least 1 entity";
-        }
-        if (sequence.size() <= 0 && !randomize) {
-            return "Sequence must contain at least 1 block color";
-        }
-
-        // check if all blocks for sequence are there.
-        // first accumulate all blocks from all rooms
-        List<BlockColor> allblocks = new ArrayList<BlockColor>();
-        for (int i = 0; i < zonecontrollers.length; i++) {
-            for (int j = 0; j < zonecontrollers[0].length; j++) {
-                allblocks.addAll(zonecontrollers[i][j].getColors());
-            }
-        }
-
-        // first check if there are blocks while random is on
-        if (randomize && (!allblocks.isEmpty() || !sequence.isEmpty())) {
-            EnvironmentStore
-                    .showDialog("There are blocks on the map\nbut the map is set to random.\nWe proceed anyway.");
-        }
-
-        // remove all colors from the sequence. That will throw exception if
-        // impossible.
-        try {
-            allblocks.removeAll(sequence);
-        } catch (IllegalArgumentException e) {
-            return e.getMessage();
-        }
-        return null;
-
-    }
-
-    /**
-     * Ask user where to save and then call {@link #save(File)}
-     */
-    public void saveAsFile() {
-        try {
-            // check before user puts effort in
-            String state = checkConsistency();
-            if (state != null) {
-                throw new IllegalStateException("Map is not ready for save.\n" + state);
-            }
-            // TODO Auto-generated method stub
-            JFileChooser chooser = new JFileChooser();
-            int returnVal = chooser.showSaveDialog(null);
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                save(chooser.getSelectedFile());
-            }
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            EnvironmentStore.showDialog(e, "Save failed: " + e.getMessage());
-        }
-    }
+    
 
     public ZoneController getZoneController(int row, int col) {
         if (isValidZone(row, col)) {
