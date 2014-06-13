@@ -183,21 +183,32 @@ public class SizeDialog extends JFrame {
     	return (Integer) (entities.getValue());
     }
     
-    
+    /**
+     * @return editExistingMapButton
+     */
     public JButton getExistingMapButton() {
     	return editExistingMapButton;
     }
 	
+    /**
+     * @return beginFromScratchButton
+     */
 	public JButton getBeginFromScratchButton() {
 		return beginFromScratchButton;
 	}
 	
+	/**
+     * @return useStandardBasisButton
+     */
 	public JButton getStandardBasisButton() {
 		return useStandardBasisButton;
 	}
 	
+	/**
+	 * Return the SizeDialogController
+	 * @return sdc
+	 */
 	public SizeDialogController getSizeDialogController() { 
 		return sdc;
-	}
-    
+	}   
 }

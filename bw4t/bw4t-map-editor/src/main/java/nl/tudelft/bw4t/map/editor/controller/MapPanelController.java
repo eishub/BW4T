@@ -616,5 +616,4 @@ public class MapPanelController implements ChangeListener {
         this.sequence = ((ColorSequenceEditor) e.getSource()).getSequence();
 
     }
-
 }
