@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,6 +31,8 @@ import nl.tudelft.bw4t.map.editor.EnvironmentStore;
 import nl.tudelft.bw4t.map.editor.controller.ZoneController;
 import nl.tudelft.bw4t.map.editor.gui.ColorSequenceEditor;
 import nl.tudelft.bw4t.map.editor.gui.ZonePopupMenu;
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import nl.tudelft.bw4t.util.XMLManager;
 
 /**
  * This holds the map that the user designed. This is an abstract map contianing only number of rows and columns, do not
@@ -613,4 +616,5 @@ public class MapPanelController implements ChangeListener {
         this.sequence = ((ColorSequenceEditor) e.getSource()).getSequence();
 
     }
+
 }

@@ -195,5 +195,9 @@ public class SizeDialog extends JFrame {
 	public JButton getStandardBasisButton() {
 		return useStandardBasisButton;
 	}
+	
+	public SizeDialogController getSizeDialogController() { 
+		return sdc;
+	}
     
 }
