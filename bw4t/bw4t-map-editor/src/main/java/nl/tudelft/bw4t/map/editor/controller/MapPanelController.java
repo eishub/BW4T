@@ -33,7 +33,7 @@ import nl.tudelft.bw4t.map.editor.gui.ColorSequenceEditor;
 import nl.tudelft.bw4t.map.editor.gui.ZonePopupMenu;
 
 /**
- * This holds the map that the user designed. This is an abstract map contianing only number of rows and columns, do not
+ * This holds the map that the user designed. This is an abstract map containing only number of rows and columns, do not
  * confuse with {@link NewMap}.
  */
 public class MapPanelController implements ChangeListener {
@@ -360,8 +360,11 @@ public class MapPanelController implements ChangeListener {
                 }
                 output[row][col] = new Zone(room.getName(),
                         new Rectangle(calcX(col), calcY(row), ROOMWIDTH, ROOMHEIGHT), room.getType());
+                //TODO DOORS
+                if (output[row][col].getType() == Type.ROOM){
+                	
+                }
                 map.addZone(output[row][col]);
-                // TODO add the doors to the map
                 // TODO add Entity spawn points on Startzones
                 output[row][col].setBlocks(room.getColors());
             }
