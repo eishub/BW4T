@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.map.editor.controller;
+package nl.tudelft.bw4t.map.editor.model;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Random;
 
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.editor.model.Node;
-import nl.tudelft.bw4t.map.editor.model.ZoneModel;
 
 public class RandomMapCreator {
 	public RandomMapCreator() {

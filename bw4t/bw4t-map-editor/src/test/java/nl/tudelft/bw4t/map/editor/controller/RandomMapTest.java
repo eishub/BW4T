@@ -1,5 +1,7 @@
 package nl.tudelft.bw4t.map.editor.controller;
 
+import nl.tudelft.bw4t.map.editor.model.RandomMapCreator;
+
 import org.junit.Test;
 
 public class RandomMapTest {

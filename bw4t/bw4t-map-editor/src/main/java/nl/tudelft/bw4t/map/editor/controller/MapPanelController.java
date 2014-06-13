@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -19,7 +18,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import nl.tudelft.bw4t.map.BlockColor;
-import nl.tudelft.bw4t.map.Door;
 import nl.tudelft.bw4t.map.Entity;
 import nl.tudelft.bw4t.map.MapFormatException;
 import nl.tudelft.bw4t.map.NewMap;
@@ -32,7 +30,6 @@ import nl.tudelft.bw4t.map.editor.EnvironmentStore;
 import nl.tudelft.bw4t.map.editor.controller.ZoneController;
 import nl.tudelft.bw4t.map.editor.gui.ColorSequenceEditor;
 import nl.tudelft.bw4t.map.editor.gui.ZonePopupMenu;
-import nl.tudelft.bw4t.map.editor.model.Node;
 import nl.tudelft.bw4t.map.editor.model.ZoneModel;
 
 /**
@@ -325,6 +322,72 @@ public class MapPanelController implements ChangeListener {
      * @throws MapFormatException if no dropZone or no startZone is found.
      */
     public NewMap createMap() throws MapFormatException {
+        NewMap map = new NewMap();
+
+        // compute a number of key values
+        double mapwidth = getColumns() * ROOMWIDTH;
+        double mapheight = getRows() * ROOMHEIGHT;
+
+        // set the general fields of the map
+        map.setArea(new Point(mapwidth, mapheight));
+        map.setSequence(sequence);
+        if (randomize) {
+            map.setRandomBlocks((int) (2.5 * zonecontrollers.length * zonecontrollers[0].length));
+            map.setRandomSequence(2 * zonecontrollers.length * zonecontrollers[0].length / 3);
+        }
+
+        // addEntities(map, dropzonex, dropzoney - ROOMHEIGHT / 2 - CORRIDORHEIGHT / 2);
+
+        // generate zones for each row:
+        // write room zones with their doors. and the zone in frront
+        // also generate the lefthall and righthall for each row.
+        // connect room and corridor in front of it.
+        // connect all corridor with each other and with left and right hall.
+        boolean foundDropzone = false;
+        boolean foundStartzone = false;
+        Zone[][] output = new Zone[getRows()][getColumns()];
+        for (int row = 0; row < getRows(); row++) {
+            for (int col = 0; col < getColumns(); col++) {
+                ZoneController room = getZoneController(row, col);
+                if (room.isDropZone()) {
+                    if (foundDropzone) {
+                        throw new MapFormatException("Only one DropZone allowed per map!");
+                    }
+                    foundDropzone = true;
+                }
+                if (room.isStartZone()) {
+                    foundStartzone = true;
+                }
+                output[row][col] = new Zone(room.getName(),
+                        new Rectangle(calcX(col), calcY(row), ROOMWIDTH, ROOMHEIGHT), room.getType());
+                //TODO DOORS
+                if (output[row][col].getType() == Type.ROOM){
+                	
+                }
+                map.addZone(output[row][col]);
+                // TODO add Entity spawn points on Startzones
+                output[row][col].setBlocks(room.getColors());
+            }
+        }
+        // connect all the zones
+        connect(output);
+        if (!foundDropzone) {
+            throw new MapFormatException("No DropZone found on the map!");
+        }
+        if (!foundStartzone) {
+            throw new MapFormatException("No StartZone found on the map!");
+        }
+
+        setRenderOptions(map);
+        return map;
+    }
+    /**
+     * Create the real map object using the settings
+     * 
+     * @return NewMap the new map that has been created.
+     * @throws MapFormatException if no dropZone or no startZone is found.
+     */
+    public NewMap createRandomMap(ZoneModel[][] modelGrid) throws MapFormatException {
         NewMap map = new NewMap();
 
         // compute a number of key values
