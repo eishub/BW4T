@@ -39,6 +39,7 @@ public class NavigatingRobotTest {
     private Queue<NdPoint> mockedQueue = Mockito.mock(ConcurrentLinkedQueue.class);
     private BoundedMoveableObject mockedMovableObject = Mockito.mock(BoundedMoveableObject.class);
     //private BW4TEnvironment mockedEnv = Mockito.mock(BW4TEnvironment.class);
+    //private MoveType mockedMoveType = Mockito.mock(MoveType.class);
     
     private NavigatingRobot bot;
     private NavigatingRobot bot2;
@@ -46,6 +47,8 @@ public class NavigatingRobotTest {
     private NavigatingRobot bot4;
     private NavigatingRobot bot5;
     private NavigatingRobot bot6;
+    
+    private Block b;
     
     @Before
     public void createNavigatingRobot() {
@@ -57,6 +60,8 @@ public class NavigatingRobotTest {
         bot4 = null;
         bot5 = new NavigatingRobot("Bot5", null, mockedContext, true, cap2);
         bot6 = new NavigatingRobot("Bot5", null, mockedContext, true, cap2);
+        
+        b = new Block(BlockColor.BLUE, mockedOtherSpace, mockedContext);
     }
 
     @Test
@@ -64,7 +69,6 @@ public class NavigatingRobotTest {
         assertNotNull(bot);
         bot.setCollided(true);
         bot.stopRobot();
-        
     }
     
     /**
@@ -137,9 +141,36 @@ public class NavigatingRobotTest {
     @Test
     public void canPickUpTest() {
         assertEquals(bot.canPickUp(bot2), false);
-        Block b = new Block(BlockColor.BLUE, mockedOtherSpace, mockedContext);
         assertEquals(bot.canPickUp(b), true);
     }
     
-
+    @Test
+    public void pickUpTest() {
+        assertEquals(b.isFree(), true);
+        bot.pickUp(b);
+        assertEquals(b.getHeldBy(), bot);
+    }
+    
+/*    @Test
+    public void dropTest() {
+        bot.pickUp(b);
+        bot.drop();
+    }
+    
+*/
+    
+    @Test
+    public void dropIntAssertTest() {
+        bot.drop(5);
+    }
+    
+    /**
+     * TODO: Kijken of dit kan.
+     */
+/*    @Test
+    public void moveToTest() {
+        when(bot.getMoveType(any(double.class), any(double.class))).thenReturn(mockedMoveType);
+        bot.moveTo(1, 1);
+    }
+*/    
 }
