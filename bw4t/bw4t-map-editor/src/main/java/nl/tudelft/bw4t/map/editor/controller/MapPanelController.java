@@ -368,10 +368,9 @@ public class MapPanelController implements ChangeListener {
                 }
                 output[row][col] = new Zone(room.getName(),
                         new Rectangle(calcX(col), calcY(row), ROOMWIDTH, ROOMHEIGHT), room.getType());
-                
+                int x = (int) output[row][col].getBoundingbox().getX();
+        		int y = (int) output[row][col].getBoundingbox().getY();
                 if (output[row][col].getType() == Type.ROOM) {
-                	int x = (int) output[row][col].getBoundingbox().getX();
-            		int y = (int) output[row][col].getBoundingbox().getY();
                 	if (room.getZoneModel().hasDoor(NORTH)) {
                 		output[row][col].addDoor(new Door(new Point(x+ROOMWIDTH/2, y), 
            						Door.Orientation.HORIZONTAL));
@@ -389,8 +388,11 @@ public class MapPanelController implements ChangeListener {
            						Door.Orientation.HORIZONTAL));
                 	}
                 }
+                if (room.isStartZone()) {
+                	addEntities(map, x+ROOMWIDTH/2, y+ROOMHEIGHT/2);
+                }
                 map.addZone(output[row][col]);
-                // TODO add Entity spawn points on Startzones
+                
                 output[row][col].setBlocks(room.getColors());
             }
         }
