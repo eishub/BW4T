@@ -397,7 +397,7 @@ public class MapPanelController implements ChangeListener {
     	Node[][] grid = new Node[rows][cols];
     	initGrid(grid);
     	createRooms(grid);
-    	int amountPossibleRooms = countRooms(grid);
+    	int amountPossibleRooms = maxRoomsPossible(rows, cols);
     	assert amountPossibleRooms >= roomCount : "The amount of rooms wanted"
     		+ " cannot be higher than the amount of rooms possible.";
     	List<Node> allRooms = getRooms(grid);
@@ -406,6 +406,15 @@ public class MapPanelController implements ChangeListener {
     	randomizeRooms(allRooms, amountPossibleRooms - roomCount);
     	randomizeDoorDirs(allRooms);
     	return grid;
+    }
+    /**
+     * Calculates the max. amount of rooms in a map (use only for randomized maps).
+     * @param r The amount of rows.
+     * @param c The amount of columns.
+     * @return The maximum amount of rooms in a map of this size.
+     */
+    public int maxRoomsPossible(int r, int c) {
+    	return (c - 2)*(r/2);
     }
     
     /**
@@ -488,23 +497,6 @@ public class MapPanelController implements ChangeListener {
     }
     
     /**
-     * Count the amount of tiles in the grid classified as a room.
-     * @param grid The grid where the rooms are counted.
-     * @return The amount of rooms.
-     */
-    private int countRooms(Node[][] grid) {
-    	int count = 0;
-    	for (int i = 0; i < grid.length; i++) {
-    		for (int j = 0; j < grid[0].length; j++) {
-    			if (grid[i][j].getType() == Zone.Type.ROOM) {
-    				count++;
-    			}
-    		}
-    	}
-    	return count;
-    }
-    
-    /**
      * Create the initial rooms according to the standard model
      * of room creation (upper row no rooms, next row has rooms on
      * all tiles except for the leftmost and rightmost ones, next row has
@@ -513,7 +505,7 @@ public class MapPanelController implements ChangeListener {
      */
     private void createRooms(Node[][] grid) {
     	int lastCol = grid[0].length - 1;
-    	int lastRow = grid.length - 1;
+    	int lastRow = grid.length;
     	for (int i = 1; i < lastRow; i++) {
     		for (int j = 1; j < lastCol; j++) {
     			if (i % 2 == 1) {
