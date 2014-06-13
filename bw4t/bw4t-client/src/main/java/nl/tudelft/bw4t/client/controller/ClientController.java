@@ -32,8 +32,6 @@ public class ClientController {
     /** The chat history. */
     private final List<String> botChatHistory = new LinkedList<>();
     private final List<String> epartnerChatHistory = new LinkedList<>();
-    
-    /** The chat history. */
 
     /** The human agent. */
     private HumanAgent humanAgent;
