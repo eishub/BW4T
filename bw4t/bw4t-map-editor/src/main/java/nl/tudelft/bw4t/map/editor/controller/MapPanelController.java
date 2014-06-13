@@ -18,6 +18,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import nl.tudelft.bw4t.map.BlockColor;
+import nl.tudelft.bw4t.map.Door;
 import nl.tudelft.bw4t.map.Entity;
 import nl.tudelft.bw4t.map.MapFormatException;
 import nl.tudelft.bw4t.map.NewMap;
