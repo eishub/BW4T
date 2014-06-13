@@ -3,6 +3,7 @@
 	<name>bw4t-map-editor</name>
 	<comment></comment>
 	<projects>
+		<project>bw4t-core</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
