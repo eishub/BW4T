@@ -38,9 +38,6 @@ public class BW4TClientConfig {
 
 	private boolean useGoal = DefaultConfigurationValues.USE_GOAL.getBooleanValue();
 
-	/**
-	 * The location of the map file.
-	 */
 	private String mapFile = "";
 
 	/**
