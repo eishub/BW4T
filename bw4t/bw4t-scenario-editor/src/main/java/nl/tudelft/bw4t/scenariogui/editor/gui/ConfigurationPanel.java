@@ -43,7 +43,6 @@ public class ConfigurationPanel extends JPanel {
 
     private MapSpec mapSpec;
 
-
     private JTextField clientIP = new JTextField(
             DefaultConfigurationValues.DEFAULT_CLIENT_IP.getValue(),
             TEXT_FIELD_COLUMN_SIZE_BIG);

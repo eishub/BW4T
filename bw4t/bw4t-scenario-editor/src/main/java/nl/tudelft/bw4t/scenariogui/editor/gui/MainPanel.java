@@ -20,15 +20,20 @@ import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 public class MainPanel extends JPanel {
 
     private static final int INSET = 10;
+    
     private static final double WEIGHT_1 = 0.1;
+    
     private static final double WEIGHT_2 = 0.8;
+    
     private static final long serialVersionUID = 475250876795906302L;
 
     private ScenarioEditor parent;
-    private ConfigurationPanel configurationPanel;
-    private EntityPanel entityPanel;
-    private GridBagLayout gbl;
     
+    private ConfigurationPanel configurationPanel;
+    
+    private EntityPanel entityPanel;
+    
+    private GridBagLayout gbl;
 
     /**
      * Create a MainPanel consisting of a ConfigurationPanel and a EntityPanel.
