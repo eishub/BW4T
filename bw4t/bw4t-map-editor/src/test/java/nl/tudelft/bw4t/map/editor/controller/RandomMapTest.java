@@ -3,7 +3,7 @@ package nl.tudelft.bw4t.map.editor.controller;
 import org.junit.Test;
 
 public class RandomMapTest {
-	private Map m = new Map(10, 10, 10, true, true);
+	private MapPanelController m = new MapPanelController(10, 10, 10, true, true);
 	
 	@Test(expected = AssertionError.class)
 	public void illegalRowsTest() {
