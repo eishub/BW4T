@@ -151,22 +151,13 @@ public class EnvironmentStore extends JFrame {
      * @param args Unused parameter
      */
     public static void main(String[] args) {
-        SizeDialog dialog = new SizeDialog();
-        if (JOptionPane.CLOSED_OPTION == JOptionPane.showOptionDialog(null,
-                dialog, "BW4T Map Editor - Map Size Dialog",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-                null, null)) {
-            System.exit(0);
-        
-
-        MapPanelController themap = new MapPanelController(dialog.getRows(), dialog.getColumns(),
-                dialog.getEntities(), dialog.isRandomMap(),
-                dialog.isLabelsVisible());
-
-        if (dialog.isRandomMap()) {
-            themap.saveAsFile();
-        } else {
-            new EnvironmentStore(themap);
-        }
+    	SizeDialog dialog = new SizeDialog();
+    	dialog.setVisible(true);
+      
+        MapPanelController themap = new MapPanelController(dialog.getRows(),
+        			dialog.getColumns(),
+	                dialog.getEntities(), true,
+	                dialog.isLabelsVisible());
     }
 }
+
