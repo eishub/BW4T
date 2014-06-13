@@ -9,7 +9,7 @@ import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.model.zone.BlocksRoom;
 import nl.tudelft.bw4t.server.model.zone.DropZone;
 import nl.tudelft.bw4t.server.model.zone.Room;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -26,11 +26,11 @@ import static org.mockito.Mockito.when;
 @RunWith(Parameterized.class)
 public class RoomLocatorTest {
 
-    /** A minor offset is done on certain elements in order to fulfill requirements of the definition of insideness. */
     @Mock private static BlocksRoom BLOCKSROOM = mock(BlocksRoom.class);
     @Mock private static DropZone DROPZONE = mock(DropZone.class);
     @Mock private static BW4TEnvironment env = mock(BW4TEnvironment.class);
     
+    /** A minor offset is done on certain elements in order to fulfill requirements of the definition of insideness. */
     private static double OFFSET = 1E-5;
     private static Context<Room> context = new DefaultContext<Room>();
     
@@ -39,8 +39,8 @@ public class RoomLocatorTest {
     private Room expectedOutAt;
     private Room expectedOutFor;
     
-    @Before
-    public void setUp() throws NoSuchMethodException, SecurityException,
+    @BeforeClass
+    public static void setUp() throws NoSuchMethodException, SecurityException,
             IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         Method method = BW4TEnvironment.class.getDeclaredMethod("setInstance", BW4TEnvironment.class);
         method.setAccessible(true);
