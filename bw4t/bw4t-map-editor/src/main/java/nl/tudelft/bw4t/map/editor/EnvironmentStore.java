@@ -1,6 +1,8 @@
 package nl.tudelft.bw4t.map.editor;
 
 import java.awt.BorderLayout;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -139,7 +141,7 @@ public class EnvironmentStore extends JFrame {
     /**
      * Closes the MapEditor window and all child frames.
      */
-    public void closeMapEditor() {
+    public void closeEnvironmentStore() {
         System.exit(0);
     }
 
