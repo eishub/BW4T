@@ -33,7 +33,7 @@ import nl.tudelft.bw4t.map.editor.gui.ColorSequenceEditor;
 import nl.tudelft.bw4t.map.editor.gui.ZonePopupMenu;
 
 /**
- * This holds the map that the user designed. This is an abstract map containing only number of rows and columns, do not
+ * This holds the map that the user designed. This is an abstract map contianing only number of rows and columns, do not
  * confuse with {@link NewMap}.
  */
 public class MapPanelController implements ChangeListener {
@@ -52,6 +52,8 @@ public class MapPanelController implements ChangeListener {
      * the target sequence.
      * */
     private List<BlockColor> sequence = new ArrayList<>();
+    
+    private List<ZoneController> rooms = new ArrayList<>();
 
     /**
      * constants that map rooms to real positions on the map.
@@ -160,6 +162,13 @@ public class MapPanelController implements ChangeListener {
             public void actionPerformed(ActionEvent ae) {
                 createZone(Type.CORRIDOR, false, true);
             }
+        });
+        
+        
+        this.getZoneMenu().getRandomize().addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent ae) {
+        		
+        	}
         });
     }
 
@@ -729,5 +738,15 @@ public class MapPanelController implements ChangeListener {
             sequence.add(input.get(random.nextInt(input.size())));
         }
         return sequence;
+    }
+   
+    public void makeRandomColorMap() {
+    	Random random = new Random();
+		ArrayList<BlockColor> colors = new ArrayList<BlockColor>();
+		colors.addAll(BlockColor.getAvailableColors());
+    	for (ZoneController zc: rooms) {
+    		int amount = random.nextInt(10);
+    		zc.makeRandomColorRoom(amount, colors);
+    	}
     }
 }
