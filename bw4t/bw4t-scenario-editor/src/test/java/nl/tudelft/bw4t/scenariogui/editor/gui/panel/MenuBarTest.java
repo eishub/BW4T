@@ -24,10 +24,8 @@ import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.LineIterator;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -222,22 +220,30 @@ public class MenuBarTest {
      * saves correctly.
      * @throws IOException 
      */
-    @Ignore
+    @Test
     public void testSaveAfterDeletedSave() throws IOException {
-    	OptionPrompt option = prepareForSave(editor.getTopMenuBar().getMenuItemFileSave(),
-                new YesMockOptionPrompt());
-    	
+    	/* Mock the file chooser for saving */
+        when(filechooser.showSaveDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
+        when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
+        when(filechooser.getSelectedFile()).thenReturn(new File(FILE_SAVE_PATH));
+
+        /* Remove the old controller, recreate the new one using the mocked editor and
+         * finally mock the filechooser.
+         */
+        replaceListener(editor.getTopMenuBar().getMenuItemFileSave());
+
+        /* Fake the prompt */
+        ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
+        
         // set the last file location without creating the file
     	String testPath = "TestPath";
         assertFalse(new File(testPath).exists());
         editor.getTopMenuBar().setLastFileLocation(testPath);
         
-        editor.getMainPanel().getConfigurationPanel().getMapFileTextField().setText("map");
-        editor.getTopMenuBar().getMenuItemFileSaveAs().doClick();
+        editor.getTopMenuBar().getMenuItemFileSave().doClick();
 
-        /* Verify if it asked if we wanted to save */
-        verify(option, times(1)).showConfirmDialog(null, ScenarioEditorController.CONFIRM_SAVE_TXT, "",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        verify(filechooser, times(1)).showDialog((Component) any(), (String) any());
+        verify(filechooser, times(1)).getSelectedFile();
     }
     
     /**
