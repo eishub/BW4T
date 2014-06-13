@@ -29,17 +29,17 @@ public class SizeDialog extends JFrame {
 	/**
 	 * The contentPane.
 	 */
-	private JPanel contentPane;
+	private JPanel contentPane = new JPanel();
 	
 	/**
 	 * The left panel of the frame (which will hold the editExistingMapButton)
 	 */
-	private JPanel leftPanel;
+	private JPanel leftPanel = new JPanel();
 	
 	/**
 	 * The right panel of the frame (which will hold the rest)
 	 */
-	private JPanel rightPanel;
+	private JPanel rightPanel = new JPanel();
 	
 	/**
 	 * With this button the user can choose to edit an already existing map.
@@ -59,27 +59,37 @@ public class SizeDialog extends JFrame {
 	/**
 	 * Checkbox which the user can check if he wants the zone labels to be showed.
 	 */
-	private JCheckBox showZoneLabelsCheckbox = new JCheckBox("Show Zone Labels");
+	private JCheckBox showZoneLabelsCheckbox = new JCheckBox("Show Zone Labels", true);
 	
 	/**
-	 * Label with the text #rows
+	 * Label with the text #rows.
 	 */
 	private JLabel rowsLabel = new JLabel("#rows");
 	
 	/**
-	 * Label with the text #columns
+	 * Label with the text #columns.
 	 */
 	private JLabel columnsLabel = new JLabel("#columns");
 	
 	/**
+	 * Label with the text {@link #entities}.
+	 */
+	private JLabel entityLabel = new JLabel("#entities");
+	
+	/**
 	 * Here can the user set the wanted numbers of rows.
 	 */
-	private JSpinner rows;
+	private JSpinner rows = new JSpinner();
 	
 	/**
 	 * Here can the user set the wanted number of columns.
 	 */
-	private JSpinner cols;
+	private JSpinner cols = new JSpinner();
+	
+	/**
+	 * Here can the user set the wanted number of entities.
+	 */
+	private JSpinner entities = new JSpinner();
 	
 
 	/**
@@ -104,7 +114,7 @@ public class SizeDialog extends JFrame {
 	public SizeDialog() {
 		setTitle("Size Dialog");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 429, 192);
+		setBounds(100, 100, 500, 200);
 		getContentPane().setLayout(new MigLayout("", "[grow][grow][][][][][][][][grow]", "[][][][grow]"));
 		
 		getContentPane().add(leftPanel, "cell 0 0 1 4,alignx left,growy");
@@ -113,9 +123,8 @@ public class SizeDialog extends JFrame {
 		leftPanel.add(editExistingMapButton, "cell 0 0,alignx left,aligny top");
 		
 		getContentPane().add(rightPanel, "cell 1 1 9 3,grow");
-		rightPanel.setLayout(new MigLayout("", "[grow][grow]", "[][][][][]"));
-		
-		rightPanel.add(rowsLabel, "cell 0 0,alignx trailing");
+		rightPanel.setLayout(new MigLayout("", "[grow][grow]", "[][][][][][][]"));
+	
 		
 		SpinnerModel rowmodel = new SpinnerNumberModel(5, // initial value
 	            5, // min
@@ -130,14 +139,27 @@ public class SizeDialog extends JFrame {
 	            1); // step
 	    cols = new JSpinner(colmodel);
 	    rightPanel.add(cols, "cell 1 1");
-	
+	    
+	    SpinnerModel entitymodel = new SpinnerNumberModel(1, // initial value
+	            1, // min
+	            Integer.MAX_VALUE, // max
+	            1); // step
+	    entities = new JSpinner(entitymodel);
+	    rightPanel.add(entities, "cell 1 2");
+	    
+	    rightPanel.add(rowsLabel, "cell 0 0,alignx trailing");
 		rightPanel.add(columnsLabel, "cell 0 1,alignx trailing");
-		rightPanel.add(showZoneLabelsCheckbox, "cell 1 2");
-		rightPanel.add(beginFromScratchButton, "cell 0 4");
-		rightPanel.add(useStandardBasisButton, "cell 1 4");
+	    rightPanel.add(entityLabel, "cell 0 2,alignx right");
+		rightPanel.add(showZoneLabelsCheckbox, "cell 1 4");
+		rightPanel.add(beginFromScratchButton, "cell 0 6");
+		rightPanel.add(useStandardBasisButton, "cell 1 6");
 			
 	}
 	
+	/**
+	 * Return true when the ZoneLabelsCheckbox is selected.
+	 * @return true if selected
+	 */
 	public boolean isLabelsVisible() {
         return showZoneLabelsCheckbox.isSelected();
     }
@@ -147,7 +169,7 @@ public class SizeDialog extends JFrame {
      * 
      * @return {@link #rows}
      */
-    public Integer getRows() {
+    public int getRows() {
         return (Integer) (rows.getValue());
     }
 
@@ -156,7 +178,16 @@ public class SizeDialog extends JFrame {
      * 
      * @return {@link #cols}
      */
-    public Integer getColumns() {
+    public int getColumns() {
         return (Integer) (cols.getValue());
+    }
+    
+    /**
+     * get {@link #entities} as set by user
+     * 
+     * @return {@link #entities}
+     */
+    public int getEntities() {
+    	return (Integer) (entities.getValue());
     }
 }
