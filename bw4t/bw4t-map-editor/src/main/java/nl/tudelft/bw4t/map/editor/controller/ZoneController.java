@@ -5,6 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -24,8 +25,7 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
     
     private Zone model;
     
-
-	private MapPanelController mapController;
+    private MapPanelController mapController;
     
     private UpdateableEditorInterface uei;
 
@@ -167,4 +167,14 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
 		this.model = model;
 	}
 
+    
+    public void makeRandomColorRoom(int amount, ArrayList<BlockColor> validcolors) {
+    	Random random = new Random();
+		ArrayList<BlockColor> colors = new ArrayList<BlockColor>();
+    	for(int i = 0; i <  amount; i++) {
+    		colors.add(validcolors.get(random.nextInt(validcolors.size())));
+    	}
+    	model.setColors(colors);
+    	uei.update();
+    }
 }
