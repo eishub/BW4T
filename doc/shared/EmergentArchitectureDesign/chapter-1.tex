@@ -28,21 +28,17 @@ For the refactoring of the code a number of tasks need to be completed:
   server share the same codebase. This makes it hard to keep a proper overview as
   it isn't always clear at a glance which class belongs to which structure, and
   some classes are even shared entirely. We want to split these structures into
-  individual projects to make them easier to work with.
+  individual projects to make it easier to maintain, extend and test them. 
   \item
-  \textbf{Convert to \Gls{maven} project} - There are currently no \gls{unittest} present
-  in the codebase, therefore in addition to splitting the codebase we wish to
-  turn these separate projects into Maven projects including Unit Tests so we can
-  easily verify that the codebases are still working correctly after having made
-  changes.
+  \textbf{Convert to \Gls{maven} project} - Maven is a build automation tool. It makes building and testing the project easier because it shields you from many of the details. It replaces the current complicated ANT buildscript, and accounts for dependencies. Maven provides guidelines for best practices, which is useful for large projects which can become very complex easily, like BW4T. Using Maven, it becomes much simpler to maintain a continous working project.
   \item
   \textbf{Improve and add to the \gls{gui}} - There is much room for improvement for
   the GUI. We want to make it more user-friendly in addition to adding a whole
-  new GUI for the creation of maps via an easy to use drag-and-drop system.
+  new GUI for the creation of maps via an easy to use drag-and-drop system. The system currently uses various batch scripts and seperate jar files to run different parts of the system. We want to create a central GUI from which all features can be accessed. 
   \item
   \textbf{Clean code} - There is a lot of unused code present, due to the
   complexity of the codebase it can be hard to tell which pieces of code are
-  unused.
+  unused. Using software analysis tools like Sonar, we want to track down the most serious issues and improve overall code quality by fixing these issues. 
   \item
   \textbf{Fully utilize Repast} - Repast is a library that has been imported to
   act as the environment for the agents to act in. However due to some missing
@@ -51,8 +47,10 @@ For the refactoring of the code a number of tasks need to be completed:
   can also be handled by Repast.
   \item
   \textbf{Improve \gls{javadoc}} - Javadoc's are sometimes lacking in information or
-  occasionally not present at all.
+  occasionally not present at all. We want to improve the quality of the javadoc, and add missing documentation for classes that are important. This makes navigating and understanding the code easier. 
   \item
   \textbf{Remove code duplication} - There are a number of instances of code
   duplication present in the code which can make future updates harder to manage.
+    \item
+  \textbf{Reduce complexity} - There are a lot of very complex methods and classes present in BW4T. Using software analysis tools like Sonar and inFocus, we want to reduce complexity to make the code easier to understand, maintain and extend. 
 \end{itemize}
