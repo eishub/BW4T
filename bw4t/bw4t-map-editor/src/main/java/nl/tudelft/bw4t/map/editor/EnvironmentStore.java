@@ -23,6 +23,8 @@ public class EnvironmentStore extends JFrame {
 
 	private MapPanelController mapController;
 	
+	private EnvironmentStoreController envController;
+	
 	private String windowName = "BW4T Extensive Map Editor";
 	
 	private ExplanationPanel explanationPanel;
@@ -50,7 +52,7 @@ public class EnvironmentStore extends JFrame {
         setJMenuBar(menuBar);
         
         // TODO: Change to DO_NOTHING_ON_CLOSE when we want to ask the user whether he is sure to exit.
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         
         // Create the explainationPanel for on top of the editor.
         explanationPanel = new ExplanationPanel();
@@ -63,7 +65,7 @@ public class EnvironmentStore extends JFrame {
         add(mapTable, BorderLayout.CENTER);
         //add(legendaPanel, BorderLayout.EAST);
 
-        new EnvironmentStoreController(this, mapController);
+        envController = new EnvironmentStoreController(this, mapController);
         
         pack();
         setLocationRelativeTo(null);
@@ -86,6 +88,15 @@ public class EnvironmentStore extends JFrame {
      */
     public final MapPanel getMapTable() {
         return mapTable;
+    }
+    
+    /**
+     * Returns the EnvironmentStoreController
+     *
+     * @return The EnvironmentStoreController.
+     */
+    public final EnvironmentStoreController getEnvironmentStoreController() {
+        return envController;
     }
     
     /**
