@@ -87,9 +87,21 @@ public class EntityPanel extends JPanel {
 
 	private JPopupMenu botDropDownMenu = new JPopupMenu();
 
-	private JMenuItem standardBot1 = new JMenuItem("StandardBot1");
+	private JMenuItem standardBot = new JMenuItem("Standard Bot");
 
-	private JMenuItem standardBot2 = new JMenuItem("StandardBot2");
+	private JMenuItem standardBotBig = new JMenuItem("Big Standard Bot");
+
+	private JMenuItem standardBotGripper = new JMenuItem("Gripper Bot");
+
+	private JMenuItem standardBotBigGripper = new JMenuItem("Big Gripper Bot");
+
+	private JMenuItem standardBotSeeer = new JMenuItem("Seeer Bot");
+
+	private JMenuItem standardBotBigSeeer = new JMenuItem("Big Seeer Bot");
+
+	private JMenuItem standardBotCommunicator = new JMenuItem("Communicator Bot");
+
+	private JMenuItem standardBotBigCommunicator = new JMenuItem("Big Communicator Bot");
 
 	private JButton modifyBot = new JButton("Modify Bot");
 
@@ -196,8 +208,14 @@ public class EntityPanel extends JPanel {
 	private void createDropDownMenuButtons() {
 		botMenu.setLayout(new BorderLayout());
 
-		botDropDownMenu.add(standardBot1);
-		botDropDownMenu.add(standardBot2);
+		botDropDownMenu.add(standardBot);
+		botDropDownMenu.add(standardBotBig);
+		botDropDownMenu.add(standardBotGripper);
+		botDropDownMenu.add(standardBotBigGripper);
+		botDropDownMenu.add(standardBotSeeer);
+		botDropDownMenu.add(standardBotBigSeeer);
+		botDropDownMenu.add(standardBotCommunicator);
+		botDropDownMenu.add(standardBotBigCommunicator);
 		botDropDownButton.add(botDropDownMenu);
 
 		botMenu.add(botDropDownButton, BorderLayout.EAST);
