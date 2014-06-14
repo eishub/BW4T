@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.map.editor;
 
 import java.awt.BorderLayout;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 

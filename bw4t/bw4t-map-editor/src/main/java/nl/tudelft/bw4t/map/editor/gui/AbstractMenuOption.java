@@ -67,20 +67,21 @@ public abstract class AbstractMenuOption implements ActionListener {
 	
 	/**
 	 * Opens a new size Dialog that lets the user start from scratch.
-	 * TODO: to write and implement.
+	 * TODO: Also dispose ALL OTHER windows and reset value like lastFileLocation
 	 */
 	public void newMap() {
-        boolean doSave = envController.promptUserToSave();
+		if(envController.notAnEmptyMap()) {
+	        boolean doSave = envController.promptUserToSave();
 
-        if (doSave) {
-        	saveAsFile();
-        } else {
-        	// Close Environmenst Store
-        	envController.getMainView().dispose();
-        	// TODO: Also dispose all other windows and reset value like lastFileLocation
-        	SizeDialog dialog = new SizeDialog();
-        	dialog.setVisible(true);
-        }		
+	        if (doSave) {
+	        	saveAsFile();
+	        }
+		}
+	   	// Close Environmenst Store
+    	envController.getMainView().dispose();
+    	// Open new Size Dialog
+    	SizeDialog dialog = new SizeDialog();
+    	dialog.setVisible(true);
 	}
 	
 	/**
@@ -89,6 +90,8 @@ public abstract class AbstractMenuOption implements ActionListener {
 	 */
 	public void openMap() {
 		System.out.println("Opening a new map.");
+		
+		// set opened file for save button
 	}
 	
     /**
@@ -113,7 +116,6 @@ public abstract class AbstractMenuOption implements ActionListener {
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
         m.marshal(map, new FileOutputStream(file));
-
     }
     
     /**
@@ -132,6 +134,7 @@ public abstract class AbstractMenuOption implements ActionListener {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 save(chooser.getSelectedFile());
             }
+            // TODO Set opened file for save button
         } catch (Exception e) {
             // TODO Auto-generated catch block
             EnvironmentStore.showDialog(e, "Save failed: " + e.getMessage());
