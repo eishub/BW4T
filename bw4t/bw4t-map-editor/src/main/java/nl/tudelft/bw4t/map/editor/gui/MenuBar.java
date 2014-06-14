@@ -69,7 +69,7 @@ public class MenuBar extends JMenuBar {
         fileExit.setToolTipText("Exit application");
         file.add(fileExit);
         
-        // Create the Tools menu items.
+        // Create the Tools menu items.        
         toolsRandomizeRooms = new JMenuItem("Randomize Rooms");
         toolsRandomizeRooms.setToolTipText("Randomize the locations of rooms");
         tools.add(toolsRandomizeRooms);
@@ -77,6 +77,8 @@ public class MenuBar extends JMenuBar {
         toolsRandomizeBlocks = new JMenuItem("Randomize Blocks");
         toolsRandomizeBlocks.setToolTipText("Randomize the distribution of all blocks");
         tools.add(toolsRandomizeBlocks);
+        
+        tools.addSeparator();
         
         toolsRandomizeSequence = new JMenuItem("Randomize Sequence");
         toolsRandomizeSequence.setToolTipText("Randomize the target sequence");
