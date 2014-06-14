@@ -23,6 +23,8 @@ public class BotEditor extends JFrame {
     
     private MainPanel mainpanel;
     
+    private BotEditorPanel bPanel;
+    
     /**
      * creates the BotEditor frame
      * @param bc the BotController in control of this frame
@@ -36,7 +38,7 @@ public class BotEditor extends JFrame {
         setResizable(false);
         setLayout(null);
       
-        BotEditorPanel bPanel = new BotEditorPanel(bc);
+        bPanel = new BotEditorPanel(bc);
         bPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
         setContentPane(bPanel);
 
@@ -74,6 +76,14 @@ public class BotEditor extends JFrame {
 	 */
 	public MainPanel getMainPanel() {
 		return mainpanel;
+	}
+	
+	/**
+	 * Return the BotEditorPanel.
+	 * @return botpanel
+	 */
+	public BotEditorPanel getBotEditorPanel() {
+		return bPanel;
 	}
 }
 
