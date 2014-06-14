@@ -1,14 +1,8 @@
 package nl.tudelft.bw4t.map.editor.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Map;
-
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import nl.tudelft.bw4t.map.editor.EnvironmentStore;
-import nl.tudelft.bw4t.map.renderer.MapRenderer;
 
 /**
  * The EnvironmentStoreController class serves as a controller for the EnvironmentStore
@@ -54,6 +48,10 @@ public class EnvironmentStoreController {
 		// Exit
 		getMainView().getTopMenuBar().getMenuItemFileExit().addActionListener(
 			new MenuOptionExit(getMainView().getTopMenuBar(), this)
+        );
+		// Default Exit button on the right top of the window
+        getMainView().addWindowListener(
+                new WindowExit(getMainView())
         );
 
 	}
