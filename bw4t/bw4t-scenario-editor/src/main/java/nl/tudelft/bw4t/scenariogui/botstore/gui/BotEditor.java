@@ -85,5 +85,13 @@ public class BotEditor extends JFrame {
 	public BotEditorPanel getBotEditorPanel() {
 		return bPanel;
 	}
+	
+	public void setBotEditorPanel(BotEditorPanel panel) {
+		bPanel = panel;
+	}
+	
+	public void setParent(MainPanel parent) {
+		mainpanel = parent;
+	}
 }
 
