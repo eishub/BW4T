@@ -15,17 +15,18 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
+import nl.tudelft.bw4t.map.editor.controller.RandomizeController;
 
 public class RandomizeFrame extends JFrame {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1993091627565106917L;
+	
+	private RandomizeController controller;
+	
 	private JPanel contentPane = new JPanel();
+	
 	private JTextField textField = new JTextField();
 	
-	// TODO This label should not contain this text but the name of the room being randomized.
 	private JLabel lblTitle;
 	
 	private JLabel lblNumberOfBlocks = new JLabel("Number of blocks created:");
@@ -81,6 +82,8 @@ public class RandomizeFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public RandomizeFrame(String title) {
+		controller = new RandomizeController(this);
+		
 		lblTitle = new JLabel(title);
 		setTitle("Randomize " + title);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -123,8 +126,16 @@ public class RandomizeFrame extends JFrame {
 		pack();
 	}
 	
+    public JLabel getLabelTitle() {
+    	return lblTitle;
+    }
+	
 	public boolean isRed() {
         return chckbxRRed.isSelected();
+    }
+	
+	public boolean isGreen() {
+        return chckbxGGreen.isSelected();
     }
 	
 	public boolean isYellow() {
@@ -154,6 +165,22 @@ public class RandomizeFrame extends JFrame {
      */
     public Integer getNumberOfBlocks() {
         return (Integer) (numberOfBlocksSpinner.getValue());
+    }
+    
+    public JButton getRandomizeButton() {
+    	return randomizeButton;
+    }
+    
+    public JTextField getRandomizedSequence() {
+    	return randomizedSequence;
+    }
+    
+    public JButton getApplyButton() {
+    	return applyButton;
+    }
+    
+    public JButton getCancelButton() {
+    	return cancelButton;
     }
 
 }
