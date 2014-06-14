@@ -609,7 +609,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 	 * 
 	 * @return true if the checkbox is selected.
 	 */
-	public boolean getCustomSizeCheckbox() {
+	public boolean getCustomSize() {
 		return customSizeCheckbox.isSelected();
 	}
 
@@ -766,5 +766,97 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 		} else {
 			sizeSlider.setEnabled(false);
 		}	
+	}
+
+	public JPanel getBotSliders() {
+		return botSliders;
+	}
+
+	public void setBotSliders(JPanel botSliders) {
+		this.botSliders = botSliders;
+	}
+
+	public JTextField getBotAmountTextField() {
+		return botAmountTextField;
+	}
+
+	public void setBotAmountTextField(JTextField botAmountTextField) {
+		this.botAmountTextField = botAmountTextField;
+	}
+
+	public JCheckBox getGripperCheckbox() {
+		return gripperCheckbox;
+	}
+
+	public void setGripperCheckbox(JCheckBox gripperCheckbox) {
+		this.gripperCheckbox = gripperCheckbox;
+	}
+
+	public JCheckBox getColorblindCheckbox() {
+		return colorblindCheckbox;
+	}
+
+	public void setColorblindCheckbox(JCheckBox colorblindCheckbox) {
+		this.colorblindCheckbox = colorblindCheckbox;
+	}
+
+	public JCheckBox getMovespeedCheckbox() {
+		return movespeedCheckbox;
+	}
+
+	public void setMovespeedCheckbox(JCheckBox movespeedCheckbox) {
+		this.movespeedCheckbox = movespeedCheckbox;
+	}
+
+	public JCheckBox getBatteryEnabledCheckbox() {
+		return batteryEnabledCheckbox;
+	}
+
+	public void setBatteryEnabledCheckbox(JCheckBox batteryEnabledCheckbox) {
+		this.batteryEnabledCheckbox = batteryEnabledCheckbox;
+	}
+
+	public JSlider getSizeSlider() {
+		return sizeSlider;
+	}
+
+	public void setSizeSlider(JSlider sizeSlider) {
+		this.sizeSlider = sizeSlider;
+	}
+
+	public JSlider getSpeedSlider() {
+		return speedSlider;
+	}
+
+	public void setSpeedSlider(JSlider speedSlider) {
+		this.speedSlider = speedSlider;
+	}
+
+	public JSlider getBatterySlider() {
+		return batterySlider;
+	}
+
+	public void setBatterySlider(JSlider batterySlider) {
+		this.batterySlider = batterySlider;
+	}
+
+	public JSlider getNumberOfGrippersSlider() {
+		return numberOfGrippersSlider;
+	}
+
+	public void setNumberOfGrippersSlider(JSlider numberOfGrippersSlider) {
+		this.numberOfGrippersSlider = numberOfGrippersSlider;
+	}
+	
+	public JCheckBox getCustomSizeCheckbox() {
+		return customSizeCheckbox;
+	}
+
+	public void setCustomSizeCheckbox(JCheckBox customSizeCheckbox) {
+		this.customSizeCheckbox = customSizeCheckbox;
+	}
+
+	public void setBatteryUseValueLabel(JLabel batteryUseValueLabel) {
+		this.batteryUseValueLabel = batteryUseValueLabel;
 	}
 }
