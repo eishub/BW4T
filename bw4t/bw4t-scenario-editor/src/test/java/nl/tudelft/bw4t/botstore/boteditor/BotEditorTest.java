@@ -24,21 +24,19 @@ public class BotEditorTest {
     /** Test the setup of boteditor */
     @Test
     public void testBotEditorPane() {
-    	BotController controller = new BotController(new MainPanel(), 0, new BW4TClientConfig());
-    	botEditor = new Boteditor(controller);
-    	
-    	
         EntityPanel entityPanel = new EntityPanel();
         ScenarioEditor main = new ScenarioEditor(new ConfigurationPanel(), entityPanel, new BW4TClientConfig());
         MainPanel parent = main.getMainPanel();
-       // BotConfig botconfig = new BotConfig();
-        //main.getController().getModel().getBots().add(botconfig);
-        //int index = botconfig.getBotAmount();
-        BotController controller = new BotController(parent, null, main.getController().getModel());
-        //botEditor = new BotEditor(controller);
-        //BotEditorPanel panel = new BotEditorPanel(controller);
-       // assertEquals(parent, botEditor.getParent());
-       // assertEquals(panel, botEditor.getBotEditorPanel());
-        //botEditor.setVisible(false);
+        main.getController().getModel().getBots().add(new BotConfig());
+        BotController controller = new BotController(parent, 0, main.getController().getModel());
+        botEditor = new BotEditor(controller);
+        BotEditorPanel panel = new BotEditorPanel(controller);
+        
+        botEditor.setBotEditorPanel(panel);
+        botEditor.setParent(parent);
+        
+        assertEquals(parent, botEditor.getMainPanel());
+        assertEquals(panel, botEditor.getBotEditorPanel());
+        botEditor.setVisible(false);
     }
 }
