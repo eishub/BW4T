@@ -26,7 +26,7 @@ public class RandomizeFrame extends JFrame {
 	private JTextField textField = new JTextField();
 	
 	// TODO This label should not contain this text but the name of the room being randomized.
-	private JLabel lblRoomA = new JLabel("Room A1 / Sequence");
+	private JLabel lblTitle;
 	
 	private JLabel lblNumberOfBlocks = new JLabel("Number of blocks created:");
 	
@@ -78,27 +78,12 @@ public class RandomizeFrame extends JFrame {
 	JButton cancelButton = new JButton("Cancel");
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RandomizeFrame frame = new RandomizeFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
-	public RandomizeFrame() {
-		setTitle("Randomize Panel");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public RandomizeFrame(String title) {
+		lblTitle = new JLabel(title);
+		setTitle("Randomize " + title);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 299, 423);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -106,9 +91,9 @@ public class RandomizeFrame extends JFrame {
 		contentPane.setLayout(new MigLayout("", "[272px]", "[20px][14px][][20px][14px][23px][23px][23px][23px][23px][23px][23px][23px][14px][20px][23px]"));
 		setResizable(false);
 		
-		lblRoomA.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
-		contentPane.add(lblRoomA, "cell 0 0,grow");
+		contentPane.add(lblTitle, "cell 0 0,grow");
 		contentPane.add(lblNumberOfBlocks, "cell 0 2,growx,aligny top");
 		contentPane.add(numberOfBlocksSpinner, "cell 0 3,growx,aligny top");
 		contentPane.add(lblColorsUsed, "cell 0 4,growx,aligny top");

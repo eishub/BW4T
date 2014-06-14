@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 
 import nl.tudelft.bw4t.map.editor.gui.AbstractMenuOption;
 import nl.tudelft.bw4t.map.editor.gui.MenuBar;
+import nl.tudelft.bw4t.map.editor.gui.RandomizeFrame;
+import nl.tudelft.bw4t.map.editor.gui.SizeDialog;
 
 public class MenuOptionRandomizeSequence extends AbstractMenuOption {
 
@@ -18,7 +20,9 @@ public class MenuOptionRandomizeSequence extends AbstractMenuOption {
      * @param e The action event.
      */
     public void actionPerformed(final ActionEvent e) {
-        System.out.println("Randomize sequence called");
+		RandomizeFrame frame = new RandomizeFrame("Sequence");
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
     }
 
 }

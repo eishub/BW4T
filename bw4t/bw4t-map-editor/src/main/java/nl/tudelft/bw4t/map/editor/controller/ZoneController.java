@@ -166,7 +166,7 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
 	public void setZoneModel(ZoneModel model) {
 		this.model = model;
 	}
-
+	
     
     public void makeRandomColorRoom(int amount, ArrayList<BlockColor> validcolors) {
     	Random random = new Random();
@@ -177,4 +177,5 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
     	model.setColors(colors);
     	uei.update();
     }
+
 }
