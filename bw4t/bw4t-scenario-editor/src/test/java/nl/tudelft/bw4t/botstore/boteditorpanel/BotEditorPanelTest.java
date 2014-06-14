@@ -192,26 +192,26 @@ public class BotEditorPanelTest {
     @Test
     public final void testResetButtonClick() {
         BotEditorPanel botEditorPanel = editor.getBotEditorPanel();
-        BotConfig dataObject = botEditorPanel.getDataObject();
+        BotConfig config = botEditorPanel.getBotController().getBotConfig();
         
         botEditorPanel.getResetButton().doClick();
-		assertEquals(botEditorPanel.getSpeedSlider().getValue(), dataObject.getBotSpeed());
-        assertEquals(botEditorPanel.getSizeSlider().getValue(), dataObject.getBotSize());
-        assertEquals(botEditorPanel.getBatterySlider().getValue(), dataObject.getBotBatteryCapacity());
-        assertEquals(botEditorPanel.getNumberOfGrippersSlider().getValue(), dataObject.getGrippers());
-        assertEquals(botEditorPanel.getSizeSlider().isEnabled(), dataObject.getSizeOverloadHandicap());
-        assertEquals(botEditorPanel.getSpeedSlider().isEnabled(), dataObject.getMoveSpeedHandicap());
-        assertEquals(botEditorPanel.getBatterySlider().isEnabled(), dataObject.isBatteryEnabled());
-        assertEquals(botEditorPanel.getBatterySlider().getValue(), dataObject.getBotBatteryCapacity());
-        assertEquals(botEditorPanel.getNumberOfGrippersSlider().isEnabled(), !dataObject.getGripperHandicap());
-        assertEquals(botEditorPanel.getGripperCheckbox().isSelected(), dataObject.getGripperHandicap());
-        assertEquals(botEditorPanel.getColorblindCheckbox().isSelected(), dataObject.getColorBlindHandicap());
-        assertEquals(botEditorPanel.getCustomSizeCheckbox().isSelected(), dataObject.getSizeOverloadHandicap());
-        assertEquals(botEditorPanel.getMovespeedCheckbox().isSelected(), dataObject.getMoveSpeedHandicap());
-        assertEquals(botEditorPanel.getBatteryEnabledCheckbox().isSelected(), dataObject.isBatteryEnabled());
-        assertEquals(botEditorPanel.getFileNameField().getText(), dataObject.getFileName());
-        assertEquals(botEditorPanel.getBotNameField().getText(), dataObject.getBotName());
-        assertEquals(botEditorPanel.getBotReferenceField().getText(), dataObject.getReferenceName());
+		assertEquals(botEditorPanel.getSpeedSlider().getValue(), config.getBotSpeed());
+        assertEquals(botEditorPanel.getSizeSlider().getValue(), config.getBotSize());
+        assertEquals(botEditorPanel.getBatterySlider().getValue(), config.getBotBatteryCapacity());
+        assertEquals(botEditorPanel.getNumberOfGrippersSlider().getValue(), config.getGrippers());
+        assertEquals(botEditorPanel.getSizeSlider().isEnabled(), config.getSizeOverloadHandicap());
+        assertEquals(botEditorPanel.getSpeedSlider().isEnabled(), config.getMoveSpeedHandicap());
+        assertEquals(botEditorPanel.getBatterySlider().isEnabled(), config.isBatteryEnabled());
+        assertEquals(botEditorPanel.getBatterySlider().getValue(), config.getBotBatteryCapacity());
+        assertEquals(botEditorPanel.getNumberOfGrippersSlider().isEnabled(), !config.getGripperHandicap());
+        assertEquals(botEditorPanel.getGripperCheckbox().isSelected(), config.getGripperHandicap());
+        assertEquals(botEditorPanel.getColorblindCheckbox().isSelected(), config.getColorBlindHandicap());
+        assertEquals(botEditorPanel.getCustomSizeCheckbox().isSelected(), config.getSizeOverloadHandicap());
+        assertEquals(botEditorPanel.getMovespeedCheckbox().isSelected(), config.getMoveSpeedHandicap());
+        assertEquals(botEditorPanel.getBatteryEnabledCheckbox().isSelected(), config.isBatteryEnabled());
+        assertEquals(botEditorPanel.getFileNameField().getText(), config.getFileName());
+        assertEquals(botEditorPanel.getBotNameField().getText(), config.getBotName());
+        assertEquals(botEditorPanel.getBotReferenceField().getText(), config.getReferenceName());
     }
 
     @Test
@@ -249,16 +249,16 @@ public class BotEditorPanelTest {
     @Test 
     public final void testSaveButton() {
         BotEditorPanel botEditorPanel = editor.getBotEditorPanel();
-        BotConfig dataObject = botEditorPanel.getDataObject();
+        BotConfig config = botEditorPanel.getBotController().getBotConfig();
     	editor.getBotEditorPanel().getBotNameField().setText("bob");
     	editor.getBotEditorPanel().getBotAmountTextField().setText("10");
     	editor.getBotEditorPanel().getBotReferenceField().setText("bobrobot");
     	editor.getBotEditorPanel().getFileNameField().setText("bob.goal");
     	editor.getBotEditorPanel().getSaveButton().doClick();
-        assertEquals(botEditorPanel.getBotNameField().getText(), dataObject.getBotName());
-        assertEquals(Integer.parseInt(botEditorPanel.getBotAmountTextField().getText()), dataObject.getBotAmount());
-        assertEquals(botEditorPanel.getBotReferenceField().getText(), dataObject.getReferenceName());
-        assertEquals(botEditorPanel.getFileNameField().getText(), dataObject.getFileName());
+        assertEquals(botEditorPanel.getBotNameField().getText(), config.getBotName());
+        assertEquals(Integer.parseInt(botEditorPanel.getBotAmountTextField().getText()), config.getBotAmount());
+        assertEquals(botEditorPanel.getBotReferenceField().getText(), config.getReferenceName());
+        assertEquals(botEditorPanel.getFileNameField().getText(), config.getFileName());
     }
 }
 

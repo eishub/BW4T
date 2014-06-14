@@ -24,6 +24,10 @@ public class BotEditorTest {
     /** Test the setup of boteditor */
     @Test
     public void testBotEditorPane() {
+    	BotController controller = new BotController(new MainPanel(), 0, new BW4TClientConfig());
+    	botEditor = new Boteditor(controller);
+    	
+    	
         EntityPanel entityPanel = new EntityPanel();
         ScenarioEditor main = new ScenarioEditor(new ConfigurationPanel(), entityPanel, new BW4TClientConfig());
         MainPanel parent = main.getMainPanel();
