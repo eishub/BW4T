@@ -8,12 +8,16 @@ import org.apache.log4j.Logger;
 import eis.iilang.Percept;
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.environment.Launcher;
+import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 
 public class PickUpEPartnerActionListener extends ClientActionListener {
     private static final Logger LOGGER = Logger.getLogger(PickUpEPartnerActionListener.class);
+    
+    private BW4TClientGUI gui;
 
-    public PickUpEPartnerActionListener(ClientController controller) {
+    public PickUpEPartnerActionListener(ClientController controller, BW4TClientGUI gui) {
         super(controller);
+        this.gui = gui;
     }
 
     @Override
@@ -21,6 +25,7 @@ public class PickUpEPartnerActionListener extends ClientActionListener {
         if (!Launcher.getEnvironment().isConnectedToGoal()) {
             try {
                 getController().getHumanAgent().pickUpEPartner();
+                gui.getEpartnerMessageButton().setEnabled(true);
             } catch (Exception e1) {
                 LOGGER.warn("failed to put down the e-partner", e1);
             }

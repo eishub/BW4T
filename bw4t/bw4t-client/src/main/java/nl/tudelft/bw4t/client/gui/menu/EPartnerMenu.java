@@ -26,7 +26,7 @@ public class EPartnerMenu {
         BasicMenuOperations.addSectionTitleToPopupMenu("Command my robot to:", popUpMenu);
 
         JMenuItem menuItem = new JMenuItem("Drop e-partner");
-        menuItem.addActionListener(new DropEPartnerActionListener(gui.getController()));
+        menuItem.addActionListener(new DropEPartnerActionListener(gui.getController(), gui));
         popUpMenu.add(menuItem);
         
         popUpMenu.addSeparator();
@@ -53,7 +53,7 @@ public class EPartnerMenu {
         BasicMenuOperations.addSectionTitleToPopupMenu("Command my robot to:", gui.getjPopupMenu());
 
         JMenuItem menuItem = new JMenuItem("Pick up e-partner");
-        menuItem.addActionListener(new PickUpEPartnerActionListener(gui.getController()));
+        menuItem.addActionListener(new PickUpEPartnerActionListener(gui.getController(), gui));
         gui.getjPopupMenu().add(menuItem);
 
         gui.getjPopupMenu().addSeparator();
