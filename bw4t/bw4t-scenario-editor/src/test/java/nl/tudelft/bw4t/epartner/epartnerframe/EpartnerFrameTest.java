@@ -8,6 +8,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.atLeastOnce;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 import nl.tudelft.bw4t.scenariogui.epartner.controller.EpartnerController;
 import nl.tudelft.bw4t.scenariogui.epartner.gui.EpartnerFrame;
 
@@ -24,14 +25,14 @@ public class EpartnerFrameTest {
 	
 	@Before
 	public final void setupEpartnerFrame() {
-		//TODO: figure out which one is the correct one. 
-//old
-		//TODO: These tests need to be fixed. 
-        frame = new EpartnerFrame(new EpartnerController(new EPartnerConfig()));
-        spyframe= spy(frame);
-//new
+		
 		config = new EPartnerConfig();
-		controller = new EpartnerController(config);
+		
+		//(MainPanel panel, int row)
+		
+		//MainPanel parent = main.getMainPanel();
+		
+		///controller = new EpartnerController(frame, 0);
         frame = new EpartnerFrame(controller);
         spyframe = spy(frame);
 	}
