@@ -5,20 +5,20 @@ import java.awt.event.ActionEvent;
 import nl.tudelft.bw4t.map.editor.gui.AbstractMenuOption;
 import nl.tudelft.bw4t.map.editor.gui.MenuBar;
 
-public class MenuOptionNew extends AbstractMenuOption {
+public class MenuOptionRandomizeSequence extends AbstractMenuOption {
 
-	public MenuOptionNew(MenuBar newView,
+	public MenuOptionRandomizeSequence(MenuBar newView,
 			EnvironmentStoreController controller) {
 		super(newView, controller);
 	}
 	
     /**
-     * Gets called when the menu item new is pressed.
+     * Gets called when the menu item Randomize Sequence as is pressed.
      *
      * @param e The action event.
      */
     public void actionPerformed(final ActionEvent e) {
-        newMap();
+        System.out.println("Randomize sequence called");
     }
 
 }

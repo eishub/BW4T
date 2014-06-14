@@ -729,6 +729,7 @@ public class MapPanelController implements ChangeListener {
     }
    
     public void makeRandomColorMap() {
+    	System.out.println("Randomized room");
     	Random random = new Random();
 		ArrayList<BlockColor> colors = new ArrayList<BlockColor>();
 		colors.addAll(BlockColor.getAvailableColors());
