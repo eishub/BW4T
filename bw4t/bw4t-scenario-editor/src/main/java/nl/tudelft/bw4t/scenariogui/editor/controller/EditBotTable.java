@@ -74,6 +74,5 @@ public class EditBotTable implements TableModelListener {
          default:
             break;
         }
-    }
-    
+    }   
 }
