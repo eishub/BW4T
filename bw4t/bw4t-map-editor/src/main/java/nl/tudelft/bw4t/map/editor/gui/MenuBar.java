@@ -16,6 +16,7 @@ public class MenuBar extends JMenuBar {
 	private String lastFileLocation;
 
     private JMenuItem fileNew, fileOpen, fileSave, fileSaveAs, preview, fileExit;
+    private JMenuItem toolsRandomizeRooms, toolsRandomizeBlocks, toolsRandomizeSequence;
 
     /**
      * Construct a menu bar for the Map Editor
@@ -24,14 +25,21 @@ public class MenuBar extends JMenuBar {
     public MenuBar() {
     	
         JMenu file;
+        JMenu tools;
 
-        // Build the menu.
+        // Build the File menu.
         file = new JMenu("File");
         // Bind alt+f to menu
         file.setMnemonic(KeyEvent.VK_F);
         add(file);
+        
+        // Build the File menu.
+        tools = new JMenu("Tools");
+        // Bind alt+t to menu
+        file.setMnemonic(KeyEvent.VK_T);
+        add(tools);
 
-        // Create the menu items.
+        // Create the File menu items.
         fileNew = new JMenuItem("New");
         fileNew.setToolTipText("New configuration file");
         file.add(fileNew);
@@ -60,6 +68,20 @@ public class MenuBar extends JMenuBar {
         fileExit = new JMenuItem("Exit");
         fileExit.setToolTipText("Exit application");
         file.add(fileExit);
+        
+        // Create the Tools menu items.
+        toolsRandomizeRooms = new JMenuItem("Randomize Rooms");
+        toolsRandomizeRooms.setToolTipText("Randomize the locations of rooms");
+        tools.add(toolsRandomizeRooms);
+        
+        toolsRandomizeBlocks = new JMenuItem("Randomize Blocks");
+        toolsRandomizeBlocks.setToolTipText("Randomize the distribution of all blocks");
+        tools.add(toolsRandomizeBlocks);
+        
+        toolsRandomizeSequence = new JMenuItem("Randomize Sequence");
+        toolsRandomizeSequence.setToolTipText("Randomize the target sequence");
+        tools.add(toolsRandomizeSequence);
+
 
     }
 
@@ -111,6 +133,30 @@ public class MenuBar extends JMenuBar {
      */
     public final JMenuItem getMenuItemFileExit() {
         return fileExit;
+    }
+    
+    /**
+     * JMenuItem used to randomize the rooms
+     * @return The JMenuItem to randomize the rooms
+     */
+    public final JMenuItem getMenuItemRandomizeRooms() {
+        return toolsRandomizeRooms;
+    }
+    
+    /**
+     * JMenuItem used to randomize the blocks distribution
+     * @return The JMenuItem to randomize the blocks distribution
+     */
+    public final JMenuItem getMenuItemRandomizeBlocks() {
+        return toolsRandomizeBlocks;
+    }
+    
+     /**
+     * JMenuItem used to randomize the target sequence
+     * @return The JMenuItem to randomize the target sequence
+     */
+    public final JMenuItem getMenuItemRandomizeSequence() {
+        return toolsRandomizeSequence;
     }
 
     /**

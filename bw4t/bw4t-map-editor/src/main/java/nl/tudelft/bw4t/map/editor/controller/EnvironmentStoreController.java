@@ -54,6 +54,20 @@ public class EnvironmentStoreController {
         getMainView().addWindowListener(
         		new WindowExit(getMainView())
         );
+        
+        /** Create all action listeners for the Tools Menu */
+        // Randomize Rooms in map
+        getMainView().getTopMenuBar().getMenuItemRandomizeRooms().addActionListener(
+				new MenuOptionRandomizeRooms(getMainView().getTopMenuBar(), this)
+        );
+		// Randomize Blocks distributions
+		getMainView().getTopMenuBar().getMenuItemRandomizeBlocks().addActionListener(
+				new MenuOptionRandomizeBlocks(getMainView().getTopMenuBar(), this)
+        );
+		// Randomize sequence
+		getMainView().getTopMenuBar().getMenuItemRandomizeSequence().addActionListener(
+				new MenuOptionRandomizeSequence(getMainView().getTopMenuBar(), this)
+        );
 
 	}
 	

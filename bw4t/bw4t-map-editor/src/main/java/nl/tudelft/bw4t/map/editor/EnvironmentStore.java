@@ -52,7 +52,6 @@ public class EnvironmentStore extends JFrame {
         menuBar = new MenuBar();
         setJMenuBar(menuBar);
         
-        // TODO: Change to DO_NOTHING_ON_CLOSE when we want to ask the user whether he is sure to exit.
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         
         // Create the explainationPanel for on top of the editor.
@@ -161,6 +160,7 @@ public class EnvironmentStore extends JFrame {
 	 */
 	public static void main(String[] args) {
 		SizeDialog dialog = new SizeDialog();
+		dialog.setLocationRelativeTo(null);
 		dialog.setVisible(true);
 	}
 }

@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
@@ -21,22 +23,28 @@ public class RandomizeFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane = new JPanel();
-	private JTextField textField = new JTextField(); 
+	private JTextField textField = new JTextField();
 	
+	// TODO This label should not contain this text but the name of the room being randomized.
 	private JLabel lblRoomA = new JLabel("Room A1 / Sequence");
+	
 	private JLabel lblNumberOfBlocks = new JLabel("Number of blocks created:");
 	
+    SpinnerModel spinnerModel = new SpinnerNumberModel(8, // initial value
+            1, // min
+            10, // max
+            1); // step
 	/**
 	 * Here can the user set the number of blocks.
 	 */
-	private JSpinner numberOfBlocksSpinner = new JSpinner();
+	private JSpinner numberOfBlocksSpinner = new JSpinner(spinnerModel);
 	
 	private JLabel lblColorsUsed = new JLabel("Colors Used:");
 	
 	/**
 	 * All the color-checkboxes. Here can the user choose what colors will be used.
 	 */
-	private JCheckBox chckbxNewCheckBox = new JCheckBox("R Red");
+	private JCheckBox chckbxRRed = new JCheckBox("R Red");
 	private JCheckBox chckbxGGreen = new JCheckBox("G Green");
 	private JCheckBox chckbxYYellow = new JCheckBox("Y Yellow");
 	private JCheckBox chckbxBBlue = new JCheckBox("B Blue");
@@ -104,7 +112,7 @@ public class RandomizeFrame extends JFrame {
 		contentPane.add(lblNumberOfBlocks, "cell 0 2,growx,aligny top");
 		contentPane.add(numberOfBlocksSpinner, "cell 0 3,growx,aligny top");
 		contentPane.add(lblColorsUsed, "cell 0 4,growx,aligny top");
-		contentPane.add(chckbxNewCheckBox, "cell 0 5,growx,aligny top");
+		contentPane.add(chckbxRRed, "cell 0 5,growx,aligny top");
 		contentPane.add(chckbxGGreen, "cell 0 6,growx,aligny top");
 		contentPane.add(chckbxYYellow, "cell 0 7,growx,aligny top");
 		contentPane.add(chckbxBBlue, "cell 0 8,growx,aligny top");
@@ -115,6 +123,14 @@ public class RandomizeFrame extends JFrame {
 		contentPane.add(lblResult, "cell 0 13,growx,aligny top");
 		contentPane.add(textField, "cell 0 14,growx,aligny top");
 		
+		chckbxRRed.setSelected(true);
+		chckbxGGreen.setSelected(true);
+		chckbxYYellow.setSelected(true);
+		chckbxBBlue.setSelected(true);
+		chckbxOOrange.setSelected(true);
+		chckbxWWhite.setSelected(true);
+		chckbxPPink.setSelected(true);
+		
 		textField.setColumns(10);
 		
 		contentPane.add(applyButton, "flowx,cell 0 15,alignx left,aligny top");
@@ -123,7 +139,7 @@ public class RandomizeFrame extends JFrame {
 	}
 	
 	public boolean isRed() {
-        return chckbxNewCheckBox.isSelected();
+        return chckbxRRed.isSelected();
     }
 	
 	public boolean isYellow() {

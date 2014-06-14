@@ -203,6 +203,14 @@ public abstract class AbstractMenuOption implements ActionListener {
         return null;
 
     }
+    
+    public MapPanelController getMapController() {
+    	return mapController;
+    }
+    
+    public EnvironmentStoreController getEnvironmentStoreController() {
+    	return envController;
+    }
 
 	
 	/**
