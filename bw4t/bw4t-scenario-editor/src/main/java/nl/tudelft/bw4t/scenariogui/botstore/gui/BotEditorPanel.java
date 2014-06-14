@@ -859,4 +859,28 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 	public void setBatteryUseValueLabel(JLabel batteryUseValueLabel) {
 		this.batteryUseValueLabel = batteryUseValueLabel;
 	}
+
+	public JTextField getBotNameField() {
+		return botNameField;
+	}
+
+	public void setBotNameField(JTextField botNameField) {
+		this.botNameField = botNameField;
+	}
+
+	public JTextField getFileNameField() {
+		return fileNameField;
+	}
+
+	public void setFileNameField(JTextField fileNameField) {
+		this.fileNameField = fileNameField;
+	}
+
+	public JTextField getBotReferenceField() {
+		return botReferenceField;
+	}
+
+	public void setBotReferenceField(JTextField botReferenceField) {
+		this.botReferenceField = botReferenceField;
+	}
 }
