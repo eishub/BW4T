@@ -883,4 +883,8 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 	public void setBotReferenceField(JTextField botReferenceField) {
 		this.botReferenceField = botReferenceField;
 	}
+
+	public void setSaveButton(JButton saveButton) {
+		this.saveButton = saveButton;
+	}
 }

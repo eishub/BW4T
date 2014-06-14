@@ -126,6 +126,7 @@ public class BotEditorPanelTest {
     @Test
     public final void testSpeedSliderEnable() {
         editor.getBotEditorPanel().getMovespeedCheckbox().doClick();
+        editor.getBotEditorPanel().updateView();
         assertTrue(editor.getBotEditorPanel().getSpeedSlider().isEnabled());
     }
 
