@@ -378,6 +378,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         epartnerChatPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         epartnerChatPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         epartnerChatPane.setEnabled(true);
+        epartnerChatPane.setVisible(false);
         epartnerChatPane.setFocusable(false);
         epartnerChatPane.setColumnHeaderView(new JLabel("E-partner Chat Session:"));
         
@@ -480,5 +481,9 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
      */
     public ClientController getController() {
         return controller;
+    }
+    
+    public JScrollPane getEpartnerChatPane() {
+        return epartnerChatPane;
     }
 }
