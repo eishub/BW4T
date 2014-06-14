@@ -26,6 +26,7 @@ public class PickUpEPartnerActionListener extends ClientActionListener {
             try {
                 getController().getHumanAgent().pickUpEPartner();
                 gui.getEpartnerMessageButton().setEnabled(true);
+                gui.getEpartnerChatPane().setVisible(true);
             } catch (Exception e1) {
                 LOGGER.warn("failed to put down the e-partner", e1);
             }
