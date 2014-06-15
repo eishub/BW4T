@@ -223,6 +223,7 @@ public abstract class AbstractMenuOption implements ActionListener {
                     }
                     foundStartZone = true;
                 }
+                //TODO check if can be removed: allblocks.addAll(mapController.getZoneControllers()[i][j].getColors());
             }
         }
         if(!foundStartZone || !foundDropZone) {

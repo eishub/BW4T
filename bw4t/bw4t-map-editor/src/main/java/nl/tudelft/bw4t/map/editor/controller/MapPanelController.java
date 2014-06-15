@@ -1,16 +1,13 @@
 package nl.tudelft.bw4t.map.editor.controller;
 
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Door;
 import nl.tudelft.bw4t.map.Entity;
@@ -21,9 +18,9 @@ import nl.tudelft.bw4t.map.Rectangle;
 import nl.tudelft.bw4t.map.RenderOptions;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.Zone.Type;
-import nl.tudelft.bw4t.map.editor.EnvironmentStore;
 import nl.tudelft.bw4t.map.editor.gui.ColorSequenceEditor;
-import nl.tudelft.bw4t.map.editor.gui.ZonePopupMenu;
+import nl.tudelft.bw4t.map.editor.gui.RoomMenu;
+import nl.tudelft.bw4t.map.editor.gui.ZoneMenu;
 import nl.tudelft.bw4t.map.editor.model.RandomMapCreator;
 import nl.tudelft.bw4t.map.editor.model.ZoneModel;
 
@@ -42,7 +39,9 @@ public class MapPanelController implements ChangeListener {
 
 	private boolean randomize;
 
+	private ZoneMenuController zmenucontroller;
 	private ZoneController selected = null;
+
 	/**
 	 * the target sequence.
 	 * */
@@ -75,8 +74,6 @@ public class MapPanelController implements ChangeListener {
 	private boolean isLabelsVisible;
 
 	private UpdateableEditorInterface uei;
-
-	private ZonePopupMenu zoneMenu = new ZonePopupMenu(this);
 
 	/**
 	 * size of map is fixed, you can't change it after construction.
@@ -113,68 +110,6 @@ public class MapPanelController implements ChangeListener {
 						new nl.tudelft.bw4t.map.editor.model.ZoneModel());
 			}
 		}
-
-		attachListenersToZoneMenu();
-	}
-
-	/**
-	 * this method attaches all the listeners to the Zone Menu.
-	 */
-	public void attachListenersToZoneMenu() {
-		this.getZoneMenu().getMenuItemZoneBlockade()
-				.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent ae) {
-						createZone(Type.BLOCKADE, false, false);
-					}
-				});
-
-		this.getZoneMenu().getMenuItemZoneChargingZone()
-				.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent ae) {
-						createZone(Type.CHARGINGZONE, false, false);
-					}
-				});
-
-		this.getZoneMenu().getMenuItemZoneCorridor()
-				.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent ae) {
-						createZone(Type.CORRIDOR, false, false);
-					}
-				});
-
-		this.getZoneMenu().getMenuItemZoneDropZone()
-				.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent ae) {
-						createZone(Type.ROOM, true, false);
-					}
-				});
-
-		this.getZoneMenu().getMenuItemZoneRoom()
-				.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent ae) {
-						createZone(Type.ROOM, false, false);
-					}
-				});
-
-		this.getZoneMenu().getMenuItemZoneStartZone()
-				.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent ae) {
-						createZone(Type.CORRIDOR, false, true);
-					}
-				});
-
-		this.getZoneMenu().getRandomize()
-				.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent ae) {
-						randomizeColorsInRooms();
-					}
-				});
 	}
 
 	/**
@@ -290,8 +225,16 @@ public class MapPanelController implements ChangeListener {
 		this.selected = selected;
 	}
 
-	public ZonePopupMenu getZoneMenu() {
-		return zoneMenu;
+	public ZoneMenu getZoneMenu() {
+		if (selected.getType() == Type.ROOM) {
+			RoomMenu menu = new RoomMenu(this);
+			zmenucontroller.attachListenersToRoomMenu(menu, this);
+			return menu;
+		} else {
+			ZoneMenu menu = new ZoneMenu(this);
+			zmenucontroller.attachListenersToZoneMenu(menu, this);
+			return menu;
+		}
 	}
 
 	/**
@@ -779,7 +722,6 @@ public class MapPanelController implements ChangeListener {
 		ArrayList<BlockColor> colors = new ArrayList<BlockColor>();
 		colors.addAll(BlockColor.getAvailableColors());
 		for (ZoneController zc : rooms) {
-			System.out.println("run");
 			int amount = random.nextInt(9) + 1;
 			zc.randomizeColors(amount, colors);
 		}
