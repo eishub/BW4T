@@ -49,7 +49,7 @@ public class RandomizeFromSettings implements ActionListener{
 			input.add(BlockColor.PINK);
 		}
 		
-		List<BlockColor> result = controller.makeRandomSequence(input, amount);
+		List<BlockColor> result = controller.randomizeSequence(input, amount);
 		setResult(result);
 		view.getRandomizedSequence().setText(result.toString());
 	}
