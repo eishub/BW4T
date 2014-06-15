@@ -157,7 +157,6 @@ public final class ExportToMAS {
      */
     private static void generateAgentHierarchyForBots(File directory) {
         for (BotConfig bot : ExportToMAS.configuration.getBots()) {
-            // TODO: Change this to goal file implementation and existing files.
             String botGoalFilename = bot.getFileName();
 
             File goalFile = new File(botGoalFilename);

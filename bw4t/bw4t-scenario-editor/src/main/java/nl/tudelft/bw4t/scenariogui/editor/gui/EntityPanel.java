@@ -70,12 +70,10 @@ public class EntityPanel extends JPanel {
 	private JPanel botMenu = new JPanel();
 
 	private JPanel botPane = new JPanel();
-	// TODO Add menuitems for the standardbots
 
 	private JPanel botCounter = new JPanel();
 
 	private DefaultTableModel botList;
-	// TODO add actionlisteners for the menu items
 
 	private EntityJTable botTable;
 	
@@ -342,7 +340,11 @@ public class EntityPanel extends JPanel {
 		return botTable;
 	}
 
-	/**
+	public void setBotTable(EntityJTable botTable) {
+        this.botTable = botTable;
+    }
+
+    /**
 	 * Returns the table model with the list of bots.
 	 *
 	 * @return The table model that contains the bots.
@@ -360,7 +362,11 @@ public class EntityPanel extends JPanel {
 		return ePartnerTable;
 	}
 
-	/**
+	public void setePartnerTable(EntityJTable ePartnerTable) {
+        this.ePartnerTable = ePartnerTable;
+    }
+
+    /**
 	 * Returns the table with the list of E-partners.
 	 *
 	 * @return The table that contains the E-partners.

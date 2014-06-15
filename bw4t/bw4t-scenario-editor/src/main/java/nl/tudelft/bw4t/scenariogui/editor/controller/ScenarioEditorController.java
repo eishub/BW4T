@@ -26,7 +26,9 @@ public class ScenarioEditorController {
     
     private BW4TClientConfig model;
     
-    private MainPanel mp;
+    private MainPanel mainPanel;
+    
+    private ConfigurationPanel configurationPanel;
 
     /**
      * Create a controllers object to control all ActionEvents.
@@ -37,7 +39,8 @@ public class ScenarioEditorController {
     public ScenarioEditorController(final ScenarioEditor newView, BW4TClientConfig model) {
         this.view = newView;
         this.model = model;
-        mp = newView.getMainPanel();
+        mainPanel = newView.getMainPanel();
+        configurationPanel = mainPanel.getConfigurationPanel();
 
         addConfigurationPanelListeners();
         addMenuBarListeners();
@@ -47,16 +50,14 @@ public class ScenarioEditorController {
     }
     
     private void addConfigurationPanelListeners() {
-    	ConfigurationPanel configurationPanel = mp.getConfigurationPanel();
-    	
-    	configurationPanel.addClientIPController(new WriteClientIP(mp));
-    	configurationPanel.addClientPortController(new WriteClientPort(mp));
-        configurationPanel.addServerIPController(new WriteServerIP(mp));
-        configurationPanel.addServerPortController(new WriteServerPort(mp));
-        configurationPanel.addGUIYesCheckboxController(new SelectLaunchGUIYes(mp));
-        configurationPanel.addGUINoCheckboxController(new SelectLaunchGUINo(mp));
-        configurationPanel.addMapFileController(new WriteMapFile(mp));
-		configurationPanel.addMapFileButtonController(new ChooseMapFileListener(mp));
+    	configurationPanel.addClientIPController(new WriteClientIP(mainPanel));
+    	configurationPanel.addClientPortController(new WriteClientPort(mainPanel));
+        configurationPanel.addServerIPController(new WriteServerIP(mainPanel));
+        configurationPanel.addServerPortController(new WriteServerPort(mainPanel));
+        configurationPanel.addGUIYesCheckboxController(new SelectLaunchGUIYes(mainPanel));
+        configurationPanel.addGUINoCheckboxController(new SelectLaunchGUINo(mainPanel));
+        configurationPanel.addMapFileController(new WriteMapFile(mainPanel));
+		configurationPanel.addMapFileButtonController(new ChooseMapFileListener(mainPanel));
     }
     
     private void addMenuBarListeners() {
@@ -71,17 +72,17 @@ public class ScenarioEditorController {
     }
     
     private void addEntityPanelListeners() {
-    	EntityPanel entityPanel = mp.getEntityPanel();
+    	EntityPanel entityPanel = mainPanel.getEntityPanel();
     	
-		entityPanel.addNewBotController(new AddNewBot(mp, getModel()));
-		entityPanel.addModifyBotController(new ModifyBot(mp, getModel()));
-		entityPanel.addDeleteBotController(new DeleteBot(mp, getModel()));		
-		entityPanel.addNewEpartnerController(new AddNewEPartner(mp, getModel()));
-		entityPanel.addModifyEpartnerController(new ModifyEPartner(mp, getModel()));
-		entityPanel.addDeleteEpartnerController(new DeleteEPartner(mp, getModel()));
-		entityPanel.addDropDownController(new BotDropDownButton(mp));
-		entityPanel.addBotTableModelController(new UpdateBotCount(mp, getModel()));
-        entityPanel.addEpartnerTableModelController(new UpdateEPartnerCount(mp, getModel()));
+		entityPanel.addNewBotController(new AddNewBot(mainPanel, getModel()));
+		entityPanel.addModifyBotController(new ModifyBot(mainPanel, getModel()));
+		entityPanel.addDeleteBotController(new DeleteBot(mainPanel, getModel()));		
+		entityPanel.addNewEpartnerController(new AddNewEPartner(mainPanel, getModel()));
+		entityPanel.addModifyEpartnerController(new ModifyEPartner(mainPanel, getModel()));
+		entityPanel.addDeleteEpartnerController(new DeleteEPartner(mainPanel, getModel()));
+		entityPanel.addDropDownController(new BotDropDownButton(mainPanel));
+		entityPanel.addBotTableModelController(new UpdateBotCount(mainPanel, getModel()));
+        entityPanel.addEpartnerTableModelController(new UpdateEPartnerCount(mainPanel, getModel()));
         entityPanel.addBotTableController(new EditBotTable(getMainView().getMainPanel(), getModel()));
         entityPanel.addEpartnerTableController(new EditEPartnerTable(getMainView().getMainPanel(), getModel()));
     }
@@ -108,11 +109,10 @@ public class ScenarioEditorController {
      * Checks if the configuration has been changed.
      * @return returns true if either the configuration, the bot list or the epartners list has been changed.
      */
-    public boolean hasConfigBeenModified() {
-        boolean configurationEqual = getMainView().getMainPanel().getConfigurationPanel().getOldValues()
-                .equals(getMainView().getMainPanel().getConfigurationPanel().getCurrentValues());
-        boolean botsEqual = getModel().compareBotConfigs(getModel().getOldBots());
-        boolean epartnersEqual = getModel().compareEpartnerConfigs(getModel().getOldEpartners());
+    public boolean hasConfigBeenModified() {        
+        boolean configurationEqual = configurationPanel.getOldValues().equals(configurationPanel.getCurrentValues());
+        boolean botsEqual = model.compareBotConfigs(model.getOldBots());
+        boolean epartnersEqual = model.compareEpartnerConfigs(model.getOldEpartners());
 
         return !(configurationEqual && botsEqual && epartnersEqual);
     }
