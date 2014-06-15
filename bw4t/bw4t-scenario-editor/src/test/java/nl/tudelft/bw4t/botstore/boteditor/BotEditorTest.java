@@ -31,11 +31,12 @@ public class BotEditorTest {
         BotController controller = new BotController(parent, 0, main.getController().getModel());
         botEditor = new BotEditor(controller);
         BotEditorPanel panel = new BotEditorPanel(controller);
+        
         botEditor.setBotEditorPanel(panel);
         botEditor.setParent(parent);
-        assertEquals(parent, botEditor.getParent());
+        
+        assertEquals(parent, botEditor.getMainPanel());
         assertEquals(panel, botEditor.getBotEditorPanel());
         botEditor.setVisible(false);
     }
-
 }
