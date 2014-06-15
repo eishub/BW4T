@@ -296,5 +296,8 @@ public abstract class AbstractRobotDecorator implements IRobot {
     }
 
     @Override
-    public IRobot getRobotInPath() { return parent.getRobotInPath(); }
+    public List<BoundedMoveableObject> getObstacles() { return parent.getObstacles(); }
+
+    @Override
+    public void clearObstacles() { parent.clearObstacles(); }
 }

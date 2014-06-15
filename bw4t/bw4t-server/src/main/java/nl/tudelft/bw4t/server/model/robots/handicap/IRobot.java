@@ -380,7 +380,10 @@ public interface IRobot {
     AbstractRobot getSuperParent();
 
     /**
-     * Retrieve the other robot in this robot's path.
+     * Retrieve all obstacles in the path of the robot.
+     * @return
      */
-    IRobot getRobotInPath();
+    public List<BoundedMoveableObject> getObstacles();
+
+    public void clearObstacles();
 }
