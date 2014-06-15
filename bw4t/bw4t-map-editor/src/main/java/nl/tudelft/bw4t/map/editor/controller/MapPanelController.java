@@ -4,7 +4,6 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,10 +28,8 @@ import nl.tudelft.bw4t.map.RenderOptions;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.Zone.Type;
 import nl.tudelft.bw4t.map.editor.EnvironmentStore;
-import nl.tudelft.bw4t.map.editor.controller.ZoneController;
 import nl.tudelft.bw4t.map.editor.gui.ColorSequenceEditor;
 import nl.tudelft.bw4t.map.editor.gui.ZonePopupMenu;
-
 import nl.tudelft.bw4t.map.editor.model.RandomMapCreator;
 import nl.tudelft.bw4t.map.editor.model.ZoneModel;
 
@@ -172,7 +169,7 @@ public class MapPanelController implements ChangeListener {
         
         this.getZoneMenu().getRandomize().addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent ae) {
-        		makeRandomColorMap();
+        		randomizeColorsInRooms();
         	}
         });
     }
@@ -797,22 +794,21 @@ public class MapPanelController implements ChangeListener {
      * @param sequencelength how long you want the sequence to be
      * @return the random sequence
      */
-    public List<BlockColor> makeRandomSequence(ArrayList<BlockColor> input, int sequencelength) {
+    public void randomizeSequence(List<BlockColor> input, int sequencelength) {
         Random random = new Random();
         for (int n = 0; n < sequencelength; n++) {
             sequence.add(input.get(random.nextInt(input.size())));
         }
-        return sequence;
     }
    
-    public void makeRandomColorMap() {
+    public void randomizeColorsInRooms() {
     	Random random = new Random();
 		ArrayList<BlockColor> colors = new ArrayList<BlockColor>();
 		colors.addAll(BlockColor.getAvailableColors());
 		colors.remove(BlockColor.DARK_GRAY);
     	for (ZoneController zc: rooms) {
     		int amount = random.nextInt(10);
-    		zc.makeRandomColorRoom(amount, colors);
+    		zc.randomizeColors(amount, colors);
     	}
     }
 }
