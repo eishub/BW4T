@@ -168,7 +168,7 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
 	}
 	
     
-    public void makeRandomColorRoom(int amount, ArrayList<BlockColor> validcolors) {
+    public void randomizeColors(int amount, ArrayList<BlockColor> validcolors) {
     	Random random = new Random();
 		ArrayList<BlockColor> colors = new ArrayList<BlockColor>();
     	for(int i = 0; i <  amount; i++) {

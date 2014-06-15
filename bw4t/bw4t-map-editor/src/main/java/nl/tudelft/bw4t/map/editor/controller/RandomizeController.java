@@ -57,13 +57,14 @@ public class RandomizeController {
      * @param sequencelength how long you want the sequence to be
      * @return the random sequence
      */
-    public List<BlockColor> makeRandomSequence(ArrayList<BlockColor> input, int sequencelength) {
+    public List<BlockColor> randomizeSequence(List<BlockColor> input, int sequencelength) {
         Random random = new Random();
         List<BlockColor> sequence = new ArrayList<>();
 
         for (int n = 0; n < sequencelength; n++) {
             sequence.add(input.get(random.nextInt(input.size())));
         }
+        
         return sequence;
     }
 }

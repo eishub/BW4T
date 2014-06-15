@@ -3,13 +3,14 @@ package nl.tudelft.bw4t.map.editor.controller;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Door;
 import nl.tudelft.bw4t.map.Entity;
@@ -20,6 +21,7 @@ import nl.tudelft.bw4t.map.Rectangle;
 import nl.tudelft.bw4t.map.RenderOptions;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.Zone.Type;
+import nl.tudelft.bw4t.map.editor.EnvironmentStore;
 import nl.tudelft.bw4t.map.editor.gui.ColorSequenceEditor;
 import nl.tudelft.bw4t.map.editor.gui.ZonePopupMenu;
 import nl.tudelft.bw4t.map.editor.model.RandomMapCreator;
@@ -161,7 +163,7 @@ public class MapPanelController implements ChangeListener {
         
         this.getZoneMenu().getRandomize().addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent ae) {
-        		makeRandomColorMap();
+        		randomizeColorsInRooms();
         	}
         });
     }
@@ -703,14 +705,14 @@ public class MapPanelController implements ChangeListener {
 
     }
    
-    public void makeRandomColorMap() {
+    public void randomizeColorsInRooms() {
     	Random random = new Random();
 		ArrayList<BlockColor> colors = new ArrayList<BlockColor>();
 		colors.addAll(BlockColor.getAvailableColors());
 		colors.remove(BlockColor.DARK_GRAY);
     	for (ZoneController zc: rooms) {
     		int amount = random.nextInt(10);
-    		zc.makeRandomColorRoom(amount, colors);
+    		zc.randomizeColors(amount, colors);
     	}
     }
     

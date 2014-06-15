@@ -18,7 +18,7 @@ public class MenuOptionRandomizeBlocks extends AbstractMenuOption {
      * @param e The action event.
      */
     public void actionPerformed(final ActionEvent e) {
-    	getMapController().makeRandomColorMap();
+    	getMapController().randomizeColorsInRooms();;
     }
 
 }
