@@ -86,7 +86,7 @@ public final class Format {
      * Gets the integer value of a string.
      * Returns zero if the string can not be converted to an Integer.
      * @param intRepresentation The string.
-     * @param canBeNegative TODO
+     * @param canBeNegative Decides whether the integer can be negative.
      * @return The integer value of the string.
      */
     public static int getIntValue(String intRepresentation, boolean canBeNegative) {
