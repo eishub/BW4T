@@ -110,6 +110,8 @@ public class MapPanelController implements ChangeListener {
 						new nl.tudelft.bw4t.map.editor.model.ZoneModel());
 			}
 		}
+		
+		zmenucontroller = new ZoneMenuController();
 	}
 
 	/**
