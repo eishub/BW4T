@@ -207,8 +207,8 @@ public abstract class AbstractMenuOption implements ActionListener {
         // check if all blocks for sequence are there.
         // first accumulate all blocks from all rooms
         List<BlockColor> allblocks = new ArrayList<BlockColor>();
-        for (int i = 0; i < mapController.getZoneController().length; i++) {
-            for (int j = 0; j < mapController.getZoneController()[0].length; j++) {
+        for (int i = 0; i < mapController.getZoneControllers().length; i++) {
+            for (int j = 0; j < mapController.getZoneControllers()[0].length; j++) {
             	ZoneController zone = mapController.getZoneController(i, j);
                 allblocks.addAll(zone.getColors());
                 if (zone.isDropZone()) {
