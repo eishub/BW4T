@@ -81,9 +81,9 @@ public class EnvironmentStoreController {
     		return true;
     	}
     	// If not all rooms are corridors, the map from scratch has been modified.
-        for (int i = 0; i < mapController.getZoneController().length; i++) {
-            for (int j = 0; j < mapController.getZoneController()[0].length; j++) {
-            	if(!(mapController.getZoneController()[i][j].getType() == Type.CORRIDOR)) {
+        for (int i = 0; i < mapController.getZoneControllers().length; i++) {
+            for (int j = 0; j < mapController.getZoneControllers()[0].length; j++) {
+            	if(!(mapController.getZoneControllers()[i][j].getType() == Type.CORRIDOR)) {
             		return true;
             	}                
             }
