@@ -165,6 +165,7 @@ public class ColorSequenceEditor extends JComponent {
         else {
             this.sequence = new ArrayList<BlockColor>(sequence);
         }
+        notifyValueChange();
     }
 
     public void addColor(Character chr) {
