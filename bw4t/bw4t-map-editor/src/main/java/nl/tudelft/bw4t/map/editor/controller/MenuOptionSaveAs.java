@@ -2,7 +2,6 @@ package nl.tudelft.bw4t.map.editor.controller;
 
 import java.awt.event.ActionEvent;
 
-import nl.tudelft.bw4t.map.editor.gui.AbstractMenuOption;
 import nl.tudelft.bw4t.map.editor.gui.MenuBar;
 
 public class MenuOptionSaveAs extends AbstractMenuOption {
@@ -18,7 +17,7 @@ public class MenuOptionSaveAs extends AbstractMenuOption {
      * @param e The action event.
      */
     public void actionPerformed(final ActionEvent e) {
-        saveAsFile();
+        saveFile(true);
     }
 
 }

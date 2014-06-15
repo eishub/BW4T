@@ -1,11 +1,10 @@
-package nl.tudelft.bw4t.map.editor.gui;
+package nl.tudelft.bw4t.map.editor.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +17,8 @@ import javax.xml.bind.Marshaller;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.editor.EnvironmentStore;
-import nl.tudelft.bw4t.map.editor.controller.EnvironmentStoreController;
-import nl.tudelft.bw4t.map.editor.controller.MapPanelController;
-import nl.tudelft.bw4t.map.editor.controller.MapPreviewController;
+import nl.tudelft.bw4t.map.editor.gui.MenuBar;
+import nl.tudelft.bw4t.map.editor.gui.SizeDialog;
 import nl.tudelft.bw4t.map.renderer.MapRenderer;
 
 public abstract class AbstractMenuOption implements ActionListener {
@@ -74,7 +72,7 @@ public abstract class AbstractMenuOption implements ActionListener {
 	        boolean doSave = envController.promptUserToSave();
 
 	        if (doSave) {
-	        	saveAsFile();
+	        	saveFile(true);
 	        }
 		}
 	   	// Close Environmenst Store
@@ -94,52 +92,78 @@ public abstract class AbstractMenuOption implements ActionListener {
 		// set opened file for save button
 	}
 	
-    /**
-     * Save the real map to given file
-     * 
-     * @param file
-     * @throws IOException
-     * @throws JAXBException
-     */
-    public void save(File file) throws IOException, JAXBException {
-        System.out.println("SAVE to " + file);
+	/**
+	 * Saves a file.
+	 */
+	public void saveFile() {
+		saveFile(!view.hasLastFileLocation());
+	}
+	
 
+	/**
+	 * Saves the configuration to XML. When the configuration hasn't been saved
+	 * before an file chooser is opened.
+	 * 
+	 * @param saveAs
+	 *            Whether or not to open a file chooser.
+	 */
+	public void saveFile(final boolean saveAs) {
         String error = checkConsistency();
         if (error != null) {
-            throw new IllegalStateException("save failed: " + error);
+        	EnvironmentStore.showDialog("Save failed: " + error);
+            return;
         }
 
+		String path = view.getLastFileLocation();
+
+        if (view.hasLastFileLocation() && !new File(path).exists()) {
+            view.setLastFileLocation(null);
+            currentFileChooser.setCurrentDirectory(new File("."));
+        }
+
+		if (saveAs || !view.hasLastFileLocation()) {
+			currentFileChooser = getCurrentFileChooser();
+
+            int returnVal = currentFileChooser.showSaveDialog(null);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+				File file = currentFileChooser.getSelectedFile();
+
+				path = file.getAbsolutePath();
+
+				String extension = ".xml";
+				if (!path.endsWith(extension)) {
+					path += extension;
+                    file = new File(path);
+				}
+                envController.getMainView().setWindowTitle(file.getName());
+            } else {
+				return;
+			}
+		}
+		try {
+            // Check if the file path was not externally deleted.
+            saveXMLFile(path);
+        } catch (JAXBException e) {
+        	EnvironmentStore.showDialog("Saving the map to XML has failed.");
+		} catch (FileNotFoundException e) {
+			EnvironmentStore.showDialog("No file has been found.");
+		}
+	}
+	
+
+	public void saveXMLFile(String path) throws JAXBException,
+			FileNotFoundException {
+		
         NewMap map = envController.getMapController().createMap();
         JAXBContext context = JAXBContext.newInstance(NewMap.class);
 
         Marshaller m = context.createMarshaller();
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
+        
+        File file = new File(path);
         m.marshal(map, new FileOutputStream(file));
-    }
-    
-    /**
-     * Ask user where to save and then call {@link #save(File)}
-     */
-    public void saveAsFile() {
-        try {
-            // check before user puts effort in
-            String state = checkConsistency();
-            if (state != null) {
-                throw new IllegalStateException("Map is not ready for save.\n" + state);
-            }
-            // TODO Auto-generated method stub
-            JFileChooser chooser = new JFileChooser();
-            int returnVal = chooser.showSaveDialog(null);
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                save(chooser.getSelectedFile());
-            }
-            // TODO Set opened file for save button
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            EnvironmentStore.showDialog(e, "Save failed: " + e.getMessage());
-        }
-    }
+		view.setLastFileLocation(path);
+	}
     
 	/**
 	 * Preview the map that is currently being edited.
@@ -174,23 +198,35 @@ public abstract class AbstractMenuOption implements ActionListener {
 		if (mapController.getNumberOfEntities() < 1) {
             return "There should be at least 1 entity";
         }
-        if (mapController.getSequence().size() <= 0 && !mapController.getRandomize()) {
+        if (mapController.getSequence().size() <= 0) {
             return "Sequence must contain at least 1 block color";
         }
-
+        
+        boolean foundDropZone = false;
+        boolean foundStartZone = false;
         // check if all blocks for sequence are there.
         // first accumulate all blocks from all rooms
         List<BlockColor> allblocks = new ArrayList<BlockColor>();
         for (int i = 0; i < mapController.getZoneController().length; i++) {
             for (int j = 0; j < mapController.getZoneController()[0].length; j++) {
-                allblocks.addAll(mapController.getZoneController()[i][j].getColors());
+            	ZoneController zone = mapController.getZoneController(i, j);
+                allblocks.addAll(zone.getColors());
+                if (zone.isDropZone()) {
+	                if (foundDropZone) {
+	                    return ("Map can only contain one drop zone.");
+	                }
+	                foundDropZone = true;
+                }
+                if (zone.isStartZone()) {
+                    if (foundStartZone) {
+                        return ("Map can only contain one starting zone.");
+                    }
+                    foundStartZone = true;
+                }
             }
         }
-
-        // first check if there are blocks while random is on
-        if (mapController.getRandomize() && (!allblocks.isEmpty() || !mapController.getSequence().isEmpty())) {
-            EnvironmentStore
-                    .showDialog("There are blocks on the map\nbut the map is set to random.\nWe proceed anyway.");
+        if(!foundStartZone || !foundDropZone) {
+        	return ("The map must contain one starting zone and drop zone.");
         }
 
         // remove all colors from the sequence. That will throw exception if
@@ -210,6 +246,10 @@ public abstract class AbstractMenuOption implements ActionListener {
     
     public EnvironmentStoreController getEnvironmentStoreController() {
     	return envController;
+    }
+    
+    public MenuBar getView() {
+    	return view;
     }
 
 	
