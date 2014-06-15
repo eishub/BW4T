@@ -111,4 +111,12 @@ public class EpartnerController {
 			evi.updateView();
 		}
 	}
+	
+	/**
+	 * Return the EPartnerConfig.
+	 * @return epConfig
+	 */
+	public EPartnerConfig getEPartnerConfig() {
+		return epConfig;
+	}
 }

@@ -290,4 +290,12 @@ public class BotController {
         }
         return buf.toString();
     }
+
+    /** 
+     * Return the botconfig.
+     * @return botConfig
+     */
+	public BotConfig getBotConfig() {
+		return botConfig;
+	}    
 }

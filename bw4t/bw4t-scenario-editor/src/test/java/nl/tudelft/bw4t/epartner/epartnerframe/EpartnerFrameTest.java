@@ -1,13 +1,13 @@
 package nl.tudelft.bw4t.epartner.epartnerframe;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.atLeastOnce;
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
+import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 import nl.tudelft.bw4t.scenariogui.epartner.controller.EpartnerController;
 import nl.tudelft.bw4t.scenariogui.epartner.gui.EpartnerFrame;
@@ -22,17 +22,15 @@ public class EpartnerFrameTest {
 	private EpartnerFrame spyframe;
 	private EpartnerController controller;
 	private EPartnerConfig config;
-	
+
 	@Before
 	public final void setupEpartnerFrame() {
-		
-		config = new EPartnerConfig();
-		
-		//(MainPanel panel, int row)
-		
-		//MainPanel parent = main.getMainPanel();
-		
-		///controller = new EpartnerController(frame, 0);
+		EntityPanel entityPanel = new EntityPanel();
+        ScenarioEditor main = new ScenarioEditor(new ConfigurationPanel(), entityPanel, new BW4TClientConfig());
+        MainPanel parent = main.getMainPanel();
+        config = new EPartnerConfig();
+        main.getController().getModel().getEpartners().add(config);
+        controller = new EpartnerController(parent, 0);
         frame = new EpartnerFrame(controller);
         spyframe = spy(frame);
 	}
