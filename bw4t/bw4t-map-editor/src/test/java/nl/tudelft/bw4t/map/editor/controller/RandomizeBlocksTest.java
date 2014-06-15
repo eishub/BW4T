@@ -15,7 +15,7 @@ import nl.tudelft.bw4t.map.editor.gui.RandomizeFrame;
 /**
  * This tests the map controller class.
  */
-public class MapPanelControllerTest {
+public class RandomizeBlocksTest {
 
 	private MapPanelController map;
 	private RandomizeFrame rframe;

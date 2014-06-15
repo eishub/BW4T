@@ -1,7 +1,6 @@
 package nl.tudelft.bw4t.map.editor.gui;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -10,31 +9,28 @@ import javax.swing.JRadioButtonMenuItem;
 import nl.tudelft.bw4t.map.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.map.editor.controller.UpdateableEditorInterface;
 import nl.tudelft.bw4t.map.editor.controller.ZoneController;
-import nl.tudelft.bw4t.map.editor.model.ZoneModel;
 
 /**
  * The ZonePopupMenu shows us the options for the different Zones through right click.
  *
  */
-public class ZonePopupMenu extends JPopupMenu implements UpdateableEditorInterface {
+public class ZoneMenu extends JPopupMenu implements UpdateableEditorInterface {
 
     private static final long serialVersionUID = -5335591852441574491L;
 
-    private JMenu zoneType, doorSide;
-
-    private JMenuItem randomize;
+    private JMenu zoneType;
     
     private JRadioButtonMenuItem corridor, room, blockade, startZone, chargingZone, dropZone;
-    
-    private JCheckBoxMenuItem north, east, south, west;
 
     private final MapPanelController mapController;
+    
+    protected ZoneController zone;
 
     /**
      * Constructor adds all the options to the menu.
      * @param mpc is the MapPanelController used.
      */
-    public ZonePopupMenu(MapPanelController mpc) {
+    public ZoneMenu(MapPanelController mpc) {
         mapController = mpc;
 
         // Create a Menu for Type Of Space
@@ -67,29 +63,6 @@ public class ZonePopupMenu extends JPopupMenu implements UpdateableEditorInterfa
         dropZone = new JRadioButtonMenuItem("Drop Zone");
         group.add(dropZone);
         zoneType.add(dropZone);
-
-        // Create a Menu for Door Side
-        doorSide = new JMenu("Door Side");
-        add(doorSide);
-
-        // Add all MenuItems for Door Side
-        north = new JCheckBoxMenuItem("North");
-        doorSide.add(north);
-
-        east = new JCheckBoxMenuItem("East");
-        doorSide.add(east);
-
-        south = new JCheckBoxMenuItem("South");
-        doorSide.add(south);
-
-        west = new JCheckBoxMenuItem("West");
-        doorSide.add(west);
-
-        // Create a MenuItem for Randomize Blocks in Room
-        randomize = new JMenuItem("Randomize Blocks");
-        randomize.setToolTipText("Randomize the blocks inside this room");
-        add(randomize);
-
     }
 
     /**
@@ -146,49 +119,9 @@ public class ZonePopupMenu extends JPopupMenu implements UpdateableEditorInterfa
         return dropZone;
     }
 
-    /**
-     * JMenuItem to change an zone to a dropZone.
-     * 
-     * @return The JMenuItem to change an zone to a dropZone.
-     */
-    public final JMenuItem getMenuItemDoorSideNorth() {
-        return north;
-    }
-
-    /**
-     * JMenuItem to change an zone to a dropZone.
-     * 
-     * @return The JMenuItem to change an zone to a dropZone.
-     */
-    public final JMenuItem getMenuItemDoorSideEast() {
-        return east;
-    }
-
-    /**
-     * JMenuItem to change an zone to a dropZone.
-     * 
-     * @return The JMenuItem to change an zone to a dropZone.
-     */
-    public final JMenuItem getMenuItemDoorSideSouth() {
-        return south;
-    }
-
-    /**
-     * JMenuItem to change an zone to a dropZone.
-     * 
-     * @return The JMenuItem to change an zone to a dropZone.
-     */
-    public final JMenuItem getMenuItemDoorSideWest() {
-        return west;
-    }
-    
-	public JMenuItem getRandomize() {
-		return randomize;
-	}
-
     @Override
     public void update() {
-        ZoneController zone = mapController.getSelected();
+        zone = mapController.getSelected();
 
         corridor.setSelected(true);
 
@@ -217,10 +150,5 @@ public class ZonePopupMenu extends JPopupMenu implements UpdateableEditorInterfa
             }
             break;
         }
-        
-        north.setSelected(zone.hasDoor(ZoneModel.NORTH));
-        east.setSelected(zone.hasDoor(ZoneModel.EAST));
-        south.setSelected(zone.hasDoor(ZoneModel.SOUTH));
-        west.setSelected(zone.hasDoor(ZoneModel.WEST));
     }
 }
