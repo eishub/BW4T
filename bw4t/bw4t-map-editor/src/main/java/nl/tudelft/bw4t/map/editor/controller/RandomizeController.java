@@ -1,24 +1,33 @@
 package nl.tudelft.bw4t.map.editor.controller;
 
-import nl.tudelft.bw4t.map.editor.EnvironmentStore;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.editor.gui.RandomizeFrame;
 
 public class RandomizeController {
 
 	private RandomizeFrame view;
 	
+	private MapPanelController mapController;
+	
+	private RandomizeFromSettings randomFromSettings;
+	
 	/**
 	 * The RandomizeController class takes care of all the ActionListeners.
 	 * 
 	 * @param rf is the Randomize JFrame and main view.
 	 */
-	public RandomizeController(RandomizeFrame rf) {
+	public RandomizeController(RandomizeFrame rf, MapPanelController mpc) {
 		this.view = rf;
+		this.mapController = mpc;
 		
 		/** Create all action listeners for the File Menu */
 		// Randomize from settings
 		getMainView().getRandomizeButton().addActionListener(
-				new RandomizeFromSettings(getMainView(), this)
+				this.randomFromSettings = new RandomizeFromSettings(getMainView(), this, null)
 		);
 		// Apply randomly generated blocks to room or sequence
 		getMainView().getApplyButton().addActionListener(
@@ -26,11 +35,35 @@ public class RandomizeController {
 		);
 		// Cancel Randomizer
 		getMainView().getCancelButton().addActionListener(
-				new CancelRandomSequence(getMainView(), this)
+				new CancelRandomSequence(getMainView())
 		);
 	}
 	
 	public RandomizeFrame getMainView() {
 		return view;
 	}
+	
+	public RandomizeFromSettings getRandomizeFromSettings() {
+		return randomFromSettings;
+	}
+	
+	public MapPanelController getMapController() {
+		return mapController;
+	}
+	
+    /**
+     * Creates a random sequence
+     * @param input	the list of available colors
+     * @param sequencelength how long you want the sequence to be
+     * @return the random sequence
+     */
+    public List<BlockColor> makeRandomSequence(ArrayList<BlockColor> input, int sequencelength) {
+        Random random = new Random();
+        List<BlockColor> sequence = new ArrayList<>();
+
+        for (int n = 0; n < sequencelength; n++) {
+            sequence.add(input.get(random.nextInt(input.size())));
+        }
+        return sequence;
+    }
 }

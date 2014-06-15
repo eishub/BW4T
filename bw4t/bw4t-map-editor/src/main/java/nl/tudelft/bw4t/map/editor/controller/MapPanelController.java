@@ -702,20 +702,6 @@ public class MapPanelController implements ChangeListener {
         this.sequence = ((ColorSequenceEditor) e.getSource()).getSequence();
 
     }
-    
-    /**
-     * Creates a random sequence
-     * @param input	the list of available colors
-     * @param sequencelength how long you want the sequence to be
-     * @return the random sequence
-     */
-    public List<BlockColor> makeRandomSequence(ArrayList<BlockColor> input, int sequencelength) {
-        Random random = new Random();
-        for (int n = 0; n < sequencelength; n++) {
-            sequence.add(input.get(random.nextInt(input.size())));
-        }
-        return sequence;
-    }
    
     public void makeRandomColorMap() {
     	Random random = new Random();

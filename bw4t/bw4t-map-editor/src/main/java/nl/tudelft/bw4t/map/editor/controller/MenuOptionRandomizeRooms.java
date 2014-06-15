@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 
 import nl.tudelft.bw4t.map.editor.gui.AbstractMenuOption;
 import nl.tudelft.bw4t.map.editor.gui.MenuBar;
+import nl.tudelft.bw4t.map.editor.model.RandomMapCreator;
 
 public class MenuOptionRandomizeRooms extends AbstractMenuOption {
 
@@ -18,7 +19,10 @@ public class MenuOptionRandomizeRooms extends AbstractMenuOption {
      * @param e The action event.
      */
     public void actionPerformed(final ActionEvent e) {
-        System.out.println("Randomize Rooms called");
+    	MapPanelController mpc = super.getMapController();
+    	
+    	RandomMapCreator rmc = new RandomMapCreator();
+        rmc.createRandomGrid(5, 5, 3);
     }
 
 }

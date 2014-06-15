@@ -20,7 +20,7 @@ public class MenuOptionRandomizeSequence extends AbstractMenuOption {
      * @param e The action event.
      */
     public void actionPerformed(final ActionEvent e) {
-		RandomizeFrame frame = new RandomizeFrame("Sequence");
+		RandomizeFrame frame = new RandomizeFrame("Sequence", super.getMapController());
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
     }

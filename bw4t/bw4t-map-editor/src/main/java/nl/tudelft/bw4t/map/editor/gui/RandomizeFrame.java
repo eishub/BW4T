@@ -15,17 +15,18 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
+import nl.tudelft.bw4t.map.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.map.editor.controller.RandomizeController;
 
 public class RandomizeFrame extends JFrame {
 
 	private static final long serialVersionUID = 1993091627565106917L;
 	
-	private RandomizeController controller;
+	private RandomizeController randomController;
+	
+	private MapPanelController mapController;
 	
 	private JPanel contentPane = new JPanel();
-	
-	private JTextField textField = new JTextField();
 	
 	private JLabel lblTitle;
 	
@@ -81,8 +82,9 @@ public class RandomizeFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RandomizeFrame(String title) {
-		controller = new RandomizeController(this);
+	public RandomizeFrame(String title, MapPanelController mpc) {
+		mapController = mpc;
+		randomController = new RandomizeController(this, mapController);
 		
 		lblTitle = new JLabel(title);
 		setTitle("Randomize " + title);
@@ -109,7 +111,7 @@ public class RandomizeFrame extends JFrame {
 		contentPane.add(chckbxPPink, "cell 0 11,growx,aligny top");
 		contentPane.add(randomizeButton, "cell 0 12,growx,aligny top");
 		contentPane.add(lblResult, "cell 0 13,growx,aligny top");
-		contentPane.add(textField, "cell 0 14,growx,aligny top");
+		contentPane.add(randomizedSequence, "cell 0 14,growx,aligny top");
 		
 		chckbxRRed.setSelected(true);
 		chckbxGGreen.setSelected(true);
@@ -119,7 +121,7 @@ public class RandomizeFrame extends JFrame {
 		chckbxWWhite.setSelected(true);
 		chckbxPPink.setSelected(true);
 		
-		textField.setColumns(10);
+		randomizedSequence.setColumns(10);
 		
 		contentPane.add(applyButton, "flowx,cell 0 15,alignx left,aligny top");
 		contentPane.add(cancelButton, "cell 0 15");
