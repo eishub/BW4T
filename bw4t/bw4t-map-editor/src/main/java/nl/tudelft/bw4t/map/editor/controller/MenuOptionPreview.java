@@ -2,7 +2,6 @@ package nl.tudelft.bw4t.map.editor.controller;
 
 import java.awt.event.ActionEvent;
 
-import nl.tudelft.bw4t.map.editor.gui.AbstractMenuOption;
 import nl.tudelft.bw4t.map.editor.gui.MenuBar;
 
 public class MenuOptionPreview extends AbstractMenuOption {

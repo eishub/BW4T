@@ -142,7 +142,23 @@ public class EnvironmentStore extends JFrame {
      * @param filenameBeingEdited is the filename of the map that is being edited.
      */
     public void setWindowTitle(String filenameBeingEdited) {
-        setTitle(windowName + " - " + filenameBeingEdited);
+        setTitle(windowName + " - " + stripExtension(filenameBeingEdited));
+    }
+
+    /**
+     * Used to strip the extension of the filename.
+     * @param str is the filename that should be stripped
+     * @return the filename without extension
+     */
+    static String stripExtension (String str) {
+        // Handle null case specially.
+        if (str == null) return null;
+        // Get position of last '.'.
+        int pos = str.lastIndexOf(".");
+        // If there wasn't any '.' just return the string as is.
+        if (pos == -1) return str;
+        // Otherwise return the string, up to the dot.
+        return str.substring(0, pos);
     }
     
     /**
