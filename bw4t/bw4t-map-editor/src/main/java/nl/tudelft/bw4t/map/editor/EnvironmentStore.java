@@ -160,7 +160,6 @@ public class EnvironmentStore extends JFrame {
 	 */
 	public static void main(String[] args) {
 		SizeDialog dialog = new SizeDialog();
-		dialog.setLocationRelativeTo(null);
 		dialog.setVisible(true);
 	}
 }

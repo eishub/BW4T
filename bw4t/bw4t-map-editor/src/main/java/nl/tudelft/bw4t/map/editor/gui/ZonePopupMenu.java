@@ -55,14 +55,14 @@ public class ZonePopupMenu extends JPopupMenu implements UpdateableEditorInterfa
         blockade = new JRadioButtonMenuItem("Blockade");
         group.add(blockade);
         zoneType.add(blockade);
+        
+        chargingZone = new JRadioButtonMenuItem("Charge Zone");
+        group.add(chargingZone);
+        zoneType.add(chargingZone);
 
         startZone = new JRadioButtonMenuItem("Start Zone");
         group.add(startZone);
         zoneType.add(startZone);
-
-        chargingZone = new JRadioButtonMenuItem("Charge Zone");
-        group.add(chargingZone);
-        zoneType.add(chargingZone);
 
         dropZone = new JRadioButtonMenuItem("Drop Zone");
         group.add(dropZone);

@@ -119,4 +119,8 @@ public class ColorSequenceController implements FocusListener, ColorPaletteListe
             focus.addColor(c);
         }
     }
+    
+    public ColorSequenceEditor getColorSequenceEditor() {
+    	return focus;
+    }
 }

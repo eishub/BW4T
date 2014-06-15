@@ -9,15 +9,12 @@ public class CancelRandomSequence implements ActionListener{
 	
 	private RandomizeFrame view;
 	
-	private RandomizeController controller;
-	
-	public CancelRandomSequence(RandomizeFrame rf, RandomizeController rc) {
+	public CancelRandomSequence(RandomizeFrame rf) {
 		this.view = rf;
-		this.controller = rc;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		view.dispose();		
+		view.dispose();
 	}
 }

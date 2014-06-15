@@ -18,8 +18,8 @@ public class ApplyRandomSequence implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO implement apply button
-		System.out.println("Applied");
-		view.dispose();		
+		controller.getMapController().setSequence(controller.getRandomizeFromSettings().getResult());
+		// TODO: Sequence has now been set. Update sequence in view.
+		view.dispose();
 	}
 }

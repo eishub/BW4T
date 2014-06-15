@@ -145,6 +145,8 @@ public class SizeDialog extends JFrame {
 		rightPanel.add(showZoneLabelsCheckbox, "cell 1 4");
 		rightPanel.add(beginFromScratchButton, "cell 0 6");
 		rightPanel.add(useStandardBasisButton, "cell 1 6");
+		
+		setLocationRelativeTo(null);
 			
 	}
 	
