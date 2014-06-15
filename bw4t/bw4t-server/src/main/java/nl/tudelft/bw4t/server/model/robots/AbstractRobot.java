@@ -107,8 +107,10 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     /** Returns the top most handicap a robot has. */
     private IRobot topMostHandicap = this;
 
-    /** Returns the robot in this robots path. */
-    private IRobot robotInPath;
+    /**
+     * Obstacles on the path of the robot
+     */
+    List<BoundedMoveableObject> obstacles = new ArrayList<BoundedMoveableObject>();
 
     /**
      * Creates a new robot.
@@ -143,8 +145,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         this.holding = new ArrayList<Block>(grippercap);
         this.handicapsList = new ArrayList<String>();
         this.agentRecord = new AgentRecord(name);
-
-        robotInPath = null;
     }
 	public void setTopMostHandicap(IRobot topMostHandicap) {
 		this.topMostHandicap = topMostHandicap;
@@ -391,10 +391,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
             getBattery().recharge();
         }
     	if (battery.getCurrentCapacity() > 0) {
-		    if (targetLocation != null) {
-                // Set the robot in path to null, if there is a bot it will be re-added.
-                robotInPath = null;
-
+		    if (targetLocation != null && obstacles.size() == 0) {
 		        // Calculate the distance that the robot is allowed to move.
 		        double distance = distanceTo(targetLocation);
 		        if (distance < MIN_MOVE_DISTANCE) {
@@ -436,7 +433,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		            } catch(DestinationOccupiedException e) {
                         LOGGER.debug("Collision!");
                         collided = true;
-                        robotInPath = e.getTileOccupiedBy();
+                        obstacles.add(e.getTileOccupiedBy());
                         stopRobot();
                     }
 		        }
@@ -649,8 +646,15 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	    return this;
 	}
 
-    @Override
-    public IRobot getRobotInPath() {
-        return robotInPath;
+    public void addObstacle(BoundedMoveableObject obstacle) {
+        obstacles.add(obstacle);
+    }
+
+    public List<BoundedMoveableObject> getObstacles() {
+        return obstacles;
+    }
+
+    public void clearObstacles() {
+        obstacles.clear();
     }
 }

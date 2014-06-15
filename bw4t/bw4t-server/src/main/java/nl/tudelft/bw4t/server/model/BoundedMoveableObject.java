@@ -1,6 +1,8 @@
 package nl.tudelft.bw4t.server.model;
 
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import repast.simphony.context.Context;
@@ -212,10 +214,21 @@ public abstract class BoundedMoveableObject {
 
     /**
      * set the object to visible
-     */
+    */
     public void addToContext() {
         context.add(this);
 
     }
 
+    public List<NdPoint> getPointsOccupiedByObject(int padding) {
+        List<NdPoint> points = new ArrayList<NdPoint>();
+
+        for(int i = (int) boundingBox.getMinX() - padding; i <= (int) boundingBox.getMaxX() + padding; i++) {
+            for(int j = (int) boundingBox.getMinY() - padding; j <= (int) boundingBox.getMaxY() + padding; j++) {
+                points.add(new NdPoint(i, j));
+            }
+        }
+
+        return points;
+    }
 }

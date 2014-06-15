@@ -414,7 +414,7 @@ public class RobotEntity implements RobotEntityInt {
     }
 
     /**
-     * The current state of the robot. See {@link NavigatingRobot#State}. Send on change
+     * The current state of the robot. See {@link NavigatingRobot#getState()}. Send on change
      */
     @AsPercept(name = "state", filter = Filter.Type.ON_CHANGE)
     public String getState() {
@@ -504,6 +504,21 @@ public class RobotEntity implements RobotEntityInt {
     	ourRobot.pickUp(nearest);
     }
 
+    /**
+     * Instruct the robot to navigate the current obstacles.
+     */
+    @AsAction(name = "navigateObstacles")
+    public void navigateObstacles() {
+        LOGGER.debug(String.format("%s is trying to navigate the following obstacles: ", ourRobot.getName()));
+        for(BoundedMoveableObject obj : ourRobot.getObstacles()) {
+            LOGGER.debug(obj + " at " + obj.getBoundingBox());
+        }
+
+        if(ourRobot instanceof NavigatingRobot) {
+            NavigatingRobot navbot = (NavigatingRobot) ourRobot;
+            navbot.navigateObstacles(false);
+        }
+    }
     /**
      * Instructs the robot to send a message
      * 
@@ -628,13 +643,28 @@ public class RobotEntity implements RobotEntityInt {
      * Send the robot a bumped percept, informing it that the path is blocked by the given robot.
      * @return Bump percept with the name of the robot in the way, if any.
      */
-    @AsPercept(name = "bumped", filter = Type.ON_CHANGE)
+    @AsPercept(name = "bumped", multiplePercepts = true, filter = Type.ON_CHANGE_NEG)
     public List<String> getBumped() {
         List<String> bumpedList = new ArrayList<String>();
-        if(ourRobot.isCollided() && ourRobot.getRobotInPath() != null) {
-            bumpedList.add(ourRobot.getRobotInPath().getName());
+        if(ourRobot.isCollided() && ourRobot.getObstacles().size() > 0) {
+            for(BoundedMoveableObject obj : ourRobot.getObstacles()) {
+                if(obj instanceof IRobot) {
+                    IRobot bot = (IRobot) obj;
+                    bumpedList.add(bot.getName());
+                }
+            }
         }
         return bumpedList;
+    }
+
+    @AsPercept(name = "currentPath", filter = Type.ALWAYS)
+    public List<NdPoint> getPath() {
+        List<NdPoint> points = new ArrayList<NdPoint>();
+        if(ourRobot instanceof NavigatingRobot) {
+            NavigatingRobot bot = (NavigatingRobot) ourRobot;
+            points = bot.getPath();
+        }
+        return points;
     }
 
     /**

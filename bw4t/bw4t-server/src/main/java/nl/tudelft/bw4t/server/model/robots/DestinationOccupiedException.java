@@ -7,14 +7,14 @@ import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
  */
 public class DestinationOccupiedException extends Exception {
 
-    private IRobot tileOccupiedBy;
+    private AbstractRobot tileOccupiedBy;
 
-    public DestinationOccupiedException(String message, IRobot tileOccupiedBy) {
+    public DestinationOccupiedException(String message, AbstractRobot tileOccupiedBy) {
         super(message);
         this.tileOccupiedBy = tileOccupiedBy;
     }
 
-    public IRobot getTileOccupiedBy() {
+    public AbstractRobot getTileOccupiedBy() {
         return tileOccupiedBy;
     }
 }
