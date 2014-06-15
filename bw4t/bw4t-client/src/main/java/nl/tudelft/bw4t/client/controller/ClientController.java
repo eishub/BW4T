@@ -157,7 +157,7 @@ public class ClientController {
         String sender = ((Identifier) iterator.next()).getValue();
         String message = ((Identifier) iterator.next()).getValue();
 
-        if (message.contains("I want to go")) {
+        if (message.contains("I want to go") || message.contains("You forgot me")) {
             getEpartnerChatHistory().add(sender + ": " + message);
         } else {
             getBotChatHistory().add(sender + ": " + message);
