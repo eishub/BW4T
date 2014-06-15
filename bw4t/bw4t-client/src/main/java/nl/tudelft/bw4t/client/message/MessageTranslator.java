@@ -48,6 +48,7 @@ public class MessageTranslator {
         stringToMessage.put("will you be long", new CommandRoomColorPlayer(MessageType.WILLYOUBELONG));
         stringToMessage.put("I am at a", new CommandColor(MessageType.ATBOX));
         stringToMessage.put("I want to go to", new CommandRoom(MessageType.IWANTTOGO));
+        stringToMessage.put("You forgot me in ", new CommandRoom(MessageType.YOUFORGOTME));
         
         stringToMessageEquals.put("yes", new CommandType(MessageType.YES));
         stringToMessageEquals.put("no", new CommandType(MessageType.NO));
