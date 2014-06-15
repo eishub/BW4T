@@ -104,12 +104,12 @@ public class ZoneModel {
 		colors = cs;
 	}
 	
-	public boolean hasDoor(int index) {
-		return doorsbool[index];
+	public boolean hasDoor(int dir) {
+		return doorsbool[dir];
 	}
 	
-	public void setDoor(int index) {
-		doorsbool[index] = true;
+	public void setDoor(int dir, boolean value) {
+		doorsbool[dir] = value;
 	}
 
 	public boolean isDropZone() {
