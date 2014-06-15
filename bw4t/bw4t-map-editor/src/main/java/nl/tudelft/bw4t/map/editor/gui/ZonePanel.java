@@ -7,13 +7,12 @@ import java.awt.Dimension;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.border.Border;
 
+import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.editor.controller.UpdateableEditorInterface;
 import nl.tudelft.bw4t.map.editor.controller.ZoneController;
-import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.Zone.Type;
+import nl.tudelft.bw4t.map.editor.model.ZoneModel;
 
 /**
  * The ZonePanel is the panel added to the grid for each Zone.
@@ -32,6 +31,8 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
     private JLabel nameLabel = new JLabel();
     
     private ColorSequenceEditor sequence = new ColorSequenceEditor();
+    
+    private Border defaultBorder;
 
     /**
      * Constructor for the ZonePanel based on the ZoneController.
@@ -57,6 +58,7 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
         this.setSize(SIZE);
         this.setPreferredSize(SIZE);
         this.setMinimumSize(SIZE);
+        this.defaultBorder = this.getBorder();
         
         update();
     }
@@ -70,6 +72,7 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
         nameLabel.setText(zoneController.getName());
         nameLabel.setForeground(Color.BLACK);
         this.remove(sequence);
+        this.removeBorder();
         switch (zoneController.getType()) {
         case ROOM:
             if (zoneController.isDropZone()) {
@@ -79,6 +82,7 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
                 this.setBackground(Color.GRAY);
                 this.add(sequence, BorderLayout.SOUTH);
                 this.sequence.setSequence(zoneController.getColors());
+                updateDoors();
             }
             break;
         case CHARGINGZONE:
@@ -100,5 +104,30 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
         revalidate();
         repaint();
     }
-
+    
+    private void updateDoors() {
+    	int east = 0;
+    	int north = 0;
+    	int south = 0;
+    	int west = 0;
+    	
+    	if (zoneController.hasDoor(ZoneModel.EAST)) {
+    		east = 2;
+    	}
+    	if (zoneController.hasDoor(ZoneModel.NORTH)) {
+    		north = 2;
+    	}
+    	if (zoneController.hasDoor(ZoneModel.SOUTH)) {
+    		south = 2;
+    	}
+    	if (zoneController.hasDoor(ZoneModel.WEST)) {
+    		west = 2;
+    	}
+    	
+    	this.setBorder(BorderFactory.createMatteBorder(north, west, south, east, Color.GREEN));
+    }
+    
+    private void removeBorder() {
+    	this.setBorder(this.defaultBorder);
+    }
 }
