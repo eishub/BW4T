@@ -282,14 +282,6 @@ public class MapPanelController implements ChangeListener {
 		// set the general fields of the map
 		map.setArea(new Point(mapwidth, mapheight));
 		map.setSequence(sequence);
-		if (randomize) {
-			map.setRandomBlocks((int) (2.5 * zonecontrollers.length * zonecontrollers[0].length));
-			map.setRandomSequence(2 * zonecontrollers.length
-					* zonecontrollers[0].length / 3);
-		}
-
-		// addEntities(map, dropzonex, dropzoney - ROOMHEIGHT / 2 -
-		// CORRIDORHEIGHT / 2);
 
 		// generate zones for each row:
 		// write room zones with their doors. and the zone in frront
