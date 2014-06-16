@@ -1,5 +1,7 @@
 package nl.tudelft.bw4t.client.controller;
 
+import eis.eis2java.annotation.AsPercept;
+import eis.eis2java.translation.Filter.Type;
 import eis.exceptions.NoEnvironmentException;
 import eis.exceptions.PerceiveException;
 import eis.iilang.Function;
@@ -10,6 +12,7 @@ import eis.iilang.ParameterList;
 import eis.iilang.Percept;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -208,9 +211,22 @@ public class ClientMapController extends AbstractMapController {
         case "robotSize":
             processRobotSize(perceptParameters);
             break;
+        case "bumped":
+            processBumpedPercept(perceptParameters);
+            break;
         default:
             break;
         }
+    }
+
+    /**
+     * Processes the bumped percept.
+     * 
+     * @param perceptParameters
+     *            the percept parameters
+     */
+    private void processBumpedPercept(List<Parameter> perceptParameters) {
+        theBot.setCollided(true);
     }
 
     /**
@@ -382,6 +398,8 @@ public class ClientMapController extends AbstractMapController {
             removeOccupiedRoom(((Identifier) paramOcc.get(0)).getValue());
         } else if (function.getName().equals("holding")) {
             theBot.getHolding().remove(((Numeral) function.getParameters().get(0)).getValue());
+        } else if (function.getName().equals("bumped")) {
+            theBot.setCollided(false);
         }
     }
 

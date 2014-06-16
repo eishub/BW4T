@@ -30,7 +30,8 @@ public class ClientController {
     private final Set<String> otherPlayers = new HashSet<>();
     
     /** The chat history. */
-    private final List<String> chatHistory = new LinkedList<>();
+    private final List<String> botChatHistory = new LinkedList<>();
+    private final List<String> epartnerChatHistory = new LinkedList<>();
 
     /** The human agent. */
     private HumanAgent humanAgent;
@@ -88,8 +89,12 @@ public class ClientController {
         return otherPlayers;
     }
 
-    public List<String> getChatHistory() {
-        return chatHistory;
+    public List<String> getBotChatHistory() {
+        return botChatHistory;
+    }
+    
+    public List<String> getEpartnerChatHistory() {
+        return epartnerChatHistory;
     }
 
     public boolean isHuman() {
@@ -151,7 +156,13 @@ public class ClientController {
         Iterator<Parameter> iterator = parameterList.iterator();
         String sender = ((Identifier) iterator.next()).getValue();
         String message = ((Identifier) iterator.next()).getValue();
-        getChatHistory().add(sender + ": " + message);
+
+        if (message.contains("I want to go")) {
+            getEpartnerChatHistory().add(sender + ": " + message);
+        } else {
+            getBotChatHistory().add(sender + ": " + message);
+        }
+        
         updateNextFrame = true;
     }
     
