@@ -96,7 +96,7 @@ public class SizeDialog extends JFrame {
 	
 	private GridBagConstraints setUpContraints(int constraints, int x, int y, int width) {
 		GridBagConstraints c = new GridBagConstraints();
-		
+
 		c.fill = constraints;
 		c.gridx = x;
 		c.gridy = y;
