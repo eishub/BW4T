@@ -35,15 +35,16 @@ public class EPartnerMessageSenderActionListener extends ClientActionListener {
     public void actionPerformed(ActionEvent e) {
         if (!Launcher.getEnvironment().isConnectedToGoal()) {
             try {
-                String epartnerName = mapController.getViewEPartner(mapController.getTheBot().getHoldingEpartner()).getName();
+                /*String epartnerName = mapController.getViewEPartner(mapController.getTheBot().getHoldingEpartner()).getName();
                 getController().getHumanAgent().sendMessage(
-                        epartnerName, message);
+                        epartnerName, message);*/
+                getController().getHumanAgent().sendMessage("all", message);
             } catch (Exception e1) {
                 LOGGER.error("Could not send message to e-partner.", e1);
             }
         } else {
             List<Percept> percepts = new LinkedList<Percept>();
-            Percept percept = new Percept("sendMessage", new Identifier("epartner"), MessageTranslator.translateMessage(
+            Percept percept = new Percept("sendMessage", new Identifier("all"/*"epartner"*/), MessageTranslator.translateMessage(
                     message, getController().getMapController().getTheBot().getName()));
             percepts.add(percept);
             getController().setToBePerformedAction(percepts);
