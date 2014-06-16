@@ -1,7 +1,6 @@
 package nl.tudelft.bw4t.environmentstore.main.view;
 
 import java.awt.BorderLayout;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 

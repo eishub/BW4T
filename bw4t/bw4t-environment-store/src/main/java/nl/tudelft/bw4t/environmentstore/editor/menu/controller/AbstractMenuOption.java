@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -19,6 +20,7 @@ import nl.tudelft.bw4t.environmentstore.editor.controller.MapPreviewController;
 import nl.tudelft.bw4t.environmentstore.editor.controller.ZoneController;
 import nl.tudelft.bw4t.environmentstore.editor.menu.view.MenuBar;
 import nl.tudelft.bw4t.environmentstore.editor.model.MapConverter;
+import nl.tudelft.bw4t.environmentstore.editor.model.SolvabilityAlgorithm;
 import nl.tudelft.bw4t.environmentstore.main.controller.EnvironmentStoreController;
 import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
 import nl.tudelft.bw4t.environmentstore.sizedialog.view.SizeDialog;
@@ -118,7 +120,16 @@ public abstract class AbstractMenuOption implements ActionListener {
         	EnvironmentStore.showDialog("Save failed: " + error);
             return;
         }
-
+        NewMap map = MapConverter.createMap(envController.getMapController().getEnvironmentMap());
+        if (!SolvabilityAlgorithm.mapIsSolvable(map)) {
+        	int response = EnvironmentStore.getOptionPrompt()
+        			.showConfirmDialog(null, "The map is unsolvable.\n"
+        			+ "Are you sure you want to save this map?",
+        			"Unsolvable map", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        	if (response == JOptionPane.NO_OPTION) {
+        		return;
+        	}
+        }
 		String path = view.getLastFileLocation();
 
         if (view.hasLastFileLocation() && !new File(path).exists()) {
@@ -167,7 +178,7 @@ public abstract class AbstractMenuOption implements ActionListener {
         
         File file = new File(path);
         m.marshal(map, new FileOutputStream(file));
-		view.setLastFileLocation(path);
+        view.setLastFileLocation(path);
 	}
     
 	/**
@@ -185,6 +196,13 @@ public abstract class AbstractMenuOption implements ActionListener {
 	 * Exit the editor with a check whether the user really wants to quit.
 	 */
 	public void exitEditor() {
+		if(envController.notAnEmptyMap()) {
+	        boolean doSave = envController.promptUserToSave();
+
+	        if (doSave) {
+	        	saveFile(true);
+	        }
+		}
         boolean doQuit = envController.promptUserToQuit();
 
         if (doQuit) {

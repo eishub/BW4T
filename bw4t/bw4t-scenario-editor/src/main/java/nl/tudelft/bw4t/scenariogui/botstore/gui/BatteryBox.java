@@ -27,14 +27,12 @@ public class BatteryBox implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
+    	view.setBatterySliderEnabled(view.isBatteryEnabled());
     	BotController currentController = view.getBotController();
     	int botSpeed = currentController.getBotSpeed();
     	int botSize = currentController.getBotSize();
     	if (view.isBatteryEnabled()) {
-    		view.setBatterySliderEnabled(true);
     		currentController.setNewBatteryValue(botSpeed, botSize, view);
-    	} else {
-    		view.setBatterySliderEnabled(false);
-    	}
+    	} 
     }
 }

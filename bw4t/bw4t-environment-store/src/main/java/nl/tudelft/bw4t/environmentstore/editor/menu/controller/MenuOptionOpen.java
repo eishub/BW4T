@@ -12,7 +12,7 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.environmentstore.editor.menu.view.MenuBar;
 import nl.tudelft.bw4t.environmentstore.editor.model.MapConverter;
-import nl.tudelft.bw4t.environmentstore.editor.model.ZoneData;
+import nl.tudelft.bw4t.environmentstore.editor.model.ZoneModel;
 import nl.tudelft.bw4t.environmentstore.main.controller.EnvironmentStoreController;
 import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
 import nl.tudelft.bw4t.environmentstore.util.DefaultOptionPrompt;
@@ -50,7 +50,7 @@ public class MenuOptionOpen extends AbstractMenuOption {
 				int nrows = getRows(map);
 				int ncols = getColumns(map);
 				List<BlockColor> sequence = map.getSequence();
-				List<ZoneData> data = getZoneData(map);
+				List<ZoneModel> data = getZoneData(map);
 				// Joost TODO: send this data to the class where the grid will be edited.
 			} catch (FileNotFoundException e1) {
 				DefaultOptionPrompt prompt = new DefaultOptionPrompt();
@@ -62,10 +62,10 @@ public class MenuOptionOpen extends AbstractMenuOption {
 		}
 	}
 
-	private List<ZoneData> getZoneData(NewMap map) {
-		List<ZoneData> data = new ArrayList<ZoneData>();
+	private List<ZoneModel> getZoneData(NewMap map) {
+		List<ZoneModel> data = new ArrayList<ZoneModel>();
 		for (Zone zone : map.getZones()) {
-			data.add(new ZoneData(zone));
+			data.add(new ZoneModel(zone));
 		}
 		return data;
 	}
