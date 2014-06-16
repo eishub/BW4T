@@ -220,6 +220,12 @@ public abstract class BoundedMoveableObject {
 
     }
 
+    /**
+     * Returns all the points rounded to an integer occupied by the Bounded Moveable Object,
+     * including the given padding.
+     * @param padding The padding to add around the box.
+     * @return A list of all points occupied by the box.
+     */
     public List<NdPoint> getPointsOccupiedByObject(int padding) {
         List<NdPoint> points = new ArrayList<NdPoint>();
 
