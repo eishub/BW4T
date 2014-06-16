@@ -27,8 +27,14 @@ public class MenuOptionPreview extends AbstractMenuOption {
         	if (mfe.getMessage().equals("No DropZone found on the map!")) {
         		EnvironmentStore.showDialog("The current map does not have a drop zone.");
         	}
-        	else {
+        	else if (mfe.getMessage().equals("No StartZone found on the map!")) {
         		EnvironmentStore.showDialog("The current map does not have a start zone.");
+        	}
+        	else if (mfe.getMessage().equals("Only one DropZone allowed per map!")) {
+        		EnvironmentStore.showDialog("The current map has multiple drop zones.");
+        	}
+        	else if (mfe.getMessage().equals("Only one StartZone allowed per map!")) {
+        		EnvironmentStore.showDialog("The current map has multiple start zones.");
         	}
         }
     }
