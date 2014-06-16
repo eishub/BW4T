@@ -28,7 +28,7 @@ public class RandomizeBlocksTest {
 
 	@Before
 	public void setUp() {
-		map = new MapPanelController(1, 1, 1, false, false);
+		map = new MapPanelController(1, 1, 5, false, false);
 		rframe = new RandomizeFrame("Pédé", map);
 		
 		random = new RandomizeController(rframe, map);

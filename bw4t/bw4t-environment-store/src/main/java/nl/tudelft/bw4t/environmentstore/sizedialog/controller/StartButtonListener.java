@@ -33,7 +33,7 @@ public class StartButtonListener implements ActionListener {
 		//FIXME with Jan's new structure of MapPanelController
 		MapPanelController mc = new MapPanelController(view.getRows(),
     			view.getColumns(),
-                1, true,
+                4, true,
                 true);
 		
 		EnvironmentStore es = new EnvironmentStore(mc);
