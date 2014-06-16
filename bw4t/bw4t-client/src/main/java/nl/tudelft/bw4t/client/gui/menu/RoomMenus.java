@@ -32,6 +32,8 @@ public class RoomMenus {
         // Robot commands
         BasicMenuOperations.addSectionTitleToPopupMenu("Command my robot to:", bw4tClientMapRenderer.getjPopupMenu());
 
+        BasicMenuOperations.addNavigateObstacleMenuItem(bw4tClientMapRenderer);
+        
         JMenuItem menuItem = new JMenuItem("Pick up " + box.getColor() + " block");
         menuItem.addActionListener(new PickUpActionListener(bw4tClientMapRenderer.getController()));
         bw4tClientMapRenderer.getjPopupMenu().add(menuItem);
@@ -65,6 +67,8 @@ public class RoomMenus {
         // Robot commands
         BasicMenuOperations.addSectionTitleToPopupMenu("Command my robot to:", gui.getjPopupMenu());
 
+        BasicMenuOperations.addNavigateObstacleMenuItem(gui);
+        
         JMenuItem menuItem = new JMenuItem("Go to " + box.getColor() + " block");
         menuItem.addActionListener(new GoToBlockActionListener(box.getObjectId(), gui.getController()));
         gui.getjPopupMenu().add(menuItem);
@@ -97,6 +101,8 @@ public class RoomMenus {
         // Robot commands
         BasicMenuOperations.addSectionTitleToPopupMenu("Command my robot to: ", gui.getjPopupMenu());
 
+        BasicMenuOperations.addNavigateObstacleMenuItem(gui);
+        
         JMenuItem menuItem = new JMenuItem("Go to " + label);
         menuItem.addActionListener(new GoToRoomActionListener(label, gui.getController()));
         gui.getjPopupMenu().add(menuItem);

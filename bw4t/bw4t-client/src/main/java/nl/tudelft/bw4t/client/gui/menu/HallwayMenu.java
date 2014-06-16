@@ -36,7 +36,9 @@ public class HallwayMenu {
 
         // Robot commands
         BasicMenuOperations.addSectionTitleToPopupMenu("Command my robot to: ", gui.getjPopupMenu());
-
+        
+        BasicMenuOperations.addNavigateObstacleMenuItem(gui);
+        
         JMenuItem menuItem = new JMenuItem(gotohall);
         menuItem.addActionListener(new GotoPositionActionListener(new Point((int) (gui.getSelectedLocation().x / set
                 .getScale()), (int) (gui.getSelectedLocation().y / set.getScale())), gui.getController()));
