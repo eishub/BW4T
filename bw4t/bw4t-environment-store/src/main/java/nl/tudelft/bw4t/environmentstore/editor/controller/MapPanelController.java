@@ -36,7 +36,10 @@ public class MapPanelController implements ChangeListener {
 	private UpdateableEditorInterface uei;
 	
 	public MapPanelController(EnvironmentMap map) {
-	    this.model = map;
+        cscontroller = new ColorSequenceController();
+        zmenucontroller = new ZoneMenuController();
+
+	    this.setModel(map);
 	}
 
 	/**
@@ -48,19 +51,7 @@ public class MapPanelController implements ChangeListener {
 	 *            true if labels should be shown by renderers
 	 */
 	public MapPanelController(int rows, int columns) {
-		
-
-		cscontroller = new ColorSequenceController();
-		zonecontrollers = new ZoneController[rows][columns];
-
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < columns; j++) {
-				zonecontrollers[i][j] = new ZoneController(this, i, j,
-						new nl.tudelft.bw4t.environmentstore.editor.model.ZoneModel());
-			}
-		}
-		
-		zmenucontroller = new ZoneMenuController();
+		this(new EnvironmentMap(rows, columns));
 	}
 
 	/**
@@ -84,20 +75,29 @@ public class MapPanelController implements ChangeListener {
 		selected = null;
 	}
 
-	public int getRows() {
-		return zonecontrollers.length;
+	public EnvironmentMap getModel() {
+        return model;
+    }
+
+    public void setModel(EnvironmentMap model) {
+        this.model = model;
+        connectZoneControllers();
+    }
+
+    public int getRows() {
+		return model.getRows();
 	}
 
 	public int getColumns() {
-		return zonecontrollers[0].length;
+		return model.getColumns();
 	}
 
 	public List<BlockColor> getSequence() {
-		return model.getSequence();
+		return getModel().getSequence();
 	}
 
 	public void setSequence(List<BlockColor> colorSequence) {
-	    model.setSequence(colorSequence);
+	    getModel().setSequence(colorSequence);
 	}
 
 	public ZoneController[][] getZoneControllers() {
@@ -130,7 +130,7 @@ public class MapPanelController implements ChangeListener {
 	}
 
     public EnvironmentMap getEnvironmentMap() {
-        return model;
+        return getModel();
     }
 
 	/**
@@ -139,7 +139,7 @@ public class MapPanelController implements ChangeListener {
 	 * @return the number of entities in the map.
 	 */
 	public int getNumberOfEntities() {
-		return model.getSpawnCount();
+		return getModel().getSpawnCount();
 	}
 
 	public UpdateableEditorInterface getUpdateableEditorInterface() {
@@ -173,6 +173,25 @@ public class MapPanelController implements ChangeListener {
 			return menu;
 		}
 	}
+	
+	private void connectZoneControllers() {
+	    final ZoneController[][] original = getZoneControllers();
+	    zonecontrollers = new ZoneController[getRows()][getColumns()];
+
+        for (int row = 0; row < getRows(); row++) {
+            for (int col = 0; col < getColumns(); col++) {
+                final ZoneModel zone = getModel().getZone(row, col);
+                if (row < original.length && col < original[row].length) {
+                    final ZoneController zoneController = original[row][col];
+                    zoneController.setZoneModel(zone);
+                    zonecontrollers[row][col] = zoneController;
+                }
+                else {
+                    zonecontrollers[row][col] = new ZoneController(this, zone);
+                }
+            }
+        }
+	}
 
 	/**
 	 * Create a random map object using the given settings.
@@ -186,16 +205,16 @@ public class MapPanelController implements ChangeListener {
 				zonecontrollers.length, zonecontrollers[0].length, roomCount);
 		for (int i = 0; i < zonecontrollers.length; i++) {
 			for (int j = 0; j < zonecontrollers[0].length; j++) {
-				zonecontrollers[i][j] = new ZoneController(this, i, j,
+				zonecontrollers[i][j] = new ZoneController(this,
 						models[i][j]);
 			}
 		}
 		
-		return MapConverter.createMap(this.model);
+		return MapConverter.createMap(this.getModel());
 	}
 
 	public ZoneController getZoneController(int row, int col) {
-		if (model.isValidZone(row, col)) {
+		if (getModel().isValidZone(row, col)) {
 			return zonecontrollers[row][col];
 		}
 		return null;
@@ -219,8 +238,13 @@ public class MapPanelController implements ChangeListener {
 
 	}
 
-	public void randomizeColorsInRooms() {
-		model.generateRandomBlocks();
+	public void randomizeColorsInRooms(List<BlockColor> colors, int amount) {
+		getModel().generateRandomBlocks(colors, amount);
+		for (int row = 0; row < getRows(); row++) {
+            for (int col = 0; col < getColumns(); col++) {
+                zonecontrollers[row][col].update();
+            }
+        }
 	}
 
 }

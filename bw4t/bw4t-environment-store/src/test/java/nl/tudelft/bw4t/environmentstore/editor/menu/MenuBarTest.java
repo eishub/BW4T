@@ -70,7 +70,7 @@ public class MenuBarTest {
      */
     @Before
     public void setUp() throws IOException {
-    	mapController = new MapPanelController(5, 5, 5, false, false);
+    	mapController = new MapPanelController(5, 5);
     	envStore = spy(new EnvironmentStore(mapController));
 
         filechooser = mock(JFileChooser.class);

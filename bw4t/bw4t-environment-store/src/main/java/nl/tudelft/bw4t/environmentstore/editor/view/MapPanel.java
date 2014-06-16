@@ -26,6 +26,8 @@ public class MapPanel extends JPanel implements UpdateableEditorInterface {
     private JPanel mapGrid = new JPanel();
     
     private ColorSequenceEditor dropSequence;
+    
+    private GridLayout layout;
 
     /**
      * Constructor sets the controller and calls the setupGrid method.
@@ -37,23 +39,16 @@ public class MapPanel extends JPanel implements UpdateableEditorInterface {
         
         this.mapController.setUpdateableEditorInterface(this);
         
-        setupGrid();
+        setupLayout();
     }
 
     /**
      * Setup the grid that we are going to use, based on information from the controller.
      */
-    private void setupGrid() {
+    private void setupLayout() {
         this.setLayout(new BorderLayout());
         zones = new ZonePanel[mapController.getRows()][mapController.getColumns()];
-        mapGrid.setLayout(new GridLayout(mapController.getRows(), mapController.getColumns()));
-
-        for (int row = 0; row < mapController.getRows(); row++) {
-            for (int col = 0; col < mapController.getColumns(); col++) {
-                zones[row][col] = new ZonePanel(mapController.getZoneController(row, col));
-                mapGrid.add(zones[row][col]);
-            }
-        }
+        setupGrid();
         this.add(new JScrollPane(mapGrid), BorderLayout.CENTER);
         
         dropSequence = new ColorSequenceEditor(EnvironmentMap.DROP_ZONE_SEQUENCE_LENGTH);
@@ -63,8 +58,25 @@ public class MapPanel extends JPanel implements UpdateableEditorInterface {
         update();
     }
 
+    public void setupGrid() {
+        mapGrid.removeAll();
+        layout = new GridLayout(mapController.getRows(), mapController.getColumns());
+        mapGrid.setLayout(layout);
+
+        for (int row = 0; row < mapController.getRows(); row++) {
+            for (int col = 0; col < mapController.getColumns(); col++) {
+                zones[row][col] = new ZonePanel(mapController.getZoneController(row, col));
+                mapGrid.add(zones[row][col]);
+            }
+        }
+    }
+
     @Override
     public void update() {
         dropSequence.setSequence(mapController.getSequence());
+        
+        if(layout.getRows() != mapController.getRows() || layout.getColumns() != mapController.getColumns()) {
+            this.setupGrid();
+        }
     }
 }
