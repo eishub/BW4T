@@ -284,7 +284,7 @@ public class BotController {
      */
     public String padString(String value) {
         StringBuffer buf = new StringBuffer();
-        while (value.length() < 8) {
+        while (buf.length() < 8) {
             buf.append("0");
         }
         return buf.toString();
