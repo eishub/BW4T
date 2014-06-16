@@ -11,6 +11,7 @@ import javax.xml.bind.JAXBException;
 import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
@@ -47,10 +48,11 @@ class MenuOptionOpen extends AbstractMenuOption {
      *            The action event.
      */
     public void actionPerformed(final ActionEvent e) {
-        ConfigurationPanel configPanel = super.getController().getMainView()
-                .getMainPanel().getConfigurationPanel();
-        EntityPanel entityPanel = super.getController().getMainView()
-                .getMainPanel().getEntityPanel();
+        ScenarioEditorController controller = super.getController();
+		ScenarioEditor mainView = controller.getMainView();
+		MainPanel mainPanel = mainView.getMainPanel();
+		ConfigurationPanel configPanel = mainPanel.getConfigurationPanel();
+        EntityPanel entityPanel = mainPanel.getEntityPanel();
 
         // Check if current config is different from last saved config
         if (getController().hasConfigBeenModified()) {
@@ -67,10 +69,13 @@ class MenuOptionOpen extends AbstractMenuOption {
      * Updates the old config values.
      */
     private void updateOldConfig() {
-        getController().getMainView().getMainPanel()
-                .getConfigurationPanel().updateOldValues();
-        getController().getModel().updateOldBotConfigs();
-        getController().getModel().updateOldEpartnerConfigs();
+        ScenarioEditor mainView = getController().getMainView();
+		MainPanel mainPanel = mainView.getMainPanel();
+		ConfigurationPanel configurationPanel = mainPanel.getConfigurationPanel();
+		configurationPanel.updateOldValues();
+        BW4TClientConfig model = getController().getModel();
+		model.updateOldBotConfigs();
+        model.updateOldEpartnerConfigs();
     }
 
     /**
@@ -85,7 +90,8 @@ class MenuOptionOpen extends AbstractMenuOption {
         JFileChooser fileChooser = getCurrentFileChooser();
         fileChooser.setFileFilter(FileFilters.xmlFilter());
 
-        if (fileChooser.showOpenDialog(getController().getMainView()) == JFileChooser.APPROVE_OPTION) {
+        ScenarioEditor mainView = getController().getMainView();
+		if (fileChooser.showOpenDialog(mainView) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             String openedFile = fileChooser.getSelectedFile().toString();
 
@@ -95,7 +101,7 @@ class MenuOptionOpen extends AbstractMenuOption {
             // saved file won't get
             // overwritten when the new config is saved.
             getMenuView().setLastFileLocation(openedFile);
-            getController().getMainView().setWindowTitle(file.getName());
+            mainView.setWindowTitle(file.getName());
         }
     }
 
