@@ -208,9 +208,8 @@ public class ClientMapController extends AbstractMapController {
 
 
     public ViewEPartner addEPartner(long id, long holderId) {
-        ViewEPartner epartner;
         LOGGER.info("creating epartner(" + id + ", " + holderId + ")");
-        epartner = new ViewEPartner();
+        ViewEPartner epartner = new ViewEPartner();
         epartner.setId(id);
         getVisibleEPartners().add(epartner);
         return epartner;

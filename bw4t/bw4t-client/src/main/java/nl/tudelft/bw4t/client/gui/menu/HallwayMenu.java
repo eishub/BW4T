@@ -50,37 +50,7 @@ public class HallwayMenu {
 
         gui.getjPopupMenu().addSeparator();
 
-        BasicMenuOperations.addSectionTitleToPopupMenu("Tell: ", gui.getjPopupMenu());
-
-        for (Zone roomInfo : cmc.getRooms()) {
-            BasicMenuOperations.addMenuItemToPopupMenu(
-                    new BW4TMessage(MessageType.AMWAITINGOUTSIDEROOM, roomInfo.getName(), null, null), gui);
-        }
-
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.AMWAITINGOUTSIDEROOM, cmc.getDropZone()
-                .getName(), null, null), gui);
-
-        if (holdingID != null) {
-            BasicMenuOperations.addMenuItemToPopupMenu(
-                    new BW4TMessage(MessageType.HASCOLOR, null, ColorTranslator.translate2ColorString(entityColor),
-                            null), gui);
-
-            JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu(
-                    "I have a " + ColorTranslator.translate2ColorString(entityColor) + " block from ",
-                    gui.getjPopupMenu());
-
-            for (Zone roomInfo : cmc.getRooms()) {
-                menuItem = new JMenuItem(roomInfo.getName());
-                menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.HASCOLOR,
-                        roomInfo.getName(), ColorTranslator.translate2ColorString(entityColor), null), gui
-                        .getController()));
-                submenu.add(menuItem);
-            }
-        }
-
-        gui.getjPopupMenu().addSeparator();
-        menuItem = new JMenuItem("Close menu");
-        gui.getjPopupMenu().add(menuItem);
+        BlockadeMenu.buildTellMenu(gui, cmc, holdingID, entityColor);
     }
 
 }

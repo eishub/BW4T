@@ -34,6 +34,22 @@ public class MapOperations {
         gui.getjPopupMenu().add(menuItem);
         gui.getjPopupMenu().addSeparator();
 
+        buildCommandMenu(gui, holdingID);
+
+        gui.getjPopupMenu().addSeparator();
+
+        buildTellMenu(color, gui, cmc, holdingID);
+
+        gui.getjPopupMenu().addSeparator();
+        buildAskMenu(color, gui);
+
+        gui.getjPopupMenu().addSeparator();
+        menuItem = new JMenuItem("Close menu");
+        gui.getjPopupMenu().add(menuItem);
+    }
+
+    private static void buildCommandMenu(BW4TClientGUI gui, ViewBlock holdingID) {
+        JMenuItem menuItem;
         BasicMenuOperations.addSectionTitleToPopupMenu("Command my robot to:", gui.getjPopupMenu());
 
         if (holdingID != null) {
@@ -41,9 +57,21 @@ public class MapOperations {
             menuItem.addActionListener(new PutdownActionListener(gui.getController()));
             gui.getjPopupMenu().add(menuItem);
         }
+    }
 
-        gui.getjPopupMenu().addSeparator();
+    private static void buildAskMenu(BlockColor color, BW4TClientGUI gui) {
+        BasicMenuOperations.addSectionTitleToPopupMenu("Ask: ", gui.getjPopupMenu());
 
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.WHEREISCOLOR, null, color.getName(),
+                null), gui);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.WHOHASABLOCK, null, color.getName(),
+                null), gui);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.WHERESHOULDIGO), gui);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.WHATCOLORSHOULDIGET), gui);
+    }
+
+    private static void buildTellMenu(BlockColor color, BW4TClientGUI gui, ClientMapController cmc, ViewBlock holdingID) {
+        JMenuItem menuItem;
         BasicMenuOperations.addSectionTitleToPopupMenu("Tell: ", gui.getjPopupMenu());
 
         BasicMenuOperations.addMenuItemToPopupMenu(
@@ -69,20 +97,6 @@ public class MapOperations {
                 submenu.add(menuItem);
             }
         }
-
-        gui.getjPopupMenu().addSeparator();
-        BasicMenuOperations.addSectionTitleToPopupMenu("Ask: ", gui.getjPopupMenu());
-
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.WHEREISCOLOR, null, color.getName(),
-                null), gui);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.WHOHASABLOCK, null, color.getName(),
-                null), gui);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.WHERESHOULDIGO), gui);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.WHATCOLORSHOULDIGET), gui);
-
-        gui.getjPopupMenu().addSeparator();
-        menuItem = new JMenuItem("Close menu");
-        gui.getjPopupMenu().add(menuItem);
     }
 
     /**
@@ -102,11 +116,12 @@ public class MapOperations {
     }
     
     public static boolean closeToBox(Point2D boxID, ClientController data) {
+        ClientMapController mapController = data.getMapController();
         double minX = boxID.getX() - 0.5;
         double maxX = boxID.getX() + 0.5;
         double minY = boxID.getY() - 0.5;
         double maxY = boxID.getY() + 0.5;
-        Point2D loc = data.getMapController().getTheBot().getLocation();
+        Point2D loc = mapController.getTheBot().getLocation();
         return (loc.getX() > minX) && (loc.getX() < maxX) && (loc.getY() > minY) && (loc.getY() < maxY);
     }
 }
