@@ -44,13 +44,6 @@ public class SizeDialog extends JFrame {
 	private JPanel rightPanel = new JPanel();
 	
 	/**
-	 * With this button the user can choose to edit an already existing map.
-	 */
-	// Joost TODO: Please get rid of this button. 
-	// It is not needed when the user can immediately edit a map from the editor itself (in the Menu). 
-	private JButton editExistingMapButton = new JButton("Edit existing map");
-	
-	/**
 	 * With this button the user can choose to start building a map from scratch.
 	 */
 	private JButton beginFromScratchButton = new JButton("Begin from scratch");
@@ -59,11 +52,6 @@ public class SizeDialog extends JFrame {
 	 * With this button the user can choose to use a standard basis.
 	 */
 	private JButton useStandardBasisButton = new JButton("Use standard basis");
-	
-	/**
-	 * Checkbox which the user can check if he wants the zone labels to be showed.
-	 */
-	private JCheckBox showZoneLabelsCheckbox = new JCheckBox("Show Zone Labels", true);
 	
 	/**
 	 * Label with the text #rows.
@@ -114,8 +102,6 @@ public class SizeDialog extends JFrame {
 		getContentPane().add(leftPanel, "cell 0 0 1 4,alignx left,growy");
 		leftPanel.setLayout(new MigLayout("", "[113px]", "[23px]"));
 		
-		leftPanel.add(editExistingMapButton, "cell 0 0,alignx left,aligny top");
-		
 		getContentPane().add(rightPanel, "cell 1 1 9 3,grow");
 		rightPanel.setLayout(new MigLayout("", "[grow][grow]", "[][][][][][][]"));
 	
@@ -144,7 +130,6 @@ public class SizeDialog extends JFrame {
 	    rightPanel.add(rowsLabel, "cell 0 0,alignx trailing");
 		rightPanel.add(columnsLabel, "cell 0 1,alignx trailing");
 	    rightPanel.add(entityLabel, "cell 0 2,alignx right");
-		rightPanel.add(showZoneLabelsCheckbox, "cell 1 4");
 		rightPanel.add(beginFromScratchButton, "cell 0 6");
 		rightPanel.add(useStandardBasisButton, "cell 1 6");
 		
@@ -152,14 +137,6 @@ public class SizeDialog extends JFrame {
 			
 	}
 	
-	/**
-	 * Return true when the ZoneLabelsCheckbox is selected.
-	 * @return true if selected
-	 */
-	public boolean isLabelsVisible() {
-        return showZoneLabelsCheckbox.isSelected();
-    }
-
     /**
      * get {@link #rows} as set by user
      * 
@@ -185,13 +162,6 @@ public class SizeDialog extends JFrame {
      */
     public int getEntities() {
     	return (Integer) (entities.getValue());
-    }
-    
-    /**
-     * @return editExistingMapButton
-     */
-    public JButton getExistingMapButton() {
-    	return editExistingMapButton;
     }
 	
     /**

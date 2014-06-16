@@ -33,7 +33,7 @@ public class BeginFromScratchButtonListener implements ActionListener {
 		MapPanelController mc = new MapPanelController(view.getRows(),
     			view.getColumns(),
                 view.getEntities(), true,
-                view.isLabelsVisible());
+                true);
 		
 		EnvironmentStore es = new EnvironmentStore(mc);
     	es.setVisible(true);
