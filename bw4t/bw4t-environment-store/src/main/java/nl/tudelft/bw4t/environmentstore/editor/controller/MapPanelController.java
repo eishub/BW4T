@@ -3,8 +3,10 @@ package nl.tudelft.bw4t.environmentstore.editor.controller;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
 import nl.tudelft.bw4t.environmentstore.editor.model.ZoneModel;
 import nl.tudelft.bw4t.environmentstore.editor.view.RoomMenu;
 import nl.tudelft.bw4t.environmentstore.editor.view.ZoneMenu;
@@ -289,7 +291,7 @@ public class MapPanelController implements ChangeListener {
 					foundStartzone = true;
 				}
 				output[row][col] = new Zone(room.getName(), new Rectangle(
-						calcX(col), calcY(row), ROOMWIDTH, ROOMHEIGHT),
+						col * ROOMWIDTH + ROOMWIDTH / 2, row * ROOMHEIGHT + ROOMHEIGHT / 2, ROOMWIDTH, ROOMHEIGHT),
 						room.getType());
 				int x = (int) output[row][col].getBoundingbox().getX();
 				int y = (int) output[row][col].getBoundingbox().getY();
@@ -505,28 +507,6 @@ public class MapPanelController implements ChangeListener {
 			zone.setRenderOptions(opts);
 		}
 
-	}
-
-	/**
-	 * get x coordinate of center of the room on the map.
-	 * 
-	 * @param column
-	 *            is the column coordinate of the Zone.
-	 * @return x coordinate of room on the map.
-	 */
-	public double calcX(int column) {
-		return column * ROOMWIDTH + ROOMWIDTH / 2;
-	}
-
-	/**
-	 * get y coordinate of center of room on the map.
-	 * 
-	 * @param row
-	 *            is the row coordinate of the Zone.
-	 * @return y coordinate of room on the map.
-	 */
-	public double calcY(int row) {
-		return row * ROOMHEIGHT + ROOMHEIGHT / 2;
 	}
 
 	public ZoneController getZoneController(int row, int col) {
