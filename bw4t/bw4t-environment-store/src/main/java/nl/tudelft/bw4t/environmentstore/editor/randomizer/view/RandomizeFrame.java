@@ -34,7 +34,7 @@ public class RandomizeFrame extends JFrame {
 	
     SpinnerModel spinnerModel = new SpinnerNumberModel(8, // initial value
             1, // min
-            10, // max
+            12, // max
             1); // step
 	/**
 	 * Here can the user set the number of blocks.
