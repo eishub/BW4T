@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.JFileChooser;
 import javax.xml.bind.JAXBException;
 
+import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.menu.view.MenuBar;
 import nl.tudelft.bw4t.environmentstore.editor.model.ZoneData;
 import nl.tudelft.bw4t.environmentstore.main.controller.EnvironmentStoreController;
@@ -45,9 +46,12 @@ public class MenuOptionOpen extends AbstractMenuOption {
 			File file = fileChooser.getSelectedFile();
 			try {
 				NewMap map = NewMap.create(new FileInputStream(file));
+				
+				int nrows = getRows(map);
+				int ncols = getColumns(map);
 				List<BlockColor> sequence = map.getSequence();
 				List<ZoneData> data = getZoneData(map);
-				// Joost TODO: send sequence and data to the class where the grid will be edited.
+				// Joost TODO: send this data to the class where the grid will be edited.
 			} catch (FileNotFoundException e1) {
 				DefaultOptionPrompt prompt = new DefaultOptionPrompt();
 				prompt.showMessageDialog(current, "File cannot be found.");
@@ -64,5 +68,31 @@ public class MenuOptionOpen extends AbstractMenuOption {
 			data.add(new ZoneData(zone));
 		}
 		return data;
+	}
+	
+	/**
+	 * @param map
+	 *            The map to be edited.
+	 * @return
+	 *        The row the zone belongs to. 
+	 */
+	private int getRows(NewMap map) {
+		double height = MapPanelController.ROOMHEIGHT;
+		double y = map.getArea().getY();
+
+		return (int) ((y - height / 2) / height) + 1;
+	}
+	
+	/**
+	 * @param map
+	 *            The map to be edited.
+	 * @return
+	 *        The column the zone belongs to. 
+	 */
+	private int getColumns(NewMap map) {
+		double width = MapPanelController.ROOMWIDTH;
+		double x = map.getArea().getX();
+
+		return (int) ((x - width / 2) / width) + 1;
 	}
 }
