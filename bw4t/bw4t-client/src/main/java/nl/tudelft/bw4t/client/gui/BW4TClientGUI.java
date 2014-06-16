@@ -172,10 +172,11 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
         addWindowListener(new ClientWindowAdapter(this));
 
         JPanel mainPanel = new JPanel(new BorderLayout());
+        initializeMouseListeners();
         initializeMainPanel(mainPanel);
         add(mainPanel);
         
-        initializeMouseListeners();
+        
         pack();
         setVisible(true);
     }
