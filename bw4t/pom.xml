@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>nl.tudelft</groupId>
-	<artifactId>bw4t</artifactId>
+	<artifactId>bw4t-dev</artifactId>
 	<version>3.3.0</version>
 	<packaging>pom</packaging>
 	<modules>
@@ -15,8 +15,8 @@
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<sonar.projectKey>nl.tudelft.bw4t</sonar.projectKey>
-		<sonar.projectName>BW4T</sonar.projectName>
+		<sonar.projectKey>nl.tudelft.bw4t-dev</sonar.projectKey>
+		<sonar.projectName>BW4T-Development</sonar.projectName>
 		<sonar.projectVersion>3.3.0</sonar.projectVersion>
 		<sonar.language>java</sonar.language>
 		<sonar.sources>src/main</sonar.sources>
