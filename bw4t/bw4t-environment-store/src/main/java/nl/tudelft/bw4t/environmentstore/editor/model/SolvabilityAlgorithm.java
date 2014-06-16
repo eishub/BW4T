@@ -17,7 +17,7 @@ public final class SolvabilityAlgorithm {
 	/**
 	 * Store the frequency of the sequence colors here.
 	 */
-	private static HashMap<BlockColor, Integer> sequenceFreq = new HashMap<BlockColor, Integer>();
+	private static HashMap<BlockColor, Integer> sequenceFreq;
 	/**
 	 * Flag to check if the start zone has been reached.
 	 */
@@ -34,6 +34,7 @@ public final class SolvabilityAlgorithm {
 	 * @return Whether or not the map is solvable.
 	 */
 	public static boolean mapIsSolvable(NewMap map) {
+		sequenceFreq = new HashMap<BlockColor, Integer>();
 		List<BlockColor> seq = map.getSequence();
 		for (BlockColor bc : seq) {
 			addToMap(sequenceFreq, bc);
@@ -90,7 +91,8 @@ public final class SolvabilityAlgorithm {
 	 */
 	private static boolean checkAccesibleBlocks(HashMap<BlockColor, Integer> map) {
 		for (BlockColor bc : sequenceFreq.keySet()) {
-			if (map.get(bc) == null || sequenceFreq.get(bc) > map.get(bc)) {
+			if ((map.get(bc) == null && sequenceFreq.get(bc) != null)
+					|| sequenceFreq.get(bc) > map.get(bc)) {
 				return false;
 			}
 		}
