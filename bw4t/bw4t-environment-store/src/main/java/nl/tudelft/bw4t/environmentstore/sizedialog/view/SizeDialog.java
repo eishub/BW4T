@@ -8,7 +8,6 @@ import nl.tudelft.bw4t.environmentstore.sizedialog.controller.SizeDialogControll
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
