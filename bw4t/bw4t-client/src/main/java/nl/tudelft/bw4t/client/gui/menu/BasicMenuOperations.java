@@ -6,8 +6,11 @@ import javax.swing.JPopupMenu;
 
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
+import nl.tudelft.bw4t.client.gui.listeners.NavigateObstaclesActionListener;
+import nl.tudelft.bw4t.client.gui.listeners.PutdownActionListener;
 import nl.tudelft.bw4t.client.message.BW4TMessage;
 import nl.tudelft.bw4t.client.message.MessageTranslator;
+import nl.tudelft.bw4t.map.view.ViewEntity;
 
 public class BasicMenuOperations {
     BW4TClientGUI bw4tClientMapRenderer;
@@ -51,6 +54,20 @@ public class BasicMenuOperations {
         JMenu menu = new JMenu(text);
         jPopupMenu.add(menu);
         return menu;
+    }
+    
+    /**
+     * Adds a menu item to the pop up menu that holds the option to navigate past obstacle,
+     * but only if the "bumped" percept has been received.
+     * @param gui The client gui.
+     */
+    public static void addNavigateObstacleMenuItem(BW4TClientGUI gui) {
+        ViewEntity theBot = gui.getController().getMapController().getTheBot();
+        if (theBot.isCollided()) {
+            JMenuItem menuItem = new JMenuItem("Navigate past obstacle");
+            menuItem.addActionListener(new NavigateObstaclesActionListener(gui.getController()));
+            gui.getjPopupMenu().add(menuItem);
+        }
     }
     
 }
