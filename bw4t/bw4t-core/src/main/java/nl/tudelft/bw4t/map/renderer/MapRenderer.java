@@ -8,26 +8,25 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.List;
 import java.util.ListIterator;
 
 import javax.swing.JPanel;
 
-import nl.tudelft.bw4t.map.Path;
-import org.apache.log4j.Logger;
-
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Door;
+import nl.tudelft.bw4t.map.Path;
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.Zone.Type;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
+import org.apache.log4j.Logger;
 import repast.simphony.space.continuous.NdPoint;
 
 public class MapRenderer extends JPanel implements MapRendererInterface {
-	
-	private static final Logger LOGGER = Logger.getLogger(MapRenderer.class);
+
+    private static final Logger LOGGER = Logger.getLogger(MapRenderer.class);
+    private static int PATH_SIZE = 1;
+
     /**
      * Serialization id.
      */
@@ -68,9 +67,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 
     /**
      * Processes all objects to display them on the panel
-     * 
-     * @param g
-     *            the graphics object
+     *
+     * @param g the graphics object
      */
     @Override
     public void paintComponent(Graphics g) {
@@ -91,9 +89,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 
     /**
      * Display the goal sequence
-     * 
-     * @param g2d
-     *            the graphics2d object
+     *
+     * @param g2d the graphics2d object
      */
     public void drawSequence(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
@@ -106,8 +103,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
             g2d.fill(new Rectangle2D.Double(startPosX, set.scale(set.getWorldHeight()), size, size));
             if (getController().getSequenceIndex() > (startPosX / size)) {
                 g2d.setColor(Color.BLACK);
-                int[] xpoints = new int[] { startPosX, startPosX, startPosX + size };
-                int[] ypoints = new int[] { wh, wh + size, wh + (size / 2) };
+                int[] xpoints = new int[]{startPosX, startPosX, startPosX + size};
+                int[] ypoints = new int[]{wh, wh + size, wh + (size / 2)};
                 g2d.fillPolygon(xpoints, ypoints, 3);
             }
             startPosX += size;
@@ -116,30 +113,29 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 
     /**
      * Process all rooms and their connected doors, and display them in the panel with an outline
-     * 
-     * @param g2d
-     *            the graphics2d object
+     *
+     * @param g2d the graphics2d object
      */
     public void drawRooms(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
 
         for (Zone room : getController().getRooms()) {
-	        boolean occupied = getController().isOccupied(room);
-	
-	        for (Door door : room.getDoors()) {
-	            drawDoor(g2d, door, occupied);
-	        }
-	        
-	        // paint the room
-	        g2d.setColor(Color.GRAY);  
-        	Shape roomDisplayCoordinates = set.transformRectangle(room.getBoundingbox().getRectangle());
-        	g2d.fill(roomDisplayCoordinates);
+            boolean occupied = getController().isOccupied(room);
+
+            for (Door door : room.getDoors()) {
+                drawDoor(g2d, door, occupied);
+            }
+
+            // paint the room
+            g2d.setColor(Color.GRAY);
+            Shape roomDisplayCoordinates = set.transformRectangle(room.getBoundingbox().getRectangle());
+            g2d.fill(roomDisplayCoordinates);
             g2d.setColor(Color.BLACK);
             g2d.draw(roomDisplayCoordinates);
 
         }
     }
-    
+
     public void drawChargingZones(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
 
@@ -150,7 +146,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
             g2d.fill(roomDisplayCoordinates);
         }
     }
-    
+
     public void drawBlockades(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
 
@@ -169,7 +165,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 
         if (closed) {
             g2d.setColor(Door.COLOR_CLOSED);
-        } else {
+        }
+        else {
             g2d.setColor(Door.COLOR_OPEN);
         }
 
@@ -179,9 +176,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 
     /**
      * Process the labels for the different areas
-     * 
-     * @param g2d
-     *            the graphics2d object
+     *
+     * @param g2d the graphics2d object
      */
     public void drawLabels(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
@@ -199,9 +195,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 
     /**
      * Process the drop zone and connected doors and display them in the panel
-     * 
-     * @param g2d
-     *            the graphics2d object
+     *
+     * @param g2d the graphics2d object
      */
     public void drawDropZone(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
@@ -222,9 +217,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 
     /**
      * Process all blocks that are visible and display them with their color
-     * 
-     * @param g2d
-     *            the graphics2d object
+     *
+     * @param g2d the graphics2d object
      */
     public void drawBlocks(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
@@ -238,9 +232,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 
     /**
      * Display the robot this panel represents. The color is adapted depending on whether it holds a block or not.
-     * 
-     * @param g2d
-     *            the graphics2d object
+     *
+     * @param g2d the graphics2d object
      */
     public void drawEntity(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
@@ -255,51 +248,61 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
                 g2d.setColor(Color.RED);
                 g2d.setFont(new Font("Arial", Font.BOLD, 16));
                 g2d.drawString(e.getName(),
-                        (int) set.scale(e.getLocation().getX()) - g2d.getFontMetrics().stringWidth(e.getName())/2,
+                        (int) set.scale(e.getLocation().getX()) - g2d.getFontMetrics().stringWidth(e.getName()) / 2,
                         (int) set.scale(e.getLocation().getY()) + set.getEntityNameOffset());
             }
         }
     }
-    
+
     public void drawEPartners(Graphics2D g2d) {
-    	MapRenderSettings set = getController().getRenderSettings();
-    	
-    	for (ViewEPartner eP : getController().getVisibleEPartners()) {
-    		g2d.setColor(eP.getColor());
-    		Point2D loc = eP.getLocation();
-    		int x = (int) set.scale(loc.getX());
-    		int y = (int) set.scale(loc.getY());
-    		final int size = set.scale(eP.EPARTNER_SIZE);
-            int[] xpoints = new int[] { x, x - size, x + size };
-            int[] ypoints = new int[] { y + size, y - size, y - size };
+        MapRenderSettings set = getController().getRenderSettings();
+
+        for (ViewEPartner eP : getController().getVisibleEPartners()) {
+            g2d.setColor(eP.getColor());
+            Point2D loc = eP.getLocation();
+            int x = (int) set.scale(loc.getX());
+            int y = (int) set.scale(loc.getY());
+            final int size = set.scale(eP.EPARTNER_SIZE);
+            int[] xpoints = new int[]{x, x - size, x + size};
+            int[] ypoints = new int[]{y + size, y - size, y - size};
             g2d.fillPolygon(xpoints, ypoints, 3);
             g2d.setColor(Color.BLACK);
-            g2d.drawPolygon(xpoints, ypoints, 3);;
-    	}
+            g2d.drawPolygon(xpoints, ypoints, 3);
+            ;
+        }
     }
 
     public void drawPaths(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
 
         g2d.setColor(Color.PINK);
-        for(Path p : controller.getPaths()) {
-            ListIterator<NdPoint> path = p.getPath().listIterator();
+        for (Path p : controller.getPaths()) {
+            NdPoint previous = null;
 
-            while(path.hasNext()) {
-                NdPoint point = path.next();
-                int x  = (int) set.scale(point.getX());
+            for(NdPoint point : p.getPath()) {
+                int x = (int) set.scale(point.getX());
                 int y = (int) set.scale(point.getY());
-                g2d.drawOval(x, y, 1, 1);
+                int scale = set.scale(PATH_SIZE);
 
-                if(path.hasPrevious()) {
-                    NdPoint prev = path.previous();
-                    int px  = (int) set.scale(prev.getX());
-                    int py = (int) set.scale(prev.getY());
+                g2d.setColor(Color.MAGENTA);
+                drawCenteredCircle(g2d, x, y, scale);
 
+                if (previous != null) {
+                    int px = (int) set.scale(previous.getX());
+                    int py = (int) set.scale(previous.getY());
+
+                    g2d.setColor(Color.BLACK);
                     g2d.drawLine(px, py, x, y);
                 }
-
+                previous = point;
             }
         }
     }
+
+    private void drawCenteredCircle(Graphics2D g2d, int x, int y, int r) {
+        x = x - (r / 2);
+        y = y - (r / 2);
+        g2d.fillOval(x, y, r, r);
+    }
 }
+
