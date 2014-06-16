@@ -10,7 +10,9 @@ import java.util.Map;
 import nl.tudelft.bw4t.client.agent.BW4TAgent;
 import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
+import nl.tudelft.bw4t.client.startup.ConfigFile;
 import nl.tudelft.bw4t.client.startup.InitParam;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
 
 import org.apache.log4j.Logger;
 
@@ -121,6 +123,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
         agentCount = environment.getAgents().size();
         if ("human".equals(environment.getType(entityId))) {
             HumanAgent agent = new HumanAgent(entityId, environment);
+            agent.setBotConfig(findCorrespondingBotConfig(entityId, false));
             agent.registerEntity(entityId);
             environment.registerAgent(agent.getAgentId());
             environment.associateEntity(agent.getAgentId(), entityId);
@@ -139,6 +142,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
             // we use the entityId as name for the agent as well. #2761
             Object[] args = new Object[] { entityId, environment };
             BW4TAgent agent = cons.newInstance(args);
+            //agent.setBotConfig(findCorrespondingBotConfig(entityId, false));
             agent.registerEntity(entityId);
             environment.registerAgent(agent.getAgentId());
             environment.associateEntity(agent.getAgentId(), entityId);
@@ -148,6 +152,27 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
             agentData.put(agent, null);
 
         }
+    }
+    
+    /**
+     * Finds the bot config corresponding to the entity id.
+     * @param entityId The entity id.
+     * @return The bot config belonging to this entity.
+     */
+    private BotConfig findCorrespondingBotConfig(String entityId, boolean recursiveCall) {
+        if (!ConfigFile.hasReadInitFile())
+            return null;
+        for (BotConfig bConfig : ConfigFile.getConfig().getBots()) {
+            if (entityId.equals(bConfig.getBotName())) {
+                return bConfig;
+            }
+        }
+        
+        /** Removes the last '_Nr' part and tries again: */
+        if (!recursiveCall)
+            return findCorrespondingBotConfig(entityId.split("_")[0], true);
+       
+        return null;
     }
 
     /**
