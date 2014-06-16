@@ -19,6 +19,8 @@ public class MapConverter {
     /* constants that map rooms to real positions on the map. */
     public static final int ROOMHEIGHT = 10;
     public static final int ROOMWIDTH = 10;
+    
+    private static int spawnCount = 1;
 
     private MapConverter() {
     }
@@ -32,6 +34,8 @@ public class MapConverter {
      */
     public static NewMap createMap(EnvironmentMap model) throws MapFormatException {
         NewMap map = new NewMap();
+        
+        spawnCount = 1;
 
         // compute a number of key values
         double mapwidth = model.getColumns() * MapConverter.ROOMWIDTH;
@@ -81,13 +85,12 @@ public class MapConverter {
                                 Door.Orientation.HORIZONTAL));
                     }
                     if (room.hasDoor(ZoneModel.WEST)) {
-                        output[row][col].addDoor(new Door(new Point(x, y + ROOMHEIGHT / 2),
-                                Door.Orientation.HORIZONTAL));
+                        output[row][col]
+                                .addDoor(new Door(new Point(x, y + ROOMHEIGHT / 2), Door.Orientation.HORIZONTAL));
                     }
                 }
                 if (room.isStartZone()) {
-                    addEntities(map, x + ROOMWIDTH / 2, y + ROOMHEIGHT / 2,
-                            room.getSpawnCount());
+                    addEntities(map, x + ROOMWIDTH / 2, y + ROOMHEIGHT / 2, room.getSpawnCount());
                 }
                 map.addZone(output[row][col]);
 
@@ -235,27 +238,21 @@ public class MapConverter {
      *            the position of first entity
      */
     private static void addEntities(NewMap map, double centerx, double centery, int numberOfEntities) {
-
-        // set entities. start at 1.
         for (int n = 1; n <= numberOfEntities; n++) {
-            int n6 = n / 6; // floor
-            int m6 = n % 6;
-            int m6sign = (m6 % 2) * 2 - 1; // 1 if m6=odd, -1 if even
-
-            int extrax = 1;
-            if (m6 <= 1)
-                extrax = 0;
-            double x = centerx + (XDISP * (2 * n6 + extrax)) * m6sign;
-
-            int yoffset = 0;
-            if (m6 == 2 || m6 == 3)
-                yoffset = -1;
-            if (m6 == 4 || m6 == 5)
-                yoffset = 1;
-            double y = centery + YDISP * yoffset;
-            map.addEntity(new Entity("Bot" + n, new Point(x, y)));
+            final int n4 = n % 4;
+            if (n4 == 1) {
+                map.addEntity(new Entity("Bot" + spawnCount++, new Point(centerx - 2.5, centery - 2.5)));
+            }
+            else if (n4 == 2) {
+                map.addEntity(new Entity("Bot" + spawnCount++, new Point(centerx + 2.5, centery - 2.5)));
+            }
+            else if (n4 == 3) {
+                map.addEntity(new Entity("Bot" + spawnCount++, new Point(centerx - 2.5, centery + 2.5)));
+            }
+            else {
+                map.addEntity(new Entity("Bot" + spawnCount++, new Point(centerx + 2.5, centery + 2.5)));
+            }
         }
-
     }
 
     /**

@@ -57,6 +57,13 @@ public class EnvironmentMap {
         return zones[0].length;
     }
 
+    public void setZones(ZoneModel[][] model) {
+        if(model == null || model.length < 2 || model[0].length < 2) {
+            throw new IllegalArgumentException("The given grid is not suitable!");
+        }
+        this.zones = model;
+    }
+
     /**
      * Get the zone at the given coordinates
      * 
