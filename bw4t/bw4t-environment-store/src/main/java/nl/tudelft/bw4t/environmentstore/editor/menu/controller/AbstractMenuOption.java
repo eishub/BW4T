@@ -18,6 +18,7 @@ import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPreviewController;
 import nl.tudelft.bw4t.environmentstore.editor.controller.ZoneController;
 import nl.tudelft.bw4t.environmentstore.editor.menu.view.MenuBar;
+import nl.tudelft.bw4t.environmentstore.editor.model.MapConverter;
 import nl.tudelft.bw4t.environmentstore.main.controller.EnvironmentStoreController;
 import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
 import nl.tudelft.bw4t.environmentstore.sizedialog.view.SizeDialog;
@@ -158,7 +159,7 @@ public abstract class AbstractMenuOption implements ActionListener {
 	public void saveXMLFile(String path) throws JAXBException,
 			FileNotFoundException {
 		
-        NewMap map = envController.getMapController().createMap();
+        NewMap map = MapConverter.createMap(envController.getMapController().getEnvironmentMap());
         JAXBContext context = JAXBContext.newInstance(NewMap.class);
 
         Marshaller m = context.createMarshaller();

@@ -10,8 +10,8 @@ import java.util.List;
 import javax.swing.JFileChooser;
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.menu.view.MenuBar;
+import nl.tudelft.bw4t.environmentstore.editor.model.MapConverter;
 import nl.tudelft.bw4t.environmentstore.editor.model.ZoneData;
 import nl.tudelft.bw4t.environmentstore.main.controller.EnvironmentStoreController;
 import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
@@ -77,7 +77,7 @@ public class MenuOptionOpen extends AbstractMenuOption {
 	 *        The row the zone belongs to. 
 	 */
 	private int getRows(NewMap map) {
-		double height = MapPanelController.ROOMHEIGHT;
+		double height = MapConverter.ROOMHEIGHT;
 		double y = map.getArea().getY();
 
 		return (int) ((y - height / 2) / height) + 1;
@@ -90,7 +90,7 @@ public class MenuOptionOpen extends AbstractMenuOption {
 	 *        The column the zone belongs to. 
 	 */
 	private int getColumns(NewMap map) {
-		double width = MapPanelController.ROOMWIDTH;
+		double width = MapConverter.ROOMWIDTH;
 		double x = map.getArea().getX();
 
 		return (int) ((x - width / 2) / width) + 1;

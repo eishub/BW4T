@@ -9,6 +9,7 @@ import javax.swing.JScrollPane;
 import nl.tudelft.bw4t.environmentstore.editor.controller.ColorSequenceEditor;
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.controller.UpdateableEditorInterface;
+import nl.tudelft.bw4t.environmentstore.editor.model.EnvironmentMap;
 
 /**
  * The mapPanel class contains the map that is being edited in a grid.
@@ -55,7 +56,7 @@ public class MapPanel extends JPanel implements UpdateableEditorInterface {
         }
         this.add(new JScrollPane(mapGrid), BorderLayout.CENTER);
         
-        dropSequence = new ColorSequenceEditor(MapPanelController.DROP_ZONE_SEQUENCE_LENGTH);
+        dropSequence = new ColorSequenceEditor(EnvironmentMap.DROP_ZONE_SEQUENCE_LENGTH);
         dropSequence.addChangeListener(mapController);
         mapController.getCSController().addColorSequenceEditor(dropSequence);
         this.add(dropSequence, BorderLayout.SOUTH);

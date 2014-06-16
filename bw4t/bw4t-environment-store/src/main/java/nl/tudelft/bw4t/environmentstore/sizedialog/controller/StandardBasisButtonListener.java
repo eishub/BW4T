@@ -31,9 +31,7 @@ public class StandardBasisButtonListener implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		// TODO fill in the right frame that has to be opened
 		MapPanelController mc = new MapPanelController(view.getRows(),
-    			view.getColumns(),
-                view.getEntities(), true,
-                view.isLabelsVisible());
+    			view.getColumns());
 		
 		EnvironmentStore es = new EnvironmentStore(mc);
     	es.setVisible(true);
