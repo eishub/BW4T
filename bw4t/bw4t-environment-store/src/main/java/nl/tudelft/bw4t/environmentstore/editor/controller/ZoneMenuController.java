@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenuItem;
+import javax.swing.JRadioButtonMenuItem;
 
 import nl.tudelft.bw4t.environmentstore.editor.model.ZoneModel;
 import nl.tudelft.bw4t.environmentstore.editor.view.RoomMenu;
@@ -70,7 +71,7 @@ public class ZoneMenuController {
 	}
 
 	/** This method ensures the map controller sets the appropriate doors. */	
-	private void attachListenerToRoomMenuItem(final JCheckBoxMenuItem item,
+	private void attachListenerToRoomMenuItem(final JMenuItem item,
 			final MapPanelController mapcontroller, final int direction) {
 		item.addActionListener(new ActionListener() {
 			@Override

@@ -83,8 +83,8 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
                 this.setBackground(Color.GRAY);
                 this.add(sequence, BorderLayout.SOUTH);
                 this.sequence.setSequence(zoneController.getColors());
-                updateDoors();
             }
+            updateDoors();
             break;
         case CHARGINGZONE:
             this.setBackground(Zone.CHARGING_ZONE_COLOR);

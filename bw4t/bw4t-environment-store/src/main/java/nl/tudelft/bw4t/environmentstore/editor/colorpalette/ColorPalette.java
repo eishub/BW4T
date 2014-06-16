@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.environmentstore.editor.controller;
+package nl.tudelft.bw4t.environmentstore.editor.colorpalette;
 
 import java.awt.Color;
 import java.awt.Dimension;

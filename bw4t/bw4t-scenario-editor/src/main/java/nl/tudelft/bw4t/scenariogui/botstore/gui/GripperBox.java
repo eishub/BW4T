@@ -27,6 +27,6 @@ class GripperBox implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent arg0) {
-    	view.setGripperSliderEnabled(view.getGripperHandicap());
+    	view.setGripperSliderEnabled(!(view.getGripperHandicap()));
     }
 }

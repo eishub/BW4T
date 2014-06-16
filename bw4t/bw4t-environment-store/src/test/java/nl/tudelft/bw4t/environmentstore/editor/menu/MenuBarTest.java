@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.map.editor;
+package nl.tudelft.bw4t.environmentstore.editor.menu;
 
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doNothing;

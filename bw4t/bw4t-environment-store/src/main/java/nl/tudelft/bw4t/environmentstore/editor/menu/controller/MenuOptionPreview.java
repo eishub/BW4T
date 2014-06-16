@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 
 import nl.tudelft.bw4t.environmentstore.editor.menu.view.MenuBar;
 import nl.tudelft.bw4t.environmentstore.main.controller.EnvironmentStoreController;
+import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
+import nl.tudelft.bw4t.map.MapFormatException;
 
 public class MenuOptionPreview extends AbstractMenuOption {
 
@@ -18,7 +20,23 @@ public class MenuOptionPreview extends AbstractMenuOption {
      * @param e The action event.
      */
     public void actionPerformed(final ActionEvent e) {
-        previewMap();
+    	try {
+    		previewMap();
+    	}
+        catch (MapFormatException mfe) {
+        	if (mfe.getMessage().equals("No DropZone found on the map!")) {
+        		EnvironmentStore.showDialog("The current map does not have a drop zone.");
+        	}
+        	else if (mfe.getMessage().equals("No StartZone found on the map!")) {
+        		EnvironmentStore.showDialog("The current map does not have a start zone.");
+        	}
+        	else if (mfe.getMessage().equals("Only one DropZone allowed per map!")) {
+        		EnvironmentStore.showDialog("The current map has multiple drop zones.");
+        	}
+        	else if (mfe.getMessage().equals("Only one StartZone allowed per map!")) {
+        		EnvironmentStore.showDialog("The current map has multiple start zones.");
+        	}
+        }
     }
 
 }
