@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import nl.tudelft.bw4t.environmentstore.editor.model.MapConverter;
 import nl.tudelft.bw4t.map.renderer.AbstractMapController;
 import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
 import nl.tudelft.bw4t.map.BlockColor;
@@ -30,9 +31,9 @@ public class MapPreviewController extends AbstractMapController {
 	 * @param mc
 	 */
 	public MapPreviewController(MapPanelController mc) {
-		super(mc.createMap());
+		super(MapConverter.createMap(mc.getEnvironmentMap()));
 		this.mapController = mc;
-		this.getRenderSettings().setUpdateDelay(1000);
+		this.getRenderSettings().setUpdateDelay(200);
 	}
 
 	@Override
@@ -98,7 +99,7 @@ public class MapPreviewController extends AbstractMapController {
 
 	@Override
 	protected void updateRenderer(MapRendererInterface mri) {
-		this.setMap(mapController.createMap());
+		this.setMap(MapConverter.createMap(mapController.getEnvironmentMap()));
 		mri.validate();
 		mri.repaint();
 	}

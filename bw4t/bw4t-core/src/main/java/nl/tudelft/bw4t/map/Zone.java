@@ -179,6 +179,11 @@ public class Zone implements Serializable {
     public void setRenderOptions(RenderOptions renderOptions) {
         this.renderOptions = renderOptions;
     }
+    
+    public boolean isOpenSpace() {
+        return getType() == Type.CORRIDOR || getType() == Type.CHARGINGZONE;
+    }
+    
     /**
      * 
      * @return true if the zone has a door on its north side.

@@ -2,7 +2,6 @@ package nl.tudelft.bw4t.environmentstore.editor.model;
 
 import java.util.List;
 
-import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.Zone.Type;
@@ -41,7 +40,7 @@ public final class ZoneData {
 	 *        The row the zone belongs to. 
 	 */
 	private int getRow(Zone zone) {
-		double height = MapPanelController.ROOMHEIGHT;
+		double height = MapConverter.ROOMHEIGHT;
 		double y = zone.getBoundingbox().getY();
 
 		return (int) ((y - height / 2) / height);
@@ -54,7 +53,7 @@ public final class ZoneData {
 	 *        The column the zone belongs to. 
 	 */
 	private int getColumn(Zone zone) {
-		double width = MapPanelController.ROOMWIDTH;
+		double width = MapConverter.ROOMWIDTH;
 		double x = zone.getBoundingbox().getX();
 
 		return (int) ((x - width / 2) / width);
