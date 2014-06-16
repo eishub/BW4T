@@ -266,12 +266,8 @@ public class MapPanelController implements ChangeListener {
 	public NewMap createMap() throws MapFormatException {
 		NewMap map = new NewMap();
 
-		// compute a number of key values
-		double mapwidth = getColumns() * ROOMWIDTH;
-		double mapheight = getRows() * ROOMHEIGHT;
-
 		// set the general fields of the map
-		map.setArea(new Point(mapwidth, mapheight));
+		map.setArea(new Point(getColumns() * ROOMWIDTH, getRows() * ROOMHEIGHT));
 		map.setSequence(sequence);
 		
 		//Check for dropzones/startzones
@@ -341,82 +337,6 @@ public class MapPanelController implements ChangeListener {
 		return map;
 	}
 
-	/**
-	 * Create a random map object using the given settings.
-	 * 
-	 * @return NewMap the new map that has been created.
-	 * @throws MapFormatException
-	 *             if no dropZone or no startZone is found.
-	 */
-	public NewMap createRandomMap(int roomCount) throws MapFormatException {
-		NewMap map = new NewMap();
-		ZoneModel[][] models = RandomMapCreator.createRandomGrid(
-				zonecontrollers.length, zonecontrollers[0].length, roomCount);
-		for (int i = 0; i < zonecontrollers.length; i++) {
-			for (int j = 0; j < zonecontrollers[0].length; j++) {
-				zonecontrollers[i][j] = new ZoneController(this, i, j,
-						models[i][j]);
-			}
-		}
-		// compute a number of key values
-		double mapwidth = getColumns() * ROOMWIDTH;
-		double mapheight = getRows() * ROOMHEIGHT;
-
-		// set the general fields of the map
-		map.setArea(new Point(mapwidth, mapheight));
-		map.setSequence(sequence);
-		if (randomize) {
-			map.setRandomBlocks((int) (2.5 * zonecontrollers.length * zonecontrollers[0].length));
-			map.setRandomSequence(2 * zonecontrollers.length
-					* zonecontrollers[0].length / 3);
-		}
-
-
-		// generate zones for each row:
-		// write room zones with their doors. and the zone in frront
-		// also generate the lefthall and righthall for each row.
-		// connect room and corridor in front of it.
-		// connect all corridor with each other and with left and right hall.
-		boolean foundDropzone = false;
-		boolean foundStartzone = false;
-		Zone[][] output = new Zone[getRows()][getColumns()];
-		for (int row = 0; row < getRows(); row++) {
-			for (int col = 0; col < getColumns(); col++) {
-				ZoneController room = getZoneController(row, col);
-				if (room.isDropZone()) {
-					if (foundDropzone) {
-						throw new MapFormatException(
-								"Only one DropZone allowed per map!");
-					}
-					foundDropzone = true;
-				}
-				if (room.isStartZone()) {
-					foundStartzone = true;
-				}
-				output[row][col] = new Zone(room.getName(), new Rectangle(
-						calcX(col), calcY(row), ROOMWIDTH, ROOMHEIGHT),
-						room.getType());
-				// TODO DOORS
-				if (output[row][col].getType() == Type.ROOM) {
-
-				}
-				map.addZone(output[row][col]);
-				// TODO add Entity spawn points on Startzones
-				output[row][col].setBlocks(room.getColors());
-			}
-		}
-		// connect all the zones
-		connect(output);
-		if (!foundDropzone) {
-			throw new MapFormatException("No DropZone found on the map!");
-		}
-		if (!foundStartzone) {
-			throw new MapFormatException("No StartZone found on the map!");
-		}
-
-		setRenderOptions(map);
-		return map;
-	}
 
 	/**
 	 * Check what type of zone the current zone is. Then call the correct
