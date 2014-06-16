@@ -3,7 +3,6 @@ package nl.tudelft.bw4t.server.model.robots;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -15,7 +14,10 @@ import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.blocks.Block;
+import nl.tudelft.bw4t.server.model.doors.Door;
 import nl.tudelft.bw4t.server.model.robots.NavigatingRobot.State;
+import nl.tudelft.bw4t.server.model.zone.Corridor;
+import nl.tudelft.bw4t.server.model.zone.Room;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,8 +38,14 @@ public class NavigatingRobotTest {
     private Context<Object> mockedContext = Mockito.mock(Context.class);
     private Context<Object> mockedOtherContext = Mockito.mock(Context.class);
     
+    private nl.tudelft.bw4t.server.model.zone.Zone mockedZone = Mockito.mock(nl.tudelft.bw4t.server.model.zone.Zone.class);
+    private nl.tudelft.bw4t.server.model.zone.Zone mockedOtherZone = Mockito.mock(nl.tudelft.bw4t.server.model.zone.Zone.class);
+    
     private Queue<NdPoint> mockedQueue = Mockito.mock(ConcurrentLinkedQueue.class);
     private BoundedMoveableObject mockedMovableObject = Mockito.mock(BoundedMoveableObject.class);
+    private Door mockedDoor = Mockito.mock(Door.class);
+    private Room mockedRoom = Mockito.mock(Room.class);
+    private Corridor mockedCorridor = Mockito.mock(Corridor.class);
     //private BW4TEnvironment mockedEnv = Mockito.mock(BW4TEnvironment.class);
     //private MoveType mockedMoveType = Mockito.mock(MoveType.class);
     
@@ -173,4 +181,40 @@ public class NavigatingRobotTest {
         bot.moveTo(1, 1);
     }
 */    
+    
+ /*   @Test
+    public void getMoveTypeTest() {
+        when(bot.getCurrentDoor(1, 1)).thenReturn(mockedDoor);
+        MoveType type = bot.getMoveType(1, 1);
+        assertEquals(MoveType.ENTERING_FREESPACE, type);
+    }
+*/
+    
+    @Test
+    public void checkZoneAccessTest() {
+        MoveType type = bot.checkZoneAccess(mockedZone, mockedZone, mockedDoor);
+        assertEquals(type, MoveType.SAME_AREA);
+        
+        type = bot.checkZoneAccess(mockedZone, mockedOtherZone, mockedDoor);
+        assertEquals(type, MoveType.ENTERING_FREESPACE);
+        
+        type = bot.checkZoneAccess(mockedZone, mockedRoom, mockedDoor);
+        assertEquals(type, MoveType.HIT_CLOSED_DOOR);
+        
+        type = bot.checkZoneAccess(mockedZone, mockedRoom, null);
+        assertEquals(type, MoveType.HIT_WALL);
+        
+        when(mockedRoom.containsMeOrNothing(bot)).thenReturn(true);
+        type = bot.checkZoneAccess(mockedZone, mockedRoom, mockedDoor);
+        assertEquals(type, MoveType.ENTERING_ROOM);
+        
+        type = bot.checkZoneAccess(mockedZone, mockedCorridor, mockedDoor);
+        assertEquals(type, MoveType.HIT_OCCUPIED_ZONE);
+        
+        when(mockedCorridor.containsMeOrNothing(bot)).thenReturn(true);
+        type = bot.checkZoneAccess(mockedZone, mockedCorridor, mockedDoor);
+        assertEquals(type, MoveType.ENTER_CORRIDOR);
+    }
+ 
+ 
 }
