@@ -124,6 +124,7 @@ public class NavigatingRobot extends AbstractRobot {
         }
         // and add the real target
         plannedMoves.add(p);
+        updateDrawPath();
         useNextTarget(); // make the bot use the new path.
     }
 
@@ -132,18 +133,21 @@ public class NavigatingRobot extends AbstractRobot {
      * erases the current target.
      */
     public void useNextTarget() {
-        path.setPath(new ArrayList(plannedMoves));
-
         currentMove = null;
         if (plannedMoves.isEmpty()) {
             // we're there.
             targetLocation = null;
+            updateDrawPath();
             return;
         }
 
         // we arrived at the inbetween target
         currentMove = plannedMoves.poll();
         super.setTargetLocation(currentMove);
+    }
+
+    private void updateDrawPath() {
+        path.setPath(new ArrayList(plannedMoves));
     }
 
     @Override
@@ -170,6 +174,7 @@ public class NavigatingRobot extends AbstractRobot {
         // and add the real target
         plannedMoves.add(target.getLocation());
         // make the bot use the new path.
+        updateDrawPath();
         useNextTarget();
     }
 
@@ -267,6 +272,7 @@ public class NavigatingRobot extends AbstractRobot {
             clearObstacles();
 
             // Let's roll.
+            updateDrawPath();
             useNextTarget();
         }
     }
@@ -277,9 +283,5 @@ public class NavigatingRobot extends AbstractRobot {
             zones.add((Zone) o);
         }
         return zones;
-    }
-
-    public List<NdPoint> getPath() {
-        return new ArrayList<NdPoint>(plannedMoves);
     }
 }
