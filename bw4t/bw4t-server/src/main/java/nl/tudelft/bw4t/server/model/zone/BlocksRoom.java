@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
+import repast.simphony.space.grid.Grid;
 
 /**
  * A room which might have block in it on initialization.
@@ -22,8 +23,8 @@ public class BlocksRoom extends Room {
      * @param context
      *            The context in which the room will be located.
      */
-    public BlocksRoom(ContinuousSpace<Object> space, Context<Object> context, nl.tudelft.bw4t.map.Zone roomzone) {
-        super(cycle[count % cycle.length], roomzone, space, context);
+    public BlocksRoom(ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context, nl.tudelft.bw4t.map.Zone roomzone) {
+        super(cycle[count % cycle.length], roomzone, space, grid, context);
         setCount(); 
     }
     

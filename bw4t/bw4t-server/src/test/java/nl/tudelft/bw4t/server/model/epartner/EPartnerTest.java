@@ -18,11 +18,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
+import repast.simphony.space.grid.Grid;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EPartnerTest {
 	
     @Mock private ContinuousSpace<Object> space;
+    @Mock private Grid<Object> grid;
     @Mock private Context<Object> context;
     @Mock private NdPoint point;
     
@@ -37,7 +39,7 @@ public class EPartnerTest {
      */ 
     @Test
     public void humanControlledRobotTest() {
-        IRobot r = new Human(new NavigatingRobot("", space, context, true, 0));
+        IRobot r = new Human(new NavigatingRobot("", space, grid, context, true, 0));
         assertFalse(r.isHoldingEPartner());
     }
     
@@ -46,8 +48,8 @@ public class EPartnerTest {
      */
     @Test
     public void nonHumanPickupEPartnerTest() {
-        AbstractRobot r = new NavigatingRobot("", space, context, true, 0);
-        EPartner e = new EPartner("", space, context);
+        AbstractRobot r = new NavigatingRobot("", space, grid, context, true, 0);
+        EPartner e = new EPartner("", space, grid, context);
         r.pickUpEPartner(e);
         assertFalse(r.isHoldingEPartner());
     }
@@ -57,8 +59,8 @@ public class EPartnerTest {
      */
     @Test
     public void humanPickupEPartnerTest() {
-        IRobot r = new Human(new NavigatingRobot("", space, context, true, 0));
-        EPartner e = new EPartner("", space, context);
+        IRobot r = new Human(new NavigatingRobot("", space, grid, context, true, 0));
+        EPartner e = new EPartner("", space, grid, context);
         r.pickUpEPartner(e);
         assertTrue(r.isHoldingEPartner());
     }

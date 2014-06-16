@@ -378,4 +378,12 @@ public interface IRobot {
      * @return the Robot
      */
     AbstractRobot getSuperParent();
+
+    /**
+     * Retrieve all obstacles in the path of the robot.
+     * @return
+     */
+    public List<BoundedMoveableObject> getObstacles();
+
+    public void clearObstacles();
 }

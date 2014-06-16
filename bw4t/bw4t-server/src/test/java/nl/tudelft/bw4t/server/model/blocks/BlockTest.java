@@ -17,6 +17,7 @@ import org.junit.*;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import repast.simphony.space.grid.Grid;
 
 import static org.junit.Assert.*;
 
@@ -27,6 +28,7 @@ import static org.junit.Assert.*;
 public class BlockTest {
 
     @Mock private ContinuousSpace<Object> space;
+    @Mock private Grid<Object> grid;
     @Mock private Context<Object> context;
     @Mock private AbstractRobot robot;
     
@@ -42,7 +44,7 @@ public class BlockTest {
         throws Exception {
         BlockColor colorId = BlockColor.BLUE;
         when(context.isEmpty()).thenReturn(true);
-        Block result = new Block(colorId, space, context);
+        Block result = new Block(colorId, space, grid, context);
 
         assertNotNull(result);
         assertEquals(new NdPoint(0, 0), result.getLocation());
@@ -61,7 +63,7 @@ public class BlockTest {
     @Test
     public void testGetColor_1()
         throws Exception {
-        Block fixture = new Block(BlockColor.BLUE, space, context);
+        Block fixture = new Block(BlockColor.BLUE, space, grid, context);
 
         Color result = fixture.getColor();
 
@@ -85,7 +87,7 @@ public class BlockTest {
     @Test
     public void testGetColorId_1()
         throws Exception {
-        Block fixture = new Block(BlockColor.BLUE, space, context);
+        Block fixture = new Block(BlockColor.BLUE, space, grid, context);
 
         BlockColor result = fixture.getColorId();
 
@@ -95,7 +97,6 @@ public class BlockTest {
         assertEquals(new Character('B'), result.getLetter());
         assertEquals("BLUE", result.name());
         assertEquals("BLUE", result.toString());
-        assertEquals(0, result.ordinal());
     }
 
     /**
@@ -108,7 +109,7 @@ public class BlockTest {
     @Test
     public void testGetHeldBy_1()
         throws Exception {
-        Block fixture = new Block(BlockColor.BLUE, space, context);
+        Block fixture = new Block(BlockColor.BLUE, space, grid, context);
         fixture.setHeldBy(robot);
 
         AbstractRobot result = fixture.getHeldBy();
@@ -128,7 +129,7 @@ public class BlockTest {
     @Test
     public void testGetLocation_1()
         throws Exception {
-        Block fixture = new Block(BlockColor.BLUE, space, context);
+        Block fixture = new Block(BlockColor.BLUE, space, grid, context);
         fixture.setHeldBy(robot);
 
         NdPoint result = fixture.getLocation();
@@ -148,7 +149,7 @@ public class BlockTest {
     @Test
     public void testGetLocation_2()
         throws Exception {
-        Block fixture = new Block(BlockColor.BLUE, space, context);
+        Block fixture = new Block(BlockColor.BLUE, space, grid, context);
         fixture.setHeldBy((AbstractRobot) null);
 
         NdPoint result = fixture.getLocation();
@@ -169,7 +170,7 @@ public class BlockTest {
     @Test
     public void testIsFree_1()
         throws Exception {
-        Block fixture = new Block(BlockColor.BLUE, space, context);
+        Block fixture = new Block(BlockColor.BLUE, space, grid, context);
         fixture.setHeldBy((AbstractRobot) null);
 
         boolean result = fixture.isFree();
@@ -188,7 +189,7 @@ public class BlockTest {
     @Test
     public void testIsFree_2()
         throws Exception {
-        Block fixture = new Block(BlockColor.BLUE, space, context);
+        Block fixture = new Block(BlockColor.BLUE, space, grid, context);
         fixture.setHeldBy(robot);
 
         boolean result = fixture.isFree();
@@ -207,7 +208,7 @@ public class BlockTest {
     @Test
     public void testSetHeldBy_1()
         throws Exception {
-        Block fixture = new Block(BlockColor.BLUE, space, context);
+        Block fixture = new Block(BlockColor.BLUE, space, grid, context);
         
         assertNull(fixture.getHeldBy());
         fixture.setHeldBy(robot);

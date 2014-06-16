@@ -8,9 +8,12 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.List;
+import java.util.ListIterator;
 
 import javax.swing.JPanel;
 
+import nl.tudelft.bw4t.map.Path;
 import org.apache.log4j.Logger;
 
 import nl.tudelft.bw4t.map.BlockColor;
@@ -20,6 +23,7 @@ import nl.tudelft.bw4t.map.Zone.Type;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
+import repast.simphony.space.continuous.NdPoint;
 
 public class MapRenderer extends JPanel implements MapRendererInterface {
 	
@@ -82,6 +86,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
         drawEntity(g2d);
         drawSequence(g2d);
         drawEPartners(g2d);
+        drawPaths(g2d);
     }
 
     /**
@@ -140,7 +145,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 
         for (Zone chargingzone : getController().getChargingZones()) {
             // paint the charging zone in transparent green
-            g2d.setColor(new Color(0f, 0.5f, 0f, 0.6f));
+            g2d.setColor(Zone.CHARGING_ZONE_COLOR);
             Shape roomDisplayCoordinates = set.transformRectangle(chargingzone.getBoundingbox().getRectangle());
             g2d.fill(roomDisplayCoordinates);
         }
@@ -150,8 +155,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
         MapRenderSettings set = getController().getRenderSettings();
 
         for (Zone blockade : getController().getBlockades()) {
-            // paint the charging zone in transparent green
-            g2d.setColor(new Color(0.6f, 0f, 0f, 0.6f));
+            // paint the blockades in transparent green
+            g2d.setColor(Zone.BLOCKADE_COLOR);
             Shape roomDisplayCoordinates = set.transformRectangle(blockade.getBoundingbox().getRectangle());
             g2d.fill(roomDisplayCoordinates);
             g2d.setColor(Color.BLACK);
@@ -271,5 +276,30 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
             g2d.setColor(Color.BLACK);
             g2d.drawPolygon(xpoints, ypoints, 3);;
     	}
+    }
+
+    public void drawPaths(Graphics2D g2d) {
+        MapRenderSettings set = getController().getRenderSettings();
+
+        g2d.setColor(Color.PINK);
+        for(Path p : controller.getPaths()) {
+            ListIterator<NdPoint> path = p.getPath().listIterator();
+
+            while(path.hasNext()) {
+                NdPoint point = path.next();
+                int x  = (int) set.scale(point.getX());
+                int y = (int) set.scale(point.getY());
+                g2d.drawOval(x, y, 1, 1);
+
+                if(path.hasPrevious()) {
+                    NdPoint prev = path.previous();
+                    int px  = (int) set.scale(prev.getX());
+                    int py = (int) set.scale(prev.getY());
+
+                    g2d.drawLine(px, py, x, y);
+                }
+
+            }
+        }
     }
 }
