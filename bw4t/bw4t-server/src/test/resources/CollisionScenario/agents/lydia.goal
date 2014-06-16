@@ -1,0 +1,29 @@
+init module { 
+	goals{
+		location(20.0, 65.0) .	
+	}
+	program{
+		forall bel( percept(state(State)) ) do insert( state(State) ).
+		forall bel( percept(location(X, Y)) ) do insert( location(X, Y)).
+	}
+	actionspec{
+		goTo(X, Y) {
+			pre { not(state(traveling)) }
+			post { true }	
+		}
+	}
+}
+
+main module{
+	program{
+	    if goal-a(location(X, Y)) then drop(location(X, Y)) .
+		if a-goal(location(X, Y)) then goTo(X, Y) .
+	}                                        
+}
+
+event module {
+	program{
+		if bel( state(State), percept(state(NewState)) ) then delete( state(State) ) + insert( state(NewState) ) .
+		if bel( location(X, Y), percept(location(NewX, NewY))) then delete( location(X, Y)) + insert(location(NewX, NewY)) .
+	}
+}
