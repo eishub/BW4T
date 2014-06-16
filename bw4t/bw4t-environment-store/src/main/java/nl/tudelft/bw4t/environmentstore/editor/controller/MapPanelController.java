@@ -659,12 +659,8 @@ public class MapPanelController implements ChangeListener {
 
 	}
 
-	public void randomizeColorsInRooms() {
-		Random random = new Random();
-		ArrayList<BlockColor> colors = new ArrayList<BlockColor>();
-		colors.addAll(BlockColor.getAvailableColors());
+	public void randomizeColorsInRooms(ArrayList<BlockColor> colors, int amount) {
 		for (ZoneController zc : rooms) {
-			int amount = random.nextInt(9) + 1;
 			zc.randomizeColors(amount, colors);
 		}
 	}

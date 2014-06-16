@@ -174,6 +174,7 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
     public void randomizeColors(int amount, List<BlockColor> validcolors) {
     	Random random = new Random();
 		ArrayList<BlockColor> colors = new ArrayList<BlockColor>();
+		amount = random.nextInt(amount);
     	for(int i = 0; i <  amount; i++) {
     		colors.add(validcolors.get(random.nextInt(validcolors.size())));
     	}
