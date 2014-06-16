@@ -187,7 +187,7 @@ public class MapPanelController implements ChangeListener {
         for (int row = 0; row < getRows(); row++) {
             for (int col = 0; col < getColumns(); col++) {
                 final ZoneModel zone = getModel().getZone(row, col);
-                if (row < original.length && col < original[row].length) {
+                if (original != null && row < original.length && col < original[row].length) {
                     final ZoneController zoneController = original[row][col];
                     zoneController.setZoneModel(zone);
                     zonecontrollers[row][col] = zoneController;
