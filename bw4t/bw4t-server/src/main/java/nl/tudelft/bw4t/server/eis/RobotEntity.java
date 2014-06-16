@@ -657,16 +657,6 @@ public class RobotEntity implements RobotEntityInt {
         return bumpedList;
     }
 
-    @AsPercept(name = "currentPath", filter = Type.ALWAYS)
-    public List<NdPoint> getPath() {
-        List<NdPoint> points = new ArrayList<NdPoint>();
-        if(ourRobot instanceof NavigatingRobot) {
-            NavigatingRobot bot = (NavigatingRobot) ourRobot;
-            points = bot.getPath();
-        }
-        return points;
-    }
-
     /**
      * Find the closest {@link BoundedMoveableObject} that can be picked up by the Robot.
      * @param type the type of {@link BoundedMoveableObject} we are looking for 
