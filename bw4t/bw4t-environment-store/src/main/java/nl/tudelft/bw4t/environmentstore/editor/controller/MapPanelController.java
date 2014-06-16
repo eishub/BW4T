@@ -262,6 +262,7 @@ public class MapPanelController implements ChangeListener {
 			double y = centery + YDISP * yoffset;
 			map.addEntity(new Entity("Bot" + n, new Point(x, y)));
 		}
+		
 
 	}
 
@@ -282,12 +283,9 @@ public class MapPanelController implements ChangeListener {
 		// set the general fields of the map
 		map.setArea(new Point(mapwidth, mapheight));
 		map.setSequence(sequence);
-
-		// generate zones for each row:
-		// write room zones with their doors. and the zone in frront
-		// also generate the lefthall and righthall for each row.
-		// connect room and corridor in front of it.
-		// connect all corridor with each other and with left and right hall.
+		
+		//Check for dropzones/startzones
+		//For each zonemodel, add the corresponding Zone
 		boolean foundDropzone = false;
 		boolean foundStartzone = false;
 		Zone[][] output = new Zone[getRows()][getColumns()];
@@ -333,7 +331,7 @@ public class MapPanelController implements ChangeListener {
 					}
 				}
 				if (room.isStartZone()) {
-					addEntities(map, x + ROOMWIDTH / 2, y + ROOMHEIGHT / 2);
+					addEntities(map, x, y);
 				}
 				map.addZone(output[row][col]);
 
@@ -383,8 +381,6 @@ public class MapPanelController implements ChangeListener {
 					* zonecontrollers[0].length / 3);
 		}
 
-		// addEntities(map, dropzonex, dropzoney - ROOMHEIGHT / 2 -
-		// CORRIDORHEIGHT / 2);
 
 		// generate zones for each row:
 		// write room zones with their doors. and the zone in frront
@@ -485,14 +481,11 @@ public class MapPanelController implements ChangeListener {
 	private void connectRoom(Zone[][] zones, int row, int col) {
 		if (zones[row][col].hasEast()) {
 			connectEast(zones, row, col);
-		}
-		if (zones[row][col].hasNorth()) {
+		} else if (zones[row][col].hasNorth()) {
 			connectNorth(zones, row, col);
-		}
-		if (zones[row][col].hasWest()) {
+		} else if (zones[row][col].hasWest()) {
 			connectWest(zones, row, col);
-		}
-		if (zones[row][col].hasSouth()) {
+		} else if (zones[row][col].hasSouth()) {
 			connectSouth(zones, row, col);
 		}
 	}
