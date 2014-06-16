@@ -23,8 +23,9 @@ public class ComboAgentModel extends AbstractListModel implements ComboBoxModel 
     }
 
     @Override
-    public Object getElementAt(int agentIndex) {
-        if (showAgent(agentIndex))
+    public Object getElementAt(int listIndex) {
+        int agentIndex = listIndexToAgentIndex(listIndex);
+        if (agentIndex >= 0 && showAgent(agentIndex))
             return gui.environment.getAgents().get(agentIndex);
         return null;
     }
@@ -50,6 +51,22 @@ public class ComboAgentModel extends AbstractListModel implements ComboBoxModel 
             e.printStackTrace();
         }
         return false;
+    }
+    
+    /**
+     * Gets the agent index in the environment's agent list from the supplied
+     * agent index in the list.
+     * @param listIndex The index of the agent in the list.
+     * @return The agent index, -1 if the agent was not in the list.
+     */
+    private int listIndexToAgentIndex(int listIndex) {
+        int currentListIndex = 0;
+        for (int agentIndex = 0; agentIndex < gui.environment.getAgents().size(); agentIndex++) {
+            if (showAgent(agentIndex) && currentListIndex++ >= listIndex) {
+                return agentIndex;
+            }
+        }
+        return -1;
     }
 
     @Override
