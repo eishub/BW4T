@@ -26,6 +26,8 @@ public class ViewEntity {
     private int robotsize = 2;
     
     private long holdingEpartner = -1;
+    
+    private boolean collided = false;
 
     public ViewEntity(){
         location = new Point2D.Double();
@@ -103,5 +105,13 @@ public class ViewEntity {
 
     public void setHoldingEpartner(long holdingEpartner) {
         this.holdingEpartner = holdingEpartner;
+    }
+
+    public boolean isCollided() {
+        return collided;
+    }
+
+    public void setCollided(boolean collided) {
+        this.collided = collided;
     }
 }
