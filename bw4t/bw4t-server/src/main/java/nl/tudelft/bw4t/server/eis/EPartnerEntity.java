@@ -125,7 +125,19 @@ public class EPartnerEntity implements RobotEntityInt {
         return -1;
     }
     
-
+    /**
+     * Percept if the epartner is taken, so other bots won't pick it up if a bot has forgot it.
+     * @return The epartner id
+     * @throws PerceiveException
+     */
+    @AsPercept(name = "isTaken", multiplePercepts = false, filter = Filter.Type.ON_CHANGE_NEG)
+    public long isTaken() throws PerceiveException {
+        if (ourEPartner.getTypeList().contains("Forget-me-not") && ourEPartner.getHolder() != null) {
+            return ourEPartner.getId();
+        }
+        return -1;
+    }
+    
     /**
      * Percept for navpoints the robot is at. Send on change. If robot is in a {@link Zone}, that zone name is returned.
      * If not, the nearest {@link Corridor} name is returned.
