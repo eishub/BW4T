@@ -7,7 +7,7 @@ import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
 import nl.tudelft.bw4t.environmentstore.sizedialog.view.SizeDialog;
 
-public class EditExistingMapButtonListener implements ActionListener {
+public class StartButtonListener implements ActionListener {
 
 	private SizeDialog view;
 
@@ -18,7 +18,7 @@ public class EditExistingMapButtonListener implements ActionListener {
 	 *            The frame with the button in it.
 	 */
 	
-	public EditExistingMapButtonListener(SizeDialog pview) {
+	public StartButtonListener(SizeDialog pview) {
 		this.view = pview;
 	}
 
@@ -29,13 +29,9 @@ public class EditExistingMapButtonListener implements ActionListener {
 	 *            The action event triggering this method.
 	 */
 	public void actionPerformed(ActionEvent ae) {
-		//TODO uncomment this (and delete the other MapPanelController) when openFile() works
-		//SizeDialogController sdc = view.getSizeDialogController();
-		//MapPanelController mc = sdc.openFile();
-		
-		MapPanelController mc = new MapPanelController(view.getRows(),
-    			view.getColumns());
-		
+
+		MapPanelController mc = new MapPanelController(view.getRows(), view.getColumns());
+
 		EnvironmentStore es = new EnvironmentStore(mc);
     	es.setVisible(true);
     	view.setVisible(false);

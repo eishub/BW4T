@@ -3,8 +3,10 @@ package nl.tudelft.bw4t.environmentstore.editor.menu.controller;
 import java.awt.event.ActionEvent;
 
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
+import nl.tudelft.bw4t.environmentstore.editor.controller.ZoneController;
 import nl.tudelft.bw4t.environmentstore.editor.menu.view.MenuBar;
 import nl.tudelft.bw4t.environmentstore.editor.model.RandomMapCreator;
+import nl.tudelft.bw4t.environmentstore.editor.model.ZoneModel;
 import nl.tudelft.bw4t.environmentstore.main.controller.EnvironmentStoreController;
 
 public class MenuOptionRandomizeRooms extends AbstractMenuOption {
@@ -22,8 +24,20 @@ public class MenuOptionRandomizeRooms extends AbstractMenuOption {
     public void actionPerformed(final ActionEvent e) {
     	MapPanelController mpc = super.getMapController();
     	
-    	RandomMapCreator rmc = new RandomMapCreator();
-        rmc.createRandomGrid(5, 5, 3);
+    	int rows = mpc.getZoneControllers().length;
+    	int cols = mpc.getZoneControllers()[0].length;
+    	int maxRooms = RandomMapCreator.maxRoomsPossible(rows, cols);
+    	
+        ZoneModel[][] model = RandomMapCreator.createRandomGrid(rows, cols, maxRooms);
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+            	// TODO rooms are not set in the list in mapPanelController. Should be refactored.
+            	mpc.getZoneController(i, j).setZoneModel(model[i][j]);
+            	mpc.getZoneController(i, j).getUpdateableEditorInterface().update();
+            }
+        }
+        
     }
 
 }

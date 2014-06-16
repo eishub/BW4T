@@ -1,7 +1,7 @@
 package nl.tudelft.bw4t.environmentstore.editor.view;
 
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
+import javax.swing.JRadioButtonMenuItem;
 
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.model.ZoneModel;
@@ -11,7 +11,7 @@ public class RoomMenu extends ZoneMenu {
 	private static final long serialVersionUID = 5919212594524584613L;
 	
 	private JMenu doorSide;
-    private JCheckBoxMenuItem north, east, south, west;
+    private JRadioButtonMenuItem north, east, south, west;
 
 	public RoomMenu(MapPanelController mpc) {
 		super(mpc);
@@ -21,16 +21,16 @@ public class RoomMenu extends ZoneMenu {
 	    add(doorSide);
 
 	    // Add all MenuItems for Door Side
-	    north = new JCheckBoxMenuItem("North");
+	    north = new JRadioButtonMenuItem("North");
 	    doorSide.add(north);
 
-	    east = new JCheckBoxMenuItem("East");
+	    east = new JRadioButtonMenuItem("East");
 	    doorSide.add(east);
 
-	    south = new JCheckBoxMenuItem("South");
+	    south = new JRadioButtonMenuItem("South");
 	    doorSide.add(south);
 
-	    west = new JCheckBoxMenuItem("West");
+	    west = new JRadioButtonMenuItem("West");
 	    doorSide.add(west);
 	    
 	    update();
@@ -42,7 +42,7 @@ public class RoomMenu extends ZoneMenu {
      * 
      * @return The JMenuItem to change an zone to a dropZone.
      */
-    public final JCheckBoxMenuItem getMenuItemDoorSideNorth() {
+    public final JRadioButtonMenuItem getMenuItemDoorSideNorth() {
         return north;
     }
 
@@ -51,7 +51,7 @@ public class RoomMenu extends ZoneMenu {
      * 
      * @return The JMenuItem to change an zone to a dropZone.
      */
-    public final JCheckBoxMenuItem getMenuItemDoorSideEast() {
+    public final JRadioButtonMenuItem getMenuItemDoorSideEast() {
         return east;
     }
 
@@ -60,7 +60,7 @@ public class RoomMenu extends ZoneMenu {
      * 
      * @return The JMenuItem to change an zone to a dropZone.
      */
-    public final JCheckBoxMenuItem getMenuItemDoorSideSouth() {
+    public final JRadioButtonMenuItem getMenuItemDoorSideSouth() {
         return south;
     }
 
@@ -69,15 +69,15 @@ public class RoomMenu extends ZoneMenu {
      * 
      * @return The JMenuItem to change an zone to a dropZone.
      */
-    public final JCheckBoxMenuItem getMenuItemDoorSideWest() {
+    public final JRadioButtonMenuItem getMenuItemDoorSideWest() {
         return west;
     }
     
     @Override
     public void update() {
     	super.update();
-    	
-        north.setSelected(zone.hasDoor(ZoneModel.NORTH));
+
+    	north.setSelected(zone.hasDoor(ZoneModel.NORTH));
         east.setSelected(zone.hasDoor(ZoneModel.EAST));
         south.setSelected(zone.hasDoor(ZoneModel.SOUTH));
         west.setSelected(zone.hasDoor(ZoneModel.WEST));

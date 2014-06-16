@@ -5,6 +5,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JOptionPane;
 
+import nl.tudelft.bw4t.environmentstore.editor.menu.controller.AbstractMenuOption;
 import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
 
 class WindowExit extends WindowAdapter {
@@ -16,7 +17,7 @@ class WindowExit extends WindowAdapter {
 	}
 	
     @Override
-    public void windowClosing(WindowEvent e) {
+    public void windowClosing(WindowEvent e) {	
     	boolean doQuit = view.getEnvironmentStoreController().promptUserToQuit();
     	
     	if(doQuit) {

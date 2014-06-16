@@ -182,7 +182,6 @@ public class MapPanelController implements ChangeListener {
 	 *             if no dropZone or no startZone is found.
 	 */
 	public NewMap createRandomMap(int roomCount) throws MapFormatException {
-		NewMap map = new NewMap();
 		ZoneModel[][] models = RandomMapCreator.createRandomGrid(
 				zonecontrollers.length, zonecontrollers[0].length, roomCount);
 		for (int i = 0; i < zonecontrollers.length; i++) {

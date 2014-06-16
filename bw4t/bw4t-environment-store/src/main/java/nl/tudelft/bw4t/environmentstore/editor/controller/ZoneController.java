@@ -3,9 +3,7 @@ package nl.tudelft.bw4t.environmentstore.editor.controller;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
