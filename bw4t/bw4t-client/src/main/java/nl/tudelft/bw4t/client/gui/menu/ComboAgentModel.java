@@ -1,15 +1,10 @@
 package nl.tudelft.bw4t.client.gui.menu;
 
-import java.util.Collection;
-
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
 import eis.exceptions.EntityException;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
-import nl.tudelft.bw4t.network.BW4TServerHiddenActions;
-import nl.tudelft.bw4t.network.BW4TServerActions;
-import nl.tudelft.bw4t.server.BW4TServer;
 
 public class ComboAgentModel extends AbstractListModel implements ComboBoxModel {
 
