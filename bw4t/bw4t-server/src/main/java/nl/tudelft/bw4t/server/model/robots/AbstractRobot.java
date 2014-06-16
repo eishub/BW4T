@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.server.model.robots;
 
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -24,12 +25,16 @@ import org.apache.log4j.Logger;
 
 import repast.simphony.context.Context;
 import repast.simphony.engine.schedule.ScheduledMethod;
+import repast.simphony.query.space.grid.GridCell;
+import repast.simphony.query.space.grid.GridCellNgh;
 import repast.simphony.random.RandomHelper;
 import repast.simphony.space.SpatialException;
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import eis.exceptions.EntityException;
+import repast.simphony.space.grid.Grid;
+import repast.simphony.space.grid.GridPoint;
 
 /**
  * Represents a robot in the BW4T environment.
@@ -103,6 +108,11 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     private IRobot topMostHandicap = this;
 
     /**
+     * Obstacles on the path of the robot
+     */
+    List<BoundedMoveableObject> obstacles = new ArrayList<BoundedMoveableObject>();
+
+    /**
      * Creates a new robot.
      * 
      * @param pname
@@ -116,8 +126,8 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
      * @param cap
      *            The holding capacity of the robot.
      */
-    public AbstractRobot(String pname, ContinuousSpace<Object> space, Context<Object> context, boolean poneBotPerZone, int cap) {
-        super(space, context);
+    public AbstractRobot(String pname, ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context, boolean poneBotPerZone, int cap) {
+        super(space, grid, context);
 
         this.name = pname;
         this.oneBotPerZone = poneBotPerZone;
@@ -136,7 +146,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         this.handicapsList = new ArrayList<String>();
         this.agentRecord = new AgentRecord(name);
     }
-
 	public void setTopMostHandicap(IRobot topMostHandicap) {
 		this.topMostHandicap = topMostHandicap;
 	}
@@ -382,7 +391,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
             getBattery().recharge();
         }
     	if (battery.getCurrentCapacity() > 0) {
-		    if (targetLocation != null) {
+		    if (targetLocation != null && obstacles.size() == 0) {
 		        // Calculate the distance that the robot is allowed to move.
 		        double distance = distanceTo(targetLocation);
 		        if (distance < MIN_MOVE_DISTANCE) {
@@ -399,7 +408,10 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		            double[] displacement = SpatialMath.getDisplacement(2, 0, movingDistance, angle);
 		
 		            try {
-		                // Move the robot to the new position using the displacement
+                        NdPoint destination = new NdPoint(getLocation().getX() + displacement[0], getLocation().getY() + displacement[1]);
+                        checkIfDestinationVacant(destination);
+
+                        // Move the robot to the new position using the displacement
 		                moveByDisplacement(displacement[0], displacement[1]);
 		                agentRecord.setStartedMoving();
 		
@@ -414,16 +426,73 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		                	topMostHandicap.getEPartner().moveTo(location.getX() + 1, location.getY() + 1);
 		                }
 		            } catch (SpatialException e) {
+                        LOGGER.debug("Spatial Exception");
 		                collided = true;
 		                LOGGER.log(BotLog.BOTLOG, "Bot " + this.name + " collided.");
 		                stopRobot();
-		            }
+		            } catch(DestinationOccupiedException e) {
+                        LOGGER.debug("Collision!");
+                        collided = true;
+                        obstacles.add(e.getTileOccupiedBy());
+                        stopRobot();
+                    }
 		        }
 		    }
     	} else {
     	    LOGGER.log(BotLog.BOTLOG, "Bot " + this.name + " could not move because of empty battery.");
     		stopRobot();
     	}
+    }
+
+    /**
+     * Check if the destination location is vacant, if not throw an exception.
+     * Only relevant if collisions are enabled.
+     * @param destination
+     * @throws DestinationOccupiedException
+     */
+    private void checkIfDestinationVacant(NdPoint destination) throws DestinationOccupiedException {
+        if(BW4TEnvironment.getInstance().isCollisionEnabled()) {
+            Rectangle2D.Double box = getBoundingBoxCenteredAt(destination);
+            for(GridCell<AbstractRobot> cell : getNeighbours()) {
+                for(AbstractRobot bot : cell.items()) {
+                    if(this != bot) {
+                        if(box.intersects(bot.getBoundingBox())) {
+                                throw new DestinationOccupiedException("Grid [" + destination.getX() + "," + destination.getY()
+                                        + "] is occupied by " + bot, bot);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Function that creates a rectangle the same size as the bot centered
+     * at the destination locations.
+     * @param destination The destination its centered at.
+     * @return
+     */
+    private Rectangle2D.Double getBoundingBoxCenteredAt(NdPoint destination) {
+        Rectangle2D.Double box = new Rectangle2D.Double();
+        box.x = destination.getX();
+        box.y = destination.getY();
+        box.width = getSize();
+        box.height = getSize();
+        return box;
+    }
+
+    /**
+     * Retrieve all neighbouring robots.
+     * @return
+     */
+    private List<GridCell<AbstractRobot>> getNeighbours() {
+        Grid<Object> grid = getGrid();
+        GridPoint location = getGridLocation();
+
+        // Check one block further than your own size for other bots.
+        GridCellNgh<AbstractRobot> nghCreator = new GridCellNgh<AbstractRobot>(grid, location, AbstractRobot.class, getSize() + 1, getSize() + 1);
+        List<GridCell<AbstractRobot>> gridCells = nghCreator.getNeighborhood(true);
+        return gridCells;
     }
 
 
@@ -576,4 +645,16 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	public AbstractRobot getSuperParent() {
 	    return this;
 	}
+
+    public void addObstacle(BoundedMoveableObject obstacle) {
+        obstacles.add(obstacle);
+    }
+
+    public List<BoundedMoveableObject> getObstacles() {
+        return obstacles;
+    }
+
+    public void clearObstacles() {
+        obstacles.clear();
+    }
 }

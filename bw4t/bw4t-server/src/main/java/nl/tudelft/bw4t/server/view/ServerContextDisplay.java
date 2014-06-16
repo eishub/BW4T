@@ -3,6 +3,8 @@ package nl.tudelft.bw4t.server.view;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
@@ -13,6 +15,7 @@ import java.util.TimerTask;
 import java.util.Vector;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -42,10 +45,10 @@ import eis.iilang.Parameter;
 /**
  * Used for directly displaying the simulation from the context, unlike BW4TRenderer does not use percepts and can show
  * all entities. Only used on the server side (BW4TEnvironment side).
- * <p>
+ * <p/>
  * Note, this renderer is largely independent of repast, so even though Repast has its own rendering tools we don't use
  * that.
- * <p>
+ * <p/>
  * Also note that this is a runnable and runs in its own thread with a refresh rate of 10Hz, started by
  * {@link BW4TBuilder}, see {@link #run()}.
  */
@@ -62,9 +65,8 @@ public class ServerContextDisplay extends JFrame {
 
     /**
      * Create a new instance of this class and initialize it
-     * 
-     * @param context
-     *            the central data model of Repast
+     *
+     * @param context the central data model of Repast
      * @throws IllegalAccessException
      * @throws InstantiationException
      * @throws FileNotFoundException
@@ -123,9 +125,10 @@ class ControlPanel extends JPanel {
 
     private final JSlider slider;
 
+    private final JCheckBox collisionCheckbox;
+
     /**
-     * @param disp
-     *            is used to close the window when user presses reset.
+     * @param disp is used to close the window when user presses reset.
      * @throws FileNotFoundException
      */
     public ControlPanel(ServerContextDisplay disp) throws FileNotFoundException {
@@ -140,6 +143,16 @@ class ControlPanel extends JPanel {
         add(slider, BorderLayout.CENTER);
         add(resetbutton, BorderLayout.EAST);
         add(new MapSelector(displayer), BorderLayout.NORTH);
+
+        collisionCheckbox = new JCheckBox("Enable Collisions", BW4TEnvironment.getInstance().isCollisionEnabled());
+        add(collisionCheckbox, BorderLayout.SOUTH);
+
+        collisionCheckbox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                BW4TEnvironment.getInstance().setCollisionEnabled(e.getStateChange() == ItemEvent.SELECTED);
+            }
+        });
 
         slider.addChangeListener(new ChangeListener() {
 
@@ -205,7 +218,7 @@ class ControlPanel extends JPanel {
 
 /**
  * This combo box allows user to select a new map. Doing that will reset the server and reload the new map.
- * <p>
+ * <p/>
  * We assume that a directory named "Maps" is available in the current directory, and that it only contains maps.
  */
 @SuppressWarnings("serial")
@@ -244,7 +257,7 @@ class MapSelector extends JPanel {
 
     /**
      * get list of available map names.
-     * 
+     *
      * @return vector with all available map names in the Maps directory.
      * @throws FileNotFoundException
      */

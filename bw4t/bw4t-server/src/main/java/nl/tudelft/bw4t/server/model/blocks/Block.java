@@ -9,6 +9,7 @@ import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
+import repast.simphony.space.grid.Grid;
 
 /**
  * Represents a block in the environment that can be picked up by a {@link AbstractRobot}.
@@ -32,8 +33,8 @@ public class Block extends BoundedMoveableObject {
      * @param context
      *            The context in which the block will be present.
      */
-    public Block(BlockColor colorId, ContinuousSpace<Object> space, Context<Object> context) {
-        super(space, context);
+    public Block(BlockColor colorId, ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context) {
+        super(space, grid, context);
         this.colorId = colorId;
         this.color = colorId.getColor();
         setSize(SIZE, SIZE);
