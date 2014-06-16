@@ -23,39 +23,42 @@ public class ComboAgentModel extends AbstractListModel implements ComboBoxModel 
     }
 
     @Override
-    public Object getElementAt(int arg0) {
-   /*     List<String> bots = new ArrayList<String>();
-        Collection<String> entities = server.getEntities();
-        for(Iterator<String> iterator = entities.iterator(); iterator.hasNext();) {
-            String entity = iterator.next();
-            
-            if(getType(entity).toString().equals("Epartner")) {
-                continue;
-            } else {
-                bots = bots.add(entity);
-            }
-        }
-        
-        return bots.get(arg0);*/
+    public Object getElementAt(int agentIndex) {
+        if (showAgent(agentIndex))
+            return gui.environment.getAgents().get(agentIndex);
+        return null;
+    }
+    
+    /**
+     * Returns whether this agent is not an e-partner and is not our
+     * own agent, and thus can be shown in the list.
+     * @param agentIndex The index of the agent in the environment.
+     * @return Whether this agent should be shown.
+     */
+    private boolean showAgent(int agentIndex) {
+        String name = gui.environment.getAgents().get(agentIndex);
+        boolean ourBot = gui.getController().getMapController().getTheBot().getName().equals(name);
+        if (ourBot || name == null)
+            return false;
         try {
-            if(gui.environment.getType(gui.environment.getAgents().get(arg0)).equals("epartner")) {
-                return null;
+            if (gui.environment.getType(gui.environment.getAgents().get(agentIndex)).equals("epartner")) {
+                return false;
             } else {
-                return gui.environment.getAgents().get(arg0);
+                return true;
             }
         } catch (EntityException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
-        return null;
-        
-        //return gui.environment.getAgents().get(arg0);
+        return false;
     }
 
     @Override
     public int getSize() {
-        return gui.environment.getAgents().size();
+        int size = 0;
+        for (int i = 0; i < gui.environment.getAgents().size(); i++)
+            if (showAgent(i))
+                size++;
+        return size;
     }
 
     @Override

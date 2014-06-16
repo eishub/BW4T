@@ -120,7 +120,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
     IOException, RelationException {
         agentCount = environment.getAgents().size();
         if ("human".equals(environment.getType(entityId))) {
-            HumanAgent agent = new HumanAgent("Agent" + agentCount, environment);
+            HumanAgent agent = new HumanAgent(entityId, environment);
             agent.registerEntity(entityId);
             environment.registerAgent(agent.getAgentId());
             environment.associateEntity(agent.getAgentId(), entityId);
