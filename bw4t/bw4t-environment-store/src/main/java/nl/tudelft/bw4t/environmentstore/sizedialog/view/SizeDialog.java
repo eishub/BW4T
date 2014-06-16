@@ -1,23 +1,13 @@
 package nl.tudelft.bw4t.environmentstore.sizedialog.view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
-import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.sizedialog.controller.SizeDialogController;
 
-import javax.swing.JLayeredPane;
-import javax.swing.JSplitPane;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JTextField;
 import javax.swing.JLabel;
-import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
@@ -122,7 +112,7 @@ public class SizeDialog extends JFrame {
 	    
 	    SpinnerModel entitymodel = new SpinnerNumberModel(1, // initial value
 	            1, // min
-	            Integer.MAX_VALUE, // max
+	            4, // max (because there is going to be 1 startzone with a maximum of 4 spawning points)
 	            1); // step
 	    entities = new JSpinner(entitymodel);
 	    rightPanel.add(entities, "cell 1 2");
