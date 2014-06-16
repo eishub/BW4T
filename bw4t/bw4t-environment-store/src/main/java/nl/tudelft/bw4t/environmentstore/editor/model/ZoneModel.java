@@ -32,18 +32,12 @@ public class ZoneModel {
 	
 	private String coordiname = "";
 	
-	private int row;
-	private int column;
-	
 	public ZoneModel() {
 		setDoor(NORTH, true);
 	}
 	
 	public ZoneModel(Zone zone) {
 		this.type = zone.getType();
-
-		this.row = getRow(zone);
-		this.column = getColumn(zone);
 
 		this.colors = zone.getBlocks();
 
@@ -147,21 +141,13 @@ public class ZoneModel {
 		isStartZone = isSZ;
 	}
 	
-	public int getRow() {
-		return row;
-	}
-	
-	public int getColumn() {
-		return column;
-	}
-	
 	/**
 	 * @param zone
 	 *            The current zone.
 	 * @return
 	 *        The row the zone belongs to. 
 	 */
-	private int getRow(Zone zone) {
+	public static int calcRow(Zone zone) {
 		double height = MapConverter.ROOMHEIGHT;
 		double y = zone.getBoundingbox().getY();
 
@@ -174,7 +160,7 @@ public class ZoneModel {
 	 * @return
 	 *        The column the zone belongs to. 
 	 */
-	private int getColumn(Zone zone) {
+	public static int calcColumn(Zone zone) {
 		double width = MapConverter.ROOMWIDTH;
 		double x = zone.getBoundingbox().getX();
 
@@ -204,6 +190,20 @@ public class ZoneModel {
             colors.add(validcolors.get(random.nextInt(numColors)));
         }
         setColors(colors);
+    }
+
+    public void generateNameFromPosition(int row, int col) {
+        StringBuilder sb = new StringBuilder();
+        
+        while(col >= 26) {
+            sb.append((char)('A' + (col % 26)));
+            col = col / 26 - 1;
+        }
+        sb.append((char)('A' + col));
+        sb.reverse();
+        
+        sb.append(row + 1);
+        setName(sb.toString());
     }
 }
 

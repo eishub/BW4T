@@ -16,9 +16,6 @@ import nl.tudelft.bw4t.map.Zone.Type;
  * This contains the room information: the blocks that the room contains.
  */
 public class ZoneController extends MouseAdapter implements ChangeListener {
-
-    /** should match the position in the map table */
-    private int row, column;
     
     private ZoneModel model;
     
@@ -32,25 +29,10 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
      * @param c columns
      * @param m Zone model
      */
-    public ZoneController(MapPanelController mc, int r, int c, ZoneModel m) {
+    public ZoneController(MapPanelController mc, ZoneModel m) {
     	mapController = mc;
-    	
-        if (r > 24 || r < 0) {
-            // prepare to compare rows to 'A'..'Y'. we need r=24 for the
-            // dropzone row and
-            throw new IllegalArgumentException("Row should be in range 0..24");
-        }
-        if (c < 0) {
-            throw new IllegalArgumentException(
-                    "Column should be bigger or equal to 0");
-        }
-
-        row = r;
-        column = c;
         
         model = m;
-        
-        m.setName("" + (char)('A' + c) + (r + 1));
     }
     
     public MapPanelController getMapController() {
@@ -91,23 +73,6 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
 
     public void setColors(List<BlockColor> cs) {
     	model.setColors(cs);
-    }
-
-    public int getRow() {
-        return row;
-    }
-
-    public int getColumn() {
-        return column;
-    }
-
-    /**
-     * gets the name of the room. The room names are of the form
-     * "room "+character+number. character is A..Z for the rows. The column
-     * determines the number, starting at 0.
-     */
-    public String toString() {
-        return "Zone" + (char) (row + 65) + (column + 1);
     }
 
     /**
@@ -171,7 +136,11 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
     
     public void randomizeColors(int amount, List<BlockColor> validcolors) {
     	model.generateRandomBlocks(amount, validcolors);
-    	uei.update();
+    	update();
+    }
+    
+    public void update() {
+        uei.update();
     }
 
 }

@@ -21,10 +21,10 @@ public class EnvironmentMap {
 
     public EnvironmentMap(int rows, int cols) {
         if (rows < 1 || rows > 100) {
-            throw new IllegalArgumentException("illegal value for row: 1 < " + rows + " < 100");
+            throw new IllegalArgumentException("illegal value for row: 1 <= " + rows + " <= 100");
         }
         if (cols < 1 || cols > 100) {
-            throw new IllegalArgumentException("illegal value for columns: 1 < " + cols + " < 100");
+            throw new IllegalArgumentException("illegal value for columns: 1 <= " + cols + " <= 100");
         }
 
         generateZones(rows, cols);
@@ -44,6 +44,7 @@ public class EnvironmentMap {
         for (int row = 0; row < zones.length; row++) {
             for (int col = 0; col < zones[0].length; col++) {
                 zones[row][col] = new ZoneModel();
+                zones[row][col].generateNameFromPosition(row, col);
             }
         }
     }
@@ -124,14 +125,10 @@ public class EnvironmentMap {
         return row >= 0 && col >= 0 && row < zones.length && col < zones[0].length;
     }
 
-    public void generateRandomBlocks() {
-        Random random = new Random();
-        ArrayList<BlockColor> colors = new ArrayList<BlockColor>();
-        colors.addAll(BlockColor.getAvailableColors());
+    public void generateRandomBlocks(List<BlockColor> colors, int amount) {
         for (int row = 0; row < zones.length; row++) {
             for (int col = 0; col < zones[0].length; col++) {
                 ZoneModel zm = getZone(row, col);
-                int amount = random.nextInt(9) + 1;
                 zm.generateRandomBlocks(amount, colors);
             }
         }
