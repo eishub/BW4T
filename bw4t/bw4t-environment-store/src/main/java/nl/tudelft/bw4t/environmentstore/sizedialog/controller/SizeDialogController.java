@@ -34,10 +34,8 @@ public class SizeDialogController {
 	public SizeDialogController(SizeDialog pview) {
 		this.view = pview;
 	
-		view.getBeginFromScratchButton().addActionListener(
-				new BeginFromScratchButtonListener(getMainView()));
-		view.getStandardBasisButton().addActionListener(
-				new StandardBasisButtonListener(getMainView()));
+		view.getStartButton().addActionListener(
+				new StartButtonListener(getMainView()));
 	}
 	
     /**

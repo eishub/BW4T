@@ -7,7 +7,7 @@ import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
 import nl.tudelft.bw4t.environmentstore.sizedialog.view.SizeDialog;
 
-public class StandardBasisButtonListener implements ActionListener {
+public class StartButtonListener implements ActionListener {
 
 	private SizeDialog view;
 
@@ -18,7 +18,7 @@ public class StandardBasisButtonListener implements ActionListener {
 	 *            The frame with the button in it.
 	 */
 	
-	public StandardBasisButtonListener(SizeDialog pview) {
+	public StartButtonListener(SizeDialog pview) {
 		this.view = pview;
 	}
 
@@ -29,10 +29,11 @@ public class StandardBasisButtonListener implements ActionListener {
 	 *            The action event triggering this method.
 	 */
 	public void actionPerformed(ActionEvent ae) {
-		// TODO fill in the right frame that has to be opened
+
+		//FIXME with Jan's new structure of MapPanelController
 		MapPanelController mc = new MapPanelController(view.getRows(),
     			view.getColumns(),
-                view.getEntities(), true,
+                1, true,
                 true);
 		
 		EnvironmentStore es = new EnvironmentStore(mc);
