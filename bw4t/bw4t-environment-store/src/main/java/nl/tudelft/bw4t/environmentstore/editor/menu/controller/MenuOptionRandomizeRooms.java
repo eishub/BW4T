@@ -2,10 +2,8 @@ package nl.tudelft.bw4t.environmentstore.editor.menu.controller;
 
 import java.awt.event.ActionEvent;
 
-import javax.swing.JOptionPane;
 
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
-import nl.tudelft.bw4t.environmentstore.editor.controller.ZoneController;
 import nl.tudelft.bw4t.environmentstore.editor.menu.view.MenuBar;
 import nl.tudelft.bw4t.environmentstore.editor.model.RandomMapCreator;
 import nl.tudelft.bw4t.environmentstore.editor.model.ZoneModel;
@@ -29,16 +27,7 @@ public class MenuOptionRandomizeRooms extends AbstractMenuOption {
     	int rows = mpc.getZoneControllers().length;
     	int cols = mpc.getZoneControllers()[0].length;
     	int maxRooms = RandomMapCreator.maxRoomsPossible(rows, cols);
-    	while (amountRooms < 1 || amountRooms > maxRooms) {
-    		String answer = JOptionPane.showInputDialog(null, "Please enter the amount of rooms you want.\n"
-    			+ "(Must be between 1 and " + maxRooms + ").", 1);
-    		try {
-    			amountRooms = Integer.parseInt(answer);
-    		}
-    		catch(NumberFormatException nfx) {
-    			amountRooms = 0;
-    		}
-    	}
+    	amountRooms = (int) (Math.random() * (maxRooms*0.9-maxRooms*0.3) + maxRooms*0.3);
     	
         ZoneModel[][] model = RandomMapCreator.createRandomGrid(rows, cols, amountRooms);
 
