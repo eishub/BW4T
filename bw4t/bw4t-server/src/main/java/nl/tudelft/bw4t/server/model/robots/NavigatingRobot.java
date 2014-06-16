@@ -8,6 +8,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import nl.tudelft.bw4t.map.Path;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.zone.Zone;
 import nl.tudelft.bw4t.server.util.PathPlanner;
@@ -48,6 +49,11 @@ public class NavigatingRobot extends AbstractRobot {
      */
     NdPoint targetLocation = null;
 
+    /**
+     * The path as displayed on the map.
+     */
+    Path path = new Path();
+
 
     /**
      * @param name
@@ -57,6 +63,8 @@ public class NavigatingRobot extends AbstractRobot {
      */
     public NavigatingRobot(String name, ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context, boolean oneBotPerZone, int cap) {
         super(name, space, grid, context, oneBotPerZone, cap);
+
+        context.add(path);
     }
 
     /**
@@ -124,6 +132,8 @@ public class NavigatingRobot extends AbstractRobot {
      * erases the current target.
      */
     public void useNextTarget() {
+        path.setPath(new ArrayList(plannedMoves));
+
         currentMove = null;
         if (plannedMoves.isEmpty()) {
             // we're there.
