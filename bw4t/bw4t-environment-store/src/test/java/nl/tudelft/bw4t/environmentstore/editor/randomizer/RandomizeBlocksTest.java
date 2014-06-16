@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.map.editor.controller;
+package nl.tudelft.bw4t.environmentstore.editor.randomizer;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
