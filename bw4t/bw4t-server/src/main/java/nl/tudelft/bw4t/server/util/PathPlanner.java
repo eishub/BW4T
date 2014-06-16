@@ -3,6 +3,7 @@ package nl.tudelft.bw4t.server.util;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.logging.Logger;
 
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.zone.Zone;
@@ -60,17 +61,17 @@ public class PathPlanner {
      * @param obstacles set of all obstacles involved in the search.
      * @return List of subsequent NdPoints from start to finish.
      */
-    public static List<NdPoint> findPath(List<Zone> allZones, List<BoundedMoveableObject> obstacles, Zone start, Zone end) {
-        SimpleWeightedGraph<NdPoint, DefaultWeightedEdge> graph = generateNdPointGraph(allZones, obstacles);
+    public static List<NdPoint> findPath(List<Zone> allZones, List<BoundedMoveableObject> obstacles, NdPoint startPoint, NdPoint end) {
+        SimpleWeightedGraph<NdPoint, DefaultWeightedEdge> graph = generateNdPointGraph(startPoint, end, allZones, obstacles);
 
 
-        List<DefaultWeightedEdge> edgeList = DijkstraShortestPath.findPathBetween(graph, start.getLocation(), end.getLocation());
+        List<DefaultWeightedEdge> edgeList = DijkstraShortestPath.findPathBetween(graph, startPoint, end);
         if (edgeList == null) {
             return new ArrayList<NdPoint>();
         }
 
         List<NdPoint> path = new ArrayList<NdPoint>();
-        NdPoint current = start.getLocation();
+        NdPoint current = startPoint;
         path.add(current);
         // Add each path node, but also check for the order of the edges so that
         // the correct point (source or target) is added.
@@ -93,7 +94,7 @@ public class PathPlanner {
 
         for (BoundedMoveableObject obstacle : obstacles) {
             // Navigate around obstacles with a margin of 1 unit.
-            obstaclePoints.addAll(obstacle.getPointsOccupiedByObject(1));
+            obstaclePoints.addAll(obstacle.getPointsOccupiedByObject(0));
         }
 
         // Now for the zone points.
@@ -113,7 +114,7 @@ public class PathPlanner {
         return zonePoints;
     }
 
-    private static SimpleWeightedGraph<NdPoint, DefaultWeightedEdge> generateNdPointGraph(List<Zone> allZones, List<BoundedMoveableObject> obstacles) {
+    private static SimpleWeightedGraph<NdPoint, DefaultWeightedEdge> generateNdPointGraph(NdPoint start, NdPoint end, List<Zone> allZones, List<BoundedMoveableObject> obstacles) {
         SimpleWeightedGraph<NdPoint, DefaultWeightedEdge> graph = new SimpleWeightedGraph<NdPoint, DefaultWeightedEdge>(
                 DefaultWeightedEdge.class);
 
@@ -121,6 +122,8 @@ public class PathPlanner {
         List<NdPoint> vertices = returnVacantPoints(allZones, obstacles);
 
         // Add all the vertices.
+        graph.addVertex(start);
+        graph.addVertex(end);
         for (NdPoint p : vertices) {
             graph.addVertex(p);
         }
@@ -156,7 +159,6 @@ public class PathPlanner {
         for (Zone p : allZones) {
             graph.addVertex(p);
         }
-        int i = 0;
         for (Zone p1 : allZones) {
             for (Zone p2 : p1.getNeighbours()) {
                 DefaultWeightedEdge edge = graph.addEdge(p1, p2);
@@ -167,7 +169,6 @@ public class PathPlanner {
                     graph.setEdgeWeight(edge, p1.distanceTo(p2));
                 }
             }
-            i++;
         }
 
         return graph;
