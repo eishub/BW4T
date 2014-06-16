@@ -51,23 +51,17 @@ public class MapPanelController implements ChangeListener {
 	/**
 	 * constants that map rooms to real positions on the map.
 	 */
-	static final double ROOMHEIGHT = 10;
-	static final double ROOMWIDTH = 10;
-	static final int CORRIDORWIDTH = 10;
-	static final int CORRIDORHEIGHT = 10;
-
-	public static final int NORTH = 0;
-	public static final int EAST = 1;
-	public static final int SOUTH = 2;
-	public static final int WEST = 3;
+	public static final double ROOMHEIGHT = 10;
+	public static final double ROOMWIDTH = 10;
+	public static final int CORRIDORWIDTH = 10;
+	public static final int CORRIDORHEIGHT = 10;
 
 	/**
 	 * bot initial displacements
 	 */
 	static final int XDISP = 4;
 	static final int YDISP = 2;
-	private static final String DROPZONE = "DropZone";
-	private static final String FRONTDROPZONE = "FrontDropZone";
+
 	public static final int DROP_ZONE_SEQUENCE_LENGTH = 12;
 
 	private boolean isLabelsVisible;
@@ -328,22 +322,22 @@ public class MapPanelController implements ChangeListener {
 				int x = (int) output[row][col].getBoundingbox().getX();
 				int y = (int) output[row][col].getBoundingbox().getY();
 				if (output[row][col].getType() == Type.ROOM) {
-					if (room.getZoneModel().hasDoor(NORTH)) {
+					if (room.getZoneModel().hasDoor(ZoneModel.NORTH)) {
 						output[row][col].addDoor(new Door(new Point(x
 								+ ROOMWIDTH / 2, y),
 								Door.Orientation.HORIZONTAL));
 					}
-					if (room.getZoneModel().hasDoor(EAST)) {
+					if (room.getZoneModel().hasDoor(ZoneModel.EAST)) {
 						output[row][col].addDoor(new Door(new Point(x
 								+ ROOMWIDTH, y + ROOMHEIGHT / 2),
 								Door.Orientation.HORIZONTAL));
 					}
-					if (room.getZoneModel().hasDoor(SOUTH)) {
+					if (room.getZoneModel().hasDoor(ZoneModel.SOUTH)) {
 						output[row][col].addDoor(new Door(new Point(x
 								+ ROOMWIDTH / 2, y + ROOMHEIGHT),
 								Door.Orientation.HORIZONTAL));
 					}
-					if (room.getZoneModel().hasDoor(WEST)) {
+					if (room.getZoneModel().hasDoor(ZoneModel.WEST)) {
 						output[row][col]
 								.addDoor(new Door(new Point(x, y + ROOMHEIGHT
 										/ 2), Door.Orientation.HORIZONTAL));
@@ -607,21 +601,6 @@ public class MapPanelController implements ChangeListener {
 	}
 
 	/**
-	 * Get the zone from certain coordinates.
-	 * 
-	 * @param zones
-	 * @param row
-	 * @param col
-	 * @return the Zone if it is a valid zone, else return null.
-	 */
-	private Zone getZone(Zone[][] zones, int row, int col) {
-		if (isValidZone(row, col)) {
-			return zones[row][col];
-		}
-		return null;
-	}
-
-	/**
 	 * Set all the render options of the map.
 	 * 
 	 * @param map
@@ -644,7 +623,7 @@ public class MapPanelController implements ChangeListener {
 	 * get x coordinate of center of the room on the map.
 	 * 
 	 * @param column
-	 *            is the column cordinate of the Zone.
+	 *            is the column coordinate of the Zone.
 	 * @return x coordinate of room on the map.
 	 */
 	public double calcX(int column) {
@@ -655,31 +634,11 @@ public class MapPanelController implements ChangeListener {
 	 * get y coordinate of center of room on the map.
 	 * 
 	 * @param row
-	 *            is the row cordinate of the Zone.
+	 *            is the row coordinate of the Zone.
 	 * @return y coordinate of room on the map.
 	 */
 	public double calcY(int row) {
 		return row * ROOMHEIGHT + ROOMHEIGHT / 2;
-	}
-
-	/**
-	 * get a navpoint label for a corridor location.
-	 * 
-	 * @param row
-	 *            allowed is 0..{@link #rows}-1
-	 * @param col
-	 *            col=-1 means the LeftHall, col={@link #columns} means
-	 *            RightHall.
-	 * @return
-	 */
-	private String corridorLabel(int row, int col) {
-		if (col == -1) {
-			return "LeftHall" + (char) (row + 65);
-		}
-		if (col == zonecontrollers[0].length) {
-			return "RightHall" + (char) (row + 65);
-		}
-		return "Front" + zonecontrollers[row][col].toString();
 	}
 
 	public ZoneController getZoneController(int row, int col) {
