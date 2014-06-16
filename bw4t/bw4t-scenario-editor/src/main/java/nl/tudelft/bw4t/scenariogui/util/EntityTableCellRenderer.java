@@ -24,27 +24,18 @@ public class EntityTableCellRenderer extends DefaultTableCellRenderer {
         Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         
         if (table.getName().equals(EntityPanel.getBotTableName())) {
-            if (column == 2 && !fileNameExists(value.toString())) {
+            if (column == 2 && !AgentFileChecker.fileNameExists(value.toString())) {
                 c.setForeground(Color.RED);
             } else {
                 c.setForeground(Color.BLACK);
             }
         } else if (table.getName().equals(EntityPanel.getePartnerTableName())) { 
-            if (column == 1 && !fileNameExists(value.toString())) {
+            if (column == 1 && !AgentFileChecker.fileNameExists(value.toString())) {
                 c.setForeground(Color.RED);
             } else {
                 c.setForeground(Color.BLACK);
             }
         }
         return c;
-    }
-    
-    /**
-     * Returns whether a file exists
-     * @return Returns whether a file exists.
-     */
-    public boolean fileNameExists(String filename){
-        File f = new File(filename);
-        return f.exists();
     }
 }
