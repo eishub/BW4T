@@ -5,8 +5,11 @@ import java.util.LinkedList;
 
 import nl.tudelft.bw4t.client.environment.PerceptsHandler;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.message.BW4TMessage;
 import nl.tudelft.bw4t.client.message.MessageTranslator;
+import nl.tudelft.bw4t.map.view.ViewEntity;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Translator;
 import eis.exceptions.ActException;
@@ -26,6 +29,8 @@ public class BW4TAgent extends Thread implements ActionInterface {
     protected String agentId, entityId;
     protected boolean environmentKilled;
     private RemoteEnvironment bw4tenv;
+    
+    private BotConfig botConfig;
 
     /**
      * Create a new BW4TAgent that can be registered to an entity.
@@ -190,5 +195,40 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	public RemoteEnvironment getEnvironment() {
 	    return bw4tenv;
 	}
+	
+	/**
+	 * Whether this agent can pick up another object (box/e-partner) based
+	 * on their gripper capacity and the amount of objects they're already
+	 * holding. 
+	 * @param sameEntity The {@link ViewEntity} type of this agent.
+	 * @return Whether this agent can pick up another object.
+	 */
+	public boolean canPickupAnotherObject(ViewEntity sameEntity) {
+	    if (getBotConfig() == null)
+	        return true;
+	    if (getBotConfig().getGripperHandicap())
+	        return false;
+	    int grippersTotal = getBotConfig().getGrippers();
+	    int grippersInUse = sameEntity.getHolding().size();
+	    if (sameEntity.getHoldingEpartner() != -1)
+	        grippersInUse++; //TODO: check if we really wanna have a gripper in use for e-partner
+	    return grippersInUse < grippersTotal;
+	}
+	
+	public boolean canPickupAnotherObject(BW4TClientGUI gui) {
+	    return canPickupAnotherObject(gui.getController().getMapController().getTheBot());
+	}
+	
+	public boolean isColorBlind() {
+	    return getBotConfig() != null && getBotConfig().getColorBlindHandicap();
+	}
+
+    public BotConfig getBotConfig() {
+        return botConfig;
+    }
+
+    public void setBotConfig(BotConfig botConfig) {
+        this.botConfig = botConfig;
+    }
 
 }

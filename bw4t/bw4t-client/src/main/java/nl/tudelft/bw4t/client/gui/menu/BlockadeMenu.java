@@ -30,6 +30,8 @@ public class BlockadeMenu {
 
         ViewBlock holdingID = cmc.getTheBot().getFirstHolding();
         Color entityColor = cmc.getTheBot().getColor();
+        String colorAsString = BasicMenuOperations.getColor(
+                ColorTranslator.translate2ColorString(entityColor), gui.getController().getHumanAgent());
 
         JMenuItem menuItem = new JMenuItem();
 
@@ -51,17 +53,17 @@ public class BlockadeMenu {
 
         if (holdingID != null) {
             BasicMenuOperations.addMenuItemToPopupMenu(
-                    new BW4TMessage(MessageType.HASCOLOR, null, ColorTranslator.translate2ColorString(entityColor),
+                    new BW4TMessage(MessageType.HASCOLOR, null, colorAsString,
                             null), gui);
 
             JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu(
-                    "I have a " + ColorTranslator.translate2ColorString(entityColor) + " block from ",
+                    "I have a " + colorAsString + " block from ",
                     gui.getjPopupMenu());
 
             for (Zone roomInfo : cmc.getRooms()) {
                 menuItem = new JMenuItem(roomInfo.getName());
                 menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.HASCOLOR,
-                        roomInfo.getName(), ColorTranslator.translate2ColorString(entityColor), null), gui
+                        roomInfo.getName(), colorAsString, null), gui
                         .getController()));
                 submenu.add(menuItem);
             }
