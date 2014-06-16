@@ -8,7 +8,6 @@ import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.Zone.Type;
 
 /**
  * A utility class containing a BFS algorithm to verify if
@@ -19,6 +18,10 @@ public final class SolvabilityAlgorithm {
 	 * Store the frequency of the sequence colors here.
 	 */
 	private static HashMap<BlockColor, Integer> sequenceFreq = new HashMap<BlockColor, Integer>();
+	/**
+	 * Flag to check if the start zone has been reached.
+	 */
+	private static boolean startZoneReachable = false;
 	/**
 	 * A private constructor.
 	 */
@@ -43,7 +46,7 @@ public final class SolvabilityAlgorithm {
 					"The map is unsolvable, as there is no drop zone.");
 			return false;
 		}
-		List<Zone> neighbours = filterNeighboursList(dropZone);
+		List<Zone> neighbours = dropZone.getNeighbours();
 		visited.put(dropZone, true);
 		return mapIsSolvable(visited, frequencies, neighbours);
 	}
@@ -61,11 +64,14 @@ public final class SolvabilityAlgorithm {
 		}
 		List<Zone> newLevel = new ArrayList<Zone>();
 		for (Zone z : level) {
+			if (z.getName().matches("StartZone.*")) {
+				startZoneReachable = true;
+			}
 			visited.put(z, true);
 			for (BlockColor bc : z.getBlocks()) {
 				addToMap(freq, bc);
 			}
-			for (Zone neigh : filterNeighboursList(z)) {
+			for (Zone neigh : z.getNeighbours()) {
 				if (visited.get(neigh) == null) {
 					visited.put(neigh, true);
 					newLevel.add(neigh);
@@ -88,7 +94,7 @@ public final class SolvabilityAlgorithm {
 				return false;
 			}
 		}
-		return true;
+		return true && startZoneReachable;
 	}
 	/**
 	 * Adds a new value to the map.
@@ -101,20 +107,5 @@ public final class SolvabilityAlgorithm {
 		} else {
 			map.put(bc, map.get(bc) + 1);
 		}
-	}
-	/**
-	 * Filter the neighbours list to not include unreachable zones.
-	 * @param z
-	 * @return
-	 */
-	private static List<Zone> filterNeighboursList(Zone z) {
-		List<Zone> res = new ArrayList<Zone>();
-		List<Zone> neigh = z.getNeighbours();
-		for (Zone z1 : neigh) {
-			if (z1.getType() != Type.BLOCKADE) {
-				res.add(z1);
-			}
-		}
-		return res;
 	}
 }
