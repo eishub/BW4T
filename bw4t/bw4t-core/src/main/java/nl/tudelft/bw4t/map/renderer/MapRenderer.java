@@ -8,7 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ListIterator;
 
 import javax.swing.JPanel;
 
@@ -275,16 +274,14 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
     public void drawPaths(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
 
-        g2d.setColor(Color.PINK);
         for (Path p : controller.getPaths()) {
             NdPoint previous = null;
-
-            for(NdPoint point : p.getPath()) {
+            for (NdPoint point : p.getPath()) {
                 int x = (int) set.scale(point.getX());
                 int y = (int) set.scale(point.getY());
                 int scale = set.scale(PATH_SIZE);
 
-                g2d.setColor(Color.MAGENTA);
+                g2d.setColor(p.getColor());
                 drawCenteredCircle(g2d, x, y, scale);
 
                 if (previous != null) {
