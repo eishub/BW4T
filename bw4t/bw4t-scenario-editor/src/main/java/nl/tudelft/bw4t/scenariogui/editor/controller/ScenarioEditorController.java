@@ -81,6 +81,16 @@ public class ScenarioEditorController {
 		entityPanel.addModifyEpartnerController(new ModifyEPartner(mainPanel, getModel()));
 		entityPanel.addDeleteEpartnerController(new DeleteEPartner(mainPanel, getModel()));
 		entityPanel.addDropDownController(new BotDropDownButton(mainPanel));
+
+        entityPanel.addNewStandardBotController(new AddNewStandardBot(mainPanel, getModel()));
+        entityPanel.addNewStandardBotBigController(new AddNewStandardBotBig(mainPanel, getModel()));
+        entityPanel.addNewStandardBotGripperController(new AddNewStandardBotGripper(mainPanel, getModel()));
+        entityPanel.addNewStandardBotBigGripperController(new AddNewStandardBotBigGripper(mainPanel, getModel()));
+        entityPanel.addNewStandardBotSeeerController(new AddNewStandardBotSeeer(mainPanel, getModel()));
+        entityPanel.addNewStandardBotBigSeeerController(new AddNewStandardBotBigSeeer(mainPanel, getModel()));
+        entityPanel.addNewStandardBotCommunicatorController(new AddNewStandardBotCommunicator(mainPanel, getModel()));
+        entityPanel.addNewStandardBotBigCommunicatorController(new AddNewStandardBotBigCommunicator(mainPanel, getModel()));
+        
 		entityPanel.addBotTableModelController(new UpdateBotCount(mainPanel, getModel()));
         entityPanel.addEpartnerTableModelController(new UpdateEPartnerCount(mainPanel, getModel()));
         entityPanel.addBotTableController(new EditBotTable(getMainView().getMainPanel(), getModel()));
