@@ -103,7 +103,7 @@ public final class SolvabilityAlgorithm {
 	 */
 	private static void addToMap(HashMap<BlockColor, Integer> map, BlockColor bc) {
 		if (map.get(bc) == null) {
-			map.put(bc, 1);
+			map.put(bc, 1); 
 		} else {
 			map.put(bc, map.get(bc) + 1);
 		}
