@@ -3,12 +3,8 @@ package nl.tudelft.bw4t.environmentstore.editor.controller;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import nl.tudelft.bw4t.environmentstore.editor.model.RandomMapCreator;
 import nl.tudelft.bw4t.environmentstore.editor.model.ZoneModel;
 import nl.tudelft.bw4t.environmentstore.editor.view.RoomMenu;
 import nl.tudelft.bw4t.environmentstore.editor.view.ZoneMenu;
