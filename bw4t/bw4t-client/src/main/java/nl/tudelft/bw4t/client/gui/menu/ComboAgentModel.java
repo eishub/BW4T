@@ -33,17 +33,11 @@ public class ComboAgentModel extends AbstractListModel implements ComboBoxModel 
      */
     private boolean showAgent(int agentIndex) {
         String name = gui.environment.getAgents().get(agentIndex);
-        
         if (name == null) {
             return false;
         }
-        
         try {
-            if (gui.environment.getType(gui.environment.getAgents().get(agentIndex)).equals("epartner")) {
-                return false;
-            } else {
-                return true;
-            }
+            return !gui.environment.getType(name).equals("epartner");
         } catch (EntityException e) {
             e.printStackTrace();
         }
