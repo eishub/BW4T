@@ -46,6 +46,8 @@ public class SizeDialog extends JFrame {
 	/**
 	 * With this button the user can choose to edit an already existing map.
 	 */
+	// Joost TODO: Please get rid of this button. 
+	// It is not needed when the user can immediately edit a map from the editor itself (in the Menu). 
 	private JButton editExistingMapButton = new JButton("Edit existing map");
 	
 	/**
