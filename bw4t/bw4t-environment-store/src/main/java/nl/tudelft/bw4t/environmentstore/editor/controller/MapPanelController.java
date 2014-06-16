@@ -242,27 +242,17 @@ public class MapPanelController implements ChangeListener {
 	 *            the position of first entity
 	 */
 	void addEntities(NewMap map, double centerx, double centery) {
-
-		// set entities. start at 1.
-		for (int n = 1; n <= numberOfEntities; n++) {
-			int n6 = n / 6; // floor
-			int m6 = n % 6;
-			int m6sign = (m6 % 2) * 2 - 1; // 1 if m6=odd, -1 if even
-
-			int extrax = 1;
-			if (m6 <= 1)
-				extrax = 0;
-			double x = centerx + (XDISP * (2 * n6 + extrax)) * m6sign;
-
-			int yoffset = 0;
-			if (m6 == 2 || m6 == 3)
-				yoffset = -1;
-			if (m6 == 4 || m6 == 5)
-				yoffset = 1;
-			double y = centery + YDISP * yoffset;
-			map.addEntity(new Entity("Bot" + n, new Point(x, y)));
+		for (int n=1; n <= numberOfEntities; n++) {
+			if (n%4 == 1) {
+				map.addEntity(new Entity("Bot" + n, new Point(centerx-2.5, centery-2.5)));
+			} else if(n%4 == 2) {
+				map.addEntity(new Entity("Bot" + n, new Point(centerx+2.5, centery-2.5)));
+			} else if(n%4 == 3) {
+				map.addEntity(new Entity("Bot" + n, new Point(centerx-2.5, centery+2.5)));
+			} else {
+				map.addEntity(new Entity("Bot" + n, new Point(centerx+2.5, centery+2.5)));
+			}
 		}
-		
 
 	}
 
