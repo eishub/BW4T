@@ -171,6 +171,7 @@ public class BotEditorPanelTest {
     /** Test the disabling of the gripper slider */
     @Test
     public final void testGripperSliderDisable() {
+    	editor.getBotEditorPanel().getGripperCheckbox().setSelected(false);
         editor.getBotEditorPanel().getGripperCheckbox().doClick();
         assertFalse(editor.getBotEditorPanel().getNumberOfGrippersSlider().isEnabled());
     }
@@ -178,7 +179,7 @@ public class BotEditorPanelTest {
     /** Test the enabling of the gripper slider */
     @Test
     public final void testGripperSliderEnable() {
-        editor.getBotEditorPanel().getGripperCheckbox().setSelected(true);
+    	editor.getBotEditorPanel().getGripperCheckbox().setSelected(true);
         editor.getBotEditorPanel().getGripperCheckbox().doClick();
         assertTrue(editor.getBotEditorPanel().getNumberOfGrippersSlider().isEnabled());
     }

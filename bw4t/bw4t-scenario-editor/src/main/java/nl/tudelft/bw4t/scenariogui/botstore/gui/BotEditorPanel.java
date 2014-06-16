@@ -187,6 +187,28 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 
         getCancelButton().addActionListener(
                 new CancelButton(this));
+
+        getSpeedSlider().addMouseListener(
+                new SpeedSlider(this));
+
+        getSizeSlider().addMouseListener(
+                new SizeSlider(this));
+
+
+        getGripperCheckbox().addActionListener(
+                new GripperBox(this));
+        
+        getCustomSizeCheckbox().addActionListener(
+                new WalkingBox(this));
+
+        getMovespeedCheckbox().addActionListener(
+                new SpeedBox(this));
+        
+        getBatteryEnabledCheckbox().addActionListener(
+                new BatteryBox(this));
+        
+        getMovespeedCheckbox().addActionListener(
+                new SpeedBox(this));
         
         controller.addView(this);
         setVisible(true);
@@ -722,11 +744,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 	 * and false if BatterySlider should be disabled.
 	 */
 	public void setBatterySliderEnabled(boolean enabled) {
-		if (enabled) { 
-			batterySlider.setEnabled(true);
-		} else {
-			batterySlider.setEnabled(false);
-		}	
+		batterySlider.setEnabled(enabled);
 	}
 	
 	/**
@@ -735,11 +753,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 	 * and false if numberOfGrippersSlider should be disabled.
 	 */
 	public void setGripperSliderEnabled(boolean enabled) {
-		if (enabled) { 
-			numberOfGrippersSlider.setEnabled(true);
-		} else {
-			numberOfGrippersSlider.setEnabled(false);
-		}	
+		numberOfGrippersSlider.setEnabled(enabled);
 	}
 	
 	/**
@@ -748,11 +762,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 	 * and false if speedSlider should be disabled.
 	 */
 	public void setSpeedSliderEnabled(boolean enabled) {
-		if (enabled) { 
-			speedSlider.setEnabled(true);
-		} else {
-			speedSlider.setEnabled(false);
-		}	
+		speedSlider.setEnabled(enabled);
 	}
 	
 	/**
@@ -761,11 +771,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 	 * and false if sizeSlider should be disabled.
 	 */
 	public void setSizeSliderEnabled(boolean enabled) {
-		if (enabled) { 
-			sizeSlider.setEnabled(true);
-		} else {
-			sizeSlider.setEnabled(false);
-		}	
+		sizeSlider.setEnabled(enabled);
 	}
 
 	public JPanel getBotSliders() {
