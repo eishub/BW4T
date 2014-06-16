@@ -35,6 +35,7 @@ public class ZoneModel {
 	private int column;
 	
 	public ZoneModel() {
+		setDoor(NORTH, true);
 	}
 	
 	public ZoneModel(Zone zone) {
@@ -125,6 +126,7 @@ public class ZoneModel {
 	}
 	
 	public void setDoor(int dir, boolean value) {
+		doorsbool = new boolean[4];
 		doorsbool[dir] = value;
 	}
 

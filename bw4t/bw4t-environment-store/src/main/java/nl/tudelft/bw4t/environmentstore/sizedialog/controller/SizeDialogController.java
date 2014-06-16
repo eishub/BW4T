@@ -36,8 +36,6 @@ public class SizeDialogController {
 	
 		view.getBeginFromScratchButton().addActionListener(
 				new BeginFromScratchButtonListener(getMainView()));
-		view.getExistingMapButton().addActionListener(
-				new EditExistingMapButtonListener(getMainView()));
 		view.getStandardBasisButton().addActionListener(
 				new StandardBasisButtonListener(getMainView()));
 	}
@@ -49,31 +47,6 @@ public class SizeDialogController {
     public final SizeDialog getMainView() {
         return view;
     }
-    
-    /** 
-     * Open an existing map
-     * @return MapPanelController
-     */
-    /*
-    public MapPanelController openFile() {
-    	// Open configuration file
-    	JFileChooser fileChooser = new JFileChooser();
-    	
-    	FileNameExtensionFilter filter = new FileNameExtensionFilter(".java");
-    	fileChooser.setFileFilter(filter);
-    	
-    	int returnVal = fileChooser.showOpenDialog(view);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-        	File file = fileChooser.getSelectedFile();
-        	String openedFile = fileChooser.getSelectedFile().toString();
-
-        	try {
-        		MapPanelController mpc = file;
-        		
-        	}
-        	
-        }
-    } */
 }
 
    
