@@ -266,4 +266,22 @@ public class NavigatingRobotTest {
         assertEquals(bot.getView().getHolding(), ent.getHolding());
         assertEquals(bot.getView().getRobotSize(), ent.getRobotSize());
     }
+    
+    @Test
+    public void getAgentRecordTest() {
+        AgentRecord record = new AgentRecord("Bot1");
+        assertEquals(bot.getAgentRecord().getName(), record.getName());
+        assertEquals(bot.getAgentRecord().getGoodDrops(), record.getGoodDrops());
+        assertEquals(bot.getAgentRecord().getNMessages(), record.getNMessages());
+        assertEquals(bot.getAgentRecord().getNRoomsEntered(), record.getNRoomsEntered());
+        assertEquals(bot.getAgentRecord().getTotalStandingStillMillis(), record.getTotalStandingStillMillis());
+        assertEquals(bot.getAgentRecord().getWrongDrops(), record.getWrongDrops());
+    }
+    
+    @Test
+    public void getBatteryTest() {
+        Battery testBattery = new Battery(100, 100, 0);
+        bot.setBattery(testBattery);
+        assertEquals(bot.getBattery(), testBattery);
+    }
 }
