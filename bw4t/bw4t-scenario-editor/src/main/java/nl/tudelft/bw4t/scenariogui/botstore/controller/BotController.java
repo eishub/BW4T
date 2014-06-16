@@ -10,7 +10,6 @@ import javax.swing.JFileChooser;
 import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
-import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditor;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotStoreViewInterface;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
