@@ -29,7 +29,6 @@ public class StartButtonListener implements ActionListener {
 	 *            The action event triggering this method.
 	 */
 	public void actionPerformed(ActionEvent ae) {
-
 		MapPanelController mc = new MapPanelController(view.getRows(), view.getColumns());
 
 		EnvironmentStore es = new EnvironmentStore(mc);

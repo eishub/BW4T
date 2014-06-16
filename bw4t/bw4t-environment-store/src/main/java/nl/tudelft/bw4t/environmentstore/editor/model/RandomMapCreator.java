@@ -69,7 +69,7 @@ public class RandomMapCreator {
     private static void randomizeCorridors(List<Node> corridors) {
     	Random r = new Random(System.currentTimeMillis());
     	for (Node n : corridors) {
-    		if (r.nextDouble() < 0.15) {
+    		if (r.nextDouble() < 0.1) {
     			n.setType(Zone.Type.CHARGINGZONE);
     		}
     	}

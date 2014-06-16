@@ -13,8 +13,14 @@ import nl.tudelft.bw4t.environmentstore.editor.model.ZoneModel;
 import nl.tudelft.bw4t.environmentstore.editor.view.RoomMenu;
 import nl.tudelft.bw4t.environmentstore.editor.view.ZoneMenu;
 import nl.tudelft.bw4t.map.BlockColor;
+import nl.tudelft.bw4t.map.Door;
+import nl.tudelft.bw4t.map.Entity;
 import nl.tudelft.bw4t.map.MapFormatException;
 import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.map.Point;
+import nl.tudelft.bw4t.map.Rectangle;
+import nl.tudelft.bw4t.map.RenderOptions;
+import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.Zone.Type;
 
 /**
