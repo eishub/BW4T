@@ -7,19 +7,15 @@ import javax.swing.ComboBoxModel;
 
 import eis.exceptions.EntityException;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
-import nl.tudelft.bw4t.network.BW4TServerHiddenActions;
-import nl.tudelft.bw4t.network.BW4TServerActions;
-import nl.tudelft.bw4t.server.BW4TServer;
 
 public class ComboAgentModel extends AbstractListModel implements ComboBoxModel {
 
     private final BW4TClientGUI gui;
-    //private final BW4TServer server;
+    
     private String selection = "";
 
-    public ComboAgentModel(BW4TClientGUI clientGUI/*, BW4TServer server*/) {
+    public ComboAgentModel(BW4TClientGUI clientGUI) {
         this.gui = clientGUI;
-        //this.server = server;
     }
 
     @Override
@@ -38,8 +34,8 @@ public class ComboAgentModel extends AbstractListModel implements ComboBoxModel 
      */
     private boolean showAgent(int agentIndex) {
         String name = gui.environment.getAgents().get(agentIndex);
-        boolean ourBot = gui.getController().getMapController().getTheBot().getName().equals(name);
-        if (ourBot || name == null)
+        
+        if (name == null)
             return false;
         try {
             if (gui.environment.getType(gui.environment.getAgents().get(agentIndex)).equals("epartner")) {
