@@ -1,7 +1,5 @@
 package nl.tudelft.bw4t.client.gui.menu;
 
-import java.util.Collection;
-
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
@@ -11,7 +9,7 @@ import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 public class ComboAgentModel extends AbstractListModel implements ComboBoxModel {
 
     private final BW4TClientGUI gui;
-    
+
     private String selection = "";
 
     public ComboAgentModel(BW4TClientGUI clientGUI) {
@@ -21,8 +19,9 @@ public class ComboAgentModel extends AbstractListModel implements ComboBoxModel 
     @Override
     public Object getElementAt(int listIndex) {
         int agentIndex = listIndexToAgentIndex(listIndex);
-        if (agentIndex >= 0 && showAgent(agentIndex))
+        if (agentIndex >= 0 && showAgent(agentIndex)) {
             return gui.environment.getAgents().get(agentIndex);
+        }
         return null;
     }
     
@@ -35,8 +34,10 @@ public class ComboAgentModel extends AbstractListModel implements ComboBoxModel 
     private boolean showAgent(int agentIndex) {
         String name = gui.environment.getAgents().get(agentIndex);
         
-        if (name == null)
+        if (name == null) {
             return false;
+        }
+        
         try {
             if (gui.environment.getType(gui.environment.getAgents().get(agentIndex)).equals("epartner")) {
                 return false;
@@ -68,9 +69,11 @@ public class ComboAgentModel extends AbstractListModel implements ComboBoxModel 
     @Override
     public int getSize() {
         int size = 0;
-        for (int i = 0; i < gui.environment.getAgents().size(); i++)
-            if (showAgent(i))
+        for (int i = 0; i < gui.environment.getAgents().size(); i++) {
+            if (showAgent(i)) {
                 size++;
+            }
+        }
         return size;
     }
 
