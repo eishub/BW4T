@@ -401,6 +401,38 @@ public class EntityPanel extends JPanel {
 	public JButton getDropDownButton() {
 		return botDropDownButton;
 	}
+    
+    public JMenuItem getAddNewStandardBotMenuItem() {
+        return standardBot;
+    }
+    
+    public JMenuItem getAddNewStandardBotBigMenuItem() {
+        return standardBotBig;
+    }
+    
+    public JMenuItem getAddNewStandardBotGripperMenuItem() {
+        return standardBotGripper;
+    }
+    
+    public JMenuItem getAddNewStandardBotBigGripperMenuItem() {
+        return standardBotBigGripper;
+    }
+    
+    public JMenuItem getAddNewStandardBotSeeerMenuItem() {
+        return standardBotSeeer;
+    }
+    
+    public JMenuItem getAddNewStandardBotBigSeeerMenuItem() {
+        return standardBotBigSeeer;
+    }
+    
+    public JMenuItem getAddNewStandardBotCommunicatorMenuItem() {
+        return standardBotCommunicator;
+    }
+    
+    public JMenuItem getAddNewStandardBotBigCommunicatorMenuItem() {
+        return standardBotBigCommunicator;
+    }
 
 	/**
 	 * Updates the bot count on the EntityPanel.
@@ -565,9 +597,41 @@ public class EntityPanel extends JPanel {
 		getDeleteEPartnerButton().addActionListener(controller);
 	}
 
-	public void addDropDownController(ActionListener controller) {
-		getDropDownButton().addActionListener(controller);
-	}
+    public void addDropDownController(ActionListener controller) {
+        getDropDownButton().addActionListener(controller);
+    }
+    
+    public void addNewStandardBotController(ActionListener controller) {
+        getAddNewStandardBotMenuItem().addActionListener(controller);
+    }
+    
+    public void addNewStandardBotBigController(ActionListener controller) {
+        getAddNewStandardBotBigMenuItem().addActionListener(controller);
+    }
+    
+    public void addNewStandardBotGripperController(ActionListener controller) {
+        getAddNewStandardBotGripperMenuItem().addActionListener(controller);
+    }
+    
+    public void addNewStandardBotBigGripperController(ActionListener controller) {
+        getAddNewStandardBotBigGripperMenuItem().addActionListener(controller);
+    }
+    
+    public void addNewStandardBotSeeerController(ActionListener controller) {
+        getAddNewStandardBotSeeerMenuItem().addActionListener(controller);
+    }
+    
+    public void addNewStandardBotBigSeeerController(ActionListener controller) {
+        getAddNewStandardBotBigSeeerMenuItem().addActionListener(controller);
+    }
+    
+    public void addNewStandardBotCommunicatorController(ActionListener controller) {
+        getAddNewStandardBotCommunicatorMenuItem().addActionListener(controller);
+    }
+    
+    public void addNewStandardBotBigCommunicatorController(ActionListener controller) {
+        getAddNewStandardBotBigCommunicatorMenuItem().addActionListener(controller);
+    }
 
 	public void addBotTableModelController(TableModelListener controller) {
 		getBotTableModel().addTableModelListener(controller);
