@@ -63,12 +63,12 @@ public class ScenarioEditorController {
     private void addMenuBarListeners() {
     	MenuBar menuBar = view.getTopMenuBar();
     	
-		menuBar.addExitController(new MenuOptionExit(getMainView().getTopMenuBar(), this, getModel()));
-    	menuBar.addNewController(new MenuOptionNew(getMainView().getTopMenuBar(), this, getModel()));
-    	menuBar.addOpenController(new MenuOptionOpen(getMainView().getTopMenuBar(), this, getModel()));
-    	menuBar.addSaveController(new MenuOptionSave(getMainView().getTopMenuBar(), this, getModel()));
-    	menuBar.addSaveAsController(new MenuOptionSaveAs(getMainView().getTopMenuBar(), this, getModel()));
-    	menuBar.addExportController(new MenuOptionExport(getMainView().getTopMenuBar(), this, getModel()));
+		menuBar.addExitController(new MenuOptionExit(menuBar, this, getModel()));
+    	menuBar.addNewController(new MenuOptionNew(menuBar, this, getModel()));
+    	menuBar.addOpenController(new MenuOptionOpen(menuBar, this, getModel()));
+    	menuBar.addSaveController(new MenuOptionSave(menuBar, this, getModel()));
+    	menuBar.addSaveAsController(new MenuOptionSaveAs(menuBar, this, getModel()));
+    	menuBar.addExportController(new MenuOptionExport(menuBar, this, getModel()));
     }
     
     private void addEntityPanelListeners() {
