@@ -440,6 +440,7 @@ public class RobotEntity implements RobotEntityInt {
     @AsAction(name = "goTo")
     public void goTo(double x, double y) {
         ourRobot.setTargetLocation(new NdPoint(x, y));
+        LOGGER.debug("angar");
     }
 
     /**
@@ -516,7 +517,7 @@ public class RobotEntity implements RobotEntityInt {
 
         if(ourRobot instanceof NavigatingRobot) {
             NavigatingRobot navbot = (NavigatingRobot) ourRobot;
-            navbot.navigateObstacles(false);
+            navbot.navigateObstacles();
         }
     }
     /**
