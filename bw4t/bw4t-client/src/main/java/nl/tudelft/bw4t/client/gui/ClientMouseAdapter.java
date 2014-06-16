@@ -4,6 +4,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 
+import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.gui.menu.ActionPopUpMenu;
 import nl.tudelft.bw4t.map.renderer.MapRenderSettings;
 
@@ -18,6 +19,8 @@ public final class ClientMouseAdapter extends MouseAdapter {
     /** The bw4t client gui. */
     private BW4TClientGUI bw4tClientGUI;
     
+    private ClientMapController mapController;
+    
     /**
      * Instantiates a new client mouse adapter.
      * 
@@ -26,6 +29,7 @@ public final class ClientMouseAdapter extends MouseAdapter {
      */
     public ClientMouseAdapter(BW4TClientGUI bw4tClientGUI){
         this.bw4tClientGUI = bw4tClientGUI;
+        this.mapController = bw4tClientGUI.getController().getMapController();
     }
     
     /* (non-Javadoc)
@@ -63,7 +67,7 @@ public final class ClientMouseAdapter extends MouseAdapter {
     @Override
     public void mouseWheelMoved(MouseWheelEvent mwe) {
         if (mouseOver && mwe.isControlDown()) {
-            MapRenderSettings settings = bw4tClientGUI.getController().getMapController().getRenderSettings();
+            MapRenderSettings settings = mapController.getRenderSettings();
             if (mwe.getUnitsToScroll() >= 0) {
                 settings.setScale(settings.getScale() + 0.1);
             } else {

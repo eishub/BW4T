@@ -1,18 +1,22 @@
 package nl.tudelft.bw4t.client.gui.listeners;
 
+import eis.exceptions.ActException;
+import eis.iilang.Identifier;
+import eis.iilang.Percept;
+import eis.iilang.Parameter;
+
 import java.awt.event.ActionEvent;
 import java.util.LinkedList;
 import java.util.List;
 
 import nl.tudelft.bw4t.client.controller.ClientController;
+import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.environment.Launcher;
 import nl.tudelft.bw4t.client.message.BW4TMessage;
 import nl.tudelft.bw4t.client.message.MessageTranslator;
 
 import org.apache.log4j.Logger;
 
-import eis.iilang.Identifier;
-import eis.iilang.Percept;
 
 /**
  * ActionListener that sends a message when the connected menu item is pressed.
@@ -31,18 +35,21 @@ public class MessageSenderActionListener extends ClientActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        ClientController controller = getController();
         if (!Launcher.getEnvironment().isConnectedToGoal()) {
             try {
-                getController().getHumanAgent().sendMessage("all", message);
-            } catch (Exception e1) {
+                controller.getHumanAgent().sendMessage("all", message);
+            } catch (ActException e1) {
                 LOGGER.error("Could not send message to all other bots.", e1);
             }
         } else {
             List<Percept> percepts = new LinkedList<Percept>();
-            Percept percept = new Percept("sendMessage", new Identifier("all"), MessageTranslator.translateMessage(
-                    message, getController().getMapController().getTheBot().getName()));
+            ClientMapController mapController = controller.getMapController();
+            Parameter paramMessage = MessageTranslator.translateMessage(
+                    message, mapController.getTheBot().getName());
+            Percept percept = new Percept("sendMessage", new Identifier("all"), paramMessage);
             percepts.add(percept);
-            getController().setToBePerformedAction(percepts);
+            controller.setToBePerformedAction(percepts);
         }
     }
 }

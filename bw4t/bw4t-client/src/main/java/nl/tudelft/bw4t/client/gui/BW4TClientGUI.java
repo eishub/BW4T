@@ -1,12 +1,12 @@
 package nl.tudelft.bw4t.client.gui;
 
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
+import eis.iilang.Percept;
+
 import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.List;
 
@@ -21,25 +21,21 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.BevelBorder;
 
 import nl.tudelft.bw4t.client.BW4TClientSettings;
 import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.controller.ClientController;
+import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.listeners.ChatListMouseListener;
 import nl.tudelft.bw4t.client.gui.listeners.TeamListMouseListener;
-import nl.tudelft.bw4t.client.gui.menu.ActionPopUpMenu;
 import nl.tudelft.bw4t.client.gui.menu.ComboAgentModel;
-import nl.tudelft.bw4t.map.renderer.MapRenderSettings;
 import nl.tudelft.bw4t.map.renderer.MapRenderer;
 import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
 
 import org.apache.log4j.Logger;
-
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
 
 /**
  * Render the current state of the world at a fixed rate (10 times per second, see run()) for a client. It connects to
@@ -116,20 +112,13 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
     /**
      * Instantiates a new bw4t client gui.
      * 
-     * @param env
-     *            the BW4TRemoteEnvironment that we are rendering
-     * @param entityId
-     *            , the id of the entity that needs to be displayed
-     * @param goal
-     *            , if this gui is for displaying a goal agent
-     * @param humanPlayer
-     *            the human player
+     * @param cc
+     *            the client controller
      * @throws IOException
-     *             if map can't be loaded.
+     *             Signals that an I/O exception has occurred.
      */
-    public BW4TClientGUI(RemoteEnvironment env, String entityId, boolean goal, boolean humanPlayer) throws IOException {
-        environment = env;
-        controller = new ClientController(env, environment.getClient().getMap(), entityId);
+    public BW4TClientGUI(ClientController cc) throws IOException {
+        this.controller = cc;
         init();
     }
 
@@ -154,13 +143,20 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
     /**
      * Instantiates a new bw4t client gui.
      * 
-     * @param cc
-     *            the client controller
+     * @param env
+     *            the BW4TRemoteEnvironment that we are rendering
+     * @param entityId
+     *            , the id of the entity that needs to be displayed
+     * @param goal
+     *            , if this gui is for displaying a goal agent
+     * @param humanPlayer
+     *            the human player
      * @throws IOException
-     *             Signals that an I/O exception has occurred.
+     *             if map can't be loaded.
      */
-    public BW4TClientGUI(ClientController cc) throws IOException {
-        this.controller = cc;
+    public BW4TClientGUI(RemoteEnvironment env, String entityId, boolean goal, boolean humanPlayer) throws IOException {
+        environment = env;
+        controller = new ClientController(env, environment.getClient().getMap(), entityId);
         init();
     }
 
@@ -175,7 +171,6 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
         initializeMouseListeners();
         initializeMainPanel(mainPanel);
         add(mainPanel);
-        
         
         pack();
         setVisible(true);
@@ -216,7 +211,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
             MouseAdapter mouseAdapter = new ClientMouseAdapter(this);
             renderer.addMouseListener(mouseAdapter);
             renderer.addMouseWheelListener(mouseAdapter);
-            getChatSession().addMouseListener(new ChatListMouseListener(this));
+            chatSession.addMouseListener(new ChatListMouseListener(this));
         }
     }
 
@@ -229,8 +224,8 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
         chatPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         chatPanel.setFocusable(false);
 
-        getChatSession().setFocusable(false);
-        chatPane = new JScrollPane(getChatSession());
+        chatSession.setFocusable(false);
+        chatPane = new JScrollPane(chatSession);
         chatPanel.add(chatPane);
         chatPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         chatPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -245,12 +240,16 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
     private void initializeEmptyWindow() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                | UnsupportedLookAndFeelException e) {
             LOGGER.error("Could not properly set the Native Look and Feel for the BW4T Client", e);
         }
         LOGGER.debug("Attaching to ClientController");
-        controller.getMapController().addRenderer(this);
-        String entityId = controller.getMapController().getTheBot().getName();
+        final ClientMapController mapController = controller.getMapController();
+        String entityId = mapController.getTheBot().getName();
+        
+        mapController.addRenderer(this);
+        
         LOGGER.debug("Initializing agent window for entity: " + entityId);
         setTitle("BW4T - " + entityId);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -265,7 +264,8 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
      *            , the Id of the player to be added
      */
     public void addPlayer(String playerId) {
-        if (!playerId.equals(controller.getMapController().getTheBot().getName())) {
+        final ClientMapController mapController = controller.getMapController();
+        if (!playerId.equals(mapController.getTheBot().getName())) {
             JButton button = new JButton(playerId);
             button.addMouseListener(new TeamListMouseListener(this));
             buttonPanel.add(button);
@@ -286,8 +286,8 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
      * Update the chat session.
      */
     public void update() {
-        getChatSession().setText(join(getController().getChatHistory(), "\n"));
-        getChatSession().setCaretPosition(getChatSession().getDocument().getLength());
+        chatSession.setText(join(controller.getChatHistory(), "\n"));
+        chatSession.setCaretPosition(chatSession.getDocument().getLength());
     }
 
     /**
@@ -318,10 +318,8 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
     public Percept sendToGUI(List<Parameter> parameters) {
         String sender = ((Identifier) parameters.get(0)).getValue();
         String message = ((Identifier) parameters.get(1)).getValue();
-
-        getChatSession().append(sender + " : " + message + "\n");
-        getChatSession().setCaretPosition(getChatSession().getDocument().getLength());
-
+        chatSession.append(sender + " : " + message + "\n");
+        chatSession.setCaretPosition(chatSession.getDocument().getLength());
         return null;
     }
 

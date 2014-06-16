@@ -6,6 +6,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import nl.tudelft.bw4t.client.controller.ClientController;
+import nl.tudelft.bw4t.client.controller.ClientMapController;
 
 import org.apache.log4j.Logger;
 
@@ -19,6 +20,8 @@ public final class ClientWindowAdapter extends WindowAdapter {
     
     /** The bw4t client gui. */
     private BW4TClientGUI bw4tClientGUI;
+    private ClientController controller;
+    private ClientMapController mapController;
     
     /**
      * Instantiates a new client window adapter.
@@ -28,6 +31,8 @@ public final class ClientWindowAdapter extends WindowAdapter {
      */
     public ClientWindowAdapter(BW4TClientGUI bw4tClientGUI) {
         this.bw4tClientGUI = bw4tClientGUI;
+        this.controller = bw4tClientGUI.getController();
+        this.mapController = controller.getMapController();
     }
     
     /* (non-Javadoc)
@@ -35,12 +40,11 @@ public final class ClientWindowAdapter extends WindowAdapter {
      */
     @Override
     public void windowClosing(WindowEvent e) {
-        ClientController controller = bw4tClientGUI.getController();
         LOGGER.info("Exit request received from the Window Manager to close Window of entity: "
-                + controller.getMapController().getTheBot().getName());
-        controller.getMapController().setRunning(false);
+                + mapController.getTheBot().getName());
+        mapController.setRunning(false);
         bw4tClientGUI.dispose();
-        controller.getMapController().removeRenderer(bw4tClientGUI);
+        mapController.removeRenderer(bw4tClientGUI);
         try {
             bw4tClientGUI.environment.kill();
         } catch (ManagementException e1) {
