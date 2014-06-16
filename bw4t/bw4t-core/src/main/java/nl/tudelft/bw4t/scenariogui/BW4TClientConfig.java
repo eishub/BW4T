@@ -356,7 +356,7 @@ public class BW4TClientConfig {
 				return false;
 			}
 		}
-
+		
 		return true;
 	}
 
