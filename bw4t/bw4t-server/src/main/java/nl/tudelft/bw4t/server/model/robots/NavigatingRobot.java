@@ -39,7 +39,7 @@ public class NavigatingRobot extends AbstractRobot {
     Queue<NdPoint> plannedMovesHistory = plannedMoves;
 
     /**
-     * When a move is started, it moves from the stack to currentMove. When currnetMove is null, it's done.
+     * When a move is started, it moves from the stack to currentMove. When currentMove is null, it's done.
      */
     NdPoint currentMove = null;
     NdPoint currentMoveHistory = currentMove;
@@ -83,25 +83,52 @@ public class NavigatingRobot extends AbstractRobot {
      * be called whenever the robots stops.
      */
     private void robotStopped() {
-        if(currentMove == getZone().getLocation()) {
-            currentMoveHistory = plannedMoves.poll();
-        } else {
-            currentMoveHistory = currentMove;
-        }
-        currentMove = null;
         if (isCollided()) {
+            /**
+             * Save the current move in case the bot wishes to navigate around the obstacle.
+             */
+            if(currentMove == getZone().getLocation()) {
+                // If we're already at the location, get the next one.
+                currentMoveHistory = plannedMoves.poll();
+            } else {
+                currentMoveHistory = currentMove;
+            }
+
             LOGGER.warn("Motion planning failed. Canceling planned path. Collision flag is " + super.isCollided());
             plannedMovesHistory = new LinkedList(plannedMoves);
             plannedMoves.clear();
             return;
         }
+        currentMove = null;
         useNextTarget();
+    }
+
+
+
+    /**
+     * Let the robot move to the next planned target on the stack. This will clear the {@link #collided} flag. Always
+     * erases the current target.
+     */
+    public void useNextTarget() {
+        currentMove = null;
+        if (plannedMoves.isEmpty()) {
+            // we're there.
+            //targetLocation = null;
+            updateDrawPath();
+            return;
+        }
+
+        // we arrived at the inbetween target
+        currentMove = plannedMoves.poll();
+        super.setTargetLocation(currentMove);
+    }
+
+    private void updateDrawPath() {
+        path.setPath(new ArrayList(plannedMoves));
     }
 
     @Override
     public void setTargetLocation(NdPoint p) {
-        targetLocation = p;
-
         if (plannedMoves == null) {
             throw new InternalError("plannedMoves==null. How is this possible??");
         }
@@ -128,32 +155,8 @@ public class NavigatingRobot extends AbstractRobot {
         useNextTarget(); // make the bot use the new path.
     }
 
-    /**
-     * Let the robot move to the next planned target on the stack. This will clear the {@link #collided} flag. Always
-     * erases the current target.
-     */
-    public void useNextTarget() {
-        currentMove = null;
-        if (plannedMoves.isEmpty()) {
-            // we're there.
-            targetLocation = null;
-            updateDrawPath();
-            return;
-        }
-
-        // we arrived at the inbetween target
-        currentMove = plannedMoves.poll();
-        super.setTargetLocation(currentMove);
-    }
-
-    private void updateDrawPath() {
-        path.setPath(new ArrayList(plannedMoves));
-    }
-
     @Override
     public void setTarget(BoundedMoveableObject target) {
-        targetLocation = target.getLocation();
-
         // clear old path.
         plannedMoves.clear();
         Zone startpt = ZoneLocator.getNearestZone(this.getLocation());
@@ -162,6 +165,7 @@ public class NavigatingRobot extends AbstractRobot {
         for (Object o : context.getObjects(Zone.class)) {
             allnavs.add((Zone) o);
         }
+
         // plan the path between the Zones
         List<Zone> path = PathPlanner.findPath(allnavs, startpt, targetpt);
         if (path.isEmpty()) {
@@ -173,6 +177,7 @@ public class NavigatingRobot extends AbstractRobot {
         }
         // and add the real target
         plannedMoves.add(target.getLocation());
+
         // make the bot use the new path.
         updateDrawPath();
         useNextTarget();
@@ -205,60 +210,32 @@ public class NavigatingRobot extends AbstractRobot {
      * <p/>
      * Continue with normal path after this.
      */
-    public void navigateObstacles(boolean useEntireMap) {
-        LOGGER.debug("Navigate block started");
+    public void navigateObstacles() {
         Zone start = getZone();
         Zone end = start;
 
         List<Zone> navZones = new ArrayList<Zone>();
         Set<Zone> referenceZones;
-        if (useEntireMap) {
-            referenceZones = getAllZonesInMap();
-        }
-        else {
-            // Make a copy!
-            referenceZones = new HashSet(start.getNeighbours());
-            referenceZones.add(start);
-        }
+
+        referenceZones = getAllZonesInMap();
 
         // Search for the zone we're going towards.
-        boolean match = false;
         for (Zone zone : referenceZones) {
+            navZones.add(zone);
             if (zone.getBoundingBox().contains(currentMoveHistory.getX(), currentMoveHistory.getY())) {
-                match = true;
                 end = zone;
                 break;
             }
         }
 
-        // If we didn't find it yet, search over all zones, and
-        // immediately run pathfinding over the entire map.
-        if(!match) {
-            referenceZones = getAllZonesInMap();
-
-            for (Zone zone : referenceZones) {
-                navZones.add(zone);
-                if (zone.getBoundingBox().contains(currentMoveHistory.getX(), currentMoveHistory.getY())) {
-                    end = zone;
-                }
-            }
-        } else {
-            // First try to find a path using the current zone and that of the destination zone.
-            navZones.add(start);
-            navZones.add(end);
-        }
-
-        List<NdPoint> path = PathPlanner.findPath(navZones, getObstacles(), start, end);
-        if (path.isEmpty() && !useEntireMap) {
-            LOGGER.debug("No path found, checking entire map");
-            navigateObstacles(true);
-        }
-        else if (path.isEmpty() && useEntireMap) {
-            LOGGER.debug("No path found. giving up.");
+        // the end isn't rounded since maps never have .5 coordinates.
+        NdPoint startLocationRounded = new NdPoint((int) getLocation().getX(), (int) getLocation().getY());
+        List<NdPoint> path = PathPlanner.findPath(navZones, getObstacles(), startLocationRounded, end.getLocation());
+        if (path.isEmpty()) {
+            LOGGER.debug("No alternative path found.");
             throw new IllegalArgumentException("target " + targetLocation + " is unreachable for " + this);
-        }
-        else {
-            LOGGER.debug("Found new path");
+        } else {
+            LOGGER.debug("Found path around obstacle.");
             // Now we just push the new points to the plannedMoved queue and sit back and relax!.
             for (NdPoint p : path) {
                 plannedMoves.add(p);
@@ -284,4 +261,7 @@ public class NavigatingRobot extends AbstractRobot {
         }
         return zones;
     }
+
+
+
 }

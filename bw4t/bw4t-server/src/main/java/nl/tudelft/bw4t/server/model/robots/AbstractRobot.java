@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
+import nl.tudelft.bw4t.map.renderer.MapRenderSettings;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.logging.BotLog;
@@ -59,6 +60,11 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     public static final double MIN_MOVE_DISTANCE = .001;
     /** The distance which it can reach with its arm to pick up a block. */
     public static final double ARM_DISTANCE = 1;
+
+    /**
+     * The amount of padding between bots moving around the map.
+     */
+    public static final double MOVEMENT_CLEARANCE = 1;
     
     /** The name of the robot. */
     private final String name;
@@ -431,7 +437,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		                LOGGER.log(BotLog.BOTLOG, "Bot " + this.name + " collided.");
 		                stopRobot();
 		            } catch(DestinationOccupiedException e) {
-                        LOGGER.debug("Collision!");
                         collided = true;
                         obstacles.add(e.getTileOccupiedBy());
                         stopRobot();
@@ -456,7 +461,10 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
             for(GridCell<AbstractRobot> cell : getNeighbours()) {
                 for(AbstractRobot bot : cell.items()) {
                     if(this != bot) {
-                        if(box.intersects(bot.getBoundingBox())) {
+                        if(box.intersects(bot.getBoundingBox())
+                                || bot.getBoundingBox().intersects(box)
+                                || box.contains(bot.getBoundingBox())
+                                || bot.getBoundingBox().contains(box)) {
                                 throw new DestinationOccupiedException("Grid [" + destination.getX() + "," + destination.getY()
                                         + "] is occupied by " + bot, bot);
                         }
@@ -476,8 +484,11 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         Rectangle2D.Double box = new Rectangle2D.Double();
         box.x = destination.getX();
         box.y = destination.getY();
-        box.width = getSize();
-        box.height = getSize();
+        box.width = getBoundingBox().getWidth();
+        box.height = getBoundingBox().getHeight();
+
+        box.x = box.x - (box.width / 2);
+        box.y = box.y - (box.height / 2);
         return box;
     }
 
@@ -490,7 +501,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         GridPoint location = getGridLocation();
 
         // Check one block further than your own size for other bots.
-        GridCellNgh<AbstractRobot> nghCreator = new GridCellNgh<AbstractRobot>(grid, location, AbstractRobot.class, getSize() + 1, getSize() + 1);
+        GridCellNgh<AbstractRobot> nghCreator = new GridCellNgh<AbstractRobot>(grid, location, AbstractRobot.class, 5, 5);
         List<GridCell<AbstractRobot>> gridCells = nghCreator.getNeighborhood(true);
         return gridCells;
     }
