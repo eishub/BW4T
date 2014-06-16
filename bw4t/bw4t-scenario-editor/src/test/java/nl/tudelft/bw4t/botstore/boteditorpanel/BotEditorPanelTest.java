@@ -52,6 +52,7 @@ public class BotEditorPanelTest {
     @After
     public final void dispose() {
         editor.dispose();
+        scenarioEditor.dispose();
     }
 
     /** testing the initial slider setup */

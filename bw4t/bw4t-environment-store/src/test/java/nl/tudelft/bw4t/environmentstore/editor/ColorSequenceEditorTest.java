@@ -26,7 +26,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class ColorSequenceEditorTest {
 
-    private static final int DELAY = 50;
+    private static final int DELAY = 500;
     private JFrame frame;
     private ColorSequenceController csc;
     private ColorSequenceEditor cse1;
