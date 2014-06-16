@@ -15,10 +15,10 @@ import nl.tudelft.bw4t.map.EntityType;
 
 public final class BotConfig implements Serializable, Cloneable {
 	private static final long serialVersionUID = -4261058226493472776L;
+	
+	public static final String DEFAULT_GOAL_FILENAME_REFERENCE = "robot";
 
-    public static final String DEFAULT_GOAL_FILENAME_REFERENCE = "robot";
-
-    public static final String DEFAULT_GOAL_FILENAME = "robot.goal";
+	public static final String DEFAULT_GOAL_FILENAME = "robot.goal";
 
 	private String name = "Bot";
 
@@ -54,7 +54,7 @@ public final class BotConfig implements Serializable, Cloneable {
 	 * Sets the name of the bot.
 	 * 
 	 * @param name
-	 *            The name of the bot.
+	 * The name of the bot.
 	 */
 	@XmlElement
 	public void setBotName(String name) {
