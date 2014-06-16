@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.DefaultConfigurationValues;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
@@ -43,10 +44,10 @@ class MenuOptionNew extends AbstractMenuOption {
 	 *            The action event.
 	 */
 	public void actionPerformed(final ActionEvent e) {
-		ConfigurationPanel configPanel = getController().getMainView()
-				.getMainPanel().getConfigurationPanel();
-		EntityPanel entityPanel = getController().getMainView()
-				.getMainPanel().getEntityPanel();
+		ScenarioEditor mainView = getController().getMainView();
+		MainPanel mainPanel = mainView.getMainPanel();
+		ConfigurationPanel configPanel = mainPanel.getConfigurationPanel();
+		EntityPanel entityPanel = mainPanel.getEntityPanel();
 
 		// Check if current config is different from last saved config
 		if (getController().hasConfigBeenModified()) {
@@ -67,7 +68,7 @@ class MenuOptionNew extends AbstractMenuOption {
 		// reset the epartner panel
 		resetEpartnerTable(entityPanel);
 
-        getController().getMainView().setWindowTitle("Untitled");
+        mainView.setWindowTitle("Untitled");
 	}
 
 	/**
@@ -82,8 +83,10 @@ class MenuOptionNew extends AbstractMenuOption {
 
         if (response == JOptionPane.YES_OPTION) {
         	saveFile();
-        	getController().getMainView().getMainPanel()
-        			.getConfigurationPanel().updateOldValues();
+        	ScenarioEditor mainView = getController().getMainView();
+			MainPanel mainPanel = mainView.getMainPanel();
+			ConfigurationPanel configurationPanel = mainPanel.getConfigurationPanel();
+			configurationPanel.updateOldValues();
         	getModel().updateOldBotConfigs();
         }
     }

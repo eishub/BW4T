@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -16,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentListener;
 
 import nl.tudelft.bw4t.scenariogui.DefaultConfigurationValues;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
@@ -490,6 +493,38 @@ public class ConfigurationPanel extends JPanel {
     
     public JTextField getMapFileTextField() {
         return mapFileTextField;
+    }
+    
+    public void addClientIPController(DocumentListener controller) {
+    	getClientIPTextField().getDocument().addDocumentListener(controller);
+    }
+    
+    public void addClientPortController(DocumentListener controller) {
+    	getClientPortTextField().getDocument().addDocumentListener(controller);
+    }
+    
+    public void addServerIPController(DocumentListener controller) {
+    	getServerIPTextField().getDocument().addDocumentListener(controller);
+    }
+    
+    public void addServerPortController(DocumentListener controller) {
+    	getServerPortTextField().getDocument().addDocumentListener(controller);
+    }
+    
+    public void addGUIYesCheckboxController(ItemListener controller) {
+    	getGUIYesCheckbox().addItemListener(controller);
+    }
+    
+    public void addGUINoCheckboxController(ItemListener controller) {
+    	getGUINoCheckbox().addItemListener(controller);
+    }
+    
+    public void addMapFileController(DocumentListener controller) {
+    	getMapFileTextField().getDocument().addDocumentListener(controller);
+    }
+
+    public void addMapFileButtonController(ActionListener controller) {
+		getChooseMapFile().addActionListener(controller);
     }
     
 }

@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.scenariogui.editor.gui;
 
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JMenu;
@@ -141,5 +142,28 @@ public class MenuBar extends JMenuBar {
         this.lastFileLocation = fileLocation;
     }
 
+    public void addExitController(ActionListener controller) {
+    	getMenuItemFileExit().addActionListener(controller);
+    }
+
+    public void addNewController(ActionListener controller) {
+    	getMenuItemFileNew().addActionListener(controller);
+    }
+
+    public void addOpenController(ActionListener controller) {
+    	getMenuItemFileOpen().addActionListener(controller);
+    }
+
+    public void addSaveController(ActionListener controller) {
+    	getMenuItemFileSave().addActionListener(controller);
+    }
+
+    public void addSaveAsController(ActionListener controller) {
+    	getMenuItemFileSaveAs().addActionListener(controller);
+    }
+
+    public void addExportController(ActionListener controller) {
+    	getMenuItemFileExport().addActionListener(controller);
+    }
 
 }
