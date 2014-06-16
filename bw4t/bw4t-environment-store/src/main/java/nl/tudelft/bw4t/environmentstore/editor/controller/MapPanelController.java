@@ -243,7 +243,6 @@ public class MapPanelController implements ChangeListener {
 	 */
 	void addEntities(NewMap map, double centerx, double centery) {
 		for (int n=1; n <= numberOfEntities; n++) {
-			System.out.println(n%4);
 			if (n%4 == 1) {
 				map.addEntity(new Entity("Bot" + n, new Point(centerx-2.5, centery-2.5)));
 			} else if(n%4 == 2) {
