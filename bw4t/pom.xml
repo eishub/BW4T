@@ -16,7 +16,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<sonar.projectKey>nl.tudelft.bw4t</sonar.projectKey>
-		<sonar.projectName>BW4T</sonar.projectName>
+		<sonar.projectName>BW4T-Development</sonar.projectName>
 		<sonar.projectVersion>3.3.0</sonar.projectVersion>
 		<sonar.language>java</sonar.language>
 		<sonar.sources>src/main</sonar.sources>
