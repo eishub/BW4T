@@ -108,7 +108,7 @@ public class SizeDialog extends JFrame {
 		
 		setTitle("Size Dialog");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 200);
+		setBounds(100, 100, 600, 230);
 		getContentPane().setLayout(new MigLayout("", "[grow][grow][][][][][][][][grow]", "[][][][grow]"));
 		
 		getContentPane().add(leftPanel, "cell 0 0 1 4,alignx left,growy");
