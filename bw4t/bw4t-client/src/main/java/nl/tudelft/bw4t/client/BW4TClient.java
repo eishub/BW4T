@@ -1,29 +1,5 @@
 package nl.tudelft.bw4t.client;
 
-import java.net.MalformedURLException;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-
-import nl.tudelft.bw4t.client.environment.EntityNotifiers;
-import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-import nl.tudelft.bw4t.client.startup.ConfigFile;
-import nl.tudelft.bw4t.client.startup.InitParam;
-import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.network.BW4TClientActions;
-import nl.tudelft.bw4t.network.BW4TServerActions;
-import nl.tudelft.bw4t.network.BW4TServerHiddenActions;
-import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
-
-import org.apache.log4j.Logger;
-
-import eis.EnvironmentInterfaceStandard;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
 import eis.exceptions.ManagementException;
@@ -34,6 +10,26 @@ import eis.iilang.Action;
 import eis.iilang.EnvironmentState;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import nl.tudelft.bw4t.client.environment.EntityNotifiers;
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.client.startup.ConfigFile;
+import nl.tudelft.bw4t.client.startup.InitParam;
+import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.network.BW4TClientActions;
+import nl.tudelft.bw4t.network.BW4TServerActions;
+import nl.tudelft.bw4t.network.BW4TServerHiddenActions;
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import org.apache.log4j.Logger;
 
 /**
  * A client remote object that can be registered to a BW4TServer. This object lives at the client side.

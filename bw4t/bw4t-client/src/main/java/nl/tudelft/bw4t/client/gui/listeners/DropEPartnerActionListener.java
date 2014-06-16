@@ -10,7 +10,7 @@ import eis.iilang.Percept;
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.environment.Launcher;
 
-public class DropEPartnerActionListener extends ClientActionListener {
+public class DropEPartnerActionListener extends AbstractClientActionListener {
     private static final Logger LOGGER = Logger.getLogger(DropEPartnerActionListener.class);
 
     public DropEPartnerActionListener(ClientController controller) {

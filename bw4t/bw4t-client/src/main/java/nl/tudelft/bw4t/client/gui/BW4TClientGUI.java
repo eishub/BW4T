@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.client.gui;
 
+import eis.exceptions.ManagementException;
 import eis.iilang.Identifier;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
@@ -9,7 +10,6 @@ import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.io.IOException;
 import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -34,7 +34,6 @@ import nl.tudelft.bw4t.client.gui.listeners.TeamListMouseListener;
 import nl.tudelft.bw4t.client.gui.menu.ComboAgentModel;
 import nl.tudelft.bw4t.map.renderer.MapRenderer;
 import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
-
 import org.apache.log4j.Logger;
 
 /**
@@ -123,16 +122,14 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
     }
 
     /**
-     * Instantiates a new bw4t client gui.
-     * 
      * @param env
-     *            the env
+     *            - The {@link RemoteEnvironment} that we are rendering.
      * @param entityId
-     *            , the id of the entity that needs to be displayed
+     *            - The id of the entity that needs to be displayed.
      * @param humanAgent
-     *            , whether a human is supposed to control this panel
+     *            - Whether a human is supposed to control this panel.
      * @throws IOException
-     *             if map can't be loaded.
+     *             Thrown if map can't be loaded.
      */
     public BW4TClientGUI(RemoteEnvironment env, String entityId, HumanAgent humanAgent) throws IOException {
         environment = env;
@@ -141,18 +138,16 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
     }
 
     /**
-     * Instantiates a new bw4t client gui.
-     * 
      * @param env
-     *            the BW4TRemoteEnvironment that we are rendering
+     *            - The {@link RemoteEnvironment} that we are rendering.
      * @param entityId
-     *            , the id of the entity that needs to be displayed
+     *            - The id of the entity that needs to be displayed.
      * @param goal
-     *            , if this gui is for displaying a goal agent
+     *            - {@code true} if this GUI is for displaying a goal agent, otherwise {@code false}.
      * @param humanPlayer
-     *            the human player
+     *            - {@code true} if the entity is human, otherwise {@code false}.
      * @throws IOException
-     *             if map can't be loaded.
+     *             Thrown if map can't be loaded.
      */
     public BW4TClientGUI(RemoteEnvironment env, String entityId, boolean goal, boolean humanPlayer) throws IOException {
         environment = env;
@@ -291,13 +286,11 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
     }
 
     /**
-     * Join.
+     * Creates a string containing each element of chatHistory with the filler appended to them.
      * 
-     * @param chatHistory
-     *            the chat history
-     * @param filler
-     *            the filler
-     * @return the string
+     * @param chatHistory A String {@link Iterator} to containing the elements to combine.
+     * @param filler A filler String to append after each String.
+     * @return The String elements with fillers.
      */
     private String join(Iterable<String> chatHistory, String filler) {
         StringBuilder sb = new StringBuilder();
@@ -312,7 +305,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
      * chat window contained in the GUI.
      * 
      * @param parameters
-     *            , the action parameters containing the message sender and the message itself.
+     *            - The action parameters containing the message sender and the message itself.
      * @return a null percept as no real percept should be returned
      */
     public Percept sendToGUI(List<Parameter> parameters) {
@@ -323,29 +316,22 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
         return null;
     }
 
-    public JTextArea getChatSession() {
-        return chatSession;
-    }
-
     public void setChatSession(JTextArea chatSession) {
         this.chatSession = chatSession;
+    }
+
+    public void setSelectedLocation(int x, int y) {
+        this.selectedLocation = new Point(x, y);
+    }
+
+    public JTextArea getChatSession() {
+        return chatSession;
     }
 
     public Point getSelectedLocation() {
         return selectedLocation;
     }
 
-    /**
-     * Sets the selected location.
-     * 
-     * @param x
-     *            the x
-     * @param y
-     *            the y
-     */
-    public void setSelectedLocation(int x, int y) {
-        this.selectedLocation = new Point(x, y);
-    }
 
     /**
      * @return the mapController
