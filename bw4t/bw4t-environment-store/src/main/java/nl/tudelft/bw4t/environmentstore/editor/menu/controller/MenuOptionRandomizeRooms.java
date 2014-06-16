@@ -27,6 +27,7 @@ public class MenuOptionRandomizeRooms extends AbstractMenuOption {
     	int rows = mpc.getZoneControllers().length;
     	int cols = mpc.getZoneControllers()[0].length;
     	int maxRooms = RandomMapCreator.maxRoomsPossible(rows, cols);
+    	maxRooms = (int) (Math.random() * (maxRooms*0.9-maxRooms*0.3) + maxRooms*0.3);
     	
         ZoneModel[][] model = RandomMapCreator.createRandomGrid(rows, cols, maxRooms);
 
