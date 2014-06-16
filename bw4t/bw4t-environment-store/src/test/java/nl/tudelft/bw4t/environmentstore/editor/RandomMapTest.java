@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.map.editor.controller;
+package nl.tudelft.bw4t.environmentstore.editor;
 
 import nl.tudelft.bw4t.environmentstore.editor.model.RandomMapCreator;
 
