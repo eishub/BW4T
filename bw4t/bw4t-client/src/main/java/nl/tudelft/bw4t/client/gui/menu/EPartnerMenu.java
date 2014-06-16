@@ -7,6 +7,7 @@ import javax.swing.text.View;
 
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.DropEPartnerActionListener;
+import nl.tudelft.bw4t.client.gui.listeners.EPartnerMessageSenderActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.GoToBlockActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.PickUpActionListener;
@@ -40,6 +41,9 @@ public class EPartnerMenu {
             menuItem = new JMenuItem(room.getName());
             menuItem.addActionListener(new MessageSenderActionListener(
                     new BW4TMessage(MessageType.IWANTTOGO, room.getName(), "", 0), gui.getController()));
+           /* menuItem.addActionListener(new EPartnerMessageSenderActionListener(
+                    new BW4TMessage(MessageType.IWANTTOGO, room.getName(), "", 0),
+                    gui.getController(), gui.getController().getMapController()));*/
             submenu.add(menuItem);
         }
         
