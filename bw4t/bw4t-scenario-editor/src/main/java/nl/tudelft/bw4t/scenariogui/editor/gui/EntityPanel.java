@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -21,9 +22,13 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.TableModelListener;
 import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+
+
 
 
 import nl.tudelft.bw4t.map.EntityType;
@@ -517,4 +522,49 @@ public class EntityPanel extends JPanel {
 	public void setEpartnerStore(boolean es) {
 		this.es = es;
 	}
+	
+	public void addNewBotController(ActionListener controller) {
+		getNewBotButton().addActionListener(controller);
+	}
+
+	public void addModifyBotController(ActionListener controller) {
+		getModifyBotButton().addActionListener(controller);
+	}
+
+	public void addDeleteBotController(ActionListener controller) {
+		getDeleteBotButton().addActionListener(controller);
+	}
+
+	public void addNewEpartnerController(ActionListener controller) {
+		getNewEPartnerButton().addActionListener(controller);
+	}
+	
+	public void addModifyEpartnerController(ActionListener controller) {
+		getModifyEPartnerButton().addActionListener(controller);
+	}
+
+	public void addDeleteEpartnerController(ActionListener controller) {
+		getDeleteEPartnerButton().addActionListener(controller);
+	}
+
+	public void addDropDownController(ActionListener controller) {
+		getDropDownButton().addActionListener(controller);
+	}
+
+	public void addBotTableModelController(TableModelListener controller) {
+		getBotTableModel().addTableModelListener(controller);
+	}
+
+	public void addEpartnerTableModelController(TableModelListener controller) {
+		getEPartnerTableModel().addTableModelListener(controller);
+	}
+	
+	public void addBotTableController(TableModelListener controller) {
+		getBotTable().getModel().addTableModelListener(controller);
+	}
+
+	public void addEpartnerTableController(TableModelListener controller) {
+		getEPartnerTable().getModel().addTableModelListener(controller);
+	}
+
 }
