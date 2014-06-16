@@ -184,6 +184,13 @@ public abstract class AbstractMenuOption implements ActionListener {
 	 * Exit the editor with a check whether the user really wants to quit.
 	 */
 	public void exitEditor() {
+		if(envController.notAnEmptyMap()) {
+	        boolean doSave = envController.promptUserToSave();
+
+	        if (doSave) {
+	        	saveFile(true);
+	        }
+		}
         boolean doQuit = envController.promptUserToQuit();
 
         if (doQuit) {
