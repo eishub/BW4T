@@ -323,24 +323,21 @@ public class MapPanelController implements ChangeListener {
 				int y = (int) output[row][col].getBoundingbox().getY();
 				if (output[row][col].getType() == Type.ROOM) {
 					if (room.getZoneModel().hasDoor(ZoneModel.NORTH)) {
-						output[row][col].addDoor(new Door(new Point(x
-								+ ROOMWIDTH / 2, y),
+						output[row][col].addDoor(new Door(new Point(x, y - ROOMHEIGHT/2),
 								Door.Orientation.HORIZONTAL));
 					}
 					if (room.getZoneModel().hasDoor(ZoneModel.EAST)) {
 						output[row][col].addDoor(new Door(new Point(x
-								+ ROOMWIDTH, y + ROOMHEIGHT / 2),
-								Door.Orientation.HORIZONTAL));
+								+ ROOMWIDTH/2, y),
+								Door.Orientation.VERTICAL));
 					}
 					if (room.getZoneModel().hasDoor(ZoneModel.SOUTH)) {
-						output[row][col].addDoor(new Door(new Point(x
-								+ ROOMWIDTH / 2, y + ROOMHEIGHT),
+						output[row][col].addDoor(new Door(new Point(x, y + ROOMHEIGHT/2),
 								Door.Orientation.HORIZONTAL));
 					}
 					if (room.getZoneModel().hasDoor(ZoneModel.WEST)) {
-						output[row][col]
-								.addDoor(new Door(new Point(x, y + ROOMHEIGHT
-										/ 2), Door.Orientation.HORIZONTAL));
+						output[row][col].addDoor(new Door(new Point(x - ROOMWIDTH/2, 
+								y), Door.Orientation.VERTICAL));
 					}
 				}
 				if (room.isStartZone()) {
