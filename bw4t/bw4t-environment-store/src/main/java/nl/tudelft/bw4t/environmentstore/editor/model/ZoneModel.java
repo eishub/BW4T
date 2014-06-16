@@ -43,6 +43,11 @@ public class ZoneModel {
 
 		this.isStartZone = isStartZone(zone);
 		this.isDropZone = isDropZone(zone);
+		
+		this.setDoor(EAST, zone.hasEast());
+		this.setDoor(NORTH, zone.hasNorth());
+		this.setDoor(SOUTH, zone.hasSouth());
+		this.setDoor(WEST, zone.hasWest());
 	}
 	
 	public ZoneModel(Node n) {
