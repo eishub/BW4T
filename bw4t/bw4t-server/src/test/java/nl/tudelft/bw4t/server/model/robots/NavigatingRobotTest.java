@@ -63,7 +63,7 @@ public class NavigatingRobotTest {
         int cap = 2;
         int cap2 = 1;
         bot = new NavigatingRobot("Bot1", mockedSpace, mockedContext, true, cap);
-        bot2 = new NavigatingRobot("Bot2", mockedSpace, mockedOtherContext, true, cap2);
+        bot2 = new NavigatingRobot("Bot2", mockedSpace, mockedOtherContext, false, cap2);
         bot3 = new NavigatingRobot("Bot3", mockedOtherSpace, mockedContext, true, cap2);
         bot4 = null;
         bot5 = new NavigatingRobot("Bot5", null, mockedContext, true, cap2);
@@ -216,5 +216,36 @@ public class NavigatingRobotTest {
         assertEquals(type, MoveType.ENTER_CORRIDOR);
     }
  
- 
+    /*    @Test
+    public void getCurrentDoorTest() {
+        bot.getCurrentDoor(1, 1);
+    }
+*/
+/*    @Test
+    public void moveByDisplacementTest() {
+        bot.moveByDisplacement(1, 1);
+        assertEquals(bot.getLocation(), new NdPoint(1, 1));
+    }
+*/
+    @Test
+    public void clearCollidedTest() {
+        bot.setCollided(true);
+        assertEquals(bot.isCollided(), true);
+        
+        bot.clearCollided();
+        assertEquals(bot.isCollided(), false);
+    }
+    
+    @Test
+    public void isOneBotPerZoneTest() {
+        assertEquals(true, bot.isOneBotPerZone());
+        assertEquals(false, bot2.isOneBotPerZone());
+    }
+    
+    @Test
+    public void getSizeTest() {
+        bot.setSize(2);
+        assertEquals(bot.getSize(), 2);
+    }
+
 }
