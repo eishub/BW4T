@@ -25,7 +25,7 @@ public class EnvironmentStore extends JFrame {
 	
 	private EnvironmentStoreController envController;
 	
-	private String windowName = "BW4T Extensive Map Editor";
+	private String windowName = "Environment Store";
 	
 	private ExplanationPanel explanationPanel;
 	
@@ -149,7 +149,7 @@ public class EnvironmentStore extends JFrame {
      * @param str is the filename that should be stripped
      * @return the filename without extension
      */
-    static String stripExtension (String str) {
+    public String stripExtension (String str) {
         // Handle null case specially.
         if (str == null) return null;
         // Get position of last '.'.
