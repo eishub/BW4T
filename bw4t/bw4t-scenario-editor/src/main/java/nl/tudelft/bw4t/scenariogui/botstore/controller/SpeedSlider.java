@@ -28,7 +28,7 @@ public class SpeedSlider extends MouseAdapter {
     @Override 
     public void mouseReleased(MouseEvent arg0) {
     	BotController currentController = view.getBotController();
-    	currentController.updateConfig(view);
+    	currentController.getBotConfig().setBotSpeed(view.getSpeedSlider().getValue());
     	currentController.setNewBatteryValue(view);
     }
 }
