@@ -34,19 +34,31 @@ public class MessageSenderActionListener extends ClientActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        
+        /** Finds the names of the receivers of the message: */
         String receiver = (String) gui.getAgentSelector().getModel().getSelectedItem();
-        if (!Launcher.getEnvironment().isConnectedToGoal()) {
-            try {
-                getController().getHumanAgent().sendMessage(receiver, message);
-            } catch (Exception e1) {
-                LOGGER.error("Could not send message to all other bots.", e1);
-            }
-        } else {
-            List<Percept> percepts = new LinkedList<Percept>();
-            Percept percept = new Percept("sendMessage", new Identifier(receiver), MessageTranslator.translateMessage(
-                    message, getController().getMapController().getTheBot().getName()));
-            percepts.add(percept);
-            getController().setToBePerformedAction(percepts);
+        String ownName = getController().getMapController().getTheBot().getName();
+        String[] receivers = new String[] { ownName, receiver };
+        if ("all".equals(receiver) || ownName.equals(receiver)) {
+            receivers = new String[] { receiver };
         }
+        
+        /** Sends the message to the receiver(s): */
+        for (String name : receivers) {
+            if (!Launcher.getEnvironment().isConnectedToGoal()) {
+                try {
+                    getController().getHumanAgent().sendMessage(name, message);
+                } catch (Exception e1) {
+                    LOGGER.error("Could not send message to all other bots.", e1);
+                }
+            } else {
+                List<Percept> percepts = new LinkedList<Percept>();
+                Percept percept = new Percept("sendMessage", new Identifier(name), MessageTranslator.translateMessage(
+                        message, ownName));
+                percepts.add(percept);
+                getController().setToBePerformedAction(percepts);
+            }
+        }
+        
     }
 }
