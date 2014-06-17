@@ -37,22 +37,44 @@ public class EPartnerMessageSenderActionListener extends ClientActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!Launcher.getEnvironment().isConnectedToGoal()) {
-            try {
-                
-              /*  String epartnerName = mapController.getViewEPartner(mapController.getTheBot().getHoldingEpartner()).getName();
-                getController().getHumanAgent().sendMessage(
-                        epartnerName, message);*/
-                getController().getHumanAgent().sendMessage("all", message);
-            } catch (Exception e1) {
-                LOGGER.error("Could not send message to e-partner.", e1);
-            }
-        } else {
-            List<Percept> percepts = new LinkedList<Percept>();
-            Percept percept = new Percept("sendMessage", new Identifier("all"/*"epartner"*/), MessageTranslator.translateMessage(
-                    message, getController().getMapController().getTheBot().getName()));
-            percepts.add(percept);
-            getController().setToBePerformedAction(percepts);
+        
+        /** Finds the names of the receivers of the message: */
+        String eParterName = findEPartner();
+        if (eParterName == null)
+            return;
+        String ownName = getController().getMapController().getTheBot().getName();
+        String[] receivers = new String[] { ownName, eParterName };
+        if (ownName.equals(eParterName)) {
+            receivers = new String[] { eParterName };
         }
+        
+        /** Sends the message to the receiver(s): */
+        for (String name : receivers) {
+            if (!Launcher.getEnvironment().isConnectedToGoal()) {
+                try {
+                    getController().getHumanAgent().sendMessage(name, message);
+                } catch (Exception e1) {
+                    LOGGER.error("Could not send message to e-partner.", e1);
+                }
+            } else {
+                List<Percept> percepts = new LinkedList<Percept>();
+                Percept percept = new Percept("sendMessage", new Identifier(name), MessageTranslator.translateMessage(
+                        message, ownName));
+                percepts.add(percept);
+                getController().setToBePerformedAction(percepts);
+            }
+        }
+        
     }
+    
+    private String findEPartner() {
+        int index = 0;
+        for (String agent : clientGUI.environment.getAgents()) {
+            if (index++ == mapController.getTheBot().getHoldingEpartner()) {
+                return agent;
+            }
+        }
+        return null;
+    }
+    
 }
