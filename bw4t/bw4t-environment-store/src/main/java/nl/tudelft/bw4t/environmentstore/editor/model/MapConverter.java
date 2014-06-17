@@ -158,16 +158,16 @@ public class MapConverter {
      */
     private static void connectRoom(Zone[][] zones, int row, int col) {
         if (zones[row][col].hasNorth()) {
-            connectZone(zones, row, col, row, col - 1);
+            connectZone(zones, row, col, row - 1, col);
         }
         if (zones[row][col].hasEast()) {
-            connectZone(zones, row, col, row + 1, col);
-        }
-        if (zones[row][col].hasSouth()) {
             connectZone(zones, row, col, row, col + 1);
         }
+        if (zones[row][col].hasSouth()) {
+            connectZone(zones, row, col, row + 1, col);
+        }
         if (zones[row][col].hasWest()) {
-            connectZone(zones, row, col, row - 1, col);
+            connectZone(zones, row, col, row, col - 1);
         }
     }
 
