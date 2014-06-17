@@ -121,49 +121,51 @@ public abstract class AbstractMenuOption implements ActionListener {
             return;
         }
         NewMap map = MapConverter.createMap(envController.getMapController().getEnvironmentMap());
-        if (!SolvabilityAlgorithm.mapIsSolvable(map)) {
-        	int response = EnvironmentStore.getOptionPrompt()
-        			.showConfirmDialog(null, "The map is unsolvable.\n"
+        String mapSolve = SolvabilityAlgorithm.mapIsSolvable(map);
+        if (mapSolve != null) {
+        	int response = JOptionPane
+        			.showConfirmDialog(null, "The map is unsolvable. The reason is as follows:\n"
+        					+ mapSolve + "\n"
         			+ "Are you sure you want to save this map?",
         			"Unsolvable map", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         	if (response == JOptionPane.NO_OPTION) {
         		return;
         	}
-        }
-		String path = view.getLastFileLocation();
-
-        if (view.hasLastFileLocation() && !new File(path).exists()) {
-            view.setLastFileLocation(null);
-            currentFileChooser.setCurrentDirectory(new File("."));
-        }
-
+        }  
+	    String path = view.getLastFileLocation();
+	
+	    if (view.hasLastFileLocation() && !new File(path).exists()) {
+	        view.setLastFileLocation(null);
+	        currentFileChooser.setCurrentDirectory(new File("."));
+	    }
+	
 		if (saveAs || !view.hasLastFileLocation()) {
 			currentFileChooser = getCurrentFileChooser();
-
-            int returnVal = currentFileChooser.showSaveDialog(null);
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
+	
+	        int returnVal = currentFileChooser.showSaveDialog(null);
+	        if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = currentFileChooser.getSelectedFile();
-
+	
 				path = file.getAbsolutePath();
-
+	
 				String extension = ".xml";
 				if (!path.endsWith(extension)) {
 					path += extension;
-                    file = new File(path);
+	                file = new File(path);
 				}
-                envController.getMainView().setWindowTitle(file.getName());
-            } else {
+	            envController.getMainView().setWindowTitle(file.getName());
+	        } else {
 				return;
 			}
 		}
 		try {
-            // Check if the file path was not externally deleted.
-            saveXMLFile(path);
-        } catch (JAXBException e) {
-        	EnvironmentStore.showDialog("Saving the map to XML has failed.");
+	        // Check if the file path was not externally deleted.
+	        saveXMLFile(path);
+	    } catch (JAXBException e) {
+	    	EnvironmentStore.showDialog("Saving the map to XML has failed.");
 		} catch (FileNotFoundException e) {
 			EnvironmentStore.showDialog("No file has been found.");
-		}
+		}    
 	}
 	
 
