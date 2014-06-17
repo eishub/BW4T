@@ -19,7 +19,7 @@ public class HumanAgentTest {
     
     @Before
     public void setUp() throws Exception {
-        testAgent = new HumanAgent("Agent1", remoteEnvironment);
+        testAgent = new HumanAgent("Agent1", remoteEnvironment, null);
     }
     
     @Test
