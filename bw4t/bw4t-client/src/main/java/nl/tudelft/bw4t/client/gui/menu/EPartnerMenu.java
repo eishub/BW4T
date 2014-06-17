@@ -54,7 +54,7 @@ public class EPartnerMenu {
         // Robot commands
         BasicMenuOperations.addSectionTitleToPopupMenu("Command my robot to:", gui.getjPopupMenu());
 
-        BasicMenuOperations.addEPartnerPickUpMenuItem(gui);
+        BasicMenuOperations.addEPartnerPickUpMenuItem(gui, ep);
 
         gui.getjPopupMenu().addSeparator();
         gui.getjPopupMenu().add(new JMenuItem("Close menu"));
