@@ -378,14 +378,93 @@ public class EntityPanelTest {
         assertEquals(editor.getController().getModel().getAmountEPartner(), 1);
     }
 
-    /** TODO finish this when the functionality is implemented
-     * Test if the bot dropdown menu when creating a new bot
-     * is shown when the button is clicked.
+   
+    /**
+     * Test if the count of bots is correct after adding a standard
+     * bot to the table.
      */
-    @Ignore
-    public void testBotDropdown() {
-        spyEntityPanel.getDropDownButton().doClick();
-        verify(spyEntityPanel, times(1)).showBotDropDown();
+    @Test
+    public final void testAddStandardBot() {
+        spyEntityPanel.getAddNewStandardBotMenuItem().doClick();
+
+        assertEquals(1, editor.getController().getModel().getAmountBot());
+    }
+    
+    /**
+     * Test if the count of bots is correct after adding a big 
+     * standard bot to the table.
+     */
+    @Test
+    public final void testAddStandardBotBig() {
+        spyEntityPanel.getAddNewStandardBotBigMenuItem().doClick();
+
+        assertEquals(1, editor.getController().getModel().getAmountBot());
+    }
+    
+    /**
+     * Test if the count of bots is correct after adding a standard
+     * gripper bot to the table.
+     */
+    @Test
+    public final void testAddStandardGripperBot() {
+        spyEntityPanel.getAddNewStandardBotGripperMenuItem().doClick();
+
+        assertEquals(1, editor.getController().getModel().getAmountBot());
+    }
+    
+    /**
+     * Test if the count of bots is correct after adding a big 
+     * standard gripper bot to the table.
+     */
+    @Test
+    public final void testAddStandardBotBigGripper() {
+        spyEntityPanel.getAddNewStandardBotBigGripperMenuItem().doClick();
+
+        assertEquals(1, editor.getController().getModel().getAmountBot());
+    }
+    
+    /**
+     * Test if the count of bots is correct after adding a standard
+     * seeer bot to the table.
+     */
+    @Test
+    public final void testAddStandardBotSeeer() {
+        spyEntityPanel.getAddNewStandardBotSeeerMenuItem().doClick();
+
+        assertEquals(1, editor.getController().getModel().getAmountBot());
+    }
+    
+    /**
+     * Test if the count of bots is correct after adding a big 
+     * standard seeer bot to the table.
+     */
+    @Test
+    public final void testAddStandardBotBigSeeer() {
+        spyEntityPanel.getAddNewStandardBotBigSeeerMenuItem().doClick();
+
+        assertEquals(1, editor.getController().getModel().getAmountBot());
+    }
+    
+    /**
+     * Test if the count of bots is correct after adding a standard
+     * communicator bot to the table.
+     */
+    @Test
+    public final void testAddStandardBotCommunicator() {
+        spyEntityPanel.getAddNewStandardBotCommunicatorMenuItem().doClick();
+
+        assertEquals(1, editor.getController().getModel().getAmountBot());
+    }
+    
+    /**
+     * Test if the count of bots is correct after adding a big 
+     * communicator standard bot to the table.
+     */
+    @Test
+    public final void testAddStandardBotBigCommunicator() {
+        spyEntityPanel.getAddNewStandardBotBigCommunicatorMenuItem().doClick();
+
+        assertEquals(1, editor.getController().getModel().getAmountBot());
     }
     
     /**
