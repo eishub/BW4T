@@ -3,12 +3,18 @@ package nl.tudelft.bw4t.server.util;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
+import nl.tudelft.bw4t.server.model.zone.DropZone;
+import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
 import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
+import repast.simphony.context.Context;
+import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 
 /**
@@ -89,8 +95,7 @@ public class PathPlanner {
         return path;
     }
 
-    private static List<NdPoint> returnVacantPoints(List<Zone> zones, List<BoundedMoveableObject> obstacles,
-                                                    int botSize) {
+    private static List<NdPoint> returnVacantPoints(List<Zone> zones, List<BoundedMoveableObject> obstacles) {
         // First generate the points occupied by the obstacles.
         List<NdPoint> obstaclePoints = new ArrayList<NdPoint>();
 
@@ -103,7 +108,7 @@ public class PathPlanner {
         List<NdPoint> zonePoints = new ArrayList<NdPoint>();
         for (Zone zone : zones) {
             // -botSize to allow the bot to move alone walls, etc.
-            zonePoints.addAll(zone.getPointsOccupiedByObject(-botSize));
+            zonePoints.addAll(zone.getPointsOccupiedByObject(0));
         }
 
         // Remove all obstacles points from the list. The remaining list if the one we'll use for pathfinding.
@@ -124,7 +129,11 @@ public class PathPlanner {
                 DefaultWeightedEdge.class);
 
 
-        List<NdPoint> vertices = returnVacantPoints(allZones, obstacles, botSize);
+        List<NdPoint> vertices = returnVacantPoints(allZones, obstacles);
+
+        // Margin is botsize / 2, since the points move under the center of the bot.
+        sanitizeVertices(allZones, vertices, botSize / 2);
+
 
         // Add all the vertices.
         graph.addVertex(start);
@@ -156,6 +165,75 @@ public class PathPlanner {
         }
 
         return graph;
+    }
+
+    private static void sanitizeVertices(List<Zone> zones, List<NdPoint> vertices, int margin) {
+        Context context = BW4TEnvironment.getInstance().getContext();
+
+        ContinuousSpace<Object> space = (ContinuousSpace<Object>) context.getProjection("BW4T_Projection");
+        double width = space.getDimensions().getWidth();
+        double height = space.getDimensions().getHeight();
+
+        Set<NdPoint> invalidPoints = new HashSet<NdPoint>();
+
+        for(Zone zone : zones) {
+            if(zone instanceof Room || zone instanceof DropZone) {
+                // Disallow a band 'margin' thick around rooms.
+                double zx = zone.getBoundingBox().getX();
+                double zy = zone.getBoundingBox().getY();
+
+                double zwidth = zone.getBoundingBox().getWidth();
+                double zheight = zone.getBoundingBox().getHeight();
+
+                // Top bar
+                invalidPoints.addAll(
+                        generateBlock(zx - margin, zy + margin, zx + zwidth + margin, zy)
+                );
+                // Lower bar
+                invalidPoints.addAll(
+                        generateBlock(zx - margin, zy - zheight, zx + zwidth + margin, zy - zheight - margin)
+                );
+                // Left bar
+                invalidPoints.addAll(
+                        generateBlock(zx - margin, zy, zx, zy - zheight)
+                );
+                // Right bar
+                invalidPoints.addAll(
+                        generateBlock(zx + zwidth, zy, zx + zwidth + margin, zy - zheight)
+                );
+            }
+        }
+
+        // And now for the points around the map border.
+
+        // Top bar.
+        invalidPoints.addAll(
+                generateBlock(0, margin, width, 0)
+        );
+        // Bottom bar
+        invalidPoints.addAll(
+                generateBlock(0, height, width, height - margin)
+        );
+        // Left bar
+        invalidPoints.addAll(
+                generateBlock(0, height - margin, margin, margin)
+        );
+        // Right bar
+        invalidPoints.addAll(
+                generateBlock(width - margin, height - margin, width, margin)
+        );
+
+        vertices.removeAll(invalidPoints);
+    }
+
+    private static Set<NdPoint> generateBlock(double x1, double y1, double x2, double y2) {
+        Set<NdPoint> points = new HashSet<NdPoint>();
+        for(double i = x1; i <= x2; i++) {
+            for(double j = y1; j >= y2; j--) {
+                points.add(new NdPoint(i, j));
+            }
+        }
+        return points;
     }
 
     private static SimpleWeightedGraph<Zone, DefaultWeightedEdge> generateZoneGraph(List<Zone> allZones) {
