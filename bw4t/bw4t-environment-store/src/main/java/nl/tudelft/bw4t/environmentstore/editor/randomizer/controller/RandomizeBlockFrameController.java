@@ -28,11 +28,6 @@ public class RandomizeBlockFrameController {
 		getMainView().getApplyButton().addActionListener(
 				this.randomFromSettings = new RandomizeFromSettingsBlock(view, this, null)
 		);
-		
-		// Apply randomly generated blocks to room or sequence
-		getMainView().getApplyButton().addActionListener(
-				new ApplyRandomBlocks(getMainView(), this )
-		);
 		// Cancel Randomizer
 		getMainView().getCancelButton().addActionListener(
 				new CancelRandomBlocks(getMainView())
