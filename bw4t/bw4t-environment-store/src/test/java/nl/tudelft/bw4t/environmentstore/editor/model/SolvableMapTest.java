@@ -40,10 +40,12 @@ public class SolvableMapTest {
 		ZoneModel zm = new ZoneModel();
 		zm.setType(Type.ROOM);
 		zm.setDoor(3, true);
+		zm.setName("DropZone");
+		zm.setDropZone(true);
 		em.setZone(1, 1, zm);
 		zm = new ZoneModel();
 		zm.setType(Type.ROOM);
-		zm.setDoor(0, true);
+		zm.setDoor(2, true);
 		em.setZone(1, 2, zm);
 		zm = new ZoneModel();
 		zm.setType(Type.ROOM);
@@ -55,9 +57,7 @@ public class SolvableMapTest {
 		em.setZone(3, 1, zm);
 		zm = new ZoneModel();
 		zm.setType(Type.ROOM);
-		zm.setName("DropZone");
-		zm.setDropZone(true);
-		zm.setDoor(2, true);
+		zm.setDoor(0, true);
 		em.setZone(3, 2, zm);
 		zm = new ZoneModel();
 		zm.setType(Type.ROOM);
