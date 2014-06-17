@@ -40,8 +40,9 @@ public class EPartnerMessageSenderActionListener extends ClientActionListener {
         
         /** Finds the names of the receivers of the message: */
         String eParterName = findEPartner();
-        if (eParterName == null)
+        if (eParterName == null) {
             return;
+        }
         String ownName = getController().getMapController().getTheBot().getName();
         String[] receivers = new String[] { ownName, eParterName };
         if (ownName.equals(eParterName)) {
