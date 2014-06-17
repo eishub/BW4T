@@ -90,16 +90,6 @@ public abstract class AbstractMenuOption implements ActionListener {
 	}
 	
 	/**
-	 * Opens a dialog that allows the user to choose a map to edit.
-	 * TODO: to write and implement.
-	 */
-	public void openMap() {
-		System.out.println("Opening a new map.");
-		
-		// set opened file for save button
-	}
-	
-	/**
 	 * Saves a file.
 	 */
 	public void saveFile() {
@@ -141,9 +131,10 @@ public abstract class AbstractMenuOption implements ActionListener {
 	
 		if (saveAs || !view.hasLastFileLocation()) {
 			currentFileChooser = getCurrentFileChooser();
-	
-	        int returnVal = currentFileChooser.showSaveDialog(null);
-	        if (returnVal == JFileChooser.APPROVE_OPTION) {
+			currentFileChooser.setFileFilter(FileFilters.xmlFilter());
+			
+            int returnVal = currentFileChooser.showSaveDialog(null);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = currentFileChooser.getSelectedFile();
 	
 				path = file.getAbsolutePath();

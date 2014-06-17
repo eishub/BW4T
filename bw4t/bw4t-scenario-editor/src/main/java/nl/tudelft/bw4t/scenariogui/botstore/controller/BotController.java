@@ -256,12 +256,9 @@ public class BotController {
     public void setNewBatteryValue(BotEditorPanel view) {
     	if (view.isBatteryEnabled()) {
     		double res = getBotBatteryDischargeRate();
-    		botConfig.setBotBatteryDischargeRate(res);
-    		DecimalFormat df = new DecimalFormat("#.######");
+    		DecimalFormat df = new DecimalFormat("#.####");
 	        String value = df.format(res);
 	        view.getBatteryUseValueLabel().setText(padString(value));
-	        System.out.println(padString(value));
-	        System.out.println(view.getBatteryUseValueLabel().getText());
     	}
     }
     
@@ -276,8 +273,8 @@ public class BotController {
      */
     public String padString(String value) {
         StringBuffer buf = new StringBuffer();
-        while (buf.length() < 8) {
-            buf.append("0");
+        while (buf.length() < 4) {
+            buf.append(value);
         }
         return buf.toString();
     }
