@@ -2,6 +2,11 @@ package nl.tudelft.bw4t.scenariogui.epartner.gui;
 
 import nl.tudelft.bw4t.scenariogui.epartner.controller.EpartnerController;
 
+/**
+ * EPartnerViewInterface for the EpartnerFrame
+ * @author Wendy
+ *
+ */
 public interface EPartnerViewInterface {
 	
 	/**
@@ -43,8 +48,17 @@ public interface EPartnerViewInterface {
 	 */
 	boolean getGPS();
 
+	/**
+	 * Returns the reference name in goal.
+	 * 
+	 * @return The reference name in goal.
+	 */
     String getEpartnerReference();
 
+    /**
+	 * Returns the goal file name.
+	 * 
+	 * @return The goal file name.
+	 */
     String getEpartnerGoalFile();
-
 }
