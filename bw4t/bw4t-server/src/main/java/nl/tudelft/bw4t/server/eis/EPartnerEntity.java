@@ -4,7 +4,6 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.tudelft.bw4t.server.RobotEntityInt;
 import nl.tudelft.bw4t.server.eis.translators.BlockWithColorTranslator;
 import nl.tudelft.bw4t.server.eis.translators.BoundedMovableObjectTranslator;
 import nl.tudelft.bw4t.server.eis.translators.ColorTranslator;
@@ -34,7 +33,7 @@ import eis.exceptions.PerceiveException;
 import eis.iilang.Action;
 import eis.iilang.Parameter;
 
-public class EPartnerEntity implements RobotEntityInt {
+public class EPartnerEntity implements EntityInterface {
 
 	static {
         // Register our translators.
