@@ -1,35 +1,29 @@
 package nl.tudelft.bw4t.client;
 
-import eis.eis2java.exception.TranslationException;
-import eis.eis2java.translation.Translator;
-import eis.exceptions.ActException;
-import eis.exceptions.ManagementException;
-import eis.exceptions.PerceiveException;
-import eis.iilang.Action;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.Iterator;
 
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.environment.Launcher;
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 
-import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
 import repast.simphony.scenario.ScenarioLoadException;
-import static org.junit.Assert.assertTrue;
+import eis.eis2java.translation.Translator;
+import eis.exceptions.ManagementException;
+import eis.iilang.Action;
+import eis.iilang.Parameter;
+import eis.iilang.Percept;
 
 /**
  * We test if blocks are properly perceived, picked up and delivered.
  */
 public class BlockTest {
-    
-    private static final Logger LOGGER = Logger.getLogger(BlockTest.class);
     
     /**
      * Client to be used for testing.
