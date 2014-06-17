@@ -33,9 +33,9 @@ public class EPartnerMenu {
         popUpMenu.addSeparator();
         
         // EPartner commands
-        BasicMenuOperations.addSectionTitleToPopupMenu("Use e-partner to:", popUpMenu);
+        BasicMenuOperations.addSectionTitleToPopupMenu("Inform e-partner that:", popUpMenu);
 
-        JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu("Navigate to ", gui.getjPopupMenu());
+        JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu("I am going to ", gui.getjPopupMenu());
         
         for (Zone room : gui.getController().getMapController().getRooms()) {
             menuItem = new JMenuItem(room.getName());
