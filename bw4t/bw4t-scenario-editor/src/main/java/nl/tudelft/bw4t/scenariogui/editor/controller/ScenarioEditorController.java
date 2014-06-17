@@ -58,6 +58,8 @@ public class ScenarioEditorController {
         configurationPanel.addGUINoCheckboxController(new SelectLaunchGUINo(mainPanel));
         configurationPanel.addPathsYesCheckboxController(new SelectVisualizePathsYes(mainPanel));
         configurationPanel.addPathsNoCheckboxController(new SelectVisualizePathsNo(mainPanel));
+        configurationPanel.addCollisionsYesCheckboxController(new SelectEnableCollisionsYes(mainPanel));
+        configurationPanel.addCollisionsNoCheckboxController(new SelectEnableCollisionsNo(mainPanel));
         configurationPanel.addMapFileController(new WriteMapFile(mainPanel));
 		configurationPanel.addMapFileButtonController(new ChooseMapFileListener(mainPanel));
     }
