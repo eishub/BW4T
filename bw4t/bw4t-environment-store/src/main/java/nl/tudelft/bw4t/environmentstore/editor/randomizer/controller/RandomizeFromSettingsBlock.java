@@ -57,7 +57,7 @@ public class RandomizeFromSettingsBlock implements ActionListener{
 			view.dispose();
 		}
 		catch (IllegalArgumentException e) {
-			JOptionPane.showMessageDialog(view, "Choose atleast 1 color");
+			JOptionPane.showMessageDialog(view, "Warning: Choose atleast 1 color");
 		}
 	}
 	

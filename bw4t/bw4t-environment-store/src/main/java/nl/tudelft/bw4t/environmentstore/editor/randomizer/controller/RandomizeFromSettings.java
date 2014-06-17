@@ -56,7 +56,7 @@ public class RandomizeFromSettings implements ActionListener{
 			view.getRandomizedSequence().setText(result.toString());
 		}
 		catch (IllegalArgumentException e){
-			JOptionPane.showMessageDialog(view, "Choose atleast 1 color");
+			JOptionPane.showMessageDialog(view, "Warning: Choose atleast 1 color");
 		}
 	}
 	
