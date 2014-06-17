@@ -317,7 +317,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
 
         botButtonPanel.add(batteryLabel);
         botButtonPanel.add(batteryProgressBar);
-        botButtonPanel.add(botMessageLabel); //TODO: uitzoeken waar de events worden afgehandeld.
+        botButtonPanel.add(botMessageLabel);
         botButtonPanel.add(agentSelector);
         botButtonPanel.add(botMessageButton);
     
