@@ -30,19 +30,21 @@ public class EPartnerMenu {
         menuItem.addActionListener(new DropEPartnerActionListener(gui.getController(), gui));
         popUpMenu.add(menuItem);
         
-        popUpMenu.addSeparator();
-        
-        // EPartner commands
-        BasicMenuOperations.addSectionTitleToPopupMenu("Inform e-partner that:", popUpMenu);
-
-        JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu("I am going to ", gui.getjPopupMenu());
-        
-        for (Zone room : gui.getController().getMapController().getRooms()) {
-            menuItem = new JMenuItem(room.getName());
-            menuItem.addActionListener(new EPartnerMessageSenderActionListener(
-                    new BW4TMessage(MessageType.IWANTTOGO, room.getName(), "", 0), gui));
-            submenu.add(menuItem);
-        }
+        //if (gui.getController().getHumanAgent().isGps()){
+            popUpMenu.addSeparator();
+            
+            // EPartner commands
+            BasicMenuOperations.addSectionTitleToPopupMenu("Inform e-partner that:", popUpMenu);
+    
+            JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu("I am going to ", gui.getjPopupMenu());
+            
+            for (Zone room : gui.getController().getMapController().getRooms()) {
+                menuItem = new JMenuItem(room.getName());
+                menuItem.addActionListener(new EPartnerMessageSenderActionListener(
+                        new BW4TMessage(MessageType.IWANTTOGO, room.getName(), "", 0), gui));
+                submenu.add(menuItem);
+            }
+        //}
         
         popUpMenu.addSeparator();
         popUpMenu.add(new JMenuItem("Close menu"));
