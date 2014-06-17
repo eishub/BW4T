@@ -80,7 +80,7 @@ public class EnvironmentMap {
     }
 
     /**
-     * Get the zone at the given coordinates
+     * Set the zone at the given coordinates
      * 
      * @param row
      *            the row number
@@ -91,7 +91,7 @@ public class EnvironmentMap {
      * @throws ArrayIndexOutOfBoundsException
      *             if the given coords are not within the map
      */
-    public void getZone(int row, int col, ZoneModel zone) {
+    public void setZone(int row, int col, ZoneModel zone) {
         if (zone == null) {
             throw new NullPointerException("A zone can not be null");
         }

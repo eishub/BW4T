@@ -19,14 +19,23 @@ public class RandomMapCreator {
      * @return A 2D array of nodes representing the randomized map.
      */
     public static ZoneModel[][] createRandomGrid(int rows, int cols, int roomCount) {
-    	assert rows > 0 && cols > 0 : "The amount of rows and colums must be"
-    		+ " greater than 0.";
+    	if (rows <= 0) {
+    		throw new IllegalArgumentException("The amount of rows has to be positive and nonzero.");
+    	}
+    	if (cols <= 0) {
+    		throw new IllegalArgumentException("The amount of columns has to be positive and nonzero.");
+    	}
     	Node[][] grid = new Node[rows][cols];
     	initGrid(grid);
     	createRooms(grid);
     	int amountPossibleRooms = maxRoomsPossible(rows, cols);
-    	assert amountPossibleRooms >= roomCount : "The amount of rooms wanted"
-    		+ " cannot be higher than the amount of rooms possible.";
+    	if (amountPossibleRooms < roomCount) {
+    		throw new IllegalArgumentException("The amount of rooms wanted"
+    		+ " cannot be higher than the amount of rooms possible.");
+    	}
+    	if (roomCount < 1) {
+    		throw new IllegalArgumentException("The amount of rooms has to be at least one.");
+    	}
     	List<Node> allRooms = getRooms(grid);
     	List<Node> allCorridors = getCorridors(grid);
     	randomizeCorridors(allCorridors);
@@ -47,6 +56,7 @@ public class RandomMapCreator {
     	for (int i = 0; i < grid.length; i++) {
     		for(int j = 0; j < grid[0].length; j++) {
     			newGrid[i][j] = new ZoneModel(grid[i][j]);
+    			newGrid[i][j].generateNameFromPosition(i, j);
     		}
     	}
     	return newGrid;

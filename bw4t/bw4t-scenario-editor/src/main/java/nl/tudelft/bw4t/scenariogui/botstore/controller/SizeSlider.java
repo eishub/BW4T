@@ -1,14 +1,14 @@
-package nl.tudelft.bw4t.scenariogui.botstore.gui;
+package nl.tudelft.bw4t.scenariogui.botstore.controller;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import nl.tudelft.bw4t.scenariogui.botstore.controller.BotController;
+import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 
 /**
  * Handles actions of the sizeslider
  */
-class SizeSlider extends MouseAdapter {
+public class SizeSlider extends MouseAdapter {
     /**
      * The panel containing the slider.
      */
@@ -28,6 +28,7 @@ class SizeSlider extends MouseAdapter {
     @Override
     public void mouseReleased(MouseEvent arg0) {
     	BotController currentController = view.getBotController();
-    	currentController.setNewBatteryValue(view.getBotSpeed(), view.getBotSize(), view);
+    	currentController.updateConfig(view);
+    	currentController.setNewBatteryValue(view);
     }
 }

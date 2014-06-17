@@ -18,7 +18,16 @@ import javax.swing.SwingConstants;
 import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.botstore.controller.BatteryBox;
 import nl.tudelft.bw4t.scenariogui.botstore.controller.BotController;
+import nl.tudelft.bw4t.scenariogui.botstore.controller.CancelButton;
+import nl.tudelft.bw4t.scenariogui.botstore.controller.GripperBox;
+import nl.tudelft.bw4t.scenariogui.botstore.controller.ResetButton;
+import nl.tudelft.bw4t.scenariogui.botstore.controller.SaveButton;
+import nl.tudelft.bw4t.scenariogui.botstore.controller.SizeSlider;
+import nl.tudelft.bw4t.scenariogui.botstore.controller.SpeedBox;
+import nl.tudelft.bw4t.scenariogui.botstore.controller.SpeedSlider;
+import nl.tudelft.bw4t.scenariogui.botstore.controller.WalkingBox;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
@@ -627,15 +636,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 	}
 
 	/**
-	 * Returns the JCheckbox for custom size.
-	 * 
-	 * @return true if the checkbox is selected.
-	 */
-	public boolean getCustomSize() {
-		return customSizeCheckbox.isSelected();
-	}
-
-	/**
 	 * Returns the JButton for adding a goal file.
 	 * 
 	 * @return The JButton for adding a goal file.
@@ -677,6 +677,10 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 	 */
 	public BotEditor getBotEditor() {
 		return botEditor;
+	}
+	
+	public void setBotEditor(BotEditor editor) {
+		this.botEditor = editor;
 	}
 	
 	/**

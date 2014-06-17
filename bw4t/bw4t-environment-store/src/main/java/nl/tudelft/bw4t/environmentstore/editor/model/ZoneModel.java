@@ -205,7 +205,7 @@ public class ZoneModel {
             final int numColors = validcolors.size();
             Random random = new Random();
             ArrayList<BlockColor> colors = new ArrayList<BlockColor>();
-            for (int i = 0; i < amount; i++) {
+            for (int i = 0; i < random.nextInt(amount); i++) {
                 colors.add(validcolors.get(random.nextInt(numColors)));
             }
             setColors(colors);
