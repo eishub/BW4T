@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 
 import nl.tudelft.bw4t.client.environment.PerceptsHandler;
+import nl.tudelft.bw4t.client.gui.listeners.BatteryProgressBarListener;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
@@ -208,6 +209,9 @@ public class ClientMapController extends AbstractMapController {
         case "robotSize":
             processRobotSize(perceptParameters);
             break;
+        case "battery":
+            processRobotBattery(perceptParameters);
+            break;
         default:
             break;
         }
@@ -370,6 +374,20 @@ public class ClientMapController extends AbstractMapController {
     }
 
     /**
+     * Process the battery percept
+     * @param perceptParameters
+     *          the percept parameters
+     */
+    private void processRobotBattery(List<Parameter> perceptParameters) {
+        double battery = ((Numeral) perceptParameters.get(0)).getValue().doubleValue();
+        theBot.setBatteryLevel(battery);
+
+        for(BatteryProgressBarListener listener : BatteryProgressBarListener.getListeners()) {
+            listener.update();
+        }
+    }
+
+    /**b
      * Negated percepts.
      * 
      * @param parameters
