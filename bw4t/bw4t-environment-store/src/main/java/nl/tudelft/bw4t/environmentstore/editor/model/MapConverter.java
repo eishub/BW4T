@@ -33,80 +33,78 @@ public class MapConverter {
      *             if no dropZone or no startZone is found.
      */
     public static NewMap createMap(EnvironmentMap model) throws MapFormatException {
-        NewMap map = new NewMap();
-        
-        spawnCount = 1;
+    	NewMap map = new NewMap();
 
-        // compute a number of key values
-        double mapwidth = model.getColumns() * MapConverter.ROOMWIDTH;
-        double mapheight = model.getRows() * MapConverter.ROOMHEIGHT;
+    	spawnCount = 4;
 
-        // set the general fields of the map
-        map.setArea(new Point(mapwidth, mapheight));
-        map.setSequence(model.getSequence());
+    	// set the general fields of the map
+    	map.setArea(new Point(model.getColumns() * MapConverter.ROOMWIDTH, 
+    			model.getColumns() * MapConverter.ROOMWIDTH));
+    	map.setSequence(model.getSequence());
 
-        // generate zones for each row:
-        // write room zones with their doors. and the zone in frront
-        // also generate the lefthall and righthall for each row.
-        // connect room and corridor in front of it.
-        // connect all corridor with each other and with left and right hall.
-        boolean foundDropzone = false;
-        boolean foundStartzone = false;
-        Zone[][] output = new Zone[model.getRows()][model.getColumns()];
-        for (int row = 0; row < model.getRows(); row++) {
-            for (int col = 0; col < model.getColumns(); col++) {
-                ZoneModel room = model.getZone(row, col);
+    	
+    	//Check for dropzones/startzones
+    	//For each zonemodel, add the corresponding Zone
+    	boolean foundDropzone = false;
+    	boolean foundStartzone = false;
+    	Zone[][] output = new Zone[model.getRows()][model.getColumns()];
+    	for (int row = 0; row < model.getRows(); row++) {
+    		for (int col = 0; col < model.getColumns(); col++) {
+    			ZoneModel room = model.getZone(row, col);
 
-                if (room.isDropZone()) {
-                    if (foundDropzone) {
-                        throw new MapFormatException("Only one DropZone allowed per map!");
-                    }
-                    foundDropzone = true;
-                }
-                if (room.isStartZone()) {
-                    foundStartzone = true;
-                }
+    			if (room.isDropZone()) {
+    				if (foundDropzone) {
+    					throw new MapFormatException("Only one DropZone allowed per map!");
+    				}
+    				foundDropzone = true;
+    			}
+    			if (room.isStartZone()) {
+    				if (foundStartzone) {
+    					throw new MapFormatException("Only one Starzone allowed per map!");
+    				}
+    				foundStartzone = true;
+    			}
 
-                output[row][col] = new Zone(room.getName(),
-                        new Rectangle(calcX(col), calcY(row), ROOMWIDTH, ROOMHEIGHT), room.getType());
-                int x = (int) output[row][col].getBoundingbox().getX();
-                int y = (int) output[row][col].getBoundingbox().getY();
-                if (output[row][col].getType() == Type.ROOM) {
-                    if (room.hasDoor(ZoneModel.NORTH)) {
-                        output[row][col]
-                                .addDoor(new Door(new Point(x + ROOMWIDTH / 2, y), Door.Orientation.HORIZONTAL));
-                    }
-                    if (room.hasDoor(ZoneModel.EAST)) {
-                        output[row][col].addDoor(new Door(new Point(x + ROOMWIDTH, y + ROOMHEIGHT / 2),
-                                Door.Orientation.HORIZONTAL));
-                    }
-                    if (room.hasDoor(ZoneModel.SOUTH)) {
-                        output[row][col].addDoor(new Door(new Point(x + ROOMWIDTH / 2, y + ROOMHEIGHT),
-                                Door.Orientation.HORIZONTAL));
-                    }
-                    if (room.hasDoor(ZoneModel.WEST)) {
-                        output[row][col]
-                                .addDoor(new Door(new Point(x, y + ROOMHEIGHT / 2), Door.Orientation.HORIZONTAL));
-                    }
-                }
-                if (room.isStartZone()) {
-                    addEntities(map, x + ROOMWIDTH / 2, y + ROOMHEIGHT / 2, room.getSpawnCount());
-                }
-                map.addZone(output[row][col]);
+    			output[row][col] = new Zone(room.getName(),
+    					new Rectangle(col * ROOMWIDTH + ROOMWIDTH / 2, row * ROOMHEIGHT + ROOMHEIGHT / 2, ROOMWIDTH, ROOMHEIGHT), room.getType());
+    			int x = (int) output[row][col].getBoundingbox().getX();
+    			int y = (int) output[row][col].getBoundingbox().getY();
+    			if (output[row][col].getType() == Type.ROOM) {
+    				if (room.hasDoor(ZoneModel.NORTH)) {
+    					output[row][col].addDoor(new Door(new Point(x, y - ROOMHEIGHT/2),
+    							Door.Orientation.HORIZONTAL));
+    				}
+    				if (room.hasDoor(ZoneModel.EAST)) {
+    					output[row][col].addDoor(new Door(new Point(x + ROOMWIDTH/2, y),
+    							Door.Orientation.VERTICAL));
+    				}
+    				if (room.hasDoor(ZoneModel.SOUTH)) {
+    					output[row][col].addDoor(new Door(new Point(x, y + ROOMHEIGHT/2),
+    							Door.Orientation.HORIZONTAL));
+    				}
+    				if (room.hasDoor(ZoneModel.WEST)) {
+    					output[row][col].addDoor(new Door(new Point(x - ROOMWIDTH/2, 
+    							y), Door.Orientation.VERTICAL));
+    				}
+    			}
+    			if (room.isStartZone()) {
+    				addEntities(map, x, y, room.getSpawnCount());
+    			}
+    			map.addZone(output[row][col]);
 
-                output[row][col].setBlocks(room.getColors());
-            }
-        }
-        // connect all the zones
-        connect(output);
-        if (!foundDropzone) {
-            throw new MapFormatException("No DropZone found on the map!");
-        }
-        if (!foundStartzone) {
-            throw new MapFormatException("No StartZone found on the map!");
-        }
+    			output[row][col].setBlocks(room.getColors());
+    		}
+    	}
+    	// connect all the zones
+    	connect(output);
+    	if (!foundDropzone) {
+    		throw new MapFormatException("No DropZone found on the map!");
+    	}
+    	if (!foundStartzone) {
+    		throw new MapFormatException("No StartZone found on the map!");
+    	}
 
-        return map;
+    	return map;
     }
 
     /**
@@ -255,25 +253,4 @@ public class MapConverter {
         }
     }
 
-    /**
-     * get x coordinate of center of the room on the map.
-     * 
-     * @param column
-     *            is the column coordinate of the Zone.
-     * @return x coordinate of room on the map.
-     */
-    private static double calcX(int column) {
-        return column * MapConverter.ROOMWIDTH + MapConverter.ROOMWIDTH / 2;
-    }
-
-    /**
-     * get y coordinate of center of room on the map.
-     * 
-     * @param row
-     *            is the row coordinate of the Zone.
-     * @return y coordinate of room on the map.
-     */
-    private static double calcY(int row) {
-        return row * MapConverter.ROOMHEIGHT + MapConverter.ROOMHEIGHT / 2;
-    }
 }
