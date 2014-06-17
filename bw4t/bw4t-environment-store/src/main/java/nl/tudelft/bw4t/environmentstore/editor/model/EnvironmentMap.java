@@ -2,7 +2,6 @@ package nl.tudelft.bw4t.environmentstore.editor.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import nl.tudelft.bw4t.map.BlockColor;
 
