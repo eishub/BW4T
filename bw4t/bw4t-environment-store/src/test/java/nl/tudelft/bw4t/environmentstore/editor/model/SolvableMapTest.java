@@ -81,7 +81,13 @@ public class SolvableMapTest {
 	@Test
 	public void unsolvableMapNotEnoughBlocksTest() {
 		List<BlockColor> l2 = new ArrayList<BlockColor>();
+		l2.add(BlockColor.RED);
 		em.generateRandomBlocks(l2, 1);
+		List<BlockColor> l = new ArrayList<BlockColor>();
+		for (int i = 0; i < 10; i++) {
+			l.add(BlockColor.RED);
+		}
+		em.setSequence(l);
 		NewMap m = MapConverter.createMap(em);
 		assertFalse(SolvabilityAlgorithm.mapIsSolvable(m) == null);
 	}
