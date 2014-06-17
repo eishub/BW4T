@@ -13,6 +13,7 @@ public enum DefaultConfigurationValues {
     DEFAULT_CLIENT_PORT("2000"),
     USE_GUI("FALSE"),
     VISUALIZE_PATHS("FALSE"),
+    ENABLE_COLLISIONS("FALSE"),
     USE_GOAL("TRUE"),
     MAP_FILE("");
 
