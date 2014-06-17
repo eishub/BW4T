@@ -39,6 +39,11 @@ public class BlockadeMenu {
             gui.getjPopupMenu().add(menuItem);
         }
 
+        buildTellMenu(gui, cmc, holdingID, entityColor);
+    }
+
+    public static void buildTellMenu(BW4TClientGUI gui, ClientMapController cmc, ViewBlock holdingID, Color entityColor) {
+        JMenuItem menuItem;
         BasicMenuOperations.addSectionTitleToPopupMenu("Tell: ", gui.getjPopupMenu());
 
         for (Zone roomInfo : cmc.getRooms()) {

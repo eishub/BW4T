@@ -13,7 +13,7 @@ import java.util.Set;
 
 import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-import nl.tudelft.bw4t.client.gui.ClientGUI;
+import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
 
@@ -169,8 +169,8 @@ public class ClientController {
      *            the map renderer interface
      */
     public void updateRenderer(MapRendererInterface mri) {
-        if (updateNextFrame && mri instanceof ClientGUI) {
-            ClientGUI gui = (ClientGUI) mri;
+        if (updateNextFrame && mri instanceof BW4TClientGUI) {
+            BW4TClientGUI gui = (BW4TClientGUI) mri;
             gui.update();
         }
     }
