@@ -2,6 +2,7 @@ package nl.tudelft.bw4t.client.agent;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -60,17 +61,18 @@ public class HumanAgent extends BW4TAgent {
         }
     }
     
-    public List<String> getEPartners(BW4TClientGUI gui) {
-        List<String> agents = gui.environment.getAgents();
-        for (int i = 0; i < agents.size(); i ++) {
-            try {
-                if (gui.environment.getType(agents.get(i)).equals("epartner")) {
-                    epartnerList.add(agents.get(i));
-                }
-            } catch (EntityException e) {
-                e.printStackTrace();
-            }
-        }
-        return epartnerList;
+    public List<BW4TAgent> getEPartners(BW4TClientGUI gui) {
+        return getAgentsWithType("epartner");
+//        List<String> agents = gui.environment.getAgents();
+//        for (int i = 0; i < agents.size(); i ++) {
+//            try {
+//                if (gui.environment.getType(agents.get(i)).equals("epartner")) {
+//                    epartnerList.add(agents.get(i));
+//                }
+//            } catch (EntityException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return epartnerList;
     }
 }

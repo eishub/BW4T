@@ -37,7 +37,7 @@ public class EPartnerMenu {
         ViewEPartner viewEpartner = gui.getController().getMapController().getViewEPartner(epartnerId);
         String nameViewEPartner = viewEpartner.getName();
         
-        List<String> epartnerList = gui.getController().getHumanAgent().getEPartners(gui);
+        List<BW4TAgent> epartnerList = gui.getController().getHumanAgent().getEPartners(gui);
         BW4TAgent currentEpartner = null;
         for (int i = 0; i < epartnerList.size(); i ++) {
             if (nameViewEPartner.equals(epartnerList.get(i))) {

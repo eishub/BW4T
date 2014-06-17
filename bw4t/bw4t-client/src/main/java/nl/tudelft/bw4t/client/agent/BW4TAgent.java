@@ -16,6 +16,7 @@ import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Translator;
 import eis.exceptions.ActException;
+import eis.exceptions.EntityException;
 import eis.exceptions.PerceiveException;
 import eis.iilang.Action;
 import eis.iilang.Parameter;
@@ -83,6 +84,25 @@ public class BW4TAgent extends Thread implements ActionInterface {
             }
         }
         return null;
+    }
+    
+    /**
+     * Gets all agent with this type.
+     * @param type The type of the agent.
+     * @return A list with the agents.
+     */
+    public LinkedList<BW4TAgent> getAgentsWithType(String type) {
+        LinkedList<BW4TAgent> res = new LinkedList<BW4TAgent>();
+        for (BW4TAgent agent : allAgents.keySet()) {
+            try {
+                if (agent.getEnvironment().getType(agent.getName()).equals(type)) {
+                    res.add(agent);
+                }
+            } catch (EntityException e) {
+                e.printStackTrace();
+            }
+        }
+        return res;
     }
 
     /**
