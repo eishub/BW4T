@@ -76,6 +76,13 @@ public class ClientController {
         this(env, entityId);
         this.humanAgent = humanAgent;
     }
+    
+    /**
+     * Instantiate a default GUI.
+     */
+    public void startupGUI() {
+        this.setGui(new BW4TClientGUI(this));
+    }
 
     public ClientMapController getMapController() {
         return mapController;
