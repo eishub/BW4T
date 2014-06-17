@@ -145,7 +145,6 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
             BW4TAgent agent = cons.newInstance(args);
             
             if ("epartner".equals(environment.getType(entityId))) {
-                EPartnerConfig epc = findCorrespondingEpartnerConfig(entityId, false);
                 agent.setEpartnerConfig(findCorrespondingEpartnerConfig(entityId, false));
             }
             
