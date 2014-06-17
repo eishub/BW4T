@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import nl.tudelft.bw4t.map.Path;
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.zone.Zone;
 import nl.tudelft.bw4t.server.util.PathPlanner;
@@ -124,7 +125,9 @@ public class NavigatingRobot extends AbstractRobot {
     }
 
     private void updateDrawPath() {
-        path.setPath(new ArrayList(plannedMoves));
+        if(BW4TEnvironment.getInstance().isDrawPathsEnabled()) {
+            path.setPath(new ArrayList(plannedMoves));
+        }
     }
 
     @Override
@@ -161,10 +164,7 @@ public class NavigatingRobot extends AbstractRobot {
         plannedMoves.clear();
         Zone startpt = ZoneLocator.getNearestZone(this.getLocation());
         Zone targetpt = ZoneLocator.getNearestZone(target.getLocation());
-        List<Zone> allnavs = new ArrayList<Zone>();
-        for (Object o : context.getObjects(Zone.class)) {
-            allnavs.add((Zone) o);
-        }
+        List<Zone> allnavs = new ArrayList<Zone>(getAllZonesInMap());
 
         // plan the path between the Zones
         List<Zone> path = PathPlanner.findPath(allnavs, startpt, targetpt);
@@ -212,25 +212,13 @@ public class NavigatingRobot extends AbstractRobot {
      */
     public void navigateObstacles() {
         Zone start = getZone();
-        Zone end = start;
+        Zone end = ZoneLocator.getNearestZone(currentMoveHistory);
 
-        List<Zone> navZones = new ArrayList<Zone>();
-        Set<Zone> referenceZones;
-
-        referenceZones = getAllZonesInMap();
-
-        // Search for the zone we're going towards.
-        for (Zone zone : referenceZones) {
-            navZones.add(zone);
-            if (zone.getBoundingBox().contains(currentMoveHistory.getX(), currentMoveHistory.getY())) {
-                end = zone;
-                break;
-            }
-        }
+        List<Zone> navZones = new ArrayList<Zone>(getAllZonesInMap());
 
         // the end isn't rounded since maps never have .5 coordinates.
         NdPoint startLocationRounded = new NdPoint((int) getLocation().getX(), (int) getLocation().getY());
-        List<NdPoint> path = PathPlanner.findPath(navZones, getObstacles(), startLocationRounded, end.getLocation());
+        List<NdPoint> path = PathPlanner.findPath(navZones, getObstacles(), startLocationRounded, currentMoveHistory);
         if (path.isEmpty()) {
             LOGGER.debug("No alternative path found.");
             throw new IllegalArgumentException("target " + targetLocation + " is unreachable for " + this);
