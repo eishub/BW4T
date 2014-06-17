@@ -32,9 +32,10 @@ public enum InitParam {
      */
     AGENTCLASS("nl.tudelft.bw4t.client.agent.BW4TAgent"),
     /**
-     * are we connected with GOAL?
+     * are we connected with GOAL? This param should be auto detected, it will be set to false if the program is started
+     * from commandline.
      */
-    GOAL("false"),
+    GOAL("true"),
     /**
      * The key we should try to use to kill the remote server.
      */
