@@ -112,8 +112,9 @@ public class MenuBarTest {
 
         assertEquals(config.getServerIp(), configurationPanel.getServerIP());
         assertEquals(config.getServerPort(), configurationPanel.getServerPort());
-        
+
         assertEquals(config.isLaunchGui(), configurationPanel.useGui());
+        assertEquals(config.isVisualizePaths(), configurationPanel.isVisualizePaths());
         assertEquals(config.getMapFile(), configurationPanel.getMapFile());    
     }
     

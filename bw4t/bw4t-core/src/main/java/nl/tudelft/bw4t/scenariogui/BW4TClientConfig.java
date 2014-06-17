@@ -36,6 +36,8 @@ public class BW4TClientConfig {
 
 	private boolean launchGui = DefaultConfigurationValues.USE_GUI.getBooleanValue();
 
+	private boolean visualizePaths = DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue();
+
 	private boolean useGoal = DefaultConfigurationValues.USE_GOAL.getBooleanValue();
 
 	private String mapFile = "";
@@ -216,6 +218,26 @@ public class BW4TClientConfig {
 	@XmlElement
 	public final void setLaunchGui(final boolean newLaunchGui) {
 		this.launchGui = newLaunchGui;
+	}
+
+	/**
+	 * Gets if paths should be visualized.
+	 *
+	 * @return if paths should be visualized
+	 */
+	public final boolean isVisualizePaths() {
+		return visualizePaths;
+	}
+
+	/**
+	 * Sets if a GUI should be launched.
+	 *
+	 * @param newVisualizePaths
+	 *            Boolean indicating if paths should be visualized.
+	 */
+	@XmlElement
+	public final void setVisualizePaths(final boolean newVisualizePaths) {
+		this.visualizePaths = newVisualizePaths;
 	}
 
 	/**

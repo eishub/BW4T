@@ -235,6 +235,7 @@ class MenuOptionOpen extends AbstractMenuOption {
         configPanel.setServerIP(getModel().getServerIp());
         configPanel.setServerPort(getModel().getServerPort() + "");
         configPanel.setUseGui(getModel().isLaunchGui());
+        configPanel.setVisualizePaths(getModel().isVisualizePaths());
         configPanel.setMapFile(getModel().getMapFile());
     }
 }
