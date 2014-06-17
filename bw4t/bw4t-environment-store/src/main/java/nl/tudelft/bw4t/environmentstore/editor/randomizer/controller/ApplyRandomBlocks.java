@@ -3,6 +3,8 @@ package nl.tudelft.bw4t.environmentstore.editor.randomizer.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeBlockFrame;
 
@@ -19,6 +21,6 @@ public class ApplyRandomBlocks implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		view.dispose();
+		
 	}
 }
