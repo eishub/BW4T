@@ -1,10 +1,12 @@
 package nl.tudelft.bw4t.client.agent;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import eis.exceptions.ActException;
+import eis.exceptions.EntityException;
 import eis.iilang.Action;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
@@ -13,6 +15,8 @@ import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
  * Class that represents an agent that is controlled via the BW4TRenderer
  */
 public class HumanAgent extends BW4TAgent {
+    
+    List<String> epartnerList = new ArrayList<String>();
 
     /**
 	 * Create a new human agent that should be linked to a BW4TRenderer
@@ -54,5 +58,19 @@ public class HumanAgent extends BW4TAgent {
             ex.setType(ActException.FAILURE);
             throw ex;
         }
+    }
+    
+    public List<String> getEPartners(BW4TClientGUI gui) {
+        List<String> agents = gui.environment.getAgents();
+        for (int i = 0; i < agents.size(); i ++) {
+            try {
+                if (gui.environment.getType(agents.get(i)).equals("epartner")) {
+                    epartnerList.add(agents.get(i));
+                }
+            } catch (EntityException e) {
+                e.printStackTrace();
+            }
+        }
+        return epartnerList;
     }
 }
