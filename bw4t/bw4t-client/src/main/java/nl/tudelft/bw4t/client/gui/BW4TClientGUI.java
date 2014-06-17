@@ -110,10 +110,8 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
      * 
      * @param cc
      *            the client controller
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
      */
-    public BW4TClientGUI(ClientController cc) throws IOException {
+    public BW4TClientGUI(ClientController cc) {
         setController(cc);
         init();
     }
@@ -123,10 +121,8 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
      *            - The {@link RemoteEnvironment} that we are rendering.
      * @param entityId
      *            - The id of the entity that needs to be displayed.
-     * @throws IOException
-     *             Thrown if map can't be loaded.
      */
-    public BW4TClientGUI(RemoteEnvironment env, String entityId) throws IOException {
+    public BW4TClientGUI(RemoteEnvironment env, String entityId) {
         this(new ClientController(env, entityId));
     }
 

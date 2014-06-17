@@ -37,20 +37,17 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
 /**
- * A remote BW4TEnvironment that delegates all actions towards the central
- * BW4TEnvironment, through RMI. This is the "Client", the connector for goal.
- * This object lives on the client, and is a singleton (so one per JVM).
+ * A remote BW4TEnvironment that delegates all actions towards the central BW4TEnvironment, through RMI. This is the
+ * "Client", the connector for goal. This object lives on the client, and is a singleton (so one per JVM).
  * <p>
- * You can launch a stand-alone BW4TRemoteEnvironment (via {@link #main}.
- * Typical args are: <code>
+ * You can launch a stand-alone BW4TRemoteEnvironment (via {@link #main}. Typical args are: <code>
  *  -clientip localhost -serverip localhost -clientport 2000
  * -serverport 8000 -launchgui true -map
  * BW4TClient/environments/maps/ColorTestScenario -agentcount 0 -humancount 2
- * </code> to run 2 HumanGUIs. Note though that these agents will not be coupled
- * to GOAL, and will not appear to GOAL as entities. So you can not communicate
- * with them from GOAL by using the GOAL send action.
+ * </code> to run 2 HumanGUIs. Note though that these agents will not be coupled to GOAL, and will not appear to GOAL as
+ * entities. So you can not communicate with them from GOAL by using the GOAL send action.
  */
-public class RemoteEnvironment implements EnvironmentInterfaceStandard {
+public class RemoteEnvironment implements EnvironmentInterfaceStandard, EnvironmentListener {
     /**
      * The log4j Logger which displays logs on console
      */
@@ -118,8 +115,8 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
     }
 
     /**
-     * We detected that environment suddenly died. Notify our listeners and
-     * return {@link NoEnvironmentException} reporting the problem.
+     * We detected that environment suddenly died. Notify our listeners and return {@link NoEnvironmentException}
+     * reporting the problem.
      * 
      * @param e
      *            is the exception from which we detected the death.
@@ -152,7 +149,8 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
                 throw e;
             }
             return entityGUI.sendToGUI(action.getParameters());
-        } else {
+        }
+        else {
             return getClient().performEntityAction(entity, action);
         }
     }
@@ -165,16 +163,14 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
         LOGGER.debug("Associating Agent " + agentId + " with Entity " + entityId + ".");
         try {
             boolean launchGUI = "true".equals(InitParam.LAUNCHGUI.getValue());
-            BW4TClientGUI renderer = null;
+            ClientController control = null;
             getClient().associateEntity(agentId, entityId);
-            if (isConnectedToGoal() && "human".equals(getType(entityId))) {
-                renderer = new BW4TClientGUI(this, entityId);
-            } else if (isConnectedToGoal() && launchGUI) {
-                renderer = new BW4TClientGUI(this, entityId);
-            } else if ("bot".equals(getType(entityId)) && launchGUI) {
-                renderer = new BW4TClientGUI(this, entityId);
+            if (isConnectedToGoal() && ("human".equals(getType(entityId)) || launchGUI)
+                    || "bot".equals(getType(entityId)) && launchGUI) {
+                control = new ClientController(this, entityId);
+                control.startupGUI();
+                putEntityController(entityId, control);
             }
-            putEntityController(entityId, renderer.getController());
         } catch (RemoteException e) {
             throw environmentSuddenDeath(e);
         } catch (Exception e) {
@@ -217,9 +213,8 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
     }
 
     /**
-     * Unfortunately goal requires the main class to be implementing the
-     * {@link EnvironmentInterfaceStandard}, that is why we had to reroute the
-     * main method through here.
+     * Unfortunately goal requires the main class to be implementing the {@link EnvironmentInterfaceStandard}, that is
+     * why we had to reroute the main method through here.
      * 
      * @see Launcher#launch(String[])
      * @param args
@@ -243,8 +238,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
     }
 
     /**
-     * Check whether an action is supported by a type, for now always returns
-     * false as it should not be used
+     * Check whether an action is supported by a type, for now always returns false as it should not be used
      * 
      * @return the result
      */
@@ -270,15 +264,13 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
      * @param entities
      *            , the list of entities
      * @throws PerceiveException
-     *             , if an attempt to perform an action or to retrieve percepts
-     *             has failed.
+     *             , if an attempt to perform an action or to retrieve percepts has failed.
      * @throws NoEnvironmentException
-     *             , if an attempt to perform an action or to retrieve percepts
-     *             has failed.
+     *             , if an attempt to perform an action or to retrieve percepts has failed.
      */
     @Override
     public Map<String, Collection<Percept>> getAllPercepts(String agent, String... entities) throws PerceiveException,
-    NoEnvironmentException {
+            NoEnvironmentException {
         /** fail if the environment does not run */
         EnvironmentState state = getState();
         if (state == EnvironmentState.KILLED) {
@@ -323,7 +315,8 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
                 }
                 perceptsMap.put(entity, all);
             }
-        } else {
+        }
+        else {
             for (String entity : entities) {
                 if (!associatedEntities.contains(entity)) {
                     throw new PerceiveException("Entity \"" + entity + "\" has not been associated with the agent \""
@@ -352,8 +345,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
     }
 
     /**
-     * Check if a certain state transition is valid, always returns true for
-     * now.
+     * Check if a certain state transition is valid, always returns true for now.
      * 
      * @param oldState
      *            , the old state of the environment
@@ -382,31 +374,30 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
     }
 
     /**
-     * {@inheritDoc.
-
+     * {@inheritDoc.
      */
     @Override
     public void kill() throws ManagementException {
         for (ClientController renderer : entityToGUI.values()) {
-            /*if (renderer != null) {
-                //FIXME renderer.setStop(true);
-            }*/
-            //renderer.getController().getMapController().setRunning(false);
+            /*
+             * if (renderer != null) { //FIXME renderer.setStop(true); }
+             */
+            // renderer.getController().getMapController().setRunning(false);
         }
         // copy list, the localAgents list is going to be changes by removing
         // agents.
         List<String> allAgents = new ArrayList<String>(localAgents);
         for (String agentname : allAgents) {
             try {
-                //unregisterAgent(agentname);
+                // unregisterAgent(agentname);
                 for (String entity : getAssociatedEntities(agentname)) {
-                    //freePair(agentname, entity);
-                    freePair(agentname,entity);
+                    // freePair(agentname, entity);
+                    freePair(agentname, entity);
                 }
-                /*freeEntity(agentname);*/
-                //freeAgent(agentname);
+                /* freeEntity(agentname); */
+                // freeAgent(agentname);
                 unregisterAgent(agentname);
-                
+
             } catch (AgentException | RelationException e) {
                 throw new ManagementException("kill failed because agent could not be freed", e);
             }
@@ -414,7 +405,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
         try {
             getClient().kill();
             client = null;
-            
+
         } catch (Exception e) {
             throw new ManagementException("problem while killing client", e);
         }
@@ -428,7 +419,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
      */
     @Override
     public void attachEnvironmentListener(EnvironmentListener listener) {
-        if (!getEnvironmentListeners().contains(listener)) {
+        if (!getEnvironmentListeners().contains(listener) || listener == this) {
             getEnvironmentListeners().add(listener);
         }
     }
@@ -513,11 +504,9 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
      * @param entity
      *            , the entity to free
      * @throws RelationException
-     *             , if an attempt to manipulate the agents-entities-relation
-     *             has failed.
+     *             , if an attempt to manipulate the agents-entities-relation has failed.
      * @throws EntityException
-     *             , if something unexpected happens when attempting to add or
-     *             remove an entity.
+     *             , if something unexpected happens when attempting to add or remove an entity.
      */
     @Override
     public void freeEntity(String entity) throws RelationException, EntityException {
@@ -534,8 +523,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
      * @param agent
      *            , the agent to free
      * @throws RelationException
-     *             , if an attempt to manipulate the agents-entities-relation
-     *             has failed.
+     *             , if an attempt to manipulate the agents-entities-relation has failed.
      */
     @Override
     public void freeAgent(String agent) throws RelationException {
@@ -555,8 +543,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
      * @param entity
      *            , the entity
      * @throws RelationException
-     *             , if an attempt to manipulate the agents-entities-relation
-     *             has failed.
+     *             , if an attempt to manipulate the agents-entities-relation has failed.
      */
     @Override
     public void freePair(String agent, String entity) throws RelationException {
@@ -574,8 +561,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
      *            , the entity
      * @return a list of agents
      * @throws EntityException
-     *             , if something unexpected happens when attempting to add or
-     *             remove an entity.
+     *             , if something unexpected happens when attempting to add or remove an entity.
      */
     @Override
     public Collection<String> getAssociatedAgents(String entity) throws EntityException {
@@ -704,10 +690,35 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void handleNewEntity(String entity) {
+        EntityNotifiers.notifyNewEntity(entity, this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void handleFreeEntity(String entity, Collection<String> agents) {
+        EntityNotifiers.notifyFreeEntity(entity, agents, this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void handleDeletedEntity(String entity, Collection<String> agents) {
+        EntityNotifiers.notifyDeletedEntity(entity, agents, this);
+    }
+
+    /**
      * This is called from the server, via the BW4T Client.
      * 
      * @param newState
      */
+    @Override
     public void handleStateChange(EnvironmentState newState) {
         for (EnvironmentListener listener : getEnvironmentListeners()) {
             listener.handleStateChange(newState);
@@ -715,9 +726,8 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
     }
 
     /**
-     * Resets the environment(-interface) with a set of key-value-pairs. to
-     * combine properly with BatchRunner, this reset does not entirely reset the
-     * env, it does not disconnect the entities. Note that this is NOT the reset
+     * Resets the environment(-interface) with a set of key-value-pairs. to combine properly with BatchRunner, this
+     * reset does not entirely reset the env, it does not disconnect the entities. Note that this is NOT the reset
      * attached to the reset button in the {@link ServerContextDisplay}.
      */
     @Override
@@ -732,17 +742,31 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
     public boolean isConnectedToGoal() {
         return connectedToGoal;
     }
-    
+
     public ClientController getEntityController(String entity) {
         return entityToGUI.get(entity);
     }
-    
+
     public void putEntityController(String entity, ClientController control) {
         if (control == null) {
             entityToGUI.remove(entity);
         }
         else {
             entityToGUI.put(entity, control);
+        }
+    }
+
+    /**
+     * Stops any associated gui from this client connected to the given entity.
+     * 
+     * @param entity
+     *            the name of the entity to be disconnected
+     */
+    public void removeEntityController(String entity) {
+        ClientController control = getEntityController(entity);
+        if (control != null) {
+            control.stop();
+            putEntityController(entity, null);
         }
     }
 

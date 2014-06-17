@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.client;
 
+import eis.EnvironmentListener;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
 import eis.exceptions.ManagementException;
@@ -10,6 +11,7 @@ import eis.iilang.Action;
 import eis.iilang.EnvironmentState;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
+
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -20,6 +22,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+
 import nl.tudelft.bw4t.client.environment.EntityNotifiers;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.startup.ConfigFile;
@@ -29,6 +32,7 @@ import nl.tudelft.bw4t.network.BW4TClientActions;
 import nl.tudelft.bw4t.network.BW4TServerActions;
 import nl.tudelft.bw4t.network.BW4TServerHiddenActions;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -41,7 +45,7 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
     /**
      * The parent that we serve.
      */
-    private final RemoteEnvironment parent;
+    private final EnvironmentListener parent;
 
     private String bindAddress;
 
@@ -64,7 +68,7 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
      * @throws NotBoundException
      * @throws MalformedURLException
      */
-    public BW4TClient(RemoteEnvironment parent) throws RemoteException, MalformedURLException, NotBoundException {
+    public BW4TClient(EnvironmentListener parent) throws RemoteException, MalformedURLException, NotBoundException {
         this.parent = parent;
     }
 
@@ -483,7 +487,7 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
      */
     @Override
     public void handleNewEntity(String entity) throws RemoteException, EntityException {
-        EntityNotifiers.notifyNewEntity(entity, parent);
+        parent.handleNewEntity(entity);
     }
 
     /**
@@ -491,7 +495,7 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
      */
     @Override
     public void handleFreeEntity(String entity, Collection<String> agents) throws RemoteException {
-        EntityNotifiers.notifyFreeEntity(entity, agents, parent);
+        parent.handleFreeEntity(entity, agents);
     }
 
     /**
@@ -499,7 +503,7 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
      */
     @Override
     public void handleDeletedEntity(String entity, Collection<String> agents) throws RemoteException {
-        EntityNotifiers.notifyDeletedEntity(entity, agents, parent);
+        parent.handleDeletedEntity(entity, agents);
     }
 
     /**
