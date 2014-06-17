@@ -25,7 +25,6 @@ import org.apache.log4j.Logger;
  */
 public class BatteryProgressBarListener  {
 
-    private static final Logger LOGGER = Logger.getLogger(BatteryProgressBarListener.class);
     public static List<BatteryProgressBarListener> listeners = new LinkedList<BatteryProgressBarListener>();
 
     BW4TClientGUI clientGUI;
@@ -39,7 +38,6 @@ public class BatteryProgressBarListener  {
     public void update() {
         ViewEntity bot = clientGUI.getController().getMapController().getTheBot();
         double counter = bot.getBatteryLevel();
-        LOGGER.debug(String.format("Entity %s has battery level: %f", bot.getName(), bot.getBatteryLevel()));
 
         progressBar.setValue((int) counter);
         if(counter < progressBar.getMaximum()/2) {
