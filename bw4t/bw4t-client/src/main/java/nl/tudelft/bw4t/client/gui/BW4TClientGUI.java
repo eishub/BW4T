@@ -80,7 +80,6 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
     private final BW4TClientGUI that = this;
     private ClientController controller;
 
-    //private JPanel buttonPanel;
     private JPanel mainPanel = new JPanel();
     private JPanel optionsMessagesPane = new JPanel();
     private JPanel botButtonPanel = new JPanel();
@@ -263,10 +262,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         setVisible(true);
     }
     
-    /**
-     * Creates the overall frame.
-     */
-    public void createOverallFrame() {
+    private void createOverallFrame() {
         mainPanel.setLayout(new BorderLayout());
         
         createOptionsMessagesPane();
@@ -275,11 +271,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         mainPanel.add(optionsMessagesPane, BorderLayout.EAST);
     }
     
-    /**
-     * Creates the right pane of the GUI, 
-     * where the options and messages are shown of bots (and epartner).
-     */
-    public void createOptionsMessagesPane() {
+    private void createOptionsMessagesPane() {
         optionsMessagesPane.setLayout(new BorderLayout());
         
         createBotPane();
@@ -289,11 +281,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         optionsMessagesPane.add(epartnerPanel, BorderLayout.CENTER);
     }
     
-    /**
-     * Creates the bot pane, where the bot options
-     * and bot chat session is being displayed.
-     */
-    public void createBotPane() {
+    private void createBotPane() {
         botPanel.setLayout(new BoxLayout(botPanel, BoxLayout.Y_AXIS));
         
         createBotOptionsBar();
@@ -303,11 +291,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         botPanel.add(botChatPane);
     }
     
-    /**
-     * Creates the epartner pane, where the epartner options
-     * and epartner chat session is being displayed.
-     */
-    public void createEpartnerPane() {
+    private void createEpartnerPane() {
         epartnerPanel.setLayout(new BoxLayout(epartnerPanel, BoxLayout.Y_AXIS));
         
         createEpartnerOptionsBar();
@@ -317,10 +301,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         epartnerPanel.add(epartnerChatPane);
     }
     
-    /**
-     * Creates the button panel for the bot options.
-     */
-    public void createBotOptionsBar() {
+    private void createBotOptionsBar() {
         botButtonPanel.setLayout(new BoxLayout(botButtonPanel, BoxLayout.X_AXIS));
         botButtonPanel.setFocusable(false);
         
@@ -339,10 +320,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         botMessageButton.addMouseListener(new TeamListMouseListener(this));
     }
     
-    /**
-     * Creates the button panel for the epartner options.
-     */
-    public void createEpartnerOptionsBar() {
+    private void createEpartnerOptionsBar() {
         epartnerButtonPanel.setLayout(new BoxLayout(epartnerButtonPanel, BoxLayout.X_AXIS));
         epartnerButtonPanel.setFocusable(false);
 
@@ -352,10 +330,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         epartnerMessageButton.addMouseListener(new EPartnerListMouseListener(this));
     }
     
-    /**
-     * Creates the chat section of the bots.
-     */
-    public void createBotChatSection() {
+    private void createBotChatSection() {
         botChatPanel.setLayout(new BoxLayout(botChatPanel, BoxLayout.Y_AXIS));
         botChatPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         botChatPanel.setFocusable(false);
@@ -371,10 +346,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         botChatPanel.add(botChatPane);
     }
     
-    /**
-     * Creates the chat section of the epartners.
-     */
-    public void createEpartnerChatSection() {
+    private void createEpartnerChatSection() {
         epartnerChatPanel.setLayout(new BoxLayout(epartnerChatPanel, BoxLayout.Y_AXIS));
         epartnerChatPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         epartnerChatPanel.setFocusable(false);
@@ -384,6 +356,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         epartnerChatPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         epartnerChatPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         epartnerChatPane.setEnabled(true);
+        epartnerChatPane.setVisible(false);
         epartnerChatPane.setFocusable(false);
         epartnerChatPane.setColumnHeaderView(new JLabel("E-partner Chat Session:"));
         
@@ -396,13 +369,13 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
      * @param playerId
      *            , the Id of the player to be added
      */
-    public void addPlayer(String playerId) {
+  /*  public void addPlayer(String playerId) {
         if (!playerId.equals(controller.getMapController().getTheBot().getName())) {
             JButton button = new JButton(playerId);
             button.addMouseListener(new TeamListMouseListener(this));
             botButtonPanel.add(button);
         }
-    }
+    }*/
 
     @Override
     public void dispose() {
@@ -494,5 +467,9 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
     
     public void setBatteryProgressBar(JProgressBar progressBar) {
         batteryProgressBar = progressBar;
+    }
+        
+    public JScrollPane getEpartnerChatPane() {
+        return epartnerChatPane;
     }
 }

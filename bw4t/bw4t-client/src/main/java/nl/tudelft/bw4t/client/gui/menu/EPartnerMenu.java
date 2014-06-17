@@ -7,6 +7,7 @@ import javax.swing.text.View;
 
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.DropEPartnerActionListener;
+import nl.tudelft.bw4t.client.gui.listeners.EPartnerMessageSenderActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.GoToBlockActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.PickUpActionListener;
@@ -26,7 +27,7 @@ public class EPartnerMenu {
         BasicMenuOperations.addSectionTitleToPopupMenu("Command my robot to:", popUpMenu);
 
         JMenuItem menuItem = new JMenuItem("Drop e-partner");
-        menuItem.addActionListener(new DropEPartnerActionListener(gui.getController()));
+        menuItem.addActionListener(new DropEPartnerActionListener(gui.getController(), gui));
         popUpMenu.add(menuItem);
         
         popUpMenu.addSeparator();
@@ -38,8 +39,11 @@ public class EPartnerMenu {
         
         for (Zone room : gui.getController().getMapController().getRooms()) {
             menuItem = new JMenuItem(room.getName());
-            menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.IWANTTOGO, room.getName(), "", 0), gui.getController()));
-            submenu.add(menuItem);
+            menuItem.addActionListener(new MessageSenderActionListener(
+                    new BW4TMessage(MessageType.IWANTTOGO, room.getName(), "", 0), gui));
+           /* menuItem.addActionListener(new EPartnerMessageSenderActionListener(
+                    new BW4TMessage(MessageType.IWANTTOGO, room.getName(), "", 0), gui));
+            submenu.add(menuItem);*/
         }
         
         popUpMenu.addSeparator();
@@ -52,9 +56,7 @@ public class EPartnerMenu {
         // Robot commands
         BasicMenuOperations.addSectionTitleToPopupMenu("Command my robot to:", gui.getjPopupMenu());
 
-        JMenuItem menuItem = new JMenuItem("Pick up e-partner");
-        menuItem.addActionListener(new PickUpEPartnerActionListener(gui.getController()));
-        gui.getjPopupMenu().add(menuItem);
+        BasicMenuOperations.addEPartnerPickUpMenuItem(gui);
 
         gui.getjPopupMenu().addSeparator();
         gui.getjPopupMenu().add(new JMenuItem("Close menu"));

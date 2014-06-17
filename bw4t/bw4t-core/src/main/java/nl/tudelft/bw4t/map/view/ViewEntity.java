@@ -104,4 +104,5 @@ public class ViewEntity {
     public void setHoldingEpartner(long holdingEpartner) {
         this.holdingEpartner = holdingEpartner;
     }
+
 }

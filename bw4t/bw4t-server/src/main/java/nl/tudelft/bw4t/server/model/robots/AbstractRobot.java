@@ -12,6 +12,8 @@ import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.doors.Door;
 import nl.tudelft.bw4t.server.model.epartners.EPartner;
+import nl.tudelft.bw4t.server.model.robots.handicap.ColorBlindHandicap;
+import nl.tudelft.bw4t.server.model.robots.handicap.GripperHandicap;
 import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.server.model.zone.ChargingZone;
 import nl.tudelft.bw4t.server.model.zone.Corridor;
@@ -485,6 +487,14 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         }
         NdPoint loc = getSpace().getLocation(this);
         return new ViewEntity(getId(), getName(), loc.getX(), loc.getY(), bs, getSize());
+    }
+    
+    private boolean gripperDisabled() {
+        return handicapsList.contains(GripperHandicap.GRIPPER_HANDICAP);
+    }
+    
+    private boolean isColorBlind() {
+        return handicapsList.contains(ColorBlindHandicap.COLOR_BLIND_HANDICAP);
     }
     
 	@Override

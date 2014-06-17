@@ -125,7 +125,32 @@ public class EPartnerEntity implements RobotEntityInt {
         return -1;
     }
     
-
+    /**
+     * Percept if the epartner is taken, so other bots won't pick it up if a bot has forgot it.
+     * @return The epartner id.
+     * @throws PerceiveException
+     */
+    @AsPercept(name = "isTaken", multiplePercepts = false, filter = Filter.Type.ON_CHANGE_NEG)
+    public long isTaken() throws PerceiveException {
+        if (ourEPartner.getTypeList().contains("Forget-me-not") && ourEPartner.getHolder() != null) {
+            return ourEPartner.getId();
+        }
+        return -1;
+    }
+    
+    /**
+     * Percept if the epartner is left behind, so the epartner knows when to message the holder.
+     * @return 1 if it was left behind, 0 if it's still held.
+     * @throws PerceiveException
+     */
+    @AsPercept(name = "leftBehind", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
+    public int leftBehind() throws PerceiveException {
+        if (ourEPartner.getTypeList().contains("Forget-me-not") && ourEPartner.getHolder() == null) {
+            return 1;
+        }
+        return 0;
+    }
+    
     /**
      * Percept for navpoints the robot is at. Send on change. If robot is in a {@link Zone}, that zone name is returned.
      * If not, the nearest {@link Corridor} name is returned.

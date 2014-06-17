@@ -2,6 +2,8 @@ package nl.tudelft.bw4t.server.model.robots.handicap;
 
 public class ColorBlindHandicap extends AbstractRobotDecorator {
     
+    public static final String COLOR_BLIND_HANDICAP = "ColorBlind";
+    
     /**
      * Sets the handicap to active,
      * Adds the handicap to the robot handicap storage.
@@ -9,6 +11,6 @@ public class ColorBlindHandicap extends AbstractRobotDecorator {
      */
     public ColorBlindHandicap(IRobot p) {
         super(p);
-        robot.getHandicapsList().add("ColorBlind");
+        robot.getHandicapsList().add(COLOR_BLIND_HANDICAP);
     }
 }

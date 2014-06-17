@@ -28,11 +28,10 @@ public class ClientController {
 
     /** The other players. */
     private final Set<String> otherPlayers = new HashSet<>();
-    private final List<String> botChatHistory = new LinkedList<>();
-    private final List<String> epartnerChatHistory = new LinkedList<>();
     
     /** The chat history. */
-    private final List<String> chatHistory = new LinkedList<>();
+    private final List<String> botChatHistory = new LinkedList<>();
+    private final List<String> epartnerChatHistory = new LinkedList<>();
 
     /** The human agent. */
     private HumanAgent humanAgent;
@@ -158,7 +157,7 @@ public class ClientController {
         String sender = ((Identifier) iterator.next()).getValue();
         String message = ((Identifier) iterator.next()).getValue();
 
-        if (message.contains("I want to go")) {
+        if (message.contains("I want to go") || message.contains("You forgot me")) {
             getEpartnerChatHistory().add(sender + ": " + message);
         } else {
             getBotChatHistory().add(sender + ": " + message);
