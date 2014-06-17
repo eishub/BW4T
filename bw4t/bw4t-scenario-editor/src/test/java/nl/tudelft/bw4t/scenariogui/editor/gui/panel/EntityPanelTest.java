@@ -378,16 +378,7 @@ public class EntityPanelTest {
         assertEquals(editor.getController().getModel().getAmountEPartner(), 1);
     }
 
-    /** TODO finish this when the functionality is implemented
-     * Test if the bot dropdown menu when creating a new bot
-     * is shown when the button is clicked.
-     */
-    @Ignore
-    public void testBotDropdown() {
-        spyEntityPanel.getDropDownButton().doClick();	//TODO: This line of code breaks the testsuite.
-        verify(spyEntityPanel, times(1)).showBotDropDown();
-    }
-    
+   
     /**
      * Test if the count of bots is correct after adding a standard
      * bot to the table.
