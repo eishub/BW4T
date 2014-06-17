@@ -82,6 +82,20 @@ public class ScenarioEditorController {
 		entityPanel.addDeleteEpartnerController(new DeleteEPartner(mainPanel, getModel()));
 		entityPanel.addDropDownController(new BotDropDownButton(mainPanel));
 
+		addStandardBotDropDownListeners();
+        
+		entityPanel.addBotTableModelController(new UpdateBotCount(mainPanel, getModel()));
+        entityPanel.addEpartnerTableModelController(new UpdateEPartnerCount(mainPanel, getModel()));
+        entityPanel.addBotTableController(new EditBotTable(getMainView().getMainPanel(), getModel()));
+        entityPanel.addEpartnerTableController(new EditEPartnerTable(getMainView().getMainPanel(), getModel()));
+    }
+    
+    /**
+     * Adds the listeners for the default bot dropdown menu.
+     */
+    private void addStandardBotDropDownListeners() {
+        EntityPanel entityPanel = mainPanel.getEntityPanel();
+        
         entityPanel.addNewStandardBotController(new AddNewStandardBot(mainPanel, getModel()));
         entityPanel.addNewStandardBotBigController(new AddNewStandardBotBig(mainPanel, getModel()));
         entityPanel.addNewStandardBotGripperController(new AddNewStandardBotGripper(mainPanel, getModel()));
@@ -89,12 +103,7 @@ public class ScenarioEditorController {
         entityPanel.addNewStandardBotSeeerController(new AddNewStandardBotSeeer(mainPanel, getModel()));
         entityPanel.addNewStandardBotBigSeeerController(new AddNewStandardBotBigSeeer(mainPanel, getModel()));
         entityPanel.addNewStandardBotCommunicatorController(new AddNewStandardBotCommunicator(mainPanel, getModel()));
-        entityPanel.addNewStandardBotBigCommunicatorController(new AddNewStandardBotBigCommunicator(mainPanel, getModel()));
-        
-		entityPanel.addBotTableModelController(new UpdateBotCount(mainPanel, getModel()));
-        entityPanel.addEpartnerTableModelController(new UpdateEPartnerCount(mainPanel, getModel()));
-        entityPanel.addBotTableController(new EditBotTable(getMainView().getMainPanel(), getModel()));
-        entityPanel.addEpartnerTableController(new EditEPartnerTable(getMainView().getMainPanel(), getModel()));
+        entityPanel.addNewStandardBotBigCommunicatorController(new AddNewStandardBotBigCommunicator(mainPanel, getModel()));        
     }
 
     /**
