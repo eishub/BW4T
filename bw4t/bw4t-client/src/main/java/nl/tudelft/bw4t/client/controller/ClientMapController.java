@@ -323,13 +323,15 @@ public class ClientMapController extends AbstractMapController {
      */
     private void processEpartnerPercept(String name, List<Parameter> perceptParameters) {
         long id = ((Numeral) perceptParameters.get(0)).getValue().longValue();
-        long holderId = ((Numeral) perceptParameters.get(1)).getValue().longValue();
+        String entityId = ((Identifier) perceptParameters.get(1)).getValue();
+        long holderId = ((Numeral) perceptParameters.get(2)).getValue().longValue();
         
         ViewEPartner epartner = getViewEPartner(id);
         if (epartner == null) {
             LOGGER.info("creating " +name + "("+id + ", " + holderId + ")");
             epartner = new ViewEPartner();
             epartner.setId(id);
+            epartner.setName(entityId);
             getVisibleEPartners().add(epartner);
         }
         if (holderId == theBot.getId()) {

@@ -11,6 +11,7 @@ import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.message.BW4TMessage;
 import nl.tudelft.bw4t.client.message.MessageTranslator;
 import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 
 import org.apache.log4j.Logger;
@@ -69,13 +70,11 @@ public class EPartnerMessageSenderActionListener extends ClientActionListener {
     }
     
     private String findEPartner() {
-        int index = 0;
-        for (String agent : clientGUI.environment.getAgents()) {
-            if (index++ == mapController.getTheBot().getHoldingEpartner()) {
-                return agent;
-            }
-        }
-        return null;
+        ViewEPartner epartner = mapController.getViewEPartner(
+                mapController.getTheBot().getHoldingEpartner());
+        if (epartner == null)
+            return null;
+        return epartner.getName();
     }
     
 }
