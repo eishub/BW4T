@@ -3,6 +3,7 @@ package nl.tudelft.bw4t.environmentstore.sizedialog.view;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -74,7 +75,7 @@ public class SizeDialog extends JFrame {
 				24, // max
 				1); // step
 		rows = new JSpinner(rowmodel);
-		rows.setPreferredSize(new Dimension(200, 20));
+		rows.setPreferredSize(new Dimension(100, 20));
 		contentPane.add(rowsLabel, setUpContraints(GridBagConstraints.HORIZONTAL, 0, 0, 0));
 		contentPane.add(rows, setUpContraints(GridBagConstraints.HORIZONTAL, 1, 0, 0));
 
@@ -83,7 +84,7 @@ public class SizeDialog extends JFrame {
 				24, // max
 				1); // step
 		cols = new JSpinner(colmodel);
-		cols.setPreferredSize(new Dimension(200, 20));
+		cols.setPreferredSize(new Dimension(100, 20));
 		contentPane.add(columnsLabel, setUpContraints(GridBagConstraints.HORIZONTAL, 0, 1, 0));
 		contentPane.add(cols, setUpContraints(GridBagConstraints.HORIZONTAL, 1, 1, 0));
 		
@@ -103,7 +104,8 @@ public class SizeDialog extends JFrame {
 		c.fill = constraints;
 		c.gridx = x;
 		c.gridy = y;
-		
+		c.insets = new Insets(3,3,3,3);
+
 		if (width != 0) {
 			c.gridwidth = width;
 		}
