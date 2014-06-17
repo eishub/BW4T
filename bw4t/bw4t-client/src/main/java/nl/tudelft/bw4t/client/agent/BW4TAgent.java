@@ -2,6 +2,8 @@ package nl.tudelft.bw4t.client.agent;
 
 import java.rmi.RemoteException;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import nl.tudelft.bw4t.client.environment.PerceptsHandler;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
@@ -10,6 +12,7 @@ import nl.tudelft.bw4t.client.message.BW4TMessage;
 import nl.tudelft.bw4t.client.message.MessageTranslator;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Translator;
 import eis.exceptions.ActException;
@@ -31,6 +34,9 @@ public class BW4TAgent extends Thread implements ActionInterface {
     private RemoteEnvironment bw4tenv;
     
     private BotConfig botConfig;
+    private EPartnerConfig epartnerConfig;
+    
+    private final Map<BW4TAgent, BW4TClientGUI> allAgents;
 
     /**
      * Create a new BW4TAgent that can be registered to an entity.
@@ -40,9 +46,10 @@ public class BW4TAgent extends Thread implements ActionInterface {
      * @param env
      *            the remote environment.
      */
-    public BW4TAgent(String agentId, RemoteEnvironment env) {
+    public BW4TAgent(String agentId, RemoteEnvironment env, Map<BW4TAgent, BW4TClientGUI> allAgents) {
         this.agentId = agentId;
         this.bw4tenv = env;
+        this.allAgents = allAgents;
     }
     
     /**
@@ -62,6 +69,20 @@ public class BW4TAgent extends Thread implements ActionInterface {
         if (environmentKilled) {
             return;
         }
+    }
+    
+    /**
+     * Gets an agent from the name.
+     * @param name The name of the agent.
+     * @return The agent.
+     */
+    public BW4TAgent getAgentFromName(String name) {
+        for (BW4TAgent agent : allAgents.keySet()) {
+            if (agent.getName().equals(name)) {
+                return agent;
+            }
+        }
+        return null;
     }
 
     /**
@@ -204,14 +225,17 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	 * @return Whether this agent can pick up another object.
 	 */
 	public boolean canPickupAnotherObject(ViewEntity sameEntity) {
-	    if (getBotConfig() == null)
+	    if (getBotConfig() == null) {
 	        return true;
-	    if (getBotConfig().getGripperHandicap())
+	    }
+	    if (getBotConfig().getGripperHandicap()) {
 	        return false;
+	    }
 	    int grippersTotal = getBotConfig().getGrippers();
 	    int grippersInUse = sameEntity.getHolding().size();
-	    if (sameEntity.getHoldingEpartner() != -1)
-	        grippersInUse++; //TODO: check if we really wanna have a gripper in use for e-partner
+	    if (sameEntity.getHoldingEpartner() != -1) {
+	        grippersInUse++;
+	    }
 	    return grippersInUse < grippersTotal;
 	}
 	
@@ -229,6 +253,18 @@ public class BW4TAgent extends Thread implements ActionInterface {
 
     public void setBotConfig(BotConfig botConfig) {
         this.botConfig = botConfig;
+    }
+    
+    public boolean isGps() {
+        return getEpartnerConfig() != null && getEpartnerConfig().isGps();
+    }
+
+    public EPartnerConfig getEpartnerConfig() {
+        return epartnerConfig;
+    }
+
+    public void setEpartnerConfig(EPartnerConfig epartnerConfig) {
+        this.epartnerConfig = epartnerConfig;
     }
 
 }

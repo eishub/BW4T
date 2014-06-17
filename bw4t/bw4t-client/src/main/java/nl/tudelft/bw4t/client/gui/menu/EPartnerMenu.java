@@ -1,10 +1,13 @@
 package nl.tudelft.bw4t.client.gui.menu;
 
+import java.util.List;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.text.View;
 
+import nl.tudelft.bw4t.client.agent.BW4TAgent;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.DropEPartnerActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.EPartnerMessageSenderActionListener;
@@ -30,21 +33,34 @@ public class EPartnerMenu {
         menuItem.addActionListener(new DropEPartnerActionListener(gui.getController(), gui));
         popUpMenu.add(menuItem);
         
-        popUpMenu.addSeparator();
+      /*  long epartnerId = gui.getController().getMapController().getTheBot().getHoldingEpartner();
+        ViewEPartner viewEpartner = gui.getController().getMapController().getViewEPartner(epartnerId);
+        String nameViewEPartner = viewEpartner.getName();
         
-        // EPartner commands
-        BasicMenuOperations.addSectionTitleToPopupMenu("Use e-partner to:", popUpMenu);
-
-        JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu("Navigate to ", gui.getjPopupMenu());
-        
-        for (Zone room : gui.getController().getMapController().getRooms()) {
-            menuItem = new JMenuItem(room.getName());
-            menuItem.addActionListener(new MessageSenderActionListener(
-                    new BW4TMessage(MessageType.IWANTTOGO, room.getName(), "", 0), gui));
-           /* menuItem.addActionListener(new EPartnerMessageSenderActionListener(
-                    new BW4TMessage(MessageType.IWANTTOGO, room.getName(), "", 0), gui));
-            submenu.add(menuItem);*/
+        List<String> epartnerList = gui.getController().getHumanAgent().getEPartners(gui);
+        BW4TAgent currentEpartner = null;
+        for (int i = 0; i < epartnerList.size(); i ++) {
+            if (nameViewEPartner.equals(epartnerList.get(i))) {
+                currentEpartner = gui.getController().getHumanAgent().getAgentFromName(nameViewEPartner);
+            }
         }
+        
+        System.err.println("epartnermenu: " + currentEpartner.getAgentId());*/
+        //if (gui.getController().getHumanAgent().getEpartnerConfig().isGps()){
+            popUpMenu.addSeparator();
+            
+            // EPartner commands
+            BasicMenuOperations.addSectionTitleToPopupMenu("Inform e-partner that:", popUpMenu);
+    
+            JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu("I am going to ", gui.getjPopupMenu());
+            
+            for (Zone room : gui.getController().getMapController().getRooms()) {
+                menuItem = new JMenuItem(room.getName());
+                menuItem.addActionListener(new EPartnerMessageSenderActionListener(
+                        new BW4TMessage(MessageType.IWANTTOGO, room.getName(), "", 0), gui));
+                submenu.add(menuItem);
+            }
+        //}
         
         popUpMenu.addSeparator();
         popUpMenu.add(new JMenuItem("Close menu"));
@@ -56,7 +72,7 @@ public class EPartnerMenu {
         // Robot commands
         BasicMenuOperations.addSectionTitleToPopupMenu("Command my robot to:", gui.getjPopupMenu());
 
-        BasicMenuOperations.addEPartnerPickUpMenuItem(gui);
+        BasicMenuOperations.addEPartnerPickUpMenuItem(gui, ep);
 
         gui.getjPopupMenu().addSeparator();
         gui.getjPopupMenu().add(new JMenuItem("Close menu"));

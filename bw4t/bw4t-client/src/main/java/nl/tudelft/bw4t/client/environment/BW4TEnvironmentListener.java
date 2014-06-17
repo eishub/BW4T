@@ -13,6 +13,7 @@ import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.startup.ConfigFile;
 import nl.tudelft.bw4t.client.startup.InitParam;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 
 import org.apache.log4j.Logger;
 
@@ -122,7 +123,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
     IOException, RelationException {
         agentCount = environment.getAgents().size();
         if ("human".equals(environment.getType(entityId))) {
-            HumanAgent agent = new HumanAgent(entityId, environment);
+            HumanAgent agent = new HumanAgent(entityId, environment, agentData);
             agent.setBotConfig(findCorrespondingBotConfig(entityId, false));
             agent.registerEntity(entityId);
             environment.registerAgent(agent.getAgentId());
@@ -142,7 +143,11 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
             // we use the entityId as name for the agent as well. #2761
             Object[] args = new Object[] { entityId, environment };
             BW4TAgent agent = cons.newInstance(args);
-            //agent.setBotConfig(findCorrespondingBotConfig(entityId, false));
+            
+            if ("epartner".equals(environment.getType(entityId))) {
+                agent.setEpartnerConfig(findCorrespondingEpartnerConfig(entityId, false));
+            }
+            
             agent.registerEntity(entityId);
             environment.registerAgent(agent.getAgentId());
             environment.associateEntity(agent.getAgentId(), entityId);
@@ -160,8 +165,9 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
      * @return The bot config belonging to this entity.
      */
     private BotConfig findCorrespondingBotConfig(String entityId, boolean recursiveCall) {
-        if (!ConfigFile.hasReadInitFile())
+        if (!ConfigFile.hasReadInitFile()) {
             return null;
+        }
         for (BotConfig bConfig : ConfigFile.getConfig().getBots()) {
             if (entityId.equals(bConfig.getBotName())) {
                 return bConfig;
@@ -169,8 +175,32 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
         }
         
         /** Removes the last '_Nr' part and tries again: */
-        if (!recursiveCall)
+        if (!recursiveCall) {
             return findCorrespondingBotConfig(entityId.split("_")[0], true);
+        }
+       
+        return null;
+    }
+
+    /**
+     * Finds the epartner config corresponding to the entity id.
+     * @param entityId The entity id.
+     * @return The epartner config belonging to this entity.
+     */
+    private EPartnerConfig findCorrespondingEpartnerConfig(String entityId, boolean recursiveCall) {
+        if (!ConfigFile.hasReadInitFile()) {
+            return null;
+        }
+        for (EPartnerConfig epConfig : ConfigFile.getConfig().getEpartners()) {
+            if (entityId.equals(epConfig.getEpartnerName())) {
+                return epConfig;
+            }
+        }
+        
+        /** Removes the last '_Nr' part and tries again: */
+        if (!recursiveCall) {
+            return findCorrespondingEpartnerConfig(entityId.split("_")[0], true);
+        }
        
         return null;
     }
