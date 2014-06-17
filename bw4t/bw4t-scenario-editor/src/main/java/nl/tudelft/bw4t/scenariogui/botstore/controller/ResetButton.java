@@ -26,6 +26,9 @@ public class ResetButton implements ActionListener {
      * @param ae The action event causing this.
      */
     public void actionPerformed(ActionEvent ae) {
+    	view.getBotController().getBotConfig().setBotSpeed(100);
+    	view.getBotController().getBotConfig().setBotSize(2);
+    	view.getBatterySlider().setEnabled(false);
     	view.updateView();
     }   
 }
