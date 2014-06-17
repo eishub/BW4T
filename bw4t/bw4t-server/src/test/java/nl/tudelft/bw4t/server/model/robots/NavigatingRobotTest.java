@@ -169,11 +169,6 @@ public class NavigatingRobotTest {
     }
     
     @Test
-    public void dropIntAssertTest() {
-        bot.drop(5);
-    }
-    
-    @Test
     public void checkZoneAccessTest() {
         MoveType type = bot.checkZoneAccess(mockedZone, mockedZone, mockedDoor);
         assertEquals(type, MoveType.SAME_AREA);
