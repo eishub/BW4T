@@ -62,4 +62,5 @@
     <serverPort>8000</serverPort>
     <useGoal>true</useGoal>
     <visualizePaths>false</visualizePaths>
+    <enableCollisions>false</enableCollisions>
 </bw4TClientConfig>

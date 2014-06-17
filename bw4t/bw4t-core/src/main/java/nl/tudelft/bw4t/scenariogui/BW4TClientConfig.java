@@ -38,6 +38,8 @@ public class BW4TClientConfig {
 
 	private boolean visualizePaths = DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue();
 
+	private boolean enableCollisions = DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue();
+
 	private boolean useGoal = DefaultConfigurationValues.USE_GOAL.getBooleanValue();
 
 	private String mapFile = "";
@@ -227,6 +229,26 @@ public class BW4TClientConfig {
 	 */
 	public final boolean isVisualizePaths() {
 		return visualizePaths;
+	}
+
+	/**
+	 * Sets if collisions should be enabled
+	 *
+	 * @param newEnableCollisions
+	 *            Boolean indicating if collisions should be enabled
+	 */
+	@XmlElement
+	public final void setEnableCollisions(final boolean newEnableCollisions) {
+		this.enableCollisions = newEnableCollisions;
+	}
+
+	/**
+	 * Gets if collisions should be enabled
+	 *
+	 * @return If collisions should be enabled
+	 */
+	public final boolean isEnableCollisions() {
+		return enableCollisions;
 	}
 
 	/**

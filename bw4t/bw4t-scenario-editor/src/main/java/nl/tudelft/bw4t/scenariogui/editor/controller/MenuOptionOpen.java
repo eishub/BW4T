@@ -227,6 +227,7 @@ class MenuOptionOpen extends AbstractMenuOption {
         getModel().setServerPort(loadedModel.getServerPort());
         getModel().setLaunchGui(loadedModel.isLaunchGui());
         getModel().setVisualizePaths(loadedModel.isVisualizePaths());
+        getModel().setEnableCollisions(loadedModel.isEnableCollisions());
         getModel().setMapFile(loadedModel.getMapFile());
     }
 
@@ -237,6 +238,7 @@ class MenuOptionOpen extends AbstractMenuOption {
         configPanel.setServerPort(getModel().getServerPort() + "");
         configPanel.setUseGui(getModel().isLaunchGui());
         configPanel.setVisualizePaths(getModel().isVisualizePaths());
+        configPanel.setEnableCollisions(getModel().isEnableCollisions());
         configPanel.setMapFile(getModel().getMapFile());
     }
 }

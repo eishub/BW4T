@@ -115,6 +115,8 @@ class MenuOptionNew extends AbstractMenuOption {
                 .getBooleanValue());
         configPanel.setVisualizePaths(DefaultConfigurationValues.VISUALIZE_PATHS
                 .getBooleanValue());
+        configPanel.setEnableCollisions(DefaultConfigurationValues.ENABLE_COLLISIONS
+                .getBooleanValue());
 		configPanel.setMapFile(DefaultConfigurationValues.MAP_FILE
 				.getValue());
 

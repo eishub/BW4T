@@ -285,6 +285,22 @@ public class ConfigurationPanelTest {
     }
 
     /**
+     * Tests whether changes have been made to the Enable Collisions section.
+     */
+    @Test
+    public void testChangesEnableCollisions() {
+        assertTrue(configPanel.isDefault());
+    	assertEquals(DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue(), configPanel.getCollisionsYesCheckbox().getState());
+    	assertEquals(!DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue(), configPanel.getCollisionsNoCheckbox().getState());
+    	
+        configPanel.setVisualizePaths(!DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue());
+
+        assertEquals(!DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue(), configPanel.getCollisionsYesCheckbox().getState());
+        assertEquals(DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue(), configPanel.getCollisionsNoCheckbox().getState());
+        assertFalse(configPanel.isDefault());
+    }
+
+    /**
      * Tests whether changes have been made to the Map file section.
      */
     @Test
