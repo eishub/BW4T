@@ -146,4 +146,12 @@ public class SizeDialog extends JFrame {
 	public SizeDialogController getSizeDialogController() {
 		return sdc;
 	}
+	
+	public JSpinner getRowSpinner() {
+		return rows;
+	}
+	
+	public JSpinner getColumnsSpinner() {
+		return cols;
+	}
 }
