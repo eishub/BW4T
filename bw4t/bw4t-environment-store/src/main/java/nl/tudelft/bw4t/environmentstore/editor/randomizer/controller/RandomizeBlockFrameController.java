@@ -1,12 +1,7 @@
 package nl.tudelft.bw4t.environmentstore.editor.randomizer.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeBlockFrame;
-import nl.tudelft.bw4t.map.BlockColor;
 
 public class RandomizeBlockFrameController {
 
