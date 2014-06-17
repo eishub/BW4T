@@ -121,7 +121,7 @@ public class RoomMenus {
             String color2 = BasicMenuOperations.getColor(color, gui.getController().getHumanAgent());
             menuItem = new JMenuItem(color2);
             menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.ROOMCONTAINS, label,
-                    color2, null), gui.getController()));
+                    color2, null), gui));
             submenu.add(menuItem);
             if (!color2.equals(color))
                 break;
@@ -138,7 +138,7 @@ public class RoomMenus {
                 String color2 = BasicMenuOperations.getColor(color, gui.getController().getHumanAgent());
                 menuItem = new JMenuItem(color2);
                 menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(
-                        MessageType.ROOMCONTAINSAMOUNT, label, color2, i), gui.getController()));
+                        MessageType.ROOMCONTAINSAMOUNT, label, color2, i), gui));
                 submenuColor.add(menuItem);
                 if (!color2.equals(color))
                     break;
@@ -152,7 +152,7 @@ public class RoomMenus {
         for (String p : gui.getController().getOtherPlayers()) {
             menuItem = new JMenuItem("" + p);
             menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.CHECKED, label,
-                    null, p), gui.getController()));
+                    null, p), gui));
             submenu.add(menuItem);
         }
 
@@ -180,7 +180,7 @@ public class RoomMenus {
             for (Zone roomInfo : cmc.getRooms()) {
                 menuItem = new JMenuItem(roomInfo.getName());
                 menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.HASCOLOR,
-                        roomInfo.getName(), holdingColor, null), gui.getController()));
+                        roomInfo.getName(), holdingColor, null), gui));
                 submenu.add(menuItem);
             }
         }

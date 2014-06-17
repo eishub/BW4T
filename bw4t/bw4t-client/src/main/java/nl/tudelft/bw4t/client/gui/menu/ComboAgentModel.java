@@ -10,7 +10,8 @@ public class ComboAgentModel extends AbstractListModel implements ComboBoxModel 
 
     private final BW4TClientGUI gui;
 
-    private String selection = "";
+    private static final String[] DEFAULT_OPTIONS = new String[] { "all" };
+    private String selection = DEFAULT_OPTIONS[0];
 
     public ComboAgentModel(BW4TClientGUI clientGUI) {
         this.gui = clientGUI;
@@ -18,10 +19,19 @@ public class ComboAgentModel extends AbstractListModel implements ComboBoxModel 
 
     @Override
     public Object getElementAt(int listIndex) {
+        int defaultOptionsSize = DEFAULT_OPTIONS.length;
+        
+        /** If the element is a default option, then return that option: */
+        if (listIndex < defaultOptionsSize) {
+            return DEFAULT_OPTIONS[listIndex];
+        }
+        
+        /** Else return the agent in the dropdown menu list: */
         int agentIndex = listIndexToAgentIndex(listIndex);
         if (agentIndex >= 0 && showAgent(agentIndex)) {
             return gui.environment.getAgents().get(agentIndex);
         }
+        
         return null;
     }
     
@@ -51,6 +61,13 @@ public class ComboAgentModel extends AbstractListModel implements ComboBoxModel 
      * @return The agent index, -1 if the agent was not in the list.
      */
     private int listIndexToAgentIndex(int listIndex) {
+        listIndex -= DEFAULT_OPTIONS.length;
+        
+        /** A default option, which can't be translated to an agent id: */
+        if (listIndex < 0) {
+            return -1;
+        }
+        
         int currentListIndex = 0;
         for (int agentIndex = 0; agentIndex < gui.environment.getAgents().size(); agentIndex++) {
             if (showAgent(agentIndex) && currentListIndex++ >= listIndex) {
@@ -68,7 +85,7 @@ public class ComboAgentModel extends AbstractListModel implements ComboBoxModel 
                 size++;
             }
         }
-        return size;
+        return size + DEFAULT_OPTIONS.length;
     }
 
     @Override

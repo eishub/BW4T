@@ -38,7 +38,7 @@ public class PlayerMenu {
         for (Zone room : cmc.getRooms()) {
             JMenuItem menuItem = new JMenuItem(room.getName());
             menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.GOTOROOM, room.getName(),
-                    null, receiver), gui.getController()));
+                    null, receiver), gui));
             submenu.add(menuItem);
         }
 
@@ -47,7 +47,7 @@ public class PlayerMenu {
         for (String color : ColorTranslator.getAllColors()) {
             JMenuItem menuItem = new JMenuItem(color);
             menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.FINDCOLOR, null,
-                    color, receiver), gui.getController()));
+                    color, receiver), gui));
             submenu.add(menuItem);
         }
 
@@ -61,7 +61,7 @@ public class PlayerMenu {
             for (Zone room : cmc.getRooms()) {
                 JMenuItem menuItem = new JMenuItem(room.getName());
                 menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(
-                        MessageType.GETCOLORFROMROOM, room.getName(), color, receiver), gui.getController()));
+                        MessageType.GETCOLORFROMROOM, room.getName(), color, receiver), gui));
                 submenu2.add(menuItem);
             }
         }

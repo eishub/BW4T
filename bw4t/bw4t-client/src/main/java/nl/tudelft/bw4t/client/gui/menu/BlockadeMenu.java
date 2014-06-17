@@ -63,8 +63,7 @@ public class BlockadeMenu {
             for (Zone roomInfo : cmc.getRooms()) {
                 menuItem = new JMenuItem(roomInfo.getName());
                 menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.HASCOLOR,
-                        roomInfo.getName(), colorAsString, null), gui
-                        .getController()));
+                        roomInfo.getName(), colorAsString, null), gui));
                 submenu.add(menuItem);
             }
         }
