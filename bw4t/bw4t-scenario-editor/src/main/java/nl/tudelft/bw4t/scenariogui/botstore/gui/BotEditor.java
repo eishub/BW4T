@@ -39,6 +39,7 @@ public class BotEditor extends JFrame {
         setLayout(null);
       
         bPanel = new BotEditorPanel(bc);
+        bPanel.setBotEditor(this);
         bPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
         setContentPane(bPanel);
 
