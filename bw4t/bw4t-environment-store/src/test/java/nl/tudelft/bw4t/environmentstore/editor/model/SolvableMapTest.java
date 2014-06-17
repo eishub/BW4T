@@ -15,7 +15,9 @@ import org.junit.Test;
 
 public class SolvableMapTest {
 	private EnvironmentMap em;
-	
+	/**
+	 * Set up the test case.
+	 */
 	@Before
 	public void setUp() {
 		em = new EnvironmentMap(5, 5);
@@ -30,7 +32,10 @@ public class SolvableMapTest {
 		zm.setStartZone(true);
 		em.setZone(4, 2, zm);
 	}
-	
+	/**
+	 * Set up all the rooms in the environment map.
+	 * @param em The used environment map.
+	 */
 	public void initRooms(EnvironmentMap em) {
 		ZoneModel zm = new ZoneModel();
 		zm.setType(Type.ROOM);
@@ -59,24 +64,31 @@ public class SolvableMapTest {
 		zm.setDoor(2, true);
 		em.setZone(3, 3, zm);
 	}
-	
+	/**
+	 * Check if the map is solvable from the standard settings.
+	 */
 	@Test
 	public void solvableMapTest() {
 		List<BlockColor> l2 = new ArrayList<BlockColor>();
 		l2.add(BlockColor.RED);
 		em.generateRandomBlocks(l2, 8);
 		NewMap m = MapConverter.createMap(em);
-		assertTrue(SolvabilityAlgorithm.mapIsSolvable(m));
+		assertTrue(SolvabilityAlgorithm.mapIsSolvable(m) == null);
 	}
-	
+	/**
+	 * The map should be unsolvable, as there aren't enough blocks (there are none).
+	 */
 	@Test
 	public void unsolvableMapNotEnoughBlocksTest() {
 		List<BlockColor> l2 = new ArrayList<BlockColor>();
 		em.generateRandomBlocks(l2, 1);
 		NewMap m = MapConverter.createMap(em);
-		assertFalse(SolvabilityAlgorithm.mapIsSolvable(m));
+		assertFalse(SolvabilityAlgorithm.mapIsSolvable(m) == null);
 	}
-	
+	/**
+	 * This map should be unsolvable, as a blockade has been put in front of a door
+	 * containing a block necessary to complete the map.
+	 */
 	@Test
 	public void unsolvableMapBlockedRoomTest() {
 		ZoneModel zm = new ZoneModel();
@@ -86,11 +98,14 @@ public class SolvableMapTest {
 		l2.add(BlockColor.RED);
 		em.generateRandomBlocks(l2, 1);
 		NewMap m = MapConverter.createMap(em);
-		assertFalse(SolvabilityAlgorithm.mapIsSolvable(m));
+		assertFalse(SolvabilityAlgorithm.mapIsSolvable(m) == null);
 		zm.setType(Type.ROOM);
 		em.setZone(1, 0, zm);
 	}
-	
+	/**
+	 * This map should be unsolvable, as the start zone is blocked
+	 * and can't be reached from the drop zone.
+	 */
 	@Test
 	public void unsolvableMapBlockedStartTest() {
 		ZoneModel zm = new ZoneModel();
@@ -101,15 +116,17 @@ public class SolvableMapTest {
 		l2.add(BlockColor.RED);
 		em.generateRandomBlocks(l2, 1);
 		NewMap m = MapConverter.createMap(em);
-		assertFalse(SolvabilityAlgorithm.mapIsSolvable(m));
+		assertFalse(SolvabilityAlgorithm.mapIsSolvable(m) == null);
 		zm.setType(Type.ROOM);
 		em.setZone(4, 1, zm);
 		em.setZone(4, 3, zm);
 	}
-	
+	/**
+	 * This map should be unsolvable, as there are no blocks in the map.
+	 */
 	@Test
 	public void unsolvableMapNoBlocks() {
 		NewMap m = MapConverter.createMap(em);
-		assertFalse(SolvabilityAlgorithm.mapIsSolvable(m));
+		assertFalse(SolvabilityAlgorithm.mapIsSolvable(m) == null);
 	}
 }
