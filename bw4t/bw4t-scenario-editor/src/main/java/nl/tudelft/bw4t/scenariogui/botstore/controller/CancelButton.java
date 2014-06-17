@@ -6,26 +6,27 @@ import java.awt.event.ActionListener;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 
 /**
- * Handles actions of the resetbutton
+ * Handles actions of the cancelbutton
  */
-public class ResetButton implements ActionListener {
+public class CancelButton implements ActionListener {
     /**
-     * The panel containing the button.
+     * The GUI to be disposed.
      */
     private BotEditorPanel view;
+
     /**
      * Constructor.
-     * @param pview The panel of the jump box.
+     * @param pview The GUI to be disposed.
      */
-    public ResetButton(BotEditorPanel pview) {
+    public CancelButton(BotEditorPanel pview) {
         this.view = pview;
     }
     /**
-     * Resets all parts of the bot editor panel
-     * to their standard value.
-     * @param ae The action event causing this.
+     * Dispose the BotEditor GUI.
+     * @param ae the action event causing the method to be invoked.
      */
     public void actionPerformed(ActionEvent ae) {
-    	view.updateView();
-    }   
+    	view.setVisible(false);
+        view.dispose();
+    }
 }

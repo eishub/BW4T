@@ -182,7 +182,7 @@ public final class BotConfig implements Serializable {
 	 * @return the robot's battery discharge rate.
 	 */
 	public double getBotBatteryDischargeRate() {
-		return botBatteryDischargeRate;
+		return 0.0002 * botSize + 0.0004 * botSpeed;
 	}
 
 	/**
