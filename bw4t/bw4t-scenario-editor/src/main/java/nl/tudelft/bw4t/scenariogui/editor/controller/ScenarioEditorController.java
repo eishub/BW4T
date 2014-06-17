@@ -56,6 +56,8 @@ public class ScenarioEditorController {
         configurationPanel.addServerPortController(new WriteServerPort(mainPanel));
         configurationPanel.addGUIYesCheckboxController(new SelectLaunchGUIYes(mainPanel));
         configurationPanel.addGUINoCheckboxController(new SelectLaunchGUINo(mainPanel));
+        configurationPanel.addPathsYesCheckboxController(new SelectVisualizePathsYes(mainPanel));
+        configurationPanel.addPathsNoCheckboxController(new SelectVisualizePathsNo(mainPanel));
         configurationPanel.addMapFileController(new WriteMapFile(mainPanel));
 		configurationPanel.addMapFileButtonController(new ChooseMapFileListener(mainPanel));
     }

@@ -79,6 +79,14 @@ public class ConfigurationPanel extends JPanel {
     private Checkbox guiNo = new Checkbox("No",
             !DefaultConfigurationValues.USE_GUI.getBooleanValue(), guiCheckBox);
 
+    private CheckboxGroup pathsCheckBox = new CheckboxGroup();
+
+    private Checkbox pathsYes = new Checkbox("Yes",
+            DefaultConfigurationValues.USE_GUI.getBooleanValue(), pathsCheckBox);
+
+    private Checkbox pathsNo = new Checkbox("No",
+            !DefaultConfigurationValues.USE_GUI.getBooleanValue(), pathsCheckBox);
+
     private JButton chooseMapFile = new JButton("Open File");
 
     private JFileChooser fileChooser;
@@ -125,6 +133,7 @@ public class ConfigurationPanel extends JPanel {
         showClientOptions();
         showServerOptions();
         showGuiOptions();
+        visualizePathsOptions();
         showMapOptions();
 
     }
@@ -236,6 +245,29 @@ public class ConfigurationPanel extends JPanel {
 
         c.gridx = 1;
         add(guiNo, c);
+    }
+
+    /**
+     * Show the option to visualize the paths.
+     */
+    private void visualizePathsOptions() {
+        c.insets = new Insets(INSET, INSET, 0, 0);
+
+        c.gridx = 0;
+        c.gridy += 1;
+
+        JLabel gui = new JLabel("Visualize Paths");
+        gui.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE_SMALL));
+        add(gui, c);
+
+        c.insets = new Insets(INSET / 2, INSET, INSET, INSET);
+
+        c.gridx = 0;
+        c.gridy += 1;
+        add(pathsYes, c);
+
+        c.gridx = 1;
+        add(pathsNo, c);
     }
 
     /**
@@ -366,6 +398,30 @@ public class ConfigurationPanel extends JPanel {
     }
 
     /**
+     * Returns if paths should be visualized.
+     *
+     * @return The visualization of paths
+     */
+    public final boolean isVisualizePaths() {
+        return pathsCheckBox.getSelectedCheckbox() == pathsYes;
+    }
+
+    /**
+     * Sets if paths should be visualized
+     *
+     * @param visualizePaths
+     *           The visualization of paths
+     */
+    public final void setVisualizePaths(final boolean visualizePaths) {
+        if (visualizePaths) {
+            pathsCheckBox.setSelectedCheckbox(pathsYes);
+        }
+        else {
+            pathsCheckBox.setSelectedCheckbox(pathsNo);
+        }
+    }
+
+    /**
      * Returns the button to choose a map file.
      *
      * @return The button to choose a map file.
@@ -422,6 +478,7 @@ public class ConfigurationPanel extends JPanel {
                 && this.getServerIP().equals(DefaultConfigurationValues.DEFAULT_SERVER_IP.getValue())
                 && this.getServerPort() == DefaultConfigurationValues.DEFAULT_SERVER_PORT.getIntValue()
                 && this.useGui() == DefaultConfigurationValues.USE_GUI.getBooleanValue()
+                && this.isVisualizePaths() == DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue()
                 && this.getMapFile().equals(DefaultConfigurationValues.MAP_FILE.getValue());
     }
 
@@ -491,6 +548,14 @@ public class ConfigurationPanel extends JPanel {
         return guiNo;
     }
     
+    public Checkbox getPathsYesCheckbox() {
+        return pathsYes;
+    }
+    
+    public Checkbox getPathsNoCheckbox() {
+        return pathsNo;
+    }
+    
     public JTextField getMapFileTextField() {
         return mapFileTextField;
     }
@@ -517,6 +582,14 @@ public class ConfigurationPanel extends JPanel {
     
     public void addGUINoCheckboxController(ItemListener controller) {
     	getGUINoCheckbox().addItemListener(controller);
+    }
+    
+    public void addPathsYesCheckboxController(ItemListener controller) {
+    	getPathsYesCheckbox().addItemListener(controller);
+    }
+    
+    public void addPathsNoCheckboxController(ItemListener controller) {
+    	getPathsNoCheckbox().addItemListener(controller);
     }
     
     public void addMapFileController(DocumentListener controller) {

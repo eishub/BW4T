@@ -12,6 +12,7 @@ public enum DefaultConfigurationValues {
     DEFAULT_SERVER_PORT("8000"),
     DEFAULT_CLIENT_PORT("2000"),
     USE_GUI("FALSE"),
+    VISUALIZE_PATHS("FALSE"),
     USE_GOAL("TRUE"),
     MAP_FILE("");
 

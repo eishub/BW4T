@@ -111,8 +111,10 @@ class MenuOptionNew extends AbstractMenuOption {
 		configPanel
 				.setServerPort(DefaultConfigurationValues.DEFAULT_SERVER_PORT
 						.getValue());
-		configPanel.setUseGui(DefaultConfigurationValues.USE_GUI
-				.getBooleanValue());
+        configPanel.setUseGui(DefaultConfigurationValues.USE_GUI
+                .getBooleanValue());
+        configPanel.setVisualizePaths(DefaultConfigurationValues.VISUALIZE_PATHS
+                .getBooleanValue());
 		configPanel.setMapFile(DefaultConfigurationValues.MAP_FILE
 				.getValue());
 

@@ -61,4 +61,5 @@
     <serverIp>localhost</serverIp>
     <serverPort>8000</serverPort>
     <useGoal>true</useGoal>
+    <visualizePaths>false</visualizePaths>
 </bw4TClientConfig>

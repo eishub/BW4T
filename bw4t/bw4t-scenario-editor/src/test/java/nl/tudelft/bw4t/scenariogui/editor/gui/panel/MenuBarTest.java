@@ -112,8 +112,9 @@ public class MenuBarTest {
 
         assertEquals(config.getServerIp(), configurationPanel.getServerIP());
         assertEquals(config.getServerPort(), configurationPanel.getServerPort());
-        
+
         assertEquals(config.isLaunchGui(), configurationPanel.useGui());
+        assertEquals(config.isVisualizePaths(), configurationPanel.isVisualizePaths());
         assertEquals(config.getMapFile(), configurationPanel.getMapFile());    
     }
     
@@ -650,6 +651,7 @@ public class MenuBarTest {
         assertEquals(opened.getServerPort(), saved.getServerPort());
         assertEquals(opened.getServerIp(), saved.getServerIp());
         assertEquals(opened.isLaunchGui(), saved.isLaunchGui());
+        assertEquals(opened.isVisualizePaths(), saved.isVisualizePaths());
         // Ignore the map file during this test.
     }
     
