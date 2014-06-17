@@ -1,11 +1,12 @@
 environment{
-	env = "C:\school\Projects\Context\BWT4\bw4t\bw4t-client\target\bw4t-client-3.3.0-jar-with-dependencies.jar" .
-	init = [ configfile = "C:\Users\Calvin\Documents\MAS Exports\Collision Scenario\CollisionScenario.xml" ] .
+	env = "C:\Users\Calvin\Documents\School\Context\BW4T\bw4t\bw4t-client\target\bw4t-client-3.3.0-jar-with-dependencies.jar" .
+	init = [ configfile = "C:\Users\Calvin\Documents\School\Context\BW4T\bw4t\bw4t-server\src\test\resources\CollisionScenario\CollisionScenario.xml" ] .
 }
 
 agentfiles{
 	"agents/lydia.goal" [name = lydia] .
 	"agents/joyce.goal" [name = joyce] .
+	"agents/robot.goal" [name = robot] .
 }
 
 launchpolicy{
