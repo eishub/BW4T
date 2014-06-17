@@ -64,6 +64,8 @@ public class ClientMapController extends AbstractMapController {
     /** All the blocks. */
     private Map<Long, ViewBlock> allBlocks = new HashMap<>();
     
+    private Map<Long, ViewEPartner> allEPartners = new HashMap<>();
+    
     /** The color sequence. */
     private List<BlockColor> colorSequence = new LinkedList<>();
 
@@ -161,6 +163,15 @@ public class ClientMapController extends AbstractMapController {
         if (b == null) {
             b = new ViewBlock();
             allBlocks.put(id, b);
+        }
+        return b;
+    }
+    
+    private ViewEPartner getEPartner(Long id) {
+        ViewEPartner b = allEPartners.get(id);
+        if (b == null) {
+            b = new ViewEPartner();
+            allEPartners.put(id, b);
         }
         return b;
     }
@@ -307,7 +318,6 @@ public class ClientMapController extends AbstractMapController {
     private void processColorPercept(List<Parameter> perceptParameters) {
         long id = ((Numeral) perceptParameters.get(0)).getValue().longValue();
         char color = ((Identifier) perceptParameters.get(1)).getValue().charAt(0);
-
         ViewBlock b = getBlock(id);
         b.setColor(BlockColor.toAvailableColor(color));
         getVisibleBlocks().add(b);
@@ -326,14 +336,14 @@ public class ClientMapController extends AbstractMapController {
         String entityId = ((Identifier) perceptParameters.get(1)).getValue();
         long holderId = ((Numeral) perceptParameters.get(2)).getValue().longValue();
         
-        ViewEPartner epartner = getViewEPartner(id);
+        ViewEPartner epartner = getEPartner(id);
         if (epartner == null) {
             LOGGER.info("creating " +name + "("+id + ", " + holderId + ")");
             epartner = new ViewEPartner();
-            epartner.setId(id);
-            epartner.setName(entityId);
-            getVisibleEPartners().add(epartner);
         }
+        epartner.setId(id);
+        epartner.setName(entityId);
+        getVisibleEPartners().add(epartner);
         if (holderId == theBot.getId()) {
             if(id != theBot.getHoldingEpartner()){
                 LOGGER.info("We are now holding the e-partner: " + id);
@@ -362,7 +372,7 @@ public class ClientMapController extends AbstractMapController {
         ViewBlock b = getBlock(id);
         b.setObjectId(id);
         b.setPosition(new Point2D.Double(x, y));
-        ViewEPartner ep = getViewEPartner(id);
+        ViewEPartner ep = getEPartner(id);
         if (ep != null) {
             ep.setLocation(b.getPosition());
         }
