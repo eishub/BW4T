@@ -95,7 +95,7 @@ public class MenuBarTest {
      */
     @Test
     public void testExitNoChanges() {
-        /* Reset the controller to the spied objects controller */
+    	/* Reset the controller to the spied objects controller */
         ActionListener[] listeners = envStore.getTopMenuBar().getMenuItemFileExit().getActionListeners();
         assert listeners.length == 1;
 
