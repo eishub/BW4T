@@ -3,11 +3,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 
-import nl.tudelft.bw4t.environmentstore.editor.model.Node.DoorDirection;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.Zone.Type;
 
-import org.junit.Before;
 import org.junit.Test;
 /**
  * Test suite to cover everything from EnvironmentMap
