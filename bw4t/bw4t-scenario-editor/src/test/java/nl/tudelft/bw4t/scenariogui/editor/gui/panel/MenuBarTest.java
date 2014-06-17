@@ -651,6 +651,7 @@ public class MenuBarTest {
         assertEquals(opened.getServerPort(), saved.getServerPort());
         assertEquals(opened.getServerIp(), saved.getServerIp());
         assertEquals(opened.isLaunchGui(), saved.isLaunchGui());
+        assertEquals(opened.isVisualizePaths(), saved.isVisualizePaths());
         // Ignore the map file during this test.
     }
     

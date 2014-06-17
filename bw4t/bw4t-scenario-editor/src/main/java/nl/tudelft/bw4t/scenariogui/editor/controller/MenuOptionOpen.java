@@ -226,6 +226,7 @@ class MenuOptionOpen extends AbstractMenuOption {
         getModel().setServerIp(loadedModel.getServerIp());
         getModel().setServerPort(loadedModel.getServerPort());
         getModel().setLaunchGui(loadedModel.isLaunchGui());
+        getModel().setVisualizePaths(loadedModel.isVisualizePaths());
         getModel().setMapFile(loadedModel.getMapFile());
     }
 

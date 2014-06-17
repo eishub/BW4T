@@ -548,6 +548,14 @@ public class ConfigurationPanel extends JPanel {
         return guiNo;
     }
     
+    public Checkbox getPathsYesCheckbox() {
+        return pathsYes;
+    }
+    
+    public Checkbox getPathsNoCheckbox() {
+        return pathsNo;
+    }
+    
     public JTextField getMapFileTextField() {
         return mapFileTextField;
     }
@@ -574,6 +582,14 @@ public class ConfigurationPanel extends JPanel {
     
     public void addGUINoCheckboxController(ItemListener controller) {
     	getGUINoCheckbox().addItemListener(controller);
+    }
+    
+    public void addPathsYesCheckboxController(ItemListener controller) {
+    	getPathsYesCheckbox().addItemListener(controller);
+    }
+    
+    public void addPathsNoCheckboxController(ItemListener controller) {
+    	getPathsNoCheckbox().addItemListener(controller);
     }
     
     public void addMapFileController(DocumentListener controller) {
