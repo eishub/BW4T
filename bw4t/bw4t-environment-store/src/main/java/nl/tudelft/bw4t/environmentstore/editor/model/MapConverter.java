@@ -39,10 +39,9 @@ public class MapConverter {
 
     	// set the general fields of the map
     	map.setArea(new Point(model.getColumns() * MapConverter.ROOMWIDTH, 
-    			model.getColumns() * MapConverter.ROOMWIDTH));
+    			model.getRows() * MapConverter.ROOMHEIGHT));
     	map.setSequence(model.getSequence());
 
-    	
     	//Check for dropzones/startzones
     	//For each zonemodel, add the corresponding Zone
     	boolean foundDropzone = false;
