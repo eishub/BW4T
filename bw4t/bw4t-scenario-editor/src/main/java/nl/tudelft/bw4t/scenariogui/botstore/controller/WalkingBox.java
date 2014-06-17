@@ -1,12 +1,14 @@
-package nl.tudelft.bw4t.scenariogui.botstore.gui;
+package nl.tudelft.bw4t.scenariogui.botstore.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
+
 /**
  * Handles actions of the walkingcheckbox
  */
-class WalkingBox implements ActionListener {
+public class WalkingBox implements ActionListener {
     /**
      * The panel containing the check box.
      */
