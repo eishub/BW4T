@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.environmentstore.sizedialog.view;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -35,12 +36,12 @@ public class SizeDialog extends JFrame {
 	/**
 	 * Label with the text #rows.
 	 */
-	private JLabel rowsLabel = new JLabel("#rows");
+	private JLabel rowsLabel = new JLabel("Number of Rows: ");
 
 	/**
 	 * Label with the text #columns.
 	 */
-	private JLabel columnsLabel = new JLabel("#columns");
+	private JLabel columnsLabel = new JLabel("Number of Columns: ");
 
 	/**
 	 * Here can the user set the wanted numbers of rows.
@@ -73,7 +74,7 @@ public class SizeDialog extends JFrame {
 				24, // max
 				1); // step
 		rows = new JSpinner(rowmodel);
-		
+		rows.setPreferredSize(new Dimension(200, 20));
 		contentPane.add(rowsLabel, setUpContraints(GridBagConstraints.HORIZONTAL, 0, 0, 0));
 		contentPane.add(rows, setUpContraints(GridBagConstraints.HORIZONTAL, 1, 0, 0));
 
@@ -82,11 +83,13 @@ public class SizeDialog extends JFrame {
 				24, // max
 				1); // step
 		cols = new JSpinner(colmodel);
+		cols.setPreferredSize(new Dimension(200, 20));
 		contentPane.add(columnsLabel, setUpContraints(GridBagConstraints.HORIZONTAL, 0, 1, 0));
 		contentPane.add(cols, setUpContraints(GridBagConstraints.HORIZONTAL, 1, 1, 0));
 		
 		contentPane.add(startButton, setUpContraints(GridBagConstraints.BASELINE, 0, 2, 2));
-
+		
+		setTitle("New Environment");
 		setLocationRelativeTo(null);
 		pack();
 		setVisible(true);

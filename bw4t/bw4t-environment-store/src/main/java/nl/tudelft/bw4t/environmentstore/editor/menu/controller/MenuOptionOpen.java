@@ -10,7 +10,9 @@ import java.util.List;
 import javax.swing.JFileChooser;
 import javax.xml.bind.JAXBException;
 
+import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.menu.view.MenuBar;
+import nl.tudelft.bw4t.environmentstore.editor.model.EnvironmentMap;
 import nl.tudelft.bw4t.environmentstore.editor.model.MapConverter;
 import nl.tudelft.bw4t.environmentstore.editor.model.ZoneModel;
 import nl.tudelft.bw4t.environmentstore.main.controller.EnvironmentStoreController;
@@ -33,8 +35,6 @@ public class MenuOptionOpen extends AbstractMenuOption {
 	 *            The action event.
 	 */
 	public void actionPerformed(final ActionEvent e) {
-		openMap();
-
 		// Open configuration file
 		JFileChooser fileChooser = getCurrentFileChooser();
 		fileChooser.setFileFilter(FileFilters.xmlFilter());
@@ -45,13 +45,46 @@ public class MenuOptionOpen extends AbstractMenuOption {
 		if (fileChooser.showOpenDialog(current) == JFileChooser.APPROVE_OPTION) {
 			File file = fileChooser.getSelectedFile();
 			try {
+				// Get the information from the file.
 				NewMap map = NewMap.create(new FileInputStream(file));
 				
 				int nrows = getRows(map);
 				int ncols = getColumns(map);
 				List<BlockColor> sequence = map.getSequence();
 				List<ZoneModel> data = getZoneData(map);
-				// Joost TODO: send this data to the class where the grid will be edited.
+				
+				// Create a new editor with the right size.
+				super.getEnvironmentStoreController().getMainView().dispose();
+				
+				MapPanelController mc = new MapPanelController(nrows, ncols);
+
+				EnvironmentStore es = new EnvironmentStore(mc);
+				es.setWindowTitle(es.stripExtension(file.getName()));
+		    	es.setVisible(true);
+		    	
+				// Send this data to the grid that will be edited.
+		    	EnvironmentMap model = mc.getEnvironmentMap();
+		    	// Set the saved zones.		    	
+				for (ZoneModel zModel : data) {
+					int rowSet = ZoneModel.calcRow(zModel.getZone());
+					int colSet = ZoneModel.calcColumn(zModel.getZone());
+
+					model.getZone(rowSet, colSet).setType(zModel.getType());
+					model.getZone(rowSet, colSet).setStartZone(zModel.isStartZone());
+					model.getZone(rowSet, colSet).setDropZone(zModel.isDropZone());
+					model.getZone(rowSet, colSet).setColors(zModel.getColors());
+
+					model.getZone(rowSet, colSet).setDoor(ZoneModel.NORTH, zModel.hasDoor(ZoneModel.NORTH));
+					model.getZone(rowSet, colSet).setDoor(ZoneModel.EAST, zModel.hasDoor(ZoneModel.EAST));
+					model.getZone(rowSet, colSet).setDoor(ZoneModel.SOUTH, zModel.hasDoor(ZoneModel.SOUTH));
+					model.getZone(rowSet, colSet).setDoor(ZoneModel.WEST, zModel.hasDoor(ZoneModel.WEST));
+				}
+				
+		    	// Set the saved sequence.
+		    	model.setSequence(sequence);
+		    	mc.setModel(model);
+		    	
+				
 			} catch (FileNotFoundException e1) {
 				DefaultOptionPrompt prompt = new DefaultOptionPrompt();
 				prompt.showMessageDialog(current, "File cannot be found.");
