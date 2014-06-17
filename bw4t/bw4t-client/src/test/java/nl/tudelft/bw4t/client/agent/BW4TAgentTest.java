@@ -45,7 +45,7 @@ public class BW4TAgentTest {
 
     @Before
     public void setUp() throws Exception {
-        testAgent = new BW4TAgent("Agent1", remoteEnvironment);
+        testAgent = new BW4TAgent("Agent1", remoteEnvironment, null);
         testAgent.registerEntity("Entity1");
     }
 
