@@ -229,12 +229,29 @@ public abstract class BoundedMoveableObject {
     public List<NdPoint> getPointsOccupiedByObject(int padding) {
         List<NdPoint> points = new ArrayList<NdPoint>();
 
-        for(int i = (int) boundingBox.getMinX() - padding; i <= (int) boundingBox.getMaxX() + padding; i++) {
-            for(int j = (int) boundingBox.getMinY() - padding; j <= (int) boundingBox.getMaxY() + padding; j++) {
+        for (int i = (int) boundingBox.getMinX() - padding; i <= (int) boundingBox.getMaxX() + padding; i++) {
+            for (int j = (int) boundingBox.getMinY() - padding; j <= (int) boundingBox.getMaxY() + padding; j++) {
                 points.add(new NdPoint(i, j));
             }
         }
 
         return points;
     }
+    
+    /**
+     * Whether this bounded moveable object is free of objects that are
+     * of the specified type.
+     * @param freeOfType The type of objects that this object should be free of.
+     * @return Whether this bounded moveable object is free of object.
+     */
+    public boolean isFree(Class<? extends BoundedMoveableObject> freeOfType) {
+        for (Object o : context.getObjects(freeOfType)) {
+            BoundedMoveableObject moveableObject = (BoundedMoveableObject) o;
+            if (moveableObject.getBoundingBox().intersects(getBoundingBox().getBounds2D())) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
 }
