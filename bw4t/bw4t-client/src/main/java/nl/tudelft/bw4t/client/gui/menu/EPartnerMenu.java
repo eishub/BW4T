@@ -42,9 +42,8 @@ public class EPartnerMenu {
             menuItem.addActionListener(new MessageSenderActionListener(
                     new BW4TMessage(MessageType.IWANTTOGO, room.getName(), "", 0), gui));
            /* menuItem.addActionListener(new EPartnerMessageSenderActionListener(
-                    new BW4TMessage(MessageType.IWANTTOGO, room.getName(), "", 0),
-                    gui.getController(), gui.getController().getMapController()));*/
-            submenu.add(menuItem);
+                    new BW4TMessage(MessageType.IWANTTOGO, room.getName(), "", 0), gui));
+            submenu.add(menuItem);*/
         }
         
         popUpMenu.addSeparator();
