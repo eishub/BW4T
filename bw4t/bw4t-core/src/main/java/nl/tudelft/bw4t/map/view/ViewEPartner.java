@@ -20,11 +20,10 @@ public class ViewEPartner {
     public ViewEPartner() {
     }
 
-    public ViewEPartner(long id, Point2D location, boolean isPickedUp/*, String name*/) {
+    public ViewEPartner(long id, Point2D location, boolean isPickedUp) {
         this.setId(id);
         this.location = location;
         this.pickedUp = isPickedUp;
-        //this.name = name;
     }
 
     public long getId() {
