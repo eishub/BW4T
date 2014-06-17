@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeBlockFrame;
 import nl.tudelft.bw4t.map.BlockColor;
 
-public class RandomizeFromSettingsBlock implements ActionListener{
+public class ApplyRandomBlock implements ActionListener{
 	
 	private RandomizeBlockFrame view;
 	
@@ -20,7 +20,7 @@ public class RandomizeFromSettingsBlock implements ActionListener{
 	
 	private int amount;
 	
-	public RandomizeFromSettingsBlock(RandomizeBlockFrame rf, RandomizeBlockFrameController controller,ArrayList<BlockColor> res) {
+	public ApplyRandomBlock(RandomizeBlockFrame rf, RandomizeBlockFrameController controller,ArrayList<BlockColor> res) {
 		this.view = rf;
 		this.result = res;
 		this.controller = controller;
