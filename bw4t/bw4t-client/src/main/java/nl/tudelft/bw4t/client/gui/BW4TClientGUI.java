@@ -30,6 +30,7 @@ import nl.tudelft.bw4t.client.BW4TClientSettings;
 import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.client.gui.listeners.BatteryProgressBarListener;
 import nl.tudelft.bw4t.client.gui.listeners.ChatListMouseListener;
 import nl.tudelft.bw4t.client.gui.listeners.EPartnerListMouseListener;
 import nl.tudelft.bw4t.client.gui.listeners.TeamListMouseListener;
@@ -307,8 +308,11 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         
         batteryProgressBar.setForeground(Color.green);
         batteryProgressBar.setStringPainted(true);
+        batteryProgressBar.setMaximum(100);
         batteryProgressBar.setValue(100);
-        
+
+        BatteryProgressBarListener.listeners.add(new BatteryProgressBarListener(batteryProgressBar, this));
+
         agentSelector = new JComboBox<ComboAgentModel>(new ComboAgentModel(this));
 
         botButtonPanel.add(batteryLabel);
@@ -363,19 +367,6 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         epartnerChatPanel.add(epartnerChatPane);
     }
 
-    /**
-     * Adds a player by adding a new button to the button panel, facilitating sending messages to this player
-     * 
-     * @param playerId
-     *            , the Id of the player to be added
-     */
-  /*  public void addPlayer(String playerId) {
-        if (!playerId.equals(controller.getMapController().getTheBot().getName())) {
-            JButton button = new JButton(playerId);
-            button.addMouseListener(new TeamListMouseListener(this));
-            botButtonPanel.add(button);
-        }
-    }*/
 
     @Override
     public void dispose() {
