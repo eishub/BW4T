@@ -234,7 +234,6 @@ public class ClientMapController extends AbstractMapController {
             setRunning(false);
         }
         super.run();
-        clientController.updatedNextFrame();
     }
 
     /* (non-Javadoc)
@@ -242,7 +241,6 @@ public class ClientMapController extends AbstractMapController {
      */
     @Override
     protected void updateRenderer(MapRendererInterface mri) {
-        clientController.updateRenderer(mri);
         mri.validate();
         mri.repaint();
     }

@@ -45,7 +45,7 @@ public class ClientControllerTest {
     public void setUp() throws Exception {
         listOfPercepts = new LinkedList<Percept>();
         when(map.getArea()).thenReturn(new Point(1.0, 1.0));
-        clientController = new ClientController(remoteEnvironment, map, entityID);
+        clientController = new ClientController(remoteEnvironment, entityID);
     }
 
     @After
@@ -54,7 +54,7 @@ public class ClientControllerTest {
 
     @Test
     public void testClientControllerRemoteEnvironmentNewMapString() {
-        ClientController testController = new ClientController(remoteEnvironment, map, entityID);
+        ClientController testController = new ClientController(remoteEnvironment, entityID);
         assertNotNull(testController);
         assertEquals(remoteEnvironment, testController.getEnvironment());
         assertEquals(map, testController.getMapController().getMap());
@@ -63,7 +63,7 @@ public class ClientControllerTest {
 
     @Test
     public void testClientControllerRemoteEnvironmentNewMapStringHumanAgent() {
-        ClientController testController = new ClientController(remoteEnvironment, map, entityID, humanAgent);
+        ClientController testController = new ClientController(remoteEnvironment, entityID, humanAgent);
         assertEquals(humanAgent,testController.getHumanAgent());
         
     }
@@ -112,15 +112,8 @@ public class ClientControllerTest {
     @Test
     public void testUpdateRenderer() {
         testHandlePerceptsMessage();
-        clientController.updateRenderer(clientGUI);
+        clientController.updateGUI();
         verify(clientGUI, times(1)).update();
-    }
-    
-    @Test
-    public void testUpdateRendererDoNot() {
-        clientController.updatedNextFrame();
-        clientController.updateRenderer(clientGUI);
-        verifyZeroInteractions(clientGUI);
     }
 
 }

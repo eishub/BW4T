@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import nl.tudelft.bw4t.client.BW4TClient;
 import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
@@ -40,25 +41,23 @@ public class ClientController {
     
     /** The environment which should be read. */
     private RemoteEnvironment environment;
-
+    
     /**
-     * if set to true the update function of the gui will be called the next frame.
+     * A reference to the client gui attached to this controller.
      */
-    private boolean updateNextFrame = true;
+    private BW4TClientGUI gui = null;
 
     /**
      * Instantiates a new client controller.
      * 
      * @param env
      *            the environment
-     * @param map
-     *            the map
      * @param entityId
      *            the entity id
      */
-    public ClientController(RemoteEnvironment env, NewMap map, String entityId) {
+    public ClientController(RemoteEnvironment env, String entityId) {
         environment = env;
-        mapController = new ClientMapController(map, this);
+        mapController = new ClientMapController(environment.getClient().getMap(), this);
         getMapController().getTheBot().setName(entityId);
         humanAgent = null;
     }
@@ -68,15 +67,13 @@ public class ClientController {
      * 
      * @param env
      *            the environment
-     * @param map
-     *            the map
      * @param entityId
      *            the entity id
      * @param humanAgent
      *            the human agent
      */
-    public ClientController(RemoteEnvironment env, NewMap map, String entityId, HumanAgent humanAgent) {
-        this(env, map, entityId);
+    public ClientController(RemoteEnvironment env, String entityId, HumanAgent humanAgent) {
+        this(env, entityId);
         this.humanAgent = humanAgent;
     }
 
@@ -120,6 +117,14 @@ public class ClientController {
         return toBePerformedActionClone;
     }
 
+    public BW4TClientGUI getGui() {
+        return gui;
+    }
+
+    public void setGui(BW4TClientGUI gui) {
+        this.gui = gui;
+    }
+
     /**
      * Interprets the given list of {@link Percept}s and extracts the required information.
      * 
@@ -152,27 +157,35 @@ public class ClientController {
         String sender = ((Identifier) iterator.next()).getValue();
         String message = ((Identifier) iterator.next()).getValue();
         getChatHistory().add(sender + ": " + message);
-        updateNextFrame = true;
+        updateGUI();
     }
     
     /**
-     * the update request was finished.
+     * the update the client GUI.
      */
-    void updatedNextFrame() {
-        updateNextFrame = false;
-    }
-
-    /**
-     * Update the renderer.
-     * 
-     * @param mri
-     *            the map renderer interface
-     */
-    public void updateRenderer(MapRendererInterface mri) {
-        if (updateNextFrame && mri instanceof BW4TClientGUI) {
-            BW4TClientGUI gui = (BW4TClientGUI) mri;
+    protected void updateGUI() {
+        BW4TClientGUI gui = this.getGui();
+        if(gui != null) {
             gui.update();
         }
+    }
+    
+    /**
+     * stop the controller and dispose the GUI.
+     */
+    public void stop() {
+        mapController.setRunning(false);
+        if(this.getGui() != null) {
+            gui.dispose();
+        }
+        this.setGui(null);
+    }
+
+    public Percept sendToGUI(LinkedList<Parameter> parameters) {
+        if(this.getGui() != null) {
+            return this.getGui().sendToGUI(parameters);
+        }
+        return null;
     }
 
 }

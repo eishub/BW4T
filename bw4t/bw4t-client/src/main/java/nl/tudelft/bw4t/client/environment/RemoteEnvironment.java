@@ -15,6 +15,7 @@ import eis.iilang.Action;
 import eis.iilang.EnvironmentState;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
+
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -26,9 +27,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import nl.tudelft.bw4t.client.BW4TClient;
+import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.startup.InitParam;
+
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
@@ -53,7 +57,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
     private static final Logger LOGGER = Logger.getLogger(RemoteEnvironment.class.getName());
     private BW4TClient client = null;
     private final List<EnvironmentListener> environmentListeners = new LinkedList<EnvironmentListener>();
-    private final Map<String, BW4TClientGUI> entityToGUI = new HashMap<String, BW4TClientGUI>();
+    private final Map<String, ClientController> entityToGUI = new HashMap<>();
     private boolean connectedToGoal = false;
     /**
      * This is a list of locally registered agents.
@@ -141,12 +145,13 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
      */
     public Percept performEntityAction(String entity, Action action) throws RemoteException, ActException {
         if (isConnectedToGoal() && "sendToGUI".equals(action.getName())) {
-            if (getEntityToGUI().get(entity) == null) {
+            final ClientController entityGUI = getEntityController(entity);
+            if (entityGUI == null) {
                 ActException e = new ActException("sendToGUI failed:" + entity + " is not connected to a GUI.");
                 e.setType(ActException.FAILURE);
                 throw e;
             }
-            return getEntityToGUI().get(entity).sendToGUI(action.getParameters());
+            return entityGUI.sendToGUI(action.getParameters());
         } else {
             return getClient().performEntityAction(entity, action);
         }
@@ -163,13 +168,13 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
             BW4TClientGUI renderer = null;
             getClient().associateEntity(agentId, entityId);
             if (isConnectedToGoal() && "human".equals(getType(entityId))) {
-                renderer = new BW4TClientGUI(this, entityId, true, true);
+                renderer = new BW4TClientGUI(this, entityId);
             } else if (isConnectedToGoal() && launchGUI) {
-                renderer = new BW4TClientGUI(this, entityId, true, false);
+                renderer = new BW4TClientGUI(this, entityId);
             } else if ("bot".equals(getType(entityId)) && launchGUI) {
-                renderer = new BW4TClientGUI(this, entityId, false, false);
+                renderer = new BW4TClientGUI(this, entityId);
             }
-            getEntityToGUI().put(entityId, renderer);
+            putEntityController(entityId, renderer.getController());
         } catch (RemoteException e) {
             throw environmentSuddenDeath(e);
         } catch (Exception e) {
@@ -382,7 +387,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
      */
     @Override
     public void kill() throws ManagementException {
-        for (BW4TClientGUI renderer : getEntityToGUI().values()) {
+        for (ClientController renderer : entityToGUI.values()) {
             /*if (renderer != null) {
                 //FIXME renderer.setStop(true);
             }*/
@@ -727,9 +732,18 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard {
     public boolean isConnectedToGoal() {
         return connectedToGoal;
     }
-
-    public Map<String, BW4TClientGUI> getEntityToGUI() {
-        return entityToGUI;
+    
+    public ClientController getEntityController(String entity) {
+        return entityToGUI.get(entity);
+    }
+    
+    public void putEntityController(String entity, ClientController control) {
+        if (control == null) {
+            entityToGUI.remove(entity);
+        }
+        else {
+            entityToGUI.put(entity, control);
+        }
     }
 
     public List<EnvironmentListener> getEnvironmentListeners() {
