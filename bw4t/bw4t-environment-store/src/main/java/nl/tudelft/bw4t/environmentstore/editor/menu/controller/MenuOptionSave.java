@@ -18,7 +18,6 @@ public class MenuOptionSave extends AbstractMenuOption {
      * @param e The action event.
      */
     public void actionPerformed(final ActionEvent e) {
-        // TODO Check is file has been set, then call save(File), else call SaveAsFile().
     	saveFile();
     }
 
