@@ -2,6 +2,7 @@ package nl.tudelft.bw4t.scenariogui.util;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,7 +25,9 @@ import nl.tudelft.bw4t.util.FileUtils;
 public final class ExportToMAS {
 
 	private static final String TAB = "\t";
+	
 	private static final String NEWLINE = "\n";
+	
 	private static final String ENVIRONMENT = "env = \"BW4T3/BW4TClient.jar\" ."
 			+ NEWLINE;
 
@@ -32,12 +35,19 @@ public final class ExportToMAS {
 			+ "configfile = \"%s.xml\" ] ." + NEWLINE;
 
 	private static String init = "";
+	
 	private static BW4TClientConfig configuration;
+	
 	private static String directory;
+	
 	private static File mas2gFile;
+	
 	private static int agentCount;
+	
 	private static int humanCount;
+	
 	private static StringBuilder launchPolicyBuilder;
+	
 	private static Map<String, String> goalFiles;
 
 	/**
@@ -68,17 +78,7 @@ public final class ExportToMAS {
 		humanCount = 0;
 
 		try {
-			generateHierarchy(configurationName);
-			buildLaunchPolicy();
-			generateEnvironmentBlock();
-			generateAgentBlock();
-			generateLaunchPolicy();
-
-			// Save the configuration again with the latest changes concerning
-			// the goal files.
-			configuration.setFileLocation(directory + "/" + configurationName
-					+ ".xml");
-			configuration.toXML();
+			generateMASFile(configurationName);
 		} catch (IOException ex) {
 			ScenarioEditor.handleException(ex,
 					"An IO Exception has occurred. Please try again.");
@@ -89,6 +89,28 @@ public final class ExportToMAS {
 
 		}
 	}
+
+	/**
+	 * Generates the MAS file.
+	 * @param configurationName The name of the configuration to be created.
+	 * @throws IOException When there was an error reading/writing to the file.
+	 * @throws FileNotFoundException When the files weren't found.
+	 * @throws JAXBException When there was an error saving as XML file.
+	 */
+    private static void generateMASFile(String configurationName)
+            throws IOException, FileNotFoundException, JAXBException {
+        generateHierarchy(configurationName);
+        buildLaunchPolicy();
+        generateEnvironmentBlock();
+        generateAgentBlock();
+        generateLaunchPolicy();
+
+        // Save the configuration again with the latest changes concerning
+        // the goal files.
+        configuration.setFileLocation(directory + "/" + configurationName
+        		+ ".xml");
+        configuration.toXML();
+    }
 
 	/**
 	 * Generate the project hierarchy.
@@ -117,43 +139,57 @@ public final class ExportToMAS {
 
 	/**
 	 * Generate the agent file hierarchy.
-	 * 
-	 * @param directory
-	 *            The directory in which the project sits.
-	 * @throws IOException
-	 *             Exception raised if there are problems reading/writing to
-	 *             files
+	 * @param directory The directory in which the project resides.
+	 * @throws IOException Exception raised if there are problems reading/writing
+	 * to files
 	 */
 	private static void generateAgentHierarchy(File directory)
 			throws IOException {
-		/*
-		 * Finally loop through the bots, and create the files.
-		 * File.createNewFile only creates a file if it does not yet exist, so
-		 * no checks are needed.
-		 */
-		for (BotConfig bot : ExportToMAS.configuration.getBots()) {
-			// TODO: Change this to goal file implementation and existing files.
-			String botName = bot.getBotName();
-			String botGoalFilename = bot.getFileName();
+		generateAgentHierarchyForBots(directory);
+		generateAgentHierarchyForEPartners(directory);
+	}
+	
+    /**
+     * Generate the agent file hierarchy for the bots.
+     * @param directory The directory in which the project resides.
+     * @throws IOException Exception raised if there are problems reading/writing
+     * to files
+     */
+    private static void generateAgentHierarchyForBots(File directory) {
+        for (BotConfig bot : ExportToMAS.configuration.getBots()) {
+            String botGoalFilename = bot.getFileName();
 
-			File goalFile = new File(botGoalFilename);
-			if (goalFile.exists()) {
-				/*
-				 * Case 1: Existing GOAL file Check if the filename doesn't
-				 * already exist, if so do nothing.
-				 */
-				String goalFilename = goalFile.getName();
-				File goalFileInDirectory = new File(directory.getAbsolutePath()
-						+ "/agents/" + goalFilename);
-				if (!goalFileInDirectory.exists()) {
-					FileUtils.copyFile(goalFile, goalFileInDirectory);
-				}
-				// Set the filename to the copied one.
-				bot.setFileName(goalFilename);
-			}
-		}
+            File goalFile = new File(botGoalFilename);
+            if (goalFile.exists()) {
+                /*
+                 * Case 1: Existing GOAL file Check if the filename doesn't
+                 * already exist, if so do nothing.
+                 */
+                String goalFilename = goalFile.getName();
+                File goalFileInDirectory = new File(directory.getAbsolutePath()
+                        + "/agents/" + goalFilename);
+                if (!goalFileInDirectory.exists()) {
+                    FileUtils.copyFile(goalFile, goalFileInDirectory);
+                }
+                // Set the filename to the copied one.
+                bot.setFileName(goalFilename);
+            }
+        }
+    }
 
-		for (EPartnerConfig epartner : ExportToMAS.configuration.getEpartners()) {
+    /**
+     * Generate the agent file hierarchy for the e-partners.
+     * @param directory The directory in which the project resides.
+     * @throws IOException Exception raised if there are problems reading/writing
+     * to files
+     */
+    private static void generateAgentHierarchyForEPartners(File directory) {
+        /*
+         * Loop through the bots, and create the files.
+         * File.createNewFile only creates a file if it does not yet exist, so
+         * no checks are needed.
+         */
+        for (EPartnerConfig epartner : ExportToMAS.configuration.getEpartners()) {
 			String epartnerFileName = epartner.getFileName();
 
 			File goalFile = new File(epartnerFileName);
@@ -168,49 +204,60 @@ public final class ExportToMAS {
 				epartner.setFileName(goalFileName);
 			}
 		}
-	}
+    }
 
 	/**
 	 * Generate the launch policy.
 	 */
 	private static void buildLaunchPolicy() {
 		launchPolicyBuilder = new StringBuilder();
-		for (BotConfig bot : configuration.getBots()) {
-			String type = "";
-			if (bot.getBotController() == EntityType.AGENT) {
-				type = "bot";
+		buildBotLaunchPolicy();
+		buildEPartnerLaunchPolicy();
+	}
+
+    /**
+     * Generates the launch policy for the bots.
+     */
+    private static void buildBotLaunchPolicy() {
+        for (BotConfig bot : configuration.getBots()) {
+            boolean isHuman = bot.getBotController() == EntityType.HUMAN;
+			String type = isHuman ? "human" : "bot";
+			if (!isHuman) {
 				agentCount += bot.getBotAmount();
-			} else if (bot.getBotController() == EntityType.HUMAN) {
-				type = "human";
+			} else {
 				humanCount += bot.getBotAmount();
 			}
-			String goalFileSanitized = bot.getFileName().toLowerCase()
-					.replace(" ", "_");
+
 			launchPolicyBuilder.append(TAB);
-			launchPolicyBuilder.append(String.format(
-					"when [type=%s,max=%d]@env do launch %s: %s .", type,
-					new Integer(bot.getBotAmount()), bot.getBotName()
-							.toLowerCase().replace(" ", "_"),
+			launchPolicyBuilder.append(String.format("when [type=%s,max=%d]@env do launch %s: %s .",
+			        type,
+					new Integer(bot.getBotAmount()),
+					bot.getBotName().toLowerCase().replace(" ", "_"),
 					bot.getReferenceName()));
 			launchPolicyBuilder.append(NEWLINE);
 			/* Remove the last 5 characters since that is the extension. */
 			goalFiles.put(bot.getFileName(), bot.getReferenceName());
 		}
+    }
+    
+    /**
+     * Generates the launch policy for the e-partners.
+     */
+    private static void buildEPartnerLaunchPolicy() {
+        for (EPartnerConfig epartner : configuration.getEpartners()) {
+            agentCount += epartner.getEpartnerAmount();
 
-		for (EPartnerConfig epartner : configuration.getEpartners()) {
-			agentCount += epartner.getEpartnerAmount();
+            launchPolicyBuilder.append(TAB);
+            launchPolicyBuilder.append(String.format(
+                    "when [type=%s,max=%d]@env do launch %s: %s .",
+                    "epartner", new Integer(epartner.getEpartnerAmount()),
+                    epartner.getEpartnerName().toLowerCase().replace(" ", "_"),
+                    epartner.getReferenceName()));
+            launchPolicyBuilder.append(NEWLINE);
 
-			launchPolicyBuilder.append(TAB);
-			launchPolicyBuilder.append(String.format(
-					"when [type=%s,max=%d]@env do launch %s: %s .",
-					"epartner", new Integer(epartner.getEpartnerAmount()),
-					epartner.getEpartnerName().toLowerCase().replace(" ", "_"),
-					epartner.getReferenceName()));
-			launchPolicyBuilder.append(NEWLINE);
-
-			goalFiles.put(epartner.getFileName(), epartner.getReferenceName());
-		}
-	}
+            goalFiles.put(epartner.getFileName(), epartner.getReferenceName());
+        }
+    }
 
 	/**
 	 * Write the environment block to the mas2g file.

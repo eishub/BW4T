@@ -4,6 +4,10 @@ import javax.swing.JOptionPane;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MenuBar;
 
 /**
  * The Controller class is in charge of all events that happen on the GUI.
@@ -21,9 +25,12 @@ public class ScenarioEditorController {
     private ScenarioEditor view;
     
     private BW4TClientConfig model;
+    
+    private MainPanel mainPanel;
+    
+    private ConfigurationPanel configurationPanel;
 
     /**
-     * TODO: Split up into multiple methods
      * Create a controllers object to control all ActionEvents.
      *
      * @param newView used to call relevant functions by the event listeners.
@@ -32,104 +39,75 @@ public class ScenarioEditorController {
     public ScenarioEditorController(final ScenarioEditor newView, BW4TClientConfig model) {
         this.view = newView;
         this.model = model;
+        mainPanel = newView.getMainPanel();
+        configurationPanel = mainPanel.getConfigurationPanel();
 
-        /** Create the action listeners for the ConfigurationPanel. */
+        addConfigurationPanelListeners();
+        addMenuBarListeners();
+        addEntityPanelListeners();
 
-        /** Listener for the map file chooser */
-        getMainView().getMainPanel().getConfigurationPanel().getChooseMapFile().addActionListener(
-                new ChooseMapFileListener(getMainView().getMainPanel())
-        );
+        getMainView().addWindowListener(new WindowExit(getMainView()));
+    }
+    
+    private void addConfigurationPanelListeners() {
+    	configurationPanel.addClientIPController(new WriteClientIP(mainPanel));
+    	configurationPanel.addClientPortController(new WriteClientPort(mainPanel));
+        configurationPanel.addServerIPController(new WriteServerIP(mainPanel));
+        configurationPanel.addServerPortController(new WriteServerPort(mainPanel));
+        configurationPanel.addGUIYesCheckboxController(new SelectLaunchGUIYes(mainPanel));
+        configurationPanel.addGUINoCheckboxController(new SelectLaunchGUINo(mainPanel));
+        configurationPanel.addPathsYesCheckboxController(new SelectVisualizePathsYes(mainPanel));
+        configurationPanel.addPathsNoCheckboxController(new SelectVisualizePathsNo(mainPanel));
+        configurationPanel.addCollisionsYesCheckboxController(new SelectEnableCollisionsYes(mainPanel));
+        configurationPanel.addCollisionsNoCheckboxController(new SelectEnableCollisionsNo(mainPanel));
+        configurationPanel.addMapFileController(new WriteMapFile(mainPanel));
+		configurationPanel.addMapFileButtonController(new ChooseMapFileListener(mainPanel));
+    }
+    
+    private void addMenuBarListeners() {
+    	MenuBar menuBar = view.getTopMenuBar();
+    	
+		menuBar.addExitController(new MenuOptionExit(menuBar, this, getModel()));
+    	menuBar.addNewController(new MenuOptionNew(menuBar, this, getModel()));
+    	menuBar.addOpenController(new MenuOptionOpen(menuBar, this, getModel()));
+    	menuBar.addSaveController(new MenuOptionSave(menuBar, this, getModel()));
+    	menuBar.addSaveAsController(new MenuOptionSaveAs(menuBar, this, getModel()));
+    	menuBar.addExportController(new MenuOptionExport(menuBar, this, getModel()));
+    }
+    
+    private void addEntityPanelListeners() {
+    	EntityPanel entityPanel = mainPanel.getEntityPanel();
+    	
+		entityPanel.addNewBotController(new AddNewBot(mainPanel, getModel()));
+		entityPanel.addModifyBotController(new ModifyBot(mainPanel, getModel()));
+		entityPanel.addDeleteBotController(new DeleteBot(mainPanel, getModel()));		
+		entityPanel.addNewEpartnerController(new AddNewEPartner(mainPanel, getModel()));
+		entityPanel.addModifyEpartnerController(new ModifyEPartner(mainPanel, getModel()));
+		entityPanel.addDeleteEpartnerController(new DeleteEPartner(mainPanel, getModel()));
+		entityPanel.addDropDownController(new BotDropDownButton(mainPanel));
+
+		addStandardBotDropDownListeners();
         
-        /** Adds the listeners for the items on the configuration panel: */
-        getMainView().getMainPanel().getConfigurationPanel().getClientIPTextField().getDocument().addDocumentListener(
-                new WriteClientIP(getMainView().getMainPanel())
-        );
-        getMainView().getMainPanel().getConfigurationPanel().getClientPortTextField().getDocument().addDocumentListener(
-                new WriteClientPort(getMainView().getMainPanel())
-        );
-        getMainView().getMainPanel().getConfigurationPanel().getServerIPTextField().getDocument().addDocumentListener(
-                new WriteServerIP(getMainView().getMainPanel())
-        );
-        getMainView().getMainPanel().getConfigurationPanel().getServerPortTextField().getDocument().addDocumentListener(
-                new WriteServerPort(getMainView().getMainPanel())
-        );
-        getMainView().getMainPanel().getConfigurationPanel().getGUIYesCheckbox().addItemListener(
-                new SelectLaunchGUIYes(getMainView().getMainPanel())
-        );
-        getMainView().getMainPanel().getConfigurationPanel().getGUINoCheckbox().addItemListener(
-                new SelectLaunchGUINo(getMainView().getMainPanel())
-        );
-        getMainView().getMainPanel().getConfigurationPanel().getMapFileTextField().getDocument().addDocumentListener(
-                new WriteMapFile(getMainView().getMainPanel())
-        );
-
-        /** Adds the listeners for the items in the MenuBar: */
-        getMainView().getTopMenuBar().getMenuItemFileExit().addActionListener(
-                new MenuOptionExit(getMainView().getTopMenuBar(), this, getModel())
-        );
-
-        getMainView().getTopMenuBar().getMenuItemFileNew().addActionListener(
-                new MenuOptionNew(getMainView().getTopMenuBar(), this, getModel())
-        );
-        getMainView().getTopMenuBar().getMenuItemFileOpen().addActionListener(
-                new MenuOptionOpen(getMainView().getTopMenuBar(), this, getModel())
-        );
-        getMainView().getTopMenuBar().getMenuItemFileSave().addActionListener(
-                new MenuOptionSave(getMainView().getTopMenuBar(), this, getModel())
-        );
-        getMainView().getTopMenuBar().getMenuItemFileSaveAs().addActionListener(
-                new MenuOptionSaveAs(getMainView().getTopMenuBar(), this, getModel())
-        );
-        getMainView().getTopMenuBar().getMenuItemFileExport().addActionListener(
-                new MenuOptionExport(getMainView().getTopMenuBar(), this, getModel())
-        );
-
-        /** Adds the listeners for the EntityPanel */
-        getMainView().getMainPanel().getEntityPanel().getNewBotButton().
-                addActionListener(
-                        new AddNewBot(getMainView().getMainPanel(), getModel())
-                );
-        getMainView().getMainPanel().getEntityPanel().getModifyBotButton().
-                addActionListener(
-                        new ModifyBot(getMainView().getMainPanel(), getModel())
-                );
-        getMainView().getMainPanel().getEntityPanel().getDeleteBotButton().
-                addActionListener(
-                        new DeleteBot(getMainView().getMainPanel(), getModel())
-                );
-
-        getMainView().getMainPanel().getEntityPanel().getNewEPartnerButton().addActionListener(
-                new AddNewEPartner(getMainView().getMainPanel(), getModel())
-        );
-        getMainView().getMainPanel().getEntityPanel().getModifyEPartnerButton().addActionListener(
-                new ModifyEPartner(getMainView().getMainPanel(), getModel())
-        );
-        getMainView().getMainPanel().getEntityPanel().getDeleteEPartnerButton().addActionListener(
-                new DeleteEPartner(getMainView().getMainPanel(), getModel())
-        );
-        getMainView().getMainPanel().getEntityPanel().getDropDownButton().addActionListener(
-                new BotDropDownButton(getMainView().getMainPanel())
-        );
+		entityPanel.addBotTableModelController(new UpdateBotCount(mainPanel, getModel()));
+        entityPanel.addEpartnerTableModelController(new UpdateEPartnerCount(mainPanel, getModel()));
+        entityPanel.addBotTableController(new EditBotTable(getMainView().getMainPanel(), getModel()));
+        entityPanel.addEpartnerTableController(new EditEPartnerTable(getMainView().getMainPanel(), getModel()));
+    }
+    
+    /**
+     * Adds the listeners for the default bot dropdown menu.
+     */
+    private void addStandardBotDropDownListeners() {
+        EntityPanel entityPanel = mainPanel.getEntityPanel();
         
-        getMainView().addWindowListener(
-                new WindowExit(getMainView())
-        );
-        
-        getMainView().getMainPanel().getEntityPanel().getBotTableModel().
-        addTableModelListener(
-                new UpdateBotCount(getMainView().getMainPanel(), getModel())
-        );
-        getMainView().getMainPanel().getEntityPanel().getEPartnerTableModel().
-        addTableModelListener(
-                new UpdateEPartnerCount(getMainView().getMainPanel(), getModel())
-        );
-        
-        /** Adds the listener for the bot and e-partner table: */
-        getMainView().getMainPanel().getEntityPanel().getBotTable().getModel().addTableModelListener(
-                new EditBotTable(getMainView().getMainPanel(), getModel()));
-        getMainView().getMainPanel().getEntityPanel().getEPartnerTable().getModel().addTableModelListener(
-                new EditEPartnerTable(getMainView().getMainPanel(), getModel()));
-        
+        entityPanel.addNewStandardBotController(new AddNewStandardBot(mainPanel, getModel()));
+        entityPanel.addNewStandardBotBigController(new AddNewStandardBotBig(mainPanel, getModel()));
+        entityPanel.addNewStandardBotGripperController(new AddNewStandardBotGripper(mainPanel, getModel()));
+        entityPanel.addNewStandardBotBigGripperController(new AddNewStandardBotBigGripper(mainPanel, getModel()));
+        entityPanel.addNewStandardBotSeeerController(new AddNewStandardBotSeeer(mainPanel, getModel()));
+        entityPanel.addNewStandardBotBigSeeerController(new AddNewStandardBotBigSeeer(mainPanel, getModel()));
+        entityPanel.addNewStandardBotCommunicatorController(new AddNewStandardBotCommunicator(mainPanel, getModel()));
+        entityPanel.addNewStandardBotBigCommunicatorController(new AddNewStandardBotBigCommunicator(mainPanel, getModel()));        
     }
 
     /**
@@ -152,13 +130,12 @@ public class ScenarioEditorController {
 
     /**
      * Checks if the configuration has been changed.
-     * @return returns true if either the configuration, the bot list of the epartners list has been changed.
+     * @return returns true if either the configuration, the bot list or the epartners list has been changed.
      */
-    public boolean hasConfigBeenModified() {
-        boolean configurationEqual = getMainView().getMainPanel().getConfigurationPanel().getOldValues()
-                .equals(getMainView().getMainPanel().getConfigurationPanel().getCurrentValues());
-        boolean botsEqual = getModel().compareBotConfigs(getModel().getOldBots());
-        boolean epartnersEqual= getModel().compareEpartnerConfigs(getModel().getOldEpartners());
+    public boolean hasConfigBeenModified() {        
+        boolean configurationEqual = configurationPanel.getOldValues().equals(configurationPanel.getCurrentValues());
+        boolean botsEqual = model.compareBotConfigs(model.getOldBots());
+        boolean epartnersEqual = model.compareEpartnerConfigs(model.getOldEpartners());
 
         return !(configurationEqual && botsEqual && epartnersEqual);
     }
@@ -175,19 +152,6 @@ public class ScenarioEditorController {
 
         return response == JOptionPane.YES_OPTION;
     }
-
-    /**
-     * Ask the user if (s)he wishes to quit the program.
-     * @return True if the user wishes to quit.
-     */
-    public boolean promptUserToQuit() {
-        int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
-                null, "Are you sure you want to exit the program?", "",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-       return response == JOptionPane.YES_OPTION;
-    }
-
 }
 
 
