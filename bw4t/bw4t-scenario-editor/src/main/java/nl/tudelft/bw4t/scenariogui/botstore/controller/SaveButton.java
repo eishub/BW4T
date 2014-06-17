@@ -4,23 +4,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-import javax.swing.SwingUtilities;
-
-import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditor;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
-import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
- * Handles actions of the applybutton
+ * Handles actions of the SaveButton
  */
-class SaveButton implements ActionListener {
+public class SaveButton implements ActionListener {
 
 	private BotEditorPanel view;
-
-	private MainPanel mp;
 
 	/**
 	 * Constructor.
@@ -31,8 +24,6 @@ class SaveButton implements ActionListener {
 	 */
 	public SaveButton(BotEditorPanel pview) {
 		this.view = pview;
-		BotEditor be = (BotEditor) SwingUtilities.getWindowAncestor(view);
-		mp = be.getParent();
 	}
 
 	/**
@@ -43,8 +34,8 @@ class SaveButton implements ActionListener {
 	 *            The action event caused by clicking on the button.
 	 */
 	public void actionPerformed(ActionEvent ae) {
-		String fileName = view.getFileNameField().getText();
-		String botName = view.getBotNameField().getText();
+		String fileName = view.getFileName();
+		String botName = view.getBotName();
 		String nonAlphaNumericRegex = "^[ a-zA-Z0-9_-]*$";
 		File f;
 		if (fileName.endsWith(".goal")) {
@@ -54,48 +45,11 @@ class SaveButton implements ActionListener {
 				if (name.matches(nonAlphaNumericRegex) || f.exists()) {
 					if (botName.length() > 0) {
 						if (botName.matches(nonAlphaNumericRegex)) {
-							view.getDataObject().setBotName(
-									view.getBotNameField().getText());
-							view.getDataObject().setBotController(
-									EntityType.getType((String) view
-											.getBotControllerSelector()
-											.getSelectedItem()));
-							view.getDataObject()
-									.setBotAmount(
-											Integer.parseInt(view
-													.getBotAmountTextField()
-													.getText()));
-							view.getDataObject().setBotSize(
-									view.getSizeSlider().getValue());
-							view.getDataObject().setBotSpeed(
-									view.getSpeedSlider().getValue());
-							view.getDataObject().setBotBatteryCapacity(
-									view.getBatterySlider().getValue());
-							view.getDataObject()
-									.setGrippers(
-											view.getNumberOfGrippersSlider()
-													.getValue());
-							view.getDataObject().setBatteryEnabled(
-									view.getBatteryEnabledCheckbox()
-											.isSelected());
-							view.getDataObject().setColorBlindHandicap(
-									view.getColorblindCheckbox().isSelected());
-							view.getDataObject().setGripperHandicap(
-									view.getGripperCheckbox().isSelected());
-							view.getDataObject().setMoveSpeedHandicap(
-									view.getmovespeedCheckbox().isSelected());
-							view.getDataObject()
-									.setSizeOverloadHandicap(
-											view.getsizeoverloadCheckbox()
-													.isSelected());
-							view.getDataObject().setReferenceName(
-									view.getBotReferenceField().getText());
-							view.getDataObject().setFileName(
-									view.getFileNameField().getText());
-
+				
+							view.getBotController().updateConfig(view);
 							updateBotTable();
 
-							view.getBotEditor().dispose();
+							//view.getBotEditor().dispose();
 						} else {
 							ScenarioEditor
 									.getOptionPrompt()
@@ -127,22 +81,24 @@ class SaveButton implements ActionListener {
 					"The file name is invalid.\n"
 							+ "File names should end in .goal.");
 		}
+
+		view.getBotEditor().dispose();
 	}
 
 	/**
 	 * Updates the bot list in the scenario editor.
 	 */
 	private void updateBotTable() {
-		view.getBotEditor().getParent().getEntityPanel().getBotTableModel()
-				.setRowCount(0);
-		int rows = view.getModel().getBots().size();
+		view.getMainPanel().getEntityPanel().getBotTableModel().setRowCount(0);
+		
+		int rows = view.getBW4TClientConfig().getBots().size();
 
 		for (int i = 0; i < rows; i++) {
-			BotConfig botConfig = view.getModel().getBot(i);
+			BotConfig botConfig = view.getBW4TClientConfig().getBot(i);
 			Object[] newBotObject = {botConfig.getBotName(),
 					botConfig.getBotController().toString(),
 					botConfig.getBotAmount()};
-			view.getBotEditor().getParent().getEntityPanel().getBotTableModel()
+			view.getMainPanel().getEntityPanel().getBotTableModel()
 					.addRow(newBotObject);
 		}
 	}
