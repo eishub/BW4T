@@ -29,6 +29,16 @@ class WindowExit extends WindowAdapter {
     
     @Override
     public void windowClosing(WindowEvent e) {
+        if (!showUnsavedDataConfirmation()) {
+        	view.closeScenarioEditor();
+        }
+    }
+
+    /**
+     * Shows a warning message if there is unsaved data.
+     * @return Whether the warning message was shown.
+     */
+    private boolean showUnsavedDataConfirmation() {
         // Check if current config is different from last saved config
         if (view.getController().hasConfigBeenModified()) {
             int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
@@ -46,14 +56,8 @@ class WindowExit extends WindowAdapter {
             if (response == JOptionPane.YES_OPTION) {
                 view.closeScenarioEditor();
             }
+            return true;
         }
-        else {
-            boolean doQuit = view.getController().promptUserToQuit();
-
-            if (doQuit) {
-                view.closeScenarioEditor();
-            }
-
-        }
+        return false;
     }
 }

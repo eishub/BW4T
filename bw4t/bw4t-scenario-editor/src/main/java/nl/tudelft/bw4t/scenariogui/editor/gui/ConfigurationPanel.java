@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -16,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentListener;
 
 import nl.tudelft.bw4t.scenariogui.DefaultConfigurationValues;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
@@ -42,7 +45,6 @@ public class ConfigurationPanel extends JPanel {
     private static final int TEXT_FIELD_COLUMN_SIZE_SMALL = 6;
 
     private MapSpec mapSpec;
-
 
     private JTextField clientIP = new JTextField(
             DefaultConfigurationValues.DEFAULT_CLIENT_IP.getValue(),
@@ -76,6 +78,22 @@ public class ConfigurationPanel extends JPanel {
 
     private Checkbox guiNo = new Checkbox("No",
             !DefaultConfigurationValues.USE_GUI.getBooleanValue(), guiCheckBox);
+
+    private CheckboxGroup pathsCheckBox = new CheckboxGroup();
+
+    private Checkbox pathsYes = new Checkbox("Yes",
+            DefaultConfigurationValues.USE_GUI.getBooleanValue(), pathsCheckBox);
+
+    private Checkbox pathsNo = new Checkbox("No",
+            !DefaultConfigurationValues.USE_GUI.getBooleanValue(), pathsCheckBox);
+
+    private CheckboxGroup collisionsCheckBox = new CheckboxGroup();
+
+    private Checkbox collisionsYes = new Checkbox("Yes",
+            DefaultConfigurationValues.USE_GUI.getBooleanValue(), collisionsCheckBox);
+
+    private Checkbox collisionsNo = new Checkbox("No",
+            !DefaultConfigurationValues.USE_GUI.getBooleanValue(), collisionsCheckBox);
 
     private JButton chooseMapFile = new JButton("Open File");
 
@@ -120,22 +138,13 @@ public class ConfigurationPanel extends JPanel {
 
         mapSpec = new MapSpec(DefaultConfigurationValues.MAP_FILE.getValue());
 
-        // showConfigLabel();
         showClientOptions();
         showServerOptions();
         showGuiOptions();
+        visualizePathsOptions();
+        enableCollisionsOptions();
         showMapOptions();
 
-    }
-
-    /**
-     * Show the "Configuration" label in the panel.
-     */
-    private void showConfigLabel() {
-        c.gridx = 0;
-        c.gridy = 0;
-        c.weightx = 1;
-        add(new JLabel("Configuration"), c);
     }
 
     /**
@@ -153,6 +162,13 @@ public class ConfigurationPanel extends JPanel {
 
         c.insets = new Insets(0, INSET, 0, 0);
 
+        showClientBoxContent();
+    }
+
+    /**
+     * Shows the contents of the client box (IP and Port boxes).
+     */
+    private void showClientBoxContent() {
         c.weightx = GRID_BAG_CONSTRAINTS_WEIGHT;
         c.gridx = 0;
         c.gridy += 1;
@@ -187,6 +203,13 @@ public class ConfigurationPanel extends JPanel {
         server.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE_SMALL));
         add(server, c);
 
+        showServerBoxContent();
+    }
+
+    /**
+     * Shows the contents of the server box (IP and Port boxes).
+     */
+    private void showServerBoxContent() {
         c.insets = new Insets(0, INSET, 0, 0);
 
         c.weightx = GRID_BAG_CONSTRAINTS_WEIGHT;
@@ -231,6 +254,52 @@ public class ConfigurationPanel extends JPanel {
 
         c.gridx = 1;
         add(guiNo, c);
+    }
+
+    /**
+     * Show the option to visualize the paths.
+     */
+    private void visualizePathsOptions() {
+        c.insets = new Insets(INSET, INSET, 0, 0);
+
+        c.gridx = 0;
+        c.gridy += 1;
+
+        JLabel gui = new JLabel("Visualize Paths");
+        gui.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE_SMALL));
+        add(gui, c);
+
+        c.insets = new Insets(INSET / 2, INSET, INSET, INSET);
+
+        c.gridx = 0;
+        c.gridy += 1;
+        add(pathsYes, c);
+
+        c.gridx = 1;
+        add(pathsNo, c);
+    }
+
+    /**
+     * Show the option to enable collisions.
+     */
+    private void enableCollisionsOptions() {
+        c.insets = new Insets(INSET, INSET, 0, 0);
+
+        c.gridx = 0;
+        c.gridy += 1;
+
+        JLabel gui = new JLabel("Enable Collisions");
+        gui.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE_SMALL));
+        add(gui, c);
+
+        c.insets = new Insets(INSET / 2, INSET, INSET, INSET);
+
+        c.gridx = 0;
+        c.gridy += 1;
+        add(collisionsYes, c);
+
+        c.gridx = 1;
+        add(collisionsNo, c);
     }
 
     /**
@@ -361,6 +430,54 @@ public class ConfigurationPanel extends JPanel {
     }
 
     /**
+     * Returns if paths should be visualized.
+     *
+     * @return The visualization of paths
+     */
+    public final boolean isVisualizePaths() {
+        return pathsCheckBox.getSelectedCheckbox() == pathsYes;
+    }
+
+    /**
+     * Sets if paths should be visualized
+     *
+     * @param visualizePaths
+     *           The visualization of paths
+     */
+    public final void setVisualizePaths(final boolean visualizePaths) {
+        if (visualizePaths) {
+            pathsCheckBox.setSelectedCheckbox(pathsYes);
+        }
+        else {
+            pathsCheckBox.setSelectedCheckbox(pathsNo);
+        }
+    }
+
+    /**
+     * Returns if collisions should be enabled.
+     *
+     * @return The enable collisions.
+     */
+    public final boolean isEnableCollisions() {
+        return collisionsCheckBox.getSelectedCheckbox() == collisionsYes;
+    }
+
+    /**
+     * Sets if collisions should be enabled.
+     *
+     * @param enableCollisions
+     *           The enable collisions.
+     */
+    public final void setEnableCollisions(final boolean enableCollisions) {
+        if (enableCollisions) {
+            collisionsCheckBox.setSelectedCheckbox(collisionsYes);
+        }
+        else {
+            collisionsCheckBox.setSelectedCheckbox(collisionsNo);
+        }
+    }
+
+    /**
      * Returns the button to choose a map file.
      *
      * @return The button to choose a map file.
@@ -412,30 +529,14 @@ public class ConfigurationPanel extends JPanel {
      * @return whether changes have been made.
      */
     public final boolean isDefault() {
-        boolean isDefault = true;
-
-        if (!this.getClientIP().equals(DefaultConfigurationValues.DEFAULT_CLIENT_IP.getValue())) {
-            isDefault = false;
-        }
-        else if (this.getClientPort() != DefaultConfigurationValues.DEFAULT_CLIENT_PORT.getIntValue()) {
-            isDefault = false;
-        }
-        else if (!this.getServerIP().equals(DefaultConfigurationValues.DEFAULT_SERVER_IP.getValue())) {
-            isDefault = false;
-        }
-        else if (this.getServerPort() != DefaultConfigurationValues.DEFAULT_SERVER_PORT.getIntValue()) {
-            isDefault = false;
-        }
-        else if (this.useGui() != DefaultConfigurationValues.USE_GUI.getBooleanValue()) {
-            isDefault = false;
-        }
-        else if (!this.getMapFile().equals(DefaultConfigurationValues.MAP_FILE.getValue())) {
-            isDefault = false;
-        }
-
-        // TODO: check if the bot list is empty (since that is default too)
-
-        return isDefault;
+        return this.getClientIP().equals(DefaultConfigurationValues.DEFAULT_CLIENT_IP.getValue())
+                && this.getClientPort() == DefaultConfigurationValues.DEFAULT_CLIENT_PORT.getIntValue()
+                && this.getServerIP().equals(DefaultConfigurationValues.DEFAULT_SERVER_IP.getValue())
+                && this.getServerPort() == DefaultConfigurationValues.DEFAULT_SERVER_PORT.getIntValue()
+                && this.useGui() == DefaultConfigurationValues.USE_GUI.getBooleanValue()
+                && this.isVisualizePaths() == DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue()
+                && this.isEnableCollisions() == DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue()
+                && this.getMapFile().equals(DefaultConfigurationValues.MAP_FILE.getValue());
     }
 
     /**
@@ -504,8 +605,72 @@ public class ConfigurationPanel extends JPanel {
         return guiNo;
     }
     
+    public Checkbox getPathsYesCheckbox() {
+        return pathsYes;
+    }
+    
+    public Checkbox getPathsNoCheckbox() {
+        return pathsNo;
+    }
+    
+    public Checkbox getCollisionsYesCheckbox() {
+        return pathsYes;
+    }
+    
+    public Checkbox getCollisionsNoCheckbox() {
+        return pathsNo;
+    }
+    
     public JTextField getMapFileTextField() {
         return mapFileTextField;
+    }
+    
+    public void addClientIPController(DocumentListener controller) {
+    	getClientIPTextField().getDocument().addDocumentListener(controller);
+    }
+    
+    public void addClientPortController(DocumentListener controller) {
+    	getClientPortTextField().getDocument().addDocumentListener(controller);
+    }
+    
+    public void addServerIPController(DocumentListener controller) {
+    	getServerIPTextField().getDocument().addDocumentListener(controller);
+    }
+    
+    public void addServerPortController(DocumentListener controller) {
+    	getServerPortTextField().getDocument().addDocumentListener(controller);
+    }
+    
+    public void addGUIYesCheckboxController(ItemListener controller) {
+    	getGUIYesCheckbox().addItemListener(controller);
+    }
+    
+    public void addGUINoCheckboxController(ItemListener controller) {
+    	getGUINoCheckbox().addItemListener(controller);
+    }
+    
+    public void addPathsYesCheckboxController(ItemListener controller) {
+    	getPathsYesCheckbox().addItemListener(controller);
+    }
+    
+    public void addPathsNoCheckboxController(ItemListener controller) {
+    	getPathsNoCheckbox().addItemListener(controller);
+    }
+    
+    public void addCollisionsYesCheckboxController(ItemListener controller) {
+    	getCollisionsYesCheckbox().addItemListener(controller);
+    }
+    
+    public void addCollisionsNoCheckboxController(ItemListener controller) {
+    	getCollisionsNoCheckbox().addItemListener(controller);
+    }
+    
+    public void addMapFileController(DocumentListener controller) {
+    	getMapFileTextField().getDocument().addDocumentListener(controller);
+    }
+
+    public void addMapFileButtonController(ActionListener controller) {
+		getChooseMapFile().addActionListener(controller);
     }
     
 }

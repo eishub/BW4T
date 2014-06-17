@@ -40,6 +40,7 @@ public class GoalFileButton implements ActionListener {
 			File f = jfc.getSelectedFile();
 			String path = f.getAbsolutePath();
 			view.getFileNameField().setText(path);
+            view.getTempBotConfig().setFileName(path);
 		}
 	}
 

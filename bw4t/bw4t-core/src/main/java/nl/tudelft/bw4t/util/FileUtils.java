@@ -245,4 +245,38 @@ public final class FileUtils {
     public static boolean isEmpty(CharSequence cs) {
         return cs == null || cs.length() == 0;
     }
+    
+    /**
+     * Checks whether the file name has the required extension.
+     * @param fileName The file name including extension.
+     * @param extensionRequired The extension required for the file name.
+     * @return Whether the file name has the required extension.
+     */
+    public static boolean hasRequiredExtension(String fileName, String extensionRequired) {
+        return getExtension(fileName).equals(extensionRequired);
+    }
+    
+    /**
+     * Gets the extension, including the starting dot, of a file name.
+     * @param fileName The file name including extension.
+     * @return The extension of the file.
+     */
+    public static String getExtension(String fileName) {
+        String[] splitFileName = fileName.split("\\.");
+        if (splitFileName.length <= 1)
+            return "";
+        int lastDotIndex = splitFileName.length - 1;
+        return "." + splitFileName[lastDotIndex];
+    }
+    
+    /**
+     * Gets the file name without it's extension.
+     * @param fileName The file name.
+     * @return The file name without extension.
+     */
+    public static String getFileNameWithoutExtension(String fileName) {
+        int extensionLength = getExtension(fileName).length();
+        return fileName.substring(0, fileName.length() - extensionLength);
+    }
+    
 }

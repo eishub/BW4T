@@ -1,11 +1,16 @@
 package nl.tudelft.bw4t.scenariogui.editor.gui.panel;
 
+import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditor;
+import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
+import nl.tudelft.bw4t.scenariogui.epartner.controller.EpartnerController;
+import nl.tudelft.bw4t.scenariogui.epartner.gui.EpartnerFrame;
 import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
 
@@ -24,20 +29,10 @@ import static org.mockito.Mockito.verify;
 
 public class EntityPanelTest {
 
-    /**
-     * The entity panel of the GUI.
-     */
     private EntityPanel entityPanel;
 
-    /**
-     * A spy object of the entity panel of the GUI.
-     */
     private EntityPanel spyEntityPanel;
 
-    /**
-     * Store the scenario editor so it can be properly disposed of
-     * at the end of the test run.
-     */
     private ScenarioEditor editor;
 
     /**
@@ -45,14 +40,11 @@ public class EntityPanelTest {
      */
     @Before
     public final void setUp() {
-        entityPanel = new EntityPanel();
-        spyEntityPanel = spy(entityPanel);
-
-        ConfigurationPanel config = new ConfigurationPanel();
-        /* The editor itself isn't used. It's simple so the BotPanel
-         * gets handled by a controller. */
-        editor = new ScenarioEditor(config, spyEntityPanel, new BW4TClientConfig());
-    }
+		entityPanel = new EntityPanel();
+		spyEntityPanel = spy(entityPanel);
+		editor = new ScenarioEditor(new ConfigurationPanel(),
+				spyEntityPanel, new BW4TClientConfig());
+	}
 
     /**
      * Close the ScenarioEditor to prevent to many windows from cluttering
@@ -68,9 +60,7 @@ public class EntityPanelTest {
      * to the table.
      */
     @Test
-    public final void testBotCount() {
-        Object[] data = {"d1", "d2", "1"};
-
+    public final void testAddBot() {
         spyEntityPanel.getNewBotButton().doClick();
 
         assertEquals(1, editor.getController().getModel().getAmountBot());
@@ -78,12 +68,12 @@ public class EntityPanelTest {
 
     /**
      * Test if the count of bots is correct after changing
-     * the number of bots
+     * the number of bots in the table
      */
     @Test
     public final void testBotCountListener() {
         spyEntityPanel.getNewBotButton().doClick();
-        spyEntityPanel.getBotTableModel().setValueAt("12", 0, 2);
+        spyEntityPanel.getBotTableModel().setValueAt("12", 0, 3);
 
         assertEquals(12, editor.getController().getModel().getAmountBot());
     }
@@ -93,9 +83,7 @@ public class EntityPanelTest {
      * an E-partner to the table.
      */
     @Test
-    public final void testEPartnerCount() {
-        Object[] data = {"D1", "1"};
-
+    public final void testAddEpartner() {
         spyEntityPanel.getNewEPartnerButton().doClick();
 
         assertEquals(1, editor.getController().getModel().getAmountEPartner());
@@ -103,55 +91,106 @@ public class EntityPanelTest {
 
     /**
      * Test if the count of bots is correct after changing
-     * the number of bots
+     * the number of bots in the table
      */
     @Test
     public final void testEPartnerCountListener() {
-        Object[] data = {"d1", "1"};
+        ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
         
         spyEntityPanel.getNewEPartnerButton().doClick();
-        spyEntityPanel.getEPartnerTableModel().setValueAt("12", 0, 1);
+        spyEntityPanel.getEPartnerTableModel().setValueAt("12", 0, 2);
 
         assertEquals(12, editor.getController().getModel().getAmountEPartner());
     }
 
     /**
-     * Test if a bot is successfully added when the add
-     * bot button is clicked.
+     * Test whether a bot's name is succesfully changed 
+     * when edited in the entitypanel table.
      */
     @Test
-    public void testAddNewBot() {
+    public void testChangeBotName() {
         spyEntityPanel.getNewBotButton().doClick();
-        assertEquals(editor.getController().getModel().getAmountBot(), 1);
+        
+        assertEquals("Bot 1", editor.getController().getModel().getBot(0).getBotName());
+        
+        String testBotName = "testBotName";
+        spyEntityPanel.getBotTableModel().setValueAt(testBotName, 0, 0);
+        
+        assertEquals(testBotName, editor.getController().getModel().getBot(0).getBotName());
     }
+    
+    /**
+     * Test whether a bot's agent filename is succesfully changed 
+     * when edited in the entitypanel table.
+     */
+    @Test
+    public void testChangeFileNameBot() {
+        spyEntityPanel.getNewBotButton().doClick();
+        
+        assertEquals("robot.goal", editor.getController().getModel().getBot(0).getFileName());
+        
+        String testFileName = "testRobot.goal";
+        spyEntityPanel.getBotTableModel().setValueAt(testFileName, 0, 2);
+
+        assertEquals(testFileName, editor.getController().getModel().getBot(0).getFileName());
+    }
+    
+    /**
+     * Test whether a the number of bots is succesfully changed 
+     * when edited in the entitypanel table.
+     */
+    @Test
+    public void testChangeBotNumber() {
+        spyEntityPanel.getNewBotButton().doClick();
+        
+        assertEquals(1, editor.getController().getModel().getBot(0).getBotAmount());
+        
+        int testNumber = 5;
+        spyEntityPanel.getBotTableModel().setValueAt(testNumber, 0, 3);
+        
+        assertEquals(testNumber, editor.getController().getModel().getBot(0).getBotAmount());
+    }
+    
+    /**
+     * Test whether a the controller type of bots is succesfully changed 
+     * when edited in the entitypanel table.
+     */
+    @Test
+    public void testChangeBotType() {
+        spyEntityPanel.getNewBotButton().doClick();
+        
+        assertEquals(EntityType.AGENT, editor.getController().getModel().getBot(0).getBotController());
+        
+        EntityType testType = EntityType.HUMAN;
+        spyEntityPanel.getBotTableModel().setValueAt(testType, 0, 1);
+        
+        assertEquals(testType, editor.getController().getModel().getBot(0).getBotController());
+    }    
 
     /**
-     * Test if a bot is successfully modified when the
+     * Test if the bot store is opened when the
      * modify bot button is clicked.
      */
     @Test
     public void testModifyBot() {
+    	spyEntityPanel.getNewBotButton().doClick();
+    	spyEntityPanel.getBotTable().setRowSelectionInterval(0, 0);
         spyEntityPanel.getModifyBotButton().doClick();
-        //TODO: Verify if the bot has actually been modified.
+
+        assertTrue(spyEntityPanel.isBotStore());
     }
     
     /**
-     * Test if a bot is not modified when the
-     * modify bot button is clicked,
-     * while the bot is not selected.
+     * Test if a warning is displayed when the modify bot button
+     * is clicked while a bot is not selected.
      */
     @Test
     public void testModifyBotNoSelection() {
         NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
         ScenarioEditor.setOptionPrompt(spyOption);
         
-        /* Add a bot to the list */
-        spyEntityPanel.getNewBotButton().doClick();
-        
-        /* Attempt to modify the bot */
         spyEntityPanel.getModifyBotButton().doClick();
         
-        /* Check if the warning message is shown  */
         verify(spyOption, times(1)).showMessageDialog(
                 null, "Please select the bot you want to modify.");
     }
@@ -165,17 +204,11 @@ public class EntityPanelTest {
     public void testDeleteBotConfirmDelete() {
         ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
 
-        /* Add a bot to the list */
         spyEntityPanel.getNewBotButton().doClick();
-
-        /* Select that bot */
-        spyEntityPanel.getBotTable().selectAll();
-
-        /* Attempt to delete it */
+        spyEntityPanel.getBotTable().setRowSelectionInterval(0, 0);
         spyEntityPanel.getDeleteBotButton().doClick();
 
-        /* check if the bot count is zero */
-        assertEquals(editor.getController().getModel().getAmountBot(), 0);
+        assertEquals(0, editor.getController().getModel().getAmountBot());
     }
 
     /**
@@ -187,86 +220,102 @@ public class EntityPanelTest {
     public void testDeleteBotDeclineDelete() {
         ScenarioEditor.setOptionPrompt(new NoMockOptionPrompt());
 
-        /* Add a bot to the list */
         spyEntityPanel.getNewBotButton().doClick();
-
-        /* Select that bot */
-        spyEntityPanel.getBotTable().selectAll();
-
-        /* Attempt to delete it */
+        spyEntityPanel.getBotTable().setRowSelectionInterval(0, 0);
         spyEntityPanel.getDeleteBotButton().doClick();
 
-        /* check if the bot count is still 1. */
-        assertEquals(editor.getController().getModel().getAmountBot(), 1);
+        assertEquals(1, editor.getController().getModel().getAmountBot());
     }
 
 
     /**
-     * Test if a bot is not deleted when the
-     * delete bot is clicked, while no row is selected.
+     * Test if a bot is not deleted when delete bot is clicked
+     * while no bot is selected.
      */
     @Test
     public void testDeleteBotNoSelection() {
         NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
         ScenarioEditor.setOptionPrompt(spyOption);
 
-        /* Add a bot to the list */
         spyEntityPanel.getNewBotButton().doClick();
-
-        /* Attempt to delete it */
         spyEntityPanel.getDeleteBotButton().doClick();
 
-        /* check if the bot count is still 1. */
         assertEquals(editor.getController().getModel().getAmountBot(), 1);
-        
-        /* Check if the warning message is shown */
         verify(spyOption, times(1)).showMessageDialog(null, "Please select the bot you want to delete.");
     }
 
     /**
-     * Test if an E-partner is successfully added when the add
-     * E-partner button is clicked.
+     * Test whether a epartners name is succesfully changed 
+     * when edited in the entitypanel table.
      */
     @Test
-    public void testAddEPartner() {
+    public void testChangeEPartnerName() {
         spyEntityPanel.getNewEPartnerButton().doClick();
-        assertEquals(editor.getController().getModel().getAmountEPartner(), 1);
+        
+        assertEquals("E-Partner 1", editor.getController().getModel().getEpartner(0).getEpartnerName());
+        
+        String testEPartnerName = "testEPartnerName";
+        spyEntityPanel.getEPartnerTableModel().setValueAt(testEPartnerName, 0, 0);
+        
+        assertEquals(testEPartnerName, editor.getController().getModel().getEpartner(0).getEpartnerName());
     }
 
-
     /**
-     * Test if an E-partner is successfully modified when the
+     * Test whether a bot's agent filename is succesfully changed 
+     * when edited in the entitypanel table.
+     */
+    @Test
+    public void testChangeFileNameEPartner() {
+    	spyEntityPanel.getNewEPartnerButton().doClick();
+        
+        assertEquals("epartner.goal", editor.getController().getModel().getEpartner(0).getFileName());
+        
+        String testFileName = "testEpartner.goal";
+        spyEntityPanel.getEPartnerTableModel().setValueAt(testFileName, 0, 1);
+        
+        assertEquals(testFileName, editor.getController().getModel().getEpartner(0).getFileName());
+    }
+    
+    /**
+     * Test whether a the number of bots is succesfully changed 
+     * when edited in the entitypanel table.
+     */
+    @Test
+    public void testChangeEpartnerNumber() {
+    	spyEntityPanel.getNewEPartnerButton().doClick();
+        
+        assertEquals(1, editor.getController().getModel().getEpartner(0).getEpartnerAmount());
+        
+        int testNumber = 5;
+        spyEntityPanel.getEPartnerTableModel().setValueAt(testNumber, 0, 2);
+     
+        assertEquals(testNumber, editor.getController().getModel().getEpartner(0).getEpartnerAmount());
+    }
+        
+    /**
+     * Test if the epartner store is opened when the
      * modify E-partner button is clicked.
      */
     @Test
     public void testModifyEPartner() {
-        /* Select an E-Partner */
-        spyEntityPanel.getEPartnerTable().selectAll();
-
-        /* Click the modify epartner button */
+    	spyEntityPanel.getNewEPartnerButton().doClick();
+        spyEntityPanel.getEPartnerTable().setRowSelectionInterval(0, 0);
         spyEntityPanel.getModifyEPartnerButton().doClick();
 
-
-        //TODO: Verify if the E-partner has actually been modified.
+        assertTrue(spyEntityPanel.isEpartnerStore());
     }
     
     /**
-     * Test if an E-partner is not modified when the
-     * modify E-partner button is clicked,
-     * while the E-partner is not selected.
+     * Test if a warning is shown when the modify E-partner button is clicked
+     * while there are no epartners selected.
      */
     @Test
     public void testModifyEPartnerNoSelection() {
         NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
         ScenarioEditor.setOptionPrompt(spyOption);
         
-        /* Add an E-partner to the list */
-        spyEntityPanel.getNewEPartnerButton().doClick();
-        
-        /* Attempt to modify the E-partner */
         spyEntityPanel.getModifyEPartnerButton().doClick();
-        
-        /* Check if the warning message is shown  */
+
         verify(spyOption, times(1)).showMessageDialog(
                 null, "Please select the E-partner you want to modify.");
     }
@@ -293,19 +342,10 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteEPartnerConfirmDelete() {
-        ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
-
-
-        /* Add an E-partner to the list */
         spyEntityPanel.getNewEPartnerButton().doClick();
-
-        /* Select that E-partner */
-        spyEntityPanel.getEPartnerTable().selectAll();
-
-        /* Attempt to delete it */
+        spyEntityPanel.getEPartnerTable().setRowSelectionInterval(0, 0);
         spyEntityPanel.getDeleteEPartnerButton().doClick();
 
-        /* Check if the E-partner count is zero */
         assertEquals(editor.getController().getModel().getAmountBot(), 0);
     }
 
@@ -316,95 +356,117 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteEPartnerDeclineDelete() {
+    	//deal with the dialog that shows up when there's more epartners than bots
         ScenarioEditor.setOptionPrompt(new NoMockOptionPrompt());
 
-
-        /* Add an E-partner to the list */
-        spyEntityPanel.getNewEPartnerButton().doClick();
-
-        /* Select that E-partner */
-        spyEntityPanel.getEPartnerTable().selectAll();
-
-        /* Attempt to delete it */
+		spyEntityPanel.getNewEPartnerButton().doClick();
+        spyEntityPanel.getEPartnerTable().setRowSelectionInterval(0, 0);
         spyEntityPanel.getDeleteEPartnerButton().doClick();
 
-        /* Check if the E-partner count is still one */
         assertEquals(editor.getController().getModel().getAmountEPartner(), 1);
     }
 
     /**
-     * Test if an E-partner is not deleted when the
-     * delete E-partner button is clicked, while no row is selected.
+     * Test if an E-partner is not deleted when the delete E-partner button is clicked
+     * while no epartner is selected.
      */
     @Test
     public void testDeleteEPartnerSelection() {
-        NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
-        ScenarioEditor.setOptionPrompt(spyOption);
-
-        /* Add an E-partner to the list */
         spyEntityPanel.getNewEPartnerButton().doClick();
-
-        /* Attempt to delete it */
         spyEntityPanel.getDeleteEPartnerButton().doClick();
 
-        /* Check if the E-partner count is still one */
         assertEquals(editor.getController().getModel().getAmountEPartner(), 1);
-        
-        /* Check if the warning message is shown */
-        verify(spyOption, times(1)).showMessageDialog(
-                null, "Please select the E-partner you want to delete.");
     }
 
-
+   
     /**
-     * Test if the bot dropdown menu when creating a new bot
-     * is shown when the button is clicked.
-     */
-    @Ignore
-    public void testBotDropdown() {
-        spyEntityPanel.getDropDownButton().doClick();
-        verify(spyEntityPanel, times(1)).showBotDropDown();
-    }
-
-    /**
-     * Tests the BotConfig compare and the update functions.
+     * Test if the count of bots is correct after adding a standard
+     * bot to the table.
      */
     @Test
-    public void testBotConfigs() {
-        
-        assertTrue(editor.getController().getModel().compareBotConfigs(
-                editor.getController().getModel().getOldBots()));
-        
-        editor.getController().getModel().getBots().add(new BotConfig());
-        
-        assertFalse(editor.getController().getModel().compareBotConfigs(
-                editor.getController().getModel().getOldBots()));
-        
-        editor.getController().getModel().updateBotConfigs();
-        
-        assertTrue(editor.getController().getModel().compareBotConfigs(
-                editor.getController().getModel().getOldBots()));
+    public final void testAddStandardBot() {
+        spyEntityPanel.getAddNewStandardBotMenuItem().doClick();
+
+        assertEquals(1, editor.getController().getModel().getAmountBot());
     }
     
     /**
-     * Tests the EPartnerConfig compare and the update functions.
+     * Test if the count of bots is correct after adding a big 
+     * standard bot to the table.
      */
     @Test
-    public void testEPartnerConfigs() {
-        assertTrue(editor.getController().getModel().compareEpartnerConfigs(
-                editor.getController().getModel().getOldEpartners()));
-        
-        editor.getController().getModel().getEpartners().add(new EPartnerConfig());
-        
-        assertFalse(editor.getController().getModel().compareEpartnerConfigs(
-                editor.getController().getModel().getOldEpartners()));
-        
-        editor.getController().getModel().updateEpartnerConfigs();
-        
-        assertTrue(editor.getController().getModel().compareEpartnerConfigs(
-                editor.getController().getModel().getOldEpartners()));
-    }
+    public final void testAddStandardBotBig() {
+        spyEntityPanel.getAddNewStandardBotBigMenuItem().doClick();
 
+        assertEquals(1, editor.getController().getModel().getAmountBot());
+    }
+    
+    /**
+     * Test if the count of bots is correct after adding a standard
+     * gripper bot to the table.
+     */
+    @Test
+    public final void testAddStandardGripperBot() {
+        spyEntityPanel.getAddNewStandardBotGripperMenuItem().doClick();
+
+        assertEquals(1, editor.getController().getModel().getAmountBot());
+    }
+    
+    /**
+     * Test if the count of bots is correct after adding a big 
+     * standard gripper bot to the table.
+     */
+    @Test
+    public final void testAddStandardBotBigGripper() {
+        spyEntityPanel.getAddNewStandardBotBigGripperMenuItem().doClick();
+
+        assertEquals(1, editor.getController().getModel().getAmountBot());
+    }
+    
+    /**
+     * Test if the count of bots is correct after adding a standard
+     * seeer bot to the table.
+     */
+    @Test
+    public final void testAddStandardBotSeeer() {
+        spyEntityPanel.getAddNewStandardBotSeeerMenuItem().doClick();
+
+        assertEquals(1, editor.getController().getModel().getAmountBot());
+    }
+    
+    /**
+     * Test if the count of bots is correct after adding a big 
+     * standard seeer bot to the table.
+     */
+    @Test
+    public final void testAddStandardBotBigSeeer() {
+        spyEntityPanel.getAddNewStandardBotBigSeeerMenuItem().doClick();
+
+        assertEquals(1, editor.getController().getModel().getAmountBot());
+    }
+    
+    /**
+     * Test if the count of bots is correct after adding a standard
+     * communicator bot to the table.
+     */
+    @Test
+    public final void testAddStandardBotCommunicator() {
+        spyEntityPanel.getAddNewStandardBotCommunicatorMenuItem().doClick();
+
+        assertEquals(1, editor.getController().getModel().getAmountBot());
+    }
+    
+    /**
+     * Test if the count of bots is correct after adding a big 
+     * communicator standard bot to the table.
+     */
+    @Test
+    public final void testAddStandardBotBigCommunicator() {
+        spyEntityPanel.getAddNewStandardBotBigCommunicatorMenuItem().doClick();
+
+        assertEquals(1, editor.getController().getModel().getAmountBot());
+    }
+    
     /**
      * Tests the isDefault function.
      */
@@ -418,9 +480,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testBotnonDefault() {
-        Object[] botData = {"d1", "d2", "1"};
-        
-        entityPanel.getBotTableModel().addRow(botData);
+    	spyEntityPanel.getNewBotButton().doClick();
         
         assertFalse(entityPanel.isDefault());
     }
@@ -430,9 +490,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testEpartnernonDefault() {
-        Object[] epartnerData = {"d1", "1"};
-        
-        entityPanel.getEPartnerTableModel().addRow(epartnerData);
+    	spyEntityPanel.getNewEPartnerButton().doClick();
         
         assertFalse(entityPanel.isDefault());
     }
@@ -442,12 +500,70 @@ public class EntityPanelTest {
      */
     @Test
     public void testBotAndEpartnernonDefault() {
-        Object[] botData = {"d1", "d2", "1"};
-        Object[] epartnerData = {"d1", "1"};
-        
-        entityPanel.getBotTableModel().addRow(botData);
-        entityPanel.getEPartnerTableModel().addRow(epartnerData);
+    	spyEntityPanel.getNewBotButton().doClick();
+    	spyEntityPanel.getNewEPartnerButton().doClick();
         
         assertFalse(entityPanel.isDefault());
     }
+    
+    /**
+	 * Tests whether the bot list is being updated.
+	 */
+	@Test
+	public void testBotTableUpdate() {
+		spyEntityPanel.getNewBotButton().doClick();
+
+		assertEquals("Bot 1", spyEntityPanel.getBotTableModel().getValueAt(0, 0));
+		assertEquals(EntityType.AGENT.toString(), spyEntityPanel
+				.getBotTableModel().getValueAt(0, 1));
+		assertEquals("robot.goal", spyEntityPanel.getBotTableModel().getValueAt(0, 2));
+		assertEquals(1, spyEntityPanel.getBotTableModel().getValueAt(0, 3));
+
+		BotEditor botEditor = new BotEditor(editor.getMainPanel(), 0,
+				editor.getController().getModel());
+		BotEditorPanel botEditorPanel = botEditor.getBoteditorPanel();
+		
+		botEditorPanel.getBotNameField().setText("TestBot");
+		botEditorPanel.getBotControllerSelector().setSelectedIndex(1);
+		botEditorPanel.getBotAmountTextField().setText("99");
+		botEditorPanel.getFileNameField().setText("TestBot.goal");
+
+		botEditorPanel.getSaveButton().doClick();
+
+		assertEquals("TestBot", spyEntityPanel.getBotTableModel().getValueAt(0, 0));
+		assertEquals(EntityType.HUMAN.toString(), spyEntityPanel
+				.getBotTableModel().getValueAt(0, 1));
+		assertEquals("TestBot.goal", spyEntityPanel.getBotTableModel().getValueAt(0, 2));
+		assertEquals(99, spyEntityPanel.getBotTableModel().getValueAt(0, 3));
+	}
+
+	/**
+	 * Tests whether the epartner list is being updated.
+	 */
+	@Test
+	public void testEpartnerTableUpdate() {
+		//deal with the dialog that shows up when there's more epartners than bots
+        ScenarioEditor.setOptionPrompt(new NoMockOptionPrompt());
+
+		spyEntityPanel.getNewEPartnerButton().doClick();
+
+		assertEquals("E-Partner 1", spyEntityPanel.getEPartnerTableModel()
+				.getValueAt(0, 0));
+		assertEquals("epartner.goal", spyEntityPanel.getEPartnerTableModel().getValueAt(0, 1));
+		assertEquals(1, spyEntityPanel.getEPartnerTableModel().getValueAt(0, 2));
+
+		EpartnerFrame epartnerFrame = new EpartnerFrame(new EpartnerController(
+				editor.getMainPanel(), 0), editor.getController().getModel());
+		
+		epartnerFrame.getEpartnerNameField().setText("TestEPartner");
+		epartnerFrame.getEpartnerAmountField().setText("99");
+		epartnerFrame.getEpartnerGoalFileField().setText("TestEPartner.goal");
+		
+		epartnerFrame.getSaveButton().doClick();
+
+		assertEquals("TestEPartner", spyEntityPanel.getEPartnerTableModel()
+				.getValueAt(0, 0));
+		assertEquals("TestEPartner.goal", spyEntityPanel.getEPartnerTableModel().getValueAt(0, 1));
+		assertEquals(99, spyEntityPanel.getEPartnerTableModel().getValueAt(0, 2));
+	}
 }

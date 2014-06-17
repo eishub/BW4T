@@ -42,6 +42,7 @@ public enum EntityType {
 
     /**
      * String representation of the entity, with the first letter capitalized.
+     * @return Returns the controller type starting with a capital letter. Example: Agent instead of agent
      */
     @Override
     public String toString() {

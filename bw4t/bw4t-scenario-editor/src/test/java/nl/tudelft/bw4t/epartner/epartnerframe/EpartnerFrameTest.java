@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.atLeastOnce;
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.epartner.controller.EpartnerController;
 import nl.tudelft.bw4t.scenariogui.epartner.gui.EpartnerFrame;
@@ -24,11 +24,8 @@ public class EpartnerFrameTest {
 	
 	@Before
 	public final void setupEpartnerFrame() {
-		config = new EPartnerConfig();
-		controller = new EpartnerController(config);
-        frame = new EpartnerFrame(controller);
-        spyframe = spy(frame);
-        
+        frame = new EpartnerFrame(new EpartnerController(new EPartnerConfig()), new BW4TClientConfig());
+        spyframe= spy(frame);
 	}
 	
 	@After
@@ -56,7 +53,7 @@ public class EpartnerFrameTest {
 	public final void testApplyButton() {
 		spyframe.getGPSCheckbox().setSelected(false);
 		spyframe.getForgetMeNotCheckbox().setSelected(true);
-		spyframe.getApplyButton().doClick();
+		spyframe.getSaveButton().doClick();
 		assertEquals(config.isGps(), spyframe.getGPSCheckbox().isSelected());
 		assertEquals(config.isForgetMeNot(), spyframe.getForgetMeNotCheckbox().isSelected());
 	}
