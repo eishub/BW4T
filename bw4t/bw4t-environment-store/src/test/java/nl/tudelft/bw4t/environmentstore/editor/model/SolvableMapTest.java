@@ -105,8 +105,6 @@ public class SolvableMapTest {
 		em.generateRandomBlocks(l2, 1);
 		NewMap m = MapConverter.createMap(em);
 		assertFalse(SolvabilityAlgorithm.mapIsSolvable(m) == null);
-		zm.setType(Type.ROOM);
-		em.setZone(1, 0, zm);
 	}
 	/**
 	 * This map should be unsolvable, as the start zone is blocked
@@ -123,9 +121,6 @@ public class SolvableMapTest {
 		em.generateRandomBlocks(l2, 1);
 		NewMap m = MapConverter.createMap(em);
 		assertFalse(SolvabilityAlgorithm.mapIsSolvable(m) == null);
-		zm.setType(Type.ROOM);
-		em.setZone(4, 1, zm);
-		em.setZone(4, 3, zm);
 	}
 	/**
 	 * This map should be unsolvable, as there are no blocks in the map.

@@ -130,7 +130,7 @@ public class ZoneModel {
     }
 
     public void setColors(List<BlockColor> cs) {
-        if (colors == null) {
+        if (cs == null) {
             throw new NullPointerException("Null list not allowed for colors");
         }
         colors = cs;
@@ -185,7 +185,6 @@ public class ZoneModel {
     public static int calcColumn(Zone zone) {
         double width = MapConverter.ROOMWIDTH;
         double x = zone.getBoundingbox().getX();
-
         return (int) ((x - width / 2) / width);
     }
 
