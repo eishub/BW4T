@@ -245,16 +245,6 @@ public class BotController {
 			view.getFile().setText(path);
 		}
 	}
-  
-	/**
-	 * Calculate the dischargeRate from a bot by using his size and speed.
-	 * @param botSpeed the speed from the bot
-	 * @param botSize the size from the bot
-	 * @return discharge rate 
-	 */
-    public double getDischargeRate(int botSpeed, int botSize) {
-    	return 0.0002 * botSize + 0.0004 * botSpeed;
-    }
     
     /** 
      * When the speed or size slider is moved, calculate the new battery discharge rate
@@ -263,12 +253,15 @@ public class BotController {
      * @param botSize the (new) bot size
      * @param view the BotEditorPanel
      */
-    public void setNewBatteryValue(int botSpeed, int botSize, BotEditorPanel view) {
+    public void setNewBatteryValue(BotEditorPanel view) {
     	if (view.isBatteryEnabled()) {
-    		double res = getDischargeRate(botSpeed, botSize);
+    		double res = getBotBatteryDischargeRate();
+    		botConfig.setBotBatteryDischargeRate(res);
     		DecimalFormat df = new DecimalFormat("#.######");
 	        String value = df.format(res);
 	        view.getBatteryUseValueLabel().setText(padString(value));
+	        System.out.println(padString(value));
+	        System.out.println(view.getBatteryUseValueLabel().getText());
     	}
     }
     

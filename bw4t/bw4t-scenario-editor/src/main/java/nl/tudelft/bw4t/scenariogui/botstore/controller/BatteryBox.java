@@ -1,9 +1,10 @@
-package nl.tudelft.bw4t.scenariogui.botstore.gui;
+package nl.tudelft.bw4t.scenariogui.botstore.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-import nl.tudelft.bw4t.scenariogui.botstore.controller.BotController;
+
+import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 /**
  * Handles actions of the battery checkbox.
  */
@@ -29,10 +30,9 @@ public class BatteryBox implements ActionListener {
     public void actionPerformed(ActionEvent e) {
     	view.setBatterySliderEnabled(view.isBatteryEnabled());
     	BotController currentController = view.getBotController();
-    	int botSpeed = currentController.getBotSpeed();
-    	int botSize = currentController.getBotSize();
     	if (view.isBatteryEnabled()) {
-    		currentController.setNewBatteryValue(botSpeed, botSize, view);
+    		currentController.setNewBatteryValue(view);
+    		System.out.println("" + currentController.getBotBatteryDischargeRate());
     	} 
     }
 }
