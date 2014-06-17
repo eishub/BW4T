@@ -87,6 +87,14 @@ public class ConfigurationPanel extends JPanel {
     private Checkbox pathsNo = new Checkbox("No",
             !DefaultConfigurationValues.USE_GUI.getBooleanValue(), pathsCheckBox);
 
+    private CheckboxGroup collisionsCheckBox = new CheckboxGroup();
+
+    private Checkbox collisionsYes = new Checkbox("Yes",
+            DefaultConfigurationValues.USE_GUI.getBooleanValue(), collisionsCheckBox);
+
+    private Checkbox collisionsNo = new Checkbox("No",
+            !DefaultConfigurationValues.USE_GUI.getBooleanValue(), collisionsCheckBox);
+
     private JButton chooseMapFile = new JButton("Open File");
 
     private JFileChooser fileChooser;
@@ -134,6 +142,7 @@ public class ConfigurationPanel extends JPanel {
         showServerOptions();
         showGuiOptions();
         visualizePathsOptions();
+        enableCollisionsOptions();
         showMapOptions();
 
     }
@@ -268,6 +277,29 @@ public class ConfigurationPanel extends JPanel {
 
         c.gridx = 1;
         add(pathsNo, c);
+    }
+
+    /**
+     * Show the option to enable collisions.
+     */
+    private void enableCollisionsOptions() {
+        c.insets = new Insets(INSET, INSET, 0, 0);
+
+        c.gridx = 0;
+        c.gridy += 1;
+
+        JLabel gui = new JLabel("Enable Collisions");
+        gui.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE_SMALL));
+        add(gui, c);
+
+        c.insets = new Insets(INSET / 2, INSET, INSET, INSET);
+
+        c.gridx = 0;
+        c.gridy += 1;
+        add(collisionsYes, c);
+
+        c.gridx = 1;
+        add(collisionsNo, c);
     }
 
     /**
@@ -422,6 +454,30 @@ public class ConfigurationPanel extends JPanel {
     }
 
     /**
+     * Returns if collisions should be enabled.
+     *
+     * @return The enable collisions.
+     */
+    public final boolean isEnableCollisions() {
+        return collisionsCheckBox.getSelectedCheckbox() == collisionsYes;
+    }
+
+    /**
+     * Sets if collisions should be enabled.
+     *
+     * @param enableCollisions
+     *           The enable collisions.
+     */
+    public final void setEnableCollisions(final boolean enableCollisions) {
+        if (enableCollisions) {
+            collisionsCheckBox.setSelectedCheckbox(collisionsYes);
+        }
+        else {
+            collisionsCheckBox.setSelectedCheckbox(collisionsNo);
+        }
+    }
+
+    /**
      * Returns the button to choose a map file.
      *
      * @return The button to choose a map file.
@@ -479,6 +535,7 @@ public class ConfigurationPanel extends JPanel {
                 && this.getServerPort() == DefaultConfigurationValues.DEFAULT_SERVER_PORT.getIntValue()
                 && this.useGui() == DefaultConfigurationValues.USE_GUI.getBooleanValue()
                 && this.isVisualizePaths() == DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue()
+                && this.isEnableCollisions() == DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue()
                 && this.getMapFile().equals(DefaultConfigurationValues.MAP_FILE.getValue());
     }
 
@@ -556,6 +613,14 @@ public class ConfigurationPanel extends JPanel {
         return pathsNo;
     }
     
+    public Checkbox getCollisionsYesCheckbox() {
+        return pathsYes;
+    }
+    
+    public Checkbox getCollisionsNoCheckbox() {
+        return pathsNo;
+    }
+    
     public JTextField getMapFileTextField() {
         return mapFileTextField;
     }
@@ -590,6 +655,14 @@ public class ConfigurationPanel extends JPanel {
     
     public void addPathsNoCheckboxController(ItemListener controller) {
     	getPathsNoCheckbox().addItemListener(controller);
+    }
+    
+    public void addCollisionsYesCheckboxController(ItemListener controller) {
+    	getCollisionsYesCheckbox().addItemListener(controller);
+    }
+    
+    public void addCollisionsNoCheckboxController(ItemListener controller) {
+    	getCollisionsNoCheckbox().addItemListener(controller);
     }
     
     public void addMapFileController(DocumentListener controller) {
