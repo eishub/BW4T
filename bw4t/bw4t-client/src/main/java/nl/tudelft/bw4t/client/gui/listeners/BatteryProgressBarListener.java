@@ -48,9 +48,6 @@ public class BatteryProgressBarListener  {
         if(counter < progressBar.getMaximum()/4) {
             progressBar.setForeground(Color.red);
         }
-        if (counter < 1) {
-            JOptionPane.showMessageDialog(null, "Battery empty!");
-        }
 
         clientGUI.setBatteryProgressBar(progressBar);
     }
