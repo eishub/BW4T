@@ -6,26 +6,27 @@ import java.awt.event.ActionListener;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 
 /**
- * Handles actions of the resetbutton
+ * Handles actions of the walkingcheckbox
  */
-public class ResetButton implements ActionListener {
+public class WalkingBox implements ActionListener {
     /**
-     * The panel containing the button.
+     * The panel containing the check box.
      */
     private BotEditorPanel view;
     /**
      * Constructor.
      * @param pview The panel of the jump box.
      */
-    public ResetButton(BotEditorPanel pview) {
+    public WalkingBox(BotEditorPanel pview) {
         this.view = pview;
     }
+    
     /**
-     * Resets all parts of the bot editor panel
-     * to their standard value.
-     * @param ae The action event causing this.
+     * Enables the size slider when checked.
+     * @param ae The action event leading to execution of this method.
      */
+    @Override
     public void actionPerformed(ActionEvent ae) {
-    	view.updateView();
-    }   
+    	view.setSizeSliderEnabled(view.getSizeOverloadHandicap());
+    }
 }

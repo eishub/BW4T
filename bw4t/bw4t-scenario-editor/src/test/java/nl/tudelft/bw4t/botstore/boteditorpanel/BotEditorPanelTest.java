@@ -90,7 +90,7 @@ public class BotEditorPanelTest {
     public final void testInitialHandicaps() {
         assertFalse(spypanel.getGripperHandicap());
         assertFalse(spypanel.getColorBlindHandicap());
-        assertFalse(spypanel.getCustomSize());
+        assertFalse(spypanel.getSizeOverloadHandicap());
         assertFalse(spypanel.getMoveSpeedHandicap());
         assertFalse(spypanel.isBatteryEnabled());
     }
