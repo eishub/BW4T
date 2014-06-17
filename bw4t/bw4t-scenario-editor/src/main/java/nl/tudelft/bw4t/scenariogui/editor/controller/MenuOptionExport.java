@@ -1,13 +1,18 @@
 package nl.tudelft.bw4t.scenariogui.editor.controller;
 
+
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
@@ -43,23 +48,22 @@ class MenuOptionExport extends AbstractMenuOption {
     public void actionPerformed(final ActionEvent e) {
         saveFile();
         if (getMenuView().hasLastFileLocation()) {
-        	if(allGoalFilesExist()) {
-	            File saveLocation = new File(getMenuView().getLastFileLocation());
-	
-	            JFileChooser filechooser = getCurrentFileChooser();
-	
-	            filechooser.setSelectedFile(new File(saveLocation.getName().split("\\.")[0]));
-	            filechooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-	            filechooser.setAcceptAllFileFilterUsed(false);
-	            filechooser.setFileFilter(FileFilters.masFilter());
-	
-	            if (filechooser.showDialog(getController().getMainView(), "Export MAS project") == JFileChooser.APPROVE_OPTION) {
-	                File xmlFile = filechooser.getSelectedFile();
-	                exportAsMASProject(xmlFile);
-	            }
-        	} else {
-        		ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Warning: Some goal files are missing.");
+        	if(!allGoalFilesExist()) {
+        	    ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Warning: Some goal files are missing.");
         	}
+            File saveLocation = new File(getMenuView().getLastFileLocation());
+
+            JFileChooser filechooser = getCurrentFileChooser();
+
+            filechooser.setSelectedFile(new File(saveLocation.getName().split("\\.")[0]));
+            filechooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            filechooser.setAcceptAllFileFilterUsed(false);
+            filechooser.setFileFilter(FileFilters.masFilter());
+
+            if (filechooser.showDialog(getController().getMainView(), "Export MAS project") == JFileChooser.APPROVE_OPTION) {
+                File xmlFile = filechooser.getSelectedFile();
+                exportAsMASProject(xmlFile);
+            }
         } else {
             ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Error: Can not export an unsaved scenario.");
         }
@@ -71,19 +75,15 @@ class MenuOptionExport extends AbstractMenuOption {
      */
     public boolean allGoalFilesExist() {
     	boolean allExist = true;
-    	EntityPanel entityPanel = getController().getMainView().getMainPanel().getEntityPanel();
-		int numRows = entityPanel.getBotTableModel().getRowCount();
-    	
-    	for(int i = 0; i < numRows && allExist; i++) {
-    		String goalFile = "" + entityPanel.getBotTable().getValueAt(i, 2);
-    		allExist = AgentFileChecker.fileNameExists(goalFile);
+    	BW4TClientConfig model = this.getModel();
+    	List<BotConfig> botList = model.getBots();
+    	for(int i = 0; i < botList.size() && allExist; i++) {
+    		allExist = allExist && AgentFileChecker.fileNameExists(botList.get(i).getFileName());
     	}
     	
-    	numRows = entityPanel.getEPartnerTableModel().getRowCount();
-    	
-    	for(int i = 0; i < numRows && allExist; i++) {
-    		String goalFile = "" + entityPanel.getBotTable().getValueAt(i, 2);
-    		allExist = AgentFileChecker.fileNameExists(goalFile);
+    	List<EPartnerConfig> epartnerList = model.getEpartners();
+    	for(int i = 0; i < epartnerList.size() && allExist; i++) {
+    	    allExist = allExist && AgentFileChecker.fileNameExists(epartnerList.get(i).getFileName());
     	}
     	
     	return allExist;
