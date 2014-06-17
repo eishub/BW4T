@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeFrame;
 import nl.tudelft.bw4t.map.BlockColor;
 
@@ -48,10 +50,14 @@ public class RandomizeFromSettings implements ActionListener{
 		if(view.isPink()) {
 			input.add(BlockColor.PINK);
 		}
-		
-		List<BlockColor> result = controller.randomizeSequence(input, amount);
-		setResult(result);
-		view.getRandomizedSequence().setText(result.toString());
+		try{
+			List<BlockColor> result = controller.randomizeSequence(input, amount);
+			setResult(result);
+			view.getRandomizedSequence().setText(result.toString());
+		}
+		catch (IllegalArgumentException e){
+			JOptionPane.showMessageDialog(view, "Choose atleast 1 color");
+		}
 	}
 	
 	public void setResult(List<BlockColor> res) {
