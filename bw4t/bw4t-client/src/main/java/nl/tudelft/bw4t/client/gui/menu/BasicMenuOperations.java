@@ -29,7 +29,7 @@ public class BasicMenuOperations {
      */
     public static void addMenuItemToPopupMenu(BW4TMessage message, BW4TClientGUI bw4tClientMapRendererData) {
         JMenuItem menuItem = new JMenuItem(MessageTranslator.translateMessage(message));
-        menuItem.addActionListener(new MessageSenderActionListener(message, bw4tClientMapRendererData.getController()));
+        menuItem.addActionListener(new MessageSenderActionListener(message, bw4tClientMapRendererData));
         bw4tClientMapRendererData.getjPopupMenu().add(menuItem);
     }
 
