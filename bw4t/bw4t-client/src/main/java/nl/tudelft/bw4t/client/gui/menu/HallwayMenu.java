@@ -61,19 +61,20 @@ public class HallwayMenu {
                 .getName(), null, null), gui);
 
         if (holdingID != null) {
+            String colorAsString = BasicMenuOperations.getColor(
+                    ColorTranslator.translate2ColorString(entityColor), gui.getController().getHumanAgent());
             BasicMenuOperations.addMenuItemToPopupMenu(
-                    new BW4TMessage(MessageType.HASCOLOR, null, ColorTranslator.translate2ColorString(entityColor),
+                    new BW4TMessage(MessageType.HASCOLOR, null, colorAsString,
                             null), gui);
 
             JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu(
-                    "I have a " + ColorTranslator.translate2ColorString(entityColor) + " block from ",
+                    "I have a " + colorAsString + " block from ",
                     gui.getjPopupMenu());
 
             for (Zone roomInfo : cmc.getRooms()) {
                 menuItem = new JMenuItem(roomInfo.getName());
                 menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.HASCOLOR,
-                        roomInfo.getName(), ColorTranslator.translate2ColorString(entityColor), null), gui
-                        .getController()));
+                        roomInfo.getName(), colorAsString, null), gui));
                 submenu.add(menuItem);
             }
         }
