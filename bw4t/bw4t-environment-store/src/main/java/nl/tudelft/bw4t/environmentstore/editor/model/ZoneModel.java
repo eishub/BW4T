@@ -46,11 +46,11 @@ public class ZoneModel {
 
         this.isStartZone = isStartZone(zone);
         this.isDropZone = isDropZone(zone);
-
-        this.setDoor(EAST, zone.hasEast());
-        this.setDoor(NORTH, zone.hasNorth());
-        this.setDoor(SOUTH, zone.hasSouth());
-        this.setDoor(WEST, zone.hasWest());
+        
+        this.doorsbool[0] = zone.hasNorth();
+        this.doorsbool[1] = zone.hasEast();
+        this.doorsbool[2] = zone.hasSouth();
+        this.doorsbool[3] = zone.hasWest();
     }
 
     public ZoneModel(Node n) {
@@ -159,6 +159,10 @@ public class ZoneModel {
 
     public void setStartZone(boolean isSZ) {
         isStartZone = isSZ;
+    }
+    
+    public boolean[] getDoorsBool() {
+    	return doorsbool;
     }
 
     /**

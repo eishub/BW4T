@@ -73,11 +73,13 @@ public class MenuOptionOpen extends AbstractMenuOption {
 					model.getZone(rowSet, colSet).setStartZone(zModel.isStartZone());
 					model.getZone(rowSet, colSet).setDropZone(zModel.isDropZone());
 					model.getZone(rowSet, colSet).setColors(zModel.getColors());
-
-					model.getZone(rowSet, colSet).setDoor(ZoneModel.NORTH, zModel.hasDoor(ZoneModel.NORTH));
-					model.getZone(rowSet, colSet).setDoor(ZoneModel.EAST, zModel.hasDoor(ZoneModel.EAST));
-					model.getZone(rowSet, colSet).setDoor(ZoneModel.SOUTH, zModel.hasDoor(ZoneModel.SOUTH));
-					model.getZone(rowSet, colSet).setDoor(ZoneModel.WEST, zModel.hasDoor(ZoneModel.WEST));
+					
+					// Set the doors for this room.
+					for(int i = 0; i < zModel.getDoorsBool().length; i++) {
+						if(zModel.getDoorsBool()[i] == true) {
+							model.getZone(rowSet, colSet).setDoor(i, true);
+						}
+					}
 				}
 				
 		    	// Set the saved sequence.

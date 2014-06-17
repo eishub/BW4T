@@ -110,7 +110,7 @@ public abstract class AbstractMenuOption implements ActionListener {
         	EnvironmentStore.showDialog("Save failed: " + error);
             return;
         }
-        NewMap map = MapConverter.createMap(envController.getMapController().getEnvironmentMap());
+        NewMap map = MapConverter.createMap(mapController.getEnvironmentMap());
         String mapSolve = SolvabilityAlgorithm.mapIsSolvable(map);
         if (mapSolve != null) {
         	int response = JOptionPane
