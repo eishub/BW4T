@@ -2,7 +2,6 @@ package nl.tudelft.bw4t.client;
 
 import java.util.prefs.Preferences;
 
-// TODO: Auto-generated Javadoc
 /**
  * Static object to store settings of the BW4T Client.
  */

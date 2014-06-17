@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.server;
+package nl.tudelft.bw4t.server.eis;
 
 /**
  * class to specify for our RobotEntity that it needs to implement initializePerceptionCycle. We can't cast to
@@ -6,7 +6,7 @@ package nl.tudelft.bw4t.server;
  * that class here because of access restrictions to repast classes.
  */
 
-public interface RobotEntityInt {
+public interface EntityInterface {
     /**
      * To be called when a new perception cycle starts. This allows the entity to 'lock' the current repast state so
      * that percepts are coherent.

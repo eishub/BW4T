@@ -20,8 +20,8 @@ import nl.tudelft.bw4t.network.BW4TClientActions;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.server.BW4TServer;
-import nl.tudelft.bw4t.server.RobotEntityInt;
 import nl.tudelft.bw4t.server.eis.EPartnerEntity;
+import nl.tudelft.bw4t.server.eis.EntityInterface;
 import nl.tudelft.bw4t.server.eis.RobotEntity;
 import nl.tudelft.bw4t.server.logging.BW4TFileAppender;
 import nl.tudelft.bw4t.server.logging.BotLog;
@@ -358,7 +358,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
     public synchronized List<Percept> getAllPerceptsFrom(String entity) {
         try {
             if (this.isMapFullyLoaded()) {
-                ((RobotEntityInt) getEntity(entity)).initializePerceptionCycle();
+                ((EntityInterface) getEntity(entity)).initializePerceptionCycle();
                 return getAllPerceptsFromEntity(entity);
             }
         } catch (PerceiveException | NoEnvironmentException e) {
