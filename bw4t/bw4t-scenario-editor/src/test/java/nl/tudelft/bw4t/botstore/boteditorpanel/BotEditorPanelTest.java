@@ -263,5 +263,16 @@ public class BotEditorPanelTest {
         assertEquals(botEditorPanel.getBotReferenceField().getText(), config.getReferenceName());
         assertEquals(botEditorPanel.getFileNameField().getText(), config.getFileName());
     }
+    
+    @Test
+    public void testBatteryDischargeRate() {
+        BotEditorPanel botEditorPanel = editor.getBotEditorPanel();
+        BotConfig config = botEditorPanel.getBotController().getBotConfig();
+        botEditorPanel.setBatterySliderEnabled(true);
+        botEditorPanel.getSizeSlider().setValue(4);
+        botEditorPanel.getSpeedSlider().setValue(80);
+        double optimalDischarge = 0.0002 * 4 + 0.0004 * 80;
+        assertEquals(config.getBotBatteryDischargeRate(), optimalDischarge, 1);
+    }
 }
 
