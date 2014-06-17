@@ -3,7 +3,6 @@ package nl.tudelft.bw4t.server.util;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.logging.Logger;
 
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.zone.Zone;
@@ -61,8 +60,10 @@ public class PathPlanner {
      * @param obstacles set of all obstacles involved in the search.
      * @return List of subsequent NdPoints from start to finish.
      */
-    public static List<NdPoint> findPath(List<Zone> allZones, List<BoundedMoveableObject> obstacles, NdPoint startPoint, NdPoint end) {
-        SimpleWeightedGraph<NdPoint, DefaultWeightedEdge> graph = generateNdPointGraph(startPoint, end, allZones, obstacles);
+    public static List<NdPoint> findPath(List<Zone> allZones, List<BoundedMoveableObject> obstacles,
+                                         NdPoint startPoint, NdPoint end, int botSize) {
+        SimpleWeightedGraph<NdPoint, DefaultWeightedEdge> graph = generateNdPointGraph(startPoint, end, allZones,
+                obstacles, botSize);
 
 
         List<DefaultWeightedEdge> edgeList = DijkstraShortestPath.findPathBetween(graph, startPoint, end);
@@ -88,7 +89,8 @@ public class PathPlanner {
         return path;
     }
 
-    private static List<NdPoint> returnVacantPoints(List<Zone> zones, List<BoundedMoveableObject> obstacles) {
+    private static List<NdPoint> returnVacantPoints(List<Zone> zones, List<BoundedMoveableObject> obstacles,
+                                                    int botSize) {
         // First generate the points occupied by the obstacles.
         List<NdPoint> obstaclePoints = new ArrayList<NdPoint>();
 
@@ -100,7 +102,8 @@ public class PathPlanner {
         // Now for the zone points.
         List<NdPoint> zonePoints = new ArrayList<NdPoint>();
         for (Zone zone : zones) {
-            zonePoints.addAll(zone.getPointsOccupiedByObject(0));
+            // -botSize to allow the bot to move alone walls, etc.
+            zonePoints.addAll(zone.getPointsOccupiedByObject(-botSize));
         }
 
         // Remove all obstacles points from the list. The remaining list if the one we'll use for pathfinding.
@@ -114,12 +117,14 @@ public class PathPlanner {
         return zonePoints;
     }
 
-    private static SimpleWeightedGraph<NdPoint, DefaultWeightedEdge> generateNdPointGraph(NdPoint start, NdPoint end, List<Zone> allZones, List<BoundedMoveableObject> obstacles) {
+    private static SimpleWeightedGraph<NdPoint, DefaultWeightedEdge> generateNdPointGraph(
+            NdPoint start, NdPoint end, List<Zone> allZones, List<BoundedMoveableObject> obstacles, int botSize) {
+
         SimpleWeightedGraph<NdPoint, DefaultWeightedEdge> graph = new SimpleWeightedGraph<NdPoint, DefaultWeightedEdge>(
                 DefaultWeightedEdge.class);
 
 
-        List<NdPoint> vertices = returnVacantPoints(allZones, obstacles);
+        List<NdPoint> vertices = returnVacantPoints(allZones, obstacles, botSize);
 
         // Add all the vertices.
         graph.addVertex(start);
@@ -142,7 +147,7 @@ public class PathPlanner {
             };
 
             for (NdPoint neighbour : neighbours) {
-                if(vertices.contains(neighbour)) {
+                if (vertices.contains(neighbour)) {
                     // Default edge distance is 1. So we're good.
                     graph.addEdge(vertex, neighbour);
                 }

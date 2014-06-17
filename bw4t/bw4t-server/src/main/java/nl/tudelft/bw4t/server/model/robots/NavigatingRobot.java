@@ -46,11 +46,6 @@ public class NavigatingRobot extends AbstractRobot {
     NdPoint currentMoveHistory = currentMove;
 
     /**
-     * The current target location.
-     */
-    NdPoint targetLocation = null;
-
-    /**
      * The path as displayed on the map.
      */
     Path path = new Path();
@@ -62,7 +57,8 @@ public class NavigatingRobot extends AbstractRobot {
      * @param context
      * @param oneBotPerZone true if max 1 bot in a zone
      */
-    public NavigatingRobot(String name, ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context, boolean oneBotPerZone, int cap) {
+    public NavigatingRobot(String name, ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context,
+                           boolean oneBotPerZone, int cap) {
         super(name, space, grid, context, oneBotPerZone, cap);
 
         context.add(path);
@@ -88,10 +84,11 @@ public class NavigatingRobot extends AbstractRobot {
             /**
              * Save the current move in case the bot wishes to navigate around the obstacle.
              */
-            if(currentMove == getZone().getLocation()) {
+            if (currentMove == getZone().getLocation()) {
                 // If we're already at the location, get the next one.
                 currentMoveHistory = plannedMoves.poll();
-            } else {
+            }
+            else {
                 currentMoveHistory = currentMove;
             }
 
@@ -105,7 +102,6 @@ public class NavigatingRobot extends AbstractRobot {
     }
 
 
-
     /**
      * Let the robot move to the next planned target on the stack. This will clear the {@link #collided} flag. Always
      * erases the current target.
@@ -113,8 +109,6 @@ public class NavigatingRobot extends AbstractRobot {
     public void useNextTarget() {
         currentMove = null;
         if (plannedMoves.isEmpty()) {
-            // we're there.
-            //targetLocation = null;
             updateDrawPath();
             return;
         }
@@ -125,7 +119,7 @@ public class NavigatingRobot extends AbstractRobot {
     }
 
     private void updateDrawPath() {
-        if(BW4TEnvironment.getInstance().isDrawPathsEnabled()) {
+        if (BW4TEnvironment.getInstance().isDrawPathsEnabled()) {
             path.setPath(new ArrayList(plannedMoves));
         }
     }
@@ -218,11 +212,13 @@ public class NavigatingRobot extends AbstractRobot {
 
         // the end isn't rounded since maps never have .5 coordinates.
         NdPoint startLocationRounded = new NdPoint((int) getLocation().getX(), (int) getLocation().getY());
-        List<NdPoint> path = PathPlanner.findPath(navZones, getObstacles(), startLocationRounded, currentMoveHistory);
+        List<NdPoint> path = PathPlanner.findPath(navZones, getObstacles(), startLocationRounded, currentMoveHistory,
+                getSize());
         if (path.isEmpty()) {
             LOGGER.debug("No alternative path found.");
-            throw new IllegalArgumentException("target " + targetLocation + " is unreachable for " + this);
-        } else {
+            throw new IllegalArgumentException("target " + getTargetLocation() + " is unreachable for " + this);
+        }
+        else {
             LOGGER.debug("Found path around obstacle.");
             // Now we just push the new points to the plannedMoved queue and sit back and relax!.
             for (NdPoint p : path) {
@@ -249,7 +245,6 @@ public class NavigatingRobot extends AbstractRobot {
         }
         return zones;
     }
-
 
 
 }
