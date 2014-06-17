@@ -2,6 +2,8 @@ package nl.tudelft.bw4t.client.agent;
 
 import java.rmi.RemoteException;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import nl.tudelft.bw4t.client.environment.PerceptsHandler;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
@@ -33,6 +35,8 @@ public class BW4TAgent extends Thread implements ActionInterface {
     
     private BotConfig botConfig;
     private EPartnerConfig epartnerConfig;
+    
+    private final Map<BW4TAgent, BW4TClientGUI> allAgents;
 
     /**
      * Create a new BW4TAgent that can be registered to an entity.
@@ -42,9 +46,10 @@ public class BW4TAgent extends Thread implements ActionInterface {
      * @param env
      *            the remote environment.
      */
-    public BW4TAgent(String agentId, RemoteEnvironment env) {
+    public BW4TAgent(String agentId, RemoteEnvironment env, Map<BW4TAgent, BW4TClientGUI> allAgents) {
         this.agentId = agentId;
         this.bw4tenv = env;
+        this.allAgents = allAgents;
     }
     
     /**
@@ -64,6 +69,20 @@ public class BW4TAgent extends Thread implements ActionInterface {
         if (environmentKilled) {
             return;
         }
+    }
+    
+    /**
+     * Gets an agent from the name.
+     * @param name The name of the agent.
+     * @return The agent.
+     */
+    public BW4TAgent getAgentFromName(String name) {
+        for (BW4TAgent agent : allAgents.keySet()) {
+            if (agent.getName().equals(name)) {
+                return agent;
+            }
+        }
+        return null;
     }
 
     /**

@@ -1,10 +1,13 @@
 package nl.tudelft.bw4t.client.agent;
 
 import java.rmi.RemoteException;
+import java.util.List;
+import java.util.Map;
 
 import eis.exceptions.ActException;
 import eis.iilang.Action;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 
 /**
  * Class that represents an agent that is controlled via the BW4TRenderer
@@ -19,8 +22,8 @@ public class HumanAgent extends BW4TAgent {
 	 * @param env
 	 *            , the remote environment to which the human agent should connect.
 	 */
-    public HumanAgent(String agentId, RemoteEnvironment env) {
-        super(agentId, env);
+    public HumanAgent(String agentId, RemoteEnvironment env, Map<BW4TAgent, BW4TClientGUI> allAgents) {
+        super(agentId, env, allAgents);
     }
 
     /**

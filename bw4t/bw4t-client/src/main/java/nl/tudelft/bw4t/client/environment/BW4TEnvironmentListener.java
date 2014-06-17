@@ -71,20 +71,6 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
             }
         }
     }
-    
-    /**
-     * Gets an agent from the name.
-     * @param name The name of the agent.
-     * @return The agent.
-     */
-    public BW4TAgent getAgentFromName(String name) {
-        for (BW4TAgent agent : agentData.keySet()) {
-            if (agent.getName().equals(name)) {
-                return agent;
-            }
-        }
-        return null;
-    }
 
     /**
      * Handle a free entity
@@ -137,7 +123,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
     IOException, RelationException {
         agentCount = environment.getAgents().size();
         if ("human".equals(environment.getType(entityId))) {
-            HumanAgent agent = new HumanAgent(entityId, environment);
+            HumanAgent agent = new HumanAgent(entityId, environment, agentData);
             agent.setBotConfig(findCorrespondingBotConfig(entityId, false));
             agent.registerEntity(entityId);
             environment.registerAgent(agent.getAgentId());
