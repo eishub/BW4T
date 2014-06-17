@@ -67,8 +67,8 @@ public class TestMapController extends AbstractMapController {
     @Override
     public Set<ViewEPartner> getVisibleEPartners() {
         Set<ViewEPartner> set = new HashSet<>();
-        set.add(new ViewEPartner(0, new Point2D.Double(5.0, 4.0), false/*, "Epartner 1"*/));
-        set.add(new ViewEPartner(1, new Point2D.Double(10.0, 8.0), true/*, "Epartner 2"*/));
+        set.add(new ViewEPartner(0, new Point2D.Double(5.0, 4.0), false));
+        set.add(new ViewEPartner(1, new Point2D.Double(10.0, 8.0), true));
         
         return set;
     }
