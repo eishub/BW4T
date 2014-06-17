@@ -679,6 +679,10 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 		return botEditor;
 	}
 	
+	public void setBotEditor(BotEditor editor) {
+		this.botEditor = editor;
+	}
+	
 	/**
 	 * Return the MainPanel.
 	 * @return mainpanel

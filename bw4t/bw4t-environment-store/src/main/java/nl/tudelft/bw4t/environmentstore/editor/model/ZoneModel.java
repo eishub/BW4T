@@ -15,6 +15,8 @@ import nl.tudelft.bw4t.map.Zone.Type;
  */
 public class ZoneModel {
     public static final int SPAWN_POINTS_PER_START_ZONE = 4;
+    
+    private Zone zone;
 
     private Type type = Type.CORRIDOR;
 
@@ -37,6 +39,7 @@ public class ZoneModel {
     }
 
     public ZoneModel(Zone zone) {
+    	this.zone = zone;
         this.type = zone.getType();
 
         this.colors = zone.getBlocks();
@@ -69,6 +72,10 @@ public class ZoneModel {
             }
             doorsbool[index] = true;
         }
+    }
+    
+    public Zone getZone() {
+    	return zone;
     }
 
     public Type getType() {
@@ -198,7 +205,7 @@ public class ZoneModel {
             final int numColors = validcolors.size();
             Random random = new Random();
             ArrayList<BlockColor> colors = new ArrayList<BlockColor>();
-            for (int i = 0; i < random.nextInt(amount); i++) {
+            for (int i = 0; i < random.nextInt(amount) + 1; i++) {
                 colors.add(validcolors.get(random.nextInt(numColors)));
             }
             setColors(colors);

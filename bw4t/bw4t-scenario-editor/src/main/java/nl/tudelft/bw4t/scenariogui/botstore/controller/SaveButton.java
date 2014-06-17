@@ -82,7 +82,7 @@ public class SaveButton implements ActionListener {
 							+ "File names should end in .goal.");
 		}
 
-		view.dispose();
+		view.getBotEditor().dispose();
 	}
 
 	/**
