@@ -226,6 +226,7 @@ class MenuOptionOpen extends AbstractMenuOption {
         getModel().setServerIp(loadedModel.getServerIp());
         getModel().setServerPort(loadedModel.getServerPort());
         getModel().setLaunchGui(loadedModel.isLaunchGui());
+        getModel().setVisualizePaths(loadedModel.isVisualizePaths());
         getModel().setMapFile(loadedModel.getMapFile());
     }
 
@@ -235,6 +236,7 @@ class MenuOptionOpen extends AbstractMenuOption {
         configPanel.setServerIP(getModel().getServerIp());
         configPanel.setServerPort(getModel().getServerPort() + "");
         configPanel.setUseGui(getModel().isLaunchGui());
+        configPanel.setVisualizePaths(getModel().isVisualizePaths());
         configPanel.setMapFile(getModel().getMapFile());
     }
 }

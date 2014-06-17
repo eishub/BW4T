@@ -269,6 +269,22 @@ public class ConfigurationPanelTest {
     }
 
     /**
+     * Tests whether changes have been made to the Visualize Paths section.
+     */
+    @Test
+    public void testChangesVisualizePaths() {
+        assertTrue(configPanel.isDefault());
+    	assertEquals(DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue(), configPanel.getPathsYesCheckbox().getState());
+    	assertEquals(!DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue(), configPanel.getPathsNoCheckbox().getState());
+    	
+        configPanel.setVisualizePaths(!DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue());
+
+        assertEquals(!DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue(), configPanel.getPathsYesCheckbox().getState());
+        assertEquals(DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue(), configPanel.getPathsNoCheckbox().getState());
+        assertFalse(configPanel.isDefault());
+    }
+
+    /**
      * Tests whether changes have been made to the Map file section.
      */
     @Test
