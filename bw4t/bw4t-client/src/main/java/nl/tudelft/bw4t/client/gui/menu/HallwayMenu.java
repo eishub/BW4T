@@ -60,9 +60,9 @@ public class HallwayMenu {
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.AMWAITINGOUTSIDEROOM, cmc.getDropZone()
                 .getName(), null, null), gui);
 
-        String colorAsString = BasicMenuOperations.getColor(
-                ColorTranslator.translate2ColorString(entityColor), gui.getController().getHumanAgent());
         if (holdingID != null) {
+            String colorAsString = BasicMenuOperations.getColor(
+                    ColorTranslator.translate2ColorString(entityColor), gui.getController().getHumanAgent());
             BasicMenuOperations.addMenuItemToPopupMenu(
                     new BW4TMessage(MessageType.HASCOLOR, null, colorAsString,
                             null), gui);
