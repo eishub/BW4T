@@ -47,13 +47,6 @@ public class MenuOptionExportTest {
         editor = spy(new ScenarioEditor());
 
         filechooser = mock(JFileChooser.class);
-
-        /*
-        Retrieve the controllers, should be one for each item.
-         */
-        ActionListener[] listeners = editor.getTopMenuBar().getMenuItemFileOpen().getActionListeners();
-        AbstractMenuOption menuOption = (AbstractMenuOption) listeners[0];
-        menuOption.setCurrentFileChooser(filechooser);
     }
     
     @After
@@ -70,7 +63,6 @@ public class MenuOptionExportTest {
     public void testBotTableWarning() throws IOException {
     	// Setup the behaviour
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
-        when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.getSelectedFile()).thenReturn(new File(FILE_EXPORT_PATH + ExportToMASTest.CONFIG_NAME + ".mas2g"));
 
@@ -83,9 +75,7 @@ public class MenuOptionExportTest {
         //message was sent.
         OptionPrompt yesPrompt = spy(new YesMockOptionPrompt());
         ScenarioEditor.setOptionPrompt(yesPrompt);
-
-        new File(FILE_EXPORT_PATH).mkdir();
-
+        
         ActionListener[] listeners = editor.getTopMenuBar().getMenuItemFileExport().getActionListeners();
         AbstractMenuOption menuOption = (AbstractMenuOption) listeners[0];
         menuOption.setCurrentFileChooser(filechooser);
