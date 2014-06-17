@@ -11,7 +11,9 @@ import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import eis.EnvironmentListener;
 
@@ -19,6 +21,7 @@ import eis.EnvironmentListener;
  * This class tests the EntityNotifiers class from the Environment package in the client.
  * It tests whether entities are correctly notified when free, deleted or new.
  */
+@RunWith(MockitoJUnitRunner.class)
 public class EntityNotifiersTest {
     
     private EnvironmentListener mockedEnvListener = Mockito.mock(eis.EnvironmentListener.class);
