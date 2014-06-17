@@ -121,6 +121,7 @@ public class RandomizeFrame extends JFrame {
 		chckbxWWhite.setSelected(true);
 		chckbxPPink.setSelected(true);
 		
+		randomizedSequence.setEditable(false);		
 		randomizedSequence.setColumns(10);
 		
 		contentPane.add(applyButton, "flowx,cell 0 15,alignx left,aligny top");
