@@ -61,26 +61,30 @@ public class PerceptsHandler {
     
     public static void tryGetEntityConfig(String entity, RemoteEnvironment remoteEnvironment) throws PerceiveException {
         try {
-            getEntityConfig(entity, remoteEnvironment);
+            client = remoteEnvironment.getClient();
+            runningGUI = "true".equals(InitParam.LAUNCHGUI.getValue());
+            humanType = "human".equals(remoteEnvironment.getType(entity.replace("gui", "")));
+            guiEntity = entity.contains("gui");
         } catch (EntityException e) {
             throw new PerceiveException("getAllPerceptsFromEntity failed for " + entity, e);
         }
     }
     
-    public static List<Percept> tryGetAllPerceptsFromEntity(String entity, RemoteEnvironment remoteEnvironment) {
+    public static List<Percept> tryGetAllPerceptsFromEntity(String entity, RemoteEnvironment env) {
         try {
-            return client.getAllPerceptsFromEntity(entity.replace("gui", ""));
+            return env.getClient().getAllPerceptsFromEntity(entity.replace("gui", ""));
         } catch (RemoteException e) {
-            throw remoteEnvironment.environmentSuddenDeath(e);
+            throw env.environmentSuddenDeath(e);
         }
     }
     
     public static List<Percept> tryGetGUIPercepts(String entity, RemoteEnvironment env ) {
         try {
-            List<Percept> percepts = client.getAllPerceptsFromEntity(entity);
+            List<Percept> percepts = env.getClient().getAllPerceptsFromEntity(entity);
 
-            if (percepts.size() > 0) {
-                env.getEntityController(entity).handlePercepts(percepts);
+            ClientController control = env.getEntityController(entity);
+            if (percepts.size() > 0 && control != null) {
+                control.handlePercepts(percepts);
             }
             
             return percepts;
@@ -89,27 +93,11 @@ public class PerceptsHandler {
         }
     }
     
-    public static List<Percept> tryClientGetAllPerceptsFromEntity(String entity, RemoteEnvironment remoteEnvironment ) {
+    public static List<Percept> tryClientGetAllPerceptsFromEntity(String entity, RemoteEnvironment env ) {
         try {
-            return client.getAllPerceptsFromEntity(entity);
+            return env.getClient().getAllPerceptsFromEntity(entity);
         } catch (RemoteException e) {
-            throw remoteEnvironment.environmentSuddenDeath(e);
+            throw env.environmentSuddenDeath(e);
         }
-    }
-
-    /**
-     * Gets the entity configuration.
-     *
-     * @param entity 
-     *      The entity in question.
-     * @param remoteEnvironment 
-     *      The remote environment from which the percepts should be retrieved.
-     * @throws EntityException is thrown if there is a problem retrieve the status of the entity. 
-     */
-    private static void getEntityConfig(String entity, RemoteEnvironment remoteEnvironment) throws EntityException {
-        client = remoteEnvironment.getClient();
-        runningGUI = "true".equals(InitParam.LAUNCHGUI.getValue());
-        humanType = "human".equals(remoteEnvironment.getType(entity.replace("gui", "")));
-        guiEntity = entity.contains("gui");
     }
 }

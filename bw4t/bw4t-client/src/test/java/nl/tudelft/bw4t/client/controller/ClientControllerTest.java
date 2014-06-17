@@ -45,7 +45,11 @@ public class ClientControllerTest {
     public void setUp() throws Exception {
         listOfPercepts = new LinkedList<Percept>();
         when(map.getArea()).thenReturn(new Point(1.0, 1.0));
+        when(remoteEnvironment.getMap()).thenReturn(map);
         clientController = new ClientController(remoteEnvironment, entityID);
+        clientController.setGui(clientGUI);
+        Thread.sleep(1);
+        clientController.getMapController().setRunning(false);
     }
 
     @After
@@ -113,7 +117,7 @@ public class ClientControllerTest {
     public void testUpdateRenderer() {
         testHandlePerceptsMessage();
         clientController.updateGUI();
-        verify(clientGUI, times(1)).update();
+        verify(clientGUI, times(2)).update();
     }
 
 }

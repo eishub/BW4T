@@ -1,15 +1,18 @@
 package nl.tudelft.bw4t.client.environment;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import nl.tudelft.bw4t.client.startup.InitParam;
+import nl.tudelft.bw4t.util.LauncherException;
+
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
+
 import eis.exceptions.ManagementException;
 import eis.exceptions.NoEnvironmentException;
 import eis.iilang.Identifier;
 import eis.iilang.Parameter;
-import java.util.HashMap;
-import java.util.Map;
-import nl.tudelft.bw4t.client.startup.InitParam;
-import nl.tudelft.bw4t.util.LauncherException;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
 
 /**
  * This class is used to startup the remote environment to interact with the
@@ -51,7 +54,9 @@ public final class Launcher {
                 LOGGER.info("Setting parameter 'GOAL' with 'false' because we started from commandline.");
                 init.put(param.nameLower(), new Identifier("false"));
             }
-            init.put(param.nameLower(), new Identifier(findArgument(args, param)));
+            else {
+                init.put(param.nameLower(), new Identifier(findArgument(args, param)));
+            }
         }
 
         startupEnvironment(init);

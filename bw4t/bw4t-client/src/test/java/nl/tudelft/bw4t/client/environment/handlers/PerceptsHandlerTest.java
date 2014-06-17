@@ -26,6 +26,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import eis.exceptions.PerceiveException;
 
 @RunWith(MockitoJUnitRunner.class)
+@Ignore
 public class PerceptsHandlerTest {
 
     @Mock

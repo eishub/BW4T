@@ -32,6 +32,7 @@ import nl.tudelft.bw4t.client.BW4TClient;
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.startup.InitParam;
+import nl.tudelft.bw4t.map.NewMap;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
@@ -185,7 +186,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     public void init(Map<String, Parameter> parameters) throws ManagementException {
         InitParam.setParameters(parameters);
         connectedToGoal = Boolean.parseBoolean(InitParam.GOAL.getValue());
-        if (connectedToGoal) {
+        if (isConnectedToGoal()) {
             BasicConfigurator.configure();
         }
         try {
@@ -733,6 +734,10 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     @Override
     public void reset(Map<String, Parameter> params) throws ManagementException {
         getClient().resetServer(params);
+    }
+    
+    public NewMap getMap() {
+        return getClient().getMap();
     }
 
     public BW4TClient getClient() {
