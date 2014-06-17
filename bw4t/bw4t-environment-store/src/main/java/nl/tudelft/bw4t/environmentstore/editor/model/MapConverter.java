@@ -60,7 +60,7 @@ public class MapConverter {
     			}
     			if (room.isStartZone()) {
     				if (foundStartzone) {
-    					throw new MapFormatException("Only one Starzone allowed per map!");
+    					throw new MapFormatException("Only one Startzone allowed per map!");
     				}
     				foundStartzone = true;
     			}

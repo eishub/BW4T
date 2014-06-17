@@ -3,6 +3,7 @@ package nl.tudelft.bw4t.environmentstore.editor.controller;
 import java.awt.Component;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -32,6 +33,9 @@ public class MapPanelController implements ChangeListener {
     /** basic size of the map */
     private ZoneController[][] zonecontrollers;
 
+    
+    private boolean startzone;
+	private boolean dropzone;
     private EnvironmentMap model;
 
     private ColorSequenceController cscontroller;
@@ -72,10 +76,28 @@ public class MapPanelController implements ChangeListener {
      */
     public void createZone(Type t, boolean isDropZone, boolean isStartZone) {
         if (selected != null) {
-            selected.setType(t);
-            selected.setDropZone(isDropZone);
-            selected.setStartZone(isStartZone);
-            selected.getUpdateableEditorInterface().update();
+        	if (isStartZone && hasStartzone() && !selected.isStartZone()){
+        		JOptionPane.showMessageDialog(null, "Only one startzone can be added to the map");
+        	} else if (isDropZone && hasDropzone() && !selected.isDropZone()) {
+        		JOptionPane.showMessageDialog(null, "Only one dropzone can be added to the map");
+        	} else {
+        		if (selected.isStartZone() && hasStartzone()) {
+        			setStartzone(isStartZone);
+        		}
+        		if (selected.isDropZone() && hasDropzone()) {
+        			setDropzone(isDropZone);
+        		}
+        		selected.setType(t);
+                selected.setDropZone(isDropZone);
+                if (isDropZone) {
+                	setDropzone(isDropZone);
+                }
+                selected.setStartZone(isStartZone);
+                if (isStartZone) {
+                	setStartzone(isStartZone);
+                }
+                selected.getUpdateableEditorInterface().update();
+        	}
         }
         selected = null;
     }
@@ -237,5 +259,33 @@ public class MapPanelController implements ChangeListener {
             }
         }
     }
+    /**
+   	 * @return the startzone
+   	 */
+   	public boolean hasStartzone() {
+   		return startzone;
+   	}
+
+   	/**
+   	 * @param startzone the startzone to set
+   	 */
+   	public void setStartzone(boolean startzone) {
+   		this.startzone = startzone;
+   	}
+
+   	/**
+   	 * @return the dropzone
+   	 */
+   	public boolean hasDropzone() {
+   		return dropzone;
+   	}
+
+   	/**
+   	 * @param dropzone the dropzone to set
+   	 */
+   	public void setDropzone(boolean dropzone) {
+   		this.dropzone = dropzone;
+   	}
+
 
 }
