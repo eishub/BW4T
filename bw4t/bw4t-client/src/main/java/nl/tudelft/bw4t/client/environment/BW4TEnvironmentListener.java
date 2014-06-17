@@ -30,8 +30,6 @@ import org.apache.log4j.Logger;
  */
 public class BW4TEnvironmentListener implements EnvironmentListener {
 
-    /** Number of agents present. */
-    private int agentCount;
     /** The log4j Logger which displays logs on console. */
     private final static Logger LOGGER = Logger.getLogger(BW4TEnvironmentListener.class);
     /**
@@ -107,7 +105,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
                 agent = new HumanAgent("Human" + agentCount, environment);
             }
             else {
-                agent = newAgent(InitParam.AGENTCLASS.getValue(), "Agent" + agentCount);
+                agent = newAgent(InitParam.AGENTCLASS.getValue(), entity);
             }
 
             agent.registerEntity(entity);

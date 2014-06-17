@@ -8,12 +8,19 @@ import eis.exceptions.PerceiveException;
 import eis.iilang.Action;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
+
 import java.io.IOException;
 import java.util.Iterator;
+
 import javax.xml.bind.JAXBException;
+
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.client.environment.Launcher;
+
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
+
 import repast.simphony.scenario.ScenarioLoadException;
 import static org.junit.Assert.assertTrue;
 
@@ -21,6 +28,8 @@ import static org.junit.Assert.assertTrue;
  * We test if blocks are properly perceived, picked up and delivered.
  */
 public class BlockTest {
+    
+    private static final Logger LOGGER = Logger.getLogger(BlockTest.class);
     
     /**
      * Client to be used for testing.
@@ -42,22 +51,18 @@ public class BlockTest {
                 "-map", "Banana",
                 "-agentcount", "1",
                 "-humancount", "0"};
-        nl.tudelft.bw4t.client.environment.Launcher.launch(clientArgs);
-        client = nl.tudelft.bw4t.client.environment.Launcher.getEnvironment();
+        Launcher.launch(clientArgs);
+        client = Launcher.getEnvironment();
         TestFunctions.setClient(client);
     }
 
     /**
      * Here we test the picking up and delivering of a block.
-     * @throws TranslationException
-     * @throws ActException
-     * @throws InterruptedException
-     * @throws PerceiveException
+     * @throws Exception if the test fails
      */
     @Test
-    public void blockTest() throws TranslationException, ActException,
-            InterruptedException, PerceiveException {
-        String bot = client.getAgents().get(0);
+    public void blockTest() throws Exception {
+        String bot = client.getAssociatedEntities(client.getAgents().get(0)).iterator().next();
         
         // Move to RoomC1
         Parameter[] param = Translator.getInstance().translate2Parameter("RoomC1");

@@ -57,7 +57,7 @@ public class ClientController {
      */
     public ClientController(RemoteEnvironment env, String entityId) {
         environment = env;
-        mapController = new ClientMapController(environment.getClient().getMap(), this);
+        mapController = new ClientMapController(environment.getMap(), this);
         getMapController().getTheBot().setName(entityId);
         humanAgent = null;
     }

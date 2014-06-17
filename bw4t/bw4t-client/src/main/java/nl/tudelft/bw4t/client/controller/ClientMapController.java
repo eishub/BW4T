@@ -222,7 +222,7 @@ public class ClientMapController extends AbstractMapController {
     public void run() {
         List<Percept> percepts;
         try {
-            percepts = PerceptsHandler.getAllPerceptsFromEntity(getTheBot().getName() + "gui",
+            percepts = PerceptsHandler.getAllPerceptsFromEntity(getTheBot().getName(),
                     clientController.getEnvironment());
             if (percepts != null) {
                 clientController.handlePercepts(percepts);
