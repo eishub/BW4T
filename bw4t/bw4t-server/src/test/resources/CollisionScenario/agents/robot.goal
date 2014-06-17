@@ -1,0 +1,36 @@
+init module { 
+	goals{
+		% a single goal to achieve a particular Blocks World configuration.
+		% assumes that these blocks are available in the Blocks World.
+		location(30.0, 65.0) .
+	}
+	program{
+		forall bel(percept(place(Room))) do adopt(place(Room)).
+	}
+	actionspec{
+		goTo(Location) {
+			pre { not(state(traveling)) }
+			post { true } 	
+		}
+		
+		navigateObstacles {
+			pre { not(state(traveling)) }
+			post { true }
+		}
+	}
+}                                  
+
+
+                                             
+main module{
+	program{   
+		if bel(state(collided)) then navigateObstacles.      
+		if a-goal(place(Room)) then goTo(Room).
+	}                                                 
+}
+
+event module {
+	program{
+		if bel( state(State), percept(state(NewState)) ) then delete( state(State) ) + insert( state(NewState) ) .
+	}
+}
