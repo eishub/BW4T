@@ -15,6 +15,10 @@ public class RoomMenu extends ZoneMenu {
 
 	public RoomMenu(MapPanelController mpc) {
 		super(mpc);
+	}
+
+	protected void init() {
+		super.init();
 		
 		// Create a Menu for Door Side
 	    doorSide = new JMenu("Door Side");
@@ -32,9 +36,6 @@ public class RoomMenu extends ZoneMenu {
 
 	    west = new JRadioButtonMenuItem("West");
 	    doorSide.add(west);
-	    
-	    update();
-
 	}
 	
     /**

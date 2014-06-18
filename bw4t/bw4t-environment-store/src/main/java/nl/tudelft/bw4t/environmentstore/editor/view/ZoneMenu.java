@@ -9,6 +9,7 @@ import javax.swing.JRadioButtonMenuItem;
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.controller.UpdateableEditorInterface;
 import nl.tudelft.bw4t.environmentstore.editor.controller.ZoneController;
+import nl.tudelft.bw4t.map.Zone.Type;
 
 /**
  * The ZonePopupMenu shows us the options for the different Zones through right click.
@@ -33,7 +34,13 @@ public class ZoneMenu extends JPopupMenu implements UpdateableEditorInterface {
     public ZoneMenu(MapPanelController mpc) {
         mapController = mpc;
 
-        // Create a Menu for Type Of Space
+        init();
+        
+        update();
+    }
+
+	protected void init() {
+		// Create a Menu for Type Of Space
         zoneType = new JMenu("Type of Zone");
         add(zoneType);
 
@@ -63,7 +70,7 @@ public class ZoneMenu extends JPopupMenu implements UpdateableEditorInterface {
         dropZone = new JRadioButtonMenuItem("Drop Zone");
         group.add(dropZone);
         zoneType.add(dropZone);
-    }
+	}
 
     /**
      * JMenuItem to change an zone to a corridor.
@@ -123,32 +130,17 @@ public class ZoneMenu extends JPopupMenu implements UpdateableEditorInterface {
     public void update() {
         zone = mapController.getSelected();
 
-        corridor.setSelected(true);
-
-        if (zone == null)
+        if (zone == null) {
             return;
-
-        switch (zone.getType()) {
-        case BLOCKADE:
-            blockade.setSelected(true);
-            break;
-        case CHARGINGZONE:
-            chargingZone.setSelected(true);
-            break;
-        case ROOM:
-            if (zone.isDropZone()) {
-                dropZone.setSelected(true);
-            }
-            else {
-                room.setSelected(true);
-            }
-            break;
-        case CORRIDOR:
-        default:
-            if (zone.isStartZone()) {
-                startZone.setSelected(true);
-            }
-            break;
         }
+        
+        Type type = zone.getType();
+        
+        corridor.setSelected(true);
+        blockade.setSelected(type == Type.BLOCKADE);
+        chargingZone.setSelected(type == Type.CHARGINGZONE);
+        room.setSelected(type == Type.ROOM);
+        dropZone.setSelected(zone.isDropZone());
+        startZone.setSelected(zone.isStartZone());
     }
 }

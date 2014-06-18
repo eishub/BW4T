@@ -27,6 +27,7 @@ public class MapPanelController implements ChangeListener {
     
     private boolean startzone;
 	private boolean dropzone;
+	
     private EnvironmentMap model;
 
     private ColorSequenceController cscontroller;
