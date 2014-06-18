@@ -3,6 +3,8 @@ package nl.tudelft.bw4t.environmentstore.main.view;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.menu.view.MenuBar;
@@ -174,6 +176,12 @@ public class EnvironmentStore extends JFrame {
 	 * @param args Unused parameter
 	 */
 	public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                | UnsupportedLookAndFeelException e) {
+            System.out.println("Unable to use the systems look and feel.");
+        }
 		SizeDialog dialog = new SizeDialog();
 		dialog.setVisible(true);
 	}
