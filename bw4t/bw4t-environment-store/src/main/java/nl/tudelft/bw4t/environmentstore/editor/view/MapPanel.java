@@ -47,7 +47,6 @@ public class MapPanel extends JPanel implements UpdateableEditorInterface {
      */
     private void setupLayout() {
         this.setLayout(new BorderLayout());
-        zones = new ZonePanel[mapController.getRows()][mapController.getColumns()];
         setupGrid();
         this.add(new JScrollPane(mapGrid), BorderLayout.CENTER);
         
@@ -59,6 +58,7 @@ public class MapPanel extends JPanel implements UpdateableEditorInterface {
     }
 
     public void setupGrid() {
+        zones = new ZonePanel[mapController.getRows()][mapController.getColumns()];
         mapGrid.removeAll();
         layout = new GridLayout(mapController.getRows(), mapController.getColumns());
         mapGrid.setLayout(layout);
