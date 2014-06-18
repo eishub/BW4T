@@ -3,6 +3,9 @@ package nl.tudelft.bw4t.map;
 import java.awt.Color;
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -13,12 +16,13 @@ import org.apache.log4j.Logger;
  * {@link Color}.
  */
 public enum BlockColor implements Serializable {
-    BLUE, ORANGE, RED, WHITE, GREEN, YELLOW, PINK, DARK_GRAY;
+    RED, ORANGE, YELLOW, GREEN, BLUE, PINK, WHITE, DARK_GRAY;
 
     /**
      * The log4j logger which writes logs.
      */
     private static final Logger LOGGER = Logger.getLogger(BlockColor.class);
+    private static List<BlockColor> colors = null;
 
     private BlockColor() {
     }
@@ -46,6 +50,15 @@ public enum BlockColor implements Serializable {
             LOGGER.fatal("Failed to find the field in the Color class.", e);
         }
         return null;
+    }
+    
+    /**
+     * Calculate the luminosity value using the CIE 1931({@link http://en.wikipedia.org/wiki/CIE_1931_color_space}).
+     * @return the luminosity value
+     */
+    public int getLuminosity() {
+        Color c = getColor();
+        return (int) (0.2126 * c.getRed() + 0.7152 * c.getGreen() + 0.0722 * c.getBlue());
     }
 
     /**
@@ -93,6 +106,19 @@ public enum BlockColor implements Serializable {
     public String getName() {
         String name = name();
         return Character.toString(name.charAt(0)).toUpperCase() + name.substring(1).toLowerCase();
+    }
+    
+    /**
+     * Use this function instead of the values, it will skip over the dark grey option!
+     * @return list of available block colors
+     */
+    public static List<BlockColor> getAvailableColors() {
+        if (colors == null) {
+            List<BlockColor> cs = new ArrayList<>(Arrays.asList(BlockColor.values()));
+            cs.remove(BlockColor.DARK_GRAY);
+            colors = cs;
+        }
+        return colors;
     }
 
 };

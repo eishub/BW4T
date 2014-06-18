@@ -205,7 +205,7 @@ public class ClientMapController extends AbstractMapController {
             processColorPercept(perceptParameters);
             break;
         case "epartner":
-            processEpartnerPercept(name, perceptParameters);
+            processEPartnerPercept(name, perceptParameters);
             break;
         case "sequence":
             processSequencePercept(perceptParameters);
@@ -294,7 +294,10 @@ public class ClientMapController extends AbstractMapController {
     }
 
     /**
-     * Process sequence percept.
+     * Process sequence percept. 
+     * 
+     * TODO: This function process a list of lists, seems like it should only process a list,
+     * why is this?
      * 
      * @param perceptParameters
      *            the percept parameters
@@ -331,21 +334,21 @@ public class ClientMapController extends AbstractMapController {
      * @param perceptParameters
      *            the percept parameters
      */
-    private void processEpartnerPercept(String name, List<Parameter> perceptParameters) {
+    private void processEPartnerPercept(String name, List<Parameter> perceptParameters) {
         long id = ((Numeral) perceptParameters.get(0)).getValue().longValue();
         String entityId = ((Identifier) perceptParameters.get(1)).getValue();
         long holderId = ((Numeral) perceptParameters.get(2)).getValue().longValue();
         
         ViewEPartner epartner = getEPartner(id);
         if (epartner == null) {
-            LOGGER.info("creating " +name + "("+id + ", " + holderId + ")");
+            LOGGER.info("creating " + name + "(" + id + ", " + holderId + ")");
             epartner = new ViewEPartner();
         }
         epartner.setId(id);
         epartner.setName(entityId);
         getVisibleEPartners().add(epartner);
         if (holderId == theBot.getId()) {
-            if(id != theBot.getHoldingEpartner()){
+            if (id != theBot.getHoldingEpartner()){
                 LOGGER.info("We are now holding the e-partner: " + id);
             }
             theBot.setHoldingEpartner(id);
@@ -389,7 +392,7 @@ public class ClientMapController extends AbstractMapController {
         if (function.getName().equals("occupied")) {
             LinkedList<Parameter> paramOcc = function.getParameters();
             removeOccupiedRoom(((Identifier) paramOcc.get(0)).getValue());
-        }else if (function.getName().equals("holding")) {
+        } else if (function.getName().equals("holding")) {
             theBot.getHolding().remove(((Numeral) function.getParameters().get(0)).getValue());
         }
     }
