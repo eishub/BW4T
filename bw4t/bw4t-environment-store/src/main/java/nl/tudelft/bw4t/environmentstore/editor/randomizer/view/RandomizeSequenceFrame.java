@@ -1,6 +1,5 @@
 package nl.tudelft.bw4t.environmentstore.editor.randomizer.view;
 
-import java.awt.EventQueue;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -18,7 +17,11 @@ import net.miginfocom.swing.MigLayout;
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.controller.RandomizeController;
 
-public class RandomizeFrame extends JFrame {
+/**
+ * Create a randomize frame to randomize blocks in the sequence.
+ *
+ */
+public class RandomizeSequenceFrame extends JFrame {
 
 	private static final long serialVersionUID = 1993091627565106917L;
 	
@@ -82,7 +85,7 @@ public class RandomizeFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RandomizeFrame(String title, MapPanelController mpc) {
+	public RandomizeSequenceFrame(String title, MapPanelController mpc) {
 		mapController = mpc;
 		randomController = new RandomizeController(this, mapController);
 		
@@ -168,6 +171,10 @@ public class RandomizeFrame extends JFrame {
      */
     public Integer getNumberOfBlocks() {
         return (Integer) (numberOfBlocksSpinner.getValue());
+    }
+    
+    public void setSpinnerModel(int n) {
+    	spinnerModel.setValue(n);
     }
     
     public JButton getRandomizeButton() {

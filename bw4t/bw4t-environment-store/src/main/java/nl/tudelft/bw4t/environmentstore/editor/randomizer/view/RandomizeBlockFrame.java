@@ -16,11 +16,13 @@ import net.miginfocom.swing.MigLayout;
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.controller.RandomizeBlockFrameController;
 
+/**
+ * Create a randomize frame to randomize blocks in the rooms.
+ *
+ */
 public class RandomizeBlockFrame extends JFrame {
 
 	private static final long serialVersionUID = 1993091627565106917L;
-	
-	private RandomizeBlockFrameController randomController;
 	
 	private MapPanelController mapController;
 	
@@ -67,7 +69,7 @@ public class RandomizeBlockFrame extends JFrame {
 	 */
 	public RandomizeBlockFrame(String title, MapPanelController mpc) {
 		mapController = mpc;
-		randomController = new RandomizeBlockFrameController(this, mapController);
+		new RandomizeBlockFrameController(this, mapController);
 		
 		lblTitle = new JLabel(title);
 		setTitle("Randomize " + title);
@@ -145,6 +147,10 @@ public class RandomizeBlockFrame extends JFrame {
      */
     public Integer getNumberOfBlocks() {
         return (Integer) (numberOfBlocksSpinner.getValue());
+    }
+    
+    public void setSpinnerModel(int n) {
+    	spinnerModel.setValue(n);
     }
     
     public JButton getApplyButton() {
