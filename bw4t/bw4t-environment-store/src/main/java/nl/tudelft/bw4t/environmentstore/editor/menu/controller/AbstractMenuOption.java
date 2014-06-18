@@ -211,13 +211,6 @@ public abstract class AbstractMenuOption implements ActionListener {
      * @return null, or string with error message.
      */
     public String checkConsistency() {
-		if (mapController.getNumberOfEntities() < 1) {
-            return "There should be at least 1 entity";
-        }
-        if (mapController.getSequence().size() <= 0) {
-            return "Sequence must contain at least 1 block color";
-        }
-        
         boolean foundDropZone = false;
         boolean foundStartZone = false;
         // check if all blocks for sequence are there.
@@ -242,8 +235,17 @@ public abstract class AbstractMenuOption implements ActionListener {
                 //TODO check if can be removed: allblocks.addAll(mapController.getZoneControllers()[i][j].getColors());
             }
         }
-        if(!foundStartZone || !foundDropZone) {
+        
+        if(!foundStartZone && !foundDropZone) {
         	return ("The map must contain one starting zone and drop zone.");
+        } else if (!foundStartZone) {
+        	return ("There should be at least one start zone.");
+        } else if (!foundDropZone) {
+        	return ("There should be one drop zone.");
+        }
+        
+        if (mapController.getSequence().size() <= 0) {
+            return ("Sequence must contain at least one block color.");
         }
 
         // remove all colors from the sequence. That will throw exception if
