@@ -276,7 +276,7 @@ public class BotController {
      */
     public String padString(String value) {
         StringBuffer buf = new StringBuffer();
-        while (buf.length() < 4) {
+        while (buf.length() < 3) {
             buf.append(value);
         }
         return buf.toString();
@@ -288,7 +288,7 @@ public class BotController {
      */
 	public BotConfig getBotConfig() {
 		return botConfig;
-	}    
+	}   
 	
 	public int getRow() {
 		return BW4Trow;

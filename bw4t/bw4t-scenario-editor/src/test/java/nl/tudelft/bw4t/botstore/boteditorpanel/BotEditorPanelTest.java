@@ -113,7 +113,7 @@ public class BotEditorPanelTest {
     /** test the batteryusevalue */
     @Test
     public final void testBatteryUseValue() {
-        assertEquals("0", spypanel.getBatteryUseValueLabel().getText());
+        assertEquals("0.000", spypanel.getBatteryUseValueLabel().getText());
     }
 
     /** Test the speed slider */
