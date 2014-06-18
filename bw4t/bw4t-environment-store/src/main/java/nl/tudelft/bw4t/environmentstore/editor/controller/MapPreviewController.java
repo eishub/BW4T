@@ -34,7 +34,7 @@ public class MapPreviewController extends AbstractMapController {
 	public MapPreviewController(MapPanelController mc) {
 		super(MapConverter.createMap(mc.getEnvironmentMap()));
 		this.mapController = mc;
-		this.getRenderSettings().setUpdateDelay(200);
+		this.getRenderSettings().setUpdateDelay(100);
 	}
 
 	@Override
