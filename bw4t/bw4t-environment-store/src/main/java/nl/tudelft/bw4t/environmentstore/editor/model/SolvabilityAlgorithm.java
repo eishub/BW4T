@@ -92,7 +92,7 @@ public final class SolvabilityAlgorithm {
 		for (BlockColor bc : sequenceFreq.keySet()) {
 			if ((map.get(bc) == null && sequenceFreq.get(bc) != null)
 					|| sequenceFreq.get(bc) > map.get(bc)) {
-				return "Not all necessary blocks could be reached from the drop zone.";
+				return "Not all necessary blocks can be reached from the drop zone.";
 			}
 		}
 		if (!startZoneReachable) {
