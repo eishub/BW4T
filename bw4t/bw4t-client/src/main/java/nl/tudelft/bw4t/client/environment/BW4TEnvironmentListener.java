@@ -1,27 +1,23 @@
 package nl.tudelft.bw4t.client.environment;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import nl.tudelft.bw4t.client.agent.BW4TAgent;
+import nl.tudelft.bw4t.client.agent.HumanAgent;
+import nl.tudelft.bw4t.client.controller.ClientController;
+import nl.tudelft.bw4t.client.startup.InitParam;
+
+import org.apache.log4j.Logger;
+
 import eis.EnvironmentListener;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
 import eis.exceptions.RelationException;
 import eis.iilang.EnvironmentState;
-
-import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import nl.tudelft.bw4t.client.agent.BW4TAgent;
-import nl.tudelft.bw4t.client.agent.HumanAgent;
-import nl.tudelft.bw4t.client.controller.ClientController;
-import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
-import nl.tudelft.bw4t.client.startup.InitParam;
-
-import org.apache.log4j.Logger;
 
 /**
  * Class that can be registered to BW4TRemoteEnvironment as EnvironmentListener and will launch new agents when new
@@ -33,8 +29,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
     /** The log4j Logger which displays logs on console. */
     private final static Logger LOGGER = Logger.getLogger(BW4TEnvironmentListener.class);
     /**
-     * This map associates agents with a renderer. I suppose agents not having a renderer do not end up in this list.
-     * TODO: Need to find out if agents that do not have a renderer end up in this list or not.
+     * List of all active agents.
      */
     private final List<BW4TAgent> agentData = new ArrayList<>();
     /** {@link RemoteEnvironment} to listen to and interact with. */

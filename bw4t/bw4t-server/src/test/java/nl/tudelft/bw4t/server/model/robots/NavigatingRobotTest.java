@@ -88,10 +88,6 @@ public class NavigatingRobotTest {
         bot.stopRobot();
     }
     
-    /**
-     * TODO: Kijken naar gebruik mockedQueue, 
-     * is volgens mij niet nodig bij gebruik van Fieldreflection
-     */
     @Test
     public void useNextTargetNotEmptyTest() {
         when(mockedQueue.isEmpty()).thenReturn(false);
