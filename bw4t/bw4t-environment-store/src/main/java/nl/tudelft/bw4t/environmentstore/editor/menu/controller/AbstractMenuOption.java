@@ -194,13 +194,10 @@ public abstract class AbstractMenuOption implements ActionListener {
 
 	        if (doSave) {
 	        	saveFile(true);
+	        } else {
+	        	envController.getMainView().closeEnvironmentStore();
 	        }
 		}
-        boolean doQuit = envController.promptUserToQuit();
-
-        if (doQuit) {
-        	envController.getMainView().closeEnvironmentStore();
-        }
 	}
     
     
