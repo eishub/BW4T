@@ -1,6 +1,10 @@
 package nl.tudelft.bw4t.client;
 
-import static org.junit.Assert.assertTrue;
+import eis.eis2java.translation.Translator;
+import eis.exceptions.ManagementException;
+import eis.iilang.Action;
+import eis.iilang.Parameter;
+import eis.iilang.Percept;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -14,11 +18,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import repast.simphony.scenario.ScenarioLoadException;
-import eis.eis2java.translation.Translator;
-import eis.exceptions.ManagementException;
-import eis.iilang.Action;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * We test if blocks are properly perceived, picked up and delivered.
@@ -92,6 +94,6 @@ public class BlockTest {
         client.performAction(bot, new Action("putDown"));
         Thread.sleep(200L);
         TestFunctions.retrievePercepts(bot);
-        assertTrue(TestFunctions.hasPercept("sequenceIndex(1)"));
+        assertEquals(1, client.getEntityController(bot).getMapController().getSequenceIndex());
     }
 }
