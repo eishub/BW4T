@@ -40,7 +40,6 @@ public final class ClientWindowAdapter extends WindowAdapter {
         
         controller.stop();//stop the gui
         
-        //TODO only stop the environment if we have only 1 bot left
         try {
             controller.getEnvironment().kill();
         } catch (ManagementException e1) {
