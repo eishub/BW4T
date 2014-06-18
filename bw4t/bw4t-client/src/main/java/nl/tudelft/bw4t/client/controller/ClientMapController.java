@@ -2,14 +2,9 @@ package nl.tudelft.bw4t.client.controller;
 
 import eis.exceptions.NoEnvironmentException;
 import eis.exceptions.PerceiveException;
-import eis.iilang.Function;
-import eis.iilang.Identifier;
-import eis.iilang.Numeral;
 import eis.iilang.Parameter;
-import eis.iilang.ParameterList;
 import eis.iilang.Percept;
 
-import java.awt.geom.Point2D;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -74,7 +69,7 @@ public class ClientMapController extends AbstractMapController {
     private Set<ViewEPartner> visibleEPartners = new HashSet<>();
     
     /** All the blocks. */
-    public Map<Long, ViewBlock> allBlocks = new HashMap<>();
+    private Map<Long, ViewBlock> allBlocks = new HashMap<>();
     
     private Map<String, PerceptProcessor> perceptProcessors;
     
@@ -189,6 +184,14 @@ public class ClientMapController extends AbstractMapController {
             allBlocks.put(id, b);
         }
         return b;
+    }
+    
+    /**
+     * @param id of the block to be checked
+     * @return true iff the block is in in the environment
+     */
+    public boolean containsBlock(Long id) {
+        return allBlocks.containsKey(id);
     }
 
     /**
