@@ -171,10 +171,17 @@ public class ZoneModel {
      * @return The row the zone belongs to.
      */
     public static int calcRow(Zone zone) {
-        double height = MapConverter.ROOMHEIGHT;
         double y = zone.getBoundingbox().getY();
+        return calcRow(y - MapConverter.ROOMHEIGHT / 2.);
+    }
 
-        return (int) ((y - height / 2) / height);
+    /**
+     * @param y
+     *            The position in y
+     * @return The row the point belongs to.
+     */
+    public static int calcRow(double y) {
+        return (int) (y / MapConverter.ROOMHEIGHT);
     }
 
     /**
@@ -183,9 +190,17 @@ public class ZoneModel {
      * @return The column the zone belongs to.
      */
     public static int calcColumn(Zone zone) {
-        double width = MapConverter.ROOMWIDTH;
         double x = zone.getBoundingbox().getX();
-        return (int) ((x - width / 2) / width);
+        return calcColumn(x - MapConverter.ROOMWIDTH / 2.);
+    }
+
+    /**
+     * @param x
+     *            The position in x
+     * @return The column the point belongs to.
+     */
+    public static int calcColumn(double x) {
+        return (int) (x / MapConverter.ROOMWIDTH);
     }
 
     private boolean isStartZone(Zone zone) {

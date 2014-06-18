@@ -1,5 +1,16 @@
 package nl.tudelft.bw4t.environmentstore.editor.model;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.JAXBException;
+
+import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
+import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
+import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Door;
 import nl.tudelft.bw4t.map.Entity;
 import nl.tudelft.bw4t.map.MapFormatException;
@@ -21,6 +32,88 @@ public class MapConverter {
     public static final int ROOMWIDTH = 10;
 
     private MapConverter() {
+    }
+    
+    public static EnvironmentMap loadMap(File file) throws MapFormatException {
+        NewMap map;
+        try {
+            map = NewMap.create(new FileInputStream(file));
+        } catch (FileNotFoundException | JAXBException e) {
+            throw new MapFormatException("Failed to open map", e);
+        }
+        int nrows = calcRows(map);
+        int ncols = calcColumns(map);
+        List<BlockColor> sequence = map.getSequence();
+        List<ZoneModel> data = getZoneData(map);
+        
+        // Send this data to the grid that will be edited.
+        EnvironmentMap model = new EnvironmentMap(nrows, ncols);
+        // Set the saved zones.             
+        for (ZoneModel zModel : data) {
+            int rowSet = ZoneModel.calcRow(zModel.getZone());
+            int colSet = ZoneModel.calcColumn(zModel.getZone());
+
+            final ZoneModel zone = model.getZone(rowSet, colSet);
+            zone.setType(zModel.getType());
+            zone.setDropZone(zModel.isDropZone());
+            zone.setColors(zModel.getColors());
+            
+            // Set the doors for this room.
+            for(int i = 0; i < zModel.getDoorsBool().length; i++) {
+                if(zModel.getDoorsBool()[i] == true) {
+                    zone.setDoor(i, true);
+                }
+            }
+        }
+        
+        for (Entity entity : map.getEntities()) {
+            final Point pos = entity.getPosition();
+            final int row = ZoneModel.calcRow(pos.getY());
+            final int col = ZoneModel.calcColumn(pos.getX());
+            final ZoneModel zone = model.getZone(row, col);
+            
+            zone.setStartZone(true);
+        }
+        
+        // Set the saved sequence.
+        model.setSequence(sequence);
+        
+        return model;
+    }
+
+
+    private static List<ZoneModel> getZoneData(NewMap map) {
+        List<ZoneModel> data = new ArrayList<ZoneModel>();
+        for (Zone zone : map.getZones()) {
+            data.add(new ZoneModel(zone));
+        }
+        return data;
+    }
+    
+    /**
+     * @param map
+     *            The map to be edited.
+     * @return
+     *        The row the zone belongs to. 
+     */
+    private static int calcRows(NewMap map) {
+        double height = MapConverter.ROOMHEIGHT;
+        double y = map.getArea().getY();
+
+        return (int) ((y - height / 2) / height) + 1;
+    }
+    
+    /**
+     * @param map
+     *            The map to be edited.
+     * @return
+     *        The column the zone belongs to. 
+     */
+    private static int calcColumns(NewMap map) {
+        double width = MapConverter.ROOMWIDTH;
+        double x = map.getArea().getX();
+
+        return (int) ((x - width / 2) / width) + 1;
     }
 
     /**
