@@ -5,6 +5,7 @@ import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.botstore.controller.BotController;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditor;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
@@ -519,9 +520,10 @@ public class EntityPanelTest {
 		assertEquals("robot.goal", spyEntityPanel.getBotTableModel().getValueAt(0, 2));
 		assertEquals(1, spyEntityPanel.getBotTableModel().getValueAt(0, 3));
 
-		BotEditor botEditor = new BotEditor(editor.getMainPanel(), 0,
+		BotController controller = new BotController(editor.getMainPanel(), 0,
 				editor.getController().getModel());
-		BotEditorPanel botEditorPanel = botEditor.getBoteditorPanel();
+		BotEditor botEditor = new BotEditor(controller);
+		BotEditorPanel botEditorPanel = botEditor.getBotEditorPanel();
 		
 		botEditorPanel.getBotNameField().setText("TestBot");
 		botEditorPanel.getBotControllerSelector().setSelectedIndex(1);
@@ -553,13 +555,13 @@ public class EntityPanelTest {
 		assertEquals(1, spyEntityPanel.getEPartnerTableModel().getValueAt(0, 2));
 
 		EpartnerFrame epartnerFrame = new EpartnerFrame(new EpartnerController(
-				editor.getMainPanel(), 0), editor.getController().getModel());
+				editor.getMainPanel(), 0));
 		
 		epartnerFrame.getEpartnerNameField().setText("TestEPartner");
 		epartnerFrame.getEpartnerAmountField().setText("99");
 		epartnerFrame.getEpartnerGoalFileField().setText("TestEPartner.goal");
 		
-		epartnerFrame.getSaveButton().doClick();
+		epartnerFrame.getApplyButton().doClick();
 
 		assertEquals("TestEPartner", spyEntityPanel.getEPartnerTableModel()
 				.getValueAt(0, 0));
