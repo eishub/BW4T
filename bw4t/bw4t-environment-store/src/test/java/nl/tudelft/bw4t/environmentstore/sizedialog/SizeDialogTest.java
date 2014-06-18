@@ -1,8 +1,8 @@
 package nl.tudelft.bw4t.environmentstore.sizedialog;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.spy;
-
 import nl.tudelft.bw4t.environmentstore.sizedialog.view.SizeDialog;
 
 import org.junit.After;
@@ -57,6 +57,21 @@ public class SizeDialogTest {
 		spysizedialog.getColumnsSpinner().setValue(columns);
 		assertEquals(rows, spysizedialog.getRows());
 		assertEquals(columns, spysizedialog.getColumns());
+	}
+	
+	/**
+	 * Testing the method to get the controller.
+	 */
+	@Test
+	public final void testGetController() {
+		assertTrue(spysizedialog.getSizeDialogController() != null);
+	}
+	/**
+	 * Testing to get more coverage.
+	 */
+	@Test
+	public final void testClickButton() {
+		spysizedialog.getStartButton().doClick();
 	}
 }
 
