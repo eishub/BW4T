@@ -132,7 +132,6 @@ public final class ExportToMAS {
 		 * no checks are needed.
 		 */
 		for (BotConfig bot : ExportToMAS.configuration.getBots()) {
-			// TODO: Change this to goal file implementation and existing files.
 			String botName = bot.getBotName();
 			String botGoalFilename = bot.getFileName();
 
