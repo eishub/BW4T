@@ -57,6 +57,7 @@ public class MapConverter {
     				}
     				foundDropzone = true;
     			}
+    			
     			if (room.isStartZone()) {
     				if (foundStartzone) {
     					throw new MapFormatException("Only one Startzone allowed per map!");

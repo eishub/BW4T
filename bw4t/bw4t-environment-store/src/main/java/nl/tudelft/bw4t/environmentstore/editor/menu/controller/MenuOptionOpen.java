@@ -17,7 +17,6 @@ import nl.tudelft.bw4t.environmentstore.editor.model.MapConverter;
 import nl.tudelft.bw4t.environmentstore.editor.model.ZoneModel;
 import nl.tudelft.bw4t.environmentstore.main.controller.EnvironmentStoreController;
 import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
-import nl.tudelft.bw4t.environmentstore.util.DefaultOptionPrompt;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
@@ -88,11 +87,9 @@ public class MenuOptionOpen extends AbstractMenuOption {
 		    	
 				
 			} catch (FileNotFoundException e1) {
-				DefaultOptionPrompt prompt = new DefaultOptionPrompt();
-				prompt.showMessageDialog(current, "File cannot be found.");
+				EnvironmentStore.showDialog("File cannot be found.");
 			} catch (JAXBException e1) {
-				DefaultOptionPrompt prompt = new DefaultOptionPrompt();
-				prompt.showMessageDialog(current, "File cannot be read.");
+				EnvironmentStore.showDialog("File cannot be read.");
 			}
 		}
 	}
