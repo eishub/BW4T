@@ -98,7 +98,7 @@ public abstract class AbstractMenuOption implements ActionListener {
 	
 
 	/**
-	 * Saves the configuration to XML. When the configuration hasn't been saved
+	 * Saves the configuration to Map. When the configuration hasn't been saved
 	 * before an file chooser is opened.
 	 * 
 	 * @param saveAs
@@ -131,7 +131,7 @@ public abstract class AbstractMenuOption implements ActionListener {
 	
 		if (saveAs || !view.hasLastFileLocation()) {
 			currentFileChooser = getCurrentFileChooser();
-			currentFileChooser.setFileFilter(FileFilters.xmlFilter());
+			currentFileChooser.setFileFilter(FileFilters.mapFilter());
 			
             int returnVal = currentFileChooser.showSaveDialog(null);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -139,7 +139,7 @@ public abstract class AbstractMenuOption implements ActionListener {
 	
 				path = file.getAbsolutePath();
 	
-				String extension = ".xml";
+				String extension = ".map";
 				if (!path.endsWith(extension)) {
 					path += extension;
 	                file = new File(path);
@@ -151,16 +151,16 @@ public abstract class AbstractMenuOption implements ActionListener {
 		}
 		try {
 	        // Check if the file path was not externally deleted.
-	        saveXMLFile(path);
+	        saveMapFile(path);
 	    } catch (JAXBException e) {
-	    	EnvironmentStore.showDialog("Saving the map to XML has failed.");
+	    	EnvironmentStore.showDialog("Saving the Map to file has failed.");
 		} catch (FileNotFoundException e) {
 			EnvironmentStore.showDialog("No file has been found.");
 		}    
 	}
 	
 
-	public void saveXMLFile(String path) throws JAXBException,
+	public void saveMapFile(String path) throws JAXBException,
 			FileNotFoundException {
 		
         NewMap map = MapConverter.createMap(envController.getMapController().getEnvironmentMap());
