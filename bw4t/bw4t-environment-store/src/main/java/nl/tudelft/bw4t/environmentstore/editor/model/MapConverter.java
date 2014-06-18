@@ -19,8 +19,6 @@ public class MapConverter {
     /* constants that map rooms to real positions on the map. */
     public static final int ROOMHEIGHT = 10;
     public static final int ROOMWIDTH = 10;
-    
-    private static int spawnCount = 1;
 
     private MapConverter() {
     }
@@ -34,8 +32,6 @@ public class MapConverter {
      */
     public static NewMap createMap(EnvironmentMap model) throws MapFormatException {
     	NewMap map = new NewMap();
-
-    	spawnCount = 4;
 
     	// set the general fields of the map
     	map.setArea(new Point(model.getColumns() * MapConverter.ROOMWIDTH, 
@@ -97,13 +93,7 @@ public class MapConverter {
     	}
     	// connect all the zones
     	connect(output);
-    	if (!foundDropzone) {
-    		throw new MapFormatException("No DropZone found on the map!");
-    	}
-    	if (!foundStartzone) {
-    		throw new MapFormatException("No StartZone found on the map!");
-    	}
-
+    	
     	return map;
     }
 

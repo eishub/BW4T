@@ -202,6 +202,10 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
         MapRenderSettings set = getController().getRenderSettings();
         Zone dropZone = getController().getDropZone();
 
+        if (dropZone == null) {
+        	return;
+        }   
+        
         g2d.setColor(Color.DARK_GRAY);
         Rectangle2D rect = set.transformRectangle(dropZone.getBoundingbox().getRectangle());
         g2d.fill(rect);
