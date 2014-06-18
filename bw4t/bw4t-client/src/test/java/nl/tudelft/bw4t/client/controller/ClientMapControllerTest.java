@@ -50,7 +50,6 @@ public class ClientMapControllerTest {
     @Test
     public void testRun() {
         clientMapController.run();
-        verify(clientController, times(1)).updatedNextFrame();
         verify(clientController, times(1)).getEnvironment();
     }
 

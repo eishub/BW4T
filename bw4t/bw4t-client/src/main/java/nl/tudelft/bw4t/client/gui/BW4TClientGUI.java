@@ -104,21 +104,26 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 
     /** The selected location. */
     private Point selectedLocation;
-    
-    /** Most of the server interfacing goes through the std eis percepts. */
-    public RemoteEnvironment environment;
 
     /**
      * Instantiates a new bw4t client gui.
      * 
      * @param cc
      *            the client controller
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
      */
-    public BW4TClientGUI(ClientController cc) throws IOException {
-        this.controller = cc;
+    public BW4TClientGUI(ClientController cc) {
+        setController(cc);
         init();
+    }
+
+    /**
+     * @param env
+     *            - The {@link RemoteEnvironment} that we are rendering.
+     * @param entityId
+     *            - The id of the entity that needs to be displayed.
+     */
+    public BW4TClientGUI(RemoteEnvironment env, String entityId) {
+        this(new ClientController(env, entityId));
     }
 
     /**
@@ -132,27 +137,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
      *             Thrown if map can't be loaded.
      */
     public BW4TClientGUI(RemoteEnvironment env, String entityId, HumanAgent humanAgent) throws IOException {
-        environment = env;
-        controller = new ClientController(env, environment.getClient().getMap(), entityId, humanAgent);
-        init();
-    }
-
-    /**
-     * @param env
-     *            - The {@link RemoteEnvironment} that we are rendering.
-     * @param entityId
-     *            - The id of the entity that needs to be displayed.
-     * @param goal
-     *            - {@code true} if this GUI is for displaying a goal agent, otherwise {@code false}.
-     * @param humanPlayer
-     *            - {@code true} if the entity is human, otherwise {@code false}.
-     * @throws IOException
-     *             Thrown if map can't be loaded.
-     */
-    public BW4TClientGUI(RemoteEnvironment env, String entityId, boolean goal, boolean humanPlayer) throws IOException {
-        environment = env;
-        controller = new ClientController(env, environment.getClient().getMap(), entityId);
-        init();
+        this(new ClientController(env, entityId, humanAgent));
     }
 
     /**
@@ -338,5 +323,12 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
      */
     public ClientController getController() {
         return controller;
+    }
+
+    private void setController(ClientController c) {
+        if(c != null) {
+            c.setGui(this);
+        }
+        controller = c;
     }
 }

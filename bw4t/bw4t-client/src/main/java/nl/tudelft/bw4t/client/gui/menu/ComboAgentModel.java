@@ -22,12 +22,12 @@ public class ComboAgentModel extends AbstractListModel implements ComboBoxModel 
 
     @Override
     public Object getElementAt(int arg0) {
-        return gui.environment.getAgents().get(arg0);
+        return gui.getController().getEnvironment().getAgents().get(arg0);
     }
 
     @Override
     public int getSize() {
-        return gui.environment.getAgents().size();
+        return gui.getController().getEnvironment().getAgents().size();
     }
 
     @Override

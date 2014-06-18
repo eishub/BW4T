@@ -28,7 +28,8 @@ public class MapLoaderTest {
     
     @Mock private ContinuousSpace space;
     @Mock private Context context;
-    @Rule private ExpectedException exception = ExpectedException.none();
+    
+    @Rule public ExpectedException exception = ExpectedException.none();
     
     @Before
     public void setUp() {

@@ -2,14 +2,9 @@ package nl.tudelft.bw4t.client.controller;
 
 import eis.exceptions.NoEnvironmentException;
 import eis.exceptions.PerceiveException;
-import eis.iilang.Function;
-import eis.iilang.Identifier;
-import eis.iilang.Numeral;
 import eis.iilang.Parameter;
-import eis.iilang.ParameterList;
 import eis.iilang.Percept;
 
-import java.awt.geom.Point2D;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -74,7 +69,7 @@ public class ClientMapController extends AbstractMapController {
     private Set<ViewEPartner> visibleEPartners = new HashSet<>();
     
     /** All the blocks. */
-    public Map<Long, ViewBlock> allBlocks = new HashMap<>();
+    private Map<Long, ViewBlock> allBlocks = new HashMap<>();
     
     private Map<String, PerceptProcessor> perceptProcessors;
     
@@ -190,6 +185,14 @@ public class ClientMapController extends AbstractMapController {
         }
         return b;
     }
+    
+    /**
+     * @param id of the block to be checked
+     * @return true iff the block is in in the environment
+     */
+    public boolean containsBlock(Long id) {
+        return allBlocks.containsKey(id);
+    }
 
     /**
      * Handle all the percepts.
@@ -222,7 +225,7 @@ public class ClientMapController extends AbstractMapController {
     public void run() {
         List<Percept> percepts;
         try {
-            percepts = PerceptsHandler.getAllPerceptsFromEntity(getTheBot().getName() + "gui",
+            percepts = PerceptsHandler.getAllPerceptsFromEntity(getTheBot().getName(),
                     clientController.getEnvironment());
             if (percepts != null) {
                 clientController.handlePercepts(percepts);
@@ -234,7 +237,6 @@ public class ClientMapController extends AbstractMapController {
             setRunning(false);
         }
         super.run();
-        clientController.updatedNextFrame();
     }
 
     /* (non-Javadoc)
@@ -242,7 +244,6 @@ public class ClientMapController extends AbstractMapController {
      */
     @Override
     protected void updateRenderer(MapRendererInterface mri) {
-        clientController.updateRenderer(mri);
         mri.validate();
         mri.repaint();
     }
