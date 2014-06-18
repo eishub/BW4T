@@ -98,7 +98,7 @@ public class ClientControllerTest {
         listOfPercepts.add(percept);
         clientController.setToBePerformedAction(listOfPercepts);
         clientController.handlePercepts(listOfPercepts);
-        assertEquals("TestSender: TestMessage", clientController.getChatHistory().get(0));
+        assertEquals("TestSender: TestMessage", clientController.getBotChatHistory().get(0));
     }
     
     @Test
