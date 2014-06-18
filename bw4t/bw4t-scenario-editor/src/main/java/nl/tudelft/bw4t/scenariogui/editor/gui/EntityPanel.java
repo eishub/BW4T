@@ -62,12 +62,10 @@ public class EntityPanel extends JPanel {
 	private JPanel botMenu = new JPanel();
 
 	private JPanel botPane = new JPanel();
-	// TODO Add menuitems for the standardbots
 
 	private JPanel botCounter = new JPanel();
 
 	private DefaultTableModel botList;
-	// TODO add actionlisteners for the menu items
 
 	private JTable botTable;
 
