@@ -51,7 +51,6 @@ public class Block extends BoundedMoveableObject {
      * @return the representation color of the block.
      */
     public Color getColor() {
-        // TODO: Can be refactored to only exist in the visualization?
         return color;
     }
 

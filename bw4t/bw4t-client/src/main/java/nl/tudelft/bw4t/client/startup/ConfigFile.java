@@ -33,7 +33,6 @@ public final class ConfigFile {
     }
     
     /**
-     * TODO: (Tom) Consider increasing maximum cyclomatic complexity?
      * Sets the default value for an init param based on the info read
      * from the init configuration file.
      * @param param The init param.
