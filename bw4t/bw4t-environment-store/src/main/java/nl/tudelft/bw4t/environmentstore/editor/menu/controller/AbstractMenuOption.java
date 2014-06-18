@@ -227,9 +227,6 @@ public abstract class AbstractMenuOption implements ActionListener {
 	                foundDropZone = true;
                 }
                 if (zone.isStartZone()) {
-                    if (foundStartZone) {
-                        return ("Map can only contain one starting zone.");
-                    }
                     foundStartZone = true;
                 }
                 //TODO check if can be removed: allblocks.addAll(mapController.getZoneControllers()[i][j].getColors());
