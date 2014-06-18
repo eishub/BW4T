@@ -16,7 +16,7 @@ import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone.Type;
 
 /**
- * This holds the map that the user designed. This is an abstract map contianing only number of rows and columns, do not
+ * This holds the map that the user designed. This is an abstract map containing only number of rows and columns, do not
  * confuse with {@link NewMap}.
  */
 public class MapPanelController implements ChangeListener {
