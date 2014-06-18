@@ -41,6 +41,8 @@ public class BotController {
      */
     private BW4TClientConfig clientconfig;
     
+    private int BW4Trow;
+    
     /**
      * Create the BotStore controllers
      *
@@ -52,6 +54,7 @@ public class BotController {
     	botConfig = mainPanel.getClientConfig().getBot(row);
     	mp = mainPanel;
     	clientconfig = cc;
+    	BW4Trow = row;
     }
     
     /**
@@ -286,4 +289,8 @@ public class BotController {
 	public BotConfig getBotConfig() {
 		return botConfig;
 	}    
+	
+	public int getRow() {
+		return BW4Trow;
+	}
 }
