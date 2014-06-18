@@ -22,6 +22,9 @@ import nl.tudelft.bw4t.map.view.ViewBlock;
 public class BlockadeMenu {
     /**
      * Builds a pop up menu for when the player clicked on a hallway
+     * 
+     * @param gui
+     *      gui on which the popUpMenu will be build
      */
     public static void buildPopUpMenuForBlockade(BW4TClientGUI gui) {
         gui.getjPopupMenu().removeAll();
@@ -41,7 +44,18 @@ public class BlockadeMenu {
 
         buildTellMenu(gui, cmc, holdingID, entityColor);
     }
-
+    
+    /**
+     * 
+     * @param gui
+     *      gui on which the popUpMenu will be build
+     * @param cmc
+     *      ClientMapController used to get all rooms.
+     * @param holdingID
+     *      ID of the currently holding block (if any).
+     * @param entityColor
+     *      Color of the robot.
+     */
     public static void buildTellMenu(BW4TClientGUI gui, ClientMapController cmc, ViewBlock holdingID, Color entityColor) {
         JMenuItem menuItem;
         BasicMenuOperations.addSectionTitleToPopupMenu("Tell: ", gui.getjPopupMenu());
@@ -54,6 +68,27 @@ public class BlockadeMenu {
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.AMWAITINGOUTSIDEROOM, cmc.getDropZone()
                 .getName(), null, null), gui);
 
+        tellMenuHolding(gui, cmc, holdingID, entityColor);
+
+        gui.getjPopupMenu().addSeparator();
+        menuItem = new JMenuItem("Close menu");
+        gui.getjPopupMenu().add(menuItem);
+    }
+
+    /**
+     * 
+     * @param gui
+     *      gui on which the popUpMenu will be build
+     * @param cmc
+     *      ClientMapController used to get all rooms.
+     * @param holdingID
+     *      ID of the currently holding block (if any).
+     * @param entityColor
+     *      Color of the robot.
+     */
+    private static void tellMenuHolding(BW4TClientGUI gui, ClientMapController cmc, ViewBlock holdingID,
+            Color entityColor) {
+        JMenuItem menuItem;
         if (holdingID != null) {
             BasicMenuOperations.addMenuItemToPopupMenu(
                     new BW4TMessage(MessageType.HASCOLOR, null, ColorTranslator.translate2ColorString(entityColor),
@@ -71,10 +106,6 @@ public class BlockadeMenu {
                 submenu.add(menuItem);
             }
         }
-
-        gui.getjPopupMenu().addSeparator();
-        menuItem = new JMenuItem("Close menu");
-        gui.getjPopupMenu().add(menuItem);
     }
 
 }
