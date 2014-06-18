@@ -48,6 +48,7 @@ class ModifyBot implements ActionListener {
         String data = (String) view.getEntityPanel().getBotTable().getModel().getValueAt(row, 0);
        
         BotController bc = new BotController(view, row, model);		
+        
         new BotEditor(bc);
     }
 }

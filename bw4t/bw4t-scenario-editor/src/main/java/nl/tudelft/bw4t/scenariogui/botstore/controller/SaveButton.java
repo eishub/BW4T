@@ -48,8 +48,6 @@ public class SaveButton implements ActionListener {
 				
 							view.getBotController().updateConfig(view);
 							updateBotTable();
-
-							//view.getBotEditor().dispose();
 						} else {
 							ScenarioEditor
 									.getOptionPrompt()

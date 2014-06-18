@@ -9,7 +9,6 @@ import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
  * Handles actions of the reset button.
  */
 public class ResetButton implements ActionListener {
-
     /**
      * The panel containing the button.
      */
@@ -32,6 +31,7 @@ public class ResetButton implements ActionListener {
     	view.getBotController().getBotConfig().setBotSpeed(100);
     	view.getBotController().getBotConfig().setBotSize(2);
     	view.getBatterySlider().setEnabled(false);
+    	view.getBotController().getBotConfig().setBotBatteryDischargeRate(0);
     	view.updateView();
     }   
 }

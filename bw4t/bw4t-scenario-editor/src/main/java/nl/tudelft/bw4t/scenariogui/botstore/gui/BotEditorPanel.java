@@ -703,6 +703,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 	 * Update the view with the values from the controller.
 	 */
 	public void updateView() {
+		botControllerSelector.setSelectedItem(controller.getBotController().toString());
 		botNameField.setText(controller.getBotName());
 		botControllerSelector.setSelectedItem(controller.getBotController());
 		botAmountTextField.setText("" + controller.getBotAmount());
@@ -717,6 +718,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 		speedSlider.setValue(controller.getBotSpeed());
 		sizeSlider.setValue(controller.getBotSize());
 		batterySlider.setValue(controller.getBotBatteryCapacity());
+		batteryUseValueLabel.setText("0.000");
 	}
 	
 	/**
