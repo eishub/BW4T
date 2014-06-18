@@ -15,7 +15,7 @@ import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
-import nl.tudelft.bw4t.environmentstore.editor.randomizer.controller.RandomizeController;
+import nl.tudelft.bw4t.environmentstore.editor.randomizer.controller.RandomizeSequenceController;
 
 /**
  * Create a randomize frame to randomize blocks in the sequence.
@@ -25,7 +25,7 @@ public class RandomizeSequenceFrame extends JFrame {
 
 	private static final long serialVersionUID = 1993091627565106917L;
 	
-	private RandomizeController randomController;
+	private RandomizeSequenceController randomController;
 	
 	private MapPanelController mapController;
 	
@@ -87,7 +87,7 @@ public class RandomizeSequenceFrame extends JFrame {
 	 */
 	public RandomizeSequenceFrame(String title, MapPanelController mpc) {
 		mapController = mpc;
-		randomController = new RandomizeController(this, mapController);
+		this.randomController = new RandomizeSequenceController(this, mapController);
 		
 		lblTitle = new JLabel(title);
 		setTitle("Randomize " + title);
@@ -191,6 +191,10 @@ public class RandomizeSequenceFrame extends JFrame {
     
     public JButton getCancelButton() {
     	return cancelButton;
+    }
+    
+    public RandomizeSequenceController getRandomController() {
+    	return this.randomController;
     }
 
 }

@@ -7,7 +7,7 @@ import nl.tudelft.bw4t.environmentstore.editor.controller.UpdateableEditorInterf
 import nl.tudelft.bw4t.environmentstore.editor.controller.ZoneController;
 import nl.tudelft.bw4t.environmentstore.editor.controller.ZoneMenuController;
 import nl.tudelft.bw4t.environmentstore.editor.model.ZoneModel;
-import nl.tudelft.bw4t.environmentstore.editor.randomizer.controller.RandomizeController;
+import nl.tudelft.bw4t.environmentstore.editor.randomizer.controller.RandomizeSequenceController;
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeSequenceFrame;
 import nl.tudelft.bw4t.environmentstore.editor.view.RoomMenu;
 import nl.tudelft.bw4t.environmentstore.editor.view.ZoneMenu;

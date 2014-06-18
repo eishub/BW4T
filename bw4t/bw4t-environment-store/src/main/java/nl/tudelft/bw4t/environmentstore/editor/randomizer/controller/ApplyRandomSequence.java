@@ -9,9 +9,9 @@ public class ApplyRandomSequence implements ActionListener{
 	
 	private RandomizeSequenceFrame view;
 	
-	private RandomizeController controller;
+	private RandomizeSequenceController controller;
 	
-	public ApplyRandomSequence(RandomizeSequenceFrame rf, RandomizeController rc) {
+	public ApplyRandomSequence(RandomizeSequenceFrame rf, RandomizeSequenceController rc) {
 		this.view = rf;
 		this.controller = rc;
 	}

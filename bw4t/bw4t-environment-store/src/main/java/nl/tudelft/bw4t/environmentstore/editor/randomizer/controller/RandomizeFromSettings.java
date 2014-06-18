@@ -14,11 +14,11 @@ public class RandomizeFromSettings implements ActionListener{
 	
 	private RandomizeSequenceFrame view;
 	
-	private RandomizeController controller;
+	private RandomizeSequenceController controller;
 	
 	private List<BlockColor> result = null;
 	
-	public RandomizeFromSettings(RandomizeSequenceFrame rf, RandomizeController rc, List<BlockColor> res) {
+	public RandomizeFromSettings(RandomizeSequenceFrame rf, RandomizeSequenceController rc, List<BlockColor> res) {
 		this.view = rf;
 		this.controller = rc;
 		this.result = res;
