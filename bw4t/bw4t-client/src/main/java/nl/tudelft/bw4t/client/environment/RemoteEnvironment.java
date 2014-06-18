@@ -375,28 +375,21 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     }
 
     /**
-     * {@inheritDoc.
+     * {@inheritDoc}
      */
     @Override
     public void kill() throws ManagementException {
         for (ClientController renderer : entityToGUI.values()) {
-            /*
-             * if (renderer != null) { //FIXME renderer.setStop(true); }
-             */
-            // renderer.getController().getMapController().setRunning(false);
+            renderer.stop();
         }
         // copy list, the localAgents list is going to be changes by removing
         // agents.
         List<String> allAgents = new ArrayList<String>(localAgents);
         for (String agentname : allAgents) {
             try {
-                // unregisterAgent(agentname);
                 for (String entity : getAssociatedEntities(agentname)) {
-                    // freePair(agentname, entity);
                     freePair(agentname, entity);
                 }
-                /* freeEntity(agentname); */
-                // freeAgent(agentname);
                 unregisterAgent(agentname);
 
             } catch (AgentException | RelationException e) {
@@ -406,7 +399,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
         try {
             getClient().kill();
             client = null;
-
         } catch (Exception e) {
             throw new ManagementException("problem while killing client", e);
         }
