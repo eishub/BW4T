@@ -36,7 +36,7 @@ public class MenuOptionOpen extends AbstractMenuOption {
 	public void actionPerformed(final ActionEvent e) {
 		// Open configuration file
 		JFileChooser fileChooser = getCurrentFileChooser();
-		fileChooser.setFileFilter(FileFilters.xmlFilter());
+		fileChooser.setFileFilter(FileFilters.mapFilter());
 
 		EnvironmentStore current = getEnvironmentStoreController()
 				.getMainView();
@@ -58,6 +58,7 @@ public class MenuOptionOpen extends AbstractMenuOption {
 				MapPanelController mc = new MapPanelController(nrows, ncols);
 
 				EnvironmentStore es = new EnvironmentStore(mc);
+				es.getTopMenuBar().setLastFileLocation(file.getAbsolutePath());
 				es.setWindowTitle(es.stripExtension(file.getName()));
 		    	es.setVisible(true);
 		    	
