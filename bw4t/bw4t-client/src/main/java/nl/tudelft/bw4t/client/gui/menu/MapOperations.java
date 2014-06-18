@@ -107,12 +107,11 @@ public final class MapOperations {
 
     /**
      * Method to determine if the player is close to a box (within 0.5 of the coordinates of the box)
-     * TODO change this to use the the size of the robot and its arm-length
      * 
      * @param boxID
-     *            - The box that should be checked.
+     *            The box that should be checked.
      * @param data
-     *            - {@link ClientController} to retrieve data from.
+     *            {@link ClientController} to retrieve data from.
      * @return {@code true} if close to the box, {@code false} if not.
      */
     public static boolean closeToBox(ViewBlock boxID, ClientController data) {

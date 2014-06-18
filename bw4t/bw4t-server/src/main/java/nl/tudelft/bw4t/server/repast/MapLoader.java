@@ -108,9 +108,6 @@ public final class MapLoader {
         List<BlockColor> extraSequenceBlocks = makeRandomSequence(map.getRandomSequence());
         sequence.addAll(extraSequenceBlocks);
 
-        // FIXME we may want to check if there is enough space at all for the
-        // requested number of blocks. If not, we will hang in the next loop.
-        // determine all the extra blocks: the extra sequence blocks and more
         List<BlockColor> extraBlocks = new ArrayList<BlockColor>(extraSequenceBlocks);
         extraBlocks.addAll(makeRandomSequence(map.getRandomBlocks()));
         addExtraBlocks(roomblocks, random, extraBlocks);

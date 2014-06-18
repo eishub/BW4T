@@ -36,8 +36,8 @@ public class EPartnerProcessor implements PerceptProcessor {
         } else if (id == theBot.getHoldingEpartner()) {
             theBot.setHoldingEpartner(-1);
         }
-        if (clientMapController.allBlocks.containsKey(id)) {
-            epartner.setLocation(clientMapController.allBlocks.get(id).getPosition());
+        if (clientMapController.containsBlock(id)) {
+            epartner.setLocation(clientMapController.getBlock(id).getPosition());
         }
         epartner.setPickedUp(holderId >= 0);
     }
