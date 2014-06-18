@@ -309,7 +309,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
         Map<String, Collection<Percept>> perceptsMap = new HashMap<String, Collection<Percept>>();
         if (entities.length == 0) {
             //No entities selected, get percepts for all associated entities
-            entities = (String[]) associatedEntities.toArray();
+            entities = associatedEntities.toArray(new String[associatedEntities.size()]);
         }
         for (String entity : entities) {
             if (!associatedEntities.contains(entity)) {
