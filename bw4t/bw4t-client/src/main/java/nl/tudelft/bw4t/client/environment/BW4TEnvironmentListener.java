@@ -151,7 +151,6 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
     public void handleStateChange(EnvironmentState newState) {
         LOGGER.debug("Handeling new environment state: " + newState);
         if (newState.equals(EnvironmentState.KILLED)) {
-            // YUK YUK. FIXME
             System.exit(0);
         }
     }
