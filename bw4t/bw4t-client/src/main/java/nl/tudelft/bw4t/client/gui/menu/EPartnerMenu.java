@@ -19,6 +19,7 @@ import nl.tudelft.bw4t.client.message.BW4TMessage;
 import nl.tudelft.bw4t.client.message.MessageType;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
+import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 
 public class EPartnerMenu {
 
@@ -33,20 +34,15 @@ public class EPartnerMenu {
         menuItem.addActionListener(new DropEPartnerActionListener(gui.getController(), gui));
         popUpMenu.add(menuItem);
         
-      /*  long epartnerId = gui.getController().getMapController().getTheBot().getHoldingEpartner();
-        ViewEPartner viewEpartner = gui.getController().getMapController().getViewEPartner(epartnerId);
-        String nameViewEPartner = viewEpartner.getName();
-        
-        List<BW4TAgent> epartnerList = gui.getController().getHumanAgent().getEPartners(gui);
-        BW4TAgent currentEpartner = null;
-        for (int i = 0; i < epartnerList.size(); i ++) {
-            if (nameViewEPartner.equals(epartnerList.get(i))) {
-                currentEpartner = gui.getController().getHumanAgent().getAgentFromName(nameViewEPartner);
-            }
+        EPartnerConfig eConfig = null;
+        List<BW4TAgent> ePartners = gui.getController().getHumanAgent().getAgentsWithType("epartner");
+        for (BW4TAgent ePartner : ePartners) {
+            if (ePartner.getAgentId().equals(ep.getName())) {
+                eConfig = ePartner.getEpartnerConfig();
+                break;
+            } 
         }
-        
-        System.err.println("epartnermenu: " + currentEpartner.getAgentId());*/
-        //if (gui.getController().getHumanAgent().getEpartnerConfig().isGps()){
+        if (eConfig != null && eConfig.isGps()){
             popUpMenu.addSeparator();
             
             // EPartner commands
@@ -60,7 +56,7 @@ public class EPartnerMenu {
                         new BW4TMessage(MessageType.IWANTTOGO, room.getName(), "", 0), gui));
                 submenu.add(menuItem);
             }
-        //}
+        }
         
         popUpMenu.addSeparator();
         popUpMenu.add(new JMenuItem("Close menu"));

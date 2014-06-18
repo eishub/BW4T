@@ -95,7 +95,7 @@ public class BW4TAgent extends Thread implements ActionInterface {
         LinkedList<BW4TAgent> res = new LinkedList<BW4TAgent>();
         for (BW4TAgent agent : allAgents.keySet()) {
             try {
-                if (agent.getEnvironment().getType(agent.getName()).equals(type)) {
+                if (agent.getEnvironment().getType(agent.getAgentId()).equals(type)) {
                     res.add(agent);
                 }
             } catch (EntityException e) {
