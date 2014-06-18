@@ -13,7 +13,7 @@ import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.controller.UpdateableEditorInterface;
 import nl.tudelft.bw4t.environmentstore.editor.controller.ZoneController;
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.controller.RandomizeController;
-import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeFrame;
+import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeSequenceFrame;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone.Type;
 
@@ -32,7 +32,7 @@ public class RandomizeBlocksTest {
 	private MapPanelController map;
 
 	/** This is the frame needed to instantiate the RandomizeController */
-	private RandomizeFrame rframe;
+	private RandomizeSequenceFrame rframe;
 	
 
 	/** This is the controller where blocks get generated in specific rooms. */
@@ -61,7 +61,7 @@ public class RandomizeBlocksTest {
 		setUpRoom();
 		setUpColors();
 
-		rframe = new RandomizeFrame("Pédé", map);
+		rframe = new RandomizeSequenceFrame("Pédé", map);
 		
 
 		random = new RandomizeController(rframe, map);

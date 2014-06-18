@@ -7,18 +7,18 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeFrame;
+import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeSequenceFrame;
 import nl.tudelft.bw4t.map.BlockColor;
 
 public class RandomizeFromSettings implements ActionListener{
 	
-	private RandomizeFrame view;
+	private RandomizeSequenceFrame view;
 	
 	private RandomizeController controller;
 	
 	private List<BlockColor> result = null;
 	
-	public RandomizeFromSettings(RandomizeFrame rf, RandomizeController rc, List<BlockColor> res) {
+	public RandomizeFromSettings(RandomizeSequenceFrame rf, RandomizeController rc, List<BlockColor> res) {
 		this.view = rf;
 		this.controller = rc;
 		this.result = res;
