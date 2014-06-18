@@ -138,10 +138,10 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
         } else {
             String agentClassName = InitParam.AGENTCLASS.getValue();
             Class<? extends BW4TAgent> c = Class.forName(agentClassName).asSubclass(BW4TAgent.class);
-            Class[] types = new Class[] { String.class, RemoteEnvironment.class };
+            Class[] types = new Class[] { String.class, RemoteEnvironment.class, Map.class };
             Constructor<BW4TAgent> cons = (Constructor<BW4TAgent>) c.getConstructor(types);
             // we use the entityId as name for the agent as well. #2761
-            Object[] args = new Object[] { entityId, environment };
+            Object[] args = new Object[] { entityId, environment, agentData };
             BW4TAgent agent = cons.newInstance(args);
             
             if ("epartner".equals(environment.getType(entityId))) {
