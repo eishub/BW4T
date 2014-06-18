@@ -299,7 +299,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     }
 
     /**
-     * TODO: Function written by a lunatic, please check this.
      * 
      * @param associatedEntities
      * @return
@@ -309,26 +308,19 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
             throws PerceiveException {
         Map<String, Collection<Percept>> perceptsMap = new HashMap<String, Collection<Percept>>();
         if (entities.length == 0) {
-            for (String entity : associatedEntities) {
-                List<Percept> all = PerceptsHandler.getAllPerceptsFromEntity(entity, this);
-                for (Percept p : all) {
-                    p.setSource(entity);
-                }
-                perceptsMap.put(entity, all);
-            }
+            //No entities selected, get percepts for all associated entities
+            entities = (String[]) associatedEntities.toArray();
         }
-        else {
-            for (String entity : entities) {
-                if (!associatedEntities.contains(entity)) {
-                    throw new PerceiveException("Entity \"" + entity + "\" has not been associated with the agent \""
-                            + agent + "\".");
-                }
-                List<Percept> all = PerceptsHandler.getAllPerceptsFromEntity(entity, this);
-                for (Percept p : all) {
-                    p.setSource(entity);
-                }
-                perceptsMap.put(entity, all);
+        for (String entity : entities) {
+            if (!associatedEntities.contains(entity)) {
+                throw new PerceiveException("Entity \"" + entity + "\" has not been associated with the agent \""
+                        + agent + "\".");
             }
+            List<Percept> all = PerceptsHandler.getAllPerceptsFromEntity(entity, this);
+            for (Percept p : all) {
+                p.setSource(entity);
+            }
+            perceptsMap.put(entity, all);
         }
         return perceptsMap;
     }
