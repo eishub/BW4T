@@ -46,7 +46,6 @@ class MenuOptionOpen extends AbstractMenuOption {
 	 * @param e
 	 *            The action event.
 	 */
-	// TODO: Split up in multiple shorter methods
 	public void actionPerformed(final ActionEvent e) {
 		ConfigurationPanel configPanel = super.getController().getMainView()
 				.getMainPanel().getConfigurationPanel();
