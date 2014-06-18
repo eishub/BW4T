@@ -68,9 +68,7 @@ public class MapPanelController implements ChangeListener {
      */
     public void createZone(Type t, boolean isDropZone, boolean isStartZone) {
         if (selected != null) {
-        	if (isStartZone && hasStartzone() && !selected.isStartZone()){
-        		EnvironmentStore.showDialog("Only one start zone can be added to the map.");
-        	} else if (isDropZone && hasDropzone() && !selected.isDropZone()) {
+        	if (isDropZone && hasDropzone() && !selected.isDropZone()) {
         		EnvironmentStore.showDialog("Only one drop zone can be added to the map.");
         	} else {
         		if (selected.isStartZone() && hasStartzone()) {

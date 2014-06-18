@@ -11,7 +11,7 @@ import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.controller.UpdateableEditorInterface;
 import nl.tudelft.bw4t.environmentstore.editor.controller.ZoneController;
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeBlockFrame;
-import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeSequenceFrame;
+import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeBlockFrame;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone.Type;
 
@@ -32,7 +32,7 @@ public class RandomizerBlockFrameTest {
 	private MapPanelController map;
 
 	/** This is the frame needed to instantiate the RandomizeController */
-	private RandomizeSequenceFrame frame;
+	private RandomizeBlockFrame frame;
 	
 	/** This is the room we will generate blocks in. */
 	private ZoneController room1;
@@ -55,7 +55,7 @@ public class RandomizerBlockFrameTest {
 		setUpRoom();
 		setUpColors();
 
-		frame = new RandomizeSequenceFrame("Sequence", map);
+		frame = new RandomizeBlockFrame("Sequence", map);
 	}
 	
 	/** Sets up the room we work in. */
@@ -136,16 +136,4 @@ public class RandomizerBlockFrameTest {
 		assertTrue(map.getZoneController(0,0).getColors().isEmpty());		
 		assertFalse(frame.isVisible());
 	}
-	
-	/**
-	 * When the apply button is clicked the window should be disposed.
-	 */
-	@Test
-	public void disposeOnApplyTest() {
-		frame.setVisible(true);
-		frame.getApplyButton().doClick();
-
-		assertFalse(frame.isVisible());
-	}
-
 }
