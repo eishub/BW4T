@@ -27,6 +27,11 @@ public final class HallwayMenu {
      * The string indicates what the first menu item will say. 
      * In normal circumstances, it says "go to here". 
      * When dealing with a charging zone, it says "go charge". 
+     * 
+     * @param gui
+     *      gui on which the popUpMenu will be build.
+     * @param gotohall
+     *      the name of the hall the robot will go to.
      */
     public static void buildPopUpMenuForHallway(BW4TClientGUI gui, String gotohall) {
         gui.getjPopupMenu().removeAll();
