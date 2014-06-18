@@ -82,7 +82,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
      */
     @Override
     public void handleFreeEntity(String entity, Collection<String> associatedEntities) {
-        // TODO Not implemented.
+        // Not used currently
     }
 
     /**
