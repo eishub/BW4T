@@ -163,7 +163,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
     public void removeAllEntities() throws ManagementException {
       
     	BW4TFileAppender.logFinish(System.currentTimeMillis(), "total time is ");
-        // FIXME: BOTLOG gives nullpointer exception if no bots.
 
         setState(EnvironmentState.KILLED);
 
