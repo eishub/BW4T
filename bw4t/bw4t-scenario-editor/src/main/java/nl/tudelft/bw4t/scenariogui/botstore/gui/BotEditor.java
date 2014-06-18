@@ -6,16 +6,13 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
-import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.botstore.controller.BotStoreController;
+import nl.tudelft.bw4t.scenariogui.botstore.controller.BotController;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
  * This class serves as frame for the BotEditorPanel
  */
 public class BotEditor extends JFrame {
-	
-	private BW4TClientConfig model;
     
     /**
      * Random generated serial version UID.
@@ -23,32 +20,26 @@ public class BotEditor extends JFrame {
     private static final long serialVersionUID = 8114982191029560097L;
     /** the name of the window */
     private String windowName = "Bot Editor";
-    /** The parent of this frame. */
-    private MainPanel parent;
-    /** the panel in the frame*/
+    
+    private MainPanel mainpanel;
+    
     private BotEditorPanel bPanel;
-
-	/** the controller for the frame*/
-    private BotStoreController controller;
-
-    /** The row number of the selected bot. */
-    private int row;
     
     /**
      * creates the BotEditor frame
-     * @param pparent the parent of the frame
-     * @param row the row to be updated in the scenario gui
+     * @param bc the BotController in control of this frame
      */
-    public BotEditor(MainPanel pparent, int row, BW4TClientConfig model) {
-    	this.model = model;
+  
+    public BotEditor(BotController bc) {
+    	mainpanel = bc.getMainPanel();
     	
         setLookAndFeel();
         setTitle(windowName);
         setResizable(false);
         setLayout(null);
-        this.parent = pparent;
-        this.row = row;
-        bPanel = new BotEditorPanel(this, this.parent, this.model);
+      
+        bPanel = new BotEditorPanel(bc);
+        bPanel.setBotEditor(this);
         bPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
         setContentPane(bPanel);
 
@@ -58,8 +49,6 @@ public class BotEditor extends JFrame {
         setLocationRelativeTo(null);
 
         setVisible(true);
-
-        controller = new BotStoreController(this);
     }
 
      /**
@@ -81,48 +70,28 @@ public class BotEditor extends JFrame {
             // pass
         }
     }
-
-    /**
-     * Returns the row number of the bot that is currently selected.
-     * @return The row number of the bot that is currently selected.
-     */
-    public int getRow() {
-        return this.row;
-    }
     
     /**
-     * Returns the BotEditorPanel
-     * @return botEditorPanel used
-     */
-    public BotEditorPanel getBotEditorPanel() {
-        return bPanel;
-    }
-
-    /**
-     * Get the main panel.
-     * @return parent
-     */
-    public MainPanel getParent() {
-        return parent;
-    }
-
-    /**
-     * Set the main panel.
-     * @param pparent the main panel.
-     */
-    public void setParent(MainPanel pparent) {
-        this.parent = pparent;
-    }
-
-    /**
-     * setter for botEditorPanel
-     * @param pbPanel the panel to be set
-     */
-    public void setBotEditorPanel(BotEditorPanel pbPanel) {
-        this.bPanel = pbPanel;
-    }
-
-    public BotEditorPanel getBoteditorPanel() {
+	 * Return the MainPanel.
+	 * @return mainpanel
+	 */
+	public MainPanel getMainPanel() {
+		return mainpanel;
+	}
+	
+	/**
+	 * Return the BotEditorPanel.
+	 * @return botpanel
+	 */
+	public BotEditorPanel getBotEditorPanel() {
 		return bPanel;
+	}
+	
+	public void setBotEditorPanel(BotEditorPanel panel) {
+		bPanel = panel;
+	}
+	
+	public void setParent(MainPanel parent) {
+		mainpanel = parent;
 	}
 }

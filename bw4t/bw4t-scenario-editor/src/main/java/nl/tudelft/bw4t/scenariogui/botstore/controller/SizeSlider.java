@@ -2,7 +2,6 @@ package nl.tudelft.bw4t.scenariogui.botstore.controller;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.text.DecimalFormat;
 
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 import nl.tudelft.bw4t.scenariogui.util.Format;
@@ -10,7 +9,7 @@ import nl.tudelft.bw4t.scenariogui.util.Format;
 /**
  * Handles actions of the sizeslider
  */
-class SizeSlider extends MouseAdapter {
+public class SizeSlider extends MouseAdapter {
     /**
      * The panel containing the slider.
      */
@@ -22,17 +21,15 @@ class SizeSlider extends MouseAdapter {
     public SizeSlider(BotEditorPanel pview) {
         this.view = pview;
     }
+    
+    /**
+     * Update the BatteryUseValueLabel with the correct value when the slider is moved.
+     * @param arg0 MouseEvent
+     */
     @Override
     public void mouseReleased(MouseEvent arg0) {
-    	if (view.getBatteryEnabledCheckbox().isSelected()) {
-	        int speed = view.getSpeedSlider().getValue();
-	        int size = view.getSizeSlider().getValue();
-	        double res = 0.002 * size + 0.000025 * speed;
-	        DecimalFormat df = new DecimalFormat("#.######");
-	        String value = df.format(res);
-	        view.getBatteryUseValueLabel().setText(Format.padString(value, 8));
-    	}
-    	view.getTempBotConfig().setBotSize(view.getSizeSlider().getValue());
+    	BotController currentController = view.getBotController();
+    	currentController.getBotConfig().setBotSize(view.getSizeSlider().getValue());
+    	currentController.setNewBatteryValue(view);
     }
-
 }

@@ -14,11 +14,17 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 public class EpartnerController {
 
+	/**
+	 * Create a set with all views.
+	 */
 	private Set<EPartnerViewInterface> views = new HashSet<>();
 	
+	/**
+	 * Create an EPartnerConfig.
+	 */
 	private EPartnerConfig epConfig;
 	
-	private MainPanel parent;
+	private MainPanel mpanel;
 
 
 	/**
@@ -27,17 +33,8 @@ public class EpartnerController {
 	 * @param row row
 	 */
 	public EpartnerController(MainPanel panel, int row) {
+		mpanel = panel;
 		epConfig = panel.getClientConfig().getEpartner(row);
-		this.parent = panel;
-	}
-	
-	/**
-	 * Create the Epartner controller 
-	 * (this one is temporary and has to be deleted when everything is MVC)
-	 * @param config : the epartner config file
-	 */
-	public EpartnerController(EPartnerConfig config) {
-		epConfig = config;
 	}
 	
 	/**
@@ -109,18 +106,28 @@ public class EpartnerController {
 	 * @param epf is the Epartnerframe the values are taken from.
 	 */
 	public void updateConfig(EpartnerFrame epf) {
-		epConfig.setEpartnerName(epf.getEpartnerName());
+		epConfig.setEpartnerName(epf.getName());
 		epConfig.setEpartnerAmount(epf.getEpartnerAmount());
-		epConfig.setFileName(epf.getEpartnerGoalFile());
-		epConfig.setReferenceName(epf.getEpartnerReference());
 		epConfig.setGps(epf.getGPS());
 		epConfig.setForgetMeNot(epf.getForgetMeNot());
 		for (EPartnerViewInterface evi: views) {
 			evi.updateView();
 		}
 	}
-
+	
+	/**
+	 * Return the EPartnerConfig.
+	 * @return epConfig
+	 */
+	public EPartnerConfig getEPartnerConfig() {
+		return epConfig;
+	}
+	
+	/**
+	 * Return the MainPanel 
+	 * @return mpanel
+	 */
 	public MainPanel getParent() {
-		return parent;
+		return mpanel;
 	}
 }
