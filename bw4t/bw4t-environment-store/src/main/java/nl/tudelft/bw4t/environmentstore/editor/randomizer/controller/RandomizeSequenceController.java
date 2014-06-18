@@ -8,7 +8,7 @@ import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeSequenceFrame;
 import nl.tudelft.bw4t.map.BlockColor;
 
-public class RandomizeController {
+public class RandomizeSequenceController {
 
 	private RandomizeSequenceFrame view;
 	
@@ -21,7 +21,7 @@ public class RandomizeController {
 	 * 
 	 * @param rf is the Randomize JFrame and main view.
 	 */
-	public RandomizeController(RandomizeSequenceFrame rf, MapPanelController mpc) {
+	public RandomizeSequenceController(RandomizeSequenceFrame rf, MapPanelController mpc) {
 		this.view = rf;
 		this.mapController = mpc;
 		

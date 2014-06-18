@@ -3,7 +3,7 @@ package nl.tudelft.bw4t.environmentstore.editor.randomizer.controller;
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeBlockFrame;
 
-public class RandomizeBlockFrameController {
+public class RandomizeBlocksController {
 
 	private RandomizeBlockFrame view;
 	
@@ -16,12 +16,12 @@ public class RandomizeBlockFrameController {
 	 * 
 	 * @param rf is the Randomize JFrame and main view.
 	 */
-	public RandomizeBlockFrameController(RandomizeBlockFrame rf, MapPanelController mpc) {
+	public RandomizeBlocksController(RandomizeBlockFrame rf, MapPanelController mpc) {
 		this.view = rf;
 		this.mapController = mpc;
 		
 		getMainView().getApplyButton().addActionListener(
-				this.randomFromSettings = new ApplyRandomBlock(view, this, null)
+				this.randomFromSettings = new ApplyRandomBlock(view, this)
 		);
 		// Cancel Randomizer
 		getMainView().getCancelButton().addActionListener(

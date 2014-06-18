@@ -14,15 +14,12 @@ public class ApplyRandomBlock implements ActionListener{
 	
 	private RandomizeBlockFrame view;
 	
-	private RandomizeBlockFrameController controller;
-	
-	private ArrayList<BlockColor> result = null;
+	private RandomizeBlocksController controller;
 	
 	private int amount;
 	
-	public ApplyRandomBlock(RandomizeBlockFrame rf, RandomizeBlockFrameController controller,ArrayList<BlockColor> res) {
+	public ApplyRandomBlock(RandomizeBlockFrame rf, RandomizeBlocksController controller) {
 		this.view = rf;
-		this.result = res;
 		this.controller = controller;
 	}
 
@@ -61,19 +58,4 @@ public class ApplyRandomBlock implements ActionListener{
 		}
 	}
 	
-	public void setResult(ArrayList<BlockColor> res) {
-		result = res;
-	}
-	
-	public ArrayList<BlockColor> getResult() {
-		return result;
-	}
-	
-	public int getAmount() {
-		return amount;
-	}
-	
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
 }
