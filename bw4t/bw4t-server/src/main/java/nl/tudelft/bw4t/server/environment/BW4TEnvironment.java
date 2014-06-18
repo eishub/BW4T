@@ -680,7 +680,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
         EPartnerEntity ee = new EPartnerEntity(epartner);
         // register the entity in the environment
         this.registerEntity(epartner.getName(), ee);
-        // TODO: Place the EPartner
+        // Place the EPartner
         epartner.moveTo(point.getX(), point.getY());
     }
 
