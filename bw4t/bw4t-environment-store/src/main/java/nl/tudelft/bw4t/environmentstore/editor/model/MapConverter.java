@@ -235,19 +235,19 @@ public class MapConverter {
      *            the position of first entity
      */
     private static void addEntities(NewMap map, double centerx, double centery, int numberOfEntities) {
-        for (int n = 1; n <= numberOfEntities; n++) {
+    	for (int n = 1; n <= numberOfEntities; n++) {
             final int n4 = n % 4;
             if (n4 == 1) {
-                map.addEntity(new Entity("Bot" + spawnCount++, new Point(centerx - 2.5, centery - 2.5)));
+                map.addEntity(new Entity("Bot" + n, new Point(centerx - 2.5, centery - 2.5)));
             }
             else if (n4 == 2) {
-                map.addEntity(new Entity("Bot" + spawnCount++, new Point(centerx + 2.5, centery - 2.5)));
+                map.addEntity(new Entity("Bot" + n, new Point(centerx + 2.5, centery - 2.5)));
             }
             else if (n4 == 3) {
-                map.addEntity(new Entity("Bot" + spawnCount++, new Point(centerx - 2.5, centery + 2.5)));
+                map.addEntity(new Entity("Bot" + n, new Point(centerx - 2.5, centery + 2.5)));
             }
             else {
-                map.addEntity(new Entity("Bot" + spawnCount++, new Point(centerx + 2.5, centery + 2.5)));
+                map.addEntity(new Entity("Bot" + n, new Point(centerx + 2.5, centery + 2.5)));
             }
         }
     }
