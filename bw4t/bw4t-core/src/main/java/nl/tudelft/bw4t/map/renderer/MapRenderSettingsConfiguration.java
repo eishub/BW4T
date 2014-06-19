@@ -3,11 +3,12 @@ package nl.tudelft.bw4t.map.renderer;
 import javax.swing.JFrame;
 
 /**
- * TODO: Configuration screen for the map renderer.
+ * A Configuration screen for the map renderer.
  *
  */
 public class MapRenderSettingsConfiguration extends JFrame {
-
+    private static final long serialVersionUID = 9202873246960555527L;
+    
     private final MapRenderSettings renderSettings;
 
     public MapRenderSettingsConfiguration(MapRenderSettings settings){

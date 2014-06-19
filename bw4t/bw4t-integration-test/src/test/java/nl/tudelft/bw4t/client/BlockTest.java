@@ -1,20 +1,25 @@
 package nl.tudelft.bw4t.client;
 
-import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Translator;
-import eis.exceptions.ActException;
 import eis.exceptions.ManagementException;
-import eis.exceptions.PerceiveException;
 import eis.iilang.Action;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
+
 import java.io.IOException;
 import java.util.Iterator;
+
 import javax.xml.bind.JAXBException;
+
+import nl.tudelft.bw4t.client.environment.Launcher;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import repast.simphony.scenario.ScenarioLoadException;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -42,22 +47,18 @@ public class BlockTest {
                 "-map", "Banana",
                 "-agentcount", "1",
                 "-humancount", "0"};
-        nl.tudelft.bw4t.client.environment.Launcher.launch(clientArgs);
-        client = nl.tudelft.bw4t.client.environment.Launcher.getEnvironment();
+        Launcher.launch(clientArgs);
+        client = Launcher.getEnvironment();
         TestFunctions.setClient(client);
     }
 
     /**
      * Here we test the picking up and delivering of a block.
-     * @throws TranslationException
-     * @throws ActException
-     * @throws InterruptedException
-     * @throws PerceiveException
+     * @throws Exception if the test fails
      */
     @Test
-    public void blockTest() throws TranslationException, ActException,
-            InterruptedException, PerceiveException {
-        String bot = client.getAgents().get(0);
+    public void blockTest() throws Exception {
+        String bot = client.getAssociatedEntities(client.getAgents().get(0)).iterator().next();
         
         // Move to RoomC1
         Parameter[] param = Translator.getInstance().translate2Parameter("RoomC1");
@@ -93,6 +94,6 @@ public class BlockTest {
         client.performAction(bot, new Action("putDown"));
         Thread.sleep(200L);
         TestFunctions.retrievePercepts(bot);
-        assertTrue(TestFunctions.hasPercept("sequenceIndex(1)"));
+        assertEquals(1, client.getEntityController(bot).getMapController().getSequenceIndex());
     }
 }

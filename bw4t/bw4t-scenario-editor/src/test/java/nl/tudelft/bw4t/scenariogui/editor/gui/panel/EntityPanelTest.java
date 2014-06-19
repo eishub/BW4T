@@ -132,7 +132,6 @@ public class EntityPanelTest {
     @Test
     public void testModifyBot() {
         spyEntityPanel.getModifyBotButton().doClick();
-        //TODO: Verify if the bot has actually been modified.
     }
     
     /**
@@ -245,9 +244,6 @@ public class EntityPanelTest {
 
         /* Click the modify epartner button */
         spyEntityPanel.getModifyEPartnerButton().doClick();
-
-
-        //TODO: Verify if the E-partner has actually been modified.
     }
     
     /**
