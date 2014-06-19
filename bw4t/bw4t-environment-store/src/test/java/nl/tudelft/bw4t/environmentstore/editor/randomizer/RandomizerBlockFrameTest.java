@@ -37,6 +37,9 @@ public class RandomizerBlockFrameTest {
 	/** This is the room we will generate blocks in. */
 	private ZoneController room1;
 	
+	/** This is the room we will generate blocks in. */
+	private ZoneController room2;
+	
 	/** This is the list of block colors we have made available for this test. */
 	private List<BlockColor> colors;
 	
@@ -63,6 +66,10 @@ public class RandomizerBlockFrameTest {
 		room1 = map.getZoneControllers()[0][0];
 		room1.setType(Type.ROOM);
 		room1.setUpdateableEditorInterface(uei);
+		
+		room2 = map.getZoneControllers()[1][0];
+		room2.setType(Type.ROOM);
+		room2.setUpdateableEditorInterface(uei);
 	}
 
 	/** Sets up the block colors we have made available for this test. */
@@ -135,5 +142,15 @@ public class RandomizerBlockFrameTest {
 		
 		assertTrue(map.getZoneController(0,0).getColors().isEmpty());		
 		assertFalse(frame.isVisible());
+	}
+	
+	/**
+	 * The room has no colors. When apply is clicked the room should contain colors
+	 */
+	@Test
+	public void applyRandomBlockTest() {
+		assertTrue(room1.getColors().isEmpty());
+		frame.getApplyButton().doClick();
+		assertFalse(room1.getColors().isEmpty());
 	}
 }
