@@ -25,8 +25,6 @@ public class SaveButton implements ActionListener {
 
     private BotEditorPanel view;
 
-    private MainPanel mp;
-
     /**
      * Constructor.
      *
@@ -36,8 +34,6 @@ public class SaveButton implements ActionListener {
      */
     public SaveButton(BotEditorPanel pview) {
         this.view = pview;
-        BotEditor be = (BotEditor) SwingUtilities.getWindowAncestor(view);
-        mp = be.getMainPanel();
     }
 
     /**

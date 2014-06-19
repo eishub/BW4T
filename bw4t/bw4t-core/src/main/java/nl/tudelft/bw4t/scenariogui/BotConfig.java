@@ -14,7 +14,8 @@ import nl.tudelft.bw4t.map.EntityType;
  */
 
 public final class BotConfig implements Serializable, Cloneable {
-	private static final long serialVersionUID = -4261058226493472776L;
+
+    private static final long serialVersionUID = -4261058226493472776L;
 	
 	public static final String DEFAULT_GOAL_FILENAME_REFERENCE = "robot";
 
@@ -31,8 +32,6 @@ public final class BotConfig implements Serializable, Cloneable {
 	private int botSpeed = 100;
 
 	private int botBatteryCapacity = 10;
-
-	private double botBatteryDischargeRate = 0;
 
 	private int numberOfGrippers = 1;
 
@@ -186,15 +185,6 @@ public final class BotConfig implements Serializable, Cloneable {
 	}
 
 	/**
-	 * @param newBatteryDischargeRate
-	 *            , the new robot's battery discharge rate.
-	 */
-	@XmlElement
-	public void setBotBatteryDischargeRate(double newBatteryDischargeRate) {
-		botBatteryDischargeRate = newBatteryDischargeRate;
-	}
-
-	/**
 	 * @return if the robot has a color blind handicap.
 	 */
 	public boolean getColorBlindHandicap() {
@@ -284,11 +274,20 @@ public final class BotConfig implements Serializable, Cloneable {
 	 * @return All the BotConfig properties.
 	 */
 	public String bcToString() {
-		return name + controller + amount + botSize
-				+ botSpeed + botBatteryCapacity + botBatteryDischargeRate
-				+ numberOfGrippers + batteryEnabled + hasColorBlindHandicap
-				+ hasGripperHandicap + hasMoveSpeedHandicap
+		return name + controller + amount + botSize 
+				+ botSpeed + botBatteryCapacity 
+				+ numberOfGrippers + batteryEnabled + hasColorBlindHandicap 
+				+ hasGripperHandicap + hasMoveSpeedHandicap 
 				+ hasSizeOverloadHandicap + fileName + referenceName;
+	}
+	
+	@Override
+	public String toString() {
+	    return name + " " + controller + " " + amount + " " + botSize + " " 
+                + botSpeed + " " + botBatteryCapacity + " " 
+                + numberOfGrippers + " " + batteryEnabled + " " + hasColorBlindHandicap + " " 
+                + hasGripperHandicap + " " + hasMoveSpeedHandicap + " " 
+                + hasSizeOverloadHandicap + " " + fileName + " " + referenceName;
 	}
 
 	/**
@@ -352,4 +351,100 @@ public final class BotConfig implements Serializable, Cloneable {
         return bot;
 	}
 
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + amount;
+        result = prime * result + (batteryEnabled ? 1231 : 1237);
+        result = prime * result + botBatteryCapacity;
+        result = prime * result + botSize;
+        result = prime * result + botSpeed;
+        result = prime * result + ((controller == null) ? 0 : controller.hashCode());
+        result = prime * result + ((fileName == null) ? 0 : fileName.hashCode());
+        result = prime * result + (hasColorBlindHandicap ? 1231 : 1237);
+        result = prime * result + (hasGripperHandicap ? 1231 : 1237);
+        result = prime * result + (hasMoveSpeedHandicap ? 1231 : 1237);
+        result = prime * result + (hasSizeOverloadHandicap ? 1231 : 1237);
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + numberOfGrippers;
+        result = prime * result + ((referenceName == null) ? 0 : referenceName.hashCode());
+        return result;
+    }
+
+    /**
+     * Eclipse generated equals method.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        BotConfig other = (BotConfig) obj;
+        if (amount != other.amount) {
+            return false;
+        }
+        if (batteryEnabled != other.batteryEnabled) {
+            return false;
+        }
+        if (botBatteryCapacity != other.botBatteryCapacity) {
+            return false;
+        }
+        if (botSize != other.botSize) {
+            return false;
+        }
+        if (botSpeed != other.botSpeed) {
+            return false;
+        }
+        if (controller != other.controller) {
+            return false;
+        }
+        if (fileName == null) {
+            if (other.fileName != null) {
+                return false;
+            }
+        }
+        else if (!fileName.equals(other.fileName)) {
+            return false;
+        }
+        if (hasColorBlindHandicap != other.hasColorBlindHandicap) {
+            return false;
+        }
+        if (hasGripperHandicap != other.hasGripperHandicap) {
+            return false;
+        }
+        if (hasMoveSpeedHandicap != other.hasMoveSpeedHandicap) {
+            return false;
+        }
+        if (hasSizeOverloadHandicap != other.hasSizeOverloadHandicap) {
+            return false;
+        }
+        if (name == null) {
+            if (other.name != null) {
+                return false;
+            }
+        }
+        else if (!name.equals(other.name)) {
+            return false;
+        }
+        if (numberOfGrippers != other.numberOfGrippers) {
+            return false;
+        }
+        if (referenceName == null) {
+            if (other.referenceName != null) {
+                return false;
+            }
+        }
+        else if (!referenceName.equals(other.referenceName)) {
+            return false;
+        }
+        return true;
+    }
 }

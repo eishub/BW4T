@@ -2,6 +2,7 @@ package nl.tudelft.bw4t.scenariogui;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
@@ -51,6 +52,26 @@ public class BW4TClientConfigTest {
     @After
     public void cleanUp(){
         removeFile(TEST_XML_OUTPUT);
+    }
+    
+    private void compareBotsHelper(BW4TClientConfig org, BW4TClientConfig test) {
+        final List<BotConfig> oBots = org.getBots();
+        final List<BotConfig> tBots = test.getBots();
+        
+        assertEquals(oBots.size(), tBots.size());
+        for (int i = 0; i < oBots.size(); i++) {
+            assertTrue("Original: " + oBots.get(i) + "\nTest: " + tBots.get(i), oBots.get(i).equals(tBots.get(i)));
+        }
+    }
+    
+    private void compareEpartnersHelper(BW4TClientConfig org, BW4TClientConfig test) {
+        final List<EPartnerConfig> oEP = org.getEpartners();
+        final List<EPartnerConfig> tEP = test.getEpartners();
+        
+        assertEquals(oEP.size(), tEP.size());
+        for (int i = 0; i < oEP.size(); i++) {
+            assertTrue(oEP.get(i).equals(tEP.get(i)));
+        }
     }
     
     /**
@@ -113,8 +134,8 @@ public class BW4TClientConfigTest {
             assertEquals(launchGui, config2.isLaunchGui());
             assertEquals(mapFile, config2.getMapFile());
             assertEquals(useGoal, config2.isUseGoal());
-            assertTrue(config.compareBotConfigs(config2.getBots()));
-            assertTrue(config.compareEpartnerConfigs(config2.getEpartners()));
+            compareBotsHelper(config, config2);
+            compareEpartnersHelper(config, config2);
         } catch (FileNotFoundException e) {
             fail("File not found exception: "+ e + ". Failed to save/open to file.");
         } catch (JAXBException e) {

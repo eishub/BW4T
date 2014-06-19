@@ -154,4 +154,65 @@ public final class EPartnerConfig implements Serializable {
 		this.epartnerGoalFileName = _fileName;
 	}
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + amount;
+        result = prime * result + ((epartnerGoalFileName == null) ? 0 : epartnerGoalFileName.hashCode());
+        result = prime * result + ((epartnerReferenceName == null) ? 0 : epartnerReferenceName.hashCode());
+        result = prime * result + (forgetmenot ? 1231 : 1237);
+        result = prime * result + (gps ? 1231 : 1237);
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        EPartnerConfig other = (EPartnerConfig) obj;
+        if (amount != other.amount) {
+            return false;
+        }
+        if (epartnerGoalFileName == null) {
+            if (other.epartnerGoalFileName != null) {
+                return false;
+            }
+        }
+        else if (!epartnerGoalFileName.equals(other.epartnerGoalFileName)) {
+            return false;
+        }
+        if (epartnerReferenceName == null) {
+            if (other.epartnerReferenceName != null) {
+                return false;
+            }
+        }
+        else if (!epartnerReferenceName.equals(other.epartnerReferenceName)) {
+            return false;
+        }
+        if (forgetmenot != other.forgetmenot) {
+            return false;
+        }
+        if (gps != other.gps) {
+            return false;
+        }
+        if (name == null) {
+            if (other.name != null) {
+                return false;
+            }
+        }
+        else if (!name.equals(other.name)) {
+            return false;
+        }
+        return true;
+    }
+
 }

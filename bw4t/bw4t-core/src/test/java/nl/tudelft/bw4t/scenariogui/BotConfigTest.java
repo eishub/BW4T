@@ -18,7 +18,6 @@ public class BotConfigTest {
     private int botSize;
     private int botSpeed;
     private int botBatteryCapacity;
-    private double botBatteryDischargeRate;
     private int numberOfGrippers;
     private boolean batteryEnabled;
     private boolean hasColorBlindHandicap;
@@ -36,7 +35,7 @@ public class BotConfigTest {
         BotConfig bot = createTestBot();
         assertNotEquals("Wrong string test", bot.bcToString());
         assertEquals((name + controller + amount + botSize
-                + botSpeed + botBatteryCapacity + botBatteryDischargeRate
+                + botSpeed + botBatteryCapacity
                 + numberOfGrippers + batteryEnabled + hasColorBlindHandicap
                 + hasGripperHandicap + hasMoveSpeedHandicap
                 + hasSizeOverloadHandicap + fileName + referenceName), bot.bcToString());
@@ -97,7 +96,6 @@ public class BotConfigTest {
         botSize = 3;
         botSpeed = 60;
         botBatteryCapacity = 100;
-        botBatteryDischargeRate = 10;
         numberOfGrippers = 2;
         batteryEnabled = true;
         hasColorBlindHandicap = true;
@@ -114,7 +112,6 @@ public class BotConfigTest {
         bot.setBotSize(botSize);
         bot.setBotSpeed(botSpeed);
         bot.setBotBatteryCapacity(botBatteryCapacity);
-        bot.setBotBatteryDischargeRate(botBatteryDischargeRate);
         bot.setGrippers(numberOfGrippers);
         bot.setBatteryEnabled(batteryEnabled);
         bot.setColorBlindHandicap(hasColorBlindHandicap);

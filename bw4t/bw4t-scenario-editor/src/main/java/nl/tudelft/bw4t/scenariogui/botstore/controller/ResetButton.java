@@ -31,7 +31,6 @@ public class ResetButton implements ActionListener {
     	view.getBotController().getBotConfig().setBotSpeed(100);
     	view.getBotController().getBotConfig().setBotSize(2);
     	view.getBatterySlider().setEnabled(false);
-    	view.getBotController().getBotConfig().setBotBatteryDischargeRate(0);
     	view.updateView();
     }   
 }
