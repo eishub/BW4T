@@ -309,7 +309,7 @@ public class ZoneModel {
 		return neighbours[pos];
 	}
 
-	public void setNeighbours(int pos, ZoneModel neighbour) {
+	public void setNeighbour(int pos, ZoneModel neighbour) {
 		neighbours[pos] = neighbour;
 	}
 }
