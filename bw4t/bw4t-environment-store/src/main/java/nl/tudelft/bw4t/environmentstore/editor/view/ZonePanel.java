@@ -14,7 +14,6 @@ import nl.tudelft.bw4t.environmentstore.editor.controller.UpdateableEditorInterf
 import nl.tudelft.bw4t.environmentstore.editor.controller.ZoneController;
 import nl.tudelft.bw4t.environmentstore.editor.model.ZoneModel;
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.Zone.Type;
 
 /**
  * The ZonePanel is the panel added to the grid for each Zone.

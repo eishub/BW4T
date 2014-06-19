@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import nl.tudelft.bw4t.environmentstore.editor.menu.view.MenuBar;
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeSequenceFrame;
 import nl.tudelft.bw4t.environmentstore.main.controller.EnvironmentStoreController;
-import nl.tudelft.bw4t.environmentstore.sizedialog.view.SizeDialog;
 
 public class MenuOptionRandomizeSequence extends AbstractMenuOption {
 

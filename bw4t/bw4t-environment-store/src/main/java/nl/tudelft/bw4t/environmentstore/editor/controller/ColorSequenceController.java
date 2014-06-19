@@ -10,8 +10,6 @@ import java.util.Set;
 
 import javax.swing.JFrame;
 
-import org.omg.CORBA.Bounds;
-
 import nl.tudelft.bw4t.environmentstore.editor.colorpalette.ColorPalette;
 import nl.tudelft.bw4t.environmentstore.editor.colorpalette.ColorPaletteListener;
 import nl.tudelft.bw4t.map.BlockColor;

@@ -4,24 +4,17 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.menu.controller.AbstractMenuOption;
 import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
-import nl.tudelft.bw4t.environmentstore.util.NoMockOptionPrompt;
-import nl.tudelft.bw4t.environmentstore.util.OptionPrompt;
 import nl.tudelft.bw4t.environmentstore.util.YesMockOptionPrompt;
-import nl.tudelft.bw4t.map.BlockColor;
 
 import org.junit.After;
 import org.junit.Before;

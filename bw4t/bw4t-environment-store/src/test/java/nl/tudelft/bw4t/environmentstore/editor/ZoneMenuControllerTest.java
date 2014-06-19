@@ -1,17 +1,18 @@
 package nl.tudelft.bw4t.environmentstore.editor;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertFalse;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.controller.UpdateableEditorInterface;
 import nl.tudelft.bw4t.environmentstore.editor.controller.ZoneController;
 import nl.tudelft.bw4t.environmentstore.editor.controller.ZoneMenuController;
 import nl.tudelft.bw4t.environmentstore.editor.model.ZoneModel;
-import nl.tudelft.bw4t.environmentstore.editor.randomizer.controller.RandomizeSequenceController;
-import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeSequenceFrame;
 import nl.tudelft.bw4t.environmentstore.editor.view.RoomMenu;
 import nl.tudelft.bw4t.environmentstore.editor.view.ZoneMenu;
-import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
 import nl.tudelft.bw4t.map.Zone.Type;
 
 import org.junit.Before;
