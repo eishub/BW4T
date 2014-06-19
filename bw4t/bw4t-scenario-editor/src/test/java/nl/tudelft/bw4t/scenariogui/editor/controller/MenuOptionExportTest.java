@@ -61,6 +61,10 @@ public class MenuOptionExportTest {
      */
     @Test
     public void testBotTableWarning() throws IOException {
+        // Create the dir
+        File directory = new File(FILE_EXPORT_PATH);
+        directory.mkdirs();
+
     	// Setup the behaviour
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
@@ -85,7 +89,6 @@ public class MenuOptionExportTest {
 
         verify(yesPrompt, times(1)).showMessageDialog((Component) any(), anyString());
         assertTrue("mas2g Exists", new File(FILE_EXPORT_PATH + ExportToMASTest.CONFIG_NAME + ".mas2g").exists());
-        FileUtils.forceDelete(new File(FILE_EXPORT_PATH + ExportToMASTest.CONFIG_NAME + ".mas2g"));
-
+        FileUtils.deleteDirectory(directory);
     }
 }
