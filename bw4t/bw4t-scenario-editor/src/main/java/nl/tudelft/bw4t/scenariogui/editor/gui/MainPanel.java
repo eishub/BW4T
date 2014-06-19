@@ -5,8 +5,10 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 
 /**
@@ -118,6 +120,23 @@ public class MainPanel extends JPanel {
      */
     public final void setEntityPanel(final EntityPanel newEntityPanel) {
         this.entityPanel = newEntityPanel;
+    }
+    
+    /**
+     * Update the Bot table with the newest values.
+     */
+    public void refreshBotTableModel() {
+        final DefaultTableModel tableModel = getEntityPanel().getBotTableModel();
+        tableModel.setRowCount(0);
+        int rows = getClientConfig().getBots().size();
+        for (int i = 0; i < rows; i++) {
+            BotConfig botConfig = getClientConfig().getBot(i);
+            Object[] newBotObject = {botConfig.getBotName(),
+                    botConfig.getBotController().toString(),
+                    botConfig.getFileName(),
+                    botConfig.getBotAmount()};
+            tableModel.addRow(newBotObject);
+        }
     }
 
     public BW4TClientConfig getClientConfig() {

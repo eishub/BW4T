@@ -529,7 +529,6 @@ public class ConfigurationPanel extends JPanel {
      * @return whether changes have been made.
      */
     public final boolean isDefault() {
-<<<<<<< HEAD
         return this.getClientIP().equals(DefaultConfigurationValues.DEFAULT_CLIENT_IP.getValue())
                 && this.getClientPort() == DefaultConfigurationValues.DEFAULT_CLIENT_PORT.getIntValue()
                 && this.getServerIP().equals(DefaultConfigurationValues.DEFAULT_SERVER_IP.getValue())
@@ -538,30 +537,6 @@ public class ConfigurationPanel extends JPanel {
                 && this.isVisualizePaths() == DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue()
                 && this.isEnableCollisions() == DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue()
                 && this.getMapFile().equals(DefaultConfigurationValues.MAP_FILE.getValue());
-=======
-        boolean isDefault = true;
-
-        if (!this.getClientIP().equals(DefaultConfigurationValues.DEFAULT_CLIENT_IP.getValue())) {
-            isDefault = false;
-        }
-        else if (this.getClientPort() != DefaultConfigurationValues.DEFAULT_CLIENT_PORT.getIntValue()) {
-            isDefault = false;
-        }
-        else if (!this.getServerIP().equals(DefaultConfigurationValues.DEFAULT_SERVER_IP.getValue())) {
-            isDefault = false;
-        }
-        else if (this.getServerPort() != DefaultConfigurationValues.DEFAULT_SERVER_PORT.getIntValue()) {
-            isDefault = false;
-        }
-        else if (this.useGui() != DefaultConfigurationValues.USE_GUI.getBooleanValue()) {
-            isDefault = false;
-        }
-        else if (!this.getMapFile().equals(DefaultConfigurationValues.MAP_FILE.getValue())) {
-            isDefault = false;
-        }
-
-        return isDefault;
->>>>>>> master
     }
 
     /**
