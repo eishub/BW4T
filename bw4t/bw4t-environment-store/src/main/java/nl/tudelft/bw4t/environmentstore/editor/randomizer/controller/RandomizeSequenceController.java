@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.Random;
 
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
-import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeFrame;
+import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeSequenceFrame;
 import nl.tudelft.bw4t.map.BlockColor;
 
-public class RandomizeController {
+public class RandomizeSequenceController {
 
-	private RandomizeFrame view;
+	private RandomizeSequenceFrame view;
 	
 	private MapPanelController mapController;
 	
@@ -21,7 +21,7 @@ public class RandomizeController {
 	 * 
 	 * @param rf is the Randomize JFrame and main view.
 	 */
-	public RandomizeController(RandomizeFrame rf, MapPanelController mpc) {
+	public RandomizeSequenceController(RandomizeSequenceFrame rf, MapPanelController mpc) {
 		this.view = rf;
 		this.mapController = mpc;
 		
@@ -40,7 +40,7 @@ public class RandomizeController {
 		);
 	}
 	
-	public RandomizeFrame getMainView() {
+	public RandomizeSequenceFrame getMainView() {
 		return view;
 	}
 	

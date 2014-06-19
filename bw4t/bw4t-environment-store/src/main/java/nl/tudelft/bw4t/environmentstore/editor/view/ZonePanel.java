@@ -84,7 +84,7 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
                 this.add(sequence, BorderLayout.SOUTH);
                 this.sequence.setSequence(zoneController.getColors());
             }
-            updateDoors();
+            updateDoor();
             break;
         case CHARGINGZONE:
             this.setBackground(Zone.CHARGING_ZONE_COLOR);
@@ -106,7 +106,7 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
         repaint();
     }
     
-    private void updateDoors() {
+    private void updateDoor() {
     	int east = 0;
     	int north = 0;
     	int south = 0;

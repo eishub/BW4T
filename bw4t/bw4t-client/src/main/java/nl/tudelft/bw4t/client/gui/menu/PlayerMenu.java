@@ -12,15 +12,23 @@ import nl.tudelft.bw4t.client.message.MessageType;
 import nl.tudelft.bw4t.map.ColorTranslator;
 import nl.tudelft.bw4t.map.Zone;
 
-public class PlayerMenu {
+/** Responsible for building the pop-up menu for sending requests to a player. */
+public final class PlayerMenu {
+	
+	/** Should never be instantiated */
+	private PlayerMenu() { }
+	
     /**
-     * Builds pop up menu for sending requests to a certain player, is called
-     * when a player button is pressed
+     * Used for building the pop-up menu that displays actions 
+     * a user can perform when clicking on another player.
      * 
      * @param playerId
-     *            , the playerId that the request should be sent to
+     *            - The playerId that the request should be sent to.
+     * @param gui
+     *            - The {@link BW4TClientGUI} to create the pop-up menu on.
      */
-    public static void buildPopUpMenuForRequests(String playerId, BW4TClientGUI gui) {
+    public static void buildPopUpMenuForRequests(String playerId, ClientController controller) {
+        BW4TClientGUI gui = controller.getGui();
         ClientMapController cmc = gui.getController().getMapController();
         gui.getjPopupMenu().removeAll();
         BasicMenuOperations.addSectionTitleToPopupMenu("Request:", gui.getjPopupMenu());
@@ -38,7 +46,7 @@ public class PlayerMenu {
         for (Zone room : cmc.getRooms()) {
             JMenuItem menuItem = new JMenuItem(room.getName());
             menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.GOTOROOM, room.getName(),
-                    null, receiver), gui));
+                    null, receiver), controller));
             submenu.add(menuItem);
         }
 
@@ -47,7 +55,7 @@ public class PlayerMenu {
         for (String color : ColorTranslator.getAllColors()) {
             JMenuItem menuItem = new JMenuItem(color);
             menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.FINDCOLOR, null,
-                    color, receiver), gui));
+                    color, receiver), controller));
             submenu.add(menuItem);
         }
 
@@ -61,7 +69,7 @@ public class PlayerMenu {
             for (Zone room : cmc.getRooms()) {
                 JMenuItem menuItem = new JMenuItem(room.getName());
                 menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(
-                        MessageType.GETCOLORFROMROOM, room.getName(), color, receiver), gui));
+                        MessageType.GETCOLORFROMROOM, room.getName(), color, receiver), controller));
                 submenu2.add(menuItem);
             }
         }

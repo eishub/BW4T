@@ -3,6 +3,7 @@ package nl.tudelft.bw4t.scenariogui.botstore.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 
 /**
@@ -26,6 +27,10 @@ public class ResetButton implements ActionListener {
      * @param ae The action event causing this.
      */
     public void actionPerformed(ActionEvent ae) {
+    	view.getBotController().getBotConfig().setBotSpeed(100);
+    	view.getBotController().getBotConfig().setBotSize(2);
+    	view.getBatterySlider().setEnabled(false);
+    	view.getBotController().getBotConfig().setBotBatteryDischargeRate(0);
     	view.updateView();
     }   
 }

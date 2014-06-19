@@ -29,7 +29,7 @@ public class ComboAgentModel extends AbstractListModel implements ComboBoxModel 
         /** Else return the agent in the dropdown menu list: */
         int agentIndex = listIndexToAgentIndex(listIndex);
         if (agentIndex >= 0 && showAgent(agentIndex)) {
-            return gui.environment.getAgents().get(agentIndex);
+            return gui.getController().getEnvironment().getAgents().get(agentIndex);
         }
         
         return null;
@@ -42,12 +42,12 @@ public class ComboAgentModel extends AbstractListModel implements ComboBoxModel 
      * @return Whether this agent should be shown.
      */
     private boolean showAgent(int agentIndex) {
-        String name = gui.environment.getAgents().get(agentIndex);
+        String name = gui.getController().getEnvironment().getAgents().get(agentIndex);
         if (name == null) {
             return false;
         }
         try {
-            return !gui.environment.getType(name).equals("epartner");
+            return !gui.getController().getEnvironment().getType(name).equals("epartner");
         } catch (EntityException e) {
             e.printStackTrace();
         }
@@ -69,7 +69,7 @@ public class ComboAgentModel extends AbstractListModel implements ComboBoxModel 
         }
         
         int currentListIndex = 0;
-        for (int agentIndex = 0; agentIndex < gui.environment.getAgents().size(); agentIndex++) {
+        for (int agentIndex = 0; agentIndex < gui.getController().getEnvironment().getAgents().size(); agentIndex++) {
             if (showAgent(agentIndex) && currentListIndex++ >= listIndex) {
                 return agentIndex;
             }
@@ -80,7 +80,7 @@ public class ComboAgentModel extends AbstractListModel implements ComboBoxModel 
     @Override
     public int getSize() {
         int size = 0;
-        for (int i = 0; i < gui.environment.getAgents().size(); i++) {
+        for (int i = 0; i < gui.getController().getEnvironment().getAgents().size(); i++) {
             if (showAgent(i)) {
                 size++;
             }

@@ -10,7 +10,6 @@ import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
-import javax.swing.KeyStroke;
 
 import nl.tudelft.bw4t.environmentstore.editor.controller.ColorSequenceController;
 import nl.tudelft.bw4t.environmentstore.editor.controller.ColorSequenceEditor;

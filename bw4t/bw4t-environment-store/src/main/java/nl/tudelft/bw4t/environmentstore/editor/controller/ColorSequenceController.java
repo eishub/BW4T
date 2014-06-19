@@ -10,8 +10,6 @@ import java.util.Set;
 
 import javax.swing.JFrame;
 
-import org.omg.CORBA.Bounds;
-
 import nl.tudelft.bw4t.environmentstore.editor.colorpalette.ColorPalette;
 import nl.tudelft.bw4t.environmentstore.editor.colorpalette.ColorPaletteListener;
 import nl.tudelft.bw4t.map.BlockColor;
@@ -87,9 +85,8 @@ public class ColorSequenceController implements FocusListener, ColorPaletteListe
             return;
         }
 
-        positionColorPalette(evt.getComponent());
-        colorPaletteWindow.setVisible(true);
         focus = (ColorSequenceEditor) evt.getComponent();
+        updatePosition();
     }
 
     /**
@@ -105,11 +102,20 @@ public class ColorSequenceController implements FocusListener, ColorPaletteListe
         p.y += (colorPaletteWindow.getHeight() / 2) + b.height / 2;
         colorPaletteWindow.setLocation(p);
     }
+    
+    public void updatePosition() {
+        if(focus == null) {
+            colorPaletteWindow.setVisible(false);
+        } else {
+            colorPaletteWindow.setVisible(true);
+            positionColorPalette(focus);
+        }
+    }
 
     @Override
     public void focusLost(FocusEvent evt) {
-        colorPaletteWindow.setVisible(false);
         focus = null;
+        updatePosition();
     }
 
     @Override

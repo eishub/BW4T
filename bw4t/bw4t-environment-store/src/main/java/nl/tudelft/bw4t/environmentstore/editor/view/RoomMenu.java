@@ -15,6 +15,10 @@ public class RoomMenu extends ZoneMenu {
 
 	public RoomMenu(MapPanelController mpc) {
 		super(mpc);
+	}
+
+	protected void init() {
+		super.init();
 		
 		// Create a Menu for Door Side
 	    doorSide = new JMenu("Door Side");
@@ -22,19 +26,12 @@ public class RoomMenu extends ZoneMenu {
 
 	    // Add all MenuItems for Door Side
 	    north = new JRadioButtonMenuItem("North");
-	    doorSide.add(north);
 
 	    east = new JRadioButtonMenuItem("East");
-	    doorSide.add(east);
 
 	    south = new JRadioButtonMenuItem("South");
-	    doorSide.add(south);
 
 	    west = new JRadioButtonMenuItem("West");
-	    doorSide.add(west);
-	    
-	    update();
-
 	}
 	
     /**
@@ -76,13 +73,28 @@ public class RoomMenu extends ZoneMenu {
     @Override
     public void update() {
     	super.update();
-
+    	
+    	restrictDoorOptions();
+    	
     	north.setSelected(zone.hasDoor(ZoneModel.NORTH));
         east.setSelected(zone.hasDoor(ZoneModel.EAST));
         south.setSelected(zone.hasDoor(ZoneModel.SOUTH));
         west.setSelected(zone.hasDoor(ZoneModel.WEST));
     }
-	
- 
-
+    
+    /** Only shows the options where one can add a door. */
+    private void restrictDoorOptions() {
+	    if (zone.canPlaceDoor(ZoneModel.NORTH)) {
+		    doorSide.add(north);
+	    }
+	    if (zone.canPlaceDoor(ZoneModel.EAST)) {
+	    	doorSide.add(east);
+	    }
+	    if (zone.canPlaceDoor(ZoneModel.SOUTH)) {
+	    	doorSide.add(south);
+	    }
+	    if (zone.canPlaceDoor(ZoneModel.WEST)) {
+	    	doorSide.add(west);
+	    }
+    }
 }

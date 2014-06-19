@@ -3,12 +3,9 @@
  */
 package nl.tudelft.bw4t.environmentstore.editor;
 
-import static org.junit.Assert.*;
-
-import java.awt.Rectangle;
-
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import nl.tudelft.bw4t.environmentstore.editor.model.EnvironmentMap;
-import nl.tudelft.bw4t.environmentstore.editor.model.MapConverter;
 import nl.tudelft.bw4t.environmentstore.editor.model.ZoneModel;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;

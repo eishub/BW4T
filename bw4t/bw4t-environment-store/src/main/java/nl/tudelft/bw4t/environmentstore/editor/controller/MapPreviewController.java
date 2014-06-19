@@ -8,11 +8,12 @@ import java.util.List;
 import java.util.Set;
 
 import nl.tudelft.bw4t.environmentstore.editor.model.MapConverter;
-import nl.tudelft.bw4t.map.renderer.AbstractMapController;
-import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Entity;
+import nl.tudelft.bw4t.map.MapFormatException;
 import nl.tudelft.bw4t.map.Zone;
+import nl.tudelft.bw4t.map.renderer.AbstractMapController;
+import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
@@ -33,7 +34,7 @@ public class MapPreviewController extends AbstractMapController {
 	public MapPreviewController(MapPanelController mc) {
 		super(MapConverter.createMap(mc.getEnvironmentMap()));
 		this.mapController = mc;
-		this.getRenderSettings().setUpdateDelay(200);
+		this.getRenderSettings().setUpdateDelay(100);
 	}
 
 	@Override
@@ -50,6 +51,16 @@ public class MapPreviewController extends AbstractMapController {
 	public boolean isOccupied(Zone room) {
 		return false;
 	}
+	
+    @Override
+    public Zone getDropZone() {
+        try {
+        	return super.getDropZone();
+        } catch(MapFormatException e) {
+        	return null;
+        }
+        
+    }
 
 	@Override
 	public Set<ViewBlock> getVisibleBlocks() {

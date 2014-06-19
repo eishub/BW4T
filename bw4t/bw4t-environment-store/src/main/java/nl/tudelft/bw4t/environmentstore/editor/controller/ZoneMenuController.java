@@ -41,7 +41,7 @@ public class ZoneMenuController {
 	private void attachListenerToZoneMenuItem(final JMenuItem item,
 			final MapPanelController mapcontroller, final Type t,
 			final boolean dropzone, final boolean startzone) {
-		item.addActionListener(new ActionListener() {
+			item.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				mapcontroller.createZone(t, dropzone, startzone);

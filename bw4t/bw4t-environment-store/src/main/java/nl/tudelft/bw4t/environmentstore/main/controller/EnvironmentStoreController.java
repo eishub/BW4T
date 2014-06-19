@@ -1,5 +1,8 @@
 package nl.tudelft.bw4t.environmentstore.main.controller;
 
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
 import javax.swing.JOptionPane;
 
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
@@ -12,6 +15,7 @@ import nl.tudelft.bw4t.environmentstore.editor.menu.controller.MenuOptionRandomi
 import nl.tudelft.bw4t.environmentstore.editor.menu.controller.MenuOptionRandomizeSequence;
 import nl.tudelft.bw4t.environmentstore.editor.menu.controller.MenuOptionSave;
 import nl.tudelft.bw4t.environmentstore.editor.menu.controller.MenuOptionSaveAs;
+import nl.tudelft.bw4t.environmentstore.editor.menu.view.MenuBar;
 import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
 import nl.tudelft.bw4t.map.Zone.Type;
 
@@ -19,7 +23,7 @@ import nl.tudelft.bw4t.map.Zone.Type;
  * The EnvironmentStoreController class serves as a controller for the EnvironmentStore
  *
  */
-public class EnvironmentStoreController {
+public class EnvironmentStoreController extends ComponentAdapter {
 	
 	private EnvironmentStore view;
 	
@@ -35,30 +39,34 @@ public class EnvironmentStoreController {
 		this.view = es;
 		this.mapController = mc;
 		
+		getMainView().addComponentListener(this);
+		
+		final MenuBar bar = getMainView().getTopMenuBar();
+		
 		/** Create all action listeners for the File Menu */
 		// New
-		getMainView().getTopMenuBar().getMenuItemFileNew().addActionListener(
-				new MenuOptionNew(getMainView().getTopMenuBar(), this)
+        bar.getMenuItemFileNew().addActionListener(
+				new MenuOptionNew(bar, this)
 		);		
 		// Open
-		getMainView().getTopMenuBar().getMenuItemFileOpen().addActionListener(
-				new MenuOptionOpen(getMainView().getTopMenuBar(), this)
+		bar.getMenuItemFileOpen().addActionListener(
+				new MenuOptionOpen(bar, this)
         );		
 		// Save
-		getMainView().getTopMenuBar().getMenuItemFileSave().addActionListener(
-				new MenuOptionSave(getMainView().getTopMenuBar(), this)
+		bar.getMenuItemFileSave().addActionListener(
+				new MenuOptionSave(bar, this)
         );		
 		// Save As
-		getMainView().getTopMenuBar().getMenuItemFileSaveAs().addActionListener(
-				new MenuOptionSaveAs(getMainView().getTopMenuBar(), this)
+		bar.getMenuItemFileSaveAs().addActionListener(
+				new MenuOptionSaveAs(bar, this)
         );		
 		// Preview
-		getMainView().getTopMenuBar().getMenuItemPreview().addActionListener(
-				new MenuOptionPreview(getMainView().getTopMenuBar(), this)
+		bar.getMenuItemPreview().addActionListener(
+				new MenuOptionPreview(bar, this)
 		);		
 		// Exit
-		getMainView().getTopMenuBar().getMenuItemFileExit().addActionListener(
-				new MenuOptionExit(getMainView().getTopMenuBar(), this)
+		bar.getMenuItemFileExit().addActionListener(
+				new MenuOptionExit(bar, this)
         );
 		// Default Exit button on the right top of the window
         getMainView().addWindowListener(
@@ -67,18 +75,23 @@ public class EnvironmentStoreController {
         
         /** Create all action listeners for the Tools Menu */
         // Randomize Rooms in map
-        getMainView().getTopMenuBar().getMenuItemRandomizeRooms().addActionListener(
-				new MenuOptionRandomizeRooms(getMainView().getTopMenuBar(), this)
+        bar.getMenuItemRandomizeRooms().addActionListener(
+				new MenuOptionRandomizeRooms(bar, this)
         );
 		// Randomize Blocks distributions
-		getMainView().getTopMenuBar().getMenuItemRandomizeBlocks().addActionListener(
-				new MenuOptionRandomizeBlocks(getMainView().getTopMenuBar(), this)
+		bar.getMenuItemRandomizeBlocks().addActionListener(
+				new MenuOptionRandomizeBlocks(bar, this)
         );
 		// Randomize sequence
-		getMainView().getTopMenuBar().getMenuItemRandomizeSequence().addActionListener(
-				new MenuOptionRandomizeSequence(getMainView().getTopMenuBar(), this)
+		bar.getMenuItemRandomizeSequence().addActionListener(
+				new MenuOptionRandomizeSequence(bar, this)
         );
 
+	}
+	
+	@Override
+	public void componentMoved(ComponentEvent arg0) {
+	    mapController.getCSController().updatePosition();
 	}
 	
     /**

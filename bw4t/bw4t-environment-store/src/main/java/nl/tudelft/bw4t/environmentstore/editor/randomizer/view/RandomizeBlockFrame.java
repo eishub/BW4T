@@ -14,17 +14,21 @@ import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
-import nl.tudelft.bw4t.environmentstore.editor.randomizer.controller.RandomizeBlockFrameController;
+import nl.tudelft.bw4t.environmentstore.editor.randomizer.controller.RandomizeBlocksController;
 
+/**
+ * Create a randomize frame to randomize blocks in the rooms.
+ *
+ */
 public class RandomizeBlockFrame extends JFrame {
 
 	private static final long serialVersionUID = 1993091627565106917L;
 	
-	private RandomizeBlockFrameController randomController;
-	
 	private MapPanelController mapController;
 	
 	private JPanel contentPane = new JPanel();
+	
+	private RandomizeBlocksController randomController;
 	
 	private JLabel lblTitle;
 	
@@ -67,7 +71,7 @@ public class RandomizeBlockFrame extends JFrame {
 	 */
 	public RandomizeBlockFrame(String title, MapPanelController mpc) {
 		mapController = mpc;
-		randomController = new RandomizeBlockFrameController(this, mapController);
+		this.randomController = new RandomizeBlocksController(this, mapController);
 		
 		lblTitle = new JLabel(title);
 		setTitle("Randomize " + title);
@@ -147,12 +151,20 @@ public class RandomizeBlockFrame extends JFrame {
         return (Integer) (numberOfBlocksSpinner.getValue());
     }
     
+    public void setSpinnerModel(int n) {
+    	spinnerModel.setValue(n);
+    }
+    
     public JButton getApplyButton() {
     	return applyButton;
     }
     
     public JButton getCancelButton() {
     	return cancelButton;
+    }
+    
+    public RandomizeBlocksController getRandomController() {
+    	return this.randomController;
     }
 
 }

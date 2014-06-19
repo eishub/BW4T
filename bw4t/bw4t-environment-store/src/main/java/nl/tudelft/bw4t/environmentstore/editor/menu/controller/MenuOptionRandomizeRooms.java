@@ -37,6 +37,8 @@ public class MenuOptionRandomizeRooms extends AbstractMenuOption {
         model.setZones(grid);
         //make sure we update the view
         mpc.setModel(model);
+        mpc.setStartzone(true);
+        mpc.setDropzone(true);
         
     }
 

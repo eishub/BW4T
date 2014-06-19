@@ -11,7 +11,7 @@ import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.environment.Launcher;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 
-public class DropEPartnerActionListener extends ClientActionListener {
+public class DropEPartnerActionListener extends AbstractClientActionListener {
     private static final Logger LOGGER = Logger.getLogger(DropEPartnerActionListener.class);
     private BW4TClientGUI gui;
 

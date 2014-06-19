@@ -40,10 +40,12 @@ public class SolvableMapTest {
 		ZoneModel zm = new ZoneModel();
 		zm.setType(Type.ROOM);
 		zm.setDoor(3, true);
+		zm.setName("DropZone");
+		zm.setDropZone(true);
 		em.setZone(1, 1, zm);
 		zm = new ZoneModel();
 		zm.setType(Type.ROOM);
-		zm.setDoor(0, true);
+		zm.setDoor(2, true);
 		em.setZone(1, 2, zm);
 		zm = new ZoneModel();
 		zm.setType(Type.ROOM);
@@ -55,9 +57,7 @@ public class SolvableMapTest {
 		em.setZone(3, 1, zm);
 		zm = new ZoneModel();
 		zm.setType(Type.ROOM);
-		zm.setName("DropZone");
-		zm.setDropZone(true);
-		zm.setDoor(2, true);
+		zm.setDoor(0, true);
 		em.setZone(3, 2, zm);
 		zm = new ZoneModel();
 		zm.setType(Type.ROOM);
@@ -105,8 +105,6 @@ public class SolvableMapTest {
 		em.generateRandomBlocks(l2, 1);
 		NewMap m = MapConverter.createMap(em);
 		assertFalse(SolvabilityAlgorithm.mapIsSolvable(m) == null);
-		zm.setType(Type.ROOM);
-		em.setZone(1, 0, zm);
 	}
 	/**
 	 * This map should be unsolvable, as the start zone is blocked
@@ -123,9 +121,6 @@ public class SolvableMapTest {
 		em.generateRandomBlocks(l2, 1);
 		NewMap m = MapConverter.createMap(em);
 		assertFalse(SolvabilityAlgorithm.mapIsSolvable(m) == null);
-		zm.setType(Type.ROOM);
-		em.setZone(4, 1, zm);
-		em.setZone(4, 3, zm);
 	}
 	/**
 	 * This map should be unsolvable, as there are no blocks in the map.

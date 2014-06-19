@@ -1,6 +1,5 @@
 package nl.tudelft.bw4t.environmentstore.editor.randomizer.view;
 
-import java.awt.EventQueue;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -16,13 +15,17 @@ import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
-import nl.tudelft.bw4t.environmentstore.editor.randomizer.controller.RandomizeController;
+import nl.tudelft.bw4t.environmentstore.editor.randomizer.controller.RandomizeSequenceController;
 
-public class RandomizeFrame extends JFrame {
+/**
+ * Create a randomize frame to randomize blocks in the sequence.
+ *
+ */
+public class RandomizeSequenceFrame extends JFrame {
 
 	private static final long serialVersionUID = 1993091627565106917L;
 	
-	private RandomizeController randomController;
+	private RandomizeSequenceController randomController;
 	
 	private MapPanelController mapController;
 	
@@ -82,9 +85,9 @@ public class RandomizeFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RandomizeFrame(String title, MapPanelController mpc) {
+	public RandomizeSequenceFrame(String title, MapPanelController mpc) {
 		mapController = mpc;
-		randomController = new RandomizeController(this, mapController);
+		this.randomController = new RandomizeSequenceController(this, mapController);
 		
 		lblTitle = new JLabel(title);
 		setTitle("Randomize " + title);
@@ -121,6 +124,7 @@ public class RandomizeFrame extends JFrame {
 		chckbxWWhite.setSelected(true);
 		chckbxPPink.setSelected(true);
 		
+		randomizedSequence.setEditable(false);		
 		randomizedSequence.setColumns(10);
 		
 		contentPane.add(applyButton, "flowx,cell 0 15,alignx left,aligny top");
@@ -169,6 +173,10 @@ public class RandomizeFrame extends JFrame {
         return (Integer) (numberOfBlocksSpinner.getValue());
     }
     
+    public void setSpinnerModel(int n) {
+    	spinnerModel.setValue(n);
+    }
+    
     public JButton getRandomizeButton() {
     	return randomizeButton;
     }
@@ -183,6 +191,10 @@ public class RandomizeFrame extends JFrame {
     
     public JButton getCancelButton() {
     	return cancelButton;
+    }
+    
+    public RandomizeSequenceController getRandomController() {
+    	return this.randomController;
     }
 
 }

@@ -2,14 +2,9 @@ package nl.tudelft.bw4t.client.controller;
 
 import eis.exceptions.NoEnvironmentException;
 import eis.exceptions.PerceiveException;
-import eis.iilang.Function;
-import eis.iilang.Identifier;
-import eis.iilang.Numeral;
 import eis.iilang.Parameter;
-import eis.iilang.ParameterList;
 import eis.iilang.Percept;
 
-import java.awt.geom.Point2D;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -17,6 +12,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import nl.tudelft.bw4t.client.controller.percept.processors.ColorProcessor;
+import nl.tudelft.bw4t.client.controller.percept.processors.EPartnerProcessor;
+import nl.tudelft.bw4t.client.controller.percept.processors.HoldingProcessor;
+import nl.tudelft.bw4t.client.controller.percept.processors.LocationProcessor;
+import nl.tudelft.bw4t.client.controller.percept.processors.NegationProcessor;
+import nl.tudelft.bw4t.client.controller.percept.processors.OccupiedProcessor;
+import nl.tudelft.bw4t.client.controller.percept.processors.PerceptProcessor;
+import nl.tudelft.bw4t.client.controller.percept.processors.PositionProcessor;
+import nl.tudelft.bw4t.client.controller.percept.processors.RobotProcessor;
+import nl.tudelft.bw4t.client.controller.percept.processors.RobotSizeProcessor;
+import nl.tudelft.bw4t.client.controller.percept.processors.SequenceIndexProcessor;
+import nl.tudelft.bw4t.client.controller.percept.processors.SequenceProcessor;
 import nl.tudelft.bw4t.client.environment.PerceptsHandler;
 import nl.tudelft.bw4t.client.gui.listeners.BatteryProgressBarListener;
 import nl.tudelft.bw4t.map.BlockColor;
@@ -66,6 +73,9 @@ public class ClientMapController extends AbstractMapController {
     private Map<Long, ViewBlock> allBlocks = new HashMap<>();
     
     private Map<Long, ViewEPartner> allEPartners = new HashMap<>();
+
+    private Map<String, PerceptProcessor> perceptProcessors;
+
     
     /** The color sequence. */
     private List<BlockColor> colorSequence = new LinkedList<>();
@@ -81,6 +91,18 @@ public class ClientMapController extends AbstractMapController {
     public ClientMapController(NewMap map, ClientController controller) {
         super(map);
         clientController = controller;
+        perceptProcessors = new HashMap<String, PerceptProcessor>();
+        perceptProcessors.put("not", new NegationProcessor());
+        perceptProcessors.put("robot", new RobotProcessor());
+        perceptProcessors.put("occupied", new OccupiedProcessor());
+        perceptProcessors.put("holding", new HoldingProcessor());
+        perceptProcessors.put("position", new PositionProcessor());
+        perceptProcessors.put("color", new ColorProcessor());
+        perceptProcessors.put("epartner", new EPartnerProcessor());
+        perceptProcessors.put("sequence", new SequenceProcessor());
+        perceptProcessors.put("sequenceIndex", new SequenceIndexProcessor());
+        perceptProcessors.put("location", new LocationProcessor());
+        perceptProcessors.put("robotSize", new RobotSizeProcessor());
     }
 
     @Override
@@ -115,7 +137,7 @@ public class ClientMapController extends AbstractMapController {
      * @param name
      *            the name
      */
-    private void addOccupiedRoom(String name) {
+    public void addOccupiedRoom(String name) {
         getOccupiedRooms().add(getMap().getZone(name));
     }
 
@@ -125,7 +147,7 @@ public class ClientMapController extends AbstractMapController {
      * @param name
      *            the name
      */
-    private void removeOccupiedRoom(String name) {
+    public void removeOccupiedRoom(String name) {
         getOccupiedRooms().remove(getMap().getZone(name));
     }
 
@@ -159,7 +181,7 @@ public class ClientMapController extends AbstractMapController {
         return theBot;
     }
 
-    private ViewBlock getBlock(Long id) {
+    public ViewBlock getBlock(Long id) {
         ViewBlock b = allBlocks.get(id);
         if (b == null) {
             b = new ViewBlock();
@@ -178,6 +200,14 @@ public class ClientMapController extends AbstractMapController {
     }
 
     /**
+     * @param id of the block to be checked
+     * @return true iff the block is in in the environment
+     */
+    public boolean containsBlock(Long id) {
+        return allBlocks.containsKey(id);
+    }
+
+    /**
      * Handle all the percepts.
      * 
      * @param name
@@ -185,236 +215,21 @@ public class ClientMapController extends AbstractMapController {
      * @param perceptParameters
      *            the percept parameters
      */
+
     public void handlePercept(String name, List<Parameter> perceptParameters) {
-        switch (name) {
-        case "not":
-            negatedPercepts(perceptParameters);
-            break;
-        case "robot":
-            processRobotPercept(perceptParameters);
-            break;
-        case "occupied":
-            processOccupiedPercept(perceptParameters);
-            break;
-        case "holding":
-            processHoldingPercept(perceptParameters);
-            break;
-        case "position":
-            processPositionPercept(perceptParameters);
-            break;
-        case "color":
-            processColorPercept(perceptParameters);
-            break;
-        case "epartner":
-            processEPartnerPercept(name, perceptParameters);
-            break;
-        case "sequence":
-            processSequencePercept(perceptParameters);
-            break;
-        case "sequenceIndex":
-            getSequenceIndex(perceptParameters);
-            break;
-        case "location":
-            processLocationPercept(perceptParameters);
-            break;
-        case "robotSize":
-            processRobotSize(perceptParameters);
-            break;
-        case "battery":
-            processRobotBattery(perceptParameters);
-            break;
-        default:
-            break;
+        PerceptProcessor processor = perceptProcessors.get(name);
+        if (processor != null) {
+            processor.process(perceptParameters, this);
         }
     }
 
-    /**
-     * Process occupied percept.
-     * 
-     * @param perceptParameters
-     *            the percept parameters
-     */
-    private void processOccupiedPercept(List<Parameter> perceptParameters) {
-        addOccupiedRoom(((Identifier) perceptParameters.get(0)).getValue());
-    }
-
-    /**
-     * Process robot percept.
-     * 
-     * @param perceptParameters
-     *            the percept parameters
-     */
-    private void processRobotPercept(List<Parameter> perceptParameters) {
-        theBot.setId(((Numeral) perceptParameters.get(0)).getValue().longValue());
-    }
-
-    /**
-     * Process robot size.
-     * 
-     * @param perceptParameters
-     *            the percept parameters
-     */
-    private void processRobotSize(List<Parameter> perceptParameters) {
-        long id = ((Numeral) perceptParameters.get(0)).getValue().longValue();
-        int x = ((Numeral) perceptParameters.get(1)).getValue().intValue();
-
-        if (id == theBot.getId()) {
-            theBot.setSize(x);
-        }
-    }
-
-    /**
-     * Gets the sequence index.
-     * 
-     * @param perceptParameters
-     *            the percept parameters
-     */
-    private void getSequenceIndex(List<Parameter> perceptParameters) {
-        int index = ((Numeral) perceptParameters.get(0)).getValue().intValue();
-        setSequenceIndex(index);
-    }
-
-    /**
-     * Process location percept.
-     * 
-     * @param perceptParameters
-     *            the percept parameters
-     */
-    private void processLocationPercept(List<Parameter> perceptParameters) {
-        double x = ((Numeral) perceptParameters.get(0)).getValue().doubleValue();
-        double y = ((Numeral) perceptParameters.get(1)).getValue().doubleValue();
-        theBot.setLocation(x, y);
-    }
-
-    /**
-     * Process holding percept.
-     * 
-     * @param perceptParameters
-     *            the percept parameters
-     */
-    private void processHoldingPercept(List<Parameter> perceptParameters) {
-        Long blockId = ((Numeral) perceptParameters.get(0)).getValue().longValue();
-        theBot.getHolding().put(blockId, getBlock(blockId));
-    }
-
-    /**
-     * Process sequence percept. 
-     * 
-     * TODO: This function process a list of lists, seems like it should only process a list,
-     * why is this?
-     * 
-     * @param perceptParameters
-     *            the percept parameters
-     */
-    private void processSequencePercept(List<Parameter> perceptParameters) {
-        for (Parameter i : perceptParameters) {
-            ParameterList list = (ParameterList) i;
-            for (Parameter j : list) {
-                char letter = (((Identifier) j).getValue().charAt(0));
-                getSequence().add(BlockColor.toAvailableColor(letter));
-            }
-        }
-    }
-
-    /**
-     * Process color percept.
-     * 
-     * @param perceptParameters
-     *            the percept parameters
-     */
-    private void processColorPercept(List<Parameter> perceptParameters) {
-        long id = ((Numeral) perceptParameters.get(0)).getValue().longValue();
-        char color = ((Identifier) perceptParameters.get(1)).getValue().charAt(0);
-        ViewBlock b = getBlock(id);
-        b.setColor(BlockColor.toAvailableColor(color));
-        getVisibleBlocks().add(b);
-    }
-
-    /**
-     * Process epartner percept.
-     * 
-     * @param name
-     *            the name
-     * @param perceptParameters
-     *            the percept parameters
-     */
-    private void processEPartnerPercept(String name, List<Parameter> perceptParameters) {
-        long id = ((Numeral) perceptParameters.get(0)).getValue().longValue();
-        String entityId = ((Identifier) perceptParameters.get(1)).getValue();
-        long holderId = ((Numeral) perceptParameters.get(2)).getValue().longValue();
-        
-        ViewEPartner epartner = getEPartner(id);
-        if (epartner == null) {
-            LOGGER.info("creating " + name + "(" + id + ", " + holderId + ")");
-            epartner = new ViewEPartner();
-        }
+    public ViewEPartner addEPartner(long id, long holderId) {
+        LOGGER.info("creating epartner(" + id + ", " + holderId + ")");
+        ViewEPartner epartner = new ViewEPartner();
         epartner.setId(id);
-        epartner.setName(entityId);
         getVisibleEPartners().add(epartner);
-        if (holderId == theBot.getId()) {
-            if (id != theBot.getHoldingEpartner()){
-                LOGGER.info("We are now holding the e-partner: " + id);
-            }
-            theBot.setHoldingEpartner(id);
-        } else if (id == theBot.getHoldingEpartner()) {
-            theBot.setHoldingEpartner(-1);
-        }
-        if (allBlocks.containsKey(id)) {
-            epartner.setLocation(allBlocks.get(id).getPosition());
-        }
-        epartner.setPickedUp(holderId >= 0);
+        return epartner;
     }
-
-    /**
-     * Process position percept.
-     * 
-     * @param perceptParameters
-     *            the percept parameters
-     */
-    private void processPositionPercept(List<Parameter> perceptParameters) {
-        long id = ((Numeral) perceptParameters.get(0)).getValue().longValue();
-        double x = ((Numeral) perceptParameters.get(1)).getValue().doubleValue();
-        double y = ((Numeral) perceptParameters.get(2)).getValue().doubleValue();
-
-        ViewBlock b = getBlock(id);
-        b.setObjectId(id);
-        b.setPosition(new Point2D.Double(x, y));
-        ViewEPartner ep = getEPartner(id);
-        if (ep != null) {
-            ep.setLocation(b.getPosition());
-        }
-    }
-
-    /**
-     * Process the battery percept
-     * @param perceptParameters
-     *          the percept parameters
-     */
-    private void processRobotBattery(List<Parameter> perceptParameters) {
-        double battery = ((Numeral) perceptParameters.get(0)).getValue().doubleValue();
-        theBot.setBatteryLevel(battery);
-
-        for(BatteryProgressBarListener listener : BatteryProgressBarListener.getListeners()) {
-            listener.update();
-        }
-    }
-
-    /**b
-     * Negated percepts.
-     * 
-     * @param parameters
-     *            the parameters
-     */
-    private void negatedPercepts(List<Parameter> parameters) {
-        Function function = ((Function) parameters.get(0));
-        if (function.getName().equals("occupied")) {
-            LinkedList<Parameter> paramOcc = function.getParameters();
-            removeOccupiedRoom(((Identifier) paramOcc.get(0)).getValue());
-        } else if (function.getName().equals("holding")) {
-            theBot.getHolding().remove(((Numeral) function.getParameters().get(0)).getValue());
-        }
-    }
-
 
     /* (non-Javadoc)
      * @see nl.tudelft.bw4t.map.renderer.AbstractMapController#run()
@@ -423,7 +238,7 @@ public class ClientMapController extends AbstractMapController {
     public void run() {
         List<Percept> percepts;
         try {
-            percepts = PerceptsHandler.getAllPerceptsFromEntity(getTheBot().getName() + "gui",
+            percepts = PerceptsHandler.getAllPerceptsFromEntity(getTheBot().getName(),
                     clientController.getEnvironment());
             if (percepts != null) {
                 clientController.handlePercepts(percepts);
@@ -435,7 +250,6 @@ public class ClientMapController extends AbstractMapController {
             setRunning(false);
         }
         super.run();
-        clientController.updatedNextFrame();
     }
 
     /* (non-Javadoc)
@@ -443,7 +257,6 @@ public class ClientMapController extends AbstractMapController {
      */
     @Override
     protected void updateRenderer(MapRendererInterface mri) {
-        clientController.updateRenderer(mri);
         mri.validate();
         mri.repaint();
     }
