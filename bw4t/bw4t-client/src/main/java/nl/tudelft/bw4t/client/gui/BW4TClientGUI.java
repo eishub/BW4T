@@ -236,6 +236,9 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLocation(BW4TClientSettings.getX(), BW4TClientSettings.getY());
         setLocation(BW4TClientSettings.getX(), BW4TClientSettings.getY());
+        
+        pack();
+        setVisible(true);
     }
     
     private void createOverallFrame() {

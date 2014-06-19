@@ -43,7 +43,7 @@ public class PerceptsHandlerTest {
     @Test
     public void testGetAllPerceptsFromEntity() throws PerceiveException, NotBoundException, IOException {
         BW4TClient bw4tClient = new BW4TClient(remoteEnvironment);
-        HumanAgent humanAgent = new HumanAgent("agentID", remoteEnvironment, null);
+        HumanAgent humanAgent = new HumanAgent("agentID", remoteEnvironment);
         NewMap newMap = new NewMap();
         bw4tClient.useMap(newMap);
         when(remoteEnvironment.getClient()).thenReturn(bw4tClient);
