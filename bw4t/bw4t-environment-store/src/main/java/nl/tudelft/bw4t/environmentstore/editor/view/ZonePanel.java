@@ -76,6 +76,10 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
         this.removeBorder();
         switch (zoneController.getType()) {
         case ROOM:
+        	if (!zoneController.isFree()) {
+        		System.out.println("zone is not free");
+        		
+        	}
             if (zoneController.isDropZone()) {
                 nameLabel.setForeground(Color.WHITE);
                 this.setBackground(Color.DARK_GRAY);
