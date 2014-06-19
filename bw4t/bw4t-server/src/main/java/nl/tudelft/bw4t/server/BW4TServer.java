@@ -18,6 +18,7 @@ import java.util.Set;
 import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.network.BW4TClientActions;
 import nl.tudelft.bw4t.network.BW4TServerHiddenActions;
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.server.eis.EntityInterface;
@@ -99,9 +100,9 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
     }
 
     @Override
-    public void registerClient(BW4TClientActions client, List<BotConfig> bots, List<EPartnerConfig> partners)
+    public void registerClient(BW4TClientActions client, BW4TClientConfig clientConfig)
             throws RemoteException {
-        registerClient(client, new ClientInfo(bots, partners));
+        registerClient(client, new ClientInfo(clientConfig));
     }
     
     private void registerClient(BW4TClientActions client, ClientInfo cInfo) throws RemoteException{
