@@ -114,6 +114,12 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     private IRobot topMostHandicap = this;
 
     /**
+     * Returns whether or not the bot has ever stood free from other obstacles.
+     * Used for collision allowance during the start.
+     */
+    private boolean hasBeenFree = false;
+
+    /**
      * Obstacles on the path of the robot
      */
     List<BoundedMoveableObject> obstacles = new ArrayList<BoundedMoveableObject>();
@@ -392,6 +398,12 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     @Override
     @ScheduledMethod(start = 0, duration = 0, interval = 1)
     public synchronized void move() {
+        // Check if the robot is alone on its map point
+        if(!hasBeenFree) {
+            hasBeenFree = isFree(AbstractRobot.class);
+        }
+
+
         // When the robot is in a charging zone, the battery recharges.
         if (getZone() instanceof ChargingZone) {
             getBattery().recharge();
@@ -415,7 +427,9 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		
 		            try {
                         NdPoint destination = new NdPoint(getLocation().getX() + displacement[0], getLocation().getY() + displacement[1]);
-                        checkIfDestinationVacant(destination);
+                        if(hasBeenFree) {
+                            checkIfDestinationVacant(destination);
+                        }
 
                         // Move the robot to the new position using the displacement
 		                moveByDisplacement(displacement[0], displacement[1]);
