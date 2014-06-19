@@ -44,6 +44,9 @@ public class ScenarioEditor extends JFrame {
      */
     public ScenarioEditor() {
         setLookAndFeel();
+
+        model = new BW4TClientConfig();
+        
         setWindowTitle("Untitled");
 
         setResizable(false);
@@ -65,7 +68,6 @@ public class ScenarioEditor extends JFrame {
         // Setting the location relative to null centers the frame.
         setLocationRelativeTo(null);
 
-        model = new BW4TClientConfig();
         controller = new ScenarioEditorController(this, model);
         setVisible(true);
     }

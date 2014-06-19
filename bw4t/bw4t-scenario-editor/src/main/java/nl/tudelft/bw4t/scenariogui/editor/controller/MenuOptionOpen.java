@@ -157,8 +157,7 @@ class MenuOptionOpen extends AbstractMenuOption {
             String agentFileName = configuration.getBot(i).getFileName();
             String botAmount = Integer.toString(configuration.getBot(i)
                     .getBotAmount());
-            Object[] botObject = {botName, botController, agentFileName, botAmount };
-            entityPanel.getBotTableModel().addRow(botObject);
+            entityPanel.getBotTableModel().update();
             getModel().getBots().add(configuration.getBot(i));
         }
     }
@@ -186,6 +185,19 @@ class MenuOptionOpen extends AbstractMenuOption {
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Reset the list with bots.
+     *
+     * @param entityPanel
+     *            The EntityPanel which contains the bot list.
+     */
+    public void resetBotTable(EntityPanel entityPanel) {
+        entityPanel.getBotTableModel().update();
+    }
+
+    /**
+>>>>>>> 0d4573e... the bot table is now using a TabelModel made specifically for use with BW4TClientConfig
      * Reset the list with epartners.
      *
      * @param entityPanel
@@ -201,23 +213,6 @@ class MenuOptionOpen extends AbstractMenuOption {
             }
         }
     }
-
-	/**
-	 * Reset the list with bots.
-	 * 
-	 * @param entityPanel
-	 *            The EntityPanel which contains the bot list.
-	 */
-	public void resetBotTable(EntityPanel entityPanel) {
-		DefaultTableModel botTable = entityPanel.getBotTableModel();
-		int rows = botTable.getRowCount();
-
-		if (rows > 0) {
-			for (int i = rows - 1; i >= 0; i--) {
-				botTable.removeRow(i);
-			}
-		}
-	}
 
 	private void updateConfigurationInModel(BW4TClientConfig loadedModel) {
         getModel().setClientIp(loadedModel.getClientIp());

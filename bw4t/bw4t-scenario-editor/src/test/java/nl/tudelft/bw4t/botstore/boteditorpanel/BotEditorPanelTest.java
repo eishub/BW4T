@@ -130,12 +130,6 @@ public class BotEditorPanelTest {
         assertTrue(spypanel.getBatteryEnabledCheckbox().isSelected());
     }
 
-    /** test the batteryusevalue */
-    @Test
-    public final void testBatteryUseValue() {
-        assertEquals("0.000", spypanel.getBatteryUseValueLabel().getText());
-    }
-
     /** Test the speed slider */
     @Test
     public final void testSpeedSliderValue() {
@@ -147,7 +141,6 @@ public class BotEditorPanelTest {
     @Test
     public final void testSpeedSliderEnable() {
         editor.getBotEditorPanel().getMovespeedCheckbox().doClick();
-        editor.getBotEditorPanel().updateView();
         assertTrue(editor.getBotEditorPanel().getSpeedSlider().isEnabled());
     }
 

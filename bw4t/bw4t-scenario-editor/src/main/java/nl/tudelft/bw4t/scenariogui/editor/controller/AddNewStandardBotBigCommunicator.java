@@ -50,10 +50,9 @@ class AddNewStandardBotBigCommunicator implements ActionListener {
         
         botCount = model.getBots().size() + 1;
         newBotConfig.setBotName("Big Communicator Bot " + botCount);
-        
-        Object[] newBotObject = {newBotConfig.getBotName(), EntityType.AGENT.toString(), newBotConfig.getFileName(), 1};
+   
         model.addBot(newBotConfig);
-        view.getEntityPanel().getBotTableModel().addRow(newBotObject);
+        view.getEntityPanel().getBotTableModel().update();
     }
 
 }

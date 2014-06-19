@@ -11,6 +11,7 @@ import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.util.RobotTableModel;
 
 /**
  * MainPanel which serves as the content pane for the ScenarioEditor frame.
@@ -46,16 +47,13 @@ public class MainPanel extends JPanel {
      */
     public MainPanel(final ScenarioEditor parent, final ConfigurationPanel newConfigurationPanel,
                      final EntityPanel newEntityPanel) {
+        this.parent = parent;
         gbl = new GridBagLayout();
         this.setLayout(gbl);
         this.setConfigurationPanel(newConfigurationPanel);
         this.setEntityPanel(newEntityPanel);
 
         this.drawPanel();
-
-        this.configurationPanel = newConfigurationPanel;
-        this.entityPanel = newEntityPanel;
-        this.parent = parent;
     }
 
     /**
@@ -121,23 +119,14 @@ public class MainPanel extends JPanel {
      */
     public final void setEntityPanel(final EntityPanel newEntityPanel) {
         this.entityPanel = newEntityPanel;
+        this.entityPanel.getBotTableModel().setEnvironmentStore(parent);
     }
     
     /**
      * Update the Bot table with the newest values.
      */
     public void refreshBotTableModel() {
-        final DefaultTableModel tableModel = getEntityPanel().getBotTableModel();
-        tableModel.setRowCount(0);
-        int rows = getClientConfig().getBots().size();
-        for (int i = 0; i < rows; i++) {
-            BotConfig botConfig = getClientConfig().getBot(i);
-            Object[] newBotObject = {botConfig.getBotName(),
-                    botConfig.getBotController().toString(),
-                    botConfig.getFileName(),
-                    botConfig.getBotAmount()};
-            tableModel.addRow(newBotObject);
-        }
+        getEntityPanel().getBotTableModel().update();
     }
     
     /**

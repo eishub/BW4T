@@ -1,5 +1,21 @@
 package nl.tudelft.bw4t.scenariogui.editor.gui.panel;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -18,6 +34,7 @@ import nl.tudelft.bw4t.scenariogui.editor.controller.AbstractMenuOption;
 import nl.tudelft.bw4t.scenariogui.editor.controller.ScenarioEditorController;
 import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
+import nl.tudelft.bw4t.scenariogui.util.AbstractTableModel;
 import nl.tudelft.bw4t.scenariogui.util.ExportToMASTest;
 import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
@@ -27,22 +44,6 @@ import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class MenuBarTest {
 
@@ -138,14 +139,14 @@ public class MenuBarTest {
         // Open the actual file with the xml reader.
         BW4TClientConfig config = BW4TClientConfig.fromXML(FILE_OPEN_PATH);
         
-        DefaultTableModel botTableModel = editor.getMainPanel().getEntityPanel().getBotTableModel();
+        AbstractTableModel botTableModel = editor.getMainPanel().getEntityPanel().getBotTableModel();
         
         //Actual testing whether the values are inserted correctly
         assertEquals(config.getBot(0).getBotName(), botTableModel.getValueAt(0, 0));
         assertEquals(config.getBot(1).getBotName(), botTableModel.getValueAt(1, 0));
         
-        assertEquals(config.getBot(0).getBotController(), botTableModel.getValueAt(0, 1));
-        assertEquals(config.getBot(1).getBotController(), botTableModel.getValueAt(1, 1));
+        assertEquals(config.getBot(0).getBotController().toString(), botTableModel.getValueAt(0, 1));
+        assertEquals(config.getBot(1).getBotController().toString(), botTableModel.getValueAt(1, 1));
         
         assertEquals(config.getBot(0).getFileName(), botTableModel.getValueAt(0, 2));
         assertEquals(config.getBot(1).getFileName(), botTableModel.getValueAt(1, 2));

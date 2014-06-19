@@ -32,8 +32,6 @@ public final class BotConfig implements Serializable, Cloneable {
 
 	private int botBatteryCapacity = 10;
 
-	private double botBatteryDischargeRate = 0;
-
 	private int numberOfGrippers = 1;
 
 	private boolean batteryEnabled = false;
@@ -186,15 +184,6 @@ public final class BotConfig implements Serializable, Cloneable {
 	}
 
 	/**
-	 * @param newBatteryDischargeRate
-	 *            , the new robot's battery discharge rate.
-	 */
-	@XmlElement
-	public void setBotBatteryDischargeRate(double newBatteryDischargeRate) {
-		botBatteryDischargeRate = newBatteryDischargeRate;
-	}
-
-	/**
 	 * @return if the robot has a color blind handicap.
 	 */
 	public boolean getColorBlindHandicap() {
@@ -285,7 +274,7 @@ public final class BotConfig implements Serializable, Cloneable {
 	 */
 	public String bcToString() {
 		return name + controller + amount + botSize
-				+ botSpeed + botBatteryCapacity + botBatteryDischargeRate
+				+ botSpeed + botBatteryCapacity
 				+ numberOfGrippers + batteryEnabled + hasColorBlindHandicap
 				+ hasGripperHandicap + hasMoveSpeedHandicap
 				+ hasSizeOverloadHandicap + fileName + referenceName;
