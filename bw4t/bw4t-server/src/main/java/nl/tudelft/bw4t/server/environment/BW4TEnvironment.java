@@ -402,6 +402,8 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
     public final boolean isDrawPathsEnabled() { return drawPathsEnabled; }
 
+    public void setDrawPathsEnabled(boolean state) { drawPathsEnabled = state; }
+
     public double getTps() {
         if (stepper == null) {
             return Stepper.MIN_TPS;

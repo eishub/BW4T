@@ -19,6 +19,7 @@ import java.util.Set;
 import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.network.BW4TClientActions;
 import nl.tudelft.bw4t.network.BW4TServerHiddenActions;
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
@@ -99,9 +100,9 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
     }
 
     @Override
-    public void registerClient(BW4TClientActions client, List<BotConfig> bots, List<EPartnerConfig> partners)
+    public void registerClient(BW4TClientActions client, BW4TClientConfig config)
             throws RemoteException {
-        registerClient(client, new ClientInfo(bots, partners));
+        registerClient(client, new ClientInfo(config, config.getBots(), config.getEpartners()));
     }
     
     private void registerClient(BW4TClientActions client, ClientInfo cInfo) throws RemoteException{
@@ -118,7 +119,10 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 
         // for every request and attach them
         env.spawnEPartners(cInfo.getRequestedEPartners(), client);
-        
+
+        // set the path finding and collision arguments.
+        env.setCollisionEnabled(cInfo.getConfiguration().isCollisionEnabled());
+        env.setDrawPathsEnabled(cInfo.getConfiguration().isVisualizePaths());
     }
 
     @Override

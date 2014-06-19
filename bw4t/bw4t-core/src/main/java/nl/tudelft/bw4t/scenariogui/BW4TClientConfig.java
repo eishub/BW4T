@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.scenariogui;
 
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,8 @@ import nl.tudelft.bw4t.util.XMLManager;
  * @since 12-05-2014
  */
 @XmlRootElement
-public class BW4TClientConfig {
+public class BW4TClientConfig implements Serializable, Cloneable  {
+    private static final long serialVersionUID = -4261058226472972776L;
 
 	private String outputFile;
 
@@ -37,8 +39,6 @@ public class BW4TClientConfig {
 	private boolean launchGui = DefaultConfigurationValues.USE_GUI.getBooleanValue();
 
 	private boolean visualizePaths = DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue();
-
-	private boolean enableCollisions = DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue();
 
 	private boolean useGoal = DefaultConfigurationValues.USE_GOAL.getBooleanValue();
 
@@ -234,26 +234,6 @@ public class BW4TClientConfig {
 	 */
 	public final boolean isVisualizePaths() {
 		return visualizePaths;
-	}
-
-	/**
-	 * Sets if collisions should be enabled
-	 *
-	 * @param newEnableCollisions
-	 *            Boolean indicating if collisions should be enabled
-	 */
-	@XmlElement
-	public final void setEnableCollisions(final boolean newEnableCollisions) {
-		this.enableCollisions = newEnableCollisions;
-	}
-
-	/**
-	 * Gets if collisions should be enabled
-	 *
-	 * @return If collisions should be enabled
-	 */
-	public final boolean isEnableCollisions() {
-		return enableCollisions;
 	}
 
 	/**
@@ -529,6 +509,15 @@ public class BW4TClientConfig {
      */
     public boolean isCollisionEnabled() {
         return collisionEnabled;
+    }
+
+    @Override
+    public BW4TClientConfig clone() {
+        try {
+            return (BW4TClientConfig) super.clone();
+        } catch (CloneNotSupportedException e) {
+            return null;
+        }
     }
 
 }

@@ -3,10 +3,12 @@ package nl.tudelft.bw4t.server;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 
 class ClientInfo {
+    private BW4TClientConfig config = new BW4TClientConfig();
     private List<BotConfig> requestedBots = new ArrayList<>();
     private List<EPartnerConfig> requestedEPartners = new ArrayList<>();
 
@@ -25,7 +27,10 @@ class ClientInfo {
         }
     }
 
-    public ClientInfo(List<BotConfig> reqBots, List<EPartnerConfig> reqEP) {
+    public ClientInfo(BW4TClientConfig config, List<BotConfig> reqBots, List<EPartnerConfig> reqEP) {
+        if(config != null) {
+            this.config = config;
+        }
         if (reqBots != null){
             this.requestedBots = reqBots;
         }
@@ -41,4 +46,6 @@ class ClientInfo {
     public List<EPartnerConfig> getRequestedEPartners() {
         return requestedEPartners;
     }
+
+    public BW4TClientConfig getConfiguration() { return config; }
 }
