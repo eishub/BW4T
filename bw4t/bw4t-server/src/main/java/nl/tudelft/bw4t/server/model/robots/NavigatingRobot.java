@@ -126,6 +126,8 @@ public class NavigatingRobot extends AbstractRobot {
 
     @Override
     public void setTargetLocation(NdPoint p) {
+        clearCollided();
+        clearObstacles();
         if (plannedMoves == null) {
             throw new InternalError("plannedMoves==null. How is this possible??");
         }
@@ -154,6 +156,8 @@ public class NavigatingRobot extends AbstractRobot {
 
     @Override
     public void setTarget(BoundedMoveableObject target) {
+        clearCollided();
+        clearObstacles();
         // clear old path.
         plannedMoves.clear();
         Zone startpt = ZoneLocator.getNearestZone(this.getLocation());
@@ -205,9 +209,6 @@ public class NavigatingRobot extends AbstractRobot {
      * Continue with normal path after this.
      */
     public void navigateObstacles() {
-        Zone start = getZone();
-        Zone end = ZoneLocator.getNearestZone(currentMoveHistory);
-
         List<Zone> navZones = new ArrayList<Zone>(getAllZonesInMap());
 
         // the end isn't rounded since maps never have .5 coordinates.
