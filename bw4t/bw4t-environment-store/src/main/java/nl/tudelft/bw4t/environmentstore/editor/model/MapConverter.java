@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Door;
 import nl.tudelft.bw4t.map.Entity;
 import nl.tudelft.bw4t.map.MapFormatException;

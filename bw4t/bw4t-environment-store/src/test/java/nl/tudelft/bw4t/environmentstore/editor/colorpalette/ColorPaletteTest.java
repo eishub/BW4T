@@ -1,11 +1,6 @@
 package nl.tudelft.bw4t.environmentstore.editor.colorpalette;
 
-import static org.junit.Assert.*;
-
-import java.awt.Component;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 
