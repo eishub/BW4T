@@ -65,7 +65,7 @@ public class MapOperations {
             for (Zone room : cmc.getRooms()) {
                 menuItem = new JMenuItem(room.getName());
                 menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(
-                        MessageType.HASCOLORFROMROOM, room.getName(), color.getName(), null), gui.getController()));
+                        MessageType.HASCOLORFROMROOM, room.getName(), color.getName(), null), gui));
                 submenu.add(menuItem);
             }
         }

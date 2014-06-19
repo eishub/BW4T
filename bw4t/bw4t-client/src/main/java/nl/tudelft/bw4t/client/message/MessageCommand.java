@@ -638,3 +638,31 @@ class CommandChecked implements MessageCommand {
         }
     }
 }
+
+class CommandEPartnerIWantToGo implements MessageCommand {
+
+    @Override
+    public Parameter getParam(BW4TMessage message, String entityId) {
+        return new Identifier("IWantToGoTo TODO");
+    }
+
+    @Override
+    public String getString(BW4TMessage message) {
+        return "I want to go to " + message.getRoom();
+    }
+    
+}
+
+class CommandEPartnerYouForgotMe implements MessageCommand {
+
+    @Override
+    public Parameter getParam(BW4TMessage message, String entityId) {
+        return new Identifier("YouForgotMe TODO");
+    }
+
+    @Override
+    public String getString(BW4TMessage message) {
+        return "You forgot me in " + message.getRoom();
+    }
+    
+}
