@@ -84,6 +84,7 @@ public class ColorSequenceEditorTest {
 
     @Test
     public void testColorNumbers() {
+        robot.delay(DELAY);
         cse1.requestFocus();
         robot.delay(DELAY);
 
@@ -103,6 +104,7 @@ public class ColorSequenceEditorTest {
 
     @Test
     public void testColorLetters() {
+        robot.delay(DELAY);
         cse1.requestFocus();
         robot.delay(DELAY);
 
