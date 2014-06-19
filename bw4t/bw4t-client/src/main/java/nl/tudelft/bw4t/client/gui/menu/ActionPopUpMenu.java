@@ -146,7 +146,7 @@ public class ActionPopUpMenu {
                     RoomMenus.buildPopUpMenuForBeingAtBlock(box, room, gui);
                 }
                 else {
-                    RoomMenus.buildPopUpMenuForBlock(box, room, gui);
+                    RoomMenus.buildPopUpMenuForBlock(box, room, gui.getController());
                 }
                 showJPopupMenu(gui);
                 return true;

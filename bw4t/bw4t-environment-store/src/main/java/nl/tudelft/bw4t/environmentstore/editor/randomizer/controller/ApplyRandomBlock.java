@@ -3,24 +3,22 @@ package nl.tudelft.bw4t.environmentstore.editor.randomizer.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeBlockFrame;
 import nl.tudelft.bw4t.map.BlockColor;
 
-public class RandomizeFromSettingsBlock implements ActionListener{
+public class ApplyRandomBlock implements ActionListener{
 	
 	private RandomizeBlockFrame view;
 	
-	private RandomizeBlockFrameController controller;
-	
-	private ArrayList<BlockColor> result = null;
+	private RandomizeBlocksController controller;
 	
 	private int amount;
 	
-	public RandomizeFromSettingsBlock(RandomizeBlockFrame rf, RandomizeBlockFrameController controller,ArrayList<BlockColor> res) {
+	public ApplyRandomBlock(RandomizeBlockFrame rf, RandomizeBlocksController controller) {
 		this.view = rf;
-		this.result = res;
 		this.controller = controller;
 	}
 
@@ -50,22 +48,13 @@ public class RandomizeFromSettingsBlock implements ActionListener{
 		if(view.isPink()) {
 			input.add(BlockColor.PINK);
 		}
-		controller.getMapController().randomizeColorsInRooms(input, amount);
+		try {
+			controller.getMapController().randomizeColorsInRooms(input, amount);
+			view.dispose();
+		}
+		catch (IllegalArgumentException e) {
+			JOptionPane.showMessageDialog(view, "Warning: Choose atleast 1 color");
+		}
 	}
 	
-	public void setResult(ArrayList<BlockColor> res) {
-		result = res;
-	}
-	
-	public ArrayList<BlockColor> getResult() {
-		return result;
-	}
-	
-	public int getAmount() {
-		return amount;
-	}
-	
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
 }

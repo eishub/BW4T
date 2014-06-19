@@ -121,6 +121,10 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
         return this.model.hasDoor(dir);
     }
     
+    public boolean canPlaceDoor(int dir) {
+    	return this.model.canPlaceDoor(dir);
+    }
+    
     public void setDoor(int dir, boolean value) {
     	this.model.setDoor(dir, value);
     }

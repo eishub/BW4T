@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
@@ -92,7 +91,7 @@ public final class SolvabilityAlgorithm {
 		for (BlockColor bc : sequenceFreq.keySet()) {
 			if ((map.get(bc) == null && sequenceFreq.get(bc) != null)
 					|| sequenceFreq.get(bc) > map.get(bc)) {
-				return "Not all necessary blocks could be reached from the drop zone.";
+				return "Not all necessary blocks can be reached from the drop zone.";
 			}
 		}
 		if (!startZoneReachable) {

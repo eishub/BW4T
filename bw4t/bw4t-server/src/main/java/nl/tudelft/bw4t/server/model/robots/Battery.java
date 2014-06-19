@@ -32,10 +32,10 @@ public class Battery {
     }
     
     /**
-     * Constructor. TODO: should we really allow the current value to be negative?
+     * Create a new Battery with the given configuration.
      * @param maxCharge The max. capacity of the battery.
      * @param currentCharge The current amount of energy left.
-     * @param dr The discharge rate.
+     * @param dischargeRate The discharge rate.
      */
     public Battery(int maxCharge, double currentCharge, double dischargeRate) {
         this.max = maxCharge;

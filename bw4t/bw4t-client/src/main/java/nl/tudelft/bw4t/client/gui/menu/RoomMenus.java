@@ -18,6 +18,8 @@ import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 
 public class RoomMenus {
+    
+    private static ClientController controller;
     /**
      * Used for building the pop up menu when clicking on the agent while it is near a box
      * 
@@ -57,9 +59,12 @@ public class RoomMenus {
      * @param box
      *            , the box that was clicked on
      */
-    public static void buildPopUpMenuForBlock(ViewBlock box, Zone room, BW4TClientGUI gui) {
+    public static void buildPopUpMenuForBlock(ViewBlock box, Zone room, ClientController controller) {
         String label = room.getName();
-        String colorAsString = BasicMenuOperations.getColor(box.getColor().getName(), gui.getController().getHumanAgent());
+        String colorAsString = BasicMenuOperations.getColor(box.getColor().getName(), controller.getHumanAgent());
+        
+        RoomMenus.controller = controller;
+        BW4TClientGUI gui = controller.getGui();
 
         gui.getjPopupMenu().removeAll();
 
@@ -121,7 +126,7 @@ public class RoomMenus {
             String color2 = BasicMenuOperations.getColor(color, gui.getController().getHumanAgent());
             menuItem = new JMenuItem(color2);
             menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.ROOMCONTAINS, label,
-                    color2, null), gui));
+                    color2, null), controller));
             submenu.add(menuItem);
             if (!color2.equals(color))
                 break;
@@ -138,7 +143,7 @@ public class RoomMenus {
                 String color2 = BasicMenuOperations.getColor(color, gui.getController().getHumanAgent());
                 menuItem = new JMenuItem(color2);
                 menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(
-                        MessageType.ROOMCONTAINSAMOUNT, label, color2, i), gui));
+                        MessageType.ROOMCONTAINSAMOUNT, label, color2, i), controller));
                 submenuColor.add(menuItem);
                 if (!color2.equals(color))
                     break;
@@ -152,7 +157,7 @@ public class RoomMenus {
         for (String p : gui.getController().getOtherPlayers()) {
             menuItem = new JMenuItem("" + p);
             menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.CHECKED, label,
-                    null, p), gui));
+                    null, p), controller));
             submenu.add(menuItem);
         }
 
@@ -180,7 +185,7 @@ public class RoomMenus {
             for (Zone roomInfo : cmc.getRooms()) {
                 menuItem = new JMenuItem(roomInfo.getName());
                 menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.HASCOLOR,
-                        roomInfo.getName(), holdingColor, null), gui));
+                        roomInfo.getName(), holdingColor, null), controller));
                 submenu.add(menuItem);
             }
         }

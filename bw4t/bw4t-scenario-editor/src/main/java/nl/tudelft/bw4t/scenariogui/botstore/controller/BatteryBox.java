@@ -32,7 +32,8 @@ public class BatteryBox implements ActionListener {
     	BotController currentController = view.getBotController();
     	if (view.isBatteryEnabled()) {
     		currentController.setNewBatteryValue(view);
-    		System.out.println("" + currentController.getBotBatteryDischargeRate());
-    	} 
+    	} else {
+    		view.getBatteryUseValueLabel().setText("0.000");
+    	}
     }
 }

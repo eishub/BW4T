@@ -7,18 +7,18 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeFrame;
+import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeSequenceFrame;
 import nl.tudelft.bw4t.map.BlockColor;
 
 public class RandomizeFromSettings implements ActionListener{
 	
-	private RandomizeFrame view;
+	private RandomizeSequenceFrame view;
 	
-	private RandomizeController controller;
+	private RandomizeSequenceController controller;
 	
 	private List<BlockColor> result = null;
 	
-	public RandomizeFromSettings(RandomizeFrame rf, RandomizeController rc, List<BlockColor> res) {
+	public RandomizeFromSettings(RandomizeSequenceFrame rf, RandomizeSequenceController rc, List<BlockColor> res) {
 		this.view = rf;
 		this.controller = rc;
 		this.result = res;
@@ -56,7 +56,7 @@ public class RandomizeFromSettings implements ActionListener{
 			view.getRandomizedSequence().setText(result.toString());
 		}
 		catch (IllegalArgumentException e){
-			JOptionPane.showMessageDialog(view, "Choose atleast 1 color");
+			JOptionPane.showMessageDialog(view, "Warning: Choose atleast 1 color");
 		}
 	}
 	

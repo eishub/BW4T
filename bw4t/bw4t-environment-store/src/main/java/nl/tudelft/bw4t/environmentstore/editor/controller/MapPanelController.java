@@ -7,24 +7,16 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import nl.tudelft.bw4t.environmentstore.editor.model.EnvironmentMap;
-import nl.tudelft.bw4t.environmentstore.editor.model.MapConverter;
-import nl.tudelft.bw4t.environmentstore.editor.model.RandomMapCreator;
 import nl.tudelft.bw4t.environmentstore.editor.model.ZoneModel;
 import nl.tudelft.bw4t.environmentstore.editor.view.RoomMenu;
 import nl.tudelft.bw4t.environmentstore.editor.view.ZoneMenu;
+import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
 import nl.tudelft.bw4t.map.BlockColor;
-import nl.tudelft.bw4t.map.Door;
-import nl.tudelft.bw4t.map.Entity;
-import nl.tudelft.bw4t.map.MapFormatException;
 import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.map.Point;
-import nl.tudelft.bw4t.map.Rectangle;
-import nl.tudelft.bw4t.map.RenderOptions;
-import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.Zone.Type;
 
 /**
- * This holds the map that the user designed. This is an abstract map contianing only number of rows and columns, do not
+ * This holds the map that the user designed. This is an abstract map containing only number of rows and columns, do not
  * confuse with {@link NewMap}.
  */
 public class MapPanelController implements ChangeListener {
@@ -32,6 +24,10 @@ public class MapPanelController implements ChangeListener {
     /** basic size of the map */
     private ZoneController[][] zonecontrollers;
 
+    
+    private boolean startzone;
+	private boolean dropzone;
+	
     private EnvironmentMap model;
 
     private ColorSequenceController cscontroller;
@@ -72,12 +68,38 @@ public class MapPanelController implements ChangeListener {
      */
     public void createZone(Type t, boolean isDropZone, boolean isStartZone) {
         if (selected != null) {
-            selected.setType(t);
-            selected.setDropZone(isDropZone);
-            selected.setStartZone(isStartZone);
-            selected.getUpdateableEditorInterface().update();
+        	if (isDropZone && hasDropzone() && !selected.isDropZone()) {
+        		EnvironmentStore.showDialog("Only one drop zone can be added to the map.");
+        	} else {
+        		if (selected.isStartZone() && hasStartzone()) {
+        			setStartzone(isStartZone);
+        		}
+        		if (selected.isDropZone() && hasDropzone()) {
+        			setDropzone(isDropZone);
+        		}
+        		selected.setType(t);
+                selected.setDropZone(isDropZone);
+                if (isDropZone) {
+                	setDropzone(isDropZone);
+                }
+                selected.setStartZone(isStartZone);
+                if (isStartZone) {
+                	setStartzone(isStartZone);
+                }
+                
+                
+                updateAll();
+        	}
         }
         selected = null;
+    }
+    
+    private void updateAll() {
+    	for (int i = 0; i < getRows(); i++) {
+    		for (int j = 0; j < getColumns(); j++) {
+    			getZoneController(i, j).getUpdateableEditorInterface().update();
+    		}
+    	}
     }
 
     public EnvironmentMap getModel() {
@@ -237,5 +259,33 @@ public class MapPanelController implements ChangeListener {
             }
         }
     }
+    /**
+   	 * @return the startzone
+   	 */
+   	public boolean hasStartzone() {
+   		return startzone;
+   	}
+
+   	/**
+   	 * @param startzone the startzone to set
+   	 */
+   	public void setStartzone(boolean startzone) {
+   		this.startzone = startzone;
+   	}
+
+   	/**
+   	 * @return the dropzone
+   	 */
+   	public boolean hasDropzone() {
+   		return dropzone;
+   	}
+
+   	/**
+   	 * @param dropzone the dropzone to set
+   	 */
+   	public void setDropzone(boolean dropzone) {
+   		this.dropzone = dropzone;
+   	}
+
 
 }

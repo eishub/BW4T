@@ -2,7 +2,6 @@ package nl.tudelft.bw4t.client.startup;
 
 import eis.iilang.Identifier;
 import eis.iilang.Parameter;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,43 +13,29 @@ import org.apache.log4j.Logger;
  * Available init parameters and default values for {@link BW4TEnvironment}.
  */
 public enum InitParam {
-    /**
-     * our ip. Passed to server so server must be able to find us with this ip.
-     */
+    /** Our IP. Passed to server so server is able to find us with this IP. */
     CLIENTIP("localhost"),
-    /**
-     * the port that we use.
-     */
+    /** The port that we use. */
     CLIENTPORT("2000"),
-    /**
-     * The ip addres of server.
-     */
+    /** The IP address of the server. */
     SERVERIP("localhost"),
-    /**
-     * port used by the server
-     */
+    /** The Port used by the server. */
     SERVERPORT("8000"),
-    /**
-     * Number of agents that we have
-     */
-
+    /** Number of agents that we have. */
     AGENTCOUNT("0"),
-    /**
-     * Launch gui for entities? (check is this only for humans?)
-     */
+    /** Launch GUI for entities? (check is this only for humans?) */
     LAUNCHGUI("true"),
-    /**
-     * Number of human bots (is this to connect GUIs?)
-     */
+    /** Number of human bots (is this to connect GUIs?) */
     HUMANCOUNT("1"),
     /**
      * The java agent class to load when new entities appear.
      */
     AGENTCLASS("nl.tudelft.bw4t.client.agent.BW4TAgent"),
     /**
-     * are we connected with GOAL?
+     * are we connected with GOAL? This param should be auto detected, it will be set to false if the program is started
+     * from commandline.
      */
-    GOAL("false"),
+    GOAL("true"),
     /**
      * The key we should try to use to kill the remote server.
      */
@@ -64,14 +49,12 @@ public enum InitParam {
     
     private String defaultvalue;
 
-    /**
-     * Store the program-wide parameters given to the {@link RemoteEnvironment}.
-     */
+    /** Store the program-wide parameters given to the {@link RemoteEnvironment}. */
     private static Map<String, Parameter> parameters = null;
 
     /**
      * @param def
-     *            the default value of the init parameter
+     *            - The default value of the init parameter.
      */
     InitParam(String def) {
         defaultvalue = def;
@@ -82,16 +65,16 @@ public enum InitParam {
     }
 
     /**
-     * {@link #name()} but in lower case
+     * {@link #name()} but in lower case.
      * 
-     * @return name in lower case
+     * @return Name in lower case.
      */
     public String nameLower() {
         return this.name().toLowerCase();
     }
 
     /**
-     * Extract the value of a setting from the given Map.
+     * Retrieve the value of this InitParam  EnumType.
      * 
      * @return the value of the parameter or the default value.
      */
@@ -107,7 +90,7 @@ public enum InitParam {
      * Set the program-wide parameters.
      * 
      * @param params
-     *            the params given to the {@link RemoteEnvironment}
+     *            - The Map of parameters given to the {@link RemoteEnvironment}
      */
     public static void setParameters(Map<String, Parameter> params) {
         parameters = params;
@@ -128,7 +111,7 @@ public enum InitParam {
     /**
      * Get all program-wide parameters.
      * 
-     * @return the params given to the {@link RemoteEnvironment}
+     * @return The Map of parameters given to the {@link RemoteEnvironment}
      */
     public static Map<String, Parameter> getParameters() {
         return parameters;
@@ -154,8 +137,8 @@ public enum InitParam {
      * Get the Parameter by name.
      * 
      * @param name
-     *            the name of the parameter to be read
-     * @return the parameter with the given name or null if not found
+     *            - The name of the parameter to be read.
+     * @return The parameter with the given name or {@code null} if not found.
      */
     public static Parameter getParameter(String name) {
         if (parameters == null) {

@@ -12,8 +12,8 @@ import java.util.Set;
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.controller.UpdateableEditorInterface;
 import nl.tudelft.bw4t.environmentstore.editor.controller.ZoneController;
-import nl.tudelft.bw4t.environmentstore.editor.randomizer.controller.RandomizeController;
-import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeFrame;
+import nl.tudelft.bw4t.environmentstore.editor.randomizer.controller.RandomizeSequenceController;
+import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeSequenceFrame;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone.Type;
 
@@ -32,15 +32,18 @@ public class RandomizeBlocksTest {
 	private MapPanelController map;
 
 	/** This is the frame needed to instantiate the RandomizeController */
-	private RandomizeFrame rframe;
+	private RandomizeSequenceFrame rframe;
 	
 
 	/** This is the controller where blocks get generated in specific rooms. */
-	private RandomizeController random;
+	private RandomizeSequenceController random;
 	
 
 	/** This is the room we will generate blocks in. */
 	private ZoneController room1;
+	
+	/** This is the room we will generate blocks in. */
+	private ZoneController room2;
 
 	private UpdateableEditorInterface uei = new UpdateableEditorInterface() {
 
@@ -61,18 +64,21 @@ public class RandomizeBlocksTest {
 		setUpRoom();
 		setUpColors();
 
-		rframe = new RandomizeFrame("Pédé", map);
+		rframe = new RandomizeSequenceFrame("Pédé", map);
 		
 
-		random = new RandomizeController(rframe, map);
+		random = new RandomizeSequenceController(rframe, map);
 	}
 
 	/** Sets up the room we work in. */
 	private void setUpRoom() {
 		room1 = map.getZoneControllers()[0][0];
 		room1.setType(Type.ROOM);
-
 		room1.setUpdateableEditorInterface(uei);
+		
+		room2 = map.getZoneControllers()[1][0];
+		room2.setType(Type.ROOM);
+		room2.setUpdateableEditorInterface(uei);
 	}
 
 	/** Sets up the block colors we have made available for this test. */
@@ -181,15 +187,6 @@ public class RandomizeBlocksTest {
 	 */
 	@Test
 	public void randomizeColorsInRoom() {
-		room1 = map.getZoneController(0, 0);
-		map.setSelected(room1);
-		map.createZone(Type.ROOM, false, false);
-		
-		ZoneController room2 = map.getZoneController(1, 0);
-		room2.setUpdateableEditorInterface(uei);
-		map.setSelected(room2);
-		map.createZone(Type.ROOM, false, false);
-
 		map.randomizeColorsInRooms(colors, 10);
 
 		assertFalse(room1.getColors().isEmpty());

@@ -5,6 +5,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 import nl.tudelft.bw4t.client.agent.HumanAgent;
+
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.PickUpActionListener;
@@ -15,30 +16,33 @@ import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 
-public class BasicMenuOperations {
-    BW4TClientGUI bw4tClientMapRenderer;
-
-    public BasicMenuOperations(BW4TClientGUI bw4tClientMapRenderer) {
-        this.bw4tClientMapRenderer = bw4tClientMapRenderer;
-    }
+/** Utility class containing some operations to add various things to pop-up menu's. */
+public final class BasicMenuOperations {
+	
+	/** Should never be instantiated */
+	private BasicMenuOperations() { }
 
     /**
-     * Adds a menu item to the pop up menu, used for messages
+     * Adds a menu item to a pop-up menu, used for messages.
      * 
      * @param message
-     *            , the message that this item represents
+     *            - The message that this item represents.
+     * @param gui
+     *            - The {@link BW4TClientGUI} to create the pop-up menu on.
      */
-    public static void addMenuItemToPopupMenu(BW4TMessage message, BW4TClientGUI bw4tClientMapRendererData) {
+    public static void addMenuItemToPopupMenu(BW4TMessage message, BW4TClientGUI gui) {
         JMenuItem menuItem = new JMenuItem(MessageTranslator.translateMessage(message));
-        menuItem.addActionListener(new MessageSenderActionListener(message, bw4tClientMapRendererData));
-        bw4tClientMapRendererData.getjPopupMenu().add(menuItem);
+        menuItem.addActionListener(new MessageSenderActionListener(message, gui.getController()));
+        gui.getjPopupMenu().add(menuItem);
     }
 
     /**
-     * Adds a section title to the pop up menu
+     * Adds a section title to a pop-up menu.
      * 
      * @param title
-     *            , the title of the section
+     *            - The title of the section to add.
+     * @param jPopupMenu
+     *            - The {@link JPopupMenu} to add the section to.
      */
     public static void addSectionTitleToPopupMenu(String title, JPopupMenu jPopupMenu) {
         JMenuItem menuItem = new JMenuItem(title);
@@ -47,11 +51,13 @@ public class BasicMenuOperations {
     }
 
     /**
-     * Adds a menu to the pop up menu
+     * Adds a submenu to a pop-up menu.
      * 
      * @param text
-     *            , the title of the menu
-     * @return the menu
+     *            - The title of the submenu to add.
+     * @param jPopupMenu
+     *            - The {@link JPopupMenu} to add the menu to.
+     * @return The newly added submenu.
      */
     public static JMenu addSubMenuToPopupMenu(String text, JPopupMenu jPopupMenu) {
         JMenu menu = new JMenu(text);

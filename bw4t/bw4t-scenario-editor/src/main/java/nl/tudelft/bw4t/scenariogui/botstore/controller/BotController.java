@@ -256,7 +256,7 @@ public class BotController {
     public void setNewBatteryValue(BotEditorPanel view) {
     	if (view.isBatteryEnabled()) {
     		double res = getBotBatteryDischargeRate();
-    		DecimalFormat df = new DecimalFormat("#.####");
+    		DecimalFormat df = new DecimalFormat("#.###");
 	        String value = df.format(res);
 	        view.getBatteryUseValueLabel().setText(padString(value));
     	}
@@ -273,7 +273,7 @@ public class BotController {
      */
     public String padString(String value) {
         StringBuffer buf = new StringBuffer();
-        while (buf.length() < 4) {
+        while (buf.length() < 3) {
             buf.append(value);
         }
         return buf.toString();

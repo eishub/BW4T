@@ -37,7 +37,6 @@ class MenuOptionExport extends AbstractMenuOption {
      *
      * @param e The action event.
      */
-    //TODO: Split up in multiple shorter methods
     public void actionPerformed(final ActionEvent e) {
         saveFile();
         if (getMenuView().hasLastFileLocation()) {
