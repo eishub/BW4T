@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -179,7 +180,7 @@ public abstract class AbstractMenuOption implements ActionListener {
 	 */
 	public void previewMap() {
     	JFrame preview = new JFrame("Map Preview");
-    	preview.add(new MapRenderer(new MapPreviewController(mapController)));
+    	preview.add(new JScrollPane(new MapRenderer(new MapPreviewController(mapController))));
     	preview.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     	preview.pack();
     	preview.setVisible(true);
