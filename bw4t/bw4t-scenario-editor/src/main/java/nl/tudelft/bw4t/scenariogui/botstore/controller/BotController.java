@@ -249,8 +249,6 @@ public class BotController {
     /** 
      * When the speed or size slider is moved, calculate the new battery discharge rate
      * and update the BatteryUseValueLabel
-     * @param botSpeed the (new) bot speed
-     * @param botSize the (new) bot size
      * @param view the BotEditorPanel
      */
     public void setNewBatteryValue(BotEditorPanel view) {

@@ -1,15 +1,12 @@
 package nl.tudelft.bw4t.client.gui.menu;
 
 import java.awt.Color;
-import java.awt.Point;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
-import nl.tudelft.bw4t.client.gui.listeners.GotoPositionActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.PutdownActionListener;
 import nl.tudelft.bw4t.client.message.BW4TMessage;
@@ -33,6 +30,8 @@ public class BlockadeMenu {
 
         ViewBlock holdingID = cmc.getTheBot().getFirstHolding();
         Color entityColor = cmc.getTheBot().getColor();
+        String colorAsString = BasicMenuOperations.getColor(
+                ColorTranslator.translate2ColorString(entityColor), gui.getController().getHumanAgent());
 
         JMenuItem menuItem = new JMenuItem();
 
@@ -90,19 +89,18 @@ public class BlockadeMenu {
             Color entityColor) {
         JMenuItem menuItem;
         if (holdingID != null) {
+            String colorAsString = BasicMenuOperations.getColor(ColorTranslator.translate2ColorString(entityColor), gui
+                    .getController().getHumanAgent());
             BasicMenuOperations.addMenuItemToPopupMenu(
-                    new BW4TMessage(MessageType.HASCOLOR, null, ColorTranslator.translate2ColorString(entityColor),
-                            null), gui);
+                    new BW4TMessage(MessageType.HASCOLOR, null, colorAsString, null), gui);
 
-            JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu(
-                    "I have a " + ColorTranslator.translate2ColorString(entityColor) + " block from ",
+            JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu("I have a " + colorAsString + " block from ",
                     gui.getjPopupMenu());
 
             for (Zone roomInfo : cmc.getRooms()) {
                 menuItem = new JMenuItem(roomInfo.getName());
                 menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.HASCOLOR,
-                        roomInfo.getName(), ColorTranslator.translate2ColorString(entityColor), null), gui
-                        .getController()));
+                        roomInfo.getName(), colorAsString, null), gui.getController()));
                 submenu.add(menuItem);
             }
         }

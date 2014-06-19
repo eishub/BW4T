@@ -68,7 +68,7 @@ public abstract class BoundedMoveableObject {
     /**
      * @return The space of an object.
      */
-    public ContinuousSpace<Object> getSpace(){
+    public ContinuousSpace<Object> getSpace() {
         return this.space;
     }
 
