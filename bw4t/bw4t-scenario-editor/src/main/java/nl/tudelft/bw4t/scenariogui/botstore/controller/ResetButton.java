@@ -9,7 +9,6 @@ import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
  * Handles actions of the reset button.
  */
 public class ResetButton implements ActionListener {
-
     /**
      * The panel containing the button.
      */

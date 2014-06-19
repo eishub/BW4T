@@ -107,10 +107,6 @@ public class BotEditor extends JFrame {
         return controller;
     }
     
-    public BotEditorPanel getBoteditorPanel() {
-		return bPanel;
-	}
-    
     /**
 	 * Return the MainPanel.
 	 * @return mainpanel
