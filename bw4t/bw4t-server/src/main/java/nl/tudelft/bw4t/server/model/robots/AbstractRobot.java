@@ -398,12 +398,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     @Override
     @ScheduledMethod(start = 0, duration = 0, interval = 1)
     public synchronized void move() {
-        // Check if the robot is alone on its map point
-        if(!hasBeenFree) {
-            hasBeenFree = isFree(AbstractRobot.class);
-        }
-
-
         // When the robot is in a charging zone, the battery recharges.
         if (getZone() instanceof ChargingZone) {
             getBattery().recharge();
@@ -427,7 +421,11 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		
 		            try {
                         NdPoint destination = new NdPoint(getLocation().getX() + displacement[0], getLocation().getY() + displacement[1]);
-                        if(hasBeenFree) {
+
+                        // Check if the robot is alone on its map point
+                        if(!hasBeenFree) {
+                            hasBeenFree = isFree(AbstractRobot.class);
+                        } else  {
                             checkIfDestinationVacant(destination);
                         }
 
