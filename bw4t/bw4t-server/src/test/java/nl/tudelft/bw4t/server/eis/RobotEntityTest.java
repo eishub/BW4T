@@ -43,7 +43,7 @@ public class RobotEntityTest {
         robot = new RobotEntity(mockRobot);
         when(mockRobot.getLocation()).thenReturn(new NdPoint(1, 1));
         
-        method = robot.getClass().getDeclaredMethod("getVisibleBlocks", null);
+        method = robot.getClass().getDeclaredMethod("getVisible", Class.class);
         method.setAccessible(true); 
         
         method3 = robot.getClass().getDeclaredMethod("getSizes", null);
@@ -85,7 +85,7 @@ public class RobotEntityTest {
     
     @Test
     public void getVisibleBlocksTest() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-            assertEquals(new HashSet<Block>(), method.invoke(robot, null));
+            assertEquals(new HashSet<Block>(), method.invoke(robot, Block.class));
             robot.initializePerceptionCycle();
             field.set(robot, mockRoom);
             assertNotNull(mockRoom);

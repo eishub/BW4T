@@ -4,6 +4,7 @@ import nl.tudelft.bw4t.server.model.epartners.EPartner;
 import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Java2Parameter;
+import eis.iilang.Identifier;
 import eis.iilang.Numeral;
 import eis.iilang.Parameter;
 
@@ -14,13 +15,14 @@ public class EPartnerTranslator implements Java2Parameter<EPartner> {
 
     @Override
     public Parameter[] translate(EPartner o) throws TranslationException {
-        Parameter[] params = new Parameter[2];
+        Parameter[] params = new Parameter[3];
         params[0] = new Numeral(o.getId());
+        params[1] = new Identifier(o.getName());
         final IRobot holder = o.getHolder();
         if (holder == null) {
-            params[1] = new Numeral(-1);
+            params[2] = new Numeral(-1);
         } else {
-            params[1] = new Numeral(holder.getId());
+            params[2] = new Numeral(holder.getId());
         }
         return params;
     }
