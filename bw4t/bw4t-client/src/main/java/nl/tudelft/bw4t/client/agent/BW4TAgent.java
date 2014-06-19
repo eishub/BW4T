@@ -241,8 +241,8 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	}
 	
 	/**
-	 * Whether this agent can pick up another object (box/e-partner) based
-	 * on their gripper capacity and the amount of objects they're already
+	 * Whether this agent can pick up another box based on their
+	 * gripper capacity and the amount of boxes they're already
 	 * holding. 
 	 * @param sameEntity The {@link ViewEntity} type of this agent.
 	 * @return Whether this agent can pick up another object.
@@ -256,9 +256,6 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	    }
 	    int grippersTotal = getBotConfig().getGrippers();
 	    int grippersInUse = sameEntity.getHolding().size();
-	    if (sameEntity.getHoldingEpartner() != -1) {
-	        grippersInUse++;
-	    }
 	    return grippersInUse < grippersTotal;
 	}
 	
