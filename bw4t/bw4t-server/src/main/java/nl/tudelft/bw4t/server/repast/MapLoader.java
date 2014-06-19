@@ -172,15 +172,6 @@ public final class MapLoader {
             createBlocksForRoom((Room) zones.get(room), context, space, grid, roomblocks.get(room));
 
         }
-        
-        /*for (Entity entityparams : map.getEntities()) {
-            if (entityparams.getType() == Entity.EntityType.NORMAL) {
-                createEisEntityRobot(context, space, entityparams);
-            } else {
-                //FIXME useless the robot is never used anywhere it gets created and then garbage collected
-                createJavaRobot(context, space, entityparams);
-            }
-        }*/
 
         BW4TEnvironment.getInstance().setMapFullyLoaded();
     }
@@ -278,62 +269,6 @@ public final class MapLoader {
 
         dropZone.setSequence(sequence);
 
-    }
-
-    /**
-     * Creates a new {@link AbstractRobot} in the context according to the data in the tokenizer and adds it to the EIS
-     * environment.
-     * 
-     * @param context
-     *            The context in which the robot should be placed.
-     * @param space
-     *            the space in which the robot should be placed.
-     * @param mapentity
-     *            The {@link Entity} on the map.
-     * @return The created robot
-     */
-    private static void createEisEntityRobot(Context<Object> context, ContinuousSpace<Object> space,
-                                             Grid<Object> grid, Entity mapentity) {
-        BW4TEnvironment environment = BW4TEnvironment.getInstance();
-
-        if (environment == null) {
-            throw new IllegalStateException(
-                    "Tried to create a Robot to put in an EIS environment but no EIS environment was launched");
-        }
-
-        NavigatingRobot robot = createJavaRobot(context, space, grid, mapentity);
-        RobotEntity entity = new RobotEntity(robot);
-        try {
-            environment.registerEntity(robot.getName(), entity);
-        } catch (EntityException e) {
-            throw new IllegalStateException("Error when registering an entity", e);
-        }
-    }
-
-    /**
-     * Creates a new {@link AbstractRobot} in the context according to the data in the tokenizer.
-     * 
-     * @param context
-     *            The context in which the robot should be placed.
-     * @param space
-     *            the space in which the robot should be placed.
-     * @param mapentity
-     *            The {@link Entity} on the map.
-     * @return The created robot
-     */
-    private static NavigatingRobot createJavaRobot(Context<Object> context, ContinuousSpace<Object> space,
-            Grid<Object> grid, Entity mapentity) {
-        String name = mapentity.getName();
-
-        NavigatingRobot robot = new NavigatingRobot(name, space, grid, context, map.getOneBotPerCorridorZone(), 1);
-
-        double x = mapentity.getPosition().getX();
-        double y = mapentity.getPosition().getY();
-
-        // we hoped to move this to Robot#connect() but failed #2346
-        robot.moveTo(x, y);
-
-        return robot;
     }
 
     /**
