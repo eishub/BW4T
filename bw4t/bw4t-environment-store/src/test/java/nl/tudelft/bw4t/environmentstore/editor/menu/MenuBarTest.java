@@ -10,7 +10,9 @@ import static org.mockito.Mockito.verify;
 
 import java.awt.Frame;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,6 +24,7 @@ import nl.tudelft.bw4t.environmentstore.editor.controller.ZoneController;
 import nl.tudelft.bw4t.environmentstore.editor.menu.controller.AbstractMenuOption;
 import nl.tudelft.bw4t.environmentstore.editor.menu.controller.FileFilters;
 import nl.tudelft.bw4t.environmentstore.editor.menu.view.MenuBar;
+import nl.tudelft.bw4t.environmentstore.editor.model.MapConverter;
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeBlockFrame;
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeSequenceFrame;
 import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
@@ -29,6 +32,7 @@ import nl.tudelft.bw4t.environmentstore.util.NoMockOptionPrompt;
 import nl.tudelft.bw4t.environmentstore.util.OptionPrompt;
 import nl.tudelft.bw4t.environmentstore.util.YesMockOptionPrompt;
 import nl.tudelft.bw4t.map.BlockColor;
+import nl.tudelft.bw4t.map.Zone.Type;
 
 import org.junit.After;
 import org.junit.Before;
@@ -44,7 +48,7 @@ public class MenuBarTest {
     /**
      * The path of the xml file used to test the open button.
      */
-    private static final String FILE_OPEN_PATH = BASE + "open.xml";
+    private static final String FILE_OPEN_PATH = BASE + "red.map";
 
     /**
      * The path of the xml file used to test the open button.
@@ -183,6 +187,29 @@ public class MenuBarTest {
     		"mas2g"
     	}));
     }
+    
+    @Test
+    public void menuOptionOpenMapTest() {
+    	List<BlockColor> cs = new ArrayList<BlockColor>();
+    	cs.add(BlockColor.RED);
+    	
+    	File file = new File(FILE_OPEN_PATH);
+    	
+    	assertFalse(mapController.getZoneController(0, 0).isStartZone());
+    	assertFalse(mapController.getZoneController(0, 2).isDropZone());
+    	assertFalse(mapController.getZoneController(1, 0).getType() == Type.ROOM);
+    	assertFalse(mapController.getZoneController(1, 0).getColors().equals(cs));
+    	assertFalse(mapController.getSequence().equals(cs));
+    	
+    	mapController.setModel(MapConverter.loadMap(file));
+    	
+    	assertTrue(mapController.getZoneController(0, 0).isStartZone());
+    	assertTrue(mapController.getZoneController(0, 2).isDropZone());
+    	assertTrue(mapController.getZoneController(1, 0).getType() == Type.ROOM);
+    	assertTrue(mapController.getZoneController(1, 0).getColors().equals(cs));
+    	assertTrue(mapController.getSequence().equals(cs));
+    }
+    
     @Test
     public void menuBarGettersSettersTest() {
     	MenuBar mb = new MenuBar();
