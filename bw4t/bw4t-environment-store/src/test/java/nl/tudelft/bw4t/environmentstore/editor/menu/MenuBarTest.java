@@ -101,7 +101,7 @@ public class MenuBarTest {
 
         AbstractMenuOption menuOption = (AbstractMenuOption) listeners[0];
         
-        envStore.setOptionPrompt(new YesMockOptionPrompt());
+        EnvironmentStore.setOptionPrompt(new YesMockOptionPrompt());
 
         /* Don't actually close the jvm */
         doNothing().when(envStore).closeEnvironmentStore();

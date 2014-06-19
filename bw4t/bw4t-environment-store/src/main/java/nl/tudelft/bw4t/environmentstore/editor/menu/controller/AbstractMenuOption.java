@@ -197,6 +197,8 @@ public abstract class AbstractMenuOption implements ActionListener {
 	        } else {
 	        	envController.getMainView().closeEnvironmentStore();
 	        }
+		} else {
+			envController.getMainView().closeEnvironmentStore();
 		}
 	}
     
