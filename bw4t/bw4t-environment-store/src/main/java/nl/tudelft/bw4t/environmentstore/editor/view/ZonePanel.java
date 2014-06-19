@@ -14,6 +14,7 @@ import nl.tudelft.bw4t.environmentstore.editor.controller.UpdateableEditorInterf
 import nl.tudelft.bw4t.environmentstore.editor.controller.ZoneController;
 import nl.tudelft.bw4t.environmentstore.editor.model.ZoneModel;
 import nl.tudelft.bw4t.map.Zone;
+import nl.tudelft.bw4t.map.Zone.Type;
 
 /**
  * The ZonePanel is the panel added to the grid for each Zone.
@@ -76,10 +77,6 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
         this.removeBorder();
         switch (zoneController.getType()) {
         case ROOM:
-        	if (!zoneController.isFree()) {
-        		System.out.println("zone is not free");
-        		
-        	}
             if (zoneController.isDropZone()) {
                 nameLabel.setForeground(Color.WHITE);
                 this.setBackground(Color.DARK_GRAY);
@@ -88,7 +85,7 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
                 this.add(sequence, BorderLayout.SOUTH);
                 this.sequence.setSequence(zoneController.getColors());
             }
-            updateDoors();
+            updateDoor();
             break;
         case CHARGINGZONE:
             this.setBackground(Zone.CHARGING_ZONE_COLOR);
@@ -110,7 +107,7 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
         repaint();
     }
     
-    private void updateDoors() {
+    private void updateDoor() {
     	int east = 0;
     	int north = 0;
     	int south = 0;
