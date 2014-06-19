@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.client.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -18,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -28,6 +30,7 @@ import nl.tudelft.bw4t.client.BW4TClientSettings;
 import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.client.gui.listeners.BatteryProgressBarListener;
 import nl.tudelft.bw4t.client.gui.listeners.ChatListMouseListener;
 import nl.tudelft.bw4t.client.gui.listeners.EPartnerListMouseListener;
 import nl.tudelft.bw4t.client.gui.listeners.TeamListMouseListener;
@@ -90,7 +93,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
     private JLabel batteryLabel = new JLabel("Bot Battery: ");
     private JLabel botMessageLabel = new JLabel("Send message to: ");
     
-    private JTextField botBatteryField = new JTextField();
+    private JProgressBar batteryProgressBar = new JProgressBar(0, 1); 
     
     private JButton botMessageButton = new JButton("Choose message");
     private JButton epartnerMessageButton = new JButton("Choose message");
@@ -302,12 +305,18 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
     private void createBotOptionsBar() {
         botButtonPanel.setLayout(new BoxLayout(botButtonPanel, BoxLayout.X_AXIS));
         botButtonPanel.setFocusable(false);
-        botBatteryField.setEditable(false);
         
+        batteryProgressBar.setForeground(Color.green);
+        batteryProgressBar.setStringPainted(true);
+        batteryProgressBar.setMaximum(100);
+        batteryProgressBar.setValue(100);
+
+        BatteryProgressBarListener.listeners.add(new BatteryProgressBarListener(batteryProgressBar, this));
+
         agentSelector = new JComboBox<ComboAgentModel>(new ComboAgentModel(this));
-        
+
         botButtonPanel.add(batteryLabel);
-        botButtonPanel.add(botBatteryField);
+        botButtonPanel.add(batteryProgressBar);
         botButtonPanel.add(botMessageLabel);
         botButtonPanel.add(agentSelector);
         botButtonPanel.add(botMessageButton);
@@ -358,19 +367,6 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         epartnerChatPanel.add(epartnerChatPane);
     }
 
-    /**
-     * Adds a player by adding a new button to the button panel, facilitating sending messages to this player
-     * 
-     * @param playerId
-     *            , the Id of the player to be added
-     */
-  /*  public void addPlayer(String playerId) {
-        if (!playerId.equals(controller.getMapController().getTheBot().getName())) {
-            JButton button = new JButton(playerId);
-            button.addMouseListener(new TeamListMouseListener(this));
-            botButtonPanel.add(button);
-        }
-    }*/
 
     @Override
     public void dispose() {
@@ -456,6 +452,14 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         return controller;
     }
     
+    public JProgressBar getBatteryProgressBar() {
+        return batteryProgressBar;
+    }
+    
+    public void setBatteryProgressBar(JProgressBar progressBar) {
+        batteryProgressBar = progressBar;
+    }
+        
     public JScrollPane getEpartnerChatPane() {
         return epartnerChatPane;
     }
