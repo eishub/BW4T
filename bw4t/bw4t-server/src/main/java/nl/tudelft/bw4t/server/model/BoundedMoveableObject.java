@@ -247,7 +247,7 @@ public abstract class BoundedMoveableObject {
     public boolean isFree(Class<? extends BoundedMoveableObject> freeOfType) {
         for (Object o : context.getObjects(freeOfType)) {
             BoundedMoveableObject moveableObject = (BoundedMoveableObject) o;
-            if (moveableObject.getBoundingBox().intersects(getBoundingBox().getBounds2D())) {
+            if (moveableObject.getBoundingBox().intersects(getBoundingBox().getBounds2D()) || moveableObject.getBoundingBox().contains(getBoundingBox())) {
                 return false;
             }
         }
