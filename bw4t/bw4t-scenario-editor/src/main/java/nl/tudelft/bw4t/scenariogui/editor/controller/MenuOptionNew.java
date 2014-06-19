@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.DefaultConfigurationValues;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
@@ -43,31 +44,18 @@ class MenuOptionNew extends AbstractMenuOption {
 	 *            The action event.
 	 */
 	public void actionPerformed(final ActionEvent e) {
-		ConfigurationPanel configPanel = getController().getMainView()
-				.getMainPanel().getConfigurationPanel();
-		EntityPanel entityPanel = getController().getMainView()
-				.getMainPanel().getEntityPanel();
+		ScenarioEditor mainView = getController().getMainView();
+		MainPanel mainPanel = mainView.getMainPanel();
+		ConfigurationPanel configPanel = mainPanel.getConfigurationPanel();
+		EntityPanel entityPanel = mainPanel.getEntityPanel();
 
 		// Check if current config is different from last saved config
 		if (getController().hasConfigBeenModified()) {
-			// Check if user wants to save current configuration
-			int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
-					null, ScenarioEditorController.CONFIRM_SAVE_TXT, "",
-					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-			if (response == JOptionPane.YES_OPTION) {
-				saveFile();
-				getController().getMainView().getMainPanel()
-						.getConfigurationPanel().updateOldValues();
-				getModel().updateBotConfigs();
-			}
+			showSaveDialogOption();
 		}
 
 		resetConfigPanel(configPanel);
-		getModel().getBots().clear();
-		getModel().getEpartners().clear();
-        getModel().updateBotConfigs();
-        getModel().updateEpartnerConfigs();
+		getModel().clearBotsAndEpartners();
 
 		// set last file location to null so that the previous saved file won't
 		// get
@@ -80,8 +68,28 @@ class MenuOptionNew extends AbstractMenuOption {
 		// reset the epartner panel
 		resetEpartnerTable(entityPanel);
 
-        getController().getMainView().setWindowTitle("Untitled");
+        mainView.setWindowTitle("Untitled");
 	}
+
+	/**
+	 * Asks the user if they want to save and proceeds to do so
+	 * if the user selects yes.
+	 */
+    private void showSaveDialogOption() {
+        // Check if user wants to save current configuration
+        int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(
+        		null, ScenarioEditorController.CONFIRM_SAVE_TXT, "",
+        		JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        if (response == JOptionPane.YES_OPTION) {
+        	saveFile();
+        	ScenarioEditor mainView = getController().getMainView();
+			MainPanel mainPanel = mainView.getMainPanel();
+			ConfigurationPanel configurationPanel = mainPanel.getConfigurationPanel();
+			configurationPanel.updateOldValues();
+        	getModel().updateOldBotConfigs();
+        }
+    }
 
 	/**
 	 * Resets the given configPanel to it's default values.
@@ -103,8 +111,12 @@ class MenuOptionNew extends AbstractMenuOption {
 		configPanel
 				.setServerPort(DefaultConfigurationValues.DEFAULT_SERVER_PORT
 						.getValue());
-		configPanel.setUseGui(DefaultConfigurationValues.USE_GUI
-				.getBooleanValue());
+        configPanel.setUseGui(DefaultConfigurationValues.USE_GUI
+                .getBooleanValue());
+        configPanel.setVisualizePaths(DefaultConfigurationValues.VISUALIZE_PATHS
+                .getBooleanValue());
+        configPanel.setEnableCollisions(DefaultConfigurationValues.ENABLE_COLLISIONS
+                .getBooleanValue());
 		configPanel.setMapFile(DefaultConfigurationValues.MAP_FILE
 				.getValue());
 
@@ -117,12 +129,7 @@ class MenuOptionNew extends AbstractMenuOption {
 	 *            The EntityPanel which contains the bot list.
 	 */
 	public void resetBotTable(EntityPanel entityPanel) {
-		DefaultTableModel botTable = entityPanel.getBotTableModel();
-		int rows = botTable.getRowCount();
-
-		for (int i = rows - 1; i >= 0; i--) {
-			botTable.removeRow(i);
-		}
+		entityPanel.getBotTableModel().update();
 	}
 
 	/**

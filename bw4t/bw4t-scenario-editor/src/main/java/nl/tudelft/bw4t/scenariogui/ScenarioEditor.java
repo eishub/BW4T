@@ -29,9 +29,9 @@ public class ScenarioEditor extends JFrame {
     private String windowName = "Scenario Editor";
 
     private MainPanel mPanel;
-
+    
     private MenuBar menuBar;
-
+    
     private ScenarioEditorController controller;
     
     private static BW4TClientConfig model;
@@ -44,6 +44,9 @@ public class ScenarioEditor extends JFrame {
      */
     public ScenarioEditor() {
         setLookAndFeel();
+
+        model = new BW4TClientConfig();
+        
         setWindowTitle("Untitled");
 
         setResizable(false);
@@ -65,7 +68,6 @@ public class ScenarioEditor extends JFrame {
         // Setting the location relative to null centers the frame.
         setLocationRelativeTo(null);
 
-        model = new BW4TClientConfig();
         controller = new ScenarioEditorController(this, model);
         setVisible(true);
     }
@@ -174,25 +176,7 @@ public class ScenarioEditor extends JFrame {
      * @param s A description that is specific for why the error occurred.
      */
     public static void handleException(final Exception e, final String s) {
-        if (e instanceof FileNotFoundException) {
-            showDialog(e, s);
-        }
-        if (e instanceof JAXBException) {
-            showDialog(e, s);
-        }
-        if (e instanceof ClassNotFoundException) {
-            showDialog(e, s);
-        }
-        if (e instanceof InstantiationException) {
-            showDialog(e, s);
-        }
-        if (e instanceof IllegalAccessException) {
-            showDialog(e, s);
-        }
-        if (e instanceof UnsupportedLookAndFeelException) {
-            showDialog(e, s);
-        }
-
+        showDialog(e, s);
     }
 
     /**

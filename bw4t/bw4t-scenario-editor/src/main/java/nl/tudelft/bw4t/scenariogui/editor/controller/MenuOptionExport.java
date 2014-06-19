@@ -1,15 +1,23 @@
 package nl.tudelft.bw4t.scenariogui.editor.controller;
 
+
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MenuBar;
+import nl.tudelft.bw4t.scenariogui.util.AgentFileChecker;
 import nl.tudelft.bw4t.scenariogui.util.ExportToMAS;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 
@@ -40,6 +48,9 @@ class MenuOptionExport extends AbstractMenuOption {
     public void actionPerformed(final ActionEvent e) {
         saveFile();
         if (getMenuView().hasLastFileLocation()) {
+        	if(!allGoalFilesExist()) {
+        	    ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Warning: Some goal files are missing.");
+        	}
             File saveLocation = new File(getMenuView().getLastFileLocation());
 
             JFileChooser filechooser = getCurrentFileChooser();
@@ -50,34 +61,59 @@ class MenuOptionExport extends AbstractMenuOption {
             filechooser.setFileFilter(FileFilters.masFilter());
 
             if (filechooser.showDialog(getController().getMainView(), "Export MAS project") == JFileChooser.APPROVE_OPTION) {
-                File masFile = filechooser.getSelectedFile();
-                try {
-                    String saveDirectory = masFile.getAbsolutePath();
-
-                    String extension = ".xml";
-                    if (!saveDirectory.endsWith(extension)) {
-                        saveDirectory += extension;
-                    }
-
-                    saveXMLFile(saveDirectory);
-                    BW4TClientConfig configuration = BW4TClientConfig.fromXML(saveDirectory);
-
-                    /* Split the name into two around the ., and pass the name without the extension */
-                    ExportToMAS.export(masFile.getParent(), configuration, masFile.getName().split("\\.")[0]);
-                } catch (JAXBException ex) {
-                    ScenarioEditor.handleException(
-                            ex, "Error: Saving to XML has failed.");
-                } catch (FileNotFoundException ex) {
-                    ScenarioEditor.handleException(
-                            ex, "Error: No file has been found.");
-                }
+                File xmlFile = filechooser.getSelectedFile();
+                exportAsMASProject(xmlFile);
             }
-
-        } 
-        else {
+        } else {
             ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Error: Can not export an unsaved scenario.");
         }
+    }
 
+    /**
+     * Checks wheter all goalfiles exist
+     *
+     */
+    public boolean allGoalFilesExist() {
+    	boolean allExist = true;
+    	BW4TClientConfig model = this.getModel();
+    	List<BotConfig> botList = model.getBots();
+    	for(int i = 0; i < botList.size() && allExist; i++) {
+    		allExist = allExist && AgentFileChecker.fileNameExists(botList.get(i).getFileName());
+    	}
+    	
+    	List<EPartnerConfig> epartnerList = model.getEpartners();
+    	for(int i = 0; i < epartnerList.size() && allExist; i++) {
+    	    allExist = allExist && AgentFileChecker.fileNameExists(epartnerList.get(i).getFileName());
+    	}
+    	
+    	return allExist;
+    }
+
+    /**
+     * Exports this XML file as a MAS file.
+     * @param xmlFile The XML file.
+     */
+    private void exportAsMASProject(File xmlFile) {
+        try {
+            String saveDirectory = xmlFile.getAbsolutePath();
+
+            String extension = ".xml";
+            if (!saveDirectory.endsWith(extension)) {
+                saveDirectory += extension;
+            }
+
+            saveConfigAsXMLFile(saveDirectory);
+            BW4TClientConfig configuration = BW4TClientConfig.fromXML(saveDirectory);
+
+            /* Split the name into two around the ., and pass the name without the extension */
+            ExportToMAS.export(xmlFile.getParent(), configuration, xmlFile.getName().split("\\.")[0]);
+        } catch (JAXBException ex) {
+            ScenarioEditor.handleException(
+                    ex, "Error: Saving to XML has failed.");
+        } catch (FileNotFoundException ex) {
+            ScenarioEditor.handleException(
+                    ex, "Error: No file has been found.");
+        }
     }
     
 }

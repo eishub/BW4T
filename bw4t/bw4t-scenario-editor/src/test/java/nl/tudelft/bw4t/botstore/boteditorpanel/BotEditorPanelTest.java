@@ -3,15 +3,16 @@ package nl.tudelft.bw4t.botstore.boteditorpanel;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.botstore.controller.BotController;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditor;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
+import nl.tudelft.bw4t.scenariogui.botstore.gui.BotStoreViewInterface;
 import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
@@ -20,10 +21,10 @@ import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+
 /**
  * Test the boteditorpanel
- * @author Arun
- * @author Tim
  */
 public class BotEditorPanelTest {
 
@@ -68,6 +69,25 @@ public class BotEditorPanelTest {
         assertEquals(grippers, spypanel.getGrippers());
     }
 
+    /** Test the reset button */
+    @Test
+    public final void testResetButtonForBotSpecClick() {
+        BotStoreViewInterface bep = editor.getBotEditorPanel();
+        BotConfig config = editor.getController().getBotConfig();
+        
+        editor.getBotEditorPanel().getResetButton().doClick();
+        
+        assertEquals(config.getBotSpeed(), bep.getBotSpeed());
+        assertEquals(config.getBotSize(), bep.getBotSize());
+        assertEquals(config.getBotBatteryCapacity(), bep.getBotBatteryCapacity());
+        assertEquals(config.getGrippers(), bep.getGrippers());
+        assertEquals(config.getSizeOverloadHandicap(), bep.getSizeOverloadHandicap());
+        assertEquals(config.getMoveSpeedHandicap(), bep.getMoveSpeedHandicap());
+        assertEquals(config.isBatteryEnabled(), bep.isBatteryEnabled());
+        assertEquals(config.getGripperHandicap(), bep.getGripperHandicap());
+        assertEquals(config.getColorBlindHandicap(), bep.getColorBlindHandicap());
+    }
+
     /** test modify sliders */
     @Test
     public final void testModifySliders() {
@@ -110,12 +130,6 @@ public class BotEditorPanelTest {
         assertTrue(spypanel.getBatteryEnabledCheckbox().isSelected());
     }
 
-    /** test the batteryusevalue */
-    @Test
-    public final void testBatteryUseValue() {
-        assertEquals("0.000", spypanel.getBatteryUseValueLabel().getText());
-    }
-
     /** Test the speed slider */
     @Test
     public final void testSpeedSliderValue() {
@@ -127,7 +141,6 @@ public class BotEditorPanelTest {
     @Test
     public final void testSpeedSliderEnable() {
         editor.getBotEditorPanel().getMovespeedCheckbox().doClick();
-        editor.getBotEditorPanel().updateView();
         assertTrue(editor.getBotEditorPanel().getSpeedSlider().isEnabled());
     }
 
@@ -188,7 +201,10 @@ public class BotEditorPanelTest {
     /** Test the selection of the color blind checkbox */
     @Test
     public final void testColorBlindCheckbox() {
-        editor.getBotEditorPanel().getColorblindCheckbox().doClick();
+        final BotEditorPanel bep = editor.getBotEditorPanel();
+        assertFalse(bep.getColorBlindHandicap());
+        bep.getColorblindCheckbox().doClick();
+        assertTrue(bep.getColorBlindHandicap());
     }
 
     /** Test the reset button */
@@ -275,4 +291,3 @@ public class BotEditorPanelTest {
         assertEquals(config.getBotBatteryDischargeRate(), optimalDischarge, 1);
     }
 }
-

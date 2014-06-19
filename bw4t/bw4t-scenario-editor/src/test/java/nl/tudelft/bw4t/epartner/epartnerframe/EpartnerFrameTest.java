@@ -60,7 +60,7 @@ public class EpartnerFrameTest {
 	public final void testApplyButton() {
 		spyframe.getGPSCheckbox().setSelected(false);
 		spyframe.getForgetMeNotCheckbox().setSelected(true);
-		spyframe.getApplyButton().doClick();
+		spyframe.getSaveButton().doClick();
 		assertEquals(config.isGps(), spyframe.getGPSCheckbox().isSelected());
 		assertEquals(config.isForgetMeNot(), spyframe.getForgetMeNotCheckbox().isSelected());
 	}

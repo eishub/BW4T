@@ -223,7 +223,6 @@ public class BotController {
 		botConfig.setSizeOverloadHandicap(bep.getSizeOverloadHandicap());
 		botConfig.setReferenceName(bep.getReferenceName());
 		botConfig.setFileName(bep.getFileName());
-		botConfig.setBotBatteryDischargeRate(bep.getBotBatteryDischargeRate());
 
 		for (BotStoreViewInterface bsvi: views) {
 			bsvi.updateView();

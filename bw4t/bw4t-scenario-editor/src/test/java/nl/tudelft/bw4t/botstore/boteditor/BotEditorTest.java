@@ -33,7 +33,6 @@ public class BotEditorTest {
         BotEditorPanel panel = new BotEditorPanel(controller);
         
         botEditor.setBotEditorPanel(panel);
-        botEditor.setParent(parent);
         
         assertEquals(parent, botEditor.getMainPanel());
         assertEquals(panel, botEditor.getBotEditorPanel());
