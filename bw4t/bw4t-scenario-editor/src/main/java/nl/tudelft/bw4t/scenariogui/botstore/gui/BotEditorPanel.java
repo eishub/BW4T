@@ -763,9 +763,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 	
     public void updateDischargeRate() {
         double dr = 0.0;
-        System.out.println("discharg update");
         if (isBatteryEnabled()) {
-            System.out.println("enabled");
             dr = BotConfig.calculateDischargeRate(getBotSize(), getBotSpeed());
         }
         batteryUseValueLabel.setText(dischargeRateFormatter.format(dr));

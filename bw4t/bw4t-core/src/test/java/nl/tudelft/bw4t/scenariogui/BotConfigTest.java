@@ -36,7 +36,7 @@ public class BotConfigTest {
         BotConfig bot = createTestBot();
         assertNotEquals("Wrong string test", bot.bcToString());
         assertEquals((name + controller + amount + botSize
-                + botSpeed + botBatteryCapacity + botBatteryDischargeRate
+                + botSpeed + botBatteryCapacity
                 + numberOfGrippers + batteryEnabled + hasColorBlindHandicap
                 + hasGripperHandicap + hasMoveSpeedHandicap
                 + hasSizeOverloadHandicap + fileName + referenceName), bot.bcToString());
