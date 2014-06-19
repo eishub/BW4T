@@ -111,7 +111,7 @@ public final class EPartnerConfig implements Serializable {
 	 * @return All the EPartnerConfig properties.
 	 */
 	public String ecToString() {
-		return name + amount + gps + forgetmenot;
+		return name + amount + gps + forgetmenot + epartnerGoalFileName + epartnerReferenceName;
 	}
 
 	/**

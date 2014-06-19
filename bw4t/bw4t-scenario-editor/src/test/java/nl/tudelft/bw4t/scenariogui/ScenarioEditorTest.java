@@ -33,24 +33,12 @@ import static org.mockito.Mockito.when;
  */
 public class ScenarioEditorTest {
 
-    /**
-     * The Scenario editor that is spied upon for this test.
-     */
     private ScenarioEditor editor;
 
-    /**
-     * File choose used to mock the behaviour of the user.
-     */
     private JFileChooser filechooser;
 
-    /**
-     * The base directory of all files used in the test.
-     */
     private static final String BASE = System.getProperty("user.dir") + "/src/test/resources/";
-    
-    /**
-     * The path of the xml file used to test the open button.
-     */
+
     private static final String FILE_OPEN_PATH = BASE + "nonexistent.xml";
     
     /**
@@ -75,7 +63,7 @@ public class ScenarioEditorTest {
      * Dispose of the editor.
      */
     @After
-    public void breakItDooooown() {
+    public void breakItDown() {
         editor.dispose();
     }
 

@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -15,35 +16,38 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.TableModelListener;
 import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import nl.tudelft.bw4t.map.EntityType;
+import nl.tudelft.bw4t.scenariogui.util.AbstractTableModel;
+import nl.tudelft.bw4t.scenariogui.util.EntityJTable;
 import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
+import nl.tudelft.bw4t.scenariogui.util.RobotTableModel;
 
 /**
  * The EntityPanel class represents right pane of the MainPanel. It shows a list
  * of bots and a list of e-partners and the actions that are possible to edit
  * bots and e-partners.
- * <p>
  * 
  * @version 0.1
  * @since 12-05-2014
  */
 public class EntityPanel extends JPanel {
+    private static final long serialVersionUID = 6488182242349086899L;
 
-	private static final long serialVersionUID = 6488182242349086899L;
+	public static final String AGENT_FILE = "Agent file";
 
-	private static final String NUMBER_BOTS_COLUMN = "Number of bots";
+	public static final String NUMBER_BOTS_COLUMN = "Number of bots";
 
-	private static final String NUMBER_EPARTNERS_COLUMN = "Number of e-partners";
+	public static final String NUMBER_EPARTNERS_COLUMN = "Number of e-partners";
 
 	private static final int FONT_SIZE = 16;
 
@@ -65,9 +69,11 @@ public class EntityPanel extends JPanel {
 
 	private JPanel botCounter = new JPanel();
 
-	private DefaultTableModel botList;
+	private AbstractTableModel botList;
 
-	private JTable botTable;
+	private EntityJTable botTable;
+	
+	private static String botTableName;
 
 	private JScrollPane botScrollPane;
 
@@ -80,9 +86,21 @@ public class EntityPanel extends JPanel {
 
 	private JPopupMenu botDropDownMenu = new JPopupMenu();
 
-	private JMenuItem standardBot1 = new JMenuItem("StandardBot1");
+	private JMenuItem standardBot = new JMenuItem("Standard Bot");
 
-	private JMenuItem standardBot2 = new JMenuItem("StandardBot2");
+	private JMenuItem standardBotBig = new JMenuItem("Big Standard Bot");
+
+	private JMenuItem standardBotGripper = new JMenuItem("Gripper Bot");
+
+	private JMenuItem standardBotBigGripper = new JMenuItem("Big Gripper Bot");
+
+	private JMenuItem standardBotSeeer = new JMenuItem("Seeer Bot");
+
+	private JMenuItem standardBotBigSeeer = new JMenuItem("Big Seeer Bot");
+
+	private JMenuItem standardBotCommunicator = new JMenuItem("Communicator Bot");
+
+	private JMenuItem standardBotBigCommunicator = new JMenuItem("Big Communicator Bot");
 
 	private JButton modifyBot = new JButton("Modify Bot");
 
@@ -96,7 +114,9 @@ public class EntityPanel extends JPanel {
 
 	private DefaultTableModel epartnerList;
 
-	private JTable ePartnerTable;
+	private EntityJTable ePartnerTable;
+	
+	private static String ePartnerTableName;
 
 	private JScrollPane epartnerScrollPane;
 
@@ -108,8 +128,13 @@ public class EntityPanel extends JPanel {
 
 	private JButton deleteEpartner = new JButton("Delete E-partner");
 
-	private static final int BOT_OPTION_PANEL_MARGIN_WIDTH = 8;	
-
+	private static final int BOT_OPTION_PANEL_MARGIN_WIDTH = 8;
+	
+	//This is just for the modifyBot/modifyEpartner test,
+	//to see if the bot/epartner store actually opened
+	private boolean bs = false;
+	private boolean es = false;
+	
 	/**
 	 * Create an EntityPanel object.
 	 */
@@ -182,8 +207,14 @@ public class EntityPanel extends JPanel {
 	private void createDropDownMenuButtons() {
 		botMenu.setLayout(new BorderLayout());
 
-		botDropDownMenu.add(standardBot1);
-		botDropDownMenu.add(standardBot2);
+		botDropDownMenu.add(standardBot);
+		botDropDownMenu.add(standardBotBig);
+		botDropDownMenu.add(standardBotGripper);
+		botDropDownMenu.add(standardBotBigGripper);
+		botDropDownMenu.add(standardBotSeeer);
+		botDropDownMenu.add(standardBotBigSeeer);
+		botDropDownMenu.add(standardBotCommunicator);
+		botDropDownMenu.add(standardBotBigCommunicator);
 		botDropDownButton.add(botDropDownMenu);
 
 		botMenu.add(botDropDownButton, BorderLayout.EAST);
@@ -203,15 +234,12 @@ public class EntityPanel extends JPanel {
 	 */
 	private void createBotTable() {
 
-		botTable = new JTable();
+		botTable = new EntityJTable();
 		botTable.getTableHeader().setReorderingAllowed(false);
-
-		botList = new EntityTableModel(EntityType.AGENT);
-
-		botTable.setModel(botList);
-		botList.addColumn("Bot");
-		botList.addColumn("Controller");
-		botList.addColumn(NUMBER_BOTS_COLUMN);
+		botTableName = "botTable";
+		botTable.setName(botTableName);
+		botList = new RobotTableModel();
+        botTable.setModel(botList);
 
 		botScrollPane = new JScrollPane(botTable);
 		botScrollPane.setPreferredSize(new Dimension(SCROLL_PANE_WIDTH,
@@ -281,12 +309,15 @@ public class EntityPanel extends JPanel {
 	 */
 	private void createEpartnerTable() {
 
-		ePartnerTable = new JTable();
+		ePartnerTable = new EntityJTable();
+		ePartnerTableName = "eparterTable";
+		ePartnerTable.setName(ePartnerTableName);
 		ePartnerTable.getTableHeader().setReorderingAllowed(false);
 		epartnerList = new EntityTableModel(EntityType.EPARTNER);
 
 		ePartnerTable.setModel(epartnerList);
 		epartnerList.addColumn("E-partner");
+		epartnerList.addColumn(AGENT_FILE);
 		epartnerList.addColumn(NUMBER_EPARTNERS_COLUMN);
 
 		epartnerScrollPane = new JScrollPane(ePartnerTable);
@@ -314,16 +345,20 @@ public class EntityPanel extends JPanel {
 	 *
 	 * @return The table that contains the bots.
 	 */
-	public final JTable getBotTable() {
+	public final EntityJTable getBotTable() {
 		return botTable;
 	}
 
-	/**
+	public void setBotTable(EntityJTable botTable) {
+        this.botTable = botTable;
+    }
+
+    /**
 	 * Returns the table model with the list of bots.
 	 *
 	 * @return The table model that contains the bots.
 	 */
-	public final DefaultTableModel getBotTableModel() {
+	public final AbstractTableModel getBotTableModel() {
 		return botList;
 	}
 
@@ -332,11 +367,15 @@ public class EntityPanel extends JPanel {
 	 *
 	 * @return The table that contains the E-partners.
 	 */
-	public final JTable getEPartnerTable() {
+	public final EntityJTable getEPartnerTable() {
 		return ePartnerTable;
 	}
 
-	/**
+	public void setePartnerTable(EntityJTable ePartnerTable) {
+        this.ePartnerTable = ePartnerTable;
+    }
+
+    /**
 	 * Returns the table with the list of E-partners.
 	 *
 	 * @return The table that contains the E-partners.
@@ -353,6 +392,38 @@ public class EntityPanel extends JPanel {
 	public JButton getDropDownButton() {
 		return botDropDownButton;
 	}
+    
+    public JMenuItem getAddNewStandardBotMenuItem() {
+        return standardBot;
+    }
+    
+    public JMenuItem getAddNewStandardBotBigMenuItem() {
+        return standardBotBig;
+    }
+    
+    public JMenuItem getAddNewStandardBotGripperMenuItem() {
+        return standardBotGripper;
+    }
+    
+    public JMenuItem getAddNewStandardBotBigGripperMenuItem() {
+        return standardBotBigGripper;
+    }
+    
+    public JMenuItem getAddNewStandardBotSeeerMenuItem() {
+        return standardBotSeeer;
+    }
+    
+    public JMenuItem getAddNewStandardBotBigSeeerMenuItem() {
+        return standardBotBigSeeer;
+    }
+    
+    public JMenuItem getAddNewStandardBotCommunicatorMenuItem() {
+        return standardBotCommunicator;
+    }
+    
+    public JMenuItem getAddNewStandardBotBigCommunicatorMenuItem() {
+        return standardBotBigCommunicator;
+    }
 
 	/**
 	 * Updates the bot count on the EntityPanel.
@@ -460,4 +531,113 @@ public class EntityPanel extends JPanel {
 
 		return isDefault;
 	}
+	
+    /**
+     * Used by the EnityTableCellRenderer for deciding which table it's dealing with.
+     * @return The name of the botTable
+     */
+    public static String getBotTableName() {
+        return botTableName;
+    }
+    
+    /**
+     * Used by the EnityTableCellRenderer for deciding which table it's dealing with.
+     * @return The name of the epartnerTable
+     */
+    public static String getePartnerTableName() {
+        return ePartnerTableName;
+    }
+
+	public boolean isBotStore() {
+		return bs;
+	}
+
+	public void setBotStore(boolean bs) {
+		this.bs = bs;
+	}
+
+	public boolean isEpartnerStore() {
+		return es;
+	}
+
+	public void setEpartnerStore(boolean es) {
+		this.es = es;
+	}
+	
+	public void addNewBotController(ActionListener controller) {
+		getNewBotButton().addActionListener(controller);
+	}
+
+	public void addModifyBotController(ActionListener controller) {
+		getModifyBotButton().addActionListener(controller);
+	}
+
+	public void addDeleteBotController(ActionListener controller) {
+		getDeleteBotButton().addActionListener(controller);
+	}
+
+	public void addNewEpartnerController(ActionListener controller) {
+		getNewEPartnerButton().addActionListener(controller);
+	}
+	
+	public void addModifyEpartnerController(ActionListener controller) {
+		getModifyEPartnerButton().addActionListener(controller);
+	}
+
+	public void addDeleteEpartnerController(ActionListener controller) {
+		getDeleteEPartnerButton().addActionListener(controller);
+	}
+
+    public void addDropDownController(ActionListener controller) {
+        getDropDownButton().addActionListener(controller);
+    }
+    
+    public void addNewStandardBotController(ActionListener controller) {
+        getAddNewStandardBotMenuItem().addActionListener(controller);
+    }
+    
+    public void addNewStandardBotBigController(ActionListener controller) {
+        getAddNewStandardBotBigMenuItem().addActionListener(controller);
+    }
+    
+    public void addNewStandardBotGripperController(ActionListener controller) {
+        getAddNewStandardBotGripperMenuItem().addActionListener(controller);
+    }
+    
+    public void addNewStandardBotBigGripperController(ActionListener controller) {
+        getAddNewStandardBotBigGripperMenuItem().addActionListener(controller);
+    }
+    
+    public void addNewStandardBotSeeerController(ActionListener controller) {
+        getAddNewStandardBotSeeerMenuItem().addActionListener(controller);
+    }
+    
+    public void addNewStandardBotBigSeeerController(ActionListener controller) {
+        getAddNewStandardBotBigSeeerMenuItem().addActionListener(controller);
+    }
+    
+    public void addNewStandardBotCommunicatorController(ActionListener controller) {
+        getAddNewStandardBotCommunicatorMenuItem().addActionListener(controller);
+    }
+    
+    public void addNewStandardBotBigCommunicatorController(ActionListener controller) {
+        getAddNewStandardBotBigCommunicatorMenuItem().addActionListener(controller);
+    }
+
+	public void addBotTableModelController(TableModelListener controller) {
+		getBotTableModel().addTableModelListener(controller);
+	}
+
+	public void addEpartnerTableModelController(TableModelListener controller) {
+		getEPartnerTableModel().addTableModelListener(controller);
+	}
+	
+	public void addBotTableController(TableModelListener controller) {
+		getBotTable().getModel().addTableModelListener(controller);
+	}
+
+	public void addEpartnerTableController(TableModelListener controller) {
+		getEPartnerTable().getModel().addTableModelListener(controller);
+	}
+
 }

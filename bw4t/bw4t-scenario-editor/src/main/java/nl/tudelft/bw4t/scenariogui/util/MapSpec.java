@@ -17,9 +17,7 @@ import org.apache.log4j.Logger;
  */
 public class MapSpec {
     
-    /** The path to the map file. */
     private String mapFileLocation;
-    /** The amount of entities that are allowed in a map. */
     private int entitiesAllowedInMap;
     
     private static final Logger LOGGER = Logger.getLogger(MapSpec.class);
