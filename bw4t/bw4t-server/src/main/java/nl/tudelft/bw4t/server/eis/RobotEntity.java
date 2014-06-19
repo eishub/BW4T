@@ -21,6 +21,7 @@ import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.epartners.EPartner;
 import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.model.robots.NavigatingRobot;
+import nl.tudelft.bw4t.server.model.robots.handicap.AbstractRobotDecorator;
 import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.server.model.zone.BlocksRoom;
 import nl.tudelft.bw4t.server.model.zone.Corridor;
@@ -512,8 +513,13 @@ public class RobotEntity implements RobotEntityInt {
             LOGGER.debug(obj + " at " + obj.getBoundingBox());
         }
 
+
+
         if(ourRobot instanceof NavigatingRobot) {
             NavigatingRobot navbot = (NavigatingRobot) ourRobot;
+            navbot.navigateObstacles();
+        } else if(ourRobot instanceof AbstractRobotDecorator && ourRobot.getParent() instanceof NavigatingRobot) {
+            NavigatingRobot navbot = (NavigatingRobot) ourRobot.getParent();
             navbot.navigateObstacles();
         }
     }
