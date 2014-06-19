@@ -5,9 +5,13 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.util.RobotTableModel;
 
 /**
  * MainPanel which serves as the content pane for the ScenarioEditor frame.
@@ -20,15 +24,20 @@ import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 public class MainPanel extends JPanel {
 
     private static final int INSET = 10;
+    
     private static final double WEIGHT_1 = 0.1;
+    
     private static final double WEIGHT_2 = 0.8;
+    
     private static final long serialVersionUID = 475250876795906302L;
 
     private ScenarioEditor parent;
-    private ConfigurationPanel configurationPanel;
-    private EntityPanel entityPanel;
-    private GridBagLayout gbl;
     
+    private ConfigurationPanel configurationPanel;
+    
+    private EntityPanel entityPanel;
+    
+    private GridBagLayout gbl;
 
     /**
      * Create a MainPanel consisting of a ConfigurationPanel and a EntityPanel.
@@ -38,16 +47,13 @@ public class MainPanel extends JPanel {
      */
     public MainPanel(final ScenarioEditor parent, final ConfigurationPanel newConfigurationPanel,
                      final EntityPanel newEntityPanel) {
+        this.parent = parent;
         gbl = new GridBagLayout();
         this.setLayout(gbl);
         this.setConfigurationPanel(newConfigurationPanel);
         this.setEntityPanel(newEntityPanel);
 
         this.drawPanel();
-
-        this.configurationPanel = newConfigurationPanel;
-        this.entityPanel = newEntityPanel;
-        this.parent = parent;
     }
 
     /**
@@ -113,6 +119,30 @@ public class MainPanel extends JPanel {
      */
     public final void setEntityPanel(final EntityPanel newEntityPanel) {
         this.entityPanel = newEntityPanel;
+        this.entityPanel.getBotTableModel().setEnvironmentStore(parent);
+    }
+    
+    /**
+     * Update the Bot table with the newest values.
+     */
+    public void refreshBotTableModel() {
+        getEntityPanel().getBotTableModel().update();
+    }
+    
+    /**
+     * Update the Bot table with the newest values.
+     */
+    public void refreshEPartnerTableModel() {
+        final DefaultTableModel tableModel = getEntityPanel().getEPartnerTableModel();
+        tableModel.setRowCount(0);
+        int rows = getClientConfig().getEpartners().size();
+        for (int i = 0; i < rows; i++) {
+            EPartnerConfig botConfig = getClientConfig().getEpartner(i);
+            Object[] newBotObject = {botConfig.getEpartnerName(),
+                    botConfig.getFileName(),
+                    botConfig.getEpartnerAmount()};
+            tableModel.addRow(newBotObject);
+        }
     }
 
     public BW4TClientConfig getClientConfig() {

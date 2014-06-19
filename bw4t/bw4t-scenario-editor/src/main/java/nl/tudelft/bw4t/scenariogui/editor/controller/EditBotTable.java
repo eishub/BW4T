@@ -41,25 +41,38 @@ public class EditBotTable implements TableModelListener {
     public void tableChanged(TableModelEvent event) {
         if (event.getColumn() == -1) 
             return;
-        model.getAmountBot();
+        
         BotConfig config = model.getBots().get(event.getFirstRow());
         String value =  "" + view.getEntityPanel().getBotTable().getValueAt(
                 event.getFirstRow(), event.getColumn());
-        switch (event.getColumn()) {
+
+        updateConfigFieldCorrespondingToTableColumn(event.getColumn(), config, value);
+    }
+    
+    /**
+     * Updates a field in the {@link BotConfig} object that corresponds to
+     * the table column with the value specified.
+     * @param tableColumn The index of the column in the table.
+     * @param config The {@link BotConfig} object to update.
+     * @param newValue The new value for the field in the config.
+     */
+    private void updateConfigFieldCorrespondingToTableColumn(int tableColumn, BotConfig config, String newValue) {
+        switch (tableColumn) {
         case 0:
-            config.setBotName(value);
+            config.setBotName(newValue);
             break;
         case 1:
-            EntityType botController = EntityType.getType(value);
-
+            EntityType botController = EntityType.getType(newValue);
             config.setBotController(botController);
             break;
         case 2:
-            config.setBotAmount(Integer.parseInt(value));
+           config.setFileName(newValue);
+            break;
+        case 3:
+            config.setBotAmount(Integer.parseInt(newValue));
             break;
          default:
             break;
         }
-    }
-    
+    }   
 }

@@ -12,6 +12,9 @@ import javax.xml.bind.JAXBException;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.DefaultConfigurationValues;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 import nl.tudelft.bw4t.scenariogui.util.MapSpec;
@@ -33,6 +36,8 @@ public abstract class AbstractMenuOption implements ActionListener {
 
 	// made a variable for this so we can call it during testing
 	private JFileChooser currentFileChooser;
+	
+	private boolean fileChooserApprove = false;
 
 	/**
 	 * Constructs a menu option object.
@@ -91,59 +96,79 @@ public abstract class AbstractMenuOption implements ActionListener {
 	 *            Whether or not to open a file chooser.
 	 */
 	public void saveFile(final boolean saveAs) {
+        if (validateBotCount() && verifyMapSelected()) {
 
-        if(!validateBotCount()) {
-            return;
+            String path = view.getLastFileLocation();
+            // Check if the previous save location exists.
+            if (wasPreviousSaveRemoved(path)) {
+                view.setLastFileLocation(null);
+                currentFileChooser.setCurrentDirectory(new File("."));
+            }
+
+            if (saveAs || !view.hasLastFileLocation()) {
+                path = getPathToSaveFromUser();
+                if (path == null)
+                    return;
+            }
+            saveConfigAsXMLFile(path);
         }
+    }
 
-        if(!verifyMapSelected()) {
-            return;
+    private boolean wasPreviousSaveRemoved(String path) {
+        return view.hasLastFileLocation() && !new File(path).exists();
+    }
+
+	/**
+	 * Displays a file chooser and saves the response in fileChooserApprove.
+	 */
+	public void setFileChooserApprove() {
+		currentFileChooser = getCurrentFileChooser();
+		
+		/** Adds an xml filter for the file chooser: */
+        currentFileChooser.setFileFilter(FileFilters.xmlFilter());
+        
+		fileChooserApprove = currentFileChooser
+		        .showDialog(getController().getMainView(), "Save Scenario") == JFileChooser.APPROVE_OPTION;
+	}
+	
+	/**
+	 * Returns whether APPROVE_OPTION was returned.
+	 * 
+	 * @return fileChooserApprove 
+	 */
+	public boolean getFileChooserApprove() {
+		return fileChooserApprove;
+	}
+	
+	/**
+	 * Gets the path to save the file to from the user via a file chooser.
+	 * @return The path to save the file, null if the user closed the file chooser.
+	 */
+	private String getPathToSaveFromUser() {
+	    String path = null;
+
+	    setFileChooserApprove();
+        if (fileChooserApprove) {
+            File file = currentFileChooser.getSelectedFile();
+
+            path = file.getAbsolutePath();
+
+            String extension = ".xml";
+            if (!path.endsWith(extension)) {
+                path += extension;
+                file = new File(path);
+            }
+            controller.getMainView().setWindowTitle(file.getName());
         }
-
-		String path = view.getLastFileLocation();
-
-        if (view.hasLastFileLocation() && !new File(path).exists()) {
-            view.setLastFileLocation(null);
-            currentFileChooser.setCurrentDirectory(new File("."));
-        }
-
-		if (saveAs || !view.hasLastFileLocation()) {
-			currentFileChooser = getCurrentFileChooser();
-
-			/** Adds an xml filter for the file chooser: */
-			currentFileChooser.setFileFilter(FileFilters.xmlFilter());
-
-			if (currentFileChooser
-					.showDialog(getController().getMainView(), "Save Scenario") == JFileChooser.APPROVE_OPTION) {
-				File file = currentFileChooser.getSelectedFile();
-
-				path = file.getAbsolutePath();
-
-				String extension = ".xml";
-				if (!path.endsWith(extension)) {
-					path += extension;
-                    file = new File(path);
-				}
-                controller.getMainView().setWindowTitle(file.getName());
-            } else {
-				return;
-			}
-		}
-		try {
-            // Check if the file path was not externally deleted.
-            saveXMLFile(path);
-        } catch (JAXBException e) {
-			ScenarioEditor.handleException(e,
-					"Error: Saving to XML has failed.");
-		} catch (FileNotFoundException e) {
-			ScenarioEditor.handleException(e, "Error: No file has been found.");
-		}
+        return path;
 	}
 
 
     private boolean validateBotCount() {
-        MapSpec map = controller.getMainView().getMainPanel()
-                .getConfigurationPanel().getMapSpecifications();
+        ScenarioEditor se = controller.getMainView();
+        MainPanel mp = se.getMainPanel();
+        ConfigurationPanel cp = mp.getConfigurationPanel();
+        MapSpec map = cp.getMapSpecifications();
         int botCount = getModel().getAmountBot();
         if (map.isSet() && botCount > map.getEntitiesAllowedInMap()) {
             ScenarioEditor.getOptionPrompt().showMessageDialog(
@@ -157,7 +182,10 @@ public abstract class AbstractMenuOption implements ActionListener {
     }
 
     private boolean verifyMapSelected() {
-        String map = getController().getMainView().getMainPanel().getConfigurationPanel().getMapFile();
+    	ScenarioEditor se = controller.getMainView();
+        MainPanel mp = se.getMainPanel();
+        ConfigurationPanel cp = mp.getConfigurationPanel();
+        String map = cp.getMapFile();
         if(map.trim().isEmpty()) {
             int response = ScenarioEditor.getOptionPrompt().showConfirmDialog(getController().getMainView(),
                     "Warning: No map file has been selected. Press OK to continue.",
@@ -170,25 +198,38 @@ public abstract class AbstractMenuOption implements ActionListener {
         return true;
     }
 
-	public void saveXMLFile(String path) throws JAXBException,
-			FileNotFoundException {
-		BW4TClientConfig configuration = getModel();
-		configuration.setFileLocation(path);
-		configuration.setUseGoal(DefaultConfigurationValues.USE_GOAL.getBooleanValue());
-
-		configuration.toXML();
-		view.setLastFileLocation(path);
+    /**
+     * Saves the config at the path specified as an XML file.
+     * @param destination The path.
+     */
+	public void saveConfigAsXMLFile(String destination) {
+        try {
+    		BW4TClientConfig configuration = getModel();
+    		configuration.setFileLocation(destination);
+    		configuration.setUseGoal(DefaultConfigurationValues.USE_GOAL.getBooleanValue());
+    
+    		configuration.toXML();
+    		view.setLastFileLocation(destination);
+        } catch (JAXBException e) {
+            ScenarioEditor.handleException(e,
+                    "Error: Saving to XML has failed.");
+        } catch (FileNotFoundException e) {
+            ScenarioEditor.handleException(e, "Error: No file has been found.");
+        }
 	}
 
     /**
      * Update the model with the new bot and epartners, and update the counts in the view.
      */
     public void updateModelAndView() {
-        getController().getMainView().getMainPanel().getConfigurationPanel().updateOldValues();
-        getModel().updateBotConfigs();
-        getController().getMainView().getMainPanel().getEntityPanel().updateEPartnerCount(
-                getModel().getAmountEPartner());
-        getModel().updateEpartnerConfigs();
+    	ScenarioEditor se = controller.getMainView();
+        MainPanel mp = se.getMainPanel();
+        ConfigurationPanel cp = mp.getConfigurationPanel();
+        cp.updateOldValues();
+        getModel().updateOldBotConfigs();
+        EntityPanel ep = mp.getEntityPanel();
+        ep.updateEPartnerCount(getModel().getAmountEPartner());
+        getModel().updateOldEpartnerConfigs();
     }
 
 	/**

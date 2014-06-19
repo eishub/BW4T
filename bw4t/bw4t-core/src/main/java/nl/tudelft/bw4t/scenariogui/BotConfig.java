@@ -13,12 +13,12 @@ import nl.tudelft.bw4t.map.EntityType;
  * @since 12-05-2014
  */
 
-public final class BotConfig implements Serializable {
+public final class BotConfig implements Serializable, Cloneable {
 	private static final long serialVersionUID = -4261058226493472776L;
+	
+	public static final String DEFAULT_GOAL_FILENAME_REFERENCE = "robot";
 
-    public static final String DEFAULT_GOAL_FILENAME_REFERENCE = "robot";
-
-    public static final String DEFAULT_GOAL_FILENAME = "robot.goal";
+	public static final String DEFAULT_GOAL_FILENAME = "robot.goal";
 
 	private String name = "Bot";
 
@@ -31,8 +31,6 @@ public final class BotConfig implements Serializable {
 	private int botSpeed = 100;
 
 	private int botBatteryCapacity = 10;
-
-	private double botBatteryDischargeRate = 0;
 
 	private int numberOfGrippers = 1;
 
@@ -54,7 +52,7 @@ public final class BotConfig implements Serializable {
 	 * Sets the name of the bot.
 	 * 
 	 * @param name
-	 *            The name of the bot.
+	 * The name of the bot.
 	 */
 	@XmlElement
 	public void setBotName(String name) {
@@ -182,16 +180,7 @@ public final class BotConfig implements Serializable {
 	 * @return the robot's battery discharge rate.
 	 */
 	public double getBotBatteryDischargeRate() {
-		return 0.0002 * botSize + 0.0004 * botSpeed;
-	}
-
-	/**
-	 * @param newBatteryDischargeRate
-	 *            , the new robot's battery discharge rate.
-	 */
-	@XmlElement
-	public void setBotBatteryDischargeRate(double newBatteryDischargeRate) {
-		botBatteryDischargeRate = newBatteryDischargeRate;
+		return calculateDischargeRate(botSize, botSpeed);
 	}
 
 	/**
@@ -285,7 +274,7 @@ public final class BotConfig implements Serializable {
 	 */
 	public String bcToString() {
 		return name + controller + amount + botSize
-				+ botSpeed + botBatteryCapacity + botBatteryDischargeRate
+				+ botSpeed + botBatteryCapacity
 				+ numberOfGrippers + batteryEnabled + hasColorBlindHandicap
 				+ hasGripperHandicap + hasMoveSpeedHandicap
 				+ hasSizeOverloadHandicap + fileName + referenceName;
@@ -325,6 +314,15 @@ public final class BotConfig implements Serializable {
 		this.fileName = _fileName;
 	}
 	
+	@Override
+	public BotConfig clone() {
+	    try {
+            return (BotConfig) super.clone();
+        } catch (CloneNotSupportedException e) {
+            return null;
+        }
+	}
+
 	/**
 	 * @return the default configuration of a Human
 	 */
@@ -342,5 +340,15 @@ public final class BotConfig implements Serializable {
         bot.setBotController(EntityType.AGENT);
         return bot;
 	}
+
+	/**
+	 * Calculate the discharge rate given the size and speed of the bot.
+	 * @param size the size of the bot
+	 * @param speed the speed of the bot
+	 * @return the discharge rate per step
+	 */
+    public static double calculateDischargeRate(int size, int speed) {
+        return 0.0002 * size + 0.0004 * speed;
+    }
 
 }
