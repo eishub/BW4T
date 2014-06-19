@@ -86,10 +86,20 @@ public class MapPanelController implements ChangeListener {
                 if (isStartZone) {
                 	setStartzone(isStartZone);
                 }
-                selected.getUpdateableEditorInterface().update();
+                
+                
+                updateAll();
         	}
         }
         selected = null;
+    }
+    
+    private void updateAll() {
+    	for (int i = 0; i < getRows(); i++) {
+    		for (int j = 0; j < getColumns(); j++) {
+    			getZoneController(i, j).getUpdateableEditorInterface().update();
+    		}
+    	}
     }
 
     public EnvironmentMap getModel() {

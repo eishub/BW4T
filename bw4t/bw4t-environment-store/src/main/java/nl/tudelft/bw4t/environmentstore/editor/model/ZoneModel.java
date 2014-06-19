@@ -93,18 +93,14 @@ public class ZoneModel {
 
 	/** Places a door at the first spot it can find. */
 	private void placeDoor() {
-		if (canPlaceDoor(EAST)) {
-			setDoor(EAST, true);
-			return;
-		} else if (canPlaceDoor(NORTH)) {
+		if (canPlaceDoor(NORTH)) {
 			setDoor(NORTH, true);
-			return;
+		} else if (canPlaceDoor(EAST)) {
+			setDoor(EAST, true);
 		} else if (canPlaceDoor(SOUTH)) {
 			setDoor(SOUTH, true);
-			return;
 		} else if (canPlaceDoor(WEST)) {
 			setDoor(WEST, true);
-			return;
 		}
 	}
 
