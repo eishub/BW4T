@@ -73,8 +73,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
         super.paintComponent(g);
         updateMinimumSize();
         Graphics2D g2d = (Graphics2D) g;
-        drawRooms(g2d);
         drawChargingZones(g2d);
+        drawRooms(g2d);
         drawBlockades(g2d);
         drawLabels(g2d);
         drawDropZone(g2d);
@@ -202,6 +202,10 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
         MapRenderSettings set = getController().getRenderSettings();
         Zone dropZone = getController().getDropZone();
 
+        if (dropZone == null) {
+        	return;
+        }   
+        
         g2d.setColor(Color.DARK_GRAY);
         Rectangle2D rect = set.transformRectangle(dropZone.getBoundingbox().getRectangle());
         g2d.fill(rect);
