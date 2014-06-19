@@ -73,8 +73,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
         super.paintComponent(g);
         updateMinimumSize();
         Graphics2D g2d = (Graphics2D) g;
-        drawRooms(g2d);
         drawChargingZones(g2d);
+        drawRooms(g2d);
         drawBlockades(g2d);
         drawLabels(g2d);
         drawDropZone(g2d);
@@ -140,7 +140,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 
         for (Zone chargingzone : getController().getChargingZones()) {
             // paint the charging zone in transparent green
-            g2d.setColor(new Color(0f, 0.5f, 0f, 0.6f));
+            g2d.setColor(Zone.CHARGING_ZONE_COLOR);
             Shape roomDisplayCoordinates = set.transformRectangle(chargingzone.getBoundingbox().getRectangle());
             g2d.fill(roomDisplayCoordinates);
         }
@@ -150,8 +150,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
         MapRenderSettings set = getController().getRenderSettings();
 
         for (Zone blockade : getController().getBlockades()) {
-            // paint the charging zone in transparent green
-            g2d.setColor(new Color(0.6f, 0f, 0f, 0.6f));
+            // paint the blockades in transparent green
+            g2d.setColor(Zone.BLOCKADE_COLOR);
             Shape roomDisplayCoordinates = set.transformRectangle(blockade.getBoundingbox().getRectangle());
             g2d.fill(roomDisplayCoordinates);
             g2d.setColor(Color.BLACK);
@@ -202,6 +202,10 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
         MapRenderSettings set = getController().getRenderSettings();
         Zone dropZone = getController().getDropZone();
 
+        if (dropZone == null) {
+        	return;
+        }   
+        
         g2d.setColor(Color.DARK_GRAY);
         Rectangle2D rect = set.transformRectangle(dropZone.getBoundingbox().getRectangle());
         g2d.fill(rect);

@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import nl.tudelft.bw4t.server.RobotEntityInt;
 import nl.tudelft.bw4t.server.eis.translators.BlockWithColorTranslator;
 import nl.tudelft.bw4t.server.eis.translators.BoundedMovableObjectTranslator;
 import nl.tudelft.bw4t.server.eis.translators.ColorTranslator;
@@ -51,7 +50,7 @@ import eis.iilang.Parameter;
 /**
  * EIS entity for a {@link AbstractRobot}.
  */
-public class RobotEntity implements RobotEntityInt {
+public class RobotEntity implements EntityInterface {
 
     static {
         // Register our translators.
@@ -135,25 +134,30 @@ public class RobotEntity implements RobotEntityInt {
         ourRobotRoom = RoomLocator.getRoomAt(ourRobotLocation.getX(), ourRobotLocation.getY());
     }
 
-    /**
-     * @return All blocks that are visible to the robot, excluding the one the robot is holding
-     */
-    private Set<Block> getVisibleBlocks() {
-        Set<Block> blocks = new HashSet<Block>();
 
-        if (ourRobotRoom != null) {
-            // Add all blocks in the same room as the robot.
-            Iterable<Object> allBlocks = context.getObjects(Block.class);
-            for (Object b : allBlocks) {
-                Block aBlock = (Block) b;
-                Double p = new Point2D.Double(aBlock.getLocation().getX(), aBlock.getLocation().getY());
-                if (ourRobotRoom.getBoundingBox().contains(p)) {
-                    blocks.add(aBlock);
-                }
+    
+    /**
+     * @return All bounded moveable objects of class T that are visible to the robot, excluding the one the robot is holding.
+     */
+    private <T extends BoundedMoveableObject> Set<T> getVisible(Class<T> type){
+        Set<T> set = new HashSet<T>();
+        
+        if(context == null) {
+            return set;
+        }
+
+        // Add all objects in the same room as the robot.
+        Iterable<Object> allObjects = context.getObjects(type);
+        Zone zone = ZoneLocator.getZoneAt(ourRobotLocation.getX(), ourRobotLocation.getY());
+        for (Object b : allObjects) {
+            T aObject = (T) b;
+            Double p = new Point2D.Double(aObject.getLocation().getX(), aObject.getLocation().getY());
+            if (zone != null && zone.getBoundingBox().contains(p)) {
+                set.add(aObject);
             }
         }
 
-        return blocks;
+        return set;  
     }
     
     /**
@@ -192,14 +196,12 @@ public class RobotEntity implements RobotEntityInt {
         }
 
         // Add blocks
-        for (Block block : getVisibleBlocks()) {
+        for (Block block : getVisible(Block.class)) {
             objects.add(new ObjectInformation(block));
         }
         
         // Add EPartners
-        IndexedIterable<Object> allEPartners = context.getObjects(EPartner.class);
-        for (Object object : allEPartners) {
-            EPartner ep = (EPartner) object;
+        for (EPartner ep : getVisible(EPartner.class)) {
             objects.add(new ObjectInformation(ep));
         }
 
@@ -328,7 +330,7 @@ public class RobotEntity implements RobotEntityInt {
      */
     @AsPercept(name = "color", multiplePercepts = true, filter = Filter.Type.ALWAYS)
     public List<BlockColor> getColor() {
-        Set<Block> blocks = getVisibleBlocks();
+        Set<Block> blocks = getVisible(Block.class);
         boolean isColorBlind = ourRobot.getHandicapsList().contains("ColorBlind");
         
         List<BlockColor> colors = new ArrayList<BlockColor>();
@@ -454,13 +456,12 @@ public class RobotEntity implements RobotEntityInt {
     @AsAction(name = "goToBlock")
     public void goTo(long targetid) {
         BoundedMoveableObject target = null;
-        for (Block b : getVisibleBlocks()) {
+        for (Block b : getVisible(Block.class)) {
             if (b.getId() == targetid) {
                 target = b;
             }
         }
-        for (Object obj : context.getObjects(EPartner.class)) {
-            EPartner ep = (EPartner) obj;
+        for (EPartner ep : getVisible(EPartner.class)) {
             if (targetid == ep.getId()) {
                 target = ep;
             }
@@ -582,17 +583,14 @@ public class RobotEntity implements RobotEntityInt {
     }
     
     /**
-     * Give the robot a list of all the EPartners on the map.
+     * Give the robot a list of all the EPartners in the zone.
      * @return the list of EPartners
      */
     @AsPercept(name = "epartner", multiplePercepts = true, filter = Type.ALWAYS)
     public List<EPartner> getEPartners() {
-        if (!ourRobot.isHuman()) {
-            return new ArrayList<>();
-        }
         List<EPartner> eps = new ArrayList<>();
-        for (Object obj : context.getObjects(EPartner.class)) {
-            eps.add((EPartner) obj);
+        for (EPartner ep : getVisible(EPartner.class)) {
+            eps.add(ep);
         }
         return eps;
     }
@@ -603,17 +601,15 @@ public class RobotEntity implements RobotEntityInt {
      */
     @AsAction(name = "pickUpEPartner")
     public void pickUpEPartner() {
-    	if(ourRobot.isHuman()) {
-	        LOGGER.debug(String.format("%s is trying to pick up an e-partner.", ourRobot.getName()));
-	
-	        EPartner nearest = getClosest(EPartner.class);
-	        if (nearest == null) {
-	            LOGGER.debug(String.format("%s can not pickup any e-partners.", ourRobot.getName()));
-	            return;
-	        }
-	        LOGGER.debug(String.format("%s will pickup e-partner %d.", ourRobot.getName(), nearest.getId()));
-	        ourRobot.pickUpEPartner(nearest);
-    	}
+        LOGGER.debug(String.format("%s is trying to pick up an e-partner.", ourRobot.getName()));
+
+        EPartner nearest = getClosest(EPartner.class);
+        if (nearest == null) {
+            LOGGER.debug(String.format("%s can not pickup any e-partners.", ourRobot.getName()));
+            return;
+        }
+        LOGGER.debug(String.format("%s will pickup e-partner %d.", ourRobot.getName(), nearest.getId()));
+        ourRobot.pickUpEPartner(nearest);
     }
     
     /**

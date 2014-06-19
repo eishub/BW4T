@@ -15,6 +15,7 @@ public class ViewEPartner {
     private long id = 0;
     private Point2D location = new Point2D.Double();
     private boolean pickedUp = false;
+    private String name = "";
 
     public ViewEPartner() {
     }
@@ -59,6 +60,14 @@ public class ViewEPartner {
         } else {
             return EPARTNER_OFFLINE;
         }
+    }
+    
+    public String getName() {
+    	return name;
+    }
+    
+    public void setName(String name) {
+    	this.name = name;
     }
 
 }

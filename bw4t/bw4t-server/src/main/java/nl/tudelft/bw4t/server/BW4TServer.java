@@ -8,7 +8,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -21,6 +20,7 @@ import nl.tudelft.bw4t.network.BW4TClientActions;
 import nl.tudelft.bw4t.network.BW4TServerHiddenActions;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
+import nl.tudelft.bw4t.server.eis.EntityInterface;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.Launcher;
 
@@ -201,7 +201,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
     public void associateEntity(final String agentId, final String entityId) throws RelationException {
         BW4TEnvironment.getInstance().associateEntity(agentId, entityId);
 
-        ((RobotEntityInt) BW4TEnvironment.getInstance().getEntity(entityId)).connect();
+        ((EntityInterface) BW4TEnvironment.getInstance().getEntity(entityId)).connect();
 
     }
 

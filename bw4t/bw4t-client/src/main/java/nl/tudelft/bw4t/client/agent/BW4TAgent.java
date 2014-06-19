@@ -2,30 +2,51 @@ package nl.tudelft.bw4t.client.agent;
 
 import java.rmi.RemoteException;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import nl.tudelft.bw4t.client.environment.PerceptsHandler;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.message.BW4TMessage;
 import nl.tudelft.bw4t.client.message.MessageTranslator;
+import nl.tudelft.bw4t.map.view.ViewEntity;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
+
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Translator;
 import eis.exceptions.ActException;
+import eis.exceptions.EntityException;
 import eis.exceptions.PerceiveException;
 import eis.iilang.Action;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
+import java.rmi.RemoteException;
+import java.util.LinkedList;
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.client.environment.PerceptsHandler;
+import nl.tudelft.bw4t.client.message.BW4TMessage;
+import nl.tudelft.bw4t.client.message.MessageTranslator;
 
 /**
- * Java agent that can control an entity
+ * Java agent that can control an entity.
  */
 public class BW4TAgent extends Thread implements ActionInterface {
 
-	/**
-	 * Information storage about the agent.
-	 */
-    protected String agentId, entityId;
+    /** The agent id. */
+    protected String agentId;
+    /** The entity id */
+    protected String entityId;
+    
+    /** The environment killed. */
     protected boolean environmentKilled;
+    
+    /** The bw4tenv. */
     private RemoteEnvironment bw4tenv;
+    
+    private BotConfig botConfig;
+    private EPartnerConfig epartnerConfig;
 
     /**
      * Create a new BW4TAgent that can be registered to an entity.
@@ -41,22 +62,40 @@ public class BW4TAgent extends Thread implements ActionInterface {
     }
     
     /**
-     * Register an entity to this agent
-     * 
-     * @param entityId
-     *            , the Id of the entity
+     * Register an entity to this agent.
+     *
+     * @param entityId            , the Id of the entity
      */
     public void registerEntity(String entityId) {
         this.entityId = entityId;
     }
 
     /**
-     * Run the reasoning process of this agent
+     * Run the reasoning process of this agent.
      */
     public void run() {
         if (environmentKilled) {
             return;
         }
+    }
+    
+    /**
+     * Gets all agent with this type.
+     * @param type The type of the agent.
+     * @return A list with the agents.
+     */
+    public LinkedList<BW4TAgent> getAgentsWithType(String type) {
+        LinkedList<BW4TAgent> res = new LinkedList<BW4TAgent>();
+        for (String agent : bw4tenv.getAgents()) {
+            try {
+                if (bw4tenv.getType(agent).equals(type)) {
+                    res.add(bw4tenv.getRunningAgent(agent));
+                }
+            } catch (EntityException e) {
+                e.printStackTrace();
+            }
+        }
+        return res;
     }
 
     /**
@@ -145,14 +184,11 @@ public class BW4TAgent extends Thread implements ActionInterface {
     }
 
     /**
-     * Sends a message to certain other agents
-     * 
-     * @param message
-     *            , the translated message (as String)
-     * @param receiver
-     *            , a receiver (can be either all or the id of another agent)
-     * @throws ActException
-     * 			  , if an attempt to perform an action has failed.
+     * Sends a message to certain other agents.
+     *
+     * @param receiver            , a receiver (can be either all or the id of another agent)
+     * @param message            , the translated message (as String)
+     * @throws ActException 			  , if an attempt to perform an action has failed.
      */
     private void sendMessage(String receiver, String message) throws ActException {
         try {
@@ -170,25 +206,88 @@ public class BW4TAgent extends Thread implements ActionInterface {
     }
 
     /**
-	 * Get all percepts for the associated entity
-	 * 
-	 * @return a list of percepts
-	 * @throws PerceiveException if there was a problem retrieving the percepts.
-	 */
+     * Get all percepts for the associated entity.
+     *
+     * @return a list of percepts
+     * @throws PerceiveException if there was a problem retrieving the percepts.
+     */
 	public LinkedList<Percept> getPercepts() throws PerceiveException {
 	    return (LinkedList<Percept>) PerceptsHandler.getAllPerceptsFromEntity(entityId, bw4tenv);
 	}
 
+	/**
+	 * Sets the killed.
+	 */
 	public void setKilled() {
         environmentKilled = true;
     }
 	
+	/**
+	 * Gets the agent id.
+	 *
+	 * @return the agent id
+	 */
 	public String getAgentId() {
 	    return agentId;
 	}
 
+	/**
+	 * Gets the environment.
+	 *
+	 * @return the environment
+	 */
 	public RemoteEnvironment getEnvironment() {
 	    return bw4tenv;
 	}
+	
+	/**
+	 * Whether this agent can pick up another object (box/e-partner) based
+	 * on their gripper capacity and the amount of objects they're already
+	 * holding. 
+	 * @param sameEntity The {@link ViewEntity} type of this agent.
+	 * @return Whether this agent can pick up another object.
+	 */
+	public boolean canPickupAnotherObject(ViewEntity sameEntity) {
+	    if (getBotConfig() == null) {
+	        return true;
+	    }
+	    if (getBotConfig().getGripperHandicap()) {
+	        return false;
+	    }
+	    int grippersTotal = getBotConfig().getGrippers();
+	    int grippersInUse = sameEntity.getHolding().size();
+	    if (sameEntity.getHoldingEpartner() != -1) {
+	        grippersInUse++;
+	    }
+	    return grippersInUse < grippersTotal;
+	}
+	
+	public boolean canPickupAnotherObject(BW4TClientGUI gui) {
+	    return canPickupAnotherObject(gui.getController().getMapController().getTheBot());
+	}
+	
+	public boolean isColorBlind() {
+	    return getBotConfig() != null && getBotConfig().getColorBlindHandicap();
+	}
+
+    public BotConfig getBotConfig() {
+        return botConfig;
+    }
+
+    public void setBotConfig(BotConfig botConfig) {
+        this.botConfig = botConfig;
+    }
+    
+    public boolean isGps() {
+        return getEpartnerConfig() != null && getEpartnerConfig().isGps();
+    }
+
+    public EPartnerConfig getEpartnerConfig() {
+        return epartnerConfig;
+    }
+
+    public void setEpartnerConfig(EPartnerConfig epartnerConfig) {
+        this.epartnerConfig = epartnerConfig;
+    }
 
 }

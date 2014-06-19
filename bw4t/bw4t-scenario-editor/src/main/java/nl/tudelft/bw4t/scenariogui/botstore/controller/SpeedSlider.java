@@ -2,7 +2,6 @@ package nl.tudelft.bw4t.scenariogui.botstore.controller;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.text.DecimalFormat;
 
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 import nl.tudelft.bw4t.scenariogui.util.Format;
@@ -10,7 +9,7 @@ import nl.tudelft.bw4t.scenariogui.util.Format;
 /**
  * Handles actions of the speedslider
  */
-class SpeedSlider extends MouseAdapter {
+public class SpeedSlider extends MouseAdapter {
     /**
      * The panel containing the slider.
      */
@@ -23,6 +22,7 @@ class SpeedSlider extends MouseAdapter {
         this.view = pview;
     }
     
+<<<<<<< HEAD
     @Override
     public void mouseReleased(MouseEvent arg0) {
     	if (view.getBatteryEnabledCheckbox().isSelected()) {
@@ -34,6 +34,17 @@ class SpeedSlider extends MouseAdapter {
 	        view.getBatteryUseValueLabel().setText(Format.padString(value, 8));
     	}
     	view.getTempBotConfig().setBotSpeed(view.getSpeedSlider().getValue());
+=======
+    /**
+     * Update the BatteryUseValueLabel with the correct value when the slider is moved.
+     * @param arg0 MouseEvent
+     */
+    @Override 
+    public void mouseReleased(MouseEvent arg0) {
+    	BotController currentController = view.getBotController();
+    	currentController.getBotConfig().setBotSpeed(view.getSpeedSlider().getValue());
+    	currentController.setNewBatteryValue(view);
+>>>>>>> master
     }
 
 }

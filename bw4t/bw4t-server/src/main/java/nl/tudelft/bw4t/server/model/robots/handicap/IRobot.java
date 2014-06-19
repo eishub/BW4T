@@ -79,8 +79,8 @@ public interface IRobot {
 	void pickUp(Block b);
 	
     /**
-     * Drops the block the robot is holding on the current location. 
-     * TODO: What if multiple blocks dropped at same spot?
+     * Drops the block the robot is holding on the current location. The block is assigned a random position inside the
+     * room that it was dropped in.
      */
 	void drop();
 	
@@ -357,7 +357,7 @@ public interface IRobot {
     long getId();
 
     /**
-     * TODO: please clarify this. 
+     * Repast stores all objects in a context, this is the context in which this IRobot is. 
      * 
      * @return
      * a giant HashMap handled by Repast containing a bunch of objects
