@@ -88,6 +88,7 @@ public class ZoneModel {
 		if (type == Type.ROOM && !hasDoors()) {
 			placeDoor();
 		}
+		changeNeighboursDoor();
 	}
 
 	/** Places a door at the first spot it can find. */
@@ -105,6 +106,51 @@ public class ZoneModel {
 			setDoor(WEST, true);
 			return;
 		}
+	}
+
+	/** Removes all doors. */
+	private void removeDoors() {
+		setDoor(EAST, false);
+		setDoor(NORTH, false);
+		setDoor(SOUTH, false);
+		setDoor(WEST, false);
+	}
+
+	/**
+	 * This ensures that when a change is brought to the map, the doors can
+	 * still be reachable for the bots.
+	 */
+	private void changeNeighboursDoor() {
+		changeNeighbourDoor(NORTH, SOUTH);
+		changeNeighbourDoor(EAST, WEST);
+		changeNeighbourDoor(SOUTH, NORTH);
+		changeNeighbourDoor(WEST, EAST);
+	}
+
+	/** Changes the door of one neighbour. */
+	private void changeNeighbourDoor(int dir, int oppositdir) {
+		if (neighbours[dir] != null
+				&& neighbours[dir].getType() == Type.ROOM
+				&& (neighbours[dir].hasDoor(oppositdir) || !neighbours[dir].hasDoors())) {
+			
+			if (!neighbours[dir].canPlaceDoors()) {
+				neighbours[dir].removeDoors();
+			} else {
+				neighbours[dir].placeDoor(); 
+			}
+		}
+	}
+
+	/** If the neighbour is a corridor or charge zone, we can place a door on this side. */
+	public boolean canPlaceDoor(int dir) {
+		return getNeighbour(dir) != null
+				&& (getNeighbour(dir).type == Type.CORRIDOR || getNeighbour(dir).type == Type.CHARGINGZONE);
+	}
+
+	/** Returns true if a door can be placed. */
+	private boolean canPlaceDoors() {
+		return canPlaceDoor(NORTH) || canPlaceDoor(EAST) || canPlaceDoor(SOUTH)
+				|| canPlaceDoor(WEST);
 	}
 
 	/**
@@ -157,17 +203,6 @@ public class ZoneModel {
 	public boolean hasDoors() {
 		return hasDoor(NORTH) || hasDoor(EAST) || hasDoor(SOUTH)
 				|| hasDoor(WEST);
-	}
-
-	/** If the neighbour is a corridor or charge zone, we can place a door on this side */
-	public boolean canPlaceDoor(int dir) {
-		return getNeighbour(dir) != null
-				&& (getNeighbour(dir).type == Type.CORRIDOR || getNeighbour(dir).type == Type.CHARGINGZONE);
-	}
-	
-	/** Returns true if the room has 4 sides free */
-	public boolean isFree() {
-		return canPlaceDoor(NORTH) && canPlaceDoor(EAST) && canPlaceDoor(SOUTH) && canPlaceDoor(WEST);
 	}
 
 	public void setDoor(int dir, boolean value) {
