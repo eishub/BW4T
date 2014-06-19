@@ -57,7 +57,7 @@ public class SaveButton implements ActionListener {
         // view.getModel().setBot(view.getBotEditor().getRow(), view.getTempBotConfig());
         view.updateView();
         
-        updateBotTableFromCurrentModel();
+        view.getMainPanel().getEntityPanel().getBotTableModel().update();
         view.getBotEditor().dispose();
     }
 
@@ -142,23 +142,5 @@ public class SaveButton implements ActionListener {
             return false;
         }
         return true;
-    }
-
-    /**
-     * Updates the bot list in the scenario editor.
-     */
-    private void updateBotTableFromCurrentModel() {
-        view.getMainPanel().getEntityPanel().getBotTableModel()
-                .setRowCount(0);
-        int rows = view.getBW4TClientConfig().getBots().size();
-        for (int i = 0; i < rows; i++) {
-            BotConfig botConfig = view.getBW4TClientConfig().getBot(i);
-            Object[] newBotObject = {botConfig.getBotName(),
-                    botConfig.getBotController().toString(),
-                    botConfig.getFileName(),
-                    botConfig.getBotAmount()};
-            view.getMainPanel().getEntityPanel().getBotTableModel()
-                    .addRow(newBotObject);
-        }
     }
 }

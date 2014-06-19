@@ -158,8 +158,7 @@ class MenuOptionOpen extends AbstractMenuOption {
             String agentFileName = configuration.getBot(i).getFileName();
             String botAmount = Integer.toString(configuration.getBot(i)
                     .getBotAmount());
-            Object[] botObject = {botName, botController, agentFileName, botAmount };
-            entityPanel.getBotTableModel().addRow(botObject);
+            entityPanel.getBotTableModel().update();
             getModel().getBots().add(configuration.getBot(i));
         }
     }
@@ -193,14 +192,7 @@ class MenuOptionOpen extends AbstractMenuOption {
      *            The EntityPanel which contains the bot list.
      */
     public void resetBotTable(EntityPanel entityPanel) {
-        DefaultTableModel botTable = entityPanel.getBotTableModel();
-        int rows = botTable.getRowCount();
-
-        if (rows > 0) {
-            for (int i = rows - 1; i >= 0; i--) {
-                botTable.removeRow(i);
-            }
-        }
+        entityPanel.getBotTableModel().update();
     }
 
     /**

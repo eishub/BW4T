@@ -31,9 +31,13 @@ import javax.swing.table.DefaultTableModel;
 
 
 
+
+
 import nl.tudelft.bw4t.map.EntityType;
+import nl.tudelft.bw4t.scenariogui.util.AbstractTableModel;
 import nl.tudelft.bw4t.scenariogui.util.EntityJTable;
 import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
+import nl.tudelft.bw4t.scenariogui.util.RobotTableModel;
 
 /**
  * The EntityPanel class represents right pane of the MainPanel. It shows a list
@@ -44,14 +48,13 @@ import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
  * @since 12-05-2014
  */
 public class EntityPanel extends JPanel {
-
-	private static final String AGENT_FILE = "Agent file";
-
     private static final long serialVersionUID = 6488182242349086899L;
 
-	private static final String NUMBER_BOTS_COLUMN = "Number of bots";
+	public static final String AGENT_FILE = "Agent file";
 
-	private static final String NUMBER_EPARTNERS_COLUMN = "Number of e-partners";
+	public static final String NUMBER_BOTS_COLUMN = "Number of bots";
+
+	public static final String NUMBER_EPARTNERS_COLUMN = "Number of e-partners";
 
 	private static final int FONT_SIZE = 16;
 
@@ -73,7 +76,7 @@ public class EntityPanel extends JPanel {
 
 	private JPanel botCounter = new JPanel();
 
-	private DefaultTableModel botList;
+	private AbstractTableModel botList;
 
 	private EntityJTable botTable;
 	
@@ -242,13 +245,8 @@ public class EntityPanel extends JPanel {
 		botTable.getTableHeader().setReorderingAllowed(false);
 		botTableName = "botTable";
 		botTable.setName(botTableName);
-		botList = new EntityTableModel(EntityType.AGENT);
-		
-		botTable.setModel(botList);
-		botList.addColumn("Bot");
-		botList.addColumn("Controller");
-		botList.addColumn(AGENT_FILE);
-		botList.addColumn(NUMBER_BOTS_COLUMN);
+		botList = new RobotTableModel();
+        botTable.setModel(botList);
 
 		botScrollPane = new JScrollPane(botTable);
 		botScrollPane.setPreferredSize(new Dimension(SCROLL_PANE_WIDTH,
@@ -367,7 +365,7 @@ public class EntityPanel extends JPanel {
 	 *
 	 * @return The table model that contains the bots.
 	 */
-	public final DefaultTableModel getBotTableModel() {
+	public final AbstractTableModel getBotTableModel() {
 		return botList;
 	}
 

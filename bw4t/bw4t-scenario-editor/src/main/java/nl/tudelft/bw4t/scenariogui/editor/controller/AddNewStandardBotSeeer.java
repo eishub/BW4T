@@ -3,7 +3,6 @@ package nl.tudelft.bw4t.scenariogui.editor.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
@@ -49,9 +48,8 @@ class AddNewStandardBotSeeer implements ActionListener {
         botCount = model.getBots().size() + 1;
         newBotConfig.setBotName("Seeer Bot " + botCount);
         
-        Object[] newBotObject = {newBotConfig.getBotName(), EntityType.AGENT.toString(), newBotConfig.getFileName(), 1};
         model.addBot(newBotConfig);
-        view.getEntityPanel().getBotTableModel().addRow(newBotObject);
+        view.getEntityPanel().getBotTableModel().update();
     }
 
 }
