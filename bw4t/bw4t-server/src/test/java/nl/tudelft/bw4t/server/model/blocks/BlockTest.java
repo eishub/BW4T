@@ -54,30 +54,6 @@ public class BlockTest {
     }
 
     /**
-     * Run the Color getColor() method test.
-     *
-     * @throws Exception
-     *
-     * @generatedBy CodePro at 24.05.14 19:21
-     */
-    @Test
-    public void testGetColor_1()
-        throws Exception {
-        Block fixture = new Block(BlockColor.BLUE, space, grid, context);
-
-        Color result = fixture.getColor();
-
-        // add additional test code here
-        assertNotNull(result);
-        assertEquals(0, result.getGreen());
-        assertEquals(255, result.getBlue());
-        assertEquals(0, result.getRed());
-        assertEquals(-16776961, result.getRGB());
-        assertEquals(255, result.getAlpha());
-        assertEquals(1, result.getTransparency());
-    }
-
-    /**
      * Run the BlockColor getColorId() method test.
      *
      * @throws Exception
