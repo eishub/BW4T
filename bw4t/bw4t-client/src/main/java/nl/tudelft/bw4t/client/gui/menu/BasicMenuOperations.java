@@ -12,6 +12,7 @@ import nl.tudelft.bw4t.client.gui.listeners.PickUpEPartnerActionListener;
 import nl.tudelft.bw4t.client.message.BW4TMessage;
 import nl.tudelft.bw4t.client.message.MessageTranslator;
 import nl.tudelft.bw4t.map.view.ViewBlock;
+import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 
 public class BasicMenuOperations {
@@ -77,8 +78,9 @@ public class BasicMenuOperations {
      * Adds the option to pick up an e-partner to the menu.
      * @param gui The gui holding the menu.
      */
-    public static void addEPartnerPickUpMenuItem(BW4TClientGUI gui) {
-        if (gui.getController().getHumanAgent().canPickupAnotherObject(gui)) {
+    public static void addEPartnerPickUpMenuItem(BW4TClientGUI gui, ViewEPartner ep) {
+        if (gui.getController().getHumanAgent().canPickupAnotherObject(gui)
+                && !ep.isPickedUp()) {
             JMenuItem menuItem = new JMenuItem("Pick up e-partner");
             menuItem.addActionListener(new PickUpEPartnerActionListener(gui.getController(), gui));
             gui.getjPopupMenu().add(menuItem);
