@@ -21,7 +21,7 @@ public class PositionProcessor implements PerceptProcessor {
         ViewBlock b = clientMapController.getBlock(id);
         b.setObjectId(id);
         b.setPosition(new Point2D.Double(x, y));
-        ViewEPartner ep = clientMapController.getViewEPartner(id);
+        ViewEPartner ep = clientMapController.getKnownEPartner(id);
         if (ep != null) {
             ep.setLocation(b.getPosition());
         }

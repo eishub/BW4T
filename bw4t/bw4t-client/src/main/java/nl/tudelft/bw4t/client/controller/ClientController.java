@@ -145,7 +145,7 @@ public class ClientController {
      */
     public void handlePercepts(List<Percept> percepts) {
         getMapController().getVisibleBlocks().clear();
-        getMapController().getVisibleEPartners().clear();
+        getMapController().makeEPartnersInvisible();
         for (Percept percept : percepts) {
             String name = percept.getName();
             List<Parameter> parameters = percept.getParameters();
