@@ -4,9 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 import nl.tudelft.bw4t.scenariogui.epartner.gui.EPartnerViewInterface;
 import nl.tudelft.bw4t.scenariogui.epartner.gui.EpartnerFrame;
-import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
  * EpartnerController is in charge of all events that happen on the EpartnerGUI.
@@ -32,15 +32,6 @@ public class EpartnerController {
 	 */
 	public EpartnerController(MainPanel panel, int row) {
 		epConfig = panel.getClientConfig().getEpartner(row);
-	}
-	
-	/**
-	 * Create the Epartner controller 
-	 * (this one is temporary and has to be deleted when everything is MVC)
-	 * @param config : the epartner config file
-	 */
-	public EpartnerController(EPartnerConfig config) {
-		epConfig = config;
 	}
 	
 	/**
@@ -119,5 +110,13 @@ public class EpartnerController {
 		for (EPartnerViewInterface evi: views) {
 			evi.updateView();
 		}
+	}
+	
+	/**
+	 * Return the EPartnerConfig.
+	 * @return epConfig
+	 */
+	public EPartnerConfig getEPartnerConfig() {
+		return epConfig;
 	}
 }
