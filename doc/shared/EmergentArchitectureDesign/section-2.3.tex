@@ -7,7 +7,7 @@ Now, the logging functionality has been extended to be a lot more flexible in lo
 A better defined logfile can also be used for various other purposes. By running an analysis of the log files, you can gather information about the results, efficiency and possible room for improvement. This can also be used to determine why a bot made certain decisions, or why it did not do what you expected it to do. 
 
 \subsection{Map files}
-The map files are fairly large \gls{xmlfile}, which consist of a declaration of the map. \\
+The map files are fairly large \gls{xmlfile} but are saved as ".map" extension, which consist of a declaration of the map. \\
 The XML file needs to contain at least the following:
 \begin{itemize}
 \item The size of the map (an x and y value)
@@ -24,7 +24,7 @@ The new map editor which we created still uses a grid layout but now you can add
 Some extra features also added to the tool:
 \begin{itemize}
 \item An option to create random maps. With this a random map can be generated with one startzone, one dropzone and a random amount of blockades, charging zones and rooms. This random map can be edited if the user wishes to do so.
-\item An option to create random blocks on the map. With this the user can choose the colors wanted and random blocks with those colors will be added to all the rooms instead of adding them manually to the rooms.
+\item An option to create random blocks on the map. With this the user can choose the colors he wants and random blocks with those colors will be added to all the rooms instead of adding them manually.
 \item An option to create a random sequence. With this the user can select the colors and length wanted and a random sequence of colors is created.
 \item An option to preview the map. The user can now preview the map before saving. Furthermore the user can preview the map while editing and the preview gets updated with every change to the map.
 \item An option to open previously created maps. The user can now open previously created maps and edit them. This was not possible with the old map editor
