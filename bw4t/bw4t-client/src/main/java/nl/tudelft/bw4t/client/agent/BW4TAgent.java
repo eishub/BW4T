@@ -86,10 +86,11 @@ public class BW4TAgent extends Thread implements ActionInterface {
      */
     public LinkedList<BW4TAgent> getAgentsWithType(String type) {
         LinkedList<BW4TAgent> res = new LinkedList<BW4TAgent>();
-        for (String agent : bw4tenv.getAgents()) {
+        for (String agentName : bw4tenv.getAgents()) {
             try {
-                if (bw4tenv.getType(agent).equals(type)) {
-                    res.add(bw4tenv.getRunningAgent(agent));
+                BW4TAgent agent = bw4tenv.getRunningAgent(agentName);
+                if (bw4tenv.getType(agent.getEntityId()).equals(type)) {
+                    res.add(agent);
                 }
             } catch (EntityException e) {
                 e.printStackTrace();
@@ -230,6 +231,15 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	public String getAgentId() {
 	    return agentId;
 	}
+	
+	/**
+     * Gets the entity id.
+     *
+     * @return the entity id
+     */
+    public String getEntityId() {
+        return entityId;
+    }
 
 	/**
 	 * Gets the environment.
