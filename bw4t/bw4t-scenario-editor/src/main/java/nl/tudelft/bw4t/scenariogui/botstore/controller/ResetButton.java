@@ -9,7 +9,7 @@ import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 /**
  * Handles actions of the resetbutton
  */
-class ResetButton implements ActionListener {
+public class ResetButton implements ActionListener {
     /**
      * The panel containing the button.
      */
@@ -27,35 +27,10 @@ class ResetButton implements ActionListener {
      * @param ae The action event causing this.
      */
     public void actionPerformed(ActionEvent ae) {
-        view.getSpeedSlider().setValue(view.getDataObject().getBotSpeed());
-        view.getSizeSlider().setValue(view.getDataObject().getBotSize());
-        view.getBatterySlider().setValue(view.getDataObject().getBotBatteryCapacity());
-        view.getSizeSlider().setEnabled(view.getDataObject().getSizeOverloadHandicap());
-        view.getBatterySlider().setEnabled(view.getDataObject().isBatteryEnabled());
-        view.getSpeedSlider().setEnabled(view.getDataObject().getMoveSpeedHandicap());
-        if(view.getDataObject().getGripperHandicap()){
-            view.getGripperCheckbox().setSelected(true);
-            view.getNumberOfGrippersSlider().setEnabled(false);
-        }
-        else {
-        	view.getGripperCheckbox().setSelected(false);
-        	view.getNumberOfGrippersSlider().setEnabled(true);
-        }
-        view.getColorblindCheckbox().setSelected(view.getDataObject().getColorBlindHandicap());
-        view.getsizeoverloadCheckbox().setSelected(view.getDataObject().getSizeOverloadHandicap());
-        view.getmovespeedCheckbox().setSelected(view.getDataObject().getMoveSpeedHandicap());
-        view.getBatteryEnabledCheckbox().setSelected(view.getDataObject().isBatteryEnabled());
-        view.getNumberOfGrippersSlider().setValue(view.getDataObject().getGrippers());
-        view.getFileNameField().setText(view.getDataObject().getFileName());
-        view.getBotNameField().setText(view.getDataObject().getBotName());
-        view.getBatteryUseValueLabel().setText("0");
-        view.getBotReferenceField().setText(view.getDataObject().getReferenceName());
-        view.getBotAmountTextField().setText(""+view.getDataObject().getBotAmount());  
-        if (view.getDataObject().getBotController().equals(EntityType.HUMAN)){
-        	view.getBotControllerSelector().setSelectedIndex(1);
-        } else {
-        	view.getBotControllerSelector().setSelectedIndex(0);
-        }
-        
-    }
+    	view.getBotController().getBotConfig().setBotSpeed(100);
+    	view.getBotController().getBotConfig().setBotSize(2);
+    	view.getBatterySlider().setEnabled(false);
+    	view.getBotController().getBotConfig().setBotBatteryDischargeRate(0);
+    	view.updateView();
+    }   
 }
