@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.Set;
 
 import nl.tudelft.bw4t.client.BW4TClient;
+import nl.tudelft.bw4t.client.agent.BW4TAgent;
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.startup.InitParam;
@@ -67,6 +68,11 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
      * Stores for each agent (represented by a string) a set of listeners.
      */
     private final Map<String, HashSet<AgentListener>> agentsToAgentListeners = new HashMap<String, HashSet<AgentListener>>();
+
+    /**
+     * List of all active agents.
+     */
+    private final Map<String, BW4TAgent> runningAgents = new HashMap<>();
 
     /**
      * Method required for GOAL to work
@@ -418,6 +424,22 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
             getEnvironmentListeners().remove(listener);
         }
     }
+    
+    public void addRunningAgent(BW4TAgent agent) {
+        runningAgents.put(agent.getAgentId(), agent);
+    }
+    
+    public void removeRunningAgent(String agent) {
+        runningAgents.remove(agent);
+    }
+    
+    public void removeRunningAgent(BW4TAgent agent) {
+        removeRunningAgent(agent.getAgentId());
+    }
+    
+    public BW4TAgent getRunningAgent(String name) {
+        return runningAgents.get(name);
+    }
 
     /**
      * {@inheritDoc}
@@ -463,6 +485,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
         try {
             LOGGER.debug("Unregistering agent: " + agent);
             localAgents.remove(agent);
+            removeRunningAgent(agent);
             getClient().unregisterAgent(agent);
         } catch (RemoteException e) {
             throw environmentSuddenDeath(e);

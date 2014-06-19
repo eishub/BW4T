@@ -1,50 +1,48 @@
 package nl.tudelft.bw4t.client.gui.listeners;
 
-import eis.exceptions.ActException;
-import eis.iilang.Identifier;
-import eis.iilang.Percept;
-import eis.iilang.Parameter;
-
 import java.awt.event.ActionEvent;
 import java.util.LinkedList;
 import java.util.List;
 
-import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.controller.ClientMapController;
-
 import nl.tudelft.bw4t.client.environment.Launcher;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.message.BW4TMessage;
 import nl.tudelft.bw4t.client.message.MessageTranslator;
+import nl.tudelft.bw4t.map.view.ViewEPartner;
 import org.apache.log4j.Logger;
 
-/**
- * ActionListener that sends a message when the connected menu item is pressed.
- */
-public class MessageSenderActionListener extends AbstractClientActionListener {
-	/** Message to send when this listener is fired. */
-    private final BW4TMessage message;
+import eis.iilang.Identifier;
+import eis.iilang.Percept;
 
-    /** Logger to report error messages to. */
-    private final static Logger LOGGER = Logger.getLogger(MessageSenderActionListener.class);
-
+public class EPartnerMessageSenderActionListener extends ClientActionListener {
     /**
-     * @param message - The {@link BW4TMessage} to send when this listener is fired.
-     * @param controller - The {@link ClientController} to listen to and interact with.
+     * The log4j Logger which displays logs on console
      */
-    public MessageSenderActionListener(BW4TMessage message, ClientController controller) {
-        super(controller);
+    private final static Logger LOGGER = Logger.getLogger(MessageSenderActionListener.class);
+    private final BW4TMessage message;
+    private ClientMapController mapController;
+    private BW4TClientGUI clientGUI;
+
+    public EPartnerMessageSenderActionListener(BW4TMessage message, BW4TClientGUI clientGUI) {
+        super(clientGUI.getController());
         this.message = message;
+        this.clientGUI = clientGUI;
+        mapController = clientGUI.getController().getMapController();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        
         /** Finds the names of the receivers of the message: */
-        String receiver = (String) getController().getGui().getAgentSelector().getModel().getSelectedItem();
+        String eParterName = findEPartner();
+        if (eParterName == null) {
+            return;
+        }
         String ownName = getController().getMapController().getTheBot().getName();
-        String[] receivers = new String[] { ownName, receiver };
-        if ("all".equals(receiver) || ownName.equals(receiver)) {
-            receivers = new String[] { receiver };
+        String[] receivers = new String[] { ownName, eParterName };
+        if (ownName.equals(eParterName)) {
+            receivers = new String[] { eParterName };
         }
         
         /** Sends the message to the receiver(s): */
@@ -53,7 +51,7 @@ public class MessageSenderActionListener extends AbstractClientActionListener {
                 try {
                     getController().getHumanAgent().sendMessage(name, message);
                 } catch (Exception e1) {
-                    LOGGER.error("Could not send message to all other bots.", e1);
+                    LOGGER.error("Could not send message to e-partner.", e1);
                 }
             } else {
                 List<Percept> percepts = new LinkedList<Percept>();
@@ -65,4 +63,13 @@ public class MessageSenderActionListener extends AbstractClientActionListener {
         }
         
     }
+    
+    private String findEPartner() {
+        ViewEPartner epartner = mapController.getViewEPartner(
+                mapController.getTheBot().getHoldingEpartner());
+        if (epartner == null)
+            return null;
+        return epartner.getName();
+    }
+    
 }
