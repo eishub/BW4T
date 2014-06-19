@@ -12,7 +12,7 @@ public final class FileFilters {
      * @return an extension filter for XML.
      */
     public static FileNameExtensionFilter xmlFilter() {
-        return new FileNameExtensionFilter("xml files (*.xml)", "xml");
+        return new FileNameExtensionFilter("XML Files (*.xml)", "xml");
     }
 
     /**
@@ -20,7 +20,7 @@ public final class FileFilters {
      * @return an extension filter for the map files.
      */
     public static FileNameExtensionFilter mapFilter() {
-        return new FileNameExtensionFilter("MAP file", "map");
+        return new FileNameExtensionFilter("MAP Files (*.map)", "map");
     }
     
     /**
@@ -29,7 +29,7 @@ public final class FileFilters {
      * @return an extension filter for GOAL files.
      */
     public static FileNameExtensionFilter goalFilter() {
-    	return new FileNameExtensionFilter("GOAL File (*.goal)", "goal");
+    	return new FileNameExtensionFilter("GOAL Files (*.goal)", "goal");
     }
 
     /**
@@ -37,6 +37,6 @@ public final class FileFilters {
      * @return an extension filter for MAS files.
      */
     public static FileNameExtensionFilter masFilter() {
-        return new FileNameExtensionFilter("mas2g file (*.mas2g)", "mas2g");
+        return new FileNameExtensionFilter("MAS2G Files (*.mas2g)", "mas2g");
     }
 }

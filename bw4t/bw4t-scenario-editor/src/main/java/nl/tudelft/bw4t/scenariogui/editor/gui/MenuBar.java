@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.scenariogui.editor.gui;
 
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JMenu;
@@ -11,12 +12,10 @@ import javax.swing.JMenuItem;
  */
 public class MenuBar extends JMenuBar {
 
-    /** Randomly generated serial version. */
     private static final long serialVersionUID = -7693079154027274860L;
-    /** The last known file location used to save the configuration. */
+
     private String lastFileLocation;
 
-    /** The items in the menu. */
     private JMenuItem fileNew, fileOpen, fileSave, fileSaveAs, exportGOAL, fileExit;
 
     /**
@@ -143,5 +142,28 @@ public class MenuBar extends JMenuBar {
         this.lastFileLocation = fileLocation;
     }
 
+    public void addExitController(ActionListener controller) {
+    	getMenuItemFileExit().addActionListener(controller);
+    }
+
+    public void addNewController(ActionListener controller) {
+    	getMenuItemFileNew().addActionListener(controller);
+    }
+
+    public void addOpenController(ActionListener controller) {
+    	getMenuItemFileOpen().addActionListener(controller);
+    }
+
+    public void addSaveController(ActionListener controller) {
+    	getMenuItemFileSave().addActionListener(controller);
+    }
+
+    public void addSaveAsController(ActionListener controller) {
+    	getMenuItemFileSaveAs().addActionListener(controller);
+    }
+
+    public void addExportController(ActionListener controller) {
+    	getMenuItemFileExport().addActionListener(controller);
+    }
 
 }

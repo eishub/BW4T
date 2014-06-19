@@ -12,6 +12,11 @@ public enum EntityType {
     public String nameLower() {
         return name().toLowerCase();
     }
+    
+    public String nameCamel() {
+        final String name = name().toLowerCase();
+        return Character.toUpperCase(name.charAt(0)) + name.substring(1);
+    }
 
     /**
      * @param type
@@ -42,6 +47,7 @@ public enum EntityType {
 
     /**
      * String representation of the entity, with the first letter capitalized.
+     * @return Returns the controller type starting with a capital letter. Example: Agent instead of agent
      */
     @Override
     public String toString() {

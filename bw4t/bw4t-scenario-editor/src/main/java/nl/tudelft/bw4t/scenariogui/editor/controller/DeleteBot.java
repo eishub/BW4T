@@ -53,7 +53,7 @@ class DeleteBot implements ActionListener {
 
         if (response == JOptionPane.YES_OPTION) {
             model.removeBot(model.getBot(row));
-            view.getEntityPanel().getBotTableModel().removeRow(row);
+            view.getEntityPanel().getBotTableModel().update();
         }
     }
 }
