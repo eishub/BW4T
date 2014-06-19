@@ -45,15 +45,8 @@ class ModifyBot implements ActionListener {
             ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select the bot you want to modify.");
             return;
         }
-<<<<<<< HEAD
         new BotEditor(view, row, model);
         
         view.getEntityPanel().setBotStore(true);
-=======
-        String data = (String) view.getEntityPanel().getBotTable().getModel().getValueAt(row, 0);
-       
-        BotController bc = new BotController(view, row, model);		
-        new BotEditor(bc);
->>>>>>> master
     }
 }

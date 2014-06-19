@@ -31,7 +31,9 @@ import javax.swing.table.DefaultTableModel;
 
 
 
+
 import nl.tudelft.bw4t.map.EntityType;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.util.EntityJTable;
 import nl.tudelft.bw4t.scenariogui.util.EntityTableModel;
 

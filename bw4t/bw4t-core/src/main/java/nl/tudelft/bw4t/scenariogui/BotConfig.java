@@ -182,7 +182,7 @@ public final class BotConfig implements Serializable, Cloneable {
 	 * @return the robot's battery discharge rate.
 	 */
 	public double getBotBatteryDischargeRate() {
-		return 0.0002 * botSize + 0.0004 * botSpeed;
+		return calculateDischargeRate(botSize, botSpeed);
 	}
 
 	/**
@@ -351,5 +351,15 @@ public final class BotConfig implements Serializable, Cloneable {
         bot.setBotController(EntityType.AGENT);
         return bot;
 	}
+
+	/**
+	 * Calculate the discharge rate given the size and speed of the bot.
+	 * @param size the size of the bot
+	 * @param speed the speed of the bot
+	 * @return the discharge rate per step
+	 */
+    public static double calculateDischargeRate(int size, int speed) {
+        return 0.0002 * size + 0.0004 * speed;
+    }
 
 }
