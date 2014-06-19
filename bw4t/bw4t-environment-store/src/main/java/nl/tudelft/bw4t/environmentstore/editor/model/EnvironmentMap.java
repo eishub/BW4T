@@ -58,24 +58,24 @@ public class EnvironmentMap {
 		for (int row = 0; row < getRows(); row++) {
 			for (int col = 0; col < getColumns(); col++) {
 				if (col == getColumns() - 1) {
-					zones[row][col].setNeighbours(ZoneModel.EAST, null);
+					zones[row][col].setNeighbour(ZoneModel.EAST, null);
 				} else {
-					zones[row][col].setNeighbours(ZoneModel.EAST, zones[row][col + 1]);
+					zones[row][col].setNeighbour(ZoneModel.EAST, zones[row][col + 1]);
 				}
 				if (row == 0) {
-					zones[row][col].setNeighbours(ZoneModel.NORTH, null);
+					zones[row][col].setNeighbour(ZoneModel.NORTH, null);
 				} else {
-					zones[row][col].setNeighbours(ZoneModel.NORTH, zones[row - 1][col]);
+					zones[row][col].setNeighbour(ZoneModel.NORTH, zones[row - 1][col]);
 				}
 				if (row == getRows() - 1) {
-					zones[row][col].setNeighbours(ZoneModel.SOUTH, null);
+					zones[row][col].setNeighbour(ZoneModel.SOUTH, null);
 				} else {
-					zones[row][col].setNeighbours(ZoneModel.SOUTH, zones[row + 1][col]);
+					zones[row][col].setNeighbour(ZoneModel.SOUTH, zones[row + 1][col]);
 				}
 				if (col == 0) {
-					zones[row][col].setNeighbours(ZoneModel.WEST, null);
+					zones[row][col].setNeighbour(ZoneModel.WEST, null);
 				} else {
-					zones[row][col].setNeighbours(ZoneModel.WEST, zones[row][col - 1]);
+					zones[row][col].setNeighbour(ZoneModel.WEST, zones[row][col - 1]);
 				}
 			}
 		}
@@ -95,6 +95,7 @@ public class EnvironmentMap {
 					"The given grid is not suitable!");
 		}
 		this.zones = model;
+		initZoneNeighbours();
 	}
 
 	/**
