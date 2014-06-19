@@ -72,7 +72,7 @@ public class SizeDialog extends JFrame {
 
 		SpinnerModel rowmodel = new SpinnerNumberModel(5, // initial value
 				5, // min
-				24, // max
+				100, // max
 				1); // step
 		rows = new JSpinner(rowmodel);
 		rows.setPreferredSize(new Dimension(100, 20));
@@ -81,7 +81,7 @@ public class SizeDialog extends JFrame {
 
 		SpinnerModel colmodel = new SpinnerNumberModel(5, // initial value
 				3, // min
-				24, // max
+				100, // max
 				1); // step
 		cols = new JSpinner(colmodel);
 		cols.setPreferredSize(new Dimension(100, 20));
