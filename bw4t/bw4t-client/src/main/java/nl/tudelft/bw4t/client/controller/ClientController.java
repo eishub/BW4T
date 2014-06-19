@@ -133,6 +133,7 @@ public class ClientController {
      */
     public void handlePercepts(List<Percept> percepts) {
         getMapController().getVisibleBlocks().clear();
+        getMapController().getVisibleEPartners().clear();
         for (Percept percept : percepts) {
             String name = percept.getName();
             List<Parameter> parameters = percept.getParameters();
@@ -157,7 +158,7 @@ public class ClientController {
         String sender = ((Identifier) iterator.next()).getValue();
         String message = ((Identifier) iterator.next()).getValue();
 
-        if (message.contains("I want to go")) {
+        if (message.contains("I want to go") || message.contains("You forgot me")) {
             getEpartnerChatHistory().add(sender + ": " + message);
         } else {
             getBotChatHistory().add(sender + ": " + message);

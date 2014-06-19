@@ -4,42 +4,45 @@ import java.awt.event.ActionEvent;
 import java.util.LinkedList;
 import java.util.List;
 
+import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.environment.Launcher;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.message.BW4TMessage;
 import nl.tudelft.bw4t.client.message.MessageTranslator;
-
+import nl.tudelft.bw4t.map.view.ViewEPartner;
 import org.apache.log4j.Logger;
 
 import eis.iilang.Identifier;
 import eis.iilang.Percept;
 
-/**
- * ActionListener that sends a message when the connected menu item is pressed.
- */
-public class MessageSenderActionListener extends ClientActionListener {
+public class EPartnerMessageSenderActionListener extends ClientActionListener {
     /**
      * The log4j Logger which displays logs on console
      */
     private final static Logger LOGGER = Logger.getLogger(MessageSenderActionListener.class);
     private final BW4TMessage message;
-    private final BW4TClientGUI gui;
+    private ClientMapController mapController;
+    private BW4TClientGUI clientGUI;
 
-    public MessageSenderActionListener(BW4TMessage message, BW4TClientGUI gui) {
-        super(gui.getController());
+    public EPartnerMessageSenderActionListener(BW4TMessage message, BW4TClientGUI clientGUI) {
+        super(clientGUI.getController());
         this.message = message;
-        this.gui = gui;
+        this.clientGUI = clientGUI;
+        mapController = clientGUI.getController().getMapController();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         
         /** Finds the names of the receivers of the message: */
-        String receiver = (String) gui.getAgentSelector().getModel().getSelectedItem();
+        String eParterName = findEPartner();
+        if (eParterName == null) {
+            return;
+        }
         String ownName = getController().getMapController().getTheBot().getName();
-        String[] receivers = new String[] { ownName, receiver };
-        if ("all".equals(receiver) || ownName.equals(receiver)) {
-            receivers = new String[] { receiver };
+        String[] receivers = new String[] { ownName, eParterName };
+        if (ownName.equals(eParterName)) {
+            receivers = new String[] { eParterName };
         }
         
         /** Sends the message to the receiver(s): */
@@ -48,7 +51,7 @@ public class MessageSenderActionListener extends ClientActionListener {
                 try {
                     getController().getHumanAgent().sendMessage(name, message);
                 } catch (Exception e1) {
-                    LOGGER.error("Could not send message to all other bots.", e1);
+                    LOGGER.error("Could not send message to e-partner.", e1);
                 }
             } else {
                 List<Percept> percepts = new LinkedList<Percept>();
@@ -60,4 +63,13 @@ public class MessageSenderActionListener extends ClientActionListener {
         }
         
     }
+    
+    private String findEPartner() {
+        ViewEPartner epartner = mapController.getViewEPartner(
+                mapController.getTheBot().getHoldingEpartner());
+        if (epartner == null)
+            return null;
+        return epartner.getName();
+    }
+    
 }

@@ -30,6 +30,7 @@ public class EPartner extends BoundedMoveableObject {
     private IRobot holder;
     
     private String name;
+    
     private List<String> funcList;
     
     private ViewEPartner view = new ViewEPartner();
