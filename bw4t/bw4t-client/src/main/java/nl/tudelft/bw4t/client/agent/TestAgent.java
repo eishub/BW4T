@@ -40,7 +40,7 @@ public class TestAgent extends BW4TAgent {
      * @param env the remote environment on which the agent should "live".
      */
     public TestAgent(String agentId, RemoteEnvironment env) {
-        super(agentId, env, null);
+        super(agentId, env);
         places = new ArrayList<String>();
     }
 

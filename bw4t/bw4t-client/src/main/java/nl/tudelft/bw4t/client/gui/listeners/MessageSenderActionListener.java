@@ -25,8 +25,6 @@ public class MessageSenderActionListener extends AbstractClientActionListener {
 	/** Message to send when this listener is fired. */
     private final BW4TMessage message;
 
-    private final BW4TClientGUI gui;
-
     /** Logger to report error messages to. */
     private final static Logger LOGGER = Logger.getLogger(MessageSenderActionListener.class);
 
@@ -37,13 +35,12 @@ public class MessageSenderActionListener extends AbstractClientActionListener {
     public MessageSenderActionListener(BW4TMessage message, ClientController controller) {
         super(controller);
         this.message = message;
-        this.gui = controller.getGui();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         /** Finds the names of the receivers of the message: */
-        String receiver = (String) gui.getAgentSelector().getModel().getSelectedItem();
+        String receiver = (String) getController().getGui().getAgentSelector().getModel().getSelectedItem();
         String ownName = getController().getMapController().getTheBot().getName();
         String[] receivers = new String[] { ownName, receiver };
         if ("all".equals(receiver) || ownName.equals(receiver)) {

@@ -47,8 +47,6 @@ public class BW4TAgent extends Thread implements ActionInterface {
     
     private BotConfig botConfig;
     private EPartnerConfig epartnerConfig;
-    
-    private final Map<BW4TAgent, BW4TClientGUI> allAgents;
 
     /**
      * Create a new BW4TAgent that can be registered to an entity.
@@ -58,10 +56,9 @@ public class BW4TAgent extends Thread implements ActionInterface {
      * @param env
      *            the remote environment.
      */
-    public BW4TAgent(String agentId, RemoteEnvironment env, Map<BW4TAgent, BW4TClientGUI> allAgents) {
+    public BW4TAgent(String agentId, RemoteEnvironment env) {
         this.agentId = agentId;
         this.bw4tenv = env;
-        this.allAgents = allAgents;
     }
     
     /**
@@ -83,30 +80,16 @@ public class BW4TAgent extends Thread implements ActionInterface {
     }
     
     /**
-     * Gets an agent from the name.
-     * @param name The name of the agent.
-     * @return The agent.
-     */
-    public BW4TAgent getAgentFromName(String name) {
-        for (BW4TAgent agent : allAgents.keySet()) {
-            if (agent.getName().equals(name)) {
-                return agent;
-            }
-        }
-        return null;
-    }
-    
-    /**
      * Gets all agent with this type.
      * @param type The type of the agent.
      * @return A list with the agents.
      */
     public LinkedList<BW4TAgent> getAgentsWithType(String type) {
         LinkedList<BW4TAgent> res = new LinkedList<BW4TAgent>();
-        for (BW4TAgent agent : allAgents.keySet()) {
+        for (String agent : bw4tenv.getAgents()) {
             try {
-                if (agent.getEnvironment().getType(agent.getAgentId()).equals(type)) {
-                    res.add(agent);
+                if (bw4tenv.getType(agent).equals(type)) {
+                    res.add(bw4tenv.getRunningAgent(agent));
                 }
             } catch (EntityException e) {
                 e.printStackTrace();

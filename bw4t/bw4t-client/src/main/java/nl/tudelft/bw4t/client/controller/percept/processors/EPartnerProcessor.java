@@ -31,6 +31,7 @@ public class EPartnerProcessor implements PerceptProcessor {
         if (epartner == null) {
             epartner = clientMapController.addEPartner(id, holderId);
         }
+        epartner.setName(entityId);
         if (holderId == theBot.getId()) {
             if (id != theBot.getHoldingEpartner()){
                 LOGGER.info("We are now holding the e-partner: " + id);
