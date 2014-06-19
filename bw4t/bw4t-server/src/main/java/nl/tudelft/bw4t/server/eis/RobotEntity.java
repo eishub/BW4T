@@ -141,6 +141,10 @@ public class RobotEntity implements EntityInterface {
      */
     private <T extends BoundedMoveableObject> Set<T> getVisible(Class<T> type){
         Set<T> set = new HashSet<T>();
+        
+        if(context == null) {
+            return set;
+        }
 
         // Add all objects in the same room as the robot.
         Iterable<Object> allObjects = context.getObjects(type);
