@@ -1,5 +1,7 @@
 package nl.tudelft.bw4t.environmentstore.editor.menu;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
@@ -87,23 +89,14 @@ public class MenuBarTest {
      * Case: New window, press exit without any changes.
      */
     @Test
-    public void testExitNoChanges() {
+    public void menuOptionsListenersTest() {
     	/* Reset the controller to the spied objects controller */
-        ActionListener[] listeners = envStore.getTopMenuBar().getMenuItemFileExit().getActionListeners();
-        assert listeners.length == 1;
-
-        AbstractMenuOption menuOption = (AbstractMenuOption) listeners[0];
-        
-        EnvironmentStore.setOptionPrompt(new YesMockOptionPrompt());
-
-        /* Don't actually close the jvm */
-        doNothing().when(envStore).closeEnvironmentStore();
-
-        /* Click the exit button */
-        envStore.getTopMenuBar().getMenuItemFileExit().doClick();
-
-        /* Verify if closeScenarioEditor is called */
-        verify(envStore, atLeastOnce()).closeEnvironmentStore();
+        assertEquals(envStore.getTopMenuBar().getMenuItemFileNew().getActionListeners().length, 1);
+        assertEquals(envStore.getTopMenuBar().getMenuItemFileOpen().getActionListeners().length, 1);
+        assertEquals(envStore.getTopMenuBar().getMenuItemFileSave().getActionListeners().length, 1);
+        assertEquals(envStore.getTopMenuBar().getMenuItemFileSaveAs().getActionListeners().length, 1);
+        assertEquals(envStore.getTopMenuBar().getMenuItemPreview().getActionListeners().length, 1);
+        assertEquals(envStore.getTopMenuBar().getMenuItemFileExit().getActionListeners().length, 1);
     }
     
 
