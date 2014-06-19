@@ -79,6 +79,9 @@ public class PerceptsHandler {
     }
     
     public static List<Percept> tryGetGUIPercepts(String entity, RemoteEnvironment env ) {
+        if(env.getClient() == null) {
+            return new LinkedList<>();
+        }
         try {
             List<Percept> percepts = env.getClient().getAllPerceptsFromEntity(entity);
 
