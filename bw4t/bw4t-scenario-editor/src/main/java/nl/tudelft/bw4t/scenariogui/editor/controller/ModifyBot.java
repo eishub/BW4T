@@ -50,5 +50,6 @@ class ModifyBot implements ActionListener {
         BotController bc = new BotController(view, row, model);		
         
         new BotEditor(bc);
+        view.getEntityPanel().setBotStore(true);
     }
 }

@@ -24,14 +24,10 @@ public class EntityTableModel extends DefaultTableModel {
      */
     @Override
     public Class<?> getColumnClass(int column) {
-    	if (type.equals(EntityType.EPARTNER)) {
-    		if (column == 2) {
-    			return Integer.class;
-    		}
-    	} else {
-    		if (column == 3) {
-    			return Integer.class;
-    		}
+    	if (type == EntityType.EPARTNER && column == 2) {
+    	    return Integer.class;
+    	} else if (column == 3) {
+    		return Integer.class;
     	}
         return String.class;
     }
