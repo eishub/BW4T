@@ -433,8 +433,6 @@ public class ConfigurationPanel extends JPanel {
             isDefault = false;
         }
 
-        // TODO: check if the bot list is empty (since that is default too)
-
         return isDefault;
     }
 
