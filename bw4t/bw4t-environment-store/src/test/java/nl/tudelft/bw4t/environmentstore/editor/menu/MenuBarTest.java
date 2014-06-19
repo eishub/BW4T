@@ -1,22 +1,30 @@
 package nl.tudelft.bw4t.environmentstore.editor.menu;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.awt.Frame;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.List;
 
 import javax.swing.JFileChooser;
 
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
+import nl.tudelft.bw4t.environmentstore.editor.controller.ZoneController;
 import nl.tudelft.bw4t.environmentstore.editor.menu.controller.AbstractMenuOption;
+import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeBlockFrame;
+import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeSequenceFrame;
 import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
+import nl.tudelft.bw4t.environmentstore.util.NoMockOptionPrompt;
+import nl.tudelft.bw4t.environmentstore.util.OptionPrompt;
 import nl.tudelft.bw4t.environmentstore.util.YesMockOptionPrompt;
+import nl.tudelft.bw4t.map.BlockColor;
 
 import org.junit.After;
 import org.junit.Before;
@@ -97,7 +105,49 @@ public class MenuBarTest {
         assertEquals(envStore.getTopMenuBar().getMenuItemFileSaveAs().getActionListeners().length, 1);
         assertEquals(envStore.getTopMenuBar().getMenuItemPreview().getActionListeners().length, 1);
         assertEquals(envStore.getTopMenuBar().getMenuItemFileExit().getActionListeners().length, 1);
+        
+        assertEquals(envStore.getTopMenuBar().getMenuItemRandomizeRooms().getActionListeners().length, 1);
+        assertEquals(envStore.getTopMenuBar().getMenuItemRandomizeBlocks().getActionListeners().length, 1);
+        assertEquals(envStore.getTopMenuBar().getMenuItemRandomizeSequence().getActionListeners().length, 1);
     }
     
+    @Test
+    public void menuOptionRandomizeRoomsTest() {
+    	ZoneController[][] zcArray = mapController.getZoneControllers();
+    	envStore.getTopMenuBar().getMenuItemRandomizeRooms().doClick();
+    	assertFalse(zcArray.equals(mapController.getZoneControllers()));
+    }
+    
+    @Test
+    public void menuOptionRandomizeBlocksTest() {
+    	boolean found = false;
+    	ZoneController[][] bc = mapController.getZoneControllers();
+    	envStore.getTopMenuBar().getMenuItemRandomizeRooms().doClick();
+    	envStore.getTopMenuBar().getMenuItemRandomizeBlocks().doClick();
+    	for (Frame f : Frame.getFrames()) {
+    		if (f instanceof RandomizeBlockFrame) {
+    			found = true;
+    			((RandomizeBlockFrame) f).getApplyButton().doClick();
+    		}
+    	}
+    	assertTrue(found);
+    	assertFalse(bc.equals(mapController.getZoneControllers()));
+    }
+    
+    @Test
+    public void menuOptionRandomizeSequenceTest() {
+    	boolean found = false;
+    	List<BlockColor> bc = mapController.getSequence();
+    	envStore.getTopMenuBar().getMenuItemRandomizeSequence().doClick();
+    	for (Frame f : Frame.getFrames()) {
+    		if (f instanceof RandomizeSequenceFrame) {
+    			found = true;
+    			((RandomizeSequenceFrame) f).getRandomizeButton().doClick();
+    			((RandomizeSequenceFrame) f).getApplyButton().doClick();
+    		}
+    	}
+    	assertTrue(found);
+    	assertFalse(bc.equals(mapController.getSequence()));
+    }   
 
 }
