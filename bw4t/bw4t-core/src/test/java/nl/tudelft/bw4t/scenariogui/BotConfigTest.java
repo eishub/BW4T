@@ -114,7 +114,6 @@ public class BotConfigTest {
         bot.setBotSize(botSize);
         bot.setBotSpeed(botSpeed);
         bot.setBotBatteryCapacity(botBatteryCapacity);
-        bot.setBotBatteryDischargeRate(botBatteryDischargeRate);
         bot.setGrippers(numberOfGrippers);
         bot.setBatteryEnabled(batteryEnabled);
         bot.setColorBlindHandicap(hasColorBlindHandicap);
