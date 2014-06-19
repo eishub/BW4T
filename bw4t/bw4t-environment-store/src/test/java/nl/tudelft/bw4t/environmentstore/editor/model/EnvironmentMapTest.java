@@ -46,7 +46,11 @@ public class EnvironmentMapTest {
 	public void setZonesNiceWeatherTest() {
 		ZoneModel[][] zmarray = new ZoneModel[2][2];
 		ZoneModel zm = new ZoneModel();
-		zmarray[0][0] = zm;
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < 2; j++) {
+				zmarray[i][j] = zm;
+			}
+		}
 		em.setZones(zmarray);
 		assertTrue(em.getZone(0, 0) == zm);
 	}
