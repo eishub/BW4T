@@ -11,13 +11,17 @@ import static org.mockito.Mockito.verify;
 import java.awt.Frame;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.controller.ZoneController;
 import nl.tudelft.bw4t.environmentstore.editor.menu.controller.AbstractMenuOption;
+import nl.tudelft.bw4t.environmentstore.editor.menu.controller.FileFilters;
+import nl.tudelft.bw4t.environmentstore.editor.menu.view.MenuBar;
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeBlockFrame;
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeSequenceFrame;
 import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
@@ -149,5 +153,43 @@ public class MenuBarTest {
     	assertTrue(found);
     	assertFalse(bc.equals(mapController.getSequence()));
     }   
-
+    @Test
+    public void menuOptionPreviewTest() {
+    	boolean found = false;
+    	envStore.getTopMenuBar().getMenuItemPreview().doClick();
+    	for (Frame f : Frame.getFrames()) {
+    		if (f instanceof JFrame) {
+    			JFrame frame = (JFrame) f;
+    			if (frame.getTitle().equals("Map Preview")) {
+    				found = true;
+    			}
+    			f.dispose();
+    		}
+    	}
+    	assertTrue(found);
+    }
+    @Test
+    public void fileFiltersTest() {
+    	assertTrue(Arrays.equals(FileFilters.goalFilter().getExtensions(), new String[] {
+    		"goal"
+    	}));
+    	assertTrue(Arrays.equals(FileFilters.xmlFilter().getExtensions(), new String[] {
+    		"xml"
+    	}));
+    	assertTrue(Arrays.equals(FileFilters.mapFilter().getExtensions(), new String[] {
+    		"map"
+    	}));
+    	assertTrue(Arrays.equals(FileFilters.masFilter().getExtensions(), new String[] {
+    		"mas2g"
+    	}));
+    }
+    @Test
+    public void menuBarGettersSettersTest() {
+    	MenuBar mb = new MenuBar();
+    	mb.setLastFileLocation("Test");
+    	assertTrue(mb.hasLastFileLocation());
+    	assertTrue(mb.getLastFileLocation().equals("Test"));
+    	mb.setLastFileLocation(null);
+    	assertFalse(mb.hasLastFileLocation());
+    }
 }
