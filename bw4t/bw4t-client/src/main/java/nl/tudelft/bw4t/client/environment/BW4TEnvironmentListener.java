@@ -4,12 +4,18 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import nl.tudelft.bw4t.client.agent.BW4TAgent;
 import nl.tudelft.bw4t.client.agent.HumanAgent;
+import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
+import nl.tudelft.bw4t.client.startup.ConfigFile;
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.startup.InitParam;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 
 import org.apache.log4j.Logger;
 
@@ -28,10 +34,6 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
 
     /** The log4j Logger which displays logs on console. */
     private final static Logger LOGGER = Logger.getLogger(BW4TEnvironmentListener.class);
-    /**
-     * List of all active agents.
-     */
-    private final List<BW4TAgent> agentData = new ArrayList<>();
     /** {@link RemoteEnvironment} to listen to and interact with. */
     private final RemoteEnvironment environment;
 
@@ -52,16 +54,14 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
      *            - The list of associated agents.
      */
     @Override
-    public void handleDeletedEntity(String entity, Collection<String> associatedEntities) {
-        for (String agent : associatedEntities) {
-            for (BW4TAgent agentB : agentData) {
-                if (agentB.getName().equals(agent)) {
-                    agentB.setKilled();
-
-                    agentData.remove(agentB);
-                    return;
-                }
+    public void handleDeletedEntity(String entity, Collection<String> agents) {
+        for (String name : agents) {
+            BW4TAgent agent = environment.getRunningAgent(name);
+            if (agent != null) {
+                agent.setKilled();
+                environment.removeRunningAgent(agent);
             }
+
         }
 
         environment.removeEntityController(entity);
@@ -90,12 +90,12 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
     @Override
     public void handleNewEntity(String entity) {
         LOGGER.debug("Handeling new entity of the environment: " + entity);
-        
+
         try {
             final int agentCount = environment.getAgents().size();
             final boolean isHuman = "human".equals(environment.getType(entity));
             BW4TAgent agent = null;
-        
+
             if (isHuman) {
                 agent = new HumanAgent("Human" + agentCount, environment);
             }
@@ -103,6 +103,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
                 agent = newAgent(InitParam.AGENTCLASS.getValue(), entity);
             }
 
+            agent.setBotConfig(findCorrespondingBotConfig(entity, false));
             agent.registerEntity(entity);
             environment.registerAgent(agent.getAgentId());
             environment.associateEntity(agent.getAgentId(), entity);
@@ -115,25 +116,80 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
 
             agent.start();
 
-            agentData.add(agent);
+            environment.addRunningAgent(agent);
         } catch (InstantiationException | AgentException | RelationException | EntityException e) {
             LOGGER.error("Failed to handle new entity event.", e);
         }
     }
 
-    protected BW4TAgent newAgent(String clazz, String entity) throws InstantiationException {
+    protected BW4TAgent newAgent(String clazz, String entity) throws InstantiationException, EntityException {
         try {
             Class<? extends BW4TAgent> c = Class.forName(clazz).asSubclass(BW4TAgent.class);
-            Class[] types = new Class[] { String.class, RemoteEnvironment.class };
-            Constructor<BW4TAgent> cons = (Constructor<BW4TAgent>) c.getConstructor(types);
+            @SuppressWarnings("unchecked")
+            Constructor<BW4TAgent> cons = (Constructor<BW4TAgent>) c.getConstructor(String.class,
+                    RemoteEnvironment.class);
             // we use the entityId as name for the agent as well. #2761
-            Object[] args = new Object[] { entity, environment };
-            BW4TAgent agent = cons.newInstance(args);
+            BW4TAgent agent = cons.newInstance(entity, environment);
+
+            if ("epartner".equals(environment.getType(entity))) {
+                agent.setEpartnerConfig(findCorrespondingEpartnerConfig(entity, false));
+            }
+
             return agent;
         } catch (InstantiationException | ClassNotFoundException | NoSuchMethodException | SecurityException
                 | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             throw new InstantiationException(e.getMessage());
         }
+    }
+
+    /**
+     * Finds the bot config corresponding to the entity id.
+     * 
+     * @param entityId
+     *            The entity id.
+     * @return The bot config belonging to this entity.
+     */
+    private BotConfig findCorrespondingBotConfig(String entityId, boolean recursiveCall) {
+        if (!ConfigFile.hasReadInitFile()) {
+            return null;
+        }
+        for (BotConfig bConfig : ConfigFile.getConfig().getBots()) {
+            if (entityId.equals(bConfig.getBotName())) {
+                return bConfig;
+            }
+        }
+
+        /** Removes the last '_Nr' part and tries again: */
+        if (!recursiveCall) {
+            return findCorrespondingBotConfig(entityId.split("_")[0], true);
+        }
+
+        return null;
+    }
+
+    /**
+     * Finds the epartner config corresponding to the entity id.
+     * 
+     * @param entityId
+     *            The entity id.
+     * @return The epartner config belonging to this entity.
+     */
+    private EPartnerConfig findCorrespondingEpartnerConfig(String entityId, boolean recursiveCall) {
+        if (!ConfigFile.hasReadInitFile()) {
+            return null;
+        }
+        for (EPartnerConfig epConfig : ConfigFile.getConfig().getEpartners()) {
+            if (entityId.equals(epConfig.getEpartnerName())) {
+                return epConfig;
+            }
+        }
+
+        /** Removes the last '_Nr' part and tries again: */
+        if (!recursiveCall) {
+            return findCorrespondingEpartnerConfig(entityId.split("_")[0], true);
+        }
+
+        return null;
     }
 
     /**

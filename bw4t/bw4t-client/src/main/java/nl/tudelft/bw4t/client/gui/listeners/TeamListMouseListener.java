@@ -5,17 +5,18 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 
+import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.menu.PlayerMenu;
 
 /** Listens for mouse events on the player buttons and builds a pop up menu accordingly. */
 public class TeamListMouseListener implements MouseListener {
-	/** The {@link BW4TClientGUI} to listen to and interact with. */
-    private final BW4TClientGUI bw4tClientGUI;
+	/** The {@link ClientController} to listen to and interact with. */
+    private final ClientController controller;
 
-    /** @param bw4tClientGUI - The {@link BW4TClientGUI} to listen to and interact with. */
-    public TeamListMouseListener(BW4TClientGUI bw4tClientGUI) {
-        this.bw4tClientGUI = bw4tClientGUI;
+    /** @param controller - The {@link ClientController} to listen to and interact with. */
+    public TeamListMouseListener(ClientController controller) {
+        this.controller = controller;
     }
 
     @Override
@@ -24,9 +25,10 @@ public class TeamListMouseListener implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        String playerId = bw4tClientGUI.getAgentSelector().getSelectedItem().toString();
-        PlayerMenu.buildPopUpMenuForRequests(playerId, bw4tClientGUI);
-        bw4tClientGUI.getjPopupMenu().show((JButton) e.getSource(), e.getX(), e.getY());
+        BW4TClientGUI gui = controller.getGui();
+        String playerId = gui.getAgentSelector().getSelectedItem().toString();
+        PlayerMenu.buildPopUpMenuForRequests(playerId, controller);
+        gui.getjPopupMenu().show((JButton) e.getSource(), e.getX(), e.getY());
     }
 
     @Override

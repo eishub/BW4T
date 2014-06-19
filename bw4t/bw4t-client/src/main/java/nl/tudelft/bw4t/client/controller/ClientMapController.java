@@ -25,6 +25,7 @@ import nl.tudelft.bw4t.client.controller.percept.processors.RobotSizeProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.SequenceIndexProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.SequenceProcessor;
 import nl.tudelft.bw4t.client.environment.PerceptsHandler;
+import nl.tudelft.bw4t.client.gui.listeners.BatteryProgressBarListener;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
@@ -71,7 +72,10 @@ public class ClientMapController extends AbstractMapController {
     /** All the blocks. */
     private Map<Long, ViewBlock> allBlocks = new HashMap<>();
     
+    private Map<Long, ViewEPartner> allEPartners = new HashMap<>();
+
     private Map<String, PerceptProcessor> perceptProcessors;
+
     
     /** The color sequence. */
     private List<BlockColor> colorSequence = new LinkedList<>();
@@ -186,6 +190,15 @@ public class ClientMapController extends AbstractMapController {
         return b;
     }
     
+    private ViewEPartner getEPartner(Long id) {
+        ViewEPartner b = allEPartners.get(id);
+        if (b == null) {
+            b = new ViewEPartner();
+            allEPartners.put(id, b);
+        }
+        return b;
+    }
+
     /**
      * @param id of the block to be checked
      * @return true iff the block is in in the environment
@@ -202,13 +215,13 @@ public class ClientMapController extends AbstractMapController {
      * @param perceptParameters
      *            the percept parameters
      */
+
     public void handlePercept(String name, List<Parameter> perceptParameters) {
         PerceptProcessor processor = perceptProcessors.get(name);
         if (processor != null) {
             processor.process(perceptParameters, this);
         }
     }
-
 
     public ViewEPartner addEPartner(long id, long holderId) {
         LOGGER.info("creating epartner(" + id + ", " + holderId + ")");
