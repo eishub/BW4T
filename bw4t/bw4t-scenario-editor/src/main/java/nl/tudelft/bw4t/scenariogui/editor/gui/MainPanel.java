@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 
 /**
@@ -135,6 +136,22 @@ public class MainPanel extends JPanel {
                     botConfig.getBotController().toString(),
                     botConfig.getFileName(),
                     botConfig.getBotAmount()};
+            tableModel.addRow(newBotObject);
+        }
+    }
+    
+    /**
+     * Update the Bot table with the newest values.
+     */
+    public void refreshEPartnerTableModel() {
+        final DefaultTableModel tableModel = getEntityPanel().getEPartnerTableModel();
+        tableModel.setRowCount(0);
+        int rows = getClientConfig().getEpartners().size();
+        for (int i = 0; i < rows; i++) {
+            EPartnerConfig botConfig = getClientConfig().getEpartner(i);
+            Object[] newBotObject = {botConfig.getEpartnerName(),
+                    botConfig.getFileName(),
+                    botConfig.getEpartnerAmount()};
             tableModel.addRow(newBotObject);
         }
     }

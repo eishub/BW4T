@@ -55,20 +55,17 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 	private EPartnerConfig dataObject = new EPartnerConfig();
 
 	private EpartnerController controller;
-	
-	private BW4TClientConfig model;
 
 	/**
 	 * Create the frame.
 	 * @param controller : the EpartnerController
 	 */
-	public EpartnerFrame(EpartnerController controller, BW4TClientConfig model) {
+	public EpartnerFrame(EpartnerController controller) {
 		setTitle("E-Partner");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		contentPane.setLayout(new BorderLayout(5, 5));
 		setContentPane(contentPane);
 		this.setController(controller);
-		this.model = model;
 
 		createInfoPanel();
 		createOptionPanel();
@@ -293,10 +290,6 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 	 */
 	public JButton getFileButton() {
 		return fileButton;
-	}
-	
-	public BW4TClientConfig getModel() {
-	    return model;
 	}
 
 	public JTextField getEpartnerNameField() {

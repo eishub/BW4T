@@ -103,6 +103,10 @@ public class BotEditor extends JFrame {
         return parent;
     }
     
+    public BotController getController() {
+        return controller;
+    }
+    
     public BotEditorPanel getBoteditorPanel() {
 		return bPanel;
 	}
