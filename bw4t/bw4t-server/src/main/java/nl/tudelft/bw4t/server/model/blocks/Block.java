@@ -18,7 +18,6 @@ public class Block extends BoundedMoveableObject {
     public static final int SIZE = 1;
 
     private final BlockColor colorId;
-    private Color color;
     private AbstractRobot heldBy;
     private final nl.tudelft.bw4t.map.view.ViewBlock view;
 
@@ -35,7 +34,6 @@ public class Block extends BoundedMoveableObject {
     public Block(BlockColor colorId, ContinuousSpace<Object> space, Context<Object> context) {
         super(space, context);
         this.colorId = colorId;
-        this.color = colorId.getColor();
         setSize(SIZE, SIZE);
         this.view = new nl.tudelft.bw4t.map.view.ViewBlock(getId(), getColorId(), new Point2D.Double());
     }
@@ -45,13 +43,6 @@ public class Block extends BoundedMoveableObject {
      */
     public BlockColor getColorId() {
         return colorId;
-    }
-
-    /**
-     * @return the representation color of the block.
-     */
-    public Color getColor() {
-        return color;
     }
 
     @Override
