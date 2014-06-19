@@ -35,7 +35,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 
     private static final long serialVersionUID = 1850617931893202292L;
     
-    public static final DecimalFormat dischargeRateFormatter = new DecimalFormat("#.0000");
+    public static final DecimalFormat dischargeRateFormatter = new DecimalFormat("0.0000");
 
     private JPanel botCheckables = new JPanel();
 
@@ -51,7 +51,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 
     private JButton fileButton = new JButton("Use existing GOAL file");
 
-    private JComboBox botControllerSelector = new JComboBox();
+    private JComboBox<String> botControllerSelector = new JComboBox<String>();
 
     private JTextField botNameField = new JTextField();
 
@@ -160,7 +160,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 	private void createBotInfoPanel() {
 		botInfo.setLayout(new GridLayout(10, 0));
 
-		botControllerSelector.setModel(new DefaultComboBoxModel(new String[] {
+		botControllerSelector.setModel(new DefaultComboBoxModel<String>(new String[] {
 		        EntityType.AGENT.toString(), EntityType.HUMAN.toString() }));
 
 		botInfo.add(new JLabel("Bot name:"));
@@ -460,15 +460,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 	}
 
 	/**
-	 * Returns the currently used move speed checkbox.
-	 * 
-	 * @return The move speed checkbox.
-	 */
-	public JCheckBox getmovespeedCheckbox() {
-		return movespeedCheckbox;
-	}
-
-	/**
 	 * Returns the used custom size checkbox.
 	 * 
 	 * @return The custom size checkbox.
@@ -560,15 +551,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 	}
 
 	/**
-	 * Returns the JButton for adding a goal file.
-	 * 
-	 * @return The JButton for adding a goal file.
-	 */
-	public JButton getFileButton() {
-		return fileButton;
-	}
-
-	/**
 	 * Returns the JComboBox that contains the bot controller type.
 	 * 
 	 * @return The JComboBox that contains the bot controller type.
@@ -603,59 +585,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 		return botEditor;
 	}
 	
-	public BW4TClientConfig getModel() {
-	    return model;
-	}
-	
-	/**
-	 * Updates the whole panel with the contents of the configuration.
-	 * @param config The configuratiom.
-	 */
-	public void updateToConfig(BotConfig config) {
-	    updateBotSpecsToConfig(config);
-        updateBotDefToConfig(config);
-	}
-
-	/**
-	 * Updates the part of the panel about the bot definition with
-	 * the contents of the configuration.
-	 * @param config The configuration.
-	 */
-    private void updateBotDefToConfig(BotConfig config) {
-        getFileNameField().setText(config.getFileName());
-        getBotNameField().setText(config.getBotName());
-        getBotReferenceField().setText(config.getReferenceName());
-        getBotAmountTextField().setText(""+config.getBotAmount());  
-        if (config.getBotController().equals(EntityType.HUMAN)){
-            getBotControllerSelector().setSelectedIndex(1);
-        } else {
-            getBotControllerSelector().setSelectedIndex(0);
-        }
-    }
-
-    /**
-     * Updates the part of the panel about the bot specs with
-     * the contents of the configuration.
-     * @param config The configuration.
-     */
-    private void updateBotSpecsToConfig(BotConfig config) {
-        getSpeedSlider().setValue(config.getBotSpeed());
-        getSizeSlider().setValue(config.getBotSize());
-        getBatterySlider().setValue(config.getBotBatteryCapacity());
-        getNumberOfGrippersSlider().setValue(config.getGrippers());
-        
-        getSizeSlider().setEnabled(config.getSizeOverloadHandicap());
-        getBatterySlider().setEnabled(config.isBatteryEnabled());
-        getSpeedSlider().setEnabled(config.getMoveSpeedHandicap());
-        getGripperCheckbox().setSelected(config.getGripperHandicap());
-        getNumberOfGrippersSlider().setEnabled(!config.getGripperHandicap());
-        getColorblindCheckbox().setSelected(config.getColorBlindHandicap());
-        getsizeoverloadCheckbox().setSelected(config.getSizeOverloadHandicap());
-        getmovespeedCheckbox().setSelected(config.getMoveSpeedHandicap());
-        getBatteryEnabledCheckbox().setSelected(config.isBatteryEnabled());
-        getBatteryUseValueLabel().setText("0");
-    }
-
 	/**
 	 * Get the currently used gripper checkbox.
 	 * 
@@ -817,14 +746,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 	}
 	
 	/**
-	 * Return the BW4TClientConfig
-	 * @return cc
-	 */
-	public BW4TClientConfig getBW4TClientConfig() {
-		return model;
-	}
-	
-	/**
 	 * Update the view with the values from the controller.
 	 */
 	public void updateView() {
@@ -850,6 +771,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
         sizeSlider.setEnabled(getSizeOverloadHandicap());
         numberOfGrippersSlider.setEnabled(!getGripperHandicap());
         batterySlider.setEnabled(isBatteryEnabled());
+        speedSlider.setEnabled(getMoveSpeedHandicap());
 	}
 	
     public void updateDischargeRate() {
@@ -919,75 +841,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 		sizeSlider.setEnabled(enabled);
 	}
 
-	public JPanel getBotSliders() {
-		return botSliders;
-	}
-
-	public void setBotSliders(JPanel botSliders) {
-		this.botSliders = botSliders;
-	}
-
-	public void setBotAmountTextField(JTextField botAmountTextField) {
-		this.botAmountTextField = botAmountTextField;
-	}
-
-	public void setGripperCheckbox(JCheckBox gripperCheckbox) {
-		this.gripperCheckbox = gripperCheckbox;
-	}
-
-	public void setColorblindCheckbox(JCheckBox colorblindCheckbox) {
-		this.colorblindCheckbox = colorblindCheckbox;
-	}
-
 	public JCheckBox getMovespeedCheckbox() {
 		return movespeedCheckbox;
-	}
-
-	public void setMovespeedCheckbox(JCheckBox movespeedCheckbox) {
-		this.movespeedCheckbox = movespeedCheckbox;
-	}
-
-	public void setBatteryEnabledCheckbox(JCheckBox batteryEnabledCheckbox) {
-		this.batteryEnabledCheckbox = batteryEnabledCheckbox;
-	}
-
-	public void setSizeSlider(JSlider sizeSlider) {
-		this.sizeSlider = sizeSlider;
-	}
-
-	public void setSpeedSlider(JSlider speedSlider) {
-		this.speedSlider = speedSlider;
-	}
-
-	public void setBatterySlider(JSlider batterySlider) {
-		this.batterySlider = batterySlider;
-	}
-
-	public void setNumberOfGrippersSlider(JSlider numberOfGrippersSlider) {
-		this.numberOfGrippersSlider = numberOfGrippersSlider;
-	}
-
-	public void setCustomSizeCheckbox(JCheckBox customSizeCheckbox) {
-		this.customSizeCheckbox = customSizeCheckbox;
-	}
-
-	public void setBatteryUseValueLabel(JLabel batteryUseValueLabel) {
-		this.batteryUseValueLabel = batteryUseValueLabel;
-	}
-
-	public void setBotNameField(JTextField botNameField) {
-		this.botNameField = botNameField;
-	}
-
-	public void setFileNameField(JTextField fileNameField) {
-		this.fileNameField = fileNameField;
-	}
-
-	public void setBotReferenceField(JTextField botReferenceField) {
-		this.botReferenceField = botReferenceField;
-	}
-
-	public void setSaveButton(JButton saveButton) {
-		this.saveButton = saveButton;
 	}
 }

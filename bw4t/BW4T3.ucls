@@ -1,784 +1,2251 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class-diagram version="1.1.5" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+<class-diagram version="1.1.6" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true">  
-  <class id="1" language="java" name="nl.tudelft.bw4t.map.ColorTranslator" project="bw4t-core" 
-    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/ColorTranslator.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="345" y="1199"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <interface id="2" language="java" name="nl.tudelft.bw4t.network.BW4TClientActions" project="bw4t-core" 
-    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/network/BW4TClientActions.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="126" y="1176"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </interface>  
-  <package id="3" language="java" name="nl.tudelft.bw4t.map" project="bw4t-core" 
-    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="50" width="685" x="296" y="1039"/>    
-    <display autosize="false" stereotype="true" accessors="true"/>  
-  </package>  
-  <class id="4" language="java" name="nl.tudelft.bw4t.map.NewMap" project="bw4t-core" 
-    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/NewMap.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="818" y="1212"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <enumeration id="5" language="java" name="nl.tudelft.bw4t.map.BlockColor" project="bw4t-core" 
-    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/BlockColor.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="565" y="1158"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </enumeration>  
-  <package id="6" language="java" name="nl.tudelft.bw4t.server" project="bw4t-core" 
-    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/server" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="117" y="1273"/>    
-    <display autosize="true" stereotype="true" accessors="true"/>  
-  </package>  
-  <enumeration id="7" language="java" name="nl.tudelft.bw4t.map.Entity.EntityType" project="bw4t-core" 
-    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/Entity.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="849" y="1583"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </enumeration>  
-  <class id="8" language="java" name="nl.tudelft.bw4t.map.Rectangle" project="bw4t-core" 
-    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/Rectangle.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="254" y="1406"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="9" language="java" name="nl.tudelft.bw4t.map.Door" project="bw4t-core" 
-    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/Door.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="527" y="1405"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="10" language="java" name="nl.tudelft.bw4t.map.Entity" project="bw4t-core" 
-    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/Entity.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="848" y="1467"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <interface id="11" language="java" name="nl.tudelft.bw4t.network.BW4TServerActions" project="bw4t-core" 
-    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/network/BW4TServerActions.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="113" y="1351"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </interface>  
-  <enumeration id="12" language="java" name="nl.tudelft.bw4t.map.Zone.Type" project="bw4t-core" 
-    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/Zone.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="398" y="1406"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </enumeration>  
-  <class id="13" language="java" name="nl.tudelft.bw4t.map.RenderOptions" project="bw4t-core" 
-    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/RenderOptions.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="649" y="1405"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <enumeration id="14" language="java" name="nl.tudelft.bw4t.map.Door.Orientation" project="bw4t-core" 
-    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/Door.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="414" y="1530"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </enumeration>  
-  <class id="15" language="java" name="nl.tudelft.bw4t.map.Point" project="bw4t-core" 
-    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/Point.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="639" y="1539"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <package id="16" language="java" name="nl.tudelft.bw4t.network" project="bw4t-core" 
-    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/network" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="130" y="1103"/>    
-    <display autosize="true" stereotype="true" accessors="true"/>  
-  </package>  
-  <class id="17" language="java" name="nl.tudelft.bw4t.map.Zone" project="bw4t-core" 
-    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/Zone.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="570" y="1269"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="18" language="java" name="nl.tudelft.bw4t.server.util.RoomLocator" project="bw4t-server" 
-    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/util/RoomLocator.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1655" y="1683"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="19" language="java" name="nl.tudelft.bw4t.server.util.PathPlanner" project="bw4t-server" 
-    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/util/PathPlanner.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1763" y="1684"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="20" language="java" name="nl.tudelft.bw4t.server.BW4TServer" project="bw4t-server" 
-    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/BW4TServer.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1182" y="1652"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="21" language="java" name="nl.tudelft.bw4t.server.util.ZoneLocator" project="bw4t-server" 
-    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/util/ZoneLocator.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1867" y="1684"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <package id="22" language="java" name="nl.tudelft.bw4t.server.util" project="bw4t-server" 
-    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/util" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="65" width="318" x="1603" y="1582"/>    
-    <display autosize="false" stereotype="true" accessors="true"/>  
-  </package>  
-  <interface id="23" language="java" name="nl.tudelft.bw4t.server.RobotEntityInt" project="bw4t-server" 
-    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/RobotEntityInt.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1199" y="1730"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </interface>  
-  <class id="24" language="java" name="nl.tudelft.bw4t.server.util.Id2Object" project="bw4t-server" 
-    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/util/Id2Object.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1653" y="1756"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <package id="25" language="java" name="nl.tudelft.bw4t.server" project="bw4t-server" 
-    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="50" width="426" x="1122" y="1483"/>    
-    <display autosize="false" stereotype="true" accessors="true"/>  
-  </package>  
-  <package id="26" language="java" name="nl.tudelft.bw4t.server.model" project="bw4t-server" 
-    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="50" width="210" x="1520" y="1080"/>    
-    <display autosize="false" stereotype="true" accessors="true"/>  
-  </package>  
-  <class id="27" language="java" name="nl.tudelft.bw4t.server.repast.MapLoader" project="bw4t-server" 
-    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/repast/MapLoader.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1567" y="1239"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="28" language="java" name="nl.tudelft.bw4t.server.repast.BW4TBuilder" project="bw4t-server" 
-    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/repast/BW4TBuilder.java" binary="false" 
+  <class id="1" language="java" name="nl.tudelft.bw4t.client.gui.listeners.ClientActionListener" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/listeners/ClientActionListener.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1671" y="1241"/>    
+    <position height="-1" width="-1" x="1213" y="350"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="29" language="java" name="nl.tudelft.bw4t.BoundedMoveableObject" project="bw4t-server" 
-    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/BoundedMoveableObject.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1604" y="1171"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <package id="30" language="java" name="nl.tudelft.bw4t.server.model.doors" project="bw4t-server" 
-    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/doors" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1625" y="1336"/>    
-    <display autosize="true" stereotype="true" accessors="true"/>  
-  </package>  
-  <package id="31" language="java" name="nl.tudelft.bw4t.server.model.blocks" project="bw4t-server" 
-    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/blocks" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1828" y="1113"/>    
-    <display autosize="true" stereotype="true" accessors="true"/>  
-  </package>  
-  <class id="32" language="java" name="nl.tudelft.bw4t.server.model.blocks.Block" project="bw4t-server" 
-    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/blocks/Block.java" binary="false" 
+  <class id="2" language="java" name="nl.tudelft.bw4t.client.environment.Launcher" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/environment/Launcher.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1830" y="1173"/>    
+    <position height="-1" width="-1" x="132" y="701"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="33" language="java" name="nl.tudelft.bw4t.server.model.doors.Door" project="bw4t-server" 
-    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/doors/Door.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1605" y="1404"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="34" language="java" name="nl.tudelft.bw4t.server.model.robots.NavigatingRobot" project="bw4t-server" 
-    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/robots/NavigatingRobot.java" binary="false" 
+  <class id="3" language="java" name="nl.tudelft.bw4t.client.gui.menu.HallwayMenu" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/menu/HallwayMenu.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1984" y="1437"/>    
+    <position height="-1" width="-1" x="1440" y="227"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <enumeration id="35" language="java" name="nl.tudelft.bw4t.server.model.robots.NavigatingRobot.State" 
-    project="bw4t-server" file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/robots/NavigatingRobot.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2123" y="1438"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </enumeration>  
-  <package id="36" language="java" name="nl.tudelft.bw4t.server.model.robots" project="bw4t-server" 
-    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/robots" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="50" width="245" x="1945" y="1232"/>    
-    <display autosize="false" stereotype="true" accessors="true"/>  
-  </package>  
-  <class id="37" language="java" name="nl.tudelft.bw4t.client.gui.listeners.TeamListMouseListener" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/listeners/TeamListMouseListener.java" binary="false" 
+  <class id="4" language="java" name="nl.tudelft.bw4t.client.startup.ConfigFile" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/startup/ConfigFile.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1448" y="237"/>    
+    <position height="-1" width="-1" x="1032" y="586"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="38" language="java" name="nl.tudelft.bw4t.client.gui.listeners.GotoPositionActionListener" 
-    project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/listeners/GotoPositionActionListener.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1225" y="533"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="39" language="java" name="nl.tudelft.bw4t.client.gui.listeners.PickUpActionListener" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/listeners/PickUpActionListener.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1633" y="235"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="40" language="java" name="nl.tudelft.bw4t.client.gui.listeners.GoToRoomActionListener" 
-    project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/listeners/GoToRoomActionListener.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1484" y="513"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="41" language="java" name="nl.tudelft.bw4t.client.environment.RemoteEnvironment" project="bw4t-client" 
+  <class id="5" language="java" name="nl.tudelft.bw4t.client.environment.RemoteEnvironment" project="bw4t-client" 
     file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/environment/RemoteEnvironment.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="347" y="852"/>    
+    <position height="-1" width="-1" x="570" y="536"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="42" language="java" name="nl.tudelft.bw4t.client.gui.listeners.GoToBlockActionListener" 
-    project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/listeners/GoToBlockActionListener.java" binary="false" 
+  <class id="6" language="java" name="nl.tudelft.bw4t.client.controller.ClientController" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/controller/ClientController.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1217" y="607"/>    
+    <position height="-1" width="-1" x="476" y="298"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <enumeration id="43" language="java" name="nl.tudelft.bw4t.message.MessageType" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/message/MessageType.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="270" y="220"/>    
+  <enumeration id="7" language="java" name="nl.tudelft.bw4t.client.startup.InitParam" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/startup/InitParam.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="902" y="585"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </enumeration>  
-  <class id="44" language="java" name="nl.tudelft.bw4t.client.gui.BW4TClientGUI" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/BW4TClientGUI.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1496" y="362"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="45" language="java" name="nl.tudelft.bw4t.client.agent.TestAgent" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/agent/TestAgent.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="306" y="456"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="46" language="java" name="nl.tudelft.bw4t.client.gui.listeners.PutdownActionListener" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/listeners/PutdownActionListener.java" binary="false" 
+  <class id="8" language="java" name="nl.tudelft.bw4t.client.environment.PerceptsHandler" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/environment/PerceptsHandler.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1212" y="681"/>    
+    <position height="-1" width="-1" x="131" y="572"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="47" language="java" name="nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener" 
-    project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/listeners/MessageSenderActionListener.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1254" y="304"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="48" language="java" name="nl.tudelft.bw4t.client.agent.HumanAgent" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/agent/HumanAgent.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="380" y="372"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <package id="49" language="java" name="nl.tudelft.bw4t.client.gui" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="50" width="821" x="890" y="139"/>    
-    <display autosize="false" stereotype="true" accessors="true"/>  
-  </package>  
-  <class id="50" language="java" name="nl.tudelft.bw4t.message.BW4TMessage" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/message/BW4TMessage.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="436" y="217"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <package id="51" language="java" name="nl.tudelft.bw4t" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="50" width="328" x="554" y="236"/>    
-    <display autosize="false" stereotype="true" accessors="true"/>  
-  </package>  
-  <class id="52" language="java" name="nl.tudelft.bw4t.client.gui.listeners.ChatListMouseListener" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/listeners/ChatListMouseListener.java" binary="false" 
+  <class id="9" language="java" name="nl.tudelft.bw4t.client.gui.menu.RoomMenus" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/menu/RoomMenus.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1215" y="750"/>    
+    <position height="-1" width="-1" x="1583" y="227"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="53" language="java" name="nl.tudelft.bw4t.client.startup.Launcher" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/startup/Launcher.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="274" y="705"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <package id="54" language="java" name="nl.tudelft.bw4t.client.environment" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/environment" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="635" y="583"/>    
+  <package id="10" language="java" name="nl.tudelft.bw4t.client.agent" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/agent" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="250" y="99"/>    
     <display autosize="true" stereotype="true" accessors="true"/>  
   </package>  
-  <package id="55" language="java" name="nl.tudelft.bw4t.message" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/message" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="50" width="464" x="36" y="121"/>    
-    <display autosize="false" stereotype="true" accessors="true"/>  
-  </package>  
-  <class id="56" language="java" name="nl.tudelft.bw4t.client.agent.BW4TAgent" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/agent/BW4TAgent.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="251" y="378"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <interface id="57" language="java" name="nl.tudelft.bw4t.client.agent.ActionInterface" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/agent/ActionInterface.java" binary="false" 
+  <interface id="11" language="java" name="nl.tudelft.bw4t.client.message.StringToMessageCommand" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/message/StringToMessageCommand.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="112" y="373"/>    
+    <position height="-1" width="-1" x="1374" y="582"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </interface>  
-  <class id="58" language="java" name="nl.tudelft.bw4t.client.BW4TClientSettings" project="bw4t-client" 
+  <interface id="12" language="java" name="nl.tudelft.bw4t.client.message.MessageCommand" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/message/MessageCommand.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1208" y="582"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <package id="13" language="java" name="nl.tudelft.bw4t.client.startup" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/startup" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="261" x="838" y="502"/>    
+    <display autosize="false" stereotype="true" accessors="true"/>  
+  </package>  
+  <class id="14" language="java" name="nl.tudelft.bw4t.client.BW4TClientSettings" project="bw4t-client" 
     file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/BW4TClientSettings.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="121" y="697"/>    
+    <position height="-1" width="-1" x="89" y="102"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="59" language="java" name="nl.tudelft.bw4t.message.MessageTranslator" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/message/MessageTranslator.java" binary="false" 
+  <interface id="15" language="java" name="nl.tudelft.bw4t.client.gui.ClientGUI" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/ClientGUI.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="924" y="176"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <class id="16" language="java" name="nl.tudelft.bw4t.client.environment.BW4TEnvironmentListener" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/environment/BW4TEnvironmentListener.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="106" y="215"/>    
+    <position height="-1" width="-1" x="140" y="637"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="60" language="java" name="nl.tudelft.bw4t.client.BW4TClient" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/BW4TClient.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="121" y="775"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="61" language="java" name="nl.tudelft.bw4t.client.environment.EntityNotifiers" project="bw4t-client" 
+  <class id="17" language="java" name="nl.tudelft.bw4t.client.environment.EntityNotifiers" project="bw4t-client" 
     file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/environment/EntityNotifiers.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="630" y="648"/>    
+    <position height="-1" width="-1" x="129" y="447"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <package id="62" language="java" name="nl.tudelft.bw4t.client.agent" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/agent" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="50" width="385" x="41" y="281"/>    
-    <display autosize="false" stereotype="true" accessors="true"/>  
-  </package>  
-  <package id="63" language="java" name="nl.tudelft.bw4t.client" project="bw4t-client" 
-    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="50" width="379" x="53" y="607"/>    
-    <display autosize="false" stereotype="true" accessors="true"/>  
-  </package>  
-  <class id="64" language="java" name="nl.tudelft.bw4t.client.gui.menu.BasicMenuOperations" project="bw4t-client" 
+  <class id="18" language="java" name="nl.tudelft.bw4t.client.controller.ClientMapController" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/controller/ClientMapController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="461" y="159"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="nl.tudelft.bw4t.client.environment.ActionHandler" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/environment/ActionHandler.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="130" y="509"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="nl.tudelft.bw4t.client.gui.menu.BasicMenuOperations" project="bw4t-client" 
     file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/menu/BasicMenuOperations.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1660" y="449"/>    
+    <position height="-1" width="-1" x="1448" y="346"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <association id="65">    
-    <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="66" name="boundingbox"/>      
-      <multiplicity id="67" minimum="0" maximum="1"/>    
+  <package id="21" language="java" name="nl.tudelft.bw4t.client.message" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/message" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="566" x="1140" y="497"/>    
+    <display autosize="false" stereotype="true" accessors="true"/>  
+  </package>  
+  <class id="22" language="java" name="nl.tudelft.bw4t.client.gui.listeners.TeamListMouseListener" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/listeners/TeamListMouseListener.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1219" y="288"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="nl.tudelft.bw4t.client.message.BW4TMessage" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/message/BW4TMessage.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1308" y="772"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="nl.tudelft.bw4t.client.gui.menu.PlayerMenu" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/menu/PlayerMenu.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1440" y="286"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="nl.tudelft.bw4t.client.message.MessageTranslator" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/message/MessageTranslator.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1308" y="690"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="nl.tudelft.bw4t.client.gui.BW4TClientGUI" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/BW4TClientGUI.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="926" y="282"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="27" language="java" name="nl.tudelft.bw4t.client.gui.menu.ActionPopUpMenu" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/menu/ActionPopUpMenu.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1582" y="286"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <package id="28" language="java" name="nl.tudelft.bw4t.client.controller" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/controller" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="490" y="99"/>    
+    <display autosize="true" stereotype="true" accessors="true"/>  
+  </package>  
+  <package id="29" language="java" name="nl.tudelft.bw4t.client.gui" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="1008" x="775" y="75"/>    
+    <display autosize="false" stereotype="true" accessors="true"/>  
+  </package>  
+  <package id="30" language="java" name="nl.tudelft.bw4t.client.gui.listeners" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/listeners" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="211" x="1136" y="140"/>    
+    <display autosize="false" stereotype="true" accessors="true"/>  
+  </package>  
+  <class id="31" language="java" name="nl.tudelft.bw4t.client.gui.listeners.ChatListMouseListener" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/listeners/ChatListMouseListener.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1214" y="225"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <package id="32" language="java" name="nl.tudelft.bw4t.client.gui.menu" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/menu" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="292" x="1372" y="141"/>    
+    <display autosize="false" stereotype="true" accessors="true"/>  
+  </package>  
+  <package id="33" language="java" name="nl.tudelft.bw4t.client.environment" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/environment" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="606" x="55" y="360"/>    
+    <display autosize="false" stereotype="true" accessors="true"/>  
+  </package>  
+  <class id="34" language="java" name="nl.tudelft.bw4t.client.gui.menu.EPartnerMenu" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/menu/EPartnerMenu.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1588" y="346"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="35" language="java" name="nl.tudelft.bw4t.client.gui.menu.MapOperations" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/menu/MapOperations.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1440" y="403"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="36" language="java" name="nl.tudelft.bw4t.client.agent.BW4TAgent" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/agent/BW4TAgent.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="234" y="249"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <enumeration id="37" language="java" name="nl.tudelft.bw4t.client.message.MessageType" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/message/MessageType.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1466" y="693"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </enumeration>  
+  <interface id="38" language="java" name="nl.tudelft.bw4t.client.agent.ActionInterface" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/agent/ActionInterface.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="233" y="162"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <class id="39" language="java" name="nl.tudelft.bw4t.client.BW4TClient" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/BW4TClient.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="698" y="681"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="40" language="java" name="nl.tudelft.bw4t.client.gui.menu.BlockadeMenu" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/menu/BlockadeMenu.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1583" y="403"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <package id="41" language="java" name="nl.tudelft.bw4t.client" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="1765" x="20" y="17"/>    
+    <display autosize="false" stereotype="true" accessors="true"/>  
+  </package>  
+  <class id="42" language="java" name="nl.tudelft.bw4t.client.gui.menu.ChatMenu" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/menu/ChatMenu.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1441" y="462"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="43" language="java" name="nl.tudelft.bw4t.client.gui.menu.ComboAgentModel" project="bw4t-client" 
+    file="/bw4t-client/src/main/java/nl/tudelft/bw4t/client/gui/menu/ComboAgentModel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="929" y="408"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="44" language="java" name="nl.tudelft.bw4t.map.ColorTranslator" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/ColorTranslator.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="77" y="1142"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <package id="45" language="java" name="nl.tudelft.bw4t.map" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="1152" x="18" y="1057"/>    
+    <display autosize="false" stereotype="true" accessors="true"/>  
+  </package>  
+  <enumeration id="46" language="java" name="nl.tudelft.bw4t.map.BlockColor" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/BlockColor.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="221" y="1140"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </enumeration>  
+  <class id="47" language="java" name="nl.tudelft.bw4t.map.view.ViewEPartner" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/view/ViewEPartner.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1588" y="1484"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="48" language="java" name="nl.tudelft.bw4t.map.renderer.AbstractMapController" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/renderer/AbstractMapController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="180" y="1758"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <interface id="49" language="java" name="nl.tudelft.bw4t.network.BW4TServerActions" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/network/BW4TServerActions.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1589" y="1176"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <class id="50" language="java" name="nl.tudelft.bw4t.map.Door" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/Door.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="745" y="1242"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="51" language="java" name="nl.tudelft.bw4t.map.Entity" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/Entity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="704" y="1692"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="52" language="java" name="nl.tudelft.bw4t.map.MapFormatException" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/MapFormatException.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="91" y="1203"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="53" language="java" name="nl.tudelft.bw4t.map.renderer.MapRenderSettingsConfiguration" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/renderer/MapRenderSettingsConfiguration.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="613" y="1496"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <enumeration id="54" language="java" name="nl.tudelft.bw4t.map.Zone.Type" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/Zone.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="872" y="1267"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </enumeration>  
+  <class id="55" language="java" name="nl.tudelft.bw4t.util.FileUtils" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/util/FileUtils.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="66" y="1457"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <interface id="56" language="java" name="nl.tudelft.bw4t.network.BW4TClientActions" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/network/BW4TClientActions.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1587" y="1113"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <interface id="57" language="java" name="nl.tudelft.bw4t.map.renderer.MapRendererInterface" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/renderer/MapRendererInterface.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="239" y="1638"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <class id="58" language="java" name="nl.tudelft.bw4t.map.renderer.MapRenderSettings" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/renderer/MapRenderSettings.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="651" y="1594"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <interface id="59" language="java" name="nl.tudelft.bw4t.network.BW4TServerHiddenActions" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/network/BW4TServerHiddenActions.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1608" y="1265"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <enumeration id="60" language="java" name="nl.tudelft.bw4t.map.Door.Orientation" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/Door.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="734" y="1152"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </enumeration>  
+  <class id="61" language="java" name="nl.tudelft.bw4t.scenariogui.EPartnerConfig" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/scenariogui/EPartnerConfig.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1204" y="1670"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="62" language="java" name="nl.tudelft.bw4t.map.renderer.Updater" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/renderer/Updater.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="87" y="1634"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="63" language="java" name="nl.tudelft.bw4t.util.LauncherException" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/util/LauncherException.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1373" y="1552"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="64" language="java" name="nl.tudelft.bw4t.map.view.ViewBlock" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/view/ViewBlock.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1592" y="1613"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="65" language="java" name="nl.tudelft.bw4t.scenariogui.BW4TClientConfig" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/scenariogui/BW4TClientConfig.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="975" y="1611"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <package id="66" language="java" name="nl.tudelft.bw4t.map.view" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/view" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1611" y="1427"/>    
+    <display autosize="true" stereotype="true" accessors="true"/>  
+  </package>  
+  <class id="67" language="java" name="nl.tudelft.bw4t.map.NewMap" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/NewMap.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="323" y="1231"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <interface id="68" language="java" name="nl.tudelft.bw4t.map.renderer.MapController" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/renderer/MapController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="386" y="1640"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <package id="69" language="java" name="nl.tudelft.bw4t.scenariogui" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/scenariogui" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="998" y="1480"/>    
+    <display autosize="true" stereotype="true" accessors="true"/>  
+  </package>  
+  <enumeration id="70" language="java" name="nl.tudelft.bw4t.map.Entity.EntityType" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/Entity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="448" y="1800"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </enumeration>  
+  <class id="71" language="java" name="nl.tudelft.bw4t.map.Rectangle" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/Rectangle.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1011" y="1276"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <package id="72" language="java" name="nl.tudelft.bw4t.network" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/network" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1597" y="1054"/>    
+    <display autosize="true" stereotype="true" accessors="true"/>  
+  </package>  
+  <enumeration id="73" language="java" name="nl.tudelft.bw4t.scenariogui.DefaultConfigurationValues" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/scenariogui/DefaultConfigurationValues.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1001" y="1537"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </enumeration>  
+  <package id="74" language="java" name="nl.tudelft.bw4t.util" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/util" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="714" x="21" y="1306"/>    
+    <display autosize="false" stereotype="true" accessors="true"/>  
+  </package>  
+  <package id="75" language="java" name="nl.tudelft.bw4t.map.renderer" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/renderer" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="517" x="23" y="1546"/>    
+    <display autosize="false" stereotype="true" accessors="true"/>  
+  </package>  
+  <class id="76" language="java" name="nl.tudelft.bw4t.map.RenderOptions" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/RenderOptions.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1090" y="1190"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="77" language="java" name="nl.tudelft.bw4t.scenariogui.BotConfig" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/scenariogui/BotConfig.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1188" y="1573"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="78" language="java" name="nl.tudelft.bw4t.util.XMLManager" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/util/XMLManager.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="72" y="1393"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="79" language="java" name="nl.tudelft.bw4t.map.view.ViewEntity" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/view/ViewEntity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1587" y="1547"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="80" language="java" name="nl.tudelft.bw4t.map.Point" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/Point.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="811" y="1385"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="81" language="java" name="nl.tudelft.bw4t.map.renderer.MapRenderer" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/renderer/MapRenderer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="301" y="1895"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <enumeration id="82" language="java" name="nl.tudelft.bw4t.map.EntityType" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/EntityType.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="396" y="1139"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </enumeration>  
+  <class id="83" language="java" name="nl.tudelft.bw4t.map.Zone" project="bw4t-core" 
+    file="/bw4t-core/src/main/java/nl/tudelft/bw4t/map/Zone.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="912" y="1155"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="84" language="java" name="nl.tudelft.bw4t.server.util.ZoneLocator" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/util/ZoneLocator.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2947" y="975"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <package id="85" language="java" name="nl.tudelft.bw4t.server.logging" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/logging" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="663" x="2823" y="582"/>    
+    <display autosize="false" stereotype="true" accessors="true"/>  
+  </package>  
+  <interface id="86" language="java" name="nl.tudelft.bw4t.server.model.robots.handicap.IRobot" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/robots/handicap/IRobot.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2290" y="733"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <class id="87" language="java" name="nl.tudelft.bw4t.server.environment.Launcher" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/environment/Launcher.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3595" y="921"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="88" language="java" name="nl.tudelft.bw4t.server.eis.ObjectInformation" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/eis/ObjectInformation.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3300" y="1004"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="89" language="java" name="nl.tudelft.bw4t.server.model.robots.AbstractRobot" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/robots/AbstractRobot.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2282" y="884"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="90" language="java" name="nl.tudelft.bw4t.server.eis.BlockColor" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/eis/BlockColor.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3214" y="1229"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="91" language="java" name="nl.tudelft.bw4t.server.logging.BotLog" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/logging/BotLog.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2890" y="665"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="92" language="java" name="nl.tudelft.bw4t.server.eis.translators.ObjectInformationTranslator" 
+    project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/eis/translators/ObjectInformationTranslator.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4034" y="853"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="93" language="java" name="nl.tudelft.bw4t.server.environment.BW4TParameters" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/environment/BW4TParameters.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4243" y="853"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="94" language="java" name="nl.tudelft.bw4t.server.ClientInfo" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/ClientInfo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2959" y="1551"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="95" language="java" name="nl.tudelft.bw4t.server.eis.translators.BlockWithColorTranslator" 
+    project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/eis/translators/BlockWithColorTranslator.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3931" y="952"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <package id="96" language="java" name="nl.tudelft.bw4t.server.util" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/util" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4338" y="948"/>    
+    <display autosize="true" stereotype="true" accessors="true"/>  
+  </package>  
+  <class id="97" language="java" name="nl.tudelft.bw4t.server.eis.translators.ColorTranslator" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/eis/translators/ColorTranslator.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4136" y="952"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="98" language="java" name="nl.tudelft.bw4t.server.model.BoundedMoveableObject" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/BoundedMoveableObject.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2526" y="881"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="99" language="java" name="nl.tudelft.bw4t.server.model.robots.NavigatingRobot" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/robots/NavigatingRobot.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3344" y="1551"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="100" language="java" name="nl.tudelft.bw4t.server.model.blocks.Block" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/blocks/Block.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3235" y="1345"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="101" language="java" name="nl.tudelft.bw4t.server.model.zone.Corridor" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/zone/Corridor.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3046" y="1757"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <package id="102" language="java" name="nl.tudelft.bw4t.server" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="1499" x="2321" y="322"/>    
+    <display autosize="false" stereotype="true" accessors="true"/>  
+  </package>  
+  <class id="103" language="java" name="nl.tudelft.bw4t.server.model.zone.BlocksRoom" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/zone/BlocksRoom.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3422" y="1855"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="104" language="java" name="nl.tudelft.bw4t.server.model.zone.ChargingZone" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/zone/ChargingZone.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3235" y="1757"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="105" language="java" name="nl.tudelft.bw4t.server.environment.Stepper" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/environment/Stepper.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2793" y="1453"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="106" language="java" name="nl.tudelft.bw4t.server.environment.BW4TEnvironment" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/environment/BW4TEnvironment.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2593" y="1345"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <enumeration id="107" language="java" name="nl.tudelft.bw4t.server.model.robots.NavigatingRobot.State" 
+    project="bw4t-server" file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/robots/NavigatingRobot.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3344" y="1649"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </enumeration>  
+  <class id="108" language="java" name="nl.tudelft.bw4t.server.model.zone.Zone" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/zone/Zone.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3141" y="1649"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="109" language="java" name="nl.tudelft.bw4t.server.view.ServerContextDisplay" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/view/ServerContextDisplay.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2508" y="1453"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="110" language="java" name="nl.tudelft.bw4t.server.model.robots.DefaultEntityFactory" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/robots/DefaultEntityFactory.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2245" y="571"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="111" language="java" name="nl.tudelft.bw4t.server.controller.ServerMapController" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/controller/ServerMapController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2506" y="1551"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="112" language="java" name="nl.tudelft.bw4t.server.model.epartners.EPartner" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/epartners/EPartner.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3909" y="1456"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="113" language="java" name="nl.tudelft.bw4t.server.eis.EPartnerEntity" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/eis/EPartnerEntity.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2777" y="1345"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="114" language="java" name="nl.tudelft.bw4t.server.eis.translators.BoundedMovableObjectTranslator" 
+    project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/eis/translators/BoundedMovableObjectTranslator.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3955" y="1091"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="115" language="java" name="nl.tudelft.bw4t.server.model.robots.Battery" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/robots/Battery.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3704" y="1551"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="116" language="java" name="nl.tudelft.bw4t.server.repast.BW4TBuilder" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/repast/BW4TBuilder.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4167" y="1091"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="117" language="java" name="nl.tudelft.bw4t.server.util.RoomLocator" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/util/RoomLocator.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3977" y="1014"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="118" language="java" name="nl.tudelft.bw4t.server.environment.EnvironmentResetException" 
+    project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/environment/EnvironmentResetException.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4217" y="1022"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="119" language="java" name="nl.tudelft.bw4t.server.util.Id2Object" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/util/Id2Object.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4306" y="1098"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="120" language="java" name="nl.tudelft.bw4t.server.model.robots.handicap.Human" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/robots/handicap/Human.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3758" y="1207"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="121" language="java" name="nl.tudelft.bw4t.server.BW4TServer" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/BW4TServer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2959" y="1453"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="122" language="java" name="nl.tudelft.bw4t.server.view.MapSelector" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/view/ServerContextDisplay.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4463" y="1098"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="123" language="java" name="nl.tudelft.bw4t.server.eis.translators.PointTranslator" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/eis/translators/PointTranslator.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4644" y="1098"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="124" language="java" name="nl.tudelft.bw4t.server.model.doors.Door" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/doors/Door.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3472" y="1345"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="125" language="java" name="nl.tudelft.bw4t.server.util.PathPlanner" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/util/PathPlanner.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4822" y="1098"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="126" language="java" name="nl.tudelft.bw4t.server.eis.translators.ZoneTranslator" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/eis/translators/ZoneTranslator.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4075" y="1195"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <package id="127" language="java" name="nl.tudelft.bw4t.server.model" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="489" x="2165" y="393"/>    
+    <display autosize="false" stereotype="true" accessors="true"/>  
+  </package>  
+  <enumeration id="128" language="java" name="nl.tudelft.bw4t.server.model.robots.MoveType" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/robots/MoveType.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4274" y="1195"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </enumeration>  
+  <package id="129" language="java" name="nl.tudelft.bw4t.server.repast" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/repast" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4324" y="1339"/>    
+    <display autosize="true" stereotype="true" accessors="true"/>  
+  </package>  
+  <class id="130" language="java" name="nl.tudelft.bw4t.server.repast.MapLoader" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/repast/MapLoader.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4520" y="1343"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="131" language="java" name="nl.tudelft.bw4t.server.model.zone.Room" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/zone/Room.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3517" y="1757"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="132" language="java" name="nl.tudelft.bw4t.server.view.ControlPanel" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/view/ServerContextDisplay.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2415" y="1345"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <package id="133" language="java" name="nl.tudelft.bw4t.server.view" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/view" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4710" y="1339"/>    
+    <display autosize="true" stereotype="true" accessors="true"/>  
+  </package>  
+  <interface id="134" language="java" name="nl.tudelft.bw4t.server.model.robots.EntityFactory" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/robots/EntityFactory.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2244" y="487"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <class id="135" language="java" name="nl.tudelft.bw4t.server.model.zone.Blockade" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/zone/Blockade.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3076" y="1851"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <package id="136" language="java" name="nl.tudelft.bw4t.server.eis" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/eis" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4437" y="1421"/>    
+    <display autosize="true" stereotype="true" accessors="true"/>  
+  </package>  
+  <package id="137" language="java" name="nl.tudelft.bw4t.server.environment" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/environment" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3630" y="856"/>    
+    <display autosize="true" stereotype="true" accessors="true"/>  
+  </package>  
+  <package id="138" language="java" name="nl.tudelft.bw4t.server.eis.translators" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/eis/translators" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4673" y="1421"/>    
+    <display autosize="true" stereotype="true" accessors="true"/>  
+  </package>  
+  <class id="139" language="java" name="nl.tudelft.bw4t.server.view.VisualizationsException" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/view/VisualizationsException.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="7791" y="1331"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="140" language="java" name="nl.tudelft.bw4t.server.eis.translators.EPartnerTranslator" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/eis/translators/EPartnerTranslator.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4659" y="1238"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="141" language="java" name="nl.tudelft.bw4t.server.model.robots.handicap.AbstractRobotDecorator" 
+    project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/robots/handicap/AbstractRobotDecorator.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3475" y="1137"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="142" language="java" name="nl.tudelft.bw4t.server.eis.RobotEntity" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/eis/RobotEntity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3540" y="1453"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="143" language="java" name="nl.tudelft.bw4t.server.model.robots.AgentRecord" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/robots/AgentRecord.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3148" y="1551"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="144" language="java" name="nl.tudelft.bw4t.server.logging.BW4TFileAppender" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/logging/BW4TFileAppender.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2410" y="1229"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="145" language="java" name="nl.tudelft.bw4t.server.model.zone.DropZone" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/zone/DropZone.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3611" y="1855"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="146" language="java" name="nl.tudelft.bw4t.server.environment.BW4TRunner" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/environment/BW4TRunner.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2793" y="1551"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <package id="147" language="java" name="nl.tudelft.bw4t.server.controller" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/controller" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3834" y="778"/>    
+    <display autosize="true" stereotype="true" accessors="true"/>  
+  </package>  
+  <interface id="148" language="java" name="nl.tudelft.bw4t.server.RobotEntityInt" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/RobotEntityInt.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2722" y="1206"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <package id="149" language="java" name="nl.tudelft.bw4t.server.model.robots" project="bw4t-server" 
+    file="/bw4t-server/src/main/java/nl/tudelft/bw4t/server/model/robots" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2290" y="655"/>    
+    <display autosize="true" stereotype="true" accessors="true"/>  
+  </package>  
+  <association id="150">    
+    <end type="SOURCE" refId="89" navigable="false">      
+      <attribute id="151" name="holding"/>      
+      <multiplicity id="152" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
+    <end type="TARGET" refId="100" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="68">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="7"/>  
-  </nesting>  
-  <association id="69">    
-    <end type="SOURCE" refId="27" navigable="false">      
-      <attribute id="70" name="map"/>      
-      <multiplicity id="71" minimum="0" maximum="1"/>    
+  <association id="153">    
+    <end type="SOURCE" refId="39" navigable="false">      
+      <attribute id="154" name="server"/>      
+      <multiplicity id="155" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
+    <end type="TARGET" refId="49" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="72">    
-    <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="73" name="blocks"/>      
-      <multiplicity id="74" minimum="0" maximum="2147483647"/>    
+  <association id="156">    
+    <end type="SOURCE" refId="22" navigable="false">      
+      <attribute id="157" name="clientRenderer"/>      
+      <multiplicity id="158" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
+    <end type="TARGET" refId="26" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="75">    
-    <end type="SOURCE" refId="53" navigable="false">      
-      <attribute id="76" name="environment"/>      
-      <multiplicity id="77" minimum="0" maximum="1"/>    
+  <association id="159">    
+    <end type="SOURCE" refId="94" navigable="false">      
+      <attribute id="160" name="requestedEPartners"/>      
+      <multiplicity id="161" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="41" navigable="true"/>    
+    <end type="TARGET" refId="61" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="78">    
-    <end type="SOURCE" refId="56"/>    
-    <end type="TARGET" refId="57"/>  
-  </realization>  
-  <association id="79">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="80" name="position"/>      
-      <multiplicity id="81" minimum="0" maximum="1"/>    
+  <association id="162">    
+    <end type="SOURCE" refId="51" navigable="false">      
+      <attribute id="163" name="position"/>      
+      <multiplicity id="164" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="15" navigable="true"/>    
+    <end type="TARGET" refId="80" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="82">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="83" name="entities"/>      
-      <multiplicity id="84" minimum="0" maximum="2147483647"/>    
+  <association id="165">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="166" name="mapController"/>      
+      <multiplicity id="167" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
+    <end type="TARGET" refId="18" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="85">    
-    <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="86" name="doors"/>      
-      <multiplicity id="87" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="88">    
-    <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="89" name="type"/>      
-      <multiplicity id="90" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="12" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="91">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="92" name="sequence"/>      
-      <multiplicity id="93" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="94">    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="95" name="type"/>      
-      <multiplicity id="96" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="97">    
-    <bendpoint x="1743" y="1155"/>    
-    <bendpoint x="1728" y="1054"/>    
-    <bendpoint x="1114" y="1054"/>    
-    <bendpoint x="923" y="1126"/>    
-    <end type="SOURCE" refId="32" navigable="false">      
-      <attribute id="98" name="colorId"/>      
-      <multiplicity id="99" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="100">    
-    <bendpoint x="262" y="909"/>    
-    <end type="SOURCE" refId="60" navigable="false">      
-      <attribute id="101" name="map"/>      
-      <multiplicity id="102" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="103">    
-    <end type="SOURCE" refId="60" navigable="false">      
-      <attribute id="104" name="parent"/>      
-      <multiplicity id="105" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="41" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="106">    
-    <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="107" name="renderOptions"/>      
-      <multiplicity id="108" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="109">    
-    <end type="SOURCE" refId="64" navigable="false">      
-      <attribute id="110" name="bw4tClientMapRenderer"/>      
-      <multiplicity id="111" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="44" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="112">    
-    <end type="SOURCE" refId="50" navigable="false">      
-      <attribute id="113" name="type"/>      
-      <multiplicity id="114" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="43" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="115">    
-    <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="116" name="neighbours"/>      
-      <multiplicity id="117" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="17" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="118">    
-    <end type="SOURCE" refId="48"/>    
-    <end type="TARGET" refId="56"/>  
+  <generalization id="168">    
+    <bendpoint x="3579" y="1316"/>    
+    <end type="SOURCE" refId="112"/>    
+    <end type="TARGET" refId="98"/>  
   </generalization>  
-  <association id="119">    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="120" name="position"/>      
-      <multiplicity id="121" minimum="0" maximum="1"/>    
+  <association id="169">    
+    <end type="SOURCE" refId="100" navigable="false">      
+      <attribute id="170" name="colorId"/>      
+      <multiplicity id="171" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="15" navigable="true"/>    
+    <end type="TARGET" refId="46" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="122">    
-    <end type="SOURCE" refId="34"/>    
-    <end type="TARGET" refId="35"/>  
-  </nesting>  
-  <association id="123">    
-    <end type="SOURCE" refId="60" navigable="false">      
-      <attribute id="124" name="server"/>      
-      <multiplicity id="125" minimum="0" maximum="1"/>    
+  <realization id="172">    
+    <end type="SOURCE" refId="39"/>    
+    <end type="TARGET" refId="56"/>  
+  </realization>  
+  <association id="173">    
+    <end type="SOURCE" refId="23" navigable="false">      
+      <attribute id="174" name="type"/>      
+      <multiplicity id="175" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="37" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="176">    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="177" name="stringToMessageEquals"/>      
+      <multiplicity id="178" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="11" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="126">    
-    <end type="SOURCE" refId="60"/>    
-    <end type="TARGET" refId="2"/>  
-  </realization>  
-  <association id="127">    
-    <end type="SOURCE" refId="37" navigable="false">      
-      <attribute id="128" name="clientRenderer"/>      
-      <multiplicity id="129" minimum="0" maximum="1"/>    
+  <association id="179">    
+    <end type="SOURCE" refId="131" navigable="false">      
+      <attribute id="180" name="renderOptions"/>      
+      <multiplicity id="181" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="44" navigable="true"/>    
+    <end type="TARGET" refId="76" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="130">    
-    <end type="SOURCE" refId="17"/>    
-    <end type="TARGET" refId="12"/>  
+  <association id="182">    
+    <end type="SOURCE" refId="87" navigable="false">      
+      <attribute id="183" name="environment"/>      
+      <multiplicity id="184" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="106" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="185">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="186" name="controller"/>      
+      <multiplicity id="187" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="188">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="189" name="entityToGUI"/>      
+      <multiplicity id="190" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="191">    
+    <end type="SOURCE" refId="99"/>    
+    <end type="TARGET" refId="107"/>  
   </nesting>  
-  <association id="131">    
+  <association id="192">    
+    <end type="SOURCE" refId="65" navigable="false">      
+      <attribute id="193" name="bots"/>      
+      <multiplicity id="194" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="77" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="195">    
+    <end type="SOURCE" refId="64" navigable="false">      
+      <attribute id="196" name="color"/>      
+      <multiplicity id="197" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="46" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="198">    
+    <end type="SOURCE" refId="131"/>    
+    <end type="TARGET" refId="108"/>  
+  </generalization>  
+  <association id="199">    
+    <end type="SOURCE" refId="106" navigable="false">      
+      <attribute id="200" name="instance"/>      
+      <multiplicity id="201" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="106" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="202">    
+    <end type="SOURCE" refId="106" navigable="false">      
+      <attribute id="203" name="stepper"/>      
+      <multiplicity id="204" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="105" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="205">    
+    <end type="SOURCE" refId="124"/>    
+    <end type="TARGET" refId="98"/>  
+  </generalization>  
+  <realization id="206">    
+    <end type="SOURCE" refId="48"/>    
+    <end type="TARGET" refId="68"/>  
+  </realization>  
+  <association id="207">    
+    <end type="SOURCE" refId="132" navigable="false">      
+      <attribute id="208" name="displayer"/>      
+      <multiplicity id="209" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="109" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="210">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="211" name="agentData"/>      
+      <multiplicity id="212" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="213">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="214" name="clientEntity"/>      
+      <multiplicity id="215" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="216">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="217" name="client"/>      
+      <multiplicity id="218" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="219">    
+    <end type="SOURCE" refId="121" navigable="false">      
+      <attribute id="220" name="clients"/>      
+      <multiplicity id="221" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="94" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="222">    
+    <end type="SOURCE" refId="113" navigable="false">      
+      <attribute id="223" name="ourEPartner"/>      
+      <multiplicity id="224" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="112" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="225">    
+    <bendpoint x="3365" y="1316"/>    
+    <end type="SOURCE" refId="141" navigable="false">      
+      <attribute id="226" name="robot"/>      
+      <multiplicity id="227" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="89" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="228">    
+    <end type="SOURCE" refId="141" navigable="false">      
+      <attribute id="229" name="parent"/>      
+      <multiplicity id="230" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="86" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="231">    
+    <end type="SOURCE" refId="120"/>    
+    <end type="TARGET" refId="141"/>  
+  </generalization>  
+  <association id="232">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="233" name="visibleEPartners"/>      
+      <multiplicity id="234" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="47" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="235">    
+    <end type="SOURCE" refId="89" navigable="false">      
+      <attribute id="236" name="topMostHandicap"/>      
+      <multiplicity id="237" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="86" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="238">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="239" name="controller"/>      
+      <multiplicity id="240" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="241">    
+    <end type="SOURCE" refId="83" navigable="false">      
+      <attribute id="242" name="boundingbox"/>      
+      <multiplicity id="243" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="71" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="244">    
+    <end type="SOURCE" refId="90" navigable="false">      
+      <attribute id="245" name="block"/>      
+      <multiplicity id="246" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="100" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="247">    
+    <bendpoint x="3039" y="1522"/>    
+    <bendpoint x="3060" y="1424"/>    
+    <bendpoint x="3060" y="1316"/>    
+    <end type="SOURCE" refId="108"/>    
+    <end type="TARGET" refId="98"/>  
+  </generalization>  
+  <association id="248">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="249" name="visibleBlocks"/>      
+      <multiplicity id="250" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="251">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="252" name="environment"/>      
+      <multiplicity id="253" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="254">    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="132" name="area"/>      
-      <multiplicity id="133" minimum="0" maximum="1"/>    
+      <attribute id="255" name="config"/>      
+      <multiplicity id="256" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="15" navigable="true"/>    
+    <end type="TARGET" refId="65" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="134">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="135" name="zones"/>      
-      <multiplicity id="136" minimum="0" maximum="2147483647"/>    
+  <association id="257">    
+    <end type="SOURCE" refId="51" navigable="false">      
+      <attribute id="258" name="type"/>      
+      <multiplicity id="259" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="17" navigable="true"/>    
+    <end type="TARGET" refId="70" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="137">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="138" name="orientation"/>      
-      <multiplicity id="139" minimum="0" maximum="1"/>    
+  <association id="260">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="261" name="occupiedRooms"/>      
+      <multiplicity id="262" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="14" navigable="true"/>    
+    <end type="TARGET" refId="83" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="140">    
-    <bendpoint x="846" y="214"/>    
-    <end type="SOURCE" refId="47" navigable="false">      
-      <attribute id="141" name="message"/>      
-      <multiplicity id="142" minimum="0" maximum="1"/>    
+  <association id="263">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="264" name="theBot"/>      
+      <multiplicity id="265" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="79" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="266">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="267" name="allBlocks"/>      
+      <multiplicity id="268" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="269">    
+    <end type="SOURCE" refId="43" navigable="false">      
+      <attribute id="270" name="gui"/>      
+      <multiplicity id="271" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="272">    
+    <end type="SOURCE" refId="100" navigable="false">      
+      <attribute id="273" name="heldBy"/>      
+      <multiplicity id="274" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="89" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="275">    
+    <end type="SOURCE" refId="113"/>    
+    <end type="TARGET" refId="148"/>  
+  </realization>  
+  <association id="276">    
+    <end type="SOURCE" refId="106" navigable="false">      
+      <attribute id="277" name="server"/>      
+      <multiplicity id="278" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="121" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="279">    
+    <end type="SOURCE" refId="48" navigable="false">      
+      <attribute id="280" name="renderSettings"/>      
+      <multiplicity id="281" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="58" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="282">    
+    <end type="SOURCE" refId="99"/>    
+    <end type="TARGET" refId="89"/>  
+  </generalization>  
+  <generalization id="283">    
+    <end type="SOURCE" refId="111"/>    
+    <end type="TARGET" refId="48"/>  
+  </generalization>  
+  <association id="284">    
+    <end type="SOURCE" refId="105" navigable="false">      
+      <attribute id="285" name="runner"/>      
+      <multiplicity id="286" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="146" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="287">    
+    <end type="SOURCE" refId="39" navigable="false">      
+      <attribute id="288" name="map"/>      
+      <multiplicity id="289" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="67" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="290">    
+    <end type="SOURCE" refId="51"/>    
+    <end type="TARGET" refId="70"/>  
+  </nesting>  
+  <association id="291">    
+    <bendpoint x="2685" y="1424"/>    
+    <bendpoint x="2685" y="1522"/>    
+    <bendpoint x="2685" y="1620"/>    
+    <end type="SOURCE" refId="113" navigable="false">      
+      <attribute id="292" name="ourEPartnerRoom"/>      
+      <multiplicity id="293" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="131" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="294">    
+    <end type="SOURCE" refId="67" navigable="false">      
+      <attribute id="295" name="entities"/>      
+      <multiplicity id="296" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="51" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="297">    
+    <end type="SOURCE" refId="39" navigable="false">      
+      <attribute id="298" name="parent"/>      
+      <multiplicity id="299" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="300">    
+    <end type="SOURCE" refId="83" navigable="false">      
+      <attribute id="301" name="doors"/>      
+      <multiplicity id="302" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="50" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="143">    
-    <bendpoint x="247" y="531"/>    
-    <bendpoint x="359" y="640"/>    
-    <end type="SOURCE" refId="56" navigable="false">      
-      <attribute id="144" name="bw4tenv"/>      
-      <multiplicity id="145" minimum="0" maximum="1"/>    
+  <association id="303">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="304" name="environment"/>      
+      <multiplicity id="305" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="41" navigable="true"/>    
+    <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="146">    
-    <end type="SOURCE" refId="45"/>    
-    <end type="TARGET" refId="56"/>  
+  <realization id="306">    
+    <end type="SOURCE" refId="36"/>    
+    <end type="TARGET" refId="38"/>  
+  </realization>  
+  <association id="307">    
+    <end type="SOURCE" refId="112" navigable="false">      
+      <attribute id="308" name="view"/>      
+      <multiplicity id="309" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="47" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="310">    
+    <end type="SOURCE" refId="50" navigable="false">      
+      <attribute id="311" name="orientation"/>      
+      <multiplicity id="312" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="60" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="313">    
+    <end type="SOURCE" refId="109" navigable="false">      
+      <attribute id="314" name="controller"/>      
+      <multiplicity id="315" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="111" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="316">    
+    <end type="SOURCE" refId="100"/>    
+    <end type="TARGET" refId="98"/>  
   </generalization>  
-  <nesting id="147">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="14"/>  
+  <realization id="317">    
+    <end type="SOURCE" refId="81"/>    
+    <end type="TARGET" refId="57"/>  
+  </realization>  
+  <association id="318">    
+    <end type="SOURCE" refId="36" navigable="false">      
+      <attribute id="319" name="bw4tenv"/>      
+      <multiplicity id="320" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="321">    
+    <end type="SOURCE" refId="87" navigable="false">      
+      <attribute id="322" name="instance"/>      
+      <multiplicity id="323" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="87" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="324">    
+    <end type="SOURCE" refId="77" navigable="false">      
+      <attribute id="325" name="controller"/>      
+      <multiplicity id="326" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="82" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="327">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="328" name="that"/>      
+      <multiplicity id="329" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="330">    
+    <end type="SOURCE" refId="83" navigable="false">      
+      <attribute id="331" name="neighbours"/>      
+      <multiplicity id="332" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="83" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="333">    
+    <end type="SOURCE" refId="48" navigable="false">      
+      <attribute id="334" name="renderers"/>      
+      <multiplicity id="335" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="57" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="336">    
+    <end type="SOURCE" refId="142"/>    
+    <end type="TARGET" refId="148"/>  
+  </realization>  
+  <generalization id="337">    
+    <end type="SOURCE" refId="101"/>    
+    <end type="TARGET" refId="108"/>  
+  </generalization>  
+  <association id="338">    
+    <end type="SOURCE" refId="67" navigable="false">      
+      <attribute id="339" name="zones"/>      
+      <multiplicity id="340" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="83" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="341">    
+    <end type="SOURCE" refId="79" navigable="false">      
+      <attribute id="342" name="holding"/>      
+      <multiplicity id="343" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="344">    
+    <end type="SOURCE" refId="48" navigable="false">      
+      <attribute id="345" name="map"/>      
+      <multiplicity id="346" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="67" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="347">    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="348" name="messageCommands"/>      
+      <multiplicity id="349" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="350">    
+    <end type="SOURCE" refId="112" navigable="false">      
+      <attribute id="351" name="holder"/>      
+      <multiplicity id="352" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="86" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="353">    
+    <end type="SOURCE" refId="104"/>    
+    <end type="TARGET" refId="108"/>  
+  </generalization>  
+  <realization id="354">    
+    <end type="SOURCE" refId="110"/>    
+    <end type="TARGET" refId="134"/>  
+  </realization>  
+  <realization id="355">    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="15"/>  
+  </realization>  
+  <association id="356">    
+    <end type="SOURCE" refId="67" navigable="false">      
+      <attribute id="357" name="sequence"/>      
+      <multiplicity id="358" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="46" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="359">    
+    <end type="SOURCE" refId="50"/>    
+    <end type="TARGET" refId="60"/>  
   </nesting>  
+  <generalization id="360">    
+    <end type="SOURCE" refId="59"/>    
+    <end type="TARGET" refId="49"/>  
+  </generalization>  
+  <association id="361">    
+    <bendpoint x="3452" y="1424"/>    
+    <bendpoint x="3452" y="1522"/>    
+    <bendpoint x="3452" y="1620"/>    
+    <end type="SOURCE" refId="124" navigable="false">      
+      <attribute id="362" name="roomBehindTheDoor"/>      
+      <multiplicity id="363" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="131" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="364">    
+    <end type="SOURCE" refId="121"/>    
+    <end type="TARGET" refId="59"/>  
+  </realization>  
+  <generalization id="365">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="48"/>  
+  </generalization>  
+  <association id="366">    
+    <end type="SOURCE" refId="81" navigable="false">      
+      <attribute id="367" name="controller"/>      
+      <multiplicity id="368" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="68" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="369">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="370" name="colorSequence"/>      
+      <multiplicity id="371" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="46" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="372">    
+    <end type="SOURCE" refId="62" navigable="false">      
+      <attribute id="373" name="controller"/>      
+      <multiplicity id="374" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="48" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="375">    
+    <end type="SOURCE" refId="130" navigable="false">      
+      <attribute id="376" name="map"/>      
+      <multiplicity id="377" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="67" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="378">    
+    <end type="SOURCE" refId="67" navigable="false">      
+      <attribute id="379" name="area"/>      
+      <multiplicity id="380" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="80" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="381">    
+    <end type="SOURCE" refId="106" navigable="false">      
+      <attribute id="382" name="theMap"/>      
+      <multiplicity id="383" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="67" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="384">    
+    <bendpoint x="3812" y="1522"/>    
+    <bendpoint x="3812" y="1620"/>    
+    <end type="SOURCE" refId="142" navigable="false">      
+      <attribute id="385" name="ourRobotRoom"/>      
+      <multiplicity id="386" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="131" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="387">    
+    <end type="SOURCE" refId="142" navigable="false">      
+      <attribute id="388" name="ourRobot"/>      
+      <multiplicity id="389" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="86" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="390">    
+    <end type="SOURCE" refId="108" navigable="false">      
+      <attribute id="391" name="neighbours"/>      
+      <multiplicity id="392" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="108" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="393">    
+    <end type="SOURCE" refId="83" navigable="false">      
+      <attribute id="394" name="blocks"/>      
+      <multiplicity id="395" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="46" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="396">    
+    <bendpoint x="1141" y="426"/>    
+    <end type="SOURCE" refId="20" navigable="false">      
+      <attribute id="397" name="bw4tClientMapRenderer"/>      
+      <multiplicity id="398" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="399">    
+    <bendpoint x="3344" y="1316"/>    
+    <end type="SOURCE" refId="89"/>    
+    <end type="TARGET" refId="98"/>  
+  </generalization>  
+  <association id="400">    
+    <end type="SOURCE" refId="145" navigable="false">      
+      <attribute id="401" name="sequence"/>      
+      <multiplicity id="402" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="46" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="403">    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="404" name="stringToMessage"/>      
+      <multiplicity id="405" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="406">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="407" name="environment"/>      
+      <multiplicity id="408" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="409">    
+    <end type="SOURCE" refId="103"/>    
+    <end type="TARGET" refId="131"/>  
+  </generalization>  
+  <association id="410">    
+    <end type="SOURCE" refId="106" navigable="false">      
+      <attribute id="411" name="contextDisplay"/>      
+      <multiplicity id="412" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="109" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="413">    
+    <end type="SOURCE" refId="65" navigable="false">      
+      <attribute id="414" name="epartners"/>      
+      <multiplicity id="415" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="61" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="416">    
+    <end type="SOURCE" refId="143" navigable="false">      
+      <attribute id="417" name="lastZoneEntered"/>      
+      <multiplicity id="418" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="108" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="419">    
+    <end type="SOURCE" refId="141"/>    
+    <end type="TARGET" refId="86"/>  
+  </realization>  
+  <association id="420">    
+    <end type="SOURCE" refId="50" navigable="false">      
+      <attribute id="421" name="position"/>      
+      <multiplicity id="422" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="80" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="423">    
+    <end type="SOURCE" refId="145"/>    
+    <end type="TARGET" refId="131"/>  
+  </generalization>  
+  <association id="424">    
+    <end type="SOURCE" refId="120" navigable="false">      
+      <attribute id="425" name="ePartner"/>      
+      <multiplicity id="426" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="112" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="427">    
+    <end type="SOURCE" refId="94" navigable="false">      
+      <attribute id="428" name="requestedBots"/>      
+      <multiplicity id="429" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="77" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="430">    
+    <end type="SOURCE" refId="135"/>    
+    <end type="TARGET" refId="103"/>  
+  </generalization>  
+  <association id="431">    
+    <end type="SOURCE" refId="87" navigable="false">      
+      <attribute id="432" name="entityFactory"/>      
+      <multiplicity id="433" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="134" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="434">    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="57"/>  
+  </realization>  
+  <nesting id="435">    
+    <end type="SOURCE" refId="83"/>    
+    <end type="TARGET" refId="54"/>  
+  </nesting>  
+  <realization id="436">    
+    <end type="SOURCE" refId="89"/>    
+    <end type="TARGET" refId="86"/>  
+  </realization>  
+  <association id="437">    
+    <end type="SOURCE" refId="89" navigable="false">      
+      <attribute id="438" name="battery"/>      
+      <multiplicity id="439" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="115" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="440">    
+    <end type="SOURCE" refId="53" navigable="false">      
+      <attribute id="441" name="renderSettings"/>      
+      <multiplicity id="442" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="58" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="443">    
+    <end type="SOURCE" refId="100" navigable="false">      
+      <attribute id="444" name="view"/>      
+      <multiplicity id="445" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="446">    
+    <end type="SOURCE" refId="83" navigable="false">      
+      <attribute id="447" name="type"/>      
+      <multiplicity id="448" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="54" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="449">    
+    <end type="SOURCE" refId="89" navigable="false">      
+      <attribute id="450" name="agentRecord"/>      
+      <multiplicity id="451" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="143" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="452">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="453" name="bw4tClientGUI"/>      
+      <multiplicity id="454" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="455">    
+    <end type="SOURCE" refId="65" navigable="false">      
+      <attribute id="456" name="oldEpartners"/>      
+      <multiplicity id="457" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="61" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="458">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="459" name="client"/>      
+      <multiplicity id="460" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="461">    
+    <end type="SOURCE" refId="83" navigable="false">      
+      <attribute id="462" name="renderOptions"/>      
+      <multiplicity id="463" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="76" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="464">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="465" name="clientController"/>      
+      <multiplicity id="466" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="467">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="468" name="environment"/>      
+      <multiplicity id="469" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="470">    
+    <end type="SOURCE" refId="109" navigable="false">      
+      <attribute id="471" name="myRenderer"/>      
+      <multiplicity id="472" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="81" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="473">    
+    <end type="SOURCE" refId="65" navigable="false">      
+      <attribute id="474" name="oldBots"/>      
+      <multiplicity id="475" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="77" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     accessors="true" visibility="true">    
     <attributes public="true" package="false" protected="false" private="false" static="false"/>    
