@@ -145,6 +145,7 @@ public final class ExportToMAS {
 	 */
 	private static void generateAgentHierarchy(File directory)
 			throws IOException {
+<<<<<<< HEAD
 		generateAgentHierarchyForBots(directory);
 		generateAgentHierarchyForEPartners(directory);
 	}
@@ -190,6 +191,35 @@ public final class ExportToMAS {
          * no checks are needed.
          */
         for (EPartnerConfig epartner : ExportToMAS.configuration.getEpartners()) {
+=======
+		/*
+		 * Finally loop through the bots, and create the files.
+		 * File.createNewFile only creates a file if it does not yet exist, so
+		 * no checks are needed.
+		 */
+		for (BotConfig bot : ExportToMAS.configuration.getBots()) {
+			String botName = bot.getBotName();
+			String botGoalFilename = bot.getFileName();
+
+			File goalFile = new File(botGoalFilename);
+			if (goalFile.exists()) {
+				/*
+				 * Case 1: Existing GOAL file Check if the filename doesn't
+				 * already exist, if so do nothing.
+				 */
+				String goalFilename = goalFile.getName();
+				File goalFileInDirectory = new File(directory.getAbsolutePath()
+						+ "/agents/" + goalFilename);
+				if (!goalFileInDirectory.exists()) {
+					FileUtils.copyFile(goalFile, goalFileInDirectory);
+				}
+				// Set the filename to the copied one.
+				bot.setFileName(goalFilename);
+			}
+		}
+
+		for (EPartnerConfig epartner : ExportToMAS.configuration.getEpartners()) {
+>>>>>>> master
 			String epartnerFileName = epartner.getFileName();
 
 			File goalFile = new File(epartnerFileName);

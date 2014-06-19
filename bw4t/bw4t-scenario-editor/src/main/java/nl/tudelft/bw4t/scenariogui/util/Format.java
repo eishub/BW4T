@@ -86,7 +86,11 @@ public final class Format {
      * Gets the integer value of a string.
      * Returns zero if the string can not be converted to an Integer.
      * @param intRepresentation The string.
+<<<<<<< HEAD
      * @param canBeNegative Decides whether the integer can be negative.
+=======
+     * @param canBeNegative if false the absolute value will be used
+>>>>>>> master
      * @return The integer value of the string.
      */
     public static int getIntValue(String intRepresentation, boolean canBeNegative) {
@@ -95,6 +99,7 @@ public final class Format {
             amount = Integer.parseInt(intRepresentation);
         } catch (NumberFormatException ex) {
             amount = 0;
+<<<<<<< HEAD
         }
         if(amount < 0 && !canBeNegative) {
             amount = Math.abs(amount);
@@ -113,6 +118,17 @@ public final class Format {
             value += 0;
         }
         return value;
+=======
+        } else if (intRepresentation.length() < (Long.MAX_VALUE + "").length())
+            amount = Long.parseLong(intRepresentation);
+        if (amount > Integer.MAX_VALUE)
+            amount = Integer.MAX_VALUE;
+        else if (amount < Integer.MIN_VALUE)
+            amount = Integer.MIN_VALUE;
+        if (!canBeNegative)
+            amount = Math.abs(amount);
+        return (int) amount;
+>>>>>>> master
     }
     
 }

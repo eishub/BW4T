@@ -176,7 +176,6 @@ public class EntityPanelTest {
     	spyEntityPanel.getNewBotButton().doClick();
     	spyEntityPanel.getBotTable().setRowSelectionInterval(0, 0);
         spyEntityPanel.getModifyBotButton().doClick();
-
         assertTrue(spyEntityPanel.isBotStore());
     }
     
@@ -301,7 +300,6 @@ public class EntityPanelTest {
     	spyEntityPanel.getNewEPartnerButton().doClick();
         spyEntityPanel.getEPartnerTable().setRowSelectionInterval(0, 0);
         spyEntityPanel.getModifyEPartnerButton().doClick();
-
         assertTrue(spyEntityPanel.isEpartnerStore());
     }
     

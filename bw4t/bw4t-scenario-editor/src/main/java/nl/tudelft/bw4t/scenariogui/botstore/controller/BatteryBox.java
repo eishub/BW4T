@@ -2,7 +2,7 @@ package nl.tudelft.bw4t.scenariogui.botstore.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JSlider;
+
 
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 /**
@@ -28,6 +28,7 @@ public class BatteryBox implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
         JSlider batterySlider = view.getBatterySlider();
         if (view.getBatteryEnabledCheckbox().isSelected()) {
             batterySlider.setEnabled(true);
@@ -38,5 +39,14 @@ public class BatteryBox implements ActionListener {
             view.getBatteryUseValueLabel().setText("0");
         }
         view.getTempBotConfig().setBatteryEnabled(view.getBatteryEnabledCheckbox().isSelected());
+=======
+    	view.setBatterySliderEnabled(view.isBatteryEnabled());
+    	BotController currentController = view.getBotController();
+    	if (view.isBatteryEnabled()) {
+    		currentController.setNewBatteryValue(view);
+    	} else {
+    		view.getBatteryUseValueLabel().setText("0.000");
+    	}
+>>>>>>> master
     }
 }

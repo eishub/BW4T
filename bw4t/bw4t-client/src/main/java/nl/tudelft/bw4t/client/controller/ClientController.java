@@ -11,9 +11,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import nl.tudelft.bw4t.client.BW4TClient;
 import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-import nl.tudelft.bw4t.client.gui.ClientGUI;
+import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
 
@@ -30,7 +31,8 @@ public class ClientController {
     private final Set<String> otherPlayers = new HashSet<>();
     
     /** The chat history. */
-    private final List<String> chatHistory = new LinkedList<>();
+    private final List<String> botChatHistory = new LinkedList<>();
+    private final List<String> epartnerChatHistory = new LinkedList<>();
 
     /** The human agent. */
     private HumanAgent humanAgent;
@@ -40,25 +42,23 @@ public class ClientController {
     
     /** The environment which should be read. */
     private RemoteEnvironment environment;
-
+    
     /**
-     * if set to true the update function of the gui will be called the next frame.
+     * A reference to the client gui attached to this controller.
      */
-    private boolean updateNextFrame = true;
+    private BW4TClientGUI gui = null;
 
     /**
      * Instantiates a new client controller.
      * 
      * @param env
      *            the environment
-     * @param map
-     *            the map
      * @param entityId
      *            the entity id
      */
-    public ClientController(RemoteEnvironment env, NewMap map, String entityId) {
+    public ClientController(RemoteEnvironment env, String entityId) {
         environment = env;
-        mapController = new ClientMapController(map, this);
+        mapController = new ClientMapController(environment.getMap(), this);
         getMapController().getTheBot().setName(entityId);
         humanAgent = null;
     }
@@ -68,16 +68,21 @@ public class ClientController {
      * 
      * @param env
      *            the environment
-     * @param map
-     *            the map
      * @param entityId
      *            the entity id
      * @param humanAgent
      *            the human agent
      */
-    public ClientController(RemoteEnvironment env, NewMap map, String entityId, HumanAgent humanAgent) {
-        this(env, map, entityId);
+    public ClientController(RemoteEnvironment env, String entityId, HumanAgent humanAgent) {
+        this(env, entityId);
         this.humanAgent = humanAgent;
+    }
+    
+    /**
+     * Instantiate a default GUI.
+     */
+    public void startupGUI() {
+        this.setGui(new BW4TClientGUI(this));
     }
 
     public ClientMapController getMapController() {
@@ -88,8 +93,12 @@ public class ClientController {
         return otherPlayers;
     }
 
-    public List<String> getChatHistory() {
-        return chatHistory;
+    public List<String> getBotChatHistory() {
+        return botChatHistory;
+    }
+    
+    public List<String> getEpartnerChatHistory() {
+        return epartnerChatHistory;
     }
 
     public boolean isHuman() {
@@ -120,6 +129,14 @@ public class ClientController {
         return toBePerformedActionClone;
     }
 
+    public BW4TClientGUI getGui() {
+        return gui;
+    }
+
+    public void setGui(BW4TClientGUI gui) {
+        this.gui = gui;
+    }
+
     /**
      * Interprets the given list of {@link Percept}s and extracts the required information.
      * 
@@ -128,6 +145,7 @@ public class ClientController {
      */
     public void handlePercepts(List<Percept> percepts) {
         getMapController().getVisibleBlocks().clear();
+        getMapController().getVisibleEPartners().clear();
         for (Percept percept : percepts) {
             String name = percept.getName();
             List<Parameter> parameters = percept.getParameters();
@@ -151,28 +169,42 @@ public class ClientController {
         Iterator<Parameter> iterator = parameterList.iterator();
         String sender = ((Identifier) iterator.next()).getValue();
         String message = ((Identifier) iterator.next()).getValue();
-        getChatHistory().add(sender + ": " + message);
-        updateNextFrame = true;
+
+        if (message.contains("I want to go") || message.contains("You forgot me")) {
+            getEpartnerChatHistory().add(sender + ": " + message);
+        } else {
+            getBotChatHistory().add(sender + ": " + message);
+        }
+
+        updateGUI();
     }
     
     /**
-     * the update request was finished.
+     * the update the client GUI.
      */
-    void updatedNextFrame() {
-        updateNextFrame = false;
-    }
-
-    /**
-     * Update the renderer.
-     * 
-     * @param mri
-     *            the map renderer interface
-     */
-    public void updateRenderer(MapRendererInterface mri) {
-        if (updateNextFrame && mri instanceof ClientGUI) {
-            ClientGUI gui = (ClientGUI) mri;
+    protected void updateGUI() {
+        BW4TClientGUI gui = this.getGui();
+        if(gui != null) {
             gui.update();
         }
+    }
+    
+    /**
+     * stop the controller and dispose the GUI.
+     */
+    public void stop() {
+        mapController.setRunning(false);
+        if(this.getGui() != null) {
+            gui.dispose();
+        }
+        this.setGui(null);
+    }
+
+    public Percept sendToGUI(LinkedList<Parameter> parameters) {
+        if(this.getGui() != null) {
+            return this.getGui().sendToGUI(parameters);
+        }
+        return null;
     }
 
 }

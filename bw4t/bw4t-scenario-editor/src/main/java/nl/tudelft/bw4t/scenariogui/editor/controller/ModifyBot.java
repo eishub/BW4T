@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.botstore.controller.BotController;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditor;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
@@ -44,8 +45,15 @@ class ModifyBot implements ActionListener {
             ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select the bot you want to modify.");
             return;
         }
+<<<<<<< HEAD
         new BotEditor(view, row, model);
         
         view.getEntityPanel().setBotStore(true);
+=======
+        String data = (String) view.getEntityPanel().getBotTable().getModel().getValueAt(row, 0);
+       
+        BotController bc = new BotController(view, row, model);		
+        new BotEditor(bc);
+>>>>>>> master
     }
 }

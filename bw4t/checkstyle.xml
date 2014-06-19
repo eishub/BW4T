@@ -30,6 +30,7 @@
     <module name="MethodLength">
       <property name="countEmpty" value="false"/>
       <property name="tokens" value="METHOD_DEF"/>
+      <property name="max" value="20" />
     </module>
     <module name="ParameterNumber"/>
     <module name="MethodCount"/>
@@ -62,7 +63,9 @@
     <module name="InnerAssignment"/>
     <module name="JUnitTestCase"/>
     <module name="MissingSwitchDefault"/>
-    <module name="MultipleStringLiterals"/>
+    <module name="MultipleStringLiterals">
+    	<property name="allowedDuplicates" value="4"/>
+    </module>
     <module name="NoClone"/>
     <module name="PackageDeclaration"/>
     <module name="RedundantThrows">

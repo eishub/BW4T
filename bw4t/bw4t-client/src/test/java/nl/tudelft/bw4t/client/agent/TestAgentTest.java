@@ -76,7 +76,7 @@ public class TestAgentTest {
         percepts.add(percept);
         testAgent.processPercepts(percepts);
         
-        Method method = TestAgent.class.getDeclaredMethod("action", null);
+        Method method = TestAgent.class.getDeclaredMethod("action");
         method.setAccessible(true);
         Object[] argObjects = new Object[0];
         method.invoke(testAgent, argObjects);
@@ -93,14 +93,6 @@ public class TestAgentTest {
         Percept percept = new Percept("player");
         percepts.add(percept);
         testAgent.processPercepts(percepts);
-    }
-    
-    @Test
-    public void testPerceptsNullPercepts() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-        Method method = TestAgent.class.getDeclaredMethod("percepts", null);
-        method.setAccessible(true);
-        Object[] argObjects = new Object[0];
-        method.invoke(testAgent, argObjects);
     }
     
     @Test

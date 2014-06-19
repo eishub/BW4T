@@ -46,5 +46,6 @@ public enum MessageType {
     PUTDOWN, 
     ROOMCONTAINSAMOUNT, 
     CHECKED,
-    IWANTTOGO
+    IWANTTOGO,
+    YOUFORGOTME
 };

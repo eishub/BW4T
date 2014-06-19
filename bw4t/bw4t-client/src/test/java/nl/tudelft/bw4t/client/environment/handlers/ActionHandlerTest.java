@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.eq;
 
-@Ignore("Not yet implemented.")
+//@Ignore("Not yet implemented.")
 @RunWith(MockitoJUnitRunner.class)
 public class ActionHandlerTest {
     
