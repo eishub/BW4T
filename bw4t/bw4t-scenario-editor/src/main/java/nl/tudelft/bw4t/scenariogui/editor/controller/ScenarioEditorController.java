@@ -23,7 +23,6 @@ public class ScenarioEditorController {
     private BW4TClientConfig model;
 
     /**
-     * TODO: Split up into multiple methods
      * Create a controllers object to control all ActionEvents.
      *
      * @param newView used to call relevant functions by the event listeners.
