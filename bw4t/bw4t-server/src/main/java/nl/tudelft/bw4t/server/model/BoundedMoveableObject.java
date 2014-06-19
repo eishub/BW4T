@@ -245,10 +245,11 @@ public abstract class BoundedMoveableObject {
      * @return Whether this bounded moveable object is free of object.
      */
     public boolean isFree(Class<? extends BoundedMoveableObject> freeOfType) {
-        for (Object o : context.getObjects(freeOfType)) {
-            BoundedMoveableObject moveableObject = (BoundedMoveableObject) o;
-            if (moveableObject.getBoundingBox().intersects(getBoundingBox().getBounds2D()) || moveableObject.getBoundingBox().contains(getBoundingBox())) {
-                return false;
+        for(NdPoint point : getPointsOccupiedByObject(0)) {
+            for(Object o : getSpace().getObjectsAt(point.getX(), point.getY())) {
+                if(this != o) {
+                    return false;
+                }
             }
         }
         return true;
