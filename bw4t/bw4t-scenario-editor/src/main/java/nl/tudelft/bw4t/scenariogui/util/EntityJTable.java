@@ -6,6 +6,7 @@ import java.lang.IndexOutOfBoundsException;
 import java.io.File;
 
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.TableCellRenderer;
 
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
@@ -23,6 +24,7 @@ public class EntityJTable extends JTable {
 
     public EntityJTable() {
         cellRenderer = new EntityTableCellRenderer();
+        setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
     @Override 

@@ -75,14 +75,10 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 		contentPane.add(optionPane, BorderLayout.CENTER);
 		contentPane.add(buttonPane, BorderLayout.SOUTH);
 
-		getResetButton().addActionListener(
-				new EpartnerResetButton(this));
-
-		getCancelButton().addActionListener(
-				new EpartnerCancelButton(this));
-
-		getSaveButton().addActionListener(
-				new EpartnerSaveButton(this));
+        getResetButton().addActionListener(new EpartnerResetButton(this));
+        getCancelButton().addActionListener(new EpartnerCancelButton(this));
+		getSaveButton().addActionListener(new EpartnerSaveButton(this));
+		getFileButton().addActionListener(new EGoalFileButton(this));
 
 		setResizable(false);
 		pack();

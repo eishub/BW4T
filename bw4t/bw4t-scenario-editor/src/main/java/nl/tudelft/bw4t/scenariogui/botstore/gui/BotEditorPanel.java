@@ -23,6 +23,7 @@ import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.botstore.controller.BatteryDischargeUpdater;
 import nl.tudelft.bw4t.scenariogui.botstore.controller.BotController;
 import nl.tudelft.bw4t.scenariogui.botstore.controller.CancelButton;
+import nl.tudelft.bw4t.scenariogui.botstore.controller.GoalFileButton;
 import nl.tudelft.bw4t.scenariogui.botstore.controller.ResetButton;
 import nl.tudelft.bw4t.scenariogui.botstore.controller.SaveButton;
 import nl.tudelft.bw4t.scenariogui.botstore.controller.SliderEnabler;
@@ -116,39 +117,23 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
         add(botSliders, BorderLayout.EAST);
         add(botCheckables, BorderLayout.WEST);
         
-        getResetButton().addActionListener(
-                new ResetButton(this));
+        getResetButton().addActionListener(new ResetButton(this));
+        getSaveButton().addActionListener(new SaveButton(this));
+        getCancelButton().addActionListener(new CancelButton(this));
+        getFile().addActionListener(new GoalFileButton(this));
 
-        getSaveButton().addActionListener(
-                new SaveButton(this));
+        final BatteryDischargeUpdater bdu = new BatteryDischargeUpdater(this);
+        getSpeedSlider().addMouseListener(bdu);
+        getSizeSlider().addMouseListener(bdu);
 
-        getCancelButton().addActionListener(
-                new CancelButton(this));
-
-        getSpeedSlider().addMouseListener(
-                new BatteryDischargeUpdater(this));
-
-        getSizeSlider().addMouseListener(
-                new BatteryDischargeUpdater(this));
-
-
-        getGripperCheckbox().addActionListener(
-                new SliderEnabler(this));
-        
-        getCustomSizeCheckbox().addActionListener(
-                new SliderEnabler(this));
-        
-        getCustomSizeCheckbox().addActionListener(
-                new BatteryDischargeUpdater(this));
-
-        getMovespeedCheckbox().addActionListener(
-                new SliderEnabler(this));
-        
-        getMovespeedCheckbox().addActionListener(
-                new BatteryDischargeUpdater(this));
-        
-        getBatteryEnabledCheckbox().addActionListener(
-                new SliderEnabler(this));
+        final SliderEnabler su = new SliderEnabler(this);
+        getGripperCheckbox().addActionListener(su);
+        getCustomSizeCheckbox().addActionListener(su);
+        getCustomSizeCheckbox().addActionListener(bdu);
+        getMovespeedCheckbox().addActionListener(su);
+        getMovespeedCheckbox().addActionListener(bdu);
+        getBatteryEnabledCheckbox().addActionListener(su);
+        getBatteryEnabledCheckbox().addActionListener(bdu);
         
         controller.addView(this);
         setVisible(true);
@@ -761,7 +746,9 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 		speedSlider.setValue(controller.getBotSpeed());
 		sizeSlider.setValue(controller.getBotSize());
 		batterySlider.setValue(controller.getBotBatteryCapacity());
-		batteryUseValueLabel.setText("0.000");
+		
+		updateDischargeRate();
+		
 	}
 	
 	/**
@@ -776,7 +763,9 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 	
     public void updateDischargeRate() {
         double dr = 0.0;
+        System.out.println("discharg update");
         if (isBatteryEnabled()) {
+            System.out.println("enabled");
             dr = BotConfig.calculateDischargeRate(getBotSize(), getBotSpeed());
         }
         batteryUseValueLabel.setText(dischargeRateFormatter.format(dr));
