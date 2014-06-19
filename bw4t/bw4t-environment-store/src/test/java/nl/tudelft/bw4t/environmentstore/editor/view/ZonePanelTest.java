@@ -20,8 +20,4 @@ public class ZonePanelTest {
 	public void getControllerTest() {
 		assertTrue(zp.getController() == zc);
 	}
-	
-	@Test
-	public void updateCaseRoomTest() {
-	}
 }
