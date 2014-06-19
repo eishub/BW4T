@@ -551,7 +551,7 @@ public class EntityPanelTest {
 		assertEquals(1, spyEntityPanel.getEPartnerTableModel().getValueAt(0, 2));
 
 		EpartnerFrame epartnerFrame = new EpartnerFrame(new EpartnerController(
-				editor.getMainPanel(), 0), editor.getController().getModel());
+				editor.getMainPanel(), 0));
 		
 		epartnerFrame.getEpartnerNameField().setText("TestEPartner");
 		epartnerFrame.getEpartnerAmountField().setText("99");

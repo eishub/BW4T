@@ -10,9 +10,8 @@ import javax.swing.text.DocumentFilter;
  * A class for the formatting of data.
  */
 public final class Format {
-    
-    private static DocumentFilter intDocumentFilter =
-            new IntegerDocumentFilter();
+
+    private static DocumentFilter intDocumentFilter = new IntegerDocumentFilter();
 
     /** Prevents this class from being instantiated. */
     private Format() {
@@ -99,9 +98,8 @@ public final class Format {
             amount = Integer.parseInt(intRepresentation);
         } catch (NumberFormatException ex) {
             amount = 0;
-<<<<<<< HEAD
         }
-        if(amount < 0 && !canBeNegative) {
+        if(!canBeNegative) {
             amount = Math.abs(amount);
         }
         return amount;
@@ -118,17 +116,6 @@ public final class Format {
             value += 0;
         }
         return value;
-=======
-        } else if (intRepresentation.length() < (Long.MAX_VALUE + "").length())
-            amount = Long.parseLong(intRepresentation);
-        if (amount > Integer.MAX_VALUE)
-            amount = Integer.MAX_VALUE;
-        else if (amount < Integer.MIN_VALUE)
-            amount = Integer.MIN_VALUE;
-        if (!canBeNegative)
-            amount = Math.abs(amount);
-        return (int) amount;
->>>>>>> master
     }
     
 }
