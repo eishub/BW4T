@@ -3,10 +3,13 @@ package nl.tudelft.bw4t.server;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 
 class ClientInfo {
+    
+    private BW4TClientConfig clientConfig;
     private List<BotConfig> requestedBots = new ArrayList<>();
     private List<EPartnerConfig> requestedEPartners = new ArrayList<>();
 
@@ -25,13 +28,14 @@ class ClientInfo {
         }
     }
 
-    public ClientInfo(List<BotConfig> reqBots, List<EPartnerConfig> reqEP) {
-        if (reqBots != null){
-            this.requestedBots = reqBots;
+    public ClientInfo(BW4TClientConfig clientConfig) {
+        if (clientConfig.getBots() != null){
+            this.requestedBots = clientConfig.getBots();
         }
-        if (reqEP != null) {
-            this.requestedEPartners = reqEP;
+        if (clientConfig.getEpartners() != null) {
+            this.requestedEPartners = clientConfig.getEpartners();
         }
+        this.clientConfig = clientConfig;
     }
 
     public List<BotConfig> getRequestedBots() {
@@ -41,4 +45,9 @@ class ClientInfo {
     public List<EPartnerConfig> getRequestedEPartners() {
         return requestedEPartners;
     }
+
+    public String getMapFile() {
+        return clientConfig == null ? "" : clientConfig.getMapFile();
+    }
+
 }

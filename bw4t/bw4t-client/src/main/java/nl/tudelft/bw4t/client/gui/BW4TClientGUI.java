@@ -7,12 +7,14 @@ import eis.iilang.Percept;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.io.IOException;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -43,6 +45,7 @@ import nl.tudelft.bw4t.client.gui.menu.ComboAgentModel;
 import nl.tudelft.bw4t.map.renderer.MapRenderSettings;
 import nl.tudelft.bw4t.map.renderer.MapRenderer;
 import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -99,7 +102,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
     private JButton botMessageButton = new JButton("Choose message");
     private JButton epartnerMessageButton = new JButton("Choose message");
     
-    private JTextArea botChatSession = new JTextArea(18, 1);
+    private JTextArea botChatSession = new JTextArea(14, 1);
     private JTextArea epartnerChatSession = new JTextArea(8, 1);
     
     private JScrollPane botChatPane = new JScrollPane(getBotChatSession());
@@ -173,6 +176,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
         mapRenderer = new JScrollPane(renderer);
         
         createOverallFrame();
+        setMinimumSize(new Dimension(700, 600));
 
         add(mainPanel);
 

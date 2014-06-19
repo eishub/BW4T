@@ -55,7 +55,7 @@ public class ComboAgentModel extends AbstractListModel implements ComboBoxModel 
         listIndex -= DEFAULT_OPTIONS.length;
 
         /** A default option, which can't be translated to an agent id: */
-        if (listIndex < 0 || listIndex > getEntities().size()) {
+        if (listIndex < 0 || listIndex >= getEntities().size()) {
             return -1;
         }
         return listIndex;
@@ -82,15 +82,15 @@ public class ComboAgentModel extends AbstractListModel implements ComboBoxModel 
      */
     private void filterEntityList() {
         final RemoteEnvironment env = gui.getController().getEnvironment();
-        entities = new ArrayList<>(env.getEntities());
+        entities = new ArrayList<>();
 
-        for (String entity : entities) {
+        for (String entity : env.getEntities()) {
             try {
-                if (env.getType(entity).equalsIgnoreCase("epartner")) {
-                    entities.remove(entity);
+                if (!env.getType(entity).equalsIgnoreCase("epartner")) {
+                    entities.add(entity);
                 }
             } catch (EntityException e) {
-                entities.remove(entity);
+                e.printStackTrace();
             }
         }
     }

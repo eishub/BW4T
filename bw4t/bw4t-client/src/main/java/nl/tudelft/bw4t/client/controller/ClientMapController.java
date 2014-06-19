@@ -66,13 +66,11 @@ public class ClientMapController extends AbstractMapController {
     /** The visible blocks. */
     private Set<ViewBlock> visibleBlocks = new HashSet<>();
     
-    /** The visible e-partners. */
-    private Set<ViewEPartner> visibleEPartners = new HashSet<>();
+    /** The (at one point) visible e-partners. */
+    private Set<ViewEPartner> knownEPartners = new HashSet<>();
     
     /** All the blocks. */
     private Map<Long, ViewBlock> allBlocks = new HashMap<>();
-    
-    private Map<Long, ViewEPartner> allEPartners = new HashMap<>();
 
     private Map<String, PerceptProcessor> perceptProcessors;
 
@@ -165,11 +163,43 @@ public class ClientMapController extends AbstractMapController {
     
     @Override
     public Set<ViewEPartner> getVisibleEPartners() {
+        Set<ViewEPartner> visibleEPartners = new HashSet<ViewEPartner>();
+        for (ViewEPartner ep : knownEPartners) {
+            if (ep.isVisible()) {
+                visibleEPartners.add(ep);
+            }
+        }
         return visibleEPartners;
     }
+    
+    public void makeEPartnersInvisible() {
+        for (ViewEPartner ep : knownEPartners) {
+            ep.setVisible(false);
+        }
+    }
 
+    /**
+     * Returns an e-partner with this id that is currently visible.
+     * @param id The id.
+     * @return The e-partner found.
+     */
     public ViewEPartner getViewEPartner(long id) {
         for (ViewEPartner ep : getVisibleEPartners()) {
+            if (ep.getId() == id) {
+                return ep;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Returns an e-partner with this id that at one point has ever
+     * been visible.
+     * @param id The id.
+     * @return The e-partner found.
+     */
+    public ViewEPartner getKnownEPartner(long id) {
+        for (ViewEPartner ep : knownEPartners) {
             if (ep.getId() == id) {
                 return ep;
             }
@@ -186,15 +216,6 @@ public class ClientMapController extends AbstractMapController {
         if (b == null) {
             b = new ViewBlock();
             allBlocks.put(id, b);
-        }
-        return b;
-    }
-    
-    private ViewEPartner getEPartner(Long id) {
-        ViewEPartner b = allEPartners.get(id);
-        if (b == null) {
-            b = new ViewEPartner();
-            allEPartners.put(id, b);
         }
         return b;
     }
@@ -227,7 +248,7 @@ public class ClientMapController extends AbstractMapController {
         LOGGER.info("creating epartner(" + id + ", " + holderId + ")");
         ViewEPartner epartner = new ViewEPartner();
         epartner.setId(id);
-        getVisibleEPartners().add(epartner);
+        knownEPartners.add(epartner);
         return epartner;
     }
 

@@ -86,10 +86,11 @@ public class BW4TAgent extends Thread implements ActionInterface {
      */
     public LinkedList<BW4TAgent> getAgentsWithType(String type) {
         LinkedList<BW4TAgent> res = new LinkedList<BW4TAgent>();
-        for (String agent : bw4tenv.getAgents()) {
+        for (String agentName : bw4tenv.getAgents()) {
             try {
-                if (bw4tenv.getType(agent).equals(type)) {
-                    res.add(bw4tenv.getRunningAgent(agent));
+                BW4TAgent agent = bw4tenv.getRunningAgent(agentName);
+                if (bw4tenv.getType(agent.getEntityId()).equals(type)) {
+                    res.add(agent);
                 }
             } catch (EntityException e) {
                 e.printStackTrace();
@@ -230,6 +231,15 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	public String getAgentId() {
 	    return agentId;
 	}
+	
+	/**
+     * Gets the entity id.
+     *
+     * @return the entity id
+     */
+    public String getEntityId() {
+        return entityId;
+    }
 
 	/**
 	 * Gets the environment.
@@ -241,8 +251,8 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	}
 	
 	/**
-	 * Whether this agent can pick up another object (box/e-partner) based
-	 * on their gripper capacity and the amount of objects they're already
+	 * Whether this agent can pick up another box based on their
+	 * gripper capacity and the amount of boxes they're already
 	 * holding. 
 	 * @param sameEntity The {@link ViewEntity} type of this agent.
 	 * @return Whether this agent can pick up another object.
@@ -256,9 +266,6 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	    }
 	    int grippersTotal = getBotConfig().getGrippers();
 	    int grippersInUse = sameEntity.getHolding().size();
-	    if (sameEntity.getHoldingEpartner() != -1) {
-	        grippersInUse++;
-	    }
 	    return grippersInUse < grippersTotal;
 	}
 	
