@@ -16,6 +16,8 @@ public class ViewEPartner {
     private Point2D location = new Point2D.Double();
     private boolean pickedUp = false;
     private String name = "";
+    
+    private boolean visible;
 
     public ViewEPartner() {
     }
@@ -68,6 +70,14 @@ public class ViewEPartner {
     
     public void setName(String name) {
     	this.name = name;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
 }
