@@ -15,16 +15,15 @@ public class ViewEPartner {
     private long id = 0;
     private Point2D location = new Point2D.Double();
     private boolean pickedUp = false;
-    //private String name = "";
+    private String name = "";
 
     public ViewEPartner() {
     }
 
-    public ViewEPartner(long id, Point2D location, boolean isPickedUp/*, String name*/) {
+    public ViewEPartner(long id, Point2D location, boolean isPickedUp) {
         this.setId(id);
         this.location = location;
         this.pickedUp = isPickedUp;
-        //this.name = name;
     }
 
     public long getId() {
@@ -63,12 +62,12 @@ public class ViewEPartner {
         }
     }
     
-  /*  public String getName() {
+    public String getName() {
     	return name;
     }
     
     public void setName(String name) {
     	this.name = name;
-    }*/
+    }
 
 }
