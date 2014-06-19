@@ -87,7 +87,7 @@ public final class Format {
     /**
      * Gets the integer value of a string.
      * @param intRepresentation The string.
-     * @param canBeNegative TODO
+     * @param canBeNegative if false the absolute value will be used
      * @return The integer value of the string.
      */
     public static int getIntValue(String intRepresentation, boolean canBeNegative) {
@@ -100,8 +100,8 @@ public final class Format {
             amount = Integer.MAX_VALUE;
         else if (amount < Integer.MIN_VALUE)
             amount = Integer.MIN_VALUE;
-        if (!canBeNegative && amount < 0)
-            amount *= -1;
+        if (!canBeNegative)
+            amount = Math.abs(amount);
         return (int) amount;
     }
 }
