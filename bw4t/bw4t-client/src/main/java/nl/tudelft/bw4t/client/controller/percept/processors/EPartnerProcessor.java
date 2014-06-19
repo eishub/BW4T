@@ -27,11 +27,12 @@ public class EPartnerProcessor implements PerceptProcessor {
         
         ViewEntity theBot = clientMapController.getTheBot();
         
-        ViewEPartner epartner = clientMapController.getViewEPartner(id);
+        ViewEPartner epartner = clientMapController.getKnownEPartner(id);
         if (epartner == null) {
             epartner = clientMapController.addEPartner(id, holderId);
         }
         epartner.setName(entityId);
+        epartner.setVisible(true);
         if (holderId == theBot.getId()) {
             if (id != theBot.getHoldingEpartner()){
                 LOGGER.info("We are now holding the e-partner: " + id);

@@ -85,7 +85,7 @@ public final class BasicMenuOperations {
      * @param gui The gui holding the menu.
      */
     public static void addEPartnerPickUpMenuItem(BW4TClientGUI gui, ViewEPartner ep) {
-        if (gui.getController().getHumanAgent().canPickupAnotherObject(gui)
+        if (gui.getController().getMapController().getTheBot().getHoldingEpartner() == -1
                 && !ep.isPickedUp()) {
             JMenuItem menuItem = new JMenuItem("Pick up e-partner");
             menuItem.addActionListener(new PickUpEPartnerActionListener(gui.getController(), gui));
