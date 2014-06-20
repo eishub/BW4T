@@ -19,9 +19,9 @@ import nl.tudelft.bw4t.map.view.ViewEntity;
 
 /** Utility class containing some operations to add various things to pop-up menu's. */
 public final class BasicMenuOperations {
-	
-	/** Should never be instantiated */
-	private BasicMenuOperations() { }
+    
+    /** Should never be instantiated */
+    private BasicMenuOperations() { }
 
     /**
      * Adds a menu item to a pop-up menu, used for messages.

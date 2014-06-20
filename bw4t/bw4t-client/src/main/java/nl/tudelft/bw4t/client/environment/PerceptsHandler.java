@@ -86,9 +86,6 @@ public class PerceptsHandler {
             List<Percept> percepts = env.getClient().getAllPerceptsFromEntity(entity);
 
             ClientController control = env.getEntityController(entity);
-            if (percepts.size() > 0 && control != null) {
-                //control.handlePercepts(percepts); //TODO: What was this for? It causes percepts to be received twice (it's also called in run() in ClientMapController), and thus causes each message a bot sends to be shown twice (bug).
-            }
             
             return percepts;
         } catch (RemoteException e) {

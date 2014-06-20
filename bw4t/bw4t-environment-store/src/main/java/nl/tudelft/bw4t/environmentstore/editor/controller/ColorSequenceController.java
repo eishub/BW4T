@@ -20,13 +20,13 @@ import nl.tudelft.bw4t.map.BlockColor;
  */
 public class ColorSequenceController implements FocusListener, ColorPaletteListener {
     
-	private static ColorPalette colorPalette;
+    private static ColorPalette colorPalette;
     
-	private static JFrame colorPaletteWindow;
+    private static JFrame colorPaletteWindow;
     
-	private ColorSequenceEditor focus = null;
+    private ColorSequenceEditor focus = null;
     
-	private Set<ColorSequenceEditor> editors = new HashSet<>();
+    private Set<ColorSequenceEditor> editors = new HashSet<>();
 
     /**
      * The constructor calls the setupWindow method to setup the color palette window.
@@ -126,6 +126,6 @@ public class ColorSequenceController implements FocusListener, ColorPaletteListe
     }
     
     public ColorSequenceEditor getColorSequenceEditor() {
-    	return focus;
+        return focus;
     }
 }

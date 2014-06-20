@@ -91,7 +91,7 @@ public class Launcher {
      *            The arguments received from the commandline
      */
     protected Launcher(final String[] args) {
-    	setInstance(this);
+        setInstance(this);
         /**
          * Set up the logging environment to log on the console.
          */
@@ -109,7 +109,7 @@ public class Launcher {
     }
     
 
-	/**
+    /**
      * Interpret the parameter sent from the operating system.
      * 
      * @param args
@@ -195,11 +195,11 @@ public class Launcher {
      */
     private void setupEnvironment() {
             try {
-				environment = new BW4TEnvironment(setupRemoteServer(), paramScenario, paramMap, paramGUI, paramKey, paramCollision, paramDrawPaths);
-			} catch (ManagementException | IOException | ScenarioLoadException | JAXBException e) {
-				LOGGER.fatal("Failed to setup the BW4T Environment.");
-	            throw new LauncherException("failed to setup the bw4t environment", e);
-			}
+                environment = new BW4TEnvironment(setupRemoteServer(), paramScenario, paramMap, paramGUI, paramKey, paramCollision, paramDrawPaths);
+            } catch (ManagementException | IOException | ScenarioLoadException | JAXBException e) {
+                LOGGER.fatal("Failed to setup the BW4T Environment.");
+                throw new LauncherException("failed to setup the bw4t environment", e);
+            }
         
     }
 
@@ -207,20 +207,20 @@ public class Launcher {
      * Setup the factories used by the system.
      */
     private void setupFactories() {
-		entityFactory = new DefaultEntityFactory();
-	}
+        entityFactory = new DefaultEntityFactory();
+    }
 
     /**
      * start the environment, repast and all.
      */
-	private void startEnvironment() {
+    private void startEnvironment() {
         try {
-		environment.launchAll();
+        environment.launchAll();
         } catch (ManagementException | IOException | ScenarioLoadException | JAXBException e) {
             LOGGER.fatal("Failed to start the BW4T Environment.");
             throw new LauncherException("failed to start the bw4t environment", e);
         }
-	}
+    }
 
     /**
      * Setup the rpc server so clients can connect to this environment.
@@ -237,7 +237,7 @@ public class Launcher {
     }
 
     public EntityFactory getEntityFactory() {
-    	return entityFactory;
+        return entityFactory;
     }
 
     /**

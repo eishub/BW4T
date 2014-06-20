@@ -10,7 +10,7 @@ import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 /**
  * The WindowExit class makes sure that on clicking the default exit button,
  * a warning pops up.
- * <p>
+ * 
  * @version     0.1
  * @since       26-05-2014
  *
@@ -30,7 +30,7 @@ class WindowExit extends WindowAdapter {
     @Override
     public void windowClosing(WindowEvent e) {
         if (!showUnsavedDataConfirmation()) {
-        	view.closeScenarioEditor();
+            view.closeScenarioEditor();
         }
     }
 

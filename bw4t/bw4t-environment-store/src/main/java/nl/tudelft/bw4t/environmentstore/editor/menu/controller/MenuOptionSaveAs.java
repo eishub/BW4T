@@ -7,11 +7,11 @@ import nl.tudelft.bw4t.environmentstore.main.controller.EnvironmentStoreControll
 
 public class MenuOptionSaveAs extends AbstractMenuOption {
 
-	public MenuOptionSaveAs(MenuBar newView,
-			EnvironmentStoreController controller) {
-		super(newView, controller);
-	}
-	
+    public MenuOptionSaveAs(MenuBar newView,
+            EnvironmentStoreController controller) {
+        super(newView, controller);
+    }
+    
     /**
      * Gets called when the menu item save as is pressed.
      *

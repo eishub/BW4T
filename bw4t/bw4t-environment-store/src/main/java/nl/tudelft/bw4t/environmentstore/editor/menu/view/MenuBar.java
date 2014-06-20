@@ -11,19 +11,19 @@ import javax.swing.JMenuItem;
  */
 public class MenuBar extends JMenuBar {
 
-	private static final long serialVersionUID = 3985946589128847791L;
+    private static final long serialVersionUID = 3985946589128847791L;
 
-	private String lastFileLocation;
+    private String lastFileLocation;
 
     private JMenuItem fileNew, fileOpen, fileSave, fileSaveAs, preview, fileExit;
     private JMenuItem toolsRandomizeRooms, toolsRandomizeBlocks, toolsRandomizeSequence;
 
     /**
      * Construct a menu bar for the Map Editor
-     * TODO: LastFileLocation Fix
+     * 
      */
     public MenuBar() {
-    	
+        
         JMenu file;
         JMenu tools;
 
@@ -126,7 +126,7 @@ public class MenuBar extends JMenuBar {
      * @return the JMenuItem to preview the map
      */
     public final JMenuItem getMenuItemPreview() {
-    	return preview;
+        return preview;
     }
 
     /**

@@ -23,7 +23,7 @@ public class MapPanelController implements ChangeListener {
 
     /** basic size of the map */
     private ZoneController[][] zonecontrollers;
-	
+    
     private EnvironmentMap model;
 
     private ColorSequenceController cscontroller;
@@ -64,38 +64,38 @@ public class MapPanelController implements ChangeListener {
      */
     public void createZone(Type t, boolean isDropZone, boolean isStartZone) {
         if (selected != null) {
-        	if (isDropZone && hasDropzone() && !selected.isDropZone()) {
-        		EnvironmentStore.showDialog("Only one drop zone can be added to the map.");
-        	} else {
-        		if (selected.isStartZone() && hasStartzone()) {
-        			setStartzone(isStartZone);
-        		}
-        		if (selected.isDropZone() && hasDropzone()) {
-        			setDropzone(isDropZone);
-        		}
-        		selected.setType(t);
+            if (isDropZone && hasDropzone() && !selected.isDropZone()) {
+                EnvironmentStore.showDialog("Only one drop zone can be added to the map.");
+            } else {
+                if (selected.isStartZone() && hasStartzone()) {
+                    setStartzone(isStartZone);
+                }
+                if (selected.isDropZone() && hasDropzone()) {
+                    setDropzone(isDropZone);
+                }
+                selected.setType(t);
                 selected.setDropZone(isDropZone);
                 if (isDropZone) {
-                	setDropzone(isDropZone);
+                    setDropzone(isDropZone);
                 }
                 selected.setStartZone(isStartZone);
                 if (isStartZone) {
-                	setStartzone(isStartZone);
+                    setStartzone(isStartZone);
                 }
                 
                 
                 updateAll();
-        	}
+            }
         }
         selected = null;
     }
     
     private void updateAll() {
-    	for (int i = 0; i < getRows(); i++) {
-    		for (int j = 0; j < getColumns(); j++) {
-    			getZoneController(i, j).getUpdateableEditorInterface().update();
-    		}
-    	}
+        for (int i = 0; i < getRows(); i++) {
+            for (int j = 0; j < getColumns(); j++) {
+                getZoneController(i, j).getUpdateableEditorInterface().update();
+            }
+        }
     }
 
     public EnvironmentMap getModel() {
@@ -256,32 +256,32 @@ public class MapPanelController implements ChangeListener {
         }
     }
     /**
-   	 * @return the startzone
-   	 */
-   	public boolean hasStartzone() {
-   		return model.hasStartzone();
-   	}
+        * @return the startzone
+        */
+       public boolean hasStartzone() {
+           return model.hasStartzone();
+       }
 
-   	/**
-   	 * @param startzone the startzone to set
-   	 */
-   	public void setStartzone(boolean startzone) {
-   		model.setStartzone(startzone);
-   	}
+       /**
+        * @param startzone the startzone to set
+        */
+       public void setStartzone(boolean startzone) {
+           model.setStartzone(startzone);
+       }
 
-   	/**
-   	 * @return the dropzone
-   	 */
-   	public boolean hasDropzone() {
-   		return model.hasDropzone();
-   	}
+       /**
+        * @return the dropzone
+        */
+       public boolean hasDropzone() {
+           return model.hasDropzone();
+       }
 
-   	/**
-   	 * @param dropzone the dropzone to set
-   	 */
-   	public void setDropzone(boolean dropzone) {
-   		model.setDropzone(dropzone);
-   	}
+       /**
+        * @param dropzone the dropzone to set
+        */
+       public void setDropzone(boolean dropzone) {
+           model.setDropzone(dropzone);
+       }
 
 
 }

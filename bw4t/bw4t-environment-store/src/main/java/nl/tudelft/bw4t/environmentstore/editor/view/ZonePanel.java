@@ -20,7 +20,7 @@ import nl.tudelft.bw4t.map.Zone;
  *
  */
 public class ZonePanel extends JPanel implements UpdateableEditorInterface {
-	
+    
     private static final long serialVersionUID = 1568360768572796042L;
     
     private static final Dimension SIZE = new Dimension(100,70);
@@ -93,11 +93,11 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
             this.setBackground(Zone.BLOCKADE_COLOR);
             break;
         case CORRIDOR:
-        	if (zoneController.isStartZone()) {
-        		this.setBackground(Color.YELLOW);
-        	} else {
-        		this.setBackground(originalColor);
-        	}
+          if (zoneController.isStartZone()) {
+            this.setBackground(Color.YELLOW);
+          } else {
+            this.setBackground(originalColor);
+         }
         default:
             break;
         }
@@ -107,28 +107,28 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
     }
     
     private void updateDoor() {
-    	int east = 0;
-    	int north = 0;
-    	int south = 0;
-    	int west = 0;
-    	
-    	if (zoneController.hasDoor(ZoneModel.EAST)) {
-    		east = 2;
-    	}
-    	if (zoneController.hasDoor(ZoneModel.NORTH)) {
-    		north = 2;
-    	}
-    	if (zoneController.hasDoor(ZoneModel.SOUTH)) {
-    		south = 2;
-    	}
-    	if (zoneController.hasDoor(ZoneModel.WEST)) {
-    		west = 2;
-    	}
-    	
-    	this.setBorder(BorderFactory.createMatteBorder(north, west, south, east, Color.GREEN));
+        int east = 0;
+        int north = 0;
+        int south = 0;
+        int west = 0;
+        
+        if (zoneController.hasDoor(ZoneModel.EAST)) {
+            east = 2;
+        }
+        if (zoneController.hasDoor(ZoneModel.NORTH)) {
+            north = 2;
+        }
+        if (zoneController.hasDoor(ZoneModel.SOUTH)) {
+            south = 2;
+        }
+        if (zoneController.hasDoor(ZoneModel.WEST)) {
+            west = 2;
+        }
+        
+        this.setBorder(BorderFactory.createMatteBorder(north, west, south, east, Color.GREEN));
     }
     
     private void removeBorder() {
-    	this.setBorder(this.defaultBorder);
+        this.setBorder(this.defaultBorder);
     }
 }

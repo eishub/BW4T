@@ -84,7 +84,7 @@ public class DropZone extends Room {
     /**
      * Called when a block is dropped. If the block has been dropped in this zone the block will be removed from the
      * context and if the block was of the right color the sequence will advance.
-     * <p>
+     * 
      * This function will also log the drop events in the drop zone.
      * 
      * @param block
@@ -106,7 +106,7 @@ public class DropZone extends Room {
                 robot.getAgentRecord().addGoodDrop();
                 
                 if (sequenceIndex == sequence.size()) 
-                	 BW4TFileAppender.logFinish(System.currentTimeMillis(), "Time to finish sequence is ");
+                     BW4TFileAppender.logFinish(System.currentTimeMillis(), "Time to finish sequence is ");
             }
             else {
                 robot.getAgentRecord().addWrongDrop();

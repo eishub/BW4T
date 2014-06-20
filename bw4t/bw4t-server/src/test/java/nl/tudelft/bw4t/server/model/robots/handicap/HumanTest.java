@@ -30,7 +30,7 @@ import repast.simphony.space.grid.Grid;
  * human bot can pick up and drop an epartner.
 */
 public class HumanTest {
-	
+    
     /**
      * space Mock
      */
@@ -101,14 +101,14 @@ public class HumanTest {
     public void testDropEPartner() {
         NavigatingRobot robot = spy(new NavigatingRobot("", space, grid, context, true, 1));
         
-		IRobot r = new Human(robot);
+        IRobot r = new Human(robot);
 
         r.pickUpEPartner(ePartner);
         assertTrue(r.isHoldingEPartner());
         
         r.dropEPartner();
         assertFalse(r.isHoldingEPartner());
-    	
+        
     }
     /**
      * The human bot tries to drop an epartner without holding it

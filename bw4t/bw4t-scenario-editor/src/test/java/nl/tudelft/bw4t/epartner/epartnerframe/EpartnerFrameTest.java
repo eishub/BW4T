@@ -18,15 +18,15 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 public class EpartnerFrameTest {
-	
-	private EpartnerFrame frame;
-	private EpartnerFrame spyframe;
-	private EpartnerController controller;
-	private EPartnerConfig config;
+    
+    private EpartnerFrame frame;
+    private EpartnerFrame spyframe;
+    private EpartnerController controller;
+    private EPartnerConfig config;
 
-	@Before
-	public final void setupEpartnerFrame() {
-		EntityPanel entityPanel = new EntityPanel();
+    @Before
+    public final void setupEpartnerFrame() {
+        EntityPanel entityPanel = new EntityPanel();
         ScenarioEditor main = new ScenarioEditor(new ConfigurationPanel(), entityPanel, new BW4TClientConfig());
         MainPanel parent = main.getMainPanel();
         config = new EPartnerConfig();
@@ -34,35 +34,35 @@ public class EpartnerFrameTest {
         controller = new EpartnerController(parent, 0);
         frame = new EpartnerFrame(controller);
         spyframe = spy(frame);
-	}
-	
-	@After
-	public final void dispose() {
-		frame.dispose();
-	}
-	
-	@Ignore
-	public final void testUpdateConfig() {
-		spyframe.getGPSCheckbox().setSelected(true);
-		spyframe.getForgetMeNotCheckbox().setSelected(true);
-		controller.updateConfig(spyframe);
-		assertTrue(config.isGps());
-		assertTrue(config.isForgetMeNot());
-	}
-	
-	@Ignore
-	public final void testResetButton() {
-		spyframe.getResetButton().doClick();
-		assertEquals(config.isGps(), spyframe.getGPSCheckbox().isSelected());
-		assertEquals(config.isForgetMeNot(), spyframe.getForgetMeNotCheckbox().isSelected());
-	}
-	
-	@Ignore
-	public final void testApplyButton() {
-		spyframe.getGPSCheckbox().setSelected(false);
-		spyframe.getForgetMeNotCheckbox().setSelected(true);
-		spyframe.getSaveButton().doClick();
-		assertEquals(config.isGps(), spyframe.getGPSCheckbox().isSelected());
-		assertEquals(config.isForgetMeNot(), spyframe.getForgetMeNotCheckbox().isSelected());
-	}
+    }
+    
+    @After
+    public final void dispose() {
+        frame.dispose();
+    }
+    
+    @Ignore
+    public final void testUpdateConfig() {
+        spyframe.getGPSCheckbox().setSelected(true);
+        spyframe.getForgetMeNotCheckbox().setSelected(true);
+        controller.updateConfig(spyframe);
+        assertTrue(config.isGps());
+        assertTrue(config.isForgetMeNot());
+    }
+    
+    @Ignore
+    public final void testResetButton() {
+        spyframe.getResetButton().doClick();
+        assertEquals(config.isGps(), spyframe.getGPSCheckbox().isSelected());
+        assertEquals(config.isForgetMeNot(), spyframe.getForgetMeNotCheckbox().isSelected());
+    }
+    
+    @Ignore
+    public final void testApplyButton() {
+        spyframe.getGPSCheckbox().setSelected(false);
+        spyframe.getForgetMeNotCheckbox().setSelected(true);
+        spyframe.getSaveButton().doClick();
+        assertEquals(config.isGps(), spyframe.getGPSCheckbox().isSelected());
+        assertEquals(config.isForgetMeNot(), spyframe.getForgetMeNotCheckbox().isSelected());
+    }
 }
