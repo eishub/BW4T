@@ -93,12 +93,12 @@ public final class MapLoader {
         Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones = new HashMap<String, nl.tudelft.bw4t.server.model.zone.Zone>();
         Map<String, List<BlockColor>> roomBlocks = new HashMap<String, List<BlockColor>>();
 
-        int mapWidth = (int) map.getArea().getX();
-        int mapHeight = (int) map.getArea().getY();
-
+      
         ContinuousSpace<Object> space = initEmptyMap(tmpLocation, context);
-        Grid<Object> grid = createGridSpace(context, mapWidth, mapHeight);
-
+        Grid<Object> grid = createGridSpace(context, (int) map.getArea().getX(), (int) map.getArea().getY());
+        
+        Launcher.getInstance().getEntityFactory().setSpace(space, grid);
+        
         List<BlockColor> sequence = new ArrayList<BlockColor>(map.getSequence());
         createZones(context, zones, roomBlocks, space, grid, sequence);
         makeBlocks(roomBlocks, sequence);
@@ -136,15 +136,9 @@ public final class MapLoader {
             throws JAXBException, FileNotFoundException {
         String location = System.getProperty("user.dir") + "/maps/" + mapFilename;
         map = NewMap.create(new FileInputStream(new File(location)));
-
-        int mapWidth = (int) map.getArea().getX();
-        int mapHeight = (int) map.getArea().getY();
-
-        Grid<Object> grid = createGridSpace(context, mapWidth, mapHeight);
+        
         ContinuousSpace<Object> space = createSpace(context, (int) map.getArea().getX(), (int) map.getArea().getY());
 
-        Launcher.getInstance().getEntityFactory().setSpace(space, grid);
-        Launcher.getInstance().getEntityFactory().setSpace(space, grid);
         return space;
     }
 
@@ -340,10 +334,12 @@ public final class MapLoader {
      * @param width   The width of the space
      * @param height  The height of the space
      */
-    private static Grid<Object> createGridSpace(Context<Object> context, int width, int height) {
+    private static Grid<Object> createGridSpace(Context<Object> context, int mapWidth, int mapHeight) {
+               
         GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
         GridBuilderParameters params = new GridBuilderParameters(new StrictBorders(), new SimpleGridAdder<Object>(),
-                true, width, height);
+                true, mapWidth, mapHeight);
+        
         return gridFactory.createGrid(GRID_PROJECTION_ID, context, params);
     }
 
