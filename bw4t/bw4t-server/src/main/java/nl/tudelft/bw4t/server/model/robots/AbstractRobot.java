@@ -416,7 +416,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
                     double movingDistance = Math.min(distance, MAX_MOVE_DISTANCE * speedMod);
         
                     // Angle at which to move
-                    double angle = SpatialMath.calcAngleFor2DMovement(space, getLocation(), targetLocation);
+                    double angle = SpatialMath.calcAngleFor2DMovement(getSpace(), getLocation(), targetLocation);
         
                     // The displacement of the robot
                     double[] displacement = SpatialMath.getDisplacement(2, 0, movingDistance, angle);
