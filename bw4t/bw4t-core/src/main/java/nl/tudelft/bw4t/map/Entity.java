@@ -6,13 +6,13 @@ import java.io.Serializable;
  * Initial entity
  */
 public class Entity implements Serializable {
-	
-	/** Serialization id. */
-	private static final long serialVersionUID = -2928851566063046519L;
-	
-	/** Possible entityTypes. */
+    
+    /** Serialization id. */
+    private static final long serialVersionUID = -2928851566063046519L;
+    
+    /** Possible entityTypes. */
     public enum EntityType {
-    	/** EntityType is either NORMAL or JAVA. */
+        /** EntityType is either NORMAL or JAVA. */
         NORMAL, JAVA
     }
 

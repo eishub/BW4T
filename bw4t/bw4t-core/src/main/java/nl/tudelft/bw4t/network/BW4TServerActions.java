@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.network;
 
+import eis.EnvironmentInterfaceStandard;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
 import eis.exceptions.ManagementException;
@@ -18,6 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import repast.simphony.batch.BatchRunner;
 
 /**
  * This interface defines the calls that the clients can make to the server. Note, this interface does not support kill
@@ -57,7 +59,7 @@ public interface BW4TServerActions extends Remote {
      * @param client
      *            the client interface to be disconnected
      * @throws RemoteException communication-related exception
-     * 				may occur during the execution of a remote method call
+     *                 may occur during the execution of a remote method call
      */
     void unregisterClient(BW4TClientActions client) throws RemoteException;
 
@@ -84,7 +86,7 @@ public interface BW4TServerActions extends Remote {
      * @throws RelationException
      *             if the attempt to manipulate the agents-entities-relation has failed.
      * @throws RemoteException communication-related exception
-     * 				may occur during the execution of a remote method call
+     *                 may occur during the execution of a remote method call
      */
     void associateEntity(String agentId, String entityId) throws RelationException, RemoteException;
 
@@ -108,7 +110,7 @@ public interface BW4TServerActions extends Remote {
      * @throws AgentException
      *             if the attempt to register or unregister an agent has failed.
      * @throws RemoteException communication-related exception
-     * 				may occur during the execution of a remote method call
+     *                 may occur during the execution of a remote method call
      */
     void unregisterAgent(String agent) throws AgentException, RemoteException;
 
@@ -247,7 +249,7 @@ public interface BW4TServerActions extends Remote {
      * @throws QueryException
      *             , if an exception occurs during the execution of a remote object call 
      * @throws RemoteException communication-related exception
-     * 				may occur during the execution of a remote method call
+     *                 may occur during the execution of a remote method call
      */
     String queryProperty(String property) throws RemoteException, QueryException;
 
@@ -268,9 +270,9 @@ public interface BW4TServerActions extends Remote {
      * 
      * @param action 
      * @return true
-     * 			iff action is supported by the environment.
+     *             iff action is supported by the environment.
      * @throws RemoteException
-     * 			, if an exception occurs during the execution of a remote object call
+     *             , if an exception occurs during the execution of a remote object call
      */
     boolean isSupportedByEnvironment(Action action) throws RemoteException;
 
@@ -280,7 +282,7 @@ public interface BW4TServerActions extends Remote {
     * @throws RemoteException
     *             , if an exception occurs during the execution of a remote object call
     * @throws ManagementException
-    * 				, if an attempt to manage an environment did not succeed.
+    *                 , if an attempt to manage an environment did not succeed.
     */
     void requestStart() throws RemoteException, ManagementException;
 
@@ -290,7 +292,7 @@ public interface BW4TServerActions extends Remote {
      * @throws RemoteException
      *             , if an exception occurs during the execution of a remote object call
      * @throws ManagementException
-     * 				, if an attempt to manage an environment did not succeed.
+     *                 , if an attempt to manage an environment did not succeed.
      */
     void requestPause() throws RemoteException, ManagementException;
 
@@ -303,7 +305,7 @@ public interface BW4TServerActions extends Remote {
      * @throws RemoteException
      *             , if an exception occurs during the execution of a remote object call
      * @throws ManagementException
-     * 				, if an attempt to manage an environment did not succeed.
+     *                 , if an attempt to manage an environment did not succeed.
      */
     void requestInit(Map<String, Parameter> parameters) throws RemoteException, ManagementException;
 
@@ -316,7 +318,7 @@ public interface BW4TServerActions extends Remote {
      * @throws RemoteException
      *             , if an exception occurs during the execution of a remote object call
      * @throws ManagementException
-     * 				, if an attempt to manage an environment did not succeed.
+     *                 , if an attempt to manage an environment did not succeed.
      */
     void requestReset(Map<String, Parameter> parameters) throws RemoteException, ManagementException;
 

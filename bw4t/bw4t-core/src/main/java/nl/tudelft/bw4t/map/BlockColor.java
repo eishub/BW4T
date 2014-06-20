@@ -16,10 +16,10 @@ import org.apache.log4j.Logger;
  * {@link Color}.
  */
 public enum BlockColor implements Serializable {
-	/** The possible colors a block can have. */
-	RED, ORANGE, YELLOW, GREEN, BLUE, PINK, WHITE, DARK_GRAY;
+    /** The possible colors a block can have. */
+    RED, ORANGE, YELLOW, GREEN, BLUE, PINK, WHITE, DARK_GRAY;
 
-	/** The log4j logger which writes logs into console */
+    /** The log4j logger which writes logs into console */
     private static final Logger LOGGER = Logger.getLogger(BlockColor.class);
     
     /** List containing all possible block colors. */
@@ -46,7 +46,7 @@ public enum BlockColor implements Serializable {
             field = Class.forName("java.awt.Color").getField(this.name());
             return (Color) field.get(null);
         } catch (ClassNotFoundException | NoSuchFieldException | SecurityException 
-        		| IllegalArgumentException | IllegalAccessException e) {
+                | IllegalArgumentException | IllegalAccessException e) {
             LOGGER.fatal("Failed to find the field in the Color class.", e);
         }
         return null;

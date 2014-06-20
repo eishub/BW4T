@@ -1,11 +1,12 @@
 package nl.tudelft.bw4t.server.model.robots.handicap;
 
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import java.util.ArrayList;
 
 import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
-import nl.tudelft.bw4t.server.model.robots.handicap.GripperHandicap;
-import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,8 +14,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import repast.simphony.space.continuous.NdPoint;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * Test suite for the AbstractRobotDecorator class.

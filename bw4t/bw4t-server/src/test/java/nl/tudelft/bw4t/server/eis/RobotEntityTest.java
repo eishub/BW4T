@@ -1,6 +1,5 @@
 package nl.tudelft.bw4t.server.eis;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
@@ -8,7 +7,6 @@ import static org.mockito.Mockito.when;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
@@ -19,8 +17,6 @@ import nl.tudelft.bw4t.server.model.zone.Room;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-
-import eis.exceptions.PerceiveException;
 
 import repast.simphony.context.Context;
 import repast.simphony.context.DefaultContext;

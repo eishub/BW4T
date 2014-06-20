@@ -1,7 +1,5 @@
 package nl.tudelft.bw4t.server.eis;
 
-import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
-import repast.simphony.space.continuous.NdPoint;
 
 public class IdAndBoolean {
     
@@ -43,10 +41,12 @@ public class IdAndBoolean {
             return false; 
         }
         IdAndBoolean other = (IdAndBoolean) obj;
-        if (other.getBool() != getBool())
+        if (other.getBool() != getBool()) {
             return false;
-        if (id != other.id)
+        }
+        if (id != other.id) {
             return false;
+        }
         return true;
     }
 }

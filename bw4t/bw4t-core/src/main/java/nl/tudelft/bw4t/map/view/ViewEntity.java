@@ -11,8 +11,8 @@ import java.util.Map;
  * information about an robot for the map renderer.
  */
 public class ViewEntity {
-	
-	/** Initialize color for robot to black. */
+    
+    /** Initialize color for robot to black. */
     public final static Color ROBOT_COLOR = Color.BLACK;
 
     /** Initialize id, default 0 */
@@ -85,7 +85,7 @@ public class ViewEntity {
 
     /**
      * @param holding
-     * 			remove current holdings, set to new holding.
+     *             remove current holdings, set to new holding.
      */
     public void setHolding(Collection<ViewBlock> holding) {
         this.getHolding().clear();
@@ -107,7 +107,7 @@ public class ViewEntity {
 
     /**
      * @return Color of first block holding;
-     * 				When no block is hold, return color of robot.
+     *                 When no block is hold, return color of robot.
      */
     public Color getColor() {
         if (holding.isEmpty()) {
@@ -149,12 +149,12 @@ public class ViewEntity {
     }
 
     public void setCollided(boolean collided) { 
-    	this.collided = collided; 
-    	}
+        this.collided = collided; 
+        }
 
     public double getBatteryLevel() { 
-    	return batteryLevel;   
-    	}
+        return batteryLevel;   
+        }
 
     public void setBatteryLevel(double batteryLevel) {
         this.batteryLevel = batteryLevel;

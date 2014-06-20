@@ -1,5 +1,10 @@
 package nl.tudelft.bw4t.client.controller;
 
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
+import eis.iilang.ParameterList;
+import eis.iilang.Percept;
+
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -9,10 +14,6 @@ import java.util.Set;
 import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
-import eis.iilang.ParameterList;
-import eis.iilang.Percept;
 
 /**
  * The Class ClientController.

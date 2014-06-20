@@ -4,8 +4,8 @@ package nl.tudelft.bw4t.map;
  * The possible types of entities in the BW4T system may be.
  */
 public enum EntityType {
-	
-	/** Possible types */
+    
+    /** Possible types */
     HUMAN, AGENT, EPARTNER;
 
     /**

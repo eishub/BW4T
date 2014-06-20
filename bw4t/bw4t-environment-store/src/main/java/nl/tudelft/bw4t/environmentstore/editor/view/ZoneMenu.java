@@ -18,7 +18,7 @@ import nl.tudelft.bw4t.map.Zone.Type;
  */
 public class ZoneMenu extends JPopupMenu implements UpdateableEditorInterface {
 
-	/** Random generated serial version UID. */
+    /** Random generated serial version UID. */
     private static final long serialVersionUID = -5335591852441574491L;
 
     /** The current zone type. */

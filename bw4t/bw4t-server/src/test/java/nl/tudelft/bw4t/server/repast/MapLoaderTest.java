@@ -1,5 +1,7 @@
 package nl.tudelft.bw4t.server.repast;
 
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.lang.reflect.InvocationTargetException;
@@ -7,18 +9,19 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.server.model.blocks.Block;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
-
-import static org.junit.Assert.assertTrue;
 
 /** 
  * Tests various functions of the MapLoader. 

@@ -1,5 +1,16 @@
 package nl.tudelft.bw4t.server;
 
+import eis.exceptions.ActException;
+import eis.exceptions.AgentException;
+import eis.exceptions.EntityException;
+import eis.exceptions.ManagementException;
+import eis.exceptions.QueryException;
+import eis.exceptions.RelationException;
+import eis.iilang.Action;
+import eis.iilang.EnvironmentState;
+import eis.iilang.Parameter;
+import eis.iilang.Percept;
+
 import java.net.MalformedURLException;
 import java.rmi.AccessException;
 import java.rmi.Naming;
@@ -26,17 +37,6 @@ import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.Launcher;
 
 import org.apache.log4j.Logger;
-
-import eis.exceptions.ActException;
-import eis.exceptions.AgentException;
-import eis.exceptions.EntityException;
-import eis.exceptions.ManagementException;
-import eis.exceptions.QueryException;
-import eis.exceptions.RelationException;
-import eis.iilang.Action;
-import eis.iilang.EnvironmentState;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
 
 /**
  * Server that allows connected client to perform actions and receive percepts from the central {@link BW4TEnvironment}

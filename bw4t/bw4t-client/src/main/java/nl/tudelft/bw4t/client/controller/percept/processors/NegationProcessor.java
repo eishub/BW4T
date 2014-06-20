@@ -1,13 +1,14 @@
 package nl.tudelft.bw4t.client.controller.percept.processors;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import nl.tudelft.bw4t.client.controller.ClientMapController;
 import eis.iilang.Function;
 import eis.iilang.Identifier;
 import eis.iilang.Numeral;
 import eis.iilang.Parameter;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import nl.tudelft.bw4t.client.controller.ClientMapController;
 
 public class NegationProcessor implements PerceptProcessor {
 

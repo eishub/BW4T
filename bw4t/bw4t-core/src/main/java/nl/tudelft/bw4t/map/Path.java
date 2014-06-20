@@ -15,18 +15,18 @@ import repast.simphony.space.continuous.NdPoint;
 public class Path implements Serializable {
 
     /**
-	 * Serial id.
-	 */
-	private static final long serialVersionUID = 6352875233093411878L;
-	
-	/**
-	 * List of point wich form a path.
-	 */
-	private List<NdPoint> path;
-	
-	/**
-	 * {@link Color} of path.
-	 */
+     * Serial id.
+     */
+    private static final long serialVersionUID = 6352875233093411878L;
+    
+    /**
+     * List of point wich form a path.
+     */
+    private List<NdPoint> path;
+    
+    /**
+     * {@link Color} of path.
+     */
     private Color color;
 
     /** 
@@ -38,7 +38,7 @@ public class Path implements Serializable {
 
     /**
      * @param path to set 
-     * 			if there was another list of point it will be overrided.
+     *             if there was another list of point it will be overrided.
      */
     public void setPath(List<NdPoint> path) {
         Random r = new Random();
@@ -51,7 +51,7 @@ public class Path implements Serializable {
     }
 
     public Color getColor() { 
-    	return color; 
-    	}
+        return color; 
+        }
 
 }

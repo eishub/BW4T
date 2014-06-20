@@ -24,18 +24,17 @@ public class DefaultEntityFactory implements EntityFactory {
      * The context which we will be using.
      */
     private Context<Object> context;
-    
+
     /**
      * The space which we will be using.
      */
     private ContinuousSpace<Object> space;
-    
+
     /**
      * The grid which we will be using.
      */
     private Grid<Object> grid;
 
-    
     @Override
     public void setGrid(Grid<Object> grid) {
         this.grid = grid;
@@ -63,11 +62,11 @@ public class DefaultEntityFactory implements EntityFactory {
         if (config.getColorBlindHandicap()) {
             r = new ColorBlindHandicap(r);
         }
-        
+
         r = setGripperHandicap(config, r);
-        
+
         if (config.getMoveSpeedHandicap()) {
-            r.setSpeedMod((double) config.getBotSpeed() / 100.0); 
+            r.setSpeedMod((double) config.getBotSpeed() / 100.0);
         }
         if (config.getSizeOverloadHandicap()) {
             r = new SizeOverloadHandicap(r, config.getBotSize());
@@ -75,7 +74,7 @@ public class DefaultEntityFactory implements EntityFactory {
         if (config.getBotController() == EntityType.HUMAN) {
             r = new Human(r);
         }
-        
+
         r = enableBattery(config, r);
 
         return r;
@@ -83,8 +82,11 @@ public class DefaultEntityFactory implements EntityFactory {
 
     /**
      * Sets the gripper handicap
-     * @param config file which needs to be read
-     * @param r robot
+     * 
+     * @param config
+     *            file which needs to be read
+     * @param r
+     *            robot
      * @return robot
      */
     private IRobot setGripperHandicap(BotConfig config, IRobot r) {
@@ -92,7 +94,7 @@ public class DefaultEntityFactory implements EntityFactory {
         if (config.getGripperHandicap()) {
             i = new GripperHandicap(r);
         } else {
-            // if the robot does not have a gripper handicap, it grabs the value set in the UI. 
+            // if the robot does not have a gripper handicap, it grabs the value set in the UI.
             i.setGripperCapacity(config.getGrippers());
         }
         return i;
@@ -100,16 +102,17 @@ public class DefaultEntityFactory implements EntityFactory {
 
     /**
      * enables the battery
-     * @param config file which needs to be read.
-     * @param r robot
+     * 
+     * @param config
+     *            file which needs to be read.
+     * @param r
+     *            robot
      * @return robot
      */
     private IRobot enableBattery(BotConfig config, IRobot r) {
         IRobot i = r;
         if (config.isBatteryEnabled()) {
-            i.setBattery(
-                    new Battery(config.getBotBatteryCapacity(), 
-                            config.getBotBatteryDischargeRate()));            
+            i.setBattery(new Battery(config.getBotBatteryCapacity(), config.getBotBatteryDischargeRate()));
         } else {
             i.setBattery(new Battery(1, 0));
         }
@@ -124,14 +127,14 @@ public class DefaultEntityFactory implements EntityFactory {
     @Override
     public EPartner makeEPartner(EPartnerConfig c) {
         EPartner ep = makeDefaultEPartner(c.getEpartnerName());
-        
+
         if (c.isGps()) {
             ep.getTypeList().add("GPS");
         }
         if (c.isForgetMeNot()) {
             ep.getTypeList().add("Forget-me-not");
         }
-        
+
         return ep;
     }
 

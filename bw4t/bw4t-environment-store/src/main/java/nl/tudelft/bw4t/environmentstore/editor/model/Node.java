@@ -102,6 +102,6 @@ public class Node {
      */
     public boolean isNotBlocking() {
         return type == Zone.Type.CHARGINGZONE 
-        		|| type == Zone.Type.CORRIDOR;
+                || type == Zone.Type.CORRIDOR;
     }
 }

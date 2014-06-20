@@ -44,8 +44,7 @@ public class MapSpec {
                 this.mapFileLocation = newMapFileLocation;
                 readMapSpecifications();
             }
-        }
-        else {
+        } else {
             this.mapFileLocation = newMapFileLocation;
         }
     }

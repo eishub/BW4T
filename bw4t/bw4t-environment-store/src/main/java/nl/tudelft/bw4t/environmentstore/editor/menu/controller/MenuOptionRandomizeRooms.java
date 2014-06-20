@@ -2,8 +2,6 @@ package nl.tudelft.bw4t.environmentstore.editor.menu.controller;
 
 import java.awt.event.ActionEvent;
 
-
-
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.menu.view.MenuBar;
 import nl.tudelft.bw4t.environmentstore.editor.model.EnvironmentMap;
@@ -16,11 +14,11 @@ import nl.tudelft.bw4t.environmentstore.main.controller.EnvironmentStoreControll
  */
 public class MenuOptionRandomizeRooms extends AbstractMenuOption {
 
-	/**
-	 * Constructor for MenuOptionRandomizeRooms
-	 * @param newView the menu this option is on
-	 * @param controller environment controller
-	 */
+    /**
+     * Constructor for MenuOptionRandomizeRooms
+     * @param newView the menu this option is on
+     * @param controller environment controller
+     */
     public MenuOptionRandomizeRooms(MenuBar newView,
             EnvironmentStoreController controller) {
         super(newView, controller);

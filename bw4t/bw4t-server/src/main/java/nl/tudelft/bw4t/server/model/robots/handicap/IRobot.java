@@ -11,6 +11,7 @@ import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.model.robots.AgentRecord;
 import nl.tudelft.bw4t.server.model.robots.Battery;
 import nl.tudelft.bw4t.server.model.robots.MoveType;
+import nl.tudelft.bw4t.server.model.robots.NavigatingRobot;
 import nl.tudelft.bw4t.server.model.robots.NavigatingRobot.State;
 import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;

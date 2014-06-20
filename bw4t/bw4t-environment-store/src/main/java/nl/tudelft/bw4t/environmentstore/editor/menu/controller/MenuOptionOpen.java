@@ -17,11 +17,11 @@ import nl.tudelft.bw4t.map.MapFormatException;
  */
 public class MenuOptionOpen extends AbstractMenuOption {
 
-	/**
-	 * Constructor for MenuOptionOpen
-	 * @param newView the menu the option is on
-	 * @param controller evironment controller
-	 */
+    /**
+     * Constructor for MenuOptionOpen
+     * @param newView the menu the option is on
+     * @param controller evironment controller
+     */
     public MenuOptionOpen(MenuBar newView, EnvironmentStoreController controller) {
         super(newView, controller);
     }

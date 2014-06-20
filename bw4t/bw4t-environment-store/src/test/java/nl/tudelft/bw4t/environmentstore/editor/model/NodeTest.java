@@ -1,8 +1,6 @@
 package nl.tudelft.bw4t.environmentstore.editor.model;
 
 import static org.junit.Assert.assertTrue;
-
-
 import nl.tudelft.bw4t.environmentstore.editor.model.Node.DoorDirection;
 import nl.tudelft.bw4t.map.Zone.Type;
 
