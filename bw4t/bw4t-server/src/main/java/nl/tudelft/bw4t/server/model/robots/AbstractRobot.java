@@ -14,8 +14,6 @@ import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.doors.Door;
 import nl.tudelft.bw4t.server.model.epartners.EPartner;
-import nl.tudelft.bw4t.server.model.robots.handicap.ColorBlindHandicap;
-import nl.tudelft.bw4t.server.model.robots.handicap.GripperHandicap;
 import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.server.model.zone.ChargingZone;
 import nl.tudelft.bw4t.server.model.zone.Corridor;
