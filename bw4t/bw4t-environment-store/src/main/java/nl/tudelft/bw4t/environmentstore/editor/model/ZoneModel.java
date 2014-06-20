@@ -15,8 +15,8 @@ import nl.tudelft.bw4t.map.Zone.Type;
  * 
  */
 public class ZoneModel {
-	
-	/** max amount spawn points per spawn point */
+    
+    /** max amount spawn points per spawn point */
     public static final int SPAWN_POINTS_PER_START_ZONE = 4;
 
     private Zone zone;

@@ -9,11 +9,11 @@ import nl.tudelft.bw4t.environmentstore.main.controller.EnvironmentStoreControll
  */
 public class MenuOptionExit extends AbstractMenuOption {
 
-	/**
-	 * Constructor for MenuOptionExit
-	 * @param newView the menu the option is on
-	 * @param controller the environment controller
-	 */
+    /**
+     * Constructor for MenuOptionExit
+     * @param newView the menu the option is on
+     * @param controller the environment controller
+     */
     public MenuOptionExit(MenuBar newView,
             EnvironmentStoreController controller) {
         super(newView, controller);

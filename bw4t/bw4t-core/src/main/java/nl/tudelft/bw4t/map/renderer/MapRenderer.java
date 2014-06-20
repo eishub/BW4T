@@ -102,7 +102,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
      * Display the goal sequence
      *
      * @param g2d
-	 *		Graphics2D where will be drawn	
+     *        Graphics2D where will be drawn    
      */
     public void drawSequence(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
@@ -127,7 +127,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
      * Process all rooms and their connected doors, and display them in the panel with an outline
      *
      * @param g2d t
-	 *		Graphics2D where will be drawn
+     *        Graphics2D where will be drawn
      */
     public void drawRooms(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
@@ -153,7 +153,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
      * Draw charging zones in transpart green (color predefined in Zone).
      * 
      * @param g2d 
-     * 			Graphics2D where will be drawn
+     *             Graphics2D where will be drawn
      */
     public void drawChargingZones(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
@@ -170,7 +170,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
      * Draw blockades in transparent green (color predefined in Zone).
      * 
      * @param g2d 
-     * 			Graphics2D where will be drawn
+     *             Graphics2D where will be drawn
      */
     public void drawBlockades(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
@@ -189,11 +189,11 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
      * Draw door, color depends on status of door (open or close).
      * 
      * @param g2d 
-     * 			Graphics2D where will be drawn
+     *             Graphics2D where will be drawn
      * @param door
-     * 			Door that needs to be drawn
+     *             Door that needs to be drawn
      * @param closed
-     * 			based on if the door is closed or not, the color will be determined
+     *             based on if the door is closed or not, the color will be determined
      */
     public void drawDoor(Graphics2D g2d, Door door, boolean closed) {
         MapRenderSettings set = getController().getRenderSettings();
@@ -212,7 +212,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
      * Process the labels for the different areas
      *
      * @param g2d
-     * 			Graphics2D where will be drawn
+     *             Graphics2D where will be drawn
      */
     public void drawLabels(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
@@ -232,7 +232,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
      * Process the drop zone and connected doors and display them in the panel
      *
      * @param g2d 
-     * 			Graphics2D where will be drawn
+     *             Graphics2D where will be drawn
      */
     public void drawDropZone(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
@@ -259,7 +259,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
      * Process all blocks that are visible and display them with their color
      *
      * @param g2d 
-	 *		Graphics2D where will be drawn	
+     *        Graphics2D where will be drawn    
      */
     public void drawBlocks(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
@@ -275,7 +275,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
      * Display the robot this panel represents. The color is adapted depending on whether it holds a block or not.
      *
      * @param g2d 
-     * 		Graphics2D where will be drawn
+     *         Graphics2D where will be drawn
      */
     public void drawEntity(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
@@ -352,13 +352,13 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 
     /**
      * @param g2d
-     * 			Graphics2D where will be drawn
+     *             Graphics2D where will be drawn
      * @param x
-     * 			x coordinate of center
+     *             x coordinate of center
      * @param y
-     * 			y coordinate of center
+     *             y coordinate of center
      * @param r
-     * 			radius of circle
+     *             radius of circle
      */
     private void drawCenteredCircle(Graphics2D g2d, int x, int y, int r) {
         int newX = x - (r / 2);

@@ -21,7 +21,7 @@ import nl.tudelft.bw4t.environmentstore.util.OptionPrompt;
  */
 public class EnvironmentStore extends JFrame {
     
-	/** Random generated serial version UID. */
+    /** Random generated serial version UID. */
     private static final long serialVersionUID = 8572609341436634787L;
 
     /** The controller of the map panel. */

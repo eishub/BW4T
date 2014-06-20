@@ -5,7 +5,7 @@ package nl.tudelft.bw4t.map;
  */
 public class MapFormatException extends RuntimeException {
     
-	/** Serialization id. */
+    /** Serialization id. */
     private static final long serialVersionUID = -5626576370581996604L;
 
     public MapFormatException() {

@@ -11,12 +11,12 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
  */
 public class RobotTableModel extends AbstractTableModel implements Serializable {
 
-	private static final long serialVersionUID = 4899095629026343945L;
+    private static final long serialVersionUID = 4899095629026343945L;
 
-	/**
-	 * Constructor.
-	 */
-	public RobotTableModel() {
+    /**
+     * Constructor.
+     */
+    public RobotTableModel() {
         super();
     }
 

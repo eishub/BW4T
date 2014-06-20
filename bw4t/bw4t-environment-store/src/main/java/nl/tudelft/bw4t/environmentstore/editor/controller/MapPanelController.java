@@ -242,7 +242,7 @@ public class MapPanelController implements ChangeListener {
      * 
      * @param component the popup
      * @param x the x position of the grid
-     * @param y	the y position of the grid
+     * @param y    the y position of the grid
      */
     public void showPopup(Component component, int x, int y) {
         getZoneMenu().update();

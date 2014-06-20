@@ -176,7 +176,7 @@ public class ScenarioEditor extends JFrame {
      * Closes the ScenarioEditor window and all child frames.
      */
     public void closeScenarioEditor() {
-    	// This exit call is used because the child frames won't be closed otherwise. 
+        // This exit call is used because the child frames won't be closed otherwise. 
         System.exit(0);
     }
 
