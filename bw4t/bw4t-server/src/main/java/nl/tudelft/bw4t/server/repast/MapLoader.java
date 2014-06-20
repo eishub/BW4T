@@ -93,11 +93,14 @@ public final class MapLoader {
         Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones = new HashMap<String, nl.tudelft.bw4t.server.model.zone.Zone>();
         Map<String, List<BlockColor>> roomBlocks = new HashMap<String, List<BlockColor>>();
 
+        ContinuousSpace<Object> space = initEmptyMap(tmpLocation, context);
+        
         int mapWidth = (int) map.getArea().getX();
         int mapHeight = (int) map.getArea().getY();
-
-        ContinuousSpace<Object> space = initEmptyMap(tmpLocation, context);
+        
         Grid<Object> grid = createGridSpace(context, mapWidth, mapHeight);
+        
+        Launcher.getInstance().getEntityFactory().setGrid(grid);
 
         List<BlockColor> sequence = new ArrayList<BlockColor>(map.getSequence());
         createZones(context, zones, roomBlocks, space, grid, sequence);
@@ -139,12 +142,10 @@ public final class MapLoader {
 
         int mapWidth = (int) map.getArea().getX();
         int mapHeight = (int) map.getArea().getY();
+        
+        ContinuousSpace<Object> space = createSpace(context, mapWidth, mapHeight);
 
-        Grid<Object> grid = createGridSpace(context, mapWidth, mapHeight);
-        ContinuousSpace<Object> space = createSpace(context, (int) map.getArea().getX(), (int) map.getArea().getY());
-
-        Launcher.getInstance().getEntityFactory().setSpace(space, grid);
-        Launcher.getInstance().getEntityFactory().setSpace(space, grid);
+        Launcher.getInstance().getEntityFactory().setSpace(space);
         return space;
     }
 
