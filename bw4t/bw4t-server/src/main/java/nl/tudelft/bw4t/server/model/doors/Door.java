@@ -29,6 +29,8 @@ public class Door extends BoundedMoveableObject {
      * 
      * @param space
      *            The space in which the room will be located.
+     * @param grid
+     *            The grid in which the room will be located.
      * @param context
      *            The context in which the room will be located.
      */
@@ -44,7 +46,7 @@ public class Door extends BoundedMoveableObject {
      * only when a door is open, someone from outside can go onto the door. From inside, you are always allowed to go
      * onto the door.
      * 
-     * @return
+     * @return nullchecks
      */
     public boolean isOpen() {
         return roomBehindTheDoor == null || roomBehindTheDoor.getOccupier() == null;
@@ -79,7 +81,7 @@ public class Door extends BoundedMoveableObject {
     /**
      * Connect this door to a room
      * 
-     * @param room
+     * @param room to which door belongs
      */
     public void connectTo(Room room) {
         roomBehindTheDoor = room;

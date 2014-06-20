@@ -15,10 +15,24 @@ import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.grid.Grid;
 
+/**
+ * Creates the default entities.
+ */
 public class DefaultEntityFactory implements EntityFactory {
 
+    /**
+     * The context which we will be using.
+     */
     private Context<Object> context;
+    
+    /**
+     * The space which we will be using.
+     */
     private ContinuousSpace<Object> space;
+    
+    /**
+     * The grid which we will be using.
+     */
     private Grid<Object> grid;
 
     
@@ -49,12 +63,9 @@ public class DefaultEntityFactory implements EntityFactory {
         if (config.getColorBlindHandicap()) {
             r = new ColorBlindHandicap(r);
         }
-        if (config.getGripperHandicap()) {
-            r = new GripperHandicap(r);
-        } else {
-            // if the robot does not have a gripper handicap, it grabs the value set in the UI. 
-            r.setGripperCapacity(config.getGrippers());
-        }
+        
+        setGripperHandicap(config, r);
+        
         if (config.getMoveSpeedHandicap()) {
             r.setSpeedMod((double) config.getBotSpeed() / 100.0); 
         }
@@ -64,6 +75,33 @@ public class DefaultEntityFactory implements EntityFactory {
         if (config.getBotController() == EntityType.HUMAN) {
             r = new Human(r);
         }
+        
+        enableBattery(config, r);
+
+        return r;
+    }
+
+    /**
+     * Sets the gripper handicap
+     * @param config file which needs to be read
+     * @param r robot
+     * @return
+     */
+    private void setGripperHandicap(BotConfig config, IRobot r) {
+        if (config.getGripperHandicap()) {
+            r = new GripperHandicap(r);
+        } else {
+            // if the robot does not have a gripper handicap, it grabs the value set in the UI. 
+            r.setGripperCapacity(config.getGrippers());
+        }
+    }
+
+    /**
+     * enables the battery
+     * @param config file which needs to be read.
+     * @param r robot
+     */
+    private void enableBattery(BotConfig config, IRobot r) {
         if (config.isBatteryEnabled()) {
             r.setBattery(
                     new Battery(config.getBotBatteryCapacity(), 
@@ -71,8 +109,6 @@ public class DefaultEntityFactory implements EntityFactory {
         } else {
             r.setBattery(new Battery(1, 0));
         }
-
-        return r;
     }
 
     @Override
