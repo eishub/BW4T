@@ -45,10 +45,10 @@ import eis.iilang.Parameter;
 /**
  * Used for directly displaying the simulation from the context, unlike BW4TRenderer does not use percepts and can show
  * all entities. Only used on the server side (BW4TEnvironment side).
- * <p/>
+ * 
  * Note, this renderer is largely independent of repast, so even though Repast has its own rendering tools we don't use
  * that.
- * <p/>
+ * 
  * Also note that this is a runnable and runs in its own thread with a refresh rate of 10Hz, started by
  * {@link BW4TBuilder}, see {@link #run()}.
  */
@@ -218,7 +218,7 @@ class ControlPanel extends JPanel {
 
 /**
  * This combo box allows user to select a new map. Doing that will reset the server and reload the new map.
- * <p/>
+ * 
  * We assume that a directory named "Maps" is available in the current directory, and that it only contains maps.
  */
 @SuppressWarnings("serial")

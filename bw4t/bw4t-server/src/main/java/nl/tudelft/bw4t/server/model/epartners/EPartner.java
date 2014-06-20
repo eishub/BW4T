@@ -16,9 +16,9 @@ import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
 
 public class EPartner extends BoundedMoveableObject {
-	
-	private static final Logger LOGGER = Logger.getLogger(EPartner.class);
-	
+    
+    private static final Logger LOGGER = Logger.getLogger(EPartner.class);
+    
     /**
      * set to true when {@link #connect()} is called.
      */
@@ -60,25 +60,25 @@ public class EPartner extends BoundedMoveableObject {
         view.setPickedUp(holder != null);
     }
 
-	public String getName() {
-		return this.name;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public List<String> getTypeList() {
-		return this.funcList;
-	}
+    public List<String> getTypeList() {
+        return this.funcList;
+    }
 
-	public void setTypeList(ArrayList<String> fList) {
-		this.funcList = fList;
-	}
-	
-	public boolean isDropped() {
-		return this.holder == null;
-	}
+    public void setTypeList(ArrayList<String> fList) {
+        this.funcList = fList;
+    }
+    
+    public boolean isDropped() {
+        return this.holder == null;
+    }
 
     public ViewEPartner getView() {
         final NdPoint location = getLocation();

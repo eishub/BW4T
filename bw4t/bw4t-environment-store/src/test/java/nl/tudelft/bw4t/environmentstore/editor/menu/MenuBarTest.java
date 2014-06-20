@@ -39,7 +39,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class MenuBarTest {
-	
+    
     /**
      * The base directory of all files used in the test.
      */
@@ -81,8 +81,8 @@ public class MenuBarTest {
      */
     @Before
     public void setUp() throws IOException {
-    	mapController = new MapPanelController(5, 5);
-    	envStore = spy(new EnvironmentStore(mapController));
+        mapController = new MapPanelController(5, 5);
+        envStore = spy(new EnvironmentStore(mapController));
 
         filechooser = mock(JFileChooser.class);
 
@@ -96,7 +96,7 @@ public class MenuBarTest {
     
     @After
     public final void closeEditor() throws IOException {
-    	envStore.dispose();
+        envStore.dispose();
     }
     
     
@@ -106,7 +106,7 @@ public class MenuBarTest {
      */
     @Test
     public void menuOptionsListenersTest() {
-    	/* Reset the controller to the spied objects controller */
+        /* Reset the controller to the spied objects controller */
         assertEquals(envStore.getTopMenuBar().getMenuItemFileNew().getActionListeners().length, 1);
         assertEquals(envStore.getTopMenuBar().getMenuItemFileOpen().getActionListeners().length, 1);
         assertEquals(envStore.getTopMenuBar().getMenuItemFileSave().getActionListeners().length, 1);
@@ -121,102 +121,102 @@ public class MenuBarTest {
     
     @Test
     public void menuOptionRandomizeRoomsTest() {
-    	ZoneController[][] zcArray = mapController.getZoneControllers();
-    	envStore.getTopMenuBar().getMenuItemRandomizeRooms().doClick();
-    	assertFalse(zcArray.equals(mapController.getZoneControllers()));
+        ZoneController[][] zcArray = mapController.getZoneControllers();
+        envStore.getTopMenuBar().getMenuItemRandomizeRooms().doClick();
+        assertFalse(zcArray.equals(mapController.getZoneControllers()));
     }
     
     @Test
     public void menuOptionRandomizeBlocksTest() {
-    	boolean found = false;
-    	ZoneController[][] bc = mapController.getZoneControllers();
-    	envStore.getTopMenuBar().getMenuItemRandomizeRooms().doClick();
-    	envStore.getTopMenuBar().getMenuItemRandomizeBlocks().doClick();
-    	for (Frame f : Frame.getFrames()) {
-    		if (f instanceof RandomizeBlockFrame) {
-    			found = true;
-    			((RandomizeBlockFrame) f).getApplyButton().doClick();
-    		}
-    	}
-    	assertTrue(found);
-    	assertFalse(bc.equals(mapController.getZoneControllers()));
+        boolean found = false;
+        ZoneController[][] bc = mapController.getZoneControllers();
+        envStore.getTopMenuBar().getMenuItemRandomizeRooms().doClick();
+        envStore.getTopMenuBar().getMenuItemRandomizeBlocks().doClick();
+        for (Frame f : Frame.getFrames()) {
+            if (f instanceof RandomizeBlockFrame) {
+                found = true;
+                ((RandomizeBlockFrame) f).getApplyButton().doClick();
+            }
+        }
+        assertTrue(found);
+        assertFalse(bc.equals(mapController.getZoneControllers()));
     }
     
     @Test
     public void menuOptionRandomizeSequenceTest() {
-    	boolean found = false;
-    	List<BlockColor> bc = mapController.getSequence();
-    	envStore.getTopMenuBar().getMenuItemRandomizeSequence().doClick();
-    	for (Frame f : Frame.getFrames()) {
-    		if (f instanceof RandomizeSequenceFrame) {
-    			found = true;
-    			((RandomizeSequenceFrame) f).getRandomizeButton().doClick();
-    			((RandomizeSequenceFrame) f).getApplyButton().doClick();
-    		}
-    	}
-    	assertTrue(found);
-    	assertFalse(bc.equals(mapController.getSequence()));
+        boolean found = false;
+        List<BlockColor> bc = mapController.getSequence();
+        envStore.getTopMenuBar().getMenuItemRandomizeSequence().doClick();
+        for (Frame f : Frame.getFrames()) {
+            if (f instanceof RandomizeSequenceFrame) {
+                found = true;
+                ((RandomizeSequenceFrame) f).getRandomizeButton().doClick();
+                ((RandomizeSequenceFrame) f).getApplyButton().doClick();
+            }
+        }
+        assertTrue(found);
+        assertFalse(bc.equals(mapController.getSequence()));
     }   
     @Test
     public void menuOptionPreviewTest() {
-    	boolean found = false;
-    	envStore.getTopMenuBar().getMenuItemPreview().doClick();
-    	for (Frame f : Frame.getFrames()) {
-    		if (f instanceof JFrame) {
-    			JFrame frame = (JFrame) f;
-    			if (frame.getTitle().equals("Map Preview")) {
-    				found = true;
-    			}
-    			f.dispose();
-    		}
-    	}
-    	assertTrue(found);
+        boolean found = false;
+        envStore.getTopMenuBar().getMenuItemPreview().doClick();
+        for (Frame f : Frame.getFrames()) {
+            if (f instanceof JFrame) {
+                JFrame frame = (JFrame) f;
+                if (frame.getTitle().equals("Map Preview")) {
+                    found = true;
+                }
+                f.dispose();
+            }
+        }
+        assertTrue(found);
     }
     @Test
     public void fileFiltersTest() {
-    	assertTrue(Arrays.equals(FileFilters.goalFilter().getExtensions(), new String[] {
-    		"goal"
-    	}));
-    	assertTrue(Arrays.equals(FileFilters.xmlFilter().getExtensions(), new String[] {
-    		"xml"
-    	}));
-    	assertTrue(Arrays.equals(FileFilters.mapFilter().getExtensions(), new String[] {
-    		"map"
-    	}));
-    	assertTrue(Arrays.equals(FileFilters.masFilter().getExtensions(), new String[] {
-    		"mas2g"
-    	}));
+        assertTrue(Arrays.equals(FileFilters.goalFilter().getExtensions(), new String[] {
+            "goal"
+        }));
+        assertTrue(Arrays.equals(FileFilters.xmlFilter().getExtensions(), new String[] {
+            "xml"
+        }));
+        assertTrue(Arrays.equals(FileFilters.mapFilter().getExtensions(), new String[] {
+            "map"
+        }));
+        assertTrue(Arrays.equals(FileFilters.masFilter().getExtensions(), new String[] {
+            "mas2g"
+        }));
     }
     
     @Test
     public void menuOptionOpenMapTest() {
-    	List<BlockColor> cs = new ArrayList<BlockColor>();
-    	cs.add(BlockColor.RED);
-    	
-    	File file = new File(FILE_OPEN_PATH);
-    	
-    	assertFalse(mapController.getZoneController(0, 0).isStartZone());
-    	assertFalse(mapController.getZoneController(0, 2).isDropZone());
-    	assertFalse(mapController.getZoneController(1, 0).getType() == Type.ROOM);
-    	assertFalse(mapController.getZoneController(1, 0).getColors().equals(cs));
-    	assertFalse(mapController.getSequence().equals(cs));
-    	
-    	mapController.setModel(MapConverter.loadMap(file));
-    	
-    	assertTrue(mapController.getZoneController(0, 0).isStartZone());
-    	assertTrue(mapController.getZoneController(0, 2).isDropZone());
-    	assertTrue(mapController.getZoneController(1, 0).getType() == Type.ROOM);
-    	assertTrue(mapController.getZoneController(1, 0).getColors().equals(cs));
-    	assertTrue(mapController.getSequence().equals(cs));
+        List<BlockColor> cs = new ArrayList<BlockColor>();
+        cs.add(BlockColor.RED);
+        
+        File file = new File(FILE_OPEN_PATH);
+        
+        assertFalse(mapController.getZoneController(0, 0).isStartZone());
+        assertFalse(mapController.getZoneController(0, 2).isDropZone());
+        assertFalse(mapController.getZoneController(1, 0).getType() == Type.ROOM);
+        assertFalse(mapController.getZoneController(1, 0).getColors().equals(cs));
+        assertFalse(mapController.getSequence().equals(cs));
+        
+        mapController.setModel(MapConverter.loadMap(file));
+        
+        assertTrue(mapController.getZoneController(0, 0).isStartZone());
+        assertTrue(mapController.getZoneController(0, 2).isDropZone());
+        assertTrue(mapController.getZoneController(1, 0).getType() == Type.ROOM);
+        assertTrue(mapController.getZoneController(1, 0).getColors().equals(cs));
+        assertTrue(mapController.getSequence().equals(cs));
     }
     
     @Test
     public void menuBarGettersSettersTest() {
-    	MenuBar mb = new MenuBar();
-    	mb.setLastFileLocation("Test");
-    	assertTrue(mb.hasLastFileLocation());
-    	assertTrue(mb.getLastFileLocation().equals("Test"));
-    	mb.setLastFileLocation(null);
-    	assertFalse(mb.hasLastFileLocation());
+        MenuBar mb = new MenuBar();
+        mb.setLastFileLocation("Test");
+        assertTrue(mb.hasLastFileLocation());
+        assertTrue(mb.getLastFileLocation().equals("Test"));
+        mb.setLastFileLocation(null);
+        assertFalse(mb.hasLastFileLocation());
     }
 }

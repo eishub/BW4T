@@ -7,30 +7,29 @@ import nl.tudelft.bw4t.environmentstore.editor.controller.UpdateableEditorInterf
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeSequenceFrame;
 
 public class ApplyRandomSequence implements ActionListener{
-	
-	private RandomizeSequenceFrame view;
-	
-	private RandomizeSequenceController controller;
-	
-	public ApplyRandomSequence(RandomizeSequenceFrame rf, RandomizeSequenceController rc) {
-		this.view = rf;
-		this.controller = rc;
-	}
+    
+    private RandomizeSequenceFrame view;
+    
+    private RandomizeSequenceController controller;
+    
+    public ApplyRandomSequence(RandomizeSequenceFrame rf, RandomizeSequenceController rc) {
+        this.view = rf;
+        this.controller = rc;
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		controller.getMapController().setSequence(controller.getRandomizeFromSettings().getResult());
-		
-		controller.getMapController().setUpdateableEditorInterface(new UpdateableEditorInterface() {
-			
-			@Override
-			public void update() {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		controller.getMapController().getUpdateableEditorInterface().update();
-		view.dispose();
-	}
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+        controller.getMapController().setSequence(controller.getRandomizeFromSettings().getResult());
+        
+        controller.getMapController().setUpdateableEditorInterface(new UpdateableEditorInterface() {
+            
+            @Override
+            public void update() {
+                
+            }
+        });
+        
+        controller.getMapController().getUpdateableEditorInterface().update();
+        view.dispose();
+    }
 }

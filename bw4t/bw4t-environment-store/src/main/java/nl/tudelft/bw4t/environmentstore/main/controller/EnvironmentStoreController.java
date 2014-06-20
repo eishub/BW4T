@@ -24,103 +24,103 @@ import nl.tudelft.bw4t.map.Zone.Type;
  *
  */
 public class EnvironmentStoreController extends ComponentAdapter {
-	
-	private EnvironmentStore view;
-	
-	private MapPanelController mapController;
-	
-	/**
-	 * The EnvironmentStoreController class takes care of all the ActionListeners.
-	 * 
-	 * @param es is the JFrame from the environment store.
-	 * @param mc is the map we would like to edit.
-	 */
-	public EnvironmentStoreController(EnvironmentStore es, MapPanelController mc) {
-		this.view = es;
-		this.mapController = mc;
-		
-		getMainView().addComponentListener(this);
-		
-		final MenuBar bar = getMainView().getTopMenuBar();
-		
-		/** Create all action listeners for the File Menu */
-		// New
+    
+    private EnvironmentStore view;
+    
+    private MapPanelController mapController;
+    
+    /**
+     * The EnvironmentStoreController class takes care of all the ActionListeners.
+     * 
+     * @param es is the JFrame from the environment store.
+     * @param mc is the map we would like to edit.
+     */
+    public EnvironmentStoreController(EnvironmentStore es, MapPanelController mc) {
+        this.view = es;
+        this.mapController = mc;
+        
+        getMainView().addComponentListener(this);
+        
+        final MenuBar bar = getMainView().getTopMenuBar();
+        
+        /** Create all action listeners for the File Menu */
+        // New
         bar.getMenuItemFileNew().addActionListener(
-				new MenuOptionNew(bar, this)
-		);		
-		// Open
-		bar.getMenuItemFileOpen().addActionListener(
-				new MenuOptionOpen(bar, this)
-        );		
-		// Save
-		bar.getMenuItemFileSave().addActionListener(
-				new MenuOptionSave(bar, this)
-        );		
-		// Save As
-		bar.getMenuItemFileSaveAs().addActionListener(
-				new MenuOptionSaveAs(bar, this)
-        );		
-		// Preview
-		bar.getMenuItemPreview().addActionListener(
-				new MenuOptionPreview(bar, this)
-		);		
-		// Exit
-		bar.getMenuItemFileExit().addActionListener(
-				new MenuOptionExit(bar, this)
+                new MenuOptionNew(bar, this)
+        );        
+        // Open
+        bar.getMenuItemFileOpen().addActionListener(
+                new MenuOptionOpen(bar, this)
+        );        
+        // Save
+        bar.getMenuItemFileSave().addActionListener(
+                new MenuOptionSave(bar, this)
+        );        
+        // Save As
+        bar.getMenuItemFileSaveAs().addActionListener(
+                new MenuOptionSaveAs(bar, this)
+        );        
+        // Preview
+        bar.getMenuItemPreview().addActionListener(
+                new MenuOptionPreview(bar, this)
+        );        
+        // Exit
+        bar.getMenuItemFileExit().addActionListener(
+                new MenuOptionExit(bar, this)
         );
-		// Default Exit button on the right top of the window
+        // Default Exit button on the right top of the window
         getMainView().addWindowListener(
-        		new WindowExit(getMainView())
+                new WindowExit(getMainView())
         );
         
         /** Create all action listeners for the Tools Menu */
         // Randomize Rooms in map
         bar.getMenuItemRandomizeRooms().addActionListener(
-				new MenuOptionRandomizeRooms(bar, this)
+                new MenuOptionRandomizeRooms(bar, this)
         );
-		// Randomize Blocks distributions
-		bar.getMenuItemRandomizeBlocks().addActionListener(
-				new MenuOptionRandomizeBlocks(bar, this)
+        // Randomize Blocks distributions
+        bar.getMenuItemRandomizeBlocks().addActionListener(
+                new MenuOptionRandomizeBlocks(bar, this)
         );
-		// Randomize sequence
-		bar.getMenuItemRandomizeSequence().addActionListener(
-				new MenuOptionRandomizeSequence(bar, this)
+        // Randomize sequence
+        bar.getMenuItemRandomizeSequence().addActionListener(
+                new MenuOptionRandomizeSequence(bar, this)
         );
 
-	}
-	
-	@Override
-	public void componentMoved(ComponentEvent arg0) {
-	    mapController.getCSController().updatePosition();
-	}
-	
+    }
+    
+    @Override
+    public void componentMoved(ComponentEvent arg0) {
+        mapController.getCSController().updatePosition();
+    }
+    
     /**
      * Checks if the configuration has been changed.
      * @return returns true if either the configuration, the bot list of the epartners list has been changed.
      */
     public boolean notAnEmptyMap() {
-    	// If the sequence is not empty, the map from scratch has been modified.
-    	if(!(mapController.getSequence().isEmpty())) {
-    		return true;
-    	}
-    	// If not all rooms are corridors, the map from scratch has been modified.
+        // If the sequence is not empty, the map from scratch has been modified.
+        if(!(mapController.getSequence().isEmpty())) {
+            return true;
+        }
+        // If not all rooms are corridors, the map from scratch has been modified.
         for (int i = 0; i < mapController.getZoneControllers().length; i++) {
             for (int j = 0; j < mapController.getZoneControllers()[0].length; j++) {
-            	if(!(mapController.getZoneControllers()[i][j].getType() == Type.CORRIDOR)) {
-            		return true;
-            	}                
+                if(!(mapController.getZoneControllers()[i][j].getType() == Type.CORRIDOR)) {
+                    return true;
+                }                
             }
         }
         return false;
     }
-	
+    
     /**
      * Ask the user if (s)he wishes to save the Environment.
      * @return True if the user wishes to save the Environment.
      */
     public boolean promptUserToSave() {
         // Check if user wants to save current configuration
-    	int response = EnvironmentStore.getOptionPrompt().showConfirmDialog(
+        int response = EnvironmentStore.getOptionPrompt().showConfirmDialog(
                 null, "Do you want to save the current configuration?", "",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
@@ -138,7 +138,7 @@ public class EnvironmentStoreController extends ComponentAdapter {
 
        return response == JOptionPane.YES_OPTION;
     }
-	
+    
     /**
      * Return the view being controlled.
      * @return The JFrame being controlled.
@@ -152,6 +152,6 @@ public class EnvironmentStoreController extends ComponentAdapter {
      * @return The Map being edited.
      */
     public final MapPanelController getMapController() {
-    	return mapController;
+        return mapController;
     }
 }

@@ -27,7 +27,7 @@ public class PutdownActionListener extends AbstractClientActionListener {
             try {
                 getController().getHumanAgent().putDown();
             } catch (ActException e1) {
-            	LOGGER.error(e1);
+                LOGGER.error(e1);
             }
         } else {
             LinkedList<Percept> percepts = new LinkedList<Percept>();

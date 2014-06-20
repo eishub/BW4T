@@ -14,10 +14,10 @@ import nl.tudelft.bw4t.map.Zone;
 
 /** Responsible for building the pop-up menu for sending requests to a player. */
 public final class PlayerMenu {
-	
-	/** Should never be instantiated */
-	private PlayerMenu() { }
-	
+    
+    /** Should never be instantiated */
+    private PlayerMenu() { }
+    
     /**
      * Used for building the pop-up menu that displays actions 
      * a user can perform when clicking on another player.

@@ -28,6 +28,6 @@ public class ResetButton implements ActionListener {
      * @param ae The action event causing this.
      */
     public void actionPerformed(ActionEvent ae) {
-    	view.updateView();
+        view.updateView();
     }   
 }

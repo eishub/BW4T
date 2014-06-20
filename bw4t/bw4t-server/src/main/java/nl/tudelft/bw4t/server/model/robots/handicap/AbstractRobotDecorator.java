@@ -42,220 +42,220 @@ public abstract class AbstractRobotDecorator implements IRobot {
     }
     
     @Override
-	public String getName() {
-		return parent.getName();
-	}
-	
+    public String getName() {
+        return parent.getName();
+    }
+    
     @Override
-	public void connect() {
-		parent.connect();
-	}
-	
+    public void connect() {
+        parent.connect();
+    }
+    
     @Override
-	public void disconnect() {
-		parent.disconnect();
-	}
-	
+    public void disconnect() {
+        parent.disconnect();
+    }
+    
     @Override
-	public List<Block> isHolding() {
-		return parent.isHolding();
-	}
-	
+    public List<Block> isHolding() {
+        return parent.isHolding();
+    }
+    
     @Override
-	public NdPoint getTargetLocation() {
-		return parent.getTargetLocation();
-	}
-	
+    public NdPoint getTargetLocation() {
+        return parent.getTargetLocation();
+    }
+    
     @Override
-	public void setTargetLocation(NdPoint ptargetLocation) {
-		parent.setTargetLocation(ptargetLocation);
-	}
-	
+    public void setTargetLocation(NdPoint ptargetLocation) {
+        parent.setTargetLocation(ptargetLocation);
+    }
+    
     @Override
-	public boolean canPickUp(BoundedMoveableObject b) {
-		return parent.canPickUp(b);
-	}
-	
+    public boolean canPickUp(BoundedMoveableObject b) {
+        return parent.canPickUp(b);
+    }
+    
     @Override
-	public void pickUp(Block b) {
-		parent.pickUp(b);
-	}
-	
+    public void pickUp(Block b) {
+        parent.pickUp(b);
+    }
+    
     @Override
-	public void drop() {
-		parent.drop();
-	}
-	
+    public void drop() {
+        parent.drop();
+    }
+    
     @Override
-	public void drop(int amount) {
-		parent.drop(amount);
-	}
-	
+    public void drop(int amount) {
+        parent.drop(amount);
+    }
+    
     @Override
-	public void moveTo(double x, double y) {
-		parent.moveTo(x, y);
-	}
-	
+    public void moveTo(double x, double y) {
+        parent.moveTo(x, y);
+    }
+    
     @Override
-	public MoveType getMoveType(double endx, double endy) {
-		return parent.getMoveType(endx, endy);
-	}
-	
+    public MoveType getMoveType(double endx, double endy) {
+        return parent.getMoveType(endx, endy);
+    }
+    
     @Override
-	public MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door) {
-		return parent.checkZoneAccess(startzone, endzone, door);
-	}
-	
+    public MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door) {
+        return parent.checkZoneAccess(startzone, endzone, door);
+    }
+    
     @Override
-	public Door getCurrentDoor(double x, double y) {
-		return parent.getCurrentDoor(x, y);
-	}
-	
+    public Door getCurrentDoor(double x, double y) {
+        return parent.getCurrentDoor(x, y);
+    }
+    
     @Override
-	public Room getCurrentRoom(double x, double y) {
-		return parent.getCurrentRoom(x, y);
-	}
-	
+    public Room getCurrentRoom(double x, double y) {
+        return parent.getCurrentRoom(x, y);
+    }
+    
     @Override
-	public Zone getZone() {
-		return parent.getZone();
-	}
-	
+    public Zone getZone() {
+        return parent.getZone();
+    }
+    
     @Override
-	public void moveByDisplacement(double x, double y) {
-		parent.moveByDisplacement(x, y);
-	}
-	
+    public void moveByDisplacement(double x, double y) {
+        parent.moveByDisplacement(x, y);
+    }
+    
     @Override
-	public void move() {
-		parent.move();
-	}
-	
+    public void move() {
+        parent.move();
+    }
+    
     @Override
-	public void stopRobot() {
-		parent.stopRobot();
-	}
-	
+    public void stopRobot() {
+        parent.stopRobot();
+    }
+    
     @Override
-	public boolean isCollided() {
-		return parent.isCollided();
-	}
-	
+    public boolean isCollided() {
+        return parent.isCollided();
+    }
+    
     @Override
-	public void setCollided(boolean collided) {
-		parent.setCollided(collided);
-	}
-	
+    public void setCollided(boolean collided) {
+        parent.setCollided(collided);
+    }
+    
     @Override
-	public void clearCollided() {
-		parent.clearCollided();
-	}
-	
+    public void clearCollided() {
+        parent.clearCollided();
+    }
+    
     @Override
-	public boolean isConnected() {
-		return parent.isConnected();
-	}
-	
+    public boolean isConnected() {
+        return parent.isConnected();
+    }
+    
     @Override
-	public boolean isOneBotPerZone() {
-		return parent.isOneBotPerZone();
-	}
-	
+    public boolean isOneBotPerZone() {
+        return parent.isOneBotPerZone();
+    }
+    
     @Override
-	public int getSize() {
-		return parent.getSize();
-	}
-	
+    public int getSize() {
+        return parent.getSize();
+    }
+    
     @Override
-	public void setSize(int s) {
-		parent.setSize(s);
-	}
-	
+    public void setSize(int s) {
+        parent.setSize(s);
+    }
+    
     @Override
-	public ViewEntity getView() {
-		return parent.getView();
-	}
-	
+    public ViewEntity getView() {
+        return parent.getView();
+    }
+    
     @Override
-	public AgentRecord getAgentRecord() {
-		return parent.getAgentRecord();
-	}
-	
+    public AgentRecord getAgentRecord() {
+        return parent.getAgentRecord();
+    }
+    
     @Override
-	public Battery getBattery() {
-		return parent.getBattery();
-	}
-	
+    public Battery getBattery() {
+        return parent.getBattery();
+    }
+    
     @Override
-	public void setBattery(Battery battery) {
-		parent.setBattery(battery);
-	}
-	
+    public void setBattery(Battery battery) {
+        parent.setBattery(battery);
+    }
+    
     @Override
-	public void recharge() {
-		parent.recharge();
-	}
-	
+    public void recharge() {
+        parent.recharge();
+    }
+    
     @Override
-	public IRobot getParent() {
-		return parent;
-	}
-	
+    public IRobot getParent() {
+        return parent;
+    }
+    
     @Override
-	public void setParent(IRobot hI) {
-		parent.setParent(hI);
-	}
-	
+    public void setParent(IRobot hI) {
+        parent.setParent(hI);
+    }
+    
     @Override
-	public ArrayList<String> getHandicapsList() {
-		return parent.getHandicapsList();
-	}
-	
+    public ArrayList<String> getHandicapsList() {
+        return parent.getHandicapsList();
+    }
+    
     @Override
-	public int getGripperCapacity() {
-		return parent.getGripperCapacity();
-	}
-	
+    public int getGripperCapacity() {
+        return parent.getGripperCapacity();
+    }
+    
     @Override
-	public void setGripperCapacity(int newcap) {
-		parent.setGripperCapacity(newcap);
-	}
-	
+    public void setGripperCapacity(int newcap) {
+        parent.setGripperCapacity(newcap);
+    }
+    
     @Override
-	public double getSpeedMod() {
-		return parent.getSpeedMod();
-	}
+    public double getSpeedMod() {
+        return parent.getSpeedMod();
+    }
     
     @Override
     public void setSpeedMod(double speedMod) {
-    	parent.setSpeedMod(speedMod);
+        parent.setSpeedMod(speedMod);
     }
-	
+    
     @Override
-	public boolean isHuman() {
-		return parent.isHuman();
-	}
-	
+    public boolean isHuman() {
+        return parent.isHuman();
+    }
+    
     @Override
-	public EPartner getEPartner() {
-		return parent.getEPartner();
-	}
-	
+    public EPartner getEPartner() {
+        return parent.getEPartner();
+    }
+    
     @Override
-	public boolean isHoldingEPartner() {
-		return parent.isHoldingEPartner();
-	}
-	
+    public boolean isHoldingEPartner() {
+        return parent.isHoldingEPartner();
+    }
+    
     @Override
-	public void pickUpEPartner(EPartner eP) {
-		parent.pickUpEPartner(eP);
-	}
-	
+    public void pickUpEPartner(EPartner eP) {
+        parent.pickUpEPartner(eP);
+    }
+    
     @Override
-	public void dropEPartner() {
-		parent.dropEPartner();
-	}
-	
+    public void dropEPartner() {
+        parent.dropEPartner();
+    }
+    
     @Override
     public State getState() {
         return parent.getState();
@@ -288,11 +288,11 @@ public abstract class AbstractRobotDecorator implements IRobot {
 
     @Override
     public AbstractRobot getSuperParent() {
-    	if (robot == null) {
-    	    robot = parent.getSuperParent();
-    	}
-    	
-    	return robot;
+        if (robot == null) {
+            robot = parent.getSuperParent();
+        }
+        
+        return robot;
     }
 
     @Override

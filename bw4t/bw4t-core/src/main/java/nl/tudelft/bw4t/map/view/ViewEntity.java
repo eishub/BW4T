@@ -36,7 +36,7 @@ public class ViewEntity {
     }
 
     public ViewEntity(long id, String name, double x, double y, Collection<ViewBlock> holding, int robotsize) {
-    	this.setId(id);
+        this.setId(id);
         this.setName(name);
         this.setLocation(x, y);
         this.setHolding(holding);
@@ -44,11 +44,11 @@ public class ViewEntity {
     }
     
     public long getId() {
-    	return id;
+        return id;
     }
     
     public void setId(long id) {
-    	this.id = id;
+        this.id = id;
     }
 
     public String getName() {
@@ -94,11 +94,11 @@ public class ViewEntity {
     }
     
     public int getRobotSize() {
-    	return robotsize;
+        return robotsize;
     }
     
     public void setSize(int robotsize) {
-    	this.robotsize = robotsize;
+        this.robotsize = robotsize;
     }
 
     public long getHoldingEpartner() {

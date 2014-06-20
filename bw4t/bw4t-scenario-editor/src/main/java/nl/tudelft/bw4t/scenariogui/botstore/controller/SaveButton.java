@@ -49,16 +49,16 @@ public class SaveButton implements ActionListener {
         
         view.getBotEditor().dispose();
     }
-	
-	/**
-	 * Returns whether this file name has the correct extension and a non-empty file
-	 * name. A message box is shown if either is not the case.
-	 * @param fileName The file name including extension.
-	 * @param extensionReq The required extension of the file name.
-	 * @return Whether this file name has the required extension and has a non-empty
-	 * file name.
-	 */
-	private boolean hasValidExtensionAndNonEmptyFileName(String fileName, String extensionReq) {
+    
+    /**
+     * Returns whether this file name has the correct extension and a non-empty file
+     * name. A message box is shown if either is not the case.
+     * @param fileName The file name including extension.
+     * @param extensionReq The required extension of the file name.
+     * @return Whether this file name has the required extension and has a non-empty
+     * file name.
+     */
+    private boolean hasValidExtensionAndNonEmptyFileName(String fileName, String extensionReq) {
         if (!FileUtils.hasRequiredExtension(fileName, extensionReq)) {
             ScenarioEditor.getOptionPrompt().showMessageDialog(view,
                     "The file name is invalid.\nFile names should end in " + extensionReq + ".");
@@ -92,7 +92,7 @@ public class SaveButton implements ActionListener {
             return false;
         }
         return true;
-	}
+    }
 
     /**
      * Checks whether a valid bot name has been selected before saving.

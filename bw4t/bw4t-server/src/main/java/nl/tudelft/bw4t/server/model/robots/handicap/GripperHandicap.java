@@ -26,15 +26,15 @@ public class GripperHandicap extends AbstractRobotDecorator {
      */
     @Override
     public boolean canPickUp(BoundedMoveableObject b) {
-    	return false;
+        return false;
     }
     
     @Override
     public int getGripperCapacity() {
-    	return 0;
+        return 0;
     }
 
-	@Override
-	public void setGripperCapacity(int newcap) {
-	}
+    @Override
+    public void setGripperCapacity(int newcap) {
+    }
 }

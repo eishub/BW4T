@@ -56,8 +56,8 @@ public class MessageTranslatorTest {
          * @param param
          */
         public MessageTranslatorTest(String stringMessage, BW4TMessage bw4tMessage,
-        		Parameter param) {
-        	this.stringMessage = stringMessage;
+                Parameter param) {
+            this.stringMessage = stringMessage;
             this.bw4tMessage = bw4tMessage;
             this.param = param;
         }
@@ -65,17 +65,17 @@ public class MessageTranslatorTest {
         /**
          * Tests whether the old function converts the messages from String->Message correctly.
          */
-		@Test
+        @Test
         public void testStringToMessage() {
-        	assertTrue(MessageTranslator.translateMessage(stringMessage).equals(bw4tMessage));
+            assertTrue(MessageTranslator.translateMessage(stringMessage).equals(bw4tMessage));
         }
         
         /**
          * Tests whether the old function converts the message from Message->String correctly.
          */
-		@Test
+        @Test
         public void testMessageToString() {
-        	assertTrue(MessageTranslator.translateMessage(bw4tMessage).equals(stringMessage));
+            assertTrue(MessageTranslator.translateMessage(bw4tMessage).equals(stringMessage));
         }
         
         /**
@@ -83,7 +83,7 @@ public class MessageTranslatorTest {
          */
         @Test
         public void testMessageToParameter() {
-        	assertTrue(MessageTranslator.translateMessage(bw4tMessage, AGENT).equals(param));
+            assertTrue(MessageTranslator.translateMessage(bw4tMessage, AGENT).equals(param));
         }
        
        
