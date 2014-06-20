@@ -1,12 +1,12 @@
 package nl.tudelft.bw4t.client.environment;
 
+import eis.EnvironmentListener;
+
 import java.util.Collection;
 
 import nl.tudelft.bw4t.client.controller.ClientController;
 
 import org.apache.log4j.Logger;
-
-import eis.EnvironmentListener;
 
 /** Utility class for notifying listeners about freed, new or deleted entities. */
 public final class EntityNotifiers {

@@ -13,7 +13,7 @@ import nl.tudelft.bw4t.environmentstore.editor.randomizer.controller.RandomizeSe
 /** Create a little menu allowing the user to randomise the sequence to be picked. */
 public class RandomizeSequenceFrame extends RandomizeFrame {
 
-	/** Random generated serial version UID. */
+    /** Random generated serial version UID. */
     private static final long serialVersionUID = 1993091627565106917L;
     
     /** The controller for this view class. */

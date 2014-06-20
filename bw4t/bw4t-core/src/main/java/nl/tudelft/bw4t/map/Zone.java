@@ -19,8 +19,8 @@ import nl.tudelft.bw4t.map.Door.Orientation;
 @SuppressWarnings("serial")
 @XmlRootElement
 public class Zone implements Serializable {
-	
-	/**
+    
+    /**
      * Type of the zone
      */
     public enum Type {
@@ -34,7 +34,7 @@ public class Zone implements Serializable {
         BLOCKADE
     }
     
-	/** Set name of dropzone, startzone, blockade, corridor, charging zone and room */
+    /** Set name of dropzone, startzone, blockade, corridor, charging zone and room */
     public static final String DROP_ZONE_NAME = "DropZone";
     public static final String START_ZONE_NAME = "StartZone";
     public static final String BLOCKADE_NAME = "Blockade";
@@ -75,11 +75,11 @@ public class Zone implements Serializable {
     /** Constructor.
      * 
      * @param nm 
-     * 		name of zone
+     *         name of zone
      * @param bbox
-     * 		boundingbox
+     *         boundingbox
      * @param t
-     * 		type
+     *         type
      */
     public Zone(String nm, Rectangle bbox, Type t) {
         name = nm;
@@ -171,7 +171,7 @@ public class Zone implements Serializable {
 
     /**
      * @param zone
-     * 			{@link Zone} to be added as Neighbour
+     *             {@link Zone} to be added as Neighbour
      */
     public void addNeighbour(Zone zone) {
         neighbours.add(zone);

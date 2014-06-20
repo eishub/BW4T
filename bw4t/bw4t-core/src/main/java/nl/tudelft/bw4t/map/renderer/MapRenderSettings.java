@@ -8,8 +8,8 @@ import java.awt.geom.Rectangle2D;
  * delay between consecutive updates.
  */
 public class MapRenderSettings {
-	
-	/** Initialization of final int's, all default values */
+    
+    /** Initialization of final int's, all default values */
     public static final int BLOCK_SEQUENCE_SIZE_MAXIMUM = 100;
     public static final int BLOCK_SEQUENCE_SIZE_MINIMUM = 1;
     public static final int DELAY_MAXIMUM = 1000;

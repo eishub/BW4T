@@ -13,7 +13,6 @@ import nl.tudelft.bw4t.client.message.BW4TMessage;
 import nl.tudelft.bw4t.client.message.MessageType;
 import nl.tudelft.bw4t.map.ColorTranslator;
 import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.renderer.MapRenderSettings;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 
 public class BlockadeMenu {

@@ -11,10 +11,10 @@ import javax.xml.bind.JAXBException;
 import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
-import nl.tudelft.bw4t.scenariogui.editor.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 
 /**

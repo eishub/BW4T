@@ -3,12 +3,7 @@ package nl.tudelft.bw4t.environmentstore.editor.controller;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import nl.tudelft.bw4t.environmentstore.editor.model.ZoneModel;
-import nl.tudelft.bw4t.map.BlockColor;
 
 import org.junit.Before;
 import org.junit.Test;

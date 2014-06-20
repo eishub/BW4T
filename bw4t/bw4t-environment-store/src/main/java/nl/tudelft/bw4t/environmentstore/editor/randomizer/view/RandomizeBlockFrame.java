@@ -11,11 +11,11 @@ import nl.tudelft.bw4t.environmentstore.editor.randomizer.controller.RandomizeBl
 
 /** Create a little menu allowing the user to randomise blocks in the rooms. */
 public class RandomizeBlockFrame extends RandomizeFrame {
-	
+    
     /** The controller for this view class. */
     private RandomizeBlocksController controller;
     
-	/** Serial version UID. */
+    /** Serial version UID. */
     private static final long serialVersionUID = 1L;
     
     /** If the user clicks this button the changes will be saved. */

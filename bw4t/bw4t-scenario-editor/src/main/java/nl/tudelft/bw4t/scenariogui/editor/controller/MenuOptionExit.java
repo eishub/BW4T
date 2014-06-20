@@ -3,8 +3,8 @@ package nl.tudelft.bw4t.scenariogui.editor.controller;
 import java.awt.event.ActionEvent;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.editor.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MenuBar;
 
 /**
  * Handles the event to exit the program.

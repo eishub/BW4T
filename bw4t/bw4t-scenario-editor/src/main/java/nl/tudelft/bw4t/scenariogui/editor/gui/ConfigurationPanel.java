@@ -344,8 +344,7 @@ public class ConfigurationPanel extends JPanel {
     public final void setUseGui(final boolean useGui) {
         if (useGui) {
             guiCheckBox.setSelectedCheckbox(guiYes);
-        }
-        else {
+        } else {
             guiCheckBox.setSelectedCheckbox(guiNo);
         }
     }
@@ -357,8 +356,7 @@ public class ConfigurationPanel extends JPanel {
     public final void setVisualizePaths(final boolean visualizePaths) {
         if (visualizePaths) {
             pathsCheckBox.setSelectedCheckbox(pathsYes);
-        }
-        else {
+        } else {
             pathsCheckBox.setSelectedCheckbox(pathsNo);
         }
     }
@@ -370,8 +368,7 @@ public class ConfigurationPanel extends JPanel {
     public final void setEnableCollisions(final boolean enableCollisions) {
         if (enableCollisions) {
             collisionsCheckBox.setSelectedCheckbox(collisionsYes);
-        }
-        else {
+        } else {
             collisionsCheckBox.setSelectedCheckbox(collisionsNo);
         }
     }

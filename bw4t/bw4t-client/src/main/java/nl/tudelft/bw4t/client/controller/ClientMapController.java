@@ -1,5 +1,10 @@
 package nl.tudelft.bw4t.client.controller;
 
+import eis.exceptions.NoEnvironmentException;
+import eis.exceptions.PerceiveException;
+import eis.iilang.Parameter;
+import eis.iilang.Percept;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -33,11 +38,6 @@ import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 
 import org.apache.log4j.Logger;
-
-import eis.exceptions.NoEnvironmentException;
-import eis.exceptions.PerceiveException;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
 
 /**
  * The Client Map Controller.

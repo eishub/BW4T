@@ -1,13 +1,13 @@
 package nl.tudelft.bw4t.client.gui;
 
+import eis.exceptions.ManagementException;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import nl.tudelft.bw4t.client.controller.ClientController;
 
 import org.apache.log4j.Logger;
-
-import eis.exceptions.ManagementException;
 
 /**
  * The Class ClientWindowAdapter.

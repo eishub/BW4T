@@ -11,12 +11,12 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
  */
 public class RobotTableModel extends AbstractTableModel implements Serializable {
 
-	private static final long serialVersionUID = 4899095629026343945L;
+    private static final long serialVersionUID = 4899095629026343945L;
 
-	/**
-	 * Constructor.
-	 */
-	public RobotTableModel() {
+    /**
+     * Constructor.
+     */
+    public RobotTableModel() {
         super();
     }
 
@@ -97,14 +97,12 @@ public class RobotTableModel extends AbstractTableModel implements Serializable 
         case 1:
             if (value instanceof EntityType) {
                 bot.setBotController((EntityType) value);
-            }
-            else if (value instanceof String) {
+            } else if (value instanceof String) {
                 String cont = (String) value;
                 cont = cont.toLowerCase();
                 if (EntityType.AGENT.nameLower().equals(cont)) {
                     bot.setBotController(EntityType.AGENT);
-                }
-                else if (EntityType.HUMAN.nameLower().equals(cont)) {
+                } else if (EntityType.HUMAN.nameLower().equals(cont)) {
                     bot.setBotController(EntityType.HUMAN);
                 }
             }

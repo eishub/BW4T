@@ -1,15 +1,12 @@
 package nl.tudelft.bw4t.server.model.robots.handicap;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 
 import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.robots.NavigatingRobot;
-import nl.tudelft.bw4t.server.model.robots.handicap.AbstractRobotDecorator;
-import nl.tudelft.bw4t.server.model.robots.handicap.ColorBlindHandicap;
-import nl.tudelft.bw4t.server.model.robots.handicap.GripperHandicap;
-import nl.tudelft.bw4t.server.model.robots.handicap.Human;
-import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
-import nl.tudelft.bw4t.server.model.robots.handicap.SizeOverloadHandicap;
 import nl.tudelft.bw4t.server.model.zone.DropZone;
 
 import org.junit.Before;
@@ -23,9 +20,6 @@ import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(MockitoJUnitRunner.class)
 

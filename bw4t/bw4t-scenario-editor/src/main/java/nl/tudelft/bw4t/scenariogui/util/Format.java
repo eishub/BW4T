@@ -88,7 +88,7 @@ public final class Format {
      * @return The padded string.
      */
     public static String padString(String value, int amount) {
-    	StringBuffer sb = new StringBuffer(value);
+        StringBuffer sb = new StringBuffer(value);
         while (sb.length() < amount) {
             sb.append(0);
         }

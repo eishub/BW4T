@@ -285,7 +285,9 @@ class CommandOk implements MessageCommand {
             return "OK";
         } else if (message.getRoom() != null) { 
             return "OK, room " + message.getRoom();
-        } else return null;
+        } else {
+          return null;
+        }
     }
 
     @Override

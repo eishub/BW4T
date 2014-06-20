@@ -11,12 +11,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Door implements Serializable {
   
-	/** Serialization id. */
-	private static final long serialVersionUID = -4173196906728316076L;
+    /** Serialization id. */
+    private static final long serialVersionUID = -4173196906728316076L;
 
-	/** Define possible orientation. */
-	public enum Orientation {
-		/** Orientation either HORIZONTAL or VERTICAL. */
+    /** Define possible orientation. */
+    public enum Orientation {
+        /** Orientation either HORIZONTAL or VERTICAL. */
        HORIZONTAL, VERTICAL
   }
 

@@ -1,5 +1,12 @@
 package nl.tudelft.bw4t.client.agent;
 
+import eis.exceptions.ActException;
+import eis.exceptions.NoEnvironmentException;
+import eis.exceptions.PerceiveException;
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
+import eis.iilang.Percept;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,13 +14,6 @@ import nl.tudelft.bw4t.client.environment.PerceptsHandler;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 
 import org.apache.log4j.Logger;
-
-import eis.exceptions.ActException;
-import eis.exceptions.NoEnvironmentException;
-import eis.exceptions.PerceiveException;
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
 
 /**
  * A Testing Agent for use in BW4T.

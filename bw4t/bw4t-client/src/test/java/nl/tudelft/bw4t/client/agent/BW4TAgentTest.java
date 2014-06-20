@@ -5,13 +5,16 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.when;
+
+import eis.eis2java.exception.TranslationException;
+import eis.exceptions.ActException;
+import eis.iilang.Action;
 
 import java.rmi.RemoteException;
 
-import nl.tudelft.bw4t.client.agent.BW4TAgent;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.message.BW4TMessage;
 import nl.tudelft.bw4t.client.message.MessageType;
@@ -24,14 +27,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.omg.Dynamic.Parameter;
-
-import eis.eis2java.exception.TranslationException;
-import eis.eis2java.translation.Translator;
-import eis.exceptions.ActException;
-import eis.exceptions.NoEnvironmentException;
-import eis.exceptions.PerceiveException;
-import eis.iilang.Action;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BW4TAgentTest {

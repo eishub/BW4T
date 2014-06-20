@@ -1,11 +1,11 @@
 package nl.tudelft.bw4t.scenariogui.util;
 
+import static org.junit.Assert.assertEquals;
+
 import javax.swing.JTextField;
 import javax.swing.text.BadLocationException;
 
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Created by on 15-5-2014.

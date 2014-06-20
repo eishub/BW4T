@@ -25,7 +25,7 @@ import nl.tudelft.bw4t.map.Zone.Type;
  */
 public class EnvironmentStoreController extends ComponentAdapter {
     
-	/** The view of our Environment Store. */
+    /** The view of our Environment Store. */
     private EnvironmentStore view;
     
     /** The controller for the Map Panel. */

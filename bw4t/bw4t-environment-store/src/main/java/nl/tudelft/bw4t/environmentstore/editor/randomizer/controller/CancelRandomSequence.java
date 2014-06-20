@@ -8,7 +8,7 @@ import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeSequence
 /** This implements the action listener for the Cancel button in the Randomize Sequence frame. */
 public class CancelRandomSequence implements ActionListener{
     
-	/** The view the button is in. */
+    /** The view the button is in. */
     private RandomizeSequenceFrame view;
     
     /**
