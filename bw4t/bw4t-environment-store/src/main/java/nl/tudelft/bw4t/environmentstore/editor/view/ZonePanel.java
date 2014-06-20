@@ -93,11 +93,11 @@ public class ZonePanel extends JPanel implements UpdateableEditorInterface {
             this.setBackground(Zone.BLOCKADE_COLOR);
             break;
         case CORRIDOR:
-            if (zoneController.isStartZone()) {
-                this.setBackground(Color.CYAN);
-            } else {
-                this.setBackground(originalColor);
-            }
+          if (zoneController.isStartZone()) {
+            this.setBackground(Color.YELLOW);
+          } else {
+            this.setBackground(originalColor);
+         }
         default:
             break;
         }
