@@ -95,8 +95,6 @@ public final class MapLoader {
       
         ContinuousSpace<Object> space = initEmptyMap(tmpLocation, context);
         Grid<Object> grid = createGridSpace(context, (int) map.getArea().getX(), (int) map.getArea().getY());
-        
-        Launcher.getInstance().getEntityFactory().setSpace(space, grid);
 
         List<BlockColor> sequence = new ArrayList<BlockColor>(map.getSequence());
         createZones(context, zones, roomBlocks, space, grid, sequence);
@@ -137,7 +135,7 @@ public final class MapLoader {
         map = NewMap.create(new FileInputStream(new File(location)));
         
         ContinuousSpace<Object> space = createSpace(context, (int) map.getArea().getX(), (int) map.getArea().getY());
-
+        Launcher.getInstance().getEntityFactory().setSpace(space);
         return space;
     }
 
@@ -334,12 +332,15 @@ public final class MapLoader {
      * @param height  The height of the space
      */
     private static Grid<Object> createGridSpace(Context<Object> context, int mapWidth, int mapHeight) {
-               
+
         GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
         GridBuilderParameters params = new GridBuilderParameters(new StrictBorders(), new SimpleGridAdder<Object>(),
                 true, mapWidth, mapHeight);
-        
-        return gridFactory.createGrid(GRID_PROJECTION_ID, context, params);
+
+        Grid<Object> grid = gridFactory.createGrid(GRID_PROJECTION_ID, context, params);
+        Launcher.getInstance().getEntityFactory().setGrid(grid);
+
+        return grid;
     }
 
     /**
