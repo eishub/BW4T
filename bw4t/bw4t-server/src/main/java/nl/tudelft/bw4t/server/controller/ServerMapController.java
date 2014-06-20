@@ -7,6 +7,7 @@ import java.util.Set;
 
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.map.Path;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.renderer.AbstractMapController;
 import nl.tudelft.bw4t.map.renderer.MapController;
@@ -128,6 +129,16 @@ public class ServerMapController extends AbstractMapController {
         }
         mri.validate();
         mri.repaint();
+    }
+
+    @Override
+    public Set<Path> getPaths() {
+        Set<Path> paths = new HashSet<Path>();
+        for(Object pathTemp : serverContext.getObjects(Path.class)) {
+            Path path = (Path) pathTemp;
+            paths.add(path);
+        }
+        return paths;
     }
 
 }

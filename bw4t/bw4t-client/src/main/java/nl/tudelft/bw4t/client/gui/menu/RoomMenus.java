@@ -71,7 +71,10 @@ public class RoomMenus {
         // Robot commands
         BasicMenuOperations.addSectionTitleToPopupMenu("Command my robot to:", gui.getjPopupMenu());
 
-        JMenuItem menuItem = new JMenuItem("Go to " + colorAsString + " block");
+        BasicMenuOperations.addNavigateObstacleMenuItem(gui);
+        
+        JMenuItem menuItem = new JMenuItem("Go to " + box.getColor() + " block");
+
         menuItem.addActionListener(new GoToBlockActionListener(box.getObjectId(), gui.getController()));
         gui.getjPopupMenu().add(menuItem);
 
@@ -103,6 +106,8 @@ public class RoomMenus {
         // Robot commands
         BasicMenuOperations.addSectionTitleToPopupMenu("Command my robot to: ", gui.getjPopupMenu());
 
+        BasicMenuOperations.addNavigateObstacleMenuItem(gui);
+        
         JMenuItem menuItem = new JMenuItem("Go to " + label);
         menuItem.addActionListener(new GoToRoomActionListener(label, gui.getController()));
         gui.getjPopupMenu().add(menuItem);
@@ -201,5 +206,5 @@ public class RoomMenus {
         gui.getjPopupMenu().addSeparator();
         menuItem = new JMenuItem("Close menu");
         gui.getjPopupMenu().add(menuItem);
-    }
+    }   
 }

@@ -8,13 +8,14 @@ import nl.tudelft.bw4t.client.agent.HumanAgent;
 
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
+import nl.tudelft.bw4t.client.gui.listeners.NavigateObstaclesActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.PickUpActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.PickUpEPartnerActionListener;
 import nl.tudelft.bw4t.client.message.BW4TMessage;
 import nl.tudelft.bw4t.client.message.MessageTranslator;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
-import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.map.view.ViewEntity;
 
 /** Utility class containing some operations to add various things to pop-up menu's. */
 public final class BasicMenuOperations {
@@ -64,9 +65,26 @@ public final class BasicMenuOperations {
         jPopupMenu.add(menu);
         return menu;
     }
-    
+
+    /**
+     * Adds a menu item to the pop up menu that holds the option to navigate past obstacle,
+     * but only if the "bumped" percept has been received.
+     *
+     * @param gui The client gui.
+     */
+    public static void addNavigateObstacleMenuItem(BW4TClientGUI gui) {
+        ViewEntity theBot = gui.getController().getMapController().getTheBot();
+        if (theBot.isCollided()) {
+            JMenuItem menuItem = new JMenuItem("Navigate past obstacle");
+            menuItem.addActionListener(new NavigateObstaclesActionListener(gui.getController()));
+
+            gui.getjPopupMenu().add(menuItem);
+        }
+    }
+
     /**
      * Adds the option to pick up a box to the menu.
+     *
      * @param gui The gui holding the menu.
      * @param box The box to be picked up.
      */
@@ -79,9 +97,10 @@ public final class BasicMenuOperations {
             gui.getjPopupMenu().add(menuItem);
         }
     }
-    
+
     /**
      * Adds the option to pick up an e-partner to the menu.
+     *
      * @param gui The gui holding the menu.
      */
     public static void addEPartnerPickUpMenuItem(BW4TClientGUI gui, ViewEPartner ep) {
@@ -92,22 +111,24 @@ public final class BasicMenuOperations {
             gui.getjPopupMenu().add(menuItem);
         }
     }
-    
+
     /**
      * Gets the color while taking into account that the agent might be
      * color blind.
+     *
      * @param color The color that is observed be the environment (but not
-     * necessarily by the agent.
+     *              necessarily by the agent.
      * @param agent The agent.
      * @return The color, unknown if the agent is colorblind.
      */
     public static String getColor(String color, HumanAgent agent) {
         if (agent.isColorBlind()) {
-            if (Character.isUpperCase(color.charAt(0)))
+            if (Character.isUpperCase(color.charAt(0))) {
                 return "Unknown";
+            }
             return "unknown";
         }
         return color;
     }
-    
+
 }
