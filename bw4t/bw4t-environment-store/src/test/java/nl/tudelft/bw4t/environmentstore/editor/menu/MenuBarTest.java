@@ -5,8 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 import java.awt.Frame;
 import java.awt.event.ActionListener;
@@ -28,9 +26,6 @@ import nl.tudelft.bw4t.environmentstore.editor.model.MapConverter;
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeBlockFrame;
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeSequenceFrame;
 import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
-import nl.tudelft.bw4t.environmentstore.util.NoMockOptionPrompt;
-import nl.tudelft.bw4t.environmentstore.util.OptionPrompt;
-import nl.tudelft.bw4t.environmentstore.util.YesMockOptionPrompt;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone.Type;
 
@@ -49,16 +44,6 @@ public class MenuBarTest {
      * The path of the xml file used to test the open button.
      */
     private static final String FILE_OPEN_PATH = BASE + "red.map";
-
-    /**
-     * The path of the xml file used to test the open button.
-     */
-    private static final String FILE_EXPORT_PATH = BASE + "export/";
-
-    /**
-     * The path of the xml file used to save dummy data
-     */
-    private static final String FILE_SAVE_PATH = BASE + "dummy.xml";
 
     /**
      * The Scenario editor that is spied upon for this test.
@@ -82,6 +67,7 @@ public class MenuBarTest {
     @Before
     public void setUp() throws IOException {
     	mapController = new MapPanelController(5, 5);
+      	
     	envStore = spy(new EnvironmentStore(mapController));
 
         filechooser = mock(JFileChooser.class);
@@ -144,19 +130,13 @@ public class MenuBarTest {
     
     @Test
     public void menuOptionRandomizeSequenceTest() {
-    	boolean found = false;
     	List<BlockColor> bc = mapController.getSequence();
-    	envStore.getTopMenuBar().getMenuItemRandomizeSequence().doClick();
-    	for (Frame f : Frame.getFrames()) {
-    		if (f instanceof RandomizeSequenceFrame) {
-    			found = true;
-    			((RandomizeSequenceFrame) f).getRandomizeButton().doClick();
-    			((RandomizeSequenceFrame) f).getApplyButton().doClick();
-    		}
-    	}
-    	assertTrue(found);
+    	RandomizeSequenceFrame randomizeFrame = new RandomizeSequenceFrame("SuperFix", mapController);
+    	randomizeFrame.getRandomizeButton().doClick();
+    	randomizeFrame.getApplyButton().doClick();
     	assertFalse(bc.equals(mapController.getSequence()));
-    }   
+    }  
+    
     @Test
     public void menuOptionPreviewTest() {
     	boolean found = false;
@@ -172,6 +152,7 @@ public class MenuBarTest {
     	}
     	assertTrue(found);
     }
+    
     @Test
     public void fileFiltersTest() {
     	assertTrue(Arrays.equals(FileFilters.goalFilter().getExtensions(), new String[] {
