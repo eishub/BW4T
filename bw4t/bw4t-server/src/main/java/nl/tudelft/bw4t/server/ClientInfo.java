@@ -26,6 +26,7 @@ class ClientInfo {
             bot.setBotAmount(reqHuman);
             requestedBots.add(bot);
         }
+        this.clientConfig = new BW4TClientConfig();
     }
 
 
