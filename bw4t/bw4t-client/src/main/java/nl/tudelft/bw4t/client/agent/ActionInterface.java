@@ -1,7 +1,7 @@
 package nl.tudelft.bw4t.client.agent;
 
-import eis.exceptions.ActException;
 import nl.tudelft.bw4t.client.message.BW4TMessage;
+import eis.exceptions.ActException;
 
 /**
  * Interface for the actions that an agent should be able to perform.

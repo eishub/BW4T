@@ -5,7 +5,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 import nl.tudelft.bw4t.client.agent.HumanAgent;
-
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.NavigateObstaclesActionListener;

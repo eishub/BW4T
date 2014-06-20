@@ -2,11 +2,13 @@ package nl.tudelft.bw4t.client.gui.listeners;
 
 import java.awt.event.ActionEvent;
 import java.util.LinkedList;
-
-import org.apache.log4j.Logger;
+import java.util.List;
 
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.environment.Launcher;
+
+import org.apache.log4j.Logger;
+
 import eis.exceptions.ActException;
 import eis.iilang.Numeral;
 import eis.iilang.Percept;
@@ -39,7 +41,7 @@ public class GoToBlockActionListener extends AbstractClientActionListener {
                     LOGGER.error(e1);
                 }
         } else {
-            LinkedList<Percept> percepts = new LinkedList<Percept>();
+            List<Percept> percepts = new LinkedList<Percept>();
             Percept percept = new Percept("goToBlock", new Numeral(boxID));
             percepts.add(percept);
             getController().setToBePerformedAction(percepts);

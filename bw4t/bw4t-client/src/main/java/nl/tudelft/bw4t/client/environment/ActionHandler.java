@@ -1,21 +1,24 @@
 package nl.tudelft.bw4t.client.environment;
 
-import eis.exceptions.ActException;
-import eis.exceptions.AgentException;
-import eis.exceptions.EntityException;
-import eis.iilang.Action;
-import eis.iilang.Percept;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import eis.exceptions.ActException;
+import eis.exceptions.AgentException;
+import eis.exceptions.EntityException;
+import eis.iilang.Action;
+import eis.iilang.Percept;
+
 /** The ActionHandler Class handles the performAction function of the RemoteEnvironment. */
 public final class ActionHandler {
     
     /** Should never be instantiated. */
-    private ActionHandler() { }
+    private ActionHandler() { 
+        
+    }
     
     /**
      * Handles the performAction function from the {@link RemoteEnvironment}. 
