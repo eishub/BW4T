@@ -15,7 +15,8 @@ public enum DefaultConfigurationValues {
     VISUALIZE_PATHS("FALSE"),
     ENABLE_COLLISIONS("FALSE"),
     USE_GOAL("TRUE"),
-    MAP_FILE("");
+    MAP_FILE(""),
+    COLLISIONS_ENABLED("TRUE");
 
     private String value;
 

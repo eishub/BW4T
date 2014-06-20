@@ -147,6 +147,20 @@ public class BW4TAgent extends Thread implements ActionInterface {
             throw ex;
         }
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void navigateObstacles() throws ActException {
+        try {
+            bw4tenv.performEntityAction(entityId, new Action("navigateObstacles"));
+        } catch (RemoteException e) {
+            ActException ex = new ActException("navigateObstacles failed", e);
+            ex.setType(ActException.FAILURE);
+            throw ex;
+        }
+    }
 
     /**
      * {@inheritDoc}

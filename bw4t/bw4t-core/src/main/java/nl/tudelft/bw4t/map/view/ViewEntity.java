@@ -26,6 +26,8 @@ public class ViewEntity {
     private int robotsize = 2;
     
     private long holdingEpartner = -1;
+    
+    private boolean collided = false;
 
     private double batteryLevel = 0.0;
 
@@ -107,9 +109,13 @@ public class ViewEntity {
         this.holdingEpartner = holdingEpartner;
     }
 
-    public double getBatteryLevel() {
-        return batteryLevel;
+    public boolean isCollided() {
+        return collided;
     }
+
+    public void setCollided(boolean collided) { this.collided = collided; }
+
+    public double getBatteryLevel() { return batteryLevel;   }
 
     public void setBatteryLevel(double batteryLevel) {
         this.batteryLevel = batteryLevel;

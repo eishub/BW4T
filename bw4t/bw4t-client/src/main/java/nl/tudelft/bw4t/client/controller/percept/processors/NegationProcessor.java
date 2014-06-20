@@ -20,6 +20,8 @@ public class NegationProcessor implements PerceptProcessor{
             clientMapController.removeOccupiedRoom(((Identifier) paramOcc.get(0)).getValue());
         } else if (function.getName().equals("holding")) {
             clientMapController.getTheBot().getHolding().remove(((Numeral) function.getParameters().get(0)).getValue());
+        } else if (function.getName().equals("bumped")) {
+            clientMapController.getTheBot().setCollided(false);
         }
     }
 

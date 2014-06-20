@@ -84,5 +84,10 @@
 			<artifactId>collections-generic</artifactId>
 			<version>4.01</version>
 		</dependency>
+		<dependency>
+			<groupId>repast.simphony</groupId>
+			<artifactId>bin_and_src</artifactId>
+			<version>2.1</version>
+		</dependency>
 	</dependencies>
 </project>

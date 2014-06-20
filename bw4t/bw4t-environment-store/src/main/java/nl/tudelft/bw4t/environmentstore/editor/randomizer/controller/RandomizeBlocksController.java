@@ -9,7 +9,7 @@ public class RandomizeBlocksController {
 	
 	private MapPanelController mapController;
 	
-	private ApplyRandomBlock randomFromSettings;
+	private ApplyRandomBlock applyRandomBlock;
 	
 	/**
 	 * The RandomizeController class takes care of all the ActionListeners.
@@ -21,9 +21,9 @@ public class RandomizeBlocksController {
 		this.mapController = mpc;
 		
 		getMainView().getApplyButton().addActionListener(
-				this.randomFromSettings = new ApplyRandomBlock(view, this)
+				this.applyRandomBlock = new ApplyRandomBlock(view, this)
 		);
-		// Cancel Randomizer
+
 		getMainView().getCancelButton().addActionListener(
 				new CancelRandomBlocks(getMainView())
 		);
@@ -31,10 +31,6 @@ public class RandomizeBlocksController {
 	
 	public RandomizeBlockFrame getMainView() {
 		return view;
-	}
-	
-	public ApplyRandomBlock getRandomizeFromSettings() {
-		return randomFromSettings;
 	}
 	
 	public MapPanelController getMapController() {

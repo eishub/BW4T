@@ -25,6 +25,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
+import repast.simphony.space.grid.Grid;
 
 /**
  * The class <code>BoundedMoveableObjectTest</code> contains tests for the class <code>{@link BoundedMoveableObject}</code>.
@@ -33,6 +34,7 @@ import repast.simphony.space.continuous.NdPoint;
 public class BoundedMoveableObjectTest {
     private static final double DELTA = 1e-15;
     @Mock private ContinuousSpace<Object> space;
+    @Mock private Grid<Object> grid;
     @Mock private Context<Object> context;
     @Mock private NdPoint point;
     /**
@@ -41,7 +43,7 @@ public class BoundedMoveableObjectTest {
     @Test
     public void testAddToContext_1()
         throws Exception {
-        BoundedMoveableObject fixture = new Door(space, context);
+        BoundedMoveableObject fixture = new Door(space, grid, context);
 
         fixture.addToContext();
 
@@ -60,8 +62,8 @@ public class BoundedMoveableObjectTest {
     public void testDistanceTo_1()
         throws Exception {
         when(space.getLocation(any())).thenReturn(point);
-        BoundedMoveableObject fixture = new Door(space, context);
-        BoundedMoveableObject o = new Door(space, context);
+        BoundedMoveableObject fixture = new Door(space, grid, context);
+        BoundedMoveableObject o = new Door(space, grid, context);
 
         double result = fixture.distanceTo(o);
 
@@ -84,7 +86,7 @@ public class BoundedMoveableObjectTest {
     public void testDistanceTo_2()
         throws Exception {
         when(space.getLocation(any())).thenReturn(point);
-        BoundedMoveableObject fixture = new Door(space, context);
+        BoundedMoveableObject fixture = new Door(space, grid, context);
         NdPoint there = new NdPoint(0,0);
 
         double result = fixture.distanceTo(there);
@@ -107,8 +109,8 @@ public class BoundedMoveableObjectTest {
     @Test
     public void testEquals_1()
         throws Exception {
-        BoundedMoveableObject fixture = new Door(space, context);
-        Object obj = new Door(space, context);
+        BoundedMoveableObject fixture = new Door(space, grid, context);
+        Object obj = new Door(space, grid, context);
         assertTrue(fixture.equals(obj));
     }
 
@@ -122,7 +124,7 @@ public class BoundedMoveableObjectTest {
     @Test
     public void testEquals_2()
         throws Exception {
-        BoundedMoveableObject fixture = new Door(space, context);
+        BoundedMoveableObject fixture = new Door(space, grid, context);
         Object obj = null;
         assertFalse(fixture.equals(obj));
     }
@@ -137,7 +139,7 @@ public class BoundedMoveableObjectTest {
     @Test
     public void testEquals_3()
         throws Exception {
-        BoundedMoveableObject fixture = new Door(space, context);
+        BoundedMoveableObject fixture = new Door(space, grid, context);
         Object obj = new Object();
         assertFalse(fixture.equals(obj));
     }
@@ -152,15 +154,15 @@ public class BoundedMoveableObjectTest {
     @Test
     public void testEquals_4()
         throws Exception {
-        BoundedMoveableObject fixture = new Door(space, context);
-        Object obj = new Door(space, context);
+        BoundedMoveableObject fixture = new Door(space, grid, context);
+        Object obj = new Door(space, grid, context);
         assertTrue(fixture.equals(obj));
     }
 
     @Test
     public void testEquals_5()
         throws Exception {
-        BoundedMoveableObject boundedMoveableObject = new Door(space, context);
+        BoundedMoveableObject boundedMoveableObject = new Door(space, grid, context);
         Object obj = boundedMoveableObject;
         boolean result = boundedMoveableObject.equals(obj);
         assertEquals(true
@@ -171,17 +173,17 @@ public class BoundedMoveableObjectTest {
     public void testEquals_6()
         throws Exception {
         when(context.size()).thenReturn(1);
-        BoundedMoveableObject boundedMoveableObject = new Door(space, context);
-        Object obj = new Door(space, context);
+        BoundedMoveableObject boundedMoveableObject = new Door(space, grid, context);
+        Object obj = new Door(space, grid, context);
         assertTrue(boundedMoveableObject.equals(obj));
     }
 
     @Test
     public void testEquals_7()
         throws Exception {
-        BoundedMoveableObject boundedMoveableObject = new Door(space, context);
+        BoundedMoveableObject boundedMoveableObject = new Door(space, grid, context);
         boundedMoveableObject.setSize(2, 3);
-        Object obj = new Door(space, context);
+        Object obj = new Door(space, grid, context);
         boolean result = boundedMoveableObject.equals(obj);
         assertEquals(false, result);
     }
@@ -196,7 +198,7 @@ public class BoundedMoveableObjectTest {
     @Test
     public void testGetBoundingBox_1()
         throws Exception {
-        BoundedMoveableObject fixture = new Door(space, context);
+        BoundedMoveableObject fixture = new Door(space, grid, context);
 
         Rectangle2D result = fixture.getBoundingBox();
 
@@ -225,7 +227,7 @@ public class BoundedMoveableObjectTest {
     @Test
     public void testGetContext_1()
         throws Exception {
-        BoundedMoveableObject fixture = new Door(space, context);
+        BoundedMoveableObject fixture = new Door(space, grid, context);
 
         Context<Object> result = fixture.getContext();
 
@@ -245,8 +247,8 @@ public class BoundedMoveableObjectTest {
     public void testGetId_1()
         throws Exception {
         when(context.size()).thenReturn(1);
-        BoundedMoveableObject fixture = new Door(space, context);
-        BoundedMoveableObject fixture2 = new Door(space, context);
+        BoundedMoveableObject fixture = new Door(space, grid, context);
+        BoundedMoveableObject fixture2 = new Door(space, grid, context);
 
         long result = fixture.getId();
         long result2 = fixture2.getId();
@@ -267,7 +269,7 @@ public class BoundedMoveableObjectTest {
     @Test
     public void testGetLocation_1()
         throws Exception {
-        BoundedMoveableObject fixture = new Door(space, context);
+        BoundedMoveableObject fixture = new Door(space, grid, context);
         
         when(space.getLocation(any())).thenReturn(point);
 
@@ -287,7 +289,7 @@ public class BoundedMoveableObjectTest {
     @Test
     public void testGetSpace_1()
         throws Exception {
-        BoundedMoveableObject fixture = new Door(space, context);
+        BoundedMoveableObject fixture = new Door(space, grid, context);
 
         ContinuousSpace<Object> result = fixture.getSpace();
 
@@ -305,7 +307,7 @@ public class BoundedMoveableObjectTest {
     @Test
     public void testHashCode_1()
         throws Exception {
-        BoundedMoveableObject fixture = new Door(space, context);
+        BoundedMoveableObject fixture = new Door(space, grid, context);
 
         int result = fixture.hashCode();
 
@@ -323,7 +325,7 @@ public class BoundedMoveableObjectTest {
     @Test
     public void testMoveTo_1()
         throws Exception {
-        BoundedMoveableObject fixture = new Door(space, context);
+        BoundedMoveableObject fixture = new Door(space, grid, context);
         double x = 1.0;
         double y = 1.0;
 
@@ -351,7 +353,7 @@ public class BoundedMoveableObjectTest {
     @Test
     public void testRemoveFromContext_1()
         throws Exception {
-        BoundedMoveableObject fixture = new Door(space, context);
+        BoundedMoveableObject fixture = new Door(space, grid, context);
 
         fixture.removeFromContext();
 
@@ -369,7 +371,7 @@ public class BoundedMoveableObjectTest {
     @Test
     public void testSetSize_1()
         throws Exception {
-        BoundedMoveableObject fixture = new Door(space, context);
+        BoundedMoveableObject fixture = new Door(space, grid, context);
         double width = 1.0;
         double height = 1.0;
 

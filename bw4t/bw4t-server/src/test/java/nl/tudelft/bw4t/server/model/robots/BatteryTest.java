@@ -17,12 +17,15 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static org.mockito.Mockito.when;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
+import repast.simphony.space.grid.Grid;
+
 @RunWith(MockitoJUnitRunner.class)
 public class BatteryTest {
     /**
      * space Mock
      */
     @Mock private ContinuousSpace<Object> space;
+    @Mock private Grid<Object> grid;
     /**
      * context Mock
      */
@@ -41,7 +44,7 @@ public class BatteryTest {
      */
     @Test
     public void getBatteryTest() {
-        AbstractRobot r = new NavigatingRobot("", space, context, true, 0);
+        AbstractRobot r = new NavigatingRobot("", space, grid, context, true, 0);
         Battery b = new Battery(50, 20, 5);
         
         r.setBattery(b);
@@ -54,7 +57,7 @@ public class BatteryTest {
      */
     @Test
     public void robotBatteryTest() {
-        AbstractRobot r = new NavigatingRobot("", space, context, true, 0);
+        AbstractRobot r = new NavigatingRobot("", space, grid, context, true, 0);
         assertTrue(r.getBattery().getPercentage() == 100);
         assertTrue(r.getBattery().getDischargeRate() == 0);
     }

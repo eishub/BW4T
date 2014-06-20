@@ -1,10 +1,11 @@
 package nl.tudelft.bw4t.client.controller;
 
+import eis.eis2java.annotation.AsPercept;
+import eis.eis2java.translation.Filter.Type;
 import eis.exceptions.NoEnvironmentException;
 import eis.exceptions.PerceiveException;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -25,7 +26,6 @@ import nl.tudelft.bw4t.client.controller.percept.processors.RobotSizeProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.SequenceIndexProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.SequenceProcessor;
 import nl.tudelft.bw4t.client.environment.PerceptsHandler;
-import nl.tudelft.bw4t.client.gui.listeners.BatteryProgressBarListener;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
@@ -45,7 +45,7 @@ public class ClientMapController extends AbstractMapController {
      * The log4j logger which writes logs.
      */
     private static final Logger LOGGER = Logger.getLogger(ClientMapController.class);
-    
+
     /** The exception string constant. */
     private static final String COULDNOTPOLL = "Could not correctly poll the percepts from the environment.";
 
@@ -56,31 +56,31 @@ public class ClientMapController extends AbstractMapController {
 
     /** The occupied rooms. */
     private Set<Zone> occupiedRooms = new HashSet<Zone>();
-    
+
     /** The rendered bot. */
     private ViewEntity theBot = new ViewEntity();
-    
+
     /** The color sequence index. */
     private int colorSequenceIndex = 0;
-    
+
     /** The visible blocks. */
     private Set<ViewBlock> visibleBlocks = new HashSet<>();
-    
+
     /** The (at one point) visible e-partners. */
     private Set<ViewEPartner> knownEPartners = new HashSet<>();
-    
+
     /** All the blocks. */
     private Map<Long, ViewBlock> allBlocks = new HashMap<>();
 
     private Map<String, PerceptProcessor> perceptProcessors;
 
-    
+
     /** The color sequence. */
     private List<BlockColor> colorSequence = new LinkedList<>();
 
     /**
      * Instantiates a new client map controller.
-     * 
+     *
      * @param map
      *            the map
      * @param controller
@@ -131,7 +131,7 @@ public class ClientMapController extends AbstractMapController {
 
     /**
      * Adds an occupied room to the list of occupied rooms.
-     * 
+     *
      * @param name
      *            the name
      */
@@ -141,7 +141,7 @@ public class ClientMapController extends AbstractMapController {
 
     /**
      * Removes the occupied room from the list of occupied rooms.
-     * 
+     *
      * @param name
      *            the name
      */
@@ -160,7 +160,7 @@ public class ClientMapController extends AbstractMapController {
         entities.add(theBot);
         return entities;
     }
-    
+
     @Override
     public Set<ViewEPartner> getVisibleEPartners() {
         Set<ViewEPartner> visibleEPartners = new HashSet<ViewEPartner>();
@@ -171,7 +171,7 @@ public class ClientMapController extends AbstractMapController {
         }
         return visibleEPartners;
     }
-    
+
     public void makeEPartnersInvisible() {
         for (ViewEPartner ep : knownEPartners) {
             ep.setVisible(false);
@@ -191,7 +191,7 @@ public class ClientMapController extends AbstractMapController {
         }
         return null;
     }
-    
+
     /**
      * Returns an e-partner with this id that at one point has ever
      * been visible.
@@ -230,7 +230,7 @@ public class ClientMapController extends AbstractMapController {
 
     /**
      * Handle all the percepts.
-     * 
+     *
      * @param name
      *            the name of the percept
      * @param perceptParameters
@@ -243,6 +243,7 @@ public class ClientMapController extends AbstractMapController {
             processor.process(perceptParameters, this);
         }
     }
+
 
     public ViewEPartner addEPartner(long id, long holderId) {
         LOGGER.info("creating epartner(" + id + ", " + holderId + ")");

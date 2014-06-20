@@ -52,7 +52,7 @@ public interface BW4TServerActions extends Remote {
      * @throws RemoteException
      *             if an exception occurs during the execution of a remote object call
      */
-    void registerClient(BW4TClientActions client, BW4TClientConfig clientConfig) throws RemoteException;
+    void registerClient(BW4TClientActions client, BW4TClientConfig config) throws RemoteException;
 
     /**
      * Remove a client from the server. At this moment the client makes sure that it frees its entities first.

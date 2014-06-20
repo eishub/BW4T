@@ -23,10 +23,6 @@ public class MapPanelController implements ChangeListener {
 
     /** basic size of the map */
     private ZoneController[][] zonecontrollers;
-
-    
-    private boolean startzone;
-	private boolean dropzone;
 	
     private EnvironmentMap model;
 
@@ -263,28 +259,28 @@ public class MapPanelController implements ChangeListener {
    	 * @return the startzone
    	 */
    	public boolean hasStartzone() {
-   		return startzone;
+   		return model.hasStartzone();
    	}
 
    	/**
    	 * @param startzone the startzone to set
    	 */
    	public void setStartzone(boolean startzone) {
-   		this.startzone = startzone;
+   		model.setStartzone(startzone);
    	}
 
    	/**
    	 * @return the dropzone
    	 */
    	public boolean hasDropzone() {
-   		return dropzone;
+   		return model.hasDropzone();
    	}
 
    	/**
    	 * @param dropzone the dropzone to set
    	 */
    	public void setDropzone(boolean dropzone) {
-   		this.dropzone = dropzone;
+   		model.setDropzone(dropzone);
    	}
 
 

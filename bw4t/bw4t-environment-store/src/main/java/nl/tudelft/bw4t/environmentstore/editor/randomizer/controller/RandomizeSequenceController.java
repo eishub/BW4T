@@ -14,7 +14,7 @@ public class RandomizeSequenceController {
 	
 	private MapPanelController mapController;
 	
-	private RandomizeFromSettings randomFromSettings;
+	private RandomizeSequence randomFromSettings;
 	
 	/**
 	 * The RandomizeController class takes care of all the ActionListeners.
@@ -28,7 +28,7 @@ public class RandomizeSequenceController {
 		/** Create all action listeners for the File Menu */
 		// Randomize from settings
 		getMainView().getRandomizeButton().addActionListener(
-				this.randomFromSettings = new RandomizeFromSettings(getMainView(), this, null)
+				this.randomFromSettings = new RandomizeSequence(getMainView(), this, null)
 		);
 		// Apply randomly generated blocks to room or sequence
 		getMainView().getApplyButton().addActionListener(
@@ -44,7 +44,7 @@ public class RandomizeSequenceController {
 		return view;
 	}
 	
-	public RandomizeFromSettings getRandomizeFromSettings() {
+	public RandomizeSequence getRandomizeFromSettings() {
 		return randomFromSettings;
 	}
 	

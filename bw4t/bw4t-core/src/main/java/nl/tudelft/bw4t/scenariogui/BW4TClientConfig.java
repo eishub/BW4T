@@ -41,10 +41,13 @@ public class BW4TClientConfig implements Serializable {
 
 	private boolean visualizePaths = DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue();
 
-	private boolean enableCollisions = DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue();
-
 	private boolean useGoal = DefaultConfigurationValues.USE_GOAL.getBooleanValue();
 
+    private boolean collisionEnabled = DefaultConfigurationValues.COLLISIONS_ENABLED.getBooleanValue();
+
+	/**
+	 * The location of the map file.
+	 */
 	private String mapFile = "";
 
 	/**
@@ -232,26 +235,6 @@ public class BW4TClientConfig implements Serializable {
 	 */
 	public final boolean isVisualizePaths() {
 		return visualizePaths;
-	}
-
-	/**
-	 * Sets if collisions should be enabled
-	 *
-	 * @param newEnableCollisions
-	 *            Boolean indicating if collisions should be enabled
-	 */
-	@XmlElement
-	public final void setEnableCollisions(final boolean newEnableCollisions) {
-		this.enableCollisions = newEnableCollisions;
-	}
-
-	/**
-	 * Gets if collisions should be enabled
-	 *
-	 * @return If collisions should be enabled
-	 */
-	public final boolean isEnableCollisions() {
-		return enableCollisions;
 	}
 
 	/**
@@ -511,5 +494,31 @@ public class BW4TClientConfig implements Serializable {
         updateOldBotConfigs();
         updateOldEpartnerConfigs();
 	}
+
+    /**
+     * Set the state of the collision checking
+     * @param state True if collisions are to be enabled.
+     */
+    @XmlElement
+    public void setCollisionEnabled(boolean state) {
+        collisionEnabled = state;
+    }
+
+    /**
+     * Returns the state of collision checking
+     * @return True if collisions are enabled.
+     */
+    public boolean isCollisionEnabled() {
+        return collisionEnabled;
+    }
+
+    @Override
+    public BW4TClientConfig clone() {
+        try {
+            return (BW4TClientConfig) super.clone();
+        } catch (CloneNotSupportedException e) {
+            return null;
+        }
+    }
 
 }
