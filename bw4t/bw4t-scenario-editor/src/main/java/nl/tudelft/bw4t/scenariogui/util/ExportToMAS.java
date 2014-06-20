@@ -231,7 +231,7 @@ public final class ExportToMAS {
             launchPolicyBuilder.append(TAB);
             launchPolicyBuilder.append(String.format("when [type=%s,max=%d]@env do launch %s: %s .",
                     type,
-                    new Integer(bot.getBotAmount()),
+                    Integer.valueOf(bot.getBotAmount()),
                     bot.getBotName().toLowerCase().replace(" ", "_"),
                     bot.getReferenceName()));
             launchPolicyBuilder.append(NEWLINE);
@@ -250,7 +250,7 @@ public final class ExportToMAS {
             launchPolicyBuilder.append(TAB);
             launchPolicyBuilder.append(String.format(
                     "when [type=%s,max=%d]@env do launch %s: %s .",
-                    "epartner", new Integer(epartner.getEpartnerAmount()),
+                    "epartner", Integer.valueOf(epartner.getEpartnerAmount()),
                     epartner.getEpartnerName().toLowerCase().replace(" ", "_"),
                     epartner.getReferenceName()));
             launchPolicyBuilder.append(NEWLINE);

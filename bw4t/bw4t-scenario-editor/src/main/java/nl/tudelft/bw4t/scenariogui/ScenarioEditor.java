@@ -34,7 +34,7 @@ public class ScenarioEditor extends JFrame {
     
     private ScenarioEditorController controller;
     
-    private static BW4TClientConfig model;
+    private BW4TClientConfig model;
     
     private static OptionPrompt option = new DefaultOptionPrompt();
 
@@ -211,6 +211,7 @@ public class ScenarioEditor extends JFrame {
      * Closes the ScenarioEditor window and all child frames.
      */
     public void closeScenarioEditor() {
+    	// This exit call is used because the child frames won't be closed otherwise. 
         System.exit(0);
     }
 
