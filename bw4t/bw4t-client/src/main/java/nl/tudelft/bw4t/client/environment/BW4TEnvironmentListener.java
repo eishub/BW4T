@@ -100,17 +100,10 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
             agent.setBotConfig(findCorrespondingBotConfig(entity, false));
             agent.registerEntity(entity);
             environment.registerAgent(agent.getAgentId());
+            environment.addRunningAgent(agent);
             environment.associateEntity(agent.getAgentId(), entity);
 
-            if (isHuman || agent instanceof HumanAgent) {
-                final ClientController control = new ClientController(environment, entity, (HumanAgent) agent);
-                control.startupGUI();
-                environment.putEntityController(entity, control);
-            }
-
             agent.start();
-
-            environment.addRunningAgent(agent);
         } catch (InstantiationException | AgentException | RelationException | EntityException e) {
             LOGGER.error("Failed to handle new entity event.", e);
         }

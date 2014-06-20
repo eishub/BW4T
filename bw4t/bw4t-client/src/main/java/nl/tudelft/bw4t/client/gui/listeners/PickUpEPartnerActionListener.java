@@ -24,7 +24,7 @@ public class PickUpEPartnerActionListener extends AbstractClientActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!Launcher.getEnvironment().isConnectedToGoal()) {
+        if (!getController().getEnvironment().isConnectedToGoal()) {
             try {
                 getController().getHumanAgent().pickUpEPartner();
                 gui.getEpartnerMessageButton().setEnabled(true);

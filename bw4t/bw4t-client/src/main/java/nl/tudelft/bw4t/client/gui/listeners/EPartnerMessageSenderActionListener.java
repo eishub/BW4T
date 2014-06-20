@@ -57,7 +57,7 @@ public class EPartnerMessageSenderActionListener extends ClientActionListener {
     private void sendMessages(String ownName, String[] receivers) {
         
         for (String name : receivers) {
-            if (!Launcher.getEnvironment().isConnectedToGoal()) {
+            if (!getController().getEnvironment().isConnectedToGoal()) {
                 try {
                     getController().getHumanAgent().sendMessage(name, message);
                 } catch (Exception e1) {

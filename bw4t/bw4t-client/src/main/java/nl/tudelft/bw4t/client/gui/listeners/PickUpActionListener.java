@@ -28,7 +28,7 @@ public class PickUpActionListener extends AbstractClientActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!Launcher.getEnvironment().isConnectedToGoal()) {
+        if (!getController().getEnvironment().isConnectedToGoal()) {
             try {
                 getController().getHumanAgent().pickUp();
             } catch (ActException e1) {

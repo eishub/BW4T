@@ -98,6 +98,8 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
      * out of a room
      */
     private boolean collided = false;
+    
+    private boolean destinationUnreachable = false;
 
     /** The location to which the robot wants to travel. */
     private NdPoint targetLocation;
@@ -621,6 +623,11 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     public IRobot getParent() {
         return null;
     }
+    
+    @Override
+    public IRobot getEarliestParent() {
+        return null;
+    }
 
     @Override
     public void setParent(IRobot hI) {
@@ -700,4 +707,13 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     public void clearObstacles() {
         obstacles.clear();
     }
+    
+    public boolean isDestinationUnreachable() {
+        return destinationUnreachable;
+    }
+    
+    public void setDestinationUnreachable(boolean destinationUnreachable) {
+        this.destinationUnreachable = destinationUnreachable;
+    }
+    
 }

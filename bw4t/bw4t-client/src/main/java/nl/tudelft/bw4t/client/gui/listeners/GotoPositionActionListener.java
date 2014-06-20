@@ -35,7 +35,7 @@ public class GotoPositionActionListener extends AbstractClientActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!Launcher.getEnvironment().isConnectedToGoal()) {
+        if (!getController().getEnvironment().isConnectedToGoal()) {
             try {
                 getController().getHumanAgent().goTo(position.getX(), position.getY());
             } catch (ActException e1) {

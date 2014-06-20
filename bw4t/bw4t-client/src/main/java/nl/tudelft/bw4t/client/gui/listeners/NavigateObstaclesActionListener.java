@@ -28,7 +28,7 @@ public class NavigateObstaclesActionListener extends ClientActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!Launcher.getEnvironment().isConnectedToGoal()) {
+        if (!getController().getEnvironment().isConnectedToGoal()) {
             try {
                 getController().getHumanAgent().navigateObstacles();
             } catch (Exception e1) {
