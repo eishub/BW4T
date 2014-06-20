@@ -6,7 +6,7 @@ import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeBlockFra
 /** The controller class for the Randomize Blocks frame. */
 public class RandomizeBlocksController {
 
-	/** The view this class controls. */
+    /** The view this class controls. */
     private RandomizeBlockFrame view;
     
     /** The map panel controller linked to this class. */

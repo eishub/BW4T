@@ -14,7 +14,7 @@ import nl.tudelft.bw4t.environmentstore.editor.model.EnvironmentMap;
 /** The mapPanel class contains the map that is being edited in a grid. */
 public class MapPanel extends JPanel implements UpdateableEditorInterface {
     
-	/** Random generated serial version UID. */
+    /** Random generated serial version UID. */
     private static final long serialVersionUID = -5921838296315289933L;
 
     /** The controller for this view class. */

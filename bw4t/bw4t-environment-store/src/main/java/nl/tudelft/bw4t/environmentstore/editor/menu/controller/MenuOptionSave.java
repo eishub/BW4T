@@ -10,11 +10,11 @@ import nl.tudelft.bw4t.environmentstore.main.controller.EnvironmentStoreControll
  */
 public class MenuOptionSave extends AbstractMenuOption {
 
-	/**
-	 * Constructor for MenuOptionSave
-	 * @param newView the menu the option is on
-	 * @param controller environment controller
-	 */
+    /**
+     * Constructor for MenuOptionSave
+     * @param newView the menu the option is on
+     * @param controller environment controller
+     */
     public MenuOptionSave(MenuBar newView,
             EnvironmentStoreController controller) {
         super(newView, controller);

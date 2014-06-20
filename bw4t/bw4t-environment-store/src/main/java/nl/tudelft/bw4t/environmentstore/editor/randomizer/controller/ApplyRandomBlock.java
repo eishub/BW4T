@@ -15,7 +15,7 @@ import nl.tudelft.bw4t.map.BlockColor;
  */
 public class ApplyRandomBlock implements ActionListener{
     
-	/** The frame in question. */
+    /** The frame in question. */
     private RandomizeBlockFrame view;
     
     /** The controller for this frame. */

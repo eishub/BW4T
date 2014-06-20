@@ -13,7 +13,7 @@ import nl.tudelft.bw4t.scenariogui.util.FileFilters;
  * Handles actions of the GoalFileButton.
  */
 public class EGoalFileButton implements ActionListener {
-	
+    
     private EpartnerFrame view;
 
     private JFileChooser jfc;

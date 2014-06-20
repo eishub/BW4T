@@ -11,7 +11,7 @@ import nl.tudelft.bw4t.map.BlockColor;
 /** The controller class for the RandomizeSequence frame. */
 public class RandomizeSequenceController {
 
-	/** The view the randomize sequence controller controls. */
+    /** The view the randomize sequence controller controls. */
     private RandomizeSequenceFrame view;
     
     /** The map controller linked to this controller. */

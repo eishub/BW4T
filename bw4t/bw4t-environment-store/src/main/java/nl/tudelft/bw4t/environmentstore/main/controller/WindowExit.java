@@ -7,7 +7,7 @@ import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
 
 class WindowExit extends WindowAdapter {
     
-	/** The view of our Environment Store. */
+    /** The view of our Environment Store. */
     private EnvironmentStore view;
     
     /**

@@ -35,7 +35,7 @@ public interface BW4TClientActions extends Remote {
      * @param entity
      *            , the id of the free entity
      * @param agents
-     * 			List of the agents (names)
+     *             List of the agents (names)
      * @throws RemoteException
      *             if an exception occurs during the execution of a remote
      *             object call

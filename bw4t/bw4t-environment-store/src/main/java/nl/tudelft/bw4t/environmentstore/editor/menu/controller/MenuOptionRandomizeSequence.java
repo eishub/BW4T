@@ -11,11 +11,11 @@ import nl.tudelft.bw4t.environmentstore.main.controller.EnvironmentStoreControll
  */
 public class MenuOptionRandomizeSequence extends AbstractMenuOption {
 
-	/**
-	 * Constructor for MenuOptionRandomizeSequence
-	 * @param newView the  menu the option is on
-	 * @param controller environment controller
-	 */
+    /**
+     * Constructor for MenuOptionRandomizeSequence
+     * @param newView the  menu the option is on
+     * @param controller environment controller
+     */
     public MenuOptionRandomizeSequence(MenuBar newView,
             EnvironmentStoreController controller) {
         super(newView, controller);

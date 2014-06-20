@@ -21,10 +21,10 @@ import org.apache.log4j.Logger;
  * A class of File operations.
  */
 public final class FileUtils {
-	
-	/** 
-	 * error message used when could not find file 
-	 */ 
+    
+    /** 
+     * error message used when could not find file 
+     */ 
     private static final String COULD_NOT_FIND_FILE = "Could not find '%s'";
 
     /**
@@ -69,29 +69,29 @@ public final class FileUtils {
 
     /**
      * Closes FileInputStream and/or FileOutpusStream 
-     * 			(when the exist/not null)
+     *             (when the exist/not null)
      * 
      * @param fis FileInputStream
      * @param fos FileOutputStream
      * @param toCopy original file
      */
-	private static void close(final File toCopy, FileInputStream fis,
-			FileOutputStream fos) {
-		if (fis != null) {
-		    try {
-		        fis.close();
-		    } catch (IOException e) {
-		        LOGGER.warn(String.format(FAILED_TO_CLOSE, toCopy), e);
-		    }
-		}
-		if (fos != null) {
-		    try {
-		        fos.close();
-		    } catch (IOException e) {
-		        LOGGER.warn(String.format(FAILED_TO_CLOSE, toCopy), e);
-		    }
-		}
-	}
+    private static void close(final File toCopy, FileInputStream fis,
+            FileOutputStream fos) {
+        if (fis != null) {
+            try {
+                fis.close();
+            } catch (IOException e) {
+                LOGGER.warn(String.format(FAILED_TO_CLOSE, toCopy), e);
+            }
+        }
+        if (fos != null) {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                LOGGER.warn(String.format(FAILED_TO_CLOSE, toCopy), e);
+            }
+        }
+    }
 
     /**
      * copy all of the files in the given directory .
@@ -143,7 +143,7 @@ public final class FileUtils {
             if (entry.getName().startsWith(entryName)) {
                 boolean copy = copyJar(destDir, jarFile, entryNameParent, entry);
                 if (!copy)
-                	return copy;
+                    return copy;
             }
         }
         return true;
@@ -160,25 +160,25 @@ public final class FileUtils {
      * @return true iff the file were successfully copied
      * @throws IOException 
      */
-	private static boolean copyJar(final File destDir, final JarFile jarFile,
-			String entryNameParent, final JarEntry entry) throws IOException {
-		
-		final String filename = FileUtils.removeStart(entry.getName(), entryNameParent);
+    private static boolean copyJar(final File destDir, final JarFile jarFile,
+            String entryNameParent, final JarEntry entry) throws IOException {
+        
+        final String filename = FileUtils.removeStart(entry.getName(), entryNameParent);
 
-		final File f = new File(destDir, filename);
-		if (!entry.isDirectory()) {
-		    final InputStream entryInputStream = jarFile.getInputStream(entry);
-		    if (!FileUtils.copyStream(entryInputStream, f)) {
-		        return false;
-		    }
-		    entryInputStream.close();
-		} else {
-		    if (!FileUtils.ensureDirectoryExists(f)) {
-		        throw new IOException("Could not create directory: " + f.getAbsolutePath());
-		    }
-		}
-		return true;
-	}
+        final File f = new File(destDir, filename);
+        if (!entry.isDirectory()) {
+            final InputStream entryInputStream = jarFile.getInputStream(entry);
+            if (!FileUtils.copyStream(entryInputStream, f)) {
+                return false;
+            }
+            entryInputStream.close();
+        } else {
+            if (!FileUtils.ensureDirectoryExists(f)) {
+                throw new IOException("Could not create directory: " + f.getAbsolutePath());
+            }
+        }
+        return true;
+    }
 
     /**
      * Copy files from local filesystem or resources to a folder in the filesystem.
@@ -274,7 +274,7 @@ public final class FileUtils {
      * @param str Original String
      * @param remove String to remove 
      * @return rest of string after removing remove in front
-     *  	when str does not start with remove, return str
+     *      when str does not start with remove, return str
      */
     public static String removeStart(String str, String remove) {
         if (isEmpty(str) || isEmpty(remove)) {

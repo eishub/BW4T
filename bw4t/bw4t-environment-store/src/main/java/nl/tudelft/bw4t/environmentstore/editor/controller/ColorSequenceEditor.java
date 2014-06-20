@@ -26,7 +26,7 @@ import nl.tudelft.bw4t.map.BlockColor;
  */
 public class ColorSequenceEditor extends JComponent {
     
-	/** Random generated serial version UID. */
+    /** Random generated serial version UID. */
     private static final long serialVersionUID = 2112401621332684899L;
     
     /** length of the sequence */

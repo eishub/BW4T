@@ -14,7 +14,7 @@ import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 /** Create a little menu allowing the user to randomise blocks and sequence. */
 public class RandomizeFrame extends JFrame {
 
-	/** Random generated serial version UID. */
+    /** Random generated serial version UID. */
     private static final long serialVersionUID = 1993091627565106917L;
     
     /** The controller for the map panel liked to this frame. */
