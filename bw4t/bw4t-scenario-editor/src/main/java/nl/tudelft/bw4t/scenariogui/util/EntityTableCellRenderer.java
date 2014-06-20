@@ -11,27 +11,60 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
 /**
  * This class is used for changing the text color in the entityPanel tables. 
  */
-
 public class EntityTableCellRenderer extends DefaultTableCellRenderer {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3827222514194681729L;
 
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column){
-        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+    /** (non-Javadoc)
+     * @see javax.swing.table.DefaultTableCellRenderer#getTableCellRendererComponent
+     * (javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
+     */
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, 
+            boolean hasFocus, int row, int column){
+        Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         
         if (table.getName().equals(EntityPanel.getBotTableName())) {
-            if (column == 2 && !AgentFileChecker.fileNameExists(value.toString())) {
-                c.setForeground(Color.RED);
-            } else {
-                c.setForeground(Color.BLACK);
-            }
+            setAppropriateColorBotTableName(value, column, component);
         } else if (table.getName().equals(EntityPanel.getePartnerTableName())) { 
-            if (column == 1 && !AgentFileChecker.fileNameExists(value.toString())) {
-                c.setForeground(Color.RED);
-            } else {
-                c.setForeground(Color.BLACK);
-            }
+            setAppropriateColorEPartner(value, column, component);
         }
-        return c;
+        return component;
+    }
+
+    /**
+     * Sets the appropriate color bot table name.
+     * 
+     * @param value
+     *            the value inside of the field
+     * @param column
+     *            the column
+     * @param component
+     *            the to be rendered component
+     */
+    private void setAppropriateColorBotTableName(Object value, int column, Component component) {
+        if (column == 2 && !AgentFileChecker.fileNameExists(value.toString())) {
+            component.setForeground(Color.RED);
+        } else {
+            component.setForeground(Color.BLACK);
+        }
+    }
+
+    /**
+     * Sets the appropriate color e partner.
+     * 
+     * @param value
+     *            the value inside of the field
+     * @param column
+     *            the column
+     * @param component
+     *            the to be rendered component
+     */
+    private void setAppropriateColorEPartner(Object value, int column, Component component) {
+        if (column == 1 && !AgentFileChecker.fileNameExists(value.toString())) {
+            component.setForeground(Color.RED);
+        } else {
+            component.setForeground(Color.BLACK);
+        }
     }
 }
