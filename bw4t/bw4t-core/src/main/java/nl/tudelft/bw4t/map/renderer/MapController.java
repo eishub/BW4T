@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import nl.tudelft.bw4t.map.BlockColor;
+import nl.tudelft.bw4t.map.Path;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
@@ -96,6 +97,13 @@ public interface MapController extends Runnable {
      * @return the set of visible e-Partners.
      */
     public Set<ViewEPartner> getVisibleEPartners();
+
+    /**
+     * Get the set of paths currently visible.
+     *
+     * @return the set of visible paths.
+     */
+    public Set<Path> getPaths();
     
 
     /**

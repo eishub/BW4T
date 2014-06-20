@@ -54,7 +54,7 @@ public class RandomMapCreator {
     private static ZoneModel[][] convertToZoneModelGrid(Node[][] grid) {
     	ZoneModel[][] newGrid = new ZoneModel[grid.length][grid[0].length];
     	for (int i = 0; i < grid.length; i++) {
-    		for(int j = 0; j < grid[0].length; j++) {
+    		for (int j = 0; j < grid[0].length; j++) {
     			newGrid[i][j] = new ZoneModel(grid[i][j]);
     			newGrid[i][j].generateNameFromPosition(i, j);
     		}
@@ -72,14 +72,14 @@ public class RandomMapCreator {
     }
     
     /**
-     * Uses a list of nodes classified as corridors and has a 15% chance
+     * Uses a list of nodes classified as corridors and has a 1% chance
      * to reclassify a node as a charge zone.
      * @param corridors The list of corridors to be randomized.
      */
     private static void randomizeCorridors(List<Node> corridors) {
     	Random r = new Random(System.currentTimeMillis());
     	for (Node n : corridors) {
-    		if (r.nextDouble() < 0.1) {
+    		if (r.nextDouble() < 0.01) {
     			n.setType(Zone.Type.CHARGINGZONE);
     		}
     	}
@@ -144,13 +144,20 @@ public class RandomMapCreator {
     private static void randomizeRooms(List<Node> rooms, int changedRooms) {
     	List<Zone.Type> typeList = new ArrayList<Zone.Type>();
     	typeList.add(Zone.Type.CORRIDOR);
+    	typeList.add(Zone.Type.CORRIDOR);
+    	typeList.add(Zone.Type.CORRIDOR);
+    	typeList.add(Zone.Type.CORRIDOR);
     	typeList.add(Zone.Type.CHARGINGZONE);
+    	typeList.add(Zone.Type.BLOCKADE);
+    	typeList.add(Zone.Type.BLOCKADE);
+    	typeList.add(Zone.Type.BLOCKADE);
+    	typeList.add(Zone.Type.BLOCKADE);
     	typeList.add(Zone.Type.BLOCKADE);
     	Random typeSelector = new Random(System.currentTimeMillis());
     	for (int i = 0; i < changedRooms; i++) {
     		Random r = new Random(System.currentTimeMillis());
     		Node n = rooms.remove(r.nextInt(rooms.size()));
-    		n.setType(typeList.get(typeSelector.nextInt(3)));
+    		n.setType(typeList.get(typeSelector.nextInt(10)));
     	}
     }
     private static void selectRandomDropZone(ZoneModel[][] grid) {

@@ -24,7 +24,7 @@ import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 /**
  * Handles the event to export the project to mas2g.
  * <p>
- * @version     0.1                
+ * @version     0.1
  * @since       02-06-2014
  */
 class MenuOptionExport extends AbstractMenuOption {
@@ -80,18 +80,19 @@ class MenuOptionExport extends AbstractMenuOption {
     	for(int i = 0; i < botList.size() && allExist; i++) {
     		allExist = allExist && AgentFileChecker.fileNameExists(botList.get(i).getFileName());
     	}
-    	
+
     	List<EPartnerConfig> epartnerList = model.getEpartners();
     	for(int i = 0; i < epartnerList.size() && allExist; i++) {
     	    allExist = allExist && AgentFileChecker.fileNameExists(epartnerList.get(i).getFileName());
     	}
-    	
+
     	return allExist;
     }
 
+
     /**
-     * Exports this XML file as a MAS file.
-     * @param xmlFile The XML file.
+     * Exoirts as a mas project
+     * @param xmlFile
      */
     private void exportAsMASProject(File xmlFile) {
         try {
@@ -115,5 +116,5 @@ class MenuOptionExport extends AbstractMenuOption {
                     ex, "Error: No file has been found.");
         }
     }
-    
+
 }

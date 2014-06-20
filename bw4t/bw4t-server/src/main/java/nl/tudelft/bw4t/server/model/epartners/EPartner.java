@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
+import repast.simphony.space.grid.Grid;
 
 public class EPartner extends BoundedMoveableObject {
 	
@@ -42,8 +43,8 @@ public class EPartner extends BoundedMoveableObject {
      * @param context
      *            The context in which the robot operates.
      */
-    public EPartner(String n, ContinuousSpace<Object> space, Context<Object> context) {
-        super(space, context);
+    public EPartner(String n, ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context) {
+        super(space, grid, context);
         
         view.setId(getId());
         this.setName(n);

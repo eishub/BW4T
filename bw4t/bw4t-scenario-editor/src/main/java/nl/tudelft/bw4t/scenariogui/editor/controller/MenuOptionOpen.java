@@ -185,8 +185,6 @@ class MenuOptionOpen extends AbstractMenuOption {
     }
 
     /**
-<<<<<<< HEAD
-=======
      * Reset the list with bots.
      *
      * @param entityPanel
@@ -197,7 +195,6 @@ class MenuOptionOpen extends AbstractMenuOption {
     }
 
     /**
->>>>>>> 0d4573e... the bot table is now using a TabelModel made specifically for use with BW4TClientConfig
      * Reset the list with epartners.
      *
      * @param entityPanel
@@ -221,7 +218,7 @@ class MenuOptionOpen extends AbstractMenuOption {
         getModel().setServerPort(loadedModel.getServerPort());
         getModel().setLaunchGui(loadedModel.isLaunchGui());
         getModel().setVisualizePaths(loadedModel.isVisualizePaths());
-        getModel().setEnableCollisions(loadedModel.isEnableCollisions());
+        getModel().setCollisionEnabled(loadedModel.isCollisionEnabled());
         getModel().setMapFile(loadedModel.getMapFile());
     }
 
@@ -232,7 +229,7 @@ class MenuOptionOpen extends AbstractMenuOption {
         configPanel.setServerPort(getModel().getServerPort() + "");
         configPanel.setUseGui(getModel().isLaunchGui());
         configPanel.setVisualizePaths(getModel().isVisualizePaths());
-        configPanel.setEnableCollisions(getModel().isEnableCollisions());
+        configPanel.setEnableCollisions(getModel().isCollisionEnabled());
         configPanel.setMapFile(getModel().getMapFile());
     }
 }

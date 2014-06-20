@@ -24,7 +24,7 @@ public class SelectEnableCollisionsYes implements ItemListener {
 
     @Override
     public void itemStateChanged(ItemEvent e) {
-        view.getClientConfig().setEnableCollisions(true);
+        view.getClientConfig().setCollisionEnabled(true);
     }
 
 }

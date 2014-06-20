@@ -8,7 +8,7 @@ import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 
 class ClientInfo {
-    
+
     private BW4TClientConfig clientConfig;
     private List<BotConfig> requestedBots = new ArrayList<>();
     private List<EPartnerConfig> requestedEPartners = new ArrayList<>();
@@ -26,7 +26,9 @@ class ClientInfo {
             bot.setBotAmount(reqHuman);
             requestedBots.add(bot);
         }
+        this.clientConfig = new BW4TClientConfig();
     }
+
 
     public ClientInfo(BW4TClientConfig clientConfig) {
         if (clientConfig.getBots() != null){
@@ -50,4 +52,11 @@ class ClientInfo {
         return clientConfig == null ? "" : clientConfig.getMapFile();
     }
 
+    public boolean isCollisionEnabled() {
+        return clientConfig.isCollisionEnabled();
+    }
+
+    public boolean isVisualizePaths() {
+        return clientConfig.isVisualizePaths();
+    }
 }

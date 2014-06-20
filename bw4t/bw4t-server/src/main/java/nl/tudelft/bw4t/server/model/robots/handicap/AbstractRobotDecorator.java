@@ -294,4 +294,10 @@ public abstract class AbstractRobotDecorator implements IRobot {
     	
     	return robot;
     }
+
+    @Override
+    public List<BoundedMoveableObject> getObstacles() { return parent.getObstacles(); }
+
+    @Override
+    public void clearObstacles() { parent.clearObstacles(); }
 }

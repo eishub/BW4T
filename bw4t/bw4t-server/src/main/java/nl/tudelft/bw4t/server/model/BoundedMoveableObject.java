@@ -1,11 +1,15 @@
 package nl.tudelft.bw4t.server.model;
 
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
+import repast.simphony.space.grid.Grid;
+import repast.simphony.space.grid.GridPoint;
 
 /**
  * Represents an object in the world that can be moved around if needed. It forms the basis for all kinds of objects
@@ -17,23 +21,24 @@ public abstract class BoundedMoveableObject {
 
     private final long id;
     public final ContinuousSpace<Object> space;
+    public final Grid<Object> grid;
     protected final Context<Object> context;
     protected final Rectangle2D.Double boundingBox;
 
     /**
      * Creates a new object bounded by a box at (0,0) with size (0,0).
-     * 
-     * @param space
+     *  @param space
      *            the space in which the object should be placed.
+     * @param grid
      * @param context
-     *            the context in which the object should be placed.
      */
-    public BoundedMoveableObject(ContinuousSpace<Object> space, Context<Object> context) {
+    public BoundedMoveableObject(ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context) {
         if (context.isEmpty()) {
             COUNTER.set(0);
         }
         this.id = COUNTER.getAndIncrement();
         this.space = space;
+        this.grid = grid;
         this.context = context;
         this.boundingBox = new Rectangle2D.Double();
         context.add(this);
@@ -64,12 +69,32 @@ public abstract class BoundedMoveableObject {
         }
         return location;
     }
+
+    /**
+     *  Returns the location on the grid space.
+     * @return The location of the object, if currently in the grid space.
+     */
+    public GridPoint getGridLocation() {
+        GridPoint location = grid.getLocation(this);
+
+        if(location == null) {
+            return new GridPoint(0, 0);
+        }
+        return location;
+    }
     
     /**
      * @return The space of an object.
      */
     public ContinuousSpace<Object> getSpace() {
         return this.space;
+    }
+
+    /**
+     * @return The grid of an object.
+     */
+    public Grid<Object> getGrid() {
+        return this.grid;
     }
 
     /**
@@ -104,6 +129,7 @@ public abstract class BoundedMoveableObject {
         boundingBox.x = x - boundingBox.width / 2;
         boundingBox.y = y - boundingBox.height / 2;
         space.moveTo(this, x, y);
+        grid.moveTo(this, (int)x, (int)y);
     }
 
 
@@ -173,12 +199,11 @@ public abstract class BoundedMoveableObject {
         NdPoint here = getLocation();
         return Math.sqrt(Math.pow(there.getX() - here.getX(), 2)
                 + Math.pow(there.getY() - here.getY(), 2));
-
     }
 
     /**
      * As {@link #distanceTo(NdPoint)}
-     * 
+     * n
      * @param o
      *            is the object to compute the distance to
      * @return distance to center of o. Note that the distance to the bounding box of o may be smaller than this.
@@ -189,10 +214,45 @@ public abstract class BoundedMoveableObject {
 
     /**
      * set the object to visible
-     */
+    */
     public void addToContext() {
         context.add(this);
 
     }
 
+    /**
+     * Returns all the points rounded to an integer occupied by the Bounded Moveable Object,
+     * including the given padding.
+     * @param padding The padding to add around the box.
+     * @return A list of all points occupied by the box.
+     */
+    public List<NdPoint> getPointsOccupiedByObject(int padding) {
+        List<NdPoint> points = new ArrayList<NdPoint>();
+
+        for (int i = (int) boundingBox.getMinX() - padding; i <= (int) boundingBox.getMaxX() + padding; i++) {
+            for (int j = (int) boundingBox.getMinY() - padding; j <= (int) boundingBox.getMaxY() + padding; j++) {
+                points.add(new NdPoint(i, j));
+            }
+        }
+
+        return points;
+    }
+    
+    /**
+     * Whether this bounded moveable object is free of objects that are
+     * of the specified type.
+     * @param freeOfType The type of objects that this object should be free of.
+     * @return Whether this bounded moveable object is free of object.
+     */
+    public boolean isFree(Class<? extends BoundedMoveableObject> freeOfType) {
+        for(NdPoint point : getPointsOccupiedByObject(0)) {
+            for(Object o : getSpace().getObjectsAt(point.getX(), point.getY())) {
+                if(this != o) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
 }

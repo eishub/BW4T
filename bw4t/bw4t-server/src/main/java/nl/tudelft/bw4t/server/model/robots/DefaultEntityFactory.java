@@ -13,13 +13,21 @@ import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.server.model.robots.handicap.SizeOverloadHandicap;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
+import repast.simphony.space.grid.Grid;
 
 public class DefaultEntityFactory implements EntityFactory {
 
 	private Context<Object> context;
 	private ContinuousSpace<Object> space;
+    private Grid<Object> grid;
 
-	@Override
+	
+    @Override
+    public void setGrid(Grid<Object> grid) {
+        this.grid = grid;
+    }
+
+    @Override
 	public void setContext(Context<Object> context) {
 		this.context = context;
 	}
@@ -32,7 +40,7 @@ public class DefaultEntityFactory implements EntityFactory {
 	@Override
 	public IRobot makeDefaultRobot(String name) {
 		final NewMap map = Launcher.getEnvironment().getMap();
-		return new NavigatingRobot(name, space, context, map.getOneBotPerCorridorZone(), 1);
+		return new NavigatingRobot(name, space, grid, context, map.getOneBotPerCorridorZone(), 1);
 	}
 
 	@Override
@@ -69,7 +77,7 @@ public class DefaultEntityFactory implements EntityFactory {
 
 	@Override
 	public EPartner makeDefaultEPartner(String name) {
-		return new EPartner(name, space, context);
+		return new EPartner(name, space, grid, context);
 	}
 
     @Override
