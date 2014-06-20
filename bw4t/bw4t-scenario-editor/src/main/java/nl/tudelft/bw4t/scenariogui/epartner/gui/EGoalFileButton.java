@@ -6,13 +6,13 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 
-import nl.tudelft.bw4t.scenariogui.epartner.gui.EpartnerFrame;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 
 /**
  * Handles actions of the GoalFileButton.
  */
 public class EGoalFileButton implements ActionListener {
+    
     private EpartnerFrame view;
 
     private JFileChooser jfc;
@@ -28,7 +28,7 @@ public class EGoalFileButton implements ActionListener {
     }
 
     /**
-     * Performs the action.
+     * Performs the action (open the filechooser).
      * 
      * @param ae
      *            The action event triggering this method.

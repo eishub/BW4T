@@ -1,10 +1,11 @@
 package nl.tudelft.bw4t.server.eis.translators;
 
-import nl.tudelft.bw4t.server.eis.ObjectInformation;
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Java2Parameter;
 import eis.iilang.Numeral;
 import eis.iilang.Parameter;
+
+import nl.tudelft.bw4t.server.eis.ObjectInformation;
 
 public class ObjectInformationTranslator implements Java2Parameter<ObjectInformation> {
 

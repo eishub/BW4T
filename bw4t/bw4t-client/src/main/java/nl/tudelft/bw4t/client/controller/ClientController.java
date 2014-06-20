@@ -11,12 +11,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import nl.tudelft.bw4t.client.BW4TClient;
 import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
-import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
 
 /**
  * The Class ClientController.
@@ -41,7 +38,7 @@ public class ClientController {
     private List<Percept> toBePerformedAction = new LinkedList<>();
     
     /** The environment which should be read. */
-    private RemoteEnvironment environment;
+    private final RemoteEnvironment environment;
     
     /**
      * A reference to the client gui attached to this controller.
@@ -150,9 +147,9 @@ public class ClientController {
             String name = percept.getName();
             List<Parameter> parameters = percept.getParameters();
             mapController.handlePercept(name, parameters);
-            if (name.equals("player")) {
+            if ("player".equals(name)) {
                 getOtherPlayers().add(((Identifier) parameters.get(0)).getValue());
-            } else if (name.equals("message")) {
+            } else if ("message".equals(name)) {
                 handleMessagePercept(parameters);
             }
         }
@@ -165,7 +162,7 @@ public class ClientController {
      *            the parameters given to the message percept
      */
     private void handleMessagePercept(List<Parameter> parameters) {
-        ParameterList parameterList = ((ParameterList) parameters.get(0));
+        ParameterList parameterList = (ParameterList) parameters.get(0);
         Iterator<Parameter> iterator = parameterList.iterator();
         String sender = ((Identifier) iterator.next()).getValue();
         String message = ((Identifier) iterator.next()).getValue();
@@ -183,9 +180,9 @@ public class ClientController {
      * the update the client GUI.
      */
     protected void updateGUI() {
-        BW4TClientGUI gui = this.getGui();
-        if(gui != null) {
-            gui.update();
+        BW4TClientGUI currentGui = this.getGui();
+        if (currentGui != null) {
+            currentGui.update();
         }
     }
     
@@ -194,14 +191,19 @@ public class ClientController {
      */
     public void stop() {
         mapController.setRunning(false);
-        if(this.getGui() != null) {
+        if (this.getGui() != null) {
             gui.dispose();
         }
         this.setGui(null);
     }
 
-    public Percept sendToGUI(LinkedList<Parameter> parameters) {
-        if(this.getGui() != null) {
+    /**
+     * Send paramenters to the GUI to be displayed in the chat window
+     * @param parameters 
+     * @return a null percept as no real percept should be returned
+     */
+    public Percept sendToGUI(List<Parameter> parameters) {
+        if (this.getGui() != null) {
             return this.getGui().sendToGUI(parameters);
         }
         return null;

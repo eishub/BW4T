@@ -8,8 +8,20 @@ import java.io.Serializable;
  * handle it, it gets stuck in an infinite recursion if you try to serialize it.
  */
 public class Rectangle implements Serializable {
+    
+    /** 
+     * Serialization id. 
+     */
+    private static final long serialVersionUID = 24724175226119920L;
+    
+    /**
+     * Initialize rectangle.
+     */
     private final Rectangle2D.Double rectangle = new Rectangle2D.Double();
 
+    /** 
+     * Empty constructor, initialize Rectangle.
+     */
     public Rectangle() {
     }
 
@@ -19,7 +31,9 @@ public class Rectangle implements Serializable {
      * @param y
      *            CENTER y
      * @param w
+     *             Width
      * @param h
+     *             Height
      */
     public Rectangle(double x, double y, double w, double h) {
         setWidth(w);
@@ -61,8 +75,10 @@ public class Rectangle implements Serializable {
         return rectangle.getWidth();
     }
 
-    /*
-     * Set new width. Moves the left side such that center remains at same place..
+    /**
+     * @param w width
+     *             Set width to w. 
+     *             Moves the left side such that center remains at same place.
      */
     public void setWidth(double w) {
         double oldwidth = getWidth();
@@ -75,9 +91,8 @@ public class Rectangle implements Serializable {
     }
 
     /**
-     * Set new height.
-     * 
-     * @param h
+     * @param h height
+     *             Set height to h.
      */
     public void setHeight(double h) {
         double oldheight = getHeight();
@@ -85,8 +100,12 @@ public class Rectangle implements Serializable {
         setY(getY() - (h - oldheight) / 2.);
     }
 
+    /** 
+     * @param p point
+     * @return true when p is in the rectangle. 
+     */
     public boolean contains(Point p) {
-        return rectangle.contains(p.asPoint2D());
+        return rectangle.contains(p.getPoint2D());
     }
 
     @Override

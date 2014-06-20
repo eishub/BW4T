@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.client.gui.listeners;
 
 import java.awt.event.ActionListener;
+
 import nl.tudelft.bw4t.client.controller.ClientController;
 
 /** Abstract listener for actions. */

@@ -1,5 +1,7 @@
 package nl.tudelft.bw4t.server.controller;
 
+import eis.iilang.EnvironmentState;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -25,7 +27,6 @@ import repast.simphony.context.Context;
 import repast.simphony.space.Dimensions;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.util.collections.IndexedIterable;
-import eis.iilang.EnvironmentState;
 
 /**
  * the {@link MapController} used by the server.
@@ -134,7 +135,7 @@ public class ServerMapController extends AbstractMapController {
     @Override
     public Set<Path> getPaths() {
         Set<Path> paths = new HashSet<Path>();
-        for(Object pathTemp : serverContext.getObjects(Path.class)) {
+        for (Object pathTemp : serverContext.getObjects(Path.class)) {
             Path path = (Path) pathTemp;
             paths.add(path);
         }

@@ -11,10 +11,13 @@ import javax.swing.JMenuItem;
  */
 public class MenuBar extends JMenuBar {
 
+    /** Random generated serial version UID */
     private static final long serialVersionUID = 3985946589128847791L;
 
+    /** The last known save file location */
     private String lastFileLocation;
 
+    /** the items added to the menubar */
     private JMenuItem fileNew, fileOpen, fileSave, fileSaveAs, preview, fileExit;
     private JMenuItem toolsRandomizeRooms, toolsRandomizeBlocks, toolsRandomizeSequence;
 

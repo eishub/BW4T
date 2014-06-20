@@ -1,11 +1,11 @@
 package nl.tudelft.bw4t.server.eis.translators;
 
-import java.awt.geom.Point2D;
-
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Java2Parameter;
 import eis.iilang.Numeral;
 import eis.iilang.Parameter;
+
+import java.awt.geom.Point2D;
 
 public class PointTranslator implements Java2Parameter<Point2D> {
 

@@ -1,8 +1,5 @@
 package nl.tudelft.bw4t.scenariogui.editor.controller;
 
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
@@ -11,7 +8,7 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
  * with the update in the text field.
  *
  */
-public class WriteServerIP implements DocumentListener {
+public class WriteServerIP extends WriteConfig {
     
     private MainPanel view;
 
@@ -23,25 +20,10 @@ public class WriteServerIP implements DocumentListener {
         this.view = newView;
     }
 
-    @Override
-    public void changedUpdate(DocumentEvent arg0) {
-        handleUpdate();
-    }
-
-    @Override
-    public void insertUpdate(DocumentEvent arg0) {
-        handleUpdate();
-    }
-
-    @Override
-    public void removeUpdate(DocumentEvent arg0) {
-        handleUpdate();
-    }
-    
     /**
-     * Stores the server ip in the client config when its field is changed.
+     * Stores the server ip in the BW4TClientConfig when its field is changed.
      */
-    private void handleUpdate() {
+    public void handleUpdate() {
         view.getClientConfig().setServerIp(
                 view.getConfigurationPanel().getServerIP());
     }

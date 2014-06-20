@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.client;
 
+import eis.EnvironmentInterfaceStandard;
 import eis.EnvironmentListener;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
@@ -23,7 +24,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import nl.tudelft.bw4t.client.environment.EntityNotifiers;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.startup.ConfigFile;
 import nl.tudelft.bw4t.client.startup.InitParam;
@@ -58,15 +58,16 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
      */
     private NewMap map;
 
+    
     /**
      * Create a listener for the server.
      * 
      * @param parent
-     *            is the parent {@link RemoteEnvironment}
+     *           is the parent {@link RemoteEnvironment}
      * @throws RemoteException
-     *             if an exception occurs during the execution of a remote object call
-     * @throws NotBoundException
-     * @throws MalformedURLException
+     *          if an exception occurs during the execution of a remote object call
+     * @throws MalformedURLException 
+     * @throws NotBoundException 
      */
     public BW4TClient(EnvironmentListener parent) throws RemoteException, MalformedURLException, NotBoundException {
         this.parent = parent;
@@ -90,9 +91,9 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
      *            </ul>
      *            Note, these are not all init parameters available to BW4TRemoteEnvironment, these are just the ones
      *            needed to launch this client class.
-     * @throws MalformedURLException
-     * @throws RemoteException
-     * @throws NotBoundException
+     * @throws MalformedURLException 
+     * @throws RemoteException 
+     * @throws NotBoundException 
      */
     public void connectServer() throws RemoteException, MalformedURLException, NotBoundException {
 
@@ -145,7 +146,7 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
         try {
             ((BW4TServerHiddenActions) server).stopServer(killKey);
         } catch (RemoteException e) {
-            // LOGGER.error("An error occurred while shutting down server", e);
+            LOGGER.error("An error occurred while shutting down server", e);
         }
     }
 
@@ -153,19 +154,21 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
      * Register our client with the server. Provided separately, of run
      * 
      * @param initParameters
-     * @throws RemoteException
+     * @throws RemoteException 
      */
     public void register() throws RemoteException {
         if (ConfigFile.hasReadInitFile()) {
             BW4TClientConfig conf = ConfigFile.getConfig();
             
-            LOGGER.info(String.format("Requesting %d robots and %d e-partners.", conf.getAmountBot(), conf.getAmountEPartner()));
+            LOGGER.info(String.format("Requesting %d robots and %d e-partners.", 
+                    conf.getAmountBot(), 
+                    conf.getAmountEPartner()));
             server.registerClient(this, conf);
         } else {
             int agentCountInt = Integer.parseInt(InitParam.AGENTCOUNT.getValue());
             int humanCountInt = Integer.parseInt(InitParam.HUMANCOUNT.getValue());
 
-            LOGGER.info("Requesting " + agentCountInt + " automated agent(s) and " + humanCountInt + " human agent(s).");
+            LOGGER.info("Requesting " + agentCountInt + " automated agent(s) and " + humanCountInt + " human agent(s)");
             server.registerClient(this, agentCountInt, humanCountInt);
         }
     }
@@ -174,9 +177,9 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
      * kill the client interface. kill at this moment does not kill the server, it just disconnects the client. Make
      * sure all entities and agents have been unbound before doing this.
      * 
-     * @throws RemoteException
-     * @throws NotBoundException
-     * @throws MalformedURLException
+     * @throws RemoteException 
+     * @throws NotBoundException 
+     * @throws MalformedURLException 
      */
     public void kill() throws RemoteException, MalformedURLException, NotBoundException {
         server.unregisterClient(this);
@@ -423,12 +426,22 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
         return server.queryEntityProperty(entity, property);
     }
 
+    /**
+     * 
+     * @param arg0 
+     *      The action to be checked
+     * @return
+     *      returns true if an Action is supported by the environment
+     * @throws RemoteException 
+     */
     public boolean isSupportedByEnvironment(Action arg0) throws RemoteException {
         return server.isSupportedByEnvironment(arg0);
     }
 
     /**
      * tell server to start. This will cause callback to us of state change when succesful.
+     * @throws ManagementException 
+     *          Throws a ManagementException when the server fails to start
      */
     public void start() throws ManagementException {
         try {
@@ -440,6 +453,8 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
 
     /**
      * tell server to stop. This will cause callback to us of state change when succesful.
+     * @throws ManagementException 
+     *          Throws a ManagementException when the server fails to pause
      */
     public void pause() throws ManagementException {
         try {
@@ -454,6 +469,8 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
      * 
      * @param parameters
      *            init parameters for eis. see {@link EnvironmentInterfaceStandard#init(java.util.Map)}
+     * @throws ManagementException 
+     *          Throws a ManagementException when the server fails to initialize
      */
     public void initServer(java.util.Map<String, Parameter> parameters) throws ManagementException {
         try {
@@ -469,6 +486,8 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
      * 
      * @param parameters
      *            init parameters for eis. see {@link EnvironmentInterfaceStandard#init(java.util.Map)}
+     * @throws ManagementException 
+     *          Throws a ManagementException when the server fails to reset
      */
     public void resetServer(java.util.Map<String, Parameter> parameters) throws ManagementException {
         try {

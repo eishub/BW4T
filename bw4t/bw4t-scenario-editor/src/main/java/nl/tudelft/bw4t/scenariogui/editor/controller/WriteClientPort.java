@@ -1,8 +1,5 @@
 package nl.tudelft.bw4t.scenariogui.editor.controller;
 
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
@@ -11,7 +8,7 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
  * with the update in the text field.
  *
  */
-public class WriteClientPort implements DocumentListener {
+public class WriteClientPort extends WriteConfig {
     
     private MainPanel view;
 
@@ -22,26 +19,11 @@ public class WriteClientPort implements DocumentListener {
     public WriteClientPort(final MainPanel newView) {
         this.view = newView;
     }
-
-    @Override
-    public void changedUpdate(DocumentEvent arg0) {
-        handleUpdate();
-    }
-
-    @Override
-    public void insertUpdate(DocumentEvent arg0) {
-        handleUpdate();
-    }
-
-    @Override
-    public void removeUpdate(DocumentEvent arg0) {
-        handleUpdate();
-    }
     
     /**
-     * Stores the client port in the client config when its field is changed.
+     * Stores the client port in the BW4TClientConfig when its field is changed.
      */
-    private void handleUpdate() {
+    public void handleUpdate() {
         int clientPort = view.getConfigurationPanel().getClientPortTextField().getText().equals("") ? 0 :
             view.getConfigurationPanel().getClientPort();
         view.getClientConfig().setClientPort(clientPort);

@@ -18,10 +18,14 @@ import org.junit.Test;
  */
 public class BotEditorTest {
 
-    /** The boteditor used to test */
+    /**
+     * The boteditor used to test
+     */
     private BotEditor botEditor;
 
-    /** Test the setup of boteditor */
+    /**
+     * Test the setup of boteditor
+     */
     @Test
     public void testBotEditorPane() {
         EntityPanel entityPanel = new EntityPanel();
@@ -31,9 +35,9 @@ public class BotEditorTest {
         BotController controller = new BotController(parent, 0, main.getController().getModel());
         botEditor = new BotEditor(controller);
         BotEditorPanel panel = new BotEditorPanel(controller);
-        
+
         botEditor.setBotEditorPanel(panel);
-        
+
         assertEquals(parent, botEditor.getMainPanel());
         assertEquals(panel, botEditor.getBotEditorPanel());
         botEditor.setVisible(false);

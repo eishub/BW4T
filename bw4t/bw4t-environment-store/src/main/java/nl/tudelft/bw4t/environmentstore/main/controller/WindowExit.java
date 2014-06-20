@@ -7,8 +7,14 @@ import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
 
 class WindowExit extends WindowAdapter {
     
+    /** The view of our Environment Store. */
     private EnvironmentStore view;
     
+    /**
+     * @param newView
+     *               Connects the exit window with the
+     *               Environment store. 
+     */
     public WindowExit(EnvironmentStore newView) {
         this.view = newView;
     }

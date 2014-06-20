@@ -12,8 +12,16 @@ import nl.tudelft.bw4t.environmentstore.main.controller.EnvironmentStoreControll
 import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
 import nl.tudelft.bw4t.map.MapFormatException;
 
+/**
+ * Menu option to open an existing map
+ */
 public class MenuOptionOpen extends AbstractMenuOption {
 
+    /**
+     * Constructor for MenuOptionOpen
+     * @param newView the menu the option is on
+     * @param controller evironment controller
+     */
     public MenuOptionOpen(MenuBar newView, EnvironmentStoreController controller) {
         super(newView, controller);
     }

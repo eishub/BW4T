@@ -13,18 +13,24 @@ import nl.tudelft.bw4t.map.Zone.Type;
 
 /**
  * The ZonePopupMenu shows us the options for the different Zones through right click.
- *
+ * This allows the user to choose which zone type he or she wishes to add to the grid.
+ * We chose to use radio buttons because there can only be one type of zone. 
  */
 public class ZoneMenu extends JPopupMenu implements UpdateableEditorInterface {
 
+    /** Random generated serial version UID. */
     private static final long serialVersionUID = -5335591852441574491L;
 
+    /** The current zone type. */
     private JMenu zoneType;
     
+    /** The different available radio buttons. */
     private JRadioButtonMenuItem corridor, room, blockade, startZone, chargingZone, dropZone;
 
+    /** The map controller linked to this zone menu. */
     private final MapPanelController mapController;
-    
+
+    /** The controller linked to this view class. */
     protected ZoneController zone;
 
     /**
@@ -39,6 +45,7 @@ public class ZoneMenu extends JPopupMenu implements UpdateableEditorInterface {
         update();
     }
 
+    /** Initialises the options available in the zone menu. */
     protected void init() {
         // Create a Menu for Type Of Space
         zoneType = new JMenu("Type of Zone");

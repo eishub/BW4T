@@ -6,31 +6,50 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import repast.simphony.space.continuous.NdPoint;
-
 /**
  * The path if a robot is stored in this class which is then
  * drawn unto the map.
  */
 public class Path implements Serializable {
 
-    private List<NdPoint> path;
+    /**
+     * Serial id.
+     */
+    private static final long serialVersionUID = 6352875233093411878L;
+    
+    /**
+     * List of point wich form a path.
+     */
+    private List<Point> path;
+    
+    /**
+     * {@link Color} of path.
+     */
     private Color color;
 
+    /** 
+     * Initialize Path.
+     */
     public Path() {
-        path = new ArrayList<NdPoint>();
+        path = new ArrayList<Point>();
     }
 
-    public void setPath(List<NdPoint> path) {
+    /**
+     * @param path to set 
+     *             if there was another list of point it will be overrided.
+     */
+    public void setPath(List<Point> path) {
         Random r = new Random();
         this.path = path;
         this.color = new Color(r.nextFloat(), r.nextFloat(), r.nextFloat());
     }
 
-    public List<NdPoint> getPath() {
+    public List<Point> getPath() {
         return path;
     }
 
-    public Color getColor() { return color; }
+    public Color getColor() { 
+        return color; 
+        }
 
 }

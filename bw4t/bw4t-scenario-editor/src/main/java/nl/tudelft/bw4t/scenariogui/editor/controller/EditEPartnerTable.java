@@ -42,8 +42,9 @@ public class EditEPartnerTable implements TableModelListener {
      */
     @Override
     public void tableChanged(TableModelEvent event) {
-        if (event.getColumn() == -1)
+        if (event.getColumn() == -1) {
             return;
+        }
         EPartnerConfig config = model.getEpartners()
                 .get(event.getFirstRow());
         String value = ""

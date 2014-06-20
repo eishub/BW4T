@@ -4,6 +4,8 @@ package nl.tudelft.bw4t.map;
  * The possible types of entities in the BW4T system may be.
  */
 public enum EntityType {
+    
+    /** Possible types */
     HUMAN, AGENT, EPARTNER;
 
     /**
@@ -13,8 +15,11 @@ public enum EntityType {
         return name().toLowerCase();
     }
     
+   /**
+    * @return {@link #name()} in lower case with capital.
+    */
     public String nameCamel() {
-        final String name = name().toLowerCase();
+        final String name = nameLower();
         return Character.toUpperCase(name.charAt(0)) + name.substring(1);
     }
 
@@ -24,15 +29,17 @@ public enum EntityType {
      * @return true iff the given string is the same as the name of this instance
      */
     public boolean isA(String type) {
-        return nameLower().equals(type.toLowerCase());
+        return name().equalsIgnoreCase(type);
     }
 
     /**
      * Get the type of Entity from the type string
      * @param name the type string
      * @return the type enum
+     * 
+     * @throws RuntimeException 
      */
-    public static EntityType getType(String name) {
+    public static EntityType getType(String name) throws RuntimeException {
         switch (name.toLowerCase()) {
         case "human":
             return HUMAN;

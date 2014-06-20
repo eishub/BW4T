@@ -11,32 +11,32 @@ import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 
-/**
- * Create a randomize frame to randomize blocks in the sequence.
- *
- */
+/** Create a little menu allowing the user to randomise blocks and sequence. */
 public class RandomizeFrame extends JFrame {
 
+    /** Random generated serial version UID. */
     private static final long serialVersionUID = 1993091627565106917L;
     
+    /** The controller for the map panel liked to this frame. */
     private MapPanelController mapController;
     
+    /** The content panel of this frame. */
     private JPanel contentPane = new JPanel();
     
+    /** Title of the frame. */
     private JLabel lblTitle;
     
+    /** The label above the list of colours used. */
     private JLabel lblColorsUsed = new JLabel("Colors Used:");
     
-    /**
-     * All the color-checkboxes. Here can the user choose what colors will be used.
-     */
-    private JCheckBox chckbxRRed = new JCheckBox("R Red");
-    private JCheckBox chckbxGGreen = new JCheckBox("G Green");
-    private JCheckBox chckbxYYellow = new JCheckBox("Y Yellow");
-    private JCheckBox chckbxBBlue = new JCheckBox("B Blue");
-    private JCheckBox chckbxOOrange = new JCheckBox("O Orange");
-    private JCheckBox chckbxWWhite = new JCheckBox("W White");
-    private JCheckBox chckbxPPink = new JCheckBox("P Pink");
+    /** All the colour-checkboxes. Here, the user can choose what colours will be used. */
+    private JCheckBox chckbxRRed = new JCheckBox("Red");
+    private JCheckBox chckbxGGreen = new JCheckBox("Green");
+    private JCheckBox chckbxYYellow = new JCheckBox("Yellow");
+    private JCheckBox chckbxBBlue = new JCheckBox("Blue");
+    private JCheckBox chckbxOOrange = new JCheckBox("Orange");
+    private JCheckBox chckbxWWhite = new JCheckBox("White");
+    private JCheckBox chckbxPPink = new JCheckBox("Pink");
 
     /**
      * Create the frame.

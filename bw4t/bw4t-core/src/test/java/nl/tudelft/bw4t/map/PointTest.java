@@ -1,8 +1,13 @@
 package nl.tudelft.bw4t.map;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.awt.geom.Point2D;
-import org.junit.*;
-import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * The class <code>PointTest</code> contains tests for the class <code>{@link Point}</code>.
@@ -62,7 +67,7 @@ public class PointTest {
         throws Exception {
         Point fixture = new Point();
 
-        Point2D result = fixture.asPoint2D();
+        Point2D result = fixture.getPoint2D();
 
         // add additional test code here
         assertNotNull(result);

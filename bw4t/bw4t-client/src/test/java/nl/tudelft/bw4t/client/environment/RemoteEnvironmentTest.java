@@ -1,6 +1,6 @@
 package nl.tudelft.bw4t.client.environment;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import org.junit.Ignore;
 import org.junit.Test;

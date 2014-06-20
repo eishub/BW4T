@@ -8,12 +8,16 @@ import java.awt.geom.Rectangle2D;
  * delay between consecutive updates.
  */
 public class MapRenderSettings {
+    
+    /** Initialization of final int's, all default values */
     public static final int BLOCK_SEQUENCE_SIZE_MAXIMUM = 100;
     public static final int BLOCK_SEQUENCE_SIZE_MINIMUM = 1;
     public static final int DELAY_MAXIMUM = 1000;
     public static final int DELAY_MINIMUM = 10;
     public static final int SCALE_MINIMUM = 3;
     public static final int SCALE_MAXIMUM = 15;
+    
+    /** Initialize default settings. */
     private int sequenceBlockSize = 20;
     private int worldWidth = 7;
     private int worldHeight = 7;
@@ -21,6 +25,7 @@ public class MapRenderSettings {
     private int roomTextOffset = 25;
     private boolean renderEntityName = false;
     private int entityNameOffset = 20;
+    
     /**
      * We want to achieve roughly 24fps = 1000/24 = 41.6666
      */

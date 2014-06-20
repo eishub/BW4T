@@ -74,6 +74,11 @@ public class Node {
     public void setDir(DoorDirection dir) {
         this.dir = dir;
     }
+    
+    /**
+     * Looks if a door is free or not
+     * @return list with doors that are not blocked
+     */
     public List<DoorDirection> getFreeDirs() {
         List<DoorDirection> dirList = new ArrayList<DoorDirection>();
         if (north != null && north.isNotBlocking()) {
@@ -90,8 +95,13 @@ public class Node {
         }
         return dirList;
     }
+    
+    /**
+     * check if a door is blocked
+     * @return true if door is chargingzone or corridor
+     */
     public boolean isNotBlocking() {
-        return type == Zone.Type.CHARGINGZONE ||
-                type == Zone.Type.CORRIDOR;
+        return type == Zone.Type.CHARGINGZONE 
+                || type == Zone.Type.CORRIDOR;
     }
 }

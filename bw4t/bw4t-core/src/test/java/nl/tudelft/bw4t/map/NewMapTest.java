@@ -1,5 +1,11 @@
 package nl.tudelft.bw4t.map;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -7,10 +13,9 @@ import java.util.List;
 
 import nl.tudelft.bw4t.map.Zone.Type;
 
-import org.junit.*;
-
-import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * The class <code>NewMapTest</code> contains tests for the class

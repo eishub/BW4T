@@ -1,6 +1,5 @@
 package nl.tudelft.bw4t.server.model.robots.handicap;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import nl.tudelft.bw4t.map.view.ViewEntity;
@@ -12,6 +11,7 @@ import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.model.robots.AgentRecord;
 import nl.tudelft.bw4t.server.model.robots.Battery;
 import nl.tudelft.bw4t.server.model.robots.MoveType;
+import nl.tudelft.bw4t.server.model.robots.NavigatingRobot;
 import nl.tudelft.bw4t.server.model.robots.NavigatingRobot.State;
 import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
@@ -263,6 +263,12 @@ public interface IRobot {
     IRobot getParent();
     
     /**
+     * Gets the top most parent, 'the Adam / oldest ancestor / founding father' robot.
+     * @return The founding father, null if this robot is the founding father.
+     */
+    IRobot getEarliestParent();
+    
+    /**
      * @param hI
      * changes the parent 
      */
@@ -388,5 +394,12 @@ public interface IRobot {
     /**
      * Clears the obstacles.
      */
-    void clearObstacles();
+    public void clearObstacles();
+    
+    /**
+     * @return Whether the old target from before the navigateObstacles action
+     * has become unreachable.
+     */
+    boolean isDestinationUnreachable();
+
 }

@@ -21,8 +21,10 @@ public final class RoomLocator {
     /**
      * Returns the {@link BlocksRoom} the object is in. Note, {@link DropZone} is not a {@link BlocksRoom}
      * 
-     * @param o
-     *            The object to get the room for.
+     * @param x
+     *            the x coordinate
+     * @param y
+     *            the y coordinate
      * @return The {@link BlocksRoom} the given object is in or null if it is in the hall.
      */
     public static BlocksRoom getRoomFor(double x, double y) {
@@ -37,9 +39,9 @@ public final class RoomLocator {
      * Find {@link Room} containing given point. Both BlocksRoom and DropZone are Room.
      * 
      * @param x
-     *            is x coord of point
+     *            the x coordinate
      * @param y
-     *            is y coord of point
+     *            the y coordinate
      * @return {@link Room} or null if no such room.
      */
     public static Room getRoomAt(double x, double y) {

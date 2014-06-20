@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import nl.tudelft.bw4t.map.Path;
+import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.zone.Zone;
@@ -138,14 +139,17 @@ public class NavigatingRobot extends AbstractRobot {
      * updates the path to draw.
      */
     private void updateDrawPath() {
-        //if (BW4TEnvironment.getInstance().isDrawPathsEnabled()) {
-        
-            final ArrayList<NdPoint> path = new ArrayList<NdPoint>(plannedMoves);
-            if(plannedMoves.size()>0){
-            path.add(0, this.getLocation());
+        if (BW4TEnvironment.getInstance().isDrawPathsEnabled()) {
+            final ArrayList<Point> path = new ArrayList<Point>();
+            for (NdPoint p : plannedMoves) {
+                path.add(new Point(p.getX(), p.getY()));
+            }
+            if (plannedMoves.size() > 0) {
+                NdPoint p = this.getLocation();
+                path.add(0, new Point(p.getX(), p.getY()));
             }
             displayedPath.setPath(path);
-        //}
+        }
     }
 
     /**
@@ -158,6 +162,7 @@ public class NavigatingRobot extends AbstractRobot {
     public void setTargetLocation(NdPoint p) {
         clearCollided();
         clearObstacles();
+        setDestinationUnreachable(false);
         if (plannedMoves == null) {
             throw new InternalError("plannedMoves==null. How is this possible??");
         }
@@ -169,14 +174,36 @@ public class NavigatingRobot extends AbstractRobot {
         for (Object o : context.getObjects(Zone.class)) {
             allnavs.add((Zone) o);
         }
+
+        planPath(p, startpt, targetpt, allnavs);
+
+        updateDrawPath();
+        // make the bot use the new path.
+        useNextTarget();
+    }
+
+    /**
+     * Plans the path and adds it to planned moves
+     * 
+     * @param p
+     *            the point
+     * @param startpt
+     *            starting point
+     * @param targetpt
+     *            target point
+     * @param allnavs
+     *            all zones
+     */
+    private void planPath(NdPoint p, Zone startpt, Zone targetpt, List<Zone> allnavs) {
         // plan the path between the Zones
         List<Zone> plannedPath = PathPlanner.findPath(allnavs, startpt, targetpt);
         if (plannedPath.isEmpty()) {
             throw new IllegalArgumentException("target " + p + " is unreachable from " + this);
         }
-        
-        if(plannedPath.size() == 1 || !skipFirstNode(this.getLocation(), plannedPath.get(1).getLocation(), plannedPath.get(2).getLocation())) {
-            plannedMoves.add(plannedPath.get(1).getLocation());
+
+        final NdPoint first = plannedPath.get(1).getLocation();
+        if (plannedPath.size() == 1 || !skipFirstNode(this.getLocation(), first, plannedPath.get(2).getLocation())) {
+            plannedMoves.add(first);
         }
 
         // and copy Zone path to our stack.
@@ -184,28 +211,28 @@ public class NavigatingRobot extends AbstractRobot {
         for (int i = 1; i < preLast; i++) {
             Zone point = plannedPath.get(i);
             NdPoint toAdd = point.getLocation();
-            
+
             plannedMoves.add(toAdd);
         }
-        
+
         NdPoint toAdd = plannedPath.get(preLast).getLocation();
         final NdPoint last = plannedPath.get(preLast + 1).getLocation();
         if (skipNextNode(toAdd, last, p)) {
             plannedMoves.add(toAdd);
         }
         plannedMoves.add(p);
-        
-
-        updateDrawPath();
-        // make the bot use the new path.
-        useNextTarget();
     }
-    
+
     /**
-     * Check whether we should skip the next node because the one after that is closer. The function also checks the angle to make sure we do not try to
-     * @param current The node we are currently at
-     * @param next the next node in the list
-     * @param after the node after the next
+     * Check whether we should skip the next node because the one after that is closer. The function also checks the
+     * angle to make sure we do not try to
+     * 
+     * @param current
+     *            The node we are currently at
+     * @param next
+     *            the next node in the list
+     * @param after
+     *            the node after the next
      * @return true if the next node should be skipped
      */
     private boolean skipNextNode(NdPoint current, NdPoint next, NdPoint after) {
@@ -214,27 +241,35 @@ public class NavigatingRobot extends AbstractRobot {
         double distAfter = SpatialMath.distance(current, after);
         return skipNextNode(distNext, distAfter, angle);
     }
-    
+
     /**
-     * Check whether we should skip the next node because the one after that is closer. The function also checks the angle to make sure we do not try to
-     * @param current The node we are currently at
-     * @param next the next node in the list
-     * @param after the node after the next
+     * Check whether we should skip the next node because the one after that is closer. The function also checks the
+     * angle to make sure we do not try to
+     * 
+     * @param current
+     *            The node we are currently at
+     * @param next
+     *            the next node in the list
+     * @param after
+     *            the node after the next
      * @return true if the next node should be skipped
      */
     private boolean skipFirstNode(NdPoint current, NdPoint next, NdPoint after) {
-        double angle = SpatialMath.angle(current, after) - SpatialMath.angle(current, next); 
+        double angle = SpatialMath.angle(current, after) - SpatialMath.angle(current, next);
         double distNext = SpatialMath.distance(current, next) + SpatialMath.distance(next, after);
         double distAfter = SpatialMath.distance(current, after);
         return skipNextNode(distNext, distAfter, angle);
     }
-    
 
     /**
      * Check whether we should skip the next node and go straight for the one after
-     * @param distNormal the normal distance  
-     * @param distNext the distance with skipping
-     * @param angle the angle from current to skip
+     * 
+     * @param distNormal
+     *            the normal distance
+     * @param distNext
+     *            the distance with skipping
+     * @param angle
+     *            the angle from current to skip
      * @return true if the next node should be skipped and gone directly to the one after
      */
     public boolean skipNextNode(double distNormal, double distNext, double angle) {
@@ -247,6 +282,7 @@ public class NavigatingRobot extends AbstractRobot {
     public void setTarget(BoundedMoveableObject target) {
         clearCollided();
         clearObstacles();
+        setDestinationUnreachable(false);
         // clear old path.
         plannedMoves.clear();
         Zone startpt = ZoneLocator.getNearestZone(this.getLocation());
@@ -281,7 +317,7 @@ public class NavigatingRobot extends AbstractRobot {
         /**
          * Collided state
          */
-        COLLIDED, 
+        COLLIDED,
         /**
          * Traveling state
          */
@@ -305,7 +341,7 @@ public class NavigatingRobot extends AbstractRobot {
      * 
      * Find a new path, going around the obstacles. Strategy: Calculate path over grid as opposed to the zones. Find a
      * path from current location to the location of the next zone (currentMove)
-     *
+     * 
      * Continue with normal path after this.
      */
     public void navigateObstacles() {
@@ -317,29 +353,41 @@ public class NavigatingRobot extends AbstractRobot {
                 getSize());
         if (path.isEmpty()) {
             LOGGER.debug("No alternative path found.");
-            throw new IllegalArgumentException("target " + getTargetLocation() + " is unreachable for " + this);
+            setDestinationUnreachable(true);
+            return;
         } else {
-            LOGGER.debug("Found path around obstacle.");
-            // Now we just push the new points to the plannedMoved queue and sit back and relax!.
-            for (NdPoint p : path) {
-                plannedMoves.add(p);
-            }
-
-            for (NdPoint p : plannedMovesHistory) {
-                plannedMoves.add(p);
-            }
-
-            clearCollided();
-            clearObstacles();
-
-            // Let's roll.
-            updateDrawPath();
-            useNextTarget();
+            createPathObstacle(path);
         }
     }
 
     /**
+     * Creates a path around an obstacle
+     * 
+     * @param path
+     *            to create
+     */
+    private void createPathObstacle(List<NdPoint> path) {
+        LOGGER.debug("Found path around obstacle.");
+        // Now we just push the new points to the plannedMoved queue and sit back and relax!.
+        for (NdPoint p : path) {
+            plannedMoves.add(p);
+        }
+
+        for (NdPoint p : plannedMovesHistory) {
+            plannedMoves.add(p);
+        }
+
+        clearCollided();
+        clearObstacles();
+
+        // Let's roll.
+        updateDrawPath();
+        useNextTarget();
+    }
+
+    /**
      * gets all zones in the map.
+     * 
      * @return all zones
      */
     private Set<Zone> getAllZonesInMap() {

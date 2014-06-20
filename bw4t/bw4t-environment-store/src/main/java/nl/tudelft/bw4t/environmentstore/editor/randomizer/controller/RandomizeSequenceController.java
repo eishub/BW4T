@@ -8,12 +8,16 @@ import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeSequenceFrame;
 import nl.tudelft.bw4t.map.BlockColor;
 
+/** The controller class for the RandomizeSequence frame. */
 public class RandomizeSequenceController {
 
+    /** The view the randomize sequence controller controls. */
     private RandomizeSequenceFrame view;
     
+    /** The map controller linked to this controller. */
     private MapPanelController mapController;
     
+    /** The randomize sequence button listener. */
     private RandomizeSequence randomFromSettings;
     
     /**

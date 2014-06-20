@@ -8,18 +8,12 @@ import java.io.File;
 import org.junit.Test;
 
 public class FileFiltersTest {
-    
-    File xmlFile = new File("test.xml");
-    
-    File mapFile = new File("test.map");
-    
-    File goalFile = new File("test.goal");
-    
-    File mas2gFile = new File("test.mas2g");
-    
-    /**
-     * Tests whether the XML filter accepts the right extension.
-     */
+
+    private File xmlFile = new File("test.xml");
+    private File mapFile = new File("test.map");
+    private File goalFile = new File("test.goal");
+    private File mas2gFile = new File("test.mas2g");
+
     @Test
     public final void testXMLFilter() {
         assertTrue(FileFilters.xmlFilter().accept(xmlFile));
@@ -27,10 +21,7 @@ public class FileFiltersTest {
         assertFalse(FileFilters.xmlFilter().accept(goalFile));
         assertFalse(FileFilters.xmlFilter().accept(mas2gFile));
     }
-    
-    /**
-     * Tests whether the MAP filter accepts the right extension.
-     */
+
     @Test
     public final void testMAPFilter() {
         assertFalse(FileFilters.mapFilter().accept(xmlFile));
@@ -38,10 +29,7 @@ public class FileFiltersTest {
         assertFalse(FileFilters.mapFilter().accept(goalFile));
         assertFalse(FileFilters.mapFilter().accept(mas2gFile));
     }
-    
-    /**
-     * Tests whether the GOAL filter accepts the right extension.
-     */
+
     @Test
     public final void testGOALFilter() {
         assertFalse(FileFilters.goalFilter().accept(xmlFile));
@@ -49,10 +37,7 @@ public class FileFiltersTest {
         assertTrue(FileFilters.goalFilter().accept(goalFile));
         assertFalse(FileFilters.goalFilter().accept(mas2gFile));
     }
-    
-    /**
-     * Tests whether the XML filter accepts the right extension.
-     */
+
     @Test
     public final void testMAS2GFilter() {
         assertFalse(FileFilters.masFilter().accept(xmlFile));

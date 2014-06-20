@@ -1,11 +1,6 @@
 package nl.tudelft.bw4t.server.model.robots;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
-import nl.tudelft.bw4t.server.model.robots.Battery;
-import nl.tudelft.bw4t.server.model.robots.NavigatingRobot;
-import nl.tudelft.bw4t.server.model.robots.handicap.AbstractRobotDecorator;
-import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.mockito.Mockito.when;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.grid.Grid;
