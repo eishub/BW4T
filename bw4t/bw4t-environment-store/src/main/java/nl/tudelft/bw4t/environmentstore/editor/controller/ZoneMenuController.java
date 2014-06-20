@@ -10,10 +10,15 @@ import nl.tudelft.bw4t.environmentstore.editor.view.RoomMenu;
 import nl.tudelft.bw4t.environmentstore.editor.view.ZoneMenu;
 import nl.tudelft.bw4t.map.Zone.Type;
 
+/** The controller of the ZoneMenu
+ * This attaches all the listeners to the ZoneMenu
+ */
 public class ZoneMenuController {
 
     /**
-     * this method attaches all the listeners to the Zone Menu.
+     * this method attaches all the listeners to the Zone Menu
+     * @param menu the menu to which the listener is attached
+     * @param mapcontroller the controller of the environment
      */
     public void attachListenersToZoneMenu(ZoneMenu menu,
             MapPanelController mapcontroller) {
@@ -37,7 +42,14 @@ public class ZoneMenuController {
                 mapcontroller, Type.CORRIDOR, false, true);
     }
 
-    /** This method ensures the map controller creates the appropriate zone. */
+    /**
+     * This method ensures the map controller creates the appropriate zone.
+     * @param item The type of zone in the ZoneMenu
+     * @param mapcontroller controller of the map
+     * @param t The type of zone to be created
+     * @param dropzone true if type is dropzone
+     * @param startzone true if type is startzone
+     */
     private void attachListenerToZoneMenuItem(final JMenuItem item,
             final MapPanelController mapcontroller, final Type t,
             final boolean dropzone, final boolean startzone) {
@@ -49,7 +61,11 @@ public class ZoneMenuController {
         });
     }
 
-    /** this method attaches all the listeners to the Room Menu. */
+    /**
+     * this method attaches all the listeners to the Room Menu. 
+     * @param menu the menu to which the listener is attached
+     * @param mapcontroller controller of the map
+     */
     public void attachListenersToRoomMenu(RoomMenu menu,
             MapPanelController mapcontroller) {
 
@@ -68,7 +84,12 @@ public class ZoneMenuController {
                 mapcontroller, ZoneModel.WEST);
     }
 
-    /** This method ensures the map controller sets the appropriate doors. */    
+    /**
+     * This method ensures the map controller sets the appropriate doors.   
+     * @param item option chosen by user
+     * @param mapcontroller controller of the map
+     * @param direction the direction of the door
+     */
     private void attachListenerToRoomMenuItem(final JMenuItem item,
             final MapPanelController mapcontroller, final int direction) {
         item.addActionListener(new ActionListener() {

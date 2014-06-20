@@ -29,7 +29,7 @@ public class MapPreviewController extends AbstractMapController {
     /**
      * Constructor for the MapPreviewController.
      * 
-     * @param mc
+     * @param mc this is the controller for the environment we preview
      */
     public MapPreviewController(MapPanelController mc) {
         super(MapConverter.createMap(mc.getEnvironmentMap()));
