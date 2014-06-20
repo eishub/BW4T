@@ -2,23 +2,38 @@ package nl.tudelft.bw4t.server.model.robots;
 
 import nl.tudelft.bw4t.server.model.zone.Zone;
 
-import org.apache.log4j.Logger;
-
 /**
  * This class stores performance information of an agent.
  */
 public class AgentRecord {
-    // name of agent
-    private String name; 
-     // number of good drops.
+    /**
+     * name of agent
+     */
+    private String name;
+
+    /**
+     * number of good drops.
+     */
     private Integer goodDrops = 0;
-    // number of wrong drops
+
+    /**
+     * number of wrong drops
+     */
     private Integer wrongDrops = 0;
-    // number of messages
-    private Integer nMessages = 0; 
-    // number of rooms entered
-    private Integer nRoomsEntered = 0; 
-    
+
+    /**
+     * number of messages
+     */
+    private Integer nMessages = 0;
+
+    /**
+     * number of rooms entered
+     */
+    private Integer nRoomsEntered = 0;
+
+    /**
+     * Sets last zone entered to null
+     */
     private Zone lastZoneEntered = null;
 
     /** accumulated milliseconds of standing still */
@@ -29,25 +44,25 @@ public class AgentRecord {
     private Long currentStandingStillMillis = System.currentTimeMillis();
 
     /**
-     * The log4j logger, logs to the console and file
-     */
-    private static final Logger LOGGER = Logger.getLogger(AgentRecord.class);
-    
-    /**
      * create new Agent record
      * 
      * @param agentName
-     * @param tp
-     *            is the type (human/bot).
+     *           The name of the agent
      */
     public AgentRecord(String agentName) {
         name = agentName;
     }
 
+    /**
+     * Amount of good drops.
+     */
     public void addGoodDrop() {
         goodDrops++;
     }
 
+    /**
+     * Amount of wrong drops
+     */
     public void addWrongDrop() {
         wrongDrops++;
     }
@@ -63,9 +78,11 @@ public class AgentRecord {
 
     /**
      * should be called when agent enters room ensures that the same room does not get printed twice.
+     * @param entered
+     *          the zone that has been entered
      */
     public void addEnteredRoom(Zone entered) {
-        if(lastZoneEntered == entered) {
+        if (lastZoneEntered == entered) {
             return;
         }
         nRoomsEntered++;
@@ -88,28 +105,28 @@ public class AgentRecord {
     public void addSentMessage() {
         nMessages++;
     }
-    
+
     public String getName() {
         return name;
     }
-    
-   public Integer getGoodDrops() {
-       return goodDrops;
-   }
-   
-   public Integer getWrongDrops() {
-       return wrongDrops;
-   }
-   
-   public Integer getNMessages() {
-       return nMessages;
-   }
-  
-   public Integer getNRoomsEntered() {
-       return nRoomsEntered;
-   }
-   
-   public long getTotalStandingStillMillis() {
-       return totalStandingStillMillis;
-   }
+
+    public Integer getGoodDrops() {
+        return goodDrops;
+    }
+
+    public Integer getWrongDrops() {
+        return wrongDrops;
+    }
+
+    public Integer getNMessages() {
+        return nMessages;
+    }
+
+    public Integer getNRoomsEntered() {
+        return nRoomsEntered;
+    }
+
+    public long getTotalStandingStillMillis() {
+        return totalStandingStillMillis;
+    }
 }

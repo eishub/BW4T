@@ -1,5 +1,9 @@
 package nl.tudelft.bw4t.server.view;
 
+import eis.exceptions.ManagementException;
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,14 +37,10 @@ import nl.tudelft.bw4t.server.controller.ServerMapController;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.server.environment.Stepper;
-import nl.tudelft.bw4t.server.repast.BW4TBuilder;
 
 import org.apache.log4j.Logger;
 
 import repast.simphony.context.Context;
-import eis.exceptions.ManagementException;
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
 
 /**
  * Used for directly displaying the simulation from the context, unlike BW4TRenderer does not use percepts and can show
@@ -169,7 +169,6 @@ class ControlPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 try {
-                    // displayer.close(); now part of reset
                     BW4TEnvironment.getInstance().reset();
                 } catch (Exception e) {
                     LOGGER.error("failed to reset the environment", e);
@@ -246,7 +245,6 @@ class MapSelector extends JPanel {
                 Map<String, Parameter> parameters = new HashMap<String, Parameter>();
                 parameters.put("map", new Identifier((String) mapselector.getSelectedItem()));
                 try {
-                    // displayer.close(); now part of reset
                     BW4TEnvironment.getInstance().reset(parameters);
                 } catch (ManagementException e) {
                     LOGGER.error("failed to reset the environment", e);
@@ -266,7 +264,6 @@ class MapSelector extends JPanel {
         if (f.list() == null) {
             throw new FileNotFoundException("maps directory not found");
         }
-        Vector<String> maps = new Vector<String>(Arrays.asList(f.list()));
-        return maps;
+        return new Vector<String>(Arrays.asList(f.list()));
     }
 }
