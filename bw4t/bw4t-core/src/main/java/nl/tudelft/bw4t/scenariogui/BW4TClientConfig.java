@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.scenariogui;
 
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import nl.tudelft.bw4t.util.XMLManager;
 
@@ -21,9 +23,11 @@ import nl.tudelft.bw4t.util.XMLManager;
  * @since 12-05-2014
  */
 @XmlRootElement
-public class BW4TClientConfig {
+public class BW4TClientConfig implements Serializable {
 
-	private String outputFile;
+    private static final long serialVersionUID = 1L;
+
+    private String outputFile;
 
 	private String clientIp = DefaultConfigurationValues.DEFAULT_CLIENT_IP.getValue();
 
@@ -35,11 +39,12 @@ public class BW4TClientConfig {
 
 	private boolean launchGui = DefaultConfigurationValues.USE_GUI.getBooleanValue();
 
+	private boolean visualizePaths = DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue();
+
+	private boolean enableCollisions = DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue();
+
 	private boolean useGoal = DefaultConfigurationValues.USE_GOAL.getBooleanValue();
 
-	/**
-	 * The location of the map file.
-	 */
 	private String mapFile = "";
 
 	/**
@@ -49,7 +54,7 @@ public class BW4TClientConfig {
 	@XmlElement(name = "bot")
 	private List<BotConfig> bots = new ArrayList<BotConfig>();
 
-	private List<BotConfig> oldBots = new ArrayList<BotConfig>();
+	private transient List<BotConfig> oldBots = new ArrayList<BotConfig>();
 
 	/**
 	 * The XML element wrapper for the list of epartners.
@@ -58,12 +63,13 @@ public class BW4TClientConfig {
 	@XmlElement(name = "epartner")
 	private List<EPartnerConfig> epartners = new ArrayList<EPartnerConfig>();
 
-	private List<EPartnerConfig> oldEpartners = new ArrayList<EPartnerConfig>();
+	private transient List<EPartnerConfig> oldEpartners = new ArrayList<EPartnerConfig>();
 
 	/**
 	 * An empty <code>BW4TClientConfig</code> object.
 	 */
 	public BW4TClientConfig() {
+	    
 	}
 
 	/**
@@ -102,6 +108,7 @@ public class BW4TClientConfig {
 	 *
 	 * @return The path of the file to store this object in as XML.
 	 */
+	@XmlTransient
 	public final String getFileLocation() {
 		return outputFile;
 	}
@@ -112,6 +119,7 @@ public class BW4TClientConfig {
 	 * @param newFileLocation
 	 *            The path of the file to store this object in as XML.
 	 */
+	
 	public final void setFileLocation(final String newFileLocation) {
 		this.outputFile = newFileLocation;
 	}
@@ -218,6 +226,46 @@ public class BW4TClientConfig {
 	}
 
 	/**
+	 * Gets if paths should be visualized.
+	 *
+	 * @return if paths should be visualized
+	 */
+	public final boolean isVisualizePaths() {
+		return visualizePaths;
+	}
+
+	/**
+	 * Sets if collisions should be enabled
+	 *
+	 * @param newEnableCollisions
+	 *            Boolean indicating if collisions should be enabled
+	 */
+	@XmlElement
+	public final void setEnableCollisions(final boolean newEnableCollisions) {
+		this.enableCollisions = newEnableCollisions;
+	}
+
+	/**
+	 * Gets if collisions should be enabled
+	 *
+	 * @return If collisions should be enabled
+	 */
+	public final boolean isEnableCollisions() {
+		return enableCollisions;
+	}
+
+	/**
+	 * Sets if a GUI should be launched.
+	 *
+	 * @param newVisualizePaths
+	 *            Boolean indicating if paths should be visualized.
+	 */
+	@XmlElement
+	public final void setVisualizePaths(final boolean newVisualizePaths) {
+		this.visualizePaths = newVisualizePaths;
+	}
+
+	/**
 	 * Gets if Goal should be used.
 	 *
 	 * @return if Goal should be used.
@@ -305,11 +353,21 @@ public class BW4TClientConfig {
 	public BotConfig getBot(int index) {
 		return bots.get(index);
 	}
+	
+	/**
+	 * Overwrites the bot config at this index in the bot list
+	 * with the new bot config.
+	 * @param index The index of the bot config to overwrite.
+	 * @param newBotConfig The new bot config.
+	 */
+	public void setBot(int index, BotConfig newBotConfig) {
+        bots.set(index, newBotConfig);
+    }
 
 	/**
 	 * Updates the bot list with the new bots.
 	 */
-	public void updateBotConfigs() {
+	public void updateOldBotConfigs() {
 		oldBots = new ArrayList<BotConfig>(bots);
 	}
 
@@ -345,7 +403,7 @@ public class BW4TClientConfig {
 				return false;
 			}
 		}
-
+		
 		return true;
 	}
 
@@ -401,7 +459,7 @@ public class BW4TClientConfig {
 	/**
 	 * Updates the EpartnerConfig list.
 	 */
-	public void updateEpartnerConfigs() {
+	public void updateOldEpartnerConfigs() {
         oldEpartners = new ArrayList<EPartnerConfig>(epartners);
 	}
 
@@ -439,6 +497,19 @@ public class BW4TClientConfig {
 		}
 
 		return true;
+	}
+	
+	/**
+	 * Clears the bot and e-partner list
+	 * and the history that came with it.
+	 */
+	public void clearBotsAndEpartners() {
+        getBots().clear();
+        getEpartners().clear();
+
+        // Delete the history as well.
+        updateOldBotConfigs();
+        updateOldEpartnerConfigs();
 	}
 
 }

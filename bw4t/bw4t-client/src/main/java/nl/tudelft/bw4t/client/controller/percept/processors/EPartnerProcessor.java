@@ -2,6 +2,7 @@ package nl.tudelft.bw4t.client.controller.percept.processors;
 
 import eis.iilang.Numeral;
 import eis.iilang.Parameter;
+import eis.iilang.Identifier;
 
 import java.util.List;
 
@@ -21,13 +22,17 @@ public class EPartnerProcessor implements PerceptProcessor {
     @Override
     public void process(List<Parameter> parameters, ClientMapController clientMapController) {
         long id = ((Numeral) parameters.get(0)).getValue().longValue();
-        long holderId = ((Numeral) parameters.get(1)).getValue().longValue();
+        String entityId = ((Identifier) parameters.get(1)).getValue();
+        long holderId = ((Numeral) parameters.get(2)).getValue().longValue();
+        
         ViewEntity theBot = clientMapController.getTheBot();
         
-        ViewEPartner epartner = clientMapController.getViewEPartner(id);
+        ViewEPartner epartner = clientMapController.getKnownEPartner(id);
         if (epartner == null) {
             epartner = clientMapController.addEPartner(id, holderId);
         }
+        epartner.setName(entityId);
+        epartner.setVisible(true);
         if (holderId == theBot.getId()) {
             if (id != theBot.getHoldingEpartner()){
                 LOGGER.info("We are now holding the e-partner: " + id);

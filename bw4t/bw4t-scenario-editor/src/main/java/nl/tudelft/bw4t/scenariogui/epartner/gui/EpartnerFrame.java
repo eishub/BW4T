@@ -40,7 +40,7 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 
 	private JTextField epartnerGoalFileField = new JTextField();
 
-	private JButton applyButton = new JButton("Apply");
+	private JButton saveButton = new JButton("Save");
 
 	private JButton resetButton = new JButton("Reset");
 
@@ -55,8 +55,6 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 	private EPartnerConfig dataObject = new EPartnerConfig();
 
 	private EpartnerController controller;
-	
-	private BW4TClientConfig model;
 
 	/**
 	 * Create the frame.
@@ -77,17 +75,14 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 		contentPane.add(optionPane, BorderLayout.CENTER);
 		contentPane.add(buttonPane, BorderLayout.SOUTH);
 
-		getResetButton().addActionListener(
-				new EpartnerResetButton(this));
-
-		getCancelButton().addActionListener(
-				new EpartnerCancelButton(this));
-
-		getApplyButton().addActionListener(
-			new EpartnerApplyButton(this));
+        getResetButton().addActionListener(new EpartnerResetButton(this));
+        getCancelButton().addActionListener(new EpartnerCancelButton(this));
+		getSaveButton().addActionListener(new EpartnerSaveButton(this));
+		getFileButton().addActionListener(new EGoalFileButton(this));
 
 		setResizable(false);
 		pack();
+		setLocationRelativeTo(null);
 		
 		controller.addView(this);
 		
@@ -107,19 +102,19 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 	 */
 	private void createOptionPanel() {
 		optionPane.setLayout(new GridLayout(0, 1));
+		
+		optionPane.add(new JLabel(""));
+
+		addGoalOptions();
+
 		optionPane.add(new JLabel(""));
 
 		JLabel propertiesLabel = new JLabel("Properties");
 		propertiesLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		optionPane.add(propertiesLabel);
-
 		optionPane.add(forgetMeNotCheckbox);
-
 		optionPane.add(gpsCheckBox);
-		optionPane.add(new JLabel(""));
-
-		addGoalOptions();
-
+		
 		optionPane.add(new JLabel(""));
 	}
 
@@ -142,7 +137,7 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 	 */
 	private void createButtonPanel() {
 		buttonPane.setLayout(new GridLayout(1, 0));
-		buttonPane.add(applyButton);
+		buttonPane.add(saveButton);
 		buttonPane.add(resetButton);
 		buttonPane.add(cancelButton);
 	}
@@ -170,8 +165,8 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 	 * 
 	 * @return The apply button.
 	 */
-	public JButton getApplyButton() {
-		return applyButton;
+	public JButton getSaveButton() {
+		return saveButton;
 	}
 
 	/**
@@ -292,9 +287,13 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
 	public JButton getFileButton() {
 		return fileButton;
 	}
-	
-	public BW4TClientConfig getModel() {
-	    return model;
+
+	public JTextField getEpartnerNameField() {
+		return epartnerNameField;
+	}
+
+	public JTextField getEpartnerAmountField() {
+		return epartnerAmountField;
 	}
 	
 }

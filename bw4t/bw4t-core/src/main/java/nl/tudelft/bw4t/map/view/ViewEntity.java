@@ -27,6 +27,8 @@ public class ViewEntity {
     
     private long holdingEpartner = -1;
 
+    private double batteryLevel = 0.0;
+
     public ViewEntity(){
         location = new Point2D.Double();
     }
@@ -103,5 +105,13 @@ public class ViewEntity {
 
     public void setHoldingEpartner(long holdingEpartner) {
         this.holdingEpartner = holdingEpartner;
+    }
+
+    public double getBatteryLevel() {
+        return batteryLevel;
+    }
+
+    public void setBatteryLevel(double batteryLevel) {
+        this.batteryLevel = batteryLevel;
     }
 }

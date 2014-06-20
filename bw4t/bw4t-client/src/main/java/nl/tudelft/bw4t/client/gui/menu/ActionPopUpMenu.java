@@ -28,12 +28,13 @@ public class ActionPopUpMenu {
         ClientMapController cmc = gui.getController().getMapController();
         MapRenderSettings settings = cmc.getRenderSettings();
 
-        buildSequenceBlockMenu(gui, startPosX, cmc, settings);
-        buildEPartnerMenu(gui, cmc, settings);
-        buildRoomMenu(gui, cmc, settings);
-        buildBlockadeMenu(gui, cmc, settings);
-        buildChargingZoneMenu(gui, cmc, settings);
-        buildHallwayMenu(gui);
+        if (!buildSequenceBlockMenu(gui, startPosX, cmc, settings)
+                && !buildEPartnerMenu(gui, cmc, settings)
+                && !buildRoomMenu(gui, cmc, settings)
+                && !buildBlockadeMenu(gui, cmc, settings)
+                && !buildChargingZoneMenu(gui, cmc, settings)) {
+            buildHallwayMenu(gui);
+        }
     }
 
     /**
@@ -56,16 +57,19 @@ public class ActionPopUpMenu {
      *            the client map controller
      * @param settings
      *            the map renderer settings
+     * @return Whether the menu was built.
      */
-    private static void buildChargingZoneMenu(BW4TClientGUI gui, ClientMapController cmc, MapRenderSettings settings) {
+    private static boolean buildChargingZoneMenu(BW4TClientGUI gui, ClientMapController cmc,
+            MapRenderSettings settings) {
         for (Zone chargingzone : cmc.getChargingZones()) {
             Shape chargeBoundaries = settings.transformRectangle(chargingzone.getBoundingbox().getRectangle());
             if (chargeBoundaries.contains(gui.getSelectedLocation())) {
                 HallwayMenu.buildPopUpMenuForHallway(gui, "go recharge");
                 showJPopupMenu(gui);
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     /**
@@ -77,16 +81,18 @@ public class ActionPopUpMenu {
      *            the client map controller
      * @param settings
      *            the map renderer settings
+     * @return Whether the menu was built.
      */
-    private static void buildBlockadeMenu(BW4TClientGUI gui, ClientMapController cmc, MapRenderSettings settings) {
+    private static boolean buildBlockadeMenu(BW4TClientGUI gui, ClientMapController cmc, MapRenderSettings settings) {
         for (Zone blockade : cmc.getBlockades()) {
             Shape blockBoundaries = settings.transformRectangle(blockade.getBoundingbox().getRectangle());
             if (blockBoundaries.contains(gui.getSelectedLocation())) {
                 BlockadeMenu.buildPopUpMenuForBlockade(gui);
                 showJPopupMenu(gui);
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     /**
@@ -98,17 +104,23 @@ public class ActionPopUpMenu {
      *            the client map controller
      * @param settings
      *            the map renderer settings
+     * @return Whether the menu was built.
      */
-    private static void buildRoomMenu(BW4TClientGUI gui, ClientMapController cmc, MapRenderSettings settings) {
+    private static boolean buildRoomMenu(BW4TClientGUI gui, ClientMapController cmc, MapRenderSettings settings) {
         for (Zone room : cmc.getRooms()) {
             Shape roomBoundaries = settings.transformRectangle(room.getBoundingbox().getRectangle());
             if (roomBoundaries.contains(gui.getSelectedLocation())) {
-                buildVisibleBlockMenu(gui, cmc, settings, room);
-                RoomMenus.buildPopUpMenuRoom(room, gui);
-                showJPopupMenu(gui);
-                return;
+                
+                /** We only draw the room menu if the block menu wasn't already drawn: */
+                if (!buildVisibleBlockMenu(gui, cmc, settings, room)) {
+                    RoomMenus.buildPopUpMenuRoom(room, gui);
+                    showJPopupMenu(gui);
+                }
+                
+                return true;
             }
         }
+        return false;
     }
 
     /**
@@ -122,8 +134,9 @@ public class ActionPopUpMenu {
      *            the map renderer settings
      * @param room
      *            the room
+     * @return Whether the menu was built.
      */
-    private static void buildVisibleBlockMenu(BW4TClientGUI gui, ClientMapController cmc, MapRenderSettings settings,
+    private static boolean buildVisibleBlockMenu(BW4TClientGUI gui, ClientMapController cmc, MapRenderSettings settings,
             Zone room) {
         for (ViewBlock box : cmc.getVisibleBlocks()) {
             Shape boxBoundaries = settings.transformCenterRectangle(new Rectangle2D.Double(box.getPosition()
@@ -133,12 +146,13 @@ public class ActionPopUpMenu {
                     RoomMenus.buildPopUpMenuForBeingAtBlock(box, room, gui);
                 }
                 else {
-                    RoomMenus.buildPopUpMenuForBlock(box, room, gui);
+                    RoomMenus.buildPopUpMenuForBlock(box, room, gui.getController());
                 }
                 showJPopupMenu(gui);
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     /**
@@ -150,12 +164,13 @@ public class ActionPopUpMenu {
      *            the client map controller
      * @param settings
      *            the map renderer settings
+     * @return Whether the menu was built.
      */
-    private static void buildEPartnerMenu(BW4TClientGUI gui, ClientMapController cmc, MapRenderSettings settings) {
+    private static boolean buildEPartnerMenu(BW4TClientGUI gui, ClientMapController cmc, MapRenderSettings settings) {
         if (cmc.getTheBot().getHoldingEpartner() >= 0) {
-            buildEPartnerHoldingMenu(gui, cmc, settings);
+            return buildEPartnerHoldingMenu(gui, cmc, settings);
         } else {
-            buildEPartnerVisibleMenu(gui, cmc, settings);
+            return buildEPartnerVisibleMenu(gui, cmc, settings);
         }
     }
 
@@ -168,8 +183,9 @@ public class ActionPopUpMenu {
      *            the client map controller
      * @param settings
      *            the map renderer settings
+     * @return Whether the menu was built.
      */
-    private static void buildEPartnerVisibleMenu(BW4TClientGUI gui, ClientMapController cmc,
+    private static boolean buildEPartnerVisibleMenu(BW4TClientGUI gui, ClientMapController cmc,
             MapRenderSettings settings) {
         for (ViewEPartner ep : cmc.getVisibleEPartners()) {
             Shape ePartnerBox = settings.transformCenterRectangle(new Rectangle2D.Double(ep.getLocation().getX(),
@@ -182,9 +198,10 @@ public class ActionPopUpMenu {
                     EPartnerMenu.buildPopUpMenuMoveToEPartner(ep, gui);
                 }
                 showJPopupMenu(gui);
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     /**
@@ -196,8 +213,9 @@ public class ActionPopUpMenu {
      *            the client map controller
      * @param settings
      *            the map renderer settings
+     * @return Whether the menu was built.
      */
-    private static void buildEPartnerHoldingMenu(BW4TClientGUI gui, ClientMapController cmc,
+    private static boolean buildEPartnerHoldingMenu(BW4TClientGUI gui, ClientMapController cmc,
             MapRenderSettings settings) {
         ViewEPartner ep = cmc.getViewEPartner(cmc.getTheBot().getHoldingEpartner());
         if (ep != null) {
@@ -207,9 +225,10 @@ public class ActionPopUpMenu {
             if (ePartnerBox.contains(gui.getSelectedLocation())) {
                 EPartnerMenu.buildPopUpMenuForEPartner(ep, gui);
                 showJPopupMenu(gui);
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     /**
@@ -234,8 +253,9 @@ public class ActionPopUpMenu {
      *            the client map controller
      * @param set
      *            the set
+     * @return Whether the menu was built.
      */
-    private static void buildSequenceBlockMenu(BW4TClientGUI gui, int startPosX, ClientMapController cmc,
+    private static boolean buildSequenceBlockMenu(BW4TClientGUI gui, int startPosX, ClientMapController cmc,
             MapRenderSettings set) {
         for (BlockColor color : cmc.getSequence()) {
             Shape colorBounds = new Rectangle2D.Double(startPosX, set.scale(set.getWorldHeight()),
@@ -243,9 +263,10 @@ public class ActionPopUpMenu {
             if (colorBounds.contains(gui.getSelectedLocation())) {
                 MapOperations.buildPopUpMenuForGoalColor(color, gui);
                 showJPopupMenu(gui);
-                return;
+                return true;
             }
             startPosX += set.getSequenceBlockSize();
         }
+        return false;
     }
 }
