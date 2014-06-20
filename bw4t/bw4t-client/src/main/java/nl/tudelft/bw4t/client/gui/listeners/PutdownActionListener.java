@@ -27,7 +27,7 @@ public class PutdownActionListener extends AbstractClientActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!Launcher.getEnvironment().isConnectedToGoal()) {
+        if (!getController().getEnvironment().isConnectedToGoal()) {
             try {
                 getController().getHumanAgent().putDown();
             } catch (ActException e1) {

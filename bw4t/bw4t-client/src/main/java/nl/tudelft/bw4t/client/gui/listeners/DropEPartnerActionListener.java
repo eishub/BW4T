@@ -23,7 +23,7 @@ public class DropEPartnerActionListener extends AbstractClientActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!Launcher.getEnvironment().isConnectedToGoal()) {
+        if (!getController().getEnvironment().isConnectedToGoal()) {
             try {
                 getController().getHumanAgent().putDownEPartner();
                 gui.getEpartnerMessageButton().setEnabled(false);

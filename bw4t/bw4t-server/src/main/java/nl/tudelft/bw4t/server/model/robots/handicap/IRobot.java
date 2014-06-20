@@ -262,6 +262,12 @@ public interface IRobot {
     IRobot getParent();
     
     /**
+     * Gets the top most parent, 'the Adam / oldest ancestor / founding father' robot.
+     * @return The founding father, null if this robot is the founding father.
+     */
+    IRobot getEarliestParent();
+    
+    /**
      * @param hI
      * changes the parent 
      */
@@ -387,5 +393,12 @@ public interface IRobot {
     /**
      * Clears the obstacles.
      */
-    void clearObstacles();
+    public void clearObstacles();
+    
+    /**
+     * @return Whether the old target from before the navigateObstacles action
+     * has become unreachable.
+     */
+    boolean isDestinationUnreachable();
+
 }

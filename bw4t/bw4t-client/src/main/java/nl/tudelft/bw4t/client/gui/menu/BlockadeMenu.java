@@ -61,9 +61,6 @@ public class BlockadeMenu {
                     new BW4TMessage(MessageType.AMWAITINGOUTSIDEROOM, roomInfo.getName(), null, null), gui);
         }
 
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.AMWAITINGOUTSIDEROOM, cmc.getDropZone()
-                .getName(), null, null), gui);
-
         tellMenuHolding(gui, cmc, holdingID, entityColor);
 
         gui.getjPopupMenu().addSeparator();

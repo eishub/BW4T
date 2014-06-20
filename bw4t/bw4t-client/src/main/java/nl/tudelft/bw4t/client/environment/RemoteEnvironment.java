@@ -14,6 +14,7 @@ import java.util.Set;
 
 import nl.tudelft.bw4t.client.BW4TClient;
 import nl.tudelft.bw4t.client.agent.BW4TAgent;
+import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.startup.InitParam;
 import nl.tudelft.bw4t.map.NewMap;
@@ -57,7 +58,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     private BW4TClient client = null;
     private final List<EnvironmentListener> environmentListeners = new LinkedList<EnvironmentListener>();
     private final Map<String, ClientController> entityToGUI = new HashMap<>();
-    private boolean connectedToGoal = false;
     /**
      * This is a list of locally registered agents.
      * 
@@ -173,12 +173,20 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     public void associateEntity(String agentId, String entityId) throws RelationException {
         LOGGER.debug("Associating Agent " + agentId + " with Entity " + entityId + ".");
         try {
-            boolean launchGUI = "true".equals(InitParam.LAUNCHGUI.getValue());
+            boolean launchGUI = InitParam.LAUNCHGUI.getBoolValue();
             ClientController control = null;
             getClient().associateEntity(agentId, entityId);
-            if (isConnectedToGoal() && ("human".equals(getType(entityId)) || launchGUI)
-                    || "bot".equals(getType(entityId)) && launchGUI) {
+            if ("human".equals(getType(entityId))) {
+                HumanAgent agent = (HumanAgent) getRunningAgent(agentId);
+                if (agent == null) {
+                    agent = new HumanAgent("Human" + getAgents().size(), this);
+                    addRunningAgent(agent);
+                }
+                control = new ClientController(this, entityId, agent);
+            } else if (launchGUI && (isConnectedToGoal() || "bot".equals(getType(entityId)))) {
                 control = new ClientController(this, entityId);
+            }
+            if (control != null) {
                 control.startupGUI();
                 putEntityController(entityId, control);
             }
@@ -195,7 +203,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     @Override
     public void init(Map<String, Parameter> parameters) throws ManagementException {
         InitParam.setParameters(parameters);
-        connectedToGoal = Boolean.parseBoolean(InitParam.GOAL.getValue());
         if (isConnectedToGoal()) {
             BasicConfigurator.configure();
         }
@@ -761,7 +768,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     }
 
     public boolean isConnectedToGoal() {
-        return connectedToGoal;
+        return InitParam.GOAL.getBoolValue();
     }
 
     public ClientController getEntityController(String entity) {
