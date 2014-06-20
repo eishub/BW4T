@@ -1,5 +1,8 @@
 package nl.tudelft.bw4t.client.environment.handlers;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
+
 import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
 import eis.iilang.Action;
@@ -7,27 +10,15 @@ import eis.iilang.Action;
 import java.util.HashSet;
 import java.util.LinkedList;
 
-
-
 import nl.tudelft.bw4t.client.environment.ActionHandler;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.eq;
 
 //@Ignore("Not yet implemented.")
 @RunWith(MockitoJUnitRunner.class)

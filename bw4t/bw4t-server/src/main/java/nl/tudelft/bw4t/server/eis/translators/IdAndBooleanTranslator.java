@@ -1,11 +1,11 @@
 package nl.tudelft.bw4t.server.eis.translators;
 
-import nl.tudelft.bw4t.server.eis.IdAndBoolean;
-import nl.tudelft.bw4t.server.eis.ObjectInformation;
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Java2Parameter;
 import eis.iilang.Numeral;
 import eis.iilang.Parameter;
+
+import nl.tudelft.bw4t.server.eis.IdAndBoolean;
 
 public class IdAndBooleanTranslator implements Java2Parameter<IdAndBoolean> {
 

@@ -1,12 +1,13 @@
 package nl.tudelft.bw4t.server.environment;
 
+import eis.eis2java.environment.AbstractEnvironment;
+import eis.iilang.EnvironmentState;
+
 import java.io.File;
 
 import org.apache.log4j.Logger;
 
 import repast.simphony.scenario.ScenarioLoadException;
-import eis.eis2java.environment.AbstractEnvironment;
-import eis.iilang.EnvironmentState;
 
 /**
  * Stepper is the thread that schedules the bot stepping according to the environment run mode and the loopDelay

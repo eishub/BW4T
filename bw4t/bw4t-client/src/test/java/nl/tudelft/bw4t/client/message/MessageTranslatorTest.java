@@ -2,23 +2,19 @@ package nl.tudelft.bw4t.client.message;
 
 import static org.junit.Assert.assertTrue;
 
+import eis.iilang.Function;
+import eis.iilang.Identifier;
+import eis.iilang.Numeral;
+import eis.iilang.Parameter;
+
 import java.util.Arrays;
 import java.util.Collection;
-
-import nl.tudelft.bw4t.client.message.BW4TMessage;
-import nl.tudelft.bw4t.client.message.MessageTranslator;
-import nl.tudelft.bw4t.client.message.MessageType;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-
-import eis.iilang.Function;
-import eis.iilang.Identifier;
-import eis.iilang.Numeral;
-import eis.iilang.Parameter;
  
 /**
  * Tests if the MessageTranslator class is working correctly.

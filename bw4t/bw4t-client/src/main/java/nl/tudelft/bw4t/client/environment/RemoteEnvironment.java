@@ -1,5 +1,21 @@
 package nl.tudelft.bw4t.client.environment;
 
+import eis.AgentListener;
+import eis.EnvironmentInterfaceStandard;
+import eis.EnvironmentListener;
+import eis.exceptions.ActException;
+import eis.exceptions.AgentException;
+import eis.exceptions.EntityException;
+import eis.exceptions.ManagementException;
+import eis.exceptions.NoEnvironmentException;
+import eis.exceptions.PerceiveException;
+import eis.exceptions.QueryException;
+import eis.exceptions.RelationException;
+import eis.iilang.Action;
+import eis.iilang.EnvironmentState;
+import eis.iilang.Parameter;
+import eis.iilang.Percept;
+
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -22,22 +38,6 @@ import nl.tudelft.bw4t.server.view.ServerContextDisplay;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
-
-import eis.AgentListener;
-import eis.EnvironmentInterfaceStandard;
-import eis.EnvironmentListener;
-import eis.exceptions.ActException;
-import eis.exceptions.AgentException;
-import eis.exceptions.EntityException;
-import eis.exceptions.ManagementException;
-import eis.exceptions.NoEnvironmentException;
-import eis.exceptions.PerceiveException;
-import eis.exceptions.QueryException;
-import eis.exceptions.RelationException;
-import eis.iilang.Action;
-import eis.iilang.EnvironmentState;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
 
 /**
  * A remote BW4TEnvironment that delegates all actions towards the central BW4TEnvironment, through RMI. This is the

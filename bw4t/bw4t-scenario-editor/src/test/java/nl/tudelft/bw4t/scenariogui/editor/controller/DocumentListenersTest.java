@@ -1,13 +1,13 @@
 package nl.tudelft.bw4t.scenariogui.editor.controller;
 
+import static org.junit.Assert.assertEquals;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 public class DocumentListenersTest {
 

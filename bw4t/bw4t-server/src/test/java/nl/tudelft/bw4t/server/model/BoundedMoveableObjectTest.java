@@ -12,7 +12,6 @@ import static org.mockito.Mockito.when;
 
 import java.awt.geom.Rectangle2D;
 
-import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.doors.Door;
 
 import org.junit.After;

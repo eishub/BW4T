@@ -12,8 +12,6 @@ import java.util.ArrayList;
 
 import nl.tudelft.bw4t.server.model.epartners.EPartner;
 import nl.tudelft.bw4t.server.model.robots.NavigatingRobot;
-import nl.tudelft.bw4t.server.model.robots.handicap.Human;
-import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 
 import org.junit.Before;
 import org.junit.Test;

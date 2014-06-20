@@ -1,14 +1,15 @@
 package nl.tudelft.bw4t.client.environment;
 
+import eis.exceptions.EntityException;
+import eis.exceptions.PerceiveException;
+import eis.iilang.Percept;
+
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
 
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.startup.InitParam;
-import eis.exceptions.EntityException;
-import eis.exceptions.PerceiveException;
-import eis.iilang.Percept;
 
 /**
  * The Percepts Handler, which should retrieve the percepts from the environment.

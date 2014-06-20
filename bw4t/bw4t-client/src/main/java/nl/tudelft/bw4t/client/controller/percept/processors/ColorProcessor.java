@@ -1,13 +1,14 @@
 package nl.tudelft.bw4t.client.controller.percept.processors;
 
+import eis.iilang.Identifier;
+import eis.iilang.Numeral;
+import eis.iilang.Parameter;
+
 import java.util.List;
 
 import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.view.ViewBlock;
-import eis.iilang.Identifier;
-import eis.iilang.Numeral;
-import eis.iilang.Parameter;
 
 public class ColorProcessor implements PerceptProcessor {
 

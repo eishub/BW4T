@@ -1,5 +1,10 @@
 package nl.tudelft.bw4t.client.environment;
 
+import eis.exceptions.ManagementException;
+import eis.exceptions.NoEnvironmentException;
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,11 +13,6 @@ import nl.tudelft.bw4t.util.LauncherException;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
-
-import eis.exceptions.ManagementException;
-import eis.exceptions.NoEnvironmentException;
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
 
 /**
  * This class is used to startup the remote environment to interact with the
