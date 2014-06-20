@@ -521,9 +521,12 @@ public class RobotEntity implements EntityInterface {
         if(ourRobot instanceof NavigatingRobot) {
             NavigatingRobot navbot = (NavigatingRobot) ourRobot;
             navbot.navigateObstacles();
-        } else if(ourRobot instanceof AbstractRobotDecorator && ourRobot.getParent() instanceof NavigatingRobot) {
-            NavigatingRobot navbot = (NavigatingRobot) ourRobot.getParent();
-            navbot.navigateObstacles();
+        } else if(ourRobot instanceof AbstractRobotDecorator) {
+            IRobot robotEarliestParent = ourRobot.getEarliestParent();
+            if (robotEarliestParent != null && robotEarliestParent instanceof NavigatingRobot) {
+                NavigatingRobot navbot = (NavigatingRobot) robotEarliestParent;
+                navbot.navigateObstacles();
+            }
         }
     }
     /**
