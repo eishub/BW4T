@@ -15,7 +15,9 @@ import java.util.Set;
 public final class ActionHandler {
     
     /** Should never be instantiated. */
-    private ActionHandler() { }
+    private ActionHandler() { 
+        
+    }
     
     /**
      * Handles the performAction function from the {@link RemoteEnvironment}. 
