@@ -11,6 +11,7 @@ import nl.tudelft.bw4t.server.eis.translators.BlockWithColorTranslator;
 import nl.tudelft.bw4t.server.eis.translators.BoundedMovableObjectTranslator;
 import nl.tudelft.bw4t.server.eis.translators.ColorTranslator;
 import nl.tudelft.bw4t.server.eis.translators.EPartnerTranslator;
+import nl.tudelft.bw4t.server.eis.translators.IdAndBooleanTranslator;
 import nl.tudelft.bw4t.server.eis.translators.ObjectInformationTranslator;
 import nl.tudelft.bw4t.server.eis.translators.PointTranslator;
 import nl.tudelft.bw4t.server.eis.translators.ZoneTranslator;
@@ -63,6 +64,7 @@ public class RobotEntity implements EntityInterface {
         translator.registerJava2ParameterTranslator(new ObjectInformationTranslator());
         translator.registerJava2ParameterTranslator(new ColorTranslator());
         translator.registerJava2ParameterTranslator(new EPartnerTranslator());
+        translator.registerJava2ParameterTranslator(new IdAndBooleanTranslator());
     }
 
     /**
@@ -685,6 +687,15 @@ public class RobotEntity implements EntityInterface {
             }
         }
         return nearest;
+    }
+    
+    /**
+     * Percepts for when this robot has a target that is unreachable/reachable (on change).
+     * @return The percept in the form of an object with an id (long) and a boolean.
+     */
+    @AsPercept(name = "oldTargetUnreachable", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
+    public IdAndBoolean getOldTargetUnreachable() {
+        return new IdAndBoolean(ourRobot.getId(), ourRobot.isDestinationUnreachable());
     }
 
 }

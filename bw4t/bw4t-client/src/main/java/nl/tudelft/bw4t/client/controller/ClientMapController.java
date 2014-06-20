@@ -24,6 +24,7 @@ import nl.tudelft.bw4t.client.controller.percept.processors.OccupiedProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.PerceptProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.PositionProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.RobotBatteryProcessor;
+import nl.tudelft.bw4t.client.controller.percept.processors.RobotOldTargetUnreachableProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.RobotProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.RobotSizeProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.SequenceIndexProcessor;
@@ -106,6 +107,7 @@ public class ClientMapController extends AbstractMapController {
         perceptProcessors.put("robotSize", new RobotSizeProcessor());
         perceptProcessors.put("bumped", new BumpedProcessor());
         perceptProcessors.put("battery", new RobotBatteryProcessor());
+        perceptProcessors.put("oldTargetUnreachable", new RobotOldTargetUnreachableProcessor());
     }
 
     @Override

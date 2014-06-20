@@ -17,4 +17,9 @@ public interface EntityInterface {
      * to be called when robot is connected, so that we can inject the entity into Repast for painting. #2326
      */
     void connect();
+
+    /**
+     * call this whenever the entity gets disconnected from the environment.
+     */
+    void disconnect();
 }

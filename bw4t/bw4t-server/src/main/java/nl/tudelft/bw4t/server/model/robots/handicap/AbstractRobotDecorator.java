@@ -309,4 +309,9 @@ public abstract class AbstractRobotDecorator implements IRobot {
 
     @Override
     public void clearObstacles() { parent.clearObstacles(); }
+    
+    @Override
+    public boolean isDestinationUnreachable() {
+        return parent.isDestinationUnreachable();
+    }
 }

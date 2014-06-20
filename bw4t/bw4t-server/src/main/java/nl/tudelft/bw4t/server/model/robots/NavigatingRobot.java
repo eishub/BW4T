@@ -128,6 +128,7 @@ public class NavigatingRobot extends AbstractRobot {
     public void setTargetLocation(NdPoint p) {
         clearCollided();
         clearObstacles();
+        setDestinationUnreachable(false);
         if (plannedMoves == null) {
             throw new InternalError("plannedMoves==null. How is this possible??");
         }
@@ -158,6 +159,7 @@ public class NavigatingRobot extends AbstractRobot {
     public void setTarget(BoundedMoveableObject target) {
         clearCollided();
         clearObstacles();
+        setDestinationUnreachable(false);
         // clear old path.
         plannedMoves.clear();
         Zone startpt = ZoneLocator.getNearestZone(this.getLocation());
@@ -217,9 +219,9 @@ public class NavigatingRobot extends AbstractRobot {
                 getSize());
         if (path.isEmpty()) {
             LOGGER.debug("No alternative path found.");
-            throw new IllegalArgumentException("target " + getTargetLocation() + " is unreachable for " + this);
-        }
-        else {
+            setDestinationUnreachable(true);
+            return;
+        } else {
             LOGGER.debug("Found path around obstacle.");
             // Now we just push the new points to the plannedMoved queue and sit back and relax!.
             for (NdPoint p : path) {
@@ -232,6 +234,7 @@ public class NavigatingRobot extends AbstractRobot {
 
             clearCollided();
             clearObstacles();
+            setDestinationUnreachable(false);
 
             // Let's roll.
             updateDrawPath();
