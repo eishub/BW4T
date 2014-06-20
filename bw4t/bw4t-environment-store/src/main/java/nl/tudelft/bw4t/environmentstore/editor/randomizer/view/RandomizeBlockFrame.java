@@ -9,33 +9,26 @@ import javax.swing.SpinnerNumberModel;
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.controller.RandomizeBlocksController;
 
-/**
- * Create a randomize frame to randomize blocks in the rooms.
- *
- */
+/** Create a little menu allowing the user to randomise blocks in the rooms. */
 public class RandomizeBlockFrame extends RandomizeFrame {
-    
+	
+    /** The controller for this view class. */
     private RandomizeBlocksController controller;
     
+	/** Serial version UID. */
     private static final long serialVersionUID = 1L;
     
-    /**
-     * If the user clicks this button the changes will be saved.
-     */
+    /** If the user clicks this button the changes will be saved. */
     JButton applyButton = new JButton("Apply");
     
-    /**
-     * If the user clicks this button the changes will not be saved.
-     */
+    /** If the user clicks this button the changes will not be saved. */
     JButton cancelButton = new JButton("Cancel");
     
     SpinnerModel spinnerModel = new SpinnerNumberModel(8, // initial value
             1, // min
             12, // max
             1); // step
-    /**
-     * Here can the user set the number of blocks.
-     */
+    /** Here can the user set the number of blocks. */
     private JSpinner numberOfBlocksSpinner = new JSpinner(spinnerModel);
     
     private JLabel lblNumberOfBlocks = new JLabel("Maximum number of blocks per room:");
