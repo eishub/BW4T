@@ -2,6 +2,9 @@ package nl.tudelft.bw4t.environmentstore.editor.menu.controller;
 
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+/**
+ * Filters all the files except the ones with the extension needed
+ */
 public final class FileFilters {
 
     /** Prevents this class from being instantiated. */
