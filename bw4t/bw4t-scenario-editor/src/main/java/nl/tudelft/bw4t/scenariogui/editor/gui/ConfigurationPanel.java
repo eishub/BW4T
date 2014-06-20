@@ -147,9 +147,6 @@ public class ConfigurationPanel extends JPanel {
 
     }
 
-    /**
-     * Show the client configuration options in the panel.
-     */
     private void showClientOptions() {
         c.insets = new Insets(INSET, INSET, 0, 0);
 
@@ -165,9 +162,6 @@ public class ConfigurationPanel extends JPanel {
         showClientBoxContent();
     }
 
-    /**
-     * Shows the contents of the client box (IP and Port boxes).
-     */
     private void showClientBoxContent() {
         c.weightx = GRID_BAG_CONSTRAINTS_WEIGHT;
         c.gridx = 0;
@@ -190,9 +184,6 @@ public class ConfigurationPanel extends JPanel {
         add(clientPort, c);
     }
 
-    /**
-     * Show the server configuration options in the panel.
-     */
     private void showServerOptions() {
         c.insets = new Insets(INSET, INSET, 0, 0);
 
@@ -206,9 +197,6 @@ public class ConfigurationPanel extends JPanel {
         showServerBoxContent();
     }
 
-    /**
-     * Shows the contents of the server box (IP and Port boxes).
-     */
     private void showServerBoxContent() {
         c.insets = new Insets(0, INSET, 0, 0);
 
@@ -233,9 +221,6 @@ public class ConfigurationPanel extends JPanel {
         add(serverPort, c);
     }
 
-    /**
-     * Show the option to use a GUI in the panel.
-     */
     private void showGuiOptions() {
         c.insets = new Insets(INSET, INSET, 0, 0);
 
@@ -256,9 +241,6 @@ public class ConfigurationPanel extends JPanel {
         add(guiNo, c);
     }
 
-    /**
-     * Show the option to visualize the paths.
-     */
     private void visualizePathsOptions() {
         c.insets = new Insets(INSET, INSET, 0, 0);
 
@@ -279,9 +261,6 @@ public class ConfigurationPanel extends JPanel {
         add(pathsNo, c);
     }
 
-    /**
-     * Show the option to enable collisions.
-     */
     private void enableCollisionsOptions() {
         c.insets = new Insets(INSET, INSET, 0, 0);
 
@@ -302,9 +281,6 @@ public class ConfigurationPanel extends JPanel {
         add(collisionsNo, c);
     }
 
-    /**
-     * Show the options to add a map file in the panel.
-     */
     private void showMapOptions() {
         c.insets = new Insets(INSET, INSET, 0, 0);
 
@@ -329,97 +305,42 @@ public class ConfigurationPanel extends JPanel {
         add(chooseMapFile, c);
     }
 
-    /**
-     * Returns the client IP.
-     *
-     * @return The client IP.
-     */
     public final String getClientIP() {
         return clientIP.getText();
     }
 
-    /**
-     * Sets the value of the text field of the client IP.
-     *
-     * @param newClientIP
-     *            The IP of the client
-     */
     public final void setClientIP(final String newClientIP) {
         this.clientIP.setText(newClientIP);
     }
 
-    /**
-     * Returns the client port.
-     *
-     * @return The client port.
-     */
     public final int getClientPort() {
         return Integer.parseInt(clientPort.getText());
     }
-
-    /**
-     * Sets the value of the text field of the client port.
-     *
-     * @param newClientPort
-     *            The port of the client
-     */
+    
     public final void setClientPort(final String newClientPort) {
         this.clientPort.setText(newClientPort);
     }
 
-    /**
-     * Returns the server IP.
-     *
-     * @return The server IP.
-     */
     public final String getServerIP() {
         return serverIP.getText();
     }
 
-    /**
-     * Sets the value of the text field of the server IP.
-     *
-     * @param newServerIP
-     *            The IP of the server
-     */
     public final void setServerIP(final String newServerIP) {
         this.serverIP.setText(newServerIP);
     }
 
-    /**
-     * Returns the server port.
-     *
-     * @return The server port.
-     */
     public final int getServerPort() {
         return Integer.parseInt(serverPort.getText());
     }
 
-    /**
-     * Sets the value of the text field of the server port.
-     *
-     * @param newServerPort
-     *            The port of the server
-     */
     public final void setServerPort(final String newServerPort) {
         this.serverPort.setText(newServerPort);
     }
 
-    /**
-     * Returns if a GUI needs to be displayed.
-     *
-     * @return The use of a GUI.
-     */
     public final boolean useGui() {
         return guiCheckBox.getSelectedCheckbox() == guiYes;
     }
 
-    /**
-     * Sets if GOAL needs to be used.
-     *
-     * @param useGui
-     *           The  use of GOAL.
-     */
     public final void setUseGui(final boolean useGui) {
         if (useGui) {
             guiCheckBox.setSelectedCheckbox(guiYes);
@@ -429,21 +350,10 @@ public class ConfigurationPanel extends JPanel {
         }
     }
 
-    /**
-     * Returns if paths should be visualized.
-     *
-     * @return The visualization of paths
-     */
     public final boolean isVisualizePaths() {
         return pathsCheckBox.getSelectedCheckbox() == pathsYes;
     }
 
-    /**
-     * Sets if paths should be visualized
-     *
-     * @param visualizePaths
-     *           The visualization of paths
-     */
     public final void setVisualizePaths(final boolean visualizePaths) {
         if (visualizePaths) {
             pathsCheckBox.setSelectedCheckbox(pathsYes);
@@ -453,21 +363,10 @@ public class ConfigurationPanel extends JPanel {
         }
     }
 
-    /**
-     * Returns if collisions should be enabled.
-     *
-     * @return The enable collisions.
-     */
     public final boolean isEnableCollisions() {
         return collisionsCheckBox.getSelectedCheckbox() == collisionsYes;
     }
 
-    /**
-     * Sets if collisions should be enabled.
-     *
-     * @param enableCollisions
-     *           The enable collisions.
-     */
     public final void setEnableCollisions(final boolean enableCollisions) {
         if (enableCollisions) {
             collisionsCheckBox.setSelectedCheckbox(collisionsYes);
@@ -477,48 +376,23 @@ public class ConfigurationPanel extends JPanel {
         }
     }
 
-    /**
-     * Returns the button to choose a map file.
-     *
-     * @return The button to choose a map file.
-     */
     public final JButton getChooseMapFile() {
         return chooseMapFile;
     }
-
-    /**
-     * Returns the path to the Map file.
-     *
-     * @return The path to the Map file.
-     */
+   
     public final String getMapFile() {
         return mapFileTextField.getText();
     }
 
-    /**
-     * Sets the value of the text field to the path of the Map file.
-     *
-     * @param mapFile
-     *            The path of the Map file
-     */
     public final void setMapFile(final String mapFile) {
         mapSpec.setMapFileLocation(mapFile);
         this.mapFileTextField.setText(mapFile);
     }
 
-    /**
-     * Returns a File Chooser.
-     *
-     * @return A File Chooser.
-     */
     public final JFileChooser getFileChooser() {
         return fileChooser;
     }
 
-    /**
-     * Sets the new file chooser.
-     * @param newFileChooser The new file chooser.
-     */
     public final void setFileChooser(final JFileChooser newFileChooser) {
         fileChooser = newFileChooser;
     }
@@ -539,10 +413,6 @@ public class ConfigurationPanel extends JPanel {
                 && this.getMapFile().equals(DefaultConfigurationValues.MAP_FILE.getValue());
     }
 
-    /**
-     * Returns the values that have been saved previously.
-     * @return The values that have been saved previously.
-     */
     public String getOldValues() {
         return this.oldClientIP + this.oldClientPort
                 + this.oldServerIP + this.oldServerPort + this.oldGui
@@ -561,10 +431,6 @@ public class ConfigurationPanel extends JPanel {
         this.oldMapFile = mapFileTextField.getText();
     }
 
-    /**
-     * Returns the current values.
-     * @return The current values.
-     */
     public String getCurrentValues() {
         return this.clientIP.getText()
                 + this.clientPort.getText()
@@ -573,10 +439,6 @@ public class ConfigurationPanel extends JPanel {
                 + this.mapFileTextField.getText();
     }
     
-    /**
-     * Returns the map specifications for the selected map.
-     * @return The map specifications for the selected map.
-     */
     public MapSpec getMapSpecifications() {
         return mapSpec;
     }

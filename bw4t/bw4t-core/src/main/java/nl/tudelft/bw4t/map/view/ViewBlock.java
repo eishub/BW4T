@@ -9,16 +9,31 @@ import nl.tudelft.bw4t.map.BlockColor;
  */
 public class ViewBlock {
     /** The width and height of the blocks */
-    public final static int BLOCK_SIZE = 1;
+    public static final int BLOCK_SIZE = 1;
 
+    /** Initialize objectId, default 0. */
     private long objectId = 0;
+    
+    /** Initialize color, default null. */
     private BlockColor color = null;
+    
+    /** Initialize position. */
     private Point2D position = new Point2D.Double();
     
+    /** 
+     * Empty constructor, initialize object.
+     */
     public ViewBlock() {
         super();
     }
 
+    /**
+     * Constructor.
+     * 
+     * @param objectId long, id of this object.
+     * @param color BlockColor
+     * @param position Point2D
+     */
     public ViewBlock(long objectId, BlockColor color, Point2D position) {
         super();
         this.objectId = objectId;
@@ -26,16 +41,10 @@ public class ViewBlock {
         this.position = position;
     }
 
-    /**
-     * @return the position
-     */
     public Point2D getPosition() {
         return position;
     }
 
-    /**
-     * @param position the position to set
-     */
     public void setPosition(Point2D position) {
         this.position = position;
     }
@@ -48,23 +57,14 @@ public class ViewBlock {
         this.position = new Point2D.Double(x, y);
     }
 
-    /**
-     * @return the objectId
-     */
     public long getObjectId() {
         return objectId;
     }
 
-    /**
-     * @param id the objectId
-     */
     public void setObjectId(long id) {
         objectId = id;
     }
 
-    /**
-     * @return the color
-     */
     public BlockColor getColor() {
         return color;
     }

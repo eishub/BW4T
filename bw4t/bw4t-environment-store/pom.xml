@@ -36,7 +36,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>nl.tudelft.bw4t.map.editor.MapEditor</mainClass>
+                            <mainClass>nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

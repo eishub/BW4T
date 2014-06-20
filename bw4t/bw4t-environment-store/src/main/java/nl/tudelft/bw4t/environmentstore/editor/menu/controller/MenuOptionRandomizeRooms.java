@@ -11,8 +11,16 @@ import nl.tudelft.bw4t.environmentstore.editor.model.RandomMapCreator;
 import nl.tudelft.bw4t.environmentstore.editor.model.ZoneModel;
 import nl.tudelft.bw4t.environmentstore.main.controller.EnvironmentStoreController;
 
+/**
+ * Menu option to randomize the rooms on the map
+ */
 public class MenuOptionRandomizeRooms extends AbstractMenuOption {
 
+	/**
+	 * Constructor for MenuOptionRandomizeRooms
+	 * @param newView the menu this option is on
+	 * @param controller environment controller
+	 */
     public MenuOptionRandomizeRooms(MenuBar newView,
             EnvironmentStoreController controller) {
         super(newView, controller);
@@ -29,7 +37,7 @@ public class MenuOptionRandomizeRooms extends AbstractMenuOption {
         int rows = mpc.getRows();
         int cols = mpc.getColumns();
         int maxRooms = RandomMapCreator.maxRoomsPossible(rows, cols);
-        amountRooms = (int) (Math.random() * (maxRooms*0.8-maxRooms*0.5) + maxRooms*0.5);
+        amountRooms = (int) (Math.random() * (maxRooms * 0.8 - maxRooms * 0.5) + maxRooms * 0.5);
         
         ZoneModel[][] grid = RandomMapCreator.createRandomGrid(rows, cols, amountRooms);
 

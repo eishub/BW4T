@@ -3,6 +3,7 @@ package nl.tudelft.bw4t.server.util;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
+
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.model.zone.Zone;
 import repast.simphony.space.continuous.NdPoint;
@@ -11,7 +12,8 @@ import repast.simphony.space.continuous.NdPoint;
 public final class ZoneLocator {
     
     /** Should never be instantiated.*/
-    private ZoneLocator() { }
+    private ZoneLocator() {
+}
 
     /**
      * Find {@link Zone} containing given point.
@@ -100,7 +102,7 @@ public final class ZoneLocator {
         if (z != null) {
             return z;
         }
-        return _getNearestZone(location);
+        return getNearestZoneNotNull(location);
     }
 
     /**
@@ -110,7 +112,7 @@ public final class ZoneLocator {
      *            - The location to search for nearby Zones.
      * @return The nearest Zone to the given point. {@code null} if there are no Zones whatsoever.
      */
-    private static Zone _getNearestZone(NdPoint location) {
+    private static Zone getNearestZoneNotNull(NdPoint location) {
         Iterable<Zone> zones = BW4TEnvironment.getInstance().getContext().getObjects(Zone.class);
         Zone nearest = null;
         double nearestdist = Double.MAX_VALUE;

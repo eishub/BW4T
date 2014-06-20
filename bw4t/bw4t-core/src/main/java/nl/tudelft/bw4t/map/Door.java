@@ -10,23 +10,45 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class Door implements Serializable {
-  public enum Orientation {
-      HORIZONTAL, VERTICAL
+  
+	/** Serialization id. */
+	private static final long serialVersionUID = -4173196906728316076L;
+
+	/** Define possible orientation. */
+	public enum Orientation {
+		/** Orientation either HORIZONTAL or VERTICAL. */
+       HORIZONTAL, VERTICAL
   }
 
-    /** width of doors. */
+    /** Width of doors. */
     public static final int DOOR_WIDTH = 4;
+   
     /** Thickness of doors. */
     public static final int DOOR_THICKNESS = 1;
+    
+    /** Color of closed door, default red. */
     public static final Color COLOR_CLOSED = Color.RED;
+    
+    /** Color of open door, default green. */
     public static final Color COLOR_OPEN = Color.GREEN;
 
+    /** Position of the door. */
     private Point position = new Point();
+    
+    /** Orientation of door, default Horizontal. */
     private Orientation orientation = Orientation.HORIZONTAL;
 
+    /**
+     * Empty constructor, initialize default variables.
+     */
     public Door() {
     }
 
+    /** Constructor. 
+     * 
+     * @param pos Point which is the position of the door
+     * @param or Orientation, either Horizontal of Vertical
+     */
     public Door(Point pos, Orientation or) {
         position = pos;
         orientation = or;

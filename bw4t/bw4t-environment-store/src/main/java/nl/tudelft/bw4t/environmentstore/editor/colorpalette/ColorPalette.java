@@ -21,14 +21,19 @@ import nl.tudelft.bw4t.map.BlockColor;
  */
 public class ColorPalette extends JPanel implements MouseInputListener {
     
+    /** Random generated serial version UID. */
     private static final long serialVersionUID = -1931059148668661725L;
     
+    /** size of the palette */
     private static final int COLOR_SIZE = 30;
-    
+     
+    /** the border of the palette */ 
     private static final int BORDER = 2;
 
+    /** the color the mouse is pointing to */
     private int mouseDownColorIndex = -1;
 
+    /** list with colors */
     private List<ColorPaletteListener> onColorClick = new LinkedList<>();
 
     /**
@@ -45,7 +50,7 @@ public class ColorPalette extends JPanel implements MouseInputListener {
 
     /**
      * Add a ColorPaletteListener to the color that has been clicked.
-     * @param cpl
+     * @param cpl the listener for the colorpalette
      */
     public void addColorClickListener(ColorPaletteListener cpl) {
         this.onColorClick.add(cpl);
@@ -53,12 +58,16 @@ public class ColorPalette extends JPanel implements MouseInputListener {
 
     /**
      * Remove a ColorPaletteListener from the color.
-     * @param cpl
+     * @param cpl the listener for the colorpalette
      */
     public void removeColorClickListener(ColorPaletteListener cpl) {
         this.onColorClick.remove(cpl);
     }
-
+    
+    /**
+     * notifies what color has been clicked
+     * @param c the color clicked 
+     */
     private void notifyColorClick(BlockColor c) {
         for (ColorPaletteListener cpl : onColorClick) {
             cpl.colorClicked(c);
@@ -78,7 +87,7 @@ public class ColorPalette extends JPanel implements MouseInputListener {
             int cvalue = 255 - c.getLuminosity();
             g.setColor(new Color(cvalue, cvalue, cvalue));
             g.setFont(new Font("Arial", Font.BOLD, 20));
-            g.drawString(Integer.toString(number), startX+BORDER + 7, BORDER + COLOR_SIZE - 7);
+            g.drawString(Integer.toString(number), startX + BORDER + 7, BORDER + COLOR_SIZE - 7);
             
             startX += COLOR_SIZE;
             number++;

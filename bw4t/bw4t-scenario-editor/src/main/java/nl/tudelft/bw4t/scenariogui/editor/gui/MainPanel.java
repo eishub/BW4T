@@ -8,18 +8,13 @@ import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.util.RobotTableModel;
 
 /**
  * MainPanel which serves as the content pane for the ScenarioEditor frame.
  * Creates a 1/3 - 2/3 division, the former for the ConfigurationPanel, and the
  * latter the EntityPanel.
- *
- * @version 0.1
- * @since 12-05-2014
  */
 public class MainPanel extends JPanel {
 
@@ -63,10 +58,6 @@ public class MainPanel extends JPanel {
     public final void drawPanel() {
         GridBagConstraints c = new GridBagConstraints();
 
-        // configurationPanel.setBorder(
-        //      BorderFactory.createLineBorder(Color.black));
-        // botPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-
         c.insets = new Insets(INSET, INSET, INSET, INSET);
         c.fill = GridBagConstraints.NONE;
         c.anchor = GridBagConstraints.NORTHWEST;
@@ -84,39 +75,19 @@ public class MainPanel extends JPanel {
         this.add(entityPanel, c);
     }
 
-    /**
-     * Returns the configuration panel used by the MainPanel.
-     *
-     * @return The configuration panel object.
-     */
     public final ConfigurationPanel getConfigurationPanel() {
         return configurationPanel;
     }
 
-    /**
-     * Set the configuration panel used by the MainPanel.
-     *
-     * @param newConfigurationPanel The configuration panel object to be used.
-     */
     public final void setConfigurationPanel(
             final ConfigurationPanel newConfigurationPanel) {
         this.configurationPanel = newConfigurationPanel;
     }
 
-    /**
-     * Returns the entity panel used by the MainPanel.
-     *
-     * @return The entity panel object.
-     */
     public EntityPanel getEntityPanel() {
         return entityPanel;
     }
 
-    /**
-     * Set the bot panel used by the MainPanel.
-     *
-     * @param newEntityPanel The bot panel object to be used.
-     */
     public final void setEntityPanel(final EntityPanel newEntityPanel) {
         this.entityPanel = newEntityPanel;
         this.entityPanel.getBotTableModel().setEnvironmentStore(parent);
