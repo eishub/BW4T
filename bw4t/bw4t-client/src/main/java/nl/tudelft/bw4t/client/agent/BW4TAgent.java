@@ -3,7 +3,6 @@ package nl.tudelft.bw4t.client.agent;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import nl.tudelft.bw4t.client.environment.PerceptsHandler;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
@@ -13,7 +12,6 @@ import nl.tudelft.bw4t.client.message.MessageTranslator;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
-
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Translator;
 import eis.exceptions.ActException;
@@ -22,12 +20,6 @@ import eis.exceptions.PerceiveException;
 import eis.iilang.Action;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
-import java.rmi.RemoteException;
-import java.util.LinkedList;
-import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-import nl.tudelft.bw4t.client.environment.PerceptsHandler;
-import nl.tudelft.bw4t.client.message.BW4TMessage;
-import nl.tudelft.bw4t.client.message.MessageTranslator;
 
 /**
  * Java agent that can control an entity.
@@ -43,7 +35,7 @@ public class BW4TAgent extends Thread implements ActionInterface {
     protected boolean environmentKilled;
     
     /** The bw4tenv. */
-    private RemoteEnvironment bw4tenv;
+    private final RemoteEnvironment bw4tenv;
     
     private BotConfig botConfig;
     private EPartnerConfig epartnerConfig;
@@ -73,6 +65,7 @@ public class BW4TAgent extends Thread implements ActionInterface {
     /**
      * Run the reasoning process of this agent.
      */
+    @Override
     public void run() {
         if (environmentKilled) {
             return;
@@ -84,8 +77,8 @@ public class BW4TAgent extends Thread implements ActionInterface {
      * @param type The type of the agent.
      * @return A list with the agents.
      */
-    public LinkedList<BW4TAgent> getAgentsWithType(String type) {
-        LinkedList<BW4TAgent> res = new LinkedList<BW4TAgent>();
+    public List<BW4TAgent> getAgentsWithType(String type) {
+        List<BW4TAgent> res = new LinkedList<BW4TAgent>();
         for (String agentName : bw4tenv.getAgents()) {
             try {
                 BW4TAgent agent = bw4tenv.getRunningAgent(agentName);
@@ -226,8 +219,8 @@ public class BW4TAgent extends Thread implements ActionInterface {
      * @return a list of percepts
      * @throws PerceiveException if there was a problem retrieving the percepts.
      */
-    public LinkedList<Percept> getPercepts() throws PerceiveException {
-        return (LinkedList<Percept>) PerceptsHandler.getAllPerceptsFromEntity(entityId, bw4tenv);
+    public List<Percept> getPercepts() throws PerceiveException {
+        return PerceptsHandler.getAllPerceptsFromEntity(entityId, bw4tenv);
     }
 
     /**
@@ -283,6 +276,13 @@ public class BW4TAgent extends Thread implements ActionInterface {
         return grippersInUse < grippersTotal;
     }
     
+    /**
+     * Checks if the bot controlled by the GUI can pick up another object
+     * @param gui
+     *         The GUI controlling the bot that needs to be checked
+     * @return
+     *         Returns true if the bot can pick up another object
+     */
     public boolean canPickupAnotherObject(BW4TClientGUI gui) {
         return canPickupAnotherObject(gui.getController().getMapController().getTheBot());
     }
