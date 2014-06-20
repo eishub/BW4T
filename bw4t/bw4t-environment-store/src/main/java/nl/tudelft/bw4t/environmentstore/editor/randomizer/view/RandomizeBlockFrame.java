@@ -23,11 +23,13 @@ public class RandomizeBlockFrame extends RandomizeFrame {
     
     /** If the user clicks this button the changes will not be saved. */
     JButton cancelButton = new JButton("Cancel");
-    
+
+    /** The spinner settings for the amount of blocks. */
     SpinnerModel spinnerModel = new SpinnerNumberModel(8, // initial value
             1, // min
             12, // max
             1); // step
+    
     /** Here can the user set the number of blocks. */
     private JSpinner numberOfBlocksSpinner = new JSpinner(spinnerModel);
     
