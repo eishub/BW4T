@@ -6,30 +6,38 @@ import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.message.BW4TMessage;
 import nl.tudelft.bw4t.client.message.MessageType;
 
-public class ChatMenu {
+/** Responsible for building the pop-up menu of the chat. */
+public final class ChatMenu {
+	
+	/** Should never be instantiated. */
+	private ChatMenu() { }
+	
     /**
-     * Build the pop up menu for sending chat messages to all players
+     * Used for building the pop-up menu that displays the chat actions a user can perform.
+     * 
+     * @param gui
+     *            - The {@link BW4TClientGUI} to create the pop-up menu on.
      */
-    public static void buildPopUpMenuForChat(BW4TClientGUI bw4tClientGUI) {
-        bw4tClientGUI.getjPopupMenu().removeAll();
+    public static void buildPopUpMenuForChat(BW4TClientGUI gui) {
+        gui.getjPopupMenu().removeAll();
 
-        BasicMenuOperations.addSectionTitleToPopupMenu("Answer:", bw4tClientGUI.getjPopupMenu());
+        BasicMenuOperations.addSectionTitleToPopupMenu("Answer:", gui.getjPopupMenu());
 
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.YES), bw4tClientGUI);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.NO), bw4tClientGUI);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.IDONOTKNOW), bw4tClientGUI);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.OK), bw4tClientGUI);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.IDO), bw4tClientGUI);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.IDONOT), bw4tClientGUI);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.WAIT), bw4tClientGUI);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.ONTHEWAY), bw4tClientGUI);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.ALMOSTTHERE), bw4tClientGUI);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.FARAWAY), bw4tClientGUI);
-        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.DELAYED), bw4tClientGUI);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.YES), gui);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.NO), gui);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.IDONOTKNOW), gui);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.OK), gui);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.IDO), gui);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.IDONOT), gui);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.WAIT), gui);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.ONTHEWAY), gui);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.ALMOSTTHERE), gui);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.FARAWAY), gui);
+        BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.DELAYED), gui);
 
-        bw4tClientGUI.getjPopupMenu().addSeparator();
+        gui.getjPopupMenu().addSeparator();
         JMenuItem menuItem = new JMenuItem("Close menu");
-        bw4tClientGUI.getjPopupMenu().add(menuItem);
+        gui.getjPopupMenu().add(menuItem);
 
     }
 }

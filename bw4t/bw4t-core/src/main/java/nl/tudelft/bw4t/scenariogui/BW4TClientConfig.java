@@ -23,10 +23,11 @@ import nl.tudelft.bw4t.util.XMLManager;
  * @since 12-05-2014
  */
 @XmlRootElement
-public class BW4TClientConfig implements Serializable, Cloneable  {
-    private static final long serialVersionUID = -4261058226472972776L;
+public class BW4TClientConfig implements Serializable {
 
-	private String outputFile;
+    private static final long serialVersionUID = 1L;
+
+    private String outputFile;
 
 	private String clientIp = DefaultConfigurationValues.DEFAULT_CLIENT_IP.getValue();
 
@@ -56,7 +57,7 @@ public class BW4TClientConfig implements Serializable, Cloneable  {
 	@XmlElement(name = "bot")
 	private List<BotConfig> bots = new ArrayList<BotConfig>();
 
-	private List<BotConfig> oldBots = new ArrayList<BotConfig>();
+	private transient List<BotConfig> oldBots = new ArrayList<BotConfig>();
 
 	/**
 	 * The XML element wrapper for the list of epartners.
@@ -65,7 +66,7 @@ public class BW4TClientConfig implements Serializable, Cloneable  {
 	@XmlElement(name = "epartner")
 	private List<EPartnerConfig> epartners = new ArrayList<EPartnerConfig>();
 
-	private List<EPartnerConfig> oldEpartners = new ArrayList<EPartnerConfig>();
+	private transient List<EPartnerConfig> oldEpartners = new ArrayList<EPartnerConfig>();
 
 	/**
 	 * An empty <code>BW4TClientConfig</code> object.

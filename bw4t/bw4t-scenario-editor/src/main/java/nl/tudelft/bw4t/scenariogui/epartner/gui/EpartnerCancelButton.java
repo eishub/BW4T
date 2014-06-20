@@ -8,6 +8,9 @@ import java.awt.event.ActionListener;
  */
 class EpartnerCancelButton implements ActionListener {
 
+	/**
+	 * The GUI to be disposed.
+	 */
 	private EpartnerFrame view;
 
 	/**

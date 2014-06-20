@@ -46,7 +46,7 @@ class ModifyEPartner implements ActionListener {
             ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Please select the E-partner you want to modify.");
         } 
         else {
-            new EpartnerFrame(new EpartnerController(view, row), model);
+            new EpartnerFrame(new EpartnerController(view, row));
             view.getEntityPanel().setEpartnerStore(true);
         }
     }

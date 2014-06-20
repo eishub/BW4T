@@ -37,25 +37,7 @@ class EpartnerSaveButton implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent ae) {
 		view.getEpartnerController().updateConfig(view);
-		updateEpartnerTable();
+		parent.refreshEPartnerTableModel();
 		view.dispose();
-	}
-
-	/**
-	 * Updates the epartner list in the scenario editor.
-	 */
-	private void updateEpartnerTable() {
-		DefaultTableModel epartnerTable = parent.getEntityPanel()
-				.getEPartnerTableModel();
-		epartnerTable.setRowCount(0);
-		int rows = view.getModel().getEpartners().size();
-
-		for (int i = 0; i < rows; i++) {
-			EPartnerConfig epartnerConfig = view.getModel().getEpartner(i);
-			Object[] newEpartnerObject = { epartnerConfig.getEpartnerName(),
-					epartnerConfig.getFileName(),
-					epartnerConfig.getEpartnerAmount() };
-			epartnerTable.addRow(newEpartnerObject);
-		}
 	}
 }

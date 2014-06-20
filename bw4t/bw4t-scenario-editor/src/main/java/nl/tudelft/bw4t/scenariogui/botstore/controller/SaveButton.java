@@ -4,28 +4,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-import javax.swing.SwingUtilities;
-import javax.swing.table.DefaultTableModel;
-
-import nl.tudelft.bw4t.map.EntityType;
-import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
-import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditor;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
-import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 import nl.tudelft.bw4t.util.FileUtils;
 
 /**
  * Handles actions of the apply button.
  */
-class SaveButton implements ActionListener {
+public class SaveButton implements ActionListener {
 
     private static final String GOAL_EXTENSION = ".goal";
     private static final String ALPHA_NUMERIC_REGEX = "^[ a-zA-Z0-9_-]*$";
 
     private BotEditorPanel view;
-
-    private MainPanel mp;
 
     /**
      * Constructor.
@@ -36,8 +27,6 @@ class SaveButton implements ActionListener {
      */
     public SaveButton(BotEditorPanel pview) {
         this.view = pview;
-        BotEditor be = (BotEditor) SwingUtilities.getWindowAncestor(view);
-        mp = be.getParent();
     }
 
     /**
@@ -54,30 +43,12 @@ class SaveButton implements ActionListener {
                 || !isAlphaNumericFileName(fileName)
                 || !isValidBotName(botName))
             return;
-        fillModelFromPartsOfViewWithoutListener();
 
-        /** Use the current temp bot config as the real one: */
-        view.getModel().setBot(view.getBotEditor().getRow(), view.getTempBotConfig());
-
+        view.getBotController().updateConfig(view);
         updateBotTableFromCurrentModel();
+        
         view.getBotEditor().dispose();
     }
-
-    /**
-     * Fills the fields of the model with its corresponding parts of the view, but only
-     * if those parts of the view don't have a listener yet.
-     */
-    private void fillModelFromPartsOfViewWithoutListener() {
-        view.getTempBotConfig().setBotName(
-                view.getBotNameField().getText());
-        view.getTempBotConfig().setBotController(
-                EntityType.getType((String) view.getBotControllerSelector().getSelectedItem()));
-        view.getTempBotConfig().setBotAmount(
-                Integer.parseInt(view.getBotAmountTextField().getText()));
-        view.getTempBotConfig().setReferenceName(
-                view.getBotReferenceField().getText());
-        view.getTempBotConfig().setFileName(view.getFileNameField().getText());
-	}
 	
 	/**
 	 * Returns whether this file name has the correct extension and a non-empty file
@@ -150,18 +121,6 @@ class SaveButton implements ActionListener {
      * Updates the bot list in the scenario editor.
      */
     private void updateBotTableFromCurrentModel() {
-        view.getBotEditor().getParent().getEntityPanel().getBotTableModel()
-                .setRowCount(0);
-        int rows = view.getModel().getBots().size();
-        for (int i = 0; i < rows; i++) {
-            BotConfig botConfig = view.getModel().getBot(i);
-            Object[] newBotObject = {botConfig.getBotName(),
-                    botConfig.getBotController().toString(),
-                    botConfig.getFileName(),
-                    botConfig.getBotAmount()};
-            view.getBotEditor().getParent().getEntityPanel().getBotTableModel()
-                    .addRow(newBotObject);
-        }
+        view.getMainPanel().refreshBotTableModel();
     }
-
 }

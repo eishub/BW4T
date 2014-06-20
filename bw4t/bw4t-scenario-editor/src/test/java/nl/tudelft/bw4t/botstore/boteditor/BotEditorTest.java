@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
+import nl.tudelft.bw4t.scenariogui.botstore.controller.BotController;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditor;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
@@ -27,13 +28,14 @@ public class BotEditorTest {
         ScenarioEditor main = new ScenarioEditor(new ConfigurationPanel(), entityPanel, new BW4TClientConfig());
         MainPanel parent = main.getMainPanel();
         main.getController().getModel().getBots().add(new BotConfig());
-        botEditor = new BotEditor(parent, 0, main.getController().getModel());
-        BotEditorPanel panel = new BotEditorPanel(botEditor, parent, main.getController().getModel());
+        BotController controller = new BotController(parent, 0, main.getController().getModel());
+        botEditor = new BotEditor(controller);
+        BotEditorPanel panel = new BotEditorPanel(controller);
+        
         botEditor.setBotEditorPanel(panel);
-        botEditor.setParent(parent);
-        assertEquals(parent, botEditor.getParent());
+        
+        assertEquals(parent, botEditor.getMainPanel());
         assertEquals(panel, botEditor.getBotEditorPanel());
         botEditor.setVisible(false);
     }
-
 }

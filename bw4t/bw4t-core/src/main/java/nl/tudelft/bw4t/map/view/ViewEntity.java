@@ -29,6 +29,8 @@ public class ViewEntity {
     
     private boolean collided = false;
 
+    private double batteryLevel = 0.0;
+
     public ViewEntity(){
         location = new Point2D.Double();
     }
@@ -111,7 +113,11 @@ public class ViewEntity {
         return collided;
     }
 
-    public void setCollided(boolean collided) {
-        this.collided = collided;
+    public void setCollided(boolean collided) { this.collided = collided; }
+
+    public double getBatteryLevel() { return batteryLevel;   }
+
+    public void setBatteryLevel(double batteryLevel) {
+        this.batteryLevel = batteryLevel;
     }
 }

@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import nl.tudelft.bw4t.client.BW4TClient;
 import nl.tudelft.bw4t.client.agent.HumanAgent;
+import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.environment.PerceptsHandler;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
@@ -24,8 +25,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import eis.exceptions.PerceiveException;
 
-@Ignore("Not yet implemented.")
 @RunWith(MockitoJUnitRunner.class)
+@Ignore
 public class PerceptsHandlerTest {
 
     @Mock
@@ -42,15 +43,14 @@ public class PerceptsHandlerTest {
     @Test
     public void testGetAllPerceptsFromEntity() throws PerceiveException, NotBoundException, IOException {
         BW4TClient bw4tClient = new BW4TClient(remoteEnvironment);
-        HumanAgent humanAgent = new HumanAgent("agentID", remoteEnvironment, null);
+        HumanAgent humanAgent = new HumanAgent("agentID", remoteEnvironment);
         NewMap newMap = new NewMap();
         bw4tClient.useMap(newMap);
         when(remoteEnvironment.getClient()).thenReturn(bw4tClient);
         BW4TClientGUI bw4tClientGUI = new BW4TClientGUI(remoteEnvironment, "entityID", humanAgent);
-        HashMap<String, BW4TClientGUI> entityToGui = new HashMap<String, BW4TClientGUI>();
-        entityToGui.put("entity", bw4tClientGUI);
-        when(remoteEnvironment.getEntityToGUI()).thenReturn(entityToGui);
+
         String entity = "test";
+        when(remoteEnvironment.getEntityController(entity)).thenReturn(bw4tClientGUI.getController());
         PerceptsHandler.getAllPerceptsFromEntity(entity, remoteEnvironment);
     }
 }

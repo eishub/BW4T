@@ -27,8 +27,8 @@ public class HumanAgent extends BW4TAgent {
 	 * @param env
 	 *            , the remote environment to which the human agent should connect.
 	 */
-    public HumanAgent(String agentId, RemoteEnvironment env, Map<BW4TAgent, BW4TClientGUI> allAgents) {
-        super(agentId, env, allAgents);
+    public HumanAgent(String agentId, RemoteEnvironment env) {
+        super(agentId, env);
     }
 
     /**

@@ -1,12 +1,17 @@
 package nl.tudelft.bw4t.client.gui;
 
+import eis.exceptions.ManagementException;
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
+import eis.iilang.Percept;
+
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.List;
 
@@ -18,16 +23,20 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.BevelBorder;
 
 import nl.tudelft.bw4t.client.BW4TClientSettings;
 import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.controller.ClientController;
+import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.client.gui.listeners.BatteryProgressBarListener;
 import nl.tudelft.bw4t.client.gui.listeners.ChatListMouseListener;
 import nl.tudelft.bw4t.client.gui.listeners.EPartnerListMouseListener;
 import nl.tudelft.bw4t.client.gui.listeners.TeamListMouseListener;
@@ -38,10 +47,6 @@ import nl.tudelft.bw4t.map.renderer.MapRenderer;
 import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
 
 import org.apache.log4j.Logger;
-
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
 
 /**
  * Render the current state of the world at a fixed rate (10 times per second, see run()) for a client. It connects to
@@ -67,15 +72,15 @@ import eis.iilang.Percept;
  * {@link RemoteEnvironment#getAllPerceptsFromEntity(String)} at every call, and merged into the regular percepts. So
  * user mouse clicks are stored there until it's time for perceiving.
  */
-public class BW4TClientGUI extends JFrame implements MapRendererInterface, ClientGUI {
+public class BW4TClientGUI extends JFrame implements MapRendererInterface {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2938950289045953493L;
 
-    /**
-     * The log4j Logger which displays logs on console
-     */
+    /** The log4j Logger which displays logs on console. */
     private static final Logger LOGGER = Logger.getLogger(BW4TClientGUI.class);
-
-    private final BW4TClientGUI that = this;
+    
+    /** The client controller. */
     private ClientController controller;
 
     private JPanel mainPanel = new JPanel();
@@ -87,25 +92,35 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
     private JPanel botChatPanel = new JPanel();
     private JPanel epartnerChatPanel = new JPanel();
     
+    private BW4TClientGUI that = this;
+    
     private JLabel batteryLabel = new JLabel("Bot Battery: ");
     private JLabel botMessageLabel = new JLabel("Send message to: ");
     
-    private JTextField botBatteryField = new JTextField();
+    private JProgressBar batteryProgressBar = new JProgressBar(0, 1); 
     
     private JButton botMessageButton = new JButton("Choose message");
     private JButton epartnerMessageButton = new JButton("Choose message");
     
-    private JTextArea botChatSession = new JTextArea(18, 1);
+    private JTextArea botChatSession = new JTextArea(14, 1);
     private JTextArea epartnerChatSession = new JTextArea(8, 1);
     
     private JScrollPane botChatPane = new JScrollPane(getBotChatSession());
     private JScrollPane epartnerChatPane = new JScrollPane(getEpartnerChatSession());
+
     private JScrollPane mapRenderer;
-
+    
+    /** The agent selector. */
     private JComboBox<ComboAgentModel> agentSelector;
-
+    
+    /** The jpopup menu. */
     private JPopupMenu jPopupMenu;
 
+    /**
+     * Gets the jpopup menu.
+     * 
+     * @return the JPopup menu
+     */
     public JPopupMenu getjPopupMenu() {
         return jPopupMenu;
     }
@@ -114,94 +129,54 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         return agentSelector;
     }
 
+    /** The selected location. */
     private Point selectedLocation;
-    
+
     /**
-     * Most of the server interfacing goes through the std eis percepts
+     * Instantiates a new bw4t client gui.
+     * 
+     * @param cc
+     *            the client controller
      */
-    public RemoteEnvironment environment;
+    public BW4TClientGUI(ClientController cc) {
+        setController(cc);
+        init();
+    }
 
     /**
      * @param env
-     *            the BW4TRemoteEnvironment that we are rendering
+     *            - The {@link RemoteEnvironment} that we are rendering.
      * @param entityId
-     *            , the id of the entity that needs to be displayed
-     * @param goal
-     *            , if this gui is for displaying a goal agent
-     * @throws IOException
-     *             if map can't be loaded.
+     *            - The id of the entity that needs to be displayed.
      */
-    public BW4TClientGUI(RemoteEnvironment env, String entityId, boolean goal, boolean humanPlayer) throws IOException {
-        environment = env;
-        controller = new ClientController(env, environment.getClient().getMap(), entityId);
-        init();
+    public BW4TClientGUI(RemoteEnvironment env, String entityId) {
+        this(new ClientController(env, entityId));
     }
 
     /**
+     * @param env
+     *            - The {@link RemoteEnvironment} that we are rendering.
      * @param entityId
-     *            , the id of the entity that needs to be displayed
+     *            - The id of the entity that needs to be displayed.
      * @param humanAgent
-     *            , whether a human is supposed to control this panel
+     *            - Whether a human is supposed to control this panel.
      * @throws IOException
-     *             if map can't be loaded.
+     *             Thrown if map can't be loaded.
      */
     public BW4TClientGUI(RemoteEnvironment env, String entityId, HumanAgent humanAgent) throws IOException {
-        environment = env;
-        controller = new ClientController(env, environment.getClient().getMap(), entityId, humanAgent);
-        init();
-    }
-
-    public BW4TClientGUI(ClientController cc) throws IOException {
-        this.controller = cc;
-        init();
+        this(new ClientController(env, entityId, humanAgent));
     }
 
     /**
-     * @param entityId
-     *            the id of the entity that needs to be displayed
-     * @param humanPlayer
-     *            whether a human is supposed to control this panel
-     * @throws IOException
+     * Initializes the GUI.
      */
     private void init() {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            LOGGER.error("Could not properly set the Native Look and Feel for the BW4T Client", e);
-        }
-        LOGGER.debug("Attaching to ClientController");
-        controller.getMapController().addRenderer(this);
-
-        // Initialize variables
-        String entityId = controller.getMapController().getTheBot().getName();
-        LOGGER.debug("Initializing agent window for entity: " + entityId);
-
-        // Initialize graphics
-
-        setTitle("BW4T - " + entityId);
-        setLocation(BW4TClientSettings.getX(), BW4TClientSettings.getY());
-        setLocation(BW4TClientSettings.getX(), BW4TClientSettings.getY());
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                LOGGER.info("Exit request received from the Window Manager to close Window of entity: "
-                        + controller.getMapController().getTheBot().getName());
-                controller.getMapController().setRunning(false);
-                dispose();
-                controller.getMapController().removeRenderer(that);
-                try {
-                    environment.kill();
-                } catch (Exception e1) {
-                    LOGGER.error("Could not correctly kill the environment.", e1);
-                }
-            }
-        });
-
+        addWindowListener(new ClientWindowAdapter(this));
         MapRenderer renderer = new MapRenderer(controller.getMapController());
         mapRenderer = new JScrollPane(renderer);
         
         createOverallFrame();
+        setMinimumSize(new Dimension(700, 600));
 
         add(mainPanel);
 
@@ -254,9 +229,19 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
 
             getBotChatSession().addMouseListener(new ChatListMouseListener(this));
         }
-
+        LOGGER.debug("Attaching to ClientController");
+        final ClientMapController mapController = controller.getMapController();
+        String entityId = mapController.getTheBot().getName();
+        
+        mapController.addRenderer(this);
+        
+        LOGGER.debug("Initializing agent window for entity: " + entityId);
+        setTitle("BW4T - " + entityId);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        setLocation(BW4TClientSettings.getX(), BW4TClientSettings.getY());
+        setLocation(BW4TClientSettings.getX(), BW4TClientSettings.getY());
+        
         pack();
-
         setVisible(true);
     }
     
@@ -302,17 +287,23 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
     private void createBotOptionsBar() {
         botButtonPanel.setLayout(new BoxLayout(botButtonPanel, BoxLayout.X_AXIS));
         botButtonPanel.setFocusable(false);
-        botBatteryField.setEditable(false);
         
+        batteryProgressBar.setForeground(Color.green);
+        batteryProgressBar.setStringPainted(true);
+        batteryProgressBar.setMaximum(100);
+        batteryProgressBar.setValue(100);
+
+        BatteryProgressBarListener.listeners.add(new BatteryProgressBarListener(batteryProgressBar, this));
+
         agentSelector = new JComboBox<ComboAgentModel>(new ComboAgentModel(this));
-        
+
         botButtonPanel.add(batteryLabel);
-        botButtonPanel.add(botBatteryField);
+        botButtonPanel.add(batteryProgressBar);
         botButtonPanel.add(botMessageLabel);
         botButtonPanel.add(agentSelector);
         botButtonPanel.add(botMessageButton);
     
-        botMessageButton.addMouseListener(new TeamListMouseListener(this));
+        botMessageButton.addMouseListener(new TeamListMouseListener(controller));
     }
     
     private void createEpartnerOptionsBar() {
@@ -324,6 +315,21 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         epartnerMessageButton.setEnabled(false);
         epartnerMessageButton.addMouseListener(new EPartnerListMouseListener(this));
     }
+        
+    /**
+     * Adds a player by adding a new button to the button panel, facilitating sending messages to this player.
+     * 
+     * @param playerId
+     *            , the Id of the player to be added
+     */
+    /*public void addPlayer(String playerId) {
+        final ClientMapController mapController = controller.getMapController();
+        if (!playerId.equals(mapController.getTheBot().getName())) {
+            JButton button = new JButton(playerId);
+            button.addMouseListener(new TeamListMouseListener(this));
+            buttonPanel.add(button);
+        }
+    }*/
     
     private void createBotChatSection() {
         botChatPanel.setLayout(new BoxLayout(botChatPanel, BoxLayout.Y_AXIS));
@@ -358,20 +364,10 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         epartnerChatPanel.add(epartnerChatPane);
     }
 
-    /**
-     * Adds a player by adding a new button to the button panel, facilitating sending messages to this player
-     * 
-     * @param playerId
-     *            , the Id of the player to be added
-     */
-  /*  public void addPlayer(String playerId) {
-        if (!playerId.equals(controller.getMapController().getTheBot().getName())) {
-            JButton button = new JButton(playerId);
-            button.addMouseListener(new TeamListMouseListener(this));
-            botButtonPanel.add(button);
-        }
-    }*/
 
+    /* (non-Javadoc)
+     * @see java.awt.Window#dispose()
+     */
     @Override
     public void dispose() {
         LOGGER.info("Stopped the BW4T Client Renderer.");
@@ -379,7 +375,9 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         super.dispose();
     }
 
-    @Override
+    /**
+     * Update the chat session.
+     */
     public void update() {
         getBotChatSession().setText(join(getController().getBotChatHistory(), "\n"));
         getBotChatSession().setCaretPosition(getBotChatSession().getDocument().getLength());
@@ -388,6 +386,13 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         getEpartnerChatSession().setCaretPosition(getEpartnerChatSession().getDocument().getLength());
     }
 
+    /**
+     * Creates a string containing each element of chatHistory with the filler appended to them.
+     * 
+     * @param chatHistory A String {@link Iterator} to containing the elements to combine.
+     * @param filler A filler String to append after each String.
+     * @return The String elements with fillers.
+     */
     private String join(Iterable<String> chatHistory, String filler) {
         StringBuilder sb = new StringBuilder();
         for (String string : chatHistory) {
@@ -401,13 +406,13 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
      * chat window contained in the GUI.
      * 
      * @param parameters
-     *            , the action parameters containing the message sender and the message itself.
+     *            - The action parameters containing the message sender and the message itself.
      * @return a null percept as no real percept should be returned
      */
     public Percept sendToGUI(List<Parameter> parameters) {
         String sender = ((Identifier) parameters.get(0)).getValue();
         String message = ((Identifier) parameters.get(1)).getValue();
-
+        
         getBotChatSession().append(sender + " : " + message + "\n");
         getBotChatSession().setCaretPosition(getBotChatSession().getDocument().getLength());
         
@@ -415,6 +420,10 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         getEpartnerChatSession().setCaretPosition(getEpartnerChatSession().getDocument().getLength());
 
         return null;
+    }
+
+    public void setSelectedLocation(int x, int y) {
+        this.selectedLocation = new Point(x, y);
     }
     
     public JButton getBotMessageButton() {
@@ -445,9 +454,6 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         return selectedLocation;
     }
 
-    public void setSelectedLocation(int x, int y) {
-        this.selectedLocation = new Point(x, y);
-    }
 
     /**
      * @return the mapController
@@ -456,7 +462,22 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface, Clien
         return controller;
     }
     
+    public JProgressBar getBatteryProgressBar() {
+        return batteryProgressBar;
+    }
+    
+    public void setBatteryProgressBar(JProgressBar progressBar) {
+        batteryProgressBar = progressBar;
+    }
+        
     public JScrollPane getEpartnerChatPane() {
         return epartnerChatPane;
+    }
+
+    private void setController(ClientController c) {
+        if(c != null) {
+            c.setGui(this);
+        }
+        controller = c;
     }
 }
