@@ -33,13 +33,16 @@ public class TeamListMouseListener implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent arg0) {
+        //Nothing should happen on this mouse event
     }
 
     @Override
     public void mouseExited(MouseEvent arg0) {
+      //Nothing should happen on this mouse event
     }
 
     @Override
     public void mouseReleased(MouseEvent arg0) {
+      //Nothing should happen on this mouse event
     }
 }

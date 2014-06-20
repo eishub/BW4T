@@ -189,7 +189,7 @@ public class ActionPopUpMenu {
             MapRenderSettings settings) {
         for (ViewEPartner ep : cmc.getVisibleEPartners()) {
             Shape ePartnerBox = settings.transformCenterRectangle(new Rectangle2D.Double(ep.getLocation().getX(),
-                    ep.getLocation().getY(), ep.EPARTNER_SIZE, ep.EPARTNER_SIZE));
+                    ep.getLocation().getY(), ViewEPartner.EPARTNER_SIZE, ViewEPartner.EPARTNER_SIZE));
             if (ePartnerBox.contains(gui.getSelectedLocation())) {
                 if (MapOperations.closeToBox(ep, gui.getController())) {
                     EPartnerMenu.buildPopUpMenuPickUpEPartner(ep, gui);
@@ -221,7 +221,7 @@ public class ActionPopUpMenu {
         if (ep != null) {
             final Point2D location = ep.getLocation();
             Shape ePartnerBox = settings.transformCenterRectangle(new Rectangle2D.Double(location.getX(), location
-                    .getY(), ep.EPARTNER_SIZE, ep.EPARTNER_SIZE));
+                    .getY(), ViewEPartner.EPARTNER_SIZE, ViewEPartner.EPARTNER_SIZE));
             if (ePartnerBox.contains(gui.getSelectedLocation())) {
                 EPartnerMenu.buildPopUpMenuForEPartner(ep, gui);
                 showJPopupMenu(gui);
