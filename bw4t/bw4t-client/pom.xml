@@ -26,11 +26,6 @@
             <artifactId>bw4t-core</artifactId>
             <version>3.4.0</version>
         </dependency>
-        <dependency>
-            <groupId>nl.tudelft.bw4t</groupId>
-            <artifactId>bw4t-server</artifactId>
-            <version>3.4.0</version>
-        </dependency>
     </dependencies>
     <build>
         <plugins>
