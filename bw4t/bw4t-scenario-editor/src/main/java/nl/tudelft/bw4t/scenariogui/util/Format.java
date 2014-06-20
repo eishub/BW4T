@@ -32,25 +32,6 @@ public final class Format {
             fb.insertString(off, str.replaceAll(DIGIT_REGEX, ""), attr);
         }
 
-        /**
-         * Deletes the region of text from <code>off</code> to
-         * <code>off + len</code>, and replaces it with <code>str</code>.
-         *
-         * @param fb
-         *            FilterBypass to circumvent calling back into the Document
-         *            to change it.
-         * @param off
-         *            Offset, location in document.
-         * @param len
-         *            Length of text to delete.
-         * @param str
-         *            Text to insert, null indicates no text to insert.
-         * @param attr
-         *            AttributeSet indicating attributes of inserted text, null
-         *            is legal.
-         * @throws BadLocationException
-         *             Reports bad locations within a document model.
-         */
         @Override
         public void replace(final FilterBypass fb, final int off, final int len,
                 final String str,
@@ -63,8 +44,7 @@ public final class Format {
     /**
      * Adds a filter to the text field that only allows numerical input.
      *
-     * @param txt
-     *            The text field.
+     * @param txt The text field.
      */
     public static void addIntegerDocumentFilterForTextField(
             final JTextField txt) {
@@ -102,15 +82,17 @@ public final class Format {
     }
     
     /**
-     * Pad the string with zeros.
+     * Pad the string with zeroes.
      * @param value The string to be padded.
      * @param amount The amount of zeroes to add.
      * @return The padded string.
      */
     public static String padString(String value, int amount) {
-        while (value.length() < amount) {
-            value += 0;
+        StringBuffer sb = new StringBuffer(value);
+        while (sb.length() < amount) {
+            sb.append(0);
         }
+        value = sb.toString();
         return value;
     }
     

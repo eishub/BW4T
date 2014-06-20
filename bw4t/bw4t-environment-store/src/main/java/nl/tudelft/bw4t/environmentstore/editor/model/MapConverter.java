@@ -187,11 +187,9 @@ public class MapConverter {
             for (int col = 0; col < zones[0].length; col++) {
                 if (zones[row][col].isOpenSpace()) {
                     connectCorridor(zones, row, col);
-                }
-                else if (zones[row][col].getType() == Type.ROOM) {
+                } else if (zones[row][col].getType() == Type.ROOM) {
                     connectRoom(zones, row, col);
-                }
-                else {
+                } else {
                     // it is a blockade and thus it should not be connected.
                 }
             }
@@ -310,14 +308,11 @@ public class MapConverter {
             Point p;
             if (n4 == 1) {
                 p = new Point(centerx - 2.5, centery - 2.5);
-            }
-            else if (n4 == 2) {
+            } else if (n4 == 2) {
                 p = new Point(centerx + 2.5, centery - 2.5);
-            }
-            else if (n4 == 3) {
+            } else if (n4 == 3) {
                 p = new Point(centerx - 2.5, centery + 2.5);
-            }
-            else {
+            } else {
                 p = new Point(centerx + 2.5, centery + 2.5);
             }
             map.addEntity(new Entity("Bot", p));

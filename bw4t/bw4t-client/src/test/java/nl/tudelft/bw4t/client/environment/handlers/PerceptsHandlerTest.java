@@ -2,13 +2,13 @@ package nl.tudelft.bw4t.client.environment.handlers;
 
 import static org.mockito.Mockito.when;
 
+import eis.exceptions.PerceiveException;
+
 import java.io.IOException;
 import java.rmi.NotBoundException;
-import java.util.HashMap;
 
 import nl.tudelft.bw4t.client.BW4TClient;
 import nl.tudelft.bw4t.client.agent.HumanAgent;
-import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.environment.PerceptsHandler;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
@@ -20,10 +20,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import eis.exceptions.PerceiveException;
 
 @RunWith(MockitoJUnitRunner.class)
 @Ignore

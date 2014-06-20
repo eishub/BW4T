@@ -1,24 +1,32 @@
 package nl.tudelft.bw4t.client.message;
 
+import eis.iilang.Parameter;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.StringTokenizer;
 
 import nl.tudelft.bw4t.map.ColorTranslator;
-import eis.iilang.Parameter;
 
 /**
  * Class used for translating messages (String->BW4TMessage and
  * BW4TMessage->String)
  */
 public class MessageTranslator {
-    public static Map<String, StringToMessageCommand> stringToMessage = new HashMap<String, StringToMessageCommand>();
-    public static Map<String, StringToMessageCommand> stringToMessageEquals = new HashMap<String, StringToMessageCommand>();
     
-    public static Map<MessageType, MessageCommand> messageCommands = new HashMap<MessageType, MessageCommand>();
+    /**
+     * Should never
+     */
+    private MessageTranslator(){
+        
+    }
+    private static final Map<String, StringToMessageCommand> stringToMessage = new HashMap<String, StringToMessageCommand>();
+    private static final Map<String, StringToMessageCommand> stringToMessageEquals = new HashMap<String, StringToMessageCommand>();
     
-    static{
+    private static final Map<MessageType, MessageCommand> messageCommands = new HashMap<MessageType, MessageCommand>();
+    
+    static {
         
         stringToMessage.put("I am going to ", new CommandRoomColor(MessageType.GOINGTOROOM));
         stringToMessage.put("I have a ", new CommandRoomColor(MessageType.HASCOLOR));
@@ -114,19 +122,18 @@ public class MessageTranslator {
      *            , the message that should be translated
      * @return the translated message
      */
-    public static BW4TMessage translateMessage(String message){
+    public static BW4TMessage translateMessage(String message) {
             
-        for(Entry<String, StringToMessageCommand> e : stringToMessageEquals.entrySet()){
+        for (Entry<String, StringToMessageCommand> e : stringToMessageEquals.entrySet()) {
             String key = e.getKey();
-            if(message.equals(key)) {
-                BW4TMessage msg = stringToMessageEquals.get(key).getMessage(message);
-                return msg;
+            if (message.equals(key)) {
+                return stringToMessageEquals.get(key).getMessage(message);
             }
         }
                         
-        for(Entry<String, StringToMessageCommand> e : stringToMessage.entrySet()){
+        for (Entry<String, StringToMessageCommand> e : stringToMessage.entrySet()) {
             String key = e.getKey();
-            if(message.contains(key)) {
+            if (message.contains(key)) {
                 return stringToMessage.get(key).getMessage(message);
             }
         }
@@ -140,7 +147,7 @@ public class MessageTranslator {
      *            , the message that should be translated
      * @return the translated message
      */
-    public static String translateMessage(BW4TMessage message){
+    public static String translateMessage(BW4TMessage message) {
         
         return messageCommands.get(message.getType()).getString(message);
  
@@ -161,8 +168,8 @@ public class MessageTranslator {
         String token = tokenizer.nextToken();
 
         while (tokenizer.hasMoreTokens()) {
-            if (token.equals("room")) {
-                return tokenizer.nextToken().replace("?","");
+            if ("room".equals(token)) {
+                return tokenizer.nextToken().replace("?", "");
             }
             token = tokenizer.nextToken();
         }
@@ -182,8 +189,9 @@ public class MessageTranslator {
         String token = tokenizer.nextToken();
         while (tokenizer.hasMoreTokens()) {
             for (String color : ColorTranslator.getAllColors()) {
-                if (token.equals(color))
+                if (token.equals(color)) {
                     return color;
+                }
             }
 
             token = tokenizer.nextToken();

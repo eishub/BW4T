@@ -3,8 +3,7 @@ package nl.tudelft.bw4t.environmentstore.util;
 import java.awt.Component;
 
 /**
- * An interface for showConfirmDialog, used to make the mocking of responses
- * simpler.     
+ * An interface for showConfirmDialog, used to make the mocking of responses simpler.     
  */
 public interface OptionPrompt {
 

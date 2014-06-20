@@ -8,20 +8,41 @@ import java.awt.geom.Point2D;
  */
 public class ViewEPartner {
     
+    /** Initialize size of EPartner. */
     public static final int EPARTNER_SIZE = 1;
+    
+    /** Initialize color of EPartner when offline, namely yellow. */
     public static final Color EPARTNER_OFFLINE = Color.YELLOW;
+    
+    /** Initialize color of EPartner when online, namely green. */
     public static final Color EPARTNER_ONLINE = Color.GREEN; 
     
+    /** Initialize id of EPartner, default 0. */
     private long id = 0;
+    
+    /** Initialize location. */
     private Point2D location = new Point2D.Double();
+    
+    /** Initialize pickedUp, default false. */
     private boolean pickedUp = false;
+    
+    /** Intiialize name of EPartner, default " " */
     private String name = "";
     
+    /** Initialize visible boolean. */
     private boolean visible;
 
+    /** Empty constructor, initialize default ViewEPartner. */
     public ViewEPartner() {
     }
 
+    /**
+     * Constructor.
+     * 
+     * @param id 
+     * @param location 
+     * @param isPickedUp 
+     */
     public ViewEPartner(long id, Point2D location, boolean isPickedUp) {
         this.setId(id);
         this.location = location;
@@ -57,7 +78,7 @@ public class ViewEPartner {
      * @return the color of the e-partner
      */
     public Color getColor() {
-        if(isPickedUp()){
+        if (isPickedUp()) {
             return EPARTNER_ONLINE;
         } else {
             return EPARTNER_OFFLINE;
@@ -78,6 +99,10 @@ public class ViewEPartner {
 
     public void setVisible(boolean visible) {
         this.visible = visible;
+    }
+    
+    public int getSize() {
+        return EPARTNER_SIZE;
     }
 
 }

@@ -10,7 +10,6 @@ import static org.mockito.Mockito.when;
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 
-import nl.tudelft.bw4t.server.model.doors.Door;
 import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.model.zone.BlocksRoom;
 import nl.tudelft.bw4t.server.model.zone.Room;

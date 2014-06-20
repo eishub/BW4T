@@ -3,8 +3,10 @@ package nl.tudelft.bw4t.client;
 import eis.exceptions.NoEnvironmentException;
 import eis.exceptions.PerceiveException;
 import eis.iilang.Percept;
+
 import java.util.Collection;
 import java.util.Iterator;
+
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 
 /**

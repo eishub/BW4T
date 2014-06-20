@@ -1,5 +1,8 @@
 package nl.tudelft.bw4t.client;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import eis.eis2java.translation.Translator;
 import eis.exceptions.ManagementException;
 import eis.iilang.Action;
@@ -18,9 +21,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import repast.simphony.scenario.ScenarioLoadException;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * We test if blocks are properly perceived, picked up and delivered.

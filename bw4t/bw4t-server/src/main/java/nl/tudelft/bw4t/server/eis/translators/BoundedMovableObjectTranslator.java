@@ -1,10 +1,11 @@
 package nl.tudelft.bw4t.server.eis.translators;
 
-import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Java2Parameter;
 import eis.iilang.Numeral;
 import eis.iilang.Parameter;
+
+import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 
 /**
  * Translates {@link BoundedMoveableObject} into a list of {@link Parameter}.

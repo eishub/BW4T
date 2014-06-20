@@ -15,26 +15,36 @@ import nl.tudelft.bw4t.map.Zone.Type;
  * 
  */
 public class ZoneModel {
+    
+    /** max amount spawn points per spawn point */
     public static final int SPAWN_POINTS_PER_START_ZONE = 4;
 
     private Zone zone;
 
     private Type type = Type.CORRIDOR;
 
+    /** BlockColors the zone contains */
     private List<BlockColor> colors = new ArrayList<>();
 
+    /** direction for doors */
     public static final int NORTH = 0;
     public static final int EAST = 1;
     public static final int SOUTH = 2;
     public static final int WEST = 3;
 
+    /** true if zone has door for that direction */
     private boolean[] doorsbool = new boolean[4];
 
+    /** the 4 neighbours of a zone */
     private ZoneModel[] neighbours = new ZoneModel[4];
 
+    /** true if zone is dropzone */
     private boolean isDropZone = false;
+    
+    /** true if zone is startzone */
     private boolean isStartZone = false;
 
+    /** name of the zone on the grid */
     private String coordiname = "";
 
     public ZoneModel() {
@@ -279,6 +289,11 @@ public class ZoneModel {
         return 0;
     }
 
+    /**
+     * Randomizes the blocks in a zone
+     * @param amount the max amount of blocks in that zone
+     * @param validcolors list of colors to choose from
+     */
     public void generateRandomBlocks(int amount, List<BlockColor> validcolors) {
         if (getType() == Type.ROOM && !isDropZone()) {
             final int numColors = validcolors.size();

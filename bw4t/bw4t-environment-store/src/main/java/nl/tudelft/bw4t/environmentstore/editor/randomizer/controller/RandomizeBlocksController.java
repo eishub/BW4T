@@ -3,12 +3,16 @@ package nl.tudelft.bw4t.environmentstore.editor.randomizer.controller;
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeBlockFrame;
 
+/** The controller class for the Randomize Blocks frame. */
 public class RandomizeBlocksController {
 
+    /** The view this class controls. */
     private RandomizeBlockFrame view;
     
+    /** The map panel controller linked to this class. */
     private MapPanelController mapController;
     
+    /** The Apply button. */
     private ApplyRandomBlock applyRandomBlock;
     
     /**

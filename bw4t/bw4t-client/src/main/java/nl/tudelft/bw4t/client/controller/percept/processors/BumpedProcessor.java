@@ -1,8 +1,9 @@
 package nl.tudelft.bw4t.client.controller.percept.processors;
 
+import eis.iilang.Parameter;
+
 import java.util.List;
 
-import eis.iilang.Parameter;
 import nl.tudelft.bw4t.client.controller.ClientMapController;
 
 /**

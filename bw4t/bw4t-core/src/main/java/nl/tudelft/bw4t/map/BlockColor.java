@@ -16,22 +16,21 @@ import org.apache.log4j.Logger;
  * {@link Color}.
  */
 public enum BlockColor implements Serializable {
+    /** The possible colors a block can have. */
     RED, ORANGE, YELLOW, GREEN, BLUE, PINK, WHITE, DARK_GRAY;
 
-    /**
-     * The log4j logger which writes logs.
-     */
+    /** The log4j logger which writes logs into console */
     private static final Logger LOGGER = Logger.getLogger(BlockColor.class);
+    
+    /** List containing all possible block colors. */
     private static List<BlockColor> colors = null;
 
+    /** 
+     * Empty constructor of BlockColor. 
+     */
     private BlockColor() {
     }
 
-    /**
-     * Get the letter for this color.
-     * 
-     * @return
-     */
     public Character getLetter() {
         return getName().charAt(0);
     }
@@ -46,7 +45,8 @@ public enum BlockColor implements Serializable {
         try {
             field = Class.forName("java.awt.Color").getField(this.name());
             return (Color) field.get(null);
-        } catch (ClassNotFoundException | NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+        } catch (ClassNotFoundException | NoSuchFieldException | SecurityException 
+                | IllegalArgumentException | IllegalAccessException e) {
             LOGGER.fatal("Failed to find the field in the Color class.", e);
         }
         return null;
@@ -70,7 +70,7 @@ public enum BlockColor implements Serializable {
      * @throws IllegalArgumentException
      *             if unknown color letter is given.
      */
-    public static BlockColor toAvailableColor(Character letter) {
+    public static BlockColor toAvailableColor(Character letter) throws IllegalArgumentException {
         for (BlockColor c : BlockColor.values()) {
             char colLetter = c.toString().toLowerCase().charAt(0);
             if (Character.toLowerCase(letter) == colLetter) {
@@ -89,7 +89,7 @@ public enum BlockColor implements Serializable {
      * @throws IllegalArgumentException
      *             if color is not availale.
      */
-    public static BlockColor toAvailableColor(Color color) {
+    public static BlockColor toAvailableColor(Color color) throws IllegalArgumentException {
         for (BlockColor c : BlockColor.values()) {
             if (c.getColor().equals(color)) {
                 return c;
@@ -98,14 +98,8 @@ public enum BlockColor implements Serializable {
         throw new IllegalArgumentException("unavailable color " + color);
     }
 
-    /**
-     * Get an explanatory name for this color.
-     * 
-     * @return
-     */
     public String getName() {
-        String name = name();
-        return Character.toString(name.charAt(0)).toUpperCase() + name.substring(1).toLowerCase();
+        return Character.toString(name().charAt(0)).toUpperCase() + name().substring(1).toLowerCase();
     }
     
     /**
@@ -121,4 +115,4 @@ public enum BlockColor implements Serializable {
         return colors;
     }
 
-};
+}

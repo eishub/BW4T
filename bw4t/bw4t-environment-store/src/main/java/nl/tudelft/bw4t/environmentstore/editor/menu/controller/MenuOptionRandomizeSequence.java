@@ -6,8 +6,16 @@ import nl.tudelft.bw4t.environmentstore.editor.menu.view.MenuBar;
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeSequenceFrame;
 import nl.tudelft.bw4t.environmentstore.main.controller.EnvironmentStoreController;
 
+/**
+ * Menu option to randomize the sequence, opens a new panel
+ */
 public class MenuOptionRandomizeSequence extends AbstractMenuOption {
 
+    /**
+     * Constructor for MenuOptionRandomizeSequence
+     * @param newView the  menu the option is on
+     * @param controller environment controller
+     */
     public MenuOptionRandomizeSequence(MenuBar newView,
             EnvironmentStoreController controller) {
         super(newView, controller);

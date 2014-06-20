@@ -2,10 +2,14 @@ package nl.tudelft.bw4t.client.startup;
 
 import eis.iilang.Identifier;
 import eis.iilang.Parameter;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.JAXBException;
+
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 
 import org.apache.log4j.Logger;
 
@@ -84,6 +88,24 @@ public enum InitParam {
             return ((Identifier) param).getValue();
         }
         return getDefaultValue();
+    }
+    
+    /**
+     * Get the integer value of this parameter
+     * @return the integer value of this value
+     * @see Integer#parseInt(String)
+     */
+    public int getIntValue() {
+        return Integer.parseInt(getValue());
+    }
+    
+    /**
+     * Get the boolean value of this parameter.
+     * @return true iff the string is equal to true
+     * @see Boolean#parseBoolean(String)
+     */
+    public boolean getBoolValue() {
+        return Boolean.parseBoolean(getValue());
     }
 
     /**

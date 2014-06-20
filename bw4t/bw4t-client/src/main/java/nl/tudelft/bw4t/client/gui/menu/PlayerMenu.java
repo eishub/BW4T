@@ -16,7 +16,9 @@ import nl.tudelft.bw4t.map.Zone;
 public final class PlayerMenu {
     
     /** Should never be instantiated */
-    private PlayerMenu() { }
+    private PlayerMenu() { 
+        
+    }
     
     /**
      * Used for building the pop-up menu that displays actions 
@@ -24,8 +26,6 @@ public final class PlayerMenu {
      * 
      * @param playerId
      *            - The playerId that the request should be sent to.
-     * @param gui
-     *            - The {@link BW4TClientGUI} to create the pop-up menu on.
      */
     public static void buildPopUpMenuForRequests(String playerId, ClientController controller) {
         BW4TClientGUI gui = controller.getGui();
@@ -35,7 +35,7 @@ public final class PlayerMenu {
 
         // Check if the playerId is a specific player
         String receiver = "Somebody";
-        if (!playerId.equalsIgnoreCase("all")) {
+        if (!"all".equalsIgnoreCase(playerId)) {
             receiver = playerId;
         }
 
@@ -45,7 +45,8 @@ public final class PlayerMenu {
 
         for (Zone room : cmc.getRooms()) {
             JMenuItem menuItem = new JMenuItem(room.getName());
-            menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.GOTOROOM, room.getName(),
+            menuItem.addActionListener(new MessageSenderActionListener(
+                                            new BW4TMessage(MessageType.GOTOROOM, room.getName(),
                     null, receiver), controller));
             submenu.add(menuItem);
         }

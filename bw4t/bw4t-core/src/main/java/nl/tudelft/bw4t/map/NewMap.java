@@ -10,15 +10,21 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import nl.tudelft.bw4t.map.Entity.EntityType;
-
 /**
  * New map structure, using Zones and stronger typechecking
  */
 @XmlRootElement
 public class NewMap implements Serializable {
 
+    /** Serialization id. */
+    private static final long serialVersionUID = -1346330091943903326L;
+    
+    /** 
+     * Boolean, true when there is one Bot per Corridor Zone
+     *  default false 
+     */
     private Boolean oneBotPerCorridorZone = false;
+   
     /**
      * The number of random colored blocks to be added to the map (not to the
      * sequence)
@@ -31,21 +37,39 @@ public class NewMap implements Serializable {
      */
     private Integer randomSequence = 0;
 
+    /** 
+     * Initial point for an area. 
+     */
     private Point area = new Point();
+    
+    /** 
+     * List containing all zones at the map. 
+     */
     private List<Zone> zones = new ArrayList<Zone>();
 
-    // sequence. Must contain block colors.
+    /** 
+     * Sequence, a list of BlockColor.
+     * This sequence defines what kind of blocks the bot needs to pick up.
+     */
     private List<BlockColor> sequence = new ArrayList<BlockColor>();
 
-    // initial entities
+    /**
+     *  Initial entities.
+     */
     private List<Entity> entities = new ArrayList<Entity>();
 
+    /** 
+     * Empty Constructor, initialize newMap.
+     */
+    public NewMap() {
+    }
+    
     /**
      * Constructor that creates a map from an inputstream that contains XML.
      * 
-     * @param instream
+     * @param instream InputStream, contains XML
      * @return NewMap
-     * @throws JAXBException
+     * @throws JAXBException 
      */
     public static NewMap create(InputStream instream) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance(NewMap.class);
@@ -60,9 +84,6 @@ public class NewMap implements Serializable {
 
     public void setSequence(List<BlockColor> sequence) {
         this.sequence = sequence;
-    }
-
-    public NewMap() {
     }
 
     public List<Zone> getZones() {
@@ -92,10 +113,9 @@ public class NewMap implements Serializable {
     }
 
     /**
-     * Get zones of given type
-     * 
      * @param type
      *            {@link EntityType}.
+     * @return List of {@Link Zone} of given type
      */
     public List<Zone> getZones(Zone.Type type) {
         List<Zone> list = new ArrayList<Zone>();
@@ -107,9 +127,7 @@ public class NewMap implements Serializable {
         return list;
     }
 
-    public Zone getZone(String name) {
-        // bit stupid implementation but we can't use hashmaps (XML
-        // serialization)
+    public Zone getZone(String name) throws IllegalArgumentException {
         for (Zone z : zones) {
             if (name.equals(z.getName())) {
                 return z;
@@ -118,17 +136,13 @@ public class NewMap implements Serializable {
         throw new IllegalArgumentException("zone " + name + " not found");
     }
 
+    @Override
     public String toString() {
         return "Map[onebotperzone=" + oneBotPerCorridorZone + ", randomblocks="
                 + randomBlocks + ",size=" + 0 + ",sequence=" + sequence
                 + ",zones=" + zones + "]";
     }
 
-    /**
-     * Blocks to be added to the map only, but not to the sequence.
-     * 
-     * @param randomBlocks
-     */
     public void setRandomBlocks(Integer randomBlocks) {
         this.randomBlocks = randomBlocks;
     }
@@ -153,14 +167,16 @@ public class NewMap implements Serializable {
         return entities;
     }
 
+    /** 
+     * Add @param e Entity to map 
+     */
     public void addEntity(Entity e) {
         entities.add(e);
     }
 
     /**
-     * Number of blocks to be added to the sequence AND to the map.
-     * 
-     * @param randomSequence
+     * @param randomSequence 
+     *             Number of blocks to be added to the sequence AND to the map.
      */
     public void setRandomSequence(Integer randomSequence) {
         this.randomSequence = randomSequence;

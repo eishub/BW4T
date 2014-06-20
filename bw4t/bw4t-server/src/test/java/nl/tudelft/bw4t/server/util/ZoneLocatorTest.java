@@ -1,22 +1,25 @@
 package nl.tudelft.bw4t.server.util;
 
-import java.awt.Rectangle;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.List;
-import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
-import nl.tudelft.bw4t.server.model.zone.Zone;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.mockito.Mock;
-import repast.simphony.context.Context;
-import repast.simphony.context.DefaultContext;
-import repast.simphony.space.continuous.NdPoint;
-
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import java.awt.Rectangle;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.List;
+
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.model.zone.Zone;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.mockito.Mock;
+
+import repast.simphony.context.Context;
+import repast.simphony.context.DefaultContext;
+import repast.simphony.space.continuous.NdPoint;
 
 /** Tests the functions in the utility class ZoneLocator. */
 public class ZoneLocatorTest {

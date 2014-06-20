@@ -11,30 +11,50 @@ import java.util.Map;
  * information about an robot for the map renderer.
  */
 public class ViewEntity {
-    /** The width and height of the robot */
-
+    
+    /** Initialize color for robot to black. */
     public final static Color ROBOT_COLOR = Color.BLACK;
 
+    /** Initialize id, default 0 */
     private long id = 0;
     
+    /** Initialize name, default empty. */
     private String name = "";
 
+    /** Initialize Map which can store which blocks the robot holds. */
     private final Map<Long, ViewBlock> holding = new HashMap<>();
 
-    private Point2D location;
+    /** Initialize location */
+    private Point2D location = new Point2D.Double();
     
+    /** Initialize size of robot */
     private int robotsize = 2;
     
+    /** Initialize holdingEpartner, default -1 */
     private long holdingEpartner = -1;
     
+    /** Initialize collided to false. */
     private boolean collided = false;
 
+    /** Initialize batteryLevel to 0. */
     private double batteryLevel = 0.0;
 
-    public ViewEntity(){
-        location = new Point2D.Double();
+    /** 
+     * Empty constructor, initialize default object.
+     */
+    public ViewEntity() {
     }
 
+    /**
+     * Constructor.
+     * 
+     * @param id long
+     * @param name String
+     * @param x coordinate location
+     * @param y coordinate location
+     * @param holding blocks
+     * @param robotsize int
+     */
     public ViewEntity(long id, String name, double x, double y, Collection<ViewBlock> holding, int robotsize) {
         this.setId(id);
         this.setName(name);
@@ -63,6 +83,10 @@ public class ViewEntity {
         return holding;
     }
 
+    /**
+     * @param holding
+     *             remove current holdings, set to new holding.
+     */
     public void setHolding(Collection<ViewBlock> holding) {
         this.getHolding().clear();
         for (ViewBlock block : holding) {
@@ -70,6 +94,9 @@ public class ViewEntity {
         }
     }
 
+    /**
+     * @return ViewBlock which is hold first, null if robot holds no blocks
+     */
     public ViewBlock getFirstHolding() {
         Iterator<ViewBlock> blocks = holding.values().iterator();
         if (blocks.hasNext()) {
@@ -78,6 +105,10 @@ public class ViewEntity {
         return null;
     }
 
+    /**
+     * @return Color of first block holding;
+     *                 When no block is hold, return color of robot.
+     */
     public Color getColor() {
         if (holding.isEmpty()) {
             return ROBOT_COLOR;
@@ -89,6 +120,10 @@ public class ViewEntity {
         return location;
     }
 
+    /**
+     * @param x coordinate of location
+     * @param y coordinate of location
+     */
     public void setLocation(double x, double y) {
         location = new Point2D.Double(x, y);
     }
@@ -113,9 +148,13 @@ public class ViewEntity {
         return collided;
     }
 
-    public void setCollided(boolean collided) { this.collided = collided; }
+    public void setCollided(boolean collided) { 
+        this.collided = collided; 
+        }
 
-    public double getBatteryLevel() { return batteryLevel;   }
+    public double getBatteryLevel() { 
+        return batteryLevel;   
+        }
 
     public void setBatteryLevel(double batteryLevel) {
         this.batteryLevel = batteryLevel;

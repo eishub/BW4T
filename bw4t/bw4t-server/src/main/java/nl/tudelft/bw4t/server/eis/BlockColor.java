@@ -47,7 +47,7 @@ public class BlockColor {
     @Override
     public boolean equals(Object obj) {
         if (obj == null 
-                || !(obj instanceof BlockColor)){
+                || !(obj instanceof BlockColor)) {
             return false; 
         }
         BlockColor other = (BlockColor) obj;

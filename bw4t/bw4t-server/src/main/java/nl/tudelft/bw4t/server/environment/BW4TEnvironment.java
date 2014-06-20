@@ -1,5 +1,19 @@
 package nl.tudelft.bw4t.server.environment;
 
+import eis.eis2java.environment.AbstractEnvironment;
+import eis.exceptions.ActException;
+import eis.exceptions.AgentException;
+import eis.exceptions.EntityException;
+import eis.exceptions.ManagementException;
+import eis.exceptions.NoEnvironmentException;
+import eis.exceptions.PerceiveException;
+import eis.exceptions.RelationException;
+import eis.iilang.Action;
+import eis.iilang.EnvironmentState;
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
+import eis.iilang.Percept;
+
 import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,19 +50,6 @@ import org.apache.log4j.Logger;
 import repast.simphony.context.Context;
 import repast.simphony.scenario.ScenarioLoadException;
 import repast.simphony.space.continuous.NdPoint;
-import eis.eis2java.environment.AbstractEnvironment;
-import eis.exceptions.ActException;
-import eis.exceptions.AgentException;
-import eis.exceptions.EntityException;
-import eis.exceptions.ManagementException;
-import eis.exceptions.NoEnvironmentException;
-import eis.exceptions.PerceiveException;
-import eis.exceptions.RelationException;
-import eis.iilang.Action;
-import eis.iilang.EnvironmentState;
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
 
 /**
  * The central environment which runs the data model and performs actions received from remote environments through the
@@ -203,6 +204,8 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
     /**
      * initialize Repast. Does not reset the {@link BW4TServer}.
+     * @param parameters 
+     * @throws ManagementException 
      */
     @Override
     public void init(Map<String, Parameter> parameters) throws ManagementException {
@@ -228,14 +231,9 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
     /**
      * Launch the server
-     * 
-     * @param serverIp
-     *            the ip address that the server should listen to
-     * @param serverPort
-     *            the port that the server should listen to
-     * @throws RemoteException
-     * @throws ManagementException
-     * @throws MalformedURLException
+     * @throws RemoteException 
+     * @throws ManagementException 
+     * @throws MalformedURLException 
      */
     private void launchServer() throws RemoteException, ManagementException, MalformedURLException {
         if (server == null) {
@@ -249,11 +247,9 @@ public class BW4TEnvironment extends AbstractEnvironment {
      * Launches the Repast framework and GUI. Does not return until there is an exception or getState()==KILLED. After
      * stopping, runner is set back to null.
      * 
-     * @throws IOException
-     * @throws ScenarioLoadException
-     * @throws JAXBException
-     * 
-     * @throws Exception
+     * @throws IOException 
+     * @throws ScenarioLoadException 
+     * @throws JAXBException 
      */
     private void launchRepast() throws IOException, ScenarioLoadException, JAXBException {
         theMap = NewMap.create(new FileInputStream(new File(System.getProperty("user.dir") + "/maps/"
@@ -331,6 +327,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
      * @param action
      *            the action that should be performed
      * @return the percept received after performing the action
+     * @throws ActException 
      */
     public Percept performClientAction(String entity, Action action) throws ActException {
         Long time = System.currentTimeMillis();
@@ -377,12 +374,15 @@ public class BW4TEnvironment extends AbstractEnvironment {
      * causing this flag to remain true while repast has in fact stopped. We detect this only when the user turns 'on'
      * the Repast environment again, in {@link BW4TBuilder#build()}.
      * 
-     * @return
+     * @return true or false of the map is loaded
      */
     public boolean isMapFullyLoaded() {
         return mapFullyLoaded;
     }
 
+    /**
+     * check that maploaded is done, so set true
+     */
     public void setMapFullyLoaded() {
         mapFullyLoaded = true;
     }
@@ -399,9 +399,13 @@ public class BW4TEnvironment extends AbstractEnvironment {
         return collisionEnabled;
     }
 
-    public final boolean isDrawPathsEnabled() { return drawPathsEnabled; }
+    public final boolean isDrawPathsEnabled() {
+        return drawPathsEnabled; 
+    }
 
-    public void setDrawPathsEnabled(boolean state) { drawPathsEnabled = state; }
+    public void setDrawPathsEnabled(boolean state) { 
+        drawPathsEnabled = state; 
+    }
 
     public double getTps() {
         if (stepper == null) {
@@ -422,6 +426,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
      * 
      * @param parameters
      *            only the map parameter is accepted
+     * @throws ManagementException 
      */
     @Override
     public void reset(Map<String, Parameter> parameters) throws ManagementException {
@@ -465,7 +470,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
     /**
      * Take down the simulation: remove all entities, stop the stepper. Stop the {@link ServerContextDisplay}.
      * 
-     * @throws ManagementException
+     * @throws ManagementException 
      */
     private void takeDownSimulation() throws ManagementException {
         // this should set state->KILLED which stops stepper.
@@ -490,7 +495,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
     /**
      * Set a new repast Context. May be null if Repast sstopped running.
      * 
-     * @param c
+     * @param c 
      */
     public void setContext(Context c) {
         context = c;
@@ -510,12 +515,11 @@ public class BW4TEnvironment extends AbstractEnvironment {
     public void freeEntity(String entity) throws RelationException, EntityException {
         super.freeEntity(entity);
         this.deleteEntity(entity);
-        // this.registerEntity(entity, entity);
     }
 
     @Override
     public void freePair(String agent, String entity) throws RelationException {
-        RobotEntity robot = (RobotEntity) getEntity(entity);
+        EntityInterface robot = (EntityInterface) getEntity(entity);
         robot.disconnect();
         super.freePair(agent, entity);
     }
@@ -562,7 +566,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
      */
     private Point2D getNextBotSpawnPoint() {
         List<Entity> ents = getMap().getEntities();
-        Point2D p = ents.get(nextBotSpawnIndex++).getPosition().asPoint2D();
+        Point2D p = ents.get(nextBotSpawnIndex++).getPosition().getPoint2D();
         if (nextBotSpawnIndex  >= ents.size()) {
             nextBotSpawnIndex = 0;
         }
@@ -605,7 +609,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
                 c.setBotName(String.format(ENTITY_NAME_FORMAT, name, created + skip + 1));
                 try {
                     if (this.getEntities().contains(c.getBotName())) {
-                        if (this.getAssociatedAgents(c.getBotName()).size() != 0) {
+                        if (!this.getAssociatedAgents(c.getBotName()).isEmpty()) {
                             skip++;
                             continue;
                         }

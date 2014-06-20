@@ -31,15 +31,23 @@ import nl.tudelft.bw4t.map.renderer.MapRenderer;
 
 public abstract class AbstractMenuOption implements ActionListener {
 
+    /** the menu the option is on */
     private MenuBar view;
     
+    /** the environment controller */
     private EnvironmentStoreController envController;
     
+    /** the mappanel controller being used */
     private MapPanelController mapController;
     
     // made a variable for this so we can call it during testing
     private JFileChooser currentFileChooser;
     
+    /**
+     * The constructor for AbstractMenuOption
+     * @param newView the file menu
+     * @param envController the controller of environmentstore
+     */
     public AbstractMenuOption(final MenuBar newView, final EnvironmentStoreController envController) {
         this.view = newView;
         this.envController = envController;
@@ -75,7 +83,7 @@ public abstract class AbstractMenuOption implements ActionListener {
      * Opens a new size Dialog that lets the user start from scratch.
      */
     public void newMap() {
-        if(envController.notAnEmptyMap()) {
+        if (envController.notAnEmptyMap()) {
             boolean doSave = envController.promptUserToSave();
 
             if (doSave) {
@@ -160,6 +168,12 @@ public abstract class AbstractMenuOption implements ActionListener {
     }
     
 
+    /** 
+     * Saves the map to that location
+     * @param path the location where it should be saved
+     * @throws JAXBException
+     * @throws FileNotFoundException
+     */
     public void saveMapFile(String path) throws JAXBException,
             FileNotFoundException {
         
@@ -189,7 +203,7 @@ public abstract class AbstractMenuOption implements ActionListener {
      * Exit the editor with a check whether the user really wants to quit.
      */
     public void exitEditor() {
-        if(envController.notAnEmptyMap()) {
+        if (envController.notAnEmptyMap()) {
             boolean doSave = envController.promptUserToSave();
 
             if (doSave) {
@@ -231,7 +245,7 @@ public abstract class AbstractMenuOption implements ActionListener {
             }
         }
         
-        if(!foundStartZone && !foundDropZone) {
+        if (!foundStartZone && !foundDropZone) {
             return ("The map must contain one starting zone and drop zone.");
         } else if (!foundStartZone) {
             return ("There should be at least one start zone.");

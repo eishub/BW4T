@@ -39,8 +39,9 @@ public class EditBotTable implements TableModelListener {
      */
     @Override
     public void tableChanged(TableModelEvent event) {
-        if (event.getColumn() == -1) 
+        if (event.getColumn() == -1) {
             return;
+        }
         
         BotConfig config = model.getBots().get(event.getFirstRow());
         String value =  "" + view.getEntityPanel().getBotTable().getValueAt(

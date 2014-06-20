@@ -3,10 +3,13 @@ package nl.tudelft.bw4t.client.gui.listeners;
 import eis.exceptions.ActException;
 import eis.iilang.Identifier;
 import eis.iilang.Percept;
+
 import java.awt.event.ActionEvent;
 import java.util.LinkedList;
+import java.util.List;
+
 import nl.tudelft.bw4t.client.controller.ClientController;
-import nl.tudelft.bw4t.client.environment.Launcher;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -30,7 +33,7 @@ public class GoToRoomActionListener extends AbstractClientActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!Launcher.getEnvironment().isConnectedToGoal()) {
+        if (!getController().getEnvironment().isConnectedToGoal()) {
             try {
                 getController().getHumanAgent().goTo(id);
             } catch (ActException e1) {
@@ -38,7 +41,7 @@ public class GoToRoomActionListener extends AbstractClientActionListener {
                 LOGGER.error(e1); 
             }
         } else {
-            LinkedList<Percept> percepts = new LinkedList<Percept>();
+            List<Percept> percepts = new LinkedList<Percept>();
             Percept percept = new Percept("goTo", new Identifier(id));
             percepts.add(percept);
             getController().setToBePerformedAction(percepts);
