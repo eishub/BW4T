@@ -202,6 +202,15 @@ public abstract class AbstractRobotDecorator implements IRobot {
     }
     
     @Override
+    public IRobot getEarliestParent() {
+        IRobot parent = getParent();
+        while (parent != null && parent.getParent() != null) {
+            parent = parent.getParent();
+        }
+        return parent;
+    }
+    
+    @Override
     public void setParent(IRobot hI) {
         parent.setParent(hI);
     }

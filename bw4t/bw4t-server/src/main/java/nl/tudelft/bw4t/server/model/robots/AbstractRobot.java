@@ -611,8 +611,14 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
             this.battery.recharge();
         }
     }
+    
     @Override
     public IRobot getParent() {
+        return null;
+    }
+    
+    @Override
+    public IRobot getEarliestParent() {
         return null;
     }
 
