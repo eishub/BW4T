@@ -92,13 +92,12 @@ public final class MapLoader {
     public static void loadMap(String tmpLocation, Context<Object> context) throws IOException, JAXBException {
         Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones = new HashMap<String, nl.tudelft.bw4t.server.model.zone.Zone>();
         Map<String, List<BlockColor>> roomBlocks = new HashMap<String, List<BlockColor>>();
-
       
         ContinuousSpace<Object> space = initEmptyMap(tmpLocation, context);
         Grid<Object> grid = createGridSpace(context, (int) map.getArea().getX(), (int) map.getArea().getY());
         
         Launcher.getInstance().getEntityFactory().setSpace(space, grid);
-        
+
         List<BlockColor> sequence = new ArrayList<BlockColor>(map.getSequence());
         createZones(context, zones, roomBlocks, space, grid, sequence);
         makeBlocks(roomBlocks, sequence);
