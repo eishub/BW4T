@@ -20,8 +20,8 @@ public abstract class BoundedMoveableObject {
     private static final AtomicLong COUNTER = new AtomicLong();
 
     private final long id;
-    public final ContinuousSpace<Object> space;
-    public final Grid<Object> grid;
+    private final ContinuousSpace<Object> space;
+    private final Grid<Object> grid;
     protected final Context<Object> context;
     protected final Rectangle2D.Double boundingBox;
 
@@ -147,38 +147,28 @@ public abstract class BoundedMoveableObject {
      */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
+        if (obj instanceof BoundedMoveableObject){
+            BoundedMoveableObject other = (BoundedMoveableObject) obj;
+            if (boundingBox == null && other.boundingBox != null) {
+                    return false;
+            } else if (!boundingBox.equals(other.boundingBox)) {
+                return false;
+            }
+            
+            if (context == null && other.context != null) {
+                    return false;
+            } else if (!context.equals(other.context)) {
+                return false;
+            }
+            
+            if (space == null && other.space != null) {
+                    return false;
+            } else if (!space.equals(other.space)) {
+                return false;
+            }
             return true;
         }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        BoundedMoveableObject other = (BoundedMoveableObject) obj;
-        if (boundingBox == null) {
-            if (other.boundingBox != null) {
-                return false;
-            }
-        } else if (!boundingBox.equals(other.boundingBox)) {
-            return false;
-        }
-        if (context == null) {
-            if (other.context != null) {
-                return false;
-            }
-        } else if (!context.equals(other.context)) {
-            return false;
-        }
-        if (space == null) {
-            if (other.space != null) {
-                return false;
-            }
-        } else if (!space.equals(other.space)) {
-            return false;
-        }
-        return true;
+        return false;
     }
 
     /**
