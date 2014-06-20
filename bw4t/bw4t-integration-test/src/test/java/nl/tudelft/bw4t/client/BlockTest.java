@@ -47,8 +47,8 @@ public class BlockTest {
                 "-map", "Banana",
                 "-agentcount", "1",
                 "-humancount", "0"};
-        Launcher.launch(clientArgs);
-        client = Launcher.getEnvironment();
+
+        client = Launcher.launch(clientArgs);
         TestFunctions.setClient(client);
     }
 

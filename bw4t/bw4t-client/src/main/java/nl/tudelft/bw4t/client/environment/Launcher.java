@@ -20,9 +20,6 @@ import org.apache.log4j.Logger;
  */
 public final class Launcher {
 
-    /** Stores the remote environment. */
-    private static RemoteEnvironment environment;
-
     /** The log4j Logger which displays logs on console. */
     private static final Logger LOGGER = Logger.getLogger(Launcher.class);
 
@@ -34,9 +31,10 @@ public final class Launcher {
      * Convert the console parameters to EIS parameters.
      * 
      * @param args
-     *            - The console arguments.
+     *            The console arguments.
+     * @return the started environment
      */
-    public static void launch(String[] args) {
+    public static RemoteEnvironment launch(String[] args) {
          //Set up the logging environment to log on the console.
         if (!LOGGER.getAllAppenders().hasMoreElements()) {
             BasicConfigurator.configure();
@@ -55,16 +53,7 @@ public final class Launcher {
                 init.put(param.nameLower(), new Identifier(findArgument(args, param)));
             }
         }
-        startupEnvironment(init);
-    }
-
-    /**
-     * Get the environment for the client.
-     * 
-     * @return The {@link RemoteEnvironment}.
-     */
-    public static RemoteEnvironment getEnvironment() {
-        return environment;
+        return startupEnvironment(init);
     }
 
     /**
@@ -76,10 +65,7 @@ public final class Launcher {
      * @return The created {@link RemoteEnvironment}.
      */
     public static synchronized RemoteEnvironment startupEnvironment(Map<String, Parameter> initParams) {
-        if (environment != null) {
-            return environment;
-        }
-        environment = new RemoteEnvironment();
+        RemoteEnvironment environment = new RemoteEnvironment();
         environment.attachEnvironmentListener(new BW4TEnvironmentListener(environment));
         try {
             LOGGER.info("Initializing environment...");
