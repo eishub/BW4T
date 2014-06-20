@@ -22,7 +22,7 @@ import repast.simphony.space.continuous.NdPoint;
 /**
  * Path planner that uses the Zones.
  */
-public class PathPlanner {
+public final class PathPlanner {
     
     private PathPlanner() {
     }
