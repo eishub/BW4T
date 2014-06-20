@@ -62,7 +62,7 @@ public class PointTest {
         throws Exception {
         Point fixture = new Point();
 
-        Point2D result = fixture.asPoint2D();
+        Point2D result = fixture.getPoint2D();
 
         // add additional test code here
         assertNotNull(result);

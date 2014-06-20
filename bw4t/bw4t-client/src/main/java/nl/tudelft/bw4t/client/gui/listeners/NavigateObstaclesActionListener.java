@@ -20,7 +20,7 @@ public class NavigateObstaclesActionListener extends ClientActionListener {
     /**
      * The log4j Logger which displays logs on console
      */
-    private final static Logger LOGGER = Logger.getLogger(BW4TClientGUI.class);
+    private static final Logger LOGGER = Logger.getLogger(BW4TClientGUI.class);
 
     public NavigateObstaclesActionListener(ClientController controller) {
         super(controller);

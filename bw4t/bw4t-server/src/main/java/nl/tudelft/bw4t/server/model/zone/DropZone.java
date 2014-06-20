@@ -38,12 +38,17 @@ public class DropZone extends Room {
     /**
      * Creates a new dropzone with an empty sequence.
      * 
+     * @param dropzone
+     *            The zone in which the dropzone should be located.
      * @param space
      *            The space in which the dropzone should be located.
+     * @param grid
+     *            The grid in which the dropzone should be located.
      * @param context
      *            The context in which the dropzone should be located.
      */
-    public DropZone(nl.tudelft.bw4t.map.Zone dropzone, ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context) {
+    public DropZone(nl.tudelft.bw4t.map.Zone dropzone, ContinuousSpace<Object> space, 
+                        Grid<Object> grid, Context<Object> context) {
         super(Color.GRAY, dropzone, space, grid, context);
         sequence = new LinkedList<BlockColor>();
         sequenceIndex = 0;
@@ -58,7 +63,7 @@ public class DropZone extends Room {
     public void setSequence(List<BlockColor> colors) {
         sequence = colors;
         
-        StringBuffer s = new StringBuffer();
+        StringBuilder s = new StringBuilder();
         s.append("sequence");
         for (BlockColor col : sequence) {
             s.append(" " + col.getLetter());
@@ -105,10 +110,10 @@ public class DropZone extends Room {
                 sequenceIndex++;
                 robot.getAgentRecord().addGoodDrop();
                 
-                if (sequenceIndex == sequence.size()) 
+                if (sequenceIndex == sequence.size()) {
                      BW4TFileAppender.logFinish(System.currentTimeMillis(), "Time to finish sequence is ");
-            }
-            else {
+                }
+            } else {
                 robot.getAgentRecord().addWrongDrop();
             }
         }

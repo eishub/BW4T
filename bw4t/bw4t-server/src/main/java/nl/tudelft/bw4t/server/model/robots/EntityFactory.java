@@ -12,8 +12,22 @@ import repast.simphony.space.grid.Grid;
  * This defines the Factory interface to generate the robot classes with all their required handicaps.
  */
 public interface EntityFactory {
+    /**
+     * sets the space.
+     * @param space to be set
+     */
     void setSpace(ContinuousSpace<Object> space);
+    
+    /**
+     * sets the grid.
+     * @param grid to be set
+     */
     void setGrid(Grid<Object> grid);
+    
+    /**
+     * sets the context.
+     * @param context to be set
+     */
     void setContext(Context<Object> context);
     
     /**

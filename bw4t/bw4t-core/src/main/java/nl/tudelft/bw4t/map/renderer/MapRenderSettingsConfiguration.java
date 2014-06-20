@@ -7,11 +7,16 @@ import javax.swing.JFrame;
  *
  */
 public class MapRenderSettingsConfiguration extends JFrame {
-    private static final long serialVersionUID = 9202873246960555527L;
+   
+	/** Serialization id. */
+	private static final long serialVersionUID = 9202873246960555527L;
     
     private final MapRenderSettings renderSettings;
 
-    public MapRenderSettingsConfiguration(MapRenderSettings settings){
+    /**
+	 * @param settings to which renderSettings will be set.
+	 */
+    public MapRenderSettingsConfiguration(MapRenderSettings settings) {
         this.renderSettings = settings;
     }
     

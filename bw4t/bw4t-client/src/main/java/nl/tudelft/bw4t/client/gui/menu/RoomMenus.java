@@ -9,7 +9,6 @@ import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.GoToBlockActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.GoToRoomActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
-import nl.tudelft.bw4t.client.gui.listeners.PickUpActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.PutdownActionListener;
 import nl.tudelft.bw4t.client.message.BW4TMessage;
 import nl.tudelft.bw4t.client.message.MessageType;
@@ -65,7 +64,6 @@ public class RoomMenus {
         
         RoomMenus.controller = controller;
         BW4TClientGUI gui = controller.getGui();
-
         gui.getjPopupMenu().removeAll();
 
         // Robot commands
@@ -133,14 +131,15 @@ public class RoomMenus {
             menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.ROOMCONTAINS, label,
                     color2, null), controller));
             submenu.add(menuItem);
-            if (!color2.equals(color))
+            if (!color2.equals(color)) {
                 break;
+            }
         }
 
         submenu = BasicMenuOperations.addSubMenuToPopupMenu(label + " contains ", gui.getjPopupMenu());
-
-        for (int i = 0; i < 6; i++) { //option for each amount of blocks 
-                                       //(e.g.: Room X contains -> 3 -> Pink)
+        
+        //option for each amount of blocks (e.g.: Room X contains -> 3 -> Pink)
+        for (int i = 0; i < 6; i++) { 
             JMenu submenuColor = new JMenu("" + i);
             submenu.add(submenuColor);
 
@@ -150,8 +149,9 @@ public class RoomMenus {
                 menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(
                         MessageType.ROOMCONTAINSAMOUNT, label, color2, i), controller));
                 submenuColor.add(menuItem);
-                if (!color2.equals(color))
+                if (!color2.equals(color)) {
                     break;
+                }
             }
         }
 
@@ -168,8 +168,8 @@ public class RoomMenus {
 
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.ROOMISEMPTY, label, null, null), gui);
 
-        String holdingColor = holding != null ?
-                BasicMenuOperations.getColor(holding.getColor().getName(), gui.getController().getHumanAgent()) : "";
+        String holdingColor = holding != null 
+                ? BasicMenuOperations.getColor(holding.getColor().getName(), gui.getController().getHumanAgent()) : "";
         if (holding != null) {
             BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.ABOUTTODROPOFFBLOCK, null, 
                     holdingColor,

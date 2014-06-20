@@ -21,6 +21,10 @@ import org.apache.log4j.Logger;
  * A class of File operations.
  */
 public final class FileUtils {
+	
+	/** 
+	 * error message used when could not find file 
+	 */ 
     private static final String COULD_NOT_FIND_FILE = "Could not find '%s'";
 
     /**
@@ -58,23 +62,36 @@ public final class FileUtils {
         } catch (final FileNotFoundException e) {
             LOGGER.error(String.format("Failed to copy file '%s' to '%s'", toCopy, destFile), e);
         } finally {
-            if (fis != null) {
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    LOGGER.warn(String.format(FAILED_TO_CLOSE, toCopy), e);
-                }
-            }
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    LOGGER.warn(String.format(FAILED_TO_CLOSE, toCopy), e);
-                }
-            }
+            close(toCopy, fis, fos);
         }
         return false;
     }
+
+    /**
+     * Closes FileInputStream and/or FileOutpusStream 
+     * 			(when the exist/not null)
+     * 
+     * @param fis FileInputStream
+     * @param fos FileOutputStream
+     * @param toCopy original file
+     */
+	private static void close(final File toCopy, FileInputStream fis,
+			FileOutputStream fos) {
+		if (fis != null) {
+		    try {
+		        fis.close();
+		    } catch (IOException e) {
+		        LOGGER.warn(String.format(FAILED_TO_CLOSE, toCopy), e);
+		    }
+		}
+		if (fos != null) {
+		    try {
+		        fos.close();
+		    } catch (IOException e) {
+		        LOGGER.warn(String.format(FAILED_TO_CLOSE, toCopy), e);
+		    }
+		}
+	}
 
     /**
      * copy all of the files in the given directory .
@@ -112,7 +129,7 @@ public final class FileUtils {
      * @param jarConnection
      *            the url of the folder in the jar to be copied
      * @return true iff the file were successfully copied
-     * @throws IOException
+     * @throws IOException 
      */
     public static boolean copyJarResourcesRecursively(final JarURLConnection jarConnection, final File destDir)
             throws IOException {
@@ -124,24 +141,44 @@ public final class FileUtils {
         for (final Enumeration<JarEntry> e = jarFile.entries(); e.hasMoreElements();) {
             final JarEntry entry = e.nextElement();
             if (entry.getName().startsWith(entryName)) {
-                final String filename = FileUtils.removeStart(entry.getName(), entryNameParent);
-
-                final File f = new File(destDir, filename);
-                if (!entry.isDirectory()) {
-                    final InputStream entryInputStream = jarFile.getInputStream(entry);
-                    if (!FileUtils.copyStream(entryInputStream, f)) {
-                        return false;
-                    }
-                    entryInputStream.close();
-                } else {
-                    if (!FileUtils.ensureDirectoryExists(f)) {
-                        throw new IOException("Could not create directory: " + f.getAbsolutePath());
-                    }
-                }
+                boolean copy = copyJar(destDir, jarFile, entryNameParent, entry);
+                if (!copy)
+                	return copy;
             }
         }
         return true;
     }
+
+    /**
+     * Copy resource files from a jar file to a directory
+     * 
+     * @param destDir
+     *            the destination directory
+     * @param jarFile 
+     * @param entryNameParent 
+     * @param entry JarEntry
+     * @return true iff the file were successfully copied
+     * @throws IOException 
+     */
+	private static boolean copyJar(final File destDir, final JarFile jarFile,
+			String entryNameParent, final JarEntry entry) throws IOException {
+		
+		final String filename = FileUtils.removeStart(entry.getName(), entryNameParent);
+
+		final File f = new File(destDir, filename);
+		if (!entry.isDirectory()) {
+		    final InputStream entryInputStream = jarFile.getInputStream(entry);
+		    if (!FileUtils.copyStream(entryInputStream, f)) {
+		        return false;
+		    }
+		    entryInputStream.close();
+		} else {
+		    if (!FileUtils.ensureDirectoryExists(f)) {
+		        throw new IOException("Could not create directory: " + f.getAbsolutePath());
+		    }
+		}
+		return true;
+	}
 
     /**
      * Copy files from local filesystem or resources to a folder in the filesystem.
@@ -232,6 +269,13 @@ public final class FileUtils {
         return f.exists() || f.mkdir();
     }
 
+    /**
+     * 
+     * @param str Original String
+     * @param remove String to remove 
+     * @return rest of string after removing remove in front
+     *  	when str does not start with remove, return str
+     */
     public static String removeStart(String str, String remove) {
         if (isEmpty(str) || isEmpty(remove)) {
             return str;
@@ -242,6 +286,10 @@ public final class FileUtils {
         return str;
     }
 
+    /**
+     * @param cs CharSequence to check
+     * @return true iff cs is null or has length zero
+     */
     public static boolean isEmpty(CharSequence cs) {
         return cs == null || cs.length() == 0;
     }
@@ -263,8 +311,9 @@ public final class FileUtils {
      */
     public static String getExtension(String fileName) {
         String[] splitFileName = fileName.split("\\.");
-        if (splitFileName.length <= 1)
+        if (splitFileName.length <= 1) {
             return "";
+        }
         int lastDotIndex = splitFileName.length - 1;
         return "." + splitFileName[lastDotIndex];
     }
