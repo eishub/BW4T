@@ -19,9 +19,7 @@ public final class Id2Object {
      * @return The {@link BoundedMoveableObject}.
      */
     public static BoundedMoveableObject getObject(Context<Object> context, long id) {
-
         for (Object o : context.getObjects(BoundedMoveableObject.class)) {
-
             BoundedMoveableObject obj = (BoundedMoveableObject) o;
             if (obj.getId() == id) {
                 return obj;
