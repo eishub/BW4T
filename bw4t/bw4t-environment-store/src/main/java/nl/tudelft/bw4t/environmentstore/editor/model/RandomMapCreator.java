@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import nl.tudelft.bw4t.map.Zone;
+import nl.tudelft.bw4t.map.Zone.Type;
 
 public class RandomMapCreator {
     public RandomMapCreator() {
@@ -78,6 +79,8 @@ public class RandomMapCreator {
      */
     private static void randomizeCorridors(List<Node> corridors) {
         Random r = new Random(System.currentTimeMillis());
+        Node stdCharge = corridors.get(r.nextInt(corridors.size()));
+        stdCharge.setType(Type.CHARGINGZONE);
         for (Node n : corridors) {
             if (r.nextDouble() < 0.01) {
                 n.setType(Zone.Type.CHARGINGZONE);
