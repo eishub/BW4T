@@ -4,7 +4,6 @@ import nl.tudelft.bw4t.scenariogui.epartner.controller.EpartnerController;
 
 /**
  * EPartnerViewInterface for the EpartnerFrame
- * @author Wendy
  *
  */
 public interface EPartnerViewInterface {
