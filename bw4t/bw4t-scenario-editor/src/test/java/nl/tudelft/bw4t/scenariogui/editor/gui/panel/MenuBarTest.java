@@ -609,7 +609,7 @@ public class MenuBarTest {
 
     /**
      * Tests whether a configuration is saved correctly.
-     * <p/>
+     * 
      * Open open.xml in editor and then saves as dummy.xml.
      * Then compares the two files and asserts true when their content is equal.
      */
