@@ -392,4 +392,11 @@ public interface IRobot {
     public List<BoundedMoveableObject> getObstacles();
 
     public void clearObstacles();
+    
+    /**
+     * @return Whether the old target from before the navigateObstacles action
+     * has become unreachable.
+     */
+    boolean isDestinationUnreachable();
+    
 }
