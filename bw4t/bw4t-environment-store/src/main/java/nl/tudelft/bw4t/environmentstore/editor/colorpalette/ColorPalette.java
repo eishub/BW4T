@@ -33,7 +33,7 @@ public class ColorPalette extends JPanel implements MouseInputListener {
     /** the color the mouse is pointing to */
     private int mouseDownColorIndex = -1;
 
-    
+    /** list with colors */
     private List<ColorPaletteListener> onColorClick = new LinkedList<>();
 
     /**
@@ -63,8 +63,11 @@ public class ColorPalette extends JPanel implements MouseInputListener {
     public void removeColorClickListener(ColorPaletteListener cpl) {
         this.onColorClick.remove(cpl);
     }
-
     
+    /**
+     * notifies what color has been clicked
+     * @param c the color clicked 
+     */
     private void notifyColorClick(BlockColor c) {
         for (ColorPaletteListener cpl : onColorClick) {
             cpl.colorClicked(c);
