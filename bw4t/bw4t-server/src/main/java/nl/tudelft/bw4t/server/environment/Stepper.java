@@ -24,11 +24,15 @@ public class Stepper implements Runnable {
     public static final double MAX_TPS = 100.0;
 
     private static final Logger LOGGER = Logger.getLogger(Stepper.class);
-    // HACK should be private.
+    /**
+     *  HACK should be private.
+     */
     BW4TRunner runner;
     private final String scenarioLocation;
     private final AbstractEnvironment environment;
-    // default 10ms between steps
+    /**
+     *  default 10ms between steps
+     */
     private long loopDelay = 10;
     private boolean running = true;
 
