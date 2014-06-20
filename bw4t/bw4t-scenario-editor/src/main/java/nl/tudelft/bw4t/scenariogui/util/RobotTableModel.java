@@ -97,14 +97,12 @@ public class RobotTableModel extends AbstractTableModel implements Serializable 
         case 1:
             if (value instanceof EntityType) {
                 bot.setBotController((EntityType) value);
-            }
-            else if (value instanceof String) {
+            } else if (value instanceof String) {
                 String cont = (String) value;
                 cont = cont.toLowerCase();
                 if (EntityType.AGENT.nameLower().equals(cont)) {
                     bot.setBotController(EntityType.AGENT);
-                }
-                else if (EntityType.HUMAN.nameLower().equals(cont)) {
+                } else if (EntityType.HUMAN.nameLower().equals(cont)) {
                     bot.setBotController(EntityType.HUMAN);
                 }
             }

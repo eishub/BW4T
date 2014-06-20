@@ -65,8 +65,7 @@ public class ApplyRandomBlock implements ActionListener{
         try {
             controller.getMapController().randomizeColorsInRooms(input, amount);
             view.dispose();
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(view, "Warning: Choose atleast 1 color");
         }
     }
