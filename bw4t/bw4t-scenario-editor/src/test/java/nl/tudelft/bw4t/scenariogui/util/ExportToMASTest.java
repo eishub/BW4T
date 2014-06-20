@@ -19,23 +19,14 @@ import static org.junit.Assert.assertTrue;
  */
 public class ExportToMASTest {
     public static final String CONFIG_NAME = "testname";
-
-    private static final String FILE_ROOT = System.getProperty("user.dir");
-    
-    private static final String CONFIG_PATH = FILE_ROOT + "/src/test/resources/export.xml";
-    
-    private static final String EXPORT_DIR = FILE_ROOT + "/src/test/resources/export/";
-    
-    private static final String AGENT_DIR = EXPORT_DIR + "agents/";
-    
-    private static final String AGENT_GOAL_FILE = FILE_ROOT + "/src/test/resources/robot.goal";
-    
-    private static final String AGENT_GOAL_FILE_WORKING = FILE_ROOT + "/robot.goal";
-    
     private static final String MAS2G = CONFIG_NAME + ".mas2g";
-    
     private static final String XML_SRC = CONFIG_NAME + ".xml";
-    
+    private static final String FILE_ROOT = System.getProperty("user.dir");
+    private static final String CONFIG_PATH = FILE_ROOT + "/src/test/resources/export.xml";
+    private static final String EXPORT_DIR = FILE_ROOT + "/src/test/resources/export/";
+    private static final String AGENT_DIR = EXPORT_DIR + "agents/";
+    private static final String AGENT_GOAL_FILE = FILE_ROOT + "/src/test/resources/robot.goal";
+    private static final String AGENT_GOAL_FILE_WORKING = FILE_ROOT + "/robot.goal";
     private static final String[] GOAL_FILES = {"robot.goal"};
 
     private BW4TClientConfig configuration;
@@ -71,17 +62,11 @@ public class ExportToMASTest {
         FileUtils.forceDelete(new File(AGENT_GOAL_FILE_WORKING));
     }
 
-    /**
-     * Verify that the export folder exists
-     */
     @Test
     public void testRootFolderExists() {
         assertTrue(EXPORT_DIR, new File(EXPORT_DIR).exists());
     }
 
-    /**
-     * Test if the mas2g file has been made.
-     */
     @Test
     public void testMAS2GExists() {
         String mas2gfile = EXPORT_DIR + MAS2G;
@@ -89,27 +74,17 @@ public class ExportToMASTest {
 
     }
 
-
-    /**
-     * Test if the mas2g file has been made.
-     */
     @Test
     public void testXMLExists() {
         String xml = EXPORT_DIR + XML_SRC;
         assertTrue(xml, new File(xml).exists());
     }
 
-    /**
-     * Test if the agent directory has been made.
-     */
     @Test
     public void testAgentFolderExists() {
         assertTrue(AGENT_DIR, new File(AGENT_DIR).exists());
     }
 
-    /**
-     * Test if the goal files have been made.
-     */
     @Test
     public void testGoalFilesExists() {
         for (String file : GOAL_FILES) {
@@ -117,13 +92,6 @@ public class ExportToMASTest {
         }
     }
 
-    /****************************************************************************************************************
-     * Now follow the integrity tests.                                                                              *
-     ****************************************************************************************************************/
-
-    /**
-     * Test of the robot.goal is equal to that in the working directory
-     */
     @Test
     public void compareRobotGoalFiles() throws IOException {
         boolean result = FileUtils.contentEquals(new File(AGENT_GOAL_FILE), new File(AGENT_GOAL_FILE_WORKING));

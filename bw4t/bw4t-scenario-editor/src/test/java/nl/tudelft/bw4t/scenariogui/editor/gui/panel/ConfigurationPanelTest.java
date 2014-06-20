@@ -10,7 +10,6 @@ import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,18 +28,11 @@ public class ConfigurationPanelTest {
     private static final String BASE = System.getProperty("user.dir") + "/src/test/resources/";
 
     private final String filePathMap = BASE + "test.map";
-
     private final String fileMapFail = BASE + "test.fail";
-
     private ScenarioEditor editor;
-
     private ConfigurationPanel configPanel;
-
     private JFileChooser fileChooser;
 
-    /**
-     * Initialize the variables.
-     */
     @Before
     public final void setUp() {
         // Mock the JFileChooser
@@ -53,18 +45,11 @@ public class ConfigurationPanelTest {
         configPanel.setFileChooser(fileChooser);
     }
 
-    /**
-     * Close the ScenarioEditor to prevent to many windows from cluttering
-     * the screen during the running of the tests
-     */
     @After
     public final void closeEditor() {
         editor.dispose();
     }
 
-    /**
-     * Tests the setMapFile method.
-     */
     @Test
     public final void testSetMapFile() {
         configPanel.setMapFile(filePathMap);
@@ -72,9 +57,6 @@ public class ConfigurationPanelTest {
         assertEquals(filePathMap, configPanel.getMapFile());
     }
 
-    /**
-     * Tests the choosing of a map file.
-     */
     @Test
     public final void testMapFileAction() {
         // Setup the mocks behaviour.
@@ -93,10 +75,6 @@ public class ConfigurationPanelTest {
                 .getMapFile());
     }
 
-    /**
-     * Tests if the choosing of an incorrect map file
-     * shows a pop-up message with an error.
-     */
     @Test
     public final void testMapFileActionIncorrect() {
         // Setup the mocks behaviour.
@@ -133,7 +111,7 @@ public class ConfigurationPanelTest {
 
         assertEquals(startURI, configPanel.getMapFile());
     }
-    
+
     /**
      * Tests if no map file is entered when map selection is cancelled.
      */
@@ -180,26 +158,20 @@ public class ConfigurationPanelTest {
                         .getCurrentValues()));
     }
 
-    /**
-     * Tests the isDefault function.
-     */
     @Test
     public void testDefault() {
         assertTrue(configPanel.isDefault());
 
         configPanel.setClientIP("Other IP");
-        
+
         assertFalse(configPanel.isDefault());
     }
 
-    /**
-     * Tests setting the Client IP field.
-     */
     @Test
     public void testSetClientIP() {
         assertTrue(configPanel.isDefault());
         assertEquals(DefaultConfigurationValues.DEFAULT_CLIENT_IP.getValue(), configPanel.getClientIP());
-        
+
         String newIP = "New IP";
         configPanel.setClientIP(newIP);
 
@@ -207,29 +179,23 @@ public class ConfigurationPanelTest {
         assertFalse(configPanel.isDefault());
     }
 
-    /**
-     * Tests setting the Client Port field.
-     */
     @Test
     public void testSetClientPort() {
         assertTrue(configPanel.isDefault());
         assertEquals(DefaultConfigurationValues.DEFAULT_CLIENT_PORT.getValue(), "" + configPanel.getClientPort());
-        
+
         String newIP = "8888";
         configPanel.setClientPort(newIP);
-        
+
         assertEquals(newIP, "" + configPanel.getClientPort());
         assertFalse(configPanel.isDefault());
     }
 
-    /**
-     * Tests setting the Server IP field.
-     */
     @Test
     public void testSetServerIP() {
         assertTrue(configPanel.isDefault());
         assertEquals(DefaultConfigurationValues.DEFAULT_SERVER_IP.getValue(), configPanel.getServerIP());
-        
+
         String newIP = "New IP";
         configPanel.setServerIP(newIP);
 
@@ -237,14 +203,11 @@ public class ConfigurationPanelTest {
         assertFalse(configPanel.isDefault());
     }
 
-    /**
-     * Tests setting the Server Port field.
-     */
     @Test
     public void testSetServerPort() {
         assertTrue(configPanel.isDefault());
         assertEquals(DefaultConfigurationValues.DEFAULT_SERVER_PORT.getValue(), "" + configPanel.getServerPort());
-        
+
         String newPort = "9999";
         configPanel.setServerPort(newPort);
 
@@ -252,15 +215,12 @@ public class ConfigurationPanelTest {
         assertFalse(configPanel.isDefault());
     }
 
-    /**
-     * Tests whether changes have been made to the Launch GUI section.
-     */
     @Test
     public void testChangesLaunchGUI() {
         assertTrue(configPanel.isDefault());
         assertEquals(DefaultConfigurationValues.USE_GUI.getBooleanValue(), configPanel.getGUIYesCheckbox().getState());
         assertEquals(!DefaultConfigurationValues.USE_GUI.getBooleanValue(), configPanel.getGUINoCheckbox().getState());
-        
+
         configPanel.setUseGui(!DefaultConfigurationValues.USE_GUI.getBooleanValue());
 
         assertEquals(!DefaultConfigurationValues.USE_GUI.getBooleanValue(), configPanel.getGUIYesCheckbox().getState());
@@ -268,46 +228,45 @@ public class ConfigurationPanelTest {
         assertFalse(configPanel.isDefault());
     }
 
-    /**
-     * Tests whether changes have been made to the Visualize Paths section.
-     */
     @Test
     public void testChangesVisualizePaths() {
         assertTrue(configPanel.isDefault());
-        assertEquals(DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue(), configPanel.getPathsYesCheckbox().getState());
-        assertEquals(!DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue(), configPanel.getPathsNoCheckbox().getState());
-        
+        assertEquals(DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue(),
+                configPanel.getPathsYesCheckbox().getState());
+        assertEquals(!DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue(),
+                configPanel.getPathsNoCheckbox().getState());
+
         configPanel.setVisualizePaths(!DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue());
 
-        assertEquals(!DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue(), configPanel.getPathsYesCheckbox().getState());
-        assertEquals(DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue(), configPanel.getPathsNoCheckbox().getState());
+        assertEquals(!DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue(),
+                configPanel.getPathsYesCheckbox().getState());
+        assertEquals(DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue(),
+                configPanel.getPathsNoCheckbox().getState());
         assertFalse(configPanel.isDefault());
     }
 
-    /**
-     * Tests whether changes have been made to the Enable Collisions section.
-     */
     @Test
     public void testChangesEnableCollisions() {
         assertTrue(configPanel.isDefault());
-        assertEquals(DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue(), configPanel.getCollisionsYesCheckbox().getState());
-        assertEquals(!DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue(), configPanel.getCollisionsNoCheckbox().getState());
-        
+        assertEquals(DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue(),
+                configPanel.getCollisionsYesCheckbox().getState());
+        assertEquals(!DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue(),
+                configPanel.getCollisionsNoCheckbox().getState());
+
         configPanel.setVisualizePaths(!DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue());
 
-        assertEquals(!DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue(), configPanel.getCollisionsYesCheckbox().getState());
-        assertEquals(DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue(), configPanel.getCollisionsNoCheckbox().getState());
+        assertEquals(!DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue(),
+                configPanel.getCollisionsYesCheckbox().getState());
+        assertEquals(DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue(),
+                configPanel.getCollisionsNoCheckbox().getState());
         assertFalse(configPanel.isDefault());
     }
 
-    /**
-     * Tests whether changes have been made to the Map file section.
-     */
     @Test
     public void testChangesMapFile() {
         assertTrue(configPanel.isDefault());
         assertEquals(DefaultConfigurationValues.MAP_FILE.getValue(), configPanel.getMapFile());
-        
+
         configPanel.setMapFile(filePathMap);
 
         assertEquals(filePathMap, configPanel.getMapFile());

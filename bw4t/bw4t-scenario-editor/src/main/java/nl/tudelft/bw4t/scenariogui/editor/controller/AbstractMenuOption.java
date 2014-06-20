@@ -21,10 +21,6 @@ import nl.tudelft.bw4t.scenariogui.util.MapSpec;
 
 /**
  * Handles the event of the menu.
- * 
- * 
- * @version 0.1
- * @since 12-05-2014
  */
 public abstract class AbstractMenuOption implements ActionListener {
 
@@ -62,21 +58,10 @@ public abstract class AbstractMenuOption implements ActionListener {
         setCurrentFileChooser(new JFileChooser());
     }
 
-    /**
-     * Gets the current file chooser.
-     * 
-     * @return The current file chooser.
-     */
     public JFileChooser getCurrentFileChooser() {
         return currentFileChooser;
     }
 
-    /**
-     * Sets the new current file chooser.
-     * 
-     * @param newFileChooser
-     *            The new file chooser to set.
-     */
     public void setCurrentFileChooser(final JFileChooser newFileChooser) {
         currentFileChooser = newFileChooser;
     }
@@ -118,9 +103,6 @@ public abstract class AbstractMenuOption implements ActionListener {
         return view.hasLastFileLocation() && !new File(path).exists();
     }
 
-    /**
-     * Displays a file chooser and saves the response in fileChooserApprove.
-     */
     public void setFileChooserApprove() {
         currentFileChooser = getCurrentFileChooser();
         
@@ -131,19 +113,10 @@ public abstract class AbstractMenuOption implements ActionListener {
                 .showDialog(getController().getMainView(), "Save Scenario") == JFileChooser.APPROVE_OPTION;
     }
     
-    /**
-     * Returns whether APPROVE_OPTION was returned.
-     * 
-     * @return fileChooserApprove 
-     */
     public boolean getFileChooserApprove() {
         return fileChooserApprove;
     }
     
-    /**
-     * Gets the path to save the file to from the user via a file chooser.
-     * @return The path to save the file, null if the user closed the file chooser.
-     */
     private String getPathToSaveFromUser() {
         String path = null;
 
@@ -162,7 +135,6 @@ public abstract class AbstractMenuOption implements ActionListener {
         }
         return path;
     }
-
 
     private boolean validateBotCount() {
         ScenarioEditor se = controller.getMainView();
@@ -232,11 +204,6 @@ public abstract class AbstractMenuOption implements ActionListener {
         getModel().updateOldEpartnerConfigs();
     }
 
-    /**
-     * Returns the MenuBar
-     * 
-     * @return The MenuBar
-     */
     public MenuBar getMenuView() {
         return this.view;
     }
@@ -244,36 +211,18 @@ public abstract class AbstractMenuOption implements ActionListener {
     /**
      * Gets called when the button associated with this action is pressed.
      * 
-     * @param e
-     *            The action event.
+     * @param e The action event.
      */
     public abstract void actionPerformed(ActionEvent e);
 
-    /**
-     * Gets the controllers.
-     * 
-     * @return The controllers.
-     */
     public ScenarioEditorController getController() {
         return controller;
     }
 
-    /**
-     * Sets the controllers.
-     * 
-     * @param newController
-     *            The new controllers.
-     */
     public void setController(final ScenarioEditorController newController) {
         controller = newController;
     }
     
-    /**
-     * Gets the BW4TClientConfig model.
-     * 
-     * @return model
-     *             The model being used.
-     */
     public BW4TClientConfig getModel() {
         return model;
     }

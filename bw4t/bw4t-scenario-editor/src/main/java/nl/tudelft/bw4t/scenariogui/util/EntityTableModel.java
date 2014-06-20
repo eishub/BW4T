@@ -13,15 +13,14 @@ public class EntityTableModel extends DefaultTableModel {
     
     private EntityType type;
     
+    /**
+     * Constructor.
+     * @param type The EntityTypes that should be in the table.
+     */
     public EntityTableModel(EntityType type) {
         this.type = type;
     }
 
-    /**
-     * The column class for the tables in the entity panel
-     * @param column The column
-     * @return The column class
-     */
     @Override
     public Class<?> getColumnClass(int column) {
         if (type.equals(EntityType.EPARTNER)) {

@@ -8,10 +8,7 @@ import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
- * Handles the event to create a new bot.
- * 
- * @version     0.1                
- * @since       12-05-2014        
+ * Handles the event to create a new bot.  
  */
 class AddNewStandardBotCommunicator implements ActionListener {
 
@@ -22,7 +19,7 @@ class AddNewStandardBotCommunicator implements ActionListener {
     private BW4TClientConfig model;
 
     /**
-     * Create an AddNewBot event handler.
+     * Create an AddNewStandardBotCommunicator event handler.
      *
      * @param newView The parent view.
      * @param model The model.
@@ -33,9 +30,9 @@ class AddNewStandardBotCommunicator implements ActionListener {
     }
 
     /**
-     * Listens to the add a new bot button.
-     * Executes action that needs to happen when the "New bot" button is
-     * pressed. Gives default name of "Bot &lt;n&gt;" where &lt;n&gt; is the n'th bot created.  
+     * Listens to the add communicator bot button.
+     * Executes action that needs to happen when the "Communicator Bot" button is
+     * pressed. Gives default name of "Communicator Bot &lt;n&gt;" where &lt;n&gt; is the n'th bot created.  
      *
      * @param ae The action event.
      */
