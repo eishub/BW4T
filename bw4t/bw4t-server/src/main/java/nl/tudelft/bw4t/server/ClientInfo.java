@@ -51,4 +51,11 @@ class ClientInfo {
         return clientConfig == null ? "" : clientConfig.getMapFile();
     }
 
+    public boolean isCollisionEnabled() {
+        return clientConfig.isCollisionEnabled();
+    }
+
+    public boolean isVisualizePaths() {
+        return clientConfig.isVisualizePaths();
+    }
 }

@@ -37,12 +37,15 @@ import org.mockito.runners.MockitoJUnitRunner;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
+import repast.simphony.space.grid.Grid;
 
 @RunWith(MockitoJUnitRunner.class)
 public class NavigatingRobotTest {
     
     private ContinuousSpace<Object> mockedSpace = Mockito.mock(ContinuousSpace.class);
     private ContinuousSpace<Object> mockedOtherSpace = Mockito.mock(ContinuousSpace.class);
+
+    private Grid<Object> mockedGrid = Mockito.mock(Grid.class);
     
     private Context<Object> mockedContext = Mockito.mock(Context.class);
     private Context<Object> mockedOtherContext = Mockito.mock(Context.class);
@@ -71,14 +74,14 @@ public class NavigatingRobotTest {
     public void createNavigatingRobot() {
         int cap = 2;
         int cap2 = 1;
-        bot = new NavigatingRobot("Bot1", mockedSpace, mockedContext, true, cap);
-        bot2 = new NavigatingRobot("Bot2", mockedSpace, mockedOtherContext, false, cap2);
-        bot3 = new NavigatingRobot("Bot3", mockedOtherSpace, mockedContext, true, cap2);
+        bot = new NavigatingRobot("Bot1", mockedSpace, mockedGrid, mockedContext, true, cap);
+        bot2 = new NavigatingRobot("Bot2", mockedSpace, mockedGrid, mockedOtherContext, false, cap2);
+        bot3 = new NavigatingRobot("Bot3", mockedOtherSpace, mockedGrid, mockedContext, true, cap2);
         bot4 = null;
-        bot5 = new NavigatingRobot("Bot5", null, mockedContext, true, cap2);
-        bot6 = new NavigatingRobot("Bot5", null, mockedContext, true, cap2);
+        bot5 = new NavigatingRobot("Bot5", null, mockedGrid, mockedContext, true, cap2);
+        bot6 = new NavigatingRobot("Bot5", null, mockedGrid, mockedContext, true, cap2);
         
-        b = new Block(BlockColor.BLUE, mockedOtherSpace, mockedContext);
+        b = new Block(BlockColor.BLUE, mockedOtherSpace, mockedGrid, mockedContext);
     }
 
     @Test
