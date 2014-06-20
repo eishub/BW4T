@@ -5,8 +5,26 @@ import eis.iilang.Identifier;
 import eis.iilang.Numeral;
 import eis.iilang.Parameter;
 
+/**
+ * The MessageCommand interface defines the functions a command should have
+ *
+ */
 public interface MessageCommand {
+    /**
+     * Function to translate a message to parameters
+     * @param message
+     *          The message being translated
+     * @param entityId 
+     * @return the translated message in parameters
+     */
     Parameter getParam(BW4TMessage message, String entityId);
+    
+    /**
+     * Function to translate a BW4TMessage to String
+     * @param message
+     *          The message to be translated
+     * @return The message as a string
+     */
     String getString(BW4TMessage message);
 }
 
@@ -200,6 +218,8 @@ class CommandDroppedOffBlock implements MessageCommand {
 }
 
 class CommandAmWaitingOutsideRoom implements MessageCommand {
+    
+    private final static String RET = "I am waiting outside room ";
 
     @Override
     public Parameter getParam(BW4TMessage message, String entityId) {
@@ -207,15 +227,13 @@ class CommandAmWaitingOutsideRoom implements MessageCommand {
                 new Identifier(message.getRoom()));
     }
 
-    private final String ret = "I am waiting outside room ";
-
     @Override
     public String getString(BW4TMessage message) {
         if (message.getColor() != null) {
-         return ret + message.getRoom()
+         return RET + message.getRoom()
                  + " with a " + message.getColor() + " block";
         } else {
-            return ret + message.getRoom();
+            return RET + message.getRoom();
         }
     }
 }
