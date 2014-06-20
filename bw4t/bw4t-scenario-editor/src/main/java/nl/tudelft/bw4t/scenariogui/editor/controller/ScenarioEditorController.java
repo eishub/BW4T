@@ -14,7 +14,7 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.MenuBar;
  * It delegates all events to classes implementing ActionListener,
  * sending the view along as an argument.
  *
- * <p>
+ * 
  * @version     0.1                
  * @since       12-05-2014        
  */

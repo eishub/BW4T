@@ -25,7 +25,6 @@ public class ApplyRandomSequence implements ActionListener{
             
             @Override
             public void update() {
-                // TODO Auto-generated method stub
                 
             }
         });

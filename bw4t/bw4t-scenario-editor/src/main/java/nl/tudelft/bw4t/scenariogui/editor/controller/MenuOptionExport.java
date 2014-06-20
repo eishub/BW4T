@@ -23,7 +23,7 @@ import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 
 /**
  * Handles the event to export the project to mas2g.
- * <p>
+ * 
  * @version     0.1
  * @since       02-06-2014
  */

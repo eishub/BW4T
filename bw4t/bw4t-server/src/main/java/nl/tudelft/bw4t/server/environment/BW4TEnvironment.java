@@ -345,13 +345,13 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
     /**
      * Helper method to allow the server to get all percepts for a connected client.
-     * <p>
+     * 
      * This function is synchronized to ensure that multiple calls are properly sequenced. This is important because
      * getAllPercepts must 'lock' the environment and parallel calls would cause overlapping 'locks' taken at different
      * moments in time.
-     * <p>
+     *
      * Actually, locking the environment is done by copying the current location of the entity.
-     * <p>
+     *
      * It seems that this new function is created because {@link AbstractEnvironment#getAllPerceptsFromEntity(String)}
      * is final.
      * 

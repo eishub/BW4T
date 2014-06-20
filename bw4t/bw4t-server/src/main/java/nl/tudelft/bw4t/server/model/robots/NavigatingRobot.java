@@ -201,11 +201,11 @@ public class NavigatingRobot extends AbstractRobot {
 
     /**
      * State: The path has failed, the bot has collided.
-     * <p/>
+     * 
      * Find a new path, going around the obstacles.
      * Strategy: Calculate path over grid as opposed to the zones. Find a path from current location
      * to the location of the next zone (currentMove)
-     * <p/>
+     *
      * Continue with normal path after this.
      */
     public void navigateObstacles() {

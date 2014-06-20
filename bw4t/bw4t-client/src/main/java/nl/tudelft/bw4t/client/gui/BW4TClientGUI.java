@@ -52,9 +52,9 @@ import org.apache.log4j.Logger;
  * Render the current state of the world at a fixed rate (10 times per second, see run()) for a client. It connects to
  * the given {@link RemoteEnvironment} on behalf of a given eis entityId. This allows fetching the latest percepts and
  * uses these percepts to track the world state.
- * <p>
  * It is possible to set up this renderer as a human GUI as well. In that case, a human can click with the mouse in the
  * GUI. His actions create GOAL percepts:
+ *
  * <ul>
  * <li>sendMessage("all",Message). User asked to send given Message.
  * <li>goToBlock(Id). User asked to go to given block id (Id is a numeral).
@@ -63,11 +63,11 @@ import org.apache.log4j.Logger;
  * <li>pickUp(). User asked to do the pick up action
  * <li>putDown(). User asked to do the put down action.
  * </ul>
- * <p>
+ * 
  * {@link RemoteEnvironment#getAllPerceptsFromEntity(String)} is called by the {@link #run()} repaint scheduler only if
  * we are representing a HumanPlayer. Otherwise the getAllPercepts is done by the agent and we assume processPercepts is
  * called by the {@link RemoteEnvironment} when the agent asked for getAllPercepts.
- * <p>
+ * 
  * The BW4TRenderer has a list {@link #toBePerformedAction} which is polled by
  * {@link RemoteEnvironment#getAllPerceptsFromEntity(String)} at every call, and merged into the regular percepts. So
  * user mouse clicks are stored there until it's time for perceiving.

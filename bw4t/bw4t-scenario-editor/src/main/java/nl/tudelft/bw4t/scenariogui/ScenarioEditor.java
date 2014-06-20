@@ -18,7 +18,7 @@ import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
 
 /**
  * The ScenarioEditor class serves as the Frame for the MenuBar and MainPanel.
- * <p>
+ * 
  * @version     0.1                
  * @since       12-05-2014        
  */
