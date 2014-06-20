@@ -21,15 +21,20 @@ public class DefaultEntityFactory implements EntityFactory {
 	private ContinuousSpace<Object> space;
     private Grid<Object> grid;
 
-	@Override
+	
+    @Override
+    public void setGrid(Grid<Object> grid) {
+        this.grid = grid;
+    }
+
+    @Override
 	public void setContext(Context<Object> context) {
 		this.context = context;
 	}
 
 	@Override
-	public void setSpace(ContinuousSpace<Object> space, Grid<Object> grid) {
+	public void setSpace(ContinuousSpace<Object> space) {
 		this.space = space;
-        this.grid = grid;
 	}
 
 	@Override
