@@ -31,8 +31,15 @@ public class RandomizeBlockFrame extends RandomizeFrame {
     /** Here can the user set the number of blocks. */
     private JSpinner numberOfBlocksSpinner = new JSpinner(spinnerModel);
     
+    /** The label above the spinner for the maximum number of blocks per room. */
     private JLabel lblNumberOfBlocks = new JLabel("Maximum number of blocks per room:");
     
+    /**
+     * @param title
+     *             Title of the frame. 
+     * @param mpc
+     *            The controller to be linked to this frame. 
+     */
     public RandomizeBlockFrame(String title, MapPanelController mpc) {
         super(title, mpc);
         this.controller = new RandomizeBlocksController(this, mpc);
