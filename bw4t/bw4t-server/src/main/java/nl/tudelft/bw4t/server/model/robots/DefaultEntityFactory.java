@@ -64,7 +64,7 @@ public class DefaultEntityFactory implements EntityFactory {
             r = new ColorBlindHandicap(r);
         }
         
-        setGripperHandicap(config, r);
+        r = setGripperHandicap(config, r);
         
         if (config.getMoveSpeedHandicap()) {
             r.setSpeedMod((double) config.getBotSpeed() / 100.0); 
@@ -76,7 +76,7 @@ public class DefaultEntityFactory implements EntityFactory {
             r = new Human(r);
         }
         
-        enableBattery(config, r);
+        r = enableBattery(config, r);
 
         return r;
     }
@@ -85,30 +85,35 @@ public class DefaultEntityFactory implements EntityFactory {
      * Sets the gripper handicap
      * @param config file which needs to be read
      * @param r robot
-     * @return
+     * @return robot
      */
-    private void setGripperHandicap(BotConfig config, IRobot r) {
+    private IRobot setGripperHandicap(BotConfig config, IRobot r) {
+        IRobot i = r;
         if (config.getGripperHandicap()) {
-            r = new GripperHandicap(r);
+            i = new GripperHandicap(r);
         } else {
             // if the robot does not have a gripper handicap, it grabs the value set in the UI. 
-            r.setGripperCapacity(config.getGrippers());
+            i.setGripperCapacity(config.getGrippers());
         }
+        return i;
     }
 
     /**
      * enables the battery
      * @param config file which needs to be read.
      * @param r robot
+     * @return robot
      */
-    private void enableBattery(BotConfig config, IRobot r) {
+    private IRobot enableBattery(BotConfig config, IRobot r) {
+        IRobot i = r;
         if (config.isBatteryEnabled()) {
-            r.setBattery(
+            i.setBattery(
                     new Battery(config.getBotBatteryCapacity(), 
                             config.getBotBatteryDischargeRate()));            
         } else {
-            r.setBattery(new Battery(1, 0));
+            i.setBattery(new Battery(1, 0));
         }
+        return i;
     }
 
     @Override
