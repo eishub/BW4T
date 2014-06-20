@@ -6,9 +6,10 @@ import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Creates a human bot.
+ */
 public class Human extends AbstractRobotDecorator {
-    private static final Logger LOGGER = Logger.getLogger(Human.class);
-    
     /**
      * The e-Partner the human is holding.
      */
@@ -50,19 +51,10 @@ public class Human extends AbstractRobotDecorator {
      */
     @Override
     public void dropEPartner() {
-        
         if (!isHoldingEPartner()) {
             return;
         }
-        
-        //this.ePartner.addToContext();
-        
-//        double x = robot.getLocation().getX();
-//        double y = robot.getLocation().getY();
-
-//        this.ePartner.moveTo(RandomHelper.nextDoubleFromTo(x - 5, x + 5), RandomHelper.nextDoubleFromTo(y - 5, y + 5));
         ePartner.setHolder(null);
-        
         this.ePartner = null;
     }
 

@@ -170,29 +170,38 @@ public abstract class BoundedMoveableObject {
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof BoundedMoveableObject) {
-            BoundedMoveableObject other = (BoundedMoveableObject) obj;
-            
-            if (boundingBox == null && other.boundingBox != null) {
-                return false;
-            } else if (!boundingBox.equals(other.boundingBox)) {
-                return false;
-            }
-            
-            if (context == null && other.context != null) {
-                return false;
-            } else if (!context.equals(other.context)) {
-                return false;
-            }
-            
-            if (space == null && other.space != null) {
-                return false;
-            } else if (!space.equals(other.space)) {
-                return false;
-            }
+        if (this == obj) {
             return true;
         }
-        return false;
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        BoundedMoveableObject other = (BoundedMoveableObject) obj;
+        if (boundingBox == null) {
+            if (other.boundingBox != null) {
+                return false;
+            }
+        } else if (!boundingBox.equals(other.boundingBox)) {
+            return false;
+        }
+        if (context == null) {
+            if (other.context != null) {
+                return false;
+            }
+        } else if (!context.equals(other.context)) {
+            return false;
+        }
+        if (space == null) {
+            if (other.space != null) {
+                return false;
+            }
+        } else if (!space.equals(other.space)) {
+            return false;
+        }
+        return true;
     }
 
     /**
