@@ -204,6 +204,11 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
             return false;
         }
     }
+    
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 
     @Override
     public List<Block> isHolding() {
