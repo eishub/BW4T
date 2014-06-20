@@ -121,8 +121,8 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
         env.spawnEPartners(cInfo.getRequestedEPartners(), client);
 
         // set the path finding and collision arguments.
-        env.setCollisionEnabled(cInfo.getConfiguration().isCollisionEnabled());
-        env.setDrawPathsEnabled(cInfo.getConfiguration().isVisualizePaths());
+        env.setCollisionEnabled(cInfo.isCollisionEnabled());
+        env.setDrawPathsEnabled(cInfo.isVisualizePaths());
     }
 
     @Override
