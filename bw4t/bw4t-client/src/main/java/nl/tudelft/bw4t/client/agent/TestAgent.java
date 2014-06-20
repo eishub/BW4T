@@ -22,7 +22,7 @@ import org.apache.log4j.Logger;
 public class TestAgent extends BW4TAgent {
 
     /** The places which have been percepted by the agent. */
-    private List<String> places;
+    private final List<String> places;
     
     /** The state of the Agent. */
     private String state = "arrived";
@@ -31,7 +31,7 @@ public class TestAgent extends BW4TAgent {
     private int nextDestination = 0;
 
     /** The log4j Logger which displays logs on console. */
-    private final static Logger LOGGER = Logger.getLogger(TestAgent.class);
+    private static final Logger LOGGER = Logger.getLogger(TestAgent.class);
 
     /**
      * Instantiates a new test agent.
@@ -80,7 +80,7 @@ public class TestAgent extends BW4TAgent {
      * @throws ActException the act exception
      */
     private void action() throws ActException {
-        if (!state.equals("traveling") && places.size() > 0) {
+        if (!"traveling".equals(state) && !places.isEmpty()) {
             goTo(places.get(nextDestination));
             nextDestination++;
             if (nextDestination == places.size()) {
@@ -98,10 +98,10 @@ public class TestAgent extends BW4TAgent {
         for (Percept percept : percepts) {
             String name = percept.getName();
             if ("place".equals(name)) {
-                LinkedList<Parameter> parameters = percept.getParameters();
+                List<Parameter> parameters = percept.getParameters();
                 places.add(((Identifier) parameters.get(0)).getValue());
             } else if ("state".equals(name)) {
-                LinkedList<Parameter> parameters = percept.getParameters();
+                List<Parameter> parameters = percept.getParameters();
                 state = ((Identifier) parameters.get(0)).getValue();
             } else if ("player".equals(name)) {
                 LOGGER.info(percept);
