@@ -22,6 +22,7 @@ import org.mockito.Mockito;
 
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
+import repast.simphony.space.grid.Grid;
 
 
 public class DropZoneTest {
@@ -29,6 +30,7 @@ public class DropZoneTest {
     private nl.tudelft.bw4t.map.Zone zone = Mockito.mock(nl.tudelft.bw4t.map.Zone.class);
     private Context<Object> context = Mockito.mock(Context.class);
     private ContinuousSpace<Object> space = Mockito.mock(ContinuousSpace.class);
+    private Grid<Object> grid = Mockito.mock(Grid.class);
     private List<BlockColor> colors = new ArrayList<BlockColor>();
     private AbstractRobot robot = Mockito.mock(AbstractRobot.class);
     private DropZone dropzone;
@@ -36,7 +38,7 @@ public class DropZoneTest {
     @Before
     public void setup() {
         when(zone.getBoundingbox()).thenReturn(new Rectangle(1.0,1.0,1.0,1.0));
-         dropzone = new DropZone(zone,space,context);
+         dropzone = new DropZone(zone,space,grid,context);
         
     }
     
@@ -63,21 +65,21 @@ public class DropZoneTest {
     @Test
     public void droppedTest() {
         when(robot.getBoundingBox()).thenReturn(new Rectangle2D.Double());
-        assertFalse(dropzone.dropped(new Block(BlockColor.BLUE,space,context), robot)); 
+        assertFalse(dropzone.dropped(new Block(BlockColor.BLUE,space,grid,context), robot));
         when(robot.getBoundingBox()).thenReturn(new Rectangle2D.Double(0.5,0.5,1.0,1.0));
-        assertTrue(dropzone.dropped(new Block(BlockColor.BLUE,space,context), robot));
+        assertTrue(dropzone.dropped(new Block(BlockColor.BLUE,space,grid,context), robot));
 //        colors.add(BlockColor.BLUE);
         colors.add(BlockColor.DARK_GRAY);
         dropzone.setSequence(colors);
         when(robot.getAgentRecord()).thenReturn(new AgentRecord("SomethingToTest"));
-        assertTrue(dropzone.dropped(new Block(BlockColor.BLUE,space,context), robot));
+        assertTrue(dropzone.dropped(new Block(BlockColor.BLUE,space,grid,context), robot));
         Mockito.verify(robot).getAgentRecord();
         colors.clear();
         colors.add(BlockColor.BLUE);
         colors.add(BlockColor.DARK_GRAY);
-        assertTrue(dropzone.dropped(new Block(BlockColor.BLUE,space,context), robot));
+        assertTrue(dropzone.dropped(new Block(BlockColor.BLUE,space,grid,context), robot));
         colors.remove(1);
-        assertTrue(dropzone.dropped(new Block(BlockColor.BLUE,space,context), robot));
+        assertTrue(dropzone.dropped(new Block(BlockColor.BLUE,space,grid,context), robot));
     }
     
     @Test
