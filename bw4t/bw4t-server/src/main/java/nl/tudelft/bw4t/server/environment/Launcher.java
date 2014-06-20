@@ -1,5 +1,7 @@
 package nl.tudelft.bw4t.server.environment;
 
+import eis.exceptions.ManagementException;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -13,14 +15,11 @@ import nl.tudelft.bw4t.server.model.robots.EntityFactory;
 import nl.tudelft.bw4t.util.FileUtils;
 import nl.tudelft.bw4t.util.LauncherException;
 
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.PropertyConfigurator;
-import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PatternLayout;
+import org.apache.log4j.PropertyConfigurator;
 
 import repast.simphony.scenario.ScenarioLoadException;
-import eis.exceptions.ManagementException;
+
 
 /**
  * This class handles the startup of the server interpreting the configuration variables and invoking the proper

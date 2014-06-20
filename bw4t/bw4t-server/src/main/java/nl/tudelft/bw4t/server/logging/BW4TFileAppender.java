@@ -53,15 +53,19 @@ public class BW4TFileAppender extends RollingFileAppender {
         }
     }
 
+    /**
+     * Creates a new log file name 
+     * @return new log file name
+     */
     private String getNewLogFileName() {
         if (fileName != null) {
-            final String DOT = ".";
-            final String HIPHEN = "-";
+            final String dot = ".";
+            final String hiphen = "-";
             final File logFile = new File(fileName);
             final String fileName = logFile.getName();
             String newFileName = "";
 
-            final int dotIndex = fileName.indexOf(DOT);
+            final int dotIndex = fileName.indexOf(dot);
             if (dotIndex != -1) {
                 // the current date to be inserted in the file name.
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss");
@@ -69,18 +73,23 @@ public class BW4TFileAppender extends RollingFileAppender {
                     Date date = new Date();
                 // the file name has an extension. so, insert the time stamp
                 // between the file name and the extension
-                newFileName = fileName.substring(0, dotIndex) + HIPHEN + dateFormat.format(date) + DOT
+                newFileName = fileName.substring(0, dotIndex) + hiphen + dateFormat.format(date) + dot
                         + fileName.substring(dotIndex + 1);
             } else {
                 // the file name has no extension. So, just append the timestamp
                 // at the end.
-                newFileName = fileName + HIPHEN + System.currentTimeMillis();
+                newFileName = fileName + hiphen + System.currentTimeMillis();
             }
             return logFile.getParent() + File.separator + newFileName;
         }
         return null;
     }
     
+    /**
+     * finish the log
+     * @param timeOfCall 
+     * @param typeTime 
+     */
     public static void logFinish(long timeOfCall, String typeTime) {
         logTime(timeOfCall, typeTime);
         logBot();
@@ -88,21 +97,23 @@ public class BW4TFileAppender extends RollingFileAppender {
     
     /**
      * Writing total time needed into logfile.
+     * @param timeOfCall 
+     * @param typeTime 
      */
     private static void logTime(long timeOfCall, String typeTime) {
 
         BW4TEnvironment env = BW4TEnvironment.getInstance();
         
         //totalTime is in miliseconds
-        double totalTime = (timeOfCall - env.getStarttime());
+        double totalTime = timeOfCall - env.getStarttime();
         
         if (totalTime > 60000) {
             int totalMin = (int) totalTime / 60000;
             int totalSec = (int) totalTime / 1000 % 60;
             LOGGER.log(BotLog.BOTLOG, typeTime + totalMin + " minutes and " + totalSec + " seconds");
-        }
-        else
+        } else {
             LOGGER.log(BotLog.BOTLOG, typeTime + totalTime / 1000 + " seconds");
+        }
     }
     
     /**
@@ -130,15 +141,17 @@ public class BW4TFileAppender extends RollingFileAppender {
       */
      private static String stringHandicap(RobotEntity bot) {
          List<String> handicap = bot.getRobotObject().getHandicapsList();
-         String handicaps = bot.getRobotObject().getName() + " handicaps ";
-         if (handicap.isEmpty())
-             handicaps = handicaps + "none";
-         else {
+         StringBuffer buf = new StringBuffer(); 
+         buf.append(bot.getRobotObject().getName() + " handicaps ");
+         if (handicap.isEmpty()) {
+             buf.append("none");
+         } else {
+            
              for (int i = 0; i < handicap.size(); i++) {
-             handicaps = handicaps + handicap.get(i);
+             buf.append(handicap.get(i));
              }
          }
-         return handicaps;
+         return buf.toString();
      }
      
      /**
