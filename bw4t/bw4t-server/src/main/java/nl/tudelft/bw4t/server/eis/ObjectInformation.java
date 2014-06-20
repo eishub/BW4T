@@ -3,29 +3,42 @@ package nl.tudelft.bw4t.server.eis;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import repast.simphony.space.continuous.NdPoint;
 
+/**
+ * location and id of the object 
+ */
 public class ObjectInformation {
-    private double X, Y;
+    private double x, y;
     private long id;
 
-    public ObjectInformation(double X, double Y, long id) {
-        this.X = X;
-        this.Y = Y;
+    /**
+     * 
+     * @param x - position
+     * @param y - position
+     * @param id 
+     */
+    public ObjectInformation(double x, double y, long id) {
+        this.x = x;
+        this.y = y;
         this.id = id;
     }
     
+    /**
+     * 
+     * @param obj where informations is from requested 
+     */
     public ObjectInformation(BoundedMoveableObject obj) {
         final NdPoint loc = obj.getLocation();
-        this.X = loc.getX();
-        this.Y = loc.getY();
+        this.x = loc.getX();
+        this.y = loc.getY();
         this.id = obj.getId();
     }
 
     public double getX() {
-        return X;
+        return x;
     }
 
     public double getY() {
-        return Y;
+        return y;
     }
 
     public long getId() {
@@ -37,9 +50,9 @@ public class ObjectInformation {
         final int prime = 31;
         int result = 1;
         long temp;
-        temp = Double.doubleToLongBits(X);
+        temp = Double.doubleToLongBits(x);
         result = prime * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(Y);
+        temp = Double.doubleToLongBits(y);
         result = prime * result + (int) (temp ^ (temp >>> 32));
         result = prime * result + (int) (id ^ (id >>> 32));
         return result;
@@ -51,12 +64,15 @@ public class ObjectInformation {
             return false; 
         }
         ObjectInformation other = (ObjectInformation) obj;
-        if (Double.doubleToLongBits(X) != Double.doubleToLongBits(other.X))
+        if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x)) {
+              return false;
+        }
+        if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y)) {
+             return false;
+        }
+        if (id != other.id) {
             return false;
-        if (Double.doubleToLongBits(Y) != Double.doubleToLongBits(other.Y))
-            return false;
-        if (id != other.id)
-            return false;
+        }  
         return true;
     }
 }
