@@ -85,6 +85,24 @@ public enum InitParam {
         }
         return getDefaultValue();
     }
+    
+    /**
+     * Get the integer value of this parameter
+     * @return the integer value of this value
+     * @see Integer#parseInt(String)
+     */
+    public int getIntValue() {
+        return Integer.parseInt(getValue());
+    }
+    
+    /**
+     * Get the boolean value of this parameter.
+     * @return true iff the string is equal to true
+     * @see Boolean#parseBoolean(String)
+     */
+    public boolean getBoolValue() {
+        return Boolean.parseBoolean(getValue());
+    }
 
     /**
      * Set the program-wide parameters.
