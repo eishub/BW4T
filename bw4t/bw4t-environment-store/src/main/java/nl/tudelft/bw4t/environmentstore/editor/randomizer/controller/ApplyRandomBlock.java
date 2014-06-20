@@ -11,7 +11,7 @@ import nl.tudelft.bw4t.map.BlockColor;
 
 /**
  * This class implements the action listener for the 
- * Apply button in the the randomize blocks frame. 
+ * Apply button in the randomize blocks frame. 
  */
 public class ApplyRandomBlock implements ActionListener{
     
