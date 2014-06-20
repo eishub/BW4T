@@ -13,6 +13,10 @@ public class EnvironmentMap {
 	public static final int DROP_ZONE_SEQUENCE_LENGTH = 12;
 
 	private ZoneModel[][] zones;
+	
+    private boolean startzone;
+	private boolean dropzone;
+	
 	/**
 	 * the target sequence.
 	 * */
@@ -174,6 +178,22 @@ public class EnvironmentMap {
 				zm.generateRandomBlocks(amount, colors);
 			}
 		}
+	}
+
+	public boolean hasStartzone() {
+		return startzone;
+	}
+
+	public void setStartzone(boolean startzone) {
+		this.startzone = startzone;
+	}
+
+	public boolean hasDropzone() {
+		return dropzone;
+	}
+
+	public void setDropzone(boolean dropzone) {
+		this.dropzone = dropzone;
 	}
 
 }
