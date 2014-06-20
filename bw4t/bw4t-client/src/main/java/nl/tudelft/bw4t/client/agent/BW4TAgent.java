@@ -1,5 +1,14 @@
 package nl.tudelft.bw4t.client.agent;
 
+import eis.eis2java.exception.TranslationException;
+import eis.eis2java.translation.Translator;
+import eis.exceptions.ActException;
+import eis.exceptions.EntityException;
+import eis.exceptions.PerceiveException;
+import eis.iilang.Action;
+import eis.iilang.Parameter;
+import eis.iilang.Percept;
+
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,14 +21,6 @@ import nl.tudelft.bw4t.client.message.MessageTranslator;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
-import eis.eis2java.exception.TranslationException;
-import eis.eis2java.translation.Translator;
-import eis.exceptions.ActException;
-import eis.exceptions.EntityException;
-import eis.exceptions.PerceiveException;
-import eis.iilang.Action;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
 
 /**
  * Java agent that can control an entity.

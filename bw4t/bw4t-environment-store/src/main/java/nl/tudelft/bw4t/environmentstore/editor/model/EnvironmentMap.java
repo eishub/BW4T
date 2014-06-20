@@ -10,7 +10,7 @@ import nl.tudelft.bw4t.map.BlockColor;
  */
 public class EnvironmentMap {
 
-	/** the max sequence length */
+    /** the max sequence length */
     public static final int DROP_ZONE_SEQUENCE_LENGTH = 12;
 
     /** contains zones on the same x and y location as the map editor */
@@ -136,7 +136,7 @@ public class EnvironmentMap {
      * @param zone
      *            the zone at the given position
      * @throws NullPointerException
-     * 			  a zone can't be null
+     *               a zone can't be null
      */
     public void setZone(int row, int col, ZoneModel zone) {
         if (zone == null) {

@@ -1,17 +1,16 @@
 package nl.tudelft.bw4t.client.gui.listeners;
 
+import eis.exceptions.ActException;
+import eis.iilang.Numeral;
+import eis.iilang.Percept;
+
 import java.awt.event.ActionEvent;
 import java.util.LinkedList;
 import java.util.List;
 
 import nl.tudelft.bw4t.client.controller.ClientController;
-import nl.tudelft.bw4t.client.environment.Launcher;
 
 import org.apache.log4j.Logger;
-
-import eis.exceptions.ActException;
-import eis.iilang.Numeral;
-import eis.iilang.Percept;
 
 /**
  * ActionListener that performs the goTo action when that command is pressed in

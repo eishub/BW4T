@@ -22,10 +22,14 @@ import nl.tudelft.bw4t.server.eis.translators.PointTranslator;
 import nl.tudelft.bw4t.server.eis.translators.ZoneTranslator;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.model.epartners.EPartner;
+import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
+import nl.tudelft.bw4t.server.model.zone.Corridor;
 import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
 import nl.tudelft.bw4t.server.util.RoomLocator;
 import nl.tudelft.bw4t.server.util.ZoneLocator;
+
+import org.omg.CORBA.Environment;
 
 import repast.simphony.context.Context;
 

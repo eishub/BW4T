@@ -9,19 +9,19 @@ import java.io.Serializable;
  */
 public class Rectangle implements Serializable {
     
-	/** 
-	 * Serialization id. 
-	 */
-	private static final long serialVersionUID = 24724175226119920L;
-	
-	/**
-	 * Initialize rectangle.
-	 */
-	private final Rectangle2D.Double rectangle = new Rectangle2D.Double();
+    /** 
+     * Serialization id. 
+     */
+    private static final long serialVersionUID = 24724175226119920L;
+    
+    /**
+     * Initialize rectangle.
+     */
+    private final Rectangle2D.Double rectangle = new Rectangle2D.Double();
 
-	/** 
-	 * Empty constructor, initialize Rectangle.
-	 */
+    /** 
+     * Empty constructor, initialize Rectangle.
+     */
     public Rectangle() {
     }
 
@@ -31,9 +31,9 @@ public class Rectangle implements Serializable {
      * @param y
      *            CENTER y
      * @param w
-     * 			Width
+     *             Width
      * @param h
-     * 			Height
+     *             Height
      */
     public Rectangle(double x, double y, double w, double h) {
         setWidth(w);
@@ -77,8 +77,8 @@ public class Rectangle implements Serializable {
 
     /**
      * @param w width
-     * 			Set width to w. 
-     * 			Moves the left side such that center remains at same place.
+     *             Set width to w. 
+     *             Moves the left side such that center remains at same place.
      */
     public void setWidth(double w) {
         double oldwidth = getWidth();
@@ -92,7 +92,7 @@ public class Rectangle implements Serializable {
 
     /**
      * @param h height
-     * 			Set height to h.
+     *             Set height to h.
      */
     public void setHeight(double h) {
         double oldheight = getHeight();

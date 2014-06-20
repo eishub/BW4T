@@ -1,5 +1,10 @@
 package nl.tudelft.bw4t.scenariogui.util;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.io.File;
@@ -15,13 +20,6 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
 
 
 public class EntityTableCellRendererTest {

@@ -8,7 +8,7 @@ import java.awt.geom.Point2D;
  */
 public class ViewEPartner {
     
-	/** Initialize size of EPartner. */
+    /** Initialize size of EPartner. */
     public static final int EPARTNER_SIZE = 1;
     
     /** Initialize color of EPartner when offline, namely yellow. */
@@ -102,7 +102,7 @@ public class ViewEPartner {
     }
     
     public int getSize() {
-    	return EPARTNER_SIZE;
+        return EPARTNER_SIZE;
     }
 
 }

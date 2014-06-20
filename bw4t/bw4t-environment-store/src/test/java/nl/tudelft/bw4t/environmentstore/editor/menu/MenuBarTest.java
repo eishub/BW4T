@@ -66,9 +66,9 @@ public class MenuBarTest {
      */
     @Before
     public void setUp() throws IOException {
-    	mapController = new MapPanelController(5, 5);
-      	
-    	envStore = spy(new EnvironmentStore(mapController));
+        mapController = new MapPanelController(5, 5);
+          
+        envStore = spy(new EnvironmentStore(mapController));
 
         filechooser = mock(JFileChooser.class);
 
@@ -130,11 +130,11 @@ public class MenuBarTest {
     
     @Test
     public void menuOptionRandomizeSequenceTest() {
-    	List<BlockColor> bc = mapController.getSequence();
-    	RandomizeSequenceFrame randomizeFrame = new RandomizeSequenceFrame("SuperFix", mapController);
-    	randomizeFrame.getRandomizeButton().doClick();
-    	randomizeFrame.getApplyButton().doClick();
-    	assertFalse(bc.equals(mapController.getSequence()));
+        List<BlockColor> bc = mapController.getSequence();
+        RandomizeSequenceFrame randomizeFrame = new RandomizeSequenceFrame("SuperFix", mapController);
+        randomizeFrame.getRandomizeButton().doClick();
+        randomizeFrame.getApplyButton().doClick();
+        assertFalse(bc.equals(mapController.getSequence()));
     }  
     
     @Test

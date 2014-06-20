@@ -3,20 +3,19 @@ package nl.tudelft.bw4t.client.environment;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
+import eis.EnvironmentListener;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
 import nl.tudelft.bw4t.client.controller.ClientController;
-import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import eis.EnvironmentListener;
 
 /**
  * This class tests the EntityNotifiers class from the Environment package in the client.

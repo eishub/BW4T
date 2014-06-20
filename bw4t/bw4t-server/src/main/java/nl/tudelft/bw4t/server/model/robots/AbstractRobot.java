@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.server.model.robots;
 
 import eis.exceptions.EntityException;
+
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collection;

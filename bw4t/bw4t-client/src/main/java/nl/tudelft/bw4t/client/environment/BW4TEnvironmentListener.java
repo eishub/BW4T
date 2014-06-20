@@ -1,24 +1,23 @@
 package nl.tudelft.bw4t.client.environment;
 
+import eis.EnvironmentListener;
+import eis.exceptions.AgentException;
+import eis.exceptions.EntityException;
+import eis.exceptions.RelationException;
+import eis.iilang.EnvironmentState;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import nl.tudelft.bw4t.client.agent.BW4TAgent;
 import nl.tudelft.bw4t.client.agent.HumanAgent;
-import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.startup.ConfigFile;
 import nl.tudelft.bw4t.client.startup.InitParam;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 
 import org.apache.log4j.Logger;
-
-import eis.EnvironmentListener;
-import eis.exceptions.AgentException;
-import eis.exceptions.EntityException;
-import eis.exceptions.RelationException;
-import eis.iilang.EnvironmentState;
 
 /**
  * Class that can be registered to BW4TRemoteEnvironment as EnvironmentListener and will launch new agents when new

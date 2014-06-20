@@ -13,36 +13,36 @@ import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeSequence
  */
 public class ApplyRandomSequence implements ActionListener {
 
-	/** The frame where the button connected to the action listener is in. */
-	private RandomizeSequenceFrame view;
+    /** The frame where the button connected to the action listener is in. */
+    private RandomizeSequenceFrame view;
 
-	/** The controller for the frame. */
-	private RandomizeSequenceController controller;
+    /** The controller for the frame. */
+    private RandomizeSequenceController controller;
 
-	/**
-	 * @param rf
-	 *            the frame the button is in
-	 * @param rc
-	 *            the controller of the frame
-	 */
-	public ApplyRandomSequence(RandomizeSequenceFrame rf,
-			RandomizeSequenceController rc) {
-		this.view = rf;
-		this.controller = rc;
-	}
+    /**
+     * @param rf
+     *            the frame the button is in
+     * @param rc
+     *            the controller of the frame
+     */
+    public ApplyRandomSequence(RandomizeSequenceFrame rf,
+            RandomizeSequenceController rc) {
+        this.view = rf;
+        this.controller = rc;
+    }
 
-	/**
-	 * When the button is clicked the generated sequence is sent to the map
-	 * panel controller, and the view is closed.
-	 */
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		MapPanelController mapController = controller.getMapController();
-		mapController.setSequence(controller.getRandomizeFromSettings()
-				.getResult());
-		UpdateableEditorInterface uei = mapController
-				.getUpdateableEditorInterface();
-		uei.update();
-		view.dispose();
-	}
+    /**
+     * When the button is clicked the generated sequence is sent to the map
+     * panel controller, and the view is closed.
+     */
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+        MapPanelController mapController = controller.getMapController();
+        mapController.setSequence(controller.getRandomizeFromSettings()
+                .getResult());
+        UpdateableEditorInterface uei = mapController
+                .getUpdateableEditorInterface();
+        uei.update();
+        view.dispose();
+    }
 }

@@ -52,8 +52,7 @@ class ChooseMapFileListener implements ActionListener {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             if (file.getName().endsWith(mapExtension)) {
                 view.getConfigurationPanel().setMapFile(file.getPath());
-            }
-            else {
+            } else {
                 ScenarioEditor.getOptionPrompt().showMessageDialog(view, "This is not a valid file.");
             }
         }

@@ -38,6 +38,7 @@ import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.EnvironmentResetException;
 import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.server.environment.Stepper;
+import nl.tudelft.bw4t.server.repast.BW4TBuilder;
 
 import org.apache.log4j.Logger;
 
