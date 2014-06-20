@@ -17,10 +17,10 @@ import nl.tudelft.bw4t.map.view.ViewEPartner;
 
 /** Responsible for building the pop-up menu when clicking on goal colors. */
 public final class MapOperations {
-	
-	/** Should never be instantiated. */
-	private MapOperations() { }
-	
+    
+    /** Should never be instantiated. */
+    private MapOperations() { }
+    
     /**
      * Used for building the pop-up menu that displays the actions
      * a user can perform when clicking on a group goal color.

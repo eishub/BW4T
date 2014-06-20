@@ -24,79 +24,79 @@ import nl.tudelft.bw4t.util.FileUtils;
  */
 public final class ExportToMAS {
 
-	private static final String TAB = "\t";
-	
-	private static final String NEWLINE = "\n";
-	
-	private static final String ENVIRONMENT = "env = \"BW4T3/BW4TClient.jar\" ."
-			+ NEWLINE;
+    private static final String TAB = "\t";
+    
+    private static final String NEWLINE = "\n";
+    
+    private static final String ENVIRONMENT = "env = \"BW4T3/BW4TClient.jar\" ."
+            + NEWLINE;
 
-	private static final String INIT = "init = [ "
-			+ "configfile = \"%s.xml\" ] ." + NEWLINE;
+    private static final String INIT = "init = [ "
+            + "configfile = \"%s.xml\" ] ." + NEWLINE;
 
-	private static String init = "";
-	
-	private static BW4TClientConfig configuration;
-	
-	private static String directory;
-	
-	private static File mas2gFile;
-	
-	private static int agentCount;
-	
-	private static int humanCount;
-	
-	private static StringBuilder launchPolicyBuilder;
-	
-	private static Map<String, String> goalFiles;
+    private static String init = "";
+    
+    private static BW4TClientConfig configuration;
+    
+    private static String directory;
+    
+    private static File mas2gFile;
+    
+    private static int agentCount;
+    
+    private static int humanCount;
+    
+    private static StringBuilder launchPolicyBuilder;
+    
+    private static Map<String, String> goalFiles;
 
-	/**
-	 * Hide the constructor
-	 */
-	private ExportToMAS() {
-	}
+    /**
+     * Hide the constructor
+     */
+    private ExportToMAS() {
+    }
 
-	/**
-	 * Generates a GOAL configuration in the specified directory from the
-	 * BW4TClientConfig given.
-	 * 
-	 * @param directory
-	 *            The directory where the configuration has to be stored.
-	 * @param configuration
-	 *            The BW4TClientConfig to be generated.
-	 */
-	public static void export(String directory, BW4TClientConfig configuration,
-			String configurationName) {
-		ExportToMAS.directory = directory;
-		ExportToMAS.configuration = configuration;
-		goalFiles = new HashMap<String, String>();
+    /**
+     * Generates a GOAL configuration in the specified directory from the
+     * BW4TClientConfig given.
+     * 
+     * @param directory
+     *            The directory where the configuration has to be stored.
+     * @param configuration
+     *            The BW4TClientConfig to be generated.
+     */
+    public static void export(String directory, BW4TClientConfig configuration,
+            String configurationName) {
+        ExportToMAS.directory = directory;
+        ExportToMAS.configuration = configuration;
+        goalFiles = new HashMap<String, String>();
 
-		init = String
-				.format(INIT, new File(directory + "/" + configurationName).getAbsolutePath());
+        init = String
+                .format(INIT, new File(directory + "/" + configurationName).getAbsolutePath());
 
-		agentCount = 0;
-		humanCount = 0;
+        agentCount = 0;
+        humanCount = 0;
 
-		try {
-			generateMASFile(configurationName);
-		} catch (IOException ex) {
-			ScenarioEditor.handleException(ex,
-					"An IO Exception has occurred. Please try again.");
-		} catch (JAXBException ex) {
-			ScenarioEditor.handleException(ex,
-					"A problem occured while attempting to export the protect. "
-							+ "Please try again.");
+        try {
+            generateMASFile(configurationName);
+        } catch (IOException ex) {
+            ScenarioEditor.handleException(ex,
+                    "An IO Exception has occurred. Please try again.");
+        } catch (JAXBException ex) {
+            ScenarioEditor.handleException(ex,
+                    "A problem occured while attempting to export the protect. "
+                            + "Please try again.");
 
-		}
-	}
+        }
+    }
 
-	/**
-	 * Generates the MAS file.
-	 * @param configurationName The name of the configuration to be created.
-	 * @throws IOException When there was an error reading/writing to the file.
-	 * @throws FileNotFoundException When the files weren't found.
-	 * @throws JAXBException When there was an error saving as XML file.
-	 */
+    /**
+     * Generates the MAS file.
+     * @param configurationName The name of the configuration to be created.
+     * @throws IOException When there was an error reading/writing to the file.
+     * @throws FileNotFoundException When the files weren't found.
+     * @throws JAXBException When there was an error saving as XML file.
+     */
     private static void generateMASFile(String configurationName)
             throws IOException, FileNotFoundException, JAXBException {
         generateHierarchy(configurationName);
@@ -108,47 +108,47 @@ public final class ExportToMAS {
         // Save the configuration again with the latest changes concerning
         // the goal files.
         configuration.setFileLocation(directory + "/" + configurationName
-        		+ ".xml");
+                + ".xml");
         configuration.toXML();
     }
 
-	/**
-	 * Generate the project hierarchy.
-	 * 
-	 * @throws IOException
-	 *             Exception raised if there are problems reading/writing to
-	 *             files
-	 */
-	private static void generateHierarchy(String configurationName)
-			throws IOException {
-		File directory = new File(ExportToMAS.directory);
-		directory.mkdir();
+    /**
+     * Generate the project hierarchy.
+     * 
+     * @throws IOException
+     *             Exception raised if there are problems reading/writing to
+     *             files
+     */
+    private static void generateHierarchy(String configurationName)
+            throws IOException {
+        File directory = new File(ExportToMAS.directory);
+        directory.mkdir();
 
-		/* Create the agents directory. */
-		File agentFolder = new File(directory.getAbsolutePath() + "/agents/");
-		agentFolder.mkdir();
+        /* Create the agents directory. */
+        File agentFolder = new File(directory.getAbsolutePath() + "/agents/");
+        agentFolder.mkdir();
 
-		/* And the mas2g file, since it will be overwritten in every case. */
-		ExportToMAS.mas2gFile = new File(directory.getAbsolutePath() + "/"
-				+ configurationName + ".mas2g");
-		mas2gFile.delete();
-		mas2gFile.createNewFile();
+        /* And the mas2g file, since it will be overwritten in every case. */
+        ExportToMAS.mas2gFile = new File(directory.getAbsolutePath() + "/"
+                + configurationName + ".mas2g");
+        mas2gFile.delete();
+        mas2gFile.createNewFile();
 
-		generateAgentHierarchy(directory);
-	}
+        generateAgentHierarchy(directory);
+    }
 
-	/**
-	 * Generate the agent file hierarchy.
-	 * @param directory The directory in which the project resides.
-	 * @throws IOException Exception raised if there are problems reading/writing
-	 * to files
-	 */
-	private static void generateAgentHierarchy(File directory)
-			throws IOException {
-		generateAgentHierarchyForBots(directory);
-		generateAgentHierarchyForEPartners(directory);
-	}
-	
+    /**
+     * Generate the agent file hierarchy.
+     * @param directory The directory in which the project resides.
+     * @throws IOException Exception raised if there are problems reading/writing
+     * to files
+     */
+    private static void generateAgentHierarchy(File directory)
+            throws IOException {
+        generateAgentHierarchyForBots(directory);
+        generateAgentHierarchyForEPartners(directory);
+    }
+    
     /**
      * Generate the agent file hierarchy for the bots.
      * @param directory The directory in which the project resides.
@@ -192,28 +192,28 @@ public final class ExportToMAS {
         for (EPartnerConfig epartner : ExportToMAS.configuration.getEpartners()) {
             String epartnerFileName = epartner.getFileName();
 
-			File goalFile = new File(epartnerFileName);
-			if (goalFile.exists()) {
-				String goalFileName = goalFile.getName();
-				File goalFileInDirectory = new File(directory.getAbsolutePath()
-						+ "/agents/" + goalFileName);
-				if (!goalFileInDirectory.exists()) {
-					FileUtils.copyFile(goalFile, goalFileInDirectory);
-				}
+            File goalFile = new File(epartnerFileName);
+            if (goalFile.exists()) {
+                String goalFileName = goalFile.getName();
+                File goalFileInDirectory = new File(directory.getAbsolutePath()
+                        + "/agents/" + goalFileName);
+                if (!goalFileInDirectory.exists()) {
+                    FileUtils.copyFile(goalFile, goalFileInDirectory);
+                }
 
-				epartner.setFileName(goalFileName);
-			}
-		}
+                epartner.setFileName(goalFileName);
+            }
+        }
     }
 
-	/**
-	 * Generate the launch policy.
-	 */
-	private static void buildLaunchPolicy() {
-		launchPolicyBuilder = new StringBuilder();
-		buildBotLaunchPolicy();
-		buildEPartnerLaunchPolicy();
-	}
+    /**
+     * Generate the launch policy.
+     */
+    private static void buildLaunchPolicy() {
+        launchPolicyBuilder = new StringBuilder();
+        buildBotLaunchPolicy();
+        buildEPartnerLaunchPolicy();
+    }
 
     /**
      * Generates the launch policy for the bots.
@@ -221,23 +221,23 @@ public final class ExportToMAS {
     private static void buildBotLaunchPolicy() {
         for (BotConfig bot : configuration.getBots()) {
             boolean isHuman = bot.getBotController() == EntityType.HUMAN;
-			String type = isHuman ? "human" : "bot";
-			if (!isHuman) {
-				agentCount += bot.getBotAmount();
-			} else {
-				humanCount += bot.getBotAmount();
-			}
+            String type = isHuman ? "human" : "bot";
+            if (!isHuman) {
+                agentCount += bot.getBotAmount();
+            } else {
+                humanCount += bot.getBotAmount();
+            }
 
-			launchPolicyBuilder.append(TAB);
-			launchPolicyBuilder.append(String.format("when [type=%s,max=%d]@env do launch %s: %s .",
-			        type,
-					new Integer(bot.getBotAmount()),
-					bot.getBotName().toLowerCase().replace(" ", "_"),
-					bot.getReferenceName()));
-			launchPolicyBuilder.append(NEWLINE);
-			/* Remove the last 5 characters since that is the extension. */
-			goalFiles.put(bot.getFileName(), bot.getReferenceName());
-		}
+            launchPolicyBuilder.append(TAB);
+            launchPolicyBuilder.append(String.format("when [type=%s,max=%d]@env do launch %s: %s .",
+                    type,
+                    new Integer(bot.getBotAmount()),
+                    bot.getBotName().toLowerCase().replace(" ", "_"),
+                    bot.getReferenceName()));
+            launchPolicyBuilder.append(NEWLINE);
+            /* Remove the last 5 characters since that is the extension. */
+            goalFiles.put(bot.getFileName(), bot.getReferenceName());
+        }
     }
     
     /**
@@ -259,75 +259,75 @@ public final class ExportToMAS {
         }
     }
 
-	/**
-	 * Write the environment block to the mas2g file.
-	 * 
-	 * @throws IOException
-	 *             Exception raised if there are problems reading/writing to
-	 *             files
-	 */
-	private static void generateEnvironmentBlock() throws IOException {
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(
-				ExportToMAS.mas2gFile, true)));
+    /**
+     * Write the environment block to the mas2g file.
+     * 
+     * @throws IOException
+     *             Exception raised if there are problems reading/writing to
+     *             files
+     */
+    private static void generateEnvironmentBlock() throws IOException {
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(
+                ExportToMAS.mas2gFile, true)));
 
-		out.println("environment{");
+        out.println("environment{");
 
-		out.print(TAB);
-		out.print(ENVIRONMENT);
+        out.print(TAB);
+        out.print(ENVIRONMENT);
 
-		String initField = String.format(init, configuration.getClientIp(),
-				configuration.getClientPort(), configuration.getServerIp(),
-				configuration.getServerPort(), agentCount, humanCount,
-				configuration.isLaunchGui() ? "true" : "false");
+        String initField = String.format(init, configuration.getClientIp(),
+                configuration.getClientPort(), configuration.getServerIp(),
+                configuration.getServerPort(), agentCount, humanCount,
+                configuration.isLaunchGui() ? "true" : "false");
 
-		out.print(TAB);
-		out.print(initField);
+        out.print(TAB);
+        out.print(initField);
 
-		out.println("}");
+        out.println("}");
 
-		out.close();
-	}
+        out.close();
+    }
 
-	/**
-	 * Write the agent files block to the mas2g.
-	 * 
-	 * @throws IOException
-	 *             Exception raised if there are problems reading/writing to
-	 *             files
-	 */
-	private static void generateAgentBlock() throws IOException {
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(
-				ExportToMAS.mas2gFile, true)));
+    /**
+     * Write the agent files block to the mas2g.
+     * 
+     * @throws IOException
+     *             Exception raised if there are problems reading/writing to
+     *             files
+     */
+    private static void generateAgentBlock() throws IOException {
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(
+                ExportToMAS.mas2gFile, true)));
 
-		out.println();
+        out.println();
 
-		out.println("agentfiles{");
-		for (Map.Entry<String, String> item : goalFiles.entrySet()) {
-			String entry = TAB + "\"agents/%s\" [name = %s] ." + NEWLINE;
-			out.append(String.format(entry, item.getKey(), item.getValue()));
-		}
-		out.println("}");
+        out.println("agentfiles{");
+        for (Map.Entry<String, String> item : goalFiles.entrySet()) {
+            String entry = TAB + "\"agents/%s\" [name = %s] ." + NEWLINE;
+            out.append(String.format(entry, item.getKey(), item.getValue()));
+        }
+        out.println("}");
 
-		out.close();
-	}
+        out.close();
+    }
 
-	/**
-	 * Write the launch policy to the mas2g.
-	 * 
-	 * @throws IOException
-	 *             Exception raised if there are problems reading/writing to
-	 *             files
-	 */
-	private static void generateLaunchPolicy() throws IOException {
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(
-				ExportToMAS.mas2gFile, true)));
+    /**
+     * Write the launch policy to the mas2g.
+     * 
+     * @throws IOException
+     *             Exception raised if there are problems reading/writing to
+     *             files
+     */
+    private static void generateLaunchPolicy() throws IOException {
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(
+                ExportToMAS.mas2gFile, true)));
 
-		out.println();
+        out.println();
 
-		out.println("launchpolicy{");
-		out.print(launchPolicyBuilder);
-		out.println("}");
+        out.println("launchpolicy{");
+        out.print(launchPolicyBuilder);
+        out.println("}");
 
-		out.close();
-	}
+        out.close();
+    }
 }

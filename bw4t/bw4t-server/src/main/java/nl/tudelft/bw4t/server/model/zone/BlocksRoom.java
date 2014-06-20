@@ -29,6 +29,6 @@ public class BlocksRoom extends Room {
     }
     
     private static void setCount(){
-    	count++; 
+        count++; 
     }
 }

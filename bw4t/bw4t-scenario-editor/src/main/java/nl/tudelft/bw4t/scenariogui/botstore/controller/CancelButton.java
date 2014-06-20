@@ -26,8 +26,8 @@ public class CancelButton implements ActionListener {
      * @param ae the action event causing the method to be invoked.
      */
     public void actionPerformed(ActionEvent ae) {
-    	view.getBotController().getBotConfig().setBotSpeed(100);
-    	view.getBotController().getBotConfig().setBotSize(2);
-    	view.getBotEditor().dispose();
+        view.getBotController().getBotConfig().setBotSpeed(100);
+        view.getBotController().getBotConfig().setBotSize(2);
+        view.getBotEditor().dispose();
     }
 }

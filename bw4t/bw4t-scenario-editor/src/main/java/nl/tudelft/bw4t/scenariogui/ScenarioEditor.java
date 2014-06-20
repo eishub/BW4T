@@ -18,7 +18,7 @@ import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
 
 /**
  * The ScenarioEditor class serves as the Frame for the MenuBar and MainPanel.
- * <p>
+ * 
  * @version     0.1                
  * @since       12-05-2014        
  */
@@ -81,7 +81,7 @@ public class ScenarioEditor extends JFrame {
      * @param model              The BW4TClientConfig object.
      */
     public ScenarioEditor(final ConfigurationPanel configurationPanel, 
-    		final EntityPanel entityPanel, BW4TClientConfig model) {
+            final EntityPanel entityPanel, BW4TClientConfig model) {
         this();
         mPanel.setConfigurationPanel(configurationPanel);
         mPanel.setEntityPanel(entityPanel);

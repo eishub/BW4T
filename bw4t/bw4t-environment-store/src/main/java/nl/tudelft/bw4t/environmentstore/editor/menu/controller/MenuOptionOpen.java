@@ -14,33 +14,33 @@ import nl.tudelft.bw4t.map.MapFormatException;
 
 public class MenuOptionOpen extends AbstractMenuOption {
 
-	public MenuOptionOpen(MenuBar newView, EnvironmentStoreController controller) {
-		super(newView, controller);
-	}
+    public MenuOptionOpen(MenuBar newView, EnvironmentStoreController controller) {
+        super(newView, controller);
+    }
 
-	/**
-	 * Gets called when the menu item save as is pressed.
-	 * 
-	 * @param e
-	 *            The action event.
-	 */
-	public void actionPerformed(final ActionEvent e) {
-		// Open configuration file
-		JFileChooser fileChooser = getCurrentFileChooser();
-		fileChooser.setFileFilter(FileFilters.mapFilter());
+    /**
+     * Gets called when the menu item save as is pressed.
+     * 
+     * @param e
+     *            The action event.
+     */
+    public void actionPerformed(final ActionEvent e) {
+        // Open configuration file
+        JFileChooser fileChooser = getCurrentFileChooser();
+        fileChooser.setFileFilter(FileFilters.mapFilter());
 
-		EnvironmentStore current = getEnvironmentStoreController()
-				.getMainView();
+        EnvironmentStore current = getEnvironmentStoreController()
+                .getMainView();
 
-		if (fileChooser.showOpenDialog(current) == JFileChooser.APPROVE_OPTION) {
-			File file = fileChooser.getSelectedFile();
-			try {
-	            MapPanelController mc = super.getEnvironmentStoreController().getMapController();
-	            
-		    	mc.setModel(MapConverter.loadMap(file));
-			} catch (MapFormatException e1) {
-				EnvironmentStore.showDialog("File cannot be read.");
-			}
-		}
-	}
+        if (fileChooser.showOpenDialog(current) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            try {
+                MapPanelController mc = super.getEnvironmentStoreController().getMapController();
+                
+                mc.setModel(MapConverter.loadMap(file));
+            } catch (MapFormatException e1) {
+                EnvironmentStore.showDialog("File cannot be read.");
+            }
+        }
+    }
 }

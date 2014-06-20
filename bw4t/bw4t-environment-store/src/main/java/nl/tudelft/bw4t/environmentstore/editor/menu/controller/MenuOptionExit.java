@@ -7,18 +7,18 @@ import nl.tudelft.bw4t.environmentstore.main.controller.EnvironmentStoreControll
 
 public class MenuOptionExit extends AbstractMenuOption {
 
-	public MenuOptionExit(MenuBar newView,
-			EnvironmentStoreController controller) {
-		super(newView, controller);
-	}
-	
+    public MenuOptionExit(MenuBar newView,
+            EnvironmentStoreController controller) {
+        super(newView, controller);
+    }
+    
     /**
      * Gets called when the menu item save as is pressed.
      *
      * @param e The action event.
      */
     public void actionPerformed(final ActionEvent e) {
-    	exitEditor();
+        exitEditor();
     }
 
 }
