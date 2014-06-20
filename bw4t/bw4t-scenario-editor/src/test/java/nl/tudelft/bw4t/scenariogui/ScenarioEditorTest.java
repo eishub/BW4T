@@ -27,10 +27,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
-/**
- * Created on 15-05-2014.
- */
 public class ScenarioEditorTest {
 
     private ScenarioEditor editor;
@@ -41,10 +37,6 @@ public class ScenarioEditorTest {
 
     private static final String FILE_OPEN_PATH = BASE + "nonexistent.xml";
     
-    /**
-     * Setup the testing environment by creating the scenario editor and
-     * assigning the editor attribute to a spy object of the ScenarioEditor.
-     */
     @Before
     public void setUp() {
         editor = spy(new ScenarioEditor());
@@ -59,17 +51,11 @@ public class ScenarioEditorTest {
         menuOption.setCurrentFileChooser(filechooser);
     }
 
-    /**
-     * Dispose of the editor.
-     */
     @After
     public void breakItDown() {
         editor.dispose();
     }
 
-    /**
-     * Tests whether the active pane gets set correctly.
-     */
     @Test
     public final void checkActivePane() {
         editor = new ScenarioEditor();
@@ -79,13 +65,6 @@ public class ScenarioEditorTest {
         assertEquals(panel, editor.getActivePane());
     }
 
-    /**
-     * Tests whether the JAXBException is handled correctly
-     *
-     * @throws FileNotFoundException File not found exception
-     * @throws JAXBException JAXBException, also called in some cases when a file is not found
-     * by JAXB itself.
-     */
     @Test
     public void testJAXBException() throws FileNotFoundException, JAXBException {
         YesMockOptionPrompt yesMockOption = spy(new YesMockOptionPrompt());
@@ -103,17 +82,11 @@ public class ScenarioEditorTest {
                 .showMessageDialog((Component) any(), anyString());
     }
 
-    /**
-     * Test the default window name.
-     */
     @Test
     public void testWindowNameDefault() {
         assertEquals("Scenario Editor - Untitled", editor.getTitle());
     }
 
-    /**
-     * Test if the window name changes work.
-     */
     @Test
     public void testWindowNameChanged() {
         String filename = "Caramba.xml";

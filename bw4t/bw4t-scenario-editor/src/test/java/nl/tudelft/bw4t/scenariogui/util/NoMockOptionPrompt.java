@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 /**
  * The OptionPrompt that always returns no, used when mocking the
  * objects during tests, to prevent the system from hanging due
- * to having to press a button on the prompt.    
+ * to having to press a button on the prompt.
  */
 public class NoMockOptionPrompt implements OptionPrompt {
 
@@ -28,7 +28,7 @@ public class NoMockOptionPrompt implements OptionPrompt {
      * This class will not show any message dialog.
      *
      * @param parentComponent The <code>java.awt.Component</code> that will be used to align the box.
-     * @param message   The Message to be displayed
+     * @param message         The Message to be displayed
      */
     public void showMessageDialog(Component parentComponent, Object message) {
         return;

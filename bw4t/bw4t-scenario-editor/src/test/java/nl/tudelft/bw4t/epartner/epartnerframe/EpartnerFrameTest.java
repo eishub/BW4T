@@ -1,8 +1,5 @@
 package nl.tudelft.bw4t.epartner.epartnerframe;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.spy;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
@@ -11,14 +8,16 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 import nl.tudelft.bw4t.scenariogui.epartner.controller.EpartnerController;
 import nl.tudelft.bw4t.scenariogui.epartner.gui.EpartnerFrame;
-
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.spy;
+
 public class EpartnerFrameTest {
-    
+
     private EpartnerFrame frame;
     private EpartnerFrame spyframe;
     private EpartnerController controller;
@@ -35,13 +34,13 @@ public class EpartnerFrameTest {
         frame = new EpartnerFrame(controller);
         spyframe = spy(frame);
     }
-    
+
     @After
     public final void dispose() {
         frame.dispose();
     }
-    
-    @Ignore
+
+    @Test
     public final void testUpdateConfig() {
         spyframe.getGPSCheckbox().setSelected(true);
         spyframe.getForgetMeNotCheckbox().setSelected(true);
@@ -49,15 +48,15 @@ public class EpartnerFrameTest {
         assertTrue(config.isGps());
         assertTrue(config.isForgetMeNot());
     }
-    
-    @Ignore
+
+    @Test
     public final void testResetButton() {
         spyframe.getResetButton().doClick();
         assertEquals(config.isGps(), spyframe.getGPSCheckbox().isSelected());
         assertEquals(config.isForgetMeNot(), spyframe.getForgetMeNotCheckbox().isSelected());
     }
-    
-    @Ignore
+
+    @Test
     public final void testApplyButton() {
         spyframe.getGPSCheckbox().setSelected(false);
         spyframe.getForgetMeNotCheckbox().setSelected(true);

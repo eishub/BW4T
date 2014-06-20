@@ -8,10 +8,7 @@ import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
- * Handles the event to create a new E-partner.
- * 
- * @version 0.1
- * @since 12-05-2014
+ * Handles the event to create a new e-partner.
  */
 class AddNewEPartner implements ActionListener {
 
@@ -22,7 +19,7 @@ class AddNewEPartner implements ActionListener {
     private int eCount;
 
     /**
-     * Create an AddNewEpartner event handler.
+     * Create an AddNewEPartner event handler.
      * 
      * @param newView
      *            The parent view.
@@ -37,7 +34,7 @@ class AddNewEPartner implements ActionListener {
     /**
      * Executes action that needs to happen when the "New E-partner" button is
      * pressed. Gives default name of "E-partner &lt;n&gt;" where &lt;n&gt; is
-     * the n'th e-Parnter created.
+     * the n'th e-partner created.
      * 
      * @param ae
      *            The action
