@@ -41,7 +41,7 @@ import org.apache.log4j.Logger;
 /**
  * A remote BW4TEnvironment that delegates all actions towards the central BW4TEnvironment, through RMI. This is the
  * "Client", the connector for goal. This object lives on the client, and is a singleton (so one per JVM).
- * <p>
+ * 
  * You can launch a stand-alone BW4TRemoteEnvironment (via {@link #main}. Typical args are: <code>
  *  -clientip localhost -serverip localhost -clientport 2000
  * -serverport 8000 -launchgui true -map
@@ -60,7 +60,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     private boolean connectedToGoal = false;
     /**
      * This is a list of locally registered agents.
-     * <p/>
+     * 
      * Only locally registered agents can act and be associated with entities.
      */
     private final List<String> localAgents = new LinkedList<String>();

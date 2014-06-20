@@ -30,7 +30,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(MockitoJUnitRunner.class)
 
 public class HandicapTest {
-	
+    
     /**
      * space Mock
      */
@@ -107,10 +107,10 @@ public class HandicapTest {
      */
     @Test
     public void testHumanHandicap() {
-    	IRobot r = new Human(new NavigatingRobot("", space, grid, context, true, 200));
-    	
-    	assertTrue(r.getSuperParent().getHandicapsList().contains("Human"));
-    	assertTrue(r.getEPartner() == null);
+        IRobot r = new Human(new NavigatingRobot("", space, grid, context, true, 200));
+        
+        assertTrue(r.getSuperParent().getHandicapsList().contains("Human"));
+        assertTrue(r.getEPartner() == null);
     }
     
     /**
@@ -119,11 +119,11 @@ public class HandicapTest {
      */
     @Test
     public void testSizeOverloadHandicap() {
-    	IRobot r = new SizeOverloadHandicap(new NavigatingRobot("", space, grid, context, true, 1), 5);
-    	
+        IRobot r = new SizeOverloadHandicap(new NavigatingRobot("", space, grid, context, true, 1), 5);
+        
         assertTrue(r.getHandicapsList().contains("SizeOverload"));
         
-    	assertTrue(r.getSize() == 5);
+        assertTrue(r.getSize() == 5);
     }
     
     /**
@@ -136,10 +136,10 @@ public class HandicapTest {
     @Test
     public void testAllHandicaps() {
         IRobot r = 
-        		new SizeOverloadHandicap(
-        		new ColorBlindHandicap(
-        		new GripperHandicap(
-        	    new NavigatingRobot("", space, grid, context, true, 1))), 2);
+                new SizeOverloadHandicap(
+                new ColorBlindHandicap(
+                new GripperHandicap(
+                new NavigatingRobot("", space, grid, context, true, 1))), 2);
         
         assertTrue(r.getHandicapsList().size() == 3);
  
@@ -156,10 +156,10 @@ public class HandicapTest {
     @Test
     public void testAllHandicapStructure() {
         IRobot r = 
-        		new SizeOverloadHandicap(
-        		new ColorBlindHandicap(
-        		new GripperHandicap(
-        	    new NavigatingRobot("", space, grid, context, true, 1))), 3);
+                new SizeOverloadHandicap(
+                new ColorBlindHandicap(
+                new GripperHandicap(
+                new NavigatingRobot("", space, grid, context, true, 1))), 3);
         
         assertTrue(r instanceof IRobot);
         assertTrue(r instanceof AbstractRobotDecorator);
@@ -171,9 +171,9 @@ public class HandicapTest {
      */
     @Test
     public void testDecoratorGetName() {
-    	IRobot r = new SizeOverloadHandicap(new NavigatingRobot("botname", space, grid, context, true, 1), 5);
-    	
-    	assertTrue(r.getName().equals("botname"));
+        IRobot r = new SizeOverloadHandicap(new NavigatingRobot("botname", space, grid, context, true, 1), 5);
+        
+        assertTrue(r.getName().equals("botname"));
     }
     
     
@@ -183,13 +183,13 @@ public class HandicapTest {
      */
     @Test
     public void testDecoratorPickUp() {
-    	IRobot r = new SizeOverloadHandicap(new NavigatingRobot("", space, grid, context, true, 1), 5);
-    	r.pickUp(block);
-    	
-    	ArrayList<Block> blockList = new ArrayList<Block>();
-    	blockList.add(block);
-    	
-    	assertTrue(blockList.equals(r.isHolding()));
+        IRobot r = new SizeOverloadHandicap(new NavigatingRobot("", space, grid, context, true, 1), 5);
+        r.pickUp(block);
+        
+        ArrayList<Block> blockList = new ArrayList<Block>();
+        blockList.add(block);
+        
+        assertTrue(blockList.equals(r.isHolding()));
     }
     
 

@@ -8,15 +8,15 @@ import nl.tudelft.bw4t.environmentstore.editor.controller.UpdateableEditorInterf
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeSequenceFrame;
 
 public class ApplyRandomSequence implements ActionListener{
-	
-	private RandomizeSequenceFrame view;
-	
-	private RandomizeSequenceController controller;
-	
-	public ApplyRandomSequence(RandomizeSequenceFrame rf, RandomizeSequenceController rc) {
-		this.view = rf;
-		this.controller = rc;
-	}
+    
+    private RandomizeSequenceFrame view;
+    
+    private RandomizeSequenceController controller;
+    
+    public ApplyRandomSequence(RandomizeSequenceFrame rf, RandomizeSequenceController rc) {
+        this.view = rf;
+        this.controller = rc;
+    }
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {

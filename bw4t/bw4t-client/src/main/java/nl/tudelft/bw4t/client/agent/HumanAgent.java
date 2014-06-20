@@ -20,13 +20,13 @@ public class HumanAgent extends BW4TAgent {
     List<String> epartnerList = new ArrayList<String>();
 
     /**
-	 * Create a new human agent that should be linked to a BW4TRenderer
-	 * 
-	 * @param agentId
-	 *            , the id of this agent
-	 * @param env
-	 *            , the remote environment to which the human agent should connect.
-	 */
+     * Create a new human agent that should be linked to a BW4TRenderer
+     * 
+     * @param agentId
+     *            , the id of this agent
+     * @param env
+     *            , the remote environment to which the human agent should connect.
+     */
     public HumanAgent(String agentId, RemoteEnvironment env) {
         super(agentId, env);
     }
@@ -63,16 +63,5 @@ public class HumanAgent extends BW4TAgent {
     
     public List<BW4TAgent> getEPartners(BW4TClientGUI gui) {
         return getAgentsWithType("epartner");
-//        List<String> agents = gui.environment.getAgents();
-//        for (int i = 0; i < agents.size(); i ++) {
-//            try {
-//                if (gui.environment.getType(agents.get(i)).equals("epartner")) {
-//                    epartnerList.add(agents.get(i));
-//                }
-//            } catch (EntityException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return epartnerList;
     }
 }

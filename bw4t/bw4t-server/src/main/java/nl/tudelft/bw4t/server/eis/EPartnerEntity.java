@@ -35,7 +35,7 @@ import eis.iilang.Parameter;
 
 public class EPartnerEntity implements EntityInterface {
 
-	static {
+    static {
         // Register our translators.
         Translator translator = Translator.getInstance();
         translator.registerJava2ParameterTranslator(new BlockWithColorTranslator());
@@ -52,7 +52,7 @@ public class EPartnerEntity implements EntityInterface {
      */
     private static final Logger LOGGER = Logger.getLogger(RobotEntity.class);
 
-	private final EPartner ourEPartner;
+    private final EPartner ourEPartner;
     private final Context<Object> context;
 
     /**

@@ -41,7 +41,7 @@ public class BW4TBuilder implements ContextBuilder<Object> {
     public Context<Object> build(Context<Object> context) {
         context.setId(CONTEXT_ID);
         try {
-        	Launcher.getInstance().getEntityFactory().setContext(context);
+            Launcher.getInstance().getEntityFactory().setContext(context);
             MapLoader.loadMap(BW4TEnvironment.getInstance().getMapLocation(), context);
             /*
              * we call setContext() only after context has been prepared, because we need complete context for the

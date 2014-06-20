@@ -22,7 +22,7 @@ import repast.simphony.space.grid.Grid;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EPartnerTest {
-	
+    
     @Mock private ContinuousSpace<Object> space;
     @Mock private Grid<Object> grid;
     @Mock private Context<Object> context;

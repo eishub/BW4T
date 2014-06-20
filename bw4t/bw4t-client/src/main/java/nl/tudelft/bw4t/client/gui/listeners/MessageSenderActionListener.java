@@ -22,7 +22,7 @@ import org.apache.log4j.Logger;
  * ActionListener that sends a message when the connected menu item is pressed.
  */
 public class MessageSenderActionListener extends AbstractClientActionListener {
-	/** Message to send when this listener is fired. */
+    /** Message to send when this listener is fired. */
     private final BW4TMessage message;
 
     /** Logger to report error messages to. */

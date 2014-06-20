@@ -11,7 +11,7 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
  * Handles the event to choose a map file.
- * <p>
+ * 
  * @version     0.1                
  * @since       12-05-2014        
  */
@@ -30,7 +30,7 @@ class ChooseMapFileListener implements ActionListener {
 
     /**
      * Listens to the map file chooser and sets a map file
-     * <p>
+     * 
      * Actionhandler that listens to the map file chooser. 
      * It creates a filter for MAP files in the file dialog and makes sure only MAP files are accepted and set.
      *
