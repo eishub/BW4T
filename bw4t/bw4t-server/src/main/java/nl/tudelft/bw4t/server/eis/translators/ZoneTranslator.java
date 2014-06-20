@@ -1,15 +1,16 @@
 package nl.tudelft.bw4t.server.eis.translators;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import nl.tudelft.bw4t.server.model.zone.Zone;
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Java2Parameter;
 import eis.iilang.Identifier;
 import eis.iilang.Numeral;
 import eis.iilang.Parameter;
 import eis.iilang.ParameterList;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import nl.tudelft.bw4t.server.model.zone.Zone;
 
 /**
  * Translates {@link Zone} into a list of {@link Parameter} specifying the navpoint id, name, location and a list of

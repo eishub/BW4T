@@ -92,8 +92,9 @@ public abstract class AbstractMenuOption implements ActionListener {
 
             if (saveAs || !view.hasLastFileLocation()) {
                 path = getPathToSaveFromUser();
-                if (path == null)
+                if (path == null) {
                     return;
+                }
             }
             saveConfigAsXMLFile(path);
         }

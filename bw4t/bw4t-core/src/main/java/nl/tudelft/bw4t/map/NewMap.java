@@ -16,16 +16,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class NewMap implements Serializable {
 
-	/** Serialization id. */
-	private static final long serialVersionUID = -1346330091943903326L;
-	
-	/** 
-	 * Boolean, true when there is one Bot per Corridor Zone
-	 *  default false 
-	 */
-	private Boolean oneBotPerCorridorZone = false;
+    /** Serialization id. */
+    private static final long serialVersionUID = -1346330091943903326L;
+    
+    /** 
+     * Boolean, true when there is one Bot per Corridor Zone
+     *  default false 
+     */
+    private Boolean oneBotPerCorridorZone = false;
    
-	/**
+    /**
      * The number of random colored blocks to be added to the map (not to the
      * sequence)
      */
@@ -176,7 +176,7 @@ public class NewMap implements Serializable {
 
     /**
      * @param randomSequence 
-     * 			Number of blocks to be added to the sequence AND to the map.
+     *             Number of blocks to be added to the sequence AND to the map.
      */
     public void setRandomSequence(Integer randomSequence) {
         this.randomSequence = randomSequence;

@@ -1,17 +1,18 @@
 package nl.tudelft.bw4t.environmentstore.editor.controller;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import nl.tudelft.bw4t.environmentstore.editor.model.EnvironmentMap;
+import nl.tudelft.bw4t.environmentstore.editor.model.ZoneModel;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
-import nl.tudelft.bw4t.environmentstore.editor.model.EnvironmentMap;
-import nl.tudelft.bw4t.environmentstore.editor.model.ZoneModel;
 
 import org.junit.BeforeClass;
 import org.junit.Test;

@@ -11,7 +11,7 @@ import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeBlockFra
  */
 public class CancelRandomBlocks implements ActionListener{
     
-	/** The frame in question. */
+    /** The frame in question. */
     private RandomizeBlockFrame view;
     
     /**

@@ -1,12 +1,13 @@
 package nl.tudelft.bw4t.client.agent;
 
+import eis.exceptions.ActException;
+import eis.iilang.Action;
+
 import java.rmi.RemoteException;
 import java.util.List;
 
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
-import eis.exceptions.ActException;
-import eis.iilang.Action;
 
 /**
  * Class that represents an agent that is controlled via the BW4TRenderer

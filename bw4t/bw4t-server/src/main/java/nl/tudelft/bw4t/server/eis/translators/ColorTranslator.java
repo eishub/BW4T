@@ -1,10 +1,11 @@
 package nl.tudelft.bw4t.server.eis.translators;
 
-import nl.tudelft.bw4t.map.BlockColor;
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Java2Parameter;
 import eis.iilang.Identifier;
 import eis.iilang.Parameter;
+
+import nl.tudelft.bw4t.map.BlockColor;
 
 /**
  * Translates a pure {@link BlockColor} to EIS

@@ -31,7 +31,7 @@ import nl.tudelft.bw4t.map.renderer.MapRenderer;
 
 public abstract class AbstractMenuOption implements ActionListener {
 
-	/** the menu the option is on */
+    /** the menu the option is on */
     private MenuBar view;
     
     /** the environment controller */

@@ -15,7 +15,7 @@ import nl.tudelft.bw4t.map.BlockColor;
  */
 public class ApplyRandomBlock implements ActionListener{
     
-	/** The frame in question. */
+    /** The frame in question. */
     private RandomizeBlockFrame view;
     
     /** The controller for this frame. */
@@ -65,8 +65,7 @@ public class ApplyRandomBlock implements ActionListener{
         try {
             controller.getMapController().randomizeColorsInRooms(input, amount);
             view.dispose();
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(view, "Warning: Choose atleast 1 color");
         }
     }

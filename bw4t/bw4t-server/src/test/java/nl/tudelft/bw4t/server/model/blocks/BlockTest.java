@@ -1,25 +1,27 @@
 package nl.tudelft.bw4t.server.model.blocks;
 
-import static org.mockito.Mockito.*;
-
-import java.awt.Color;
-
-import repast.simphony.context.Context;
-import repast.simphony.space.continuous.ContinuousSpace;
-import repast.simphony.context.SmallDefaultContext;
-import repast.simphony.space.continuous.DefaultContinuousSpace;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 import nl.tudelft.bw4t.map.BlockColor;
-import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
-import repast.simphony.space.continuous.NdPoint;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import repast.simphony.space.grid.Grid;
 
-import static org.junit.Assert.*;
+import repast.simphony.context.Context;
+import repast.simphony.space.continuous.ContinuousSpace;
+import repast.simphony.space.continuous.NdPoint;
+import repast.simphony.space.grid.Grid;
 
 /**
  * The class <code>BlockTest</code> contains tests for the class <code>{@link Block}</code>.

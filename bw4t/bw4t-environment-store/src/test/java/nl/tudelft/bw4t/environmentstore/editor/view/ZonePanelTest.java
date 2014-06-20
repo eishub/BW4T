@@ -1,6 +1,5 @@
 package nl.tudelft.bw4t.environmentstore.editor.view;
 import static org.junit.Assert.assertTrue;
-
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.controller.ZoneController;
 import nl.tudelft.bw4t.environmentstore.editor.model.ZoneModel;
