@@ -5,12 +5,19 @@ import org.apache.log4j.Level;
 public class BotLog extends Level {
     
     /**
+     * String is used 3 times
+     */
+    private static String botLog = "BOTLOG";
+    
+    /**
      * Value of BotLog level. This value is bigger than FATAL,
      * to make sure this is the only level that will log to the file.
      */
     public static final int BOTLOG_INT = FATAL_INT + 10;
     
-    public static final Level BOTLOG = new BotLog(BOTLOG_INT, "BOTLOG", 10);
+    public static final Level BOTLOG = new BotLog(BOTLOG_INT, botLog, 10);
+    
+ 
     
     /**
      * Constructor
@@ -26,7 +33,7 @@ public class BotLog extends Level {
      * it Level#DEBUG as the defaultLevel.
      */
     public static Level toLevel(String logArgument) {
-        if (logArgument != null && logArgument.toUpperCase().equals("BOTLOG")) {
+        if (logArgument != null && logArgument.toUpperCase().equals(botLog)) {
             return BOTLOG;
         }
         return (Level) toLevel(logArgument);
@@ -65,7 +72,7 @@ public class BotLog extends Level {
      * 
      */
     public static Level toLevel(String logArgument, Level defaultLevel) {
-        if (logArgument != null && logArgument.toUpperCase().equals("BOTLOG")) {
+        if (logArgument != null && logArgument.toUpperCase().equals(botLog)) {
             return BOTLOG;
         }
         return Level.toLevel(logArgument, defaultLevel);

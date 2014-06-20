@@ -331,6 +331,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
      * @param action
      *            the action that should be performed
      * @return the percept received after performing the action
+     * @throws ActException 
      */
     public Percept performClientAction(String entity, Action action) throws ActException {
         Long time = System.currentTimeMillis();
@@ -399,9 +400,13 @@ public class BW4TEnvironment extends AbstractEnvironment {
         return collisionEnabled;
     }
 
-    public final boolean isDrawPathsEnabled() { return drawPathsEnabled; }
+    public final boolean isDrawPathsEnabled() {
+        return drawPathsEnabled; 
+    }
 
-    public void setDrawPathsEnabled(boolean state) { drawPathsEnabled = state; }
+    public void setDrawPathsEnabled(boolean state) { 
+        drawPathsEnabled = state; 
+    }
 
     public double getTps() {
         if (stepper == null) {
@@ -510,7 +515,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
     public void freeEntity(String entity) throws RelationException, EntityException {
         super.freeEntity(entity);
         this.deleteEntity(entity);
-        // this.registerEntity(entity, entity);
     }
 
     @Override
@@ -605,7 +609,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
                 c.setBotName(String.format(ENTITY_NAME_FORMAT, name, created + skip + 1));
                 try {
                     if (this.getEntities().contains(c.getBotName())) {
-                        if (this.getAssociatedAgents(c.getBotName()).size() != 0) {
+                        if (!this.getAssociatedAgents(c.getBotName()).isEmpty()) {
                             skip++;
                             continue;
                         }

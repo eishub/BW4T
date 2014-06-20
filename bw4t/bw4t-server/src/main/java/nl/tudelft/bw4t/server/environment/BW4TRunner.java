@@ -13,11 +13,8 @@ import repast.simphony.engine.environment.DefaultRunEnvironmentBuilder;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.environment.RunEnvironmentBuilder;
 import repast.simphony.engine.environment.RunState;
-import repast.simphony.engine.environment.Runner;
 import repast.simphony.engine.schedule.ISchedule;
 import repast.simphony.engine.schedule.Schedule;
-import repast.simphony.parameter.Parameters;
-import repast.simphony.parameter.Schema;
 import repast.simphony.parameter.SweeperProducer;
 import repast.simphony.scenario.ScenarioLoadException;
 
@@ -40,13 +37,18 @@ public class BW4TRunner extends AbstractRunner {
     protected Object monitor = new Object();
     protected SweeperProducer producer;
     private ISchedule schedule;
-
+    
     public BW4TRunner() {
         runEnvironmentBuilder = new DefaultRunEnvironmentBuilder(this, true);
         bw4tController = new DefaultController(runEnvironmentBuilder);
         bw4tController.setScheduleRunner(this);
     }
 
+    /**
+     *  Loads a scenario
+     * @param scenarioDir 
+     * @throws ScenarioLoadException 
+     */
     public void load(File scenarioDir) throws ScenarioLoadException {
         if (scenarioDir.exists()) {
             BatchScenarioLoader loader = new BatchScenarioLoader(scenarioDir);
