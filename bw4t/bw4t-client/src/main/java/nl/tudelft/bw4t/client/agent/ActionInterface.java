@@ -16,6 +16,12 @@ public interface ActionInterface {
      * @throws ActException the act exception which is thrown if the requested action cannot be performed on the server.
      */
     void goTo(double x, double y) throws ActException;
+    
+    /**
+     * The "nagivate obstacles action". Takes a different route after colliding with obstacles.
+     * @throws ActException the act exception which is thrown if the requested action cannot be performed on the server.
+     */
+    void navigateObstacles() throws ActException;
 
     /**
      * The "go to block" action. Picks up a specified block.

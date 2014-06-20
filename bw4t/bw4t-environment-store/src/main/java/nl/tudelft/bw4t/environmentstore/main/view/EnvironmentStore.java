@@ -15,6 +15,7 @@ import nl.tudelft.bw4t.environmentstore.sizedialog.view.SizeDialog;
 import nl.tudelft.bw4t.environmentstore.util.DefaultOptionPrompt;
 import nl.tudelft.bw4t.environmentstore.util.OptionPrompt;
 
+
 /**
  * The EnvironmentStore class serves as a frame for the Panels and tables.
  *

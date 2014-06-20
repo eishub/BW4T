@@ -20,6 +20,7 @@ import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.epartners.EPartner;
 import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.model.robots.NavigatingRobot;
+import nl.tudelft.bw4t.server.model.robots.handicap.AbstractRobotDecorator;
 import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.server.model.zone.BlocksRoom;
 import nl.tudelft.bw4t.server.model.zone.Corridor;
@@ -416,7 +417,7 @@ public class RobotEntity implements EntityInterface {
     }
 
     /**
-     * The current state of the robot. See {@link NavigatingRobot#State}. Send on change
+     * The current state of the robot. See {@link NavigatingRobot#getState()}. Send on change
      */
     @AsPercept(name = "state", filter = Filter.Type.ON_CHANGE)
     public String getState() {
@@ -490,9 +491,6 @@ public class RobotEntity implements EntityInterface {
 
     /**
      * Instructs the robot to pick up a block.
-     * 
-     * @param id
-     *            The identifier of the block.
      */
     @AsAction(name = "pickUp")
     public void pickUp() {
@@ -508,6 +506,26 @@ public class RobotEntity implements EntityInterface {
     	ourRobot.pickUp(nearest);
     }
 
+    /**
+     * Instruct the robot to navigate the current obstacles.
+     */
+    @AsAction(name = "navigateObstacles")
+    public void navigateObstacles() {
+        LOGGER.debug(String.format("%s is trying to navigate the following obstacles: ", ourRobot.getName()));
+        for(BoundedMoveableObject obj : ourRobot.getObstacles()) {
+            LOGGER.debug(obj + " at " + obj.getBoundingBox());
+        }
+
+
+
+        if(ourRobot instanceof NavigatingRobot) {
+            NavigatingRobot navbot = (NavigatingRobot) ourRobot;
+            navbot.navigateObstacles();
+        } else if(ourRobot instanceof AbstractRobotDecorator && ourRobot.getParent() instanceof NavigatingRobot) {
+            NavigatingRobot navbot = (NavigatingRobot) ourRobot.getParent();
+            navbot.navigateObstacles();
+        }
+    }
     /**
      * Instructs the robot to send a message
      * 
@@ -621,6 +639,24 @@ public class RobotEntity implements EntityInterface {
     	if (ourRobot.isHuman()) {
     		ourRobot.dropEPartner();
     	}
+    }
+
+    /**
+     * Send the robot a bumped percept, informing it that the path is blocked by the given robot.
+     * @return Bump percept with the name of the robot in the way, if any.
+     */
+    @AsPercept(name = "bumped", multiplePercepts = true, filter = Type.ON_CHANGE_NEG)
+    public List<String> getBumped() {
+        List<String> bumpedList = new ArrayList<String>();
+        if(ourRobot.isCollided() && ourRobot.getObstacles().size() > 0) {
+            for(BoundedMoveableObject obj : ourRobot.getObstacles()) {
+                if(obj instanceof IRobot) {
+                    IRobot bot = (IRobot) obj;
+                    bumpedList.add(bot.getName());
+                }
+            }
+        }
+        return bumpedList;
     }
 
     /**

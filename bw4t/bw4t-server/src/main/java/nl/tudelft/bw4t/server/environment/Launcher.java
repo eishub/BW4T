@@ -72,12 +72,18 @@ public class Launcher {
      * The key necessary to remotely kill the server.
      */
     private String paramKey;
-    
     /**
      * stores a reference to the robot factory being used to create new robots.
      */
     private EntityFactory entityFactory;
-
+    /**
+     * true if collisions are enabled.
+     */
+    private boolean paramCollision;
+    /**
+     * True if draw paths is enabled
+     */
+    private boolean paramDrawPaths;
     /**
      * This class cannot be externally instantiated, it is a utility startup class.
      * 
@@ -118,6 +124,8 @@ public class Launcher {
                 + ".");
         paramGUI = Boolean.parseBoolean(findArgument(args, "-gui", "true"));
         paramKey = findArgument(args, "-key", "GuVC7TZ38NN49X8utMspV3Z5");
+        paramCollision = Boolean.parseBoolean(findArgument(args, "-collision", "true"));
+        paramDrawPaths = Boolean.parseBoolean(findArgument(args, "-paths", "false"));
     }
 
     /**
@@ -187,7 +195,7 @@ public class Launcher {
      */
     private void setupEnvironment() {
             try {
-				environment = new BW4TEnvironment(setupRemoteServer(), paramScenario, paramMap, paramGUI, paramKey);
+				environment = new BW4TEnvironment(setupRemoteServer(), paramScenario, paramMap, paramGUI, paramKey, paramCollision, paramDrawPaths);
 			} catch (ManagementException | IOException | ScenarioLoadException | JAXBException e) {
 				LOGGER.fatal("Failed to setup the BW4T Environment.");
 	            throw new LauncherException("failed to setup the bw4t environment", e);

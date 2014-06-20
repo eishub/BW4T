@@ -80,6 +80,8 @@ public class EPartnerMenu {
         // Robot commands
         BasicMenuOperations.addSectionTitleToPopupMenu("Command my robot to:", gui.getjPopupMenu());
 
+        BasicMenuOperations.addNavigateObstacleMenuItem(gui);
+        
         JMenuItem menuItem = new JMenuItem("Go to e-partner");
         menuItem.addActionListener(new GoToBlockActionListener(ep.getId(), gui.getController()));
         gui.getjPopupMenu().add(menuItem);
