@@ -1,9 +1,7 @@
 package nl.tudelft.bw4t.scenariogui.util;
 
-import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.lang.IndexOutOfBoundsException;
-import java.io.File;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -14,14 +12,13 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
 
 public class EntityJTable extends JTable {
     
-    /**
-     * BotJTable extends JTable in order to use a custom cell renderer.
-     */
     private static final long serialVersionUID = 6368045182363427342L;
 
     private EntityTableCellRenderer cellRenderer;
     
-
+    /**
+     * Constructor.
+     */
     public EntityJTable() {
         cellRenderer = new EntityTableCellRenderer();
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -64,10 +61,6 @@ public class EntityJTable extends JTable {
         return warning;
     }
     
-    /**
-     * Returns the agent file column of the table.
-     * @return The agent file column of the table.
-     */
     public int getAgentFileColumn() {
         String name = "";
         try {
