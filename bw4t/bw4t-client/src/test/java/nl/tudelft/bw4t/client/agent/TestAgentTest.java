@@ -3,13 +3,17 @@ package nl.tudelft.bw4t.client.agent;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import eis.eis2java.exception.TranslationException;
+import eis.eis2java.translation.Translator;
+import eis.iilang.Parameter;
+import eis.iilang.Percept;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 
-import nl.tudelft.bw4t.client.agent.TestAgent;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 
 import org.junit.Before;
@@ -17,13 +21,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import eis.eis2java.exception.TranslationException;
-import eis.eis2java.translation.Translator;
-import eis.iilang.Action;
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
 
 /**
  * The class <code>TestAgentTest</code> contains tests for the class {@link <code>TestAgent</code>}

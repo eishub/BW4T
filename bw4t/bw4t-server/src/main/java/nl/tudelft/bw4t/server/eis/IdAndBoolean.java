@@ -1,7 +1,5 @@
 package nl.tudelft.bw4t.server.eis;
 
-import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
-import repast.simphony.space.continuous.NdPoint;
 
 public class IdAndBoolean {
     

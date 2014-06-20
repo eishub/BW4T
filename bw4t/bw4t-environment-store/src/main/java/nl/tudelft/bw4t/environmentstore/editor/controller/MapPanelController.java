@@ -12,6 +12,7 @@ import nl.tudelft.bw4t.environmentstore.editor.view.RoomMenu;
 import nl.tudelft.bw4t.environmentstore.editor.view.ZoneMenu;
 import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
 import nl.tudelft.bw4t.map.BlockColor;
+import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone.Type;
 
 /**

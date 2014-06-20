@@ -1,12 +1,13 @@
 package nl.tudelft.bw4t.client.message;
 
+import eis.iilang.Parameter;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.StringTokenizer;
 
 import nl.tudelft.bw4t.map.ColorTranslator;
-import eis.iilang.Parameter;
 
 /**
  * Class used for translating messages (String->BW4TMessage and

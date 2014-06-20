@@ -1,10 +1,10 @@
 package nl.tudelft.bw4t.scenariogui;
 
-import nl.tudelft.bw4t.map.EntityType;
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import nl.tudelft.bw4t.map.EntityType;
+
+import org.junit.Test;
 
 /**
  * Class used for testing the BotConfig class except the getters and setters.

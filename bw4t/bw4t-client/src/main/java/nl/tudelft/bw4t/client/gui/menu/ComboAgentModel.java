@@ -1,5 +1,7 @@
 package nl.tudelft.bw4t.client.gui.menu;
 
+import eis.exceptions.EntityException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +10,6 @@ import javax.swing.ComboBoxModel;
 
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
-import eis.exceptions.EntityException;
 
 public class ComboAgentModel extends AbstractListModel implements ComboBoxModel {
     private static final long serialVersionUID = 344469588673323347L;

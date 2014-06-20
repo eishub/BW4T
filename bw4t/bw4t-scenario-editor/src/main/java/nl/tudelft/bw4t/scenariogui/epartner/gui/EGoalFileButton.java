@@ -6,7 +6,6 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 
-import nl.tudelft.bw4t.scenariogui.epartner.gui.EpartnerFrame;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 
 /**

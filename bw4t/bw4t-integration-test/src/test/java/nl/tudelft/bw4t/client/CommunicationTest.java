@@ -3,6 +3,14 @@ package nl.tudelft.bw4t.client;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import eis.eis2java.exception.TranslationException;
+import eis.eis2java.translation.Translator;
+import eis.exceptions.ActException;
+import eis.exceptions.ManagementException;
+import eis.exceptions.PerceiveException;
+import eis.iilang.Action;
+import eis.iilang.Parameter;
+
 import java.io.IOException;
 
 import javax.xml.bind.JAXBException;
@@ -14,13 +22,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import repast.simphony.scenario.ScenarioLoadException;
-import eis.eis2java.exception.TranslationException;
-import eis.eis2java.translation.Translator;
-import eis.exceptions.ActException;
-import eis.exceptions.ManagementException;
-import eis.exceptions.PerceiveException;
-import eis.iilang.Action;
-import eis.iilang.Parameter;
 
 /**
  * We test if messages are send and received and to the intended recipients.

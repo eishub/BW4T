@@ -2,8 +2,6 @@ package nl.tudelft.bw4t.environmentstore.editor.menu.controller;
 
 import java.awt.event.ActionEvent;
 
-
-
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.menu.view.MenuBar;
 import nl.tudelft.bw4t.environmentstore.editor.model.EnvironmentMap;

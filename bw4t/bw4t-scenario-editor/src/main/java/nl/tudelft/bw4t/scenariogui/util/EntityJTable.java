@@ -1,7 +1,6 @@
 package nl.tudelft.bw4t.scenariogui.util;
 
 import java.awt.event.MouseEvent;
-import java.lang.IndexOutOfBoundsException;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;

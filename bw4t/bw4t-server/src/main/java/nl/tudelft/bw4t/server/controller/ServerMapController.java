@@ -12,6 +12,7 @@ import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Path;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.renderer.AbstractMapController;
+import nl.tudelft.bw4t.map.renderer.MapController;
 import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
