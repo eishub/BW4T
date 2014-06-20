@@ -13,22 +13,31 @@ import repast.simphony.space.grid.Grid;
 public abstract class Room extends Zone {
 
     /**
-     * CHECK is color actually used?
+     * Colour to be used
      */
     private final Color color;
+    
+    /**
+     * Rendering options
+     */
     private RenderOptions renderOptions;
 
     /**
      * Creates a new room that has the given color.
      * 
+     * @param roomzone
+     *            The zone in which the room should be placed.
      * @param color
      *            The color of the room, used for visualization.
      * @param space
      *            The space in which the room should be placed.
+     * @param grid
+     *            The zone in which the room should be placed.
      * @param context
      *            The context in which the room should be placed.
      */
-    public Room(Color color, nl.tudelft.bw4t.map.Zone roomzone, ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context) {
+    public Room(Color color, nl.tudelft.bw4t.map.Zone roomzone, ContinuousSpace<Object> space, 
+                                    Grid<Object> grid, Context<Object> context) {
         super(roomzone, space, grid, context);
         this.color = color;
         this.renderOptions = roomzone.getRenderOptions();
