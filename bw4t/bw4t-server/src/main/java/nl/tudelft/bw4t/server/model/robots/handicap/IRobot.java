@@ -12,7 +12,6 @@ import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.model.robots.AgentRecord;
 import nl.tudelft.bw4t.server.model.robots.Battery;
 import nl.tudelft.bw4t.server.model.robots.MoveType;
-import nl.tudelft.bw4t.server.model.robots.NavigatingRobot;
 import nl.tudelft.bw4t.server.model.robots.NavigatingRobot.State;
 import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
@@ -273,7 +272,7 @@ public interface IRobot {
      * @return
      * returns which handicaps are attached to the robot
      */
-    ArrayList<String> getHandicapsList();
+    List<String> getHandicapsList();
     
     /**
      * @return
@@ -382,8 +381,12 @@ public interface IRobot {
     /**
      * Retrieve all obstacles in the path of the robot.
      * @return
+     *      the obstacles
      */
-    public List<BoundedMoveableObject> getObstacles();
+    List<BoundedMoveableObject> getObstacles();
 
-    public void clearObstacles();
+    /**
+     * Clears the obstacles.
+     */
+    void clearObstacles();
 }

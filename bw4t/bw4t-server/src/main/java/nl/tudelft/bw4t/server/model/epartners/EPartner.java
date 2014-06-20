@@ -8,31 +8,33 @@ import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 
-import org.apache.log4j.Logger;
-
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
 
-public class EPartner extends BoundedMoveableObject {
-    
-    private static final Logger LOGGER = Logger.getLogger(EPartner.class);
-    
+/**
+ * This class makes it possible to create an EPartner for the Human.
+ */
+public class EPartner extends BoundedMoveableObject {    
     /**
-     * set to true when {@link #connect()} is called.
-     */
-    private boolean connected = false;
-    
-    /**
-     * Human that owns the E-Partner
+     * Human that owns the E-Partner.
      */
     private IRobot holder;
     
+    /**
+     * Name of the E-Partner.
+     */
     private String name;
     
+    /**
+     * The functionality list of the E-Partner.
+     */
     private List<String> funcList;
     
+    /**
+     * The view of the E-Partner.
+     */
     private ViewEPartner view = new ViewEPartner();
 
     /**
@@ -40,6 +42,8 @@ public class EPartner extends BoundedMoveableObject {
      *            The "human-friendly" name of the e-Partner.
      * @param space
      *            The space in which the robot operates.
+     * @param grid
+     *            The grid in which the robot operates.
      * @param context
      *            The context in which the robot operates.
      */
@@ -55,6 +59,11 @@ public class EPartner extends BoundedMoveableObject {
         return this.holder;
     }
     
+    /**
+     * Sets the holder to human and pickedUp to a not null value.
+     * @param human
+     *          The human which is being held.
+     */
     public void setHolder(IRobot human) {
         this.holder = human;
         view.setPickedUp(holder != null);
@@ -80,6 +89,11 @@ public class EPartner extends BoundedMoveableObject {
         return this.holder == null;
     }
 
+    /**
+     * Returns the view of the current E-Partner.
+     * @return
+     *      Returns the view.
+     */
     public ViewEPartner getView() {
         final NdPoint location = getLocation();
         this.view.setLocation(new Point2D.Double(location.getX(), location.getY()));
