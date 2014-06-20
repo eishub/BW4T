@@ -25,13 +25,10 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
 
     /** Create a new ZoneController from the MapPanelController, rows, columns, and Zone model.
      * @param mc MapPanelController
-     * @param r rows
-     * @param c columns
      * @param m Zone model
      */
     public ZoneController(MapPanelController mc, ZoneModel m) {
         mapController = mc;
-        
         model = m;
     }
     
@@ -80,7 +77,7 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
      * otherRoom are ignored, assuming that the original coordinates of our room
      * are correct.
      * 
-     * @param otherRoom
+     * @param otherRoom the room to be set
      */
     public void setValue(ZoneController otherRoom) {
         setColors(otherRoom.getColors());
@@ -94,10 +91,13 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
         uei = ui;
     }
     
+    /**
+     * opens the popup to modify a zone 
+     * @param e contains the x and y location of the mouse where the popup needs to open
+     */
     private void openPopup(MouseEvent e) {
         if (e.isPopupTrigger()) {
             getMapController().setSelected(this);
-            
             getMapController().showPopup(e.getComponent(), e.getX(), e.getY());
         }
     }
@@ -114,7 +114,7 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
 
     @Override
     public void stateChanged(ChangeEvent arg0) {
-        this.model.setColors(((ColorSequenceEditor)arg0.getSource()).getSequence());
+        this.model.setColors(((ColorSequenceEditor) arg0.getSource()).getSequence());
     }
 
     public boolean hasDoor(int dir) {
@@ -137,12 +137,17 @@ public class ZoneController extends MouseAdapter implements ChangeListener {
         this.model = model;
     }
     
-    
+    /**
+     * Randomizes the BlockColors in the rooms
+     * @param amount the max amount of blocks per room
+     * @param validcolors list of colors to randomize
+     */
     public void randomizeColors(int amount, List<BlockColor> validcolors) {
         model.generateRandomBlocks(amount, validcolors);
         update();
     }
     
+    /** update the map and preview */
     public void update() {
         uei.update();
     }
