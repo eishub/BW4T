@@ -137,7 +137,7 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
         String address = "//" + InitParam.SERVERIP.getValue() + ":" + InitParam.SERVERPORT.getValue() + "/BW4TServer";
         try {
             server = (BW4TServerActions) Naming.lookup(address);
-        } catch (Exception e) {
+        } catch (NotBoundException | MalformedURLException | RemoteException e) {
             LOGGER.info("The server is already down: " + address);
             return;
         }
@@ -146,8 +146,10 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
         try {
             ((BW4TServerHiddenActions) server).stopServer(killKey);
         } catch (RemoteException e) {
-            LOGGER.error("An error occurred while shutting down server", e);
+            // Will always throw an exception because the server stop the connection before we can get an answer from it
+            return;
         }
+        LOGGER.error("Unable to shutdown the server.");
     }
 
     /**
