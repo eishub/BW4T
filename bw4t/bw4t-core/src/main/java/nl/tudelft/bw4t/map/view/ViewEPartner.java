@@ -65,11 +65,11 @@ public class ViewEPartner {
     }
     
     public String getName() {
-    	return name;
+        return name;
     }
     
     public void setName(String name) {
-    	this.name = name;
+        this.name = name;
     }
 
     public boolean isVisible() {

@@ -6,11 +6,11 @@ import java.util.prefs.Preferences;
  * Static object to store settings of the BW4T Client.
  */
 public final class BW4TClientSettings {
-	
-	/**
+    
+    /**
      * Use the global preference store for this user to store the settings.
      */
-	public static final Preferences PREFS = Preferences.userNodeForPackage(BW4TClientSettings.class);
+    public static final Preferences PREFS = Preferences.userNodeForPackage(BW4TClientSettings.class);
 
     /**
      * Empty constructor. Prevent a class from being explicitly instantiated by its callers. 

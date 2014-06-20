@@ -31,139 +31,139 @@ import nl.tudelft.bw4t.map.renderer.MapRenderer;
 
 public abstract class AbstractMenuOption implements ActionListener {
 
-	private MenuBar view;
-	
-	private EnvironmentStoreController envController;
-	
-	private MapPanelController mapController;
-	
-	// made a variable for this so we can call it during testing
-	private JFileChooser currentFileChooser;
-	
-	public AbstractMenuOption(final MenuBar newView, final EnvironmentStoreController envController) {
-		this.view = newView;
-		this.envController = envController;
-		
+    private MenuBar view;
+    
+    private EnvironmentStoreController envController;
+    
+    private MapPanelController mapController;
+    
+    // made a variable for this so we can call it during testing
+    private JFileChooser currentFileChooser;
+    
+    public AbstractMenuOption(final MenuBar newView, final EnvironmentStoreController envController) {
+        this.view = newView;
+        this.envController = envController;
+        
         this.mapController = envController.getMapController();
-		/*
-		 * Set the intial file chooser and option prompt, can eventually be
-		 * changed when tests need to be ran.
-		 */
-		setCurrentFileChooser(new JFileChooser());
-	}
-	
-	/**
-	 * Gets the current file chooser.
-	 * 
-	 * @return The current file chooser.
-	 */
-	public JFileChooser getCurrentFileChooser() {
-		return currentFileChooser;
-	}
+        /*
+         * Set the intial file chooser and option prompt, can eventually be
+         * changed when tests need to be ran.
+         */
+        setCurrentFileChooser(new JFileChooser());
+    }
+    
+    /**
+     * Gets the current file chooser.
+     * 
+     * @return The current file chooser.
+     */
+    public JFileChooser getCurrentFileChooser() {
+        return currentFileChooser;
+    }
 
-	/**
-	 * Sets the new current file chooser.
-	 * 
-	 * @param newFileChooser
-	 *            The new file chooser to set.
-	 */
-	public void setCurrentFileChooser(final JFileChooser newFileChooser) {
-		currentFileChooser = newFileChooser;
-	}
-	
-	/**
-	 * Opens a new size Dialog that lets the user start from scratch.
-	 * TODO: Also dispose ALL OTHER windows and reset value like lastFileLocation
-	 */
-	public void newMap() {
-		if(envController.notAnEmptyMap()) {
-	        boolean doSave = envController.promptUserToSave();
+    /**
+     * Sets the new current file chooser.
+     * 
+     * @param newFileChooser
+     *            The new file chooser to set.
+     */
+    public void setCurrentFileChooser(final JFileChooser newFileChooser) {
+        currentFileChooser = newFileChooser;
+    }
+    
+    /**
+     * Opens a new size Dialog that lets the user start from scratch.
+     * TODO: Also dispose ALL OTHER windows and reset value like lastFileLocation
+     */
+    public void newMap() {
+        if(envController.notAnEmptyMap()) {
+            boolean doSave = envController.promptUserToSave();
 
-	        if (doSave) {
-	        	saveFile(true);
-	        }
-		}
-	   	// Close Environmenst Store
-    	envController.getMainView().dispose();
-    	// Open new Size Dialog
-    	SizeDialog dialog = new SizeDialog();
-    	dialog.setVisible(true);
-	}
-	
-	/**
-	 * Saves a file.
-	 */
-	public void saveFile() {
-		saveFile(!view.hasLastFileLocation());
-	}
-	
+            if (doSave) {
+                saveFile(true);
+            }
+        }
+           // Close Environmenst Store
+        envController.getMainView().dispose();
+        // Open new Size Dialog
+        SizeDialog dialog = new SizeDialog();
+        dialog.setVisible(true);
+    }
+    
+    /**
+     * Saves a file.
+     */
+    public void saveFile() {
+        saveFile(!view.hasLastFileLocation());
+    }
+    
 
-	/**
-	 * Saves the configuration to Map. When the configuration hasn't been saved
-	 * before an file chooser is opened.
-	 * 
-	 * @param saveAs
-	 *            Whether or not to open a file chooser.
-	 */
-	public void saveFile(final boolean saveAs) {
+    /**
+     * Saves the configuration to Map. When the configuration hasn't been saved
+     * before an file chooser is opened.
+     * 
+     * @param saveAs
+     *            Whether or not to open a file chooser.
+     */
+    public void saveFile(final boolean saveAs) {
         String error = checkConsistency();
         if (error != null) {
-        	EnvironmentStore.showDialog("Save failed: " + error);
+            EnvironmentStore.showDialog("Save failed: " + error);
             return;
         }
         NewMap map = MapConverter.createMap(mapController.getEnvironmentMap());
         String mapSolve = SolvabilityAlgorithm.mapIsSolvable(map);
         if (mapSolve != null) {
-        	int response = JOptionPane
-        			.showConfirmDialog(null, "The map is unsolvable. The reason is as follows:\n"
-        					+ mapSolve + "\n"
-        			+ "Are you sure you want to save this map?",
-        			"Unsolvable map", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-        	if (response == JOptionPane.NO_OPTION) {
-        		return;
-        	}
+            int response = JOptionPane
+                    .showConfirmDialog(null, "The map is unsolvable. The reason is as follows:\n"
+                            + mapSolve + "\n"
+                    + "Are you sure you want to save this map?",
+                    "Unsolvable map", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (response == JOptionPane.NO_OPTION) {
+                return;
+            }
         }  
-	    String path = view.getLastFileLocation();
-	
-	    if (view.hasLastFileLocation() && !new File(path).exists()) {
-	        view.setLastFileLocation(null);
-	        currentFileChooser.setCurrentDirectory(new File("."));
-	    }
-	
-		if (saveAs || !view.hasLastFileLocation()) {
-			currentFileChooser = getCurrentFileChooser();
-			currentFileChooser.setFileFilter(FileFilters.mapFilter());
-			
+        String path = view.getLastFileLocation();
+    
+        if (view.hasLastFileLocation() && !new File(path).exists()) {
+            view.setLastFileLocation(null);
+            currentFileChooser.setCurrentDirectory(new File("."));
+        }
+    
+        if (saveAs || !view.hasLastFileLocation()) {
+            currentFileChooser = getCurrentFileChooser();
+            currentFileChooser.setFileFilter(FileFilters.mapFilter());
+            
             int returnVal = currentFileChooser.showSaveDialog(null);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
-				File file = currentFileChooser.getSelectedFile();
-	
-				path = file.getAbsolutePath();
-	
-				String extension = ".map";
-				if (!path.endsWith(extension)) {
-					path += extension;
-	                file = new File(path);
-				}
-	            envController.getMainView().setWindowTitle(file.getName());
-	        } else {
-				return;
-			}
-		}
-		try {
-	        // Check if the file path was not externally deleted.
-	        saveMapFile(path);
-	    } catch (JAXBException e) {
-	    	EnvironmentStore.showDialog("Saving the Map to file has failed.");
-		} catch (FileNotFoundException e) {
-			EnvironmentStore.showDialog("No file has been found.");
-		}    
-	}
-	
+                File file = currentFileChooser.getSelectedFile();
+    
+                path = file.getAbsolutePath();
+    
+                String extension = ".map";
+                if (!path.endsWith(extension)) {
+                    path += extension;
+                    file = new File(path);
+                }
+                envController.getMainView().setWindowTitle(file.getName());
+            } else {
+                return;
+            }
+        }
+        try {
+            // Check if the file path was not externally deleted.
+            saveMapFile(path);
+        } catch (JAXBException e) {
+            EnvironmentStore.showDialog("Saving the Map to file has failed.");
+        } catch (FileNotFoundException e) {
+            EnvironmentStore.showDialog("No file has been found.");
+        }    
+    }
+    
 
-	public void saveMapFile(String path) throws JAXBException,
-			FileNotFoundException {
-		
+    public void saveMapFile(String path) throws JAXBException,
+            FileNotFoundException {
+        
         NewMap map = MapConverter.createMap(envController.getMapController().getEnvironmentMap());
         JAXBContext context = JAXBContext.newInstance(NewMap.class);
 
@@ -173,35 +173,35 @@ public abstract class AbstractMenuOption implements ActionListener {
         File file = new File(path);
         m.marshal(map, new FileOutputStream(file));
         view.setLastFileLocation(path);
-	}
+    }
     
-	/**
-	 * Preview the map that is currently being edited.
-	 */
-	public void previewMap() {
-    	JFrame preview = new JFrame("Map Preview");
-    	preview.add(new JScrollPane(new MapRenderer(new MapPreviewController(mapController))));
-    	preview.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    	preview.pack();
-    	preview.setVisible(true);
-	}
-	
-	/**
-	 * Exit the editor with a check whether the user really wants to quit.
-	 */
-	public void exitEditor() {
-		if(envController.notAnEmptyMap()) {
-	        boolean doSave = envController.promptUserToSave();
+    /**
+     * Preview the map that is currently being edited.
+     */
+    public void previewMap() {
+        JFrame preview = new JFrame("Map Preview");
+        preview.add(new JScrollPane(new MapRenderer(new MapPreviewController(mapController))));
+        preview.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        preview.pack();
+        preview.setVisible(true);
+    }
+    
+    /**
+     * Exit the editor with a check whether the user really wants to quit.
+     */
+    public void exitEditor() {
+        if(envController.notAnEmptyMap()) {
+            boolean doSave = envController.promptUserToSave();
 
-	        if (doSave) {
-	        	saveFile(true);
-	        } else {
-	        	envController.getMainView().closeEnvironmentStore();
-	        }
-		} else {
-			envController.getMainView().closeEnvironmentStore();
-		}
-	}
+            if (doSave) {
+                saveFile(true);
+            } else {
+                envController.getMainView().closeEnvironmentStore();
+            }
+        } else {
+            envController.getMainView().closeEnvironmentStore();
+        }
+    }
     
     
     /**
@@ -218,13 +218,13 @@ public abstract class AbstractMenuOption implements ActionListener {
         List<BlockColor> allblocks = new ArrayList<BlockColor>();
         for (int i = 0; i < mapController.getZoneControllers().length; i++) {
             for (int j = 0; j < mapController.getZoneControllers()[0].length; j++) {
-            	ZoneController zone = mapController.getZoneController(i, j);
+                ZoneController zone = mapController.getZoneController(i, j);
                 allblocks.addAll(zone.getColors());
                 if (zone.isDropZone()) {
-	                if (foundDropZone) {
-	                    return ("Map can only contain one drop zone.");
-	                }
-	                foundDropZone = true;
+                    if (foundDropZone) {
+                        return ("Map can only contain one drop zone.");
+                    }
+                    foundDropZone = true;
                 }
                 if (zone.isStartZone()) {
                     foundStartZone = true;
@@ -234,11 +234,11 @@ public abstract class AbstractMenuOption implements ActionListener {
         }
         
         if(!foundStartZone && !foundDropZone) {
-        	return ("The map must contain one starting zone and drop zone.");
+            return ("The map must contain one starting zone and drop zone.");
         } else if (!foundStartZone) {
-        	return ("There should be at least one start zone.");
+            return ("There should be at least one start zone.");
         } else if (!foundDropZone) {
-        	return ("There should be one drop zone.");
+            return ("There should be one drop zone.");
         }
         
         if (mapController.getSequence().size() <= 0) {
@@ -257,23 +257,23 @@ public abstract class AbstractMenuOption implements ActionListener {
     }
     
     public MapPanelController getMapController() {
-    	return mapController;
+        return mapController;
     }
     
     public EnvironmentStoreController getEnvironmentStoreController() {
-    	return envController;
+        return envController;
     }
     
     public MenuBar getView() {
-    	return view;
+        return view;
     }
 
-	
-	/**
-	 * Gets called when the button associated with this action is pressed.
-	 * 
-	 * @param e
-	 *            The action event.
-	 */
-	public abstract void actionPerformed(ActionEvent e);
+    
+    /**
+     * Gets called when the button associated with this action is pressed.
+     * 
+     * @param e
+     *            The action event.
+     */
+    public abstract void actionPerformed(ActionEvent e);
 }

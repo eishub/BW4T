@@ -119,7 +119,7 @@ public class ConfigurationPanelTest {
      */
     @Test
     public final void testMapFileActionBranch() {
-    	ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
+        ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
         // Setup the mocks behaviour.
         when(fileChooser.showOpenDialog(editor.getMainPanel())).thenReturn(
                 JFileChooser.APPROVE_OPTION);
@@ -139,7 +139,7 @@ public class ConfigurationPanelTest {
      */
     @Test
     public final void testMapFileCancel() {
-    	// Setup the mocks behaviour.
+        // Setup the mocks behaviour.
         when(fileChooser.showOpenDialog(editor.getMainPanel())).thenReturn(
                 JFileChooser.CANCEL_OPTION);
         when(fileChooser.getSelectedFile()).thenReturn(new File(filePathMap));
@@ -187,8 +187,8 @@ public class ConfigurationPanelTest {
     public void testDefault() {
         assertTrue(configPanel.isDefault());
 
-    	configPanel.setClientIP("Other IP");
-    	
+        configPanel.setClientIP("Other IP");
+        
         assertFalse(configPanel.isDefault());
     }
 
@@ -198,9 +198,9 @@ public class ConfigurationPanelTest {
     @Test
     public void testSetClientIP() {
         assertTrue(configPanel.isDefault());
-    	assertEquals(DefaultConfigurationValues.DEFAULT_CLIENT_IP.getValue(), configPanel.getClientIP());
-    	
-    	String newIP = "New IP";
+        assertEquals(DefaultConfigurationValues.DEFAULT_CLIENT_IP.getValue(), configPanel.getClientIP());
+        
+        String newIP = "New IP";
         configPanel.setClientIP(newIP);
 
         assertEquals(newIP, configPanel.getClientIP());
@@ -213,9 +213,9 @@ public class ConfigurationPanelTest {
     @Test
     public void testSetClientPort() {
         assertTrue(configPanel.isDefault());
-    	assertEquals(DefaultConfigurationValues.DEFAULT_CLIENT_PORT.getValue(), "" + configPanel.getClientPort());
-    	
-    	String newIP = "8888";
+        assertEquals(DefaultConfigurationValues.DEFAULT_CLIENT_PORT.getValue(), "" + configPanel.getClientPort());
+        
+        String newIP = "8888";
         configPanel.setClientPort(newIP);
         
         assertEquals(newIP, "" + configPanel.getClientPort());
@@ -228,9 +228,9 @@ public class ConfigurationPanelTest {
     @Test
     public void testSetServerIP() {
         assertTrue(configPanel.isDefault());
-    	assertEquals(DefaultConfigurationValues.DEFAULT_SERVER_IP.getValue(), configPanel.getServerIP());
-    	
-    	String newIP = "New IP";
+        assertEquals(DefaultConfigurationValues.DEFAULT_SERVER_IP.getValue(), configPanel.getServerIP());
+        
+        String newIP = "New IP";
         configPanel.setServerIP(newIP);
 
         assertEquals(newIP, configPanel.getServerIP());
@@ -243,9 +243,9 @@ public class ConfigurationPanelTest {
     @Test
     public void testSetServerPort() {
         assertTrue(configPanel.isDefault());
-    	assertEquals(DefaultConfigurationValues.DEFAULT_SERVER_PORT.getValue(), "" + configPanel.getServerPort());
-    	
-    	String newPort = "9999";
+        assertEquals(DefaultConfigurationValues.DEFAULT_SERVER_PORT.getValue(), "" + configPanel.getServerPort());
+        
+        String newPort = "9999";
         configPanel.setServerPort(newPort);
 
         assertEquals(newPort, "" + configPanel.getServerPort());
@@ -258,9 +258,9 @@ public class ConfigurationPanelTest {
     @Test
     public void testChangesLaunchGUI() {
         assertTrue(configPanel.isDefault());
-    	assertEquals(DefaultConfigurationValues.USE_GUI.getBooleanValue(), configPanel.getGUIYesCheckbox().getState());
-    	assertEquals(!DefaultConfigurationValues.USE_GUI.getBooleanValue(), configPanel.getGUINoCheckbox().getState());
-    	
+        assertEquals(DefaultConfigurationValues.USE_GUI.getBooleanValue(), configPanel.getGUIYesCheckbox().getState());
+        assertEquals(!DefaultConfigurationValues.USE_GUI.getBooleanValue(), configPanel.getGUINoCheckbox().getState());
+        
         configPanel.setUseGui(!DefaultConfigurationValues.USE_GUI.getBooleanValue());
 
         assertEquals(!DefaultConfigurationValues.USE_GUI.getBooleanValue(), configPanel.getGUIYesCheckbox().getState());
@@ -274,9 +274,9 @@ public class ConfigurationPanelTest {
     @Test
     public void testChangesVisualizePaths() {
         assertTrue(configPanel.isDefault());
-    	assertEquals(DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue(), configPanel.getPathsYesCheckbox().getState());
-    	assertEquals(!DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue(), configPanel.getPathsNoCheckbox().getState());
-    	
+        assertEquals(DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue(), configPanel.getPathsYesCheckbox().getState());
+        assertEquals(!DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue(), configPanel.getPathsNoCheckbox().getState());
+        
         configPanel.setVisualizePaths(!DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue());
 
         assertEquals(!DefaultConfigurationValues.VISUALIZE_PATHS.getBooleanValue(), configPanel.getPathsYesCheckbox().getState());
@@ -290,9 +290,9 @@ public class ConfigurationPanelTest {
     @Test
     public void testChangesEnableCollisions() {
         assertTrue(configPanel.isDefault());
-    	assertEquals(DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue(), configPanel.getCollisionsYesCheckbox().getState());
-    	assertEquals(!DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue(), configPanel.getCollisionsNoCheckbox().getState());
-    	
+        assertEquals(DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue(), configPanel.getCollisionsYesCheckbox().getState());
+        assertEquals(!DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue(), configPanel.getCollisionsNoCheckbox().getState());
+        
         configPanel.setVisualizePaths(!DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue());
 
         assertEquals(!DefaultConfigurationValues.ENABLE_COLLISIONS.getBooleanValue(), configPanel.getCollisionsYesCheckbox().getState());

@@ -114,7 +114,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
         super();
         setInstance(this); 
         this.server = server2;
-     	mapName = mapLocation;
+         mapName = mapLocation;
         this.scenarioLocation = System.getProperty("user.dir") + "/" + scenarioLocation;
         this.guiEnabled = guiEnabled;
         this.shutdownKey = shutdownKey;
@@ -122,7 +122,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
         this.drawPathsEnabled = drawPathsEnabled;
     }
     private static void setInstance(BW4TEnvironment env){
-    	instance = env;  
+        instance = env;  
     }
     /**
      * Launch server and start repast.
@@ -167,13 +167,13 @@ public class BW4TEnvironment extends AbstractEnvironment {
      */
     public void removeAllEntities() throws ManagementException {
       
-    	BW4TFileAppender.logFinish(System.currentTimeMillis(), "total time is ");
+        BW4TFileAppender.logFinish(System.currentTimeMillis(), "total time is ");
 
         setState(EnvironmentState.KILLED);
 
         LOGGER.debug("Removing all entities");
         for (String entity : this.getEntities()) {
-        	try {
+            try {
                 this.deleteEntity(entity);
             } catch (EntityException | RelationException e) {
                 LOGGER.error("Failure to delete entity: " + entity, e);
@@ -551,7 +551,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
     }
     
     public long getStarttime() {
-    	return starttime;
+        return starttime;
     }
     
     /**

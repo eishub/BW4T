@@ -49,8 +49,8 @@ class MenuOptionOpen extends AbstractMenuOption {
      */
     public void actionPerformed(final ActionEvent e) {
         ScenarioEditorController controller = getController();
-		MainPanel mainPanel = controller.getMainView().getMainPanel();
-		ConfigurationPanel configPanel = mainPanel.getConfigurationPanel();
+        MainPanel mainPanel = controller.getMainView().getMainPanel();
+        ConfigurationPanel configPanel = mainPanel.getConfigurationPanel();
         EntityPanel entityPanel = mainPanel.getEntityPanel();
 
         // Check if current config is different from last saved config
@@ -69,11 +69,11 @@ class MenuOptionOpen extends AbstractMenuOption {
      */
     private void updateOldConfig() {
         ScenarioEditor mainView = getController().getMainView();
-		MainPanel mainPanel = mainView.getMainPanel();
-		ConfigurationPanel configurationPanel = mainPanel.getConfigurationPanel();
-		configurationPanel.updateOldValues();
+        MainPanel mainPanel = mainView.getMainPanel();
+        ConfigurationPanel configurationPanel = mainPanel.getConfigurationPanel();
+        configurationPanel.updateOldValues();
         BW4TClientConfig model = getController().getModel();
-		model.updateOldBotConfigs();
+        model.updateOldBotConfigs();
         model.updateOldEpartnerConfigs();
     }
 
@@ -90,7 +90,7 @@ class MenuOptionOpen extends AbstractMenuOption {
         fileChooser.setFileFilter(FileFilters.xmlFilter());
 
         ScenarioEditor mainView = getController().getMainView();
-		if (fileChooser.showOpenDialog(mainView) == JFileChooser.APPROVE_OPTION) {
+        if (fileChooser.showOpenDialog(mainView) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             String openedFile = fileChooser.getSelectedFile().toString();
 
@@ -211,7 +211,7 @@ class MenuOptionOpen extends AbstractMenuOption {
         }
     }
 
-	private void updateConfigurationInModel(BW4TClientConfig loadedModel) {
+    private void updateConfigurationInModel(BW4TClientConfig loadedModel) {
         getModel().setClientIp(loadedModel.getClientIp());
         getModel().setClientPort(loadedModel.getClientPort());
         getModel().setServerIp(loadedModel.getServerIp());

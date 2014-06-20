@@ -21,22 +21,22 @@ import nl.tudelft.bw4t.environmentstore.util.OptionPrompt;
  *
  */
 public class EnvironmentStore extends JFrame {
-	
-	private static final long serialVersionUID = 8572609341436634787L;
+    
+    private static final long serialVersionUID = 8572609341436634787L;
 
-	private MapPanelController mapController;
-	
-	private EnvironmentStoreController envController;
-	
-	private String windowName = "Environment Store";
-	
-	private ExplanationPanel explanationPanel;
-	
-	private final MapPanel mapTable;
-	
-	private MenuBar menuBar;
+    private MapPanelController mapController;
+    
+    private EnvironmentStoreController envController;
+    
+    private String windowName = "Environment Store";
+    
+    private ExplanationPanel explanationPanel;
+    
+    private final MapPanel mapTable;
+    
+    private MenuBar menuBar;
 
-	private static OptionPrompt option = new DefaultOptionPrompt();
+    private static OptionPrompt option = new DefaultOptionPrompt();
     
     /**
      * Create the MapEditor frame which will hold all the panels, tables and buttons.
@@ -171,20 +171,20 @@ public class EnvironmentStore extends JFrame {
     }
 
     /**
-	 * Start first the dialog that gives us the options for the map.
-	 * Then create the MapEditor with this options.
-	 * 
-	 * @param args Unused parameter
-	 */
-	public static void main(String[] args) {
+     * Start first the dialog that gives us the options for the map.
+     * Then create the MapEditor with this options.
+     * 
+     * @param args Unused parameter
+     */
+    public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
                 | UnsupportedLookAndFeelException e) {
             System.out.println("Unable to use the systems look and feel.");
         }
-		SizeDialog dialog = new SizeDialog();
-		dialog.setVisible(true);
-	}
+        SizeDialog dialog = new SizeDialog();
+        dialog.setVisible(true);
+    }
 }
 

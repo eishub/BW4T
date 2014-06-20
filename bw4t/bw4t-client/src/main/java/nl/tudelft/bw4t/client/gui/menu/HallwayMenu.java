@@ -18,10 +18,10 @@ import nl.tudelft.bw4t.map.view.ViewBlock;
 
 /** Responsible for building the pop-up menu when the user clicks on a hallway. */
 public final class HallwayMenu {
-	
-	/** Should never be instantiated */
-	private HallwayMenu() { }
-	
+    
+    /** Should never be instantiated */
+    private HallwayMenu() { }
+    
     /**
      * Builds a pop up menu for when the player clicked on a hallway
      * The string indicates what the first menu item will say. 

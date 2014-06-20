@@ -7,33 +7,33 @@ import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.model.ZoneModel;
 
 public class RoomMenu extends ZoneMenu {
-	
-	private static final long serialVersionUID = 5919212594524584613L;
-	
-	private JMenu doorSide;
+    
+    private static final long serialVersionUID = 5919212594524584613L;
+    
+    private JMenu doorSide;
     private JRadioButtonMenuItem north, east, south, west;
 
-	public RoomMenu(MapPanelController mpc) {
-		super(mpc);
-	}
+    public RoomMenu(MapPanelController mpc) {
+        super(mpc);
+    }
 
-	protected void init() {
-		super.init();
-		
-		// Create a Menu for Door Side
-	    doorSide = new JMenu("Door Side");
-	    add(doorSide);
+    protected void init() {
+        super.init();
+        
+        // Create a Menu for Door Side
+        doorSide = new JMenu("Door Side");
+        add(doorSide);
 
-	    // Add all MenuItems for Door Side
-	    north = new JRadioButtonMenuItem("North");
+        // Add all MenuItems for Door Side
+        north = new JRadioButtonMenuItem("North");
 
-	    east = new JRadioButtonMenuItem("East");
+        east = new JRadioButtonMenuItem("East");
 
-	    south = new JRadioButtonMenuItem("South");
+        south = new JRadioButtonMenuItem("South");
 
-	    west = new JRadioButtonMenuItem("West");
-	}
-	
+        west = new JRadioButtonMenuItem("West");
+    }
+    
     /**
      * JMenuItem to change an zone to a dropZone.
      * 
@@ -72,11 +72,11 @@ public class RoomMenu extends ZoneMenu {
     
     @Override
     public void update() {
-    	super.update();
-    	
-    	restrictDoorOptions();
-    	
-    	north.setSelected(zone.hasDoor(ZoneModel.NORTH));
+        super.update();
+        
+        restrictDoorOptions();
+        
+        north.setSelected(zone.hasDoor(ZoneModel.NORTH));
         east.setSelected(zone.hasDoor(ZoneModel.EAST));
         south.setSelected(zone.hasDoor(ZoneModel.SOUTH));
         west.setSelected(zone.hasDoor(ZoneModel.WEST));
@@ -84,17 +84,17 @@ public class RoomMenu extends ZoneMenu {
     
     /** Only shows the options where one can add a door. */
     private void restrictDoorOptions() {
-	    if (zone.canPlaceDoor(ZoneModel.NORTH)) {
-		    doorSide.add(north);
-	    }
-	    if (zone.canPlaceDoor(ZoneModel.EAST)) {
-	    	doorSide.add(east);
-	    }
-	    if (zone.canPlaceDoor(ZoneModel.SOUTH)) {
-	    	doorSide.add(south);
-	    }
-	    if (zone.canPlaceDoor(ZoneModel.WEST)) {
-	    	doorSide.add(west);
-	    }
+        if (zone.canPlaceDoor(ZoneModel.NORTH)) {
+            doorSide.add(north);
+        }
+        if (zone.canPlaceDoor(ZoneModel.EAST)) {
+            doorSide.add(east);
+        }
+        if (zone.canPlaceDoor(ZoneModel.SOUTH)) {
+            doorSide.add(south);
+        }
+        if (zone.canPlaceDoor(ZoneModel.WEST)) {
+            doorSide.add(west);
+        }
     }
 }

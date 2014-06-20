@@ -30,7 +30,7 @@ class WindowExit extends WindowAdapter {
     @Override
     public void windowClosing(WindowEvent e) {
         if (!showUnsavedDataConfirmation()) {
-        	view.closeScenarioEditor();
+            view.closeScenarioEditor();
         }
     }
 

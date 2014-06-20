@@ -7,11 +7,11 @@ import nl.tudelft.bw4t.environmentstore.main.controller.EnvironmentStoreControll
 
 public class MenuOptionNew extends AbstractMenuOption {
 
-	public MenuOptionNew(MenuBar newView,
-			EnvironmentStoreController controller) {
-		super(newView, controller);
-	}
-	
+    public MenuOptionNew(MenuBar newView,
+            EnvironmentStoreController controller) {
+        super(newView, controller);
+    }
+    
     /**
      * Gets called when the menu item new is pressed.
      *
