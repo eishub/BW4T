@@ -63,6 +63,9 @@ public class BW4TRunner extends AbstractRunner {
         bw4tController.runParameterSetters(null);
     }
 
+    /**
+     * intitialize it
+     */
     public void runInitialize() {
         BW4TParameters params = new BW4TParameters();
         bw4tController.runInitialize(params);
@@ -70,10 +73,16 @@ public class BW4TRunner extends AbstractRunner {
         fireStartedMessage();
     }
 
+    /**
+     * clean up the run
+     */
     public void cleanUpRun() {
         bw4tController.runCleanup();
     }
 
+    /**
+     * clean up the batch
+     */
     public void cleanUpBatch() {
         bw4tController.batchCleanup();
     }
@@ -85,6 +94,7 @@ public class BW4TRunner extends AbstractRunner {
 
     /**
      * see {@link ISchedule#getModelActionCount()}.
+     * @return Modelcount
      */
     public int getModelActionCount() {
         return schedule.getModelActionCount();
@@ -92,17 +102,22 @@ public class BW4TRunner extends AbstractRunner {
 
     /**
      * see {@link ISchedule#getActionCount()}.
+     * @return actionCount
      */
     public int getActionCount() {
         return schedule.getActionCount();
     }
 
-    // Step the schedule
+    /**
+     *  Step the schedule
+     */
     public void step() {
         schedule.execute();
     }
 
-    // stop the schedule
+    /**
+     *  stop the schedule
+     */
     public void stop() {
         if (schedule != null) {
             schedule.executeEndActions();
@@ -110,10 +125,18 @@ public class BW4TRunner extends AbstractRunner {
         }
     }
 
+    /**
+     * set ending
+     * @param fin 
+     */
     public void setFinishing(boolean fin) {
         schedule.setFinishing(fin);
     }
-
+    
+    /**
+     * Not sure if this is needed. 
+     * @param toExecuteOn 
+     */
     public void execute(RunState toExecuteOn) {
         // required AbstractRunner stub. We will control the
         // schedule directly.

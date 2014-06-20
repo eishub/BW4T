@@ -53,6 +53,10 @@ public class BW4TFileAppender extends RollingFileAppender {
         }
     }
 
+    /**
+     * Creates a new log file name 
+     * @return new log file name
+     */
     private String getNewLogFileName() {
         if (fileName != null) {
             final String dot = ".";
@@ -81,6 +85,11 @@ public class BW4TFileAppender extends RollingFileAppender {
         return null;
     }
     
+    /**
+     * finish the log
+     * @param timeOfCall 
+     * @param typeTime 
+     */
     public static void logFinish(long timeOfCall, String typeTime) {
         logTime(timeOfCall, typeTime);
         logBot();
@@ -88,6 +97,8 @@ public class BW4TFileAppender extends RollingFileAppender {
     
     /**
      * Writing total time needed into logfile.
+     * @param timeOfCall 
+     * @param typeTime 
      */
     private static void logTime(long timeOfCall, String typeTime) {
 
