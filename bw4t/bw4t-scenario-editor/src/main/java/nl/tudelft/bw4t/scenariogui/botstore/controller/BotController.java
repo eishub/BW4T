@@ -16,29 +16,17 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 
 /**
- * The BotStoreController class is in charge of all events that happen on the BotStoreGUI. It delegates all events
+ * The BotController class is in charge of all events that happen on the BotEditorPanel. It delegates all events
  * to classes implementing ActionListener, sending the view along as an argument.
  */
 public class BotController {
 
-    /**
-     * Create a set with all views.
-     */
     private Set<BotStoreViewInterface> views = new HashSet<>();
 
-    /**
-     * Create a BotConfig.
-     */
     private BotConfig botConfig;
     
-    /**
-     * Create a MainPanel.
-     */
     private MainPanel mp;
     
-    /**
-     * Create a BW4TClientConfig.
-     */
     private BW4TClientConfig clientconfig;
     
     /**
@@ -57,7 +45,7 @@ public class BotController {
     /**
      * Add a view to the set of views.
      * 
-     * @param view : the view that is added to the set.
+     * @param view The view that is added to the set.
      */
     public void addView(BotStoreViewInterface view) {
         views.add(view);
@@ -67,132 +55,72 @@ public class BotController {
     /**
      * Delete a view from the set of views.
      * 
-     * @param view : the view that is deleted from the set
+     * @param view The view that is deleted from the set
      */
     public void removeView(BotStoreViewInterface view) {
         views.remove(view);
     }
     
-    /**
-     * Returns the name of the bot.
-     * 
-     * @return The name of the bot.
-     */
     public String getBotName() {
         return botConfig.getBotName();
     }
     
-    /**
-     * Returns the amount of bots of this type.
-     * 
-     * @return The amount of bots of this type.
-     */
     public int getBotAmount() {
         return botConfig.getBotAmount();
     }
     
-    /**
-     * @return the size of the robot.
-     */
     public int getBotSize() {
         return botConfig.getBotSize();
     }
     
-    /**
-     * @return the speed of the robot
-     */
     public int getBotSpeed() {
         return botConfig.getBotSpeed();
     }
     
-    /**
-     * Returns if the battery is enabled or not.
-     * 
-     * @return If the battery is enabled.
-     */
     public boolean isBatteryEnabled() {
         return botConfig.isBatteryEnabled();
     }
     
-    /**
-     * @return the robot's battery capacity.
-     */
     public int getBotBatteryCapacity() {
         return botConfig.getBotBatteryCapacity();
     }
     
-    /**
-     * @return the robot's battery discharge rate.
-     */
     public double getBotBatteryDischargeRate() {
         return botConfig.getBotBatteryDischargeRate();
     }
     
-    /**
-     * @return if the robot has a color blind handicap.
-     */
     public boolean getColorBlindHandicap() {
         return botConfig.getColorBlindHandicap();
     }
 
-    /**
-     * @return if the robot has a gripper handicap.
-     */
     public boolean getGripperHandicap() {
         return botConfig.getGripperHandicap();
     }
     
-    /**
-     * @return if the robot has a move speed handicap.
-     */
     public boolean getMoveSpeedHandicap() {
         return botConfig.getMoveSpeedHandicap();
     }
 
-    /**
-     * @return if the robot has a size overload handicap.
-     */
     public boolean getSizeOverloadHandicap() {
         return botConfig.getSizeOverloadHandicap();
     }
     
-    /**
-     * Returns the amount of grippers the bot has.
-     * 
-     * @return The amount of grippers the bot has.
-     */
     public int getGrippers() {
         return botConfig.getGrippers();
     }
     
-    /**
-     * Returns the reference name in goal.
-     * @return The reference name in goal.
-     */
     public String getReferenceName() {
         return botConfig.getReferenceName();
     }
     
-    /**
-     * Returns the goal file name.
-     * @return The goal file name.
-     */
     public String getFileName() {
         return botConfig.getFileName();
     }
     
-    /**
-     * Return the MainPanel.
-     * @return mp
-     */
     public MainPanel getMainPanel() {
         return mp;
     }
     
-    /**
-     * Return the BW4TClientConfig
-     * @return config
-     */
     public BW4TClientConfig getBW4TClientConfig() {
         return clientconfig;
     }
@@ -202,9 +130,9 @@ public class BotController {
     }
     
     /**
-     * Updates the bot config file with the values from the BotEditorPanel
+     * Updates the BotConfig file with the values from the BotEditorPanel.
      * 
-     * @param bep is the BotEditorPanel the values are taken from.
+     * @param bep The BotEditorPanel the values are taken from.
      */
     public void updateConfig(BotEditorPanel bep) {
         botConfig.setBotName(bep.getBotName());
@@ -230,9 +158,9 @@ public class BotController {
     }
     
     /**
-     * Open a Goal file
+     * Open the JFileChooser to select a Goal file.
 
-     * @param view the BotEditorPanel.
+     * @param view The BotEditorPanel.
      */
     @SuppressWarnings("static-access")
     public void openGoalFile(BotEditorPanel view) {
@@ -245,11 +173,6 @@ public class BotController {
         }
     }
     
-    /** 
-     * When the speed or size slider is moved, calculate the new battery discharge rate
-     * and update the BatteryUseValueLabel
-     * @param view the BotEditorPanel
-     */
     public void setNewBatteryValue(BotEditorPanel view) {
         if (view.isBatteryEnabled()) {
             double res = getBotBatteryDischargeRate();
@@ -259,16 +182,7 @@ public class BotController {
         }
     }
     
-    /**
-     * Pad the string with zeros (the string with
-     * the value for the battery usage is aligned with
-     * the sliders, and will cause the sliders to resize
-     * when changed. This function keeps the string at a
-     * certain length, so the sliders aren't resized anymore).
-     * @param value The string to be padded.
-     * @return The padded string.
-     */
-    public String padString(String value) {
+    private String padString(String value) {
         StringBuffer buf = new StringBuffer();
         while (buf.length() < 3) {
             buf.append(value);
@@ -276,10 +190,6 @@ public class BotController {
         return buf.toString();
     }
 
-    /** 
-     * Return the botconfig.
-     * @return botConfig
-     */
     public BotConfig getBotConfig() {
         return botConfig;
     }    

@@ -50,9 +50,7 @@ public final class ExportToMAS {
     
     private static Map<String, String> goalFiles;
 
-    /**
-     * Hide the constructor
-     */
+    /** Prevents this class from being instantiated. */
     private ExportToMAS() {
     }
 
@@ -90,13 +88,6 @@ public final class ExportToMAS {
         }
     }
 
-    /**
-     * Generates the MAS file.
-     * @param configurationName The name of the configuration to be created.
-     * @throws IOException When there was an error reading/writing to the file.
-     * @throws FileNotFoundException When the files weren't found.
-     * @throws JAXBException When there was an error saving as XML file.
-     */
     private static void generateMASFile(String configurationName)
             throws IOException, FileNotFoundException, JAXBException {
         generateHierarchy(configurationName);
@@ -112,13 +103,6 @@ public final class ExportToMAS {
         configuration.toXML();
     }
 
-    /**
-     * Generate the project hierarchy.
-     * 
-     * @throws IOException
-     *             Exception raised if there are problems reading/writing to
-     *             files
-     */
     private static void generateHierarchy(String configurationName)
             throws IOException {
         File directory = new File(ExportToMAS.directory);
@@ -137,24 +121,12 @@ public final class ExportToMAS {
         generateAgentHierarchy(directory);
     }
 
-    /**
-     * Generate the agent file hierarchy.
-     * @param directory The directory in which the project resides.
-     * @throws IOException Exception raised if there are problems reading/writing
-     * to files
-     */
     private static void generateAgentHierarchy(File directory)
             throws IOException {
         generateAgentHierarchyForBots(directory);
         generateAgentHierarchyForEPartners(directory);
     }
     
-    /**
-     * Generate the agent file hierarchy for the bots.
-     * @param directory The directory in which the project resides.
-     * @throws IOException Exception raised if there are problems reading/writing
-     * to files
-     */
     private static void generateAgentHierarchyForBots(File directory) {
         for (BotConfig bot : ExportToMAS.configuration.getBots()) {
             String botGoalFilename = bot.getFileName();
@@ -177,12 +149,6 @@ public final class ExportToMAS {
         }
     }
 
-    /**
-     * Generate the agent file hierarchy for the e-partners.
-     * @param directory The directory in which the project resides.
-     * @throws IOException Exception raised if there are problems reading/writing
-     * to files
-     */
     private static void generateAgentHierarchyForEPartners(File directory) {
         /*
          * Loop through the bots, and create the files.
@@ -206,18 +172,12 @@ public final class ExportToMAS {
         }
     }
 
-    /**
-     * Generate the launch policy.
-     */
     private static void buildLaunchPolicy() {
         launchPolicyBuilder = new StringBuilder();
         buildBotLaunchPolicy();
         buildEPartnerLaunchPolicy();
     }
 
-    /**
-     * Generates the launch policy for the bots.
-     */
     private static void buildBotLaunchPolicy() {
         for (BotConfig bot : configuration.getBots()) {
             boolean isHuman = bot.getBotController() == EntityType.HUMAN;
@@ -231,7 +191,7 @@ public final class ExportToMAS {
             launchPolicyBuilder.append(TAB);
             launchPolicyBuilder.append(String.format("when [type=%s,max=%d]@env do launch %s: %s .",
                     type,
-                    new Integer(bot.getBotAmount()),
+                    Integer.valueOf(bot.getBotAmount()),
                     bot.getBotName().toLowerCase().replace(" ", "_"),
                     bot.getReferenceName()));
             launchPolicyBuilder.append(NEWLINE);
@@ -240,9 +200,6 @@ public final class ExportToMAS {
         }
     }
     
-    /**
-     * Generates the launch policy for the e-partners.
-     */
     private static void buildEPartnerLaunchPolicy() {
         for (EPartnerConfig epartner : configuration.getEpartners()) {
             agentCount += epartner.getEpartnerAmount();
@@ -250,7 +207,7 @@ public final class ExportToMAS {
             launchPolicyBuilder.append(TAB);
             launchPolicyBuilder.append(String.format(
                     "when [type=%s,max=%d]@env do launch %s: %s .",
-                    "epartner", new Integer(epartner.getEpartnerAmount()),
+                    "epartner", Integer.valueOf(epartner.getEpartnerAmount()),
                     epartner.getEpartnerName().toLowerCase().replace(" ", "_"),
                     epartner.getReferenceName()));
             launchPolicyBuilder.append(NEWLINE);
@@ -259,13 +216,6 @@ public final class ExportToMAS {
         }
     }
 
-    /**
-     * Write the environment block to the mas2g file.
-     * 
-     * @throws IOException
-     *             Exception raised if there are problems reading/writing to
-     *             files
-     */
     private static void generateEnvironmentBlock() throws IOException {
         PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(
                 ExportToMAS.mas2gFile, true)));
@@ -288,13 +238,6 @@ public final class ExportToMAS {
         out.close();
     }
 
-    /**
-     * Write the agent files block to the mas2g.
-     * 
-     * @throws IOException
-     *             Exception raised if there are problems reading/writing to
-     *             files
-     */
     private static void generateAgentBlock() throws IOException {
         PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(
                 ExportToMAS.mas2gFile, true)));
@@ -311,13 +254,6 @@ public final class ExportToMAS {
         out.close();
     }
 
-    /**
-     * Write the launch policy to the mas2g.
-     * 
-     * @throws IOException
-     *             Exception raised if there are problems reading/writing to
-     *             files
-     */
     private static void generateLaunchPolicy() throws IOException {
         PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(
                 ExportToMAS.mas2gFile, true)));

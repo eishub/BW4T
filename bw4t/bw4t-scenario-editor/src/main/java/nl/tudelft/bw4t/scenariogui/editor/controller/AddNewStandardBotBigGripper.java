@@ -3,16 +3,12 @@ package nl.tudelft.bw4t.scenariogui.editor.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
- * Handles the event to create a new bot.
- * 
- * @version     0.1                
- * @since       12-05-2014        
+ * Handles the event to create a new bot.     
  */
 class AddNewStandardBotBigGripper implements ActionListener {
 
@@ -23,7 +19,7 @@ class AddNewStandardBotBigGripper implements ActionListener {
     private BW4TClientConfig model;
 
     /**
-     * Create an AddNewBot event handler.
+     * Create an AddNewStandardBotBigGripper event handler.
      *
      * @param newView The parent view.
      * @param model The model.
@@ -34,8 +30,8 @@ class AddNewStandardBotBigGripper implements ActionListener {
     }
 
     /**
-     * Listens to the add a new bot button.
-     * Executes action that needs to happen when the "New bot" button is
+     * Listens to the add big gripper bot button.
+     * Executes action that needs to happen when the "Big Gripper Bot" button is
      * pressed. Gives default name of "Bot &lt;n&gt;" where &lt;n&gt; is the n'th bot created.  
      *
      * @param ae The action event.
