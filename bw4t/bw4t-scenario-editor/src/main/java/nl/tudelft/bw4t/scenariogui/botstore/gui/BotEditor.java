@@ -14,8 +14,8 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
  * This class serves as frame for the BotEditorPanel
  */
 public class BotEditor extends JFrame {
-	
-	private BW4TClientConfig model;
+    
+    private BW4TClientConfig model;
     
     /**
      * Random generated serial version UID.
@@ -28,7 +28,7 @@ public class BotEditor extends JFrame {
     /** the panel in the frame*/
     private BotEditorPanel bPanel;
 
-	/** the controller for the frame*/
+    /** the controller for the frame*/
     private BotController controller;
 
     /** The row number of the selected bot. */
@@ -40,7 +40,7 @@ public class BotEditor extends JFrame {
      * @param row the row to be updated in the scenario gui
      */
     public BotEditor(MainPanel pparent, int row, BW4TClientConfig model) {
-    	this(new BotController(pparent, row, model));
+        this(new BotController(pparent, row, model));
     }
     /**
      * creates the BotEditor frame
@@ -108,22 +108,22 @@ public class BotEditor extends JFrame {
     }
     
     /**
-	 * Return the MainPanel.
-	 * @return mainpanel
-	 */
-	public MainPanel getMainPanel() {
-		return controller.getMainPanel();
-	}
-	
-	/**
-	 * Return the BotEditorPanel.
-	 * @return botpanel
-	 */
-	public BotEditorPanel getBotEditorPanel() {
-		return bPanel;
-	}
-	
-	public void setBotEditorPanel(BotEditorPanel panel) {
-		bPanel = panel;
-	}
+     * Return the MainPanel.
+     * @return mainpanel
+     */
+    public MainPanel getMainPanel() {
+        return controller.getMainPanel();
+    }
+    
+    /**
+     * Return the BotEditorPanel.
+     * @return botpanel
+     */
+    public BotEditorPanel getBotEditorPanel() {
+        return bPanel;
+    }
+    
+    public void setBotEditorPanel(BotEditorPanel panel) {
+        bPanel = panel;
+    }
 }

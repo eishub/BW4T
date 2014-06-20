@@ -39,8 +39,8 @@ public class ZoneMenu extends JPopupMenu implements UpdateableEditorInterface {
         update();
     }
 
-	protected void init() {
-		// Create a Menu for Type Of Space
+    protected void init() {
+        // Create a Menu for Type Of Space
         zoneType = new JMenu("Type of Zone");
         add(zoneType);
 
@@ -70,7 +70,7 @@ public class ZoneMenu extends JPopupMenu implements UpdateableEditorInterface {
         dropZone = new JRadioButtonMenuItem("Drop Zone");
         group.add(dropZone);
         zoneType.add(dropZone);
-	}
+    }
 
     /**
      * JMenuItem to change an zone to a corridor.

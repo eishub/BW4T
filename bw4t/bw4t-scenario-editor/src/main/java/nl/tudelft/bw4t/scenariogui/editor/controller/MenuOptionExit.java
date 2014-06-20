@@ -8,7 +8,7 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
 
 /**
  * Handles the event to exit the program.
- * <p/>
+ * 
  *
  * @version 0.1
  * @since 12-05-2014
@@ -48,7 +48,7 @@ class MenuOptionExit extends AbstractMenuOption {
                 getController().getMainView().closeScenarioEditor();
             }
         } else {
-        	getController().getMainView().closeScenarioEditor();
+            getController().getMainView().closeScenarioEditor();
         }
     }
 }

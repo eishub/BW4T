@@ -143,27 +143,27 @@ public class MenuBar extends JMenuBar {
     }
 
     public void addExitController(ActionListener controller) {
-    	getMenuItemFileExit().addActionListener(controller);
+        getMenuItemFileExit().addActionListener(controller);
     }
 
     public void addNewController(ActionListener controller) {
-    	getMenuItemFileNew().addActionListener(controller);
+        getMenuItemFileNew().addActionListener(controller);
     }
 
     public void addOpenController(ActionListener controller) {
-    	getMenuItemFileOpen().addActionListener(controller);
+        getMenuItemFileOpen().addActionListener(controller);
     }
 
     public void addSaveController(ActionListener controller) {
-    	getMenuItemFileSave().addActionListener(controller);
+        getMenuItemFileSave().addActionListener(controller);
     }
 
     public void addSaveAsController(ActionListener controller) {
-    	getMenuItemFileSaveAs().addActionListener(controller);
+        getMenuItemFileSaveAs().addActionListener(controller);
     }
 
     public void addExportController(ActionListener controller) {
-    	getMenuItemFileExport().addActionListener(controller);
+        getMenuItemFileExport().addActionListener(controller);
     }
 
 }

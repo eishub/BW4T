@@ -163,15 +163,15 @@ public abstract class AbstractMapController implements MapController, Runnable {
     
     @Override
     public Set<Zone> getChargingZones() {
-    	Set<Zone> chargingzones = new HashSet<Zone>();
-    	
-    	for (Zone zone : map.getZones()) {
-    		if (zone.getType() == Type.CHARGINGZONE) {
-    			chargingzones.add(zone);
-    		}
-    	}
-    	
-    	return chargingzones;
+        Set<Zone> chargingzones = new HashSet<Zone>();
+        
+        for (Zone zone : map.getZones()) {
+            if (zone.getType() == Type.CHARGINGZONE) {
+                chargingzones.add(zone);
+            }
+        }
+        
+        return chargingzones;
     }
     
     @Override
@@ -184,7 +184,7 @@ public abstract class AbstractMapController implements MapController, Runnable {
             }
         }
 
-        return blockades;   	
+        return blockades;       
     }
 
     @Override

@@ -13,10 +13,10 @@ import java.util.Set;
 
 /** The ActionHandler Class handles the performAction function of the RemoteEnvironment. */
 public final class ActionHandler {
-	
-	/** Should never be instantiated. */
-	private ActionHandler() { }
-	
+    
+    /** Should never be instantiated. */
+    private ActionHandler() { }
+    
     /**
      * Handles the performAction function from the {@link RemoteEnvironment}. 
      * All actions which are requested are routed through this function.

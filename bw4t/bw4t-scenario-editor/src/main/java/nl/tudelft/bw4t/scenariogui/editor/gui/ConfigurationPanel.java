@@ -626,51 +626,51 @@ public class ConfigurationPanel extends JPanel {
     }
     
     public void addClientIPController(DocumentListener controller) {
-    	getClientIPTextField().getDocument().addDocumentListener(controller);
+        getClientIPTextField().getDocument().addDocumentListener(controller);
     }
     
     public void addClientPortController(DocumentListener controller) {
-    	getClientPortTextField().getDocument().addDocumentListener(controller);
+        getClientPortTextField().getDocument().addDocumentListener(controller);
     }
     
     public void addServerIPController(DocumentListener controller) {
-    	getServerIPTextField().getDocument().addDocumentListener(controller);
+        getServerIPTextField().getDocument().addDocumentListener(controller);
     }
     
     public void addServerPortController(DocumentListener controller) {
-    	getServerPortTextField().getDocument().addDocumentListener(controller);
+        getServerPortTextField().getDocument().addDocumentListener(controller);
     }
     
     public void addGUIYesCheckboxController(ItemListener controller) {
-    	getGUIYesCheckbox().addItemListener(controller);
+        getGUIYesCheckbox().addItemListener(controller);
     }
     
     public void addGUINoCheckboxController(ItemListener controller) {
-    	getGUINoCheckbox().addItemListener(controller);
+        getGUINoCheckbox().addItemListener(controller);
     }
     
     public void addPathsYesCheckboxController(ItemListener controller) {
-    	getPathsYesCheckbox().addItemListener(controller);
+        getPathsYesCheckbox().addItemListener(controller);
     }
     
     public void addPathsNoCheckboxController(ItemListener controller) {
-    	getPathsNoCheckbox().addItemListener(controller);
+        getPathsNoCheckbox().addItemListener(controller);
     }
     
     public void addCollisionsYesCheckboxController(ItemListener controller) {
-    	getCollisionsYesCheckbox().addItemListener(controller);
+        getCollisionsYesCheckbox().addItemListener(controller);
     }
     
     public void addCollisionsNoCheckboxController(ItemListener controller) {
-    	getCollisionsNoCheckbox().addItemListener(controller);
+        getCollisionsNoCheckbox().addItemListener(controller);
     }
     
     public void addMapFileController(DocumentListener controller) {
-    	getMapFileTextField().getDocument().addDocumentListener(controller);
+        getMapFileTextField().getDocument().addDocumentListener(controller);
     }
 
     public void addMapFileButtonController(ActionListener controller) {
-		getChooseMapFile().addActionListener(controller);
+        getChooseMapFile().addActionListener(controller);
     }
     
 }

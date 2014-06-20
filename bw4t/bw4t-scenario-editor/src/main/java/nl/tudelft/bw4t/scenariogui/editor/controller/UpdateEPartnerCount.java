@@ -15,30 +15,30 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
  */
 public class UpdateEPartnerCount implements TableModelListener {
 
-	private MainPanel view;
-	
-	private BW4TClientConfig model;
-	
-	private boolean hasShownEpartnerWarning = false;
-	
-	/**
-	 * Create an UpdateEPartnerCount event handler.
-	 * @param newView The parent view.
-	 * @param model The model.
-	 */
-	public UpdateEPartnerCount(final MainPanel newView, BW4TClientConfig model) {
-		this.view = newView;
-		this.model = model;
-	}
-	
-	/**
-	 * Executes action that needs to happen when the epartner table changes.
+    private MainPanel view;
+    
+    private BW4TClientConfig model;
+    
+    private boolean hasShownEpartnerWarning = false;
+    
+    /**
+     * Create an UpdateEPartnerCount event handler.
+     * @param newView The parent view.
+     * @param model The model.
+     */
+    public UpdateEPartnerCount(final MainPanel newView, BW4TClientConfig model) {
+        this.view = newView;
+        this.model = model;
+    }
+    
+    /**
+     * Executes action that needs to happen when the epartner table changes.
      *
      * @param e The action.
-	 */
-	@Override
-	public void tableChanged(TableModelEvent e) {
-	    view.getEntityPanel().updateEPartnerCount(model.getAmountEPartner());
+     */
+    @Override
+    public void tableChanged(TableModelEvent e) {
+        view.getEntityPanel().updateEPartnerCount(model.getAmountEPartner());
         if (model.getAmountEPartner() > model.getAmountBot()) {
             if (!hasShownEpartnerWarning) {
                 hasShownEpartnerWarning = true;
@@ -50,6 +50,6 @@ public class UpdateEPartnerCount implements TableModelListener {
         } else {
             hasShownEpartnerWarning = false;
         }
-	}
+    }
 
 }

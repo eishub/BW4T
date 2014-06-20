@@ -13,33 +13,33 @@ import nl.tudelft.bw4t.scenariogui.util.FileFilters;
  * Handles actions of the GoalFileButton.
  */
 public class EGoalFileButton implements ActionListener {
-	private EpartnerFrame view;
+    private EpartnerFrame view;
 
-	private JFileChooser jfc;
+    private JFileChooser jfc;
 
-	/**
-	 * The constructor for this action listener.
-	 * 
-	 * @param view
-	 *            The frame with the button in it.
-	 */
-	public EGoalFileButton(EpartnerFrame view) {
-		this.view = view;
-	}
+    /**
+     * The constructor for this action listener.
+     * 
+     * @param view
+     *            The frame with the button in it.
+     */
+    public EGoalFileButton(EpartnerFrame view) {
+        this.view = view;
+    }
 
-	/**
-	 * Performs the action.
-	 * 
-	 * @param ae
-	 *            The action event triggering this method.
-	 */
-	public void actionPerformed(ActionEvent ae) {
-		jfc = new JFileChooser();
-		jfc.setFileFilter(FileFilters.goalFilter());
-		if (jfc.showOpenDialog(view) == jfc.APPROVE_OPTION) {
-			File f = jfc.getSelectedFile();
-			String path = f.getAbsolutePath();
-			view.getEpartnerGoalFileField().setText(path);
-		}
-	}
+    /**
+     * Performs the action.
+     * 
+     * @param ae
+     *            The action event triggering this method.
+     */
+    public void actionPerformed(ActionEvent ae) {
+        jfc = new JFileChooser();
+        jfc.setFileFilter(FileFilters.goalFilter());
+        if (jfc.showOpenDialog(view) == jfc.APPROVE_OPTION) {
+            File f = jfc.getSelectedFile();
+            String path = f.getAbsolutePath();
+            view.getEpartnerGoalFileField().setText(path);
+        }
+    }
 }

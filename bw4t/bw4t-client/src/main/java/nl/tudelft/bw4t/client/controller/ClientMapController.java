@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import nl.tudelft.bw4t.client.controller.percept.processors.BumpedProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.ColorProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.EPartnerProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.HoldingProcessor;
@@ -101,6 +102,7 @@ public class ClientMapController extends AbstractMapController {
         perceptProcessors.put("sequenceIndex", new SequenceIndexProcessor());
         perceptProcessors.put("location", new LocationProcessor());
         perceptProcessors.put("robotSize", new RobotSizeProcessor());
+        perceptProcessors.put("bumped", new BumpedProcessor());
     }
 
     @Override

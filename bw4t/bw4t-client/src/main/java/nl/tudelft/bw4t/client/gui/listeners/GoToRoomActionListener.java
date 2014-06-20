@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
  * the pop up menu
  */
 public class GoToRoomActionListener extends AbstractClientActionListener {
-	/** ID of the room to goTo when this listener is fired. */
+    /** ID of the room to goTo when this listener is fired. */
     private final String id;
     /** Logger to report error messages to. */
     private static final Logger LOGGER = Logger.getLogger(GoToRoomActionListener.class);

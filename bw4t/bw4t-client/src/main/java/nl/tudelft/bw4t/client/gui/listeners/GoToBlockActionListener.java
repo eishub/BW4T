@@ -16,7 +16,7 @@ import eis.iilang.Percept;
  * the pop up menu
  */
 public class GoToBlockActionListener extends AbstractClientActionListener {
-	/** ID of the box to goTo when this listener is fired. */
+    /** ID of the box to goTo when this listener is fired. */
     private final long boxID;
     /** Logger to report error messages to. */
     private static final Logger LOGGER = Logger.getLogger(GoToBlockActionListener.class);
@@ -34,10 +34,10 @@ public class GoToBlockActionListener extends AbstractClientActionListener {
     public void actionPerformed(ActionEvent e) {
         if (!Launcher.getEnvironment().isConnectedToGoal()) {
                 try {
-					getController().getHumanAgent().goToBlock(boxID);
-				} catch (ActException e1) {
-					LOGGER.error(e1);
-				}
+                    getController().getHumanAgent().goToBlock(boxID);
+                } catch (ActException e1) {
+                    LOGGER.error(e1);
+                }
         } else {
             LinkedList<Percept> percepts = new LinkedList<Percept>();
             Percept percept = new Percept("goToBlock", new Numeral(boxID));
