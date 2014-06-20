@@ -45,6 +45,7 @@ public class RandomizeBlocksTest {
 	/** This is the room we will generate blocks in. */
 	private ZoneController room2;
 
+	/** This is the updateable interface the map controller will use. */
 	private UpdateableEditorInterface uei = new UpdateableEditorInterface() {
 
 		@Override
