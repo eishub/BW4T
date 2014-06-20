@@ -16,8 +16,9 @@ public class RobotOldTargetUnreachableProcessor implements PerceptProcessor {
         boolean oldTargetUnreachable = ((Numeral) parameters.get(1)).getValue().intValue() == 1;
         ViewEntity theBot = clientMapController.getTheBot();
         if (id == theBot.getId()) {
-            if (oldTargetUnreachable)
+            if (oldTargetUnreachable) {
                 theBot.setCollided(false);
+            }
         }
     }
 
