@@ -1,26 +1,20 @@
 package nl.tudelft.bw4t.scenariogui;
 
-import java.io.FileNotFoundException;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.editor.controller.ScenarioEditorController;
-import nl.tudelft.bw4t.scenariogui.editor.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
+import nl.tudelft.bw4t.scenariogui.editor.gui.MenuBar;
 import nl.tudelft.bw4t.scenariogui.util.DefaultOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
 
 /**
- * The ScenarioEditor class serves as the Frame for the MenuBar and MainPanel.
- * 
- * @version     0.1                
- * @since       12-05-2014        
+ * The ScenarioEditor class serves as the Frame for the MenuBar and MainPanel.     
  */
 public class ScenarioEditor extends JFrame {
 
@@ -34,7 +28,7 @@ public class ScenarioEditor extends JFrame {
     
     private ScenarioEditorController controller;
     
-    private static BW4TClientConfig model;
+    private BW4TClientConfig model;
     
     private static OptionPrompt option = new DefaultOptionPrompt();
 
@@ -123,29 +117,14 @@ public class ScenarioEditor extends JFrame {
         return (JPanel) getContentPane();
     }
 
-    /**
-     * Returns the main panel.
-     *
-     * @return The main panel.
-     */
     public final MainPanel getMainPanel() {
         return mPanel;
     }
 
-    /**
-     * Returns the menu bar.
-     *
-     * @return The menu bar.
-     */
     public final MenuBar getTopMenuBar() {
         return menuBar;
     }
 
-    /**
-     * Function to set the look and feel of the frame to the default look and
-     * feel of the system. Throws exceptions which are passed over since the
-     * failure to set the look and feel is not considered harmful.
-     */
     private void setLookAndFeel() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -160,11 +139,6 @@ public class ScenarioEditor extends JFrame {
         }
     }
 
-    /**
-     * Returns the controllers object being used to handle all events on the GUI.
-     *
-     * @return The Controller used.
-     */
     public ScenarioEditorController getController() {
         return controller;
     }
@@ -190,19 +164,10 @@ public class ScenarioEditor extends JFrame {
         ScenarioEditor.option.showMessageDialog(null, s + "\n" + e.toString());
     }
     
-    /**
-     * Used to set the OptionPrompt for the Scenario GUI.
-     * 
-     * @param o The OptionPrompt object to set option to.
-     */
     public static void setOptionPrompt(OptionPrompt o) {
         option = o;
     }
     
-    /**
-     * Used to get the OptionPrompt for the Scenario GUI
-     * @return option Used to handle all thread blocking GUI objects.
-     */
     public static OptionPrompt getOptionPrompt() {
         return option;
     }
@@ -211,6 +176,7 @@ public class ScenarioEditor extends JFrame {
      * Closes the ScenarioEditor window and all child frames.
      */
     public void closeScenarioEditor() {
+    	// This exit call is used because the child frames won't be closed otherwise. 
         System.exit(0);
     }
 
