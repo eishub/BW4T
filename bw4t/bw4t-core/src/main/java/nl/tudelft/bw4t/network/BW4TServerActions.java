@@ -1,6 +1,5 @@
 package nl.tudelft.bw4t.network;
 
-import eis.EnvironmentInterfaceStandard;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
 import eis.exceptions.ManagementException;
@@ -19,7 +18,6 @@ import java.util.Map;
 import java.util.Set;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
-import repast.simphony.batch.BatchRunner;
 
 /**
  * This interface defines the calls that the clients can make to the server. Note, this interface does not support kill
