@@ -4,7 +4,6 @@ import nl.tudelft.bw4t.scenariogui.botstore.controller.BotController;
 
 /**
  * BotStoreViewInterface for the BotEditorPanel.
- * @author Wendy
  *
  */
 public interface BotStoreViewInterface {
