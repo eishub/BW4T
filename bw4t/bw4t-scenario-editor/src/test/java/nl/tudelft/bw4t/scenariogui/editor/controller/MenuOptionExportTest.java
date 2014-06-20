@@ -89,13 +89,8 @@ public class MenuOptionExportTest {
         editor.getTopMenuBar().getMenuItemFileExport().doClick();
 
         verify(yesPrompt, times(1)).showMessageDialog((Component) any(), anyString());
-<<<<<<< HEAD
+
         assertTrue("mas2g Exists", new File(FILE_EXPORT_PATH + ExportToMASTest.CONFIG_NAME + ".mas2g").exists());
         FileUtils.deleteDirectory(directory);
-=======
-        assertTrue("mas2g failed to create", new File(FILE_EXPORT_PATH + ExportToMASTest.CONFIG_NAME + ".mas2g").exists());
-        FileUtils.forceDelete(new File(FILE_EXPORT_PATH + ExportToMASTest.CONFIG_NAME + ".mas2g"));
-
->>>>>>> origin/master
     }
 }

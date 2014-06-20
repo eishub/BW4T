@@ -12,11 +12,14 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
+import repast.simphony.space.grid.Grid;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AbstractRobotTest {
     
     private ContinuousSpace<Object> mockedSpace = Mockito.mock(ContinuousSpace.class);
+    private Grid<Object> grid = Mockito.mock(Grid.class);
+
     private Context<Object> mockedContext = Mockito.mock(Context.class);
     private IRobot mockedIRobot = Mockito.mock(IRobot.class);
 
@@ -26,7 +29,7 @@ public class AbstractRobotTest {
     public void createNavigatingRobot() {
         int cap = 2;
         String name = "Bot1";
-        bot = new NavigatingRobot(name, mockedSpace, mockedContext, true, cap);
+        bot = new NavigatingRobot(name, mockedSpace, grid, mockedContext, true, cap);
     }
     
     // can no do because no such field in navigatingrobot
