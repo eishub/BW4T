@@ -25,7 +25,7 @@ public class BatteryDischargeUpdater extends MouseAdapter implements ActionListe
 
     @Override
     public void mouseReleased(MouseEvent arg0) {
-    	view.updateDischargeRate();
+        view.updateDischargeRate();
     }
     
     @Override

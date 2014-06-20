@@ -80,7 +80,7 @@ public class FormatTest {
      */
     @Test
     public final void testGetNonNegativeIntValueNegative() {
-    	assertEquals(1, Format.getNonNegativeIntValue(negativeInteger));
+        assertEquals(1, Format.getNonNegativeIntValue(negativeInteger));
     }
     
     /**
@@ -89,7 +89,7 @@ public class FormatTest {
      */
     @Test
     public final void testGetNonNegativeIntValuePositive() {
-    	assertEquals(1, Format.getNonNegativeIntValue(nonNegativeInteger));
+        assertEquals(1, Format.getNonNegativeIntValue(nonNegativeInteger));
     }
     
     /**
@@ -97,7 +97,7 @@ public class FormatTest {
      */
     @Test
     public final void testGetNonNegativeIntValueNull() {
-    	assertEquals(0, Format.getNonNegativeIntValue(null));
+        assertEquals(0, Format.getNonNegativeIntValue(null));
     }
 
     /**
@@ -106,7 +106,7 @@ public class FormatTest {
      */
     @Test
     public final void testNegativeGetIntValueNoNegative() {
-    	assertEquals(1, Format.getIntValue(negativeInteger, false));
+        assertEquals(1, Format.getIntValue(negativeInteger, false));
     }
 
     /**
@@ -115,7 +115,7 @@ public class FormatTest {
      */
     @Test
     public final void testNegativeGetIntValueNegative() {
-    	assertEquals(-1, Format.getIntValue(negativeInteger, true));
+        assertEquals(-1, Format.getIntValue(negativeInteger, true));
     }
 
     /**
@@ -124,7 +124,7 @@ public class FormatTest {
      */
     @Test
     public final void testPositiveGetIntValueNoNegative() {
-    	assertEquals(1, Format.getIntValue(nonNegativeInteger, false));
+        assertEquals(1, Format.getIntValue(nonNegativeInteger, false));
     }
 
     /**
@@ -133,7 +133,7 @@ public class FormatTest {
      */
     @Test
     public final void testPositiveGetIntValueNegative() {
-    	assertEquals(1, Format.getIntValue(nonNegativeInteger, true));
+        assertEquals(1, Format.getIntValue(nonNegativeInteger, true));
     }
     
     /**
@@ -142,7 +142,7 @@ public class FormatTest {
      */
     @Test
     public final void testGetIntValueNULLNegative() {
-    	assertEquals(0, Format.getIntValue(null, true));
+        assertEquals(0, Format.getIntValue(null, true));
     }
     
     /**
@@ -151,7 +151,7 @@ public class FormatTest {
      */
     @Test
     public final void testGetIntValueNULLNoNegative() {
-    	assertEquals(0, Format.getIntValue(null, false));
+        assertEquals(0, Format.getIntValue(null, false));
     }
 
     /**
@@ -159,7 +159,7 @@ public class FormatTest {
      */
     @Test
     public final void testGetIntValueToLongLong() {
-    	assertEquals(0, Format.getIntValue("1000000000000000000", false));
+        assertEquals(0, Format.getIntValue("1000000000000000000", false));
     }
 
     /**
@@ -168,7 +168,7 @@ public class FormatTest {
      */
     @Test
     public final void testGetIntValueToLongInt() {
-    	assertEquals(0, Format.getIntValue("10000000000", false));
+        assertEquals(0, Format.getIntValue("10000000000", false));
     }
 
     /**
@@ -177,7 +177,7 @@ public class FormatTest {
      */
     @Test
     public final void testGetIntValueToSmallInt() {
-    	assertEquals(0, Format.getIntValue("-10000000000", false));
+        assertEquals(0, Format.getIntValue("-10000000000", false));
     }
 
     /**
@@ -186,7 +186,7 @@ public class FormatTest {
      */
     @Test
     public final void testGetIntValueToSmallIntNegative() {
-    	assertEquals(0, Format.getIntValue("-10000000000", true));
+        assertEquals(0, Format.getIntValue("-10000000000", true));
     }
     
     /**
@@ -194,7 +194,7 @@ public class FormatTest {
      */
     @Test
     public final void testPadStringEmpty() {
-    	assertEquals("0000", Format.padString("", 4));
+        assertEquals("0000", Format.padString("", 4));
     }
     
     /**
@@ -202,7 +202,7 @@ public class FormatTest {
      */
     @Test
     public final void testPadStringShort() {
-    	assertEquals("3000", Format.padString("3", 4));
+        assertEquals("3000", Format.padString("3", 4));
     }
     
     /**
@@ -210,7 +210,7 @@ public class FormatTest {
      */
     @Test
     public final void testPadStringLong() {
-    	assertEquals("3000000", Format.padString("3000000", 4));
+        assertEquals("3000000", Format.padString("3000000", 4));
     }
     
     /**
@@ -219,7 +219,7 @@ public class FormatTest {
      */
     @Test
     public final void testPadStringEqual() {
-    	assertEquals("3000", Format.padString("3000", 4));
+        assertEquals("3000", Format.padString("3000", 4));
     }
 
 }

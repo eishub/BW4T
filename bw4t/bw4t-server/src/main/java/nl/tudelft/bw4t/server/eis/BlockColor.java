@@ -48,7 +48,7 @@ public class BlockColor {
     public boolean equals(Object obj) {
         if (obj == null 
                 || !(obj instanceof BlockColor)){
-        	return false; 
+            return false; 
         }
         BlockColor other = (BlockColor) obj;
         if (this == obj) {

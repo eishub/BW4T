@@ -15,7 +15,7 @@ import org.apache.log4j.Logger;
  * the pop up menu
  */
 public class GotoPositionActionListener extends AbstractClientActionListener {
-	/** The point to goTo when this listener is fired. */
+    /** The point to goTo when this listener is fired. */
     private final Point position;
     /** Logger to report error messages to. */
     private static final Logger LOGGER = Logger.getLogger(GotoPositionActionListener.class);
@@ -35,7 +35,7 @@ public class GotoPositionActionListener extends AbstractClientActionListener {
             try {
                 getController().getHumanAgent().goTo(position.getX(), position.getY());
             } catch (ActException e1) {
-            	LOGGER.error(e1); 
+                LOGGER.error(e1); 
             }
         } else {
             LinkedList<Percept> percepts = new LinkedList<Percept>();

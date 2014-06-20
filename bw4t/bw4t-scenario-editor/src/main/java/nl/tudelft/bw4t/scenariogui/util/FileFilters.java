@@ -29,7 +29,7 @@ public final class FileFilters {
      * @return an extension filter for GOAL files.
      */
     public static FileNameExtensionFilter goalFilter() {
-    	return new FileNameExtensionFilter("GOAL Files (*.goal)", "goal");
+        return new FileNameExtensionFilter("GOAL Files (*.goal)", "goal");
     }
 
     /**

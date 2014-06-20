@@ -225,7 +225,7 @@ public class MenuBarTest {
      */
     @Test
     public void testSaveAfterDeletedSave() throws IOException {
-    	/* Mock the file chooser for saving */
+        /* Mock the file chooser for saving */
         when(filechooser.showSaveDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.getSelectedFile()).thenReturn(new File(FILE_SAVE_PATH));
@@ -239,7 +239,7 @@ public class MenuBarTest {
         ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
         
         // set the last file location without creating the file
-    	String testPath = "TestPath";
+        String testPath = "TestPath";
         assertFalse(new File(testPath).exists());
         editor.getTopMenuBar().setLastFileLocation(testPath);
         
@@ -300,7 +300,7 @@ public class MenuBarTest {
 
         // Change the defaults
         ConfigurationPanel configurationPanel = editor.getMainPanel().getConfigurationPanel();
-		configurationPanel.setClientIP("randomvalue");
+        configurationPanel.setClientIP("randomvalue");
 
         editor.getTopMenuBar().getMenuItemFileOpen().doClick();
 
@@ -345,7 +345,7 @@ public class MenuBarTest {
 
         // Change the defaults
         ConfigurationPanel configurationPanel = editor.getMainPanel().getConfigurationPanel();
-		configurationPanel.setClientIP("randomvalue");
+        configurationPanel.setClientIP("randomvalue");
 
         // Set a map.
         configurationPanel.setMapFile(BASE + "maps/Banana");
@@ -407,7 +407,7 @@ public class MenuBarTest {
 
         // Change the defaults
         ConfigurationPanel configurationPanel = editor.getMainPanel().getConfigurationPanel();
-		configurationPanel.setClientIP("randomval");
+        configurationPanel.setClientIP("randomval");
 
         editor.getTopMenuBar().getMenuItemFileOpen().doClick();
 
@@ -433,14 +433,14 @@ public class MenuBarTest {
      */
     @Test
     public void testNewAfterOpen() {
-    	// Setup the behaviour
+        // Setup the behaviour
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.getSelectedFile()).thenReturn(new File(FILE_OPEN_PATH));
 
         editor.getTopMenuBar().getMenuItemFileOpen().doClick();
         EntityPanel entityPanel = editor.getMainPanel().getEntityPanel();
-		assertEquals(2, entityPanel.getBotTableModel().getRowCount());
+        assertEquals(2, entityPanel.getBotTableModel().getRowCount());
         assertEquals(2, entityPanel.getEPartnerTableModel().getRowCount());
         
         //open new configuration

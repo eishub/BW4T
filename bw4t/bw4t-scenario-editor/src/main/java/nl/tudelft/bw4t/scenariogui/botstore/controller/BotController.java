@@ -49,9 +49,9 @@ public class BotController {
      * @param cc BW4TClientConfig
      */
     public BotController(MainPanel mainPanel, int row, BW4TClientConfig cc) {
-    	botConfig = mainPanel.getClientConfig().getBot(row);
-    	mp = mainPanel;
-    	clientconfig = cc;
+        botConfig = mainPanel.getClientConfig().getBot(row);
+        mp = mainPanel;
+        clientconfig = cc;
     }
     
     /**
@@ -60,190 +60,190 @@ public class BotController {
      * @param view : the view that is added to the set.
      */
     public void addView(BotStoreViewInterface view) {
-    	views.add(view);
-    	view.updateView();
+        views.add(view);
+        view.updateView();
     }
     
     /**
-	 * Delete a view from the set of views.
-	 * 
-	 * @param view : the view that is deleted from the set
-	 */
-	public void removeView(BotStoreViewInterface view) {
-		views.remove(view);
-	}
-    
-	/**
-	 * Returns the name of the bot.
-	 * 
-	 * @return The name of the bot.
-	 */
-	public String getBotName() {
-		return botConfig.getBotName();
-	}
-	
-	/**
-	 * Returns the amount of bots of this type.
-	 * 
-	 * @return The amount of bots of this type.
-	 */
-	public int getBotAmount() {
-		return botConfig.getBotAmount();
-	}
-	
-	/**
-	 * @return the size of the robot.
-	 */
-	public int getBotSize() {
-		return botConfig.getBotSize();
-	}
-	
-	/**
-	 * @return the speed of the robot
-	 */
-	public int getBotSpeed() {
-		return botConfig.getBotSpeed();
-	}
-	
-	/**
-	 * Returns if the battery is enabled or not.
-	 * 
-	 * @return If the battery is enabled.
-	 */
-	public boolean isBatteryEnabled() {
-		return botConfig.isBatteryEnabled();
-	}
-	
-	/**
-	 * @return the robot's battery capacity.
-	 */
-	public int getBotBatteryCapacity() {
-		return botConfig.getBotBatteryCapacity();
-	}
-	
-	/**
-	 * @return the robot's battery discharge rate.
-	 */
-	public double getBotBatteryDischargeRate() {
-		return botConfig.getBotBatteryDischargeRate();
-	}
-	
-	/**
-	 * @return if the robot has a color blind handicap.
-	 */
-	public boolean getColorBlindHandicap() {
-		return botConfig.getColorBlindHandicap();
-	}
-
-	/**
-	 * @return if the robot has a gripper handicap.
-	 */
-	public boolean getGripperHandicap() {
-		return botConfig.getGripperHandicap();
-	}
-	
-	/**
-	 * @return if the robot has a move speed handicap.
-	 */
-	public boolean getMoveSpeedHandicap() {
-		return botConfig.getMoveSpeedHandicap();
-	}
-
-	/**
-	 * @return if the robot has a size overload handicap.
-	 */
-	public boolean getSizeOverloadHandicap() {
-		return botConfig.getSizeOverloadHandicap();
-	}
-	
-	/**
-	 * Returns the amount of grippers the bot has.
-	 * 
-	 * @return The amount of grippers the bot has.
-	 */
-	public int getGrippers() {
-		return botConfig.getGrippers();
-	}
+     * Delete a view from the set of views.
+     * 
+     * @param view : the view that is deleted from the set
+     */
+    public void removeView(BotStoreViewInterface view) {
+        views.remove(view);
+    }
     
     /**
-	 * Returns the reference name in goal.
-	 * @return The reference name in goal.
-	 */
-	public String getReferenceName() {
-		return botConfig.getReferenceName();
-	}
-	
-	/**
-	 * Returns the goal file name.
-	 * @return The goal file name.
-	 */
-	public String getFileName() {
-		return botConfig.getFileName();
-	}
-	
-	/**
-	 * Return the MainPanel.
-	 * @return mp
-	 */
-	public MainPanel getMainPanel() {
-		return mp;
-	}
-	
-	/**
-	 * Return the BW4TClientConfig
-	 * @return config
-	 */
-	public BW4TClientConfig getBW4TClientConfig() {
-		return clientconfig;
-	}
-	
-	public EntityType getBotController() {
-		return botConfig.getBotController();
-	}
-	
-	/**
-	 * Updates the bot config file with the values from the BotEditorPanel
-	 * 
-	 * @param bep is the BotEditorPanel the values are taken from.
-	 */
-	public void updateConfig(BotEditorPanel bep) {
-		botConfig.setBotName(bep.getBotName());
-		botConfig.setBotController(EntityType.getType((String) bep
-				.getBotControllerSelector()
-				.getSelectedItem()));
-		botConfig.setBotAmount(bep.getBotAmount());
-		botConfig.setBotSize(bep.getBotSize());
-		botConfig.setBotSpeed(bep.getBotSpeed());
-		botConfig.setBotBatteryCapacity(bep.getBotBatteryCapacity());
-		botConfig.setGrippers(bep.getGrippers());
-		botConfig.setBatteryEnabled(bep.isBatteryEnabled());
-		botConfig.setColorBlindHandicap(bep.getColorBlindHandicap());
-		botConfig.setGripperHandicap(bep.getGripperHandicap());
-		botConfig.setMoveSpeedHandicap(bep.getMoveSpeedHandicap());
-		botConfig.setSizeOverloadHandicap(bep.getSizeOverloadHandicap());
-		botConfig.setReferenceName(bep.getReferenceName());
-		botConfig.setFileName(bep.getFileName());
+     * Returns the name of the bot.
+     * 
+     * @return The name of the bot.
+     */
+    public String getBotName() {
+        return botConfig.getBotName();
+    }
+    
+    /**
+     * Returns the amount of bots of this type.
+     * 
+     * @return The amount of bots of this type.
+     */
+    public int getBotAmount() {
+        return botConfig.getBotAmount();
+    }
+    
+    /**
+     * @return the size of the robot.
+     */
+    public int getBotSize() {
+        return botConfig.getBotSize();
+    }
+    
+    /**
+     * @return the speed of the robot
+     */
+    public int getBotSpeed() {
+        return botConfig.getBotSpeed();
+    }
+    
+    /**
+     * Returns if the battery is enabled or not.
+     * 
+     * @return If the battery is enabled.
+     */
+    public boolean isBatteryEnabled() {
+        return botConfig.isBatteryEnabled();
+    }
+    
+    /**
+     * @return the robot's battery capacity.
+     */
+    public int getBotBatteryCapacity() {
+        return botConfig.getBotBatteryCapacity();
+    }
+    
+    /**
+     * @return the robot's battery discharge rate.
+     */
+    public double getBotBatteryDischargeRate() {
+        return botConfig.getBotBatteryDischargeRate();
+    }
+    
+    /**
+     * @return if the robot has a color blind handicap.
+     */
+    public boolean getColorBlindHandicap() {
+        return botConfig.getColorBlindHandicap();
+    }
 
-		for (BotStoreViewInterface bsvi: views) {
-			bsvi.updateView();
-		}
-	}
-	
-	/**
-	 * Open a Goal file
+    /**
+     * @return if the robot has a gripper handicap.
+     */
+    public boolean getGripperHandicap() {
+        return botConfig.getGripperHandicap();
+    }
+    
+    /**
+     * @return if the robot has a move speed handicap.
+     */
+    public boolean getMoveSpeedHandicap() {
+        return botConfig.getMoveSpeedHandicap();
+    }
 
-	 * @param view the BotEditorPanel.
-	 */
-	@SuppressWarnings("static-access")
-	public void openGoalFile(BotEditorPanel view) {
-		JFileChooser jfc = new JFileChooser();
-		jfc.setFileFilter(FileFilters.goalFilter());
-		if (jfc.showOpenDialog(view) == jfc.APPROVE_OPTION) {
-			File f = jfc.getSelectedFile();
-			String path = f.getAbsolutePath();
-			view.getFile().setText(path);
-		}
-	}
+    /**
+     * @return if the robot has a size overload handicap.
+     */
+    public boolean getSizeOverloadHandicap() {
+        return botConfig.getSizeOverloadHandicap();
+    }
+    
+    /**
+     * Returns the amount of grippers the bot has.
+     * 
+     * @return The amount of grippers the bot has.
+     */
+    public int getGrippers() {
+        return botConfig.getGrippers();
+    }
+    
+    /**
+     * Returns the reference name in goal.
+     * @return The reference name in goal.
+     */
+    public String getReferenceName() {
+        return botConfig.getReferenceName();
+    }
+    
+    /**
+     * Returns the goal file name.
+     * @return The goal file name.
+     */
+    public String getFileName() {
+        return botConfig.getFileName();
+    }
+    
+    /**
+     * Return the MainPanel.
+     * @return mp
+     */
+    public MainPanel getMainPanel() {
+        return mp;
+    }
+    
+    /**
+     * Return the BW4TClientConfig
+     * @return config
+     */
+    public BW4TClientConfig getBW4TClientConfig() {
+        return clientconfig;
+    }
+    
+    public EntityType getBotController() {
+        return botConfig.getBotController();
+    }
+    
+    /**
+     * Updates the bot config file with the values from the BotEditorPanel
+     * 
+     * @param bep is the BotEditorPanel the values are taken from.
+     */
+    public void updateConfig(BotEditorPanel bep) {
+        botConfig.setBotName(bep.getBotName());
+        botConfig.setBotController(EntityType.getType((String) bep
+                .getBotControllerSelector()
+                .getSelectedItem()));
+        botConfig.setBotAmount(bep.getBotAmount());
+        botConfig.setBotSize(bep.getBotSize());
+        botConfig.setBotSpeed(bep.getBotSpeed());
+        botConfig.setBotBatteryCapacity(bep.getBotBatteryCapacity());
+        botConfig.setGrippers(bep.getGrippers());
+        botConfig.setBatteryEnabled(bep.isBatteryEnabled());
+        botConfig.setColorBlindHandicap(bep.getColorBlindHandicap());
+        botConfig.setGripperHandicap(bep.getGripperHandicap());
+        botConfig.setMoveSpeedHandicap(bep.getMoveSpeedHandicap());
+        botConfig.setSizeOverloadHandicap(bep.getSizeOverloadHandicap());
+        botConfig.setReferenceName(bep.getReferenceName());
+        botConfig.setFileName(bep.getFileName());
+
+        for (BotStoreViewInterface bsvi: views) {
+            bsvi.updateView();
+        }
+    }
+    
+    /**
+     * Open a Goal file
+
+     * @param view the BotEditorPanel.
+     */
+    @SuppressWarnings("static-access")
+    public void openGoalFile(BotEditorPanel view) {
+        JFileChooser jfc = new JFileChooser();
+        jfc.setFileFilter(FileFilters.goalFilter());
+        if (jfc.showOpenDialog(view) == jfc.APPROVE_OPTION) {
+            File f = jfc.getSelectedFile();
+            String path = f.getAbsolutePath();
+            view.getFile().setText(path);
+        }
+    }
     
     /** 
      * When the speed or size slider is moved, calculate the new battery discharge rate
@@ -251,12 +251,12 @@ public class BotController {
      * @param view the BotEditorPanel
      */
     public void setNewBatteryValue(BotEditorPanel view) {
-    	if (view.isBatteryEnabled()) {
-    		double res = getBotBatteryDischargeRate();
-    		DecimalFormat df = new DecimalFormat("#.###");
-	        String value = df.format(res);
-	        view.getBatteryUseValueLabel().setText(padString(value));
-    	}
+        if (view.isBatteryEnabled()) {
+            double res = getBotBatteryDischargeRate();
+            DecimalFormat df = new DecimalFormat("#.###");
+            String value = df.format(res);
+            view.getBatteryUseValueLabel().setText(padString(value));
+        }
     }
     
     /**
@@ -280,7 +280,7 @@ public class BotController {
      * Return the botconfig.
      * @return botConfig
      */
-	public BotConfig getBotConfig() {
-		return botConfig;
-	}    
+    public BotConfig getBotConfig() {
+        return botConfig;
+    }    
 }

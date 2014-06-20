@@ -48,9 +48,9 @@ class MenuOptionExport extends AbstractMenuOption {
     public void actionPerformed(final ActionEvent e) {
         saveFile();
         if (getMenuView().hasLastFileLocation()) {
-        	if(!allGoalFilesExist()) {
-        	    ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Warning: Some goal files are missing.");
-        	}
+            if(!allGoalFilesExist()) {
+                ScenarioEditor.getOptionPrompt().showMessageDialog(null, "Warning: Some goal files are missing.");
+            }
             File saveLocation = new File(getMenuView().getLastFileLocation());
 
             JFileChooser filechooser = getCurrentFileChooser();
@@ -74,19 +74,19 @@ class MenuOptionExport extends AbstractMenuOption {
      *
      */
     public boolean allGoalFilesExist() {
-    	boolean allExist = true;
-    	BW4TClientConfig model = this.getModel();
-    	List<BotConfig> botList = model.getBots();
-    	for(int i = 0; i < botList.size() && allExist; i++) {
-    		allExist = allExist && AgentFileChecker.fileNameExists(botList.get(i).getFileName());
-    	}
+        boolean allExist = true;
+        BW4TClientConfig model = this.getModel();
+        List<BotConfig> botList = model.getBots();
+        for(int i = 0; i < botList.size() && allExist; i++) {
+            allExist = allExist && AgentFileChecker.fileNameExists(botList.get(i).getFileName());
+        }
 
-    	List<EPartnerConfig> epartnerList = model.getEpartners();
-    	for(int i = 0; i < epartnerList.size() && allExist; i++) {
-    	    allExist = allExist && AgentFileChecker.fileNameExists(epartnerList.get(i).getFileName());
-    	}
+        List<EPartnerConfig> epartnerList = model.getEpartners();
+        for(int i = 0; i < epartnerList.size() && allExist; i++) {
+            allExist = allExist && AgentFileChecker.fileNameExists(epartnerList.get(i).getFileName());
+        }
 
-    	return allExist;
+        return allExist;
     }
 
 

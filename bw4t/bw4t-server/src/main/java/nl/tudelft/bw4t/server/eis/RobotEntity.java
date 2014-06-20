@@ -499,11 +499,11 @@ public class RobotEntity implements EntityInterface {
         Block nearest = getClosest(Block.class);
         // Pick up closest block in canPickUp list
         if (nearest == null) {
-        	LOGGER.debug(String.format("%s can not pickup any blocks.", ourRobot.getName()));
+            LOGGER.debug(String.format("%s can not pickup any blocks.", ourRobot.getName()));
             return;
         }
-    	LOGGER.debug(String.format("%s will pickup block %d.", ourRobot.getName(), nearest.getId()));
-    	ourRobot.pickUp(nearest);
+        LOGGER.debug(String.format("%s will pickup block %d.", ourRobot.getName(), nearest.getId()));
+        ourRobot.pickUp(nearest);
     }
 
     /**
@@ -636,9 +636,9 @@ public class RobotEntity implements EntityInterface {
      */
     @AsAction(name = "putDownEPartner")
     public void dropEPartner() {
-    	if (ourRobot.isHuman()) {
-    		ourRobot.dropEPartner();
-    	}
+        if (ourRobot.isHuman()) {
+            ourRobot.dropEPartner();
+        }
     }
 
     /**

@@ -90,26 +90,26 @@ public class AgentRecord {
     }
     
     public String getName() {
-    	return name;
+        return name;
     }
     
    public Integer getGoodDrops() {
-	   return goodDrops;
+       return goodDrops;
    }
    
    public Integer getWrongDrops() {
-	   return wrongDrops;
+       return wrongDrops;
    }
    
    public Integer getNMessages() {
-	   return nMessages;
+       return nMessages;
    }
   
    public Integer getNRoomsEntered() {
-	   return nRoomsEntered;
+       return nRoomsEntered;
    }
    
    public long getTotalStandingStillMillis() {
-	   return totalStandingStillMillis;
+       return totalStandingStillMillis;
    }
 }

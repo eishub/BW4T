@@ -16,7 +16,7 @@ import nl.tudelft.bw4t.environmentstore.editor.model.EnvironmentMap;
  *
  */
 public class MapPanel extends JPanel implements UpdateableEditorInterface {
-	
+    
     private static final long serialVersionUID = -5921838296315289933L;
 
     private MapPanelController mapController;

@@ -20,7 +20,7 @@ import nl.tudelft.bw4t.map.BlockColor;
  *
  */
 public class ColorPalette extends JPanel implements MouseInputListener {
-	
+    
     private static final long serialVersionUID = -1931059148668661725L;
     
     private static final int COLOR_SIZE = 30;

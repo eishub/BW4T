@@ -106,7 +106,7 @@ public class DropZone extends Room {
                 robot.getAgentRecord().addGoodDrop();
                 
                 if (sequenceIndex == sequence.size()) 
-                	 BW4TFileAppender.logFinish(System.currentTimeMillis(), "Time to finish sequence is ");
+                     BW4TFileAppender.logFinish(System.currentTimeMillis(), "Time to finish sequence is ");
             }
             else {
                 robot.getAgentRecord().addWrongDrop();

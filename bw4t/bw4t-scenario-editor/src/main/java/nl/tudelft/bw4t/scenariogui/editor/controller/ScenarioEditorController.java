@@ -50,8 +50,8 @@ public class ScenarioEditorController {
     }
     
     private void addConfigurationPanelListeners() {
-    	configurationPanel.addClientIPController(new WriteClientIP(mainPanel));
-    	configurationPanel.addClientPortController(new WriteClientPort(mainPanel));
+        configurationPanel.addClientIPController(new WriteClientIP(mainPanel));
+        configurationPanel.addClientPortController(new WriteClientPort(mainPanel));
         configurationPanel.addServerIPController(new WriteServerIP(mainPanel));
         configurationPanel.addServerPortController(new WriteServerPort(mainPanel));
         configurationPanel.addGUIYesCheckboxController(new SelectLaunchGUIYes(mainPanel));
@@ -61,34 +61,34 @@ public class ScenarioEditorController {
         configurationPanel.addCollisionsYesCheckboxController(new SelectEnableCollisionsYes(mainPanel));
         configurationPanel.addCollisionsNoCheckboxController(new SelectEnableCollisionsNo(mainPanel));
         configurationPanel.addMapFileController(new WriteMapFile(mainPanel));
-		configurationPanel.addMapFileButtonController(new ChooseMapFileListener(mainPanel));
+        configurationPanel.addMapFileButtonController(new ChooseMapFileListener(mainPanel));
     }
     
     private void addMenuBarListeners() {
-    	MenuBar menuBar = view.getTopMenuBar();
-    	
-		menuBar.addExitController(new MenuOptionExit(menuBar, this, getModel()));
-    	menuBar.addNewController(new MenuOptionNew(menuBar, this, getModel()));
-    	menuBar.addOpenController(new MenuOptionOpen(menuBar, this, getModel()));
-    	menuBar.addSaveController(new MenuOptionSave(menuBar, this, getModel()));
-    	menuBar.addSaveAsController(new MenuOptionSaveAs(menuBar, this, getModel()));
-    	menuBar.addExportController(new MenuOptionExport(menuBar, this, getModel()));
+        MenuBar menuBar = view.getTopMenuBar();
+        
+        menuBar.addExitController(new MenuOptionExit(menuBar, this, getModel()));
+        menuBar.addNewController(new MenuOptionNew(menuBar, this, getModel()));
+        menuBar.addOpenController(new MenuOptionOpen(menuBar, this, getModel()));
+        menuBar.addSaveController(new MenuOptionSave(menuBar, this, getModel()));
+        menuBar.addSaveAsController(new MenuOptionSaveAs(menuBar, this, getModel()));
+        menuBar.addExportController(new MenuOptionExport(menuBar, this, getModel()));
     }
     
     private void addEntityPanelListeners() {
-    	EntityPanel entityPanel = mainPanel.getEntityPanel();
-    	
-		entityPanel.addNewBotController(new AddNewBot(mainPanel, getModel()));
-		entityPanel.addModifyBotController(new ModifyBot(mainPanel, getModel()));
-		entityPanel.addDeleteBotController(new DeleteBot(mainPanel, getModel()));		
-		entityPanel.addNewEpartnerController(new AddNewEPartner(mainPanel, getModel()));
-		entityPanel.addModifyEpartnerController(new ModifyEPartner(mainPanel, getModel()));
-		entityPanel.addDeleteEpartnerController(new DeleteEPartner(mainPanel, getModel()));
-		entityPanel.addDropDownController(new BotDropDownButton(mainPanel));
-
-		addStandardBotDropDownListeners();
+        EntityPanel entityPanel = mainPanel.getEntityPanel();
         
-		entityPanel.addBotTableModelController(new UpdateBotCount(mainPanel, getModel()));
+        entityPanel.addNewBotController(new AddNewBot(mainPanel, getModel()));
+        entityPanel.addModifyBotController(new ModifyBot(mainPanel, getModel()));
+        entityPanel.addDeleteBotController(new DeleteBot(mainPanel, getModel()));        
+        entityPanel.addNewEpartnerController(new AddNewEPartner(mainPanel, getModel()));
+        entityPanel.addModifyEpartnerController(new ModifyEPartner(mainPanel, getModel()));
+        entityPanel.addDeleteEpartnerController(new DeleteEPartner(mainPanel, getModel()));
+        entityPanel.addDropDownController(new BotDropDownButton(mainPanel));
+
+        addStandardBotDropDownListeners();
+        
+        entityPanel.addBotTableModelController(new UpdateBotCount(mainPanel, getModel()));
         entityPanel.addEpartnerTableModelController(new UpdateEPartnerCount(mainPanel, getModel()));
         entityPanel.addBotTableController(new EditBotTable(getMainView().getMainPanel(), getModel()));
         entityPanel.addEpartnerTableController(new EditEPartnerTable(getMainView().getMainPanel(), getModel()));
@@ -125,7 +125,7 @@ public class ScenarioEditorController {
      * @return The BW4TClientConfig model.
      */
     public final BW4TClientConfig getModel() {
-    	return model;
+        return model;
     }
 
     /**

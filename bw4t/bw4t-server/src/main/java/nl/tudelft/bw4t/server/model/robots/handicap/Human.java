@@ -13,7 +13,7 @@ public class Human extends AbstractRobotDecorator {
      * The e-Partner the human is holding.
      */
     private EPartner ePartner;
-	
+    
     /**
      * Sets the handicap to active,
      * Adds the handicap to the robot handicap storage.
@@ -50,29 +50,29 @@ public class Human extends AbstractRobotDecorator {
      */
     @Override
     public void dropEPartner() {
-    	
-    	if (!isHoldingEPartner()) {
-    		return;
-    	}
-    	
-    	//this.ePartner.addToContext();
-    	
+        
+        if (!isHoldingEPartner()) {
+            return;
+        }
+        
+        //this.ePartner.addToContext();
+        
 //        double x = robot.getLocation().getX();
 //        double y = robot.getLocation().getY();
 
 //        this.ePartner.moveTo(RandomHelper.nextDoubleFromTo(x - 5, x + 5), RandomHelper.nextDoubleFromTo(y - 5, y + 5));
-    	ePartner.setHolder(null);
-    	
+        ePartner.setHolder(null);
+        
         this.ePartner = null;
     }
 
     @Override
     public boolean isHoldingEPartner() {
-		return this.ePartner != null;
-	}
-	
+        return this.ePartner != null;
+    }
+    
     @Override
     public EPartner getEPartner() {
-		return this.ePartner;
-	}
+        return this.ePartner;
+    }
 }

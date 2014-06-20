@@ -81,7 +81,7 @@ public class ScenarioEditor extends JFrame {
      * @param model              The BW4TClientConfig object.
      */
     public ScenarioEditor(final ConfigurationPanel configurationPanel, 
-    		final EntityPanel entityPanel, BW4TClientConfig model) {
+            final EntityPanel entityPanel, BW4TClientConfig model) {
         this();
         mPanel.setConfigurationPanel(configurationPanel);
         mPanel.setEntityPanel(entityPanel);
