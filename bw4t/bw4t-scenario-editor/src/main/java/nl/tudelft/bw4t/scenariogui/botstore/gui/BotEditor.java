@@ -17,34 +17,30 @@ public class BotEditor extends JFrame {
     
     private BW4TClientConfig model;
     
-    /**
-     * Random generated serial version UID.
-     */
     private static final long serialVersionUID = 8114982191029560097L;
-    /** the name of the window */
+
     private String windowName = "Bot Editor";
-    /** The parent of this frame. */
+
     private MainPanel parent;
-    /** the panel in the frame*/
+
     private BotEditorPanel bPanel;
 
-    /** the controller for the frame*/
     private BotController controller;
 
-    /** The row number of the selected bot. */
     private int row;
     
     /**
-     * creates the BotEditor frame
-     * @param pparent the parent of the frame
-     * @param row the row to be updated in the scenario gui
+     * Creates the BotEditor.
+     * @param pparent The parent of the BotEditor.
+     * @param row The row to be updated in the ScenarioEditor.
      */
     public BotEditor(MainPanel pparent, int row, BW4TClientConfig model) {
         this(new BotController(pparent, row, model));
     }
+    
     /**
-     * creates the BotEditor frame
-     * @param bc the BotController in control of this frame
+     * Creates the BotEditor.
+     * @param bc The BotController in control of this frame.
      */
     public BotEditor(BotController bc) {
         controller = bc;
@@ -67,11 +63,6 @@ public class BotEditor extends JFrame {
         setVisible(true);
     }
 
-     /**
-     *  Function to set the look and feel of the frame to the default look and feel of the system.
-     *  Throws exceptions which are passed over since the failure to set the look and feel is not
-     *  considered harmful.
-     */
     private void setLookAndFeel() {
         try {
             UIManager.setLookAndFeel(
@@ -86,19 +77,11 @@ public class BotEditor extends JFrame {
             // pass
         }
     }
-
-    /**
-     * Returns the row number of the bot that is currently selected.
-     * @return The row number of the bot that is currently selected.
-     */
+    
     public int getRow() {
         return this.row;
     }
 
-    /**
-     * Get the main panel.
-     * @return parent
-     */
     public MainPanel getParent() {
         return parent;
     }
@@ -107,18 +90,10 @@ public class BotEditor extends JFrame {
         return controller;
     }
     
-    /**
-     * Return the MainPanel.
-     * @return mainpanel
-     */
     public MainPanel getMainPanel() {
         return controller.getMainPanel();
     }
     
-    /**
-     * Return the BotEditorPanel.
-     * @return botpanel
-     */
     public BotEditorPanel getBotEditorPanel() {
         return bPanel;
     }
