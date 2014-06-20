@@ -1,13 +1,17 @@
 package nl.tudelft.bw4t.scenariogui.util;
 
+import java.io.Serializable;
+
 import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
 
-public class RobotTableModel extends AbstractTableModel {
+public class RobotTableModel extends AbstractTableModel implements Serializable {
 
-    public RobotTableModel() {
+	private static final long serialVersionUID = 4899095629026343945L;
+
+	public RobotTableModel() {
         super();
     }
 
