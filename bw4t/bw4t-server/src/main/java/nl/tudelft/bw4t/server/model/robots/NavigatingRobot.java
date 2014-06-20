@@ -84,7 +84,7 @@ public class NavigatingRobot extends AbstractRobot {
             /**
              * Save the current move in case the bot wishes to navigate around the obstacle.
              */
-            if (currentMove == getZone().getLocation()) {
+            if (getZone() != null && currentMove == getZone().getLocation()) {
                 // If we're already at the location, get the next one.
                 currentMoveHistory = plannedMoves.poll();
             }
