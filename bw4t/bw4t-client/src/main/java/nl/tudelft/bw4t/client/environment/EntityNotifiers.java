@@ -14,7 +14,9 @@ public final class EntityNotifiers {
     private static final Logger LOGGER = Logger.getLogger(EntityNotifiers.class);
 
     /** Should never be instantiated. */
-    private EntityNotifiers() { }
+    private EntityNotifiers() { 
+        
+    }
     
     /**
      * Notifies all listeners about an entity that is free.
