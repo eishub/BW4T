@@ -208,11 +208,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
     public List<Block> isHolding() {
         return holding;
     }
@@ -402,50 +397,58 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
                     // we're there
                     stopRobot();
                 } else {
-                    double movingDistance = Math.min(distance, MAX_MOVE_DISTANCE * speedMod);
-
-                    // Angle at which to move
-                    double angle = SpatialMath.calcAngleFor2DMovement(getSpace(), getLocation(), targetLocation);
-
-                    // The displacement of the robot
-                    double[] displacement = SpatialMath.getDisplacement(2, 0, movingDistance, angle);
-
-                    try {
-                        NdPoint destination = new NdPoint(getLocation().getX() + displacement[0], getLocation().getY()
-                                + displacement[1]);
-
-                        // Check if the robot is alone on its map point
-                        if (!hasBeenFree) {
-                            hasBeenFree = isFree(AbstractRobot.class);
-                        } else {
-                            checkIfDestinationVacant(destination);
-                        }
-
-                        // Move the robot to the new position using the displacement
-                        moveByDisplacement(displacement[0], displacement[1]);
-                        agentRecord.setStartedMoving();
-
-                        /**
-                         * The robot's battery discharges when it moves.
-                         */
-                        this.battery.discharge();
-                        LOGGER.info(this.name + "'s current battery level is: " + this.battery.getCurrentCapacity());
-
-                        handicapMove();
-                    } catch (SpatialException e) {
-                        LOGGER.debug("Spatial Exception");
-                        collided = true;
-                        LOGGER.log(BotLog.BOTLOG, "Bot " + this.name + " collided.");
-                        stopRobot();
-                    } catch (DestinationOccupiedException e) {
-                        collided = true;
-                        obstacles.add(e.getTileOccupiedBy());
-                        stopRobot();
-                    }
+                    moveBot(distance);
                 }
             }
         } else {
             LOGGER.log(BotLog.BOTLOG, "Bot " + this.name + " could not move because of empty battery.");
+            stopRobot();
+        }
+    }
+
+    /**
+     * Actually moves the bot.
+     * @param distance distance over which it must move.
+     */
+    private void moveBot(double distance) {
+        double movingDistance = Math.min(distance, MAX_MOVE_DISTANCE * speedMod);
+
+        // Angle at which to move
+        double angle = SpatialMath.calcAngleFor2DMovement(getSpace(), getLocation(), targetLocation);
+
+        // The displacement of the robot
+        double[] displacement = SpatialMath.getDisplacement(2, 0, movingDistance, angle);
+
+        try {
+            NdPoint destination = new NdPoint(getLocation().getX() + displacement[0], getLocation().getY()
+                    + displacement[1]);
+
+            // Check if the robot is alone on its map point
+            if (!hasBeenFree) {
+                hasBeenFree = isFree(AbstractRobot.class);
+            } else {
+                checkIfDestinationVacant(destination);
+            }
+
+            // Move the robot to the new position using the displacement
+            moveByDisplacement(displacement[0], displacement[1]);
+            agentRecord.setStartedMoving();
+
+            /**
+             * The robot's battery discharges when it moves.
+             */
+            this.battery.discharge();
+            LOGGER.info(this.name + "'s current battery level is: " + this.battery.getCurrentCapacity());
+
+            handicapMove();
+        } catch (SpatialException e) {
+            LOGGER.debug("Spatial Exception");
+            collided = true;
+            LOGGER.log(BotLog.BOTLOG, "Bot " + this.name + " collided.");
+            stopRobot();
+        } catch (DestinationOccupiedException e) {
+            collided = true;
+            obstacles.add(e.getTileOccupiedBy());
             stopRobot();
         }
     }
@@ -473,14 +476,26 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
             Rectangle2D.Double box = getBoundingBoxCenteredAt(destination);
             for (GridCell<AbstractRobot> cell : getNeighbours()) {
                 for (AbstractRobot bot : cell.items()) {
-                    if ((this != bot)
-                            && (box.intersects(bot.getBoundingBox()) || bot.getBoundingBox().intersects(box)
-                                    || box.contains(bot.getBoundingBox()) || bot.getBoundingBox().contains(box))) {
-                        throw new DestinationOccupiedException("Grid [" + destination.getX() + "," + destination.getY()
-                                + "] is occupied by " + bot, bot);
-                    }
+                    throwDestination(destination, box, bot);
                 }
             }
+        }
+    }
+
+    /**
+     * Actually throws the exception.
+     * @param destination to check
+     * @param box in which the destination is.
+     * @param bot to check.
+     * @throws DestinationOccupiedException already occupied
+     */
+    private void throwDestination(NdPoint destination, Rectangle2D.Double box, AbstractRobot bot)
+            throws DestinationOccupiedException {
+        if ((this != bot)
+                && (box.intersects(bot.getBoundingBox()) || bot.getBoundingBox().intersects(box)
+                        || box.contains(bot.getBoundingBox()) || bot.getBoundingBox().contains(box))) {
+            throw new DestinationOccupiedException("Grid [" + destination.getX() + "," + destination.getY()
+                    + "] is occupied by " + bot, bot);
         }
     }
 
@@ -650,10 +665,14 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     }
 
     @Override
-    public void pickUpEPartner(EPartner eP) { }
+    public void pickUpEPartner(EPartner eP) { 
+        
+    }
 
     @Override
-    public void dropEPartner() { }
+    public void dropEPartner() { 
+        
+    }
 
     @Override
     public AbstractRobot getSuperParent() {
