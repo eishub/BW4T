@@ -114,14 +114,6 @@
 							<goals>
 								<goal>copy</goal>
 							</goals>
-							<configuration>
-								<resources>
-									<resource>
-										<targetPath>${project.basedir}/bw4t-server/target/classes/bin/nl</targetPath>
-										<directory>${project.basedir}/bw4t-server/target/classes/nl</directory>
-									</resource>
-								</resources>
-							</configuration>
 						</execution>
 					</executions>
 				</plugin>
