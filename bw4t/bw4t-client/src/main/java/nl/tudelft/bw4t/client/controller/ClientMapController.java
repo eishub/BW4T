@@ -25,6 +25,7 @@ import nl.tudelft.bw4t.client.controller.percept.processors.RobotSizeProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.SequenceIndexProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.SequenceProcessor;
 import nl.tudelft.bw4t.client.environment.PerceptsHandler;
+import nl.tudelft.bw4t.client.gui.listeners.BatteryProgressBarListener;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
@@ -65,13 +66,14 @@ public class ClientMapController extends AbstractMapController {
     /** The visible blocks. */
     private Set<ViewBlock> visibleBlocks = new HashSet<>();
     
-    /** The visible e-partners. */
-    private Set<ViewEPartner> visibleEPartners = new HashSet<>();
+    /** The (at one point) visible e-partners. */
+    private Set<ViewEPartner> knownEPartners = new HashSet<>();
     
     /** All the blocks. */
     private Map<Long, ViewBlock> allBlocks = new HashMap<>();
-    
+
     private Map<String, PerceptProcessor> perceptProcessors;
+
     
     /** The color sequence. */
     private List<BlockColor> colorSequence = new LinkedList<>();
@@ -161,11 +163,43 @@ public class ClientMapController extends AbstractMapController {
     
     @Override
     public Set<ViewEPartner> getVisibleEPartners() {
+        Set<ViewEPartner> visibleEPartners = new HashSet<ViewEPartner>();
+        for (ViewEPartner ep : knownEPartners) {
+            if (ep.isVisible()) {
+                visibleEPartners.add(ep);
+            }
+        }
         return visibleEPartners;
     }
+    
+    public void makeEPartnersInvisible() {
+        for (ViewEPartner ep : knownEPartners) {
+            ep.setVisible(false);
+        }
+    }
 
+    /**
+     * Returns an e-partner with this id that is currently visible.
+     * @param id The id.
+     * @return The e-partner found.
+     */
     public ViewEPartner getViewEPartner(long id) {
         for (ViewEPartner ep : getVisibleEPartners()) {
+            if (ep.getId() == id) {
+                return ep;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Returns an e-partner with this id that at one point has ever
+     * been visible.
+     * @param id The id.
+     * @return The e-partner found.
+     */
+    public ViewEPartner getKnownEPartner(long id) {
+        for (ViewEPartner ep : knownEPartners) {
             if (ep.getId() == id) {
                 return ep;
             }
@@ -185,7 +219,7 @@ public class ClientMapController extends AbstractMapController {
         }
         return b;
     }
-    
+
     /**
      * @param id of the block to be checked
      * @return true iff the block is in in the environment
@@ -202,6 +236,7 @@ public class ClientMapController extends AbstractMapController {
      * @param perceptParameters
      *            the percept parameters
      */
+
     public void handlePercept(String name, List<Parameter> perceptParameters) {
         PerceptProcessor processor = perceptProcessors.get(name);
         if (processor != null) {
@@ -209,12 +244,11 @@ public class ClientMapController extends AbstractMapController {
         }
     }
 
-
     public ViewEPartner addEPartner(long id, long holderId) {
         LOGGER.info("creating epartner(" + id + ", " + holderId + ")");
         ViewEPartner epartner = new ViewEPartner();
         epartner.setId(id);
-        getVisibleEPartners().add(epartner);
+        knownEPartners.add(epartner);
         return epartner;
     }
 

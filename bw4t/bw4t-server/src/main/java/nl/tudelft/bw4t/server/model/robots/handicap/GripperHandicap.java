@@ -3,6 +3,8 @@ package nl.tudelft.bw4t.server.model.robots.handicap;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 
 public class GripperHandicap extends AbstractRobotDecorator {
+    
+    public static final String GRIPPER_HANDICAP = "Gripper";
 
     /**
      * Calls the super method on p,
@@ -12,7 +14,7 @@ public class GripperHandicap extends AbstractRobotDecorator {
      */
     public GripperHandicap(IRobot p) {
         super(p);
-        robot.getHandicapsList().add("Gripper");
+        robot.getHandicapsList().add(GRIPPER_HANDICAP);
         robot.setGripperCapacity(0);
     }
 

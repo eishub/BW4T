@@ -50,22 +50,13 @@ class ChooseMapFileListener implements ActionListener {
 
         /** Makes sure only files with the right extension are accepted */
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            if (file.getName().endsWith(mapExtension) || hasNoExtension(file.getName())) {
+            if (file.getName().endsWith(mapExtension)) {
                 view.getConfigurationPanel().setMapFile(file.getPath());
             }
             else {
                 ScenarioEditor.getOptionPrompt().showMessageDialog(view, "This is not a valid file.");
             }
         }
-    }
-    
-    /**
-     * Checks whether this file name has no extension.
-     * @param fileName The file name to check.
-     * @return Whether this file has no extension.
-     */
-    private static boolean hasNoExtension(String fileName) {
-        return !fileName.contains(".");
     }
     
 }

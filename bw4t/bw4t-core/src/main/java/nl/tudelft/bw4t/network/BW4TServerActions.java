@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 
@@ -46,12 +47,12 @@ public interface BW4TServerActions extends Remote {
      * 
      * @param client
      *            the client that wants to register
-     * @param bots
-     *            a list of configurations, the bots to be created in the environment
+     * @param clientConfig
+     *           The client configuration used (can be null).
      * @throws RemoteException
      *             if an exception occurs during the execution of a remote object call
      */
-    void registerClient(BW4TClientActions client, List<BotConfig> bots, List<EPartnerConfig> partners) throws RemoteException;
+    void registerClient(BW4TClientActions client, BW4TClientConfig clientConfig) throws RemoteException;
 
     /**
      * Remove a client from the server. At this moment the client makes sure that it frees its entities first.

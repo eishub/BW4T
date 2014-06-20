@@ -160,7 +160,7 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
             BW4TClientConfig conf = ConfigFile.getConfig();
             
             LOGGER.info(String.format("Requesting %d robots and %d e-partners.", conf.getAmountBot(), conf.getAmountEPartner()));
-            server.registerClient(this, conf.getBots(), conf.getEpartners());
+            server.registerClient(this, conf);
         } else {
             int agentCountInt = Integer.parseInt(InitParam.AGENTCOUNT.getValue());
             int humanCountInt = Integer.parseInt(InitParam.HUMANCOUNT.getValue());

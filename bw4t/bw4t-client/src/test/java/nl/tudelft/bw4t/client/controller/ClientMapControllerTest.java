@@ -148,9 +148,11 @@ public class ClientMapControllerTest {
     public void testHandlePerceptEPartner() {
         LinkedList<Parameter> parameters = new LinkedList<Parameter>();
         parameters.add(new Numeral(3));
+        parameters.add(new Identifier("NAAM"));
         parameters.add(new Numeral(3));
         clientMapController.handlePercept("epartner", parameters);
-        assertEquals(3, clientMapController.getViewEPartner(3).getId());
+        assertEquals(3,clientMapController.getViewEPartner(3).getId());
+        assertEquals("NAAM", clientMapController.getViewEPartner(3).getName());
     }
     
     @Test
@@ -164,9 +166,11 @@ public class ClientMapControllerTest {
         testHandlePerceptRobot();
         LinkedList<Parameter> parameters = new LinkedList<Parameter>();
         parameters.add(new Numeral(2));
+        parameters.add(new Identifier("NAAM"));
         parameters.add(new Numeral(2));
         clientMapController.handlePercept("epartner", parameters);
         assertEquals(2, clientMapController.getViewEPartner(2).getId());
+        assertEquals("NAAM", clientMapController.getViewEPartner(2).getName());
     }
     
     @Test
@@ -175,9 +179,11 @@ public class ClientMapControllerTest {
         testHandlePerceptEPartnerHolderID();
         LinkedList<Parameter> parameters = new LinkedList<Parameter>();
         parameters.add(new Numeral(2));
+        parameters.add(new Identifier("NAAM"));
         parameters.add(new Numeral(2));
         clientMapController.handlePercept("epartner", parameters);
         assertEquals(2, clientMapController.getViewEPartner(2).getId());
+        assertEquals("NAAM", clientMapController.getViewEPartner(2).getName());
     }
     
     @Test
@@ -187,18 +193,22 @@ public class ClientMapControllerTest {
         testHandlePerceptHolding();
         LinkedList<Parameter> parameters = new LinkedList<Parameter>();
         parameters.add(new Numeral(2));
+        parameters.add(new Identifier("NAAM"));
         parameters.add(new Numeral(3));
         clientMapController.handlePercept("epartner", parameters);
         assertEquals(2, clientMapController.getViewEPartner(2).getId());
+        assertEquals("NAAM", clientMapController.getViewEPartner(2).getName());
     }
     
     @Test
     public void testHandlePerceptEPartnerSameIDHoldingPartnerNegative() {
         LinkedList<Parameter> parameters = new LinkedList<Parameter>();
         parameters.add(new Numeral(1));
+        parameters.add(new Identifier("NAAM"));
         parameters.add(new Numeral(-2));
         clientMapController.handlePercept("epartner", parameters);
         assertEquals(-1, clientMapController.getTheBot().getHoldingEpartner());
+        assertEquals("NAAM", clientMapController.getViewEPartner(1).getName());
     }
     
     @Test
