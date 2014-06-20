@@ -103,8 +103,9 @@ public class ColorSequenceController implements FocusListener, ColorPaletteListe
         colorPaletteWindow.setLocation(p);
     }
     
+    /** moves the palette with the main frame */
     public void updatePosition() {
-        if(focus == null) {
+        if (focus == null) {
             colorPaletteWindow.setVisible(false);
         } else {
             colorPaletteWindow.setVisible(true);

@@ -1,6 +1,5 @@
 package nl.tudelft.bw4t.server.model.robots.handicap;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import nl.tudelft.bw4t.map.view.ViewEntity;

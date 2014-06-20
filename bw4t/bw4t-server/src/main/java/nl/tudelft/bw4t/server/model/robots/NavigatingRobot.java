@@ -163,6 +163,24 @@ public class NavigatingRobot extends AbstractRobot {
         for (Object o : context.getObjects(Zone.class)) {
             allnavs.add((Zone) o);
         }
+        
+        planPath(p, startpt, targetpt, allnavs);
+        
+        // and add the real target
+        plannedMoves.add(p);
+        updateDrawPath();
+        // make the bot use the new path.
+        useNextTarget();
+    }
+
+    /**
+     * Plans the path and adds it to planned moves
+     * @param p the point 
+     * @param startpt starting point
+     * @param targetpt target point
+     * @param allnavs all zones
+     */
+    private void planPath(NdPoint p, Zone startpt, Zone targetpt, List<Zone> allnavs) {
         // plan the path between the Zones
         List<Zone> plannedPath = PathPlanner.findPath(allnavs, startpt, targetpt);
         if (plannedPath.isEmpty()) {
@@ -172,11 +190,6 @@ public class NavigatingRobot extends AbstractRobot {
         for (Zone point : plannedPath) {
             plannedMoves.add(point.getLocation());
         }
-        // and add the real target
-        plannedMoves.add(p);
-        updateDrawPath();
-        // make the bot use the new path.
-        useNextTarget();
     }
 
     @Override
@@ -255,23 +268,31 @@ public class NavigatingRobot extends AbstractRobot {
             LOGGER.debug("No alternative path found.");
             throw new IllegalArgumentException("target " + getTargetLocation() + " is unreachable for " + this);
         } else {
-            LOGGER.debug("Found path around obstacle.");
-            // Now we just push the new points to the plannedMoved queue and sit back and relax!.
-            for (NdPoint p : path) {
-                plannedMoves.add(p);
-            }
-
-            for (NdPoint p : plannedMovesHistory) {
-                plannedMoves.add(p);
-            }
-
-            clearCollided();
-            clearObstacles();
-
-            // Let's roll.
-            updateDrawPath();
-            useNextTarget();
+            createPathObstacle(path);
         }
+    }
+
+    /**
+     * Creates a path around an obstacle
+     * @param path to create
+     */
+    private void createPathObstacle(List<NdPoint> path) {
+        LOGGER.debug("Found path around obstacle.");
+        // Now we just push the new points to the plannedMoved queue and sit back and relax!.
+        for (NdPoint p : path) {
+            plannedMoves.add(p);
+        }
+
+        for (NdPoint p : plannedMovesHistory) {
+            plannedMoves.add(p);
+        }
+
+        clearCollided();
+        clearObstacles();
+
+        // Let's roll.
+        updateDrawPath();
+        useNextTarget();
     }
 
     /**
