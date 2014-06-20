@@ -20,7 +20,7 @@ public class MenuBar extends JMenuBar {
 
     /**
      * Construct a menu bar for the Map Editor
-     * TODO: LastFileLocation Fix
+     * 
      */
     public MenuBar() {
         

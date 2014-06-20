@@ -7,7 +7,7 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.MenuBar;
 
 /**
  * Handles the event to save at a chosen location.
- * <p>
+ * 
  * @version     0.1                
  * @since       12-05-2014        
  */

@@ -17,7 +17,7 @@ import nl.tudelft.bw4t.util.XMLManager;
  * This class holds the possible options that can be specified in the Scenario
  * GUI and is meant to be directly convertible to XML and constructible from
  * XML.
- * <p>
+ * 
  *
  * @version 0.1
  * @since 12-05-2014

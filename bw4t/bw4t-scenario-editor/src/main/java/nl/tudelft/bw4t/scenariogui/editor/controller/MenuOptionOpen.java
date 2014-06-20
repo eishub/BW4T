@@ -19,7 +19,7 @@ import nl.tudelft.bw4t.scenariogui.util.FileFilters;
 
 /**
  * Handles the event to open a file.
- * <p>
+ * 
  *
  * @version 0.1
  * @since 12-05-2014

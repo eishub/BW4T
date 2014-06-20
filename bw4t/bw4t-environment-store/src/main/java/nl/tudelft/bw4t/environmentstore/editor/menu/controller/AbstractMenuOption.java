@@ -73,7 +73,6 @@ public abstract class AbstractMenuOption implements ActionListener {
     
     /**
      * Opens a new size Dialog that lets the user start from scratch.
-     * TODO: Also dispose ALL OTHER windows and reset value like lastFileLocation
      */
     public void newMap() {
         if(envController.notAnEmptyMap()) {
@@ -229,7 +228,6 @@ public abstract class AbstractMenuOption implements ActionListener {
                 if (zone.isStartZone()) {
                     foundStartZone = true;
                 }
-                //TODO check if can be removed: allblocks.addAll(mapController.getZoneControllers()[i][j].getColors());
             }
         }
         
