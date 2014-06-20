@@ -33,15 +33,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class MenuOptionExportTest {
-	
+    
     private static final String BASE = System.getProperty("user.dir") + "/src/test/resources/";
-	
+    
     private static final String FILE_EXPORT_PATH = BASE + "export/";
     
     private ScenarioEditor editor;
 
     private JFileChooser filechooser;
-	
+    
     @Before
     public void setUp() throws IOException {
         editor = spy(new ScenarioEditor());
@@ -65,7 +65,7 @@ public class MenuOptionExportTest {
         File directory = new File(FILE_EXPORT_PATH);
         directory.mkdirs();
 
-    	// Setup the behaviour
+        // Setup the behaviour
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         new File(FILE_EXPORT_PATH).mkdirs();

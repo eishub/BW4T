@@ -7,11 +7,11 @@ import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
 
 public class SizeOverloadHandicap extends AbstractRobotDecorator {
-	
-	/**
-	 * This variable indicates the size of the robot. 
-	 */
-	private final int size;
+    
+    /**
+     * This variable indicates the size of the robot. 
+     */
+    private final int size;
     
     /**
      * Calls the super method on p,
@@ -46,7 +46,7 @@ public class SizeOverloadHandicap extends AbstractRobotDecorator {
                 }
                 return MoveType.HIT_OCCUPIED_ZONE;
             } else if (endzone instanceof Room) {
-            	return MoveType.HIT_CLOSED_DOOR;
+                return MoveType.HIT_CLOSED_DOOR;
             }
         } else {
             super.checkZoneAccess(startzone, endzone, door);
@@ -56,6 +56,6 @@ public class SizeOverloadHandicap extends AbstractRobotDecorator {
     
     @Override
     public int getSize() {
-    	return this.size;
+        return this.size;
     }
 }

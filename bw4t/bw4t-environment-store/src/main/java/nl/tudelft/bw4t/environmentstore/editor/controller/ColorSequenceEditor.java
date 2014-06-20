@@ -25,9 +25,9 @@ import nl.tudelft.bw4t.map.BlockColor;
  *
  */
 public class ColorSequenceEditor extends JComponent {
-	
+    
     private static final long serialVersionUID = 2112401621332684899L;
-	
+    
     private static final int DEFAULT_LENGTH = 10;
     
     private static final int COLOR_SIZE = 15;

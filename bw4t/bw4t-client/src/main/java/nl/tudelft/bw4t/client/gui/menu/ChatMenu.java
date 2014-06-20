@@ -8,10 +8,10 @@ import nl.tudelft.bw4t.client.message.MessageType;
 
 /** Responsible for building the pop-up menu of the chat. */
 public final class ChatMenu {
-	
-	/** Should never be instantiated. */
-	private ChatMenu() { }
-	
+    
+    /** Should never be instantiated. */
+    private ChatMenu() { }
+    
     /**
      * Used for building the pop-up menu that displays the chat actions a user can perform.
      * 

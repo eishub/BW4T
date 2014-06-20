@@ -189,52 +189,52 @@ public class Zone implements Serializable {
      * @return true if the zone has a door on its north side.
      */
     public boolean hasNorth() {
-    	boolean temp = false;
-    	for (Door d : doors) {
-    		if (d.getOrientation() == Orientation.HORIZONTAL) {
-    			temp = (d.getPosition().getY() < boundingbox.getY());
-    		}
-    	}
-    	return temp;
+        boolean temp = false;
+        for (Door d : doors) {
+            if (d.getOrientation() == Orientation.HORIZONTAL) {
+                temp = (d.getPosition().getY() < boundingbox.getY());
+            }
+        }
+        return temp;
     }
     /**
      * 
      * @return true if the zone has a door on its east side.
      */
     public boolean hasEast() {
-    	boolean temp = false;
-    	for (Door d : doors) {
-    		if (d.getOrientation() == Orientation.VERTICAL) {
-    			temp = (d.getPosition().getX() > boundingbox.getX());
-    		}
-    	}
-    	return temp;
+        boolean temp = false;
+        for (Door d : doors) {
+            if (d.getOrientation() == Orientation.VERTICAL) {
+                temp = (d.getPosition().getX() > boundingbox.getX());
+            }
+        }
+        return temp;
     }
     /**
      * 
      * @return true if the zone has a door on its south side.
      */
     public boolean hasSouth() {
-    	boolean temp = false;
-    	for (Door d : doors) {
-    		if (d.getOrientation() == Orientation.HORIZONTAL) {
-    			temp =  (d.getPosition().getY() > boundingbox.getY());
-    		}
-    	}
-    	return temp;
+        boolean temp = false;
+        for (Door d : doors) {
+            if (d.getOrientation() == Orientation.HORIZONTAL) {
+                temp =  (d.getPosition().getY() > boundingbox.getY());
+            }
+        }
+        return temp;
     }
     /**
      * 
      * @return true if the zone has a door on its west side.
      */
     public boolean hasWest() {
-    	boolean temp = false;
-    	for (Door d : doors) {
-    		if (d.getOrientation() == Orientation.VERTICAL) {
-    			temp = (d.getPosition().getX() < boundingbox.getX());
-    		}
-    	}
-    	return temp;
+        boolean temp = false;
+        for (Door d : doors) {
+            if (d.getOrientation() == Orientation.VERTICAL) {
+                temp = (d.getPosition().getX() < boundingbox.getX());
+            }
+        }
+        return temp;
     }
 
 }

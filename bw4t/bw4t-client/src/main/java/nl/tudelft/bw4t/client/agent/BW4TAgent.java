@@ -203,7 +203,7 @@ public class BW4TAgent extends Thread implements ActionInterface {
      *
      * @param receiver            , a receiver (can be either all or the id of another agent)
      * @param message            , the translated message (as String)
-     * @throws ActException 			  , if an attempt to perform an action has failed.
+     * @throws ActException               , if an attempt to perform an action has failed.
      */
     private void sendMessage(String receiver, String message) throws ActException {
         try {
@@ -226,27 +226,27 @@ public class BW4TAgent extends Thread implements ActionInterface {
      * @return a list of percepts
      * @throws PerceiveException if there was a problem retrieving the percepts.
      */
-	public LinkedList<Percept> getPercepts() throws PerceiveException {
-	    return (LinkedList<Percept>) PerceptsHandler.getAllPerceptsFromEntity(entityId, bw4tenv);
-	}
+    public LinkedList<Percept> getPercepts() throws PerceiveException {
+        return (LinkedList<Percept>) PerceptsHandler.getAllPerceptsFromEntity(entityId, bw4tenv);
+    }
 
-	/**
-	 * Sets the killed.
-	 */
-	public void setKilled() {
+    /**
+     * Sets the killed.
+     */
+    public void setKilled() {
         environmentKilled = true;
     }
-	
-	/**
-	 * Gets the agent id.
-	 *
-	 * @return the agent id
-	 */
-	public String getAgentId() {
-	    return agentId;
-	}
-	
-	/**
+    
+    /**
+     * Gets the agent id.
+     *
+     * @return the agent id
+     */
+    public String getAgentId() {
+        return agentId;
+    }
+    
+    /**
      * Gets the entity id.
      *
      * @return the entity id
@@ -255,41 +255,41 @@ public class BW4TAgent extends Thread implements ActionInterface {
         return entityId;
     }
 
-	/**
-	 * Gets the environment.
-	 *
-	 * @return the environment
-	 */
-	public RemoteEnvironment getEnvironment() {
-	    return bw4tenv;
-	}
-	
-	/**
-	 * Whether this agent can pick up another box based on their
-	 * gripper capacity and the amount of boxes they're already
-	 * holding. 
-	 * @param sameEntity The {@link ViewEntity} type of this agent.
-	 * @return Whether this agent can pick up another object.
-	 */
-	public boolean canPickupAnotherObject(ViewEntity sameEntity) {
-	    if (getBotConfig() == null) {
-	        return true;
-	    }
-	    if (getBotConfig().getGripperHandicap()) {
-	        return false;
-	    }
-	    int grippersTotal = getBotConfig().getGrippers();
-	    int grippersInUse = sameEntity.getHolding().size();
-	    return grippersInUse < grippersTotal;
-	}
-	
-	public boolean canPickupAnotherObject(BW4TClientGUI gui) {
-	    return canPickupAnotherObject(gui.getController().getMapController().getTheBot());
-	}
-	
-	public boolean isColorBlind() {
-	    return getBotConfig() != null && getBotConfig().getColorBlindHandicap();
-	}
+    /**
+     * Gets the environment.
+     *
+     * @return the environment
+     */
+    public RemoteEnvironment getEnvironment() {
+        return bw4tenv;
+    }
+    
+    /**
+     * Whether this agent can pick up another box based on their
+     * gripper capacity and the amount of boxes they're already
+     * holding. 
+     * @param sameEntity The {@link ViewEntity} type of this agent.
+     * @return Whether this agent can pick up another object.
+     */
+    public boolean canPickupAnotherObject(ViewEntity sameEntity) {
+        if (getBotConfig() == null) {
+            return true;
+        }
+        if (getBotConfig().getGripperHandicap()) {
+            return false;
+        }
+        int grippersTotal = getBotConfig().getGrippers();
+        int grippersInUse = sameEntity.getHolding().size();
+        return grippersInUse < grippersTotal;
+    }
+    
+    public boolean canPickupAnotherObject(BW4TClientGUI gui) {
+        return canPickupAnotherObject(gui.getController().getMapController().getTheBot());
+    }
+    
+    public boolean isColorBlind() {
+        return getBotConfig() != null && getBotConfig().getColorBlindHandicap();
+    }
 
     public BotConfig getBotConfig() {
         return botConfig;

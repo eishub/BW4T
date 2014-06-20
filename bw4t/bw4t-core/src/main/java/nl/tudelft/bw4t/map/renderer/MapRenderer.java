@@ -202,7 +202,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
         Zone dropZone = getController().getDropZone();
 
         if (dropZone == null) {
-        	return;
+            return;
         }   
         
         g2d.setColor(Color.DARK_GRAY);

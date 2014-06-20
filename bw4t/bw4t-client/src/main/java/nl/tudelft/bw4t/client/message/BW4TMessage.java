@@ -7,7 +7,7 @@ package nl.tudelft.bw4t.client.message;
  */
 public class BW4TMessage {
 
-	/** Information storage of the message. {@code null} if not set. */
+    /** Information storage of the message. {@code null} if not set. */
     private final String color, playerId, room;
     /** MessageType of this message */
     private final MessageType type;
