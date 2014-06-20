@@ -1,24 +1,22 @@
 package nl.tudelft.bw4t.scenariogui;
 
 import nl.tudelft.bw4t.map.EntityType;
-
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-/** 
+/**
  * Class used for testing the BotConfig class except the getters and setters.
  */
 public class BotConfigTest {
-    
+
     private String name;
     private EntityType controller;
     private int amount;
     private int botSize;
     private int botSpeed;
     private int botBatteryCapacity;
-    private double botBatteryDischargeRate;
     private int numberOfGrippers;
     private boolean batteryEnabled;
     private boolean hasColorBlindHandicap;
@@ -32,7 +30,8 @@ public class BotConfigTest {
      * Tests whether the toString method displays the desired result.
      */
     @Test
-    public void bcToStringTest() {        
+    public void bcToStringTest() {
+        setDefaultValues();
         BotConfig bot = createTestBot();
         assertNotEquals("Wrong string test", bot.bcToString());
         assertEquals((name + controller + amount + botSize
@@ -41,63 +40,56 @@ public class BotConfigTest {
                 + hasGripperHandicap + hasMoveSpeedHandicap
                 + hasSizeOverloadHandicap + fileName + referenceName), bot.bcToString());
     }
-    
+
     /**
      * Test for cloning a bot
      */
     @Test
     public void cloneTest() {
         BotConfig bot = createTestBot();
-        BotConfig clonedbot = bot.clone();        
+        BotConfig clonedbot = bot.clone();
         assertEquals(bot.bcToString(), clonedbot.bcToString());
     }
 
     /**
-     * Tests whether the default human bot created is of type HUMAN and 
+     * Tests whether the default human bot created is of type HUMAN and
      * only differs in controller type from the default bot.
      */
     @Test
     public void createDefaultHumansTest() {
         BotConfig humanBot = BotConfig.createDefaultHumans();
         BotConfig defaultBot = new BotConfig();
-        
+
         assertEquals(humanBot.getBotController(), EntityType.HUMAN);
-        
-        EntityType defaultController = defaultBot.getBotController();        
+
+        EntityType defaultController = defaultBot.getBotController();
         humanBot.setBotController(defaultController);
         assertEquals(humanBot.bcToString(), defaultBot.bcToString());
     }
-    
+
     /**
-     * Tests whether the default human bot created is of type HUMAN and 
+     * Tests whether the default human bot created is of type HUMAN and
      * only differs in controller type from the default bot.
      */
     @Test
     public void createDefaultRobotTest() {
         BotConfig staticDefaultBot = BotConfig.createDefaultRobot();
         BotConfig defaultBot = new BotConfig();
-        
+
         assertEquals(staticDefaultBot.getBotController(), EntityType.AGENT);
-        
-        EntityType defaultController = defaultBot.getBotController();        
+
+        EntityType defaultController = defaultBot.getBotController();
         staticDefaultBot.setBotController(defaultController);
         assertEquals(staticDefaultBot.bcToString(), defaultBot.bcToString());
     }
-  
-    /**
-     * Used for generating a test bot. 
-     * 
-     * @return Returns a botconfig.
-     */
-    private BotConfig createTestBot() {
-        
+
+    private void setDefaultValues() {
         name = "testName";
         controller = EntityType.HUMAN;
         amount = 10;
         botSize = 3;
         botSpeed = 60;
         botBatteryCapacity = 100;
-        botBatteryDischargeRate = 10;
         numberOfGrippers = 2;
         batteryEnabled = true;
         hasColorBlindHandicap = true;
@@ -106,7 +98,9 @@ public class BotConfigTest {
         hasSizeOverloadHandicap = false;
         fileName = "robot_test.goal";
         referenceName = "ref_test_name";
-                
+    }
+
+    private BotConfig createTestBot() {
         BotConfig bot = new BotConfig();
         bot.setBotName(name);
         bot.setBotController(controller);

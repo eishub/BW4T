@@ -100,7 +100,7 @@ public class ScenarioEditorController {
     private void addStandardBotDropDownListeners() {
         EntityPanel entityPanel = mainPanel.getEntityPanel();
         
-        entityPanel.addNewStandardBotController(new AddNewStandardBot(mainPanel, getModel()));
+        entityPanel.addNewStandardBotController(new AddNewBot(mainPanel, getModel()));
         entityPanel.addNewStandardBotBigController(new AddNewStandardBotBig(mainPanel, getModel()));
         entityPanel.addNewStandardBotGripperController(new AddNewStandardBotGripper(mainPanel, getModel()));
         entityPanel.addNewStandardBotBigGripperController(new AddNewStandardBotBigGripper(mainPanel, getModel()));

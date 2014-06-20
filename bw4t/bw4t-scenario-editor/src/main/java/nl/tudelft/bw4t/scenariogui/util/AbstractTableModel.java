@@ -10,14 +10,17 @@ import javax.swing.table.TableModel;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 
+/**
+ * This class creates a table which can hold entities.
+ */
 public abstract class AbstractTableModel implements TableModel {
 
     private Set<TableModelListener> listeners = new HashSet<>();
     
     private ScenarioEditor parent = null;
     
-    public AbstractTableModel() {
-    }
+    /** Prevents this class from being instantiated. */
+    public AbstractTableModel() {}
     
     protected BW4TClientConfig getConfig() {
         if(parent == null || parent.getController() == null)
@@ -30,7 +33,7 @@ public abstract class AbstractTableModel implements TableModel {
     }
     
     /**
-     * update all attached listeners.
+     * Update all attached listeners.
      */
     public void update() {
         final TableModelEvent tableModelEvent = new TableModelEvent(this);

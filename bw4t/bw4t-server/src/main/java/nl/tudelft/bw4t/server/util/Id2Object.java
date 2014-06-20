@@ -8,12 +8,17 @@ import repast.simphony.context.Context;
  */
 public final class Id2Object {
 
+    /**
+     * makes sure that this is not instantiated as an object
+     */
     private Id2Object() {
     }
 
     /**
      * Returns the {@link BoundedMoveableObject} with the given ID.
      * 
+     * @param context
+     *          the context from which to get the object
      * @param id
      *            The id to get the room for.
      * @return The {@link BoundedMoveableObject}.

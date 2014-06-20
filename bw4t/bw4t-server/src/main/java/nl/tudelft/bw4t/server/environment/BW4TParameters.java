@@ -5,7 +5,11 @@ import repast.simphony.parameter.Schema;
 
 public class BW4TParameters implements Parameters {
 
+    /**
+     * this is something of repast
+     */
     public BW4TParameters() {
+        // needs to be here
     }
 
     @Override

@@ -8,10 +8,7 @@ import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
- * Handles the event to create a new bot.
- * 
- * @version     0.1                
- * @since       12-05-2014        
+ * Handles the event to create a new bot.      
  */
 class AddNewBot implements ActionListener {
 
@@ -34,7 +31,7 @@ class AddNewBot implements ActionListener {
 
     /**
      * Listens to the add a new bot button.
-     * Executes action that needs to happen when the "New bot" button is
+     * Executes action that needs to happen when the "New Bot" button is
      * pressed. Gives default name of "Bot &lt;n&gt;" where &lt;n&gt; is the n'th bot created.  
      *
      * @param ae The action event.
