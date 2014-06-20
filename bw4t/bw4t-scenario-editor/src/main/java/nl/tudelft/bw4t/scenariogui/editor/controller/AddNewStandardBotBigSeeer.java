@@ -41,6 +41,7 @@ class AddNewStandardBotBigSeeer implements ActionListener {
      */
     public void actionPerformed(final ActionEvent ae) {
         BotConfig newBotConfig = new BotConfig();
+        newBotConfig.setBotSize(5);
         newBotConfig.setGripperHandicap(true);
         newBotConfig.setFileName(BotConfig.DEFAULT_GOAL_FILENAME);
         newBotConfig.setReferenceName(BotConfig.DEFAULT_GOAL_FILENAME_REFERENCE);
