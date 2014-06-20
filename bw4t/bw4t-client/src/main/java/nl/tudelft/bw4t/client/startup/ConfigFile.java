@@ -11,10 +11,12 @@ import nl.tudelft.bw4t.util.XMLManager;
  */
 public final class ConfigFile {
     
-    /** Should never be instantiated. */
-    private ConfigFile() { }
-    
     private static BW4TClientConfig config;
+    
+    /** Should never be instantiated. */
+    private ConfigFile() { 
+        
+    }
     
     /**
      * Reads the init config file and sets the init parameters accordingly.
