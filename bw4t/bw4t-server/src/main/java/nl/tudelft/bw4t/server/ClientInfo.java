@@ -8,7 +8,8 @@ import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 
 class ClientInfo {
-    private BW4TClientConfig config = new BW4TClientConfig();
+
+    private BW4TClientConfig clientConfig;
     private List<BotConfig> requestedBots = new ArrayList<>();
     private List<EPartnerConfig> requestedEPartners = new ArrayList<>();
 
@@ -27,16 +28,15 @@ class ClientInfo {
         }
     }
 
-    public ClientInfo(BW4TClientConfig config, List<BotConfig> reqBots, List<EPartnerConfig> reqEP) {
-        if(config != null) {
-            this.config = config;
+
+    public ClientInfo(BW4TClientConfig clientConfig) {
+        if (clientConfig.getBots() != null){
+            this.requestedBots = clientConfig.getBots();
         }
-        if (reqBots != null){
-            this.requestedBots = reqBots;
+        if (clientConfig.getEpartners() != null) {
+            this.requestedEPartners = clientConfig.getEpartners();
         }
-        if (reqEP != null) {
-            this.requestedEPartners = reqEP;
-        }
+        this.clientConfig = clientConfig;
     }
 
     public List<BotConfig> getRequestedBots() {
@@ -47,5 +47,8 @@ class ClientInfo {
         return requestedEPartners;
     }
 
-    public BW4TClientConfig getConfiguration() { return config; }
+    public String getMapFile() {
+        return clientConfig == null ? "" : clientConfig.getMapFile();
+    }
+
 }

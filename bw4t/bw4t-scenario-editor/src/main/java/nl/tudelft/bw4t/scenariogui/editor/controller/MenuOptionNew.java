@@ -129,12 +129,7 @@ class MenuOptionNew extends AbstractMenuOption {
 	 *            The EntityPanel which contains the bot list.
 	 */
 	public void resetBotTable(EntityPanel entityPanel) {
-		DefaultTableModel botTable = entityPanel.getBotTableModel();
-		int rows = botTable.getRowCount();
-
-		for (int i = rows - 1; i >= 0; i--) {
-			botTable.removeRow(i);
-		}
+		entityPanel.getBotTableModel().update();
 	}
 
 	/**

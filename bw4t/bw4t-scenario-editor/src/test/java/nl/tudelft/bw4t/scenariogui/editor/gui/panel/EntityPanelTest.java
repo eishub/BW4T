@@ -176,7 +176,6 @@ public class EntityPanelTest {
     	spyEntityPanel.getNewBotButton().doClick();
     	spyEntityPanel.getBotTable().setRowSelectionInterval(0, 0);
         spyEntityPanel.getModifyBotButton().doClick();
-
         assertTrue(spyEntityPanel.isBotStore());
     }
     
@@ -301,7 +300,6 @@ public class EntityPanelTest {
     	spyEntityPanel.getNewEPartnerButton().doClick();
         spyEntityPanel.getEPartnerTable().setRowSelectionInterval(0, 0);
         spyEntityPanel.getModifyEPartnerButton().doClick();
-
         assertTrue(spyEntityPanel.isEpartnerStore());
     }
     
@@ -521,7 +519,7 @@ public class EntityPanelTest {
 
 		BotEditor botEditor = new BotEditor(editor.getMainPanel(), 0,
 				editor.getController().getModel());
-		BotEditorPanel botEditorPanel = botEditor.getBoteditorPanel();
+		BotEditorPanel botEditorPanel = botEditor.getBotEditorPanel();
 		
 		botEditorPanel.getBotNameField().setText("TestBot");
 		botEditorPanel.getBotControllerSelector().setSelectedIndex(1);
@@ -553,7 +551,7 @@ public class EntityPanelTest {
 		assertEquals(1, spyEntityPanel.getEPartnerTableModel().getValueAt(0, 2));
 
 		EpartnerFrame epartnerFrame = new EpartnerFrame(new EpartnerController(
-				editor.getMainPanel(), 0), editor.getController().getModel());
+				editor.getMainPanel(), 0));
 		
 		epartnerFrame.getEpartnerNameField().setText("TestEPartner");
 		epartnerFrame.getEpartnerAmountField().setText("99");

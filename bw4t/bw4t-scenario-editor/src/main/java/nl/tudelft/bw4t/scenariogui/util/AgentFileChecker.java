@@ -7,7 +7,7 @@ public class AgentFileChecker {
     
     /**
      * Returns whether a file exists
-     * @filename filename to check
+     * @param filename to check
      * @return Returns whether a file exists.
      */
     public static boolean fileNameExists(String filename) {

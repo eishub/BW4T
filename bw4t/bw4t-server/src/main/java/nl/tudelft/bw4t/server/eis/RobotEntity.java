@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import nl.tudelft.bw4t.server.RobotEntityInt;
 import nl.tudelft.bw4t.server.eis.translators.BlockWithColorTranslator;
 import nl.tudelft.bw4t.server.eis.translators.BoundedMovableObjectTranslator;
 import nl.tudelft.bw4t.server.eis.translators.ColorTranslator;
@@ -52,7 +51,7 @@ import eis.iilang.Parameter;
 /**
  * EIS entity for a {@link AbstractRobot}.
  */
-public class RobotEntity implements RobotEntityInt {
+public class RobotEntity implements EntityInterface {
 
     static {
         // Register our translators.
@@ -143,6 +142,10 @@ public class RobotEntity implements RobotEntityInt {
      */
     private <T extends BoundedMoveableObject> Set<T> getVisible(Class<T> type){
         Set<T> set = new HashSet<T>();
+        
+        if(context == null) {
+            return set;
+        }
 
         // Add all objects in the same room as the robot.
         Iterable<Object> allObjects = context.getObjects(type);

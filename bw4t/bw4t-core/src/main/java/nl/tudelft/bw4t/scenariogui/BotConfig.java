@@ -32,8 +32,6 @@ public final class BotConfig implements Serializable, Cloneable {
 
 	private int botBatteryCapacity = 10;
 
-	private double botBatteryDischargeRate = 0;
-
 	private int numberOfGrippers = 1;
 
 	private boolean batteryEnabled = false;
@@ -182,16 +180,7 @@ public final class BotConfig implements Serializable, Cloneable {
 	 * @return the robot's battery discharge rate.
 	 */
 	public double getBotBatteryDischargeRate() {
-		return botBatteryDischargeRate;
-	}
-
-	/**
-	 * @param newBatteryDischargeRate
-	 *            , the new robot's battery discharge rate.
-	 */
-	@XmlElement
-	public void setBotBatteryDischargeRate(double newBatteryDischargeRate) {
-		botBatteryDischargeRate = newBatteryDischargeRate;
+		return calculateDischargeRate(botSize, botSpeed);
 	}
 
 	/**
@@ -285,7 +274,7 @@ public final class BotConfig implements Serializable, Cloneable {
 	 */
 	public String bcToString() {
 		return name + controller + amount + botSize
-				+ botSpeed + botBatteryCapacity + botBatteryDischargeRate
+				+ botSpeed + botBatteryCapacity
 				+ numberOfGrippers + batteryEnabled + hasColorBlindHandicap
 				+ hasGripperHandicap + hasMoveSpeedHandicap
 				+ hasSizeOverloadHandicap + fileName + referenceName;
@@ -351,5 +340,15 @@ public final class BotConfig implements Serializable, Cloneable {
         bot.setBotController(EntityType.AGENT);
         return bot;
 	}
+
+	/**
+	 * Calculate the discharge rate given the size and speed of the bot.
+	 * @param size the size of the bot
+	 * @param speed the speed of the bot
+	 * @return the discharge rate per step
+	 */
+    public static double calculateDischargeRate(int size, int speed) {
+        return 0.0002 * size + 0.0004 * speed;
+    }
 
 }

@@ -20,8 +20,8 @@ import nl.tudelft.bw4t.network.BW4TClientActions;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.server.BW4TServer;
-import nl.tudelft.bw4t.server.RobotEntityInt;
 import nl.tudelft.bw4t.server.eis.EPartnerEntity;
+import nl.tudelft.bw4t.server.eis.EntityInterface;
 import nl.tudelft.bw4t.server.eis.RobotEntity;
 import nl.tudelft.bw4t.server.logging.BW4TFileAppender;
 import nl.tudelft.bw4t.server.logging.BotLog;
@@ -168,7 +168,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
     public void removeAllEntities() throws ManagementException {
       
     	BW4TFileAppender.logFinish(System.currentTimeMillis(), "total time is ");
-        // FIXME: BOTLOG gives nullpointer exception if no bots.
 
         setState(EnvironmentState.KILLED);
 
@@ -363,7 +362,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
     public synchronized List<Percept> getAllPerceptsFrom(String entity) {
         try {
             if (this.isMapFullyLoaded()) {
-                ((RobotEntityInt) getEntity(entity)).initializePerceptionCycle();
+                ((EntityInterface) getEntity(entity)).initializePerceptionCycle();
                 return getAllPerceptsFromEntity(entity);
             }
         } catch (PerceiveException | NoEnvironmentException e) {
@@ -597,15 +596,23 @@ public class BW4TEnvironment extends AbstractEnvironment {
      * @param client the client to notify
      */
     public void spawnBots(List<BotConfig> bots, BW4TClientActions client) {
+        int skip = 0;
         for (BotConfig c : bots) {
             int created = 0;
             String name = c.getBotName();
 
             while (created < c.getBotAmount()) {
-                c.setBotName(String.format(ENTITY_NAME_FORMAT, name, created + 1));
+                c.setBotName(String.format(ENTITY_NAME_FORMAT, name, created + skip + 1));
                 try {
-                    spawn(c);
-                    
+                    if (this.getEntities().contains(c.getBotName())) {
+                        if (this.getAssociatedAgents(c.getBotName()).size() != 0) {
+                            skip++;
+                            continue;
+                        }
+                    } else {
+                        spawn(c);
+                    }
+
                     // assign robot to client
                     server.notifyFreeRobot(client, c);
                 } catch (EntityException e) {
@@ -693,7 +700,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
         EPartnerEntity ee = new EPartnerEntity(epartner);
         // register the entity in the environment
         this.registerEntity(epartner.getName(), ee);
-        // TODO: Place the EPartner
+        // Place the EPartner
         epartner.moveTo(point.getX(), point.getY());
     }
 

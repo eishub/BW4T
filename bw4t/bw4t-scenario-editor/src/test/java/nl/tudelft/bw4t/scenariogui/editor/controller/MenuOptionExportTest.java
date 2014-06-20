@@ -68,6 +68,7 @@ public class MenuOptionExportTest {
     	// Setup the behaviour
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
+        new File(FILE_EXPORT_PATH).mkdirs();
         when(filechooser.getSelectedFile()).thenReturn(new File(FILE_EXPORT_PATH + ExportToMASTest.CONFIG_NAME + ".mas2g"));
 
         editor.getMainPanel().getEntityPanel().getNewBotButton().doClick();
@@ -88,7 +89,13 @@ public class MenuOptionExportTest {
         editor.getTopMenuBar().getMenuItemFileExport().doClick();
 
         verify(yesPrompt, times(1)).showMessageDialog((Component) any(), anyString());
+<<<<<<< HEAD
         assertTrue("mas2g Exists", new File(FILE_EXPORT_PATH + ExportToMASTest.CONFIG_NAME + ".mas2g").exists());
         FileUtils.deleteDirectory(directory);
+=======
+        assertTrue("mas2g failed to create", new File(FILE_EXPORT_PATH + ExportToMASTest.CONFIG_NAME + ".mas2g").exists());
+        FileUtils.forceDelete(new File(FILE_EXPORT_PATH + ExportToMASTest.CONFIG_NAME + ".mas2g"));
+
+>>>>>>> origin/master
     }
 }

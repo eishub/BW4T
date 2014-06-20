@@ -190,7 +190,7 @@ public final class ExportToMAS {
          * no checks are needed.
          */
         for (EPartnerConfig epartner : ExportToMAS.configuration.getEpartners()) {
-			String epartnerFileName = epartner.getFileName();
+            String epartnerFileName = epartner.getFileName();
 
 			File goalFile = new File(epartnerFileName);
 			if (goalFile.exists()) {

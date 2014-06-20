@@ -1,14 +1,21 @@
 package nl.tudelft.bw4t.client.gui.menu;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
-import eis.exceptions.EntityException;
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
+import eis.exceptions.EntityException;
 
 public class ComboAgentModel extends AbstractListModel implements ComboBoxModel {
+    private static final long serialVersionUID = 344469588673323347L;
 
     private final BW4TClientGUI gui;
+
+    private List<String> entities;
 
     private static final String[] DEFAULT_OPTIONS = new String[] { "all" };
     private String selection = DEFAULT_OPTIONS[0];
@@ -20,72 +27,44 @@ public class ComboAgentModel extends AbstractListModel implements ComboBoxModel 
     @Override
     public Object getElementAt(int listIndex) {
         int defaultOptionsSize = DEFAULT_OPTIONS.length;
-        
+
         /** If the element is a default option, then return that option: */
         if (listIndex < defaultOptionsSize) {
             return DEFAULT_OPTIONS[listIndex];
         }
         
+        filterEntityList();
+
         /** Else return the agent in the dropdown menu list: */
-        int agentIndex = listIndexToAgentIndex(listIndex);
-        if (agentIndex >= 0 && showAgent(agentIndex)) {
-            return gui.environment.getAgents().get(agentIndex);
+        int entityIndex = listIndexToAgentIndex(listIndex);
+        if (entityIndex >= 0) {
+            return getEntities().get(entityIndex);
         }
-        
+
         return null;
     }
-    
+
     /**
-     * Returns whether this agent is not an e-partner and is not our
-     * own agent, and thus can be shown in the list.
-     * @param agentIndex The index of the agent in the environment.
-     * @return Whether this agent should be shown.
-     */
-    private boolean showAgent(int agentIndex) {
-        String name = gui.environment.getAgents().get(agentIndex);
-        if (name == null) {
-            return false;
-        }
-        try {
-            return !gui.environment.getType(name).equals("epartner");
-        } catch (EntityException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-    
-    /**
-     * Gets the agent index in the environment's agent list from the supplied
-     * agent index in the list.
-     * @param listIndex The index of the agent in the list.
+     * Gets the agent index in the environment's agent list from the supplied agent index in the list.
+     * 
+     * @param listIndex
+     *            The index of the agent in the list.
      * @return The agent index, -1 if the agent was not in the list.
      */
     private int listIndexToAgentIndex(int listIndex) {
         listIndex -= DEFAULT_OPTIONS.length;
-        
+
         /** A default option, which can't be translated to an agent id: */
-        if (listIndex < 0) {
+        if (listIndex < 0 || listIndex >= getEntities().size()) {
             return -1;
         }
-        
-        int currentListIndex = 0;
-        for (int agentIndex = 0; agentIndex < gui.environment.getAgents().size(); agentIndex++) {
-            if (showAgent(agentIndex) && currentListIndex++ >= listIndex) {
-                return agentIndex;
-            }
-        }
-        return -1;
+        return listIndex;
     }
 
     @Override
     public int getSize() {
-        int size = 0;
-        for (int i = 0; i < gui.environment.getAgents().size(); i++) {
-            if (showAgent(i)) {
-                size++;
-            }
-        }
-        return size + DEFAULT_OPTIONS.length;
+        filterEntityList();
+        return getEntities().size() + DEFAULT_OPTIONS.length;
     }
 
     @Override
@@ -96,6 +75,28 @@ public class ComboAgentModel extends AbstractListModel implements ComboBoxModel 
     @Override
     public void setSelectedItem(Object arg0) {
         selection = (String) arg0;
+    }
+
+    /**
+     * load the list of entities from the server and filter it.
+     */
+    private void filterEntityList() {
+        final RemoteEnvironment env = gui.getController().getEnvironment();
+        entities = new ArrayList<>();
+
+        for (String entity : env.getEntities()) {
+            try {
+                if (!env.getType(entity).equalsIgnoreCase("epartner")) {
+                    entities.add(entity);
+                }
+            } catch (EntityException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private List<String> getEntities() {
+        return entities;
     }
 
 }

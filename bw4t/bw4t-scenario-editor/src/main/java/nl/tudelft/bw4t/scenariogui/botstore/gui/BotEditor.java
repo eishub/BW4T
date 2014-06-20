@@ -7,7 +7,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.botstore.controller.BotStoreController;
+import nl.tudelft.bw4t.scenariogui.botstore.controller.BotController;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
@@ -29,7 +29,7 @@ public class BotEditor extends JFrame {
     private BotEditorPanel bPanel;
 
 	/** the controller for the frame*/
-    private BotStoreController controller;
+    private BotController controller;
 
     /** The row number of the selected bot. */
     private int row;
@@ -40,15 +40,22 @@ public class BotEditor extends JFrame {
      * @param row the row to be updated in the scenario gui
      */
     public BotEditor(MainPanel pparent, int row, BW4TClientConfig model) {
-    	this.model = model;
-    	
+    	this(new BotController(pparent, row, model));
+    }
+    /**
+     * creates the BotEditor frame
+     * @param bc the BotController in control of this frame
+     */
+    public BotEditor(BotController bc) {
+        controller = bc;
+        
         setLookAndFeel();
         setTitle(windowName);
         setResizable(false);
         setLayout(null);
-        this.parent = pparent;
-        this.row = row;
-        bPanel = new BotEditorPanel(this, this.parent, this.model);
+      
+        bPanel = new BotEditorPanel(bc);
+        bPanel.setBotEditor(this);
         bPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
         setContentPane(bPanel);
 
@@ -58,8 +65,6 @@ public class BotEditor extends JFrame {
         setLocationRelativeTo(null);
 
         setVisible(true);
-
-        controller = new BotStoreController(this);
     }
 
      /**
@@ -89,14 +94,6 @@ public class BotEditor extends JFrame {
     public int getRow() {
         return this.row;
     }
-    
-    /**
-     * Returns the BotEditorPanel
-     * @return botEditorPanel used
-     */
-    public BotEditorPanel getBotEditorPanel() {
-        return bPanel;
-    }
 
     /**
      * Get the main panel.
@@ -105,24 +102,28 @@ public class BotEditor extends JFrame {
     public MainPanel getParent() {
         return parent;
     }
-
-    /**
-     * Set the main panel.
-     * @param pparent the main panel.
-     */
-    public void setParent(MainPanel pparent) {
-        this.parent = pparent;
+    
+    public BotController getController() {
+        return controller;
     }
-
+    
     /**
-     * setter for botEditorPanel
-     * @param pbPanel the panel to be set
-     */
-    public void setBotEditorPanel(BotEditorPanel pbPanel) {
-        this.bPanel = pbPanel;
-    }
-
-    public BotEditorPanel getBoteditorPanel() {
+	 * Return the MainPanel.
+	 * @return mainpanel
+	 */
+	public MainPanel getMainPanel() {
+		return controller.getMainPanel();
+	}
+	
+	/**
+	 * Return the BotEditorPanel.
+	 * @return botpanel
+	 */
+	public BotEditorPanel getBotEditorPanel() {
 		return bPanel;
+	}
+	
+	public void setBotEditorPanel(BotEditorPanel panel) {
+		bPanel = panel;
 	}
 }

@@ -47,8 +47,8 @@ public interface BW4TServerActions extends Remote {
      * 
      * @param client
      *            the client that wants to register
-     * @param bots
-     *            a list of configurations, the bots to be created in the environment
+     * @param clientConfig
+     *           The client configuration used (can be null).
      * @throws RemoteException
      *             if an exception occurs during the execution of a remote object call
      */

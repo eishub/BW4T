@@ -12,6 +12,11 @@ public enum EntityType {
     public String nameLower() {
         return name().toLowerCase();
     }
+    
+    public String nameCamel() {
+        final String name = name().toLowerCase();
+        return Character.toUpperCase(name.charAt(0)) + name.substring(1);
+    }
 
     /**
      * @param type
