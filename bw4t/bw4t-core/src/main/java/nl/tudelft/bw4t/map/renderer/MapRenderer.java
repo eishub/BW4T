@@ -18,21 +18,30 @@ import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
-import org.apache.log4j.Logger;
 import repast.simphony.space.continuous.NdPoint;
 
+/** Implementation of the {@link MapRenderInterface} */
 public class MapRenderer extends JPanel implements MapRendererInterface {
-
-    private static final Logger LOGGER = Logger.getLogger(MapRenderer.class);
-    private static int PATH_SIZE = 1;
 
     /**
      * Serialization id.
      */
     private static final long serialVersionUID = 2854272641217795283L;
 
+    /** 
+     * Initialize MapController (to null).
+     */
     private transient MapController controller = null;
 
+    /** 
+     * Path_size used for scaling.
+     */
+    private static final int PATH_SIZE = 1;
+    
+    /** Constructor. 
+     * 
+     * @param controller MapController
+     */
     public MapRenderer(MapController controller) {
         this.setController(controller);
     }
@@ -41,10 +50,10 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
         return controller;
     }
 
-    /*
-     * (non-Javadoc)
+    /** 
+     * Set controller and update minimum size.
      * 
-     * @see nl.tudelft.bw4t.view.MapRendererInterface#setController(nl.tudelft.bw4t.controller.MapController)
+     * @param controller MapController 
      */
     public void setController(MapController controller) {
         if (this.controller != null) {
@@ -55,6 +64,9 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
         updateMinimumSize();
     }
 
+    /**
+     * Update minimum size based on controller.
+     */
     private void updateMinimumSize() {
         MapRenderSettings set = getController().getRenderSettings();
         Dimension size = new Dimension(set.scale(set.getWorldWidth()), set.scale(set.getWorldHeight())
@@ -89,7 +101,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
     /**
      * Display the goal sequence
      *
-     * @param g2d the graphics2d object
+     * @param g2d
+	 *		Graphics2D where will be drawn	
      */
     public void drawSequence(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
@@ -113,7 +126,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
     /**
      * Process all rooms and their connected doors, and display them in the panel with an outline
      *
-     * @param g2d the graphics2d object
+     * @param g2d t
+	 *		Graphics2D where will be drawn
      */
     public void drawRooms(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
@@ -134,7 +148,13 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 
         }
     }
-
+    
+    /**
+     * Draw charging zones in transpart green (color predefined in Zone).
+     * 
+     * @param g2d 
+     * 			Graphics2D where will be drawn
+     */
     public void drawChargingZones(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
 
@@ -146,6 +166,12 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
         }
     }
 
+    /**
+     * Draw blockades in transparent green (color predefined in Zone).
+     * 
+     * @param g2d 
+     * 			Graphics2D where will be drawn
+     */
     public void drawBlockades(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
 
@@ -159,13 +185,22 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
         }
     }
 
+    /**
+     * Draw door, color depends on status of door (open or close).
+     * 
+     * @param g2d 
+     * 			Graphics2D where will be drawn
+     * @param door
+     * 			Door that needs to be drawn
+     * @param closed
+     * 			based on if the door is closed or not, the color will be determined
+     */
     public void drawDoor(Graphics2D g2d, Door door, boolean closed) {
         MapRenderSettings set = getController().getRenderSettings();
 
         if (closed) {
             g2d.setColor(Door.COLOR_CLOSED);
-        }
-        else {
+        } else {
             g2d.setColor(Door.COLOR_OPEN);
         }
 
@@ -176,7 +211,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
     /**
      * Process the labels for the different areas
      *
-     * @param g2d the graphics2d object
+     * @param g2d
+     * 			Graphics2D where will be drawn
      */
     public void drawLabels(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
@@ -195,7 +231,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
     /**
      * Process the drop zone and connected doors and display them in the panel
      *
-     * @param g2d the graphics2d object
+     * @param g2d 
+     * 			Graphics2D where will be drawn
      */
     public void drawDropZone(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
@@ -221,7 +258,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
     /**
      * Process all blocks that are visible and display them with their color
      *
-     * @param g2d the graphics2d object
+     * @param g2d 
+	 *		Graphics2D where will be drawn	
      */
     public void drawBlocks(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
@@ -236,7 +274,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
     /**
      * Display the robot this panel represents. The color is adapted depending on whether it holds a block or not.
      *
-     * @param g2d the graphics2d object
+     * @param g2d 
+     * 		Graphics2D where will be drawn
      */
     public void drawEntity(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
@@ -257,6 +296,12 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
         }
     }
 
+    /**
+     * Display the EPartners in black.
+     * 
+     * @param g2d
+     *            Graphics2D where will be drawn
+     */
     public void drawEPartners(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
 
@@ -265,16 +310,21 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
             Point2D loc = eP.getLocation();
             int x = (int) set.scale(loc.getX());
             int y = (int) set.scale(loc.getY());
-            final int size = set.scale(eP.EPARTNER_SIZE);
+            final int size = set.scale(eP.getSize());
             int[] xpoints = new int[]{x, x - size, x + size};
             int[] ypoints = new int[]{y + size, y - size, y - size};
             g2d.fillPolygon(xpoints, ypoints, 3);
             g2d.setColor(Color.BLACK);
             g2d.drawPolygon(xpoints, ypoints, 3);
-            ;
         }
     }
 
+    /**
+     * Display the paths.
+     * 
+     * @param g2d
+     *           Graphics2D where will be drawn
+     */
     public void drawPaths(Graphics2D g2d) {
         MapRenderSettings set = getController().getRenderSettings();
 
@@ -300,10 +350,20 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
         }
     }
 
+    /**
+     * @param g2d
+     * 			Graphics2D where will be drawn
+     * @param x
+     * 			x coordinate of center
+     * @param y
+     * 			y coordinate of center
+     * @param r
+     * 			radius of circle
+     */
     private void drawCenteredCircle(Graphics2D g2d, int x, int y, int r) {
-        x = x - (r / 2);
-        y = y - (r / 2);
-        g2d.fillOval(x, y, r, r);
+        int newX = x - (r / 2);
+        int newY = y - (r / 2);
+        g2d.fillOval(newX, newY, r, r);
     }
 }
 
