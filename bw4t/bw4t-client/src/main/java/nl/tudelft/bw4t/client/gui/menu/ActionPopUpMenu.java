@@ -27,12 +27,13 @@ public class ActionPopUpMenu {
         int startPosX = 0;
         ClientMapController cmc = gui.getController().getMapController();
         MapRenderSettings settings = cmc.getRenderSettings();
+        boolean buildBlockadeMenu_ChargingZoneMenu = !buildBlockadeMenu(gui, cmc, settings) 
+                                                        && !buildChargingZoneMenu(gui, cmc, settings);
 
         if (!buildSequenceBlockMenu(gui, startPosX, cmc, settings)
                 && !buildEPartnerMenu(gui, cmc, settings)
                 && !buildRoomMenu(gui, cmc, settings)
-                && !buildBlockadeMenu(gui, cmc, settings)
-                && !buildChargingZoneMenu(gui, cmc, settings)) {
+                && buildBlockadeMenu_ChargingZoneMenu) {
             buildHallwayMenu(gui);
         }
     }
@@ -144,8 +145,7 @@ public class ActionPopUpMenu {
             if (boxBoundaries.contains(gui.getSelectedLocation())) {
                 if (MapOperations.closeToBox(box, gui.getController())) {
                     RoomMenus.buildPopUpMenuForBeingAtBlock(box, room, gui);
-                }
-                else {
+                } else {
                     RoomMenus.buildPopUpMenuForBlock(box, room, gui.getController());
                 }
                 showJPopupMenu(gui);
@@ -193,8 +193,7 @@ public class ActionPopUpMenu {
             if (ePartnerBox.contains(gui.getSelectedLocation())) {
                 if (MapOperations.closeToBox(ep, gui.getController())) {
                     EPartnerMenu.buildPopUpMenuPickUpEPartner(ep, gui);
-                }
-                else {
+                } else {
                     EPartnerMenu.buildPopUpMenuMoveToEPartner(ep, gui);
                 }
                 showJPopupMenu(gui);

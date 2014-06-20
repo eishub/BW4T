@@ -86,7 +86,7 @@ public class ComboAgentModel extends AbstractListModel implements ComboBoxModel 
 
         for (String entity : env.getEntities()) {
             try {
-                if (!env.getType(entity).equalsIgnoreCase("epartner")) {
+                if (!"epartner".equalsIgnoreCase(env.getType(entity))) {
                     entities.add(entity);
                 }
             } catch (EntityException e) {
