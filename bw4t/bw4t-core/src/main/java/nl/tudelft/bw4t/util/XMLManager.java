@@ -37,8 +37,6 @@ public final class XMLManager {
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         jaxbMarshaller.marshal(xmlObject, file);
 
-        // Can be used to print the file during debugging:
-        // jaxbMarshaller.marshal(xmlObject, System.out);
     }
 
     /**
