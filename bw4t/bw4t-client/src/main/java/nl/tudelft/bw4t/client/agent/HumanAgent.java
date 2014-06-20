@@ -1,7 +1,6 @@
 package nl.tudelft.bw4t.client.agent;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.List;
 
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;

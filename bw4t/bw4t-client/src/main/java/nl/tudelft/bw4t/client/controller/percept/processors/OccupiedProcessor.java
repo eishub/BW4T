@@ -1,11 +1,10 @@
 package nl.tudelft.bw4t.client.controller.percept.processors;
 
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
-
 import java.util.List;
 
 import nl.tudelft.bw4t.client.controller.ClientMapController;
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
 
 public class OccupiedProcessor implements PerceptProcessor {
 
