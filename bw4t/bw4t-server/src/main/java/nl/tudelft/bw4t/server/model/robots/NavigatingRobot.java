@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import nl.tudelft.bw4t.map.Path;
+import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.zone.Zone;
@@ -138,7 +139,13 @@ public class NavigatingRobot extends AbstractRobot {
      */
     private void updateDrawPath() {
         if (BW4TEnvironment.getInstance().isDrawPathsEnabled()) {
-            displayedPath.setPath(new ArrayList<NdPoint>(plannedMoves));
+            final ArrayList<Point> path = new ArrayList<Point>();
+            
+            for (NdPoint p : plannedMoves) {
+                path.add(new Point(p.getX(), p.getY()));
+            }
+            
+            displayedPath.setPath(path);
         }
     }
 

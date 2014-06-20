@@ -14,11 +14,11 @@ import javax.swing.JPanel;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Door;
 import nl.tudelft.bw4t.map.Path;
+import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
-import repast.simphony.space.continuous.NdPoint;
 
 /** Implementation of the {@link MapRenderInterface} */
 public class MapRenderer extends JPanel implements MapRendererInterface {
@@ -329,8 +329,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
         MapRenderSettings set = getController().getRenderSettings();
 
         for (Path p : controller.getPaths()) {
-            NdPoint previous = null;
-            for (NdPoint point : p.getPath()) {
+            Point previous = null;
+            for (Point point : p.getPath()) {
                 int x = (int) set.scale(point.getX());
                 int y = (int) set.scale(point.getY());
                 int scale = set.scale(PATH_SIZE);
