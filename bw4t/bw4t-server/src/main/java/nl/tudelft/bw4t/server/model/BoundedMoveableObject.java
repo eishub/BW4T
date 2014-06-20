@@ -16,13 +16,35 @@ import repast.simphony.space.grid.GridPoint;
  * like robots, blocks and rooms.
  */
 public abstract class BoundedMoveableObject {
-
+    
+    /**
+     * The counter which represents the id of a BMO.
+     */
     private static final AtomicLong COUNTER = new AtomicLong();
 
+    /**
+     * The id of the BMO.
+     */
     private final long id;
-    public final ContinuousSpace<Object> space;
-    public final Grid<Object> grid;
+    
+    /**
+     * The space for the BMO. 
+     */
+    private final ContinuousSpace<Object> space;
+    
+    /**
+     * The grid for the BMO.
+     */
+    private final Grid<Object> grid;
+    
+    /**
+     * The context for the BMO.
+     */
     protected final Context<Object> context;
+    
+    /**
+     * The box for the BMO.
+     */
     protected final Rectangle2D.Double boundingBox;
 
     /**
@@ -30,7 +52,9 @@ public abstract class BoundedMoveableObject {
      *  @param space
      *            the space in which the object should be placed.
      * @param grid
+     *            the grid in which the object should be placed.
      * @param context
+     *            the context in which the object should be placed.
      */
     public BoundedMoveableObject(ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context) {
         if (context.isEmpty()) {
@@ -63,7 +87,6 @@ public abstract class BoundedMoveableObject {
      */
     public NdPoint getLocation() {
         NdPoint location = space.getLocation(this);
-        //ugly fix for NullPointerException when adding entity after the display was setup
         if (location == null) {
             return new NdPoint(0, 0);
         }
@@ -77,7 +100,7 @@ public abstract class BoundedMoveableObject {
     public GridPoint getGridLocation() {
         GridPoint location = grid.getLocation(this);
 
-        if(location == null) {
+        if (location == null) {
             return new GridPoint(0, 0);
         }
         return location;
@@ -129,7 +152,7 @@ public abstract class BoundedMoveableObject {
         boundingBox.x = x - boundingBox.width / 2;
         boundingBox.y = y - boundingBox.height / 2;
         space.moveTo(this, x, y);
-        grid.moveTo(this, (int)x, (int)y);
+        grid.moveTo(this, (int) x, (int) y);
     }
 
 
@@ -245,9 +268,9 @@ public abstract class BoundedMoveableObject {
      * @return Whether this bounded moveable object is free of object.
      */
     public boolean isFree(Class<? extends BoundedMoveableObject> freeOfType) {
-        for(NdPoint point : getPointsOccupiedByObject(0)) {
-            for(Object o : getSpace().getObjectsAt(point.getX(), point.getY())) {
-                if(this != o) {
+        for (NdPoint point : getPointsOccupiedByObject(0)) {
+            for (Object o : getSpace().getObjectsAt(point.getX(), point.getY())) {
+                if (this != o) {
                     return false;
                 }
             }

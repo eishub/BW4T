@@ -1,14 +1,17 @@
 package nl.tudelft.bw4t.client.gui.listeners;
 
-import eis.exceptions.ActException;
-import eis.iilang.Percept;
 import java.awt.event.ActionEvent;
 import java.util.LinkedList;
 import java.util.List;
+
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.environment.Launcher;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
+
 import org.apache.log4j.Logger;
+
+import eis.exceptions.ActException;
+import eis.iilang.Percept;
 
 /**
  * ActionListener that performs the pick up action when that command is pressed
@@ -16,7 +19,7 @@ import org.apache.log4j.Logger;
  */
 public class PickUpActionListener extends AbstractClientActionListener {
     /** Logger to report error messages to. */
-    private final static Logger LOGGER = Logger.getLogger(BW4TClientGUI.class);
+    private static final Logger LOGGER = Logger.getLogger(BW4TClientGUI.class);
 
     /** @param controller - The {@link ClientController} to listen to and interact with. */
     public PickUpActionListener(ClientController controller) {

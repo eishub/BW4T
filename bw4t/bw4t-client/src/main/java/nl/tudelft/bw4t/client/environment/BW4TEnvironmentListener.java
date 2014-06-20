@@ -2,17 +2,12 @@ package nl.tudelft.bw4t.client.environment;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import nl.tudelft.bw4t.client.agent.BW4TAgent;
 import nl.tudelft.bw4t.client.agent.HumanAgent;
-import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
-import nl.tudelft.bw4t.client.startup.ConfigFile;
 import nl.tudelft.bw4t.client.controller.ClientController;
+import nl.tudelft.bw4t.client.startup.ConfigFile;
 import nl.tudelft.bw4t.client.startup.InitParam;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
@@ -33,7 +28,7 @@ import eis.iilang.EnvironmentState;
 public class BW4TEnvironmentListener implements EnvironmentListener {
 
     /** The log4j Logger which displays logs on console. */
-    private final static Logger LOGGER = Logger.getLogger(BW4TEnvironmentListener.class);
+    private static final Logger LOGGER = Logger.getLogger(BW4TEnvironmentListener.class);
     /** {@link RemoteEnvironment} to listen to and interact with. */
     private final RemoteEnvironment environment;
 
@@ -50,7 +45,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
      * 
      * @param entity
      *            - The deleted entity.
-     * @param associatedEntities
+     * @param agents
      *            - The list of associated agents.
      */
     @Override
@@ -84,7 +79,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
      * Handle a new entity, load the human agent if it is of type human otherwise load the agent that was specified in
      * the program argument or the default one (BW4TAgent).
      * 
-     * @param entityId
+     * @param entity
      *            - The new entity.
      */
     @Override
@@ -98,8 +93,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
 
             if (isHuman) {
                 agent = new HumanAgent("Human" + agentCount, environment);
-            }
-            else {
+            } else {
                 agent = newAgent(InitParam.AGENTCLASS.getValue(), entity);
             }
 
@@ -115,6 +109,14 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
         }
     }
 
+    /**
+     * Creates a new agent. 
+     * @param clazz 
+     * @param entity 
+     * @return Returns the newly created agent
+     * @throws InstantiationException 
+     * @throws EntityException 
+     */
     protected BW4TAgent newAgent(String clazz, String entity) throws InstantiationException, EntityException {
         try {
             Class<? extends BW4TAgent> c = Class.forName(clazz).asSubclass(BW4TAgent.class);
@@ -140,6 +142,8 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
      * 
      * @param entityId
      *            The entity id.
+     * @param recursiveCall
+     *            Boolean weather this is a recursive call or not
      * @return The bot config belonging to this entity.
      */
     private BotConfig findCorrespondingBotConfig(String entityId, boolean recursiveCall) {
@@ -165,6 +169,8 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
      * 
      * @param entityId
      *            The entity id.
+     * @param recursiveCall
+     *            Boolean weather this is a recursive call or not
      * @return The epartner config belonging to this entity.
      */
     private EPartnerConfig findCorrespondingEpartnerConfig(String entityId, boolean recursiveCall) {

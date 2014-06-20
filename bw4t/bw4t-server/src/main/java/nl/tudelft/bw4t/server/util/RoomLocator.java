@@ -44,7 +44,6 @@ public final class RoomLocator {
      */
     public static Room getRoomAt(double x, double y) {
         Point2D location = new Point2D.Double(x, y);
-
         Iterable<Object> rooms = BW4TEnvironment.getInstance().getContext().getObjects(Room.class);
         for (Object r : rooms) {
             Room room = (Room) r;

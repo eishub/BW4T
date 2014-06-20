@@ -1,12 +1,5 @@
 package nl.tudelft.bw4t.client.controller;
 
-import eis.eis2java.annotation.AsPercept;
-import eis.eis2java.translation.Filter.Type;
-import eis.exceptions.NoEnvironmentException;
-import eis.exceptions.PerceiveException;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -41,6 +34,11 @@ import nl.tudelft.bw4t.map.view.ViewEntity;
 
 import org.apache.log4j.Logger;
 
+import eis.exceptions.NoEnvironmentException;
+import eis.exceptions.PerceiveException;
+import eis.iilang.Parameter;
+import eis.iilang.Percept;
+
 /**
  * The Client Map Controller.
  */
@@ -59,28 +57,28 @@ public class ClientMapController extends AbstractMapController {
     private final ClientController clientController;
 
     /** The occupied rooms. */
-    private Set<Zone> occupiedRooms = new HashSet<Zone>();
+    private final Set<Zone> occupiedRooms = new HashSet<Zone>();
 
     /** The rendered bot. */
-    private ViewEntity theBot = new ViewEntity();
+    private final ViewEntity theBot = new ViewEntity();
 
     /** The color sequence index. */
     private int colorSequenceIndex = 0;
 
     /** The visible blocks. */
-    private Set<ViewBlock> visibleBlocks = new HashSet<>();
+    private final Set<ViewBlock> visibleBlocks = new HashSet<>();
 
     /** The (at one point) visible e-partners. */
-    private Set<ViewEPartner> knownEPartners = new HashSet<>();
+    private final Set<ViewEPartner> knownEPartners = new HashSet<>();
 
     /** All the blocks. */
-    private Map<Long, ViewBlock> allBlocks = new HashMap<>();
+    private final Map<Long, ViewBlock> allBlocks = new HashMap<>();
 
-    private Map<String, PerceptProcessor> perceptProcessors;
+    private final Map<String, PerceptProcessor> perceptProcessors;
 
 
     /** The color sequence. */
-    private List<BlockColor> colorSequence = new LinkedList<>();
+    private final List<BlockColor> colorSequence = new LinkedList<>();
 
     /**
      * Instantiates a new client map controller.
@@ -282,7 +280,8 @@ public class ClientMapController extends AbstractMapController {
     }
 
     /* (non-Javadoc)
-     * @see nl.tudelft.bw4t.map.renderer.AbstractMapController#updateRenderer(nl.tudelft.bw4t.map.renderer.MapRendererInterface)
+     * @see nl.tudelft.bw4t.map.renderer.AbstractMapController#updateRenderer
+     * (nl.tudelft.bw4t.map.renderer.MapRendererInterface)
      */
     @Override
     protected void updateRenderer(MapRendererInterface mri) {

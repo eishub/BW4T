@@ -10,9 +10,11 @@ import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.zone.DropZone;
 import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
+
 import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
+
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
@@ -21,6 +23,7 @@ import repast.simphony.space.continuous.NdPoint;
  * Path planner that uses the Zones.
  */
 public class PathPlanner {
+    
     private PathPlanner() {
     }
 
@@ -49,8 +52,7 @@ public class PathPlanner {
             if (graph.getEdgeSource(edge).equals(current)) {
                 current = graph.getEdgeTarget(edge);
                 path.add(current);
-            }
-            else if (graph.getEdgeTarget(edge).equals(current)) {
+            } else if (graph.getEdgeTarget(edge).equals(current)) {
                 current = graph.getEdgeSource(edge);
                 path.add(current);
             }
@@ -86,8 +88,7 @@ public class PathPlanner {
             if (graph.getEdgeSource(edge).equals(current)) {
                 current = graph.getEdgeTarget(edge);
                 path.add(current);
-            }
-            else if (graph.getEdgeTarget(edge).equals(current)) {
+            } else if (graph.getEdgeTarget(edge).equals(current)) {
                 current = graph.getEdgeSource(edge);
                 path.add(current);
             }

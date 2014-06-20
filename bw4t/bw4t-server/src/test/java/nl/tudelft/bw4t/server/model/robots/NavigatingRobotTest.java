@@ -83,20 +83,6 @@ public class NavigatingRobotTest {
         
         b = new Block(BlockColor.BLUE, mockedOtherSpace, mockedGrid, mockedContext);
     }
-
-    @Test
-    public void stopRobotTest() {      
-        assertNotNull(bot);
-        bot.setCollided(true);
-        bot.stopRobot();
-    }
-    
-    @Test
-    public void useNextTargetNotEmptyTest() {
-        when(mockedQueue.isEmpty()).thenReturn(false);
-        
-        bot.useNextTarget();
-    }
     
     @Test
     public void getStateCollidedTest() {

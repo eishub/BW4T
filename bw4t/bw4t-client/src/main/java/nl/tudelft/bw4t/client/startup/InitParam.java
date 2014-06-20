@@ -1,13 +1,17 @@
 package nl.tudelft.bw4t.client.startup;
 
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.JAXBException;
 
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+
 import org.apache.log4j.Logger;
+
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
 
 /**
  * Available init parameters and default values for {@link BW4TEnvironment}.

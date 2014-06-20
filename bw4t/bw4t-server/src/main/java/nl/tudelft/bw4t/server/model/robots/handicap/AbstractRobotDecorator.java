@@ -1,6 +1,5 @@
 package nl.tudelft.bw4t.server.model.robots.handicap;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import nl.tudelft.bw4t.map.view.ViewEntity;
@@ -18,6 +17,9 @@ import nl.tudelft.bw4t.server.model.zone.Zone;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.NdPoint;
 
+/**
+ * The robot decorator.
+ */
 public abstract class AbstractRobotDecorator implements IRobot {
     
     /**
@@ -216,7 +218,7 @@ public abstract class AbstractRobotDecorator implements IRobot {
     }
     
     @Override
-    public ArrayList<String> getHandicapsList() {
+    public List<String> getHandicapsList() {
         return parent.getHandicapsList();
     }
     
@@ -305,11 +307,15 @@ public abstract class AbstractRobotDecorator implements IRobot {
     }
 
     @Override
-    public List<BoundedMoveableObject> getObstacles() { return parent.getObstacles(); }
+    public List<BoundedMoveableObject> getObstacles() { 
+        return parent.getObstacles(); 
+    }
 
     @Override
-    public void clearObstacles() { parent.clearObstacles(); }
-    
+    public void clearObstacles() { 
+        parent.clearObstacles(); 
+    }
+
     @Override
     public boolean isDestinationUnreachable() {
         return parent.isDestinationUnreachable();
