@@ -13,6 +13,7 @@ import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.zone.Zone;
 import nl.tudelft.bw4t.server.util.PathPlanner;
+import nl.tudelft.bw4t.server.util.SpatialMath;
 import nl.tudelft.bw4t.server.util.ZoneLocator;
 
 import org.apache.log4j.Logger;
@@ -137,9 +138,14 @@ public class NavigatingRobot extends AbstractRobot {
      * updates the path to draw.
      */
     private void updateDrawPath() {
-        if (BW4TEnvironment.getInstance().isDrawPathsEnabled()) {
-            displayedPath.setPath(new ArrayList<NdPoint>(plannedMoves));
-        }
+        //if (BW4TEnvironment.getInstance().isDrawPathsEnabled()) {
+        
+            final ArrayList<NdPoint> path = new ArrayList<NdPoint>(plannedMoves);
+            if(plannedMoves.size()>0){
+            path.add(0, this.getLocation());
+            }
+            displayedPath.setPath(path);
+        //}
     }
 
     /**
@@ -168,15 +174,73 @@ public class NavigatingRobot extends AbstractRobot {
         if (plannedPath.isEmpty()) {
             throw new IllegalArgumentException("target " + p + " is unreachable from " + this);
         }
-        // and copy Zone path to our stack.
-        for (Zone point : plannedPath) {
-            plannedMoves.add(point.getLocation());
+        
+        if(plannedPath.size() == 1 || !skipFirstNode(this.getLocation(), plannedPath.get(1).getLocation(), plannedPath.get(2).getLocation())) {
+            plannedMoves.add(plannedPath.get(1).getLocation());
         }
-        // and add the real target
+
+        // and copy Zone path to our stack.
+        int preLast = plannedPath.size() - 2;
+        for (int i = 1; i < preLast; i++) {
+            Zone point = plannedPath.get(i);
+            NdPoint toAdd = point.getLocation();
+            
+            plannedMoves.add(toAdd);
+        }
+        
+        NdPoint toAdd = plannedPath.get(preLast).getLocation();
+        final NdPoint last = plannedPath.get(preLast + 1).getLocation();
+        if (skipNextNode(toAdd, last, p)) {
+            plannedMoves.add(toAdd);
+        }
         plannedMoves.add(p);
+        
+
         updateDrawPath();
         // make the bot use the new path.
         useNextTarget();
+    }
+    
+    /**
+     * Check whether we should skip the next node because the one after that is closer. The function also checks the angle to make sure we do not try to
+     * @param current The node we are currently at
+     * @param next the next node in the list
+     * @param after the node after the next
+     * @return true if the next node should be skipped
+     */
+    private boolean skipNextNode(NdPoint current, NdPoint next, NdPoint after) {
+        double angle = SpatialMath.angle(current, after) - SpatialMath.angle(current, next);
+        double distNext = SpatialMath.distance(current, next);
+        double distAfter = SpatialMath.distance(current, after);
+        return skipNextNode(distNext, distAfter, angle);
+    }
+    
+    /**
+     * Check whether we should skip the next node because the one after that is closer. The function also checks the angle to make sure we do not try to
+     * @param current The node we are currently at
+     * @param next the next node in the list
+     * @param after the node after the next
+     * @return true if the next node should be skipped
+     */
+    private boolean skipFirstNode(NdPoint current, NdPoint next, NdPoint after) {
+        double angle = SpatialMath.angle(current, after) - SpatialMath.angle(current, next); 
+        double distNext = SpatialMath.distance(current, next) + SpatialMath.distance(next, after);
+        double distAfter = SpatialMath.distance(current, after);
+        return skipNextNode(distNext, distAfter, angle);
+    }
+    
+
+    /**
+     * Check whether we should skip the next node and go straight for the one after
+     * @param distNormal the normal distance  
+     * @param distNext the distance with skipping
+     * @param angle the angle from current to skip
+     * @return true if the next node should be skipped and gone directly to the one after
+     */
+    public boolean skipNextNode(double distNormal, double distNext, double angle) {
+        angle = Math.abs(angle);
+        LOGGER.info(String.format("normal: %f, direct: %f, angle: %f", distNormal, distNext, angle));
+        return distNormal < distNext || angle < Math.PI / 6.;
     }
 
     @Override

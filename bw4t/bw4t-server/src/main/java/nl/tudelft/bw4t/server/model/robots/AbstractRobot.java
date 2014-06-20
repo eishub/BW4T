@@ -429,7 +429,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
                          * The robot's battery discharges when it moves.
                          */
                         this.battery.discharge();
-                        LOGGER.info(this.name + "'s current battery level is: " + this.battery.getCurrentCapacity());
+                        LOGGER.trace(String.format("%s's current battery level is: %f", this.name, this.battery.getCurrentCapacity()));
 
                         handicapMove();
                     } catch (SpatialException e) {
