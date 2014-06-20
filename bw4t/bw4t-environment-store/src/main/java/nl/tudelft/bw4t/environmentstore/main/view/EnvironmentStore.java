@@ -15,27 +15,34 @@ import nl.tudelft.bw4t.environmentstore.sizedialog.view.SizeDialog;
 import nl.tudelft.bw4t.environmentstore.util.DefaultOptionPrompt;
 import nl.tudelft.bw4t.environmentstore.util.OptionPrompt;
 
-
 /**
  * The EnvironmentStore class serves as a frame for the Panels and tables.
  *
  */
 public class EnvironmentStore extends JFrame {
     
+	/** Random generated serial version UID. */
     private static final long serialVersionUID = 8572609341436634787L;
 
+    /** The controller of the map panel. */
     private MapPanelController mapController;
     
+    /** The controller for this view class. */
     private EnvironmentStoreController envController;
     
+    /** The name of the window. */
     private String windowName = "Environment Store";
     
+    /** The explanation panel where a short How-To-Use explanation is displayed. */
     private ExplanationPanel explanationPanel;
     
+    /** The map panel. */
     private final MapPanel mapTable;
     
+    /** The menu bar. */
     private MenuBar menuBar;
 
+    /** The option prompt that will pop up for some events. */
     private static OptionPrompt option = new DefaultOptionPrompt();
     
     /**
@@ -114,7 +121,7 @@ public class EnvironmentStore extends JFrame {
     
     /**
      * Opens a dialog showing a message, but no error.
-     * 
+     *
      * @param s A message that is displayed to the user.
      */
     public static void showDialog(final String s) {
@@ -163,9 +170,7 @@ public class EnvironmentStore extends JFrame {
         return str.substring(0, pos);
     }
     
-    /**
-     * Closes the MapEditor window and all child frames.
-     */
+    /** Closes the MapEditor window and all child frames. */
     public void closeEnvironmentStore() {
         System.exit(0);
     }

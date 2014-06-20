@@ -36,9 +36,6 @@ import nl.tudelft.bw4t.scenariogui.util.RobotTableModel;
  * The EntityPanel class represents right pane of the MainPanel. It shows a list
  * of bots and a list of e-partners and the actions that are possible to edit
  * bots and e-partners.
- * 
- * @version 0.1
- * @since 12-05-2014
  */
 public class EntityPanel extends JPanel {
     private static final long serialVersionUID = 6488182242349086899L;
@@ -160,9 +157,6 @@ public class EntityPanel extends JPanel {
 
     }
 
-    /**
-     * Create the panel that shows the actions that can be done.
-     */
     private void createBotOptionPanel() {
         botOptions.setLayout(new GridLayout(BOT_OPTION_PANEL_GRID_ROWS_AMT, 2));
         Border margin = BorderFactory.createEmptyBorder(
@@ -171,9 +165,6 @@ public class EntityPanel extends JPanel {
         botOptions.setBorder(margin);
     }
 
-    /**
-     * Create the panel in which the bot list and options will be.
-     */
     private void createBotPane() {
         botPane.setLayout(new BorderLayout());
 
@@ -186,9 +177,6 @@ public class EntityPanel extends JPanel {
         botPane.add(botCounter, BorderLayout.SOUTH);
     }
 
-    /**
-     * Create the toolbar for the bots.
-     */
     private void createBotToolbar() {
         botToolbar.setLayout(new GridLayout(1, 0));
 
@@ -201,9 +189,6 @@ public class EntityPanel extends JPanel {
         botToolbar.add(deleteBot);
     }
 
-    /**
-     * Create the dropdown menu for adding standard bots.
-     */
     private void createDropDownMenuButtons() {
         botMenu.setLayout(new BorderLayout());
 
@@ -229,9 +214,6 @@ public class EntityPanel extends JPanel {
         botDropDownMenu.show(newBot, 0, botDropDownButton.getHeight());
     }
 
-    /**
-     * Create the table that contains the list of bots.
-     */
     private void createBotTable() {
 
         botTable = new EntityJTable();
@@ -261,9 +243,6 @@ public class EntityPanel extends JPanel {
         botTable.getColumnModel().getColumn(1).setCellRenderer(renderer);
     }
 
-    /**
-     * Create a bot counter.
-     */
     private void createBotCounter() {
         botCounter.setLayout(new GridLayout(1, 0));
 
@@ -276,9 +255,6 @@ public class EntityPanel extends JPanel {
         botCounter.add(botCountField);
     }
 
-    /**
-     * Create the panel in which the E-partner list and toolbar will be.
-     */
     private void createEpartnerPane() {
         epartnerPane.setLayout(new BorderLayout());
 
@@ -291,9 +267,6 @@ public class EntityPanel extends JPanel {
         epartnerPane.add(epartnerCounter, BorderLayout.SOUTH);
     }
 
-    /**
-     * Create the toolbar for the E-partners.
-     */
     private void createEpartnerToolbar() {
         epartnerToolbar.setLayout(new GridLayout(1, 0));
 
@@ -304,9 +277,6 @@ public class EntityPanel extends JPanel {
         epartnerToolbar.add(deleteEpartner);
     }
 
-    /**
-     * Create the table that contains the list of E-partners.
-     */
     private void createEpartnerTable() {
 
         ePartnerTable = new EntityJTable();
@@ -325,9 +295,6 @@ public class EntityPanel extends JPanel {
                 SCROLL_PANE_HEIGHT));
     }
 
-    /**
-     * Create a E-partner counter.
-     */
     private void createEpartnerCounter() {
         epartnerCounter.setLayout(new GridLayout(1, 0));
 
@@ -340,11 +307,6 @@ public class EntityPanel extends JPanel {
         epartnerCounter.add(epartnerCountField);
     }
 
-    /**
-     * Returns the table with the list of bots.
-     *
-     * @return The table that contains the bots.
-     */
     public final EntityJTable getBotTable() {
         return botTable;
     }
@@ -353,20 +315,10 @@ public class EntityPanel extends JPanel {
         this.botTable = botTable;
     }
 
-    /**
-     * Returns the table model with the list of bots.
-     *
-     * @return The table model that contains the bots.
-     */
     public final AbstractTableModel getBotTableModel() {
         return botList;
     }
 
-    /**
-     * Returns the table with the list of E-partners.
-     *
-     * @return The table that contains the E-partners.
-     */
     public final EntityJTable getEPartnerTable() {
         return ePartnerTable;
     }
@@ -374,21 +326,11 @@ public class EntityPanel extends JPanel {
     public void setePartnerTable(EntityJTable ePartnerTable) {
         this.ePartnerTable = ePartnerTable;
     }
-
-    /**
-     * Returns the table with the list of E-partners.
-     *
-     * @return The table that contains the E-partners.
-     */
+    
     public final DefaultTableModel getEPartnerTableModel() {
         return epartnerList;
     }
 
-    /**
-     * Returns the "arrow" button.
-     *
-     * @return The "arrow" button.
-     */
     public JButton getDropDownButton() {
         return botDropDownButton;
     }
@@ -443,80 +385,40 @@ public class EntityPanel extends JPanel {
         epartnerCountField.setText(count.toString());
     }
 
-    /**
-     * Returns the button to create a new E-partner.
-     *
-     * @return The button to create a new E-partner.
-     */
     public JButton getNewEPartnerButton() {
         return newEpartner;
     }
 
-    /**
-     * Returns the button to delete an E-partner.
-     *
-     * @return The button to delete an E-partner.
-     */
     public JButton getDeleteEPartnerButton() {
         return deleteEpartner;
     }
 
-    /**
-     * Returns the button to modify an E-partner.
-     *
-     * @return The button to modify an E-partner.
-     */
     public JButton getModifyEPartnerButton() {
         return modifyEpartner;
     }
-
-    /**
-     * Returns the button to add a bot.
-     *
-     * @return The add bot button.
-     */
+    
     public JButton getNewBotButton() {
         return newBot;
     }
 
-    /**
-     * Returns the button to modify a bot.
-     *
-     * @return The modify bot button.
-     */
     public JButton getModifyBotButton() {
         return modifyBot;
     }
 
-    /**
-     * Returns the button to delete a bot.
-     *
-     * @return The delete bot button.
-     */
     public JButton getDeleteBotButton() {
         return deleteBot;
     }
 
-    /**
-     * Returns the selected row in the bot table.
-     *
-     * @return The selected row.
-     */
     public int getSelectedBotRow() {
         return botTable.getSelectedRow();
     }
 
-    /**
-     * Returns the selected row in the E-partner table.
-     *
-     * @return The selected row.
-     */
     public final int getSelectedEPartnerRow() {
         return ePartnerTable.getSelectedRow();
     }
 
     /**
-     * Returns if changes has been made to the default configuration.
+     * Returns if changes has been made to the last configuration.
      *
      * @return whether changes have been made.
      */
@@ -532,18 +434,10 @@ public class EntityPanel extends JPanel {
         return isDefault;
     }
     
-    /**
-     * Used by the EnityTableCellRenderer for deciding which table it's dealing with.
-     * @return The name of the botTable
-     */
     public static String getBotTableName() {
         return botTableName;
     }
     
-    /**
-     * Used by the EnityTableCellRenderer for deciding which table it's dealing with.
-     * @return The name of the epartnerTable
-     */
     public static String getePartnerTableName() {
         return ePartnerTableName;
     }

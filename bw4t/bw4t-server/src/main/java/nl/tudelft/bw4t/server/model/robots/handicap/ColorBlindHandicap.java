@@ -1,7 +1,13 @@
 package nl.tudelft.bw4t.server.model.robots.handicap;
 
+/**
+ * Creates a colour blindness handicap for a robot.
+ */
 public class ColorBlindHandicap extends AbstractRobotDecorator {
     
+    /**
+     * Connects the color blindness.
+     */
     public static final String COLOR_BLIND_HANDICAP = "ColorBlind";
     
     /**

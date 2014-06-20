@@ -1,9 +1,6 @@
 package nl.tudelft.bw4t.scenariogui;
 
 /**
- * Created by on 6-6-2014.
- */
-/**
  * The default values for in the GUI.
  */
 public enum DefaultConfigurationValues {
@@ -22,6 +19,7 @@ public enum DefaultConfigurationValues {
 
     /**
      * Constructs a new default configuration.
+     *
      * @param newValue The new default value.
      */
     DefaultConfigurationValues(final String newValue) {
@@ -30,6 +28,7 @@ public enum DefaultConfigurationValues {
 
     /**
      * Gets the value as a string.
+     *
      * @return The value.
      */
     public String getValue() {
@@ -38,6 +37,7 @@ public enum DefaultConfigurationValues {
 
     /**
      * Gets the value as an int.
+     *
      * @return The value as an int.
      */
     public int getIntValue() {
@@ -46,6 +46,7 @@ public enum DefaultConfigurationValues {
 
     /**
      * Gets the value as a boolean.
+     *
      * @return The value as a boolean.
      */
     public boolean getBooleanValue() {

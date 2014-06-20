@@ -10,6 +10,7 @@ package nl.tudelft.bw4t.util;
  */
 public class LauncherException extends RuntimeException {
 
+	/** Serial id. */
     private static final long serialVersionUID = -7076592660325024223L;
 
     /**

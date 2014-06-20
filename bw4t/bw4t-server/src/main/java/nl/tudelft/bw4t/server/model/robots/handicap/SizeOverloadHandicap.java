@@ -6,6 +6,9 @@ import nl.tudelft.bw4t.server.model.zone.Corridor;
 import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
 
+/**
+ * Creates the Size overload handicap for a robot.
+ */
 public class SizeOverloadHandicap extends AbstractRobotDecorator {
     
     /**

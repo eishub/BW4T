@@ -4,9 +4,8 @@ package nl.tudelft.bw4t.map;
  * This Exception is thrown if the map loaded by the application does not conform to the requirements.
  */
 public class MapFormatException extends RuntimeException {
-    /**
-     * 
-     */
+    
+	/** Serialization id. */
     private static final long serialVersionUID = -5626576370581996604L;
 
     public MapFormatException() {
