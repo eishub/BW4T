@@ -5,16 +5,12 @@ import java.util.List;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.text.View;
 
 import nl.tudelft.bw4t.client.agent.BW4TAgent;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.DropEPartnerActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.EPartnerMessageSenderActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.GoToBlockActionListener;
-import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
-import nl.tudelft.bw4t.client.gui.listeners.PickUpActionListener;
-import nl.tudelft.bw4t.client.gui.listeners.PickUpEPartnerActionListener;
 import nl.tudelft.bw4t.client.message.BW4TMessage;
 import nl.tudelft.bw4t.client.message.MessageType;
 import nl.tudelft.bw4t.map.Zone;
