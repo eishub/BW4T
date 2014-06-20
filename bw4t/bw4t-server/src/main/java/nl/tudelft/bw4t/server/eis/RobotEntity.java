@@ -1,5 +1,17 @@
 package nl.tudelft.bw4t.server.eis;
 
+import eis.eis2java.annotation.AsAction;
+import eis.eis2java.annotation.AsPercept;
+import eis.eis2java.exception.TranslationException;
+import eis.eis2java.translation.Filter;
+import eis.eis2java.translation.Filter.Type;
+import eis.eis2java.translation.Translator;
+import eis.exceptions.ActException;
+import eis.exceptions.AgentException;
+import eis.exceptions.PerceiveException;
+import eis.iilang.Action;
+import eis.iilang.Parameter;
+
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
 import java.util.ArrayList;
@@ -18,12 +30,10 @@ import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.epartners.EPartner;
-import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.model.robots.NavigatingRobot;
 import nl.tudelft.bw4t.server.model.robots.handicap.AbstractRobotDecorator;
 import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.server.model.zone.BlocksRoom;
-import nl.tudelft.bw4t.server.model.zone.Corridor;
 import nl.tudelft.bw4t.server.model.zone.DropZone;
 import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
@@ -31,22 +41,11 @@ import nl.tudelft.bw4t.server.util.RoomLocator;
 import nl.tudelft.bw4t.server.util.ZoneLocator;
 
 import org.apache.log4j.Logger;
-import org.omg.CORBA.Environment;
 
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.util.collections.IndexedIterable;
-import eis.eis2java.annotation.AsAction;
-import eis.eis2java.annotation.AsPercept;
-import eis.eis2java.exception.TranslationException;
-import eis.eis2java.translation.Filter;
-import eis.eis2java.translation.Filter.Type;
-import eis.eis2java.translation.Translator;
-import eis.exceptions.ActException;
-import eis.exceptions.AgentException;
-import eis.exceptions.PerceiveException;
-import eis.iilang.Action;
-import eis.iilang.Parameter;
+
 
 /**
  * EIS entity for a {@link AbstractRobot}.
@@ -112,7 +111,7 @@ public class RobotEntity implements EntityInterface {
     /**
      * Disconnects the robot from repast.
      */
-    public void disconnect(){
+    public void disconnect() {
         ourRobot.disconnect();
         reset();
     }
@@ -120,7 +119,7 @@ public class RobotEntity implements EntityInterface {
     /**
      * Reset the robot's location and should set it to its default spawn state.
      */
-    public void reset(){
+    public void reset() {
         ourRobot.drop();
         ourRobot.moveTo(this.spawnLocation.getX(), this.spawnLocation.getY());
     }
@@ -138,12 +137,15 @@ public class RobotEntity implements EntityInterface {
 
     
     /**
-     * @return All bounded moveable objects of class T that are visible to the robot, excluding the one the robot is holding.
+     * @return All bounded moveable objects of class T that are visible to the robot.
+     * Excluding the one the robot is holding.
+     * @param <T>  
+     * @param type  
      */
-    private <T extends BoundedMoveableObject> Set<T> getVisible(Class<T> type){
+    private <T extends BoundedMoveableObject> Set<T> getVisible(Class<T> type) {
         Set<T> set = new HashSet<T>();
-        
-        if(context == null) {
+     
+        if (context == null) {
             return set;
         }
 
@@ -163,6 +165,7 @@ public class RobotEntity implements EntityInterface {
     
     /**
      * Percepts for the sizes of all the robots.
+     * @return size of the robot
      */
     @AsPercept(name = "robotSize", multiplePercepts = true, filter = Filter.Type.ON_CHANGE)
     public List<ObjectInformation> getSizes() {
@@ -180,6 +183,7 @@ public class RobotEntity implements EntityInterface {
 
     /**
      * Percepts for the location of rooms and the dropzone and the blocks Send on change
+     * @return postitions
      */
     @AsPercept(name = "position", multiplePercepts = true, filter = Filter.Type.ON_CHANGE)
     public List<ObjectInformation> getLocations() {
@@ -217,7 +221,7 @@ public class RobotEntity implements EntityInterface {
      * If not, the nearest {@link Corridor} name is returned.
      * 
      * @return a list of blockID
-     * @throws PerceiveException
+     * @throws PerceiveException 
      */
     @AsPercept(name = "at", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
     public String getAt() throws PerceiveException {
@@ -252,6 +256,7 @@ public class RobotEntity implements EntityInterface {
 
     /**
      * Percept for the room that the player is in, null if not in a room. Send on change
+     * @return room name
      */
     @AsPercept(name = "in", multiplePercepts = false, filter = Filter.Type.ON_CHANGE_NEG)
     public String getRoom() {
@@ -264,6 +269,7 @@ public class RobotEntity implements EntityInterface {
 
     /**
      * Percept for the location of this robot Send on change
+     * @return location
      */
     @AsPercept(name = "location", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
     public Point2D getLocation() {
@@ -272,6 +278,7 @@ public class RobotEntity implements EntityInterface {
 
     /**
      * Percept for the places in the world. Send at the beginning
+     * @return rooms
      */
     @AsPercept(name = "place", multiplePercepts = true, filter = Filter.Type.ONCE)
     public List<String> getRooms() {
@@ -286,6 +293,7 @@ public class RobotEntity implements EntityInterface {
 
     /**
      * Percept of the id of the robot Send at the beginning
+     * @return id
      */
     @AsPercept(name = "robot", filter = Filter.Type.ONCE)
     public long getRobot() {
@@ -328,6 +336,7 @@ public class RobotEntity implements EntityInterface {
 
     /**
      * Percept for the colors of all blocks that are visible. Send always. They are visible only when inside a room.
+     * @return color
      */
     @AsPercept(name = "color", multiplePercepts = true, filter = Filter.Type.ALWAYS)
     public List<BlockColor> getColor() {
@@ -345,6 +354,7 @@ public class RobotEntity implements EntityInterface {
     /**
      * Percept if the robot is holding something. Send if it becomes true, and
      * send negated if it becomes false again.
+     * @return holding block
      */
     @AsPercept(name = "holding", multiplePercepts = true, filter = Filter.Type.ON_CHANGE_NEG)
     public List<Block> getHolding() {
@@ -353,6 +363,7 @@ public class RobotEntity implements EntityInterface {
 
     /**
      * The sequence in which the blocks should be returned. Send at the beginning
+     * @return sequence of blocks
      */
     @AsPercept(name = "sequence", filter = Filter.Type.ONCE)
     public List<nl.tudelft.bw4t.map.BlockColor> getSequence() {
@@ -362,6 +373,7 @@ public class RobotEntity implements EntityInterface {
 
     /**
      * The index of the block that needs to be brought back now. Send on change
+     * @return sequence index
      */
     @AsPercept(name = "sequenceIndex", filter = Filter.Type.ON_CHANGE)
     public Integer getSequenceIndex() {
@@ -418,6 +430,7 @@ public class RobotEntity implements EntityInterface {
 
     /**
      * The current state of the robot. See {@link NavigatingRobot#getState()}. Send on change
+     * @return state
      */
     @AsPercept(name = "state", filter = Filter.Type.ON_CHANGE)
     public String getState() {
@@ -426,6 +439,7 @@ public class RobotEntity implements EntityInterface {
     
     /**
      * The battery level of the robot. 
+     * @return batterypercentage
      */
     @AsPercept(name = "battery", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
     public double getBatteryPercentage() {
@@ -451,8 +465,6 @@ public class RobotEntity implements EntityInterface {
      * 
      * @param targetid
      *            is the target object id. This can be the id of any object in the map (not a free x,y location)
-     * @throws IllegalArgumentException
-     *             if no block of given id visible
      */
     @AsAction(name = "goToBlock")
     public void goTo(long targetid) {
@@ -512,16 +524,16 @@ public class RobotEntity implements EntityInterface {
     @AsAction(name = "navigateObstacles")
     public void navigateObstacles() {
         LOGGER.debug(String.format("%s is trying to navigate the following obstacles: ", ourRobot.getName()));
-        for(BoundedMoveableObject obj : ourRobot.getObstacles()) {
+        for (BoundedMoveableObject obj : ourRobot.getObstacles()) {
             LOGGER.debug(obj + " at " + obj.getBoundingBox());
         }
 
 
 
-        if(ourRobot instanceof NavigatingRobot) {
+        if (ourRobot instanceof NavigatingRobot) {
             NavigatingRobot navbot = (NavigatingRobot) ourRobot;
             navbot.navigateObstacles();
-        } else if(ourRobot instanceof AbstractRobotDecorator && ourRobot.getParent() instanceof NavigatingRobot) {
+        } else if (ourRobot instanceof AbstractRobotDecorator && ourRobot.getParent() instanceof NavigatingRobot) {
             NavigatingRobot navbot = (NavigatingRobot) ourRobot.getParent();
             navbot.navigateObstacles();
         }
@@ -648,9 +660,9 @@ public class RobotEntity implements EntityInterface {
     @AsPercept(name = "bumped", multiplePercepts = true, filter = Type.ON_CHANGE_NEG)
     public List<String> getBumped() {
         List<String> bumpedList = new ArrayList<String>();
-        if(ourRobot.isCollided() && ourRobot.getObstacles().size() > 0) {
-            for(BoundedMoveableObject obj : ourRobot.getObstacles()) {
-                if(obj instanceof IRobot) {
+        if (ourRobot.isCollided() && !ourRobot.getObstacles().isEmpty()) {
+            for (BoundedMoveableObject obj : ourRobot.getObstacles()) {
+                if (obj instanceof IRobot) {
                     IRobot bot = (IRobot) obj;
                     bumpedList.add(bot.getName());
                 }
@@ -662,6 +674,7 @@ public class RobotEntity implements EntityInterface {
     /**
      * Find the closest {@link BoundedMoveableObject} that can be picked up by the Robot.
      * @param type the type of {@link BoundedMoveableObject} we are looking for 
+     * @param <T> 
      * @return null if non were found, otherwise the closest
      */
     private <T extends BoundedMoveableObject> T getClosest(Class<T> type) {

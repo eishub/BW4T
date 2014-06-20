@@ -1,5 +1,15 @@
 package nl.tudelft.bw4t.server.eis;
 
+import eis.eis2java.annotation.AsAction;
+import eis.eis2java.annotation.AsPercept;
+import eis.eis2java.exception.TranslationException;
+import eis.eis2java.translation.Filter;
+import eis.eis2java.translation.Translator;
+import eis.exceptions.ActException;
+import eis.exceptions.PerceiveException;
+import eis.iilang.Action;
+import eis.iilang.Parameter;
+
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,27 +22,16 @@ import nl.tudelft.bw4t.server.eis.translators.PointTranslator;
 import nl.tudelft.bw4t.server.eis.translators.ZoneTranslator;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.model.epartners.EPartner;
-import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
-import nl.tudelft.bw4t.server.model.zone.Corridor;
 import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
 import nl.tudelft.bw4t.server.util.RoomLocator;
 import nl.tudelft.bw4t.server.util.ZoneLocator;
 
-import org.apache.log4j.Logger;
-import org.omg.CORBA.Environment;
-
 import repast.simphony.context.Context;
-import eis.eis2java.annotation.AsAction;
-import eis.eis2java.annotation.AsPercept;
-import eis.eis2java.exception.TranslationException;
-import eis.eis2java.translation.Filter;
-import eis.eis2java.translation.Translator;
-import eis.exceptions.ActException;
-import eis.exceptions.PerceiveException;
-import eis.iilang.Action;
-import eis.iilang.Parameter;
 
+/**
+ * Interface to create an Entity that can be used for Robot or EPartner
+ */
 public class EPartnerEntity implements EntityInterface {
 
     static {
@@ -47,11 +46,6 @@ public class EPartnerEntity implements EntityInterface {
 
     }
 
-    /**
-     * The log4j logger, logs to the console.
-     */
-    private static final Logger LOGGER = Logger.getLogger(RobotEntity.class);
-
     private final EPartner ourEPartner;
     private final Context<Object> context;
 
@@ -61,6 +55,11 @@ public class EPartnerEntity implements EntityInterface {
     private Point2D ourEPartnerLocation;
     private Point2D spawnLocation;
     private Room ourEPartnerRoom;
+    
+    /**
+     *  Variable is used 3 times 
+     */
+    private String forgetMeNot = "Forget-me-not";
 
     /**
      * each item in messages is a list with two items: the sender and the messagetext.
@@ -70,7 +69,7 @@ public class EPartnerEntity implements EntityInterface {
     /**
      * Creates a new {@link RobotEntity} that can be launched by an EIS compatible {@link Environment}.
      * 
-     * @param robot
+     * @param eP
      *            The {@link AbstractRobot} that this entity can put up for controlling in EIS.
      */
     public EPartnerEntity(EPartner eP) {
@@ -88,9 +87,10 @@ public class EPartnerEntity implements EntityInterface {
     }
     
     /**
-     * Disconnects the robot from repast.
+     * Disconnects the robot from repast. 
      */
-    public void disconnect(){
+    public void disconnect() {
+        // Needs to be here or Repast will cry.
     }
 
     /**
@@ -114,11 +114,12 @@ public class EPartnerEntity implements EntityInterface {
     
     /**
      * Percept if the e-Partner was dropped.
+     * @return id of holder
      * @throws PerceiveException 
      */
     @AsPercept(name = "heldBy", multiplePercepts = false, filter = Filter.Type.ON_CHANGE_NEG)
     public long heldBy() throws PerceiveException {
-        if (ourEPartner.getTypeList().contains("Forget-me-not") && ourEPartner.getHolder() != null) {
+        if (ourEPartner.getTypeList().contains(forgetMeNot) && ourEPartner.getHolder() != null) {
             return ourEPartner.getHolder().getId();
         }
         return -1;
@@ -127,11 +128,11 @@ public class EPartnerEntity implements EntityInterface {
     /**
      * Percept if the epartner is taken, so other bots won't pick it up if a bot has forgot it.
      * @return The epartner id.
-     * @throws PerceiveException
+      * @throws PerceiveException 
      */
     @AsPercept(name = "isTaken", multiplePercepts = false, filter = Filter.Type.ON_CHANGE_NEG)
     public long isTaken() throws PerceiveException {
-        if (ourEPartner.getTypeList().contains("Forget-me-not") && ourEPartner.getHolder() != null) {
+        if (ourEPartner.getTypeList().contains(forgetMeNot) && ourEPartner.getHolder() != null) {
             return ourEPartner.getId();
         }
         return -1;
@@ -140,11 +141,11 @@ public class EPartnerEntity implements EntityInterface {
     /**
      * Percept if the epartner is left behind, so the epartner knows when to message the holder.
      * @return 1 if it was left behind, 0 if it's still held.
-     * @throws PerceiveException
+     * @throws PerceiveException 
      */
     @AsPercept(name = "leftBehind", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
     public int leftBehind() throws PerceiveException {
-        if (ourEPartner.getTypeList().contains("Forget-me-not") && ourEPartner.getHolder() == null) {
+        if (ourEPartner.getTypeList().contains(forgetMeNot) && ourEPartner.getHolder() == null) {
             return 1;
         }
         return 0;
@@ -155,7 +156,7 @@ public class EPartnerEntity implements EntityInterface {
      * If not, the nearest {@link Corridor} name is returned.
      * 
      * @return a list of blockID
-     * @throws PerceiveException
+     * @throws PerceiveException 
      */
     @AsPercept(name = "at", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
     public String getAt() throws PerceiveException {
@@ -176,6 +177,7 @@ public class EPartnerEntity implements EntityInterface {
 
     /**
      * Percept for the location of this robot Send on change
+     * @return location of epartner
      */
     @AsPercept(name = "location", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
     public Point2D getLocation() {
@@ -184,6 +186,7 @@ public class EPartnerEntity implements EntityInterface {
 
     /**
      * Percept for the room that the player is in, null if not in a room. Send on change
+     * @return room name
      */
     @AsPercept(name = "in", multiplePercepts = false, filter = Filter.Type.ON_CHANGE_NEG)
     public String getRoom() {
@@ -196,6 +199,7 @@ public class EPartnerEntity implements EntityInterface {
 
     /**
      * Percept for the places in the world. Send at the beginning
+     * @return Rooms of the epartner
      * @throws PerceiveException 
      */
     @AsPercept(name = "place", multiplePercepts = true, filter = Filter.Type.ONCE)
