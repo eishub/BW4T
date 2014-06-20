@@ -1,7 +1,5 @@
 package nl.tudelft.bw4t.server.repast;
 
-import java.io.IOException;
-
 import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;

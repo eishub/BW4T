@@ -62,63 +62,30 @@ public class MenuBar extends JMenuBar {
 
     }
 
-    /**
-     * JMenuItem to start a new configuration with the default values filled in.
-     * @return The JMenuItem to start a new configuration
-     */
     public final JMenuItem getMenuItemFileNew() {
         return fileNew;
     }
 
-    /**
-     * JMenuItem to open a configuration from a file.
-     * @return The JMenuItem to open a file
-     */
     public final JMenuItem getMenuItemFileOpen() {
         return fileOpen;
     }
 
-    /**
-     * JMenuItem used to save the configuration
-     * to a file at a new file location.
-     *
-     * @return The JMenuItem to start a save a file at a new file location
-     */
     public final JMenuItem getMenuItemFileSave() {
         return fileSave;
     }
 
-    /**
-     * JMenuItem used to save the configuration to a file at a chosen location.
-     * @return The JMenuItem to save a file at a chosen location
-     */
     public final JMenuItem getMenuItemFileSaveAs() {
         return fileSaveAs;
     }
 
-    /**
-     * JMenuItem used to exit the program.
-     * @return The JMenuItem to exit the program
-     */
     public final JMenuItem getMenuItemFileExit() {
         return fileExit;
     }
 
-    /**
-     * JMenuItem used to export the scenario.
-     * @return The JMenuItem to export the scenario
-     */
     public final JMenuItem getMenuItemFileExport() {
         return exportGOAL;
     }
 
-
-    /**
-     * Variable to get the file location used to save the configuration
-     * immediately instead of having to browse to the same location again.
-     *
-     * @return the last know file location
-     */
     public final String getLastFileLocation() {
         return lastFileLocation;
     }
@@ -132,12 +99,6 @@ public class MenuBar extends JMenuBar {
         return lastFileLocation != null;
     }
 
-    /**
-     * Variable to save the file location used to save the configuration
-     * immediately instead of having to browse to the same location again.
-     *
-     * @param fileLocation is the last used file location
-     */
     public final void setLastFileLocation(final String fileLocation) {
         this.lastFileLocation = fileLocation;
     }

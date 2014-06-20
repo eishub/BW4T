@@ -2,9 +2,6 @@ package nl.tudelft.bw4t.scenariogui.util;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Point;
-import java.io.File;
-import java.util.ArrayList;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -12,7 +9,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
 
 /**
- * @since 10-06-2014
  * This class is used for changing the text color in the entityPanel tables. 
  */
 

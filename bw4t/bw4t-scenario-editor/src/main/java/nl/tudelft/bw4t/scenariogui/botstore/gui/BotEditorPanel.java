@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
@@ -87,14 +86,8 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 
     private BotEditor botEditor;
 
-    /**
-     * Create a new BotController.
-     */
     private BotController controller;
     
-    /**
-     * Create a new BW4TClientConfig.
-     */
     private BW4TClientConfig model;
 
     /**
@@ -139,9 +132,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
         setVisible(true);
     }
 
-    /**
-     * Create the panel which contains the bots name and the controller type
-     */
     private void createBotInfoPanel() {
         botInfo.setLayout(new GridLayout(10, 0));
 
@@ -162,9 +152,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
         createGOALOptions();
     }
 
-    /**
-     * Shows the GOAL options on the panel.
-     */
     private void createGOALOptions() {
         botInfo.add(new JLabel(""));
         JLabel goalLabel = new JLabel("GOAL options");
@@ -177,9 +164,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
         botInfo.add(fileButton);
     }
 
-    /**
-     * create the checkables panel
-     */
     private void createBotCheckablesPanel() {
         botCheckables.setLayout(new GridLayout(2, 1));
         JLabel checkablesLabel = new JLabel("Specs");
@@ -199,10 +183,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
         botCheckables.add(checkablesPanel);
     }
     
-    /**
-     * Checks the checkboxes in the bot spec section of the panel
-     * if they're true in the model.
-     */
     private void updateCheckBoxesModel() {
         gripperCheckbox.setSelected(controller.getGripperHandicap());
         colorblindCheckbox.setSelected(controller.getColorBlindHandicap());
@@ -211,9 +191,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
         batteryEnabledCheckbox.setSelected(controller.isBatteryEnabled());
     }
 
-    /**
-     * creates the botSlidersPanel
-     */
     private void createBotSlidersPanel() {
         botSliders.setLayout(new GridLayout(6, 1));
 
@@ -227,9 +204,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
         addButtonPanel();
     }
 
-    /**
-     * Create and add the battery capacity panel to the sliders panel.
-     */
     private void addBatteryCapPanel() {
         JPanel batteryCapPanel = new JPanel();
 
@@ -243,9 +217,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
         botSliders.add(batteryCapPanel);
     }
 
-    /**
-     * Create and add the button panel to the sliders panel.
-     */
     private void addButtonPanel() {
         JPanel buttonPanel = new JPanel();
 
@@ -256,9 +227,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
         botSliders.add(buttonPanel);
     }
 
-    /**
-     * Craete and add the gripper panel to the sliders panel.
-     */
     private void addGripperPanel() {
         JPanel gripperPanel = new JPanel();
     
@@ -274,9 +242,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
         botSliders.add(gripperPanel);
     }
 
-    /**
-     * Create and add the size panel to the sliders panel.
-     */
     private void addSizePanel() {
         JPanel sizePanel = new JPanel();
     
@@ -291,9 +256,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
         botSliders.add(sizePanel);
     }
 
-    /**
-     * Create and add the speed panel to the sliders panel.
-     */
     private void addSpeedPanel() {
         JPanel speedPanel = new JPanel();
     
@@ -312,9 +274,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
         botSliders.add(speedPanel);
     }
 
-    /**
-     * Create and add the battery panel to the sliders panel.
-     */
     private void addBatteryPanel() {
         JPanel batteryPanel = new JPanel();
     
@@ -330,9 +289,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
         botSliders.add(batteryPanel);
     }
 
-    /**
-     * sets the default settings for the sliders
-     */
     private void createSliders() {
         createGripperSlider();
         createSizeSlider();
@@ -340,9 +296,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
         createBatterySlider();
     }
 
-    /**
-     * Create the gripper slider.
-     */
     private void createGripperSlider() {
         numberOfGrippersSlider.setMajorTickSpacing(1);
         numberOfGrippersSlider.setMaximum(5);
@@ -354,9 +307,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
         numberOfGrippersSlider.setValueIsAdjusting(true);
     }
 
-    /**
-     * Create the size slider.
-     */
     private void createSizeSlider() {
         sizeSlider.setMajorTickSpacing(1);
         sizeSlider.setMaximum(5);
@@ -369,9 +319,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
         sizeSlider.setValueIsAdjusting(true);
     }
 
-    /**
-     * Create the speed slider.
-     */
     private void createSpeedSlider() {
         speedSlider.setMajorTickSpacing(10);
         speedSlider.setMaximum(140);
@@ -384,9 +331,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
         speedSlider.setValueIsAdjusting(true);
     }
 
-    /**
-     * Create the battery slider.
-     */
     private void createBatterySlider() {
         batterySlider = new JSlider();
         batterySlider.setMinimum(10);
@@ -399,321 +343,150 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
         batterySlider.setMajorTickSpacing(10);
     }
 
-    /**
-     * Returns the save button
-     * 
-     * @return the save button.
-     */
     public JButton getSaveButton() {
         return saveButton;
     }
 
-    /**
-     * Returns the reset button.
-     * 
-     * @return the reset button.
-     */
     public JButton getResetButton() {
         return resetButton;
     }
 
-    /**
-     * Returns the cancel button.
-     * 
-     * @return The cancel button.
-     */
     public JButton getCancelButton() {
         return cancelButton;
     }
 
-    /**
-     * Get the currently used gripper checkbox.
-     * 
-     * @return The checkbox for setting the gripper handicap.
-     */
     public JCheckBox getGripperCheckbox() {
         return gripperCheckbox;
     }
 
-    /**
-     * Get the currently used color blindness checkbox.
-     * 
-     * @return The checkbox for setting the color blind handicap.
-     */
     public JCheckBox getColorblindCheckbox() {
         return colorblindCheckbox;
     }
 
-    /**
-     * Returns the used custom size checkbox.
-     * 
-     * @return The custom size checkbox.
-     */
     public JCheckBox getsizeoverloadCheckbox() {
         return customSizeCheckbox;
     }
 
-    /**
-     * Returns the used size slider.
-     * 
-     * @return The size slider.
-     */
     public JSlider getSizeSlider() {
         return sizeSlider;
     }
 
-    /**
-     * Returns the current speed slider.
-     * 
-     * @return The used speed slider.
-     */
     public JSlider getSpeedSlider() {
         return speedSlider;
     }
 
-    /**
-     * Returns the currently used battery slider.
-     * 
-     * @return The battery slider.
-     */
     public JSlider getBatterySlider() {
         return batterySlider;
     }
 
-    /**
-     * Returns the used battery enabled checkbox.
-     * 
-     * @return The used checkbox.
-     */
     public JCheckBox getBatteryEnabledCheckbox() {
         return batteryEnabledCheckbox;
     }
 
-    /**
-     * Return the label describing what the robot uses regarding battery
-     * potential per tick.
-     * 
-     * @return The aforementioned label.
-     */
     public JLabel getBatteryUseValueLabel() {
         return batteryUseValueLabel;
     }
 
-    /**
-     * Returns the slider determining the amount of grippers the bot can use.
-     * 
-     * @return The aforementioned slider.
-     */
     public JSlider getNumberOfGrippersSlider() {
         return numberOfGrippersSlider;
     }
 
-    /**
-     * Returns the JTextField that contains the goal file name.
-     * 
-     * @return The JTextField that contains the goal file name.
-     */
     public JTextField getFileNameField() {
         return fileNameField;
     }
 
-    /**
-     * Returns the JTextField that contains the bot name.
-     * 
-     * @return The JTextField that contains the bot name.
-     */
     public JTextField getBotNameField() {
         return botNameField;
     }
 
-    /**
-     * Returns the JCheckbox for custom size.
-     * 
-     * @return The JCheckbox for custom size.
-     */
     public JCheckBox getCustomSizeCheckbox() {
         return customSizeCheckbox;
     }
 
-    /**
-     * Returns the JComboBox that contains the bot controller type.
-     * 
-     * @return The JComboBox that contains the bot controller type.
-     */
     public JComboBox getBotControllerSelector() {
         return botControllerSelector;
     }
 
-    /**
-     * Returns the JTextField that contains the amount of a bot.
-     * 
-     * @return The JTextField that contains the amount of a bot.
-     */
     public JTextField getBotAmountTextField() {
         return botAmountTextField;
     }
 
-    /**
-     * Returns the JTextField that contains the goal reference name.
-     * 
-     * @return The JTextField that contains the goal reference name.
-     */
     public JTextField getBotReferenceField() {
         return botReferenceField;
     }
 
-    /**
-     * Returns the BotEditor.
-     * @return The BotEditor.
-     */
     public BotEditor getBotEditor() {
         return botEditor;
     }
     
-    /**
-     * Get the currently used gripper checkbox.
-     * 
-     * @return true if the gripperCheckbox is selected
-     */
     @Override
     public boolean getGripperHandicap() {
         return gripperCheckbox.isSelected();
     }
 
-    /**
-     * Get the currently used color blindness checkbox.
-     * 
-     * @return true if the getColorblindCheckbox is selected
-     */
     @Override
     public boolean getColorBlindHandicap() {
         return colorblindCheckbox.isSelected();
     }
 
-    /**
-     * Returns the currently used move speed checkbox.
-     * 
-     * @return true if the getmovespeedCheckbox is selected
-     */
     @Override
     public boolean getMoveSpeedHandicap() {
         return movespeedCheckbox.isSelected();
     }
 
-    /**
-     * Returns the used custom size checkbox.
-     * 
-     * @return true if the custom size checkbox is selected.
-     */
     @Override
     public boolean getSizeOverloadHandicap() {
         return customSizeCheckbox.isSelected();
     }
 
-    /**
-     * Returns the value of the SizeSlider.
-     * 
-     * @return the size.
-     */
     @Override
     public int getBotSize() {
         return sizeSlider.getValue();
     }
 
-    /**
-     * Returns the current speed slider.
-     * 
-     * @return speed.
-     */
     @Override
     public int getBotSpeed() {
         return speedSlider.getValue();
     }
 
-    /**
-     * Returns the currently used battery slider.
-     * 
-     * @return the value of the battery slider.
-     */
     @Override
     public int getBotBatteryCapacity() {
         return batterySlider.getValue();
     }
 
-    /**
-     * Returns the used battery enabled checkbox.
-     * 
-     * @return true if the checkbox is checked.
-     */
     @Override
     public boolean isBatteryEnabled() {
         return batteryEnabledCheckbox.isSelected();
     }
     
-    /**
-     * Return the label describing what the robot uses regarding battery
-     * potential per tick.
-     * 
-     * @return The text on the aforementioned label.
-     */
     @Override
     public double getBotBatteryDischargeRate() {
         return Double.parseDouble(batteryUseValueLabel.getText());
     }
 
-    /**
-     * Returns the slider determining the amount of grippers the bot can use.
-     * 
-     * @return The value of the aforementioned slider.
-     */
     @Override
     public int getGrippers() {
         return numberOfGrippersSlider.getValue();
     }
 
-    /**
-     * Returns the String that contains the goal file name.
-     * 
-     * @return the string that contains the goal file name.
-     */
     @Override
     public String getFileName() {
         return fileNameField.getText();
     }
 
-    /**
-     * Returns the string that contains the bot name.
-     * 
-     * @return the string that contains the bot name.
-     */
     @Override
     public String getBotName() {
         return botNameField.getText();
     }
 
-    /**
-     * Returns the JButton for adding a goal file.
-     * 
-     * @return The JButton for adding a goal file.
-     */
     public JButton getFile() {
         return fileButton;
     }
 
-    /**
-     * Returns the string that contains the amount of a bot.
-     * 
-     * @return The string that contains the amount of a bot.
-     */
     public int getBotAmount() {
         return Integer.parseInt(botAmountTextField.getText());
     }
 
-    /**
-     * Returns the string that contains the goal reference name.
-     * 
-     * @return The string that contains the goal reference name.
-     */
     public String getReferenceName() {
         return botReferenceField.getText();
     }
@@ -722,10 +495,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
         this.botEditor = editor;
     }
     
-    /**
-     * Return the MainPanel.
-     * @return mainpanel
-     */
     public MainPanel getMainPanel() {
         return mainPanel;
     }
@@ -752,7 +521,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
     }
     
     /**
-     * update the sliders so they are enabled properly.
+     * Update the sliders so they are enabled properly.
      */
     public void updateSliders() {
         sizeSlider.setEnabled(getSizeOverloadHandicap());
@@ -761,6 +530,9 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
         speedSlider.setEnabled(getMoveSpeedHandicap());
     }
     
+    /**
+     * Update the discharge rate.
+     */
     public void updateDischargeRate() {
         double dr = 0.0;
         if (isBatteryEnabled()) {
@@ -769,61 +541,31 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
         batteryUseValueLabel.setText(dischargeRateFormatter.format(dr));
     }
 
-    /**
-     * @return the current BotController
-     */
     public BotController getBotController() {
         return controller;
     }
     
-    /**
-     * Set the current BotStoreController
-     * @param bsc 
-     */
     public void setController(BotController bsc) {
         this.controller = bsc;
     }
     
-    /**
-     * Remove the current view.
-     */
     @Override
     public void dispose() {
         controller.removeView(this);
     }
     
-    /**
-     * This function enables/disables the battery slider
-     * @param enabled Boolean: true if BatterySlider should be enabled
-     * and false if BatterySlider should be disabled.
-     */
     public void setBatterySliderEnabled(boolean enabled) {
         batterySlider.setEnabled(enabled);
     }
     
-    /**
-     * This function enables/disables the gripper slider
-     * @param enabled Boolean: true if numberOfGrippersSlider should be enabled
-     * and false if numberOfGrippersSlider should be disabled.
-     */
     public void setGripperSliderEnabled(boolean enabled) {
         numberOfGrippersSlider.setEnabled(enabled);
     }
     
-    /**
-     * This function enables/disables the speed slider
-     * @param enabled Boolean: true if speedSlider should be enabled
-     * and false if speedSlider should be disabled.
-     */
     public void setSpeedSliderEnabled(boolean enabled) {
         speedSlider.setEnabled(enabled);
     }
     
-    /**
-     * This function enables/disables the size slider
-     * @param enabled Boolean: true if sizeSlider should be enabled
-     * and false if sizeSlider should be disabled.
-     */
     public void setSizeSliderEnabled(boolean enabled) {
         sizeSlider.setEnabled(enabled);
     }

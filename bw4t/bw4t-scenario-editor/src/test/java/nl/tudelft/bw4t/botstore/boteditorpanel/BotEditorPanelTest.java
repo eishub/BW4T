@@ -29,14 +29,10 @@ import org.junit.Test;
 public class BotEditorPanelTest {
 
     private ScenarioEditor scenarioEditor;
-    /** the frame on which we put the panel */
     private BotEditor editor;
-    /** the panel we test */
     private BotEditorPanel panel;
-    /** the spy entity of panel */
     private BotEditorPanel spypanel;
 
-    /** setup the panel */
     @Before
     public final void setUp() {
         EntityPanel entityPanel = new EntityPanel();
@@ -49,14 +45,12 @@ public class BotEditorPanelTest {
         spypanel = spy(panel);
     }
 
-    /** dispose the frame after testing */
     @After
     public final void dispose() {
         editor.dispose();
         scenarioEditor.dispose();
     }
 
-    /** testing the initial slider setup */
     @Test
     public final void testInitialSliders() {
         int speed = 100;
@@ -69,7 +63,7 @@ public class BotEditorPanelTest {
         assertEquals(grippers, spypanel.getGrippers());
     }
 
-    /** Test the reset button */
+    /** Test the reset button to see if the configuration stays the same. */
     @Test
     public final void testResetButtonForBotSpecClick() {
         BotStoreViewInterface bep = editor.getBotEditorPanel();
@@ -88,7 +82,6 @@ public class BotEditorPanelTest {
         assertEquals(config.getColorBlindHandicap(), bep.getColorBlindHandicap());
     }
 
-    /** test modify sliders */
     @Test
     public final void testModifySliders() {
         int speed = 140;
@@ -105,7 +98,6 @@ public class BotEditorPanelTest {
         assertEquals(grippers, spypanel.getGrippers());
     }
 
-    /** test initial handicaps */
     @Test
     public final void testInitialHandicaps() {
         assertFalse(spypanel.getGripperHandicap());
@@ -115,7 +107,6 @@ public class BotEditorPanelTest {
         assertFalse(spypanel.isBatteryEnabled());
     }
 
-    /** test modify handicaps */
     @Test
     public final void testModifyCheckBoxes() {
         spypanel.getGripperCheckbox().setSelected(true);
@@ -130,35 +121,30 @@ public class BotEditorPanelTest {
         assertTrue(spypanel.getBatteryEnabledCheckbox().isSelected());
     }
 
-    /** Test the speed slider */
     @Test
     public final void testSpeedSliderValue() {
         int i = editor.getBotEditorPanel().getSpeedSlider().getValue();
         assertEquals(i, 100);
     }
 
-    /** Test the enabling of the speed slider */
     @Test
     public final void testSpeedSliderEnable() {
         editor.getBotEditorPanel().getMovespeedCheckbox().doClick();
         assertTrue(editor.getBotEditorPanel().getSpeedSlider().isEnabled());
     }
 
-    /** Test the enabling of the size slider */
     @Test
     public final void testSizeSliderEnable() {
         editor.getBotEditorPanel().getCustomSizeCheckbox().doClick();
         assertTrue(editor.getBotEditorPanel().getSizeSlider().isEnabled());
     }
 
-    /** Test the enabling of the size slider */
     @Test
     public final void testCapacitySliderEnable() {
         editor.getBotEditorPanel().getBatteryEnabledCheckbox().doClick();
         assertTrue(editor.getBotEditorPanel().getBatterySlider().isEnabled());
     }
 
-    /** Test the disabling of the speed slider */
     @Test
     public final void testSpeedSliderDisable() {
         editor.getBotEditorPanel().getMovespeedCheckbox().setSelected(true);
@@ -166,7 +152,6 @@ public class BotEditorPanelTest {
         assertFalse(editor.getBotEditorPanel().getSpeedSlider().isEnabled());
     }
 
-    /** Test the disabling of the size slider */
     @Test
     public final void testSizeSliderDisable() {
         editor.getBotEditorPanel().getCustomSizeCheckbox().setSelected(true);
@@ -174,7 +159,6 @@ public class BotEditorPanelTest {
         assertFalse(editor.getBotEditorPanel().getSizeSlider().isEnabled());
     }
 
-    /** Test the disabling of the size slider */
     @Test
     public final void testCapacitySliderDisable() {
         editor.getBotEditorPanel().getBatteryEnabledCheckbox().setSelected(true);
@@ -182,7 +166,6 @@ public class BotEditorPanelTest {
         assertFalse(editor.getBotEditorPanel().getBatterySlider().isEnabled());
     }
 
-    /** Test the disabling of the gripper slider */
     @Test
     public final void testGripperSliderDisable() {
         editor.getBotEditorPanel().getGripperCheckbox().setSelected(false);
@@ -190,7 +173,6 @@ public class BotEditorPanelTest {
         assertFalse(editor.getBotEditorPanel().getNumberOfGrippersSlider().isEnabled());
     }
 
-    /** Test the enabling of the gripper slider */
     @Test
     public final void testGripperSliderEnable() {
         editor.getBotEditorPanel().getGripperCheckbox().setSelected(true);
@@ -198,7 +180,6 @@ public class BotEditorPanelTest {
         assertTrue(editor.getBotEditorPanel().getNumberOfGrippersSlider().isEnabled());
     }
 
-    /** Test the selection of the color blind checkbox */
     @Test
     public final void testColorBlindCheckbox() {
         final BotEditorPanel bep = editor.getBotEditorPanel();
@@ -207,7 +188,6 @@ public class BotEditorPanelTest {
         assertTrue(bep.getColorBlindHandicap());
     }
 
-    /** Test the reset button */
     @Test
     public final void testResetButtonClick() {
         BotEditorPanel botEditorPanel = editor.getBotEditorPanel();
