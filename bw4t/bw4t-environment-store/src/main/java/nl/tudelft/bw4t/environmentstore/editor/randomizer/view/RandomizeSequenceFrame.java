@@ -10,54 +10,48 @@ import javax.swing.SpinnerNumberModel;
 import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.controller.RandomizeSequenceController;
 
-/**
- * Create a randomize frame to randomize blocks in the sequence.
- *
- */
+/** Create a little menu allowing the user to randomise the sequence to be picked. */
 public class RandomizeSequenceFrame extends RandomizeFrame {
 
+	/** Random generated serial version UID. */
     private static final long serialVersionUID = 1993091627565106917L;
     
+    /** The controller for this view class. */
     private RandomizeSequenceController randomController;
     
+    /** The label above the spinner for the amount of blocks. */
     private JLabel lblNumberOfBlocks = new JLabel("Number of blocks created:");
     
+    /** The spinner settings for the amount of blocks. */
     SpinnerModel spinnerModel = new SpinnerNumberModel(8, // initial value
             1, // min
             12, // max
             1); // step
-    /**
-     * Here can the user set the number of blocks.
-     */
+    
+    /** Here can the user set the number of blocks. */
     private JSpinner numberOfBlocksSpinner = new JSpinner(spinnerModel);
     
-    /**
-     * By pressing this button, a randomized color sequence will be made.
-     */
+    /** By pressing this button, a randomized color sequence will be made. */
     private JButton randomizeButton = new JButton("Randomize");
     
-    /**
-     * Label with the text 'Result:'.
-     */
+    /** Label with the text 'Result:'. */
     private JLabel lblResult = new JLabel("Result:");
     
-    /**
-     * This is the textField where the randomized sequence will appear.
-     */
+    /** This is the textField where the randomized sequence will appear. */
     private JTextField randomizedSequence = new JTextField();
     
     /**
-     * If the user clicks this button the changes will be saved.
-     */
+     * If the user clicks this button the changes will be saved. */
     JButton applyButton = new JButton("Apply");
     
-    /**
-     * If the user clicks this button the changes will not be saved.
-     */
+    /** If the user clicks this button the changes will not be saved. */
     JButton cancelButton = new JButton("Cancel");
 
     /**
-     * Create the frame.
+     * Creates the frame. 
+     * @param title
+     * @param mpc
+     *           Controller of the map panel linked to this frame. 
      */
     public RandomizeSequenceFrame(String title, MapPanelController mpc) {
         super(title, mpc);

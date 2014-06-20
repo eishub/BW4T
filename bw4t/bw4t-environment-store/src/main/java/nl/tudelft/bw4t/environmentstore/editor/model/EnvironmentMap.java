@@ -10,11 +10,16 @@ import nl.tudelft.bw4t.map.BlockColor;
  */
 public class EnvironmentMap {
 
+	/** the max sequence length */
     public static final int DROP_ZONE_SEQUENCE_LENGTH = 12;
 
+    /** contains zones on the same x and y location as the map editor */
     private ZoneModel[][] zones;
     
+    /** true if map has a startzone */
     private boolean startzone;
+    
+    /** true if map has a dropzone */
     private boolean dropzone;
     
     /**
@@ -22,6 +27,12 @@ public class EnvironmentMap {
      * */
     private List<BlockColor> sequence = new ArrayList<>();
 
+    /**
+     * Constructs the environmentMap and adds default zones to every zones[][] cell
+     * Also connects all these zones with their respective neighbor
+     * @param rows the amount of rows the maps has
+     * @param cols the amount of columns the map has
+     */
     public EnvironmentMap(int rows, int cols) {
         if (rows < 1 || rows > 100) {
             throw new IllegalArgumentException("illegal value for row: 1 <= "
@@ -110,8 +121,6 @@ public class EnvironmentMap {
      * @param col
      *            the col number
      * @return the zone at the given position
-     * @throws ArrayIndexOutOfBoundsException
-     *             if the given coords are not within the map
      */
     public ZoneModel getZone(int row, int col) {
         return this.zones[row][col];
@@ -126,8 +135,8 @@ public class EnvironmentMap {
      *            the col number
      * @param zone
      *            the zone at the given position
-     * @throws ArrayIndexOutOfBoundsException
-     *             if the given coords are not within the map
+     * @throws NullPointerException
+     * 			  a zone can't be null
      */
     public void setZone(int row, int col, ZoneModel zone) {
         if (zone == null) {
@@ -171,6 +180,11 @@ public class EnvironmentMap {
                 && col < zones[0].length;
     }
 
+    /**
+     * Randomizes the blocks in all rooms
+     * @param colors valid list of colors to randomize from
+     * @param amount max amount of blocks per room
+     */
     public void generateRandomBlocks(List<BlockColor> colors, int amount) {
         for (int row = 0; row < zones.length; row++) {
             for (int col = 0; col < zones[0].length; col++) {

@@ -21,137 +21,130 @@ import nl.tudelft.bw4t.environmentstore.sizedialog.controller.SizeDialogControll
  */
 public class SizeDialog extends JFrame {
 
-    private static final long serialVersionUID = -3691483561210215655L;
+	/** Random generated serial version UID */
+	private static final long serialVersionUID = -3691483561210215655L;
 
-    /**
-     * The contentPane.
-     */
-    private JPanel contentPane = new JPanel();
+	/**
+	 * The contentPane.
+	 */
+	private JPanel contentPane = new JPanel();
 
-    /**
-     * With this button the user can choose to start building a map from
-     * scratch.
-     */
-    private JButton startButton = new JButton("Start");
+	/**
+	 * With this button the user can choose to start building a map from
+	 * scratch.
+	 */
+	private JButton startButton = new JButton("Start");
 
-    /**
-     * Label with the text #rows.
-     */
-    private JLabel rowsLabel = new JLabel("Number of Rows: ");
+	/**
+	 * Label with the text #rows.
+	 */
+	private JLabel rowsLabel = new JLabel("Number of Rows: ");
 
-    /**
-     * Label with the text #columns.
-     */
-    private JLabel columnsLabel = new JLabel("Number of Columns: ");
+	/**
+	 * Label with the text #columns.
+	 */
+	private JLabel columnsLabel = new JLabel("Number of Columns: ");
 
-    /**
-     * Here can the user set the wanted numbers of rows.
-     */
-    private JSpinner rows = new JSpinner();
+	/**
+	 * Here can the user set the wanted numbers of rows.
+	 */
+	private JSpinner rows = new JSpinner();
 
-    /**
-     * Here can the user set the wanted number of columns.
-     */
-    private JSpinner cols = new JSpinner();
+	/**
+	 * Here can the user set the wanted number of columns.
+	 */
+	private JSpinner cols = new JSpinner();
 
-    /**
-     * SizeDialogController
-     */
-    private SizeDialogController sdc;
+	/** The controller for the size dialog. */
+	private SizeDialogController sdc;
 
-    /**
-     * Create the frame.
-     */
-    public SizeDialog() {
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	/** Creates the frame. */
+	public SizeDialog() {
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        contentPane.setLayout(new GridBagLayout());
-        setContentPane(contentPane);
+		contentPane.setLayout(new GridBagLayout());
+		setContentPane(contentPane);
 
-        sdc = new SizeDialogController(this);
+		sdc = new SizeDialogController(this);
 
-        SpinnerModel rowmodel = new SpinnerNumberModel(5, // initial value
-                5, // min
-                100, // max
-                1); // step
-        rows = new JSpinner(rowmodel);
-        rows.setPreferredSize(new Dimension(100, 20));
-        contentPane.add(rowsLabel, setUpContraints(GridBagConstraints.HORIZONTAL, 0, 0, 0));
-        contentPane.add(rows, setUpContraints(GridBagConstraints.HORIZONTAL, 1, 0, 0));
+		// (initial value, min, max, step)
+		SpinnerModel rowmodel = new SpinnerNumberModel(5, 5, 100, 1); 
+		rows = new JSpinner(rowmodel);
+		rows.setPreferredSize(new Dimension(100, 20));
+		contentPane.add(rowsLabel,
+				setUpContraints(GridBagConstraints.HORIZONTAL, 0, 0, 0));
+		contentPane.add(rows,
+				setUpContraints(GridBagConstraints.HORIZONTAL, 1, 0, 0));
 
-        SpinnerModel colmodel = new SpinnerNumberModel(5, // initial value
-                3, // min
-                100, // max
-                1); // step
-        cols = new JSpinner(colmodel);
-        cols.setPreferredSize(new Dimension(100, 20));
-        contentPane.add(columnsLabel, setUpContraints(GridBagConstraints.HORIZONTAL, 0, 1, 0));
-        contentPane.add(cols, setUpContraints(GridBagConstraints.HORIZONTAL, 1, 1, 0));
-        
-        contentPane.add(startButton, setUpContraints(GridBagConstraints.BASELINE, 0, 2, 2));
-        
-        setTitle("New Environment");
-        setLocationRelativeTo(null);
-        pack();
-        setVisible(true);
-        setResizable(false);
+		// (initial value, min, max, step)
+		SpinnerModel colmodel = new SpinnerNumberModel(5, 3, 100, 1); 
+		cols = new JSpinner(colmodel);
+		cols.setPreferredSize(new Dimension(100, 20));
+		contentPane.add(columnsLabel,
+				setUpContraints(GridBagConstraints.HORIZONTAL, 0, 1, 0));
+		contentPane.add(cols,
+				setUpContraints(GridBagConstraints.HORIZONTAL, 1, 1, 0));
 
-    }
-    
-    private GridBagConstraints setUpContraints(int constraints, int x, int y, int width) {
-        GridBagConstraints c = new GridBagConstraints();
+		contentPane.add(startButton,
+				setUpContraints(GridBagConstraints.BASELINE, 0, 2, 2));
 
-        c.fill = constraints;
-        c.gridx = x;
-        c.gridy = y;
-        c.insets = new Insets(3,3,3,3);
+		setTitle("New Environment");
+		setLocationRelativeTo(null);
+		pack();
+		setVisible(true);
+		setResizable(false);
 
-        if (width != 0) {
-            c.gridwidth = width;
-        }
-        
-        return c;
-    }
+	}
 
-    /**
-     * get {@link #rows} as set by user
-     * 
-     * @return {@link #rows}
-     */
-    public int getRows() {
-        return (Integer) (rows.getValue());
-    }
+	/**
+	 * This method set ups the certain constraints for the Grid Bag Layout.
+	 * @param constraint
+	 *                   positions
+	 * @param x
+	 *         the concerned column
+	 * @param y
+	 *         the concerned row
+	 * @param width
+	 *             for components that need to be bigger.
+	 * @return the constraints set up
+	 */
+	private GridBagConstraints setUpContraints(int constraint, int x, int y,
+			int width) {
+		GridBagConstraints c = new GridBagConstraints();
 
-    /**
-     * get {@link #cols} as set by user
-     * 
-     * @return {@link #cols}
-     */
-    public int getColumns() {
-        return (Integer) (cols.getValue());
-    }
+		c.fill = constraint;
+		c.gridx = x;
+		c.gridy = y;
+		c.insets = new Insets(3, 3, 3, 3);
 
-    /**
-     * @return beginFromScratchButton
-     */
-    public JButton getStartButton() {
-        return startButton;
-    }
+		if (width != 0) {
+			c.gridwidth = width;
+		}
 
-    /**
-     * Return the SizeDialogController
-     * 
-     * @return sdc
-     */
-    public SizeDialogController getSizeDialogController() {
-        return sdc;
-    }
-    
-    public JSpinner getRowSpinner() {
-        return rows;
-    }
-    
-    public JSpinner getColumnsSpinner() {
-        return cols;
-    }
+		return c;
+	}
+
+	public int getRows() {
+		return (Integer) (rows.getValue());
+	}
+
+	public int getColumns() {
+		return (Integer) (cols.getValue());
+	}
+
+	public JButton getStartButton() {
+		return startButton;
+	}
+
+	public SizeDialogController getSizeDialogController() {
+		return sdc;
+	}
+
+	public JSpinner getRowSpinner() {
+		return rows;
+	}
+
+	public JSpinner getColumnsSpinner() {
+		return cols;
+	}
 }

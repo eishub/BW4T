@@ -26,12 +26,9 @@ public class BlockadeMenu {
     public static void buildPopUpMenuForBlockade(BW4TClientGUI gui) {
         gui.getjPopupMenu().removeAll();
         ClientMapController cmc = gui.getController().getMapController();
-        MapRenderSettings set = cmc.getRenderSettings();
 
         ViewBlock holdingID = cmc.getTheBot().getFirstHolding();
         Color entityColor = cmc.getTheBot().getColor();
-        String colorAsString = BasicMenuOperations.getColor(
-                ColorTranslator.translate2ColorString(entityColor), gui.getController().getHumanAgent());
 
         JMenuItem menuItem = new JMenuItem();
 
