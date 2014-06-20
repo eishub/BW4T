@@ -3,15 +3,12 @@ package nl.tudelft.bw4t.map.renderer;
 import java.util.HashSet;
 import java.util.Set;
 
-import nl.tudelft.bw4t.map.Path;
-import org.apache.log4j.*;
-
 import nl.tudelft.bw4t.map.MapFormatException;
 import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.map.Path;
 import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.Zone.Type;
-import repast.simphony.space.continuous.NdPoint;
 
 /**
  * An abstract {@link MapController} implementation, taking over as much functionality as possible. Without using client

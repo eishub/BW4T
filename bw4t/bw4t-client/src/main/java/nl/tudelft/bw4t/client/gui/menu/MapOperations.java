@@ -1,8 +1,10 @@
 package nl.tudelft.bw4t.client.gui.menu;
 
 import java.awt.geom.Point2D;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;

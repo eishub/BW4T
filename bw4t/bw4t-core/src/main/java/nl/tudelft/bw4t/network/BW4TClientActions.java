@@ -1,12 +1,13 @@
 package nl.tudelft.bw4t.network;
 
+import eis.exceptions.EntityException;
+import eis.iilang.EnvironmentState;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Collection;
 
 import nl.tudelft.bw4t.map.NewMap;
-import eis.exceptions.EntityException;
-import eis.iilang.EnvironmentState;
 
 /**
  * This is a listener at the client side that allows the server to do callbacks
@@ -33,6 +34,8 @@ public interface BW4TClientActions extends Remote {
      * 
      * @param entity
      *            , the id of the free entity
+     * @param agents
+     * 			List of the agents (names)
      * @throws RemoteException
      *             if an exception occurs during the execution of a remote
      *             object call
