@@ -21,6 +21,7 @@ import nl.tudelft.bw4t.environmentstore.sizedialog.controller.SizeDialogControll
  */
 public class SizeDialog extends JFrame {
 
+	/** Random generated serial version UID */
 	private static final long serialVersionUID = -3691483561210215655L;
 
 	/**
@@ -66,10 +67,8 @@ public class SizeDialog extends JFrame {
 
 		sdc = new SizeDialogController(this);
 
-		SpinnerModel rowmodel = new SpinnerNumberModel(5, // initial value
-				5, // min
-				100, // max
-				1); // step
+		// (initial value, min, max, step)
+		SpinnerModel rowmodel = new SpinnerNumberModel(5, 5, 100, 1); 
 		rows = new JSpinner(rowmodel);
 		rows.setPreferredSize(new Dimension(100, 20));
 		contentPane.add(rowsLabel,
@@ -77,10 +76,8 @@ public class SizeDialog extends JFrame {
 		contentPane.add(rows,
 				setUpContraints(GridBagConstraints.HORIZONTAL, 1, 0, 0));
 
-		SpinnerModel colmodel = new SpinnerNumberModel(5, // initial value
-				3, // min
-				100, // max
-				1); // step
+		// (initial value, min, max, step)
+		SpinnerModel colmodel = new SpinnerNumberModel(5, 3, 100, 1); 
 		cols = new JSpinner(colmodel);
 		cols.setPreferredSize(new Dimension(100, 20));
 		contentPane.add(columnsLabel,
