@@ -10,6 +10,7 @@
     <artifactId>bw4t-server</artifactId>
     <properties>
         <checkstyle.config.location>../checkstyle.xml</checkstyle.config.location>
+        <java.main.class>nl.tudelft.bw4t.server.environment.Launcher</java.main.class>
     </properties>
     <packaging>jar</packaging>
 
@@ -24,12 +25,26 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <index>true</index>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>${java.main.class}</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>nl.tudelft.bw4t.server.environment.Launcher</mainClass>
+                            <mainClass>${java.main.class}</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -69,6 +84,61 @@
             <groupId>repast.simphony</groupId>
             <artifactId>bin_and_src</artifactId>
             <version>2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>saf.core</groupId>
+            <artifactId>runtime</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.jpf</groupId>
+            <artifactId>jpf</artifactId>
+            <version>1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.12.1.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>javolution</groupId>
+            <artifactId>javolution</artifactId>
+            <version>5.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.javabits.jgrapht</groupId>
+            <artifactId>jgrapht-core</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+        <dependency>
+            <groupId>saf.core</groupId>
+            <artifactId>ui</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>saf.core</groupId>
+            <artifactId>v3d</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.jpf</groupId>
+            <artifactId>jpf-boot</artifactId>
+            <version>1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>colt</groupId>
+            <artifactId>colt</artifactId>
+            <version>1.2.0</version>
         </dependency>
         <dependency>
             <groupId>net.sourceforge.collections</groupId>
