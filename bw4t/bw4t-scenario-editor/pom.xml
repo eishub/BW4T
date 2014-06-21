@@ -12,6 +12,7 @@
     <name>bw4t-scenario-editor</name>
     <properties>
         <checkstyle.config.location>../checkstyle.xml</checkstyle.config.location>
+        <java.main.class>nl.tudelft.bw4t.scenariogui.ScenarioEditor</java.main.class>
     </properties>
     <packaging>jar</packaging>
     <build>
@@ -64,12 +65,26 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <index>true</index>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>${java.main.class}</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>nl.tudelft.bw4t.scenariogui.ScenarioEditor</mainClass>
+                            <mainClass>${java.main.class}</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
