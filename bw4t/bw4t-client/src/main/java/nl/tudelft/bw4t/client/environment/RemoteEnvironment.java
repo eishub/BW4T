@@ -34,7 +34,6 @@ import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.startup.InitParam;
 import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.server.view.ServerContextDisplay;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
@@ -67,8 +66,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     /**
      * Stores for each agent (represented by a string) a set of listeners.
      */
-    private final Map<String, HashSet<AgentListener>> agentsToAgentListeners = 
-            new HashMap<String, HashSet<AgentListener>>();
+    private final Map<String, HashSet<AgentListener>> agentsToAgentListeners = new HashMap<String, HashSet<AgentListener>>();
 
     /**
      * List of all active agents.
@@ -77,6 +75,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 
     /**
      * Method required for GOAL to work
+     * 
      * @return the type of entity
      */
     @Override
@@ -93,7 +92,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
      * 
      * @param agentId
      *            , the agent that should be registered
-     * @throws AgentException 
+     * @throws AgentException
      */
     @Override
     public void registerAgent(String agentId) throws AgentException {
@@ -149,8 +148,8 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
      * @param action
      *            , the action that should be performed
      * @return the percept resulting from the action, null if an error occurred.
-     * @throws ActException 
-     * @throws RemoteException 
+     * @throws ActException
+     * @throws RemoteException
      */
     public Percept performEntityAction(String entity, Action action) throws RemoteException, ActException {
         if (isConnectedToGoal() && "sendToGUI".equals(action.getName())) {
@@ -161,7 +160,8 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
                 throw e;
             }
             return entityGUI.sendToGUI(action.getParameters());
-        } else {
+        }
+        else {
             return getClient().performEntityAction(entity, action);
         }
     }
@@ -183,7 +183,8 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
                     addRunningAgent(agent);
                 }
                 control = new ClientController(this, entityId, agent);
-            } else if (launchGUI && (isConnectedToGoal() || "bot".equals(getType(entityId)))) {
+            }
+            else if (launchGUI && (isConnectedToGoal() || "bot".equals(getType(entityId)))) {
                 control = new ClientController(this, entityId);
             }
             if (control != null) {
@@ -245,9 +246,10 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     /**
      * Check whether an action is supported by this environment.
      * 
-     * @param arg0 The action to be checked
+     * @param arg0
+     *            The action to be checked
      * @return true if the Action is supported by the environment
-     * @throws ActException 
+     * @throws ActException
      */
     public boolean isSupportedByEnvironment(Action arg0) throws ActException {
         try {
@@ -280,13 +282,14 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
      * Gets all percepts for a certain agent for a specified list of entities
      * 
      * @param agent
-     *            , the agent's id
+     *            the agent's id
      * @param entities
-     *            , the list of entities
+     *            the list of entities
+     * @return a list of Percepts for every entity
      * @throws PerceiveException
-     *             , if an attempt to perform an action or to retrieve percepts has failed.
+     *             if an attempt to perform an action or to retrieve percepts has failed.
      * @throws NoEnvironmentException
-     *             , if an attempt to perform an action or to retrieve percepts has failed.
+     *             if an attempt to perform an action or to retrieve percepts has failed.
      */
     @Override
     public Map<String, Collection<Percept>> getAllPercepts(String agent, String... entities) throws PerceiveException,
@@ -317,20 +320,24 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
         return gatherPercepts(agent, associatedEntities, entities);
     }
 
- 
     /**
+     * Gets all percepts for a certain agent for a specified list of entities
      * 
-     * @param agent 
-     * @param associatedEntities 
-     * @param entities 
+     * @param agent
+     *            the agent's name
+     * @param associatedEntities
+     *            the set of attached entities
+     * @param entities
+     *            the entities we want percepts for
      * @return Returns a map with all percepts
-     * @throws PerceiveException 
+     * @throws PerceiveException
+     *             unable to get percepts because the entity does not belong to this agent
      */
     Map<String, Collection<Percept>> gatherPercepts(String agent, Set<String> associatedEntities, String... entities)
             throws PerceiveException {
         Map<String, Collection<Percept>> perceptsMap = new HashMap<String, Collection<Percept>>();
         if (entities.length == 0) {
-            //No entities selected, get percepts for all associated entities
+            // No entities selected, get percepts for all associated entities
             entities = associatedEntities.toArray(new String[associatedEntities.size()]);
         }
         for (String entity : entities) {
@@ -351,9 +358,9 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
      * Check if an action is supported by an entity, is not used so returns true
      * 
      * @param action
-     *            , the action
+     *            the action
      * @param entity
-     *            , the entity
+     *            the entity
      */
     public boolean isSupportedByEntity(Action action, String entity) {
         return true;
@@ -393,15 +400,13 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
      */
     @Override
     public void kill() throws ManagementException {
-        for (ClientController renderer : entityToGUI.values()) {
-            renderer.stop();
-        }
         // copy list, the localAgents list is going to be changes by removing
         // agents.
         List<String> allAgents = new ArrayList<String>(localAgents);
         for (String agentname : allAgents) {
             try {
                 for (String entity : getAssociatedEntities(agentname)) {
+                    removeEntityController(entity);
                     freePair(agentname, entity);
                 }
                 unregisterAgent(agentname);
@@ -440,19 +445,32 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
             getEnvironmentListeners().remove(listener);
         }
     }
-    
+
     public void addRunningAgent(BW4TAgent agent) {
         runningAgents.put(agent.getAgentId(), agent);
     }
-    
+
+    /**
+     * Removes the given agent object from the running agents list
+     * 
+     * @param agent
+     *            the name of the agent to remove
+     */
     public void removeRunningAgent(String agent) {
+        try {
+            for (String entity : getAssociatedEntities(agent)) {
+                removeEntityController(entity);
+            }
+        } catch (AgentException e) {
+            LOGGER.warn("Unable to get associated entities.", e);
+        }
         runningAgents.remove(agent);
     }
-    
+
     public void removeRunningAgent(BW4TAgent agent) {
         removeRunningAgent(agent.getAgentId());
     }
-    
+
     public BW4TAgent getRunningAgent(String name) {
         return runningAgents.get(name);
     }
@@ -740,7 +758,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     /**
      * This is called from the server, via the BW4T Client.
      * 
-     * @param newState 
+     * @param newState
      */
     @Override
     public void handleStateChange(EnvironmentState newState) {
@@ -758,7 +776,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     public void reset(Map<String, Parameter> params) throws ManagementException {
         getClient().resetServer(params);
     }
-    
+
     public NewMap getMap() {
         return getClient().getMap();
     }
@@ -778,7 +796,8 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     public void putEntityController(String entity, ClientController control) {
         if (control == null) {
             entityToGUI.remove(entity);
-        } else {
+        }
+        else {
             entityToGUI.put(entity, control);
         }
     }

@@ -8,9 +8,6 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
-
 import org.apache.log4j.Logger;
 
 /**

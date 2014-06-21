@@ -2,7 +2,6 @@ package nl.tudelft.bw4t.client;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Translator;
 import eis.exceptions.ActException;
@@ -15,6 +14,7 @@ import java.io.IOException;
 
 import javax.xml.bind.JAXBException;
 
+import nl.tudelft.bw4t.client.environment.Launcher;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 
 import org.junit.Before;
@@ -47,8 +47,8 @@ public class CommunicationTest {
     public void setUp() throws ManagementException, IOException, ScenarioLoadException, JAXBException,
             InterruptedException {
         String[] clientArgs = new String[] { "-map", "Banana", "-agentcount", "3", "-humancount", "0" };
-        nl.tudelft.bw4t.client.environment.Launcher.launch(clientArgs);
-        client = nl.tudelft.bw4t.client.environment.Launcher.getEnvironment();
+
+        client = Launcher.launch(clientArgs);
         TestFunctions.setClient(client);
     }
 
