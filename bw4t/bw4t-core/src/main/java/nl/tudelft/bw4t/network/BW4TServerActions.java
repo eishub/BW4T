@@ -1,6 +1,5 @@
 package nl.tudelft.bw4t.network;
 
-import eis.EnvironmentInterfaceStandard;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
 import eis.exceptions.ManagementException;
