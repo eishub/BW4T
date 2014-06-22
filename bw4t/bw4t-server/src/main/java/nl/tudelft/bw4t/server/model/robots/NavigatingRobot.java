@@ -1,12 +1,14 @@
 package nl.tudelft.bw4t.server.model.robots;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import nl.tudelft.bw4t.map.Path;
 import nl.tudelft.bw4t.map.Point;
@@ -163,19 +165,14 @@ public class NavigatingRobot extends AbstractRobot {
         clearCollided();
         clearObstacles();
         setDestinationUnreachable(false);
-        if (plannedMoves == null) {
-            throw new InternalError("plannedMoves==null. How is this possible??");
-        }
+
         // clear old path.
         plannedMoves.clear();
         Zone startpt = ZoneLocator.getNearestZone(this.getLocation());
         Zone targetpt = ZoneLocator.getNearestZone(p);
-        List<Zone> allnavs = new ArrayList<Zone>();
-        for (Object o : context.getObjects(Zone.class)) {
-            allnavs.add((Zone) o);
-        }
+        Collection<Zone> allnavs = getAllZonesInMap();
 
-        planPath(p, startpt, targetpt, allnavs);
+        plannedMoves.addAll(planPath(this.getLocation(), p, startpt, targetpt, allnavs));
 
         updateDrawPath();
         // make the bot use the new path.
@@ -185,42 +182,49 @@ public class NavigatingRobot extends AbstractRobot {
     /**
      * Plans the path and adds it to planned moves
      * 
-     * @param p
+     * @param current
+     *            where we start our move from
+     * @param target
      *            the point
      * @param startpt
-     *            starting point
+     *            zone closest to our current position
      * @param targetpt
-     *            target point
+     *            target zone
      * @param allnavs
-     *            all zones
+     *            all navigation points in the system
+     * @return the path to take through the navpoints
      */
-    private void planPath(NdPoint p, Zone startpt, Zone targetpt, List<Zone> allnavs) {
+    public Queue<NdPoint> planPath(NdPoint current, NdPoint target, Zone startpt, Zone targetpt, Collection<Zone> allnavs) {
         // plan the path between the Zones
-        List<Zone> plannedPath = PathPlanner.findPath(allnavs, startpt, targetpt);
+        List<NdPoint> plannedPath = PathPlanner.findPath(allnavs, startpt, targetpt);
         if (plannedPath.isEmpty()) {
-            throw new IllegalArgumentException("target " + p + " is unreachable from " + this);
+            throw new IllegalArgumentException("target " + target + " is unreachable from " + this);
         }
 
-        final NdPoint first = plannedPath.get(1).getLocation();
-        if (plannedPath.size() == 1 || !skipFirstNode(this.getLocation(), first, plannedPath.get(2).getLocation())) {
-            plannedMoves.add(first);
+        final NdPoint first = plannedPath.get(0);
+        final Queue<NdPoint> actualPath = new LinkedBlockingQueue<>();
+        if (plannedPath.size() == 1) {
+            actualPath.add(first);
+            return actualPath;
+        }
+        if (!skipFirstNode(current, first, plannedPath.get(1))) {
+            actualPath.add(first);
         }
 
         // and copy Zone path to our stack.
         int preLast = plannedPath.size() - 2;
         for (int i = 1; i < preLast; i++) {
-            Zone point = plannedPath.get(i);
-            NdPoint toAdd = point.getLocation();
-
-            plannedMoves.add(toAdd);
+            actualPath.add(plannedPath.get(i));
         }
 
-        NdPoint toAdd = plannedPath.get(preLast).getLocation();
-        final NdPoint last = plannedPath.get(preLast + 1).getLocation();
-        if (skipNextNode(toAdd, last, p)) {
-            plannedMoves.add(toAdd);
+        NdPoint toAdd = plannedPath.get(preLast);
+        final NdPoint last = plannedPath.get(preLast + 1);
+        actualPath.add(toAdd);
+        if (!skipNextNode(toAdd, last, target)) {
+            actualPath.add(last);
         }
-        plannedMoves.add(p);
+        actualPath.add(target);
+        return actualPath;
     }
 
     /**
@@ -235,8 +239,8 @@ public class NavigatingRobot extends AbstractRobot {
      *            the node after the next
      * @return true if the next node should be skipped
      */
-    private boolean skipNextNode(NdPoint current, NdPoint next, NdPoint after) {
-        double angle = SpatialMath.angle(current, after) - SpatialMath.angle(current, next);
+    private static boolean skipNextNode(NdPoint current, NdPoint next, NdPoint after) {
+        double angle = SpatialMath.angle(current, after, next);
         double distNext = SpatialMath.distance(current, next);
         double distAfter = SpatialMath.distance(current, after);
         return skipNextNode(distNext, distAfter, angle);
@@ -254,8 +258,9 @@ public class NavigatingRobot extends AbstractRobot {
      *            the node after the next
      * @return true if the next node should be skipped
      */
-    private boolean skipFirstNode(NdPoint current, NdPoint next, NdPoint after) {
-        double angle = SpatialMath.angle(current, after) - SpatialMath.angle(current, next);
+    private static boolean skipFirstNode(NdPoint current, NdPoint next, NdPoint after) {
+        LOGGER.info(String.format("Skip first Node? cur: [%s] next: [%s] after: [%s]", current, next, after));
+        double angle = SpatialMath.angle(current, next, after);
         double distNext = SpatialMath.distance(current, next) + SpatialMath.distance(next, after);
         double distAfter = SpatialMath.distance(current, after);
         return skipNextNode(distNext, distAfter, angle);
@@ -272,10 +277,10 @@ public class NavigatingRobot extends AbstractRobot {
      *            the angle from current to skip
      * @return true if the next node should be skipped and gone directly to the one after
      */
-    public boolean skipNextNode(double distNormal, double distNext, double angle) {
-        angle = Math.abs(angle);
+    public static boolean skipNextNode(double distNormal, double distNext, double angle) {
         LOGGER.info(String.format("normal: %f, direct: %f, angle: %f", distNormal, distNext, angle));
-        return distNormal < distNext || angle < Math.PI / 6.;
+        angle = Math.abs(angle);
+        return distNormal < distNext && angle < Math.PI / 8.;
     }
 
     @Override
@@ -290,13 +295,13 @@ public class NavigatingRobot extends AbstractRobot {
         List<Zone> allnavs = new ArrayList<Zone>(getAllZonesInMap());
 
         // plan the path between the Zones
-        List<Zone> path = PathPlanner.findPath(allnavs, startpt, targetpt);
+        List<NdPoint> path = PathPlanner.findPath(allnavs, startpt, targetpt);
         if (path.isEmpty()) {
             throw new IllegalArgumentException("target " + target + " is unreachable from " + this);
         }
         // and copy Zone path to our stack.
-        for (Zone p : path) {
-            plannedMoves.add(p.getLocation());
+        for (NdPoint p : path) {
+            plannedMoves.add(p);
         }
         // and add the real target
         plannedMoves.add(target.getLocation());
