@@ -1,5 +1,7 @@
 package nl.tudelft.bw4t.server.model.robots;
 
+import static nl.tudelft.bw4t.server.util.SpatialMath.distance;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -14,9 +16,9 @@ import nl.tudelft.bw4t.map.Path;
 import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
+import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
 import nl.tudelft.bw4t.server.util.PathPlanner;
-import nl.tudelft.bw4t.server.util.SpatialMath;
 import nl.tudelft.bw4t.server.util.ZoneLocator;
 
 import org.apache.log4j.Logger;
@@ -194,93 +196,80 @@ public class NavigatingRobot extends AbstractRobot {
      *            all navigation points in the system
      * @return the path to take through the navpoints
      */
-    public Queue<NdPoint> planPath(NdPoint current, NdPoint target, Zone startpt, Zone targetpt, Collection<Zone> allnavs) {
+    public static Queue<NdPoint> planPath(NdPoint current, NdPoint target, Zone startpt, Zone targetpt, Collection<Zone> allnavs) {
         // plan the path between the Zones
         List<NdPoint> plannedPath = PathPlanner.findPath(allnavs, startpt, targetpt);
         if (plannedPath.isEmpty()) {
-            throw new IllegalArgumentException("target " + target + " is unreachable from " + this);
+            throw new IllegalArgumentException("target " + target + " is unreachable from " + current);
         }
 
         final NdPoint first = plannedPath.get(0);
         final Queue<NdPoint> actualPath = new LinkedBlockingQueue<>();
         if (plannedPath.size() == 1) {
-            actualPath.add(first);
+            actualPath.add(target);
             return actualPath;
         }
-        if (!skipFirstNode(current, first, plannedPath.get(1))) {
+        final boolean startsInRoom = startpt instanceof Room;
+        if (startsInRoom || !current.equals(first) && !skipFirstNode(current, first, plannedPath.get(1))) {
+            System.out.println("0 = " + first);
             actualPath.add(first);
         }
 
         // and copy Zone path to our stack.
         int preLast = plannedPath.size() - 2;
         for (int i = 1; i < preLast; i++) {
+            System.out.println(i + " = " + plannedPath.get(i));
             actualPath.add(plannedPath.get(i));
         }
 
         NdPoint toAdd = plannedPath.get(preLast);
         final NdPoint last = plannedPath.get(preLast + 1);
-        actualPath.add(toAdd);
-        if (!skipNextNode(toAdd, last, target)) {
+        if (preLast > 0) {
+            System.out.println(preLast + " = " + toAdd);
+            actualPath.add(toAdd);
+        }
+        if (preLast == 0 && startsInRoom || targetpt instanceof Room || !skipLastNode(toAdd, last, target)) {
             actualPath.add(last);
         }
+        System.out.println((preLast + 2) + " = " + target);
         actualPath.add(target);
         return actualPath;
     }
 
     /**
-     * Check whether we should skip the next node because the one after that is closer. The function also checks the
-     * angle to make sure we do not try to
+     * Check whether we should skip the next node because the one after that is closer.
      * 
-     * @param current
-     *            The node we are currently at
-     * @param next
-     *            the next node in the list
-     * @param after
-     *            the node after the next
-     * @return true if the next node should be skipped
+     * @param pzone
+     *            The previous zone
+     * @param tzone
+     *            the zone next to the target node
+     * @param target
+     *            the target node
+     * @return true if the target zone should be skipped
      */
-    private static boolean skipNextNode(NdPoint current, NdPoint next, NdPoint after) {
-        double angle = SpatialMath.angle(current, after, next);
-        double distNext = SpatialMath.distance(current, next);
-        double distAfter = SpatialMath.distance(current, after);
-        return skipNextNode(distNext, distAfter, angle);
+    private static boolean skipLastNode(NdPoint pzone, NdPoint tzone, NdPoint target) {
+        final double THRESHOLD = 2.;
+        if (Math.abs(pzone.getX() - tzone.getX()) > THRESHOLD && Math.abs(pzone.getY() - tzone.getY()) > THRESHOLD) {
+            return false;
+        }
+        
+        return distance(pzone, target) < distance(pzone, tzone);
     }
-
+    
     /**
-     * Check whether we should skip the next node because the one after that is closer. The function also checks the
-     * angle to make sure we do not try to
-     * 
-     * @param current
-     *            The node we are currently at
-     * @param next
-     *            the next node in the list
-     * @param after
-     *            the node after the next
-     * @return true if the next node should be skipped
+     * Check whether we should skip the First node because it is faster, but still feasible to go directly to the second node.
+     * @param current current position of the robot
+     * @param fzone the first zone to navigate to
+     * @param szone the second zone to navigate to
+     * @return true if the first zone should be skipped
      */
-    private static boolean skipFirstNode(NdPoint current, NdPoint next, NdPoint after) {
-        LOGGER.info(String.format("Skip first Node? cur: [%s] next: [%s] after: [%s]", current, next, after));
-        double angle = SpatialMath.angle(current, next, after);
-        double distNext = SpatialMath.distance(current, next) + SpatialMath.distance(next, after);
-        double distAfter = SpatialMath.distance(current, after);
-        return skipNextNode(distNext, distAfter, angle);
-    }
-
-    /**
-     * Check whether we should skip the next node and go straight for the one after
-     * 
-     * @param distNormal
-     *            the normal distance
-     * @param distNext
-     *            the distance with skipping
-     * @param angle
-     *            the angle from current to skip
-     * @return true if the next node should be skipped and gone directly to the one after
-     */
-    public static boolean skipNextNode(double distNormal, double distNext, double angle) {
-        LOGGER.info(String.format("normal: %f, direct: %f, angle: %f", distNormal, distNext, angle));
-        angle = Math.abs(angle);
-        return distNormal < distNext && angle < Math.PI / 8.;
+    private static boolean skipFirstNode(NdPoint current, NdPoint fzone, NdPoint szone) {
+        final double THRESHOLD = 2.;
+        if (Math.abs(szone.getX() - fzone.getX()) > THRESHOLD && Math.abs(szone.getY() - fzone.getY()) > THRESHOLD) {
+            return false;
+        }
+        
+        return distance(current, szone) < distance(current, fzone) + distance(fzone, szone);
     }
 
     @Override
