@@ -58,4 +58,21 @@ public final class SpatialMath {
         double dY = dest.getY() - origin.getY();
         return repast.simphony.space.SpatialMath.angleFromDisplacement(dX, dY);
     }
+
+    /**
+     * Calculates the angle in the corner A of the triangle ABC.
+     * @param pA the point A
+     * @param pB the point B
+     * @param pC the point C
+     * @return the angle in A
+     */
+    public static double angle(NdPoint pA, NdPoint pB, NdPoint pC) {
+        double a = distance(pB, pC);
+        double b = distance(pA, pC);
+        double c = distance(pA, pB);
+        
+        double result = Math.pow(b, 2) + Math.pow(c, 2) - Math.pow(a, 2);
+        result /= 2. * b * c;
+        return Math.acos(result);
+    }
 }
