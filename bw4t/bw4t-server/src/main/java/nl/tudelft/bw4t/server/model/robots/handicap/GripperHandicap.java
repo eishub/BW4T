@@ -2,8 +2,14 @@ package nl.tudelft.bw4t.server.model.robots.handicap;
 
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 
+/**
+ * Creates the handicap for a bot who can't grip anything.
+ */
 public class GripperHandicap extends AbstractRobotDecorator {
     
+    /**
+     * Connects Gripper to the handicap.
+     */
     public static final String GRIPPER_HANDICAP = "Gripper";
 
     /**
@@ -26,15 +32,19 @@ public class GripperHandicap extends AbstractRobotDecorator {
      */
     @Override
     public boolean canPickUp(BoundedMoveableObject b) {
-    	return false;
+        return false;
     }
     
     @Override
     public int getGripperCapacity() {
-    	return 0;
+        return 0;
     }
 
-	@Override
-	public void setGripperCapacity(int newcap) {
-	}
+    /**
+     * Collides when it gets a capacity, as it is handicaped to have none gripper capacity.
+     * @param newcap
+     *          not used.
+     */
+    @Override
+    public void setGripperCapacity(int newcap) { }
 }

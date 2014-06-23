@@ -37,9 +37,7 @@ public final class Launcher {
      *            - The console arguments.
      */
     public static void launch(String[] args) {
-        /**
-         * Set up the logging environment to log on the console.
-         */
+         //Set up the logging environment to log on the console.
         if (!LOGGER.getAllAppenders().hasMoreElements()) {
             BasicConfigurator.configure();
         }
@@ -50,15 +48,13 @@ public final class Launcher {
          */
         Map<String, Parameter> init = new HashMap<String, Parameter>();
         for (InitParam param : InitParam.values()) {
-            if(param == InitParam.GOAL) {
+            if (param == InitParam.GOAL) {
                 LOGGER.info("Setting parameter 'GOAL' with 'false' because we started from commandline.");
                 init.put(param.nameLower(), new Identifier("false"));
-            }
-            else {
+            } else {
                 init.put(param.nameLower(), new Identifier(findArgument(args, param)));
             }
         }
-
         startupEnvironment(init);
     }
 

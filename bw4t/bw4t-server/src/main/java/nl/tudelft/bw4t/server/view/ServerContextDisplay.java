@@ -1,5 +1,9 @@
 package nl.tudelft.bw4t.server.view;
 
+import eis.exceptions.ManagementException;
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,24 +35,21 @@ import javax.swing.event.ChangeListener;
 import nl.tudelft.bw4t.map.renderer.MapRenderer;
 import nl.tudelft.bw4t.server.controller.ServerMapController;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.environment.EnvironmentResetException;
 import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.server.environment.Stepper;
-import nl.tudelft.bw4t.server.repast.BW4TBuilder;
 
 import org.apache.log4j.Logger;
 
 import repast.simphony.context.Context;
-import eis.exceptions.ManagementException;
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
 
 /**
  * Used for directly displaying the simulation from the context, unlike BW4TRenderer does not use percepts and can show
  * all entities. Only used on the server side (BW4TEnvironment side).
- * <p/>
+ * 
  * Note, this renderer is largely independent of repast, so even though Repast has its own rendering tools we don't use
  * that.
- * <p/>
+ * 
  * Also note that this is a runnable and runs in its own thread with a refresh rate of 10Hz, started by
  * {@link BW4TBuilder}, see {@link #run()}.
  */
@@ -60,16 +61,19 @@ public class ServerContextDisplay extends JFrame {
      */
     private static final Logger LOGGER = Logger.getLogger(ServerContextDisplay.class);
 
+    /** The map renderer. */
     private final MapRenderer myRenderer;
+    
+    /** The server map controller. */
     private final ServerMapController controller;
 
     /**
-     * Create a new instance of this class and initialize it
-     *
-     * @param context the central data model of Repast
-     * @throws IllegalAccessException
-     * @throws InstantiationException
-     * @throws FileNotFoundException
+     * Create a new instance of this class and initialize it.
+     * 
+     * @param context
+     *            the central data model of Repast
+     * @throws VisualizationsException
+     *             the visualizations exception
      */
     public ServerContextDisplay(Context context) throws VisualizationsException {
         try {
@@ -119,17 +123,20 @@ class ControlPanel extends JPanel {
     /**
      * used to close the window when user presses reset.
      */
-    final ServerContextDisplay displayer;
+    final private ServerContextDisplay displayer;
 
-    final JLabel tpsDisplay = new JLabel("0.0 tps");
+    /** The times per second display. */
+    final private JLabel tpsDisplay = new JLabel("0.0 tps");
 
+    /** The slider for the tps. */
     private final JSlider slider;
 
+    /** The collision checkbox. */
     private final JCheckBox collisionCheckbox;
 
     /**
      * @param disp is used to close the window when user presses reset.
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException 
      */
     public ControlPanel(ServerContextDisplay disp) throws FileNotFoundException {
         this.displayer = disp;
@@ -169,9 +176,8 @@ class ControlPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 try {
-                    // displayer.close(); now part of reset
                     BW4TEnvironment.getInstance().reset();
-                } catch (Exception e) {
+                } catch (EnvironmentResetException e) {
                     LOGGER.error("failed to reset the environment", e);
                 }
             }
@@ -195,6 +201,11 @@ class ControlPanel extends JPanel {
         updateTpsDisplay();
     }
 
+    /**
+     * Calculate tps from slider.
+     * 
+     * @return the double
+     */
     public double calculateTpsFromSlider() {
         double percent = (slider.getValue() - slider.getMinimum())
                 / (double) (slider.getMaximum() - slider.getMinimum());
@@ -203,6 +214,11 @@ class ControlPanel extends JPanel {
         return value;
     }
 
+    /**
+     * Calculate slider value from delay.
+     * 
+     * @return the int
+     */
     public int calculateSliderValueFromDelay() {
         double delay = BW4TEnvironment.getInstance().getTps();
         double percent = (delay - Stepper.MIN_TPS) / (Stepper.MAX_TPS - Stepper.MIN_TPS);
@@ -211,6 +227,9 @@ class ControlPanel extends JPanel {
         return value;
     }
 
+    /**
+     * Update the tps display.
+     */
     public void updateTpsDisplay() {
         tpsDisplay.setText(String.format("%3.1f tps", BW4TEnvironment.getInstance().getTps()));
     }
@@ -218,7 +237,7 @@ class ControlPanel extends JPanel {
 
 /**
  * This combo box allows user to select a new map. Doing that will reset the server and reload the new map.
- * <p/>
+ * 
  * We assume that a directory named "Maps" is available in the current directory, and that it only contains maps.
  */
 @SuppressWarnings("serial")
@@ -229,6 +248,14 @@ class MapSelector extends JPanel {
      */
     private static final Logger LOGGER = Logger.getLogger(MapSelector.class);
 
+    /**
+     * Instantiates a new map selector.
+     * 
+     * @param displayer
+     *            the displayer
+     * @throws FileNotFoundException
+     *             the file not found exception
+     */
     public MapSelector(final ServerContextDisplay displayer) throws FileNotFoundException {
         setLayout(new BorderLayout());
         add(new JLabel("Change Map"), BorderLayout.WEST);
@@ -246,7 +273,6 @@ class MapSelector extends JPanel {
                 Map<String, Parameter> parameters = new HashMap<String, Parameter>();
                 parameters.put("map", new Identifier((String) mapselector.getSelectedItem()));
                 try {
-                    // displayer.close(); now part of reset
                     BW4TEnvironment.getInstance().reset(parameters);
                 } catch (ManagementException e) {
                     LOGGER.error("failed to reset the environment", e);
@@ -259,14 +285,13 @@ class MapSelector extends JPanel {
      * get list of available map names.
      *
      * @return vector with all available map names in the Maps directory.
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException 
      */
     private Vector<String> getMaps() throws FileNotFoundException {
         File f = new File(System.getProperty("user.dir") + "/maps");
         if (f.list() == null) {
             throw new FileNotFoundException("maps directory not found");
         }
-        Vector<String> maps = new Vector<String>(Arrays.asList(f.list()));
-        return maps;
+        return new Vector<String>(Arrays.asList(f.list()));
     }
 }

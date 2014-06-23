@@ -37,13 +37,16 @@ public class EPartnerListMouseListener implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent arg0) {
+        // Nothing should happen when mouse enters the list
     }
 
     @Override
     public void mouseExited(MouseEvent arg0) {
+        // Nothing should happen when mouse exists the list   
     }
 
     @Override
     public void mouseReleased(MouseEvent arg0) {
+        // Nothing should happen when mouse is released
     }
 }

@@ -18,7 +18,7 @@ public final class ClientWindowAdapter extends WindowAdapter {
     private static final Logger LOGGER = Logger.getLogger(ClientWindowAdapter.class.getName());
     
     /** The bw4t client gui. */
-    private ClientController controller;
+    private final ClientController controller;
     
     /**
      * Instantiates a new client window adapter.
@@ -37,8 +37,8 @@ public final class ClientWindowAdapter extends WindowAdapter {
     public void windowClosing(WindowEvent e) {
         LOGGER.info("Exit request received from the Window Manager to close Window of entity: "
                 + controller.getMapController().getTheBot().getName());
-        
-        controller.stop();//stop the gui
+      //stop the gui
+        controller.stop();
         
         try {
             controller.getEnvironment().kill();

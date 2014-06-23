@@ -9,7 +9,15 @@ import repast.simphony.space.grid.Grid;
  */
 public class ChargingZone extends Zone {
 
-    public ChargingZone(nl.tudelft.bw4t.map.Zone zone, ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context) {
+    /**
+     * Creates a charging zone
+     * @param zone which will be charging zone
+     * @param space in which this room will be
+     * @param grid in which this room will be
+     * @param context in which this room will be
+     */
+    public ChargingZone(nl.tudelft.bw4t.map.Zone zone, ContinuousSpace<Object> space, 
+                                Grid<Object> grid, Context<Object> context) {
         super(zone, space, grid, context);
     }
 }

@@ -114,7 +114,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
         super();
         setInstance(this); 
         this.server = server2;
-     	mapName = mapLocation;
+         mapName = mapLocation;
         this.scenarioLocation = System.getProperty("user.dir") + "/" + scenarioLocation;
         this.guiEnabled = guiEnabled;
         this.shutdownKey = shutdownKey;
@@ -122,7 +122,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
         this.drawPathsEnabled = drawPathsEnabled;
     }
     private static void setInstance(BW4TEnvironment env){
-    	instance = env;  
+        instance = env;  
     }
     /**
      * Launch server and start repast.
@@ -167,13 +167,13 @@ public class BW4TEnvironment extends AbstractEnvironment {
      */
     public void removeAllEntities() throws ManagementException {
       
-    	BW4TFileAppender.logFinish(System.currentTimeMillis(), "total time is ");
+        BW4TFileAppender.logFinish(System.currentTimeMillis(), "total time is ");
 
         setState(EnvironmentState.KILLED);
 
         LOGGER.debug("Removing all entities");
         for (String entity : this.getEntities()) {
-        	try {
+            try {
                 this.deleteEntity(entity);
             } catch (EntityException | RelationException e) {
                 LOGGER.error("Failure to delete entity: " + entity, e);
@@ -345,13 +345,13 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
     /**
      * Helper method to allow the server to get all percepts for a connected client.
-     * <p>
+     * 
      * This function is synchronized to ensure that multiple calls are properly sequenced. This is important because
      * getAllPercepts must 'lock' the environment and parallel calls would cause overlapping 'locks' taken at different
      * moments in time.
-     * <p>
+     *
      * Actually, locking the environment is done by copying the current location of the entity.
-     * <p>
+     *
      * It seems that this new function is created because {@link AbstractEnvironment#getAllPerceptsFromEntity(String)}
      * is final.
      * 
@@ -551,7 +551,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
     }
     
     public long getStarttime() {
-    	return starttime;
+        return starttime;
     }
     
     /**
@@ -562,7 +562,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
      */
     private Point2D getNextBotSpawnPoint() {
         List<Entity> ents = getMap().getEntities();
-        Point2D p = ents.get(nextBotSpawnIndex++).getPosition().asPoint2D();
+        Point2D p = ents.get(nextBotSpawnIndex++).getPosition().getPoint2D();
         if (nextBotSpawnIndex  >= ents.size()) {
             nextBotSpawnIndex = 0;
         }

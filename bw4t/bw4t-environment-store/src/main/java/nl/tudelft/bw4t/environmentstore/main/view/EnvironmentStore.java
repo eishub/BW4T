@@ -15,28 +15,35 @@ import nl.tudelft.bw4t.environmentstore.sizedialog.view.SizeDialog;
 import nl.tudelft.bw4t.environmentstore.util.DefaultOptionPrompt;
 import nl.tudelft.bw4t.environmentstore.util.OptionPrompt;
 
-
 /**
  * The EnvironmentStore class serves as a frame for the Panels and tables.
  *
  */
 public class EnvironmentStore extends JFrame {
-	
-	private static final long serialVersionUID = 8572609341436634787L;
+    
+	/** Random generated serial version UID. */
+    private static final long serialVersionUID = 8572609341436634787L;
 
-	private MapPanelController mapController;
-	
-	private EnvironmentStoreController envController;
-	
-	private String windowName = "Environment Store";
-	
-	private ExplanationPanel explanationPanel;
-	
-	private final MapPanel mapTable;
-	
-	private MenuBar menuBar;
+    /** The controller of the map panel. */
+    private MapPanelController mapController;
+    
+    /** The controller for this view class. */
+    private EnvironmentStoreController envController;
+    
+    /** The name of the window. */
+    private String windowName = "Environment Store";
+    
+    /** The explanation panel where a short How-To-Use explanation is displayed. */
+    private ExplanationPanel explanationPanel;
+    
+    /** The map panel. */
+    private final MapPanel mapTable;
+    
+    /** The menu bar. */
+    private MenuBar menuBar;
 
-	private static OptionPrompt option = new DefaultOptionPrompt();
+    /** The option prompt that will pop up for some events. */
+    private static OptionPrompt option = new DefaultOptionPrompt();
     
     /**
      * Create the MapEditor frame which will hold all the panels, tables and buttons.
@@ -114,7 +121,7 @@ public class EnvironmentStore extends JFrame {
     
     /**
      * Opens a dialog showing a message, but no error.
-     * 
+     *
      * @param s A message that is displayed to the user.
      */
     public static void showDialog(final String s) {
@@ -163,28 +170,26 @@ public class EnvironmentStore extends JFrame {
         return str.substring(0, pos);
     }
     
-    /**
-     * Closes the MapEditor window and all child frames.
-     */
+    /** Closes the MapEditor window and all child frames. */
     public void closeEnvironmentStore() {
         System.exit(0);
     }
 
     /**
-	 * Start first the dialog that gives us the options for the map.
-	 * Then create the MapEditor with this options.
-	 * 
-	 * @param args Unused parameter
-	 */
-	public static void main(String[] args) {
+     * Start first the dialog that gives us the options for the map.
+     * Then create the MapEditor with this options.
+     * 
+     * @param args Unused parameter
+     */
+    public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
                 | UnsupportedLookAndFeelException e) {
             System.out.println("Unable to use the systems look and feel.");
         }
-		SizeDialog dialog = new SizeDialog();
-		dialog.setVisible(true);
-	}
+        SizeDialog dialog = new SizeDialog();
+        dialog.setVisible(true);
+    }
 }
 

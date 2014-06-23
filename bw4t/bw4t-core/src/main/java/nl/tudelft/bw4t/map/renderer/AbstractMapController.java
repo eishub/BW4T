@@ -3,15 +3,12 @@ package nl.tudelft.bw4t.map.renderer;
 import java.util.HashSet;
 import java.util.Set;
 
-import nl.tudelft.bw4t.map.Path;
-import org.apache.log4j.*;
-
 import nl.tudelft.bw4t.map.MapFormatException;
 import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.map.Path;
 import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.Zone.Type;
-import repast.simphony.space.continuous.NdPoint;
 
 /**
  * An abstract {@link MapController} implementation, taking over as much functionality as possible. Without using client
@@ -163,15 +160,15 @@ public abstract class AbstractMapController implements MapController, Runnable {
     
     @Override
     public Set<Zone> getChargingZones() {
-    	Set<Zone> chargingzones = new HashSet<Zone>();
-    	
-    	for (Zone zone : map.getZones()) {
-    		if (zone.getType() == Type.CHARGINGZONE) {
-    			chargingzones.add(zone);
-    		}
-    	}
-    	
-    	return chargingzones;
+        Set<Zone> chargingzones = new HashSet<Zone>();
+        
+        for (Zone zone : map.getZones()) {
+            if (zone.getType() == Type.CHARGINGZONE) {
+                chargingzones.add(zone);
+            }
+        }
+        
+        return chargingzones;
     }
     
     @Override
@@ -184,7 +181,7 @@ public abstract class AbstractMapController implements MapController, Runnable {
             }
         }
 
-        return blockades;   	
+        return blockades;       
     }
 
     @Override

@@ -5,16 +5,23 @@ import java.awt.event.ActionListener;
 
 import nl.tudelft.bw4t.environmentstore.editor.randomizer.view.RandomizeSequenceFrame;
 
+/** This implements the action listener for the Cancel button in the Randomize Sequence frame. */
 public class CancelRandomSequence implements ActionListener{
-	
-	private RandomizeSequenceFrame view;
-	
-	public CancelRandomSequence(RandomizeSequenceFrame rf) {
-		this.view = rf;
-	}
+    
+	/** The view the button is in. */
+    private RandomizeSequenceFrame view;
+    
+    /**
+     * @param rf
+     *         the view
+     */
+    public CancelRandomSequence(RandomizeSequenceFrame rf) {
+        this.view = rf;
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		view.dispose();
-	}
+    /** Close the view when the button is clicked. */
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+        view.dispose();
+    }
 }

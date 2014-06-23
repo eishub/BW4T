@@ -119,19 +119,21 @@ class CommandContainsBy implements StringToMessageCommand {
 
 class CommandContains implements StringToMessageCommand {
     
-    MessageType type;
+    private MessageType type;
 
     public CommandContains() {
+        
     }
 
     @Override
     public BW4TMessage getMessage(String message) {
 
         int number = MessageTranslator.findNumber(message);
-        if (number == Integer.MAX_VALUE)
+        if (number == Integer.MAX_VALUE) {
             type = MessageType.ROOMCONTAINS;
-        else
+        } else {
             type = MessageType.ROOMCONTAINSAMOUNT;
+        }
 
         return new BW4TMessage(type, MessageTranslator.findRoomId(message), MessageTranslator.findColorId(message),
                 number);

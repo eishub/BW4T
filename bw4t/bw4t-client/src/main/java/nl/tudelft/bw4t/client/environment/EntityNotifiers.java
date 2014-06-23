@@ -1,21 +1,23 @@
 package nl.tudelft.bw4t.client.environment;
 
-import eis.EnvironmentListener;
-
 import java.util.Collection;
 
 import nl.tudelft.bw4t.client.controller.ClientController;
 
 import org.apache.log4j.Logger;
 
+import eis.EnvironmentListener;
+
 /** Utility class for notifying listeners about freed, new or deleted entities. */
 public final class EntityNotifiers {
     /** The log4j Logger which displays logs on console. */
     private static final Logger LOGGER = Logger.getLogger(EntityNotifiers.class);
 
-	/** Should never be instantiated. */
-	private EntityNotifiers() { }
-	
+    /** Should never be instantiated. */
+    private EntityNotifiers() { 
+        
+    }
+    
     /**
      * Notifies all listeners about an entity that is free.
      * 
@@ -27,7 +29,7 @@ public final class EntityNotifiers {
      *            - Used to fetch the list of listeners to notify.
      */
     public static void notifyFreeEntity(String entity, Collection<String> agents,
-    		RemoteEnvironment remoteEnvironment) {
+            RemoteEnvironment remoteEnvironment) {
         for (EnvironmentListener listener : remoteEnvironment.getEnvironmentListeners()) {
             listener.handleFreeEntity(entity, agents);
         }
@@ -58,7 +60,7 @@ public final class EntityNotifiers {
      *            - Used to fetch the list of listeners to notify.
      */
     public static void notifyDeletedEntity(String entity, Collection<String> agents,
-    		RemoteEnvironment remoteEnvironment) {
+            RemoteEnvironment remoteEnvironment) {
         LOGGER.debug("Notifying all listeners about an entity that has been deleted.");
         final ClientController control = remoteEnvironment.getEntityController(entity);
         if (control != null) {

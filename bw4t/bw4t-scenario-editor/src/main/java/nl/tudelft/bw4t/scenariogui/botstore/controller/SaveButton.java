@@ -9,7 +9,7 @@ import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 import nl.tudelft.bw4t.util.FileUtils;
 
 /**
- * Handles actions of the apply button.
+ * Handles actions of the save button.
  */
 public class SaveButton implements ActionListener {
 
@@ -49,16 +49,8 @@ public class SaveButton implements ActionListener {
         
         view.getBotEditor().dispose();
     }
-	
-	/**
-	 * Returns whether this file name has the correct extension and a non-empty file
-	 * name. A message box is shown if either is not the case.
-	 * @param fileName The file name including extension.
-	 * @param extensionReq The required extension of the file name.
-	 * @return Whether this file name has the required extension and has a non-empty
-	 * file name.
-	 */
-	private boolean hasValidExtensionAndNonEmptyFileName(String fileName, String extensionReq) {
+    
+    private boolean hasValidExtensionAndNonEmptyFileName(String fileName, String extensionReq) {
         if (!FileUtils.hasRequiredExtension(fileName, extensionReq)) {
             ScenarioEditor.getOptionPrompt().showMessageDialog(view,
                     "The file name is invalid.\nFile names should end in " + extensionReq + ".");
@@ -72,13 +64,6 @@ public class SaveButton implements ActionListener {
         return true;
     }
 
-    /**
-     * Returns whether the file name is alpha numeric. If not, a message box
-     * is shown.
-     * @param fileName The file name including extension.
-     * @param extension The extension of the file name.
-     * @return Whether the file name is alpha numeric.
-     */
     private boolean isAlphaNumericFileName(String fileName) {
         if (!FileUtils.getFileNameWithoutExtension(fileName).
                 matches(ALPHA_NUMERIC_REGEX)
@@ -92,13 +77,8 @@ public class SaveButton implements ActionListener {
             return false;
         }
         return true;
-	}
+    }
 
-    /**
-     * Checks whether a valid bot name has been selected before saving.
-     * Show a message box if this is not the case.
-     * @return Whether a valid bot name has been selected.
-     */
     private boolean isValidBotName(String botName) {
         if (botName.length() == 0) {
             ScenarioEditor.getOptionPrompt().showMessageDialog(
@@ -117,9 +97,6 @@ public class SaveButton implements ActionListener {
         return true;
     }
 
-    /**
-     * Updates the bot list in the scenario editor.
-     */
     private void updateBotTableFromCurrentModel() {
         view.getMainPanel().refreshBotTableModel();
     }
