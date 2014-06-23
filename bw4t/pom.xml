@@ -21,6 +21,7 @@
         <sonar.language>java</sonar.language>
         <sonar.sources>src/main</sonar.sources>
         <sonar.tests>src/test</sonar.tests>
+        <sonar.binaries>target/classes</sonar.binaries>
         <sonar.java.coveragePlugin>cobertura</sonar.java.coveragePlugin>
         <sonar.cobertura.reportPath>target/site/cobertura/coverage.xml</sonar.cobertura.reportPath>
         <sonar.junit.reportsPath>target/surefire-reports</sonar.junit.reportsPath>
