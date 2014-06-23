@@ -279,7 +279,7 @@ public class ZoneModel {
     }
 
     private boolean isDropZone(Zone zone) {
-        return zone.getName().startsWith("DropZone");
+        return zone.getName().startsWith(Zone.DROP_ZONE_NAME);
     }
 
     public int getSpawnCount() {

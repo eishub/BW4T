@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 import eis.iilang.Function;
 import eis.iilang.Identifier;
 import eis.iilang.Numeral;
@@ -22,6 +21,7 @@ import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Point;
+import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 
 import org.junit.Before;
@@ -97,9 +97,9 @@ public class ClientMapControllerTest {
     @Test
     public void testHandlePerceptOccupied() {
         LinkedList<Parameter> parameters = new LinkedList<Parameter>();
-        parameters.add(new Identifier("DropZone"));
+        parameters.add(new Identifier(Zone.DROP_ZONE_NAME));
         clientMapController.handlePercept("occupied", parameters);
-        verify(map, times(1)).getZone("DropZone");
+        verify(map, times(1)).getZone(Zone.DROP_ZONE_NAME);
     }
     
     @Test

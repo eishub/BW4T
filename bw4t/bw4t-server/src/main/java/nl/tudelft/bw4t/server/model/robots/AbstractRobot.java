@@ -1,7 +1,5 @@
 package nl.tudelft.bw4t.server.model.robots;
 
-import eis.exceptions.EntityException;
-
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,21 +19,21 @@ import nl.tudelft.bw4t.server.model.zone.Corridor;
 import nl.tudelft.bw4t.server.model.zone.DropZone;
 import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
+import nl.tudelft.bw4t.server.repast.BW4TServerMap;
 import nl.tudelft.bw4t.server.util.ZoneLocator;
 
 import org.apache.log4j.Logger;
 
-import repast.simphony.context.Context;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.query.space.grid.GridCell;
 import repast.simphony.query.space.grid.GridCellNgh;
 import repast.simphony.random.RandomHelper;
 import repast.simphony.space.SpatialException;
 import repast.simphony.space.SpatialMath;
-import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
+import eis.exceptions.EntityException;
 
 /**
  * Represents a robot in the BW4T environment.
@@ -99,7 +97,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
      * out of a room
      */
     private boolean collided = false;
-    
+
     private boolean destinationUnreachable = false;
 
     /** The location to which the robot wants to travel. */
@@ -145,9 +143,8 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
      * @param cap
      *            The holding capacity of the robot.
      */
-    public AbstractRobot(String pname, ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context,
-            boolean poneBotPerZone, int cap) {
-        super(space, grid, context);
+    public AbstractRobot(String pname, BW4TServerMap context, boolean poneBotPerZone, int cap) {
+        super(context);
 
         this.name = pname;
         this.oneBotPerZone = poneBotPerZone;
@@ -202,12 +199,19 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof AbstractRobot) {
+            final AbstractRobot other = (AbstractRobot) obj;
+            if (this.name == null) {
+                if (other.name != null) {
+                    return false;
+                }
+            } else if (!this.name.equals(other.name)) {
+                return false;
+            }
             return super.equals(obj);
-        } else {
-            return false;
         }
+        return false;
     }
-    
+
     @Override
     public int hashCode() {
         return super.hashCode();
@@ -250,7 +254,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         if (!holding.isEmpty()) {
             // First check if dropped in dropzone, then it won't need to be
             // added to the context again
-            DropZone dropZone = (DropZone) context.getObjects(DropZone.class).get(0);
+            DropZone dropZone = (DropZone) getContext().getObjects(DropZone.class).get(0);
             Block b = holding.get(0);
             if (!dropZone.dropped(b, this)) {
                 // bot was not in the dropzone.. Are we in a room?
@@ -358,7 +362,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 
     @Override
     public Door getCurrentDoor(double x, double y) {
-        for (Object o : context.getObjects(Door.class)) {
+        for (Object o : getContext().getObjects(Door.class)) {
             Door door = (Door) o;
             if (door.getBoundingBox().contains(x, y)) {
                 return door;
@@ -369,7 +373,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 
     @Override
     public Room getCurrentRoom(double x, double y) {
-        for (Object o : context.getObjects(Room.class)) {
+        for (Object o : getContext().getObjects(Room.class)) {
             Room room = (Room) o;
             if (room.getBoundingBox().contains(x, y)) {
                 return room;
@@ -414,7 +418,9 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 
     /**
      * Actually moves the bot.
-     * @param distance distance over which it must move.
+     * 
+     * @param distance
+     *            distance over which it must move.
      */
     private void moveBot(double distance) {
         double movingDistance = Math.min(distance, MAX_MOVE_DISTANCE * speedMod);
@@ -490,10 +496,15 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 
     /**
      * Actually throws the exception.
-     * @param destination to check
-     * @param box in which the destination is.
-     * @param bot to check.
-     * @throws DestinationOccupiedException already occupied
+     * 
+     * @param destination
+     *            to check
+     * @param box
+     *            in which the destination is.
+     * @param bot
+     *            to check.
+     * @throws DestinationOccupiedException
+     *             already occupied
      */
     private void throwDestination(NdPoint destination, Rectangle2D.Double box, AbstractRobot bot)
             throws DestinationOccupiedException {
@@ -534,8 +545,8 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         GridPoint location = getGridLocation();
 
         // Check one block further than your own size for other bots.
-        GridCellNgh<AbstractRobot> nghCreator = new GridCellNgh<AbstractRobot>(grid, location, 
-                                                        AbstractRobot.class, 5, 5);
+        GridCellNgh<AbstractRobot> nghCreator = new GridCellNgh<AbstractRobot>(grid, location, AbstractRobot.class, 5,
+                5);
         return nghCreator.getNeighborhood(true);
     }
 
@@ -624,7 +635,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     public IRobot getParent() {
         return null;
     }
-    
+
     @Override
     public IRobot getEarliestParent() {
         return null;
@@ -676,13 +687,13 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     }
 
     @Override
-    public void pickUpEPartner(EPartner eP) { 
-        
+    public void pickUpEPartner(EPartner eP) {
+
     }
 
     @Override
-    public void dropEPartner() { 
-        
+    public void dropEPartner() {
+
     }
 
     @Override
@@ -692,7 +703,9 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 
     /**
      * Adds obstacles.
-     * @param obstacle to be added
+     * 
+     * @param obstacle
+     *            to be added
      */
     public void addObstacle(BoundedMoveableObject obstacle) {
         obstacles.add(obstacle);
@@ -708,13 +721,13 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     public void clearObstacles() {
         obstacles.clear();
     }
-    
+
     public boolean isDestinationUnreachable() {
         return destinationUnreachable;
     }
-    
+
     public void setDestinationUnreachable(boolean destinationUnreachable) {
         this.destinationUnreachable = destinationUnreachable;
     }
-    
+
 }

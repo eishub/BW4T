@@ -299,7 +299,7 @@ public abstract class AbstractRobotDecorator implements IRobot {
 
     @Override
     public AbstractRobot getSuperParent() {
-        if (robot == null) {
+        if (robot == null && parent != null) {
             robot = parent.getSuperParent();
         }
         

@@ -17,8 +17,10 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
@@ -27,17 +29,13 @@ import repast.simphony.space.continuous.ContinuousSpace;
  * Tests various functions of the MapLoader. 
  * The class is rather complex, so not everything can be properly tested. 
  */
+@RunWith(MockitoJUnitRunner.class)
 public class MapLoaderTest {
     
     @Mock private ContinuousSpace space;
     @Mock private Context context;
     
     @Rule public ExpectedException exception = ExpectedException.none();
-    
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-    }
 
     /** Tests whether it correctly returns a random sequence of colors when called. */
     @Test

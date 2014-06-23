@@ -4,6 +4,7 @@ import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.server.model.epartners.EPartner;
 import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
+import nl.tudelft.bw4t.server.repast.BW4TServerMap;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.grid.Grid;
@@ -13,22 +14,10 @@ import repast.simphony.space.grid.Grid;
  */
 public interface EntityFactory {
     /**
-     * sets the space.
-     * @param space to be set
+     * sets the server map.
+     * @param server map to be set
      */
-    void setSpace(ContinuousSpace<Object> space);
-    
-    /**
-     * sets the grid.
-     * @param grid to be set
-     */
-    void setGrid(Grid<Object> grid);
-    
-    /**
-     * sets the context.
-     * @param context to be set
-     */
-    void setContext(Context<Object> context);
+    void setServerMap(BW4TServerMap serverMap);
     
     /**
      * Create a default robot with one arm, normal size and speed.

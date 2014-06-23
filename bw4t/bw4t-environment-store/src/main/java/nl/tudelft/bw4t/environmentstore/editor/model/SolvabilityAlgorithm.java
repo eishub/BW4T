@@ -41,7 +41,7 @@ public final class SolvabilityAlgorithm {
         }
         HashMap<Zone, Boolean> visited = new HashMap<Zone, Boolean>();
         HashMap<BlockColor, Integer> frequencies = new HashMap<BlockColor, Integer>();
-        Zone dropZone = map.getZone("DropZone");
+        Zone dropZone = map.getZone(Zone.DROP_ZONE_NAME);
         if (dropZone == null) {
             return "There is no drop zone.";
         }

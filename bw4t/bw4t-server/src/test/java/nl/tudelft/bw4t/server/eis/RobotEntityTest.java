@@ -47,7 +47,7 @@ public class RobotEntityTest {
         
         method2 = BW4TEnvironment.class.getDeclaredMethod("setInstance", BW4TEnvironment.class);
         method2.setAccessible(true);
-        method2.invoke(null, env); 
+        method2.invoke(null, env);
         when(env.getContext()).thenReturn(context);
         
        
