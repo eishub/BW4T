@@ -46,7 +46,7 @@ As can be seen, The room and drop zone contain a green border. This is to indica
 	Figure 5: the drop down menu generated when a room is right clicked
 \end{center}
 This drop down menu lists the directions the door can face while still being accessible. In this case, as it is the top left zone, only doors facing east or south are possible.
-\section*{Sequence}
+\section*{Editing a sequence}
 Under the zones of the map editor is a white rectangle that contains the sequence for that map. This same rectangle is also present in the rooms that aren't drop zones. The rectangles are given here:
 \begin{center}
 	\centering
@@ -67,7 +67,32 @@ The file menu contains not only the standard operations for exporting a created 
 \begin{center}
 	\centering
 	\includegraphics{DropDownFile.png}\\
-	Figure 8: the drop down menu created when the 'File' button is clicked
+	Figure 8: the drop down menu created when the 'File' menu item is clicked
 \end{center}
-The New-, Open...-, Save- and Save as...-options are the standard file operations and need no further explanation. However, as added functionality to the options, it is impossible to save a map not containing either a start- or drop zone, as well as a map not containing a block in its sequence, and saving an unsolvable map will give a warning describing what's wrong. The Exit-option also needs no further explanation. The Preview-option gives a preview of the created map. 
+The New-, Open...-, Save- and Save as...-options are the standard file operations and need no further explanation. However, as added functionality to the options, it is impossible to save a map not containing either a start- or drop zone, as well as a map not containing a block in its sequence, and saving an unsolvable map will give a warning describing what's wrong. The Exit-option also needs no further explanation. The Preview-option gives a preview of the created map, as how it would be rendered when used as an actual map for bots. For a non-edited 5x5 map, the preview looks as follows:
+\begin{center}
+	\centering
+	\includegraphics{Preview.png}\\
+	Figure 9: The preview of a 5x5 non-edited map, with no blocks in the sequence
+\end{center}
+\section*{Tools menu}
+The other drop down menu at the top of the map editor is the tools menu. This menu contains options to use several tools. The drop down menu is given here:
+\begin{center}
+	\centering
+	\includegraphics{DropDownTools.png}\\
+	Figure 10: The drop down menu created when the 'Tools' menu item is clicked.
+\end{center}
+Clicking on the 'Randomize Zones' option creates a random map, according to parameters the user has put in. The map is always solvable, given that all the blocks in the sequence are present in the map and no further changes are made to the map. The 'Randomize Blocks' option randomizes the blocks contained in every room according to parameters that the user has to specify. The interface for specifying the parameters is given here:
+\begin{center}
+	\centering
+	\includegraphics[scale=0.6]{MenuBlocks.png}\\
+	Figure 11: The menu appearing when the randomize blocks option is clicked in the menu.
+\end{center}
+This interface allows the user to specify which block colors they want to be spawned, and also the max. amount of blocks in a room. The interface for random sequence generation is slightly different, and is as follows:
+\begin{center}
+	\centering
+	\includegraphics[scale=0.6]{MenuSeq.png}\\
+	Figure 12: The menu appearing when the randomize blocks option is clicked in the menu.
+\end{center}
+The differences between this interface and the previous interface are the Randomize button and Result label, that  create and display resp. the random sequence, and the apply and cancel button which enter the sequence in the map or cancel the creation of the sequence, respectively.
 \end{document}
