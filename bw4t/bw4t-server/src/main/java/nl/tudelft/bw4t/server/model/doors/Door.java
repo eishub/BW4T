@@ -3,9 +3,9 @@ package nl.tudelft.bw4t.server.model.doors;
 import java.awt.Color;
 
 import nl.tudelft.bw4t.map.Door.Orientation;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.zone.Room;
-import nl.tudelft.bw4t.server.repast.BW4TServerMap;
 
 /**
  * A door is a platform between a room and the outside. You can enter rooms only through a door. This is implemented by

@@ -3,9 +3,9 @@ package nl.tudelft.bw4t.server.model.blocks;
 import java.awt.geom.Point2D;
 
 import nl.tudelft.bw4t.map.BlockColor;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
-import nl.tudelft.bw4t.server.repast.BW4TServerMap;
 import repast.simphony.space.continuous.NdPoint;
 
 /**

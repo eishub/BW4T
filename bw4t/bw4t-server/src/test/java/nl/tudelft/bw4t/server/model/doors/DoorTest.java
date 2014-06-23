@@ -12,10 +12,10 @@ import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 
 import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.model.zone.BlocksRoom;
 import nl.tudelft.bw4t.server.model.zone.Room;
-import nl.tudelft.bw4t.server.repast.BW4TServerMap;
 
 import org.junit.After;
 import org.junit.Before;

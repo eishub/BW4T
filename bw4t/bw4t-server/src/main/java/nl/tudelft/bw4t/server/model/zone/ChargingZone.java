@@ -1,6 +1,6 @@
 package nl.tudelft.bw4t.server.model.zone;
 
-import nl.tudelft.bw4t.server.repast.BW4TServerMap;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
 
 /**
  * Charging zones are zones robots can stand in in order to charge. 
