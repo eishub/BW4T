@@ -7,7 +7,7 @@ package nl.tudelft.bw4t.client.message;
  */
 public class BW4TMessage {
 
-	/** Information storage of the message. {@code null} if not set. */
+    /** Information storage of the message. {@code null} if not set. */
     private final String color, playerId, room;
     /** MessageType of this message */
     private final MessageType type;
@@ -166,32 +166,38 @@ public class BW4TMessage {
      */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         BW4TMessage other = (BW4TMessage) obj;
         if (color == null) {
-            if (other.color != null)
+            if (other.color != null) {
                 return false;
-        } else if (!color.equals(other.color))
+            }
+        } else if (!color.equals(other.color)) {
             return false;
-        if (number != other.number)
+        }
+        if (number != other.number) {
             return false;
+        }
         if (playerId == null) {
             if (other.playerId != null)
                 return false;
-        } else if (!playerId.equals(other.playerId))
+        } else if (!playerId.equals(other.playerId)) {
             return false;
+        }
         if (room == null) {
             if (other.room != null)
                 return false;
-        } else if (!room.equals(other.room))
+        } else if (!room.equals(other.room)) {
             return false;
-        if (type != other.type)
+        }
+        if (type != other.type) {
             return false;
+        }
         return true;
     }
 

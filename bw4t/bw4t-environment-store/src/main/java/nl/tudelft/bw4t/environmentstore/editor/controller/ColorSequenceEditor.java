@@ -25,11 +25,13 @@ import nl.tudelft.bw4t.map.BlockColor;
  *
  */
 public class ColorSequenceEditor extends JComponent {
-	
-    private static final long serialVersionUID = 2112401621332684899L;
-	
-    private static final int DEFAULT_LENGTH = 10;
     
+	/** Random generated serial version UID. */
+    private static final long serialVersionUID = 2112401621332684899L;
+    
+    /** length of the sequence */
+    private static final int DEFAULT_LENGTH = 10;
+  
     private static final int COLOR_SIZE = 15;
     
     private static final int BORDER = 2;
@@ -110,10 +112,18 @@ public class ColorSequenceEditor extends JComponent {
         this.setBorder(BorderFactory.createLoweredBevelBorder());
     }
 
+    /**
+     * 
+     * @param cl
+     */
     public void addChangeListener(ChangeListener cl) {
         onChange.add(cl);
     }
 
+    /**
+     * 
+     * @param cl
+     */
     public void removeChangeListener(ChangeListener cl) {
         onChange.remove(cl);
     }
@@ -138,6 +148,10 @@ public class ColorSequenceEditor extends JComponent {
         return getSequenceSize() >= getMaxLength();
     }
 
+    /**
+     * changes the current length to maxLength
+     * @param maxLength the length of the sequence and updates the sequence
+     */
     public void setMaxLength(int maxLength) {
         this.maxLength = maxLength;
         this.setupAperance();
@@ -159,13 +173,16 @@ public class ColorSequenceEditor extends JComponent {
     public void setSequence(List<BlockColor> sequence) {
         if (sequence == null) {
             this.sequence.clear();
-        }
-        else {
+        } else {
             this.sequence = new ArrayList<BlockColor>(sequence);
         }
         notifyValueChange();
     }
 
+    /**
+     * add the color to the sequence list
+     * @param chr the color to be added as character
+     */
     public void addColor(Character chr) {
         BlockColor color;
         try {
@@ -176,6 +193,10 @@ public class ColorSequenceEditor extends JComponent {
         addColor(color);
     }
 
+    /**
+     * add the color to the sequence list
+     * @param c the BlockColor to be added
+     */
     public void addColor(BlockColor c) {
         if (isFull() || c == null) {
             return;

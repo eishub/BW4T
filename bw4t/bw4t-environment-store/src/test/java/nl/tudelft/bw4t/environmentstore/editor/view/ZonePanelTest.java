@@ -11,13 +11,13 @@ import org.junit.Test;
  *
  */
 public class ZonePanelTest {
-	private MapPanelController mpc = new MapPanelController(1, 1);
-	private ZoneModel zm = new ZoneModel();
-	private ZoneController zc = new ZoneController(mpc, zm);
-	private ZonePanel zp = new ZonePanel(zc);
-	
-	@Test
-	public void getControllerTest() {
-		assertTrue(zp.getController() == zc);
-	}
+    private MapPanelController mpc = new MapPanelController(1, 1);
+    private ZoneModel zm = new ZoneModel();
+    private ZoneController zc = new ZoneController(mpc, zm);
+    private ZonePanel zp = new ZonePanel(zc);
+    
+    @Test
+    public void getControllerTest() {
+        assertTrue(zp.getController() == zc);
+    }
 }

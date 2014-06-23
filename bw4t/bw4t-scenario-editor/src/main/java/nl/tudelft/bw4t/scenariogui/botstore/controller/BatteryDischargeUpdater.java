@@ -8,13 +8,12 @@ import java.awt.event.MouseEvent;
 import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
 
 /**
- * Handles actions of the sizeslider
+ * Handles actions of the size slider.
  */
 public class BatteryDischargeUpdater extends MouseAdapter implements ActionListener {
-    /**
-     * The panel containing the slider.
-     */
+
     private BotEditorPanel view;
+    
     /**
      * Constructor.
      * @param pview The panel containing the slider.
@@ -25,7 +24,7 @@ public class BatteryDischargeUpdater extends MouseAdapter implements ActionListe
 
     @Override
     public void mouseReleased(MouseEvent arg0) {
-    	view.updateDischargeRate();
+        view.updateDischargeRate();
     }
     
     @Override

@@ -2,6 +2,7 @@ package nl.tudelft.bw4t.client.gui.listeners;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.menu.ChatMenu;
 
@@ -10,7 +11,7 @@ import nl.tudelft.bw4t.client.gui.menu.ChatMenu;
  * accordingly
  */
 public class ChatListMouseListener implements MouseListener {
-	/** The {@link BW4TClientGUI} to listen to and interact with. */
+    /** The {@link BW4TClientGUI} to listen to and interact with. */
     private final BW4TClientGUI bw4tClientGUI;
 
     /** @param bw4tClientGUI - The {@link BW4TClientGUI} to listen to and interact with. */
@@ -30,13 +31,17 @@ public class ChatListMouseListener implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent arg0) {
+      //Nothing should happen on this mouse event
     }
 
     @Override
     public void mouseExited(MouseEvent arg0) {
+      //Nothing should happen on this mouse event
     }
+    
 
     @Override
     public void mouseReleased(MouseEvent arg0) {
+      //Nothing should happen on this mouse event
     }
 }

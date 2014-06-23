@@ -2,26 +2,22 @@ package nl.tudelft.bw4t.client.gui.menu;
 
 import java.awt.Color;
 import java.awt.Point;
-import javax.swing.JMenu;
+
 import javax.swing.JMenuItem;
+
 import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.GotoPositionActionListener;
-import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.PutdownActionListener;
-import nl.tudelft.bw4t.client.message.BW4TMessage;
-import nl.tudelft.bw4t.client.message.MessageType;
-import nl.tudelft.bw4t.map.ColorTranslator;
-import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.renderer.MapRenderSettings;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 
 /** Responsible for building the pop-up menu when the user clicks on a hallway. */
 public final class HallwayMenu {
-	
-	/** Should never be instantiated */
-	private HallwayMenu() { }
-	
+    
+    /** Should never be instantiated */
+    private HallwayMenu() { }
+    
     /**
      * Builds a pop up menu for when the player clicked on a hallway
      * The string indicates what the first menu item will say. 

@@ -9,9 +9,7 @@ import nl.tudelft.bw4t.scenariogui.botstore.gui.BotEditorPanel;
  * Handles actions of the reset button.
  */
 public class ResetButton implements ActionListener {
-    /**
-     * The panel containing the button.
-     */
+
     private BotEditorPanel view;
     
     /**
@@ -23,11 +21,11 @@ public class ResetButton implements ActionListener {
     }
     
     /**
-     * Resets all parts of the bot editor panel
-     * to their standard value.
+     * Resets all parts of the BotEditorPanel
+     * to their last saved value.
      * @param ae The action event causing this.
      */
     public void actionPerformed(ActionEvent ae) {
-    	view.updateView();
+        view.updateView();
     }   
 }

@@ -12,7 +12,6 @@ import nl.tudelft.bw4t.environmentstore.editor.view.RoomMenu;
 import nl.tudelft.bw4t.environmentstore.editor.view.ZoneMenu;
 import nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore;
 import nl.tudelft.bw4t.map.BlockColor;
-import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone.Type;
 
 /**
@@ -23,7 +22,7 @@ public class MapPanelController implements ChangeListener {
 
     /** basic size of the map */
     private ZoneController[][] zonecontrollers;
-	
+    
     private EnvironmentMap model;
 
     private ColorSequenceController cscontroller;
@@ -43,9 +42,8 @@ public class MapPanelController implements ChangeListener {
     /**
      * size of map is fixed, you can't change it after construction.
      * 
-     * @param rows
-     * @param columns
-     * @param isLabelsVisible
+     * @param rows amount of rows the map has.
+     * @param columns amount  of columns the map has.
      *            true if labels should be shown by renderers
      */
     public MapPanelController(int rows, int columns) {
@@ -64,44 +62,49 @@ public class MapPanelController implements ChangeListener {
      */
     public void createZone(Type t, boolean isDropZone, boolean isStartZone) {
         if (selected != null) {
-        	if (isDropZone && hasDropzone() && !selected.isDropZone()) {
-        		EnvironmentStore.showDialog("Only one drop zone can be added to the map.");
-        	} else {
-        		if (selected.isStartZone() && hasStartzone()) {
-        			setStartzone(isStartZone);
-        		}
-        		if (selected.isDropZone() && hasDropzone()) {
-        			setDropzone(isDropZone);
-        		}
-        		selected.setType(t);
+            if (isDropZone && hasDropzone() && !selected.isDropZone()) {
+                EnvironmentStore.showDialog("Only one drop zone can be added to the map.");
+            } else {
+                if (selected.isStartZone() && hasStartzone()) {
+                    setStartzone(isStartZone);
+                }
+                if (selected.isDropZone() && hasDropzone()) {
+                    setDropzone(isDropZone);
+                }
+                selected.setType(t);
                 selected.setDropZone(isDropZone);
                 if (isDropZone) {
-                	setDropzone(isDropZone);
+                    setDropzone(isDropZone);
                 }
                 selected.setStartZone(isStartZone);
                 if (isStartZone) {
-                	setStartzone(isStartZone);
+                    setStartzone(isStartZone);
                 }
-                
-                
                 updateAll();
-        	}
+            }
         }
         selected = null;
     }
     
+    /**
+     * updates all the zones on the map
+     */
     private void updateAll() {
-    	for (int i = 0; i < getRows(); i++) {
-    		for (int j = 0; j < getColumns(); j++) {
-    			getZoneController(i, j).getUpdateableEditorInterface().update();
-    		}
-    	}
+        for (int i = 0; i < getRows(); i++) {
+            for (int j = 0; j < getColumns(); j++) {
+                getZoneController(i, j).getUpdateableEditorInterface().update();
+            }
+        }
     }
 
     public EnvironmentMap getModel() {
         return model;
     }
 
+    /**
+     * adds the model to the map and connects this with the neighbouring zones
+     * @param model the model that gets added to the map
+     */
     public void setModel(EnvironmentMap model) {
         this.model = model;
         connectZoneControllers();
@@ -185,19 +188,25 @@ public class MapPanelController implements ChangeListener {
         this.selected = selected;
     }
 
+    /**
+     * If zone is a room return menu with option to change door position
+     * @return return ZoneMenu 
+     */
     public ZoneMenu getZoneMenu() {
         if (selected.getType() == Type.ROOM) {
             RoomMenu menu = new RoomMenu(this);
             zmenucontroller.attachListenersToRoomMenu(menu, this);
             return menu;
-        }
-        else {
+        } else {
             ZoneMenu menu = new ZoneMenu(this);
             zmenucontroller.attachListenersToZoneMenu(menu, this);
             return menu;
         }
     }
 
+    /**
+     * adds ZoneController to the grid
+     */
     private void connectZoneControllers() {
         final ZoneController[][] original = getZoneControllers();
         zonecontrollers = new ZoneController[getRows()][getColumns()];
@@ -210,8 +219,7 @@ public class MapPanelController implements ChangeListener {
                     zoneController.setZoneModel(zone);
                     zonecontrollers[row][col] = zoneController;
                     zonecontrollers[row][col].update();
-                }
-                else {
+                } else {
                     zonecontrollers[row][col] = new ZoneController(this, zone);
                 }
             }
@@ -232,9 +240,9 @@ public class MapPanelController implements ChangeListener {
     /**
      * Show the ZoneMenu popup at given cordinates.
      * 
-     * @param component
-     * @param x
-     * @param y
+     * @param component the popup
+     * @param x the x position of the grid
+     * @param y	the y position of the grid
      */
     public void showPopup(Component component, int x, int y) {
         getZoneMenu().update();
@@ -247,6 +255,11 @@ public class MapPanelController implements ChangeListener {
 
     }
 
+    /**
+     * Randomizes the BlockColors in the rooms
+     * @param colors the valid list of colors to randomize from
+     * @param amount the max amount of blocks per room
+     */
     public void randomizeColorsInRooms(List<BlockColor> colors, int amount) {
         getModel().generateRandomBlocks(colors, amount);
         for (int row = 0; row < getRows(); row++) {
@@ -256,32 +269,32 @@ public class MapPanelController implements ChangeListener {
         }
     }
     /**
-   	 * @return the startzone
-   	 */
-   	public boolean hasStartzone() {
-   		return model.hasStartzone();
-   	}
+        * @return the startzone
+        */
+       public boolean hasStartzone() {
+           return model.hasStartzone();
+       }
 
-   	/**
-   	 * @param startzone the startzone to set
-   	 */
-   	public void setStartzone(boolean startzone) {
-   		model.setStartzone(startzone);
-   	}
+       /**
+        * @param startzone the startzone to set
+        */
+       public void setStartzone(boolean startzone) {
+           model.setStartzone(startzone);
+       }
 
-   	/**
-   	 * @return the dropzone
-   	 */
-   	public boolean hasDropzone() {
-   		return model.hasDropzone();
-   	}
+       /**
+        * @return the dropzone
+        */
+       public boolean hasDropzone() {
+           return model.hasDropzone();
+       }
 
-   	/**
-   	 * @param dropzone the dropzone to set
-   	 */
-   	public void setDropzone(boolean dropzone) {
-   		model.setDropzone(dropzone);
-   	}
+       /**
+        * @param dropzone the dropzone to set
+        */
+       public void setDropzone(boolean dropzone) {
+           model.setDropzone(dropzone);
+       }
 
 
 }

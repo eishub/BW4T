@@ -1,21 +1,5 @@
 package nl.tudelft.bw4t.scenariogui.editor.gui.panel;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -39,32 +23,38 @@ import nl.tudelft.bw4t.scenariogui.util.ExportToMASTest;
 import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
-
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 public class MenuBarTest {
 
     private static final String BASE = System.getProperty("user.dir") + "/src/test/resources/";
-
     private static final String FILE_OPEN_PATH = BASE + "open.xml";
-
     private static final String FILE_EXPORT_PATH = BASE + "export/";
-
     private static final String FILE_SAVE_PATH = BASE + "dummy.xml";
-
     private static final String FILE_MAP = BASE + "test.map";
 
     private ScenarioEditor editor;
-
     private JFileChooser filechooser;
 
-    /**
-     * Setup the testing environment by creating the scenario editor and
-     * assigning the editor attribute to a spy object of the ScenarioEditor.
-     */
     @Before
     public void setUp() throws IOException {
         editor = spy(new ScenarioEditor());
@@ -79,10 +69,6 @@ public class MenuBarTest {
         menuOption.setCurrentFileChooser(filechooser);
     }
 
-    /**
-     * Close the ScenarioEditor to prevent to many windows from cluttering
-     * the screen during the running of the tests
-     */
     @After
     public final void closeEditor() throws IOException {
         editor.dispose();
@@ -107,7 +93,7 @@ public class MenuBarTest {
         // Get the saved configuration
         BW4TClientConfig config = BW4TClientConfig.fromXML(FILE_OPEN_PATH);
         ConfigurationPanel configurationPanel = editor.getMainPanel().getConfigurationPanel();
-        
+
         assertEquals(config.getClientIp(), configurationPanel.getClientIP());
         assertEquals(config.getClientPort(), configurationPanel.getClientPort());
 
@@ -117,16 +103,16 @@ public class MenuBarTest {
         assertEquals(config.isLaunchGui(), configurationPanel.useGui());
         assertEquals(config.isVisualizePaths(), configurationPanel.isVisualizePaths());
         assertEquals(config.isCollisionEnabled(), configurationPanel.isEnableCollisions());
-        assertEquals(config.getMapFile(), configurationPanel.getMapFile());    
+        assertEquals(config.getMapFile(), configurationPanel.getMapFile());
     }
-    
+
     /**
      * Test if the open button works for the bot list in the entity panel.
      *
      * @throws FileNotFoundException File not found exception
      * @throws JAXBException         JAXBException, also called in some cases when a file is not found
      *                               by JAXB itself.
-     */   
+     */
     @Test
     public void testOpenButtonBotList() throws FileNotFoundException, JAXBException {
         // Setup the behaviour
@@ -138,30 +124,30 @@ public class MenuBarTest {
 
         // Open the actual file with the xml reader.
         BW4TClientConfig config = BW4TClientConfig.fromXML(FILE_OPEN_PATH);
-        
+
         AbstractTableModel botTableModel = editor.getMainPanel().getEntityPanel().getBotTableModel();
-        
+
         //Actual testing whether the values are inserted correctly
         assertEquals(config.getBot(0).getBotName(), botTableModel.getValueAt(0, 0));
         assertEquals(config.getBot(1).getBotName(), botTableModel.getValueAt(1, 0));
-        
+
         assertEquals(config.getBot(0).getBotController().toString(), botTableModel.getValueAt(0, 1));
         assertEquals(config.getBot(1).getBotController().toString(), botTableModel.getValueAt(1, 1));
-        
+
         assertEquals(config.getBot(0).getFileName(), botTableModel.getValueAt(0, 2));
         assertEquals(config.getBot(1).getFileName(), botTableModel.getValueAt(1, 2));
-        
+
         assertEquals(config.getBot(0).getBotAmount(), Integer.parseInt(botTableModel.getValueAt(0, 3).toString()));
         assertEquals(config.getBot(1).getBotAmount(), Integer.parseInt(botTableModel.getValueAt(1, 3).toString()));
     }
-    
+
     /**
      * Test if the open button works for the epartner list in the entity panel.
      *
      * @throws FileNotFoundException File not found exception
      * @throws JAXBException         JAXBException, also called in some cases when a file is not found
      *                               by JAXB itself.
-     */   
+     */
     @Test
     public void testOpenButtonEpartnerList() throws FileNotFoundException, JAXBException {
         // Setup the behaviour
@@ -173,20 +159,22 @@ public class MenuBarTest {
 
         // Open the actual file with the xml reader.
         BW4TClientConfig config = BW4TClientConfig.fromXML(FILE_OPEN_PATH);
-        
+
         DefaultTableModel ePartnerTableModel = editor.getMainPanel().getEntityPanel().getEPartnerTableModel();
-        
+
         //Actual testing whether the values are inserted correctly
         assertEquals(config.getEpartner(0).getEpartnerName(), ePartnerTableModel.getValueAt(0, 0));
         assertEquals(config.getEpartner(1).getEpartnerName(), ePartnerTableModel.getValueAt(1, 0));
-        
+
         assertEquals(config.getEpartner(0).getFileName(), ePartnerTableModel.getValueAt(0, 1));
         assertEquals(config.getEpartner(1).getFileName(), ePartnerTableModel.getValueAt(1, 1));
-        
-        assertEquals(config.getEpartner(0).getEpartnerAmount(), Integer.parseInt(ePartnerTableModel.getValueAt(0, 2).toString()));
-        assertEquals(config.getEpartner(1).getEpartnerAmount(), Integer.parseInt(ePartnerTableModel.getValueAt(1, 2).toString()));
+
+        assertEquals(config.getEpartner(0).getEpartnerAmount(), Integer.parseInt(ePartnerTableModel.getValueAt(0,
+                2).toString()));
+        assertEquals(config.getEpartner(1).getEpartnerAmount(), Integer.parseInt(ePartnerTableModel.getValueAt(1,
+                2).toString()));
     }
-    
+
     /**
      * Tests if clicking open and then cancelling doesn't change the configuration.
      */
@@ -194,16 +182,17 @@ public class MenuBarTest {
     public void testOpenCancel() {
         when(filechooser.getSelectedFile()).thenReturn(new File(FILE_OPEN_PATH));
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.CANCEL_OPTION);
-        
+
         editor.getTopMenuBar().getMenuItemFileOpen().doClick();
-        
+
         assertTrue(editor.getMainPanel().getEntityPanel().isDefault());
         assertTrue(editor.getMainPanel().getConfigurationPanel().isDefault());
     }
-    
+
     /**
      * Tests if saving a saved configuration doesn't show a dialog.
-     * @throws IOException 
+     *
+     * @throws IOException
      */
     @Test
     public void testSaveAfterSave() throws IOException {
@@ -213,19 +202,20 @@ public class MenuBarTest {
         editor.getTopMenuBar().setLastFileLocation(FILE_SAVE_PATH);
 
         editor.getTopMenuBar().getMenuItemFileSave().doClick();
-        
+
         //verify if the filechooser doesn't open its dialog
         verify(filechooser, never()).showDialog((Component) any(), (String) any());
     }
-    
+
     /**
      * Tests if saving a saved configuration which has been deleted
      * saves correctly.
-     * @throws IOException 
+     *
+     * @throws IOException
      */
     @Test
     public void testSaveAfterDeletedSave() throws IOException {
-    	/* Mock the file chooser for saving */
+        /* Mock the file chooser for saving */
         when(filechooser.showSaveDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.getSelectedFile()).thenReturn(new File(FILE_SAVE_PATH));
@@ -237,18 +227,18 @@ public class MenuBarTest {
 
         /* Fake the prompt */
         ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
-        
+
         // set the last file location without creating the file
-    	String testPath = "TestPath";
+        String testPath = "TestPath";
         assertFalse(new File(testPath).exists());
         editor.getTopMenuBar().setLastFileLocation(testPath);
-        
+
         editor.getTopMenuBar().getMenuItemFileSave().doClick();
 
         verify(filechooser, times(1)).showDialog((Component) any(), (String) any());
         verify(filechooser, times(1)).getSelectedFile();
     }
-    
+
     /**
      * Tests if the configuration doesn't ask to save when save is clicked
      * if there is no map given and clicking no on the prompt.
@@ -264,18 +254,19 @@ public class MenuBarTest {
         // There should be one listener, so we check that and then change the option pane.
         assert listeners.length == 1;
         ScenarioEditor.setOptionPrompt(noMockOption);
-        
+
         editor.getTopMenuBar().getMenuItemFileSave().doClick();
-        
+
         //verify if the confirmation dialog opened once
-        verify(noMockOption, times(1)).showConfirmDialog((Component) any(), anyObject(), anyString(), anyInt(), anyInt());
+        verify(noMockOption, times(1)).showConfirmDialog((Component) any(), anyObject(), anyString(), anyInt(),
+                anyInt());
         //verify if the filechooser doesn't open its dialog
         verify(filechooser, never()).showDialog((Component) any(), (String) any());
     }
-       
+
     /**
      * Test if the open button works after changing the defaults and clicking yes on the prompt,
-     *  it will also ask if we want to save without a map
+     * it will also ask if we want to save without a map
      *
      * @throws FileNotFoundException File not found exception
      * @throws JAXBException         JAXBException, also called in some cases when a file is not found
@@ -300,7 +291,7 @@ public class MenuBarTest {
 
         // Change the defaults
         ConfigurationPanel configurationPanel = editor.getMainPanel().getConfigurationPanel();
-		configurationPanel.setClientIP("randomvalue");
+        configurationPanel.setClientIP("randomvalue");
 
         editor.getTopMenuBar().getMenuItemFileOpen().doClick();
 
@@ -345,7 +336,7 @@ public class MenuBarTest {
 
         // Change the defaults
         ConfigurationPanel configurationPanel = editor.getMainPanel().getConfigurationPanel();
-		configurationPanel.setClientIP("randomvalue");
+        configurationPanel.setClientIP("randomvalue");
 
         // Set a map.
         configurationPanel.setMapFile(BASE + "maps/Banana");
@@ -370,10 +361,7 @@ public class MenuBarTest {
         verify(filechooser, times(1)).showDialog((Component) any(), (String) any());
 
     }
-    
-    /**
-     * Tests if the menu option 'file open' has only one listener. 
-     */
+
     @Test
     public void testOneListenerForMenuFileOpen() {
         ActionListener[] listeners = editor.getTopMenuBar().getMenuItemFileOpen().getActionListeners();
@@ -407,7 +395,7 @@ public class MenuBarTest {
 
         // Change the defaults
         ConfigurationPanel configurationPanel = editor.getMainPanel().getConfigurationPanel();
-		configurationPanel.setClientIP("randomval");
+        configurationPanel.setClientIP("randomval");
 
         editor.getTopMenuBar().getMenuItemFileOpen().doClick();
 
@@ -427,25 +415,22 @@ public class MenuBarTest {
         // File chooser should not have been called for the actual opening
         verify(filechooser, times(1)).showOpenDialog((Component) any());
     }
-    
-    /**
-     * Test whether the lists with bots and epartners are flushed when a new configuration is opened.
-     */
+
     @Test
     public void testNewAfterOpen() {
-    	// Setup the behaviour
+        // Setup the behaviour
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.getSelectedFile()).thenReturn(new File(FILE_OPEN_PATH));
 
         editor.getTopMenuBar().getMenuItemFileOpen().doClick();
         EntityPanel entityPanel = editor.getMainPanel().getEntityPanel();
-		assertEquals(2, entityPanel.getBotTableModel().getRowCount());
+        assertEquals(2, entityPanel.getBotTableModel().getRowCount());
         assertEquals(2, entityPanel.getEPartnerTableModel().getRowCount());
-        
+
         //open new configuration
         editor.getTopMenuBar().getMenuItemFileNew().doClick();
-        
+
         //check if the rows have actually been flushed
         assertEquals(0, entityPanel.getBotTableModel().getRowCount());
         assertEquals(0, entityPanel.getEPartnerTableModel().getRowCount());
@@ -624,10 +609,9 @@ public class MenuBarTest {
 
     /**
      * Tests whether a configuration is saved correctly.
-     * <p>
+     * <p/>
      * Open open.xml in editor and then saves as dummy.xml.
      * Then compares the two files and asserts true when their content is equal.
-     *
      */
     @Test
     public void testSaveCorrectValues() throws IOException, JAXBException {
@@ -657,7 +641,7 @@ public class MenuBarTest {
         assertEquals(opened.isCollisionEnabled(), saved.isCollisionEnabled());
         // Ignore the map file during this test.
     }
-    
+
     /**
      * Test the save as button. The save as button always shows the filechooser.
      * Even if there no changes. Thus the case:
@@ -674,6 +658,7 @@ public class MenuBarTest {
 
     /**
      * Test if the export function executes when the user chooses to do so.
+     *
      * @throws FileNotFoundException
      * @throws JAXBException
      */
@@ -682,7 +667,8 @@ public class MenuBarTest {
         // Setup the behaviour
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
         when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.APPROVE_OPTION);
-        when(filechooser.getSelectedFile()).thenReturn(new File(FILE_EXPORT_PATH + ExportToMASTest.CONFIG_NAME + ".mas2g"));
+        when(filechooser.getSelectedFile()).thenReturn(new File(FILE_EXPORT_PATH + ExportToMASTest.CONFIG_NAME + "" +
+                ".mas2g"));
 
         new File(FILE_EXPORT_PATH).mkdir();
 
@@ -700,6 +686,7 @@ public class MenuBarTest {
 
     /**
      * Test if the export function does nothing when the user cancels the filechooser.
+     *
      * @throws FileNotFoundException
      * @throws JAXBException
      */
@@ -708,7 +695,8 @@ public class MenuBarTest {
         // Setup the behaviour
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.CANCEL_OPTION);
         when(filechooser.showDialog((Component) any(), (String) any())).thenReturn(JFileChooser.CANCEL_OPTION);
-        when(filechooser.getSelectedFile()).thenReturn(new File(FILE_EXPORT_PATH + ExportToMASTest.CONFIG_NAME + ".mas2g"));
+        when(filechooser.getSelectedFile()).thenReturn(new File(FILE_EXPORT_PATH + ExportToMASTest.CONFIG_NAME + "" +
+                ".mas2g"));
 
         // Spy the message
         OptionPrompt spyPrompt = spy(new YesMockOptionPrompt());
@@ -724,22 +712,22 @@ public class MenuBarTest {
 
         verify(spyPrompt, times(1)).showMessageDialog(null, "Error: Can not export an unsaved scenario.");
     }
-    
+
     /**
      * Checks if it's allowed to save when a correct amount
      * of bots have been selected for the selected map.
      */
     @Test
     public void checkProperAmountOfBotsInMap() {
-        
+
         //The banana map can hold 3 bots:
         setMapFile("Banana");
         addBotsToTable(2);
-        
+
         saveWithMockedFileChooser();
 
         verify(filechooser, times(1)).showDialog((Component) any(), (String) any());
-        
+
     }
 
     /**
@@ -748,41 +736,44 @@ public class MenuBarTest {
      */
     @Test
     public void checkTooManyBotsInMap() {
-        
+
         //The banana map can hold 3 bots:
         setMapFile("Banana");
         addBotsToTable(10);
-        
+
         //Once the option prompt is set, we know that the 'too many' bots
         //message was sent, so we can close the GUI when that happens:
         OptionPrompt noPrompt = spy(new NoMockOptionPrompt());
         ScenarioEditor.setOptionPrompt(noPrompt);
-        
+
         //Should not be able to save due to too many bots
         saveWithMockedFileChooser();
 
         verify(filechooser, never()).showDialog((Component) any(), (String) any());
         verify(noPrompt, times(1)).showMessageDialog((Component) any(), anyString());
-        
+
     }
-    
+
     /**
      * Sets the map file path in the GUI.
+     *
      * @param mapName The new map file path to select.
      */
     private void setMapFile(String mapName) {
         editor.getMainPanel().getConfigurationPanel().setMapFile(BASE + "maps/" + mapName);
     }
-    
+
     /**
      * Adds a specified amount of bots to the entity table.
+     *
      * @param amount The amount of bots to add.
      */
     private void addBotsToTable(int amount) {
-        for (int i = 0; i < amount; i++)
+        for (int i = 0; i < amount; i++) {
             editor.getMainPanel().getEntityPanel().getNewBotButton().doClick();
+        }
     }
-    
+
     /**
      * Saves the config as XML file using the mocked file chooser to save.
      */
@@ -801,9 +792,10 @@ public class MenuBarTest {
         /** Saves the config as XML: */
         editor.getTopMenuBar().getMenuItemFileSaveAs().doClick();
     }
-    
+
     /**
      * Replaces the listener of the menu item.
+     *
      * @param menuItem The menu item.
      */
     private void replaceListener(JMenuItem menuItem) {
@@ -818,8 +810,9 @@ public class MenuBarTest {
     /**
      * Prepares the file chooser so that when it's opened it closes right away
      * in the desired way.
+     *
      * @param menuItem The menu item to replace the listener of (the menu item we're testing).
-     * @param option The mocked option prompt that could pop up during execution.
+     * @param option   The mocked option prompt that could pop up during execution.
      * @return The spied version of the option prompt.
      */
     private OptionPrompt prepareForSave(JMenuItem menuItem, OptionPrompt option) {
@@ -836,7 +829,7 @@ public class MenuBarTest {
         /* Fake the prompt */
         option = spy(option);
         ScenarioEditor.setOptionPrompt(option);
-        
+
         return option;
     }
 

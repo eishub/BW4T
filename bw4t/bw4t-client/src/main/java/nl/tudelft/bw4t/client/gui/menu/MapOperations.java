@@ -1,8 +1,10 @@
 package nl.tudelft.bw4t.client.gui.menu;
 
 import java.awt.geom.Point2D;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
@@ -17,10 +19,10 @@ import nl.tudelft.bw4t.map.view.ViewEPartner;
 
 /** Responsible for building the pop-up menu when clicking on goal colors. */
 public final class MapOperations {
-	
-	/** Should never be instantiated. */
-	private MapOperations() { }
-	
+    
+    /** Should never be instantiated. */
+    private MapOperations() { }
+    
     /**
      * Used for building the pop-up menu that displays the actions
      * a user can perform when clicking on a group goal color.

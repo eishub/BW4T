@@ -1,10 +1,5 @@
 package nl.tudelft.bw4t.client.gui;
 
-import eis.exceptions.ManagementException;
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -26,9 +22,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
 
 import nl.tudelft.bw4t.client.BW4TClientSettings;
@@ -48,13 +43,17 @@ import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
 
 import org.apache.log4j.Logger;
 
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
+import eis.iilang.Percept;
+
 /**
  * Render the current state of the world at a fixed rate (10 times per second, see run()) for a client. It connects to
  * the given {@link RemoteEnvironment} on behalf of a given eis entityId. This allows fetching the latest percepts and
  * uses these percepts to track the world state.
- * <p>
  * It is possible to set up this renderer as a human GUI as well. In that case, a human can click with the mouse in the
  * GUI. His actions create GOAL percepts:
+ *
  * <ul>
  * <li>sendMessage("all",Message). User asked to send given Message.
  * <li>goToBlock(Id). User asked to go to given block id (Id is a numeral).
@@ -63,11 +62,11 @@ import org.apache.log4j.Logger;
  * <li>pickUp(). User asked to do the pick up action
  * <li>putDown(). User asked to do the put down action.
  * </ul>
- * <p>
+ * 
  * {@link RemoteEnvironment#getAllPerceptsFromEntity(String)} is called by the {@link #run()} repaint scheduler only if
  * we are representing a HumanPlayer. Otherwise the getAllPercepts is done by the agent and we assume processPercepts is
  * called by the {@link RemoteEnvironment} when the agent asked for getAllPercepts.
- * <p>
+ * 
  * The BW4TRenderer has a list {@link #toBePerformedAction} which is polled by
  * {@link RemoteEnvironment#getAllPerceptsFromEntity(String)} at every call, and merged into the regular percepts. So
  * user mouse clicks are stored there until it's time for perceiving.
@@ -83,30 +82,30 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
     /** The client controller. */
     private ClientController controller;
 
-    private JPanel mainPanel = new JPanel();
-    private JPanel optionsMessagesPane = new JPanel();
-    private JPanel botButtonPanel = new JPanel();
-    private JPanel epartnerButtonPanel = new JPanel();
-    private JPanel botPanel = new JPanel();
-    private JPanel epartnerPanel = new JPanel();
-    private JPanel botChatPanel = new JPanel();
-    private JPanel epartnerChatPanel = new JPanel();
+    private final JPanel mainPanel = new JPanel();
+    private final JPanel optionsMessagesPane = new JPanel();
+    private final JPanel botButtonPanel = new JPanel();
+    private final JPanel epartnerButtonPanel = new JPanel();
+    private final JPanel botPanel = new JPanel();
+    private final JPanel epartnerPanel = new JPanel();
+    private final JPanel botChatPanel = new JPanel();
+    private final JPanel epartnerChatPanel = new JPanel();
     
-    private BW4TClientGUI that = this;
+    private final BW4TClientGUI that = this;
     
-    private JLabel batteryLabel = new JLabel("Bot Battery: ");
-    private JLabel botMessageLabel = new JLabel("Send message to: ");
+    private final JLabel batteryLabel = new JLabel("Bot Battery: ");
+    private final JLabel botMessageLabel = new JLabel("Send message to: ");
     
     private JProgressBar batteryProgressBar = new JProgressBar(0, 1); 
     
-    private JButton botMessageButton = new JButton("Choose message");
-    private JButton epartnerMessageButton = new JButton("Choose message");
+    private final JButton botMessageButton = new JButton("Choose message");
+    private final JButton epartnerMessageButton = new JButton("Choose message");
     
     private JTextArea botChatSession = new JTextArea(14, 1);
     private JTextArea epartnerChatSession = new JTextArea(8, 1);
     
-    private JScrollPane botChatPane = new JScrollPane(getBotChatSession());
-    private JScrollPane epartnerChatPane = new JScrollPane(getEpartnerChatSession());
+    private final JScrollPane botChatPane = new JScrollPane(getBotChatSession());
+    private final JScrollPane epartnerChatPane = new JScrollPane(getEpartnerChatSession());
 
     private JScrollPane mapRenderer;
     
@@ -115,20 +114,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
     
     /** The jpopup menu. */
     private JPopupMenu jPopupMenu;
-
-    /**
-     * Gets the jpopup menu.
-     * 
-     * @return the JPopup menu
-     */
-    public JPopupMenu getjPopupMenu() {
-        return jPopupMenu;
-    }
-
-    public JComboBox<ComboAgentModel> getAgentSelector() {
-        return agentSelector;
-    }
-
+    
     /** The selected location. */
     private Point selectedLocation;
 
@@ -185,7 +171,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
             this.jPopupMenu = new JPopupMenu();
             MouseAdapter ma = new MouseAdapter() {
                 private boolean mouseOver = false;
-
+                
                 @Override
                 public void mouseEntered(MouseEvent arg0) {
                     super.mouseEntered(arg0);
@@ -202,11 +188,8 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
                 public void mousePressed(MouseEvent e) {
                     // Get coordinates of mouse click
                     int mouseX = e.getX();
-
                     int mouseY = e.getY();
-
                     setSelectedLocation(mouseX, mouseY);
-
                     ActionPopUpMenu.buildPopUpMenu(that);
                 }
 
@@ -237,12 +220,25 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
         
         LOGGER.debug("Initializing agent window for entity: " + entityId);
         setTitle("BW4T - " + entityId);
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         setLocation(BW4TClientSettings.getX(), BW4TClientSettings.getY());
         setLocation(BW4TClientSettings.getX(), BW4TClientSettings.getY());
         
         pack();
         setVisible(true);
+    }
+    
+    /**
+     * Gets the jpopup menu.
+     * 
+     * @return the JPopup menu
+     */
+    public JPopupMenu getjPopupMenu() {
+        return jPopupMenu;
+    }
+
+    public JComboBox<ComboAgentModel> getAgentSelector() {
+        return agentSelector;
     }
     
     private void createOverallFrame() {
@@ -293,7 +289,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
         batteryProgressBar.setMaximum(100);
         batteryProgressBar.setValue(100);
 
-        BatteryProgressBarListener.listeners.add(new BatteryProgressBarListener(batteryProgressBar, this));
+        BatteryProgressBarListener.getListeners().add(new BatteryProgressBarListener(batteryProgressBar, this));
 
         agentSelector = new JComboBox<ComboAgentModel>(new ComboAgentModel(this));
 
@@ -315,21 +311,6 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
         epartnerMessageButton.setEnabled(false);
         epartnerMessageButton.addMouseListener(new EPartnerListMouseListener(this));
     }
-        
-    /**
-     * Adds a player by adding a new button to the button panel, facilitating sending messages to this player.
-     * 
-     * @param playerId
-     *            , the Id of the player to be added
-     */
-    /*public void addPlayer(String playerId) {
-        final ClientMapController mapController = controller.getMapController();
-        if (!playerId.equals(mapController.getTheBot().getName())) {
-            JButton button = new JButton(playerId);
-            button.addMouseListener(new TeamListMouseListener(this));
-            buttonPanel.add(button);
-        }
-    }*/
     
     private void createBotChatSection() {
         botChatPanel.setLayout(new BoxLayout(botChatPanel, BoxLayout.Y_AXIS));
@@ -338,8 +319,8 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 
         getBotChatSession().setFocusable(false);
         
-        botChatPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        botChatPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        botChatPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        botChatPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         botChatPane.setEnabled(true);
         botChatPane.setFocusable(false);
         botChatPane.setColumnHeaderView(new JLabel("Bot Chat Session:"));
@@ -354,8 +335,8 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
         
         getEpartnerChatSession().setFocusable(false);
         
-        epartnerChatPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        epartnerChatPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        epartnerChatPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        epartnerChatPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         epartnerChatPane.setEnabled(true);
         epartnerChatPane.setVisible(false);
         epartnerChatPane.setFocusable(false);
@@ -475,7 +456,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
     }
 
     private void setController(ClientController c) {
-        if(c != null) {
+        if (c != null) {
             c.setGui(this);
         }
         controller = c;

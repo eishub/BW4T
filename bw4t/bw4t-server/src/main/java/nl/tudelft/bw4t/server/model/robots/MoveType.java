@@ -1,5 +1,8 @@
 package nl.tudelft.bw4t.server.model.robots;
 
+/**
+ * This class contains all the move types possible for a robot.
+ */
 public enum MoveType {
     /**
      * start and end point are in same room/corridor
@@ -34,8 +37,8 @@ public enum MoveType {
      * Merge the move type if multiple zones are entered at once. The result
      * is the 'worst' event that happens
      * 
-     * @param other
-     * @return
+     * @param other movetype to be merged
+     * @return the merge
      */
     public MoveType merge(MoveType other) {
         if (this.isHit()) {

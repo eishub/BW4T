@@ -1,16 +1,16 @@
 package nl.tudelft.bw4t.client.controller.percept.processors;
 
-import eis.iilang.Numeral;
-import eis.iilang.Parameter;
-import eis.iilang.Identifier;
-
 import java.util.List;
-
-import org.apache.log4j.Logger;
 
 import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
+
+import org.apache.log4j.Logger;
+
+import eis.iilang.Identifier;
+import eis.iilang.Numeral;
+import eis.iilang.Parameter;
 
 public class EPartnerProcessor implements PerceptProcessor {
     

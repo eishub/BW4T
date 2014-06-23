@@ -11,7 +11,7 @@ import nl.tudelft.bw4t.client.gui.menu.PlayerMenu;
 
 /** Listens for mouse events on the player buttons and builds a pop up menu accordingly. */
 public class TeamListMouseListener implements MouseListener {
-	/** The {@link ClientController} to listen to and interact with. */
+    /** The {@link ClientController} to listen to and interact with. */
     private final ClientController controller;
 
     /** @param controller - The {@link ClientController} to listen to and interact with. */
@@ -33,13 +33,16 @@ public class TeamListMouseListener implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent arg0) {
+        //Nothing should happen on this mouse event
     }
 
     @Override
     public void mouseExited(MouseEvent arg0) {
+      //Nothing should happen on this mouse event
     }
 
     @Override
     public void mouseReleased(MouseEvent arg0) {
+      //Nothing should happen on this mouse event
     }
 }
