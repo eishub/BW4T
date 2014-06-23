@@ -26,9 +26,9 @@ public class Battery {
      * @param dischargeRate the discharge rate per tick
      */
     public Battery(int maxCharge, double dischargeRate) {
-    	this.max = maxCharge;
-    	this.current = maxCharge;
-    	this.dRate = dischargeRate;
+        this.max = maxCharge;
+        this.current = maxCharge;
+        this.dRate = dischargeRate;
     }
     
     /**

@@ -16,7 +16,14 @@ import repast.simphony.space.grid.Grid;
  */
 public abstract class Zone extends BoundedMoveableObject {
 
+    /**
+     * name of the zone
+     */
     private final String name;
+    
+    /**
+     * sets visibility
+     */
     private boolean isLabelVisible = true;
 
     /**
@@ -24,7 +31,15 @@ public abstract class Zone extends BoundedMoveableObject {
      */
     private Set<Zone> neighbours = new HashSet<Zone>();
 
-    public Zone(nl.tudelft.bw4t.map.Zone zone, ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context) {
+    /**
+     * Creates a zone
+     * @param zone in which this zone needs to be created
+     * @param space in which the zone needs to be created
+     * @param grid in which the zone needs to be created
+     * @param context in which the zone needs to be created
+     */
+    public Zone(nl.tudelft.bw4t.map.Zone zone, ContinuousSpace<Object> space, 
+                        Grid<Object> grid, Context<Object> context) {
         super(space, grid, context);
         name = zone.getName();
         if (zone.getRenderOptions() != null) {
@@ -81,7 +96,7 @@ public abstract class Zone extends BoundedMoveableObject {
     /**
      * Check that this zone is not occupied by given robot
      * 
-     * @param robot
+     * @param robot that might occupy room
      * @return true if
      */
     public boolean containsMeOrNothing(AbstractRobot robot) {

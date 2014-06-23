@@ -10,11 +10,29 @@ import java.io.Serializable;
  */
 public class Point implements Serializable {
 
-    private Point2D.Double point = new Point2D.Double();
+    /**
+	 * Serial id.
+	 */
+	private static final long serialVersionUID = -7842093296385905576L;
+	
+	/** 
+	 * Initialize point.
+	 */
+	private Point2D.Double point = new Point2D.Double();
 
+	/** 
+	 * Empty constructor, intialize point.
+	 */
     public Point() {
     }
 
+    /** Constructor 
+     * 
+     * @param newx double
+     * 		x coordinate
+     * @param newy double
+     * 		y coordinate
+     */
     public Point(double newx, double newy) {
         point = new Point2D.Double(newx, newy);
     }
@@ -35,7 +53,7 @@ public class Point implements Serializable {
         point.y = y;
     }
 
-    public Point2D asPoint2D() {
+    public Point2D getPoint2D() {
         return point;
     }
 

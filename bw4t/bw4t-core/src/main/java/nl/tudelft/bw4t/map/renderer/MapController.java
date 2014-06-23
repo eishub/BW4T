@@ -10,6 +10,7 @@ import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 
+/** Interface that definds the MapController */
 public interface MapController extends Runnable {
 
     /**
@@ -17,56 +18,56 @@ public interface MapController extends Runnable {
      * 
      * @return the sequence as list
      */
-    public List<BlockColor> getSequence();
+    List<BlockColor> getSequence();
 
     /**
      * The current position in the sequence of {@link BlockColor}s.
      * 
      * @return the index
      */
-    public int getSequenceIndex();
+    int getSequenceIndex();
 
     /**
      * Get the rendering settings, like size of the world or scale.
      * 
      * @return the render settings
      */
-    public MapRenderSettings getRenderSettings();
+    MapRenderSettings getRenderSettings();
 
     /**
      * Get the {@link Zone} to where the blocks need to be delivered to.
      * 
      * @return the zone
      */
-    public Zone getDropZone();
+    Zone getDropZone();
 
     /**
      * Get all the {@link Zone}s that are Rooms, that can contain Blocks.
      * 
      * @return the set of zones
      */
-    public Set<Zone> getRooms();
+    Set<Zone> getRooms();
     
     /**
      * Get all the {@link Zone}s that are Charging Zones, that can recharge robots.
      * 
      * @return the set of zones
      */
-    public Set<Zone> getChargingZones();
+    Set<Zone> getChargingZones();
     
     /**
      * Get all the {@link Zone} that are blockades, that block the way of robots. 
      * 
      * @return the set of blockades
      */
-    public Set<Zone> getBlockades();
+    Set<Zone> getBlockades();
 
     /**
      * Get all the {@link Zone}s.
      * 
      * @return the set of zones
      */
-    public Set<Zone> getZones();
+    Set<Zone> getZones();
 
     /**
      * Check whether the given room is currently occupied.
@@ -75,35 +76,35 @@ public interface MapController extends Runnable {
      *            the room to be checked
      * @return true iff the room is free
      */
-    public boolean isOccupied(Zone room);
+    boolean isOccupied(Zone room);
 
     /**
      * Get the set of {@link ViewBlock}s currently visible.
      * 
      * @return the set of blocks
      */
-    public Set<ViewBlock> getVisibleBlocks();
+    Set<ViewBlock> getVisibleBlocks();
 
     /**
      * Get the set of {@link ViewEntity}s currently visible.
      * 
      * @return the set of visible entities
      */
-    public Set<ViewEntity> getVisibleEntities();
+    Set<ViewEntity> getVisibleEntities();
     
     /**
      * Get the set of e-Partners currently visible.
      * 
      * @return the set of visible e-Partners.
      */
-    public Set<ViewEPartner> getVisibleEPartners();
+    Set<ViewEPartner> getVisibleEPartners();
 
     /**
      * Get the set of paths currently visible.
      *
      * @return the set of visible paths.
      */
-    public Set<Path> getPaths();
+    Set<Path> getPaths();
     
 
     /**
@@ -112,7 +113,7 @@ public interface MapController extends Runnable {
      * @param mri
      *            the renderer
      */
-    public void addRenderer(MapRendererInterface mri);
+    void addRenderer(MapRendererInterface mri);
 
     /**
      * Removes an {@link MapRendererInterface} from the list of renderers.
@@ -120,7 +121,7 @@ public interface MapController extends Runnable {
      * @param mri
      *            the renderer
      */
-    public void removeRenderer(MapRendererInterface mri);
+    void removeRenderer(MapRendererInterface mri);
 
     /**
      * Use this function to stop the update thread.
@@ -128,5 +129,5 @@ public interface MapController extends Runnable {
      * @param run
      *            set to false to stop the thread.
      */
-    public void setRunning(boolean run);
+    void setRunning(boolean run);
 }

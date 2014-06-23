@@ -1,12 +1,16 @@
 package nl.tudelft.bw4t.client.gui.listeners;
 
-import eis.exceptions.ActException;
-import eis.iilang.Percept;
 import java.awt.event.ActionEvent;
 import java.util.LinkedList;
+import java.util.List;
+
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.environment.Launcher;
+
 import org.apache.log4j.Logger;
+
+import eis.exceptions.ActException;
+import eis.iilang.Percept;
 
 /**
  * ActionListener that performs the put down action when that command is pressed
@@ -27,10 +31,10 @@ public class PutdownActionListener extends AbstractClientActionListener {
             try {
                 getController().getHumanAgent().putDown();
             } catch (ActException e1) {
-            	LOGGER.error(e1);
+                LOGGER.error(e1);
             }
         } else {
-            LinkedList<Percept> percepts = new LinkedList<Percept>();
+            List<Percept> percepts = new LinkedList<Percept>();
             Percept percept = new Percept("putDown");
             percepts.add(percept);
             getController().setToBePerformedAction(percepts);
