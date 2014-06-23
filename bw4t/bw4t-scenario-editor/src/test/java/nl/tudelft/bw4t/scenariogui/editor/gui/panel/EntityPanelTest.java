@@ -15,8 +15,8 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.epartner.controller.EpartnerController;
 import nl.tudelft.bw4t.scenariogui.epartner.gui.EpartnerFrame;
-import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
-import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
+import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
+import nl.tudelft.bw4t.scenariogui.util.OptionPromptHelper;
 
 import org.junit.After;
 import org.junit.Before;
@@ -66,7 +66,8 @@ public class EntityPanelTest {
 
     @Test
     public final void testEPartnerCountListener() {
-        ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
+        OptionPrompt yesMockOption = OptionPromptHelper.getYesOptionPrompt();
+        ScenarioEditor.setOptionPrompt(yesMockOption);
 
         spyEntityPanel.getNewEPartnerButton().doClick();
         spyEntityPanel.getEPartnerTableModel().setValueAt("12", 0, 2);
@@ -132,7 +133,7 @@ public class EntityPanelTest {
 
     @Test
     public void testModifyBotNoSelection() {
-        NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
+        OptionPrompt spyOption = OptionPromptHelper.getNoOptionPrompt();
         ScenarioEditor.setOptionPrompt(spyOption);
 
         spyEntityPanel.getModifyBotButton().doClick();
@@ -148,7 +149,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteBotConfirmDelete() {
-        ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
+        ScenarioEditor.setOptionPrompt(OptionPromptHelper.getYesOptionPrompt());
 
         spyEntityPanel.getNewBotButton().doClick();
         spyEntityPanel.getBotTable().setRowSelectionInterval(0, 0);
@@ -164,7 +165,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteBotDeclineDelete() {
-        ScenarioEditor.setOptionPrompt(new NoMockOptionPrompt());
+        ScenarioEditor.setOptionPrompt(OptionPromptHelper.getNoOptionPrompt());
 
         spyEntityPanel.getNewBotButton().doClick();
         spyEntityPanel.getBotTable().setRowSelectionInterval(0, 0);
@@ -180,7 +181,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testDeleteBotNoSelection() {
-        NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
+        OptionPrompt spyOption = OptionPromptHelper.getNoOptionPrompt();
         ScenarioEditor.setOptionPrompt(spyOption);
 
         spyEntityPanel.getNewBotButton().doClick();
@@ -240,7 +241,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testModifyEPartnerNoSelection() {
-        NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
+        OptionPrompt spyOption = OptionPromptHelper.getNoOptionPrompt();
         ScenarioEditor.setOptionPrompt(spyOption);
 
         spyEntityPanel.getModifyEPartnerButton().doClick();
@@ -255,7 +256,7 @@ public class EntityPanelTest {
      */
     @Test
     public void testEPartnerModifyNoSelection() {
-        YesMockOptionPrompt spyOption = spy(new YesMockOptionPrompt());
+        OptionPrompt spyOption = OptionPromptHelper.getYesOptionPrompt();
         ScenarioEditor.setOptionPrompt(spyOption);
 
         editor.getMainPanel().getEntityPanel().getModifyEPartnerButton().doClick();
@@ -286,7 +287,7 @@ public class EntityPanelTest {
     @Test
     public void testDeleteEPartnerDeclineDelete() {
         //deal with the dialog that shows up when there's more epartners than bots
-        ScenarioEditor.setOptionPrompt(new NoMockOptionPrompt());
+        ScenarioEditor.setOptionPrompt(OptionPromptHelper.getNoOptionPrompt());
 
         spyEntityPanel.getNewEPartnerButton().doClick();
         spyEntityPanel.getEPartnerTable().setRowSelectionInterval(0, 0);
@@ -416,7 +417,7 @@ public class EntityPanelTest {
     @Test
     public void testEpartnerTableUpdate() {
         //deal with the dialog that shows up when there's more epartners than bots
-        ScenarioEditor.setOptionPrompt(new NoMockOptionPrompt());
+        ScenarioEditor.setOptionPrompt(OptionPromptHelper.getNoOptionPrompt());
 
         spyEntityPanel.getNewEPartnerButton().doClick();
 
