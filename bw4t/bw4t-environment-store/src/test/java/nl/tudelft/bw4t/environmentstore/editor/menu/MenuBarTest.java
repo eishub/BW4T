@@ -100,7 +100,7 @@ public class MenuBarTest {
         assertEquals(envStore.getTopMenuBar().getMenuItemPreview().getActionListeners().length, 1);
         assertEquals(envStore.getTopMenuBar().getMenuItemFileExit().getActionListeners().length, 1);
         
-        assertEquals(envStore.getTopMenuBar().getMenuItemRandomizeRooms().getActionListeners().length, 1);
+        assertEquals(envStore.getTopMenuBar().getMenuItemRandomizeZones().getActionListeners().length, 1);
         assertEquals(envStore.getTopMenuBar().getMenuItemRandomizeBlocks().getActionListeners().length, 1);
         assertEquals(envStore.getTopMenuBar().getMenuItemRandomizeSequence().getActionListeners().length, 1);
     }
@@ -108,7 +108,7 @@ public class MenuBarTest {
     @Test
     public void menuOptionRandomizeRoomsTest() {
         ZoneController[][] zcArray = mapController.getZoneControllers();
-        envStore.getTopMenuBar().getMenuItemRandomizeRooms().doClick();
+        envStore.getTopMenuBar().getMenuItemRandomizeZones().doClick();
         assertFalse(zcArray.equals(mapController.getZoneControllers()));
     }
     
@@ -116,7 +116,7 @@ public class MenuBarTest {
     public void menuOptionRandomizeBlocksTest() {
         boolean found = false;
         ZoneController[][] bc = mapController.getZoneControllers();
-        envStore.getTopMenuBar().getMenuItemRandomizeRooms().doClick();
+        envStore.getTopMenuBar().getMenuItemRandomizeZones().doClick();
         envStore.getTopMenuBar().getMenuItemRandomizeBlocks().doClick();
         for (Frame f : Frame.getFrames()) {
             if (f instanceof RandomizeBlockFrame) {
