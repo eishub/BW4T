@@ -1,17 +1,22 @@
 package nl.tudelft.bw4t.server.model.robots;
 
+import static nl.tudelft.bw4t.server.util.SpatialMath.distance;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import nl.tudelft.bw4t.map.Path;
 import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
+import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
 import nl.tudelft.bw4t.server.util.PathPlanner;
 import nl.tudelft.bw4t.server.util.ZoneLocator;
@@ -140,11 +145,13 @@ public class NavigatingRobot extends AbstractRobot {
     private void updateDrawPath() {
         if (BW4TEnvironment.getInstance().isDrawPathsEnabled()) {
             final ArrayList<Point> path = new ArrayList<Point>();
-            
             for (NdPoint p : plannedMoves) {
                 path.add(new Point(p.getX(), p.getY()));
             }
-            
+            if (plannedMoves.size() > 0) {
+                NdPoint p = this.getLocation();
+                path.add(0, new Point(p.getX(), p.getY()));
+            }
             displayedPath.setPath(path);
         }
     }
@@ -160,22 +167,15 @@ public class NavigatingRobot extends AbstractRobot {
         clearCollided();
         clearObstacles();
         setDestinationUnreachable(false);
-        if (plannedMoves == null) {
-            throw new InternalError("plannedMoves==null. How is this possible??");
-        }
+
         // clear old path.
         plannedMoves.clear();
         Zone startpt = ZoneLocator.getNearestZone(this.getLocation());
         Zone targetpt = ZoneLocator.getNearestZone(p);
-        List<Zone> allnavs = new ArrayList<Zone>();
-        for (Object o : context.getObjects(Zone.class)) {
-            allnavs.add((Zone) o);
-        }
-        
-        planPath(p, startpt, targetpt, allnavs);
-        
-        // and add the real target
-        plannedMoves.add(p);
+        Collection<Zone> allnavs = getAllZonesInMap();
+
+        plannedMoves.addAll(planPath(this.getLocation(), p, startpt, targetpt, allnavs));
+
         updateDrawPath();
         // make the bot use the new path.
         useNextTarget();
@@ -183,21 +183,93 @@ public class NavigatingRobot extends AbstractRobot {
 
     /**
      * Plans the path and adds it to planned moves
-     * @param p the point 
-     * @param startpt starting point
-     * @param targetpt target point
-     * @param allnavs all zones
+     * 
+     * @param current
+     *            where we start our move from
+     * @param target
+     *            the point
+     * @param startpt
+     *            zone closest to our current position
+     * @param targetpt
+     *            target zone
+     * @param allnavs
+     *            all navigation points in the system
+     * @return the path to take through the navpoints
      */
-    private void planPath(NdPoint p, Zone startpt, Zone targetpt, List<Zone> allnavs) {
+    public static Queue<NdPoint> planPath(NdPoint current, NdPoint target, Zone startpt, Zone targetpt, Collection<Zone> allnavs) {
         // plan the path between the Zones
-        List<Zone> plannedPath = PathPlanner.findPath(allnavs, startpt, targetpt);
+        List<NdPoint> plannedPath = PathPlanner.findPath(allnavs, startpt, targetpt);
         if (plannedPath.isEmpty()) {
-            throw new IllegalArgumentException("target " + p + " is unreachable from " + this);
+            throw new IllegalArgumentException("target " + target + " is unreachable from " + current);
         }
+
+        final NdPoint first = plannedPath.get(0);
+        final Queue<NdPoint> actualPath = new LinkedBlockingQueue<>();
+        if (plannedPath.size() == 1) {
+            actualPath.add(target);
+            return actualPath;
+        }
+        final boolean startsInRoom = startpt instanceof Room;
+        if (startsInRoom || !current.equals(first) && !skipFirstNode(current, first, plannedPath.get(1))) {
+            System.out.println("0 = " + first);
+            actualPath.add(first);
+        }
+
         // and copy Zone path to our stack.
-        for (Zone point : plannedPath) {
-            plannedMoves.add(point.getLocation());
+        int preLast = plannedPath.size() - 2;
+        for (int i = 1; i < preLast; i++) {
+            System.out.println(i + " = " + plannedPath.get(i));
+            actualPath.add(plannedPath.get(i));
         }
+
+        NdPoint toAdd = plannedPath.get(preLast);
+        final NdPoint last = plannedPath.get(preLast + 1);
+        if (preLast > 0) {
+            System.out.println(preLast + " = " + toAdd);
+            actualPath.add(toAdd);
+        }
+        if (preLast == 0 && startsInRoom || targetpt instanceof Room || !skipLastNode(toAdd, last, target)) {
+            actualPath.add(last);
+        }
+        System.out.println((preLast + 2) + " = " + target);
+        actualPath.add(target);
+        return actualPath;
+    }
+
+    /**
+     * Check whether we should skip the next node because the one after that is closer.
+     * 
+     * @param pzone
+     *            The previous zone
+     * @param tzone
+     *            the zone next to the target node
+     * @param target
+     *            the target node
+     * @return true if the target zone should be skipped
+     */
+    private static boolean skipLastNode(NdPoint pzone, NdPoint tzone, NdPoint target) {
+        final double THRESHOLD = 2.;
+        if (Math.abs(pzone.getX() - tzone.getX()) > THRESHOLD && Math.abs(pzone.getY() - tzone.getY()) > THRESHOLD) {
+            return false;
+        }
+        
+        return distance(pzone, target) < distance(pzone, tzone);
+    }
+    
+    /**
+     * Check whether we should skip the First node because it is faster, but still feasible to go directly to the second node.
+     * @param current current position of the robot
+     * @param fzone the first zone to navigate to
+     * @param szone the second zone to navigate to
+     * @return true if the first zone should be skipped
+     */
+    private static boolean skipFirstNode(NdPoint current, NdPoint fzone, NdPoint szone) {
+        final double THRESHOLD = 2.;
+        if (Math.abs(szone.getX() - fzone.getX()) > THRESHOLD && Math.abs(szone.getY() - fzone.getY()) > THRESHOLD) {
+            return false;
+        }
+        
+        return distance(current, szone) < distance(current, fzone) + distance(fzone, szone);
     }
 
     @Override
@@ -212,13 +284,13 @@ public class NavigatingRobot extends AbstractRobot {
         List<Zone> allnavs = new ArrayList<Zone>(getAllZonesInMap());
 
         // plan the path between the Zones
-        List<Zone> path = PathPlanner.findPath(allnavs, startpt, targetpt);
+        List<NdPoint> path = PathPlanner.findPath(allnavs, startpt, targetpt);
         if (path.isEmpty()) {
             throw new IllegalArgumentException("target " + target + " is unreachable from " + this);
         }
         // and copy Zone path to our stack.
-        for (Zone p : path) {
-            plannedMoves.add(p.getLocation());
+        for (NdPoint p : path) {
+            plannedMoves.add(p);
         }
         // and add the real target
         plannedMoves.add(target.getLocation());
@@ -239,7 +311,7 @@ public class NavigatingRobot extends AbstractRobot {
         /**
          * Collided state
          */
-        COLLIDED, 
+        COLLIDED,
         /**
          * Traveling state
          */
@@ -263,7 +335,7 @@ public class NavigatingRobot extends AbstractRobot {
      * 
      * Find a new path, going around the obstacles. Strategy: Calculate path over grid as opposed to the zones. Find a
      * path from current location to the location of the next zone (currentMove)
-     *
+     * 
      * Continue with normal path after this.
      */
     public void navigateObstacles() {
@@ -284,7 +356,9 @@ public class NavigatingRobot extends AbstractRobot {
 
     /**
      * Creates a path around an obstacle
-     * @param path to create
+     * 
+     * @param path
+     *            to create
      */
     private void createPathObstacle(List<NdPoint> path) {
         LOGGER.debug("Found path around obstacle.");
@@ -307,6 +381,7 @@ public class NavigatingRobot extends AbstractRobot {
 
     /**
      * gets all zones in the map.
+     * 
      * @return all zones
      */
     private Set<Zone> getAllZonesInMap() {

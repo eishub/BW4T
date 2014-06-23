@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
 import repast.simphony.space.continuous.NdPoint;
 
@@ -102,7 +103,7 @@ public final class ZoneLocator {
         if (z != null) {
             return z;
         }
-        return getNearestZoneNotNull(location);
+        return getNearestZoneNotNullNotRoom(location);
     }
 
     /**
@@ -112,12 +113,15 @@ public final class ZoneLocator {
      *            - The location to search for nearby Zones.
      * @return The nearest Zone to the given point. {@code null} if there are no Zones whatsoever.
      */
-    private static Zone getNearestZoneNotNull(NdPoint location) {
+    private static Zone getNearestZoneNotNullNotRoom(NdPoint location) {
         Iterable<Zone> zones = BW4TEnvironment.getInstance().getContext().getObjects(Zone.class);
         Zone nearest = null;
         double nearestdist = Double.MAX_VALUE;
 
         for (Zone zone : zones) {
+            if (zone instanceof Room) {
+                continue;
+            }
             double dist = zone.distanceTo(location);
 
             if (dist < nearestdist) {
