@@ -8,10 +8,10 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 
 import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.robots.NavigatingRobot;
 import nl.tudelft.bw4t.server.model.zone.DropZone;
-import nl.tudelft.bw4t.server.repast.BW4TServerMap;
 
 import org.junit.Before;
 import org.junit.Test;

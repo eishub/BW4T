@@ -21,6 +21,8 @@ import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.server.logging.BotLog;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
+import nl.tudelft.bw4t.server.model.BW4TServerMapListerner;
 import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.doors.Door;
 import nl.tudelft.bw4t.server.model.zone.Blockade;

@@ -11,8 +11,8 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
-import nl.tudelft.bw4t.server.repast.BW4TServerMap;
 
 import org.junit.After;
 import org.junit.Before;

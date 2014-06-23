@@ -1,4 +1,4 @@
-package nl.tudelft.bw4t.server.repast;
+package nl.tudelft.bw4t.server.model;
 
 import repast.simphony.context.Context;
 import nl.tudelft.bw4t.map.NewMap;

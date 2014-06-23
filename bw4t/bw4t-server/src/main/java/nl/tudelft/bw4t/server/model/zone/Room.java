@@ -3,7 +3,7 @@ package nl.tudelft.bw4t.server.model.zone;
 import java.awt.Color;
 
 import nl.tudelft.bw4t.map.RenderOptions;
-import nl.tudelft.bw4t.server.repast.BW4TServerMap;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
 
 /**
  * Abstract definition of a room in the environment.

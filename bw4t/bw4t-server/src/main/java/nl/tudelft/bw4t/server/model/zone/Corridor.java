@@ -1,6 +1,6 @@
 package nl.tudelft.bw4t.server.model.zone;
 
-import nl.tudelft.bw4t.server.repast.BW4TServerMap;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
 
 /**
  * A corridor is a zone outside the rooms.

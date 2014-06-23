@@ -8,9 +8,9 @@ import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.server.logging.BW4TFileAppender;
 import nl.tudelft.bw4t.server.logging.BotLog;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
-import nl.tudelft.bw4t.server.repast.BW4TServerMap;
 
 import org.apache.log4j.Logger;
 

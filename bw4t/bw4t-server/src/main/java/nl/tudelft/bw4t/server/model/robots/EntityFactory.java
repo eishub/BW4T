@@ -2,9 +2,9 @@ package nl.tudelft.bw4t.server.model.robots;
 
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.epartners.EPartner;
 import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
-import nl.tudelft.bw4t.server.repast.BW4TServerMap;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.grid.Grid;

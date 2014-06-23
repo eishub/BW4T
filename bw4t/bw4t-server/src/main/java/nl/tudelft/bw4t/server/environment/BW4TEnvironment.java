@@ -25,12 +25,12 @@ import nl.tudelft.bw4t.server.eis.EntityInterface;
 import nl.tudelft.bw4t.server.eis.RobotEntity;
 import nl.tudelft.bw4t.server.logging.BW4TFileAppender;
 import nl.tudelft.bw4t.server.logging.BotLog;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
+import nl.tudelft.bw4t.server.model.BW4TServerMapListerner;
 import nl.tudelft.bw4t.server.model.epartners.EPartner;
 import nl.tudelft.bw4t.server.model.robots.EntityFactory;
 import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.server.repast.BW4TBuilder;
-import nl.tudelft.bw4t.server.repast.BW4TServerMap;
-import nl.tudelft.bw4t.server.repast.BW4TServerMapListerner;
 import nl.tudelft.bw4t.server.repast.MapLoader;
 import nl.tudelft.bw4t.server.view.ServerContextDisplay;
 

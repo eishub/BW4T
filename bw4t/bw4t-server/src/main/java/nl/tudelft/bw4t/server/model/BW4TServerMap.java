@@ -1,10 +1,11 @@
-package nl.tudelft.bw4t.server.repast;
+package nl.tudelft.bw4t.server.model;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.server.model.zone.Zone;
+import nl.tudelft.bw4t.server.repast.MapLoader;
 import nl.tudelft.bw4t.server.util.GraphHelper;
 
 import org.jgrapht.WeightedGraph;

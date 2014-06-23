@@ -15,10 +15,10 @@ import java.util.concurrent.LinkedBlockingQueue;
 import nl.tudelft.bw4t.map.Path;
 import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
-import nl.tudelft.bw4t.server.repast.BW4TServerMap;
 import nl.tudelft.bw4t.server.util.PathPlanner;
 import nl.tudelft.bw4t.server.util.ZoneLocator;
 

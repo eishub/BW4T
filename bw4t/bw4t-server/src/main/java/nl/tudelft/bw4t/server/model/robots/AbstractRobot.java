@@ -9,6 +9,7 @@ import java.util.List;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.logging.BotLog;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.doors.Door;
@@ -19,7 +20,6 @@ import nl.tudelft.bw4t.server.model.zone.Corridor;
 import nl.tudelft.bw4t.server.model.zone.DropZone;
 import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
-import nl.tudelft.bw4t.server.repast.BW4TServerMap;
 import nl.tudelft.bw4t.server.util.ZoneLocator;
 
 import org.apache.log4j.Logger;

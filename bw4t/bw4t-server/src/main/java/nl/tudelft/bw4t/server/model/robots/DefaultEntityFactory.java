@@ -4,13 +4,13 @@ import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.epartners.EPartner;
 import nl.tudelft.bw4t.server.model.robots.handicap.ColorBlindHandicap;
 import nl.tudelft.bw4t.server.model.robots.handicap.GripperHandicap;
 import nl.tudelft.bw4t.server.model.robots.handicap.Human;
 import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.server.model.robots.handicap.SizeOverloadHandicap;
-import nl.tudelft.bw4t.server.repast.BW4TServerMap;
 
 /**
  * Creates the default entities.
