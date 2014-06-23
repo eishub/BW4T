@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.server.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,7 +11,9 @@ import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.zone.DropZone;
 import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
+import nl.tudelft.bw4t.server.repast.MapLoader;
 
+import org.jgrapht.WeightedGraph;
 import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
@@ -35,30 +38,10 @@ public final class PathPlanner {
      * @param end      is target Zone
      * @return List of subsequent Zones from start to end, or null if no path exists.
      */
-    public static List<Zone> findPath(List<Zone> allZones, Zone start, Zone end) {
-        SimpleWeightedGraph<Zone, DefaultWeightedEdge> graph = generateZoneGraph(allZones);
+    public static List<NdPoint> findPath(Collection<Zone> allZones, Zone start, Zone end) {
+        WeightedGraph<NdPoint, DefaultWeightedEdge> graph = GraphHelper.generateZoneGraph(allZones);
 
-        List<DefaultWeightedEdge> edgeList = DijkstraShortestPath.findPathBetween(graph, start, end);
-        if (edgeList == null) {
-            return new ArrayList<Zone>();
-        }
-
-        List<Zone> path = new ArrayList<Zone>();
-        Zone current = start;
-        path.add(current);
-        // Add each path node, but also check for the order of the edges so that
-        // the correct point (source or target) is added.
-        for (DefaultWeightedEdge edge : edgeList) {
-            if (graph.getEdgeSource(edge).equals(current)) {
-                current = graph.getEdgeTarget(edge);
-                path.add(current);
-            } else if (graph.getEdgeTarget(edge).equals(current)) {
-                current = graph.getEdgeSource(edge);
-                path.add(current);
-            }
-        }
-
-        return path;
+        return findPath(graph, start.getLocation(), end.getLocation());
     }
 
 
@@ -74,29 +57,42 @@ public final class PathPlanner {
                 obstacles, botSize);
 
 
-        List<DefaultWeightedEdge> edgeList = DijkstraShortestPath.findPathBetween(graph, startPoint, end);
+        return findPath(graph, startPoint, end);
+    }
+
+    /**
+     * Find the list of point to be traversed from the start to the end using the DijkstraShortestPath algorithm.
+     * 
+     * @param graph
+     *            the graph upon which we need to find the path
+     * @param start
+     *            the start node from which to navigate
+     * @param end
+     *            the end node to which to navigate to
+     * @return the succession of node to traverse from start to end, empty if no path was found
+     */
+    public static List<NdPoint> findPath(WeightedGraph<NdPoint, DefaultWeightedEdge> graph, NdPoint start,
+            NdPoint end) {
+        List<DefaultWeightedEdge> edgeList = DijkstraShortestPath.findPathBetween(graph, start, end);
         if (edgeList == null) {
             return new ArrayList<NdPoint>();
         }
 
         List<NdPoint> path = new ArrayList<NdPoint>();
-        NdPoint current = startPoint;
+        NdPoint current = start;
         path.add(current);
         // Add each path node, but also check for the order of the edges so that
         // the correct point (source or target) is added.
         for (DefaultWeightedEdge edge : edgeList) {
-            if (graph.getEdgeSource(edge).equals(current)) {
-                current = graph.getEdgeTarget(edge);
-                path.add(current);
-            } else if (graph.getEdgeTarget(edge).equals(current)) {
-                current = graph.getEdgeSource(edge);
+            current = GraphHelper.getOpposite(graph, edge, current);
+            if (current != null) {
                 path.add(current);
             }
         }
         return path;
     }
 
-    private static List<NdPoint> returnVacantPoints(List<Zone> zones, List<BoundedMoveableObject> obstacles) {
+    private static List<NdPoint> returnVacantPoints(Collection<Zone> zones, Collection<BoundedMoveableObject> obstacles) {
         // First generate the points occupied by the obstacles.
         List<NdPoint> obstaclePoints = new ArrayList<NdPoint>();
 
@@ -124,7 +120,7 @@ public final class PathPlanner {
     }
 
     private static SimpleWeightedGraph<NdPoint, DefaultWeightedEdge> generateNdPointGraph(
-            NdPoint start, NdPoint end, List<Zone> allZones, List<BoundedMoveableObject> obstacles, int botSize) {
+            NdPoint start, NdPoint end, Collection<Zone> allZones, Collection<BoundedMoveableObject> obstacles, int botSize) {
 
         SimpleWeightedGraph<NdPoint, DefaultWeightedEdge> graph = new SimpleWeightedGraph<NdPoint, DefaultWeightedEdge>(
                 DefaultWeightedEdge.class);
@@ -168,10 +164,10 @@ public final class PathPlanner {
         return graph;
     }
 
-    private static void sanitizeVertices(List<Zone> zones, List<NdPoint> vertices, int margin) {
-        Context context = BW4TEnvironment.getInstance().getContext();
+    private static void sanitizeVertices(Collection<Zone> zones, Collection<NdPoint> vertices, int margin) {
+        Context<Object> context = BW4TEnvironment.getInstance().getContext();
 
-        ContinuousSpace<Object> space = (ContinuousSpace<Object>) context.getProjection("BW4T_Projection");
+        ContinuousSpace<Object> space = (ContinuousSpace<Object>) context.getProjection(MapLoader.PROJECTION_ID);
         double width = space.getDimensions().getWidth();
         double height = space.getDimensions().getHeight();
 
@@ -235,27 +231,6 @@ public final class PathPlanner {
             }
         }
         return points;
-    }
-
-    private static SimpleWeightedGraph<Zone, DefaultWeightedEdge> generateZoneGraph(List<Zone> allZones) {
-        SimpleWeightedGraph<Zone, DefaultWeightedEdge> graph = new SimpleWeightedGraph<Zone, DefaultWeightedEdge>(
-                DefaultWeightedEdge.class);
-        for (Zone p : allZones) {
-            graph.addVertex(p);
-        }
-        for (Zone p1 : allZones) {
-            for (Zone p2 : p1.getNeighbours()) {
-                DefaultWeightedEdge edge = graph.addEdge(p1, p2);
-                /**
-                 * If we get edge==null, the edge already has been added.
-                 */
-                if (edge != null) {
-                    graph.setEdgeWeight(edge, p1.distanceTo(p2));
-                }
-            }
-        }
-
-        return graph;
     }
 
 }
