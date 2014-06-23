@@ -8,347 +8,210 @@ import nl.tudelft.bw4t.map.EntityType;
 
 /**
  * This class stores all the date from the BotEditorUI.
- * 
+ *
  * @version 0.1
  * @since 12-05-2014
  */
 
 public final class BotConfig implements Serializable, Cloneable {
-	private static final long serialVersionUID = -4261058226493472776L;
-	
-	public static final String DEFAULT_GOAL_FILENAME_REFERENCE = "robot";
+    public static final String DEFAULT_GOAL_FILENAME_REFERENCE = "robot";
+    public static final String DEFAULT_GOAL_FILENAME = "robot.goal";
+    private static final long serialVersionUID = -4261058226493472776L;
 
-	public static final String DEFAULT_GOAL_FILENAME = "robot.goal";
+    private String name = "Bot";
+    private EntityType controller = EntityType.AGENT;
+    private int amount = 1;
+    private int botSize = 2;
+    private int botSpeed = 100;
+    private int botBatteryCapacity = 10;
+    private int numberOfGrippers = 1;
+    private boolean batteryEnabled = false;
+    private boolean hasColorBlindHandicap = false;
+    private boolean hasGripperHandicap = false;
+    private boolean hasMoveSpeedHandicap = false;
+    private boolean hasSizeOverloadHandicap = false;
+    private String fileName = "*.goal";
+    private String referenceName = "";
 
-	private String name = "Bot";
+    /**
+     * @return the default configuration of a Human
+     */
+    public static BotConfig createDefaultHumans() {
+        BotConfig bot = new BotConfig();
+        bot.setBotController(EntityType.HUMAN);
+        return bot;
+    }
 
-	private EntityType controller = EntityType.AGENT;
+    /**
+     * @return the default configuration of a robot
+     */
+    public static BotConfig createDefaultRobot() {
+        BotConfig bot = new BotConfig();
+        bot.setBotController(EntityType.AGENT);
+        return bot;
+    }
 
-	private int amount = 1;
+    /**
+     * Calculate the discharge rate given the size and speed of the bot.
+     *
+     * @param size  the size of the bot
+     * @param speed the speed of the bot
+     * @return the discharge rate per step
+     */
+    public static double calculateDischargeRate(int size, int speed) {
+        return 0.0002 * size + 0.0004 * speed;
+    }
 
-	private int botSize = 2;
+    public String getBotName() {
+        return this.name;
+    }
 
-	private int botSpeed = 100;
+    @XmlElement
+    public void setBotName(String name) {
+        this.name = name;
+    }
 
-	private int botBatteryCapacity = 10;
+    public EntityType getBotController() {
+        return this.controller;
+    }
 
-	private int numberOfGrippers = 1;
+    @XmlElement
+    public void setBotController(EntityType controller) {
+        this.controller = controller;
+    }
 
-	private boolean batteryEnabled = false;
+    public int getBotAmount() {
+        return this.amount;
+    }
 
-	private boolean hasColorBlindHandicap = false;
+    @XmlElement
+    public void setBotAmount(int amount) {
+        this.amount = amount;
+    }
 
-	private boolean hasGripperHandicap = false;
+    public int getBotSize() {
+        return botSize;
+    }
 
-	private boolean hasMoveSpeedHandicap = false;
+    @XmlElement
+    public void setBotSize(int newSize) {
+        botSize = newSize;
+    }
 
-	private boolean hasSizeOverloadHandicap = false;
+    public int getBotSpeed() {
+        return botSpeed;
+    }
 
-	private String fileName = "*.goal";
+    @XmlElement
+    public void setBotSpeed(int newSpeed) {
+        botSpeed = newSpeed;
+    }
 
-	private String referenceName = "";
+    public boolean isBatteryEnabled() {
+        return this.batteryEnabled;
+    }
 
-	/**
-	 * Sets the name of the bot.
-	 * 
-	 * @param name
-	 * The name of the bot.
-	 */
-	@XmlElement
-	public void setBotName(String name) {
-		this.name = name;
-	}
+    @XmlElement
+    public void setBatteryEnabled(boolean batteryEnabled) {
+        this.batteryEnabled = batteryEnabled;
+    }
 
-	/**
-	 * Returns the name of the bot.
-	 * 
-	 * @return The name of the bot.
-	 */
-	public String getBotName() {
-		return this.name;
-	}
+    public int getBotBatteryCapacity() {
+        return botBatteryCapacity;
+    }
 
-	/**
-	 * Sets the controller type of the bot.
-	 * 
-	 * @param controller
-	 *            The controller type of the bot.
-	 */
-	@XmlElement
-	public void setBotController(EntityType controller) {
-		this.controller = controller;
-	}
+    @XmlElement
+    public void setBotBatteryCapacity(int newBatteryCapacity) {
+        botBatteryCapacity = newBatteryCapacity;
+    }
 
-	/**
-	 * Returns the controller type of the bot.
-	 * 
-	 * @return The controller type of the bot.
-	 */
-	public EntityType getBotController() {
-		return this.controller;
-	}
+    public double getBotBatteryDischargeRate() {
+        return calculateDischargeRate(botSize, botSpeed);
+    }
 
-	/**
-	 * Sets the amount of bots of a type there are.
-	 * 
-	 * @param amount
-	 *            The amount of bots.
-	 */
-	@XmlElement
-	public void setBotAmount(int amount) {
-		this.amount = amount;
-	}
+    public boolean getColorBlindHandicap() {
+        return hasColorBlindHandicap;
+    }
 
-	/**
-	 * Returns the amount of bots of this type.
-	 * 
-	 * @return The amount of bots of this type.
-	 */
-	public int getBotAmount() {
-		return this.amount;
-	}
+    @XmlElement
+    public void setColorBlindHandicap(boolean bool) {
+        hasColorBlindHandicap = bool;
+    }
 
-	/**
-	 * @return the size of the robot.
-	 */
-	public int getBotSize() {
-		return botSize;
-	}
+    public boolean getGripperHandicap() {
+        return hasGripperHandicap;
+    }
 
-	/**
-	 * @param newSize
-	 *            , the new size of the robot.
-	 */
-	@XmlElement
-	public void setBotSize(int newSize) {
-		botSize = newSize;
-	}
+    @XmlElement
+    public void setGripperHandicap(boolean bool) {
+        hasGripperHandicap = bool;
+    }
 
-	/**
-	 * @return the speed of the robot.
-	 */
-	public int getBotSpeed() {
-		return botSpeed;
-	}
+    public boolean getMoveSpeedHandicap() {
+        return hasMoveSpeedHandicap;
+    }
 
-	/**
-	 * @param newSpeed
-	 *            , the new speed of the robot.
-	 */
-	@XmlElement
-	public void setBotSpeed(int newSpeed) {
-		botSpeed = newSpeed;
-	}
+    @XmlElement
+    public void setMoveSpeedHandicap(boolean bool) {
+        hasMoveSpeedHandicap = bool;
+    }
 
-	/**
-	 * Sets if the battery is enabled or not.
-	 * 
-	 * @param batteryEnabled
-	 *            If the battery is enabled.
-	 */
-	@XmlElement
-	public void setBatteryEnabled(boolean batteryEnabled) {
-		this.batteryEnabled = batteryEnabled;
-	}
+    public boolean getSizeOverloadHandicap() {
+        return hasSizeOverloadHandicap;
+    }
 
-	/**
-	 * Returns if the battery is enabled or not.
-	 * 
-	 * @return If the battery is enabled.
-	 */
-	public boolean isBatteryEnabled() {
-		return this.batteryEnabled;
-	}
+    @XmlElement
+    public void setSizeOverloadHandicap(boolean bool) {
+        hasSizeOverloadHandicap = bool;
+    }
 
-	/**
-	 * @return the robot's battery capacity.
-	 */
-	public int getBotBatteryCapacity() {
-		return botBatteryCapacity;
-	}
+    public int getGrippers() {
+        return this.numberOfGrippers;
+    }
 
-	/**
-	 * @param newBatteryCapacity
-	 *            , the new robot's battery capacity.
-	 */
-	@XmlElement
-	public void setBotBatteryCapacity(int newBatteryCapacity) {
-		botBatteryCapacity = newBatteryCapacity;
-	}
+    @XmlElement
+    public void setGrippers(int grippers) {
+        this.numberOfGrippers = grippers;
+    }
 
-	/**
-	 * @return the robot's battery discharge rate.
-	 */
-	public double getBotBatteryDischargeRate() {
-		return calculateDischargeRate(botSize, botSpeed);
-	}
+    /**
+     * Returns all the properties as a String.
+     *
+     * @return All the BotConfig properties.
+     */
+    public String bcToString() {
+        return name + controller + amount + botSize
+                + botSpeed + botBatteryCapacity
+                + numberOfGrippers + batteryEnabled + hasColorBlindHandicap
+                + hasGripperHandicap + hasMoveSpeedHandicap
+                + hasSizeOverloadHandicap + fileName + referenceName;
+    }
 
-	/**
-	 * @return if the robot has a color blind handicap.
-	 */
-	public boolean getColorBlindHandicap() {
-		return hasColorBlindHandicap;
-	}
+    public String getReferenceName() {
+        return referenceName;
+    }
 
-	/**
-	 * @param bool
-	 *            , adds or removes the color blind handicap.
-	 */
-	@XmlElement
-	public void setColorBlindHandicap(boolean bool) {
-		hasColorBlindHandicap = bool;
-	}
+    @XmlElement
+    public void setReferenceName(String _referenceName) {
+        this.referenceName = _referenceName;
+    }
 
-	/**
-	 * @return if the robot has a gripper handicap.
-	 */
-	public boolean getGripperHandicap() {
-		return hasGripperHandicap;
-	}
+    public String getFileName() {
+        return fileName;
+    }
 
-	/**
-	 * @param bool
-	 *            , adds or removes the gripper handicap.
-	 */
-	@XmlElement
-	public void setGripperHandicap(boolean bool) {
-		hasGripperHandicap = bool;
-	}
+    @XmlElement
+    public void setFileName(String _fileName) {
+        this.fileName = _fileName;
+    }
 
-	/**
-	 * @return if the robot has a move speed handicap.
-	 */
-	public boolean getMoveSpeedHandicap() {
-		return hasMoveSpeedHandicap;
-	}
-
-	/**
-	 * @param bool
-	 *            , adds or removes the move speed handicap.
-	 */
-	@XmlElement
-	public void setMoveSpeedHandicap(boolean bool) {
-		hasMoveSpeedHandicap = bool;
-	}
-
-	/**
-	 * @return if the robot has a size overload handicap.
-	 */
-	public boolean getSizeOverloadHandicap() {
-		return hasSizeOverloadHandicap;
-	}
-
-	/**
-	 * @param bool
-	 *            , adds or removes the size overload handicap.
-	 */
-	@XmlElement
-	public void setSizeOverloadHandicap(boolean bool) {
-		hasSizeOverloadHandicap = bool;
-	}
-
-	/**
-	 * Sets the amount of grippers a bot has.
-	 * 
-	 * @param grippers
-	 *            The amount of grippers.
-	 */
-	@XmlElement
-	public void setGrippers(int grippers) {
-		this.numberOfGrippers = grippers;
-	}
-
-	/**
-	 * Returns the amount of grippers the bot has.
-	 * 
-	 * @return The amount of grippers the bot has.
-	 */
-	public int getGrippers() {
-		return this.numberOfGrippers;
-	}
-
-	/**
-	 * Returns all the properties as a String.
-	 * 
-	 * @return All the BotConfig properties.
-	 */
-	public String bcToString() {
-		return name + controller + amount + botSize
-				+ botSpeed + botBatteryCapacity
-				+ numberOfGrippers + batteryEnabled + hasColorBlindHandicap
-				+ hasGripperHandicap + hasMoveSpeedHandicap
-				+ hasSizeOverloadHandicap + fileName + referenceName;
-	}
-
-	/**
-	 * Returns the reference name in goal.
-	 * @return The reference name in goal.
-	 */
-	public String getReferenceName() {
-		return referenceName;
-	}
-
-	/**
-	 * Sets the reference name in goal.
-	 * @param _referenceName The reference name in goal.
-	 */
-	@XmlElement
-	public void setReferenceName(String _referenceName) {
-		this.referenceName = _referenceName;
-	}
-
-	/**
-	 * Returns the goal file name.
-	 * @return The goal file name.
-	 */
-	public String getFileName() {
-		return fileName;
-	}
-
-	/**
-	 * Sets the goal file name.
-	 * @param _fileName The goal file name.
-	 */
-	@XmlElement
-	public void setFileName(String _fileName) {
-		this.fileName = _fileName;
-	}
-	
-	@Override
-	public BotConfig clone() {
-	    try {
+    @Override
+    public BotConfig clone() {
+        try {
             return (BotConfig) super.clone();
         } catch (CloneNotSupportedException e) {
             return null;
         }
-	}
-
-	/**
-	 * @return the default configuration of a Human
-	 */
-	public static BotConfig createDefaultHumans() {
-        BotConfig bot = new BotConfig();
-        bot.setBotController(EntityType.HUMAN);
-        return bot;
-	}
-	
-	/**
-	 * @return the default configuration of a robot
-	 */
-	public static BotConfig createDefaultRobot() {
-        BotConfig bot = new BotConfig();
-        bot.setBotController(EntityType.AGENT);
-        return bot;
-	}
-
-	/**
-	 * Calculate the discharge rate given the size and speed of the bot.
-	 * @param size the size of the bot
-	 * @param speed the speed of the bot
-	 * @return the discharge rate per step
-	 */
-    public static double calculateDischargeRate(int size, int speed) {
-        return 0.0002 * size + 0.0004 * speed;
     }
 
 }

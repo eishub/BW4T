@@ -11,7 +11,7 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 
 /**
  * Handles the event to modify an E-partner.
- * <p>
+ * 
  * @version     0.1                
  * @since       12-05-2014        
  */

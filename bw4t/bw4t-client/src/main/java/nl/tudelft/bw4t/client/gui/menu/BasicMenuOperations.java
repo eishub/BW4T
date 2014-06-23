@@ -5,7 +5,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 import nl.tudelft.bw4t.client.agent.HumanAgent;
-
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.MessageSenderActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.NavigateObstaclesActionListener;
@@ -19,9 +18,9 @@ import nl.tudelft.bw4t.map.view.ViewEntity;
 
 /** Utility class containing some operations to add various things to pop-up menu's. */
 public final class BasicMenuOperations {
-	
-	/** Should never be instantiated */
-	private BasicMenuOperations() { }
+    
+    /** Should never be instantiated */
+    private BasicMenuOperations() { }
 
     /**
      * Adds a menu item to a pop-up menu, used for messages.

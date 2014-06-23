@@ -9,7 +9,15 @@ import repast.simphony.space.grid.Grid;
  */
 public class Corridor extends Zone {
 
-    public Corridor(nl.tudelft.bw4t.map.Zone zone, ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context) {
+    /**
+     * Creates the corridor
+     * @param zone in which the corridor will be placed
+     * @param space in which the corridor will be placed
+     * @param grid in which the corridor will be placed
+     * @param context in which the corridor will be placed
+     */
+    public Corridor(nl.tudelft.bw4t.map.Zone zone, ContinuousSpace<Object> space, 
+                            Grid<Object> grid, Context<Object> context) {
         super(zone, space, grid, context);
     }
 

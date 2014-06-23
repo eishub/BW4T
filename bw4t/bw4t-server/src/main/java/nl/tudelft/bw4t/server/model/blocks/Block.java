@@ -1,6 +1,5 @@
 package nl.tudelft.bw4t.server.model.blocks;
 
-import java.awt.Color;
 import java.awt.geom.Point2D;
 
 import nl.tudelft.bw4t.map.BlockColor;
@@ -16,10 +15,24 @@ import repast.simphony.space.grid.Grid;
  */
 public class Block extends BoundedMoveableObject {
 
+    /**
+     * size of the block.
+     */
     public static final int SIZE = 1;
 
+    /**
+     * the color of the block.
+     */
     private final BlockColor colorId;
+    
+    /**
+     * by whom the block is being held.
+     */
     private AbstractRobot heldBy;
+    
+    /**
+     * the view of the of the block.
+     */
     private final nl.tudelft.bw4t.map.view.ViewBlock view;
 
     /**
@@ -29,6 +42,8 @@ public class Block extends BoundedMoveableObject {
      *            The color of the block
      * @param space
      *            The space the block will be in.
+     * @param grid
+     *            The grid in which the block will be placed.
      * @param context
      *            The context in which the block will be present.
      */
@@ -62,6 +77,7 @@ public class Block extends BoundedMoveableObject {
 
     /**
      * Returns the {@link AbstractRobot} that is holding this block if any.
+     * @return bot
      */
     public AbstractRobot getHeldBy() {
         return heldBy;
@@ -79,11 +95,16 @@ public class Block extends BoundedMoveableObject {
 
     /**
      * Returns true if this block is not held by a {@link AbstractRobot}.
+     * @return is free
      */
     public boolean isFree() {
         return getHeldBy() == null;
     }
 
+    /**
+     * gets the view of the block
+     * @return view
+     */
     public nl.tudelft.bw4t.map.view.ViewBlock getView() {
         this.getLocation();
         return this.view;

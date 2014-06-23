@@ -4,16 +4,15 @@ import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.epartners.EPartner;
 import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
 
-import org.apache.log4j.Logger;
-
+/**
+ * Creates a human bot.
+ */
 public class Human extends AbstractRobotDecorator {
-    private static final Logger LOGGER = Logger.getLogger(Human.class);
-    
     /**
      * The e-Partner the human is holding.
      */
     private EPartner ePartner;
-	
+    
     /**
      * Sets the handicap to active,
      * Adds the handicap to the robot handicap storage.
@@ -39,7 +38,7 @@ public class Human extends AbstractRobotDecorator {
      */
     @Override
     public boolean canPickUp(BoundedMoveableObject eP) {
-        if (eP instanceof EPartner){
+        if (eP instanceof EPartner) {
             return (robot.distanceTo(eP) <= AbstractRobot.ARM_DISTANCE) && this.ePartner == null;
         }
         return getParent().canPickUp(eP);
@@ -50,29 +49,20 @@ public class Human extends AbstractRobotDecorator {
      */
     @Override
     public void dropEPartner() {
-    	
-    	if (!isHoldingEPartner()) {
-    		return;
-    	}
-    	
-    	//this.ePartner.addToContext();
-    	
-//        double x = robot.getLocation().getX();
-//        double y = robot.getLocation().getY();
-
-//        this.ePartner.moveTo(RandomHelper.nextDoubleFromTo(x - 5, x + 5), RandomHelper.nextDoubleFromTo(y - 5, y + 5));
-    	ePartner.setHolder(null);
-    	
+        if (!isHoldingEPartner()) {
+            return;
+        }
+        ePartner.setHolder(null);
         this.ePartner = null;
     }
 
     @Override
     public boolean isHoldingEPartner() {
-		return this.ePartner != null;
-	}
-	
+        return this.ePartner != null;
+    }
+    
     @Override
     public EPartner getEPartner() {
-		return this.ePartner;
-	}
+        return this.ePartner;
+    }
 }

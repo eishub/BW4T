@@ -74,12 +74,12 @@ public class TestMapController extends AbstractMapController {
     }
     
     public static void main(String[] args) throws JAXBException {
-    	BasicConfigurator.configure();
-    	NewMap map = NewMap.create(TestMapController.class.getResourceAsStream("/Rainbow"));
-    	JFrame jan = new JFrame("Pédé");
-    	jan.add(new MapRenderer(new TestMapController(map)));
-    	jan.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	jan.pack();
-    	jan.setVisible(true);
+        BasicConfigurator.configure();
+        NewMap map = NewMap.create(TestMapController.class.getResourceAsStream("/Rainbow"));
+        JFrame jan = new JFrame("Pédé");
+        jan.add(new MapRenderer(new TestMapController(map)));
+        jan.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jan.pack();
+        jan.setVisible(true);
     }
 }
