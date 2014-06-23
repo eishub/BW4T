@@ -32,20 +32,20 @@ public class GoToRoomActionListener extends AbstractClientActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        if (!getController().getEnvironment().isConnectedToGoal()) {
-            try {
-                getController().getHumanAgent().goTo(id);
-            } catch (ActException e1) {
-                // Also catch NoServerException. Nothing we can do really.
-                LOGGER.error(e1); 
-            }
-        } else {
-            List<Percept> percepts = new LinkedList<Percept>();
-            Percept percept = new Percept("goTo", new Identifier(id));
-            percepts.add(percept);
-            getController().setToBePerformedAction(percepts);
+    protected void actionWithHumanAgent(ActionEvent arg0) {
+        try {
+            getController().getHumanAgent().goTo(id);
+        } catch (ActException e1) {
+            // Also catch NoServerException. Nothing we can do really.
+            LOGGER.error(e1); 
         }
+    }
 
+    @Override
+    protected void actionWithGoalAgent(ActionEvent arg0) {
+        List<Percept> percepts = new LinkedList<Percept>();
+        Percept percept = new Percept("goTo", new Identifier(id));
+        percepts.add(percept);
+        getController().setToBePerformedAction(percepts);
     }
 }
