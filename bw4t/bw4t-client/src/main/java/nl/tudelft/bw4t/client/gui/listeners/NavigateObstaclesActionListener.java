@@ -8,6 +8,7 @@ import java.util.List;
 
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
+import nl.tudelft.bw4t.client.startup.InitParam;
 
 import org.apache.log4j.Logger;
 
@@ -27,7 +28,7 @@ public class NavigateObstaclesActionListener extends ClientActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!getController().getEnvironment().isConnectedToGoal()) {
+        if (!getController().getEnvironment().isConnectedToGoal() && InitParam.GOALHUMAN.getBoolValue()) {
             try {
                 getController().getHumanAgent().navigateObstacles();
             } catch (Exception e1) {
