@@ -294,6 +294,6 @@ public class NavigatingRobotTest {
 
     @Test
     public void distanceToTest() {
-        assertEquals(0.0, bot.distanceTo(bot2), 0.1);
+        assertEquals(0.0, bot.distanceTo(bot2), 0.01);
     }
 }
