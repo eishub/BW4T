@@ -2,7 +2,6 @@ package nl.tudelft.bw4t.client;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
 import eis.eis2java.translation.Translator;
 import eis.exceptions.ManagementException;
 import eis.iilang.Action;
@@ -16,6 +15,7 @@ import javax.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.client.environment.Launcher;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.map.Zone;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -86,7 +86,7 @@ public class BlockTest {
         Thread.sleep(200L);
         
         // Move to the DropZone
-        param = Translator.getInstance().translate2Parameter("DropZone");
+        param = Translator.getInstance().translate2Parameter(Zone.DROP_ZONE_NAME);
         client.performAction(bot, new Action("goTo", param));
         Thread.sleep(3000L);
         

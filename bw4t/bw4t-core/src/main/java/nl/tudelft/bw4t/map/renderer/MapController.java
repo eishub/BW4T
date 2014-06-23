@@ -10,7 +10,7 @@ import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 
-/** Interface that definds the MapController */
+/** Interface that defines the MapController */
 public interface MapController extends Runnable {
 
     /**

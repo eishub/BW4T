@@ -39,6 +39,7 @@ import nl.tudelft.bw4t.server.environment.EnvironmentResetException;
 import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.server.environment.Stepper;
 import nl.tudelft.bw4t.server.repast.BW4TBuilder;
+import nl.tudelft.bw4t.server.repast.BW4TServerMap;
 
 import org.apache.log4j.Logger;
 
@@ -71,12 +72,12 @@ public class ServerContextDisplay extends JFrame {
     /**
      * Create a new instance of this class and initialize it.
      * 
-     * @param context
+     * @param serverMap
      *            the central data model of Repast
      * @throws VisualizationsException
      *             the visualizations exception
      */
-    public ServerContextDisplay(Context context) throws VisualizationsException {
+    public ServerContextDisplay(BW4TServerMap serverMap) throws VisualizationsException {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
@@ -87,7 +88,7 @@ public class ServerContextDisplay extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        controller = new ServerMapController(Launcher.getEnvironment().getMap(), context);
+        controller = new ServerMapController(serverMap);
         myRenderer = new MapRenderer(controller);
         add(new JScrollPane(myRenderer), BorderLayout.CENTER);
         try {
@@ -264,7 +265,7 @@ class MapSelector extends JPanel {
         final JComboBox mapselector = new JComboBox(maps);
 
         // find the current map in the list and highlight it
-        String mapname = BW4TEnvironment.getInstance().getMapLocation();
+        String mapname = BW4TEnvironment.getInstance().getMapName();
         mapselector.setSelectedItem(mapname);
 
         add(mapselector, BorderLayout.CENTER);

@@ -1,19 +1,5 @@
 package nl.tudelft.bw4t.server.environment;
 
-import eis.eis2java.environment.AbstractEnvironment;
-import eis.exceptions.ActException;
-import eis.exceptions.AgentException;
-import eis.exceptions.EntityException;
-import eis.exceptions.ManagementException;
-import eis.exceptions.NoEnvironmentException;
-import eis.exceptions.PerceiveException;
-import eis.exceptions.RelationException;
-import eis.iilang.Action;
-import eis.iilang.EnvironmentState;
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
-
 import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.FileInputStream;
@@ -43,6 +29,9 @@ import nl.tudelft.bw4t.server.model.epartners.EPartner;
 import nl.tudelft.bw4t.server.model.robots.EntityFactory;
 import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.server.repast.BW4TBuilder;
+import nl.tudelft.bw4t.server.repast.BW4TServerMap;
+import nl.tudelft.bw4t.server.repast.BW4TServerMapListerner;
+import nl.tudelft.bw4t.server.repast.MapLoader;
 import nl.tudelft.bw4t.server.view.ServerContextDisplay;
 
 import org.apache.log4j.Logger;
@@ -50,6 +39,19 @@ import org.apache.log4j.Logger;
 import repast.simphony.context.Context;
 import repast.simphony.scenario.ScenarioLoadException;
 import repast.simphony.space.continuous.NdPoint;
+import eis.eis2java.environment.AbstractEnvironment;
+import eis.exceptions.ActException;
+import eis.exceptions.AgentException;
+import eis.exceptions.EntityException;
+import eis.exceptions.ManagementException;
+import eis.exceptions.NoEnvironmentException;
+import eis.exceptions.PerceiveException;
+import eis.exceptions.RelationException;
+import eis.iilang.Action;
+import eis.iilang.EnvironmentState;
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
+import eis.iilang.Percept;
 
 /**
  * The central environment which runs the data model and performs actions received from remote environments through the
@@ -83,8 +85,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
     private boolean mapFullyLoaded;
     private Stepper stepper;
     private final String scenarioLocation;
-    private Context context;
-    private static NewMap theMap;
+    private BW4TServerMap serverMap;
     private ServerContextDisplay contextDisplay;
     private final boolean guiEnabled;
     private final String shutdownKey;
@@ -92,6 +93,8 @@ public class BW4TEnvironment extends AbstractEnvironment {
     private boolean drawPathsEnabled;
 
     private int nextBotSpawnIndex = 0;
+    
+    private MapLoader mapLoader;
 
     /**
      * Create a new instance of this environment
@@ -121,9 +124,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
         this.shutdownKey = shutdownKey;
         this.collisionEnabled = collisionEnabled;
         this.drawPathsEnabled = drawPathsEnabled;
-    }
-    private static void setInstance(BW4TEnvironment env){
-        instance = env;  
     }
     /**
      * Launch server and start repast.
@@ -252,12 +252,15 @@ public class BW4TEnvironment extends AbstractEnvironment {
      * @throws JAXBException 
      */
     private void launchRepast() throws IOException, ScenarioLoadException, JAXBException {
-        theMap = NewMap.create(new FileInputStream(new File(System.getProperty("user.dir") + "/maps/"
+        NewMap theMap = NewMap.create(new FileInputStream(new File(System.getProperty("user.dir") + "/maps/"
                 + mapName)));
+        serverMap = new BW4TServerMap(theMap);
+        serverMap.attachChangeListener(getMapLoader());
+        Launcher.getInstance().getEntityFactory().setServerMap(serverMap);
         stepper = new Stepper(scenarioLocation, this);
         new Thread(stepper).start();
     }
-
+    
     /**
      * Get the instance of this environment
      * 
@@ -270,12 +273,32 @@ public class BW4TEnvironment extends AbstractEnvironment {
         return instance;
     }
 
-    public String getMapLocation() {
+    private static void setInstance(BW4TEnvironment env){
+        instance = env;  
+    }
+    /**
+     * Get the currently active map loader, or make a default one if none are present.
+     * @return the map loader
+     */
+    public BW4TServerMapListerner getMapLoader() {
+        if(mapLoader == null) {
+            mapLoader = new MapLoader();
+        }
+        return mapLoader;
+    }
+    public void setMapLoader(MapLoader loader) {
+        mapLoader = loader;
+    }
+    public String getMapName() {
         return mapName;
     }
 
     public void setMapName(String mapName) {
          this.mapName = mapName;
+    }
+    
+    public BW4TServerMap getServerMap() {
+        return serverMap;
     }
 
     /**
@@ -385,6 +408,11 @@ public class BW4TEnvironment extends AbstractEnvironment {
      */
     public void setMapFullyLoaded() {
         mapFullyLoaded = true;
+        startGUI();
+    }
+
+    public final boolean isCollisionEnabled() {
+        return collisionEnabled;
     }
 
     /**
@@ -394,11 +422,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
     public void setCollisionEnabled(boolean state) {
         collisionEnabled = state;
     }
-
-    public final boolean isCollisionEnabled() {
-        return collisionEnabled;
-    }
-
     public final boolean isDrawPathsEnabled() {
         return drawPathsEnabled; 
     }
@@ -479,30 +502,29 @@ public class BW4TEnvironment extends AbstractEnvironment {
         stepper.terminate();
         contextDisplay.close();
         contextDisplay = null;
-        context = null;
+        serverMap.setContext(null);
     }
 
     /**
-     * get the repast current context. May be null if Repast not running now. Called from {@link BW4TBuilder} when
-     * repast gives us context.
+     * get the repast current context. May be null if Repast not running now. 
      * 
      * @return Repast {@link Context}.
      */
     public Context getContext() {
-        return context;
+        return serverMap.getContext();
     }
 
     /**
-     * Set a new repast Context. May be null if Repast sstopped running.
+     * Set a new repast Context. May be null if Repast sstopped running. Called from {@link BW4TBuilder} when repast
+     * gives us context.
      * 
-     * @param c 
+     * @param c the new context
      */
-    public void setContext(Context c) {
-        context = c;
+    public void startGUI() {
         if (guiEnabled) {
             LOGGER.info("Launching the BW4T Server Graphical User Interface.");
             try {
-                contextDisplay = new ServerContextDisplay(context);
+                contextDisplay = new ServerContextDisplay(getServerMap());
             } catch (Exception e) {
                 LOGGER.error("BW4T Server started ok but failed to launch display.", e);
             }
@@ -534,6 +556,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
         if (key.equals(this.shutdownKey)) {
             LOGGER.info("Server shutdown requested with correct key");
             try {
+                takeDownSimulation();
                 this.setState(EnvironmentState.KILLED);
             } catch (ManagementException e) {
                 LOGGER.warn("failed to notify clients that the server is going down...", e);
@@ -551,7 +574,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
     }
 
     public NewMap getMap() {
-        return theMap;
+        return serverMap.getMap();
     }
     
     public long getStarttime() {
@@ -580,7 +603,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
     private List<Point2D> getHumanWithoutEPartners() {
         List<Point2D> points = new ArrayList<Point2D>();
         
-        for (Object robot : context.getObjects(IRobot.class)) {
+        for (Object robot : serverMap.getContext().getObjects(IRobot.class)) {
             IRobot robotTemp = (IRobot) robot;
             
             if (robotTemp.isHuman() && !robotTemp.isHoldingEPartner()) {

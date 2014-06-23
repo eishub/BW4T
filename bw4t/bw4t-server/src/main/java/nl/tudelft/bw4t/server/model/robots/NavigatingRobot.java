@@ -18,15 +18,13 @@ import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
+import nl.tudelft.bw4t.server.repast.BW4TServerMap;
 import nl.tudelft.bw4t.server.util.PathPlanner;
 import nl.tudelft.bw4t.server.util.ZoneLocator;
 
 import org.apache.log4j.Logger;
 
-import repast.simphony.context.Context;
-import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
-import repast.simphony.space.grid.Grid;
 
 /**
  * Represents a self navigating robot in the BW4T environment. The self navigation means that you can go to a Zone which
@@ -80,11 +78,11 @@ public class NavigatingRobot extends AbstractRobot {
      * @param cap
      *            capacity of the bot
      */
-    public NavigatingRobot(String name, ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context,
+    public NavigatingRobot(String name, BW4TServerMap context,
             boolean oneBotPerZone, int cap) {
-        super(name, space, grid, context, oneBotPerZone, cap);
+        super(name, context, oneBotPerZone, cap);
 
-        context.add(displayedPath);
+        getContext().add(displayedPath);
     }
 
     /**
@@ -172,7 +170,7 @@ public class NavigatingRobot extends AbstractRobot {
         plannedMoves.clear();
         Zone startpt = ZoneLocator.getNearestZone(this.getLocation());
         Zone targetpt = ZoneLocator.getNearestZone(p);
-        Collection<Zone> allnavs = getAllZonesInMap();
+        Collection<Zone> allnavs = getServerMap().getObjectsFromContext(Zone.class);
 
         plannedMoves.addAll(planPath(this.getLocation(), p, startpt, targetpt, allnavs));
 
@@ -281,7 +279,7 @@ public class NavigatingRobot extends AbstractRobot {
         plannedMoves.clear();
         Zone startpt = ZoneLocator.getNearestZone(this.getLocation());
         Zone targetpt = ZoneLocator.getNearestZone(target.getLocation());
-        List<Zone> allnavs = new ArrayList<Zone>(getAllZonesInMap());
+        List<Zone> allnavs = new ArrayList<Zone>(getServerMap().getObjectsFromContext(Zone.class));
 
         // plan the path between the Zones
         List<NdPoint> path = PathPlanner.findPath(allnavs, startpt, targetpt);
@@ -339,7 +337,7 @@ public class NavigatingRobot extends AbstractRobot {
      * Continue with normal path after this.
      */
     public void navigateObstacles() {
-        List<Zone> navZones = new ArrayList<Zone>(getAllZonesInMap());
+        List<Zone> navZones = new ArrayList<Zone>(getServerMap().getObjectsFromContext(Zone.class));
 
         // the end isn't rounded since maps never have .5 coordinates.
         NdPoint startLocationRounded = new NdPoint((int) getLocation().getX(), (int) getLocation().getY());
@@ -377,19 +375,6 @@ public class NavigatingRobot extends AbstractRobot {
         // Let's roll.
         updateDrawPath();
         useNextTarget();
-    }
-
-    /**
-     * gets all zones in the map.
-     * 
-     * @return all zones
-     */
-    private Set<Zone> getAllZonesInMap() {
-        Set<Zone> zones = new HashSet<Zone>();
-        for (Object o : context.getObjects(Zone.class)) {
-            zones.add((Zone) o);
-        }
-        return zones;
     }
 
 }

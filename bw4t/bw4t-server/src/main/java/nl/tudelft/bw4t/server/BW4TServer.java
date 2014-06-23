@@ -106,7 +106,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
     }
     
     private void registerClient(BW4TClientActions client, ClientInfo cInfo) throws RemoteException{
-        BW4TEnvironment env = Launcher.getEnvironment();
+        BW4TEnvironment env = Launcher.getInstance().getEnvironment();
         LOGGER.info("Registering client: " + client);
         clients.put(client, cInfo);
 
@@ -141,7 +141,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
     public void notifyFreeEpartner(BW4TClientActions client, EPartnerConfig ci) throws EntityException {
         try {
             String entity = ci.getEpartnerName();
-            if ("unknown".equals(Launcher.getEnvironment().getType(entity))) {
+            if ("unknown".equals(Launcher.getInstance().getEnvironment().getType(entity))) {
                 BW4TEnvironment.getInstance().setType(entity, EntityType.EPARTNER.nameLower());
             }
             client.handleNewEntity(entity);
@@ -154,7 +154,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
     public void notifyFreeRobot(BW4TClientActions client, BotConfig ci) throws EntityException {
         try {
             String entity = ci.getBotName();
-            if ("unknown".equals(Launcher.getEnvironment().getType(entity))) {
+            if ("unknown".equals(Launcher.getInstance().getEnvironment().getType(entity))) {
                 String type = "bot";
                 if (EntityType.HUMAN == ci.getBotController()) {
                     type = "human";
@@ -437,7 +437,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
      */
     @Override
     public void stopServer(String key) throws RemoteException {
-        Launcher.getEnvironment().shutdownServer(key);
+        Launcher.getInstance().getEnvironment().shutdownServer(key);
 
     }
 
