@@ -19,7 +19,7 @@ import javax.swing.JFileChooser;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.util.ExportToMASTest;
 import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
-import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
+import nl.tudelft.bw4t.scenariogui.util.OptionPromptHelper;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
@@ -71,7 +71,7 @@ public class MenuOptionExportTest {
 
         //Once the option prompt is set, we know that the export warning
         //message was sent.
-        OptionPrompt yesPrompt = spy(new YesMockOptionPrompt());
+        OptionPrompt yesPrompt = OptionPromptHelper.getYesOptionPrompt();
         ScenarioEditor.setOptionPrompt(yesPrompt);
 
         ActionListener[] listeners = editor.getTopMenuBar().getMenuItemFileExport().getActionListeners();

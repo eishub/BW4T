@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -18,7 +17,8 @@ import nl.tudelft.bw4t.scenariogui.DefaultConfigurationValues;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
-import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
+import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
+import nl.tudelft.bw4t.scenariogui.util.OptionPromptHelper;
 
 import org.junit.After;
 import org.junit.Before;
@@ -83,7 +83,7 @@ public class ConfigurationPanelTest {
                 JFileChooser.APPROVE_OPTION);
         when(fileChooser.getSelectedFile()).thenReturn(new File(fileMapFail));
 
-        YesMockOptionPrompt spyOption = spy(new YesMockOptionPrompt());
+        OptionPrompt spyOption = OptionPromptHelper.getYesOptionPrompt();
         ScenarioEditor.setOptionPrompt(spyOption);
 
         // Trigger the event.
@@ -98,7 +98,7 @@ public class ConfigurationPanelTest {
      */
     @Test
     public final void testMapFileActionBranch() {
-        ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
+        ScenarioEditor.setOptionPrompt(OptionPromptHelper.getYesOptionPrompt());
         // Setup the mocks behaviour.
         when(fileChooser.showOpenDialog(editor.getMainPanel())).thenReturn(
                 JFileChooser.APPROVE_OPTION);
