@@ -255,7 +255,7 @@ public class NavigatingRobotTest {
     @Test
     public void getSpeedModTest() {
         bot.setSpeedMod(5.0);
-        assertEquals(bot.getSpeedMod(), 5.0);
+        assertEquals(5.0, bot.getSpeedMod(), 0.01);
     }
     
     @Test
@@ -278,6 +278,6 @@ public class NavigatingRobotTest {
     
     @Test
     public void distanceToTest() {
-        assertEquals(bot.distanceTo(bot2), 0.0);
+        assertEquals(0.0, bot.distanceTo(bot2), 0.01);
     }
 }
