@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import nl.tudelft.bw4t.client.BW4TClient;
+import nl.tudelft.bw4t.client.controller.ClientController;
 import eis.exceptions.PerceiveException;
 import eis.iilang.Percept;
 
@@ -34,6 +35,10 @@ public class PerceptsHandler {
                 entity = entity.substring(0, entity.length() - 4);
             }
             final List<Percept> percepts = client.getAllPerceptsFromEntity(entity);
+            ClientController cc = env.getEntityController(entity);
+            if (cc != null) {
+                percepts.addAll(cc.getToBePerformedAction());
+            }
             return percepts;
         } catch (RemoteException e) {
             throw env.environmentSuddenDeath(e);
