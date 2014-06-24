@@ -33,11 +33,6 @@ class Updater implements Runnable {
     @Override
     public void run() {
         LOGGER.info("Initializing updater thread for: " + controller);
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e1) {
-            //ignore interruptions
-        }
         if (controller.isRunning() || !controller.isStarting()) {
             controller = null;
             return;
