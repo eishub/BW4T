@@ -47,11 +47,9 @@ public class PerceptsHandler {
             }
             return control.getToBePerformedAction();
         } else if (guiEntity && humanType) {
-            return tryGetAllPerceptsFromEntity(entity, env);
-        } else if (runningGUI) {
-            return tryGetGUIPercepts(entity, env);
+            return tryGetGUIPercepts(entity.replace("gui", ""), env);
         } else {
-            return tryClientGetAllPerceptsFromEntity(entity, env);
+            return tryGetGUIPercepts(entity, env);
         }
         
     }
@@ -78,20 +76,6 @@ public class PerceptsHandler {
      * Method only used in getAllPerceptsFromEntity. Else it would be come too complex
      * @param entity 
      * @param env 
-     * @return returns list of percepts coming from entity
-     */
-    private static List<Percept> tryGetAllPerceptsFromEntity(String entity, RemoteEnvironment env) {
-        try {
-            return env.getClient().getAllPerceptsFromEntity(entity.replace("gui", ""));
-        } catch (RemoteException e) {
-            throw env.environmentSuddenDeath(e);
-        }
-    }
-    
-    /**
-     * Method only used in getAllPerceptsFromEntity. Else it would be come too complex
-     * @param entity 
-     * @param env 
      * @return return a list of percepts currently in the gui
      */
     private static List<Percept> tryGetGUIPercepts(String entity, RemoteEnvironment env) {
@@ -101,20 +85,6 @@ public class PerceptsHandler {
         try {
             List<Percept> percepts = env.getClient().getAllPerceptsFromEntity(entity);            
             return percepts;
-        } catch (RemoteException e) {
-            throw env.environmentSuddenDeath(e);
-        }
-    }
-    
-    /**
-     * Method only used in getAllPerceptsFromEntity. Else it would be come too complex
-     * @param entity 
-     * @param env 
-     * @return returns a list of all percepts from the client
-     */
-    private static List<Percept> tryClientGetAllPerceptsFromEntity(String entity, RemoteEnvironment env) {
-        try {
-            return env.getClient().getAllPerceptsFromEntity(entity);
         } catch (RemoteException e) {
             throw env.environmentSuddenDeath(e);
         }

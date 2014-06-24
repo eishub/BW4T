@@ -1,10 +1,5 @@
 package nl.tudelft.bw4t.client.controller;
 
-import eis.exceptions.NoEnvironmentException;
-import eis.exceptions.PerceiveException;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -27,7 +22,6 @@ import nl.tudelft.bw4t.client.controller.percept.processors.RobotProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.RobotSizeProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.SequenceIndexProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.SequenceProcessor;
-import nl.tudelft.bw4t.client.environment.PerceptsHandler;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
@@ -38,6 +32,10 @@ import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 
 import org.apache.log4j.Logger;
+
+import eis.exceptions.NoEnvironmentException;
+import eis.exceptions.PerceiveException;
+import eis.iilang.Parameter;
 
 /**
  * The Client Map Controller.
@@ -76,13 +74,12 @@ public class ClientMapController extends AbstractMapController {
 
     private final Map<String, PerceptProcessor> perceptProcessors;
 
-
     /** The color sequence. */
     private final List<BlockColor> colorSequence = new LinkedList<>();
 
     /**
      * Instantiates a new client map controller.
-     *
+     * 
      * @param map
      *            the map
      * @param controller
@@ -126,7 +123,9 @@ public class ClientMapController extends AbstractMapController {
         return occupiedRooms;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see nl.tudelft.bw4t.map.renderer.MapController#isOccupied(nl.tudelft.bw4t.map.Zone)
      */
     @Override
@@ -136,7 +135,7 @@ public class ClientMapController extends AbstractMapController {
 
     /**
      * Adds an occupied room to the list of occupied rooms.
-     *
+     * 
      * @param name
      *            the name
      */
@@ -146,7 +145,7 @@ public class ClientMapController extends AbstractMapController {
 
     /**
      * Removes the occupied room from the list of occupied rooms.
-     *
+     * 
      * @param name
      *            the name
      */
@@ -185,7 +184,9 @@ public class ClientMapController extends AbstractMapController {
 
     /**
      * Returns an e-partner with this id that is currently visible.
-     * @param id The id.
+     * 
+     * @param id
+     *            The id.
      * @return The e-partner found.
      */
     public ViewEPartner getViewEPartner(long id) {
@@ -198,9 +199,10 @@ public class ClientMapController extends AbstractMapController {
     }
 
     /**
-     * Returns an e-partner with this id that at one point has ever
-     * been visible.
-     * @param id The id.
+     * Returns an e-partner with this id that at one point has ever been visible.
+     * 
+     * @param id
+     *            The id.
      * @return The e-partner found.
      */
     public ViewEPartner getKnownEPartner(long id) {
@@ -226,7 +228,8 @@ public class ClientMapController extends AbstractMapController {
     }
 
     /**
-     * @param id of the block to be checked
+     * @param id
+     *            of the block to be checked
      * @return true iff the block is in in the environment
      */
     public boolean containsBlock(Long id) {
@@ -235,7 +238,7 @@ public class ClientMapController extends AbstractMapController {
 
     /**
      * Handle all the percepts.
-     *
+     * 
      * @param name
      *            the name of the percept
      * @param perceptParameters
@@ -243,12 +246,12 @@ public class ClientMapController extends AbstractMapController {
      */
 
     public void handlePercept(String name, List<Parameter> perceptParameters) {
+        LOGGER.debug("Handling percept: " + name + " => " + perceptParameters.toString());
         PerceptProcessor processor = perceptProcessors.get(name);
         if (processor != null) {
             processor.process(perceptParameters, this);
         }
     }
-
 
     public ViewEPartner addEPartner(long id, long holderId) {
         LOGGER.info("creating epartner(" + id + ", " + holderId + ")");
@@ -258,28 +261,30 @@ public class ClientMapController extends AbstractMapController {
         return epartner;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see nl.tudelft.bw4t.map.renderer.AbstractMapController#run()
      */
     @Override
     public void run() {
-        List<Percept> percepts;
-        try {
-            percepts = PerceptsHandler.getAllPerceptsFromEntity(getTheBot().getName(),
-                    clientController.getEnvironment());
-            if (percepts != null) {
-                clientController.handlePercepts(percepts);
+        if (clientController.isHuman() || !clientController.getEnvironment().isConnectedToGoal()) {
+            LOGGER.debug("updating information");
+            try {
+                clientController.getEnvironment().gatherPercepts(getTheBot().getName());
+            } catch (PerceiveException e) {
+                LOGGER.error(COULDNOTPOLL, e);
+            } catch (NoEnvironmentException | NullPointerException e) {
+                LOGGER.fatal(COULDNOTPOLL + " No connection could be made to the environment", e);
+                setRunning(false);
             }
-        } catch (PerceiveException e) {
-            LOGGER.error(COULDNOTPOLL, e);
-        } catch (NoEnvironmentException e) {
-            LOGGER.fatal(COULDNOTPOLL + "No connection could be made to the environment", e);
-            setRunning(false);
         }
         super.run();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see nl.tudelft.bw4t.map.renderer.AbstractMapController#updateRenderer
      * (nl.tudelft.bw4t.map.renderer.MapRendererInterface)
      */

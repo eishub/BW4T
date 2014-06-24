@@ -26,6 +26,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import nl.tudelft.bw4t.client.BW4TClient;
@@ -53,7 +54,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     /**
      * The log4j Logger which displays logs on console
      */
-    private static final Logger LOGGER = Logger.getLogger(RemoteEnvironment.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(RemoteEnvironment.class);
     private BW4TClient client = null;
     private final List<EnvironmentListener> environmentListeners = new LinkedList<EnvironmentListener>();
     private final Map<String, ClientController> entityToGUI = new HashMap<>();
@@ -73,130 +74,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
      */
     private final Map<String, BW4TAgent> runningAgents = new HashMap<>();
 
-    /**
-     * Method required for GOAL to work
-     * 
-     * @return the type of entity
-     */
-    @Override
-    public String getType(String entity) throws EntityException {
-        try {
-            return getClient().getType(entity);
-        } catch (RemoteException e) {
-            throw environmentSuddenDeath(e);
-        }
-    }
-
-    /**
-     * Register an agent to the environment, is passed towards the server
-     * 
-     * @param agentId
-     *            , the agent that should be registered
-     * @throws AgentException
-     */
-    @Override
-    public void registerAgent(String agentId) throws AgentException {
-        LOGGER.debug("Registering new agent:" + agentId + ".");
-        try {
-            getClient().registerAgent(agentId);
-            localAgents.add(agentId);
-        } catch (RemoteException e) {
-            throw environmentSuddenDeath(e);
-        }
-    }
-
-    @Override
-    public List<String> getAgents() {
-        try {
-            return getClient().getAgents();
-        } catch (RemoteException e) {
-            throw environmentSuddenDeath(e);
-        }
-    }
-
-    @Override
-    public Set<String> getAssociatedEntities(String agent) throws AgentException {
-        try {
-            return getClient().getAssociatedEntities(agent);
-        } catch (RemoteException e) {
-            throw environmentSuddenDeath(e);
-        }
-    }
-
-    /**
-     * We detected that environment suddenly died. Notify our listeners and return {@link NoEnvironmentException}
-     * reporting the problem.
-     * 
-     * @param e
-     *            is the exception from which we detected the death.
-     * @return {@link NoEnvironmentException}
-     */
-    public NoEnvironmentException environmentSuddenDeath(Exception e) {
-        LOGGER.error("The BW4T Server disconnected unexpectedly.");
-        handleStateChange(EnvironmentState.KILLED);
-        if (e instanceof NoEnvironmentException) {
-            return (NoEnvironmentException) e;
-        }
-        return new NoEnvironmentException("Unable to access environment.", e);
-    }
-
-    /**
-     * Perform an entity action, is passed towards the server
-     * 
-     * @param entity
-     *            , the entity that should perform the action
-     * @param action
-     *            , the action that should be performed
-     * @return the percept resulting from the action, null if an error occurred.
-     * @throws ActException
-     * @throws RemoteException
-     */
-    public Percept performEntityAction(String entity, Action action) throws RemoteException, ActException {
-        if (isConnectedToGoal() && "sendToGUI".equals(action.getName())) {
-            final ClientController entityGUI = getEntityController(entity);
-            if (entityGUI == null) {
-                ActException e = new ActException("sendToGUI failed:" + entity + " is not connected to a GUI.");
-                e.setType(ActException.FAILURE);
-                throw e;
-            }
-            return entityGUI.sendToGUI(action.getParameters());
-        }
-        else {
-            return getClient().performEntityAction(entity, action);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void associateEntity(String agentId, String entityId) throws RelationException {
-        LOGGER.debug("Associating Agent " + agentId + " with Entity " + entityId + ".");
-        try {
-            boolean launchGUI = InitParam.LAUNCHGUI.getBoolValue();
-            ClientController control = null;
-            getClient().associateEntity(agentId, entityId);
-            if ("human".equals(getType(entityId))) {
-                HumanAgent agent = (HumanAgent) getRunningAgent(agentId);
-                if (agent == null) {
-                    agent = new HumanAgent("Human" + getAgents().size(), this);
-                    addRunningAgent(agent);
-                }
-                control = new ClientController(this, entityId, agent);
-            }
-            else if (launchGUI && (isConnectedToGoal() || "bot".equals(getType(entityId)))) {
-                control = new ClientController(this, entityId);
-            }
-            if (control != null) {
-                control.startupGUI();
-                putEntityController(entityId, control);
-            }
-        } catch (RemoteException e) {
-            throw environmentSuddenDeath(e);
-        } catch (Exception e) {
-            throw new RelationException("failed to associate entity", e);
-        }
-    }
+    private final Map<String, List<Percept>> storedPercepts = new HashMap<>();
 
     /**
      * {@inheritDoc}
@@ -228,6 +106,353 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
             LOGGER.error("The URL provided to connect to the remote environment is invalid.");
         } catch (NotBoundException e) {
             LOGGER.error("Unable to bind to the remote environment.");
+        }
+    }
+
+    /**
+     * Resets the environment(-interface) with a set of key-value-pairs. to combine properly with BatchRunner, this
+     * reset does not entirely reset the env, it does not disconnect the entities. Note that this is NOT the reset
+     * attached to the reset button in the {@link ServerContextDisplay}.
+     */
+    @Override
+    public void reset(Map<String, Parameter> params) throws ManagementException {
+        getClient().resetServer(params);
+    }
+
+    /**
+     * We detected that environment suddenly died. Notify our listeners and return {@link NoEnvironmentException}
+     * reporting the problem.
+     * 
+     * @param e
+     *            is the exception from which we detected the death.
+     * @return {@link NoEnvironmentException}
+     */
+    public NoEnvironmentException environmentSuddenDeath(Exception e) {
+        LOGGER.error("The BW4T Server disconnected unexpectedly.");
+        handleStateChange(EnvironmentState.KILLED);
+        if (e instanceof NoEnvironmentException) {
+            return (NoEnvironmentException) e;
+        }
+        return new NoEnvironmentException("Unable to access environment.", e);
+    }
+
+    /*
+     * Listener functionality. Attaching, detaching, notifying listeners.
+     */
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void attachEnvironmentListener(EnvironmentListener listener) {
+        if (!getEnvironmentListeners().contains(listener) || listener == this) {
+            getEnvironmentListeners().add(listener);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void detachEnvironmentListener(EnvironmentListener listener) {
+        if (getEnvironmentListeners().contains(listener)) {
+            getEnvironmentListeners().remove(listener);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void attachAgentListener(String agent, AgentListener listener) {
+        if (!localAgents.contains(agent)) {
+            return;
+        }
+        Set<AgentListener> listeners = agentsToAgentListeners.get(agent);
+        if (listeners == null) {
+            listeners = new HashSet<AgentListener>();
+        }
+        listeners.add(listener);
+        agentsToAgentListeners.put(agent, (HashSet<AgentListener>) listeners);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void detachAgentListener(String agent, AgentListener listener) {
+        if (!localAgents.contains(agent)) {
+            return;
+        }
+        Set<AgentListener> listeners = agentsToAgentListeners.get(agent);
+        if ((listeners == null) || !listeners.contains(agent)) {
+            return;
+        }
+        listeners.remove(listener);
+    }
+
+    /**
+     * Method required for GOAL to work
+     * 
+     * @param entity
+     *            the name of the entity to check
+     * @return the type of entity
+     * @throws EntityException
+     *             thrown if an error occured while getting the type
+     */
+    @Override
+    public String getType(String entity) throws EntityException {
+        try {
+            return getClient().getType(entity);
+        } catch (RemoteException e) {
+            throw environmentSuddenDeath(e);
+        }
+    }
+
+    /**
+     * Register an agent to the environment, is passed towards the server
+     * 
+     * @param agentId
+     *            the agent that should be registered
+     * @throws AgentException
+     *             failed to register the agent
+     */
+    @Override
+    public void registerAgent(String agentId) throws AgentException {
+        LOGGER.debug("Registering new agent:" + agentId + ".");
+        try {
+            getClient().registerAgent(agentId);
+            localAgents.add(agentId);
+        } catch (RemoteException e) {
+            throw environmentSuddenDeath(e);
+        }
+    }
+
+    /**
+     * Used to unregister an agent on the server side
+     * 
+     * @param agent
+     *            , the agent to unregister
+     * @throws AgentException
+     *             if the attempt failed
+     */
+    @Override
+    public void unregisterAgent(String agent) throws AgentException {
+        try {
+            LOGGER.debug("Unregistering agent: " + agent);
+            localAgents.remove(agent);
+            removeRunningAgent(agent);
+            getClient().unregisterAgent(agent);
+        } catch (RemoteException e) {
+            throw environmentSuddenDeath(e);
+        }
+    }
+
+    /**
+     * Used to free an agent
+     * 
+     * @param agent
+     *            , the agent to free
+     * @throws RelationException
+     *             , if an attempt to manipulate the agents-entities-relation has failed.
+     */
+    @Override
+    public void freeAgent(String agent) throws RelationException {
+        try {
+            getClient().freeAgent(agent);
+            // agent is just freed, not removed. Keep it in #localAgents.
+        } catch (RemoteException e) {
+            throw environmentSuddenDeath(e);
+        }
+    }
+
+    @Override
+    public List<String> getAgents() {
+        try {
+            return getClient().getAgents();
+        } catch (RemoteException e) {
+            throw environmentSuddenDeath(e);
+        }
+    }
+
+    /**
+     * Gets all associated agents for a certain entity
+     * 
+     * @param entity
+     *            , the entity
+     * @return a list of agents
+     * @throws EntityException
+     *             , if something unexpected happens when attempting to add or remove an entity.
+     */
+    @Override
+    public Collection<String> getAssociatedAgents(String entity) throws EntityException {
+        try {
+            return getClient().getAssociatedAgents(entity);
+        } catch (RemoteException e) {
+            throw environmentSuddenDeath(e);
+        }
+    }
+
+    @Override
+    public Set<String> getAssociatedEntities(String agent) throws AgentException {
+        try {
+            return getClient().getAssociatedEntities(agent);
+        } catch (RemoteException e) {
+            throw environmentSuddenDeath(e);
+        }
+    }
+
+    /**
+     * Gets all the entities that exist on the server
+     * 
+     * @return the list of entity names
+     */
+    @Override
+    public Collection<String> getEntities() {
+        try {
+            return getClient().getEntities();
+        } catch (RemoteException e) {
+            throw new NoEnvironmentException("can't access environment", e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void associateEntity(String agentId, String entityId) throws RelationException {
+        LOGGER.debug("Associating Agent " + agentId + " with Entity " + entityId + ".");
+        try {
+            getClient().associateEntity(agentId, entityId);
+            startEntityGUI(agentId, entityId);
+        } catch (RemoteException e) {
+            throw environmentSuddenDeath(e);
+        } catch (Exception e) {
+            throw new RelationException("failed to associate entity", e);
+        }
+    }
+
+    /**
+     * Startup the GUI by instantiating a {@link ClientController}.
+     * 
+     * @param agentId
+     *            the agent to attach the controller to
+     * @param entityId
+     *            the entity displayed by the controller
+     * @throws EntityException
+     *             if we fail to create the controller or agent
+     * @throws AgentException
+     *             if we fail to register the new human agent
+     * @throws RelationException
+     *             if we fail to associate the new human agent
+     */
+    private void startEntityGUI(String agentId, String entityId) throws EntityException, AgentException,
+            RelationException {
+        if (hasEntityGUI(entityId)) {
+            ClientController control = null;
+            if ("human".equals(getType(entityId))) {
+                HumanAgent agent = (HumanAgent) getRunningAgent(agentId);
+                if (agent == null) {
+                    agent = new HumanAgent("Human" + getAgents().size(), this);
+                    agent.registerEntity(entityId);
+                    addRunningAgent(agent);
+                    associateEntity(agent.getAgentId(), entityId);
+                    agent.start();
+                    return;
+                }
+                control = new ClientController(this, entityId, agent);
+            } else {
+                control = new ClientController(this, entityId);
+            }
+            control.startupGUI();
+            putEntityController(entityId, control);
+        }
+    }
+
+    /**
+     * Used to free an entity
+     * 
+     * @param entity
+     *            , the entity to free
+     * @throws RelationException
+     *             , if an attempt to manipulate the agents-entities-relation has failed.
+     * @throws EntityException
+     *             , if something unexpected happens when attempting to add or remove an entity.
+     */
+    @Override
+    public void freeEntity(String entity) throws RelationException, EntityException {
+        try {
+            getClient().freeEntity(entity);
+        } catch (RemoteException e) {
+            throw environmentSuddenDeath(e);
+        }
+    }
+
+    /**
+     * Used to free an agent-entity pair.
+     * 
+     * @param agent
+     *            , the agent
+     * @param entity
+     *            , the entity
+     * @throws RelationException
+     *             , if an attempt to manipulate the agents-entities-relation has failed.
+     */
+    @Override
+    public void freePair(String agent, String entity) throws RelationException {
+        try {
+            removeEntityController(entity);
+            getClient().freePair(agent, entity);
+        } catch (RemoteException e) {
+            throw environmentSuddenDeath(e);
+        }
+    }
+
+    /**
+     * Check whether the given entity has a gui attached or will have one attached.
+     * 
+     * @param entity
+     *            the entity to check
+     * @return true iff the entity can have a gui
+     */
+    public boolean hasEntityGUI(String entity) {
+        if (entityToGUI.containsKey(entity) || storedPercepts.containsKey(entity)) {
+            return true;
+        }
+        try {
+            String type = getType(entity);
+            if ("human".equals(type)) {
+                return true;
+            } else if ("bot".equals(type)) {
+                return !isConnectedToGoal() || InitParam.LAUNCHGUI.getBoolValue();
+            }
+        } catch (EntityException e) {
+            LOGGER.error(String.format("Could not retrieve the type of entity %s!", entity), e);
+        }
+        return false;
+    }
+
+    /**
+     * Perform an entity action, is passed towards the server
+     * 
+     * @param entity
+     *            , the entity that should perform the action
+     * @param action
+     *            , the action that should be performed
+     * @return the percept resulting from the action, null if an error occurred.
+     * @throws ActException
+     * @throws RemoteException
+     */
+    public Percept performEntityAction(String entity, Action action) throws RemoteException, ActException {
+        if (isConnectedToGoal() && "sendToGUI".equals(action.getName())) {
+            final ClientController entityGUI = getEntityController(entity);
+            if (entityGUI == null) {
+                ActException e = new ActException("sendToGUI failed:" + entity + " is not connected to a GUI.");
+                e.setType(ActException.FAILURE);
+                throw e;
+            }
+            return entityGUI.sendToGUI(action.getParameters());
+        } else {
+            return getClient().performEntityAction(entity, action);
         }
     }
 
@@ -317,7 +542,41 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
         if ((associatedEntities == null) || associatedEntities.isEmpty()) {
             throw new PerceiveException("Agent \"" + agent + "\" has no associated entities.");
         }
-        return gatherPercepts(agent, associatedEntities, entities);
+        final Map<String, Collection<Percept>> percepts = gatherPercepts(agent, associatedEntities, entities);
+        try {
+            // allow other threads to be processed
+            Thread.sleep(2);
+        } catch (InterruptedException e) {
+            // Ignore being interupted
+        }
+        return percepts;
+    }
+
+    /**
+     * Tries to send the percepts to the given entity, if it is not yet present we will store the percepts in a map.
+     * 
+     * @param entry
+     *            the entity-percepts entry
+     */
+    protected void saveAndSendPercepts(String entity, Collection<Percept> percepts) {
+        if (!hasEntityGUI(entity)) {
+            return;
+        }
+        ClientController cc = this.getEntityController(entity);
+        if (cc != null) {
+            if (storedPercepts.containsKey(entity)) {
+                cc.handlePercepts(storedPercepts.get(entity));
+            }
+            cc.handlePercepts(percepts);
+            storedPercepts.remove(entity);
+        } else {
+            List<Percept> tpercepts = new ArrayList<Percept>();
+            if (storedPercepts.containsKey(entity)) {
+                tpercepts = storedPercepts.get(entity);
+            }
+            tpercepts.addAll(percepts);
+            storedPercepts.put(entity, tpercepts);
+        }
     }
 
     /**
@@ -345,13 +604,18 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
                 throw new PerceiveException("Entity \"" + entity + "\" has not been associated with the agent \""
                         + agent + "\".");
             }
-            List<Percept> all = PerceptsHandler.getAllPerceptsFromEntity(entity, this);
-            for (Percept p : all) {
-                p.setSource(entity);
-            }
-            perceptsMap.put(entity, all);
+            perceptsMap.put(entity, gatherPercepts(entity));
         }
         return perceptsMap;
+    }
+
+    public List<Percept> gatherPercepts(String name) throws PerceiveException {
+        List<Percept> all = PerceptsHandler.getAllPerceptsFromEntity(name, this);
+        for (Percept p : all) {
+            p.setSource(name);
+        }
+        saveAndSendPercepts(name, all);
+        return all;
     }
 
     /**
@@ -406,7 +670,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
         for (String agentname : allAgents) {
             try {
                 for (String entity : getAssociatedEntities(agentname)) {
-                    removeEntityController(entity);
                     freePair(agentname, entity);
                 }
                 unregisterAgent(agentname);
@@ -423,30 +686,8 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
         }
     }
 
-    /*
-     * Listener functionality. Attaching, detaching, notifying listeners.
-     */
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void attachEnvironmentListener(EnvironmentListener listener) {
-        if (!getEnvironmentListeners().contains(listener) || listener == this) {
-            getEnvironmentListeners().add(listener);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void detachEnvironmentListener(EnvironmentListener listener) {
-        if (getEnvironmentListeners().contains(listener)) {
-            getEnvironmentListeners().remove(listener);
-        }
-    }
-
-    public void addRunningAgent(BW4TAgent agent) {
+    public void addRunningAgent(BW4TAgent agent) throws AgentException {
+        registerAgent(agent.getAgentId());
         runningAgents.put(agent.getAgentId(), agent);
     }
 
@@ -473,145 +714,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 
     public BW4TAgent getRunningAgent(String name) {
         return runningAgents.get(name);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void attachAgentListener(String agent, AgentListener listener) {
-        if (!localAgents.contains(agent)) {
-            return;
-        }
-        Set<AgentListener> listeners = agentsToAgentListeners.get(agent);
-        if (listeners == null) {
-            listeners = new HashSet<AgentListener>();
-        }
-        listeners.add(listener);
-        agentsToAgentListeners.put(agent, (HashSet<AgentListener>) listeners);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void detachAgentListener(String agent, AgentListener listener) {
-        if (!localAgents.contains(agent)) {
-            return;
-        }
-        Set<AgentListener> listeners = agentsToAgentListeners.get(agent);
-        if ((listeners == null) || !listeners.contains(agent)) {
-            return;
-        }
-        listeners.remove(listener);
-    }
-
-    /**
-     * Used to unregister an agent on the server side
-     * 
-     * @param agent
-     *            , the agent to unregister
-     * @throws AgentException
-     *             if the attempt failed
-     */
-    @Override
-    public void unregisterAgent(String agent) throws AgentException {
-        try {
-            LOGGER.debug("Unregistering agent: " + agent);
-            localAgents.remove(agent);
-            removeRunningAgent(agent);
-            getClient().unregisterAgent(agent);
-        } catch (RemoteException e) {
-            throw environmentSuddenDeath(e);
-        }
-    }
-
-    /**
-     * Gets all the entities that exist on the server
-     * 
-     * @return the list of entity names
-     */
-    @Override
-    public Collection<String> getEntities() {
-        try {
-            return getClient().getEntities();
-        } catch (RemoteException e) {
-            throw new NoEnvironmentException("can't access environment", e);
-        }
-    }
-
-    /**
-     * Used to free an entity
-     * 
-     * @param entity
-     *            , the entity to free
-     * @throws RelationException
-     *             , if an attempt to manipulate the agents-entities-relation has failed.
-     * @throws EntityException
-     *             , if something unexpected happens when attempting to add or remove an entity.
-     */
-    @Override
-    public void freeEntity(String entity) throws RelationException, EntityException {
-        try {
-            getClient().freeEntity(entity);
-        } catch (RemoteException e) {
-            throw environmentSuddenDeath(e);
-        }
-    }
-
-    /**
-     * Used to free an agent
-     * 
-     * @param agent
-     *            , the agent to free
-     * @throws RelationException
-     *             , if an attempt to manipulate the agents-entities-relation has failed.
-     */
-    @Override
-    public void freeAgent(String agent) throws RelationException {
-        try {
-            getClient().freeAgent(agent);
-            // agent is just freed, not removed. Keep it in #localAgents.
-        } catch (RemoteException e) {
-            throw environmentSuddenDeath(e);
-        }
-    }
-
-    /**
-     * Used to free an agent-entity pair.
-     * 
-     * @param agent
-     *            , the agent
-     * @param entity
-     *            , the entity
-     * @throws RelationException
-     *             , if an attempt to manipulate the agents-entities-relation has failed.
-     */
-    @Override
-    public void freePair(String agent, String entity) throws RelationException {
-        try {
-            getClient().freePair(agent, entity);
-        } catch (RemoteException e) {
-            throw environmentSuddenDeath(e);
-        }
-    }
-
-    /**
-     * Gets all associated agents for a certain entity
-     * 
-     * @param entity
-     *            , the entity
-     * @return a list of agents
-     * @throws EntityException
-     *             , if something unexpected happens when attempting to add or remove an entity.
-     */
-    @Override
-    public Collection<String> getAssociatedAgents(String entity) throws EntityException {
-        try {
-            return getClient().getAssociatedAgents(entity);
-        } catch (RemoteException e) {
-            throw environmentSuddenDeath(e);
-        }
     }
 
     /**
@@ -663,13 +765,31 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     public EnvironmentState getState() {
         if (getClient() != null) {
             try {
-                LOGGER.debug("Getting the environment state: " + getClient().getState());
-                return getClient().getState();
+                final EnvironmentState state = getClient().getState();
+                LOGGER.debug("Getting the environment state: " + state);
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    // ignore interruptions
+                }
+                return state;
             } catch (RemoteException e) {
                 LOGGER.warn("getState detected non-responsive environment. Assuming it's killed.", e);
             }
         }
         return EnvironmentState.KILLED;
+    }
+
+    public NewMap getMap() {
+        return getClient().getMap();
+    }
+
+    public BW4TClient getClient() {
+        return client;
+    }
+
+    public boolean isConnectedToGoal() {
+        return InitParam.GOAL.getBoolValue();
     }
 
     @Override
@@ -768,36 +888,28 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     }
 
     /**
-     * Resets the environment(-interface) with a set of key-value-pairs. to combine properly with BatchRunner, this
-     * reset does not entirely reset the env, it does not disconnect the entities. Note that this is NOT the reset
-     * attached to the reset button in the {@link ServerContextDisplay}.
+     * Get the gui controller associated with the given entity.
+     * 
+     * @param entity
+     *            the name of the entity
+     * @return the gui controller
      */
-    @Override
-    public void reset(Map<String, Parameter> params) throws ManagementException {
-        getClient().resetServer(params);
-    }
-
-    public NewMap getMap() {
-        return getClient().getMap();
-    }
-
-    public BW4TClient getClient() {
-        return client;
-    }
-
-    public boolean isConnectedToGoal() {
-        return InitParam.GOAL.getBoolValue();
-    }
-
     public ClientController getEntityController(String entity) {
         return entityToGUI.get(entity);
     }
 
+    /**
+     * Add or remove a gui controller to/from the system.
+     * 
+     * @param entity
+     *            the name of the entity
+     * @param control
+     *            the gui controller
+     */
     public void putEntityController(String entity, ClientController control) {
         if (control == null) {
             entityToGUI.remove(entity);
-        }
-        else {
+        } else {
             entityToGUI.put(entity, control);
         }
     }
@@ -813,10 +925,16 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
         if (control != null) {
             control.stop();
             putEntityController(entity, null);
+            try {
+                // Take some time to let the thread stop itself
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                // ignore interruptions
+            }
         }
     }
 
-    public List<EnvironmentListener> getEnvironmentListeners() {
+    List<EnvironmentListener> getEnvironmentListeners() {
         return environmentListeners;
     }
 }

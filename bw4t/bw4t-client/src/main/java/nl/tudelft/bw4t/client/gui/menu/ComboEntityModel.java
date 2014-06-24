@@ -11,7 +11,7 @@ import javax.swing.ComboBoxModel;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 
-public class ComboAgentModel extends AbstractListModel implements ComboBoxModel {
+public class ComboEntityModel extends AbstractListModel implements ComboBoxModel {
     private static final long serialVersionUID = 344469588673323347L;
 
     private final BW4TClientGUI gui;
@@ -21,7 +21,7 @@ public class ComboAgentModel extends AbstractListModel implements ComboBoxModel 
     private static final String[] DEFAULT_OPTIONS = new String[] { "all" };
     private String selection = DEFAULT_OPTIONS[0];
 
-    public ComboAgentModel(BW4TClientGUI clientGUI) {
+    public ComboEntityModel(BW4TClientGUI clientGUI) {
         this.gui = clientGUI;
     }
 
