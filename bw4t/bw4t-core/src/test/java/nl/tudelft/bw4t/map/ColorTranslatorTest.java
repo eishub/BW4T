@@ -7,14 +7,27 @@ import static org.junit.Assert.assertTrue;
 import java.awt.Color;
 import java.util.List;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  * The class <code>ColorTranslatorTest</code> contains tests for the class <code>{@link ColorTranslator}</code>.
  */
 public class ColorTranslatorTest {
+    private static final Logger LOGGER = Logger.getLogger(ColorTranslatorTest.class);
+    
+    @BeforeClass
+    public static void setupLogger() {
+        if(!LOGGER.getAllAppenders().hasMoreElements()){
+            BasicConfigurator.configure();
+        }
+    }
+    
     /**
      * Run the ArrayList<String> getAllColors() method test.
      *
@@ -80,6 +93,7 @@ public class ColorTranslatorTest {
             throws Exception {
         Color color = new Color(1);
 
+        LOGGER.info("The next error message can be ignored:");
         String result = ColorTranslator.translate2ColorString(color);
 
         // add additional test code here

@@ -101,10 +101,9 @@ public abstract class AbstractMapController implements MapController, Runnable {
     @Override
     public void setRunning(boolean run) {
         if (!run) {
-            starting = false;
             setForceRunning(false);
-        } else if (!running) {
-            starting = true;
+            starting = false;
+        } else if (!running && !starting) {
             startupUpdateThread();
         }
     }
@@ -137,6 +136,7 @@ public abstract class AbstractMapController implements MapController, Runnable {
      * Start the update thread.(will fail if it's already running)
      */
     private void startupUpdateThread() {
+        starting = true;
         Thread thread = new Thread(new Updater(this), "Updater->" + Integer.toHexString(this.hashCode()));
         thread.start();
     }
