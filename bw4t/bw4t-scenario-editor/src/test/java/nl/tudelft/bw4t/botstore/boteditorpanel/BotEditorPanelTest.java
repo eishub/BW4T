@@ -16,7 +16,8 @@ import nl.tudelft.bw4t.scenariogui.botstore.gui.BotStoreViewInterface;
 import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
-import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
+import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
+import nl.tudelft.bw4t.scenariogui.util.OptionPromptHelper;
 
 import org.junit.After;
 import org.junit.Before;
@@ -215,7 +216,7 @@ public class BotEditorPanelTest {
 
     @Test
     public final void testValidFileNamePrompt() {
-        NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
+        OptionPrompt spyOption = OptionPromptHelper.getNoOptionPrompt();
         ScenarioEditor.setOptionPrompt(spyOption);
         editor.getBotEditorPanel().getBotNameField().setText("");
         editor.getBotEditorPanel().getSaveButton().doClick();
@@ -226,7 +227,7 @@ public class BotEditorPanelTest {
 
     @Test
     public final void testFileNameEndPrompt() {
-        NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
+        OptionPrompt spyOption = OptionPromptHelper.getNoOptionPrompt();
         ScenarioEditor.setOptionPrompt(spyOption);
         editor.getBotEditorPanel().getBotNameField().setText("bob");
         editor.getBotEditorPanel().getFileNameField().setText("bob");
@@ -237,7 +238,7 @@ public class BotEditorPanelTest {
 
     @Test
     public final void testNoFileNameEndPrompt() {
-        NoMockOptionPrompt spyOption = spy(new NoMockOptionPrompt());
+        OptionPrompt spyOption = OptionPromptHelper.getNoOptionPrompt();
         ScenarioEditor.setOptionPrompt(spyOption);
         editor.getBotEditorPanel().getBotNameField().setText("bob");
         editor.getBotEditorPanel().getFileNameField().setText(".goal");

@@ -21,7 +21,8 @@ import nl.tudelft.bw4t.scenariogui.editor.controller.AbstractMenuOption;
 import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
-import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
+import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
+import nl.tudelft.bw4t.scenariogui.util.OptionPromptHelper;
 
 import org.junit.After;
 import org.junit.Before;
@@ -67,7 +68,7 @@ public class ScenarioEditorTest {
 
     @Test
     public void testJAXBException() throws FileNotFoundException, JAXBException {
-        YesMockOptionPrompt yesMockOption = spy(new YesMockOptionPrompt());
+        OptionPrompt yesMockOption = OptionPromptHelper.getYesOptionPrompt();
 
         // Setup the behaviour
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
