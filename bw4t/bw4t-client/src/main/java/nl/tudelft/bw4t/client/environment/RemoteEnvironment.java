@@ -75,6 +75,8 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     private final Map<String, BW4TAgent> runningAgents = new HashMap<>();
 
     private final Map<String, List<Percept>> storedPercepts = new HashMap<>();
+    
+    PerceptDebugScreen pds = new PerceptDebugScreen(this);
 
     /**
      * {@inheritDoc}
@@ -99,7 +101,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
                 getClient().initServer(serverparams);
             }
             getClient().register();
-
         } catch (RemoteException e) {
             LOGGER.error("Unable to access the remote environment.", e);
         } catch (MalformedURLException e) {
@@ -553,33 +554,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     }
 
     /**
-     * Tries to send the percepts to the given entity, if it is not yet present we will store the percepts in a map.
-     * 
-     * @param entry
-     *            the entity-percepts entry
-     */
-    protected void saveAndSendPercepts(String entity, Collection<Percept> percepts) {
-        if (!hasEntityGUI(entity)) {
-            return;
-        }
-        ClientController cc = this.getEntityController(entity);
-        if (cc != null) {
-            if (storedPercepts.containsKey(entity)) {
-                cc.handlePercepts(storedPercepts.get(entity));
-            }
-            cc.handlePercepts(percepts);
-            storedPercepts.remove(entity);
-        } else {
-            List<Percept> tpercepts = new ArrayList<Percept>();
-            if (storedPercepts.containsKey(entity)) {
-                tpercepts = storedPercepts.get(entity);
-            }
-            tpercepts.addAll(percepts);
-            storedPercepts.put(entity, tpercepts);
-        }
-    }
-
-    /**
      * Gets all percepts for a certain agent for a specified list of entities
      * 
      * @param agent
@@ -609,6 +583,12 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
         return perceptsMap;
     }
 
+    /**
+     * Gather all the new percepts for the given entity from the environment
+     * @param name name of the entity
+     * @return the percepts for the given entity
+     * @throws PerceiveException if we failed to get the entity
+     */
     public List<Percept> gatherPercepts(String name) throws PerceiveException {
         List<Percept> all = PerceptsHandler.getAllPerceptsFromEntity(name, this);
         for (Percept p : all) {
@@ -616,6 +596,41 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
         }
         saveAndSendPercepts(name, all);
         return all;
+    }
+
+    /**
+     * Tries to send the percepts to the given entity, if it is not yet present we will store the percepts in a map.
+     * 
+     * @param entry
+     *            the entity-percepts entry
+     */
+    protected void saveAndSendPercepts(String entity, Collection<Percept> percepts) {
+        if (!hasEntityGUI(entity)) {
+            return;
+        }
+        ClientController cc = this.getEntityController(entity);
+        if (cc != null) {
+            if (isConnectedToGoal() && storedPercepts.containsKey(entity)) {
+                cc.handlePercepts(storedPercepts.get(entity));
+                storedPercepts.remove(entity);
+            }
+            cc.handlePercepts(percepts);
+        } else {
+            storePercepts(entity, percepts);
+        }
+    }
+
+    /**
+     * @param entity
+     * @param percepts
+     */
+    public void storePercepts(String entity, Collection<Percept> percepts) {
+        List<Percept> tpercepts = new ArrayList<Percept>();
+        if (storedPercepts.containsKey(entity)) {
+            tpercepts.addAll(storedPercepts.get(entity));
+        }
+        tpercepts.addAll(percepts);
+        storedPercepts.put(entity, tpercepts);
     }
 
     /**
@@ -936,5 +951,9 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 
     List<EnvironmentListener> getEnvironmentListeners() {
         return environmentListeners;
+    }
+
+    public List<Percept> getStoredPercepts(String selectedEntity) {
+        return storedPercepts.get(selectedEntity);
     }
 }

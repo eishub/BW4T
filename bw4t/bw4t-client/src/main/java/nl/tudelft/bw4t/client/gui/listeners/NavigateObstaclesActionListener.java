@@ -15,7 +15,7 @@ import org.apache.log4j.Logger;
 /**
  * ActionListener that performs the pick up action when that command is pressed in the pop up menu
  */
-public class NavigateObstaclesActionListener extends ClientActionListener {
+public class NavigateObstaclesActionListener extends AbstractClientActionListener {
     
     /**
      * The log4j Logger which displays logs on console
@@ -25,20 +25,21 @@ public class NavigateObstaclesActionListener extends ClientActionListener {
     public NavigateObstaclesActionListener(ClientController controller) {
         super(controller);
     }
-
+    
     @Override
-    public void actionPerformed(ActionEvent e) {
-        if (!getController().getEnvironment().isConnectedToGoal() && InitParam.GOALHUMAN.getBoolValue()) {
-            try {
-                getController().getHumanAgent().navigateObstacles();
-            } catch (Exception e1) {
-                LOGGER.error("Could tell the agent to perform a navigateObstacles action.", e1);
-            }
-        } else {
-            List<Percept> percepts = new LinkedList<Percept>();
-            Percept percept = new Percept("navigateObstacles");
-            percepts.add(percept);
-            getController().setToBePerformedAction(percepts);
+    protected void actionWithHumanAgent(ActionEvent arg0) {
+        try {
+            getController().getHumanAgent().navigateObstacles();
+        } catch (Exception e1) {
+            LOGGER.error("Could tell the agent to perform a navigateObstacles action.", e1);
         }
+    }
+    
+    @Override
+    protected void actionWithGoalAgent(ActionEvent arg0) {
+        List<Percept> percepts = new LinkedList<Percept>();
+        Percept percept = new Percept("navigateObstacles");
+        percepts.add(percept);
+        getController().setToBePerformedAction(percepts);
     }
 }
