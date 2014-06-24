@@ -3,7 +3,6 @@ package nl.tudelft.bw4t.scenariogui.editor.controller;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -13,7 +12,8 @@ import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
-import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
+import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
+import nl.tudelft.bw4t.scenariogui.util.OptionPromptHelper;
 
 import org.junit.After;
 import org.junit.Before;
@@ -29,13 +29,13 @@ public class UpdateEPartnerCountTest {
 
     private EntityPanel entityPanel;
 
-    private NoMockOptionPrompt spyOption;
+    private OptionPrompt spyOption;
 
     @Before
     public void startUp() {
         entityPanel = new EntityPanel();
         scenarioEditor = new ScenarioEditor(new ConfigurationPanel(), entityPanel, new BW4TClientConfig());
-        spyOption = spy(new NoMockOptionPrompt());
+        spyOption = OptionPromptHelper.getNoOptionPrompt();
         ScenarioEditor.setOptionPrompt(spyOption);
     }
 

@@ -38,7 +38,7 @@ public class ExportToMASTest {
         FileUtils.deleteDirectory(new File(EXPORT_DIR));
 
         /* Mock the alert boxes in ScenarioEditor in the case of an error (unexpected) so Jenkins doesn't freeze */
-        ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
+        ScenarioEditor.setOptionPrompt(OptionPromptHelper.getYesOptionPrompt());
 
         configuration = BW4TClientConfig.fromXML(CONFIG_PATH);
 
