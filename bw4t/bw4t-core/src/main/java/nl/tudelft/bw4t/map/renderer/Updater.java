@@ -1,5 +1,7 @@
 package nl.tudelft.bw4t.map.renderer;
 
+import java.lang.reflect.InvocationTargetException;
+
 import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
@@ -45,10 +47,14 @@ class Updater implements Runnable {
         LOGGER.info("Started updater thread for: " + controller);
 
         while (controller.isRunning() && !controller.isStarting()) {
-
-            SwingUtilities.invokeLater(controller);
-
             try {
+                try {
+                    SwingUtilities.invokeAndWait(controller);
+                } catch (InvocationTargetException e) {
+                    LOGGER.error("An Error occured while trying to update: " + controller, e);
+                    controller.setRunning(false);
+                }
+
                 // Sleep for a short while
                 Thread.sleep(controller.getRenderSettings().getUpdateDelay());
             } catch (InterruptedException e) {

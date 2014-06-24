@@ -1,32 +1,28 @@
 package nl.tudelft.bw4t.client.gui.menu;
 
-import eis.exceptions.EntityException;
-
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
-import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
-
-public class ComboEntityModel extends AbstractListModel implements ComboBoxModel {
+public class ComboEntityModel extends AbstractListModel<String> implements ComboBoxModel<String> {
     private static final long serialVersionUID = 344469588673323347L;
 
-    private final BW4TClientGUI gui;
+    private final EntityComboModelProvider gui;
 
-    private List<String> entities;
+    private List<String> entities = new ArrayList<>();
 
     private static final String[] DEFAULT_OPTIONS = new String[] { "all" };
     private String selection = DEFAULT_OPTIONS[0];
 
-    public ComboEntityModel(BW4TClientGUI clientGUI) {
+    public ComboEntityModel(EntityComboModelProvider clientGUI) {
         this.gui = clientGUI;
     }
 
     @Override
-    public Object getElementAt(int listIndex) {
+    public String getElementAt(int listIndex) {
         int defaultOptionsSize = DEFAULT_OPTIONS.length;
 
         /** If the element is a default option, then return that option: */
@@ -82,17 +78,10 @@ public class ComboEntityModel extends AbstractListModel implements ComboBoxModel
      * load the list of entities from the server and filter it.
      */
     private void filterEntityList() {
-        final RemoteEnvironment env = gui.getController().getEnvironment();
-        entities = new ArrayList<>();
-
-        for (String entity : env.getEntities()) {
-            try {
-                if (!"epartner".equalsIgnoreCase(env.getType(entity))) {
-                    entities.add(entity);
-                }
-            } catch (EntityException e) {
-                e.printStackTrace();
-            }
+        Collection<String> ents = gui.getEntities();
+        if(ents != null){
+            this.entities.clear();
+            this.entities.addAll(ents);
         }
     }
 

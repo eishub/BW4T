@@ -1,12 +1,7 @@
 package nl.tudelft.bw4t.client.gui;
 
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -46,6 +41,10 @@ import nl.tudelft.bw4t.map.renderer.MapRenderer;
 import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
 
 import org.apache.log4j.Logger;
+
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
+import eis.iilang.Percept;
 
 /**
  * Render the current state of the world at a fixed rate (10 times per second, see run()) for a client. It connects to
@@ -112,7 +111,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
     private JScrollPane mapRenderer;
     
     /** The agent selector. */
-    private JComboBox<ComboEntityModel> agentSelector;
+    private JComboBox<String> agentSelector;
     
     /** The jpopup menu. */
     private JPopupMenu jPopupMenu;
@@ -237,7 +236,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
         return jPopupMenu;
     }
 
-    public JComboBox<ComboEntityModel> getAgentSelector() {
+    public JComboBox<String> getAgentSelector() {
         return agentSelector;
     }
     
@@ -291,9 +290,9 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
         batteryProgressBar.setMaximum(100);
         batteryProgressBar.setValue(100);
 
-        BatteryProgressBarListener.getListeners().add(new BatteryProgressBarListener(batteryProgressBar, this));
+        new BatteryProgressBarListener(batteryProgressBar, this);
 
-        agentSelector = new JComboBox<ComboEntityModel>(new ComboEntityModel(this));
+        agentSelector = new JComboBox<String>(new ComboEntityModel(getController()));
 
         botButtonPanel.add(batteryLabel);
         botButtonPanel.add(batteryProgressBar);
@@ -465,4 +464,5 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
         }
         controller = c;
     }
+
 }
