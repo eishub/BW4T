@@ -251,7 +251,7 @@ public class RobotEntity implements EntityInterface {
         IndexedIterable<Object> allBlocks = context.getObjects(Block.class);
         for (Object object : allBlocks) {
             Block b = (Block) object;
-            if (ourRobot.distanceTo(b) <= 1 && ourRobot.isHolding() == null || !ourRobot.isHolding().contains(b)) {
+            if (ourRobot.canPickUp(b)) {
                 result.add(b.getId());
                 return result;
             }
