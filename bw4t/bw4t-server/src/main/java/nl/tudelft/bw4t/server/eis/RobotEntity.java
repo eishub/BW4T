@@ -34,6 +34,7 @@ import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.epartners.EPartner;
 import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.model.robots.NavigatingRobot;
+import nl.tudelft.bw4t.server.model.robots.NavigatingRobot.State;
 import nl.tudelft.bw4t.server.model.robots.handicap.AbstractRobotDecorator;
 import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.server.model.zone.BlocksRoom;
@@ -248,9 +249,13 @@ public class RobotEntity implements EntityInterface {
      */
     @AsPercept(name = "atBlock", multiplePercepts = true, filter = Filter.Type.ON_CHANGE_NEG)
     public List<Long> getAtBlock() {
+        List<Long> ret = new ArrayList<Long>();
         Block closest = null;
         double cdist = Integer.MAX_VALUE;
         IndexedIterable<Object> allBlocks = context.getObjects(Block.class);
+        if (ourRobot.getState() != State.ARRIVED) {
+            return ret;
+        }
         for (Object object : allBlocks) {
             Block b = (Block) object;
             if (ourRobot.canPickUp(b)) {
@@ -261,7 +266,6 @@ public class RobotEntity implements EntityInterface {
                 }
             }
         }
-        List<Long> ret = new ArrayList<Long>();
         if (closest != null) {
             ret.add(closest.getId());
         }
