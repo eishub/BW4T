@@ -11,6 +11,7 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 import nl.tudelft.bw4t.scenariogui.epartner.controller.EpartnerController;
 import nl.tudelft.bw4t.scenariogui.epartner.gui.EpartnerFrame;
+import nl.tudelft.bw4t.scenariogui.util.OptionPromptHelper;
 
 import org.junit.After;
 import org.junit.Before;
@@ -33,6 +34,7 @@ public class EpartnerFrameTest {
         controller = new EpartnerController(parent, 0);
         frame = new EpartnerFrame(controller);
         spyframe = spy(frame);
+        ScenarioEditor.setOptionPrompt(OptionPromptHelper.getYesOptionPrompt());
     }
 
     @After
