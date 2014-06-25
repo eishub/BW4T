@@ -1,6 +1,0 @@
-sprint reflection sander:
-Description of product design: estimated 5, actual 5
-Decide what to test: estimated 1, actual 1
-AbstractRobot class: estimated 8, actual 13, note: Very big class which was abstract. Took some time to find out how to test an abstract class and its methods.
-NavigatingRobot class: estimated 8, actual 5, note: Was less work than expected. Contained a lot of static methods which was adviced to skip for testing as it is really hard to test.
-Server class: estimated 8, actual 13, note: not finished. Really hard to find out whether methods in this class were testable or not.
