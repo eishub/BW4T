@@ -233,7 +233,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
     public boolean canPickUp(BoundedMoveableObject obj) {
         if (obj instanceof Block) {
             Block b = (Block) obj;
-            return (distanceTo(obj.getLocation()) <= ARM_DISTANCE) && b.isFree() && (holding.size() < grippercap);
+            return (distanceTo(obj.getLocation()) <= topMostHandicap.getSize() + ARM_DISTANCE) && b.isFree() && (holding.size() < grippercap);
         }
         return false;
     }
