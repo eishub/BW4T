@@ -19,7 +19,6 @@ import nl.tudelft.bw4t.map.Door.Orientation;
 @SuppressWarnings("serial")
 @XmlRootElement
 public class Zone implements Serializable {
-    
     /**
      * Type of the zone
      */
@@ -255,5 +254,63 @@ public class Zone implements Serializable {
         return temp;
     }
 
+    
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((blocks == null) ? 0 : blocks.hashCode());
+        result = prime * result + ((boundingbox == null) ? 0 : boundingbox.hashCode());
+        result = prime * result + ((doors == null) ? 0 : doors.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((neighbours == null) ? 0 : neighbours.hashCode());
+        result = prime * result + ((renderOptions == null) ? 0 : renderOptions.hashCode());
+        result = prime * result + ((type == null) ? 0 : type.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Zone other = (Zone) obj;
+        if (blocks == null) {
+            if (other.blocks != null)
+                return false;
+        } else if (!blocks.equals(other.blocks))
+            return false;
+        if (boundingbox == null) {
+            if (other.boundingbox != null)
+                return false;
+        } else if (!boundingbox.equals(other.boundingbox))
+            return false;
+        if (doors == null) {
+            if (other.doors != null)
+                return false;
+        } else if (!doors.equals(other.doors))
+            return false;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        if (neighbours == null) {
+            if (other.neighbours != null)
+                return false;
+        } else if (!neighbours.equals(other.neighbours))
+            return false;
+        if (renderOptions == null) {
+            if (other.renderOptions != null)
+                return false;
+        } else if (!renderOptions.equals(other.renderOptions))
+            return false;
+        if (type != other.type)
+            return false;
+        return true;
+    }
 }
 
