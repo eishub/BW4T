@@ -644,6 +644,10 @@ public class RobotEntity implements EntityInterface {
         for (EPartner ep : getVisible(EPartner.class)) {
             eps.add(ep);
         }
+        EPartner mine = ourRobot.getEPartner();
+        if(mine != null && !eps.contains(mine)) {
+            eps.add(mine);
+        }
         return eps;
     }
     
