@@ -33,41 +33,63 @@ public class MessageSenderActionListener extends AbstractClientActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionWithHumanAgent(ActionEvent e) {
+    	String ownName = getController().getMapController().getTheBot().getName();
+        /** Sends the message to the receiver(s): */
+        sendMessagesHuman(ownName, findReceivers(ownName));
+    }
+    
+    @Override
+    public void actionWithGoalAgent(ActionEvent e) {
+    	String ownName = getController().getMapController().getTheBot().getName();
+        /** Sends the message to the receiver(s): */
+        sendMessagesGoal(ownName, findReceivers(ownName));
+    }
+    
+    /**
+     * Finds the names of the receivers of the message:
+     * @param ownName
+     * @return the receivers of the message
+     */
+    private String[] findReceivers(String ownName) {
         /** Finds the names of the receivers of the message: */
         String receiver = (String) getController().getGui().getAgentSelector().getModel().getSelectedItem();
-        String ownName = getController().getMapController().getTheBot().getName();
         String[] receivers = new String[] {ownName, receiver};
         if ("all".equals(receiver) || ownName.equals(receiver)) {
             receivers = new String[] {receiver};
         }
         
-        /** Sends the message to the receiver(s): */
-        sendMessages(ownName, receivers);
-        
+        return receivers;
     }
     
     
     /**
-     * Sends the message to the receiver(s): 
+     * Sends the message from Human to the receiver(s): 
      * @param ownName 
      * @param receivers 
      */
-    private void sendMessages(String ownName, String[] receivers) {
+    private void sendMessagesHuman(String ownName, String[] receivers) {
         for (String name : receivers) {
-            if (!getController().getEnvironment().isConnectedToGoal()) {
-                try {
-                    getController().getHumanAgent().sendMessage(name, message);
-                } catch (ActException e1) {
-                    LOGGER.error("Could not send message to all other bots.", e1);
-                }
-            } else {
-                List<Percept> percepts = new LinkedList<Percept>();
-                Percept percept = new Percept("sendMessage", new Identifier(name), MessageTranslator.translateMessage(
-                        message, ownName));
-                percepts.add(percept);
-                getController().setToBePerformedAction(percepts);
+        	try {
+                getController().getHumanAgent().sendMessage(name, message);
+            } catch (ActException e1) {
+                LOGGER.error("Could not send message to all other bots.", e1);
             }
         }
+    }
+    
+    /**
+     * Sends the message from Human connected to GOAL to the receiver(s):
+     * @param ownName
+     * @param receivers
+     */
+    private void sendMessagesGoal(String ownName, String[] receivers) {
+    	for (String name : receivers) {
+    		 List<Percept> percepts = new LinkedList<Percept>();
+             Percept percept = new Percept("sendMessage", new Identifier(name), MessageTranslator.translateMessage(
+                     message, ownName));
+             percepts.add(percept);
+             getController().setToBePerformedAction(percepts);
+    	}
     }
 }
