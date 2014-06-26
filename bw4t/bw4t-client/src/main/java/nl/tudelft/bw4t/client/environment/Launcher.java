@@ -53,6 +53,10 @@ public final class Launcher {
                 init.put(param.nameLower(), new Identifier(findArgument(args, param)));
             }
         }
+        final String map = findArgument(args, "-map", "");
+        if(!map.isEmpty()) {
+            init.put("map", new Identifier(map));
+        }
         return startupEnvironment(init);
     }
 
