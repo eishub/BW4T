@@ -1,9 +1,6 @@
 package nl.tudelft.bw4t.server.repast;
 
 import java.awt.geom.Rectangle2D;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -11,15 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.xml.bind.JAXBException;
-
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Door.Orientation;
-import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
-import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.server.logging.BotLog;
 import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.BW4TServerMapListerner;
@@ -65,11 +58,6 @@ public class MapLoader implements BW4TServerMapListerner {
      */
     private static final Logger LOGGER = Logger.getLogger(MapLoader.class);
 
-    /**
-     * The map.
-     */
-    private BW4TServerMap map;
-
     private boolean loaded = false;
 
     /**
@@ -82,7 +70,6 @@ public class MapLoader implements BW4TServerMapListerner {
     public void contextChange(BW4TServerMap map) {
         loaded = false;
         if (map.hasContext() && map.hasMap()) {
-            this.map = map;
             loadMap(map);
             loaded = true;
         }
@@ -91,7 +78,6 @@ public class MapLoader implements BW4TServerMapListerner {
     @Override
     public void mapChange(BW4TServerMap map) {
         if (map.hasContext() && map.hasMap()) {
-            this.map = map;
             if (!loaded) {
                 loadMap(map);
                 loaded = true;
@@ -107,12 +93,8 @@ public class MapLoader implements BW4TServerMapListerner {
      * <li>An additional 1.5*N random blocks are random placed in the rooms.
      * </ul>
      * 
-     * @param tmpLocation
-     *            The location of the file
      * @param context
      *            The context to load to.
-     * @throws JAXBException
-     *             the JAXB exception
      */
     public static void loadMap(BW4TServerMap context) {
         if (context == null || !context.hasContext() || !context.hasMap()) {
