@@ -34,7 +34,7 @@ public class Stepper implements Runnable {
     /**
      *  default 10ms between steps
      */
-    private long loopDelay = 10;
+    private long loopDelay = 20;
     private boolean running = true;
 
     public Stepper(String scenario, AbstractEnvironment envi) throws ScenarioLoadException {
