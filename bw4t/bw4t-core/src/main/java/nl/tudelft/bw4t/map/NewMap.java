@@ -220,4 +220,59 @@ public class NewMap implements Serializable {
         return randomSequence;
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((area == null) ? 0 : area.hashCode());
+        result = prime * result + ((entities == null) ? 0 : entities.hashCode());
+        result = prime * result + ((randomBlocks == null) ? 0 : randomBlocks.hashCode());
+        result = prime * result + ((randomSequence == null) ? 0 : randomSequence.hashCode());
+        result = prime * result + ((sequence == null) ? 0 : sequence.hashCode());
+        result = prime * result + ((zones == null) ? 0 : zones.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        NewMap other = (NewMap) obj;
+        if (area == null) {
+            if (other.area != null)
+                return false;
+        } else if (!area.equals(other.area))
+            return false;
+        if (entities == null) {
+            if (other.entities != null)
+                return false;
+        } else if (!entities.equals(other.entities))
+            return false;
+        if (randomBlocks == null) {
+            if (other.randomBlocks != null)
+                return false;
+        } else if (!randomBlocks.equals(other.randomBlocks))
+            return false;
+        if (randomSequence == null) {
+            if (other.randomSequence != null)
+                return false;
+        } else if (!randomSequence.equals(other.randomSequence))
+            return false;
+        if (sequence == null) {
+            if (other.sequence != null)
+                return false;
+        } else if (!sequence.equals(other.sequence))
+            return false;
+        if (zones == null) {
+            if (other.zones != null)
+                return false;
+        } else if (!zones.equals(other.zones))
+            return false;
+        return true;
+    }
+
 }
