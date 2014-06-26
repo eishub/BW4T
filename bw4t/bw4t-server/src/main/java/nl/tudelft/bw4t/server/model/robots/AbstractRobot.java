@@ -448,7 +448,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 
             handicapMove();
         } catch (SpatialException e) {
-            LOGGER.debug("Spatial Exception");
             collided = true;
             LOGGER.log(BotLog.BOTLOG, "Bot " + this.name + " collided.");
             stopRobot();
