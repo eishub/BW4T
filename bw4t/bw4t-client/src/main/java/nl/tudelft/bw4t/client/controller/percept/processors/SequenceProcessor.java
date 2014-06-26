@@ -13,6 +13,7 @@ public class SequenceProcessor implements PerceptProcessor {
 
     @Override
     public void process(List<Parameter> parameters, ClientMapController clientMapController) {
+        clientMapController.getSequence().clear();
         for (Parameter i : parameters) {
             ParameterList list = (ParameterList) i;
             for (Parameter j : list) {
