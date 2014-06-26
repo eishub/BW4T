@@ -54,7 +54,7 @@ public final class PathPlanner {
      */
     public static List<NdPoint> findPath(List<Zone> allZones, List<BoundedMoveableObject> obstacles,
                                          NdPoint startPoint, NdPoint endPoint, int botSize) {
-        SimpleWeightedGraph<NdPoint, DefaultWeightedEdge> graph = generateNdPointGraph(allZones,
+        SimpleWeightedGraph<NdPoint, DefaultWeightedEdge> graph = generateNdPointGraph(startPoint, allZones,
                 obstacles, botSize);
 
         try {
@@ -148,7 +148,7 @@ public final class PathPlanner {
 
         for (BoundedMoveableObject obstacle : obstacles) {
             // Navigate around obstacles with a margin of 1 unit.
-            obstaclePoints.addAll(obstacle.getPointsOccupiedByObject(4));
+            obstaclePoints.addAll(obstacle.getPointsOccupiedByObject(2));
         }
 
         // Now for the zone points.
@@ -169,7 +169,7 @@ public final class PathPlanner {
         return zonePoints;
     }
 
-    private static SimpleWeightedGraph<NdPoint, DefaultWeightedEdge> generateNdPointGraph(
+    private static SimpleWeightedGraph<NdPoint, DefaultWeightedEdge> generateNdPointGraph(NdPoint start,
             Collection<Zone> allZones, Collection<BoundedMoveableObject> obstacles, int botSize) {
 
         SimpleWeightedGraph<NdPoint, DefaultWeightedEdge> graph = new SimpleWeightedGraph<NdPoint, DefaultWeightedEdge>(
@@ -177,7 +177,7 @@ public final class PathPlanner {
 
 
         List<NdPoint> vertices = returnVacantPoints(allZones, obstacles, botSize / 2);
-
+        vertices.add(start);
         // Margin is botsize / 2, since the points move under the center of the bot.
         sanitizeVertices(allZones, vertices, obstacles, botSize / 2);
 
@@ -186,6 +186,7 @@ public final class PathPlanner {
         for (NdPoint p : vertices) {
             graph.addVertex(p);
         }
+
 
         /*
             Create the edges
