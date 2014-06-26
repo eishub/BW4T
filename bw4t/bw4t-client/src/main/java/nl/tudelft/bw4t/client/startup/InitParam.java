@@ -144,11 +144,13 @@ public enum InitParam {
         Map<String, Parameter> ret = new HashMap<>();
         for (InitParam p: values()) {
             ret.put(p.nameLower(), new Identifier(p.getValue()));
+            LOGGER.info(p.nameLower() + " => " + p.getValue());
         }
         for (String k : parameters.keySet()) {
             InitParam p = Enum.valueOf(InitParam.class, k.toUpperCase());
             if (p == null) {
                 ret.put(k, parameters.get(k));
+                LOGGER.info(k + " => " + parameters.get(k));
             }
         }
         return ret;
@@ -164,7 +166,7 @@ public enum InitParam {
     public static Map<String, Parameter> getServerParameters() {
         Map<String, Parameter> serverparams = getParameters();
         for (InitParam param : InitParam.values()) {
-            if (param == MAP) {
+            if (param == MAP && !MAP.getValue().isEmpty()) {
                 continue;
             }
             serverparams.remove(param.nameLower());
