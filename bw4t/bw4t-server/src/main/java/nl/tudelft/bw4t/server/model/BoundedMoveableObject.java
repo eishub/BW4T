@@ -249,11 +249,28 @@ public abstract class BoundedMoveableObject {
      * @param padding The padding to add around the box.
      * @return A list of all points occupied by the box.
      */
-    public List<NdPoint> getPointsOccupiedByObject(int padding) {
+    public List<NdPoint> getPointsOccupiedByObject(double padding) {
         List<NdPoint> points = new ArrayList<NdPoint>();
 
-        for (int i = (int) boundingBox.getMinX() - padding; i <= (int) boundingBox.getMaxX() + padding; i++) {
-            for (int j = (int) boundingBox.getMinY() - padding; j <= (int) boundingBox.getMaxY() + padding; j++) {
+        double halfPad = Math.ceil(padding / 2);
+
+        double x =  Math.floor(getBoundingBox().getX());
+        double y =  Math.floor(getBoundingBox().getY());
+
+        double width = Math.ceil(getBoundingBox().getWidth());
+        double height = Math.ceil(getBoundingBox().getHeight());
+
+        double x2  = x + width;
+        double y2 = y + height;
+
+        x -= halfPad;
+        y -= halfPad;
+
+        x2 += halfPad;
+        y2 += halfPad;
+
+        for(double i = x; i <= x2; i++) {
+            for(double j = y; j <= y2; j++) {
                 points.add(new NdPoint(i, j));
             }
         }
