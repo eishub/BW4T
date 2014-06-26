@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.client.gui.listeners;
 
+import eis.exceptions.ActException;
 import eis.iilang.Identifier;
 import eis.iilang.Percept;
 
@@ -57,7 +58,7 @@ public class MessageSenderActionListener extends AbstractClientActionListener {
             if (!getController().getEnvironment().isConnectedToGoal()) {
                 try {
                     getController().getHumanAgent().sendMessage(name, message);
-                } catch (Exception e1) {
+                } catch (ActException e1) {
                     LOGGER.error("Could not send message to all other bots.", e1);
                 }
             } else {

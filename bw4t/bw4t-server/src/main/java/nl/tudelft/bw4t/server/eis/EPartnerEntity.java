@@ -59,9 +59,9 @@ public class EPartnerEntity implements EntityInterface {
     private Point2D ourEPartnerLocation;
     private Point2D spawnLocation;
     private Room ourEPartnerRoom;
-    
+
     /**
-     *  Variable is used 3 times 
+     * Variable is used 3 times
      */
     private String forgetMeNot = "Forget-me-not";
 
@@ -89,9 +89,9 @@ public class EPartnerEntity implements EntityInterface {
     public void connect() {
         spawnLocation = new Point2D.Double(ourEPartner.getLocation().getX(), ourEPartner.getLocation().getY());
     }
-    
+
     /**
-     * Disconnects the robot from repast. 
+     * Disconnects the robot from repast.
      */
     public void disconnect() {
         // Needs to be here or Repast will cry.
@@ -106,20 +106,20 @@ public class EPartnerEntity implements EntityInterface {
         ourEPartnerLocation = new Point2D.Double(ourEPartner.getLocation().getX(), ourEPartner.getLocation().getY());
         ourEPartnerRoom = RoomLocator.getRoomAt(ourEPartnerLocation.getX(), ourEPartnerLocation.getY());
     }
-    
+
     /**
-     * @return
-     * The functionalities of the e-Partner
+     * @return The functionalities of the e-Partner
      */
     @AsPercept(name = "functionality", multiplePercepts = true, filter = Filter.Type.ONCE)
     public List<String> getFunctionalities() {
         return ourEPartner.getTypeList();
     }
-    
+
     /**
      * Percept if the e-Partner was dropped.
+     * 
      * @return id of holder
-     * @throws PerceiveException 
+     * @throws PerceiveException
      */
     @AsPercept(name = "heldBy", multiplePercepts = false, filter = Filter.Type.ON_CHANGE_NEG)
     public long heldBy() throws PerceiveException {
@@ -128,11 +128,12 @@ public class EPartnerEntity implements EntityInterface {
         }
         return -1;
     }
-    
+
     /**
      * Percept if the epartner is taken, so other bots won't pick it up if a bot has forgot it.
+     * 
      * @return The epartner id.
-      * @throws PerceiveException 
+     * @throws PerceiveException
      */
     @AsPercept(name = "isTaken", multiplePercepts = false, filter = Filter.Type.ON_CHANGE_NEG)
     public long isTaken() throws PerceiveException {
@@ -141,11 +142,12 @@ public class EPartnerEntity implements EntityInterface {
         }
         return -1;
     }
-    
+
     /**
      * Percept if the epartner is left behind, so the epartner knows when to message the holder.
+     * 
      * @return 1 if it was left behind, 0 if it's still held.
-     * @throws PerceiveException 
+     * @throws PerceiveException
      */
     @AsPercept(name = "leftBehind", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
     public int leftBehind() throws PerceiveException {
@@ -154,18 +156,18 @@ public class EPartnerEntity implements EntityInterface {
         }
         return 0;
     }
-    
+
     /**
      * Percept for navpoints the robot is at. Send on change. If robot is in a {@link Zone}, that zone name is returned.
      * If not, the nearest {@link Corridor} name is returned.
      * 
      * @return a list of blockID
-     * @throws PerceiveException 
+     * @throws PerceiveException
      */
     @AsPercept(name = "at", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
     public String getAt() throws PerceiveException {
         if (ourEPartner.getTypeList().contains("GPS")) {
-          
+
             Zone navpt = ZoneLocator.getNearestZone(ourEPartner.getLocation());
             if (navpt == null) {
                 throw new PerceiveException(
@@ -173,14 +175,13 @@ public class EPartnerEntity implements EntityInterface {
                                 + ourEPartnerLocation);
             }
             return navpt.getName();
-        } else {
-            throw new PerceiveException(
-                    "perceiving 'at' percept failed, because this e-Partner does not have this functionality.");
         }
+        return "";
     }
 
     /**
      * Percept for the location of this robot Send on change
+     * 
      * @return location of epartner
      */
     @AsPercept(name = "location", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
@@ -190,6 +191,7 @@ public class EPartnerEntity implements EntityInterface {
 
     /**
      * Percept for the room that the player is in, null if not in a room. Send on change
+     * 
      * @return room name
      */
     @AsPercept(name = "in", multiplePercepts = false, filter = Filter.Type.ON_CHANGE_NEG)
@@ -203,25 +205,22 @@ public class EPartnerEntity implements EntityInterface {
 
     /**
      * Percept for the places in the world. Send at the beginning
+     * 
      * @return Rooms of the epartner
-     * @throws PerceiveException 
+     * @throws PerceiveException
      */
     @AsPercept(name = "place", multiplePercepts = true, filter = Filter.Type.ONCE)
     public List<String> getRooms() throws PerceiveException {
+        List<String> places = new ArrayList<String>();
         if (ourEPartner.getTypeList().contains("GPS")) {
-            List<String> places = new ArrayList<String>();
             for (Object o : context.getObjects(Zone.class)) {
                 Zone zone = (Zone) o;
                 places.add(zone.getName());
             }
-    
-            return places;
-        } else {
-            throw new PerceiveException(
-                    "perceiving 'at' percept failed, because this e-Partner does not have this functionality.");
         }
-    }
 
+        return places;
+    }
 
     /**
      * Returns all messages received by the player, Send on change

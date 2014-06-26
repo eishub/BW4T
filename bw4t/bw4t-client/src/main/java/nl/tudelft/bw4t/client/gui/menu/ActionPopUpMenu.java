@@ -236,7 +236,7 @@ public class ActionPopUpMenu {
      * @param gui
      *            the gui
      */
-    private static void showJPopupMenu(BW4TClientGUI gui) {
+    public static void showJPopupMenu(BW4TClientGUI gui) {
         gui.getjPopupMenu().show(gui, (int) gui.getSelectedLocation().getX(),
                 (int) gui.getSelectedLocation().getY());
     }

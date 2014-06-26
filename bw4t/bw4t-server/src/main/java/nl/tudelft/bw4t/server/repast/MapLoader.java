@@ -346,11 +346,11 @@ public final class MapLoader {
      * @return the list
      */
     private static List<BlockColor> makeRandomSequence(int num) {
-        BlockColor[] colors = BlockColor.values();
+        List<BlockColor> colors = BlockColor.getAvailableColors();
         List<BlockColor> sequence = new ArrayList<BlockColor>();
         Random random = new Random();
         for (int n = 0; n < num; n++) {
-            sequence.add(colors[random.nextInt(colors.length)]);
+            sequence.add(colors.get(random.nextInt(colors.size())));
         }
 
         return sequence;

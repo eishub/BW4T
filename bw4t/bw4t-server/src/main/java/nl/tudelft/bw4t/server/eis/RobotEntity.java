@@ -16,6 +16,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -33,6 +34,7 @@ import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.epartners.EPartner;
 import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.model.robots.NavigatingRobot;
+import nl.tudelft.bw4t.server.model.robots.NavigatingRobot.State;
 import nl.tudelft.bw4t.server.model.robots.handicap.AbstractRobotDecorator;
 import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.server.model.zone.BlocksRoom;
@@ -247,16 +249,24 @@ public class RobotEntity implements EntityInterface {
      */
     @AsPercept(name = "atBlock", multiplePercepts = true, filter = Filter.Type.ON_CHANGE_NEG)
     public List<Long> getAtBlock() {
-        List<Long> result = new ArrayList<Long>();
+        List<Long> ret = new ArrayList<Long>();
+        Block closest = null;
+        double cdist = Integer.MAX_VALUE;
         IndexedIterable<Object> allBlocks = context.getObjects(Block.class);
         for (Object object : allBlocks) {
             Block b = (Block) object;
-            if (ourRobot.distanceTo(b) <= 1 && ourRobot.isHolding() == null || !ourRobot.isHolding().contains(b)) {
-                result.add(b.getId());
-                return result;
+            if (ourRobot.canPickUp(b)) {
+                double dist = ourRobot.distanceTo(b);
+                if (dist < cdist) {
+                    cdist = dist;
+                    closest = b;
+                }
             }
         }
-        return result;
+        if (closest != null) {
+            ret.add(closest.getId());
+        }
+        return ret;
     }
 
     /**
@@ -362,8 +372,12 @@ public class RobotEntity implements EntityInterface {
      * @return holding block
      */
     @AsPercept(name = "holding", multiplePercepts = true, filter = Filter.Type.ON_CHANGE_NEG)
-    public List<Block> getHolding() {
-        return ourRobot.isHolding();
+    public List<Long> getHolding() {
+        List<Long> holds = new ArrayList<>();
+        for (Block b : ourRobot.isHolding()) {
+            holds.add(b.getId());
+        }
+        return holds;
     }
 
     /**
