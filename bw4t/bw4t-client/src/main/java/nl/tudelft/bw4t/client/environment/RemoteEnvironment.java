@@ -679,6 +679,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     public void kill() throws ManagementException {
         // copy list, the localAgents list is going to be changes by removing
         // agents.
+                
         List<String> allAgents = new ArrayList<String>(localAgents);
         for (String agentname : allAgents) {
             try {
@@ -699,6 +700,31 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
         }
     }
 
+    
+    /**
+     * Used to kill a human entity. When a GUI is closed, 
+     * the other GUI's will remain open and the environment will not be killed.
+     * 
+     * @param entity The entity to free
+     * @throws ManagementException
+     */
+    public void killHumanEntity(String entity) throws ManagementException{
+        
+        try {
+            for (String agent : getAssociatedAgents(entity)) {
+                if (agent.isEmpty()) {
+                    freeEntity(entity);
+                } else {
+                    freePair(agent, entity);
+                    unregisterAgent(agent);
+                }
+            }    
+        } catch (AgentException | RelationException | EntityException e) {
+            throw new ManagementException("kill failed because agent could not be freed", e);
+        }
+        
+    }
+    
     public void addRunningAgent(BW4TAgent agent) throws AgentException {
         registerAgent(agent.getAgentId());
         runningAgents.put(agent.getAgentId(), agent);

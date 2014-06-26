@@ -35,13 +35,14 @@ public final class ClientWindowAdapter extends WindowAdapter {
      */
     @Override
     public void windowClosing(WindowEvent e) {
+        String entity = controller.getMapController().getTheBot().getName();
         LOGGER.info("Exit request received from the Window Manager to close Window of entity: "
-                + controller.getMapController().getTheBot().getName());
+                + entity);
       //stop the gui
         controller.stop();
         
         try {
-            controller.getEnvironment().kill();
+            controller.getEnvironment().killHumanEntity(entity);
         } catch (ManagementException e1) {
             LOGGER.error("Could not correctly kill the environment.", e1);
         }
