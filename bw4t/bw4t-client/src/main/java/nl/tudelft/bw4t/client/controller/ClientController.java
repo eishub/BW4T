@@ -221,9 +221,10 @@ public class ClientController implements EntityComboModelProvider {
     public Collection<String> getEntities() {
         Collection<String> ents = getEnvironment().getEntities();
         Collection<String> ret = new ArrayList<>(ents.size());
+        String me = getMapController().getTheBot().getName();
         for (String entity : ents) {
             try {
-                if ("epartner".equals(getEnvironment().getType(entity))) {
+                if (!me.equals(entity) && !"epartner".equals(getEnvironment().getType(entity))) {
                     ret.add(entity);
                 }
             } catch (EntityException e) {
