@@ -60,6 +60,7 @@ public class BotConfigTest {
         BotConfig humanBot = BotConfig.createDefaultHumans();
         BotConfig defaultBot = new BotConfig();
 
+        defaultBot.setBotName("Human");
         assertEquals(humanBot.getBotController(), EntityType.HUMAN);
 
         EntityType defaultController = defaultBot.getBotController();
