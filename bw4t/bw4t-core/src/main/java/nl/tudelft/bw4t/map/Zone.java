@@ -263,7 +263,15 @@ public class Zone implements Serializable {
         result = prime * result + ((boundingbox == null) ? 0 : boundingbox.hashCode());
         result = prime * result + ((doors == null) ? 0 : doors.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((neighbours == null) ? 0 : neighbours.hashCode());
+        int temp = 0;
+        if(neighbours != null){
+            temp = 1;
+            
+            for (Zone z : neighbours) {
+                temp = prime * temp + z.name.hashCode();
+            }
+        }
+        result = prime * result + temp;
         result = prime * result + ((renderOptions == null) ? 0 : renderOptions.hashCode());
         result = prime * result + ((type == null) ? 0 : type.hashCode());
         return result;
