@@ -60,6 +60,9 @@ public final class ConfigFile {
         case SERVERPORT:
             param.setDefaultValue(((Integer) config.getServerPort()).toString());
             break;
+        case MAP:
+            param.setDefaultValue(config.getMapFile());
+            break;
         default:
             break;
         }
