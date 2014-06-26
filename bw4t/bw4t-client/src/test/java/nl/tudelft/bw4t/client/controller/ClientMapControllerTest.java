@@ -130,6 +130,7 @@ public class ClientMapControllerTest {
         parameters.add(new Numeral(3));
         parameters.add(new Numeral(3));
         parameters.add(new Numeral(3));
+        parameters.add(new ParameterList());
         testHandlePerceptEPartner();
         clientMapController.handlePercept("position", parameters);
         assertEquals(3, clientMapController.getViewEPartner(3).getLocation().getX(), 0.001);
@@ -153,6 +154,7 @@ public class ClientMapControllerTest {
         parameters.add(new Numeral(3));
         parameters.add(new Identifier("NAAM"));
         parameters.add(new Numeral(3));
+        parameters.add(new ParameterList());
         clientMapController.handlePercept("epartner", parameters);
         assertEquals(3,clientMapController.getViewEPartner(3).getId());
         assertEquals("NAAM", clientMapController.getViewEPartner(3).getName());
@@ -171,6 +173,7 @@ public class ClientMapControllerTest {
         parameters.add(new Numeral(2));
         parameters.add(new Identifier("NAAM"));
         parameters.add(new Numeral(2));
+        parameters.add(new ParameterList());
         clientMapController.handlePercept("epartner", parameters);
         assertEquals(2, clientMapController.getViewEPartner(2).getId());
         assertEquals("NAAM", clientMapController.getViewEPartner(2).getName());
@@ -184,6 +187,7 @@ public class ClientMapControllerTest {
         parameters.add(new Numeral(2));
         parameters.add(new Identifier("NAAM"));
         parameters.add(new Numeral(2));
+        parameters.add(new ParameterList());
         clientMapController.handlePercept("epartner", parameters);
         assertEquals(2, clientMapController.getViewEPartner(2).getId());
         assertEquals("NAAM", clientMapController.getViewEPartner(2).getName());
@@ -198,6 +202,7 @@ public class ClientMapControllerTest {
         parameters.add(new Numeral(2));
         parameters.add(new Identifier("NAAM"));
         parameters.add(new Numeral(3));
+        parameters.add(new ParameterList());
         clientMapController.handlePercept("epartner", parameters);
         assertEquals(2, clientMapController.getViewEPartner(2).getId());
         assertEquals("NAAM", clientMapController.getViewEPartner(2).getName());
@@ -209,6 +214,7 @@ public class ClientMapControllerTest {
         parameters.add(new Numeral(1));
         parameters.add(new Identifier("NAAM"));
         parameters.add(new Numeral(-2));
+        parameters.add(new ParameterList());
         clientMapController.handlePercept("epartner", parameters);
         assertEquals(-1, clientMapController.getTheBot().getHoldingEpartner());
         assertEquals("NAAM", clientMapController.getViewEPartner(1).getName());

@@ -2,6 +2,7 @@ package nl.tudelft.bw4t.server.model.robots;
 
 import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.server.model.BW4TServerMap;
@@ -105,10 +106,10 @@ public class DefaultEntityFactory implements EntityFactory {
         EPartner ep = makeDefaultEPartner(c.getEpartnerName());
 
         if (c.isGps()) {
-            ep.getTypeList().add("GPS");
+            ep.getTypeList().add(ViewEPartner.GPS);
         }
         if (c.isForgetMeNot()) {
-            ep.getTypeList().add("Forget-me-not");
+            ep.getTypeList().add(ViewEPartner.FORGET_ME_NOT);
         }
 
         return ep;

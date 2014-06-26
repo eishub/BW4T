@@ -11,6 +11,7 @@ import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.message.BW4TMessage;
 import nl.tudelft.bw4t.client.message.MessageTranslator;
+import nl.tudelft.bw4t.client.startup.InitParam;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 
 import org.apache.log4j.Logger;
@@ -56,7 +57,7 @@ public class EPartnerMessageSenderActionListener extends AbstractClientActionLis
     private void sendMessages(String ownName, String[] receivers) {
         
         for (String name : receivers) {
-            if (!getController().getEnvironment().isConnectedToGoal()) {
+            if (!getController().getEnvironment().isConnectedToGoal() || !InitParam.GOALHUMAN.getBoolValue()) {
                 try {
                     getController().getHumanAgent().sendMessage(name, message);
                 } catch (Exception e1) {
