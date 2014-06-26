@@ -150,11 +150,11 @@ public class ViewEntity {
 
     public void setCollided(boolean collided) { 
         this.collided = collided; 
-        }
+    }
 
     public double getBatteryLevel() { 
         return batteryLevel;   
-        }
+    }
 
     public void setBatteryLevel(double batteryLevel) {
         this.batteryLevel = batteryLevel;
