@@ -1,5 +1,8 @@
 package nl.tudelft.bw4t.map.renderer;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +17,7 @@ import nl.tudelft.bw4t.map.Zone.Type;
  * An abstract {@link MapController} implementation, taking over as much functionality as possible. Without using client
  * or server-specific code.
  */
-public abstract class AbstractMapController implements MapController, Runnable {
+public abstract class AbstractMapController extends MouseAdapter implements MapController, Runnable {
     /**
      * The map to be rendered.
      */
@@ -34,6 +37,8 @@ public abstract class AbstractMapController implements MapController, Runnable {
      * The set of all connected {@link MapRendererInterface}s.
      */
     private final Set<MapRendererInterface> renderers = new HashSet<>();
+    
+    private boolean mouseOver = false;
 
     /**
      * Creates Default {@link MapRenderSettings}, sets the map and starts the updater.
@@ -143,11 +148,15 @@ public abstract class AbstractMapController implements MapController, Runnable {
 
     @Override
     public void addRenderer(MapRendererInterface mri) {
+        mri.addMouseListener(this);
+        mri.addMouseWheelListener(this);
         getRenderers().add(mri);
     }
 
     @Override
     public void removeRenderer(MapRendererInterface mri) {
+        mri.removeMouseListener(this);
+        mri.removeMouseWheelListener(this);
         getRenderers().remove(mri);
     }
 
@@ -228,4 +237,30 @@ public abstract class AbstractMapController implements MapController, Runnable {
         return new HashSet<>();
     }
 
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        this.mouseOver = true;
+    }
+    
+    @Override
+    public void mouseExited(MouseEvent e) {
+        this.mouseOver = false;
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.awt.event.MouseAdapter#mouseWheelMoved(java.awt.event.MouseWheelEvent)
+     */
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent mwe) {
+        if (mouseOver && mwe.isControlDown()) {
+            MapRenderSettings settings = this.getRenderSettings();
+            if (mwe.getUnitsToScroll() >= 0) {
+                settings.setScale(settings.getScale() + 0.1);
+            } else {
+                settings.setScale(settings.getScale() - 0.1);
+            }
+            mwe.getComponent().revalidate();
+        }
+    }
 }

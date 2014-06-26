@@ -13,13 +13,8 @@ import nl.tudelft.bw4t.map.renderer.MapRenderSettings;
  */
 public final class ClientMouseAdapter extends MouseAdapter {
     
-    /** The mouse over state. */
-    private boolean mouseOver = false;
-    
     /** The bw4t client gui. */
     private BW4TClientGUI bw4tClientGUI;
-    
-    private ClientMapController mapController;
     
     /**
      * Instantiates a new client mouse adapter.
@@ -29,25 +24,7 @@ public final class ClientMouseAdapter extends MouseAdapter {
      */
     public ClientMouseAdapter(BW4TClientGUI bw4tClientGUI){
         this.bw4tClientGUI = bw4tClientGUI;
-        this.mapController = bw4tClientGUI.getController().getMapController();
-    }
-    
-    /* (non-Javadoc)
-     * @see java.awt.event.MouseAdapter#mouseEntered(java.awt.event.MouseEvent)
-     */
-    @Override
-    public void mouseEntered(MouseEvent arg0) {
-        super.mouseEntered(arg0);
-        mouseOver = true;
-    }
-
-    /* (non-Javadoc)
-     * @see java.awt.event.MouseAdapter#mouseExited(java.awt.event.MouseEvent)
-     */
-    @Override
-    public void mouseExited(MouseEvent arg0) {
-        super.mouseExited(arg0);
-        mouseOver = false;
+        bw4tClientGUI.getController().getMapController();
     }
 
     /* (non-Javadoc)
@@ -59,22 +36,5 @@ public final class ClientMouseAdapter extends MouseAdapter {
         int mouseY = e.getY();
         bw4tClientGUI.setSelectedLocation(mouseX, mouseY);
         ActionPopUpMenu.buildPopUpMenu(bw4tClientGUI);
-    }
-
-    /* (non-Javadoc)
-     * @see java.awt.event.MouseAdapter#mouseWheelMoved(java.awt.event.MouseWheelEvent)
-     */
-    @Override
-    public void mouseWheelMoved(MouseWheelEvent mwe) {
-        if (mouseOver && mwe.isControlDown()) {
-            MapRenderSettings settings = mapController.getRenderSettings();
-            if (mwe.getUnitsToScroll() >= 0) {
-                settings.setScale(settings.getScale() + 0.1);
-            } else {
-                settings.setScale(settings.getScale() - 0.1);
-            }
-        } else {
-            super.mouseWheelMoved(mwe);
-        }
     }
 }
