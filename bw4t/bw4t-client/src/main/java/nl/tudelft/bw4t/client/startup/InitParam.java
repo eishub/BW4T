@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBException;
 
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
 /**
@@ -118,6 +119,11 @@ public enum InitParam {
     public static void setParameters(Map<String, Parameter> params) {
         parameters = params;
         
+
+        if (InitParam.GOAL.getBoolValue()) {
+            BasicConfigurator.configure();
+        }
+        
         final String cfile = CONFIGFILE.getValue();
         if (!cfile.isEmpty()) {
             LOGGER.info(String.format("Reading configuration file '%s'", cfile));
@@ -130,12 +136,22 @@ public enum InitParam {
     }   
 
     /**
-     * Get all program-wide parameters.
+     * Get all program-wide parameters, with the actual values.
      * 
      * @return The Map of parameters given to the {@link RemoteEnvironment}
      */
     public static Map<String, Parameter> getParameters() {
-        return parameters;
+        Map<String, Parameter> ret = new HashMap<>();
+        for (InitParam p: values()) {
+            ret.put(p.nameLower(), new Identifier(p.getValue()));
+        }
+        for (String k : parameters.keySet()) {
+            InitParam p = Enum.valueOf(InitParam.class, k.toUpperCase());
+            if (p == null) {
+                ret.put(k, parameters.get(k));
+            }
+        }
+        return ret;
     }
 
     /**
@@ -146,10 +162,9 @@ public enum InitParam {
      * @return parameters for the server
      */
     public static Map<String, Parameter> getServerParameters() {
-        Map<String, Parameter> serverparams = new HashMap<String, Parameter>(
-                getParameters());
+        Map<String, Parameter> serverparams = getParameters();
         for (InitParam param : InitParam.values()) {
-            if(param == MAP) {
+            if (param == MAP) {
                 continue;
             }
             serverparams.remove(param.nameLower());

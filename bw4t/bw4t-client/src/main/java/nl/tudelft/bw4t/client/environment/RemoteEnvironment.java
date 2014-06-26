@@ -86,9 +86,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     @Override
     public void init(Map<String, Parameter> parameters) throws ManagementException {
         InitParam.setParameters(parameters);
-        if (isConnectedToGoal()) {
-            BasicConfigurator.configure();
-        }
         try {
             LOGGER.info("Connecting to BW4T Server.");
             client = new BW4TClient(this);
@@ -118,9 +115,10 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
      */
     private void sendServerParams() throws ManagementException {
         Map<String, Parameter> serverparams = InitParam.getServerParameters();
-        if (!(serverparams.isEmpty())) {
+        final boolean mapPresent = !InitParam.MAP.getValue().isEmpty();
+        if (!serverparams.isEmpty() || mapPresent) {
             LOGGER.info(String.format("Sending extra parameters to server: %s", serverparams));
-            if (!InitParam.MAP.getValue().isEmpty()) {
+            if (mapPresent) {
                 File mapfile = new File(InitParam.MAP.getValue());
                 if (mapfile.exists() && !mapfile.isDirectory()) {
                     try {
