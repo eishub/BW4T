@@ -12,6 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import nl.tudelft.bw4t.map.Path;
 import nl.tudelft.bw4t.map.Point;
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.zone.Corridor;
 import nl.tudelft.bw4t.server.model.zone.Room;
@@ -218,17 +219,17 @@ public class NavigatingRobot extends AbstractRobot {
      * updates the path to draw.
      */
     private void updateDrawPath() {
-        //if (BW4TEnvironment.getInstance().isDrawPathsEnabled()) {
-        final ArrayList<Point> path = new ArrayList<Point>();
-        for (NdPoint p : plannedMoves) {
-            path.add(new Point(p.getX(), p.getY()));
+        if (BW4TEnvironment.getInstance().isDrawPathsEnabled()) {
+            final ArrayList<Point> path = new ArrayList<Point>();
+            for (NdPoint p : plannedMoves) {
+                path.add(new Point(p.getX(), p.getY()));
+            }
+            if (plannedMoves.size() > 0) {
+                NdPoint p = this.getLocation();
+                path.add(0, new Point(p.getX(), p.getY()));
+            }
+            displayedPath.setPath(path);
         }
-        if (plannedMoves.size() > 0) {
-            NdPoint p = this.getLocation();
-            path.add(0, new Point(p.getX(), p.getY()));
-        }
-        displayedPath.setPath(path);
-        //}
     }
 
     /**
