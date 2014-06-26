@@ -1,22 +1,5 @@
 package nl.tudelft.bw4t.client.environment;
 
-import eis.AgentListener;
-import eis.EnvironmentInterfaceStandard;
-import eis.EnvironmentListener;
-import eis.exceptions.ActException;
-import eis.exceptions.AgentException;
-import eis.exceptions.EntityException;
-import eis.exceptions.ManagementException;
-import eis.exceptions.NoEnvironmentException;
-import eis.exceptions.PerceiveException;
-import eis.exceptions.QueryException;
-import eis.exceptions.RelationException;
-import eis.iilang.Action;
-import eis.iilang.EnvironmentState;
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
@@ -29,7 +12,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.xml.bind.JAXBException;
@@ -44,6 +26,22 @@ import nl.tudelft.bw4t.map.NewMap;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
+
+import eis.AgentListener;
+import eis.EnvironmentInterfaceStandard;
+import eis.EnvironmentListener;
+import eis.exceptions.ActException;
+import eis.exceptions.AgentException;
+import eis.exceptions.EntityException;
+import eis.exceptions.ManagementException;
+import eis.exceptions.NoEnvironmentException;
+import eis.exceptions.PerceiveException;
+import eis.exceptions.QueryException;
+import eis.exceptions.RelationException;
+import eis.iilang.Action;
+import eis.iilang.EnvironmentState;
+import eis.iilang.Parameter;
+import eis.iilang.Percept;
 
 /**
  * A remote BW4TEnvironment that delegates all actions towards the central BW4TEnvironment, through RMI. This is the
@@ -122,11 +120,11 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
         Map<String, Parameter> serverparams = InitParam.getServerParameters();
         if (!(serverparams.isEmpty())) {
             LOGGER.info(String.format("Sending extra parameters to server: %s", serverparams));
-            if (serverparams.containsKey("map")) {
-                File mapfile = new File(((Identifier) serverparams.get("map")).getValue());
+            if (!InitParam.MAP.getValue().isEmpty()) {
+                File mapfile = new File(InitParam.MAP.getValue());
                 if (mapfile.exists() && !mapfile.isDirectory()) {
                     try {
-                        serverparams.put("map", new MapParameter(mapfile));
+                        serverparams.put(InitParam.MAP.nameLower(), new MapParameter(mapfile));
                     } catch (FileNotFoundException | JAXBException e) {
                         throw new ManagementException("Could not load local Map to send to the server.", e);
                     }
@@ -630,8 +628,10 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     /**
      * Tries to send the percepts to the given entity, if it is not yet present we will store the percepts in a map.
      * 
-     * @param entry
-     *            the entity-percepts entry
+     * @param entity
+     *            the entity name
+     * @param percepts
+     *            the percepts for the entity
      */
     protected void saveAndSendPercepts(String entity, Collection<Percept> percepts) {
         if (!hasEntityGUI(entity)) {
@@ -650,8 +650,12 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     }
 
     /**
+     * Store the current concatenated with the given percepts to the list of stored percepts
+     * 
      * @param entity
+     *            the entity to whom the percepts belong
      * @param percepts
+     *            the percepts to be used
      */
     public void storePercepts(String entity, Collection<Percept> percepts) {
         List<Percept> tpercepts = new ArrayList<Percept>();
@@ -710,7 +714,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     public void kill() throws ManagementException {
         // copy list, the localAgents list is going to be changes by removing
         // agents.
-                
+
         List<String> allAgents = new ArrayList<String>(localAgents);
         for (String agentname : allAgents) {
             try {
@@ -731,16 +735,16 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
         }
     }
 
-    
     /**
-     * Used to kill a human entity. When a GUI is closed, 
-     * the other GUI's will remain open and the environment will not be killed.
+     * Used to kill a human entity. When a GUI is closed, the other GUI's will remain open and the environment will not
+     * be killed.
      * 
-     * @param entity The entity to free
+     * @param entity
+     *            The entity to free
      * @throws ManagementException
      */
-    public void killHumanEntity(String entity) throws ManagementException{
-        
+    public void killHumanEntity(String entity) throws ManagementException {
+
         try {
             for (String agent : getAssociatedAgents(entity)) {
                 if (agent.isEmpty()) {
@@ -749,13 +753,13 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
                     freePair(agent, entity);
                     unregisterAgent(agent);
                 }
-            }    
+            }
         } catch (AgentException | RelationException | EntityException e) {
             throw new ManagementException("kill failed because agent could not be freed", e);
         }
-        
+
     }
-    
+
     public void addRunningAgent(BW4TAgent agent) throws AgentException {
         registerAgent(agent.getAgentId());
         runningAgents.put(agent.getAgentId(), agent);

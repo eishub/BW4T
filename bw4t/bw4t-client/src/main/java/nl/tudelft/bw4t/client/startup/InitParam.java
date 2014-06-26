@@ -46,7 +46,9 @@ public enum InitParam {
      */
     CONFIGFILE(""),
     /** Forces the use of the human GUI with an GOAL agent to translate the commands */
-    GOALHUMAN("false");
+    GOALHUMAN("false"),
+    /** Name or filename of the map to use */
+    MAP("");
     
     private static final Logger LOGGER = Logger.getLogger(InitParam.class);
     
@@ -125,9 +127,7 @@ public enum InitParam {
                 LOGGER.error(String.format("Unable to load configuration file: '%s'", cfile), e);
             }
         }
-    }
-    
-    
+    }   
 
     /**
      * Get all program-wide parameters.
@@ -149,6 +149,9 @@ public enum InitParam {
         Map<String, Parameter> serverparams = new HashMap<String, Parameter>(
                 getParameters());
         for (InitParam param : InitParam.values()) {
+            if(param == MAP) {
+                continue;
+            }
             serverparams.remove(param.nameLower());
         }
         return serverparams;
