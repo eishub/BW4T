@@ -2,6 +2,10 @@ package nl.tudelft.bw4t.map.view;
 
 import java.awt.Color;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
+
+import eis.iilang.ParameterList;
 
 /**
  * information about an e-partner to be displayed on the map.
@@ -17,6 +21,10 @@ public class ViewEPartner {
     /** Initialize color of EPartner when online, namely green. */
     public static final Color EPARTNER_ONLINE = Color.GREEN; 
     
+    public static final String GPS = "GPS";
+    
+    public static final String FORGET_ME_NOT = "Forget-me-not";
+    
     /** Initialize id of EPartner, default 0. */
     private long id = 0;
     
@@ -26,11 +34,14 @@ public class ViewEPartner {
     /** Initialize pickedUp, default false. */
     private boolean pickedUp = false;
     
-    /** Intiialize name of EPartner, default " " */
+    /** Initialize name of EPartner, default " " */
     private String name = "";
     
     /** Initialize visible boolean. */
     private boolean visible;
+
+    /** ParameterList containing the functionalities. **/
+    private List<String> types = new ArrayList<String>();
 
     /** Empty constructor, initialize default ViewEPartner. */
     public ViewEPartner() {
@@ -104,5 +115,13 @@ public class ViewEPartner {
     public int getSize() {
         return EPARTNER_SIZE;
     }
+
+    public void setTypes(List<String> t) {
+       types = t;        
+    }
+    
+    public List<String> getTypes() {
+        return types;     
+     }
 
 }
