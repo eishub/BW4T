@@ -1,8 +1,10 @@
 package nl.tudelft.bw4t.client.gui.listeners;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import nl.tudelft.bw4t.client.controller.ClientController;
+import nl.tudelft.bw4t.client.startup.InitParam;
 
 /** Abstract listener for actions. */
 public abstract class AbstractClientActionListener implements ActionListener {
@@ -19,4 +21,18 @@ public abstract class AbstractClientActionListener implements ActionListener {
         return controller;
     }
 
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+        if (!getController().getEnvironment().isConnectedToGoal() || !InitParam.GOALHUMAN.getBoolValue()) {
+            actionWithHumanAgent(arg0);
+        } else {
+            actionWithGoalAgent(arg0);
+        }
+    }
+
+    protected void actionWithHumanAgent(ActionEvent arg0){
+    }
+
+    protected void actionWithGoalAgent(ActionEvent arg0) {
+    }
 }

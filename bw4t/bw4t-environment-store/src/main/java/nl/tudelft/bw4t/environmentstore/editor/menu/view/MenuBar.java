@@ -19,7 +19,7 @@ public class MenuBar extends JMenuBar {
 
     /** the items added to the menubar */
     private JMenuItem fileNew, fileOpen, fileSave, fileSaveAs, preview, fileExit;
-    private JMenuItem toolsRandomizeRooms, toolsRandomizeBlocks, toolsRandomizeSequence;
+    private JMenuItem toolsRandomizeZones, toolsRandomizeBlocks, toolsRandomizeSequence;
 
     /**
      * Construct a menu bar for the Map Editor
@@ -73,9 +73,9 @@ public class MenuBar extends JMenuBar {
         file.add(fileExit);
         
         // Create the Tools menu items.        
-        toolsRandomizeRooms = new JMenuItem("Randomize Rooms");
-        toolsRandomizeRooms.setToolTipText("Randomize the locations of rooms");
-        tools.add(toolsRandomizeRooms);
+        toolsRandomizeZones = new JMenuItem("Randomize Zones");
+        toolsRandomizeZones.setToolTipText("Randomize the locations of Zones");
+        tools.add(toolsRandomizeZones);
         
         toolsRandomizeBlocks = new JMenuItem("Randomize Blocks");
         toolsRandomizeBlocks.setToolTipText("Randomize the distribution of all blocks");
@@ -144,8 +144,8 @@ public class MenuBar extends JMenuBar {
      * JMenuItem used to randomize the rooms
      * @return The JMenuItem to randomize the rooms
      */
-    public final JMenuItem getMenuItemRandomizeRooms() {
-        return toolsRandomizeRooms;
+    public final JMenuItem getMenuItemRandomizeZones() {
+        return toolsRandomizeZones;
     }
     
     /**

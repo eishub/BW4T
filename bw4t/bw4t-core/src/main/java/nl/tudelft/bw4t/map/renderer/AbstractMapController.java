@@ -27,6 +27,8 @@ public abstract class AbstractMapController implements MapController, Runnable {
      * True while the thread to update the {@link MapRendererInterface} is running.
      */
     private boolean running = false;
+    
+    private boolean starting = false;
 
     /**
      * The set of all connected {@link MapRendererInterface}s.
@@ -99,10 +101,15 @@ public abstract class AbstractMapController implements MapController, Runnable {
     @Override
     public void setRunning(boolean run) {
         if (!run) {
-            setForceRunning(run);
-        } else if (!running) {
+            setForceRunning(false);
+            starting = false;
+        } else if (!running && !starting) {
             startupUpdateThread();
         }
+    }
+    
+    protected boolean isStarting() {
+        return starting;
     }
 
     /**
@@ -113,6 +120,9 @@ public abstract class AbstractMapController implements MapController, Runnable {
      */
     protected void setForceRunning(boolean run) {
         running = run;
+        if (run) {
+            starting = false;
+        }
     }
 
     /**
@@ -126,7 +136,8 @@ public abstract class AbstractMapController implements MapController, Runnable {
      * Start the update thread.(will fail if it's already running)
      */
     private void startupUpdateThread() {
-        Thread thread = new Thread(new Updater(this));
+        starting = true;
+        Thread thread = new Thread(new Updater(this), "Updater->" + Integer.toHexString(this.hashCode()));
         thread.start();
     }
 

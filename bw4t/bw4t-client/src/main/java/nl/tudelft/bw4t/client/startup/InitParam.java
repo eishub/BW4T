@@ -44,7 +44,9 @@ public enum InitParam {
     /**
      * The file from which the client reads the configuration.
      */
-    CONFIGFILE("");
+    CONFIGFILE(""),
+    /** Forces the use of the human GUI with an GOAL agent to translate the commands */
+    GOALHUMAN("false");
     
     private static final Logger LOGGER = Logger.getLogger(InitParam.class);
     

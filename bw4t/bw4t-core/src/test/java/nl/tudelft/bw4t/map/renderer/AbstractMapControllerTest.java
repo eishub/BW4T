@@ -5,12 +5,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -19,8 +21,11 @@ import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.map.Zone;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -29,12 +34,20 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AbstractMapControllerTest {
+    private static final Logger LOGGER = Logger.getLogger(AbstractMapControllerTest.class);
     
     private AbstractMapController mc;
     @Mock
     private MapRendererInterface mri;
     @Mock
     private NewMap themap;
+    
+    @BeforeClass
+    public static void setupLogger() {
+        if(!LOGGER.getAllAppenders().hasMoreElements()){
+            BasicConfigurator.configure();
+        }
+    }
     
     @Before
     public void setup() {
@@ -135,11 +148,20 @@ public class AbstractMapControllerTest {
     
     @Test
     public void setRunningTest() throws Exception{
-        assertFalse(mc.isRunning());
+        when(mc.getRenderers()).thenReturn(new HashSet<MapRendererInterface>());
+        assertFalse("The thread is already running.", mc.isRunning());
         
         mc.setRunning(true);
-        //let the thread set the running to true
-        Thread.sleep(10);
+        assertTrue("The thread is not starting", mc.isStarting());
+        int i = 0;
+        while(mc.isStarting() && i < 5) {
+            //let the thread set the running to true
+            Thread.sleep(50);
+            i++;
+        }
+        if(i >= 5) {
+            fail("could not start the thread");
+        }
         
         assertTrue(mc.isRunning());
     }

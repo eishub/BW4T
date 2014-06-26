@@ -98,7 +98,6 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
 
             agent.setBotConfig(findCorrespondingBotConfig(entity, false));
             agent.registerEntity(entity);
-            environment.registerAgent(agent.getAgentId());
             environment.addRunningAgent(agent);
             environment.associateEntity(agent.getAgentId(), entity);
 

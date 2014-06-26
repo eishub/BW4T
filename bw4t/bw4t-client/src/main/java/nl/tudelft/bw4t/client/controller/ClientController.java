@@ -1,24 +1,30 @@
 package nl.tudelft.bw4t.client.controller;
 
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
-import eis.iilang.ParameterList;
-import eis.iilang.Percept;
-
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
+import nl.tudelft.bw4t.client.gui.menu.EntityComboModelProvider;
+import eis.exceptions.EntityException;
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
+import eis.iilang.ParameterList;
+import eis.iilang.Percept;
 
 /**
  * The Class ClientController.
  */
-public class ClientController {
+public class ClientController implements EntityComboModelProvider {
+    private static final Logger LOGGER = Logger.getLogger(ClientController.class);
     /**
      * The map controller used by this client controller.
      */
@@ -27,8 +33,9 @@ public class ClientController {
     /** The other players. */
     private final Set<String> otherPlayers = new HashSet<>();
     
-    /** The chat history. */
+    /** The bot chat history. */
     private final List<String> botChatHistory = new LinkedList<>();
+    /** The epartner chat history. */
     private final List<String> epartnerChatHistory = new LinkedList<>();
 
     /** The human agent. */
@@ -140,12 +147,13 @@ public class ClientController {
      * @param percepts
      *            the list of percepts
      */
-    public void handlePercepts(List<Percept> percepts) {
+    public void handlePercepts(Collection<Percept> percepts) {
         getMapController().getVisibleBlocks().clear();
         getMapController().makeEPartnersInvisible();
         for (Percept percept : percepts) {
             String name = percept.getName();
             List<Parameter> parameters = percept.getParameters();
+            
             mapController.handlePercept(name, parameters);
             if ("player".equals(name)) {
                 getOtherPlayers().add(((Identifier) parameters.get(0)).getValue());
@@ -209,4 +217,20 @@ public class ClientController {
         return null;
     }
 
+    @Override
+    public Collection<String> getEntities() {
+        Collection<String> ents = getEnvironment().getEntities();
+        Collection<String> ret = new ArrayList<>(ents.size());
+        for (String entity : ents) {
+            try {
+                if ("epartner".equals(getEnvironment().getType(entity))) {
+                    ret.add(entity);
+                }
+            } catch (EntityException e) {
+                LOGGER.warn("Unable to get the type of entity: " + entity, e);
+            }
+        }
+        
+        return ret;
+    }
 }
