@@ -143,7 +143,7 @@ public class NavigatingRobot extends AbstractRobot {
      * updates the path to draw.
      */
     private void updateDrawPath() {
-        if (BW4TEnvironment.getInstance().isDrawPathsEnabled()) {
+        //if (BW4TEnvironment.getInstance().isDrawPathsEnabled()) {
             final ArrayList<Point> path = new ArrayList<Point>();
             for (NdPoint p : plannedMoves) {
                 path.add(new Point(p.getX(), p.getY()));
@@ -153,7 +153,7 @@ public class NavigatingRobot extends AbstractRobot {
                 path.add(0, new Point(p.getX(), p.getY()));
             }
             displayedPath.setPath(path);
-        }
+        //}
     }
 
     /**
@@ -342,8 +342,7 @@ public class NavigatingRobot extends AbstractRobot {
         List<Zone> navZones = new ArrayList<Zone>(getAllZonesInMap());
 
         // the end isn't rounded since maps never have .5 coordinates.
-        NdPoint startLocationRounded = new NdPoint((int) getLocation().getX(), (int) getLocation().getY());
-        List<NdPoint> path = PathPlanner.findPath(navZones, getObstacles(), startLocationRounded, currentMoveHistory,
+        List<NdPoint> path = PathPlanner.findPath(navZones, getObstacles(), getLocation(), currentMoveHistory,
                 getSize());
         if (path.isEmpty()) {
             LOGGER.debug("No alternative path found.");
@@ -361,7 +360,6 @@ public class NavigatingRobot extends AbstractRobot {
      *            to create
      */
     private void createPathObstacle(List<NdPoint> path) {
-        LOGGER.debug("Found path around obstacle.");
         // Now we just push the new points to the plannedMoved queue and sit back and relax!.
         for (NdPoint p : path) {
             plannedMoves.add(p);
