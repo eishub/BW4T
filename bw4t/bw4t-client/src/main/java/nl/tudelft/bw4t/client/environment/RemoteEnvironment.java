@@ -96,6 +96,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 
             Map<String, Parameter> serverparams = InitParam.getServerParameters();
             if (!(serverparams.isEmpty())) {
+                LOGGER.info(String.format("Sending extra parameters to server: %s", serverparams));
                 getClient().initServer(serverparams);
             }
             getClient().register();

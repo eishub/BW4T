@@ -211,19 +211,15 @@ public class BW4TEnvironment extends AbstractEnvironment {
     public void init(Map<String, Parameter> parameters) throws ManagementException {
         setState(EnvironmentState.INITIALIZING);
         takeDownSimulation();
-        String error = "launch of Repast failed";
+
         Parameter map = parameters.get("map");
         if (map != null) {
             setMapName(((Identifier) map).getValue());
         }
         try {
             launchRepast();
-        } catch (IOException e) {
-            throw new ManagementException(error, e);
-        } catch (ScenarioLoadException e) {
-            throw new ManagementException(error, e);
-        } catch (JAXBException e) {
-            throw new ManagementException(error, e);
+        } catch (IOException | ScenarioLoadException | JAXBException e) {
+            throw new ManagementException("launch of Repast failed", e);
         }
 
         setState(EnvironmentState.RUNNING);
