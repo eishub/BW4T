@@ -43,7 +43,7 @@ To use BW4T you need Java JDK 7 or higher. The BW4T3 environment has been tested
 
 \newpage
 \section{Running the server}
-Run the server before running the client, as otherwise the client cannot connect to the server. Start the server by opening the server.jar in <SERVER>. This should open the server window (Figure 1). Note that during this opening, two other maps are created: 
+Run the server before running the client, as otherwise the client cannot connect to the server. Start the server by opening the server.jar in $<$SERVER$>$. This should open the server window (Figure 1). Note that during this opening, two other maps are created: 
 \begin{itemize}
 \item Maps: The folder in which all possible maps are put.
 \item Log: The folder in which all log files will be placed.
@@ -91,8 +91,14 @@ If you use BW4T from a batch runner, you may want to reset the server after each
 \section{Restarting, pausing and resuming the system}
 To be able to pause the system, don’t run the mas2g file as described above.
 This time, open the mas2g file and click on the debug button (the small bug icon).
-Eclipse will ask you whether you would like to go to the debug screen, click yes and watch your screen adjust.
-Now you can see the running bots listed at the left side, and the current goals, beliefs and knowledge of the selected bot on the right side. Beneath the list the goal file belonging to the bot is shown and at the bottom of the screen, all debug actions are being run.
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \begin{center}
+    \includegraphics[width=0.6\textwidth]{debug.png}
+  \end{center}
+  \caption{Choose yes}
+\end{wrapfigure}
+Eclipse will ask you whether you would like to go to the debug screen (see figure 3), click yes and watch your screen adjust.
+Now you can see the running bots listed at the left side, and the current goals, beliefs and knowledge of the selected bot on the right side. Beneath the list the goal file belonging to the bot is shown and at the bottom of the screen, all debug actions are being run. See figure 4.
 To pause the system, select the bot to be paused and click on the pause button. To resume, select the bot and click resume.
 To restart the system, do the following
 \begin{enumerate}
@@ -100,7 +106,12 @@ To restart the system, do the following
 \item In the server window, press Reset, or choose a new map from the Change Map menu.
 \item Run the MAS in Eclipse as described above.
 \end{enumerate}
+\begin{figure}
+    \includegraphics[width=\textwidth]{debugmode.png}
+    \caption{Debug mode}
+\end{figure}
 
+\newpage
 \section{Loading and creating new maps}
 \subsection{Using the Environment Store}
 The Map Editor is a tool for editing maps for the BW4T server. Double click the jar file environment-store.jar to start the map editor.
@@ -110,7 +121,7 @@ The Map Editor is a tool for editing maps for the BW4T server. Double click the 
   \end{center}
   \caption{Choose the amount of columns and rows}
 \end{wrapfigure}
-After starting up, the map size dialog (Figure 3) appears, which can be used as follows.
+After starting up, the map size dialog (Figure 5) appears, which can be used as follows.
 Here you can choose the amount of rows and columns you want the environment to consist of. Each cell in the “table” can be used to fulfill one piece of the map. This could either be a room, a corridor, a dropzone, a charging zone, start zone or a blockade. By pressing the colours at the bottom you can generate the sequence to be completed. This can also be done by pressing the according numbers on the keyboard. \\
 In the Map editor GUI above you can add blocks to rooms. To add blocks to rooms, right click in the cell, adjust the type of the zone to Room. Now you can add blocks the way you did with the sequence. Right clicking the cell again lets you choose at which side of the room you want the door. When you're done, press save. 
 By pressing Tools in the menu bar, you are able to randomize zones, blocks and sequences. WARNING: Randomizing these will not always guarantee that the sequence can be completed.
@@ -161,7 +172,7 @@ The other computers will then function as client. Create a MAS file for each of 
 \item set the serverip and serverport initialization parameters to the ones that the server is listening on (default for the server is localhost and port 8000).
 \item Set the humancount and agentcount parameter on each client to reflect how many human or agent players that client should load.
 \item Use humanbot.goal for human agents
-\item use env = <CLIENT>/client.jar". in the environment section. Do not connect to an already running environment in another MAS. This is because BW4TClient creates GUIs for humanbots, on the machine where it is running.
+\item use env = $<$CLIENT$>/$client.jar". in the environment section. Do not connect to an already running environment in another MAS. This is because BW4TClient creates GUIs for humanbots, on the machine where it is running.
 \item Check that the launchpolicy picks up the proper entity type, so use 'human' if you want to attach to human entities etc.
 \end{itemize} 
 
@@ -208,7 +219,7 @@ Make sure that you set GOAL to launch the desired number of your agent. Also mak
 Note that besides in the bw4t.mas2g file, the number of agents is also specified in the map that you use. This number determines the maximum amount of bots that can appear on the map. If the maximum number of agents to be launched as specified in the bw4t.mas2g file is bigger than the number of agents specified in the map, some of the agents will not appear on the map and not be part of the team. 
 
 \section{Creating your own Scenario}
-This part describes how to make use of the Scenario Editor (Figure 5). When you open the editor, you see two main parts:
+This part describes how to make use of the Scenario Editor (Figure 7). When you open the editor, you see two main parts:
 \begin{enumerate}
 \item The Configuration panel, which is used to create, open and save configuration files.
 \item The Entity panel, where a list of bots and a list of e-partners are being displayed. Here you can create, modify, rename and delete bots and e-partners.
@@ -231,7 +242,7 @@ On the right side of the editor you can create, modify, rename and delete bots a
 Linked to the Scenario Editor are the Bot Store and the E-partner Store, which will also be discussed in this document.
 \pagebreak
 \subsection{Configuration Panel}
-A picture of the configuration panel can be found in figure 6.
+A picture of the configuration panel can be found in figure 8.
 \begin{figure}[h]
 \begin{center}
 \includegraphics{config.png}
@@ -257,7 +268,7 @@ To export your configuration to mas2g, you have to have saved your configuration
 If you want to close the Scenario Editor, select $File$ $\to$ $Exit$ in the menu bar. Closing the Scenario Editor will not save any changes you have made, so make sure you save your configuration first if you want to keep it.
 
 \subsection{Entity Panel}
-The entity panel exists of 2 parts; the top part shows the bot options and the bottom part shows the e-partner options. A picture of the entity panel can be found in figure 7.
+The entity panel exists of 2 parts; the top part shows the bot options and the bottom part shows the e-partner options. A picture of the entity panel can be found in figure 9.
 \begin{figure}[h]
 \begin{center}
 \includegraphics{bot.png}
@@ -299,7 +310,7 @@ To change how many entities of a type of e-partner you want, you can either use 
 To delete an e-partner, select the e-partner you want to delete in the e-partner list and click the $Delete$ $E$-$partner$ button.
 
 \subsection{Bot Store}
-A picture of the Bot Store can be found in figure 8.
+A picture of the Bot Store can be found in figure 10.
 \begin{figure}[h]
 \begin{center}
 \includegraphics{bs.png}
@@ -331,7 +342,7 @@ If you want to reset the changes you have made to the bot, you can click on the 
 If you want to cancel modifying the bot without saving any changes, you can click on the $Cancel$ button. The Bot Store window will close.
 
 \subsection{E-partner Store}
-A picture of the E-partner Store can be found in figure 9.
+A picture of the E-partner Store can be found in figure 11.
 \begin{figure}[h]
 \begin{center}
 \includegraphics{es.png}
@@ -360,7 +371,7 @@ If you want to reset the changes you have made to the e-partner, you can click o
 If you want to cancel modifying the e-partner without saving any changes, you can click on the $Cancel$ button. The E-partner Store window will close.
 
 \section{Log file}
-Repast logs the following for each run into a file. The filename is “BW4TXXXX.log” where XXX is the date and time to make the filename unique. The file is saved in the <SERVER>/log directory. It contains:
+Repast logs the following for each run into a file. The filename is “BW4TXXXX.log” where XXX is the date and time to make the filename unique. The file is saved in the $<$SERVER$>/$log directory. It contains:
 \begin{enumerate}
 \item sequence: goal sequence (which block colors are to be dropped)
 \item room: initial blocks per room
@@ -376,6 +387,6 @@ Repast logs the following for each run into a file. The filename is “BW4TXXXX.
     \item \# rooms entered
     \end{itemize}
 \end{enumerate}
-We will write info as soon as possible to the log file, so that you at least have some log info even when the system is killed before the end is reached (sequence completed).
+Logs are written to the file as soon as possible, so that information won't get lost when the system is being killed before the end of the sequence is reached.
 
 \end{document}
