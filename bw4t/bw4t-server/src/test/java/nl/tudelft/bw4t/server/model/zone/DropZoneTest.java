@@ -21,13 +21,16 @@ import nl.tudelft.bw4t.server.model.robots.AgentRecord;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.grid.Grid;
 
+@RunWith(MockitoJUnitRunner.class)
 public class DropZoneTest {
 
     private nl.tudelft.bw4t.map.Zone zone = Mockito.mock(nl.tudelft.bw4t.map.Zone.class);
@@ -76,7 +79,7 @@ public class DropZoneTest {
         assertFalse(dropzone.dropped(new Block(BlockColor.BLUE, smap), robot));
         when(robot.getBoundingBox()).thenReturn(new Rectangle2D.Double(0.5, 0.5, 1.0, 1.0));
         assertTrue(dropzone.dropped(new Block(BlockColor.BLUE, smap), robot));
-        // colors.add(BlockColor.BLUE);
+        //colors.add(BlockColor.BLUE);
         colors.add(BlockColor.DARK_GRAY);
         dropzone.setSequence(colors);
         when(robot.getAgentRecord()).thenReturn(new AgentRecord("SomethingToTest"));
