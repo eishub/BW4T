@@ -98,9 +98,11 @@ The following plugins are required for the Jenkins installation:
 
 # Sonar <i class="icon-chart-bar"></i>
 The **Code Analysis and Statistics** of BW4T is done by [Sonar](http://ii.tudelft.nl/sonar/).
+
 ### <i class="icon-help"></i>Sonar FAQ 
  - I don't have any frequently asked questions right now. Do you have a question or think something should be added to this FAQ?
 > Edit this ReadMe in ${repository_root}/README.md A handy tool to do markdown editing is [StackEdit.io][7]
+
 ### Sonar Plugins
 The following plugins are required for the sonar installation:
 
