@@ -33,18 +33,19 @@ public class GotoPositionActionListener extends AbstractClientActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        if (!getController().getEnvironment().isConnectedToGoal()) {
-            try {
-                getController().getHumanAgent().goTo(position.getX(), position.getY());
-            } catch (ActException e1) {
-                LOGGER.error(e1); 
-            }
-        } else {
-            List<Percept> percepts = new LinkedList<Percept>();
-            Percept percept = new Percept("goTo", new Numeral(position.getX()), new Numeral(position.getY()));
-            percepts.add(percept);
-            getController().setToBePerformedAction(percepts);
+    protected void actionWithHumanAgent(ActionEvent arg0) {
+        try {
+            getController().getHumanAgent().goTo(position.getX(), position.getY());
+        } catch (ActException e1) {
+            LOGGER.error(e1); 
         }
+    }
+
+    @Override
+    protected void actionWithGoalAgent(ActionEvent arg0) {
+        List<Percept> percepts = new LinkedList<Percept>();
+        Percept percept = new Percept("goTo", new Numeral(position.getX()), new Numeral(position.getY()));
+        percepts.add(percept);
+        getController().setToBePerformedAction(percepts);
     }
 }

@@ -22,6 +22,7 @@ public class BatteryProgressBarListener  {
     public BatteryProgressBarListener(JProgressBar progressBar, BW4TClientGUI gui) {
         this.progressBar = progressBar;
         this.clientGUI = gui;
+        listeners.add(this);
     }
 
     public void update() {

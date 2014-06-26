@@ -15,7 +15,7 @@ import nl.tudelft.bw4t.map.view.ViewEPartner;
 
 import org.apache.log4j.Logger;
 
-public class EPartnerMessageSenderActionListener extends ClientActionListener {
+public class EPartnerMessageSenderActionListener extends AbstractClientActionListener {
     /**
      * The log4j Logger which displays logs on console
      */

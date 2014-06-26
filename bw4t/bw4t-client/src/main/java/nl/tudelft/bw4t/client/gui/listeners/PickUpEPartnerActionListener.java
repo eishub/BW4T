@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.client.gui.listeners;
 
+import eis.exceptions.ActException;
 import eis.iilang.Percept;
 
 import java.awt.event.ActionEvent;
@@ -20,23 +21,23 @@ public class PickUpEPartnerActionListener extends AbstractClientActionListener {
         super(controller);
         this.gui = gui;
     }
-
+    
     @Override
-    public void actionPerformed(ActionEvent e) {
-        if (!getController().getEnvironment().isConnectedToGoal()) {
-            try {
-                getController().getHumanAgent().pickUpEPartner();
-                gui.getEpartnerMessageButton().setEnabled(true);
-                gui.getEpartnerChatPane().setVisible(true);
-            } catch (Exception e1) {
-                LOGGER.warn("failed to put down the e-partner", e1);
-            }
-        } else {
-            List<Percept> percepts = new LinkedList<Percept>();
-            Percept percept = new Percept("pickUpEPartner");
-            percepts.add(percept);
-            getController().setToBePerformedAction(percepts);
+    protected void actionWithHumanAgent(ActionEvent arg0) {
+        try {
+            getController().getHumanAgent().pickUpEPartner();
+            gui.getEpartnerMessageButton().setEnabled(true);
+            gui.getEpartnerChatPane().setVisible(true);
+        } catch (ActException e1) {
+            LOGGER.warn("failed to put down the e-partner", e1);
         }
     }
-
+    
+    @Override
+    protected void actionWithGoalAgent(ActionEvent arg0) {
+        List<Percept> percepts = new LinkedList<Percept>();
+        Percept percept = new Percept("pickUpEPartner");
+        percepts.add(percept);
+        getController().setToBePerformedAction(percepts);
+    }
 }

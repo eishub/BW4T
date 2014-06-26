@@ -21,9 +21,9 @@ public final class OptionPromptHelper {
     }
 
     public static OptionPrompt getYesOptionPrompt() {
-        OptionPrompt noPrompt = mock(OptionPrompt.class);
-        when(noPrompt.showConfirmDialog(any(Component.class), any(), anyString(), anyInt(), anyInt())).thenReturn(JOptionPane.YES_OPTION);
-        return noPrompt;
+        OptionPrompt yesPrompt = mock(OptionPrompt.class);
+        when(yesPrompt.showConfirmDialog(any(Component.class), any(), anyString(), anyInt(), anyInt())).thenReturn(JOptionPane.YES_OPTION);
+        return yesPrompt;
     }
 
     public static OptionPrompt getNoOptionPrompt() {

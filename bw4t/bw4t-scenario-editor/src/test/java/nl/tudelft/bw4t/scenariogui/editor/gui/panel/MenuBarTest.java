@@ -827,7 +827,6 @@ public class MenuBarTest {
         replaceListener(menuItem);
 
         /* Fake the prompt */
-        option = spy(option);
         ScenarioEditor.setOptionPrompt(option);
 
         return option;
