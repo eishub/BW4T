@@ -253,9 +253,6 @@ public class RobotEntity implements EntityInterface {
         Block closest = null;
         double cdist = Integer.MAX_VALUE;
         IndexedIterable<Object> allBlocks = context.getObjects(Block.class);
-        if (ourRobot.getState() != State.ARRIVED) {
-            return ret;
-        }
         for (Object object : allBlocks) {
             Block b = (Block) object;
             if (ourRobot.canPickUp(b)) {

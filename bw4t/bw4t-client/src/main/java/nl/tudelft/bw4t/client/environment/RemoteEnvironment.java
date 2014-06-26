@@ -75,8 +75,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
     private final Map<String, BW4TAgent> runningAgents = new HashMap<>();
 
     private final Map<String, List<Percept>> storedPercepts = new HashMap<>();
-    
-    PerceptDebugScreen pds = new PerceptDebugScreen(this);
 
     /**
      * {@inheritDoc}
