@@ -131,8 +131,8 @@ public class MapLoader implements BW4TServerMapListerner {
     private static ContinuousSpace<Object> createSpace(BW4TServerMap smap) {
         Context<Object> context = smap.getContext();
         final Point area = smap.getMap().getArea();
-        int width = (int) area.getX();
-        int height = (int) area.getY();
+        int width = (int) area.getX() + 1;
+        int height = (int) area.getY() + 1;
     
         ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);
         return spaceFactory.createContinuousSpace(PROJECTION_ID, context, new SimpleCartesianAdder<Object>(),
@@ -154,8 +154,8 @@ public class MapLoader implements BW4TServerMapListerner {
     private static Grid<Object> createGridSpace(BW4TServerMap smap) {
         Context<Object> context = smap.getContext();
         final Point area = smap.getMap().getArea();
-        int width = (int) area.getX();
-        int height = (int) area.getY();
+        int width = (int) area.getX() + 1;
+        int height = (int) area.getY() + 1;
     
         GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
         GridBuilderParameters params = new GridBuilderParameters(new StrictBorders(), new SimpleGridAdder<Object>(),
