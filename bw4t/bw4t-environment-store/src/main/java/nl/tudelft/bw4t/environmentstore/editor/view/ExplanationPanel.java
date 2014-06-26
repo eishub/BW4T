@@ -12,21 +12,23 @@ import javax.swing.JSeparator;
  */
 public class ExplanationPanel extends JPanel {
 
-    /** Random generated serial version UID. */
-    private static final long serialVersionUID = 7898118456497448363L;
+	/** Random generated serial version UID. */
+	private static final long serialVersionUID = 7898118456497448363L;
 
-    /**
-     * Set the layout and message that should be displayed.
-     */
-    public ExplanationPanel() {
-        setLayout(new BorderLayout());
+	/**
+	 * Set the layout and message that should be displayed.
+	 */
+	public ExplanationPanel() {
+		setLayout(new BorderLayout());
 
-        JLabel message = new JLabel(
-                "Right click on a cell to do modify its appearance or its content. "
-                + "If you want more options, use \"Tools\" in the menu bar.");
+		JLabel message = new JLabel(
+				"Right click on a cell to do modify its appearance. "
+						+ "If you choose to modify this cell to a room, "
+						+ "you can right click to change the position of the door, "
+						+ "or click on the white fiels to add or delete blocks.");
 
-        add(message, BorderLayout.CENTER);
-        add(new JSeparator(), BorderLayout.SOUTH);
-    }
+		add(message, BorderLayout.CENTER);
+		add(new JSeparator(), BorderLayout.SOUTH);
+	}
 
 }

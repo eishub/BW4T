@@ -37,6 +37,7 @@ public class UpdaterTest {
     @Test
     public void startAndRun() {
         when(mc.isRunning()).thenReturn(false, true, true, false);
+        when(mc.isStarting()).thenReturn(true, false, false, false);
         when(mc.getRenderSettings()).thenReturn(sett);
         when(sett.getUpdateDelay()).thenReturn(0);
         Updater upd = new Updater(mc);
@@ -50,6 +51,7 @@ public class UpdaterTest {
         }
         
         verify(mc, times(4)).isRunning();
+        verify(mc, times(3)).isStarting();
         verify(mc).setForceRunning(true);
         verify(mc, times(2)).run();
         verify(mc, times(2)).getRenderSettings();

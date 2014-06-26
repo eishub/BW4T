@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bw4TClientConfig>
+    <bots/>
+    <epartners/>
+    <clientIp>8.8.8.8</clientIp>
+    <clientPort>6000</clientPort>
+    <fileLocation>C:\Users\Tim\Documents\Java standard workspace\BlocksWorldForTeam2\bw4t\bw4t-scenario-editor/src/test/resources/XMLSaveTest.xml</fileLocation>
+    <launchGui>true</launchGui>
+    <mapFile></mapFile>
+    <serverIp>localhost</serverIp>
+    <serverPort>8000</serverPort>
+    <useGoal>true</useGoal>
+</bw4TClientConfig>

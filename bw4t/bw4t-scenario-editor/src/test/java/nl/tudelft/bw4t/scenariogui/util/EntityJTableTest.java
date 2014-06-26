@@ -68,7 +68,7 @@ public class EntityJTableTest {
 
     @Test
     public void getAgentFileColumnExceptionTest1() {
-        YesMockOptionPrompt yesMockOption = spy(new YesMockOptionPrompt());
+        OptionPrompt yesMockOption = OptionPromptHelper.getYesOptionPrompt();
         ScenarioEditor.setOptionPrompt(yesMockOption);
 
         EntityJTable errorTable = new EntityJTable();
@@ -79,7 +79,7 @@ public class EntityJTableTest {
 
     @Test
     public void getAgentFileColumnExceptionTest2() {
-        YesMockOptionPrompt yesMockOption = spy(new YesMockOptionPrompt());
+        OptionPrompt yesMockOption = OptionPromptHelper.getYesOptionPrompt();
         ScenarioEditor.setOptionPrompt(yesMockOption);
 
         EntityJTable errorTable = new EntityJTable();

@@ -1,12 +1,7 @@
 package nl.tudelft.bw4t.client.gui;
 
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -40,12 +35,16 @@ import nl.tudelft.bw4t.client.gui.listeners.ChatListMouseListener;
 import nl.tudelft.bw4t.client.gui.listeners.EPartnerListMouseListener;
 import nl.tudelft.bw4t.client.gui.listeners.TeamListMouseListener;
 import nl.tudelft.bw4t.client.gui.menu.ActionPopUpMenu;
-import nl.tudelft.bw4t.client.gui.menu.ComboAgentModel;
+import nl.tudelft.bw4t.client.gui.menu.ComboEntityModel;
 import nl.tudelft.bw4t.map.renderer.MapRenderSettings;
 import nl.tudelft.bw4t.map.renderer.MapRenderer;
 import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
 
 import org.apache.log4j.Logger;
+
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
+import eis.iilang.Percept;
 
 /**
  * Render the current state of the world at a fixed rate (10 times per second, see run()) for a client. It connects to
@@ -82,7 +81,6 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
     /** The client controller. */
     private ClientController controller;
 
-    private final JPanel mainPanel = new JPanel();
     private final JPanel optionsMessagesPane = new JPanel();
     private final JPanel botButtonPanel = new JPanel();
     private final JPanel epartnerButtonPanel = new JPanel();
@@ -91,6 +89,9 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
     private final JPanel botChatPanel = new JPanel();
     private final JPanel epartnerChatPanel = new JPanel();
     
+    /**
+     * A reference to the current object for the internal classes to use.
+     */
     private final BW4TClientGUI that = this;
     
     private final JLabel batteryLabel = new JLabel("Bot Battery: ");
@@ -110,7 +111,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
     private JScrollPane mapRenderer;
     
     /** The agent selector. */
-    private JComboBox<ComboAgentModel> agentSelector;
+    private JComboBox<String> agentSelector;
     
     /** The jpopup menu. */
     private JPopupMenu jPopupMenu;
@@ -162,9 +163,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
         mapRenderer = new JScrollPane(renderer);
         
         createOverallFrame();
-        setMinimumSize(new Dimension(700, 600));
-
-        add(mainPanel);
+//        setMinimumSize(new Dimension(700, 600));
 
         // Initialize mouse listeners for human controller
         if (controller.isHuman()) {
@@ -237,17 +236,19 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
         return jPopupMenu;
     }
 
-    public JComboBox<ComboAgentModel> getAgentSelector() {
+    public JComboBox<String> getAgentSelector() {
         return agentSelector;
     }
     
     private void createOverallFrame() {
-        mainPanel.setLayout(new BorderLayout());
+        setLayout(new BorderLayout());
         
-        createOptionsMessagesPane();
+        if(getController().isHuman()) {
+            createOptionsMessagesPane();
+            add(optionsMessagesPane, BorderLayout.EAST);
+        }
         
-        mainPanel.add(mapRenderer, BorderLayout.CENTER);
-        mainPanel.add(optionsMessagesPane, BorderLayout.EAST);
+        add(mapRenderer, BorderLayout.CENTER);
     }
     
     private void createOptionsMessagesPane() {
@@ -289,9 +290,9 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
         batteryProgressBar.setMaximum(100);
         batteryProgressBar.setValue(100);
 
-        BatteryProgressBarListener.getListeners().add(new BatteryProgressBarListener(batteryProgressBar, this));
+        new BatteryProgressBarListener(batteryProgressBar, this);
 
-        agentSelector = new JComboBox<ComboAgentModel>(new ComboAgentModel(this));
+        agentSelector = new JComboBox<String>(new ComboEntityModel(getController()));
 
         botButtonPanel.add(batteryLabel);
         botButtonPanel.add(batteryProgressBar);
@@ -365,6 +366,8 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
         
         getEpartnerChatSession().setText(join(getController().getEpartnerChatHistory(), "\n"));
         getEpartnerChatSession().setCaretPosition(getEpartnerChatSession().getDocument().getLength());
+        
+        repaint();
     }
 
     /**
@@ -461,4 +464,5 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
         }
         controller = c;
     }
+
 }

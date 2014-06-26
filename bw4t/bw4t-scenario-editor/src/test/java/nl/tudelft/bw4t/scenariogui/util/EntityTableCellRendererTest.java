@@ -83,7 +83,7 @@ public class EntityTableCellRendererTest {
      */
     @Test
     public void getTableCellRendererComponentEPartnerTableTest() {
-        YesMockOptionPrompt yesMockOption = spy(new YesMockOptionPrompt());
+        OptionPrompt yesMockOption = OptionPromptHelper.getYesOptionPrompt();
         ScenarioEditor.setOptionPrompt(yesMockOption);
         
         entityPanel.getNewEPartnerButton().doClick();      

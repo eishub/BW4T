@@ -11,7 +11,7 @@ import nl.tudelft.bw4t.environmentstore.editor.menu.controller.MenuOptionNew;
 import nl.tudelft.bw4t.environmentstore.editor.menu.controller.MenuOptionOpen;
 import nl.tudelft.bw4t.environmentstore.editor.menu.controller.MenuOptionPreview;
 import nl.tudelft.bw4t.environmentstore.editor.menu.controller.MenuOptionRandomizeBlocks;
-import nl.tudelft.bw4t.environmentstore.editor.menu.controller.MenuOptionRandomizeRooms;
+import nl.tudelft.bw4t.environmentstore.editor.menu.controller.MenuOptionRandomizeZones;
 import nl.tudelft.bw4t.environmentstore.editor.menu.controller.MenuOptionRandomizeSequence;
 import nl.tudelft.bw4t.environmentstore.editor.menu.controller.MenuOptionSave;
 import nl.tudelft.bw4t.environmentstore.editor.menu.controller.MenuOptionSaveAs;
@@ -77,8 +77,8 @@ public class EnvironmentStoreController extends ComponentAdapter {
         
         /** Create all action listeners for the Tools Menu */
         // Randomize Rooms in map
-        bar.getMenuItemRandomizeRooms().addActionListener(
-                new MenuOptionRandomizeRooms(bar, this)
+        bar.getMenuItemRandomizeZones().addActionListener(
+                new MenuOptionRandomizeZones(bar, this)
         );
         // Randomize Blocks distributions
         bar.getMenuItemRandomizeBlocks().addActionListener(

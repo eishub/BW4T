@@ -36,9 +36,8 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.EntityPanel;
 import nl.tudelft.bw4t.scenariogui.util.AbstractTableModel;
 import nl.tudelft.bw4t.scenariogui.util.ExportToMASTest;
-import nl.tudelft.bw4t.scenariogui.util.NoMockOptionPrompt;
 import nl.tudelft.bw4t.scenariogui.util.OptionPrompt;
-import nl.tudelft.bw4t.scenariogui.util.YesMockOptionPrompt;
+import nl.tudelft.bw4t.scenariogui.util.OptionPromptHelper;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
@@ -227,7 +226,7 @@ public class MenuBarTest {
         replaceListener(editor.getTopMenuBar().getMenuItemFileSave());
 
         /* Fake the prompt */
-        ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
+        ScenarioEditor.setOptionPrompt(OptionPromptHelper.getYesOptionPrompt());
 
         // set the last file location without creating the file
         String testPath = "TestPath";
@@ -247,7 +246,7 @@ public class MenuBarTest {
     @Test
     public void testSaveNoMapCancel() {
         // Create a NoMockOptionPrompt object to spy on.
-        NoMockOptionPrompt noMockOption = spy(new NoMockOptionPrompt());
+        OptionPrompt noMockOption = OptionPromptHelper.getNoOptionPrompt();
 
         // Set the controllers to mock no.
         ActionListener[] listeners = editor.getTopMenuBar().getMenuItemFileOpen().getActionListeners();
@@ -276,7 +275,7 @@ public class MenuBarTest {
     @Test
     public void testOpenButtonNonDefaultSaveNoMap() throws FileNotFoundException, JAXBException {
         // Create a YesMockOptionPrompt object to spy on.
-        YesMockOptionPrompt yesMockOption = spy(new YesMockOptionPrompt());
+        OptionPrompt yesMockOption = OptionPromptHelper.getYesOptionPrompt();
 
         // Setup the behaviour
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
@@ -325,7 +324,7 @@ public class MenuBarTest {
     @Test
     public void testOpenButtonNonDefaultSaveYesMap() throws FileNotFoundException, JAXBException {
         // Create a YesMockOptionPrompt object to spy on.
-        YesMockOptionPrompt yesMockOption = spy(new YesMockOptionPrompt());
+        OptionPrompt yesMockOption = OptionPromptHelper.getYesOptionPrompt();
 
         // Setup the behaviour
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
@@ -381,7 +380,7 @@ public class MenuBarTest {
     @Test
     public void testOpenButtonNonDefaultNo() throws FileNotFoundException, JAXBException {
         // Create a NoMockOptionPrompt object to spy on.
-        NoMockOptionPrompt noMockOption = spy(new NoMockOptionPrompt());
+        OptionPrompt noMockOption = OptionPromptHelper.getNoOptionPrompt();
 
         // Setup the behaviour
         when(filechooser.showOpenDialog((Component) any())).thenReturn(JFileChooser.APPROVE_OPTION);
@@ -450,7 +449,7 @@ public class MenuBarTest {
         AbstractMenuOption menuOption = (AbstractMenuOption) listeners[0];
         menuOption.setController(new ScenarioEditorController(editor, new BW4TClientConfig()));
 
-        ScenarioEditor.setOptionPrompt(new YesMockOptionPrompt());
+        ScenarioEditor.setOptionPrompt(OptionPromptHelper.getYesOptionPrompt());
 
         /* Don't actually close the jvm */
         doNothing().when(editor).closeScenarioEditor();
@@ -474,7 +473,7 @@ public class MenuBarTest {
         replaceListener(editor.getTopMenuBar().getMenuItemFileExit());
 
         /* Fake the prompt to no */
-        OptionPrompt option = spy(new NoMockOptionPrompt());
+        OptionPrompt option = OptionPromptHelper.getNoOptionPrompt();
         ScenarioEditor.setOptionPrompt(option);
 
         /* Change some random field */
@@ -501,7 +500,7 @@ public class MenuBarTest {
     @Test
     public void testExitSaveChanges() {
         OptionPrompt option = prepareForSave(editor.getTopMenuBar().getMenuItemFileExit(),
-                new YesMockOptionPrompt());
+                OptionPromptHelper.getYesOptionPrompt());
 
         /* Change some random field */
         editor.getMainPanel().getConfigurationPanel().setClientIP("0.0");
@@ -557,7 +556,7 @@ public class MenuBarTest {
         editor.getMainPanel().getConfigurationPanel().setClientIP("blaaas");
 
         /* Fake the prompt to no */
-        OptionPrompt option = spy(new NoMockOptionPrompt());
+        OptionPrompt option = OptionPromptHelper.getNoOptionPrompt();
         ScenarioEditor.setOptionPrompt(option);
 
         AbstractMenuOption menuOption = (AbstractMenuOption) listeners[0];
@@ -591,7 +590,7 @@ public class MenuBarTest {
         editor.getMainPanel().getConfigurationPanel().setClientIP("blaaas");
 
         /* Fake the prompt to yes */
-        OptionPrompt option = spy(new YesMockOptionPrompt());
+        OptionPrompt option = OptionPromptHelper.getYesOptionPrompt();
         ScenarioEditor.setOptionPrompt(option);
 
         /* Click the new button */
@@ -700,7 +699,7 @@ public class MenuBarTest {
                 ".mas2g"));
 
         // Spy the message
-        OptionPrompt spyPrompt = spy(new YesMockOptionPrompt());
+        OptionPrompt spyPrompt = OptionPromptHelper.getYesOptionPrompt();
         ScenarioEditor.setOptionPrompt(spyPrompt);
 
         new File(FILE_EXPORT_PATH).mkdir();
@@ -744,7 +743,7 @@ public class MenuBarTest {
 
         //Once the option prompt is set, we know that the 'too many' bots
         //message was sent, so we can close the GUI when that happens:
-        OptionPrompt noPrompt = spy(new NoMockOptionPrompt());
+        OptionPrompt noPrompt = OptionPromptHelper.getNoOptionPrompt();
         ScenarioEditor.setOptionPrompt(noPrompt);
 
         //Should not be able to save due to too many bots
@@ -828,7 +827,6 @@ public class MenuBarTest {
         replaceListener(menuItem);
 
         /* Fake the prompt */
-        option = spy(option);
         ScenarioEditor.setOptionPrompt(option);
 
         return option;
