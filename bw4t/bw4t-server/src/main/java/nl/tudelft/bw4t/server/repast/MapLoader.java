@@ -78,6 +78,7 @@ public class MapLoader implements BW4TServerMapListerner {
     @Override
     public void mapChange(BW4TServerMap map) {
         if (map.hasContext() && map.hasMap()) {
+            //Repast leegmaken en dan loadMap
             if (!loaded) {
                 loadMap(map);
                 loaded = true;
