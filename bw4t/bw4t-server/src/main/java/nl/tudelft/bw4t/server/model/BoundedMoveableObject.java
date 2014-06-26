@@ -254,14 +254,20 @@ public abstract class BoundedMoveableObject {
 
         double halfPad = Math.ceil(padding / 2);
 
-        double x =  Math.floor(getBoundingBox().getX()) - halfPad;
-        double y =  Math.floor(getBoundingBox().getY()) - halfPad;
+        double x =  Math.floor(getBoundingBox().getX());
+        double y =  Math.floor(getBoundingBox().getY());
 
         double width = Math.ceil(getBoundingBox().getWidth());
         double height = Math.ceil(getBoundingBox().getHeight());
 
-        double x2  = x + width +  halfPad;
-        double y2 = y + height + halfPad;
+        double x2  = x + width;
+        double y2 = y + height;
+
+        x -= halfPad;
+        y -= halfPad;
+
+        x2 += halfPad;
+        y2 += halfPad;
 
         for(double i = x; i <= x2; i++) {
             for(double j = y; j <= y2; j++) {
