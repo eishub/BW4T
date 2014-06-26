@@ -1,9 +1,13 @@
 package nl.tudelft.bw4t.client.environment;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import nl.tudelft.bw4t.client.startup.InitParam;
 
 import org.junit.Test;
+
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
 
 /**
  * Here we test if the Launcher correctly finds arguments.
@@ -15,23 +19,23 @@ public class LauncherTest {
     /** We test if it correctly identifies the intended value amongst several values */
     @Test
     public void findArgumentTest() {
-        String str = Launcher.findArgument(new String[]{
+        Identifier str = Launcher.findParameter(new String[]{
                 "-clientport", "101",
                 "-agentcount", "2",
                 "-launchgui", "false",
                 "-serverport", "5000"},
                 InitParam.CLIENTPORT);
-        assertTrue(str.equals("101"));
+        assertTrue("101".equals(str.getValue()));
     }
     
     /** We test if it correctly returns the default value when the desired argument is not included. */
     @Test
     public void findArgumentDefaultTest() {
-        String str = Launcher.findArgument(new String[]{
+        Parameter str = Launcher.findParameter(new String[]{
                 "-agentcount", "2",
                 "-launchgui", "false",
                 "-serverport", "5000"},
                 InitParam.CLIENTPORT);
-        assertTrue(str.equals("2000"));
+        assertNull(str);
     }
 }

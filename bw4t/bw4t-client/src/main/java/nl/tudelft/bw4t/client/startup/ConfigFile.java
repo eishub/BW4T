@@ -2,6 +2,8 @@ package nl.tudelft.bw4t.client.startup;
 
 import javax.xml.bind.JAXBException;
 
+import org.apache.log4j.Logger;
+
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.util.XMLManager;
 
@@ -10,6 +12,7 @@ import nl.tudelft.bw4t.util.XMLManager;
  * overwrite the InitParam variables.
  */
 public final class ConfigFile {
+    private static final Logger LOGGER = Logger.getLogger(ConfigFile.class);
     
     private static BW4TClientConfig config;
     
@@ -66,6 +69,7 @@ public final class ConfigFile {
         default:
             break;
         }
+        LOGGER.info(param.nameLower() + " =D " + param.getDefaultValue());
     }
     
     /**
