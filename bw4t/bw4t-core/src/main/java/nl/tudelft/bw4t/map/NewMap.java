@@ -1,12 +1,17 @@
 package nl.tudelft.bw4t.map;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
+import java.io.StringBufferInputStream;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -76,6 +81,35 @@ public class NewMap implements Serializable {
         Unmarshaller jaxbUnmarshaller = context.createUnmarshaller();
         return (NewMap) jaxbUnmarshaller.unmarshal(instream);
 
+    }
+    
+    /**
+     * Convert the given {@link NewMap} object to a XML string
+     * @param map the map to convert
+     * @return the created XML string
+     * @throws JAXBException if an error occured during conversion
+     */
+    public static String toXML(NewMap map) throws JAXBException {
+        OutputStream baos = new ByteArrayOutputStream();
+
+        toXML(map, baos);
+        
+        return baos.toString();
+    }
+    
+    /**
+     * Convert the given {@link NewMap} object to XML and write it to the given outputstream.
+     * @param map the map to convert
+     * @param os the outputstream to write to
+     * @throws JAXBException if we fail to convert the map object
+     */
+    public static void toXML(NewMap map, OutputStream os) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(NewMap.class);
+
+        Marshaller m = context.createMarshaller();
+        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        
+        m.marshal(map, os);
     }
 
     public List<BlockColor> getSequence() {
