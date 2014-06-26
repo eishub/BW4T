@@ -13,96 +13,51 @@
 
 \maketitle
 
-\section{Hoe het nu is}
+\section{How it was}
 \includegraphics[width=\linewidth]{old.png}
-Zoals in het UML diagram te zien is zijn veel klassen met elkaar verbonden. De documentatie is erg matig en er zijn geen testen. Deze factoren zorgen ervoor dat het heel lastig is om de code te begrijpen en te debuggen. Het is lastig uit te vinden wat een stukje code doet, wat de functie van een methode is, wat het verschil is tussen bepaalde methodes en klassen en wat de connectie is tussen stukken code. \\
-In het huidige systeem zit Repast, maar veel functies die ook in Repast zitten worden apart geimplementeerd. Hier zorgt Repast ervoor dat de totale size van de systeem erg groot is (500 mb voor Repast alleen). \\
-In het huidige systeem zit een client en server klasse, maar de client en server worden niet consistent gebruikt. De client en server zitten niet los van elkaar, en er zijn klassen die met elkaar communiceren buiten de client en server om terwijl ze dit niet zouden moeten doen bij een client-server architecture. \\
-Het opstarten van het systeem is nu ook niet heel gebruiksvriendelijk, de client en server moeten apart opgestart worden. 
-Zie ook bijlage voor voorbeelden van 'slechte' code en comments.
+As can be seen in the UML diagram above, many classes were connected, Documentation was inadequate and no tests were written. These factors made it very hard for us to understand and debug the code base.
+It took quite some time to find out what a piece of code exactly did, what function a method had, what the difference between methods and classes was and what the connection between pieces of code was.
+After some weeks of exploring the code base and the UML diagrams belonging to the code base, we found out that there was no clear structure at all. There was a client and a server, but all communication went through the BW4TEnvironment class. So the first thing we did, was deciding how to split up the code, such that we got a clear Client-Server Architecture. \\
+\indent Take a look at the attachments as well for some examples of the old code.
+In the old system, Repast was used. Problem was that many functions in Repast were custom written as well and the entire Repast package needed to be installed. This caused the system to grow very large (500 MB for Repast only).
 
-\section{Wat hebben we tot nu toe bereikt}
-\includegraphics[width=\linewidth]{UMLv2.png}
-Repast is nu een plugin en de bijbehorende jar files zijn uit het systeem, wat veel minder ruimte kost (nu nog maar 8mb). De plugin is de nieuwste versie van Repast. \\
-We zijn bezig geweest met het splitsen van de server, client en een core. In core zitten de klassen die zowel door de server en de client gebruikt wordt. Elk van deze onderdelen is nu een apart Maven project. Met deze structuur hopen wij meer overzicht te krijgen in de code en dat het voor andere mensen ook (snel) duidelijk is hoe het systeem in elkaar zit. Verder is het testen van het systeem met deze structuur een stuk makkelijker. 
-
-\section{Repast}
-Repast is zeker een goed platform voor agent-based modeling. Echter voor dit project zullen we geen verder gebruik maken Repast dan hoe het nu gebruikt wordt. Dit omdat we problemen verwachten als we Repast meer gaan gebruiken. Met name het synchroon lopen met GOAL is een uitdaging. Als we het systeem meer gebruik willen laten maken van Repast zal er een hoop moeten worden omgeschreven. Wij zijn niet in staat dit in 5 weken te doen, aangezien we zoveel moeten veranderen dat er dan geen werkend product is. \\
-
-\section{Wat kunnen wij aankomende weken nog bereiken}
-Wat wij de aankomende weken nog kunnen doen is zorgen dat het opstarten van het systeem makkelijker is. Dus dat de server en client niet apart opgestart hoeven te worden, maar dat er een launcher is die alles voor je doet. \\
-Ook zullen we de client-server architecture verder uitwerken. Hierbij willen we proberen om het systeem te versimpelen door overbodige connecties tussen klasses te verwijderen of om te zetten naar client-server communicatie. Ook zullen we de documentatie van het systeem proberen te verbeteren. \\
-Een ander punt waar we aan gaan werken is het schrijven van testen. Dit zullen voornamelijk functionaliteitstesten zijn. \\
-In de bijlage bevindt zich ook de toepassing van de MoSCoW-methode.
-
-\section{Wat zou er kunnen gebeuren}
-Als we meer tijd en ervaring zouden hebben zouden we het hele systeem omgooien. Zodanig dat de server-client architecture nog beter wordt geimplementeerd, de documentatie duidelijk is, en alles in het systeem goed getest is. Bij een langer lopend project is het te overwegen om alsnog Repast te gaan gebruiken. Dit zou dus betekenen dat er ook goed naar de link tussen GOAL en Repast gekeken moet worden. \\
-Het is dan ook heel belangrijk dat het overzicht bewaart blijft, dat er kritisch naar de code wordt gekeken zodat het systeem optimaal werkt.
+\section{What we achieved}
+Server \\
+\includegraphics[width=\linewidth]{server_simplified_boxed.png}
+\\ Client \\
+\includegraphics[width=\linewidth]{client_simplified_boxed.png}
+The customer wanted a clear structure to be added to the code base. Besides that, the code had to be rewritten so that it would be easier to adjust and maintain the code. Adding new features should than automatically become easier as well. \\
+\indent We decided to put classes which the Client needs and the Server does not need into the Client part. This does not cause any errors in the server, and anything needed by the client is present. Afterwards, we did the same for the Server. All classes needed by the Server and not by the Client are put in the Server part. The classes that are needed by both, we put in the Core part. The Core can be seen as a library, it can be used by both the Server and the Client when needed. For the Client and the Server, simplified diagrams are shown above.
+We chose to use Maven as an outline for the project, because Maven has a perfect way of handling those parts and the dependencies between them. Other dependencies such as EIS and Repast can be put in the resources folder and Maven takes care of the rest. \\
+\indent After everything was set up, we took a deeper look at the code. Trying to figure out what could be replaced by Repast was a big task that, for now, unfortunately led to nothing. Repast is a big bunch of interfaces which can guide your simulation of agents. Unfortunately, there were some problems with the connection to GOAL. GOAL can be paused and resumed whenever the user wants to, but Repast will continue to run, which will lead to false simulations and results. However because we only had 5 weeks to refactor the entire code base, we decided to leave Repast as it is for now. The chance of breaking the project was too big, as we had to deliver a fully working product in only 5 weeks. \\
+\indent But we did manage to get the Repast functions more efficient. In combination with Maven, we pulled Repast apart and only added the dependencies that are really needed. Now the Repast functionality used is only 8 MB. Besides that, we made sure the newest version of Repast is used.
+So we started looking at what could be refactored. We created our own UML class diagram, and got really shocked about all connections and tried to figure out what the god classes are and how we could make them smaller. We immediately saw that BW4TRemoteEnvironment was the hugest class in the project, so that had to be refactored. BW4TClientMapRenderer was the second god class we handled. We tried to pick pieces of code that belong together and diffused it to a different class. \\
+\indent Then we found the custom BW4TLogger, a logger implemented to print anything the bot does. We thought that it would be very practical to export the logging to Log4j (an apache library). Now two kinds of logs are made, one kind that prints all the bot's actions to the log file and the other prints the debug issues in the code to the console. Now it can easily be adapted, if anything new from a bot is wanting to be logged, you just log it to BOTLOG level and it appears in the log file.
 
 \newpage
-\section*{Bijlagen} 
-Deze bijlage bevat een aantal voorbeelden van 'slechte' code en comments. Het zijn situaties die we willen verbeteren en voorkomen. \\
+\section*{Attachments} 
+This section contains some examples of the old code base that we found. It were examples of what we wanted to adjust and make sure it never happens again.
 
-Lege methodes \\
-\includegraphics[width=\linewidth]{emptyMethod.png} \\ 
+Empty methods.\\
+\includegraphics[width=\linewidth]{emptyMethod.PNG} \\ 
 
-Twee methodes die op elkaar lijken maar niet duidelijk het verschil wordt aangegeven. \\
-\includegraphics[width=\linewidth]{freeAgentNoClue.png}
-\includegraphics[width=\linewidth]{unregisterAgentNoClue.png} \\ 
+Two methods that look alike, but the difference is nowhere to be found .\\
+\includegraphics[width=\linewidth]{freeAgentNoClue.PNG}
+\includegraphics[width=\linewidth]{unregisterAgentNoClue.PNG} \\ 
 
 Hacks \\
-\includegraphics[width=\linewidth]{HackWTF.png} \\ 
+\includegraphics[width=\linewidth]{HackWTF.PNG} \\ 
 
-Uitgecommende code, zeker bij een eindversie is het netter om dit eruit te halen \\
-\includegraphics[width=\linewidth]{lelijkCode.png} \\ 
+Commented code.\\
+\includegraphics[width=\linewidth]{lelijkCode.PNG} \\ 
 
-Er wordt niet gechecked of er inderdaad aan de voorwaarde wordt voldaan dat alle entities en agents ontbonden zijn\\
-\includegraphics[width=\linewidth]{noEntityCheck.png} \\ 
+No checks whether code satisfies pre condition.\\
+\includegraphics[width=\linewidth]{noEntityCheck.PNG} \\ 
 
-Niet getest, op de gok iets proberen \\
-\includegraphics[width=\linewidth]{notTested.png} \\ 
+Nothing tested, everything is assumed to work.\\
+\includegraphics[width=\linewidth]{notTested.PNG} \\ 
 
-Zou gedaan moeten worden, maar is dus niet gedaan \\
-\includegraphics[width=\linewidth]{TODOs+shouldBeFixed} \\
-
-\newpage
-\section*{MoSCoW}
-\subsection*{Must}
-\begin{enumerate}
-\item[-] Fully integration tests
-\item[-] Test coverage of 50 $\%$
-\item[-] System works same as before refactoring, functionallities are the same
-\item[-] Documentation codeBase complete on package level
-\item[-] Wouter must know how the new architecture is
-\item[-] Launcher
-\item[-] New logger fully integrated, old logger does not excist anymore
-\item[-] Good graphical overview
-\item[-] Make sure that the stakeholders get why we do what we do (eg with Repast)
-\item[-] Integration with other groups
-\item[-] System with Jenskins and Sonar on server TU Delft
-\item[-] Exception handling
-\end{enumerate}
-
-\subsection*{Should}
-\begin{enumerate}
-\item[-] Reduce indicated mistakes given by Sonar
-\item[-] Documentation codeBase for core complete on classe level
-\item[-] Visualization package for Client en Server mergen
-\end{enumerate}
-
-\subsection*{Could}
-\begin{enumerate}
-\item[-] Documentation codeBase complete on classe level
-\item[-] Analysing tool wich make use of the logger
-\item[-] Use CodeCity on old on new system
-\end{enumerate}
-
-\subsection*{Won't}
-\begin{enumerate}
-\item[-] Logger replay function
-\item[-] More use of Repast
-\item[-] Documentation codeBase complete on method level
-\end{enumerate}
-
+TODO's and should-be-fixed's.\\
+\includegraphics[width=\linewidth]{TODOs+shouldBeFixed.PNG} \\
 
 \end{document}
