@@ -3,6 +3,8 @@ package nl.tudelft.bw4t.server.environment;
 import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
@@ -14,6 +16,7 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBException;
 
+import nl.tudelft.bw4t.eis.MapParameter;
 import nl.tudelft.bw4t.map.Entity;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.network.BW4TClientActions;
@@ -212,9 +215,26 @@ public class BW4TEnvironment extends AbstractEnvironment {
         setState(EnvironmentState.INITIALIZING);
         takeDownSimulation();
 
-        Parameter map = parameters.get("map");
-        if (map != null) {
-            setMapName(((Identifier) map).getValue());
+        Parameter param = parameters.get("map");
+        if (param != null) {
+            String mapname = null;
+            if (param instanceof MapParameter) {
+                MapParameter mParam = (MapParameter) param;
+                NewMap map = mParam.getMap();
+                mapname = map.hashCode() + ".map";
+                
+                try {
+                    NewMap.toXML(map, new FileOutputStream(getFullMapPath(mapname)));
+                } catch (FileNotFoundException | JAXBException e) {
+                    LOGGER.error("failed to save the map received from the client", e);
+                    mapname = null;
+                }
+            } else if (param instanceof Identifier) {
+                mapname = ((Identifier) param).getValue();
+            }
+            if (mapname != null) {
+                setMapName(mapname);
+            }
         }
         try {
             launchRepast();
@@ -248,8 +268,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
      * @throws JAXBException 
      */
     private void launchRepast() throws IOException, ScenarioLoadException, JAXBException {
-        NewMap theMap = NewMap.create(new FileInputStream(new File(System.getProperty("user.dir") + "/maps/"
-                + mapName)));
+        NewMap theMap = NewMap.create(new FileInputStream(new File(getFullMapPath(this.getMapName()))));
         serverMap = new BW4TServerMap(theMap);
         serverMap.attachChangeListener(getMapLoader());
         Launcher.getInstance().getEntityFactory().setServerMap(serverMap);
@@ -287,6 +306,15 @@ public class BW4TEnvironment extends AbstractEnvironment {
     }
     public String getMapName() {
         return mapName;
+    }
+    
+    /**
+     * Get the actual path for the given map name.
+     * @param name the name of the map
+     * @return the path to the actual file
+     */
+    public static String getFullMapPath(String name) {
+        return System.getProperty("user.dir") + "/maps/" + name;
     }
 
     public void setMapName(String mapName) {

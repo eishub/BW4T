@@ -13,9 +13,12 @@ import eis.exceptions.QueryException;
 import eis.exceptions.RelationException;
 import eis.iilang.Action;
 import eis.iilang.EnvironmentState;
+import eis.iilang.Identifier;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -29,11 +32,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import javax.xml.bind.JAXBException;
+
 import nl.tudelft.bw4t.client.BW4TClient;
 import nl.tudelft.bw4t.client.agent.BW4TAgent;
 import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.startup.InitParam;
+import nl.tudelft.bw4t.eis.MapParameter;
 import nl.tudelft.bw4t.map.NewMap;
 
 import org.apache.log4j.BasicConfigurator;
@@ -94,11 +100,8 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
             }
             getClient().connectServer();
 
-            Map<String, Parameter> serverparams = InitParam.getServerParameters();
-            if (!(serverparams.isEmpty())) {
-                LOGGER.info(String.format("Sending extra parameters to server: %s", serverparams));
-                getClient().initServer(serverparams);
-            }
+            sendServerParams();
+
             getClient().register();
         } catch (RemoteException e) {
             LOGGER.error("Unable to access the remote environment.", e);
@@ -106,6 +109,30 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
             LOGGER.error("The URL provided to connect to the remote environment is invalid.");
         } catch (NotBoundException e) {
             LOGGER.error("Unable to bind to the remote environment.");
+        }
+    }
+
+    /**
+     * Send the extra parameters to the server.
+     * 
+     * @throws ManagementException
+     *             if we fail to load a local map or there is an error in the communication with the server.
+     */
+    private void sendServerParams() throws ManagementException {
+        Map<String, Parameter> serverparams = InitParam.getServerParameters();
+        if (!(serverparams.isEmpty())) {
+            LOGGER.info(String.format("Sending extra parameters to server: %s", serverparams));
+            if (serverparams.containsKey("map")) {
+                File mapfile = new File(((Identifier) serverparams.get("map")).getValue());
+                if (mapfile.exists() && !mapfile.isDirectory()) {
+                    try {
+                        serverparams.put("map", new MapParameter(mapfile));
+                    } catch (FileNotFoundException | JAXBException e) {
+                        throw new ManagementException("Could not load local Map to send to the server.", e);
+                    }
+                }
+            }
+            getClient().initServer(serverparams);
         }
     }
 
@@ -584,9 +611,12 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 
     /**
      * Gather all the new percepts for the given entity from the environment
-     * @param name name of the entity
+     * 
+     * @param name
+     *            name of the entity
      * @return the percepts for the given entity
-     * @throws PerceiveException if we failed to get the entity
+     * @throws PerceiveException
+     *             if we failed to get the entity
      */
     public List<Percept> gatherPercepts(String name) throws PerceiveException {
         List<Percept> all = PerceptsHandler.getAllPerceptsFromEntity(name, this);

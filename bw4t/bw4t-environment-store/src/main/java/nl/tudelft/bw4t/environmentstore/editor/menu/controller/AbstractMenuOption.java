@@ -178,13 +178,8 @@ public abstract class AbstractMenuOption implements ActionListener {
             FileNotFoundException {
         
         NewMap map = MapConverter.createMap(envController.getMapController().getEnvironmentMap());
-        JAXBContext context = JAXBContext.newInstance(NewMap.class);
-
-        Marshaller m = context.createMarshaller();
-        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         
-        File file = new File(path);
-        m.marshal(map, new FileOutputStream(file));
+        NewMap.toXML(map, new FileOutputStream(new File(path)));
         view.setLastFileLocation(path);
     }
     
