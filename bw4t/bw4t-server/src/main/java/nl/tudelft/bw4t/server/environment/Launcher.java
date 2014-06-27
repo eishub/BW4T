@@ -254,7 +254,7 @@ public class Launcher {
      * 
      * @return the environment
      */
-    public static BW4TEnvironment getEnvironment() {
+    public BW4TEnvironment getEnvironment() {
         return environment;
     }
 

@@ -8,7 +8,6 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 import eis.eis2java.exception.TranslationException;
 import eis.exceptions.ActException;
 import eis.iilang.Action;
@@ -18,6 +17,7 @@ import java.rmi.RemoteException;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.message.BW4TMessage;
 import nl.tudelft.bw4t.client.message.MessageType;
+import nl.tudelft.bw4t.map.Zone;
 
 import org.junit.After;
 import org.junit.Before;
@@ -80,10 +80,10 @@ public class BW4TAgentTest {
     
     @Test
     public void testGoToNavPoint() throws ActException, RemoteException, TranslationException{
-        testAgent.goTo("DropZone");
+        testAgent.goTo(Zone.DROP_ZONE_NAME);
         verify(remoteEnvironment).performEntityAction(any(String.class), captorAction.capture());
         assertEquals("goTo", captorAction.getValue().getName());
-        assertEquals("DropZone", captorAction.getValue().getParameters().get(0).toProlog());
+        assertEquals(Zone.DROP_ZONE_NAME, captorAction.getValue().getParameters().get(0).toProlog());
     }
 
     @Test
@@ -149,7 +149,7 @@ public class BW4TAgentTest {
     @Test(expected = ActException.class)
     public void testGoToNavPointEnvThrows() throws RemoteException, ActException {
         when(remoteEnvironment.performEntityAction(any(String.class), any(Action.class))).thenThrow(new RemoteException());
-        testAgent.goTo("DropZone");
+        testAgent.goTo(Zone.DROP_ZONE_NAME);
     }
     
     @Test(expected = ActException.class)

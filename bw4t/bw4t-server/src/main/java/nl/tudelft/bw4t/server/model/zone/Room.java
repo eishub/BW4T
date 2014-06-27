@@ -3,9 +3,7 @@ package nl.tudelft.bw4t.server.model.zone;
 import java.awt.Color;
 
 import nl.tudelft.bw4t.map.RenderOptions;
-import repast.simphony.context.Context;
-import repast.simphony.space.continuous.ContinuousSpace;
-import repast.simphony.space.grid.Grid;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
 
 /**
  * Abstract definition of a room in the environment.
@@ -36,9 +34,8 @@ public abstract class Room extends Zone {
      * @param context
      *            The context in which the room should be placed.
      */
-    public Room(Color color, nl.tudelft.bw4t.map.Zone roomzone, ContinuousSpace<Object> space, 
-                                    Grid<Object> grid, Context<Object> context) {
-        super(roomzone, space, grid, context);
+    public Room(Color color, nl.tudelft.bw4t.map.Zone roomzone, BW4TServerMap context) {
+        super(roomzone, context);
         this.color = color;
         this.renderOptions = roomzone.getRenderOptions();
     }

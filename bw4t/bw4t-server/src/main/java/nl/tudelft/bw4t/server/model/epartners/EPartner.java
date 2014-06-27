@@ -5,12 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.tudelft.bw4t.map.view.ViewEPartner;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
-import repast.simphony.context.Context;
-import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
-import repast.simphony.space.grid.Grid;
 
 /**
  * This class makes it possible to create an EPartner for the Human.
@@ -39,15 +37,11 @@ public class EPartner extends BoundedMoveableObject {
     /**
      * @param n
      *            The "human-friendly" name of the e-Partner.
-     * @param space
-     *            The space in which the robot operates.
-     * @param grid
-     *            The grid in which the robot operates.
-     * @param context
-     *            The context in which the robot operates.
+     * @param smap
+     *            The context in which the epartner operates.
      */
-    public EPartner(String n, ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context) {
-        super(space, grid, context);
+    public EPartner(String n, BW4TServerMap smap) {
+        super(smap);
         
         view.setId(getId());
         this.setName(n);

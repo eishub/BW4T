@@ -3,11 +3,9 @@ package nl.tudelft.bw4t.server.model.doors;
 import java.awt.Color;
 
 import nl.tudelft.bw4t.map.Door.Orientation;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.zone.Room;
-import repast.simphony.context.Context;
-import repast.simphony.space.continuous.ContinuousSpace;
-import repast.simphony.space.grid.Grid;
 
 /**
  * A door is a platform between a room and the outside. You can enter rooms only through a door. This is implemented by
@@ -27,15 +25,11 @@ public class Door extends BoundedMoveableObject {
     /**
      * Creates a new door.
      * 
-     * @param space
-     *            The space in which the room will be located.
-     * @param grid
-     *            The grid in which the room will be located.
      * @param context
      *            The context in which the room will be located.
      */
-    public Door(ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context) {
-        super(space, grid, context);
+    public Door(BW4TServerMap context) {
+        super(context);
     }
 
     public Color getColor() {

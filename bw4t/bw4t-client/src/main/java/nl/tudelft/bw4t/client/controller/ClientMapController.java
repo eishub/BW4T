@@ -246,7 +246,15 @@ public class ClientMapController extends AbstractMapController {
      */
 
     public void handlePercept(String name, List<Parameter> perceptParameters) {
-        LOGGER.debug("Handling percept: " + name + " => " + perceptParameters.toString());
+        StringBuilder sb = new StringBuilder("Handling percept: ");
+        sb.append(name);
+        sb.append(" => [");
+        for(Parameter p: perceptParameters) {
+            sb.append(p.toProlog());
+            sb.append(", ");
+        }
+        sb.append("]");
+        LOGGER.debug(sb.toString());
         PerceptProcessor processor = perceptProcessors.get(name);
         if (processor != null) {
             processor.process(perceptParameters, this);
@@ -269,7 +277,6 @@ public class ClientMapController extends AbstractMapController {
     @Override
     public void run() {
         if (clientController.isHuman() || !clientController.getEnvironment().isConnectedToGoal()) {
-            LOGGER.debug("updating information");
             try {
                 clientController.getEnvironment().gatherPercepts(getTheBot().getName());
             } catch (PerceiveException e) {

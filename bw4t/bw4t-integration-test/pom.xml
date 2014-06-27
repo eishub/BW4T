@@ -4,7 +4,7 @@
     <parent>
         <groupId>nl.tudelft</groupId>
         <artifactId>bw4t</artifactId>
-        <version>3.4.0</version>
+        <version>3.5.0</version>
         <relativePath>..</relativePath>
     </parent>
     <groupId>nl.tudelft.bw4t</groupId>
@@ -18,12 +18,12 @@
         <dependency>
             <groupId>nl.tudelft.bw4t</groupId>
             <artifactId>bw4t-server</artifactId>
-            <version>3.4.0</version>
+            <version>3.5.0</version>
         </dependency>
         <dependency>
             <groupId>nl.tudelft.bw4t</groupId>
             <artifactId>bw4t-client</artifactId>
-            <version>3.4.0</version>
+            <version>3.5.0</version>
         </dependency>
     </dependencies>
 
@@ -53,7 +53,7 @@
                                 <mkdir dir="target/run-server/" />
                                 <java fork="true" spawn="true" dir="target/run-server/"
                                     classpathref="maven.runtime.classpath" className="nl.tudelft.bw4t.server.environment.Launcher"
-                                    args="-gui false -map Banana -key bw4tServerIntegration" />
+                                    args="-gui true -map Banana -key bw4tServerIntegration" />
                                 <waitfor maxwait="1" maxwaitunit="minute" checkevery="200">
                                     <socket server="localhost" port="8000" />
                                 </waitfor>

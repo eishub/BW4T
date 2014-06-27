@@ -38,6 +38,7 @@ public final class BotConfig implements Serializable, Cloneable {
      */
     public static BotConfig createDefaultHumans() {
         BotConfig bot = new BotConfig();
+        bot.setBotName("Human");
         bot.setBotController(EntityType.HUMAN);
         return bot;
     }

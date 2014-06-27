@@ -2,20 +2,17 @@ package nl.tudelft.bw4t.server.model.zone;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import nl.tudelft.bw4t.map.BlockColor;
+import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.server.logging.BW4TFileAppender;
 import nl.tudelft.bw4t.server.logging.BotLog;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
 
 import org.apache.log4j.Logger;
-
-import repast.simphony.context.Context;
-import repast.simphony.space.continuous.ContinuousSpace;
-import repast.simphony.space.grid.Grid;
 
 /**
  * Representation of a room where blocks can be dropped into.
@@ -40,17 +37,14 @@ public class DropZone extends Room {
      * 
      * @param dropzone
      *            The zone in which the dropzone should be located.
-     * @param space
-     *            The space in which the dropzone should be located.
-     * @param grid
-     *            The grid in which the dropzone should be located.
+     * @param sequence2
+     *            the sequence of blocks that need to be brought to this dropzone
      * @param context
      *            The context in which the dropzone should be located.
      */
-    public DropZone(nl.tudelft.bw4t.map.Zone dropzone, ContinuousSpace<Object> space, 
-                        Grid<Object> grid, Context<Object> context) {
-        super(Color.GRAY, dropzone, space, grid, context);
-        sequence = new LinkedList<BlockColor>();
+    public DropZone(Zone dropzone, List<BlockColor> sequence2, BW4TServerMap context) {
+        super(Color.GRAY, dropzone, context);
+        this.setSequence(sequence);
         sequenceIndex = 0;
     }
 

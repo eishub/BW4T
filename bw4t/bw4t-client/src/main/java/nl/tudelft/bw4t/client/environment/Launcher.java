@@ -50,7 +50,10 @@ public final class Launcher {
                 LOGGER.info("Setting parameter 'GOAL' with 'false' because we started from commandline.");
                 init.put(param.nameLower(), new Identifier("false"));
             } else {
-                init.put(param.nameLower(), new Identifier(findArgument(args, param)));
+                final Parameter value = findParameter(args, param);
+                if (value != null) {
+                    init.put(param.nameLower(), value);
+                }
             }
         }
         return startupEnvironment(init);
@@ -88,30 +91,14 @@ public final class Launcher {
      *            element in the array should then contain the value.
      * @return The value for the parameter. Returns default value if not in the array.
      */
-    public static String findArgument(String[] args, InitParam param) {
-        return findArgument(args, "-" + param.nameLower(), param.getDefaultValue());
-    }
-
-    /**
-     * Find a certain argument in the string array and return its setting.
-     * 
-     * @param args
-     *            - The {@link String} array containing all the arguments.
-     * @param param
-     *            - The name of the parameter to look for.
-     * @param def
-     *            - The default value for this parameter.
-     * @return Returns the value found or the default value if nothing is found.
-     */
-    private static String findArgument(String[] args, String param, String def) {
+    public static Identifier findParameter(String[] args, InitParam param) {
         for (int i = 0; i < (args.length - 1); i++) {
-            if (args[i].equalsIgnoreCase(param)) {
-                LOGGER.debug("Found parameter '" + param + "' with '" + args[i + 1] + "'");
-                return args[i + 1];
+            if (args[i].equalsIgnoreCase("-" + param.nameLower())) {
+                LOGGER.debug("Found parameter '" + param.nameLower() + "' with '" + args[i + 1] + "'");
+                return new Identifier(args[i + 1]);
             }
         }
-        LOGGER.debug("Defaulting parameter '" + param + "' with '" + def + "'");
-        return def;
+        LOGGER.debug("Defaulting parameter '" + param.nameLower() + "' with '" + param.getDefaultValue() + "'");
+        return null;
     }
-
 }

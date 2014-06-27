@@ -3,6 +3,7 @@ package nl.tudelft.bw4t.server.model.zone;
 import java.util.HashSet;
 import java.util.Set;
 
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
 import repast.simphony.context.Context;
@@ -38,9 +39,8 @@ public abstract class Zone extends BoundedMoveableObject {
      * @param grid in which the zone needs to be created
      * @param context in which the zone needs to be created
      */
-    public Zone(nl.tudelft.bw4t.map.Zone zone, ContinuousSpace<Object> space, 
-                        Grid<Object> grid, Context<Object> context) {
-        super(space, grid, context);
+    public Zone(nl.tudelft.bw4t.map.Zone zone, BW4TServerMap context) {
+        super(context);
         name = zone.getName();
         if (zone.getRenderOptions() != null) {
             isLabelVisible = zone.getRenderOptions().isLabelVisible();
@@ -83,7 +83,7 @@ public abstract class Zone extends BoundedMoveableObject {
      * @return Robot, or null if no occupier.
      */
     public AbstractRobot getOccupier() {
-        for (Object o : context.getObjects(AbstractRobot.class)) {
+        for (Object o : getContext().getObjects(AbstractRobot.class)) {
             AbstractRobot robot = (AbstractRobot) o;
             NdPoint loc = robot.getLocation();
             if (getBoundingBox().contains(loc.getX(), loc.getY())) {

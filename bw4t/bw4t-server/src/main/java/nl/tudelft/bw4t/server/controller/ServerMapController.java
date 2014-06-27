@@ -1,14 +1,11 @@
 package nl.tudelft.bw4t.server.controller;
 
-import eis.iilang.EnvironmentState;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import nl.tudelft.bw4t.map.BlockColor;
-import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Path;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.renderer.AbstractMapController;
@@ -18,15 +15,14 @@ import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
+import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.epartners.EPartner;
 import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.server.model.zone.DropZone;
 import nl.tudelft.bw4t.server.model.zone.Room;
-import nl.tudelft.bw4t.server.repast.MapLoader;
-import repast.simphony.context.Context;
 import repast.simphony.space.Dimensions;
-import repast.simphony.space.continuous.ContinuousSpace;
-import repast.simphony.util.collections.IndexedIterable;
+import eis.iilang.EnvironmentState;
 
 /**
  * the {@link MapController} used by the server.
@@ -36,53 +32,46 @@ public class ServerMapController extends AbstractMapController {
     /**
      * the repast context containing block and entities.
      */
-    private final Context<Object> serverContext;
+    private final BW4TServerMap serverMap;
     /**
      * make sure we focus on the map once we started the application.
      */
     private boolean haveRequestedFocusAlready = false;
 
     /**
-     * Instantiate the MapController with the given repast context and the map used.
+     * Instantiate the MapController with the given server map used.
      * 
-     * @param map
-     *            the map to be displayed
-     * @param context
-     *            the repast context containing block and entities
+     * @param serverMap the server map containing the context and map
      */
-    public ServerMapController(NewMap map, Context<Object> context) {
-        super(map);
+    public ServerMapController(BW4TServerMap serverMap) {
+        super(serverMap.getMap());
+        this.serverMap = serverMap;
         getRenderSettings().setRenderEntityName(true);
-        serverContext = context;
-        Dimensions size = ((ContinuousSpace) context.getProjection(MapLoader.PROJECTION_ID)).getDimensions();
+        Dimensions size = serverMap.getContinuousSpace().getDimensions();
         getRenderSettings().setWorldDimensions((int) size.getWidth(), (int) size.getHeight());
     }
 
     @Override
     public List<BlockColor> getSequence() {
-        IndexedIterable<Object> dropZone = serverContext.getObjects(DropZone.class);
+        Set<DropZone> dropZone = serverMap.getObjectsFromContext(DropZone.class);
         if (dropZone.size() <= 0) {
             return new ArrayList<>();
         }
-        DropZone zone = (DropZone) dropZone.get(0);
-        return zone.getSequence();
+        return dropZone.iterator().next().getSequence();
     }
 
     @Override
     public int getSequenceIndex() {
-        DropZone dropZoneTemp = null;
-        for (Object dropZone : serverContext.getObjects(DropZone.class)) {
-            dropZoneTemp = (DropZone) dropZone;
+        Set<DropZone> dropZone = serverMap.getObjectsFromContext(DropZone.class);
+        if (dropZone.size() <= 0) {
+            return 0;
         }
-        if (dropZoneTemp != null) {
-            return dropZoneTemp.getSequenceIndex();
-        }
-        return 0;
+        return dropZone.iterator().next().getSequenceIndex();
     }
 
     @Override
     public boolean isOccupied(Zone room) {
-        for (Object roomObj : serverContext.getObjects(Room.class)) {
+        for (Object roomObj : serverMap.getContext().getObjects(Room.class)) {
             Room sroom = (Room) roomObj;
             if (sroom.getName().equals(room.getName())) {
                 return sroom.getOccupier() != null;
@@ -94,8 +83,8 @@ public class ServerMapController extends AbstractMapController {
     @Override
     public Set<ViewBlock> getVisibleBlocks() {
         Set<ViewBlock> blocks = new HashSet<>();
-        for (Object block : serverContext.getObjects(nl.tudelft.bw4t.server.model.blocks.Block.class)) {
-            blocks.add(((nl.tudelft.bw4t.server.model.blocks.Block) block).getView());
+        for (Object block : serverMap.getContext().getObjects(Block.class)) {
+            blocks.add(((Block) block).getView());
         }
         return blocks;
     }
@@ -103,7 +92,7 @@ public class ServerMapController extends AbstractMapController {
     @Override
     public Set<ViewEntity> getVisibleEntities() {
         Set<ViewEntity> entities = new HashSet<>();
-        for (Object robot : serverContext.getObjects(IRobot.class)) {
+        for (Object robot : serverMap.getContext().getObjects(IRobot.class)) {
             IRobot robotTemp = (IRobot) robot;
             if (robotTemp.isConnected()) {
                 entities.add(robotTemp.getView());
@@ -115,7 +104,7 @@ public class ServerMapController extends AbstractMapController {
     @Override
     public Set<ViewEPartner> getVisibleEPartners() {
         Set<ViewEPartner> epartners = new HashSet<>();
-        for (Object epartner : serverContext.getObjects(EPartner.class)) {
+        for (Object epartner : serverMap.getContext().getObjects(EPartner.class)) {
             EPartner epartnerTemp = (EPartner) epartner;
             epartners.add(epartnerTemp.getView());
         }
@@ -135,7 +124,7 @@ public class ServerMapController extends AbstractMapController {
     @Override
     public Set<Path> getPaths() {
         Set<Path> paths = new HashSet<Path>();
-        for (Object pathTemp : serverContext.getObjects(Path.class)) {
+        for (Object pathTemp : serverMap.getContext().getObjects(Path.class)) {
             Path path = (Path) pathTemp;
             paths.add(path);
         }

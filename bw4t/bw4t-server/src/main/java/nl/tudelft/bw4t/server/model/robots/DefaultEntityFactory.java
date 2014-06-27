@@ -2,18 +2,16 @@ package nl.tudelft.bw4t.server.model.robots;
 
 import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
-import nl.tudelft.bw4t.server.environment.Launcher;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.epartners.EPartner;
 import nl.tudelft.bw4t.server.model.robots.handicap.ColorBlindHandicap;
 import nl.tudelft.bw4t.server.model.robots.handicap.GripperHandicap;
 import nl.tudelft.bw4t.server.model.robots.handicap.Human;
 import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.server.model.robots.handicap.SizeOverloadHandicap;
-import repast.simphony.context.Context;
-import repast.simphony.space.continuous.ContinuousSpace;
-import repast.simphony.space.grid.Grid;
 
 /**
  * Creates the default entities.
@@ -23,37 +21,16 @@ public class DefaultEntityFactory implements EntityFactory {
     /**
      * The context which we will be using.
      */
-    private Context<Object> context;
-
-    /**
-     * The space which we will be using.
-     */
-    private ContinuousSpace<Object> space;
-
-    /**
-     * The grid which we will be using.
-     */
-    private Grid<Object> grid;
+    private BW4TServerMap serverMap;
 
     @Override
-    public void setGrid(Grid<Object> grid) {
-        this.grid = grid;
-    }
-
-    @Override
-    public void setContext(Context<Object> context) {
-        this.context = context;
-    }
-
-    @Override
-    public void setSpace(ContinuousSpace<Object> space) {
-        this.space = space;
+    public void setServerMap(BW4TServerMap serverMap) {
+        this.serverMap = serverMap;
     }
 
     @Override
     public IRobot makeDefaultRobot(String name) {
-        final NewMap map = Launcher.getEnvironment().getMap();
-        return new NavigatingRobot(name, space, grid, context, map.getOneBotPerCorridorZone(), 1);
+        return new NavigatingRobot(name, serverMap, serverMap.getMap().getOneBotPerCorridorZone(), 1);
     }
 
     @Override
@@ -121,7 +98,7 @@ public class DefaultEntityFactory implements EntityFactory {
 
     @Override
     public EPartner makeDefaultEPartner(String name) {
-        return new EPartner(name, space, grid, context);
+        return new EPartner(name, serverMap);
     }
 
     @Override
@@ -129,10 +106,10 @@ public class DefaultEntityFactory implements EntityFactory {
         EPartner ep = makeDefaultEPartner(c.getEpartnerName());
 
         if (c.isGps()) {
-            ep.getTypeList().add("GPS");
+            ep.getTypeList().add(ViewEPartner.GPS);
         }
         if (c.isForgetMeNot()) {
-            ep.getTypeList().add("Forget-me-not");
+            ep.getTypeList().add(ViewEPartner.FORGET_ME_NOT);
         }
 
         return ep;

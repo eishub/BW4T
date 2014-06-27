@@ -28,19 +28,9 @@ public abstract class BoundedMoveableObject {
     private final long id;
     
     /**
-     * The space for the BMO. 
+     * The server context this object is attached to.
      */
-    private final ContinuousSpace<Object> space;
-    
-    /**
-     * The grid for the BMO.
-     */
-    private final Grid<Object> grid;
-    
-    /**
-     * The context for the BMO.
-     */
-    protected final Context<Object> context;
+    private BW4TServerMap serverMap;
     
     /**
      * The box for the BMO.
@@ -56,16 +46,17 @@ public abstract class BoundedMoveableObject {
      * @param context
      *            the context in which the object should be placed.
      */
-    public BoundedMoveableObject(ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context) {
-        if (context.isEmpty()) {
+    public BoundedMoveableObject(BW4TServerMap smap) {
+        assert smap != null;
+        assert smap.hasMap();
+        assert smap.hasContext();
+        setServerMap(smap);
+        if (getContext().isEmpty()) {
             COUNTER.set(0);
         }
         this.id = COUNTER.getAndIncrement();
-        this.space = space;
-        this.grid = grid;
-        this.context = context;
         this.boundingBox = new Rectangle2D.Double();
-        context.add(this);
+        addToContext();
     }
 
     /**
@@ -75,18 +66,26 @@ public abstract class BoundedMoveableObject {
         return id;
     }
 
+    public BW4TServerMap getServerMap() {
+        return serverMap;
+    }
+
+    private void setServerMap(BW4TServerMap serverMap) {
+        this.serverMap = serverMap;
+    }
+
     /**
      * @return The context in which the object might be placed in.
      */
     public Context<Object> getContext() {
-        return context;
+        return getServerMap().getContext();
     }
 
     /**
      * @return The location of the object, if currently in a space.
      */
     public NdPoint getLocation() {
-        NdPoint location = space.getLocation(this);
+        NdPoint location = getSpace().getLocation(this);
         if (location == null) {
             return new NdPoint(0, 0);
         }
@@ -98,7 +97,7 @@ public abstract class BoundedMoveableObject {
      * @return The location of the object, if currently in the grid space.
      */
     public GridPoint getGridLocation() {
-        GridPoint location = grid.getLocation(this);
+        GridPoint location = getGrid().getLocation(this);
 
         if (location == null) {
             return new GridPoint(0, 0);
@@ -110,14 +109,14 @@ public abstract class BoundedMoveableObject {
      * @return The space of an object.
      */
     public ContinuousSpace<Object> getSpace() {
-        return this.space;
+        return getServerMap().getContinuousSpace();
     }
 
     /**
      * @return The grid of an object.
      */
     public Grid<Object> getGrid() {
-        return this.grid;
+        return getServerMap().getGridSpace();
     }
 
     /**
@@ -151,8 +150,8 @@ public abstract class BoundedMoveableObject {
     public void moveTo(double x, double y) {
         boundingBox.x = x - boundingBox.width / 2;
         boundingBox.y = y - boundingBox.height / 2;
-        space.moveTo(this, x, y);
-        grid.moveTo(this, (int) x, (int) y);
+        getSpace().moveTo(this, x, y);
+        getGrid().moveTo(this, (int) x, (int) y);
     }
 
 
@@ -187,18 +186,11 @@ public abstract class BoundedMoveableObject {
         } else if (!boundingBox.equals(other.boundingBox)) {
             return false;
         }
-        if (context == null) {
-            if (other.context != null) {
+        if (serverMap == null) {
+            if (other.serverMap != null) {
                 return false;
             }
-        } else if (!context.equals(other.context)) {
-            return false;
-        }
-        if (space == null) {
-            if (other.space != null) {
-                return false;
-            }
-        } else if (!space.equals(other.space)) {
+        } else if (!serverMap.equals(other.serverMap)) {
             return false;
         }
         return true;
@@ -208,7 +200,7 @@ public abstract class BoundedMoveableObject {
      * Removes this object from the context given at construction.
      */
     public void removeFromContext() {
-        context.remove(this);
+        getContext().remove(this);
     }
 
     /**
@@ -239,7 +231,7 @@ public abstract class BoundedMoveableObject {
      * set the object to visible
     */
     public void addToContext() {
-        context.add(this);
+        getContext().add(this);
 
     }
 

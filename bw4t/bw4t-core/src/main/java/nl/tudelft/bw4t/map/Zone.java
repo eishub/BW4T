@@ -12,14 +12,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 import nl.tudelft.bw4t.map.Door.Orientation;
 
 /**
- * A zone is a square area in the map. The zone also functions as a 'navpoint'
- * in that the bot uses these zones for navigation. The navpoint is the middle
- * of the area. Zones can be rooms or corridor areas.
+ * A zone is a square area in the map. The zone also functions as a 'navpoint' in that the bot uses these zones for
+ * navigation. The navpoint is the middle of the area. Zones can be rooms or corridor areas.
  */
 @SuppressWarnings("serial")
 @XmlRootElement
 public class Zone implements Serializable {
-    
     /**
      * Type of the zone
      */
@@ -33,7 +31,7 @@ public class Zone implements Serializable {
         /** Blockade. Obstacle in the path of robots */
         BLOCKADE
     }
-    
+
     /** Set name of dropzone, startzone, blockade, corridor, charging zone and room */
     public static final String DROP_ZONE_NAME = "DropZone";
     public static final String START_ZONE_NAME = "StartZone";
@@ -41,7 +39,7 @@ public class Zone implements Serializable {
     public static final String CORRIDOR_NAME = "Corridor";
     public static final String CHARGING_ZONE_NAME = "ChargeZone";
     public static final String ROOM_NAME = "Room";
-    
+
     /** Set color of blockade and chargingzone. */
     public static final Color BLOCKADE_COLOR = new Color(0.6f, 0f, 0f);
     public static final Color CHARGING_ZONE_COLOR = new Color(0f, 0.5f, 0f);
@@ -67,19 +65,20 @@ public class Zone implements Serializable {
     private RenderOptions renderOptions = null;
 
     /**
-     *  Empty constructor, initialize Zone.
+     * Empty constructor, initialize Zone.
      */
     public Zone() {
     }
 
-    /** Constructor.
+    /**
+     * Constructor.
      * 
-     * @param nm 
-     *         name of zone
+     * @param nm
+     *            name of zone
      * @param bbox
-     *         boundingbox
+     *            boundingbox
      * @param t
-     *         type
+     *            type
      */
     public Zone(String nm, Rectangle bbox, Type t) {
         name = nm;
@@ -120,8 +119,7 @@ public class Zone implements Serializable {
     }
 
     /**
-     * XmlIDREF annotation indicates XML serializer to use only the IDs and not
-     * the full elements in the list
+     * XmlIDREF annotation indicates XML serializer to use only the IDs and not the full elements in the list
      * 
      * @return List<Zone> containing neighbours
      */
@@ -135,8 +133,7 @@ public class Zone implements Serializable {
     }
 
     /**
-     * XmlID hints the XML serializer that this field can be used as unique ID
-     * for a zone.
+     * XmlID hints the XML serializer that this field can be used as unique ID for a zone.
      * 
      * @return name of this zone. It's also the name of the "navpoint"
      */
@@ -171,7 +168,7 @@ public class Zone implements Serializable {
 
     /**
      * @param zone
-     *             {@link Zone} to be added as Neighbour
+     *            {@link Zone} to be added as Neighbour
      */
     public void addNeighbour(Zone zone) {
         neighbours.add(zone);
@@ -183,8 +180,8 @@ public class Zone implements Serializable {
         for (Zone neighbour : neighbours) {
             neighbournames.add(neighbour.getName());
         }
-        return "Zone[" + name + "," + boundingbox + "," + type + "," + doors
-                + "," + blocks + "," + neighbournames + "]";
+        return "Zone[" + name + "," + boundingbox + "," + type + "," + doors + "," + blocks + "," + neighbournames
+                + "]";
     }
 
     /**
@@ -197,11 +194,11 @@ public class Zone implements Serializable {
     public void setRenderOptions(RenderOptions renderOptions) {
         this.renderOptions = renderOptions;
     }
-    
+
     public boolean isOpenSpace() {
         return getType() == Type.CORRIDOR || getType() == Type.CHARGINGZONE;
     }
-    
+
     /**
      * 
      * @return true if the zone has a door on its north side.
@@ -215,6 +212,7 @@ public class Zone implements Serializable {
         }
         return temp;
     }
+
     /**
      * 
      * @return true if the zone has a door on its east side.
@@ -228,6 +226,7 @@ public class Zone implements Serializable {
         }
         return temp;
     }
+
     /**
      * 
      * @return true if the zone has a door on its south side.
@@ -236,11 +235,12 @@ public class Zone implements Serializable {
         boolean temp = false;
         for (Door d : doors) {
             if (d.getOrientation() == Orientation.HORIZONTAL) {
-                temp =  (d.getPosition().getY() > boundingbox.getY());
+                temp = (d.getPosition().getY() > boundingbox.getY());
             }
         }
         return temp;
     }
+
     /**
      * 
      * @return true if the zone has a door on its west side.
@@ -255,5 +255,79 @@ public class Zone implements Serializable {
         return temp;
     }
 
-}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((blocks == null) ? 0 : blocks.hashCode());
+        result = prime * result + ((boundingbox == null) ? 0 : boundingbox.hashCode());
+        result = prime * result + ((doors == null) ? 0 : doors.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        int temp = 0;
+        if (neighbours != null) {
+            temp = 1;
 
+            for (Zone z : neighbours) {
+                temp = prime * temp + z.name.hashCode();
+            }
+        }
+        result = prime * result + temp;
+        result = prime * result + ((renderOptions == null) ? 0 : renderOptions.hashCode());
+        result = prime * result + ((type == null) ? 0 : type.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Zone other = (Zone) obj;
+        if (blocks == null) {
+            if (other.blocks != null)
+                return false;
+        } else if (!blocks.equals(other.blocks))
+            return false;
+        if (boundingbox == null) {
+            if (other.boundingbox != null)
+                return false;
+        } else if (!boundingbox.equals(other.boundingbox))
+            return false;
+        if (doors == null) {
+            if (other.doors != null)
+                return false;
+        } else if (!doors.equals(other.doors))
+            return false;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        if (neighbours == null) {
+            if (other.neighbours != null)
+                return false;
+        } else {
+            if (this.neighbours.size() != other.neighbours.size())
+                return false;
+            for (Zone next : neighbours) {
+                boolean found = false;
+                for (Zone zone : other.neighbours) {
+                    found = found || (next.getName() != null && next.getName().equals(zone.getName()));
+                }
+                if(!found)
+                    return false;
+            }
+        }
+        if (renderOptions == null) {
+            if (other.renderOptions != null)
+                return false;
+        } else if (!renderOptions.equals(other.renderOptions))
+            return false;
+        if (type != other.type)
+            return false;
+        return true;
+    }
+}

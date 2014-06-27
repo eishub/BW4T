@@ -14,6 +14,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.server.eis.translators.BlockWithColorTranslator;
 import nl.tudelft.bw4t.server.eis.translators.BoundedMovableObjectTranslator;
 import nl.tudelft.bw4t.server.eis.translators.ColorTranslator;
@@ -60,10 +61,6 @@ public class EPartnerEntity implements EntityInterface {
     private Point2D spawnLocation;
     private Room ourEPartnerRoom;
 
-    /**
-     * Variable is used 3 times
-     */
-    private String forgetMeNot = "Forget-me-not";
 
     /**
      * each item in messages is a list with two items: the sender and the messagetext.
@@ -123,7 +120,7 @@ public class EPartnerEntity implements EntityInterface {
      */
     @AsPercept(name = "heldBy", multiplePercepts = false, filter = Filter.Type.ON_CHANGE_NEG)
     public long heldBy() throws PerceiveException {
-        if (ourEPartner.getTypeList().contains(forgetMeNot) && ourEPartner.getHolder() != null) {
+        if (ourEPartner.getTypeList().contains(ViewEPartner.FORGET_ME_NOT) && ourEPartner.getHolder() != null) {
             return ourEPartner.getHolder().getId();
         }
         return -1;
@@ -137,7 +134,7 @@ public class EPartnerEntity implements EntityInterface {
      */
     @AsPercept(name = "isTaken", multiplePercepts = false, filter = Filter.Type.ON_CHANGE_NEG)
     public long isTaken() throws PerceiveException {
-        if (ourEPartner.getTypeList().contains(forgetMeNot) && ourEPartner.getHolder() != null) {
+        if (ourEPartner.getTypeList().contains(ViewEPartner.FORGET_ME_NOT) && ourEPartner.getHolder() != null) {
             return ourEPartner.getId();
         }
         return -1;
@@ -151,7 +148,7 @@ public class EPartnerEntity implements EntityInterface {
      */
     @AsPercept(name = "leftBehind", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
     public int leftBehind() throws PerceiveException {
-        if (ourEPartner.getTypeList().contains(forgetMeNot) && ourEPartner.getHolder() == null) {
+        if (ourEPartner.getTypeList().contains(ViewEPartner.FORGET_ME_NOT) && ourEPartner.getHolder() == null) {
             return 1;
         }
         return 0;
@@ -166,7 +163,7 @@ public class EPartnerEntity implements EntityInterface {
      */
     @AsPercept(name = "at", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
     public String getAt() throws PerceiveException {
-        if (ourEPartner.getTypeList().contains("GPS")) {
+        if (ourEPartner.getTypeList().contains(ViewEPartner.GPS)) {
 
             Zone navpt = ZoneLocator.getNearestZone(ourEPartner.getLocation());
             if (navpt == null) {
@@ -212,7 +209,7 @@ public class EPartnerEntity implements EntityInterface {
     @AsPercept(name = "place", multiplePercepts = true, filter = Filter.Type.ONCE)
     public List<String> getRooms() throws PerceiveException {
         List<String> places = new ArrayList<String>();
-        if (ourEPartner.getTypeList().contains("GPS")) {
+        if (ourEPartner.getTypeList().contains(ViewEPartner.GPS)) {
             for (Object o : context.getObjects(Zone.class)) {
                 Zone zone = (Zone) o;
                 places.add(zone.getName());

@@ -3,12 +3,10 @@ package nl.tudelft.bw4t.server.model.blocks;
 import java.awt.geom.Point2D;
 
 import nl.tudelft.bw4t.map.BlockColor;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
-import repast.simphony.context.Context;
-import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
-import repast.simphony.space.grid.Grid;
 
 /**
  * Represents a block in the environment that can be picked up by a {@link AbstractRobot}.
@@ -40,15 +38,11 @@ public class Block extends BoundedMoveableObject {
      * 
      * @param colorId
      *            The color of the block
-     * @param space
-     *            The space the block will be in.
-     * @param grid
-     *            The grid in which the block will be placed.
      * @param context
      *            The context in which the block will be present.
      */
-    public Block(BlockColor colorId, ContinuousSpace<Object> space, Grid<Object> grid, Context<Object> context) {
-        super(space, grid, context);
+    public Block(BlockColor colorId, BW4TServerMap context) {
+        super(context);
         this.colorId = colorId;
         setSize(SIZE, SIZE);
         this.view = new nl.tudelft.bw4t.map.view.ViewBlock(getId(), getColorId(), new Point2D.Double());

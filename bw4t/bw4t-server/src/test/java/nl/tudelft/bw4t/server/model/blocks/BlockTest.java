@@ -5,10 +5,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import nl.tudelft.bw4t.map.BlockColor;
+import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
 
 import org.junit.After;
@@ -33,6 +36,15 @@ public class BlockTest {
     @Mock private Grid<Object> grid;
     @Mock private Context<Object> context;
     @Mock private AbstractRobot robot;
+    @Mock private NewMap map;
+    private BW4TServerMap smap;
+    
+    @Before
+    public void setup() {
+        smap = spy(new BW4TServerMap(map, context));
+        when(smap.getContinuousSpace()).thenReturn(space);
+        when(smap.getGridSpace()).thenReturn(grid);
+    }
     
     /**
      * Run the Block(BlockColor,ContinuousSpace<Object>,Context<Object>) constructor test.
@@ -46,7 +58,7 @@ public class BlockTest {
         throws Exception {
         BlockColor colorId = BlockColor.BLUE;
         when(context.isEmpty()).thenReturn(true);
-        Block result = new Block(colorId, space, grid, context);
+        Block result = new Block(colorId, smap);
 
         assertNotNull(result);
         assertEquals(new NdPoint(0, 0), result.getLocation());
@@ -65,7 +77,7 @@ public class BlockTest {
     @Test
     public void testGetColorId_1()
         throws Exception {
-        Block fixture = new Block(BlockColor.BLUE, space, grid, context);
+        Block fixture = new Block(BlockColor.BLUE, smap);
 
         BlockColor result = fixture.getColorId();
 
@@ -87,7 +99,7 @@ public class BlockTest {
     @Test
     public void testGetHeldBy_1()
         throws Exception {
-        Block fixture = new Block(BlockColor.BLUE, space, grid, context);
+        Block fixture = new Block(BlockColor.BLUE, smap);
         fixture.setHeldBy(robot);
 
         AbstractRobot result = fixture.getHeldBy();
@@ -107,7 +119,7 @@ public class BlockTest {
     @Test
     public void testGetLocation_1()
         throws Exception {
-        Block fixture = new Block(BlockColor.BLUE, space, grid, context);
+        Block fixture = new Block(BlockColor.BLUE, smap);
         fixture.setHeldBy(robot);
 
         NdPoint result = fixture.getLocation();
@@ -127,7 +139,7 @@ public class BlockTest {
     @Test
     public void testGetLocation_2()
         throws Exception {
-        Block fixture = new Block(BlockColor.BLUE, space, grid, context);
+        Block fixture = new Block(BlockColor.BLUE, smap);
         fixture.setHeldBy((AbstractRobot) null);
 
         NdPoint result = fixture.getLocation();
@@ -148,7 +160,7 @@ public class BlockTest {
     @Test
     public void testIsFree_1()
         throws Exception {
-        Block fixture = new Block(BlockColor.BLUE, space, grid, context);
+        Block fixture = new Block(BlockColor.BLUE, smap);
         fixture.setHeldBy((AbstractRobot) null);
 
         boolean result = fixture.isFree();
@@ -167,7 +179,7 @@ public class BlockTest {
     @Test
     public void testIsFree_2()
         throws Exception {
-        Block fixture = new Block(BlockColor.BLUE, space, grid, context);
+        Block fixture = new Block(BlockColor.BLUE, smap);
         fixture.setHeldBy(robot);
 
         boolean result = fixture.isFree();
@@ -186,7 +198,7 @@ public class BlockTest {
     @Test
     public void testSetHeldBy_1()
         throws Exception {
-        Block fixture = new Block(BlockColor.BLUE, space, grid, context);
+        Block fixture = new Block(BlockColor.BLUE, smap);
         
         assertNull(fixture.getHeldBy());
         fixture.setHeldBy(robot);

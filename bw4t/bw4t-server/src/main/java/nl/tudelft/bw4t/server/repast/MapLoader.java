@@ -1,24 +1,21 @@
 package nl.tudelft.bw4t.server.repast;
 
 import java.awt.geom.Rectangle2D;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.xml.bind.JAXBException;
-
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Door.Orientation;
-import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
-import nl.tudelft.bw4t.server.environment.Launcher;
 import nl.tudelft.bw4t.server.logging.BotLog;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
+import nl.tudelft.bw4t.server.model.BW4TServerMapListerner;
 import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.doors.Door;
 import nl.tudelft.bw4t.server.model.zone.Blockade;
@@ -46,7 +43,7 @@ import repast.simphony.space.grid.StrictBorders;
 /**
  * The MapLoader class loads the map from a given map location.
  */
-public final class MapLoader {
+public class MapLoader implements BW4TServerMapListerner {
 
     /**
      * Identifier used for the space projections, matched in context.xml
@@ -61,15 +58,32 @@ public final class MapLoader {
      */
     private static final Logger LOGGER = Logger.getLogger(MapLoader.class);
 
-    /**
-     * The map.
-     */
-    private static NewMap map;
+    private boolean loaded = false;
 
     /**
      * Instantiates a new map loader.
      */
-    private MapLoader() {
+    public MapLoader() {
+    }
+
+    @Override
+    public void contextChange(BW4TServerMap map) {
+        loaded = false;
+        if (map.hasContext() && map.hasMap()) {
+            loadMap(map);
+            loaded = true;
+        }
+    }
+
+    @Override
+    public void mapChange(BW4TServerMap map) {
+        if (map.hasContext() && map.hasMap()) {
+            //Repast leegmaken en dan loadMap
+            if (!loaded) {
+                loadMap(map);
+                loaded = true;
+            }
+        }
     }
 
     /**
@@ -80,27 +94,210 @@ public final class MapLoader {
      * <li>An additional 1.5*N random blocks are random placed in the rooms.
      * </ul>
      * 
-     * @param tmpLocation
-     *            The location of the file
      * @param context
      *            The context to load to.
-     * @throws JAXBException
-     *             the JAXB exception
      */
-    public static void loadMap(String tmpLocation, Context<Object> context) throws JAXBException {
-        Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones = 
-                new HashMap<String, nl.tudelft.bw4t.server.model.zone.Zone>();
+    public static void loadMap(BW4TServerMap context) {
+        if (context == null || !context.hasContext() || !context.hasMap()) {
+            throw new IllegalArgumentException("Cannot load a map that does not have a repast Context and a BW4TMap.");
+        }
+        Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones = new HashMap<String, nl.tudelft.bw4t.server.model.zone.Zone>();
         Map<String, List<BlockColor>> roomBlocks = new HashMap<String, List<BlockColor>>();
 
-        ContinuousSpace<Object> space = initEmptyMap(tmpLocation, context);
-        Grid<Object> grid = createGridSpace(context, (int) map.getArea().getX(), (int) map.getArea().getY());
+        createSpace(context);
+        createGridSpace(context);
 
-        List<BlockColor> sequence = new ArrayList<BlockColor>(map.getSequence());
-        createZones(context, zones, roomBlocks, space, grid, sequence);
-        makeBlocks(roomBlocks, sequence);
-        placeBlocks(context, zones, roomBlocks, space, grid);
+        List<BlockColor> sequence = new ArrayList<BlockColor>(context.getMap().getSequence());
+        createZones(context, zones, roomBlocks, sequence);
+        makeBlocks(context, roomBlocks, sequence);
+        placeBlocks(context, zones, roomBlocks);
+        
+        context.getObjectsFromContext(DropZone.class).iterator().next().setSequence(sequence);
 
         BW4TEnvironment.getInstance().setMapFullyLoaded();
+    }
+
+    /**
+     * Creates the {@link ContinuousSpace} in which all objects will be placed.
+     * 
+     * @param context
+     *            the context in which this space operates.
+     * @param width
+     *            The width of the space
+     * @param height
+     *            The height of the space
+     * @return the created space
+     */
+    private static ContinuousSpace<Object> createSpace(BW4TServerMap smap) {
+        Context<Object> context = smap.getContext();
+        final Point area = smap.getMap().getArea();
+        int width = (int) area.getX() + 1;
+        int height = (int) area.getY() + 1;
+    
+        ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);
+        return spaceFactory.createContinuousSpace(PROJECTION_ID, context, new SimpleCartesianAdder<Object>(),
+                new StickyBorders(), width, height);
+    }
+
+    /**
+     * Creates the {@link Grid} in which all objects will be placed, in conjuction with the continuous space. The grid
+     * space allows for querying for Von Neumann and Moore neighborhoods.
+     * 
+     * @param context
+     *            the context in which this space operates.
+     * @param mapWidth
+     *            The width of the space
+     * @param mapHeight
+     *            The height of the space
+     * @return the create grid for the given context and map dimensions
+     */
+    private static Grid<Object> createGridSpace(BW4TServerMap smap) {
+        Context<Object> context = smap.getContext();
+        final Point area = smap.getMap().getArea();
+        int width = (int) area.getX() + 1;
+        int height = (int) area.getY() + 1;
+    
+        GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
+        GridBuilderParameters params = new GridBuilderParameters(new StrictBorders(), new SimpleGridAdder<Object>(),
+                true, width, height);
+    
+        return gridFactory.createGrid(GRID_PROJECTION_ID, context, params);
+    }
+
+    /**
+     * Creates the zones.
+     * 
+     * @param smap
+     *            the context
+     * @param zones
+     *            the zones
+     * @param roomblocks
+     *            the roomblocks
+     * @param space
+     *            the space
+     * @param sequence
+     *            the sequence
+     * @param grid
+     *            the grid
+     */
+    private static void createZones(BW4TServerMap smap, Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones,
+            Map<String, List<BlockColor>> roomblocks, List<BlockColor> sequence) {
+        createCorridors(smap, zones);
+
+        createRooms(smap, zones, roomblocks, sequence);
+
+        createBlockades(smap, zones);
+
+        createChargingZones(smap, zones);
+
+        connectAllZones(smap, zones);
+    }
+
+    /**
+     * Creates the corridors.
+     * 
+     * @param context
+     *            the context
+     * @param zones
+     *            the zones
+     * @param space
+     *            the space
+     * @param grid
+     *            the grid
+     */
+    private static void createCorridors(BW4TServerMap context,
+            Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones) {
+        for (Zone corridor : context.getMap().getZones(Zone.Type.CORRIDOR)) {
+            Corridor corr = new Corridor(corridor, context);
+            zones.put(corr.getName(), corr);
+        }
+    }
+
+    /**
+     * Creates the rooms.
+     * 
+     * @param context
+     *            the context
+     * @param zones
+     *            the zones
+     * @param roomblocks
+     *            the roomblocks
+     * @param sequence
+     *            the sequence
+     */
+    private static void createRooms(BW4TServerMap context, Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones,
+            Map<String, List<BlockColor>> roomblocks, List<BlockColor> sequence) {
+        for (Zone roomzone : context.getMap().getZones(Zone.Type.ROOM)) {
+            Room room;
+            if (Zone.DROP_ZONE_NAME.equals(roomzone.getName())) {
+                room = new DropZone(roomzone, sequence, context);
+            } else {
+                room = new BlocksRoom(roomzone, context);
+                roomblocks.put(room.getName(), new ArrayList<BlockColor>(roomzone.getBlocks()));
+            }
+
+            for (nl.tudelft.bw4t.map.Door door : roomzone.getDoors()) {
+                createDoor(context, door, room);
+            }
+            zones.put(roomzone.getName(), room);
+        }
+
+    }
+
+    /**
+     * Creates a new {@link Door} in the context according to the {@link nl.tudelft.bw4t.map.Door}.
+     * 
+     * @param smap
+     *            The context in which the room should be placed.
+     * @param args
+     *            {@link nl.tudelft.bw4t.map.Door} object.
+     * @param room
+     *            the room
+     */
+    private static void createDoor(BW4TServerMap smap, nl.tudelft.bw4t.map.Door args, Room room) {
+        Door door = new Door(smap);
+
+        double x = args.getPosition().getX();
+        double y = args.getPosition().getY();
+        Orientation ori = args.getOrientation();
+
+        door.setPos(x, y, ori);
+
+        door.connectTo(room);
+    }
+
+    /**
+     * Creates the blockades.
+     * 
+     * @param context
+     *            the context
+     * @param zones
+     *            the zones
+     */
+    private static void createBlockades(BW4TServerMap context, Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones) {
+        for (Zone blockzone : context.getMap().getZones(Zone.Type.BLOCKADE)) {
+            zones.put(blockzone.getName(), new Blockade(blockzone, context));
+        }
+    }
+
+    /**
+     * Creates the charging zones.
+     * 
+     * @param context
+     *            the context
+     * @param zones
+     *            the zones
+     * @param space
+     *            the space
+     * @param grid
+     *            the grid
+     */
+    private static void createChargingZones(BW4TServerMap context,
+            Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones) {
+        for (Zone chargezone : context.getMap().getZones(Zone.Type.CHARGINGZONE)) {
+            ChargingZone czone = new ChargingZone(chargezone, context);
+            zones.put(chargezone.getName(), czone);
+        }
     }
 
     /**
@@ -111,60 +308,34 @@ public final class MapLoader {
      * @param sequence
      *            the sequence
      */
-    private static void makeBlocks(Map<String, List<BlockColor>> roomblocks, List<BlockColor> sequence) {
+    private static void makeBlocks(BW4TServerMap smap, Map<String, List<BlockColor>> roomblocks,
+            List<BlockColor> sequence) {
         Random random = new Random();
-        List<BlockColor> extraSequenceBlocks = makeRandomSequence(map.getRandomSequence());
+        List<BlockColor> extraSequenceBlocks = makeRandomSequence(smap.getMap().getRandomSequence());
         sequence.addAll(extraSequenceBlocks);
 
         List<BlockColor> extraBlocks = new ArrayList<BlockColor>(extraSequenceBlocks);
-        extraBlocks.addAll(makeRandomSequence(map.getRandomBlocks()));
+        extraBlocks.addAll(makeRandomSequence(smap.getMap().getRandomBlocks()));
         addExtraBlocks(roomblocks, random, extraBlocks);
     }
 
     /**
-     * Initializes the empty map.
+     * make a random sequence of <size> colors.
      * 
-     * @param mapFilename
-     *            the filename of the map file
-     * @param context
-     *            the context on which the empty should be initialized
-     * @return the continuous space
-     * @throws JAXBException
-     *             the JAXB exception
+     * @param num
+     *            is required number of blocks in the sequence.
+     * @return the list
      */
-    private static ContinuousSpace<Object> initEmptyMap(String mapFilename, Context<Object> context)
-            throws JAXBException {
-        String location = System.getProperty("user.dir") + "/maps/" + mapFilename;
-        try {
-            map = NewMap.create(new FileInputStream(new File(location)));
-        } catch (FileNotFoundException e) {
-            LOGGER.error("Unable to read mapFile", e);
+    private static List<BlockColor> makeRandomSequence(int num) {
+        List<BlockColor> colors = BlockColor.getAvailableColors();
+        List<BlockColor> sequence = new ArrayList<BlockColor>();
+        Random random = new Random();
+        for (int n = 0; n < num; n++) {
+            sequence.add(colors.get(random.nextInt(colors.size())));
         }
 
-        ContinuousSpace<Object> space = createSpace(context, (int) map.getArea().getX(), (int) map.getArea().getY());
-        Launcher.getInstance().getEntityFactory().setSpace(space);
-        return space;
-    }
+        return sequence;
 
-    /**
-     * Place blocks.
-     * 
-     * @param context
-     *            the context on which the actions should have effect
-     * @param zones
-     *            the zones including the rooms in which the blocks should be created
-     * @param roomblocks
-     *            the rooms which should contain blocks
-     * @param space
-     *            the space
-     * @param grid
-     *            the grid
-     */
-    private static void placeBlocks(Context<Object> context, Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones,
-            Map<String, List<BlockColor>> roomblocks, ContinuousSpace<Object> space, Grid<Object> grid) {
-        for (String room : roomblocks.keySet()) {
-            createBlocksForRoom((Room) zones.get(room), context, space, grid, roomblocks.get(room));
-        }
     }
 
     /**
@@ -192,144 +363,16 @@ public final class MapLoader {
     }
 
     /**
-     * Creates the zones.
-     * 
-     * @param context
-     *            the context
-     * @param zones
-     *            the zones
-     * @param roomblocks
-     *            the roomblocks
-     * @param space
-     *            the space
-     * @param sequence
-     *            the sequence
-     * @param grid
-     *            the grid
-     */
-    private static void createZones(Context<Object> context, Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones,
-            Map<String, List<BlockColor>> roomblocks, ContinuousSpace<Object> space, Grid<Object> grid,
-            List<BlockColor> sequence) {
-        createCorridors(context, zones, space, grid);
-
-        createRooms(context, zones, roomblocks, space, grid, sequence);
-
-        createBlockades(context, zones, space, grid);
-
-        createChargingZones(context, zones, space, grid);
-
-        connectAllZones(zones);
-    }
-
-    /**
-     * Creates the charging zones.
-     * 
-     * @param context
-     *            the context
-     * @param zones
-     *            the zones
-     * @param space
-     *            the space
-     * @param grid
-     *            the grid
-     */
-    private static void createChargingZones(Context<Object> context,
-            Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones, ContinuousSpace<Object> space,
-                Grid<Object> grid) {
-        for (Zone chargingzone : map.getZones(Zone.Type.CHARGINGZONE)) {
-            ChargingZone czone = createChargingZone(context, space, grid, chargingzone);
-            zones.put(chargingzone.getName(), czone);
-        }
-    }
-
-    /**
-     * Creates the blockades.
-     * 
-     * @param context
-     *            the context
-     * @param zones
-     *            the zones
-     * @param space
-     *            the space
-     * @param grid
-     *            the grid
-     */
-    private static void createBlockades(Context<Object> context,
-            Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones, ContinuousSpace<Object> space,
-                Grid<Object> grid) {
-        for (Zone blockzone : map.getZones(Zone.Type.BLOCKADE)) {
-            Blockade blockade = createBlockade(context, space, grid, blockzone);
-            zones.put(blockzone.getName(), blockade);
-        }
-    }
-
-    /**
-     * Creates the rooms.
-     * 
-     * @param context
-     *            the context
-     * @param zones
-     *            the zones
-     * @param roomblocks
-     *            the roomblocks
-     * @param space
-     *            the space
-     * @param sequence
-     *            the sequence
-     * @param grid
-     *            the grid
-     */
-    private static void createRooms(Context<Object> context, Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones,
-            Map<String, List<BlockColor>> roomblocks, ContinuousSpace<Object> space, Grid<Object> grid,
-            List<BlockColor> sequence) {
-        for (Zone roomzone : map.getZones(Zone.Type.ROOM)) {
-            Room room;
-            if ("DropZone".equals(roomzone.getName())) {
-                room = new DropZone(roomzone, space, grid, context);
-                ((DropZone) room).setSequence(sequence);
-            } else {
-                room = createRoom(context, space, grid, roomzone);
-                roomblocks.put(room.getName(), new ArrayList<BlockColor>(roomzone.getBlocks()));
-            }
-
-            for (nl.tudelft.bw4t.map.Door door : roomzone.getDoors()) {
-                createDoor(context, space, grid, door, room);
-            }
-            zones.put(roomzone.getName(), room);
-        }
-
-    }
-
-    /**
-     * Creates the corridors.
-     * 
-     * @param context
-     *            the context
-     * @param zones
-     *            the zones
-     * @param space
-     *            the space
-     * @param grid
-     *            the grid
-     */
-    private static void createCorridors(Context<Object> context,
-            Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones, ContinuousSpace<Object> space,
-                Grid<Object> grid) {
-        for (Zone corridor : map.getZones(Zone.Type.CORRIDOR)) {
-            Corridor corr = createCorridor(context, space, grid, corridor);
-            zones.put(corr.getName(), corr);
-        }
-    }
-
-    /**
      * Connect all the zones according to the map.
+     * 
+     * @param smap
      * 
      * @param zones
      *            the map of all zones in repast. We can't yet access the BW4T context, therefore we need to pass this
      *            explicitly..
      */
-    private static void connectAllZones(Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones) {
-        for (Zone zone : map.getZones()) {
+    private static void connectAllZones(BW4TServerMap smap, Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones) {
+        for (Zone zone : smap.getMap().getZones()) {
             nl.tudelft.bw4t.server.model.zone.Zone z = zones.get(zone.getName());
             for (Zone mapneigh : zone.getNeighbours()) {
                 nl.tudelft.bw4t.server.model.zone.Zone neigh = zones.get(mapneigh.getName());
@@ -339,166 +382,24 @@ public final class MapLoader {
     }
 
     /**
-     * make a random sequence of <size> colors.
+     * Place blocks.
      * 
-     * @param num
-     *            is required number of blocks in the sequence.
-     * @return the list
-     */
-    private static List<BlockColor> makeRandomSequence(int num) {
-        List<BlockColor> colors = BlockColor.getAvailableColors();
-        List<BlockColor> sequence = new ArrayList<BlockColor>();
-        Random random = new Random();
-        for (int n = 0; n < num; n++) {
-            sequence.add(colors.get(random.nextInt(colors.size())));
-        }
-
-        return sequence;
-
-    }
-
-    /**
-     * Creates the {@link ContinuousSpace} in which all objects will be placed.
-     * 
-     * @param context
-     *            the context in which this space operates.
-     * @param width
-     *            The width of the space
-     * @param height
-     *            The height of the space
-     * @return the created space
-     */
-    private static ContinuousSpace<Object> createSpace(Context<Object> context, int width, int height) {
-
-        ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);
-        return spaceFactory.createContinuousSpace(PROJECTION_ID, context, new SimpleCartesianAdder<Object>(),
-                new StickyBorders(), width, height);
-    }
-
-    /**
-     * Creates the {@link Grid} in which all objects will be placed, in conjuction with the continuous space. The grid
-     * space allows for querying for Von Neumann and Moore neighborhoods.
-     * 
-     * @param context
-     *            the context in which this space operates.
-     * @param mapWidth
-     *            The width of the space
-     * @param mapHeight
-     *            The height of the space
-     * @return the create grid for the given context and map dimensions
-     */
-    private static Grid<Object> createGridSpace(Context<Object> context, int mapWidth, int mapHeight) {
-
-        GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
-        GridBuilderParameters params = new GridBuilderParameters(new StrictBorders(), new SimpleGridAdder<Object>(),
-                true, mapWidth, mapHeight);
-
-        Grid<Object> grid = gridFactory.createGrid(GRID_PROJECTION_ID, context, params);
-        Launcher.getInstance().getEntityFactory().setGrid(grid);
-
-        return grid;
-    }
-
-    /**
-     * Creates a new EMPTY (no blocks) {@link Room} in the context according to the data in the tokenizer. We make the
-     * room empty because there may be extra (random) blocks in addition to the explicit blocks for this room. Therefore
-     * the exact blocks for this room have to be determined at a higher level.
-     * 
-     * @param context
-     *            The context in which the room should be placed.
-     * @param space
-     *            the space in which the room should be placed.
-     * @param roomzone
-     *            the room {@link Zone}.
-     * @param grid
-     *            the grid
-     * @return the room
-     */
-    private static Room createRoom(Context<Object> context, ContinuousSpace<Object> space, Grid<Object> grid,
-            Zone roomzone) {
-        return new BlocksRoom(space, grid, context, roomzone);
-    }
-
-    /**
-     * Creates a charging zone where multiple robots can charge.
-     * 
-     * @param context
-     *            The context in which the room should be placed.
-     * @param space
-     *            the space in which the room should be placed.
-     * @param grid
-     *            the grid
-     * @param chargezone
-     *            the room {@link Zone}.
-     * @return the charging zone
-     */
-    private static ChargingZone createChargingZone(Context<Object> context, ContinuousSpace<Object> space,
-            Grid<Object> grid, Zone chargezone) {
-        return new ChargingZone(chargezone, space, grid, context);
-    }
-
-    /**
-     * Creates a blockade to block the robots' path.
-     * 
-     * @param context
-     *            The context in which the room should be placed.
-     * @param space
-     *            the space in which the room should be placed.
-     * @param chargezone
-     *            the room {@link Zone}.
-     * @param grid
-     *            the grid
-     * @return the blockade
-     */
-
-    private static Blockade createBlockade(Context<Object> context, ContinuousSpace<Object> space, Grid<Object> grid,
-            Zone chargezone) {
-        return new Blockade(chargezone, space, grid, context);
-    }
-
-    /**
-     * Add navpoint to the context. Neighbours are NOT set at this point.
-     * 
-     * @param context
-     *            the context
+     * @param smap
+     *            the context on which the actions should have effect
+     * @param zones
+     *            the zones including the rooms in which the blocks should be created
+     * @param roomblocks
+     *            the rooms which should contain blocks
      * @param space
      *            the space
-     * @param zone
-     *            the zone
      * @param grid
      *            the grid
-     * @return the corridor
      */
-    private static Corridor createCorridor(Context<Object> context, ContinuousSpace<Object> space, Grid<Object> grid,
-            Zone zone) {
-        return new Corridor(zone, space, grid, context);
-    }
-
-    /**
-     * Creates a new {@link Door} in the context according to the {@link nl.tudelft.bw4t.map.Door}.
-     * 
-     * @param context
-     *            The context in which the room should be placed.
-     * @param space
-     *            the space in which the room should be placed.
-     * @param args
-     *            {@link nl.tudelft.bw4t.map.Door} object.
-     * @param grid
-     *            the grid
-     * @param room
-     *            the room
-     */
-    private static void createDoor(Context<Object> context, ContinuousSpace<Object> space, Grid<Object> grid,
-            nl.tudelft.bw4t.map.Door args, Room room) {
-        Door door = new Door(space, grid, context);
-
-        double x = args.getPosition().getX();
-        double y = args.getPosition().getY();
-        Orientation ori = args.getOrientation();
-
-        door.setPos(x, y, ori);
-
-        door.connectTo(room);
+    private static void placeBlocks(BW4TServerMap smap, Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones,
+            Map<String, List<BlockColor>> roomblocks) {
+        for (String room : roomblocks.keySet()) {
+            createBlocksForRoom((Room) zones.get(room), smap, roomblocks.get(room));
+        }
     }
 
     /**
@@ -515,16 +416,8 @@ public final class MapLoader {
      * @param args
      *            is a list of colors to be added.
      */
-    private static void createBlocksForRoom(Room room, Context<Object> context, ContinuousSpace<Object> space,
-            Grid<Object> grid, List<BlockColor> args) {
-        StringBuilder builder = new StringBuilder();
-        for (BlockColor c : args) {
-            builder.append(" ");
-            builder.append(c.getLetter().toString());
-        }
-        String letter = builder.toString();
-
-        LOGGER.log(BotLog.BOTLOG, String.format("room %s contains blocks: %s", room.getName(), letter));
+    private static void createBlocksForRoom(Room room, BW4TServerMap context, List<BlockColor> args) {
+        LOGGER.log(BotLog.BOTLOG, String.format("room %s contains blocks: %s", room.getName(), toString(args)));
 
         Rectangle2D roomBox = room.getBoundingBox();
         List<Rectangle2D> newblocks = new ArrayList<Rectangle2D>();
@@ -532,7 +425,7 @@ public final class MapLoader {
         for (BlockColor color : args) {
             Rectangle2D newpos = findFreePlace(roomBox, newblocks);
 
-            Block block = new Block(color, space, grid, context);
+            Block block = new Block(color, context);
 
             block.moveTo(newpos.getCenterX(), newpos.getCenterY());
             newblocks.add(newpos);
@@ -572,10 +465,13 @@ public final class MapLoader {
     }
 
     /**
-     * @param blockPlacedOK 
-     * @param x the x-coordinate
-     * @param y the y-coordinate
-     * @param bl the block
+     * @param blockPlacedOK
+     * @param x
+     *            the x-coordinate
+     * @param y
+     *            the y-coordinate
+     * @param bl
+     *            the block
      * @return check if the block is placed correctly
      */
     private static boolean checkPlacement(boolean blockPlacedOK, double x, double y, Rectangle2D bl) {
@@ -584,6 +480,15 @@ public final class MapLoader {
         boolean noOverlap = noXoverlap || noYoverlap;
         blockPlacedOK = blockPlacedOK && noOverlap;
         return blockPlacedOK;
+    }
+    
+    public static String toString(Collection<BlockColor> colors) {
+        StringBuilder builder = new StringBuilder();
+        for (BlockColor c : colors) {
+            builder.append(" ");
+            builder.append(c.getLetter());
+        }
+        return builder.toString();
     }
 
 }

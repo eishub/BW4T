@@ -26,6 +26,8 @@ public class BatteryProgressBarListener  {
     }
 
     public void update() {
+    	progressBar.setForeground(Color.green);
+    	
         ViewEntity bot = clientGUI.getController().getMapController().getTheBot();
         double counter = bot.getBatteryLevel();
 

@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 import eis.iilang.Function;
 import eis.iilang.Identifier;
 import eis.iilang.Numeral;
@@ -22,6 +21,7 @@ import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Point;
+import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 
 import org.junit.Before;
@@ -97,9 +97,9 @@ public class ClientMapControllerTest {
     @Test
     public void testHandlePerceptOccupied() {
         LinkedList<Parameter> parameters = new LinkedList<Parameter>();
-        parameters.add(new Identifier("DropZone"));
+        parameters.add(new Identifier(Zone.DROP_ZONE_NAME));
         clientMapController.handlePercept("occupied", parameters);
-        verify(map, times(1)).getZone("DropZone");
+        verify(map, times(1)).getZone(Zone.DROP_ZONE_NAME);
     }
     
     @Test
@@ -130,6 +130,7 @@ public class ClientMapControllerTest {
         parameters.add(new Numeral(3));
         parameters.add(new Numeral(3));
         parameters.add(new Numeral(3));
+        parameters.add(new ParameterList());
         testHandlePerceptEPartner();
         clientMapController.handlePercept("position", parameters);
         assertEquals(3, clientMapController.getViewEPartner(3).getLocation().getX(), 0.001);
@@ -153,6 +154,7 @@ public class ClientMapControllerTest {
         parameters.add(new Numeral(3));
         parameters.add(new Identifier("NAAM"));
         parameters.add(new Numeral(3));
+        parameters.add(new ParameterList());
         clientMapController.handlePercept("epartner", parameters);
         assertEquals(3,clientMapController.getViewEPartner(3).getId());
         assertEquals("NAAM", clientMapController.getViewEPartner(3).getName());
@@ -171,6 +173,7 @@ public class ClientMapControllerTest {
         parameters.add(new Numeral(2));
         parameters.add(new Identifier("NAAM"));
         parameters.add(new Numeral(2));
+        parameters.add(new ParameterList());
         clientMapController.handlePercept("epartner", parameters);
         assertEquals(2, clientMapController.getViewEPartner(2).getId());
         assertEquals("NAAM", clientMapController.getViewEPartner(2).getName());
@@ -184,6 +187,7 @@ public class ClientMapControllerTest {
         parameters.add(new Numeral(2));
         parameters.add(new Identifier("NAAM"));
         parameters.add(new Numeral(2));
+        parameters.add(new ParameterList());
         clientMapController.handlePercept("epartner", parameters);
         assertEquals(2, clientMapController.getViewEPartner(2).getId());
         assertEquals("NAAM", clientMapController.getViewEPartner(2).getName());
@@ -198,6 +202,7 @@ public class ClientMapControllerTest {
         parameters.add(new Numeral(2));
         parameters.add(new Identifier("NAAM"));
         parameters.add(new Numeral(3));
+        parameters.add(new ParameterList());
         clientMapController.handlePercept("epartner", parameters);
         assertEquals(2, clientMapController.getViewEPartner(2).getId());
         assertEquals("NAAM", clientMapController.getViewEPartner(2).getName());
@@ -209,6 +214,7 @@ public class ClientMapControllerTest {
         parameters.add(new Numeral(1));
         parameters.add(new Identifier("NAAM"));
         parameters.add(new Numeral(-2));
+        parameters.add(new ParameterList());
         clientMapController.handlePercept("epartner", parameters);
         assertEquals(-1, clientMapController.getTheBot().getHoldingEpartner());
         assertEquals("NAAM", clientMapController.getViewEPartner(1).getName());

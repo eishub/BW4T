@@ -20,4 +20,29 @@ public class RenderOptions implements Serializable {
         this.labelVisible = labelVisible;
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((labelVisible == null) ? 0 : labelVisible.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        RenderOptions other = (RenderOptions) obj;
+        if (labelVisible == null) {
+            if (other.labelVisible != null)
+                return false;
+        } else if (!labelVisible.equals(other.labelVisible))
+            return false;
+        return true;
+    }
+
 }
