@@ -4,8 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
-import java.io.StringBufferInputStream;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +13,14 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.apache.log4j.Logger;
+
 /**
  * New map structure, using Zones and stronger typechecking
  */
 @XmlRootElement
 public class NewMap implements Serializable {
+    private static final Logger LOGGER = Logger.getLogger(NewMap.class);
 
     /** Serialization id. */
     private static final long serialVersionUID = -1346330091943903326L;
@@ -222,15 +223,20 @@ public class NewMap implements Serializable {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((area == null) ? 0 : area.hashCode());
-        result = prime * result + ((entities == null) ? 0 : entities.hashCode());
-        result = prime * result + ((randomBlocks == null) ? 0 : randomBlocks.hashCode());
-        result = prime * result + ((randomSequence == null) ? 0 : randomSequence.hashCode());
-        result = prime * result + ((sequence == null) ? 0 : sequence.hashCode());
-        result = prime * result + ((zones == null) ? 0 : zones.hashCode());
-        return result;
+        try {
+            return NewMap.toXML(this).hashCode();
+        } catch (JAXBException e) {
+            LOGGER.info("Failed to create a stable hash code, reverting back to java jvm unstable." , e);
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ((area == null) ? 0 : area.hashCode());
+            result = prime * result + ((entities == null) ? 0 : entities.hashCode());
+            result = prime * result + ((randomBlocks == null) ? 0 : randomBlocks.hashCode());
+            result = prime * result + ((randomSequence == null) ? 0 : randomSequence.hashCode());
+            result = prime * result + ((sequence == null) ? 0 : sequence.hashCode());
+            result = prime * result + ((zones == null) ? 0 : zones.hashCode());
+            return result;
+        }
     }
 
     @Override

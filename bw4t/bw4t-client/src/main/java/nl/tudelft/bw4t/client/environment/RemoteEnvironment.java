@@ -24,7 +24,6 @@ import nl.tudelft.bw4t.client.startup.InitParam;
 import nl.tudelft.bw4t.eis.MapParameter;
 import nl.tudelft.bw4t.map.NewMap;
 
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
 import eis.AgentListener;
