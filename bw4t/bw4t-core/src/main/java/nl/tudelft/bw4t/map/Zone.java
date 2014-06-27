@@ -313,10 +313,12 @@ public class Zone implements Serializable {
             if (this.neighbours.size() != other.neighbours.size())
                 return false;
             for (Zone next : neighbours) {
+                boolean found = false;
                 for (Zone zone : other.neighbours) {
-                    if (next.getName() == null || !next.getName().equals(zone.getName()))
-                        return false;
+                    found = found || (next.getName() != null && next.getName().equals(zone.getName()));
                 }
+                if(!found)
+                    return false;
             }
         }
         if (renderOptions == null) {
