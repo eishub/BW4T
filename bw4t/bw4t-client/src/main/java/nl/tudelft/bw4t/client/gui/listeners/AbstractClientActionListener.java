@@ -14,6 +14,7 @@ public abstract class AbstractClientActionListener implements ActionListener {
 
     /** @param controller - The {@link ClientController} to listen to and interact with. */
     public AbstractClientActionListener(ClientController controller) {
+        assert controller != null;
         this.controller = controller;
     }
 
@@ -23,7 +24,7 @@ public abstract class AbstractClientActionListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-        if (!getController().getEnvironment().isConnectedToGoal() || !InitParam.GOALHUMAN.getBoolValue()) {
+        if (!InitParam.GOAL.getBoolValue() || !InitParam.GOALHUMAN.getBoolValue()) {
             actionWithHumanAgent(arg0);
         } else {
             actionWithGoalAgent(arg0);

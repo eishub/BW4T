@@ -9,8 +9,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import nl.tudelft.bw4t.client.controller.ClientController;
+import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.message.BW4TMessage;
 import nl.tudelft.bw4t.client.message.MessageTranslator;
+import nl.tudelft.bw4t.map.renderer.MapController;
+import nl.tudelft.bw4t.map.view.ViewEntity;
 
 import org.apache.log4j.Logger;
 /**
@@ -34,7 +37,10 @@ public class MessageSenderActionListener extends AbstractClientActionListener {
 
     @Override
     public void actionWithHumanAgent(ActionEvent e) {
-    	String ownName = getController().getMapController().getTheBot().getName();
+        ClientController controller = getController();
+        ClientMapController cmp = controller.getMapController();
+        ViewEntity bot = cmp.getTheBot();
+    	String ownName = bot.getName();
         /** Sends the message to the receiver(s): */
         sendMessagesHuman(ownName, findReceivers(ownName));
     }
