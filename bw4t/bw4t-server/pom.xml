@@ -4,7 +4,7 @@
     <parent>
         <groupId>nl.tudelft</groupId>
         <artifactId>bw4t</artifactId>
-        <version>3.4.0</version>
+        <version>3.5.0</version>
     </parent>
     <groupId>nl.tudelft.bw4t</groupId>
     <artifactId>bw4t-server</artifactId>
@@ -73,7 +73,7 @@
         <dependency>
             <groupId>nl.tudelft.bw4t.core</groupId>
             <artifactId>bw4t-core</artifactId>
-            <version>3.4.0</version>
+            <version>3.5.0</version>
         </dependency>
         <dependency>
             <groupId>repast.simphony</groupId>
