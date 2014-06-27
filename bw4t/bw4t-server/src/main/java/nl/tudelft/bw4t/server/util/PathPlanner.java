@@ -19,6 +19,7 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
 
 import repast.simphony.context.Context;
+import repast.simphony.space.SpatialException;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 
@@ -52,12 +53,60 @@ public final class PathPlanner {
      * @return List of subsequent NdPoints from start to finish.
      */
     public static List<NdPoint> findPath(List<Zone> allZones, List<BoundedMoveableObject> obstacles,
-                                         NdPoint startPoint, NdPoint end, int botSize) {
-        SimpleWeightedGraph<NdPoint, DefaultWeightedEdge> graph = generateNdPointGraph(startPoint, end, allZones,
+                                         NdPoint startPoint, NdPoint endPoint, int botSize) {
+        SimpleWeightedGraph<NdPoint, DefaultWeightedEdge> graph = generateNdPointGraph(startPoint, allZones,
                 obstacles, botSize);
 
+        try {
+            NdPoint start = findNearestRoundedPoint(startPoint, graph);
+            NdPoint end  =  findNearestRoundedPoint(endPoint, graph);
 
-        return findPath(graph, startPoint, end);
+            return findPath(graph, start, end);
+        } catch (SpatialException ex) {
+            return new ArrayList<NdPoint>();
+        }
+
+    }
+
+    private static NdPoint findNearestRoundedPoint(NdPoint point, SimpleWeightedGraph<NdPoint, DefaultWeightedEdge> graph) throws SpatialException {
+        NdPoint roundedPoint;
+        Set<NdPoint> vertices = graph.vertexSet();
+
+        // Find the floored point first.
+        double x = Math.floor(point.getX());
+        double y = Math.floor(point.getY());
+        roundedPoint = new NdPoint(x, y);
+
+        if(vertices.contains(roundedPoint)) {
+            return roundedPoint;
+        }
+
+        // floor x, ceil y.
+        y = Math.ceil(point.getY());
+        roundedPoint = new NdPoint(x, y);
+
+        if(vertices.contains(roundedPoint)) {
+            return roundedPoint;
+        }
+
+        // ceil x, ceil y
+        x = Math.ceil(point.getX());
+        roundedPoint = new NdPoint(x, y);
+
+        if(vertices.contains(roundedPoint)) {
+            return roundedPoint;
+        }
+
+        // ceil x, floor y
+        y = Math.floor(point.getY());
+        roundedPoint = new NdPoint(x, y);
+
+        if(vertices.contains(roundedPoint)) {
+            return roundedPoint;
+        }
+
+
+        throw new SpatialException("Start vertex not on pathfinding graph.");
     }
 
     /**
@@ -92,13 +141,14 @@ public final class PathPlanner {
         return path;
     }
 
-    private static List<NdPoint> returnVacantPoints(Collection<Zone> zones, Collection<BoundedMoveableObject> obstacles) {
+    private static List<NdPoint> returnVacantPoints(Collection<Zone> zones, Collection<BoundedMoveableObject> obstacles,
+                                                    int botSize) {
         // First generate the points occupied by the obstacles.
         List<NdPoint> obstaclePoints = new ArrayList<NdPoint>();
 
         for (BoundedMoveableObject obstacle : obstacles) {
             // Navigate around obstacles with a margin of 1 unit.
-            obstaclePoints.addAll(obstacle.getPointsOccupiedByObject(0));
+            obstaclePoints.addAll(obstacle.getPointsOccupiedByObject(2));
         }
 
         // Now for the zone points.
@@ -119,25 +169,24 @@ public final class PathPlanner {
         return zonePoints;
     }
 
-    private static SimpleWeightedGraph<NdPoint, DefaultWeightedEdge> generateNdPointGraph(
-            NdPoint start, NdPoint end, Collection<Zone> allZones, Collection<BoundedMoveableObject> obstacles, int botSize) {
+    private static SimpleWeightedGraph<NdPoint, DefaultWeightedEdge> generateNdPointGraph(NdPoint start,
+            Collection<Zone> allZones, Collection<BoundedMoveableObject> obstacles, int botSize) {
 
         SimpleWeightedGraph<NdPoint, DefaultWeightedEdge> graph = new SimpleWeightedGraph<NdPoint, DefaultWeightedEdge>(
                 DefaultWeightedEdge.class);
 
 
-        List<NdPoint> vertices = returnVacantPoints(allZones, obstacles);
-
+        List<NdPoint> vertices = returnVacantPoints(allZones, obstacles, botSize / 2);
+        vertices.add(start);
         // Margin is botsize / 2, since the points move under the center of the bot.
-        sanitizeVertices(allZones, vertices, botSize / 2);
+        sanitizeVertices(allZones, vertices, obstacles, botSize / 2);
 
 
         // Add all the vertices.
-        graph.addVertex(start);
-        graph.addVertex(end);
         for (NdPoint p : vertices) {
             graph.addVertex(p);
         }
+
 
         /*
             Create the edges
@@ -164,7 +213,8 @@ public final class PathPlanner {
         return graph;
     }
 
-    private static void sanitizeVertices(Collection<Zone> zones, Collection<NdPoint> vertices, int margin) {
+    private static void sanitizeVertices(Collection<Zone> zones, Collection<NdPoint> vertices,
+                                         Collection<BoundedMoveableObject> obstacles, int margin) {
         Context<Object> context = BW4TEnvironment.getInstance().getContext();
 
         ContinuousSpace<Object> space = (ContinuousSpace<Object>) context.getProjection(MapLoader.PROJECTION_ID);
