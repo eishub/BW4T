@@ -40,6 +40,7 @@ import eis.exceptions.QueryException;
 import eis.exceptions.RelationException;
 import eis.iilang.Action;
 import eis.iilang.EnvironmentState;
+import eis.iilang.Identifier;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
 
@@ -126,6 +127,8 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
                     } catch (FileNotFoundException | JAXBException e) {
                         throw new ManagementException("Could not load local Map to send to the server.", e);
                     }
+                } else {
+                    serverparams.put(InitParam.MAP.nameLower(), new Identifier(mapfile.getName()));
                 }
             }
             getClient().initServer(serverparams);
