@@ -455,6 +455,11 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
             LOGGER.debug(e);
             collided = true;
             obstacles.add(e.getTileOccupiedBy());
+
+            // Add the obstacle to the other bot.
+            e.getTileOccupiedBy().setCollided(true);
+            e.getTileOccupiedBy().addObstacle(this);
+
             stopRobot();
         }
     }

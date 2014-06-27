@@ -14,6 +14,7 @@ import nl.tudelft.bw4t.map.Path;
 import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
+import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.server.model.zone.Corridor;
 import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
@@ -342,6 +343,7 @@ public class NavigatingRobot extends AbstractRobot {
             plannedMoves.add(p);
         }
 
+        clearCollisionFlagOnObstacles();
         clearCollided();
         clearObstacles();
 
@@ -388,6 +390,16 @@ public class NavigatingRobot extends AbstractRobot {
          */
         TRAVELING
 
+    }
+
+    private void clearCollisionFlagOnObstacles() {
+        for(BoundedMoveableObject obj : getObstacles()) {
+            if(obj instanceof IRobot) {
+                IRobot bot = (IRobot) obj;
+                bot.clearCollided();
+                bot.clearObstacles();
+            }
+        }
     }
 
 }
