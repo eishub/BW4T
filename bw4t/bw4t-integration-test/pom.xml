@@ -53,7 +53,7 @@
                                 <mkdir dir="target/run-server/" />
                                 <java fork="true" spawn="true" dir="target/run-server/"
                                     classpathref="maven.runtime.classpath" className="nl.tudelft.bw4t.server.environment.Launcher"
-                                    args="-gui false -map Banana -key bw4tServerIntegration" />
+                                    args="-gui true -map Banana -key bw4tServerIntegration" />
                                 <waitfor maxwait="1" maxwaitunit="minute" checkevery="200">
                                     <socket server="localhost" port="8000" />
                                 </waitfor>
