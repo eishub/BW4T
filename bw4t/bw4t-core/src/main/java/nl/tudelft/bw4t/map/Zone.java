@@ -309,8 +309,15 @@ public class Zone implements Serializable {
         if (neighbours == null) {
             if (other.neighbours != null)
                 return false;
-        } else if (!neighbours.equals(other.neighbours))
-            return false;
+        } else {
+            if(this.neighbours.size() != other.neighbours.size())
+                return false;
+            for(Zone next : neighbours) {
+                if (!other.neighbours.contains(next)) {
+                    return false;
+                }
+            }
+        }
         if (renderOptions == null) {
             if (other.renderOptions != null)
                 return false;
