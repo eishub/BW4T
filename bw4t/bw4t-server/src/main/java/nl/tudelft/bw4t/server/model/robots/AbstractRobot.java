@@ -454,13 +454,18 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 
             handicapMove();
         } catch (SpatialException e) {
-            LOGGER.debug("Spatial Exception");
             collided = true;
             LOGGER.log(BotLog.BOTLOG, "Bot " + this.name + " collided.");
             stopRobot();
         } catch (DestinationOccupiedException e) {
+            LOGGER.debug(e);
             collided = true;
             obstacles.add(e.getTileOccupiedBy());
+
+            // Add the obstacle to the other bot.
+            e.getTileOccupiedBy().setCollided(true);
+            e.getTileOccupiedBy().addObstacle(this);
+
             stopRobot();
         }
     }
@@ -485,7 +490,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
      */
     private void checkIfDestinationVacant(NdPoint destination) throws DestinationOccupiedException {
         if (BW4TEnvironment.getInstance().isCollisionEnabled()) {
-            Rectangle2D.Double box = getBoundingBoxCenteredAt(destination);
+            Rectangle2D.Double box = getBoundingBoxCenteredAt(destination, 1.0f);
             for (GridCell<AbstractRobot> cell : getNeighbours()) {
                 for (AbstractRobot bot : cell.items()) {
                     throwDestination(destination, box, bot);
@@ -523,12 +528,12 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
      *            The destination its centered at.
      * @return the box
      */
-    private Rectangle2D.Double getBoundingBoxCenteredAt(NdPoint destination) {
+    private Rectangle2D.Double getBoundingBoxCenteredAt(NdPoint destination, double padding) {
         Rectangle2D.Double box = new Rectangle2D.Double();
         box.x = destination.getX();
         box.y = destination.getY();
-        box.width = getBoundingBox().getWidth();
-        box.height = getBoundingBox().getHeight();
+        box.width = getBoundingBox().getWidth() + padding;
+        box.height = getBoundingBox().getHeight() + padding;
 
         box.x = box.x - (box.width / 2);
         box.y = box.y - (box.height / 2);
@@ -544,9 +549,8 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
         Grid<Object> grid = getGrid();
         GridPoint location = getGridLocation();
 
-        // Check one block further than your own size for other bots.
-        GridCellNgh<AbstractRobot> nghCreator = new GridCellNgh<AbstractRobot>(grid, location, AbstractRobot.class, 5,
-                5);
+        GridCellNgh<AbstractRobot> nghCreator = new GridCellNgh<AbstractRobot>(grid, location,
+                                                        AbstractRobot.class, 10, 10);
         return nghCreator.getNeighborhood(true);
     }
 
