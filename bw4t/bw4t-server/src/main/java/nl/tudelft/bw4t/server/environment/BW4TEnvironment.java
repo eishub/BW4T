@@ -202,6 +202,13 @@ public class BW4TEnvironment extends AbstractEnvironment {
         }
         setMapName(mapname);
         reset(false);
+        try {
+            while (!isMapFullyLoaded()) {
+                Thread.sleep(50);
+            }
+        } catch (InterruptedException e) {
+            LOGGER.warn("Waiting until the map is loaded interrupted", e);
+        }
     }
     
     /**

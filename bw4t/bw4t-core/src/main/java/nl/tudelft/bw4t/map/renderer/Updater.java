@@ -40,6 +40,12 @@ class Updater implements Runnable {
         controller.setForceRunning(true);
 
         LOGGER.info("Started updater thread for: " + controller);
+        
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            LOGGER.warn("Interrupted the Updater initial wait period", e);
+        }
 
         while (controller.isRunning() && !controller.isStarting()) {
             try {
