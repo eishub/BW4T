@@ -106,10 +106,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
      *            the location of the scenario that should be loaded in Repast
      * @param mapLocation
      *            the location of the map file
-     * @param serverIp
-     *            the ip address the server should listen on
-     * @param serverPort
-     *            the port the server should listen on
      * @throws IOException
      * @throws ManagementException
      * @throws ScenarioLoadException
@@ -128,20 +124,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
         this.collisionEnabled = collisionEnabled;
         this.drawPathsEnabled = drawPathsEnabled;
     }
-    /**
-     * Launch server and start repast.
-     * 
-     * @throws IOException
-     * @throws ManagementException
-     * @throws ScenarioLoadException
-     * @throws JAXBException
-     */
-    void launchAll() throws IOException, ManagementException, ScenarioLoadException, JAXBException {
-        launchServer();
-        setState(EnvironmentState.RUNNING);
-        launchRepast();
-    }
-
     /**
      * Notify listeners that a new entity is available, server handles correct distribution of entities to listeners
      * 
@@ -206,45 +188,70 @@ public class BW4TEnvironment extends AbstractEnvironment {
     }
 
     /**
-     * initialize Repast. Does not reset the {@link BW4TServer}.
-     * @param parameters 
+     * initialize Repast with a different map. Does not reset the {@link BW4TServer}.
+     * @param parameters like the 
      * @throws ManagementException 
      */
     @Override
     public void init(Map<String, Parameter> parameters) throws ManagementException {
-        setState(EnvironmentState.INITIALIZING);
-        takeDownSimulation();
-
-        Parameter param = parameters.get("map");
+        final Parameter param = parameters.get("map");
+        String mapname = prepareMapParameter(param);
+        if (mapname == null) {
+            LOGGER.info("No changed parameters where found, not restarting the environment.");
+            return;
+        }
+        setMapName(mapname);
+        reset(false);
+    }
+    
+    /**
+     * Interpret the given parameter and make sure we use it properly. If the {@link Parameter} is a
+     * {@link MapParameter} the system stores the map locally and returns the new filename.
+     * 
+     * @param param
+     *            the param describing the map setting
+     * @return the filename to be opened for the map
+     * 
+     */
+    private String prepareMapParameter(Parameter param) {
+        String mapname = null;
         if (param != null) {
-            String mapname = null;
             if (param instanceof MapParameter) {
-                MapParameter mParam = (MapParameter) param;
-                NewMap map = mParam.getMap();
-                mapname = map.hashCode() + ".map";
-                
-                try {
-                    NewMap.toXML(map, new FileOutputStream(getFullMapPath(mapname)));
-                } catch (FileNotFoundException | JAXBException e) {
-                    LOGGER.error("failed to save the map received from the client", e);
-                    mapname = null;
+                final MapParameter mParam = (MapParameter) param;
+                final NewMap map = mParam.getMap();
+                final NewMap servermap = getServerMap().getMap();
+                if (servermap == null || !servermap.equals(map)) {
+
+                    mapname = map.hashCode() + ".map";
+
+                    try {
+                        NewMap.toXML(map, new FileOutputStream(getFullMapPath(mapname)));
+                        LOGGER.info("Successfully stored the map transfered from the server at: maps/" + mapname);
+                    } catch (FileNotFoundException | JAXBException e) {
+                        LOGGER.error("failed to save the map received from the client", e);
+                        mapname = null;
+                    }
                 }
             } else if (param instanceof Identifier) {
                 mapname = ((Identifier) param).getValue();
             }
-            if (mapname != null) {
-                setMapName(mapname);
-            }
         }
-        try {
-            launchRepast();
-        } catch (IOException | ScenarioLoadException | JAXBException e) {
-            throw new ManagementException("launch of Repast failed", e);
-        }
-
-        setState(EnvironmentState.RUNNING);
+        return mapname;
     }
 
+    /**
+     * Launch server and start repast.
+     * 
+     * @throws IOException
+     * @throws ManagementException
+     * @throws ScenarioLoadException
+     * @throws JAXBException
+     */
+    void launchAll() throws IOException, ManagementException, ScenarioLoadException, JAXBException {
+        launchServer();
+        setState(EnvironmentState.RUNNING);
+        launchRepast();
+    }
     /**
      * Launch the server
      * @throws RemoteException 
@@ -317,8 +324,14 @@ public class BW4TEnvironment extends AbstractEnvironment {
         return System.getProperty("user.dir") + "/maps/" + name;
     }
 
+    /**
+     * Set the map name and reset the loaded state of the map.
+     * 
+     * @param mapName
+     */
     public void setMapName(String mapName) {
          this.mapName = mapName;
+         this.mapFullyLoaded = false;
     }
     
     public BW4TServerMap getServerMap() {
@@ -477,40 +490,33 @@ public class BW4TEnvironment extends AbstractEnvironment {
      */
     @Override
     public void reset(Map<String, Parameter> parameters) throws ManagementException {
-        try {
-            setMapName(((Identifier) parameters.get("map")).getValue());
-            if (mapName == null) {
-                setMapName("Random");
-            }
-            reset();
-        } catch (Exception e) {
-            throw new ManagementException("reset failed", e);
+        String mapname = prepareMapParameter(parameters.get("map"));
+        if (mapname == null) {
+            setMapName("Random");
+        } else {
+            setMapName(mapname);
         }
+        reset(true);
     }
 
     /**
      * reset to initial situation.
      * 
-     * @throws EnvironmentResetException
-     *             if the server was unable to restart
+     * @param resetNetwork Should we restart the network server?
      */
-    public void reset() throws EnvironmentResetException {
+    public void reset(boolean resetNetwork) throws ManagementException {
+        setState(EnvironmentState.INITIALIZING);
         try {
             takeDownSimulation();
-        } catch (ManagementException e) {
-            throw new EnvironmentResetException(e);
-        }
-        if (server != null) {
-            server.takeDown();
-            server = null;
-        }
-        
-        BW4TFileAppender.resetNewFile();
-       
-        try {
+            if (resetNetwork && server != null) {
+                server.takeDown();
+                server = null;
+            }
+
+            BW4TFileAppender.resetNewFile();
             launchAll();
         } catch (ManagementException | IOException | ScenarioLoadException | JAXBException e) {
-            throw new EnvironmentResetException(e);
+            throw new ManagementException("Failed to reset the environment", e);
         }
     }
 
@@ -520,6 +526,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
      * @throws ManagementException 
      */
     private void takeDownSimulation() throws ManagementException {
+        LOGGER.info("Taking down the simulation environment");
         // this should set state->KILLED which stops stepper.
         removeAllEntities();
 
