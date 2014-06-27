@@ -234,6 +234,9 @@ public class BW4TEnvironment extends AbstractEnvironment {
                 }
             } else if (param instanceof Identifier) {
                 mapname = ((Identifier) param).getValue();
+                if(getMapName() != null && getMapName().equals(mapname)) {
+                    mapname = null;
+                }
             }
         }
         return mapname;
