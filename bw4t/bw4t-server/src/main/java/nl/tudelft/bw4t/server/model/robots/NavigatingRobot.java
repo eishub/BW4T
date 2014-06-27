@@ -311,7 +311,7 @@ public class NavigatingRobot extends AbstractRobot {
         zones.add(getZone());
 
         NdPoint target = currentMoveHistory;
-        if (plannedMoves.size() > 0) {
+        if (plannedMovesHistory.size() > 0) {
             target = (NdPoint) ((LinkedList) plannedMovesHistory).getLast();
         }
         zones.add(ZoneLocator.getNearestZone(target));
