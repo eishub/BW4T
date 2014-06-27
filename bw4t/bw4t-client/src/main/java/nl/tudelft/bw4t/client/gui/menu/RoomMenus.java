@@ -25,31 +25,32 @@ public class RoomMenus {
      * @param box
      *            , the box that the robot is at.
      */
-    public static void buildPopUpMenuForBeingAtBlock(ViewBlock box, Zone room, BW4TClientGUI bw4tClientMapRenderer) {
+    public static void buildPopUpMenuForBeingAtBlock(ViewBlock box, Zone room, BW4TClientGUI gui) {
+        RoomMenus.controller = gui.getController();
         String label = room.getName();
 
-        bw4tClientMapRenderer.getjPopupMenu().removeAll();
+        gui.getjPopupMenu().removeAll();
         String colorAsString = BasicMenuOperations.getColor(box.getColor().getName(),
-                bw4tClientMapRenderer.getController().getHumanAgent());
+                controller.getHumanAgent());
 
         // Robot commands
-        BasicMenuOperations.addSectionTitleToPopupMenu("Command my robot to:", bw4tClientMapRenderer.getjPopupMenu());
+        BasicMenuOperations.addSectionTitleToPopupMenu("Command my robot to:", gui.getjPopupMenu());
 
-        BasicMenuOperations.addBlockPickUpMenuItem(bw4tClientMapRenderer, box);
+        BasicMenuOperations.addBlockPickUpMenuItem(gui, box);
 
         // Message sending
-        bw4tClientMapRenderer.getjPopupMenu().addSeparator();
-        BasicMenuOperations.addSectionTitleToPopupMenu("Tell: ", bw4tClientMapRenderer.getjPopupMenu());
+        gui.getjPopupMenu().addSeparator();
+        BasicMenuOperations.addSectionTitleToPopupMenu("Tell: ", gui.getjPopupMenu());
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.ROOMCONTAINS, label, colorAsString,
-                null), bw4tClientMapRenderer);
+                null), gui);
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.AMGETTINGCOLOR, label, colorAsString,
-                null), bw4tClientMapRenderer);
+                null), gui);
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.ATBOX, null, colorAsString,
-                null), bw4tClientMapRenderer);
+                null), gui);
 
-        bw4tClientMapRenderer.getjPopupMenu().addSeparator();
+        gui.getjPopupMenu().addSeparator();
         JMenuItem menuItem = new JMenuItem("Close menu");
-        bw4tClientMapRenderer.getjPopupMenu().add(menuItem);
+        gui.getjPopupMenu().add(menuItem);
     }
 
     /**
@@ -73,7 +74,7 @@ public class RoomMenus {
         
         JMenuItem menuItem = new JMenuItem("Go to " + box.getColor() + " block");
 
-        menuItem.addActionListener(new GoToBlockActionListener(box.getObjectId(), gui.getController()));
+        menuItem.addActionListener(new GoToBlockActionListener(box.getObjectId(), controller));
         gui.getjPopupMenu().add(menuItem);
 
         // Message sending
@@ -96,7 +97,8 @@ public class RoomMenus {
      *            , the room that was clicked on
      */
     public static void buildPopUpMenuRoom(Zone room, BW4TClientGUI gui) {
-        ClientMapController cmc = gui.getController().getMapController();
+        RoomMenus.controller = gui.getController();
+        ClientMapController cmc = controller.getMapController();
         ViewBlock holding = cmc.getTheBot().getFirstHolding();
         String label = room.getName();
         gui.getjPopupMenu().removeAll();
@@ -107,12 +109,12 @@ public class RoomMenus {
         BasicMenuOperations.addNavigateObstacleMenuItem(gui);
         
         JMenuItem menuItem = new JMenuItem("Go to " + label);
-        menuItem.addActionListener(new GoToRoomActionListener(label, gui.getController()));
+        menuItem.addActionListener(new GoToRoomActionListener(label, controller));
         gui.getjPopupMenu().add(menuItem);
 
         if (holding != null) {
             menuItem = new JMenuItem("Put down block");
-            menuItem.addActionListener(new PutdownActionListener(gui.getController()));
+            menuItem.addActionListener(new PutdownActionListener(controller));
             gui.getjPopupMenu().add(menuItem);
         }
 
@@ -126,7 +128,7 @@ public class RoomMenus {
         JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu(label + " contains ", gui.getjPopupMenu());
 
         for (String color : ColorTranslator.getAllColors()) {
-            String color2 = BasicMenuOperations.getColor(color, gui.getController().getHumanAgent());
+            String color2 = BasicMenuOperations.getColor(color, controller.getHumanAgent());
             menuItem = new JMenuItem(color2);
             menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.ROOMCONTAINS, label,
                     color2, null), controller));
@@ -144,7 +146,7 @@ public class RoomMenus {
             submenu.add(submenuColor);
 
             for (String color : ColorTranslator.getAllColors()) {
-                String color2 = BasicMenuOperations.getColor(color, gui.getController().getHumanAgent());
+                String color2 = BasicMenuOperations.getColor(color, controller.getHumanAgent());
                 menuItem = new JMenuItem(color2);
                 menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(
                         MessageType.ROOMCONTAINSAMOUNT, label, color2, i), controller));
@@ -159,7 +161,7 @@ public class RoomMenus {
 
         submenu = BasicMenuOperations.addSubMenuToPopupMenu(label + " has been checked by ", gui.getjPopupMenu());
 
-        for (String p : gui.getController().getOtherPlayers()) {
+        for (String p : controller.getOtherPlayers()) {
             menuItem = new JMenuItem("" + p);
             menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.CHECKED, label,
                     null, p), controller));
@@ -169,7 +171,7 @@ public class RoomMenus {
         BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.ROOMISEMPTY, label, null, null), gui);
 
         String holdingColor = holding != null 
-                ? BasicMenuOperations.getColor(holding.getColor().getName(), gui.getController().getHumanAgent()) : "";
+                ? BasicMenuOperations.getColor(holding.getColor().getName(), controller.getHumanAgent()) : "";
         if (holding != null) {
             BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(MessageType.ABOUTTODROPOFFBLOCK, null, 
                     holdingColor,
