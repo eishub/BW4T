@@ -107,6 +107,7 @@ public class ServerContextDisplay extends JFrame {
     public void close() {
         myRenderer.getController().setRunning(false);
         setVisible(false);
+        dispose();
     }
 
 }
@@ -178,8 +179,8 @@ class ControlPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 try {
-                    BW4TEnvironment.getInstance().reset();
-                } catch (EnvironmentResetException e) {
+                    BW4TEnvironment.getInstance().reset(true);
+                } catch (ManagementException e) {
                     LOGGER.error("failed to reset the environment", e);
                 }
             }
