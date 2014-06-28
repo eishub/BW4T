@@ -1,0 +1,39 @@
+\documentclass[oneside]{tudelft-report}
+\usepackage{graphicx}
+
+\begin{document}
+
+%% Use Roman numerals for the page numbers of the title pages and table of
+%% contents.
+\frontmatter
+
+\title[Blocks World for Teams]{Final Report}
+\author{BW4T~Context~Project}
+\affiliation{Delft~University~of~Technology}
+\makecover
+
+%% Include an optional title page.
+\input{title}
+
+%% Use Arabic numerals for the page numbers of the chapters.
+\mainmatter
+\setcounter{tocdepth}{1}
+\input{abstract}
+\tableofcontents
+\input{introduction}
+\input{overview}
+\input{description}
+\input{hci}
+\input{evaluation}
+\input{outlook}
+
+\bibliography{final-report}
+
+\chapter*{Attachments}
+\addcontentsline{toc}{chapter}{Attachments}
+\input{attachments/personas}
+\input{attachments/informed-consent}
+\input{attachments/Manual}
+\input{attachments/Questionnaire}
+
+\end{document}

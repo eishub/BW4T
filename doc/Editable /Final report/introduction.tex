@@ -1,0 +1,25 @@
+\chapter{Introduction}
+
+
+%%- High level description of the real world problem: Human teams using robots to overcome situations.
+
+\section{Problem Description}
+In the field of search and rescue there are many advantages to using robots over human beings. A rescue team can use a specialised robot to reach areas which would otherwise be hazardous to humans. As useful as a single robot may be, a team of these robots is needed in countless real world situations; these teams need strategies in order to efficiently collaborate. To develop and evaluate a particular strategy, simulation software is required. The main challenge in developing such software is how to ensure realism. 
+
+
+%%- Introduction BW4T
+%%- This is missing in the document or not clear but: BW4T plays a role in gaining knowledge about the real world problem
+
+\section{Blocks World for Teams}
+Blocks World For Teams (BW4T) \cite{bw4t}, is a simulation environment for search and rescue robot teams. The simulation world contains various elements that can be tailored to represent numerous real world scenarios. The main elements are the rooms and the blocks contained in them; these coloured blocks represent injured victims. To test a particular strategy, a sequence of colours can be given in order to specifiy which victims have priority. Another key element in the BW4T simulation environment are the robots. Using the multi-agent programming language GOAL, strategies can be tested that require robots to communicate and share the workload efficiently. The combination of this language support and a fully fledged graphical user interface, make BW4T a truly powerful simulation tool.
+
+%%- Problem description of what is lacking in BW4T.
+
+\section{Problem Description}
+In order for BW4T to mirror reality accurately, new features have to be added to support more advanced simulations. One of the main extensions is the support for varying types of robots; the current version only supports a single default type. Robots need to be able to vary in size, speed, and capabilities. Another vital improvement to the simulation environment is the addition of new zone types including charging zones and blockade zones. These main extensions, along with several other essential improvements, are what the BW4T system needs to continue serving the user's needs.
+
+%%- end user requirements
+
+\section{End-user's Requirements}
+
+To extend the capabilities of BW4T, the client gave a set of requirements. The main concern of the client is that the system is unmaintable in its current state; the coupling between modules is far too high. The second requirement of the client is that the simulation robots need to be customisable. Bots need to have adjustable sizes and speeds, as well as a new functionality set including color blindness and size overloading. The client also asked for a graphical user interface overhaul that would allow users to edit maps and gain a clear overview of the simulation environment. Finally, the client required that users should be able to control robots manually to facilitate simulations of mixed teams containing both humans and robots.
