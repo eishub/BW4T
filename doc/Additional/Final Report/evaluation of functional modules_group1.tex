@@ -1,8 +1,0 @@
-\section{Evaluation of the functional modules and the product}
-While refactoring itself is not a functional module, maintaining backwards compatibility is a major task. Keeping old functionality the same, even while adding new functionality is top priority. This is so important because BW4T is currently used for various purposes, like the practical of the first year Logic-based AI course. Students should still be able to do the same exercises on the new BW4T, without big changes to the original assignment.\\
-
-This prevented excessive changes to the code. Instead of rewriting large parts of the project, we improved the structure by splitting large classes into smaller ones without changing anything to the functional code itself.  \\
-
-Complex methods were rewritten, mostly by splitting the method up into several smaller methods. Even though the code seems to have changed a lot, the actual functionality was not touched this way. In the exceptional case where code really had to be changed for a proper refactor, tests were written. These tests compared the old and the new method, ensuring both methods provided the same results.\\
-
-In the end, this resulted in a total product that had a much better and clearer structure, less complex methods which made the code easier to understand and most likely a better performing product, even though this is hard to measure. 
