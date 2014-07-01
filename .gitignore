@@ -1,1 +1,57 @@
 _site
+.gitignore
+!/.gitignore
+
+.settings/
+.classpath
+target/
+bin/
+log/
+bw4t-integration-test/BW4T.rs
+bw4t-integration-test/maps
+
+
+## Directory-based project format
+.idea/
+# if you remove the above rule, at least ignore user-specific stuff:
+# .idea/workspace.xml
+# .idea/tasks.xml
+# and these sensitive or high-churn files:
+# .idea/dataSources.ids
+# .idea/dataSources.xml
+# .idea/sqlDataSources.xml
+# .idea/dynamic.xml
+
+## File-based project format
+*.ipr
+*.iws
+*.iml
+
+## tex ignore
+*.aux
+*.glo
+*.idx
+*.log
+*.toc
+*.ist
+*.acn
+*.acr
+*.alg
+*.bbl
+*.blg
+*.dvi
+*.glg
+*.gls
+*.ilg
+*.ind
+*.lof
+*.lot
+*.maf
+*.mtc
+*.mtc1
+*.out
+*.synctex.gz
+
+# ignore mac temp files
+*~
+

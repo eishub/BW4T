@@ -1,0 +1,74 @@
+\begin{titlepage}
+
+\begin{center}
+
+%% Insert the TU Delft logo at the bottom of the page.
+\begin{tikzpicture}[remember picture,overlay]
+    \node at (current page.south)[anchor=south,inner sep=0pt]{
+        \includegraphics{cover/logo}
+    };
+\end{tikzpicture}
+
+%% Extra whitespace at the top.
+\vspace*{2\bigskipamount}
+
+%% Print the title in cyan.
+{\makeatletter
+\titlestyle\color{tudelft-cyan}\Huge BW4Tv3 Manual
+\makeatother}
+
+%% Print the optional subtitle in black.
+{\makeatletter
+\ifx\@subtitle\undefined\else
+    \bigskip
+    \titlefont\titleshape\LARGE\@subtitle
+\fi
+\makeatother}
+
+\bigskip
+\bigskip
+
+by
+%door
+
+\bigskip
+\bigskip
+
+%% Print the name of the author.
+{\makeatletter
+\titlefont\Large\bfseries\@author
+\makeatother}
+
+\vfill
+
+\begin{tabular}{lll}
+    BW4Tv3 Team: & Daniel Swaab & 4237455\\
+        & Valentine Mairet     & 4141784\\
+        & Xander Zonneveld     & 1509608\\
+        & Ruben Starmans       & 4141792\\
+        & Calvin Wong Loi Sing & 4076699\\
+        & Martin Jorn Rogalla  & 4173635\\
+        & Jan Giesenberg       & 4174720\\
+        & Wendy Bolier         & 4133633\\
+        & Joost Rotheweiler    & 4246551\\
+        & Joop Aué             & 4139534\\
+        & Katia Asmoredjo      & 4091760\\
+        & Sander Liebens       & 4207750\\
+        & Sille Kamoen         & 1534866\\
+        & Shirley de Wit       & 4249259\\
+        & Tom Peeters          & 4176510\\
+        & Tim van Rossum       & 4246306\\
+        & Arun Malhoe          & 4148703\\
+        & Seu Man To           & 4064976\\
+        & Nick Feddes          & 4229770
+\end{tabular}
+
+\bigskip
+\bigskip
+
+\bigskip
+\bigskip
+
+\end{center}
+
+\end{titlepage}

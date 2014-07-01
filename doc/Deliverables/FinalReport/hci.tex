@@ -1,0 +1,102 @@
+\chapter{The HCI module}
+In this chapter we will discuss the human-computer interaction part of the project. First we discuss the personas and user scenarios created by group 1. Afterwards we discuss the user test results of group 2, followed by group 3.
+
+\section{Interaction Designers from last year}
+These are the names of all the students who already passed the Interaction Design course (TI2600) last year (2013): Ruben Starmans, Martin Rogalla, Joop Aue, Wendy Bolier, Arun Malhoe, Calvin Wong Loi Sing, Seu Man To and Katia Asmoredjo.
+
+\section{Group 1}
+
+\subsection*{Personas}
+As can be seen in the attachments, our personas are all in the range of 18 – 60 years old and make use of the BW4T environment. Obviously, the design of our graphical user interfaces, views and other choices are based upon this range of age. If, for example, we would have been developing this software for children aged 5 to 12, we could have chosen to make it more of a game. To do this, we could have introduced missions, where a bot has to perform several actions in some specific order to progress through the game. 
+When dealing with children we also could have added more graphics and effects to make it more attractive to play. We could have made real buildings, with several stages and effects like burning trees or houses. A shaking screen as a cause of an earthquake, making it harder for the player to complete the game level. 
+
+On the other hand, if we had to develop this software for elderly people (age 60+), we probably would not even have thought about gamifying the software. Instead, other parts of the software would have changed. For example buttons would have been bigger so that it would be easier to click on them correctly. Text fonts would have been larger so they can be read more easily and maybe another font would have been chosen if it would turn out to be easier to read.\\
+
+
+What we did not consider during the making of BW4T was the phenomenon of colorblindness. One out of 12 men and 1 out of 250 women are colorblind. Although the bots themselves are able to have the handicap colorblindness, there is no option for users to choose a colorblind option. In order to take this into account, blocks could contain numbers instead of having colors. Changing the colors would not have a significant impact, as there exist different kinds of colorblindness. \\
+
+After some tests with our client (K.V. Hindriks), he told us that he had a hard time seeing the colors of a button during the test. With that in mind, we are still considering a good and practical solution for this problem.\\
+
+
+All our personas fall in the same category: they all know how to use GOAL and study artificial intelligence. If we would change the personas to people who would not do any research in or study artificial intelligence, we would probably get back to the “game” as described for children. We adjusted the user interface to a simple and intuitive user interface. The students and researchers should not have any problems finding features or using the program because of that. The logger gives a clear view of each bot. It says which bot did which action and it logs for each bot the amount of good block drops, bad block drops and especially how long it took the bot to finish the sequence. If our personas did not contain researchers, it would probably not matter much how long it takes a bot to finish the sequence as for the student it is only important that the bot completes the mission.
+
+\subsection*{User Scenario}
+If we did not have a batchrunner, a small script that runs the program multiple times in a row on the background, it would have taken researchers huge amounts of time to run the program multiple times. Not to mention putting together and analyzing the data afterwards. Without the Scenario Store, users could only select the amount of rows and columns (which would turn out to be the amount of rooms). The user would not be able to specify which rooms would be at what locations or where the drop zone would be. \\
+
+As this program is an assistance tool for researchers, you don't want that agents just control your bots. In real life situations there are always humans involved, at least, nowadays, and probably in the future too. So there is a Human GUI (Graphical User Interface) which lets the user control a bot in the environment. \\
+
+Even though we use bots which are probably capable of everything, there are still different kinds of bots. Robots come in all colors and sizes and therefore we want our bots to have some handicaps. In the Bot Store users are able to choose handicaps on robots, e.g. not being able to pick up a block or not being able to fit through small doors. This is very helpful for researchers as well, because they can analyze the difference in completion time when using different kinds of robots.
+
+\section{Group 2}
+We decided to do some user tests to find out how user friendly our system really is. We based these tests on the user stories and personas described above.
+
+\subsection*{Preparations and expectations }
+As we did not have much time for these user tests, we decided to keep it short. But in order to still get representative results, we decided to gather three test users, each representing a different persona. Fortunately, we found three test users willing to participate in our user tests: a first year student, a professor and a researcher.
+
+There is a lot of documentation that comes with the system so, in real life, the users can consult these documents to learn more about the system and how to work with it. However, these documents are too much reading material for a simple user test. That is why we decided not to give these documents to the test users. Also, we expected that the test users would not need documentation or manuals because we believed our GUI's were clear enough.
+
+First we gave the participants an informed consent form (see attachment \textit{Informed Consent}). The participants had to sign this document before we commenced the experiment.
+During the user tests, our participants received a short roadmap (see attachment \textit{Manual}), with a few simple tasks they had to complete. We used the "Think Aloud" protocol, so we knew what our test users were thinking when performing these tasks. We wanted to know whether they immediately understood what they needed to do and how they needed to do it, or whether they needed a bit of time to comprehend such tasks. We expected the experiment to go smoothly, and that the user would not have too much trouble, but some elements that were obvious for us (because we made the system) were maybe not simple for our test users.
+
+Furthermore all test users were given a questionnaire (see attachment \textit{Questionnaire}) with seven questions in total. In addition to this questionnaire, we also asked some questions in person, depending on how the evaluation was going.
+
+\subsection*{Test results}
+Our test users were very positive about the changes we brought to the system. They had (some) experience with the old BW4T and they were happy with the new functionalities we had added. However, the system was not as clear and self-explanatory as we believed. \\
+
+All the test users had problems with:
+\begin{itemize}
+\item Finding out how to add blocks to the rooms
+\item Opening a file
+\end{itemize}
+
+Opening a file went wrong because the Environment Store begins with a dialog named StartDialog. In this dialog the user can input the map's number of rows and columns, and then continue to the editor screen. Only in this screen is it possible for the user to open a file. It is only natural that this seemed contradictory to our test users: they had to set a number of rows and columns in order to open a map that already existed. 
+
+Moreover, a charge zone would not always appear when randomizing zones in the map. The users' opinion was that there should always be one charge zone, no matter what.
+
+Furthermore, the name attributed to the randomize zones command used to be 'randomize rooms'; one of the users pointed out that this was incorrect, because not only did it randomize rooms, but it also randomized other of the map's elements. \\
+
+Finally, our users suggested various improvements for next versions of the system:
+
+\begin{itemize}
+\item A one-click-random: it should be possible to randomize everything (zones, blocks and sequence) with one button. The result should be a solvable map, so the randomize functions should take each others' results into account. For example: there cannot be a color in the sequence which does not exist anywhere else on the map.
+\item Setting up more zones at once: it should be possible to select multiple zones by dragging the mouse over them, and then changing them all at once into rooms, blockades etc. This would be rather useful especially when dealing with large maps. 
+\item Being able to save a map without a start- and/or drop-zone. 
+\end{itemize}
+
+\subsection*{What we did with the results}
+Unfortunately, we did not have much time to adjust the system to the test users' suggestions. So we only focused primarily on modifications that were easy to apply. For the few things we did not have time to correct, we listed them in our final report, so that future teams that will work on this project have an idea of what needs to be done. \\
+
+What we changed:
+\begin{itemize}
+\item Added a more detailed explanation in the Environment Store. It tells the user how to edit zones and how to add blocks to rooms.
+\item Made sure at least one charge zone is generated when randomizing zones. 
+\item Changed the name of 'Randomize rooms' to 'Randomize zones'.
+\end{itemize}
+
+We have not yet fixed the `open file' problem. Unfortunately, we did not have the time to do this properly, though we described this problem in our documentation for the next project group that will work on this.
+
+\section{Group 3}
+During the last week of the project a usability evaluation was scheduled to find out how different users interact with our newly added features.
+
+\subsection*{Preparations and expectations }
+In order to keep the user test as accurate as possible, a first-year student, a researcher and a professor were asked to participate in the evaluation. Each of these participants had a different level of experience with the old system, ranging from none at all to a lot. Also, each of the participants had used the system before to preform different tasks ranging from programming a simple bot to studying the way in which a large group of bots interacts while trying to achieve a shared task. These handful of participants were chosen to best represent the personas that we had thought out and which can be found in the attachments. \\
+
+To be able to actually test the intuitiveness of the newly added features it was decided to not explain anything about the features and only give them detailed tasks which forced them to use these features. These tasks can be found in the attachments (Usability Evaluation - Manual, see the group 3 section). Because the addition of the Scenario Editor enables almost everyone to set up an environment, build a scenario and start the simulation, it was decided that each user test should include these three crucial parts.
+
+\subsection*{Test results}
+During the tests it became very clear that each of the participants had not only a completely different view of the system, but also interacted with the system in a different way. On the one hand there was the participant that started reading lines of text included in the Graphical User Interface while on the other hand there was also a participant that started clicking right away and discovered most features by accidentally bumping into them. \\
+Overall there were only a few features that every participant had problems with:
+\begin{itemize}
+\item What parts of the program have to be started - as in which jar files have to be run -W to preform certain actions
+\item It was not clear that the table in the Scenario Editor was editable
+\item It was not clear which disability slider belonged to which robot disability
+\item It was not clear what the export to MAS function did
+\end{itemize}
+As it was decided on to not give a any thorough explanation of how the system worked, all participants needed help starting the right jar files in order to run the right parts of the system. Both the researcher and the professor told us that it was currently better than how it used to be, but were not able to start everything without explanation. This did not come as a real surprise, since we had only made the jars available but had not thought about a logical folder to place them in.\\
+The Scenario Editor has two tables in which the added agents and e-partners are visualized. To speed up the process of setting up an environment this table is editable so that a user doesn't have to open the associated store and change the basic values there. Unfortunately it wasn't clear that this was possible and most participants wouldn't have known without being told. This wasn't really what we had expected, since we thought this feature would be easy to find. But after all this is just a speed-up feature for which alternative methods exist to achieve the same result.\\
+Most disabilities have a slider next to them in order to indicate the severity of the disability (size and battery capacity of the robots for example). Due to the crowded layout of the BotStore some participants had trouble seeing which slider belonged to what disability. As a result of this, a new task was created for the team that consisted of improving the layout so that a slider is next to its disability check-box. We didn't deem this necessary at first, since a slider would only light up when the corresponding check-box was selected.\\
+In order to speed up the process of creating a simulation, an export to MAS (Multi-Agent System) function has been added. This function exports the current configured Scenario and builds a ready to launch mas2g (MAS to GOAL) project. To do this a lot of files have to be created and copied in the background, something that isn't very visual and therefor caused some confusion for the participants.
+
+\subsection*{What we did with the results}
+In order to improve the visual aspect of the BotStore each disability has gotten a little more space, thus making it easier to see which slider belongs to what disability. \\
+All other problems encountered by the participants have afterwards been explained in the manuals for the users to come. The added features were designed to be as self explanatory as possible, but there is always that little bit of explanation that is necessary in order to fully understand the system. So in the end the usability evaluation was quite useful and has resulted in changes to our system and detailed explanations in the manual.

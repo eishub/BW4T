@@ -1,0 +1,120 @@
+\ifglsentryexists{deterministic}{}%
+{%
+\gls@defglossaryentry{deterministic}%
+{%
+name={deterministic algorithm},%
+sort={deterministic algorithm},%
+type={main},%
+first={deterministic algorithm},%
+firstplural={deterministic algorithms},%
+text={deterministic algorithm},%
+plural={deterministic algorithms},%
+description={is an algorithm which, given a particular input, will always produce the same output, with the underlying machine always passing through the same sequence of states. },%
+descriptionplural={is an algorithm which, given a particular input, will always produce the same output, with the underlying machine always passing through the same sequence of states. },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{know-how}{}%
+{%
+\gls@defglossaryentry{know-how}%
+{%
+name={know-how acquisition},%
+sort={know-how acquisition},%
+type={main},%
+first={know-how acquisition},%
+firstplural={know-how acquisitions},%
+text={know-how acquisition},%
+plural={know-how acquisitions},%
+description={is about acquiring knowledge on how to do something, for instance by reading a manual. },%
+descriptionplural={is about acquiring knowledge on how to do something, for instance by reading a manual. },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{e-partner}{}%
+{%
+\gls@defglossaryentry{e-partner}%
+{%
+name={e-partner},%
+sort={e-partner},%
+type={main},%
+first={e-partner},%
+firstplural={e-partners},%
+text={e-partner},%
+plural={e-partners},%
+description={a small electronic device which can assist a robot if it's possessed by the robot. },%
+descriptionplural={a small electronic device which can assist a robot if it's possessed by the robot. },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{pathfinding}{}%
+{%
+\gls@defglossaryentry{pathfinding}%
+{%
+name={e-partner},%
+sort={e-partner},%
+type={main},%
+first={e-partner},%
+firstplural={e-partners},%
+text={e-partner},%
+plural={e-partners},%
+description={the act of computing a path, often with a predefined algorithm such as Dijkstra's algorithm, along which the robot should travel. },%
+descriptionplural={the act of computing a path, often with a predefined algorithm such as Dijkstra's algorithm, along which the robot should travel. },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%

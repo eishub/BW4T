@@ -1,0 +1,30 @@
+\chapter{Overview of the developed and implemented software}
+The BW4T environment is a useful tool to test team strategies but is very limited in its current condition. To give the user more freedom in creating diverse scenarios we added in a number of new features. In this chapter we give an overview of the developed software for the new features.
+
+\section{Logger}
+The logger was an already existing feature that allowed a user to see what exactly happened during a simulation after it has happened. The log files it generated were however quite unclear and also couldn't handle our additional features yet. So we made sure that details about the bot (e.g. being colorblind) are also logged.
+
+\section{Scenario Editor}
+The Scenario Editor is a GUI that can be used to generate configuration files that can be passed on to the BW4T client. These configuration files contain the IP address and port number that the server binds to and the client connects with. It's also possible to specify a map file that the server has to use, whether or not to launch a GUI for each agent and options to enable path visualization and collisions between robots.
+
+\section{Bot store}
+As a part of the Scenario Editor we made a panel that handles the creation of customized bots. This panel is the bot store. In here users can specify the attributes of the currently selected robot from a list of robots. These attributes are the handicaps described in the next section of this chapter.
+
+\section{Handicaps}
+A large feature that we have added in this new version of BW4T is that the robots can have certain handicaps allowing the user to create different robots suited for different tasks. As an example, one of these handicaps makes the robot colorblind, causing all blocks to appear grey.
+
+\section{E-Partner}
+Another addition to BW4T is the E-Partner. This is a small, tablet-like thing that allows an agent that has the E-Partner to communicate with other agents that also have an E-Partner. It can be found in the corridors and looks like a yellow triangle, turning green when it is picked up. The E-Partner was a special request by one of the customers to allow for communication between agents for more than just GOAL-messages \cite{hindriks2012goal}. It can also track if a robot is going in the right direction and it checks when it is dropped that it is not forgotten.
+
+\section{Environment store}
+In the new Environment Store we can create a map that is much more extensive in features than the maps we were able to create before in the map editor. The user can now create different types of zones at any cell in the grid that we use, enabling us to create much more versatile environments for the bots since we are no longer bounded by the old rows and columns structure. Also we have added in different types of zones including blockades and charging zones that allows for the user to create much more interesting maps.
+
+\section{Human Player GUI}
+A feature that we have extended is the Human Player GUI. The extra functionality that is added are the menus. We changed the menus so that the options are different for every bot according to their capabilities. For example, a bot without a gripper won't see the option to pick up a block. Additionally, all the agent handicaps are implemented in the interface too, e.g. a colorblind agent sees all blocks as grey blocks. Furthermore, an E-Partner chat session has been added, where the agent can send messages to the E-Partner and the E-Partner can send messages to the agent.
+
+\section{Collision Detection}
+A whole new feature is the collision detection. Bots can now collide with each other if collision detection is enabled. When they have collided, a new option is available: navigate obstacles. With this option, the bot will take another path to his destination.
+Also new is the option to visualize the traversed path and there is a new pathfinder.
+
+\section{Refactor}
+While not really a feature, an important part of the project was to improve the existing codebase. The code needed to become easier to maintain and extend. This was something that with the current heading of the project became harder and more complicated to do. The code has been restructured into different projects and complexity of several classes and methods has been greatly reduced. 

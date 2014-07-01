@@ -1,0 +1,17 @@
+\section{Subsystem Decomposition}
+
+Our system consists of various parts. Currently, we have:
+\begin{itemize}
+\item
+The server project, containing all files to run a server instance of BW4T
+\item
+The client project, containing all files to run a client (controlling one agent) on a running server. 
+\item
+The core project, which is the central "library" containing all shared assets and classes used by more then one project. The core project is not runnable, it only contains shared elements to be used by other projects. 
+\item
+The map editor project, contains all the files needed to run the map editor as a standalone application.
+\item
+The scenario editor, contains all files for the scenario editor.
+\end{itemize}
+
+All these systems can run independently from eachother, except for the core project. All subsystems need the core project files to run. The client and server project are both part of a Client-Server architecture. Individually, all projects (apart from the core project) are based on the classical Model-View-Controller architecture. All classes are in packeges belonging to one of these 3 subcomponents.  \\

@@ -1,0 +1,27 @@
+\documentclass[oneside]{tudelft-report}
+\usepackage{graphicx}
+
+\begin{document}
+
+%% Use Roman numerals for the page numbers of the title pages and table of
+%% contents.
+\frontmatter
+
+\title[Blocks World for Teams]{BW4Tv3 Manual}
+\author{BW4T~Context~Project}
+\affiliation{Delft~University~of~Technology}
+\makecover
+
+%% Include an optional title page.
+\input{title}
+
+%% Use Arabic numerals for the page numbers of the chapters.
+\mainmatter
+\setcounter{tocdepth}{1}
+\tableofcontents
+\input{Introduction/introduction}
+\input{Structure/structure}
+\input{NewFeatures/newfeatures}
+\input{Transferability/transferability}
+
+\end{document}

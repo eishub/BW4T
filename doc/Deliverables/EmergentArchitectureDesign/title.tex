@@ -1,0 +1,84 @@
+\begin{titlepage}
+
+\begin{center}
+
+%% Insert the TU Delft logo at the bottom of the page.
+\begin{tikzpicture}[remember picture,overlay]
+    \node at (current page.south)[anchor=south,inner sep=0pt]{
+        \includegraphics{cover/logo}
+    };
+\end{tikzpicture}
+
+%% Extra whitespace at the top.
+\vspace*{2\bigskipamount}
+
+%% Print the title in cyan.
+{\makeatletter
+\titlestyle\color{tudelft-cyan}\Huge Emergent Architecture Design
+\makeatother}
+
+%% Print the optional subtitle in black.
+{\makeatletter
+\ifx\@subtitle\undefined\else
+    \bigskip
+    \titlefont\titleshape\LARGE\@subtitle
+\fi
+\makeatother}
+
+\bigskip
+\bigskip
+
+by
+%door
+
+\bigskip
+\bigskip
+
+%% Print the name of the author.
+{\makeatletter
+\titlefont\Large\bfseries\@author
+\makeatother}
+
+\vfill
+
+
+\vfill
+
+\begin{tabular}{lll}
+%% Add additional information here, per faculty requirements, e.g
+%    Student number: & 1234567 \\
+%    Project duration: & \multicolumn{2}{l}{March 1, 2012 -- January 1, 2013} \\
+    Architecture Design Team: & Daniel Swaab & 4237455\\
+        & Valentine Mairet     & 4141784\\
+        & Xander Zonneveld     & 1509608\\
+        & Ruben Starmans       & 4141792\\
+        & Calvin Wong Loi Sing & 4076699\\
+        & Martin Jorn Rogalla  & 4173635\\
+        & Jan Giesenberg       & 4174720\\
+        & Wendy Bolier         & 4133633\\
+        & Joost Rotheweiler    & 4246551\\
+        & Joop Aué             & 4139534\\
+        & Katia Asmoredjo      & 4091760\\
+        & Sander Liebens       & 4207750\\
+        & Sille Kamoen         & 1534866\\
+        & Shirley de Wit       & 4249259\\
+        & Tom Peeters          & 4176510\\
+        & Tim van Rossum       & 4246306\\
+        & Arun Malhoe          & 4148703\\
+        & Seu Man To           & 4064976\\
+        & Nick Feddes          & 4229770
+\end{tabular}
+
+%% Only include the following lines if confidentiality is applicable.
+\bigskip
+\bigskip
+%\emph{This thesis is confidential and cannot be made public until December 31, 2013.}
+%\emph{Op dit verslag is geheimhouding van toepassing tot en met 31 december 2013.}
+
+\bigskip
+\bigskip
+%Een elektronische versie van dit verslag is beschikbaar op \url{http://repository.tudelft.nl/}.
+
+\end{center}
+
+\end{titlepage}

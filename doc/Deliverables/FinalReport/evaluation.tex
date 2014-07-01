@@ -1,0 +1,60 @@
+\chapter{Evaluation}
+In this chapter we discuss backward compatibility and analysis of the functional modules and the product. The first section of this chapter is about how we handled backwards compatibility. The user test of the functional modules follows in the next section. The analysis of the product is described in the last section.
+
+\section{Backward compatibility}
+During the testing of the system, we also ran special tests to ensure that BW4T version 3 was compatible with the GOAL code used for the assignments for first year students. These assignments were created during the Logic Based AI course.
+
+Immediately, the first assignment did not run as expected. The bots would go into a room an see a block of the color it was looking for. It would then try to go to the block, however it would not receive the "atBlock()" percept, so it went back to the centre of the room. These actions repeated endlessly. After improving the logic of the percept, the assignment code worked.
+
+Initially, we found a problem that was caused by a change brought to the "holding()" percept. Originally, only the ID of the block that was being held was contained within this percept, but because of modifications, it then included the position of the Block as well. This, of course, was unnecessary information, as the block was in the same spot as the robot holding it. After removing the data the exercise the second assignment ran without any additional problems.
+
+Some of the old goal agents will not work on new maps, as they use the hard-coded name "FrontDropZone" for the zone that is in front of the "DropZone". The new maps no longer assign a special name to this zone. We decided not to implement this, because we thought a robot should not need to be told which place is connected to the "DropZone", as it can derive that information from its knowledge of the map.
+
+There was another problem with backwards compatibility: we noticed robots started behaving "strangely" when the amount of tics per second was increased (approximately over 75 tps). After deeper analysis of the situation, we came to the conclusion that this problem originated from the fact that GOAL could not keep up with the system. Percepts came in too fast for the bot to make a decision, so its "mind" went overboard. As we could not really fix this issue, we decided to set up a default speed (50 tps), and leave a warning to the users who would want to increase it.
+
+\section{Functional modules}
+
+\subsection*{Environment Store}
+The customer wanted to be able to build and search through various environment types. The user should be able to build/play/vary the physical realism of the map. An environment is a map with specification of the physical realism. This has been satisfied for the most part according to the customers needs. A user can create a custom map from scratch thus a user can create an environment resembling a real life situation.The user should also be able to add charge zones where the bot can recharge its battery which i also possible now. Other features such as color blindness and other percept failures or bots not being able to pass through each other are handled in the bot store. The features requested by the customer that we did not satisfy are the ability to make bots not be able to see other bots under certain circumstances, limited communication range, and bot failures. We did not add these features because they had low priority on the backlog.
+
+\subsection*{Bot Store}
+\begin{itemize}
+	\item The body store:
+	\begin{itemize}
+		\item The E-Partner: satisfied, as it grants a communication potential to other robots in the environment, and bots can perceive it.
+		\item Humanoid bots: didn't satisfy, at this moment it doesn't make any difference whether the bot is a wheeled bot or a humanoid bot, because of the abstract environment.
+		\item Wheeled bots: didn't satisfy, for the same reason as the humanoid bots.
+	\end{itemize}
+	\item Bots can crash into each other: partially satisfied, the bots can crash into each other which causes them to stand still if they are not commanded or programmed to recalculate it, but nothing else happens (no damaging of the bots, for example). This is because the functionality had a very low priority and was only developed very late in the project, when we didn't have a lot of time to implement further consequences for a collision.
+	\item Equipment store: satisfied, all the functionalities specified in the document are implemented except an alternate form of perception (which doesn't really matter at this stage, as BW4T is still very abstract). Some functionalities, however, are implemented differently than specified, such as the charger which became a charge zone that the bot had to walk over.
+	\item Combination logic: didn't satisfy, the BW4T environment is still too abstract for this to have any result. All bots can have all handicaps activated at the same time, which allows for at least as many possible configurations that combination logic would also allow.
+	\item Accessibility: satisfied, the bot store is directly accessible from the environment store and has to be this way, as the bot store edits the bot currently selected in the environment store.
+\end{itemize}
+
+\subsection*{Scenario Editor}
+\begin{itemize}
+	\item Bot type: didn't satisfy, see the body store part of the bot store.
+	\item Capabilities: satisfied, these are the possible handicaps which were satisfied when making the bot store.
+	\item Control: partly satisfied, as it is only possible to specify whether a human or an agent controls the bot. It is not possible to specify partial control.
+\end{itemize}
+
+\subsection*{Human Player GUI}
+\begin{itemize}
+	\item Appropriate GUI: satisfied, there are no constraints on what a bot cannot do when it is controlled by a player that the bot could do otherwise.
+	\item E-Partner: partially satisfied, this is already managed in the standard human player GUI.
+\end{itemize}
+
+\subsection*{User tests}
+The functional modules, those being the environment store, the bot store, the scenario editor and the EPartner store are analyzed and evaluated here. A small user test with a researcher has actually been executed with the environment store. This gave the following results: it is hard for a user that has not developed the system to actually understand how to add blocks to a certain room. There is no hint that the white box at the bottom side of the room has to be clicked to add blocks to the room. A solution would be to add a small label or tooltip explaining what the white box at the bottom of the room or map is for. The task to create your own map and save it, however, went very well. As the researcher was very experienced with the BW4T environment, she was impressed by what is possible now using the environment store. There was an issue with there not always being a charging zone in the map at the time, but this has since been fixed. The other issues are discussed in the `Outlook' part of the report.
+
+\subsection*{Demo feedback}
+There was some feedback on the environment store during demos where the customer could use the software. The original warnings for saving a map that wasn't solvable were simple and did not evaluate on what was the unsolvable part of the map. This was fixed later and the warnings are far more descriptive. They still don't show where in the map the problem is, because that was quite hard to do.
+
+\section{Product}
+As the functional modules are mainly evaluated through usability, the product in general is going to be evaluated through structure and architecture of the components. Also, our part focuses on the new feature aspects of the software, so only the structure and architecture of the code forming that part of the system will be discussed here. The analysis is as follows:
+
+\subsection*{Decorator pattern}
+Unlike most of the other groups, we started with pretty much no starting code at all. There was no previous support for robots with handicaps, let alone a bot store where one could create a robot with certain handicaps. The handicap functionality makes use of a decorator pattern to be able to put multiple handicaps on a single robot. At first, the decorator pattern was not correct, so the code was rewritten to be able to function as a decorator pattern. This required some minor changes to the standard robot code. The decorator pattern is correctly implemented now, as stated by the project supervisors, and also allows for a single robot to have multiple handicaps active at the same time. The code used is high quality code now.
+
+\subsection*{MVC pattern}
+The model view controller architecture was used in the Scenario Editor, the Environment Store and the Human Player GUI. This was useful since different team members could work on their own piece of code without being dependent on others and without getting in the way of each other.

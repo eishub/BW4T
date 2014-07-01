@@ -1,0 +1,172 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>nl.tudelft</groupId>
+        <artifactId>bw4t</artifactId>
+        <version>3.5.0</version>
+        <relativePath>..</relativePath>
+    </parent>
+    <groupId>nl.tudelft.bw4t</groupId>
+    <artifactId>bw4t-integration-test</artifactId>
+    <description>This module integration test the entire bw4t system, to ensure the working state of the client and server.</description>
+    <properties>
+        <checkstyle.config.location>../checkstyle.xml</checkstyle.config.location>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>nl.tudelft.bw4t</groupId>
+            <artifactId>bw4t-server</artifactId>
+            <version>3.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>nl.tudelft.bw4t</groupId>
+            <artifactId>bw4t-client</artifactId>
+            <version>3.5.0</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <!-- *** failsafe plugin: run server and test the integration *** -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <workingDirectory>${basedir}/target/</workingDirectory>
+                </configuration>
+            </plugin>
+
+            <!-- *** Ant plugin: start and stop the integration server *** -->
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <id>start-server</id>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <target>
+                                <mkdir dir="target/run-server/" />
+                                <java fork="true" spawn="true" dir="target/run-server/"
+                                    classpathref="maven.runtime.classpath" className="nl.tudelft.bw4t.server.environment.Launcher"
+                                    args="-gui true -map Banana -key bw4tServerIntegration" />
+                                <waitfor maxwait="1" maxwaitunit="minute" checkevery="200">
+                                    <socket server="localhost" port="8000" />
+                                </waitfor>
+                                <sleep seconds="5" />
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>stop-server</id>
+                        <phase>post-integration-test</phase>
+                        <configuration>
+                            <target>
+                                <!-- *** run a java client to kill the server *** -->
+                                <java classpathref="maven.runtime.classpath"
+                                    className="nl.tudelft.bw4t.client.environment.RemoteEnvironment"
+                                    args="-kill bw4tServerIntegration" />
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*.java</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <excludes>
+                                <exclude>none</exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.1.2</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>project-team</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.4</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <configuration>
+                    <linkJavadoc>true</linkJavadoc>
+                </configuration>
+                <version>2.4</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>2.3.2</version>
+            </plugin>
+
+            <plugin> <!-- JUnit report -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>2.17</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <formats>
+                        <format>html</format>
+                        <format>xml</format>
+                    </formats>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+
+</project>

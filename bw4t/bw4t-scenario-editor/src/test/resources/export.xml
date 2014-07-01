@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bw4TClientConfig>
+    <bots>
+        <bot>
+            <batteryEnabled>false</batteryEnabled>
+            <botAmount>1</botAmount>
+            <botBatteryCapacity>10</botBatteryCapacity>
+            <botBatteryDischargeRate>0.0</botBatteryDischargeRate>
+            <botController>AGENT</botController>
+            <botName>Bot 1</botName>
+            <botSize>2</botSize>
+            <botSpeed>100</botSpeed>
+            <colorBlindHandicap>false</colorBlindHandicap>
+            <fileName>robot.goal</fileName>
+            <gripperHandicap>false</gripperHandicap>
+            <grippers>1</grippers>
+            <moveSpeedHandicap>false</moveSpeedHandicap>
+            <referenceName>hope</referenceName>
+            <sizeOverloadHandicap>false</sizeOverloadHandicap>
+        </bot>
+        <bot>
+            <batteryEnabled>false</batteryEnabled>
+            <botAmount>1</botAmount>
+            <botBatteryCapacity>10</botBatteryCapacity>
+            <botBatteryDischargeRate>0.0</botBatteryDischargeRate>
+            <botController>HUMAN</botController>
+            <botName>Bot 1</botName>
+            <botSize>2</botSize>
+            <botSpeed>100</botSpeed>
+            <colorBlindHandicap>false</colorBlindHandicap>
+            <fileName>grace.goal</fileName>
+            <gripperHandicap>false</gripperHandicap>
+            <grippers>1</grippers>
+            <moveSpeedHandicap>false</moveSpeedHandicap>
+            <referenceName>grace</referenceName>
+            <sizeOverloadHandicap>false</sizeOverloadHandicap>
+        </bot>
+    </bots>
+    <epartners>
+        <epartner>
+            <epartnerAmount>1</epartnerAmount>
+            <epartnerName>E-Partner 1</epartnerName>
+            <fileName>epartner.goal</fileName>
+            <forgetMeNot>false</forgetMeNot>
+            <gps>false</gps>
+            <referenceName>epartner</referenceName>
+        </epartner>
+        <epartner>
+            <epartnerAmount>1</epartnerAmount>
+            <epartnerName>E-Partner 2</epartnerName>
+            <fileName>robot.goal</fileName>
+            <forgetMeNot>false</forgetMeNot>
+            <gps>false</gps>
+            <referenceName>epartner</referenceName>
+        </epartner>
+    </epartners>
+    <clientIp>localhost</clientIp>
+    <clientPort>2000</clientPort>
+    <launchGui>true</launchGui>
+    <mapFile></mapFile>
+    <serverIp>localhost</serverIp>
+    <serverPort>8000</serverPort>
+    <useGoal>true</useGoal>
+    <visualizePaths>false</visualizePaths>
+    <enableCollisions>false</enableCollisions>
+</bw4TClientConfig>

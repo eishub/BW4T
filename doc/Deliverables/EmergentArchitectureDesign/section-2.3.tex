@@ -1,0 +1,31 @@
+\section{Persistent Data Management}
+In the Blocks World for Teams project there is no need to use databases as \gls{logfile} and map files are the only persistent data.
+\subsection{Log files}
+At the start, the log files were raw dumps of the actions of a bot (might be human, might be agent). These actions varied from walking to a spot in the map to interacting with an item. \\
+There was no use for these log files besides \gls{debugging}, but the log files were too poorly organised and contained insufficient information to be of significant value for this. \\
+Now, the logging functionality has been extended to be a lot more flexible in logging various things. The log files may be used to reconstruct a series of actions or events. You would be able to feed a log file to the client, which will run the bot according to the lines in the log file. \\
+A better defined logfile can also be used for various other purposes. By running an analysis of the log files, you can gather information about the results, efficiency and possible room for improvement. This can also be used to determine why a bot made certain decisions, or why it did not do what you expected it to do. 
+
+\subsection{Map files}
+The map files are fairly large \gls{xmlfile} but are saved as ".map" extension, which consist of a declaration of the map. \\
+The XML file needs to contain at least the following:
+\begin{itemize}
+\item The size of the map (an x and y value)
+\item The bot entities (including an (x,y) starting position)
+\item The zones (including the name of the zone, the colour of the boxes inside, its neighbouring zones and an (x,y) value)
+\item The sequence of coloured blocks to be collected (or alternatively set to be random via a seperate boolean)
+\item Whether multiple bots are allowed in one room (boolean)
+\item Whether the number of blocks in the rooms are randomized or not (boolean)
+\end{itemize}
+
+%Need to be updated by map editor people. 
+Because these XML files can be rather difficult to write by hand, there is currently a tool which creates a map for you according to certain parameters. This tool will however always generate the maps in a grid formation, with all rooms being the same size, which results in the maps always looking rather similar. \\
+The new map editor which we created still uses a grid layout but now you can add rooms, blockades, etc wherever you like by clicking on the grid. This way you can create custom maps which will be converted to a XML file instead of the similar looking grid formation maps. 
+Some extra features also added to the tool:
+\begin{itemize}
+\item An option to create random maps. With this a random map can be generated with one startzone, one dropzone and a random amount of blockades, charging zones and rooms. This random map can be edited if the user wishes to do so.
+\item An option to create random blocks on the map. With this the user can choose the colors he wants and random blocks with those colors will be added to all the rooms instead of adding them manually.
+\item An option to create a random sequence. With this the user can select the colors and length wanted and a random sequence of colors is created.
+\item An option to preview the map. The user can now preview the map before saving. Furthermore the user can preview the map while editing and the preview gets updated with every change to the map.
+\item An option to open previously created maps. The user can now open previously created maps and edit them. This was not possible with the old map editor
+\end{itemize}
