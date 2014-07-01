@@ -3,7 +3,7 @@ title: Blocks World for Teams
 email: bw4t-ewi@tudelft.nl
 description: "Blocks World for Teams (BW4T) is a testbed for team coordination. BW4T allows for games with human-human, agent-agent and human-agent teams of variable sizes. The goal is to jointly deliver a sequence of colored blocks in a particular order as fast as possible. A complicating factor is that the players cannot see each other.[http://goo.gl/PVAk0c]"
 baseurl: "/BW4T"
-url: "https://MartinRogalla.github.io/BW4T"
+url: "https://eishub.github.io/BW4T"
 username: "BW4T_Repository"
 
 # Build settings
