@@ -37,11 +37,11 @@
         <repository>
             <id>git-bw4t-dependency-repository</id>
             <name>Git BW4T Dependency Repository</name>
-            <url>https://martinrogalla.github.io/BW4T/repo/bw4t/dep/</url>
+            <url>https://eishub.github.io/BW4T/repo/bw4t/dep/</url>
         </repository>
         <repository>
             <id>eis-releases</id>
-            <url>https://raw.github.com/MartinRogalla/eis/releases/</url>
+            <url>https://raw.github.com/eishub/eis/releases/</url>
             <snapshots>
                 <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>

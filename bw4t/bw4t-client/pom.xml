@@ -13,14 +13,6 @@
         <checkstyle.config.location>../checkstyle.xml</checkstyle.config.location>
         <java.main.class>nl.tudelft.bw4t.client.environment.RemoteEnvironment</java.main.class>
     </properties>
-    <repositories>
-        <repository>
-            <id>martin-private-dependency-repository</id>
-            <name>Martin Dependency</name>
-            <url>https://martinrogalla.com/bw4t/dependency/</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <dependency>
             <groupId>nl.tudelft.bw4t.core</groupId>
