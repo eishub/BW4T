@@ -1,0 +1,57 @@
+\chapter{Introduction}
+
+In this chapter, we will explain our goals for this project.
+We split them up into several tasks that work towards achieving our design
+goals, which include but are not limited to: reliability, modifiability and
+ease of use.
+
+\section{Design Goals}
+For this project we were given a large codebase. This codebase had grown
+complex and convoluted. The task for us was to refactor the code to reduce
+complexity, make it more manageable and give it a \gls{pluginarch}. \\ On
+further inspection, however, it was revealed that an exact plugin architecture
+wasn't precisely what the product owner wanted. By analyzing the product
+owner's final goals, we decided that a modular design which can be easily
+expanded or modified was actually desired. \\ 
+Our goal is to have most, if not all core parts of the environment and agents
+built using interfaces. This allows for easy addition and modification of
+elements in the environment or agent behaviour. Creating these additional
+features would then be done by creating new classes utilizing one of these set
+up interfaces. Similarly these classes could then later be easily removed
+without causing parts of the system to start malfunctioning or breaking
+entirely. Section \ref{Design} covers a more detailed explanations of several design choices we made during the project.\\
+
+For the refactoring of the code a number of tasks need to be completed:
+\begin{itemize}
+  \item
+  \textbf{Split up codebase into Client and Server} - Currently the client and
+  server share the same codebase. This makes it hard to keep a proper overview as
+  it isn't always clear at a glance which class belongs to which subsystem, and
+  some classes are even shared entirely. We want to split these subsystems into
+  individual projects to make it easier to maintain, extend and test them. 
+  \item
+  \textbf{Convert to \Gls{maven} project} - Maven is a build automation tool. It makes building and testing the project easier because it shields you from many of the details. It replaces the current complicated ANT buildscript, and accounts for dependencies. Maven provides guidelines for best practices, which is useful for large projects which can become very complex easily, like BW4T. Using Maven, it becomes much simpler to maintain a continous working project.
+  \item
+  \textbf{Improve and add to the \gls{gui}} - There is much room for improvement for
+  the GUI. BW4T is currently run by executing serveral different batch scripts. We want to make it more user-friendly in addition to adding a whole
+  new GUI for the creation of maps, and the configuration of bots. 
+  \item
+  \textbf{Improve overall code quality} - Using sourcecode analysis tools like Sonar and inFocus, we discovered that there were a lot of code quality issues present in the existing BW4T codebase.
+  \begin{itemize}
+  \item 
+  There is a lot of unused code present, and due to the
+  complexity of the codebase it can be hard to tell which pieces of code are
+  unused. 
+  \item
+  Furthermore, there are a lot of very complex methods and classes. We want to reduce complexity to make the code easier to understand, maintain and extend.
+  \item
+  In order to make the code more readable, we want to apply a well-defined checkstyle throughout the project. This includes the use of curly braces, indentation and sufficient javadoc   
+  \end{itemize}
+  \item
+  \textbf{Improve \gls{javadoc}} - Javadoc's are sometimes lacking in information or
+  occasionally not present at all. We want to improve the quality of the javadoc, and add missing documentation for classes that are important. This makes navigating and understanding the code easier. 
+   \item
+  \textbf{Add sufficient tests} - There are currently no tests present. In order to ensure functionality after changes, tests will need to be written. We want to achieve 50\% line coverage for existing code, and 75\% line coverage for newly written code. 
+  \item
+  \textbf{Maintain backwards compatibility} - Old simulations should still work, and give the same results in the new BW4T. This includes that BW4T should still be usable for the Logic-based AI course in the first year of Computer Science. 
+\end{itemize}

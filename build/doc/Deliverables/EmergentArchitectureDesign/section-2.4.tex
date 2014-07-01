@@ -1,0 +1,20 @@
+\section{Concurrency}
+As stated in section 2.2, the BW4T-Server needs to accept connections from
+various BW4T-Clients. The following decisions have been made regarding client
+priorities:
+
+\begin{itemize}
+  \item Every connected client is allowed to start the debugging process and/or
+    control it.
+  \item The agents' actions, percepts, etc. which are time dependent are
+    offered by the server in a first-come first-serve basis.
+  \item The agents should be indistinguishable and should not suffer from any
+    effects due to being from a different client.
+\end{itemize}
+
+Concurrency will mostly be handled by a tick system. Every time a tick is
+executed, an agent performs a certain action which is allowed by the server
+within that specific time-frame. If a non-shareable atomic action is requested
+by an agent, the server will look up in the configuration what it is supposed
+to do. The default behaviour in this situation is that the server will select each agent 
+in a random order and allow them to perform the requested action.

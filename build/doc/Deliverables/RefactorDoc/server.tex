@@ -1,0 +1,12 @@
+\section*{Server} 
+You would think this is a client-server architecture but it's more complicated. The central class is the Singleton \emph{BW4TEnvironment.java}. This is a class that contains the main method to start the server entity. From javadoc: 
+\begin{quote}
+The central environment which runs the data model and performs actions received from remote environments through the server. Remote environments also poll percepts from this environment. Remote environments are notified of entity and environment events also using the server. 
+\end{quote}  
+
+The environment uses a "BW4T-server" instance to communicate with the connecting clients. The name "server" can be a little confusing because of this, because it's mostly a list of connected clients that can be accessed by the Environment instead of the actual controlling more typical 'server' role.
+The environment extends an \emph{AbstractEnvironment} from the "EIS" library. This means that most of its functionality comes from the EIS standard, on which we won't go into much detail for now. 
+
+Another attribute is the Repast Context. Repast is a comprehensive agent modeling platform. Currently, BW4T makes little use of the advanced functionality and even has some custom classes to make it compatible with GOAL. Examples of these classes are the Stepper and BW4TRunner. Lastly, the server package contains the BW4TLogger, which is a custom logger class (likely to be replaced). %TODO, likely to be replaced 
+
+Moving on to the other packages, we find the visualizations package. This big package takes care of the GUI, containing an overview of the rooms, blocks and bots when you launch the server. It uses some parts of Repasts displaying functionality, with a custom ServerMapRenderer class to actually draw the panels. The ServerMapRenderer uses BoundedMovableObjectStyle to know which object to run. The actual classes for these objects from the last big portion of classes in the Server package. Divided over zone, bw4t, robots, doors and blocks, we find the objects that can exist within an environment. BoundedMovableObject is the superclass, and each package represents a child. Zone is a square in the map, which can be a Corridor or a Room. A Room can be a (regular) BlocksRoom or a Dropzone. 

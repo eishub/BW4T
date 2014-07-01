@@ -1,0 +1,24 @@
+How to run batch runs from the command prompt:
+
+1. Dowload + install GOAL if you haven't done so yet (or reinstall so you don't have the 2k12 version).
+	Go to http://mmi.tudelft.nl/trac/goal/wiki/Releases and under 'Legacy Downloads and Release Descriptions'
+	press the download button on the latest release. Then install it from there.
+
+2. Set required path variables.
+	Start -> (right-click) Computer -> Properties -> Advanced system settings -> Environment Variables...
+	From there you need to add the following to the END of your PATH variable (User variable), replace
+	the beginning with your own path to the GOAL installation folder:
+		;C:\Users\Nick\GOAL\swifiles\libs
+	Now for the System variables; make a new System variable (not User variable):
+		Variable name: SWI_HOME_DIR
+		Variable value: C:\Users\Nick\GOAL\swifiles
+
+3. Test.
+	To test whether it worked correctly, open your cmd, navigate to the GOAL installation folder (cd GOAL) and
+	execute the following command (replace Nick with your own name or change the whole path if needed):
+		java -cp goal.jar -Djava.library.path=swifiles/libs goal.tools.Run C:/Users/Nick/GOAL/GOALagents/HelloWorld
+
+You can now (hopefully) run batch runs from the command prompt.
+
+If you wish to run them via Java, open the bw4t-batchrunner project and add the 'goal.jar', in your GOAL installation
+folder, to the external libraries of bw4t-batchrunner's build path. From there just take a look at the Launcher class.

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bw4TClientConfig>
+    <bots/>
+    <epartners/>
+    <clientIp>localhost</clientIp>
+    <clientPort>2000</clientPort>
+    <collisionEnabled>true</collisionEnabled>
+    <launchGui>false</launchGui>
+    <mapFile></mapFile>
+    <serverIp>localhost</serverIp>
+    <serverPort>8000</serverPort>
+    <useGoal>true</useGoal>
+    <visualizePaths>false</visualizePaths>
+</bw4TClientConfig>

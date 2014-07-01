@@ -1,0 +1,40 @@
+\documentclass{article}
+\usepackage{graphicx}
+
+\begin{document}
+
+\title{Codebase Documentation}
+\author{Daniel Swaab\\
+\texttt{ 4237455}
+\and
+Sille Kamoen \\
+\texttt{1534866}
+}
+\maketitle
+
+This document will contain a simple discreption about the codebase of BW4T. We will use som UML-diagrams to make relations clear. Use this when you want to refactor/understand the code. It took us hours to comprehend the code before we could start refactoring, we hope this will allow other people to get an understanding of the code in a shorter time period. 
+
+\section*{The begin}
+The project is split up into 3 sub-projects: \emph{Core, Client and Server}.
+\begin{itemize}
+	\item The Server project contains all classes needed to run a BW4T-ServerInstance.
+	\item The Core project contains classes that are shared by both client and server. It can be seen as a shared library.
+	\item The Client project contains all classes to run a BW4T-ClientInstane. 
+
+\end{itemize}  
+	
+	\subsection*{EIS}
+	A lot of classes make use of the \emph{EIS} library. \emph{EIS} is an Environment Interface Standard. Consider this a black box that you use to implement environments. It contains function/methods/interfaces to run environments. %TODO must be better explained
+	\begin{quote}
+		Sille Kamoen: "You dont know what it is, but you do know what it does" 
+	\end{quote}
+\textbf{\emph{INSERT IMAGE}}	 
+
+\input{server}
+\input{core}
+\input{client}
+
+
+
+
+\end{document}

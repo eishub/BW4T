@@ -1,0 +1,96 @@
+init module {
+    knowledge {
+        % A room is a place with exactly one neighbour, i.e., only way way to get to and from that place.
+        room(PlaceID) :- zone(_,PlaceID,_,_,Neighbours), length(Neighbours,1).
+        
+        nextColorInSeq(0, [Color|_], Color).
+        nextColorInSeq(N, [_|Tail], Color) :- N1 is N-1, nextColorInSeq(N1, Tail, Color).
+        nextColorInSeq(Color) :- sequence(List), sequenceIndex(Index), nextColorInSeq(Index, List, Color).    
+    }
+    
+    program {
+        % Store map information, i.e., navigation points in agent's belief base.
+        forall bel( percept(zone(ID, Name, X, Y, Neighbours)) ) do insert( zone(ID, Name, X, Y, Neighbours) ).
+        
+        % Record current state of movement in belief base.
+        forall bel( percept(state(State)) ) do insert( state(State) ).
+        
+        if bel(percept(sequence(List))) then insert(sequence(List)).
+        if bel(percept(sequenceIndex(Index))) then insert(sequenceIndex(Index)).
+        
+        % Assignment II.1a: insert here rules for processing percepts sent only at the beginning of a session.
+        forall bel( room(Place) ) do adopt( in(Place) ).
+        
+    }
+        
+    actionspec {    
+        % Actions are only executed if the precondition of that action holds.
+        
+        % The goTo action makes the agent move to a place (location) in the BW4T environment.
+        % As long as the agent has not arrived at the place it is going to, it will be in "traveling" mode.
+        goTo(Location) {
+            pre { not(state(traveling)) }
+            post { true }
+        }
+
+        % Assignment II.3a: insert a specification for the goToBlock(Block) action.
+        
+        goToBlock(Block) {
+            pre { not(state(traveling)) }
+            post { true }
+        }
+        
+        % Assignment II.3b: insert a specification for the pickUp action.
+        
+        % Assignment II.3c: insert a specification for the putDown action.
+    }
+}
+
+main module{
+    program {
+    
+                                                                                            
+
+        if goal-a( in(Place) ) then drop(in(Place)).
+        if a-goal( in(Place) ) then goTo(Place).
+        
+        % Assignment II.5: improve the two lines of code above such that the agent 
+        %   checks the rooms in a more efficient way (not checking the same room 
+        %   twice, for example).
+        
+        % Assignment II.6: insert code that makes the agent deliver a block when it 
+        %   knows about a block that can be delivered. Make sure you use the goal base
+        %    to set goals where the agent should go.    
+        
+        % Assignment III.2: implement dealing with unexpected block removal.
+        
+        % Assignment III.3: implement dealing with unexpected block delivery.
+    }
+}
+
+event module {
+    program{
+        if bel( state(State), percept(state(NewState)) ) then delete( state(State) ) + insert( state(NewState) ).
+        
+        if bel(percept(in(Place)), not(in(Place))) then insert(in(Place), visited(Place)).
+        if bel(in(Place), not(percept(in(Place)))) then delete(in(Place)).
+        
+            % Initial code.
+        if bel(nextColorInSeq(Color), not(next(Color))) then insert(next(Color)).
+        if bel(nextColorInSeq(Color), next(OtherColor)) then insert(next(Color)) + delete(next(OtherColor)).
+
+                
+        % Assignment II.1b: insert percept rules for handling percepts other than send once percepts.
+        
+        %%%%%%%%%%%%%%%%%% sending messages and processing received messages %%%%%%%%%%%%%%%%%%%%
+        % Assignment III.5b: insert one or more rule(s) for messages sent by other agents.
+
+        % Assignment III.5a: insert send-actions to implement the communication of your choice.
+    }
+}
+
+
+    
+    
+
+

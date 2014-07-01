@@ -1,0 +1,58 @@
+ \begin{description}
+    \item[Story 2.1:] Repast Stepper\\
+    As a researcher into multi-agent systems\\
+    I want to have a consistent simulation environment\\
+    So that I can always reach the same final state if I were using deterministic agents.
+    
+        \begin{description}
+        \item[Scenario 2.1.1:] Equal result\\
+        Given the researcher has run a simulation using deterministic agents\\
+        And the result was X\\
+        When the researches re-runs the simulation\\
+        Then the result should be X
+        
+        \item[Scenario 2.1.2:] Equal states\\
+        Given the researcher is running a simulation on two seperate systems using deterministic agents\\
+        When the researcher pauses the simulation at a specific tick\\
+        Then the states on both computers should be equal
+    \end{description}
+    % Reclassified as an improvement, as it adds more realism to the
+    % BW4T environment, which is a goal to be achieved.
+  \item[Story 2.2:] Simulation (Handicaps)\\
+  As a multi-agent systems researcher\\
+  I want to create simulation conditions\\
+  So that I can easily create specific scenarios
+  
+  \begin{description}
+    \item[Scenario 2.2.1:] Bot store GUI\\
+    Given the user has launched the scenario GUI\\
+    When the user selects a bot from the list of bots in the scenario GUI\\
+    Then the bot store GUI should be launched containing the settings for the selected bot
+    
+    \item[Scenario 2.2.2:] Gripper Handicap\\
+    Given the bot store GUI has started before the simulation run\\
+    When the user unchecks the ability for a bot to use its gripper\\
+    Then during the simulation the bot should not be able to use its gripper
+
+    \item[Scenario 2.2.3:] Colorblind Handicap\\
+    Given the bot store GUI has started before the simulation run\\
+    When the user unchecks the ability for a bot to see colors\\
+    Then during the simulation the bot should not be able to differentiate between colors
+
+    \item[Scenario 2.2.4:] Bot size\\
+    Given the bot store GUI has started before the simulation run\\
+    When the user changes the size of a bot\\
+    Then during the simulation the bot should have that size and its restrictions
+
+    \item[Scenario 2.2.5:] Bot speed\\
+    Given the bot store GUI has started before the simulation run\\
+    When the user changes the speed of a bot\\
+    Then during the simulation the bot should have that speed
+
+    \item[Scenario 2.2.6:] Physical aspects\\
+    Given the bot store GUI has started before the simulation run\\
+    When the user checks the physical aspects of a bot\\
+    Then when the simulation runs this bot can only continue its path as long as it does not collide with other bots who have the physical aspects checked as well
+  \end{description}
+\end{description}
+

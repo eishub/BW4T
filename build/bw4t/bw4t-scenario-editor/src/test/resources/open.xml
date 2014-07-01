@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bw4TClientConfig>
+    <bots>
+        <bot>
+            <batteryEnabled>true</batteryEnabled>
+            <botAmount>1</botAmount>
+            <botBatteryCapacity>50</botBatteryCapacity>
+            <botBatteryDischargeRate>0.0</botBatteryDischargeRate>
+            <botController>HUMAN</botController>
+            <botName>test_Bot1</botName>
+            <botSize>3</botSize>
+            <botSpeed>80</botSpeed>
+            <colorBlindHandicap>true</colorBlindHandicap>
+            <fileName>test_robot.goal</fileName>
+            <gripperHandicap>false</gripperHandicap>
+            <grippers>1</grippers>
+            <moveSpeedHandicap>true</moveSpeedHandicap>
+            <referenceName>test_robot_ref</referenceName>
+            <sizeOverloadHandicap>true</sizeOverloadHandicap>
+        </bot>
+        <bot>
+            <batteryEnabled>false</batteryEnabled>
+            <botAmount>2</botAmount>
+            <botBatteryCapacity>10</botBatteryCapacity>
+            <botBatteryDischargeRate>0.0</botBatteryDischargeRate>
+            <botController>AGENT</botController>
+            <botName>test_Bot2</botName>
+            <botSize>2</botSize>
+            <botSpeed>100</botSpeed>
+            <colorBlindHandicap>false</colorBlindHandicap>
+            <fileName>test_robot2.goal</fileName>
+            <gripperHandicap>false</gripperHandicap>
+            <grippers>1</grippers>
+            <moveSpeedHandicap>false</moveSpeedHandicap>
+            <referenceName>test_robot_ref2</referenceName>
+            <sizeOverloadHandicap>false</sizeOverloadHandicap>
+        </bot>
+    </bots>
+    <epartners>
+        <epartner>
+            <epartnerAmount>1</epartnerAmount>
+            <epartnerName>test_E-Partner 1</epartnerName>
+            <fileName>test_epartner.goal</fileName>
+            <forgetMeNot>true</forgetMeNot>
+            <gps>false</gps>
+            <referenceName>ref_epartner</referenceName>
+        </epartner>
+        <epartner>
+            <epartnerAmount>2</epartnerAmount>
+            <epartnerName>test_E-Partner 2</epartnerName>
+            <fileName>test_epartner2.goal</fileName>
+            <forgetMeNot>false</forgetMeNot>
+            <gps>true</gps>
+            <referenceName>ref_epartner2</referenceName>
+        </epartner>
+    </epartners>
+    <clientIp>localhost</clientIp>
+    <clientPort>2000</clientPort>
+    <launchGui>true</launchGui>
+    <mapFile>C:\Gitprojects\BW4T\bw4t\bw4t-scenario-editor\src\test\resources\test.map</mapFile>
+    <serverIp>localhost</serverIp>
+    <serverPort>8000</serverPort>
+    <useGoal>true</useGoal>
+    <visualizePaths>false</visualizePaths>
+    <enableCollisions>false</enableCollisions>
+</bw4TClientConfig>
