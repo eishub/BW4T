@@ -1,1 +1,10 @@
 \section{Backwards compatibility}
+During the testing of the system, we also ran special tests to ensure that BW4Tv3 was compatible with the GOAL code used for the assignments for first year students. These assignments were created during the Logic Based AI course. 
+
+Immediately, the first assignment did not run as expected. The bots would go into a room and see a block of the color it was looking for. It would then try to go to the block, however it would not receive the "atBlock()" percept, so it went back to the center of the room. These actions repeated endlessly. After improving the logic of the percept, the assignment code worked.
+
+Initially, we found a problem that was caused by a change brought to the "holding()" percept. Originally only the ID of the block that was being held was contained within this percept, but because of modifications it then included the position of the block as well. This, of course, was unnecessary information as the block was in the same spot as the robot holding it. After removing the data the second assignment ran without any additional problems.
+
+Some of the old goal agents will not work on new maps, as they use the hard-coded name "FrontDropZone" for the zone that is in front of the "DropZone". The new maps no longer assign a special name to this zone. We decided not to implement this, because we thought a robot should not need to be told which place is connected to the "DropZone", as it can derive that information from its knowledge of the map.
+
+There was another problem with backwards compatibility; we noticed robots started behaving "strangely" when the amount of ticks per second was increased (approximately over 75 tps). After deeper analysis of the situation, we came to the conclusion that this problem originated from the fact that GOAL could not keep up with the system. Percepts came in too fast for the bot to make a decision, so its "mind" went overboard. As we could not really fix this issue, we decided to set up a default speed (50 tps), and leave a warning to the users who would want to increase it. 
