@@ -44,7 +44,7 @@ The local branch can now be deleted
  > git branch -D master_release
 
 #  GitHub <i class="icon-provider-github"></i>
-The **BW4T Git Repository** can be found at [GitHub](https://github.com/MartinRogalla/BW4T/).
+The **BW4T Git Repository** can be found at [GitHub](http://eishub.github.io/BW4T/).
 ### <i class="icon-attention"></i>Git Rules
 1. <i class="icon-lock"></i>*Never* push anything to the **master** branch. 
  > If you want to work on something as a **group**: [create a new branch][6], commit and add your changes and [create a pull request][5]. Only the git master is allowed to merge the changes to the master branch. **All other unauthorized commits on the master branch will be reverted.**
