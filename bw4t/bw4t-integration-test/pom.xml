@@ -2,12 +2,12 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>nl.tudelft</groupId>
+        <groupId>eishub</groupId>
         <artifactId>bw4t</artifactId>
         <version>3.5.0</version>
         <relativePath>..</relativePath>
     </parent>
-    <groupId>nl.tudelft.bw4t</groupId>
+    <groupId>eishub.bw4t</groupId>
     <artifactId>bw4t-integration-test</artifactId>
     <description>This module integration test the entire bw4t system, to ensure the working state of the client and server.</description>
     <properties>
@@ -16,12 +16,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>nl.tudelft.bw4t</groupId>
+            <groupId>eishub.bw4t</groupId>
             <artifactId>bw4t-server</artifactId>
             <version>3.5.0</version>
         </dependency>
         <dependency>
-            <groupId>nl.tudelft.bw4t</groupId>
+            <groupId>eishub.bw4t</groupId>
             <artifactId>bw4t-client</artifactId>
             <version>3.5.0</version>
         </dependency>

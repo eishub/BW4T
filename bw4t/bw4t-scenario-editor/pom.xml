@@ -2,12 +2,12 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>nl.tudelft</groupId>
+        <groupId>eishub</groupId>
         <artifactId>bw4t</artifactId>
         <version>3.5.0</version>
         <relativePath>..</relativePath>
     </parent>
-    <groupId>nl.tudelft.bw4t</groupId>
+    <groupId>eishub.bw4t</groupId>
     <artifactId>bw4t-scenario-editor</artifactId>
     <name>bw4t-scenario-editor</name>
     <properties>
@@ -108,7 +108,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>nl.tudelft.bw4t.core</groupId>
+            <groupId>eishub.bw4t.core</groupId>
             <artifactId>bw4t-core</artifactId>
             <version>3.5.0</version>
         </dependency>

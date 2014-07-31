@@ -1,7 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>nl.tudelft</groupId>
+
+    <groupId>eishub</groupId>
     <artifactId>bw4t</artifactId>
     <version>3.5.0</version>
     <packaging>pom</packaging>
@@ -40,12 +41,8 @@
             <url>https://eishub.github.io/BW4T/repo/bw4t/dep/</url>
         </repository>
         <repository>
-            <id>eis-releases</id>
-            <url>https://raw.github.com/eishub/eis/releases/</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
+            <id>eishub-mvn-repo</id>
+            <url>https://raw.github.com/eishub/mvn-repo/master</url>
         </repository>
     </repositories>
 
