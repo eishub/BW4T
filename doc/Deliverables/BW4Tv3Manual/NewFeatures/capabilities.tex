@@ -1,0 +1,23 @@
+\subsection{How to add capabilities to robots}
+Looking at a scenario where a developer would like to add an extra functionality to the BW4T robots, he or she will have to undergo a certain set of steps in order to accomplish this task. 
+\newline
+The first step is the creation of this new capability in the system itself. We have set up a decorator pattern in the "robots" package located in the Server project, which can be used to easily add new features to robots. The only thing that needs to be done is adding an extra class that will extend the AbstractRobotDecorator. It is then rather simple to add a new capability. 
+\newline
+Let us say we want to add the ability to "go through walls", the navigation method will have to be overridden so that the robot can also go through the walls in the environment. 
+\newline
+\newline
+Now we have to think of how to create new robots with the new capability that was just added. In the Scenario Editor project, we can find the Scenario Editor graphical user interface which allows us to create new robots, e-Partners, and modify their functionalities. 
+\newline
+The Scenario Editor leads us to the BotStore, once we choose to modify a robot: this is were the changes should happen. Suppose we take our example from above: we want a robot which can go through walls. The simplest solution would be to add a JCheckbox in the BotEditor, among the other JCheckboxes which define the different robot's abilities. 
+\newline
+The Scenario Editor needs to receive the new command to "create" a new robot which can go through walls. That is why the information from the BotStore is stored into a model class called BotConfig, located in the Core. In this class, we would have to add a method that can check whether we have chosen to make a robot with this new capability. This class can be directly accessed (and updated) from the controller that belongs to the BotEditor. 
+
+\subsection{How to add capabilities to e-Partners}
+Adding a new capability to an e-Partner also involves changing various components in the Server and Core. We do not have a decorator pattern for e-Partners because we only had two functionalities so far. 
+\newline
+Suppose we want our e-Partner to tell us the time it took a robot to go to a certain location. What we want to do is modify the e-Partner's percept, for when it has this capability, it should be able to calculate the amount of ticks its holder took to go to a certain zone. These changes should be made in the EPartnerEntity class, located in the EIS part of the Server. 
+\newline
+\newline 
+In order for the user to be able to create an e-Partner with this functionality, changes need to be made in the Scenario Editor. Once we press on the "Modify" button when we want to modify an e-Partner, we are directed to a rather small frame which allows us to check which functionalities we want to be added to our e-Partner. What we need to do in order to make it possible for us to choose the "stopwatch" ability is to add an extra checkbox. 
+\newline
+As we explained for adding capabilities to robots, the Scenario Editor needs to know what kind of e-Partner to instantiate. That is possible by using the EPartnerConfig class, in the Core project. The possibility to have an e-Partner with a stopwatch ability needs to be added to this class. 

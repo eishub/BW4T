@@ -1,1 +1,16 @@
 \section{New structure}
+The BW4Tv3 system is composed of the following components:
+\begin{itemize}
+\item
+The server project, containing all files to run a server instance of BW4T.
+\item
+The client project, containing all files to run a client (to control one agent) on a running server. 
+\item
+The core project, containing all shared resources and classes used by more than one project. The core project is not runnable on its own. 
+\item
+The map editor project, containing all files needed to run the map editor as a standalone application.
+\item
+The scenario editor, containing all files for the scenario editor.
+\end{itemize}
+
+All of these systems can run independently, except for the core project. All subsystems need the core project files to be able to run. The client and server project are both part of a Client-Server architecture. All projects (apart from the core project) are based on the classical Model-View-Controller architecture. All classes are in packages belonging to one of these 3 sub-components. 
