@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.xml.bind.JAXBException;
 
 import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 /**
@@ -49,7 +51,13 @@ public enum InitParam {
     /** Forces the use of the human GUI with an GOAL agent to translate the commands */
     GOALHUMAN("false"),
     /** Name or filename of the map to use */
-    MAP("");
+    MAP(""),
+    
+    /**
+     * The log4j log level to be used. Default to off. 
+     * available values: OFF, FATAL, ERROR, WARN, INFODEBUG and ALL.
+     */
+    LOG("OFF");
     
     private static final Logger LOGGER = Logger.getLogger(InitParam.class);
     
@@ -119,6 +127,8 @@ public enum InitParam {
     public static void setParameters(Map<String, Parameter> params) {
         parameters = params;
         
+        // set the global log level as indicated in params (or use default).
+        LogManager.getRootLogger().setLevel(Level.toLevel(InitParam.LOG.getValue()));
 
         if (InitParam.GOAL.getBoolValue()) {
             BasicConfigurator.configure();
