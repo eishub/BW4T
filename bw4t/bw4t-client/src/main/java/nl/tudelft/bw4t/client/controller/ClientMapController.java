@@ -38,7 +38,9 @@ import eis.exceptions.PerceiveException;
 import eis.iilang.Parameter;
 
 /**
- * The Client Map Controller.
+ * The Client Map Controller. This processes incoming percepts and pushes them through
+ * {@link PerceptProcessor}s that do the actual updating. If GOAL is connected, the percepts are retrieved only by GOAL getPercept calls.
+ * If the controller is running standalone, it calls getPercepts itself. see also {@link #run()}
  */
 public class ClientMapController extends AbstractMapController {
     /**
@@ -276,7 +278,10 @@ public class ClientMapController extends AbstractMapController {
      */
     @Override
     public void run() {
-        if (clientController.isHuman() || !clientController.getEnvironment().isConnectedToGoal()) {
+    	/**
+    	 * If GOAL is not connected we need to fetch the percepts ourselves. Otherwise, GOAL will fetch them and we just reuse them.
+    	 */
+        if (clientController.isHuman() && !clientController.getEnvironment().isConnectedToGoal()) {
             try {
                 clientController.getEnvironment().gatherPercepts(getTheBot().getName());
             } catch (PerceiveException e) {

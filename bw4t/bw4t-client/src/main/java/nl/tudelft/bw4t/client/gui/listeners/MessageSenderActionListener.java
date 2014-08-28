@@ -91,11 +91,9 @@ public class MessageSenderActionListener extends AbstractClientActionListener {
      */
     private void sendMessagesGoal(String ownName, String[] receivers) {
     	for (String name : receivers) {
-    		 List<Percept> percepts = new LinkedList<Percept>();
              Percept percept = new Percept("sendMessage", new Identifier(name), MessageTranslator.translateMessage(
                      message, ownName));
-             percepts.add(percept);
-             getController().setToBePerformedAction(percepts);
+             getController().addToBePerformedAction(percept);
     	}
     }
 }

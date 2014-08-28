@@ -43,9 +43,7 @@ public class GoToBlockActionListener extends AbstractClientActionListener {
 
     @Override
     protected void actionWithGoalAgent(ActionEvent arg0) {
-        List<Percept> percepts = new LinkedList<Percept>();
         Percept percept = new Percept("goToBlock", new Numeral(boxID));
-        percepts.add(percept);
-        getController().setToBePerformedAction(percepts);
+        getController().addToBePerformedAction(percept);
     }
 }

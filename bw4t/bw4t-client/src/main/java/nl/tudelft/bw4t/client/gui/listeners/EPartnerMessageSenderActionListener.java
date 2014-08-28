@@ -64,11 +64,9 @@ public class EPartnerMessageSenderActionListener extends AbstractClientActionLis
                     LOGGER.error("Could not send message to e-partner.", e1);
                 }
             } else {
-                List<Percept> percepts = new LinkedList<Percept>();
                 Percept percept = new Percept("sendMessage", new Identifier(name), MessageTranslator.translateMessage(
                         message, ownName));
-                percepts.add(percept);
-                getController().setToBePerformedAction(percepts);
+                getController().addToBePerformedAction(percept);
             }
         }
     }

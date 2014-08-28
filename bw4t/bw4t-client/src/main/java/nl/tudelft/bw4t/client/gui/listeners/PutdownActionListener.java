@@ -35,9 +35,7 @@ public class PutdownActionListener extends AbstractClientActionListener {
     
     @Override
     protected void actionWithGoalAgent(ActionEvent arg0) {
-        List<Percept> percepts = new LinkedList<Percept>();
         Percept percept = new Percept("putDown");
-        percepts.add(percept);
-        getController().setToBePerformedAction(percepts);
+        getController().addToBePerformedAction(percept);
     }
 }

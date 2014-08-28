@@ -117,7 +117,15 @@ public class ClientController implements EntityComboModelProvider {
         return environment;
     }
 
-    public void setToBePerformedAction(List<Percept> toBePerformedAction) {
+    /**
+     * Add a new percept (containing an user action) to the list of percepts to be returned in the next getPercept cycle
+     * @param toBePerformedAction
+     */
+    public void addToBePerformedAction(Percept toBePerformedAction) {
+        this.toBePerformedAction.add( toBePerformedAction);
+    }
+    
+    protected void setToBePerformedAction(List<Percept> toBePerformedAction) {
         this.toBePerformedAction = toBePerformedAction;
     }
 
