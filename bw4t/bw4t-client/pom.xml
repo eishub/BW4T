@@ -17,7 +17,7 @@
         <dependency>
             <groupId>eishub.bw4t.core</groupId>
             <artifactId>bw4t-core</artifactId>
-            <version>3.5.0</version>
+            <version>[3.5.0,4.0.0)</version>
         </dependency>
     </dependencies>
     <build>
