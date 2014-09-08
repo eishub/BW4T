@@ -16,21 +16,24 @@ class ClientInfo {
     public ClientInfo(int reqAgent, int reqHuman) {
         assert reqHuman >= 0;
         assert reqAgent >= 0;
+        this.clientConfig = new BW4TClientConfig();
         if (reqAgent > 0) {
             BotConfig bot = BotConfig.createDefaultRobot();
             bot.setBotAmount(reqAgent);
+            clientConfig.addBot(bot);
             requestedBots.add(bot);
         }
         if (reqHuman > 0) {
             BotConfig bot = BotConfig.createDefaultHumans();
             bot.setBotAmount(reqHuman);
+            clientConfig.addBot(bot);
             requestedBots.add(bot);
         }
-        this.clientConfig = new BW4TClientConfig();
     }
 
 
     public ClientInfo(BW4TClientConfig clientConfig) {
+    	assert clientConfig != null;
         if (clientConfig.getBots() != null){
             this.requestedBots = clientConfig.getBots();
         }
