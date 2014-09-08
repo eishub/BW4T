@@ -42,14 +42,19 @@ public class MessageSenderActionListener extends AbstractClientActionListener {
         ViewEntity bot = cmp.getTheBot();
     	String ownName = bot.getName();
         /** Sends the message to the receiver(s): */
-        sendMessagesHuman(ownName, findReceivers(ownName));
+        sendMessagesHuman(ownName, new String[] {findReceiver(ownName)});
     }
     
     @Override
     public void actionWithGoalAgent(ActionEvent e) {
     	String ownName = getController().getMapController().getTheBot().getName();
         /** Sends the message to the receiver(s): */
-        sendMessagesGoal(ownName, findReceivers(ownName));
+        String receiver = findReceiver(ownName);
+    	
+    	if ("all".equals(receiver)) {
+        	receiver="allother"; // do not send message to yourself. 
+        }
+        sendMessagesGoal(ownName, new String[] {receiver});
     }
     
     /**
@@ -57,15 +62,14 @@ public class MessageSenderActionListener extends AbstractClientActionListener {
      * @param ownName
      * @return the receivers of the message
      */
-    private String[] findReceivers(String ownName) {
+    private String findReceiver(String ownName) {
         /** Finds the names of the receivers of the message: */
-        String receiver = (String) getController().getGui().getAgentSelector().getModel().getSelectedItem();
-        String[] receivers = new String[] {ownName, receiver};
-        if ("all".equals(receiver) || ownName.equals(receiver)) {
-            receivers = new String[] {receiver};
-        }
-        
-        return receivers;
+       return (String) getController().getGui().getAgentSelector().getModel().getSelectedItem();
+       // String[] receivers = new String[] {ownName, receiver};
+       // if ("all".equals(receiver) || ownName.equals(receiver)) {
+       //     receivers = new String[] {receiver};
+       // }
+       // return receivers;
     }
     
     
