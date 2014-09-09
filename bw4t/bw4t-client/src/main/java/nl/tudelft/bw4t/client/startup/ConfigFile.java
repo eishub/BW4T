@@ -1,5 +1,8 @@
 package nl.tudelft.bw4t.client.startup;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import javax.xml.bind.JAXBException;
 
 import org.apache.log4j.Logger;
@@ -11,65 +14,53 @@ import nl.tudelft.bw4t.util.XMLManager;
  * Reads the config file that can be passed to the client to
  * overwrite the InitParam variables.
  */
-public final class ConfigFile {
+public class ConfigFile {
     private static final Logger LOGGER = Logger.getLogger(ConfigFile.class);
     
-    private static BW4TClientConfig config;
-    
-    /** Should never be instantiated. */
-    private ConfigFile() { 
-        
-    }
+    protected File file;
+    protected BW4TClientConfig config;
     
     /**
-     * Reads the init config file and sets the init parameters accordingly.
-     * @param pathToConfigFile - The path to the config file.
-     * @throws JAXBException When there is a problem reading the config file.
+     * Reads the given file as configuration file.
+     * @param filename the path and filename of the config to be used 
+     * @throws JAXBException If an error occurs while reading the xml config
+     * @throws FileNotFoundException if the param is null or the file can not be read
      */
-    public static void readConfigFile(String pathToConfigFile) throws JAXBException {
-        
+    public ConfigFile(String filename) throws JAXBException, FileNotFoundException {
+    	file = new File(filename);
+    	
+    	if(filename == null || !file.canRead())
+    		throw new FileNotFoundException();
         // Reads the configuration file and constructs a BW4TClientConfig from it:
-        config = (BW4TClientConfig) XMLManager.
-                fromXML(pathToConfigFile, BW4TClientConfig.class);
-        
-        // Sets the default values for all init params based on the configuration file:
-        for (InitParam param : InitParam.values()) {
-            setDefaultValueForInitParam(param);
-        }
+        config = (BW4TClientConfig) XMLManager.fromXML(filename, BW4TClientConfig.class);
     }
     
     /**
-     * Sets the default value for an init param based on the info read
-     * from the init configuration file.
+     * Gets the value for an init param based on the info read
+     * from this configuration file.
      * @param param The init param.
+     * @return the value of the given param in the file or null if not set
      */
-    private static void setDefaultValueForInitParam(InitParam param) {
+    public String getValue(InitParam param) {
         switch (param) {
         case CLIENTIP:
-            param.setDefaultValue(config.getClientIp());
-            break;
+            return config.getClientIp();
         case CLIENTPORT:
-            param.setDefaultValue(((Integer) config.getClientPort()).toString());
-            break;
+            return Integer.toString(config.getClientPort());
         case GOAL:
-            param.setDefaultValue(((Boolean) config.isUseGoal()).toString());
-            break;
+            return Boolean.toString(config.isUseGoal());
         case LAUNCHGUI:
-            param.setDefaultValue(((Boolean) config.isLaunchGui()).toString());
-            break;
+            return Boolean.toString(config.isLaunchGui());
         case SERVERIP:
-            param.setDefaultValue(config.getServerIp());
-            break;
+            return config.getServerIp();
         case SERVERPORT:
-            param.setDefaultValue(((Integer) config.getServerPort()).toString());
-            break;
+            return Integer.toString(config.getServerPort());
         case MAP:
-            param.setDefaultValue(config.getMapFile());
-            break;
+            return config.getMapFile();
         default:
-            break;
+            LOGGER.info(param.name() + " is not supported by the config file");
+            return null;
         }
-        LOGGER.info(param.nameLower() + " =D " + param.getDefaultValue());
     }
     
     /**
@@ -77,19 +68,11 @@ public final class ConfigFile {
      * 
      * @return The location to the map file or {@code null} if no init file was read.
      */
-    public static String getMapFile() {
-        return hasReadInitFile() ? config.getMapFile() : null;
-    }
-    
-    /**
-     * Whether an init configuration file has been read.
-     * @return Returns {@code true} if an init configuration file has been read.
-     */
-    public static boolean hasReadInitFile() {
-        return config != null;
+    public String getMapFile() {
+        return config.getMapFile();
     }
 
-    public static BW4TClientConfig getConfig() {
+    public BW4TClientConfig getConfig() {
         return config;
     }
 

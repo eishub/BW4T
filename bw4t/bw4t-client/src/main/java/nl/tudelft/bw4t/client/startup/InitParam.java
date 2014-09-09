@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.client.startup;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,6 +69,12 @@ public enum InitParam {
 	private static final Logger LOGGER = Logger.getLogger(InitParam.class);
 
 	private String defaultvalue;
+	
+	
+	/**
+	 * Store a referenc to the object that manages the parameters from the config file
+	 */
+	private static ConfigFile config;
 
 	/**
 	 * Store the program-wide parameters given to the {@link RemoteEnvironment}.
@@ -105,6 +112,12 @@ public enum InitParam {
 		if (param != null) {
 			return ((Identifier) param).getValue();
 		}
+		if(config != null) {
+			String result = config.getValue(this);
+			if(result != null) {
+				return result;
+			}
+		}
 		return getDefaultValue();
 	}
 
@@ -136,6 +149,7 @@ public enum InitParam {
 	 */
 	public static void setParameters(Map<String, Parameter> params) {
 		parameters = params;
+		config = null;
 
 		// set the global log level as indicated in params (or use default).
 		LogManager.getRootLogger().setLevel(
@@ -149,8 +163,8 @@ public enum InitParam {
 		if (!cfile.isEmpty()) {
 			LOGGER.info(String.format("Reading configuration file '%s'", cfile));
 			try {
-				ConfigFile.readConfigFile(cfile);
-			} catch (JAXBException e) {
+				config = new ConfigFile(cfile);
+			} catch (JAXBException | FileNotFoundException e) {
 				LOGGER.error(String.format(
 						"Unable to load configuration file: '%s'", cfile), e);
 			}
@@ -212,5 +226,9 @@ public enum InitParam {
 
 	public void setDefaultValue(String defaultvalue) {
 		this.defaultvalue = defaultvalue;
+	}
+
+	public static ConfigFile getConfigFile() {
+		return config;
 	}
 }
