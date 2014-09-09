@@ -191,7 +191,7 @@ class ControlPanel extends JPanel {
 			}
 		});
 
-		// 3196 FIXME what is this?
+		// 3196 FIXME delay startup of de UI till the stepper is ready.
 		new Timer().schedule(new TimerTask() {
 
 			@Override
