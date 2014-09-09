@@ -5,10 +5,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.Color;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
@@ -78,7 +80,9 @@ public class ColorTranslatorTest {
             throws Exception {
         String color = "x";
 
-        Color result = ColorTranslator.translate2Color(color);
+        ColorTranslator.translate2Color(color);
+        
+        assertTrue(false);
     }
 
     /**
@@ -91,13 +95,25 @@ public class ColorTranslatorTest {
     @Test
     public void testTranslate2ColorString_unkown()
             throws Exception {
+    	//temporarily disable output:
+    	List<Logger> loggers = Collections.<Logger>list(LogManager.getCurrentLoggers());
+    	loggers.add(LogManager.getRootLogger());
+    	for ( Logger logger : loggers ) {
+    	    logger.setLevel(Level.ERROR);
+    	}
+    	try {
         Color color = new Color(1);
 
-        LOGGER.info("The next error message can be ignored:");
         String result = ColorTranslator.translate2ColorString(color);
 
         // add additional test code here
         assertEquals("Unknown", result);
+    	} finally {
+    		//reenable output
+    		for ( Logger logger : loggers ) {
+        	    logger.setLevel(Level.WARN);
+        	}
+    	}
     }
 
     /**
