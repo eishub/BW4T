@@ -78,8 +78,10 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	/** The width and height of the robot. */
 	private int size = 2;
 
-	/** The speed modifier of the robot, default being 1. */
-	private double speedMod = 1;
+	/**
+	 * The speed modifier of the robot, default 0.5. #3198 NEVER set this > 1
+	 */
+	private double speedMod = 0.5;
 
 	/** The max. amount of blocks a robot can hold, default is 1. */
 	private int grippercap = 1;
@@ -703,6 +705,10 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 
 	@Override
 	public void setSpeedMod(double speedMod) {
+		if (speedMod > 1.0 || speedMod < 0) {
+			throw new IllegalArgumentException(
+					"speedMod must be in [0,1] but is " + speedMod);
+		}
 		this.speedMod = speedMod;
 	}
 
