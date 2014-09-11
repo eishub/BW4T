@@ -257,7 +257,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 
 	@Override
 	public void pickUp(Block b) {
-        holding.add(0, b);
+        holding.add(b);
 		b.setHeldBy(this);
 		b.removeFromContext();
 	}
@@ -269,7 +269,8 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 			// added to the context again
 			DropZone dropZone = (DropZone) getContext().getObjects(
 					DropZone.class).get(0);
-			Block b = holding.get(0);
+			int toDrop = holding.size() - 1;
+			Block b = holding.get(toDrop);
 			if (!dropZone.dropped(b, this)) {
 				// bot was not in the dropzone.. Are we in a room?
 				Zone ourzone = getZone();
@@ -283,12 +284,9 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 					double y = ourzone.getLocation().getY();
 					b.moveTo(RandomHelper.nextDoubleFromTo(x - 5, x + 5),
 							RandomHelper.nextDoubleFromTo(y - 5, y + 5));
-					holding.remove(0);
-					return;
-
 				}
 			}
-			holding.remove(0);
+			holding.remove(toDrop);
 		}
 	}
 
