@@ -1,7 +1,10 @@
 #Blocks World for Teams - v3.5.0
 Blocks World for Teams (**BW4T**) is a testbed for team coordination. BW4T allows for games with human-human, agent-agent and human-agent teams of variable sizes. The goal is to jointly deliver a sequence of colored blocks in a particular order as fast as possible. A complicating factor is that the players cannot see each other.
 
-[[Self-explaining Agents - A Study in the BW4T Testbed for Team Coordination]](http://www.dtic.mil/dtic/tr/fulltext/u2/a550537.pdf)
+[Self-explaining Agents - A Study in the BW4T Testbed for Team Coordination](http://www.dtic.mil/dtic/tr/fulltext/u2/a550537.pdf)
+
+
+[Link to Developer details](DEVELOPER.md)
 
 #  Maven
 ### First time running Maven
