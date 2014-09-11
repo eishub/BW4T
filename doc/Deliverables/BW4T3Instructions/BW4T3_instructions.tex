@@ -5,6 +5,7 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{wrapfig}
+\usepackage{color}
 
 \title{BW4T3 Instructions}
 \date{\today}
@@ -178,43 +179,6 @@ To restart the system, do the following
     \includegraphics[width=\textwidth]{debugmode.png}
     \caption{Debug mode}
 \end{figure}
-
-\newpage
-\section{Loading and creating new maps}
-\subsection{Using the Environment Store}
-The Map Editor is a tool for editing maps for the BW4T server. Double click the jar file environment-store.jar to start the map editor.
-\begin{wrapfigure}{r}{0.5\textwidth}
-  \begin{center}
-    \includegraphics[width=0.4\textwidth]{mapsize.png}
-  \end{center}
-  \caption{Choose the amount of columns and rows}
-\end{wrapfigure}
-After starting up, the map size dialog (Figure 5) appears, which can be used as follows.
-Here you can choose the amount of rows and columns you want the environment to consist of. Each cell in the “table” can be used to fulfill one piece of the map. This could either be a room, a corridor, a dropzone, a charging zone, start zone or a blockade. By pressing the colours at the bottom you can generate the sequence to be completed. This can also be done by pressing the according numbers on the keyboard. \\
-In the Map editor GUI above you can add blocks to rooms. To add blocks to rooms, right click in the cell, adjust the type of the zone to Room. Now you can add blocks the way you did with the sequence. Right clicking the cell again lets you choose at which side of the room you want the door. When you're done, press save. 
-By pressing Tools in the menu bar, you are able to randomize zones, blocks and sequences. WARNING: Randomizing these will not always guarantee that the sequence can be completed.
-By pressing File in the menu bar, you are able to watch a preview of your map, and you are able to save the map. Save the map in the $<$SERVER$>/$maps folder \footnote[1]{This map directory appears after the first run of the server.}.  
-\begin{figure}
-    \includegraphics[width=\textwidth]{grid.png}
-    \caption{Create a map}
-\end{figure}
-
-
-\subsection{Manual editing}
-It is also possible to manually edit a map as it is a plain text XML file.
-\begin{enumerate}
-\item Copy an existing map file in the $<$SERVER$>/$maps folder to a new file \footnotemark[1].
-\item Open the copied map with a text editor. You can then edit the colors in the rooms. Each $<$blocks$>$COL$</$blocks$>$ line inside a $<$zones$>$ of type ROOM adds another block to the room. The currently available colors are BLUE, ORANGE, RED, WHITE, GREEN, YELLOW AND PINK. A room has place for at most 10 blocks.
-\item You can change the number of rooms by adding or removing $<$zones$>$ of type ROOM and position the rooms correctly on the map by editing the $<$x$>$ $<$y$>$ $<$width$>$ and $<$height$>$ inside the room's $<$boundingbox$>$. Also you need to add a $<$door$>$ properly positioned on the border of the room.
-\item You can edit the goal sequence by adding $<$sequence$>$ items to the map, with colors as mentioned above.
-\item You can prevent multiple entities to enter corridor zones by putting true in the item $<$oneBotPerCorridorZone$>$ in the map.
-\item You can add entities to the environment by creating more $<$entities$>$ items. Make sure they have a unique $<$name$>$ and that their start position is in a different $<$zone$>$ if you have $<$oneBotPerCorrridorZone$>$ set to true.
-\item You can let the server pick a random sequence of a given length by setting the $<$randomSequence$>$ to a positive value. These random blocks are added to the existing sequence items and the random blocks are placed randomly on the map.
-\item You can let the server pick random extra blocks to be placed in the rooms on the map by putting a positive number in the $<$randomBlocks$>$ in the map. Note that this addition is on top of all blocks that are already placed in the map; so normally you leave the room zones empty when using this option.
-\item You can set per-zone visibility of the zone namelabel in the server map renderer, using a $<$renderOptions$>$ $<$labelVisible$>$ false $</$labelVisible$>$ $</$renderOptions$>$ block to disable visibility.
-\item Save the map in the $<$SERVER$>/$maps directory.
-\item Edit the map initialization parameter for the server to your new map file. See the section on customizing the server settings. If you now start the server and your new map should be loaded.
-\end{enumerate}
 
 \section{Using the interface}
 To use the interface, the user clicks with the left (occasionally the right) mouse button in the GUI. Depending on where the user clicks, different menus appear. The user then picks the appropriate action from the menu to execute that action. Below the possibilities are explained.
@@ -456,5 +420,7 @@ Repast logs the following for each run into a file. The filename is “BW4TXXXX.
     \end{itemize}
 \end{enumerate}
 Logs are written to the file as soon as possible, so that information won't get lost when the system is being killed before the end of the sequence is reached.
+
+\include{EnvironmentStore/EnvStoreDoc}
 
 \end{document}
