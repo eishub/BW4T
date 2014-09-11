@@ -15,3 +15,4 @@ We deliver a number of components to work with this environment:
 
 To install BW4T and for all details on how to use the environment and related tools, please consult the [BW4T user manual](https://github.com/eishub/BW4T/blob/master/doc/Manuals/BW4T3_instructions.pdf?raw=true).
 
+WARNING: The collisions and e-partner options are not completely ready for use.
