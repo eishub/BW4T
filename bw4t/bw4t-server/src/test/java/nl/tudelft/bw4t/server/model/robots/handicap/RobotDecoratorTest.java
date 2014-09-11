@@ -392,7 +392,8 @@ public class RobotDecoratorTest {
      */
     @Test
     public void distanceToTest() {
-        gh.distanceTo(null);
-        verify(bot).distanceTo(null);
+    	NdPoint p = null;
+        gh.distanceTo(p);
+        verify(bot).distanceTo(p);
     }
 }

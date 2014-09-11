@@ -42,7 +42,8 @@ public class ViewEntity {
     /** 
      * Empty constructor, initialize default object.
      */
-    public ViewEntity() {
+    public ViewEntity(long id) {
+    	this.id = id;
     }
 
     /**
@@ -125,7 +126,14 @@ public class ViewEntity {
      * @param y coordinate of location
      */
     public void setLocation(double x, double y) {
-        location = new Point2D.Double(x, y);
+        this.setLocation(new Point2D.Double(x, y));
+    }
+
+    /**
+     * @param loc position
+     */
+    public void setLocation(Point2D loc) {
+        location = loc;
     }
     
     public int getRobotSize() {

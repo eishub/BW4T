@@ -156,12 +156,17 @@ public class ClientController implements EntityComboModelProvider {
      *            the list of percepts
      */
     public void handlePercepts(Collection<Percept> percepts) {
-        getMapController().getVisibleBlocks().clear();
-        getMapController().makeEPartnersInvisible();
+        getMapController().clearVisible();
+        boolean clearedPositions = false;
         for (Percept percept : percepts) {
             String name = percept.getName();
             List<Parameter> parameters = percept.getParameters();
-            
+
+        	if(name.equals("position") && !clearedPositions) {
+        		getMapController().clearVisiblePositions();
+        		clearedPositions = true;
+        	}
+        	
             mapController.handlePercept(name, parameters);
             if ("player".equals(name)) {
                 getOtherPlayers().add(((Identifier) parameters.get(0)).getValue());

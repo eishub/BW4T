@@ -15,7 +15,7 @@ import repast.simphony.space.grid.GridPoint;
  * Represents an object in the world that can be moved around if needed. It forms the basis for all kinds of objects
  * like robots, blocks and rooms.
  */
-public abstract class BoundedMoveableObject {
+public abstract class BoundedMoveableObject implements BoundedMoveableInterface {
     
     /**
      * The counter which represents the id of a BMO.
@@ -204,7 +204,7 @@ public abstract class BoundedMoveableObject {
     }
 
     /**
-     * Calculates the distance between our center poitn and the given point.
+     * Calculates the distance between our center point and the given point.
      * 
      * @param there
      *            the point to calculate the distance to.

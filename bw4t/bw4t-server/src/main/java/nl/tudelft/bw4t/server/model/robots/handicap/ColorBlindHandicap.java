@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.server.model.robots.handicap;
 
+
 /**
  * Creates a colour blindness handicap for a robot.
  */

@@ -9,6 +9,7 @@ import java.util.List;
 import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
+import nl.tudelft.bw4t.map.view.ViewEntity;
 
 public class PositionProcessor implements PerceptProcessor {
 
@@ -24,6 +25,12 @@ public class PositionProcessor implements PerceptProcessor {
         ViewEPartner ep = clientMapController.getKnownEPartner(id);
         if (ep != null) {
             ep.setLocation(b.getPosition());
+        } else {
+			ViewEntity bot = clientMapController.getKnownRobot(id);
+			if (bot != null) {
+				bot.setLocation(b.getPosition());
+				clientMapController.makeRobotVisible(id);
+			}
         }
     }
 

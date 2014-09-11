@@ -146,7 +146,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
      */
     private BotConfig findCorrespondingBotConfig(String entityId, boolean recursiveCall) {
     	ConfigFile file = InitParam.getConfigFile();
-        if (file != null) {
+        if (file == null) {
             return null;
         }
         for (BotConfig bConfig : file.getConfig().getBots()) {

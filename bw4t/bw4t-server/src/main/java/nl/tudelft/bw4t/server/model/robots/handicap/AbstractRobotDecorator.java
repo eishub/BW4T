@@ -1,8 +1,10 @@
 package nl.tudelft.bw4t.server.model.robots.handicap;
 
+import java.awt.geom.Rectangle2D;
 import java.util.List;
 
 import nl.tudelft.bw4t.map.view.ViewEntity;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.doors.Door;
@@ -16,6 +18,7 @@ import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.NdPoint;
+import repast.simphony.space.grid.GridPoint;
 
 /**
  * The robot decorator.
@@ -320,4 +323,44 @@ public abstract class AbstractRobotDecorator implements IRobot {
     public boolean isDestinationUnreachable() {
         return parent.isDestinationUnreachable();
     }
+
+	@Override
+	public BW4TServerMap getServerMap() {
+		return parent.getServerMap();
+	}
+
+	@Override
+	public GridPoint getGridLocation() {
+		return parent.getGridLocation();
+	}
+
+	@Override
+	public Rectangle2D getBoundingBox() {
+		return parent.getBoundingBox();
+	}
+
+	@Override
+	public void setSize(double width, double height) {
+		parent.setSize(width, height);
+	}
+
+	@Override
+	public void removeFromContext() {
+		parent.removeFromContext();
+	}
+
+	@Override
+	public double distanceTo(NdPoint there) {
+		return parent.distanceTo(there);
+	}
+
+	@Override
+	public List<NdPoint> getPointsOccupiedByObject(double padding) {
+		return parent.getPointsOccupiedByObject(padding);
+	}
+
+	@Override
+	public boolean isFree(Class<? extends BoundedMoveableObject> freeOfType) {
+		return parent.isFree(freeOfType);
+	}
 }
