@@ -9,7 +9,12 @@ We assume that you already installed the agent programming language environment 
 ### Client-Server systems
 Blocks World for Teams has a client-server architecture. This means that you need to install and run two parts to use it: a client and a server. The server is the Blocks World for Team Server where the real simulation takes place. The client is the agent programming environment, which communicates with the server to run the simulation. This architecture was chosen to allow multi-machine configurations, where multiple users can interact in the same Blocks World. 
 
-#Installation
+#Download and Installation
+## Documentation
+We have the following documentation
+ * BW4T3 manual with general installation instructions
+ 
+ 
 ## Installing client software
 If you installed a recent release of GOAL, a BW4T sample project is provided to you with the name 'BW4T3'. This client is ready to run. But you do need to install and run the server first
 
@@ -23,6 +28,4 @@ There are two editors:
  1. The Map editor to create new maps. [Download latest version here](FIXME). 
  2. The Scenario editor to create new agent configuration files. [Download latest version here](FIXME). 
  
-## Documentation
-We have the following documentation
- BW4T3 manual with general installation instructions
+
