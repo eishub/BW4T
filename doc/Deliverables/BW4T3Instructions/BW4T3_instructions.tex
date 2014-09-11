@@ -17,7 +17,7 @@
     {\bfseries\Large
         BW4T3 Instructions\\
         \vskip2cm
-        ContextProjectGroup2014\\
+        W. Pasman, M. B. van Riemsdijk, \\
     }    
     \vfill
     \includegraphics[width=4cm]{TUD.png}
@@ -30,20 +30,36 @@
 \newpage
 
 \section{Introduction}
-This document describes how to install Blocks World For Teams (BW4T) for use with GOAL. BW4T is a client-server system. The server is responsible for the administration, simulation and visualization of the virtual world: it keeps track of robots, rooms, blocks, connected GOAL agents, etc. The server uses Repast, software to simulate virtual environments, to do part of this administration. The client is GOAL, which runs a multi-agent system (MAS) and connects to the server. The agents in the GOAL client get percepts from the server, and send actions to the server. Client and server can run on a different computer. This document describes how to install the BW4T server, configure it, place the BW4T client in GOAL, configure the MAS file, and run the system.
+Blocks World for Teams (BW4T) is a testbed for team coordination. BW4T allows for games with human-human, agent-agent and human-agent teams of variable sizes. The goal is to jointly deliver a sequence of colored blocks in a particular order as fast as possible. A complicating factor is that the players cannot see each other.
+
+This document describes how to install Blocks World For Teams (BW4T) for use with GOAL. We briefly comment where necessary how it would work with a different agent system. You can also use BT4T stand-alone but this is not described in this document. BW4T is a client-server system. The server is responsible for the administration, simulation and visualization of the virtual world: it keeps track of robots, rooms, blocks, connected GOAL agents, etc. The server uses Repast, software to simulate virtual environments, to do part of this administration. The client is GOAL, which runs a multi-agent system (MAS) and connects to the server. The agents in the GOAL client get percepts from the server, and send actions to the server. Client and server can run on a different computer. This document describes how to install the BW4T server, configure it, place the BW4T client in GOAL, configure the MAS file, and run the system.
+
+This chapter descibes how users can install and use the Blocks World for Teams environment. For developer information please go to the project page on github  https://github.com/eishub/BW4T and click on the Link to Developer Details.
+
 We use the following names to refer to directories of BW4T:
 \begin{itemize}
 \item $<$GOAL$>$ refers to the directory where you installed GOAL.
-\item $<$SERVER$>$ refers to the directory where you have put the server.jar.
+\item $<$SERVER$>$ refers to the directory where you have put the server.jar, documentation and utilities.
 \item $<$CLIENT$>$ refers to the directory where you have put the client.jar.
 \end{itemize}
 
 \subsection{System requirements}
-To use BW4T you need Java JDK 7 or higher. The BW4T3 environment has been tested on Windows 7, Windows 8 and OSX.
+To use BW4T you need Java JDK 7 or higher. The BW4T3 environment has been tested on Windows 7, Windows 8 and OSX. Note that OSX may come with java 6 pre-installed. You need to install java 7. You can then keep java 6 installed as well, but ensure that java 7 is used as the default.
 
-\newpage
+\subsection{Installation}
+You need to install a number of items to run BW4T from GOAL. 
+\begin{enumerate}
+ \item (if not yet done): Install Java 7 and made it the default Java (such that double clicking on a jar makes it open with Java 7).
+ \item You can download GOAL from $http://ii.tudelft.nl/trac/goal$. You can choose for the plugin for Eclipse or the stand-alone SimpleIDE.
+ \item GOAL provides a sample Multi-agent-system 'BW4T3' that is demonstrating the Blocks World for Teams system. \footnote{If you run in a different agent system, you can download the client-side environment from $https://github.com/eishub/BW4T/releases$. Select $bw4t-client-X.Y.Z.jar$. This is the environment that should be attached to your agent system. You then will have to write your own agents that can run in the BW4T world.}
+ \item You can download the BW4T server from $https://github.com/eishub/BW4T/releases$ and save it in $<$SERVER$>$. Select the latest $bw4t-server-X.Y.Z.jar$.
+ \item You can optionally download the BW4T map editor from $https://github.com/eishub/BW4T/releases$ and save it in $<$SERVER$>$. Select the latest $bw4t-environment-store-X.Y.Z.jar$.
+ \item You can optionally download the BW4T scenario editor from $https://github.com/eishub/BW4T/releases$ and save it in $<$SERVER$>$. Select the latest $bw4t-scenario-editor-X.Y.Z.jar$.
+\end{enumerate}
+  
+
 \section{Running the server}
-Run the server before running the client, as otherwise the client cannot connect to the server. Start the server by opening the server.jar in $<$SERVER$>$. This should open the server window (Figure 1). Note that during this opening, two other maps are created: 
+Run the server before running the client, as otherwise the client cannot connect to the server. Start the server by opening (typically: double clicking) the server.jar in $<$SERVER$>$. This should open the server window (Figure 1). Note that during this opening, two other maps are created: 
 \begin{itemize}
 \item Maps: The folder in which all possible maps are put.
 \item Log: The folder in which all log files will be placed.
@@ -56,7 +72,7 @@ Run the server before running the client, as otherwise the client cannot connect
 \subsection{Advanced run settings}
 The default settings for the server can be changed in the command line of your OS. To change the server ip and/or server port execute the following:\\
 
-java –jar bw4t-server.jar –servip $<$server ip here$>$ (default: localhost) –serverport $<$serverport here$>$ (default: 8000)\\
+java -jar bw4t-server.jar -servip $<$server ip here$>$ (default: localhost) -serverport $<$serverport here$>$ (default: 8000)\\
 
 If you change the serverip and/or serverport, change the client settings correspondingly (see below).
 The server will now start using the new values.
@@ -74,22 +90,74 @@ Before running the client, make sure you have already started the server. Start 
 Before running the client, make sure you have already started the server. Start Eclipse IDE and load your GOAL files. Open the .mas2g file and press the run button. This time, no new window will appear. The agent will control your bot and all evaluations will be shown in the console. In the server window you will see your bot(s) move according to the rules applied in the .goal file(s).
 
 \subsection{Advanced run settings}
-The default settings for the client can be changed in the bw4t.mas2g file (GOAL). The following settings can be changed.
-\begin{enumerate}
-\item Serverip: the ip address that the server listens on (default: localhost).
-\item Serverport: the port that the server listens on (default:8000).
-\item Agentcount : the amount of agents (also specified in the launchpolicy section, see below), that the client should load. If the agentcount is higher than the amount of entities in the map then they won’t be loaded. (default: 0).
-\item Humancount: the amount of human players that should be loaded. If the humancount is higher than the amount of entities in the map then they won’t be loaded. (default: 0).
-\item Clientip : the ip address that the client listens on (default: localhost).
-\item Clientport : the port that the client listens on (default: 2000).
-\item Launchgui: whether to launch a separate GUI for each bot (controlled by an agent or human) can be set to true or false. This GUI shows the environment from the perspective of the bot. (default:false).
-\item Map. The map name to be loaded. If you specify a map, the server will reset to load the new map, which disconnects all entities.
-\end{enumerate}
+The following MAS init parameters are available (the default values are shown inside the brackets). In GOAL these settings can be changed from the mas2g file. Most of  these parameters are not needed if you use an agent config xml file. The CONFIGFILE option is needed if you use a config file. The HUMANGUI option is needed if you have a human GUI connected with an agent (and the agent should receive percepts as well). 
+
+\begin{itemize}
+\item
+
+    CLIENTIP("localhost"):    client's own IP. Passed to server so server is able to find us with this IP. 
+
+\item
+    CLIENTPORT("2000"):   The port that the client listens to. 
+
+
+\item
+    SERVERIP("localhost"):
+ The IP address of the server. 
+  
+\item
+    SERVERPORT("8000"):
+   The Port that the server listens on. 
+
+\item
+    AGENTCOUNT("0"):
+ the amount of agents (also specified in the launchpolicy section, see below), that the client should load. If the agentcount is higher than the amount of entities in the map then they won't be loaded. (default: 0).. 
+    
+\item
+    LAUNCHGUI("true"):
+    whether to launch a separate GUI for each bot (controlled by an agent or human) can be set to true or false. This GUI shows the environment from the perspective of the bot. (default:false).
+
+
+\item
+    HUMANCOUNT("1"):
+    the amount of human players that should be loaded. If the humancount is higher than the amount of entities in the map then they won't be loaded. 
+
+\item
+    AGENTCLASS("nl.tudelft.bw4t.client.agent.BW4TAgent"):
+    The java agent class to load when new entities appear.
+   
+
+\item
+    GOAL("true"):
+    are we connected with GOAL? This param should be auto detected, it will be set to false if the program is started from commandline.
+
+\item
+    KILL(""):
+  The key we should try to use to kill the remote server.
+ 
+\item
+    CONFIGFILE(""):
+    The file from which the client reads the configuration.
+ 
+\item
+    GOALHUMAN("false"):
+    Forces the use of the human GUI with an GOAL agent to translate the commands. You should turn on this option if you have a human GUI but still want the agent to receive the percepts.
+
+\item
+    MAP(""):
+    The map name to be loaded. If you specify a map, the server will reset to load the new map, which disconnects all entities.
+     
+\item    
+    LOG("ERROR"):
+    The log4j log level to be used. Available values: OFF, FATAL, ERROR, WARN, INFODEBUG and ALL.
+
+\end{itemize}
+
 The number of agents is specified at two places in the mas2g file. First, the agentcount and humancount specify the number of entities of the corresponding type that should be created in the environment. Second, the launchpolicy specifies which and how many agents should be connected to these entities. Make sure that the agentcount and humancount in the initialization parameters are in line with the launch policy section in the mas2g file. Furthermore, the number of agents should not exceed the maximum number of agents defined on the map (see section “Loading and creating new maps” below).
 If you use BW4T from a batch runner, you may want to reset the server after each run. This is done by specifying a map in the mas file init parameters.
 
 \section{Restarting, pausing and resuming the system}
-To be able to pause the system, don’t run the mas2g file as described above.
+If you are running from SimpleIDE, you can pause and resume the system at any time by clicking the pause or step buttons. When running from Eclipse, to be able to pause the system, don't run the mas2g file as described above.
 This time, open the mas2g file and click on the debug button (the small bug icon).
 \begin{wrapfigure}{r}{0.5\textwidth}
   \begin{center}
@@ -117,7 +185,7 @@ To restart the system, do the following
 The Map Editor is a tool for editing maps for the BW4T server. Double click the jar file environment-store.jar to start the map editor.
 \begin{wrapfigure}{r}{0.5\textwidth}
   \begin{center}
-    \includegraphics[width=0.6\textwidth]{mapsize.png}
+    \includegraphics[width=0.4\textwidth]{mapsize.png}
   \end{center}
   \caption{Choose the amount of columns and rows}
 \end{wrapfigure}
@@ -125,17 +193,17 @@ After starting up, the map size dialog (Figure 5) appears, which can be used as 
 Here you can choose the amount of rows and columns you want the environment to consist of. Each cell in the “table” can be used to fulfill one piece of the map. This could either be a room, a corridor, a dropzone, a charging zone, start zone or a blockade. By pressing the colours at the bottom you can generate the sequence to be completed. This can also be done by pressing the according numbers on the keyboard. \\
 In the Map editor GUI above you can add blocks to rooms. To add blocks to rooms, right click in the cell, adjust the type of the zone to Room. Now you can add blocks the way you did with the sequence. Right clicking the cell again lets you choose at which side of the room you want the door. When you're done, press save. 
 By pressing Tools in the menu bar, you are able to randomize zones, blocks and sequences. WARNING: Randomizing these will not always guarantee that the sequence can be completed.
-By pressing File in the menu bar, you are able to watch a preview of your map, and you are able to save the map. Save the map in the $<$SERVER$>/$maps folder.
+By pressing File in the menu bar, you are able to watch a preview of your map, and you are able to save the map. Save the map in the $<$SERVER$>/$maps folder \footnote[1]{This map directory appears after the first run of the server.}.  
 \begin{figure}
     \includegraphics[width=\textwidth]{grid.png}
     \caption{Create a map}
 \end{figure}
 
-\newpage
+
 \subsection{Manual editing}
 It is also possible to manually edit a map as it is a plain text XML file.
 \begin{enumerate}
-\item Copy an existing map file in the $<$SERVER$>/$maps folder to a new file.
+\item Copy an existing map file in the $<$SERVER$>/$maps folder to a new file \footnotemark[1].
 \item Open the copied map with a text editor. You can then edit the colors in the rooms. Each $<$blocks$>$COL$</$blocks$>$ line inside a $<$zones$>$ of type ROOM adds another block to the room. The currently available colors are BLUE, ORANGE, RED, WHITE, GREEN, YELLOW AND PINK. A room has place for at most 10 blocks.
 \item You can change the number of rooms by adding or removing $<$zones$>$ of type ROOM and position the rooms correctly on the map by editing the $<$x$>$ $<$y$>$ $<$width$>$ and $<$height$>$ inside the room's $<$boundingbox$>$. Also you need to add a $<$door$>$ properly positioned on the border of the room.
 \item You can edit the goal sequence by adding $<$sequence$>$ items to the map, with colors as mentioned above.
