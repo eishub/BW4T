@@ -20,10 +20,12 @@ Change your current working directory to `${repository_root}/bw4t`
 
 Make sure you have the latest version of the `master` branch
  > git checkout master
+ 
  > git pull
 
 Make a new branch to update the version of the branch
  > git checkout -b master_release
+ 
  > git push --set-upstream origin master_release
 
 Use maven to update the pom files, replace `${version-number}` with the new version number
@@ -37,11 +39,28 @@ If no errors occur we can remove the backups of the old pom files
 
 Upload your changes to github and create a pull request
  > git commit -a -m "Releasing version ${version-number}!"
- > git push
+
+Tag the new version
+ > git tag -a v${version-number} -m "Release Version ${version-number}"
+
+Use maven to update the pom files again to set the version to the next higher SNAPSHOT version number
+ > mvn versions:set "-DnewVersion=${version-number+1}"
+ 
+ > mvn clean verify
+ 
+ > mvn versions:commit
+ 
+ > git push --tags
 
 The local branch can now be deleted
  > git checkout master
+ 
  > git branch -D master_release
+ 
+ On the Github website, make a new draft version and use the tag that you made during the above steps.
+ Don't forget to upload the built jar files to the release!
+ 
+ gebruik een github pull-request om the master_release branch met the master te mergen
 
 #  GitHub <i class="icon-provider-github"></i>
 The **BW4T Git Repository** can be found at [GitHub](http://eishub.github.io/BW4T/).
