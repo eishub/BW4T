@@ -9,9 +9,9 @@ Blocks World for Teams has a client-server architecture. This means that you nee
 This environment is a general EIS environment, you can use it from GOAL but also from other EIS-compatible systems or even stand alone. To install GOAL, please refer to [GOAL](http://ii.tudelft.nl/trac/goal)
 
 We deliver a number of components to work with this environment:
- * client, server, mapeditor, scenarioeditor. All available at the [https://github.com/eishub/BW4T/releases](BW4T release page).
- * [https://github.com/eishub/BW4T/blob/master/doc/Manuals/BW4T3_instructions.pdf?raw=true](BW4T user manual).
- * [https://github.com/eishub/BW4T/blob/master/doc/Manuals/BW4T3%20Specification.pdf?raw=true](BW4T specification manual) explaining all percepts and actions that the BW4T environment provides.
+ * The [BW4T user manual](https://github.com/eishub/BW4T/blob/master/doc/Manuals/BW4T3_instructions.pdf?raw=true).
+ * The [BW4T specification manual](https://github.com/eishub/BW4T/blob/master/doc/Manuals/BW4T3%20Specification.pdf?raw=true). explaining all percepts and actions that the BW4T environment provides.
+ * client, server, mapeditor, scenarioeditor. All available at the [BW4T release page](https://github.com/eishub/BW4T/releases).
 
-To install BW4T and for all details on how to use the environment and related tools, please consult the instructions manual at [https://github.com/eishub/BW4T/blob/master/doc/Manuals/BW4T3_instructions.pdf?raw=true](BW4T user manual).
+To install BW4T and for all details on how to use the environment and related tools, please consult the [BW4T user manual](https://github.com/eishub/BW4T/blob/master/doc/Manuals/BW4T3_instructions.pdf?raw=true).
 
