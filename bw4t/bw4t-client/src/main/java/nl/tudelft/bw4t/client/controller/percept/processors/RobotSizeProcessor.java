@@ -14,10 +14,8 @@ public class RobotSizeProcessor implements PerceptProcessor {
     public void process(List<Parameter> parameters, ClientMapController clientMapController) {
         long id = ((Numeral) parameters.get(0)).getValue().longValue();
         int x = ((Numeral) parameters.get(1)).getValue().intValue();
-        ViewEntity theBot = clientMapController.getTheBot();
-        if (id == theBot.getId()) {
-            theBot.setSize(x);
-        }
+        ViewEntity theBot = clientMapController.getCreateRobot(id);
+        theBot.setSize(x);
     }
 
 }

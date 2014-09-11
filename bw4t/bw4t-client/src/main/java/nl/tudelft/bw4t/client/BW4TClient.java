@@ -159,8 +159,9 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
      * @throws RemoteException 
      */
     public void register() throws RemoteException {
-        if (ConfigFile.hasReadInitFile()) {
-            BW4TClientConfig conf = ConfigFile.getConfig();
+    	ConfigFile file = InitParam.getConfigFile();
+        if (file != null) {
+            BW4TClientConfig conf = file.getConfig();
             
             LOGGER.info(String.format("Requesting %d robots and %d e-partners.", 
                     conf.getAmountBot(), 

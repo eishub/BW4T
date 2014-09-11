@@ -1,32 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-    <name>bw4t-integration-test</name>
-    <comment></comment>
-    <projects>
-        <project>bw4t-client</project>
-        <project>bw4t-server</project>
-    </projects>
-    <buildSpec>
-        <buildCommand>
-            <name>org.eclipse.jdt.core.javabuilder</name>
-            <arguments>
-            </arguments>
-        </buildCommand>
-        <buildCommand>
-            <name>net.sf.eclipsecs.core.CheckstyleBuilder</name>
-            <arguments>
-            </arguments>
-        </buildCommand>
-        <buildCommand>
-            <name>org.eclipse.m2e.core.maven2Builder</name>
-            <arguments>
-            </arguments>
-        </buildCommand>
-    </buildSpec>
-    <natures>
-        <nature>org.sonar.ide.eclipse.core.sonarNature</nature>
-        <nature>org.eclipse.jdt.core.javanature</nature>
-        <nature>org.eclipse.m2e.core.maven2Nature</nature>
-        <nature>net.sf.eclipsecs.core.CheckstyleNature</nature>
-    </natures>
+  <name>bw4t-integration-test</name>
+  <comment>This module integration test the entire bw4t system, to ensure the working state of the client and server. NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
+  <projects/>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+    </buildCommand>
+    <buildCommand>
+      <name>net.sf.eclipsecs.core.CheckstyleBuilder</name>
+    </buildCommand>
+    <buildCommand>
+      <name>org.eclipse.m2e.core.maven2Builder</name>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.sonar.ide.eclipse.core.sonarNature</nature>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+    <nature>org.eclipse.m2e.core.maven2Nature</nature>
+    <nature>net.sf.eclipsecs.core.CheckstyleNature</nature>
+  </natures>
 </projectDescription>

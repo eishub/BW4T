@@ -1,0 +1,61 @@
+\section{Init Parameters}
+The following MAS init parameters are available (the default values are shown inside the brackets)
+
+\begin{itemize}
+\item
+
+    CLIENTIP("localhost"):    Our IP. Passed to server so server is able to find us with this IP. 
+
+\item
+    CLIENTPORT("2000"):   The port that we use. 
+
+
+\item
+    SERVERIP("localhost"):
+ The IP address of the server. 
+  
+\item
+    SERVERPORT("8000"):
+   The Port used by the server. 
+
+\item
+    AGENTCOUNT("0"):
+ Number of agents that we have. 
+    
+\item
+    LAUNCHGUI("true"):
+    Launch GUI for entities
+
+\item
+    HUMANCOUNT("1"):
+    Number of human bots 
+
+\item
+    AGENTCLASS("nl.tudelft.bw4t.client.agent.BW4TAgent"):
+    The java agent class to load when new entities appear.
+   
+
+\item
+    GOAL("true"):
+    are we connected with GOAL? This param should be auto detected, it will be set to false if the program is started from commandline.
+
+\item
+    KILL(""):
+  The key we should try to use to kill the remote server.
+ 
+\item
+    CONFIGFILE(""):
+    The file from which the client reads the configuration.
+ 
+\item
+    GOALHUMAN("false"):
+    Forces the use of the human GUI with an GOAL agent to translate the commands
+
+\item
+    MAP(""):
+    Name or filename of the map to use 
+\item    
+    LOG("OFF"):
+    The log4j log level to be used. Available values: OFF, FATAL, ERROR, WARN, INFODEBUG and ALL.
+
+\end{itemize}

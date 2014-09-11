@@ -1,22 +1,9 @@
 package nl.tudelft.bw4t.server.eis;
 
-import eis.eis2java.annotation.AsAction;
-import eis.eis2java.annotation.AsPercept;
-import eis.eis2java.exception.TranslationException;
-import eis.eis2java.translation.Filter;
-import eis.eis2java.translation.Filter.Type;
-import eis.eis2java.translation.Translator;
-import eis.exceptions.ActException;
-import eis.exceptions.AgentException;
-import eis.exceptions.PerceiveException;
-import eis.iilang.Action;
-import eis.iilang.Parameter;
-
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -29,12 +16,12 @@ import nl.tudelft.bw4t.server.eis.translators.ObjectInformationTranslator;
 import nl.tudelft.bw4t.server.eis.translators.PointTranslator;
 import nl.tudelft.bw4t.server.eis.translators.ZoneTranslator;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.model.BoundedMoveableInterface;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.epartners.EPartner;
 import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.model.robots.NavigatingRobot;
-import nl.tudelft.bw4t.server.model.robots.NavigatingRobot.State;
 import nl.tudelft.bw4t.server.model.robots.handicap.AbstractRobotDecorator;
 import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.server.model.zone.BlocksRoom;
@@ -51,6 +38,17 @@ import org.omg.CORBA.Environment;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.util.collections.IndexedIterable;
+import eis.eis2java.annotation.AsAction;
+import eis.eis2java.annotation.AsPercept;
+import eis.eis2java.exception.TranslationException;
+import eis.eis2java.translation.Filter;
+import eis.eis2java.translation.Filter.Type;
+import eis.eis2java.translation.Translator;
+import eis.exceptions.ActException;
+import eis.exceptions.AgentException;
+import eis.exceptions.PerceiveException;
+import eis.iilang.Action;
+import eis.iilang.Parameter;
 
 
 /**
@@ -149,7 +147,7 @@ public class RobotEntity implements EntityInterface {
      * @param <T>  
      * @param type  
      */
-    private <T extends BoundedMoveableObject> Set<T> getVisible(Class<T> type) {
+    private <T extends BoundedMoveableInterface> Set<T> getVisible(Class<T> type) {
         Set<T> set = new HashSet<T>();
      
         if (context == null) {
@@ -215,6 +213,11 @@ public class RobotEntity implements EntityInterface {
         // Add EPartners
         for (EPartner ep : getVisible(EPartner.class)) {
             objects.add(new ObjectInformation(ep));
+        }
+
+        // Add Robots
+        for (IRobot ep : getVisible(IRobot.class)) {
+            objects.add(new ObjectInformation(ep.getSuperParent()));
         }
 
         // #2830 add robots own position
@@ -330,7 +333,7 @@ public class RobotEntity implements EntityInterface {
             try {
                 Set<String> entities = env.getAssociatedEntities(agt);
                 if (!entities.contains(ourRobot.getName())) {
-                    result.addAll(env.getAssociatedEntities(agt));
+                    result.addAll(entities);
                 }
             } catch (AgentException e) {
                 LOGGER.error("Ignoring an Agent's percept problem", e);

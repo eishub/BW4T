@@ -123,7 +123,7 @@ public class Launcher {
                 + ".");
         paramGUI = Boolean.parseBoolean(findArgument(args, "-gui", "true"));
         paramKey = findArgument(args, "-key", "GuVC7TZ38NN49X8utMspV3Z5");
-        paramCollision = Boolean.parseBoolean(findArgument(args, "-collision", "true"));
+        paramCollision = Boolean.parseBoolean(findArgument(args, "-collision", "false"));
         paramDrawPaths = Boolean.parseBoolean(findArgument(args, "-paths", "false"));
     }
 

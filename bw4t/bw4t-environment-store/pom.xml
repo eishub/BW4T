@@ -4,7 +4,7 @@
     <parent>
         <groupId>eishub</groupId>
         <artifactId>bw4t</artifactId>
-        <version>3.5.0</version>
+        <version>3.6.4-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
     <groupId>eishub.bw4t</groupId>
@@ -20,7 +20,7 @@
         <dependency>
             <groupId>eishub.bw4t.core</groupId>
             <artifactId>bw4t-core</artifactId>
-            <version>3.5.0</version>
+            <version>[3.5.0,4.0.0)</version>
         </dependency>
         <dependency>
             <groupId>com.miglayout</groupId>

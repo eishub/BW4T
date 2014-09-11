@@ -37,9 +37,7 @@ public class NavigateObstaclesActionListener extends AbstractClientActionListene
     
     @Override
     protected void actionWithGoalAgent(ActionEvent arg0) {
-        List<Percept> percepts = new LinkedList<Percept>();
         Percept percept = new Percept("navigateObstacles");
-        percepts.add(percept);
-        getController().setToBePerformedAction(percepts);
+        getController().addToBePerformedAction(percept);
     }
 }

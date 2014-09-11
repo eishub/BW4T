@@ -145,10 +145,11 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
      * @return The bot config belonging to this entity.
      */
     private BotConfig findCorrespondingBotConfig(String entityId, boolean recursiveCall) {
-        if (!ConfigFile.hasReadInitFile()) {
+    	ConfigFile file = InitParam.getConfigFile();
+        if (file == null) {
             return null;
         }
-        for (BotConfig bConfig : ConfigFile.getConfig().getBots()) {
+        for (BotConfig bConfig : file.getConfig().getBots()) {
             if (entityId.equals(bConfig.getBotName())) {
                 return bConfig;
             }
@@ -172,10 +173,11 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
      * @return The epartner config belonging to this entity.
      */
     private EPartnerConfig findCorrespondingEpartnerConfig(String entityId, boolean recursiveCall) {
-        if (!ConfigFile.hasReadInitFile()) {
+    	ConfigFile file = InitParam.getConfigFile();
+        if (file != null) {
             return null;
         }
-        for (EPartnerConfig epConfig : ConfigFile.getConfig().getEpartners()) {
+        for (EPartnerConfig epConfig : file.getConfig().getEpartners()) {
             if (entityId.equals(epConfig.getEpartnerName())) {
                 return epConfig;
             }

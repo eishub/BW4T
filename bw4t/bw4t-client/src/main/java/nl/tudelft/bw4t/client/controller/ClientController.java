@@ -117,7 +117,15 @@ public class ClientController implements EntityComboModelProvider {
         return environment;
     }
 
-    public void setToBePerformedAction(List<Percept> toBePerformedAction) {
+    /**
+     * Add a new percept (containing an user action) to the list of percepts to be returned in the next getPercept cycle
+     * @param toBePerformedAction
+     */
+    public void addToBePerformedAction(Percept toBePerformedAction) {
+        this.toBePerformedAction.add( toBePerformedAction);
+    }
+    
+    protected void setToBePerformedAction(List<Percept> toBePerformedAction) {
         this.toBePerformedAction = toBePerformedAction;
     }
 
@@ -148,12 +156,17 @@ public class ClientController implements EntityComboModelProvider {
      *            the list of percepts
      */
     public void handlePercepts(Collection<Percept> percepts) {
-        getMapController().getVisibleBlocks().clear();
-        getMapController().makeEPartnersInvisible();
+        getMapController().clearVisible();
+        boolean clearedPositions = false;
         for (Percept percept : percepts) {
             String name = percept.getName();
             List<Parameter> parameters = percept.getParameters();
-            
+
+        	if(name.equals("position") && !clearedPositions) {
+        		getMapController().clearVisiblePositions();
+        		clearedPositions = true;
+        	}
+        	
             mapController.handlePercept(name, parameters);
             if ("player".equals(name)) {
                 getOtherPlayers().add(((Identifier) parameters.get(0)).getValue());

@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 import java.awt.Color;
@@ -212,10 +213,9 @@ public class BlockColorTest {
             throws Exception {
         Color color = new Color(1);
 
-        BlockColor result = BlockColor.toAvailableColor(color);
+        BlockColor.toAvailableColor(color);
 
-        // add additional test code here
-        assertNotNull(result);
+        assertFalse(true);
     }
 
     /**
