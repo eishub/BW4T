@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{wrapfig}
 \usepackage{color}
+\usepackage{a4wide}
 
 \title{BW4T3 Instructions}
 \date{\today}
@@ -60,15 +61,22 @@ You need to install a number of items to run BW4T from GOAL.
   
 
 \section{Running the server}
+
+
 Run the server before running the client, as otherwise the client cannot connect to the server. Start the server by opening (typically: double clicking) the server.jar in $<$SERVER$>$. This should open the server window (Figure 1). Note that during this opening, two other maps are created: 
 \begin{itemize}
 \item Maps: The folder in which all possible maps are put.
 \item Log: The folder in which all log files will be placed.
 \end{itemize}
-\begin{figure}
-    \includegraphics[width=0.48\textwidth]{server.png}
-    \caption{Server window}
+
+
+\begin{figure}[!h]
+\begin{center}
+   \includegraphics[height=10cm]{server.png}
+   \caption{Server window}
+\end{center}
 \end{figure}
+
 
 \subsection{Advanced run settings}
 The default settings for the server can be changed in the command line of your OS. To change the server ip and/or server port execute the following:\\
@@ -80,10 +88,11 @@ The server will now start using the new values.
 
 \section{Running the client (Human Controlled Bot)}
 Before running the client, make sure you have already started the server. Start the client.jar in $<$CLIENT$>$. Figure 2 will show up and the bot is automatically added to the server. You can now control the bot by clicking (left or right) at different spots in the Client.
+
 \begin{wrapfigure}{r}{0.5\textwidth}
-  \begin{center}
-    \includegraphics[width=0.6\textwidth]{client.png}
-  \end{center}
+\begin{center}
+\includegraphics[width=0.5\textwidth]{client.png}
+\end{center}
   \caption{Client window}
 \end{wrapfigure}
 
@@ -154,15 +163,16 @@ The following MAS init parameters are available (the default values are shown in
 
 \end{itemize}
 
-The number of agents is specified at two places in the mas2g file. First, the agentcount and humancount specify the number of entities of the corresponding type that should be created in the environment. Second, the launchpolicy specifies which and how many agents should be connected to these entities. Make sure that the agentcount and humancount in the initialization parameters are in line with the launch policy section in the mas2g file. Furthermore, the number of agents should not exceed the maximum number of agents defined on the map (see section “Loading and creating new maps” below).
+The number of agents is specified at two places in the mas2g file. First, the agentcount and humancount specify the number of entities of the corresponding type that should be created in the environment. Second, the launchpolicy specifies which and how many agents should be connected to these entities. Make sure that the agentcount and humancount in the initialization parameters are in line with the launch policy section in the mas2g file. Furthermore, the number of agents should not exceed the maximum number of agents defined on the map (see section "Loading and creating new maps" below).
 If you use BW4T from a batch runner, you may want to reset the server after each run. This is done by specifying a map in the mas file init parameters.
 
 \section{Restarting, pausing and resuming the system}
 If you are running from SimpleIDE, you can pause and resume the system at any time by clicking the pause or step buttons. When running from Eclipse, to be able to pause the system, don't run the mas2g file as described above.
 This time, open the mas2g file and click on the debug button (the small bug icon).
+
 \begin{wrapfigure}{r}{0.5\textwidth}
   \begin{center}
-    \includegraphics[width=0.6\textwidth]{debug.png}
+    \includegraphics[width=0.5\textwidth]{debug.png}
   \end{center}
   \caption{Choose yes}
 \end{wrapfigure}
