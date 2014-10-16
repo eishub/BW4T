@@ -7,6 +7,7 @@
 \usepackage{wrapfig}
 \usepackage{color}
 \usepackage{a4wide}
+\usepackage{subcaption}
 
 \title{BW4T3 Instructions}
 \date{\today}
@@ -63,7 +64,7 @@ You need to install a number of items to run BW4T from GOAL.
 \section{Running the server}
 
 
-Run the server before running the client, as otherwise the client cannot connect to the server. Start the server by opening (typically: double clicking) the server.jar in $<$SERVER$>$. This should open the server window (Figure 1). Note that during this opening, two other maps are created: 
+Run the server before running the client, as otherwise the client cannot connect to the server. Start the server by opening (typically: double clicking) the server.jar in $<$SERVER$>$. This should open the server window (Figure  \ref{fig:ServerWindow}). Note that during this opening, two other maps are created: 
 \begin{itemize}
 \item Maps: The folder in which all possible maps are put.
 \item Log: The folder in which all log files will be placed.
@@ -73,7 +74,7 @@ Run the server before running the client, as otherwise the client cannot connect
 \begin{figure}[!h]
 \begin{center}
    \includegraphics[height=10cm]{server.png}
-   \caption{Server window}
+   \caption{Server window}\label{fig:ServerWindow}
 \end{center}
 \end{figure}
 
@@ -87,13 +88,13 @@ If you change the serverip and/or serverport, change the client settings corresp
 The server will now start using the new values.
 
 \section{Running the client (Human Controlled Bot)}
-Before running the client, make sure you have already started the server. Start the client.jar in $<$CLIENT$>$. Figure 2 will show up and the bot is automatically added to the server. You can now control the bot by clicking (left or right) at different spots in the Client.
+Before running the client, make sure you have already started the server. Start the client.jar in $<$CLIENT$>$. Figure \ref{fig:Client} will show up and the bot is automatically added to the server. You can now control the bot by clicking (left or right) at different spots in the Client.
 
 \begin{wrapfigure}{r}{0.5\textwidth}
 \begin{center}
 \includegraphics[width=0.5\textwidth]{client.png}
 \end{center}
-  \caption{Client window}
+  \caption{Client window}\label{fig:Client}
 \end{wrapfigure}
 
 \section{Running the client (Agent Controlled Bot)}
@@ -174,10 +175,10 @@ This time, open the mas2g file and click on the debug button (the small bug icon
   \begin{center}
     \includegraphics[width=0.5\textwidth]{debug.png}
   \end{center}
-  \caption{Choose yes}
+  \caption{Choose yes}\label{fig:EclipseDebug}
 \end{wrapfigure}
-Eclipse will ask you whether you would like to go to the debug screen (see figure 3), click yes and watch your screen adjust.
-Now you can see the running bots listed at the left side, and the current goals, beliefs and knowledge of the selected bot on the right side. Beneath the list the goal file belonging to the bot is shown and at the bottom of the screen, all debug actions are being run. See figure 4.
+Eclipse will ask you whether you would like to go to the debug screen (see Figure \ref{fig:EclipseDebug}), click yes and watch your screen adjust.
+Now you can see the running bots listed at the left side, and the current goals, beliefs and knowledge of the selected bot on the right side. Beneath the list the goal file belonging to the bot is shown and at the bottom of the screen, all debug actions are being run (Figure \ref{fig:Eclipse}).
 To pause the system, select the bot to be paused and click on the pause button. To resume, select the bot and click resume.
 To restart the system, do the following
 \begin{enumerate}
@@ -185,15 +186,18 @@ To restart the system, do the following
 \item In the server window, press Reset, or choose a new map from the Change Map menu.
 \item Run the MAS in Eclipse as described above.
 \end{enumerate}
+
 \begin{figure}
     \includegraphics[width=\textwidth]{debugmode.png}
-    \caption{Debug mode}
+    \caption{Debug mode}\label{fig:Eclipse}
 \end{figure}
+
 
 \section{Using the interface}
 To use the interface, the user clicks with the left (occasionally the right) mouse button in the GUI. Depending on where the user clicks, different menus appear. The user then picks the appropriate action from the menu to execute that action. Below the possibilities are explained.
+
 \subsection{Sending messages}
-By clicking on the dropdown menu, the user can choose to which bot he or she will send a request or question. “all” sends the message to all bots. Next to the dropdown menu, a button is placed with choose message. This button contains the messages that are most likely to be sent. Left clicking this button will create a list from which the user can choose a message. When clicking in the “Bot Chat Session”, gives a number of standard answers: yes, no, don't know, ok, etc. It is not possible to use free text because the non-human agents can only process these pre-specified messages. The specification document gives more details on how messages are processed by non-human agents.
+By clicking on the drop-down menu, the user can choose to which bot he or she will send a request or question. "all" sends the message to all bots. Next to the drop-down menu, a button is placed with choose message. This button contains the messages that are most likely to be sent. Left clicking this button will create a list from which the user can choose a message. The "Bot Chat Session" menu ives a number of standard answers: yes, no, don't know, ok, etc. It is not possible to use free text because the non-human agents can only process these pre-specified messages. The specification document gives more details on how messages are processed by non-human agents.
 \subsection{Click on room or dropzone}
 By clicking on a room, the user can order his bot to go to that room, tell everybody something about that room or ask something about that room.
 \subsection{Click on blocks}
@@ -261,7 +265,7 @@ Make sure that you set GOAL to launch the desired number of your agent. Also mak
 Note that besides in the bw4t.mas2g file, the number of agents is also specified in the map that you use. This number determines the maximum amount of bots that can appear on the map. If the maximum number of agents to be launched as specified in the bw4t.mas2g file is bigger than the number of agents specified in the map, some of the agents will not appear on the map and not be part of the team. 
 
 \section{Creating your own Scenario}
-This part describes how to make use of the Scenario Editor (Figure 7). When you open the editor, you see two main parts:
+This part describes how to make use of the Scenario Editor (Figure \ref{fig:ScenarioEditor}). When you open the editor, you see two main parts:
 \begin{enumerate}
 \item The Configuration panel, which is used to create, open and save configuration files.
 \item The Entity panel, where a list of bots and a list of e-partners are being displayed. Here you can create, modify, rename and delete bots and e-partners.
@@ -270,7 +274,7 @@ This part describes how to make use of the Scenario Editor (Figure 7). When you 
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=\textwidth]{editor.png}
-\caption{Scenario Editor}
+\caption{Scenario Editor}\label{fig:ScenarioEditor}
 \end{center}
 \end{figure}
 
@@ -282,14 +286,15 @@ On the left side of the editor you can configure a scenario as you like. The Cli
 On the right side of the editor you can create, modify, rename and delete bots and e-partners. There also are a list of bots and a list of e-partners that are created, and below each list there is an indication of how many bots or e-partners are created in total.
 
 Linked to the Scenario Editor are the Bot Store and the E-partner Store, which will also be discussed in this document.
+
 \pagebreak
 \subsection{Configuration Panel}
-A picture of the configuration panel can be found in figure 8.
+A picture of the configuration panel can be found in Figure \ref{fig:ConfigPanel}.
 \begin{figure}[h]
 \begin{center}
-\includegraphics{config.png}
+\includegraphics[width=0.4\textwidth]{config.png}
 \end{center}
-\caption{Configuration Panel}
+\caption{Configuration Panel}\label{fig:ConfigPanel}
 \end{figure}
 \subsubsection{New configuration file}
 To create a new configuration file, select $File$ $\to$ $New$ in the menu bar. You will now get a new configuration with the default values. Creating a new configuration will reset all previous changes you have made, so make sure you save your current configuration first if you want to keep it.
@@ -297,25 +302,29 @@ To create a new configuration file, select $File$ $\to$ $New$ in the menu bar. Y
 \subsection{Open configuration file}
 To open an existing configuration file, select $File$ $\to$ $Open$ in the menu bar. A window will pop up where you can select the folder where the configuration file is saved to. Once you have selected the right folder, select the file and click the $Open$ button.
 
-\subsubsection{Save configuration file}
+\begin{itemize}
+
+\item{Save configuration file}:
 To save your configuration file, select $File$ $\to$ $Save$ in the menu bar. If your file hasn't been saved before, a window will pop up where you can select the folder you want to save your configuration file to and enter the file name you want to use. Once you have selected the right folder and entered the file name, click the $Save$ button.
 
-\subsubsection{Save configuration file as}
+\item{Save configuration file as}:
 To save your configuration in a new file, select $File$ $\to$ $Save$ $As$ in the menu bar. A window will pop up where you can select the folder you want to save your configuration file to and enter the file name you want to use. Once you have selected the right folder and entered the file name, click the $Save$ button.
 
-\subsubsection{Export configuration to mas2g}
+\item{Export configuration to mas2g}:
 To export your configuration to mas2g, you have to have saved your configuration first. Once you have done that, select $File$ $\to$ $Export$ $as$ $MAS$ $project$ in the menu bar. A window will pop up where you can select the folder you want to export the configuration to and the file name you want to use. Once you have selected the right folder and entered the file name, click the $Export$ $MAS$ $project$ button.
 
-\subsubsection{Exit the Scenario Editor}
+\item{Exit the Scenario Editor}:
 If you want to close the Scenario Editor, select $File$ $\to$ $Exit$ in the menu bar. Closing the Scenario Editor will not save any changes you have made, so make sure you save your configuration first if you want to keep it.
 
+\end{itemize}
+
 \subsection{Entity Panel}
-The entity panel exists of 2 parts; the top part shows the bot options and the bottom part shows the e-partner options. A picture of the entity panel can be found in figure 9.
+The entity panel exists of 2 parts; the top part shows the bot options and the bottom part shows the e-partner options. A picture of the entity panel can be found in Figure \ref{fig:EntityPanel}.
 \begin{figure}[h]
 \begin{center}
 \includegraphics{bot.png}
 \end{center}
-\caption{Entity Panel}
+\caption{Entity Panel}\label{fig:EntityPanel}
 \end{figure}
 \subsubsection{Create new bot}
 To create a new bot, click the $New$ $Bot$ button. A new bot will appear in the bot list.\\
@@ -352,12 +361,12 @@ To change how many entities of a type of e-partner you want, you can either use 
 To delete an e-partner, select the e-partner you want to delete in the e-partner list and click the $Delete$ $E$-$partner$ button.
 
 \subsection{Bot Store}
-A picture of the Bot Store can be found in figure 10.
+A picture of the Bot Store can be found in Figure \ref{fig:BotStore}.
 \begin{figure}[h]
 \begin{center}
 \includegraphics{bs.png}
 \end{center}
-\caption{Bot Store}
+\caption{Bot Store}\label{fig:BotStore}
 \end{figure}
 \subsubsection{Rename bot}
 To rename a bot, click on the field that contains its current name. Now you are able to edit the current name or you can enter a new name.
@@ -384,13 +393,15 @@ If you want to reset the changes you have made to the bot, you can click on the 
 If you want to cancel modifying the bot without saving any changes, you can click on the $Cancel$ button. The Bot Store window will close.
 
 \subsection{E-partner Store}
-A picture of the E-partner Store can be found in figure 11.
+A picture of the E-partner Store can be found in Figure \ref{fig:EPartnerStore}.
+
 \begin{figure}[h]
 \begin{center}
 \includegraphics{es.png}
 \end{center}
-\caption{E-partner Store}
+\caption{E-partner Store}\label{fig:EPartnerStore}
 \end{figure}
+
 \subsubsection{Rename e-partner}
 To rename an e-partner, click on the field that contains its current name. Now you are able to edit the current name or you can enter a new name.
 

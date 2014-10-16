@@ -3,60 +3,79 @@
 \section{Loading and creating new maps}
 This section describes how you can edit existing maps or create new maps from scratch. This can be done with a editing tool, or by directly editing the map files manually.
 
+
+
+
 \subsection{Using the Environment Store}
 The Map Editor is a tool for editing maps for the BW4T server. Double click the jar file environment-store.jar  in the $<$SERVER$>$ directory to start the  editor.
 
-\begin{wrapfigure}{r}{0.5\textwidth}
+\begin{wrapfigure}{r}{0.4\textwidth}
   \begin{center}
-    \includegraphics[width=0.4\textwidth]{mapsize.png}
+    \includegraphics[width=0.4\textwidth]{EnvironmentStore/SizeDialog.png}
   \end{center}
-  \caption{Choose the amount of columns and rows}
+  \caption{Choose the amount of columns and rows}\label{fig:MapSize}
 \end{wrapfigure}
-After starting up, the map size dialog (Figure 5) appears, which can be used as follows.
-Here you can choose the amount of rows and columns you want the environment to consist of. Each cell in the “table” can be used to fulfill one piece of the map. This could either be a room, a corridor, a dropzone, a charging zone, start zone or a blockade. By pressing the colours at the bottom you can generate the sequence to be completed. This can also be done by pressing the according numbers on the keyboard. \\
+
+
+After starting up, the map size dialog (Figure \ref{fig:MapSize}) appears, which can be used as follows.
+Here you can choose the amount of rows and columns you want the environment to consist of. Each cell in the "table" can be used to fulfill one piece of the map. This could either be a room, a corridor, a dropzone, a charging zone, start zone or a blockade. By pressing the colours at the bottom you can generate the sequence to be completed. This can also be done by pressing the according numbers on the keyboard. 
+
+% we put the figure even ahead of the map editor section, to allow tex to be more flexible with
+% the placement. Unfortunately tex keeps delaying the placement and we end up with a mess of pictures
+% on one page with very little text remaining between the figures....
+\begin{figure}
+	\center
+	\includegraphics[scale=0.55]{EnvironmentStore/MapEditor.png}
+	\caption{the map editor with a 5x5 freshly created map}\label{fig:MapEditor}
+\end{figure}
+
+At the moment, for an existing map to be loaded in the map editor, the correct sizes of the map have to be entered before the map can be loaded.
+
 In the Map editor GUI above you can add blocks to rooms. To add blocks to rooms, right click in the cell, adjust the type of the zone to Room. Now you can add blocks the way you did with the sequence. Right clicking the cell again lets you choose at which side of the room you want the door. When you're done, press save. 
 By pressing Tools in the menu bar, you are able to randomize zones, blocks and sequences. WARNING: Randomizing these will not always guarantee that the sequence can be completed.
 By pressing File in the menu bar, you are able to watch a preview of your map, and you are able to save the map. Save the map in the $<$SERVER$>/$maps folder \footnote[1]{This map directory appears after the first run of the server.}.  
-\begin{figure}
-    \includegraphics[width=\textwidth]{grid.png}
-    \caption{Create a map}
+
+
+\begin{wrapfigure}{r}{0.3\textwidth}
+  \begin{center}
+	\includegraphics[width=0.3\textwidth]{EnvironmentStore/DropDownMenuRoom.png}
+  \end{center}
+  \caption{the drop down menu generated when a zone is right clicked}\label{fig:DropDownMenuRoom}
+\end{wrapfigure}
+
+\subsection{Map editor}
+After specifying the amount of rows and columns the map should have, and clicking on the Start button, 
+the map editor is launched. Figure \ref{fig:MapEditor} shows the environment store after launch, with a 5x5 map.
+
+The map editor has many functionalities. The functionalities are detailed bit by bit in this documentation.
+
+
+\subsection{Editing a room}
+
+Right click on any corridor (or any zone of the matrix for that matter), and the drop down menu is shown (Figure \ref{fig:DropDownMenuRoom}).
+
+This allows a zone to be converted to any one of a corridor, a room, a blockade, a charge zone, a start zone, and a drop zone. The following figure shows the different appearances of the zones in the map editor (Figure \ref{fig:DifferentRooms}).
+
+As can be seen, The room and drop zone contain a green border. This is to indicate which way the door to enter the room is faced. This is also editable. When right clicking on a certain room, a drop down menu pops up (Figure \ref{DropDownMenuRoom2}).
+
+
+
+ \begin{figure}
+        \centering
+        \begin{subfigure}[b]{0.5\textwidth}
+		\includegraphics[width=0.9\textwidth]{EnvironmentStore/DifferentRooms.png}
+		\caption{the color palette at the bottom of the map editor}\label{fig:DifferentRooms}
+        \end{subfigure}%
+        \begin{subfigure}[b]{0.5\textwidth}
+	\includegraphics[width=0.9\textwidth]{EnvironmentStore/DropDownMenuRoom2.png}
+	\caption{the drop down menu generated when a room is right clicked}\label{DropDownMenuRoom2}
+        \end{subfigure}
+        \caption{Drop Down menus}\label{fig:animals}
 \end{figure}
 
 
-\subsection{Size dialog}
-At startup, a small GUI is shown that prompts the user to enter the amount of rows and columns the map has that they want to create. At the moment, for an existing map to be loaded in the map editor, the correct sizes of the map have to be entered before the map can be loaded. Figure one displays the size dialog:
-\begin{center}
-	\centering
-	\includegraphics{EnvironmentStore/SizeDialog.png}\\
-	Figure 1: the size dialog
-\end{center}
-\subsection{Map editor}
-After specifying the amount of rows and columns the map should have, and clicking on the Start button, the map editor is launched. Figure 2 shows the environment store after launch, with a 5x5 map:
-\begin{center}
-	\centering
-	\includegraphics[scale=0.55]{EnvironmentStore/MapEditor.png}\\
-	Figure 2: the map editor with a 5x5 freshly created map
-\end{center}
-The map editor has many functionalities. The functionalities are detailed bit by bit in this documentation.
-\subsection{Editing a room}
-Right click on any corridor (or any zone of the matrix for that matter), and the following drop down menu is shown:
-\begin{center}
-	\centering
-	\includegraphics[scale=0.55]{EnvironmentStore/DropDownMenuRoom.png}\\
-	Figure 3: the drop down menu generated when a zone is right clicked
-\end{center}
-This allows a zone to be converted to any one of a corridor, a room, a blockade, a charge zone, a start zone, and a drop zone. The following figure shows the different appearances of the zones in the map editor:
-\begin{center}
-	\centering
-	\includegraphics{EnvironmentStore/DifferentRooms.png}\\
-	Figure 4: the color palette at the bottom of the map editor
-\end{center}
-As can be seen, The room and drop zone contain a green border. This is to indicate which way the door to enter the room is faced. This is also editable. When right clicking on a certain room, the following drop down menu pops up:
-\begin{center}
-	\centering
-	\includegraphics{EnvironmentStore/DropDownMenuRoom2.png}\\
-	Figure 5: the drop down menu generated when a room is right clicked
-\end{center}
+
+
 This drop down menu lists the directions the door can face while still being accessible. In this case, as it is the top left zone, only doors facing east or south are possible.
 \subsection{Editing a sequence}
 Under the zones of the map editor is a white rectangle that contains the sequence for that map. This same rectangle is also present in the rooms that aren't drop zones. The rectangles are given here:
