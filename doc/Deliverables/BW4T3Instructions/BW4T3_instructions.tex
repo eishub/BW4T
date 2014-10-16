@@ -94,7 +94,7 @@ Notice: if you run both agents and human controlled bots, you should use the HUM
 
 \begin{figure}[!h]
 \begin{center}
-  \includegraphics[width=0.5\textwidth]{client.png}
+  \includegraphics[width=0.5\textwidth]{HumanPlayerGUI/hpg.png}
   \caption{Client window}\label{fig:Client}
 \end{center}
 \end{figure}
@@ -182,18 +182,10 @@ The server interface (Figure \ref{fig:ServerWindow}) offers very limited control
 
 
 
-\section{Using the Human Interface}
-\label{ch:usingHI} 
-To use the human interface (Figure \ref{fig:Client}), the user clicks with the left (occasionally the right) mouse button in the GUI. Depending on where the user clicks, different menus appear. The user then picks the appropriate action from the menu to execute that action. Below the possibilities are explained.
 
-\subsection{Sending messages}
-By clicking on the drop-down menu, the user can choose to which bot he or she will send a request or question. "all" sends the message to all bots. Next to the drop-down menu, a button is placed with choose message. This button contains the messages that are most likely to be sent. Left clicking this button will create a list from which the user can choose a message. The "Bot Chat Session" menu ives a number of standard answers: yes, no, don't know, ok, etc. It is not possible to use free text because the non-human agents can only process these pre-specified messages. The specification document gives more details on how messages are processed by non-human agents.
-\subsection{Click on room or dropzone}
-By clicking on a room, the user can order his bot to go to that room, tell everybody something about that room or ask something about that room.
-\subsection{Click on blocks}
-By clicking on a block (particularly, those below the drop zone), the user can tell everybody something about that block, or ask others for information about that block.
-\subsection{Click on hallway}
-By clicking on a hallway, the user can point to an exact (X,Y) location to go to. Also it is possible to tell all others roughly where one is in the hallway.
+\include{HumanPlayerGUI/humanplayergui}
+
+
 
 \section{Hints for GOAL users}
 In this section we give some hints that are specific for using BW4T from the GOAL agent system.
