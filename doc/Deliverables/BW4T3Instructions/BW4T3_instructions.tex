@@ -62,8 +62,6 @@ You need to install a number of items to run BW4T from GOAL.
   
 
 \section{Running the server}
-
-
 Run the server before running the client, as otherwise the client cannot connect to the server. Start the server by opening (typically: double clicking) the server.jar in $<$SERVER$>$. This should open the server window (Figure  \ref{fig:ServerWindow}). Note that during this opening, two other maps are created: 
 \begin{itemize}
 \item Maps: The folder in which all possible maps are put.
@@ -79,29 +77,38 @@ Run the server before running the client, as otherwise the client cannot connect
 \end{figure}
 
 
-\subsection{Advanced run settings}
-The default settings for the server can be changed in the command line of your OS. To change the server ip and/or server port execute the following:\\
+\subsection{Advanced server settings}
+The default settings for the server can be changed in the command line of your OS. To change the server ip and/or server port execute the following:
 
-java -jar bw4t-server.jar -servip $<$server ip here$>$ (default: localhost) -serverport $<$serverport here$>$ (default: 8000)\\
+java -jar bw4t-server.jar -servip $<$server ip here$>$ (default: localhost) -serverport $<$serverport here$>$ (default: 8000)
 
 If you change the serverip and/or serverport, change the client settings correspondingly (see below).
 The server will now start using the new values.
 
-\section{Running the client (Human Controlled Bot)}
-Before running the client, make sure you have already started the server. Start the client.jar in $<$CLIENT$>$. Figure \ref{fig:Client} will show up and the bot is automatically added to the server. You can now control the bot by clicking (left or right) at different spots in the Client.
 
-\begin{wrapfigure}{r}{0.5\textwidth}
+
+\section{Running the client (Human Controlled Bot)}
+Before running the client, make sure you have already started the server. Start the client.jar in $<$CLIENT$>$. Figure \ref{fig:Client} will show up and the bot is automatically added to the server. You can now control the bot by clicking (left or right) at different spots in the Client. Please refer to Section  \ref{ch:usingHI} for details on using the this client.
+
+Notice: if you run both agents and human controlled bots, you should use the HUMANGUI option and launch the human GUIs in coordination with the agent platform. Please refer to the Advanced run settings below.
+
+\begin{figure}[!h]
 \begin{center}
-\includegraphics[width=0.5\textwidth]{client.png}
-\end{center}
+  \includegraphics[width=0.5\textwidth]{client.png}
   \caption{Client window}\label{fig:Client}
-\end{wrapfigure}
+\end{center}
+\end{figure}
+
 
 \section{Running the client (Agent Controlled Bot)}
-Before running the client, make sure you have already started the server. Start Eclipse IDE and load your GOAL files. Open the .mas2g file and press the run button. This time, no new window will appear. The agent will control your bot and all evaluations will be shown in the console. In the server window you will see your bot(s) move according to the rules applied in the .goal file(s).
+Before running the client, make sure you have already started the server. Start your favourite Agent platform and load run the MAS. If you use GOAL, this means open the .mas2g file and press the run button. This time, no new windows will appear. The agent will control your bot and  agent behaviours can be seen only by introspecting the agents with your agent platform tools. In the server window you will see your bot(s) move according to the rules applied in the .goal file(s).
 
 \subsection{Advanced run settings}
-The following MAS init parameters are available (the default values are shown inside the brackets). In GOAL these settings can be changed from the mas2g file. Most of  these parameters are not needed if you use an agent config xml file. The CONFIGFILE option is needed if you use a config file. The HUMANGUI option is needed if you have a human GUI connected with an agent (and the agent should receive percepts as well). 
+The following MAS init parameters are available (the default values are shown inside the brackets). These init parameters should be placed inside the config.xml file. 
+
+The HUMANGUI option is needed if you have a human GUI connected with an agent (and the agent should receive percepts as well).
+
+In GOAL these settings can be changed also from the mas2g file. The CONFIGFILE option is the only needed option in the MAS file, if you use a config file.  
 
 \begin{itemize}
 \item
@@ -126,7 +133,7 @@ The following MAS init parameters are available (the default values are shown in
     
 \item
     LAUNCHGUI("true"):
-    whether to launch a separate GUI for each bot (controlled by an agent or human) can be set to true or false. This GUI shows the environment from the perspective of the bot. (default:false).
+    whether to launch a separate GUI for each bot (controlled by an agent or human) can be set to true or false. This GUI shows the environment from the perspective of the bot. (default:false).When this option is used, the human GUI is connected with the agent platform. A special agent in the agent platform can then communicate with the HumanGUI using entity actions that are available specifically for this purpose. This way, a human player can be a fully qualified player in the agent platform (e.g., use the native communication mechanisms in the agent platform).
 
 
 \item
@@ -164,12 +171,41 @@ The following MAS init parameters are available (the default values are shown in
 
 \end{itemize}
 
-The number of agents is specified at two places in the mas2g file. First, the agentcount and humancount specify the number of entities of the corresponding type that should be created in the environment. Second, the launchpolicy specifies which and how many agents should be connected to these entities. Make sure that the agentcount and humancount in the initialization parameters are in line with the launch policy section in the mas2g file. Furthermore, the number of agents should not exceed the maximum number of agents defined on the map (see section "Loading and creating new maps" below).
+
+\section{Using the Server Interface}
+The server interface (Figure \ref{fig:ServerWindow}) offers very limited controls, as the main control is running through software (the agents, management system, buttons and settings in the agent platform). There are only 3 controls available:
+\begin{itemize}
+\item{Reset}: By pressing this button, the environment is completely killed and restarted, all entities are killed (which kicks out all agents), the map is reloaded from scratch. We recommend killing from your agent platform as that offers the agent platform the opportunity to handle this take-down in a nice way.
+\item{Enable Collisions}: When enabled, bots can collide with each other. When disabled, they can run over each other without any interference. We recommend to keep this \emph{disabled} as this option is not yet fully supported (you may have problems with path planning).
+\item{Change Map}: By selecting a map, you effectively \emph{Reset} the system, to restart it with a different map.
+\end{itemize}
+
+
+
+\section{Using the Human Interface}
+\label{ch:usingHI} 
+To use the human interface (Figure \ref{fig:Client}), the user clicks with the left (occasionally the right) mouse button in the GUI. Depending on where the user clicks, different menus appear. The user then picks the appropriate action from the menu to execute that action. Below the possibilities are explained.
+
+\subsection{Sending messages}
+By clicking on the drop-down menu, the user can choose to which bot he or she will send a request or question. "all" sends the message to all bots. Next to the drop-down menu, a button is placed with choose message. This button contains the messages that are most likely to be sent. Left clicking this button will create a list from which the user can choose a message. The "Bot Chat Session" menu ives a number of standard answers: yes, no, don't know, ok, etc. It is not possible to use free text because the non-human agents can only process these pre-specified messages. The specification document gives more details on how messages are processed by non-human agents.
+\subsection{Click on room or dropzone}
+By clicking on a room, the user can order his bot to go to that room, tell everybody something about that room or ask something about that room.
+\subsection{Click on blocks}
+By clicking on a block (particularly, those below the drop zone), the user can tell everybody something about that block, or ask others for information about that block.
+\subsection{Click on hallway}
+By clicking on a hallway, the user can point to an exact (X,Y) location to go to. Also it is possible to tell all others roughly where one is in the hallway.
+
+\section{Hints for GOAL users}
+In this section we give some hints that are specific for using BW4T from the GOAL agent system.
+
+\subsection{mas2g file}
+The number of agents is specified at two places in the mas2g file. First, the agentcount and humancount specify the number of entities of the corresponding type that should be created in the environment. Second, the launchpolicy specifies which and how many agents should be connected to these entities. Make sure that the agentcount and humancount in the initialization parameters are in line with the launch policy section in the mas2g file. 
 If you use BW4T from a batch runner, you may want to reset the server after each run. This is done by specifying a map in the mas file init parameters.
 
-\section{Restarting, pausing and resuming the system}
-If you are running from SimpleIDE, you can pause and resume the system at any time by clicking the pause or step buttons. When running from Eclipse, to be able to pause the system, don't run the mas2g file as described above.
-This time, open the mas2g file and click on the debug button (the small bug icon).
+\subsection{Restarting, pausing and resuming the system}
+If you are running from SimpleIDE, you can pause and resume the system at any time by clicking the pause or step buttons. 
+
+When running from Eclipse, to be able to pause the system, don't run the mas2g file as described above. This time, open the mas2g file and click on the debug button (the small bug icon).
 
 \begin{wrapfigure}{r}{0.5\textwidth}
   \begin{center}
@@ -188,25 +224,20 @@ To restart the system, do the following
 \end{enumerate}
 
 \begin{figure}
-    \includegraphics[width=\textwidth]{debugmode.png}
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{debugmode.png}
     \caption{Debug mode}\label{fig:Eclipse}
+  \end{center}
 \end{figure}
 
 
-\section{Using the interface}
-To use the interface, the user clicks with the left (occasionally the right) mouse button in the GUI. Depending on where the user clicks, different menus appear. The user then picks the appropriate action from the menu to execute that action. Below the possibilities are explained.
 
-\subsection{Sending messages}
-By clicking on the drop-down menu, the user can choose to which bot he or she will send a request or question. "all" sends the message to all bots. Next to the drop-down menu, a button is placed with choose message. This button contains the messages that are most likely to be sent. Left clicking this button will create a list from which the user can choose a message. The "Bot Chat Session" menu ives a number of standard answers: yes, no, don't know, ok, etc. It is not possible to use free text because the non-human agents can only process these pre-specified messages. The specification document gives more details on how messages are processed by non-human agents.
-\subsection{Click on room or dropzone}
-By clicking on a room, the user can order his bot to go to that room, tell everybody something about that room or ask something about that room.
-\subsection{Click on blocks}
-By clicking on a block (particularly, those below the drop zone), the user can tell everybody something about that block, or ask others for information about that block.
-\subsection{Click on hallway}
-By clicking on a hallway, the user can point to an exact (X,Y) location to go to. Also it is possible to tell all others roughly where one is in the hallway.
+\subsection{Running on multiple computers}
+BW4T server can handle multiple clients out of the box. However, if you run multiple agent systems separately, agents in these separate platforms will not see each others' agents. 
 
-\section{Running on multiple computers}
-If you want to run BW4T on multiple computers you should designate one of these computer as the server. On this computer you can start the server as described in the first section of this guide. You must use RMI messaging (check the GOAL Run menu) to allow other GOAL runtimes to connect .
+To make a real distributed agent system where all agents can see each other, the agent system itself has to be run distributed. 
+
+For GOAL, this is done as follows. You should designate one of these computer as the server. On this computer you can start the server as described in the first section of this guide. You must use RMI messaging (check the GOAL Run menu) to allow other GOAL runtimes to connect with the main GOAL instance that runs on the server.
 You need to check a few things in the MAS that you use here:
 \begin{itemize}
 \item specify a map such that the environment resets when you start up the MAS
@@ -222,21 +253,21 @@ The other computers will then function as client. Create a MAS file for each of 
 \item Check that the launchpolicy picks up the proper entity type, so use 'human' if you want to attach to human entities etc.
 \end{itemize} 
 
-\subsection{Distributed human GUIs}
+\subsection{Distributed Human GUIs}
 This section describes how to run a set of distributed human GUIs such that they all communicate through GOAL. Before running a set of distributed Human GUIs with Eclipse, make sure that the server is installed on one machine. Furthermore, make sure that the server map can contain a sufficient number of entities.
 To run a set of distributed Human GUIs with GOAL, do the following:
 \begin{itemize}
 \item Start the server
 \item For each machine where you want to have a human GUI:
     \begin{enumerate}
-    \item Start  Eclipse IDE
+    \item Start your agent platform (SimpleIDE or  Eclipse IDE)
     \item Open the MAS file of the bw4thuman.mas2g
     \item adjust the serverip to correctly point to the machine ip number where the server runs
     \item Start the MAS
     \end{enumerate}
 \end{itemize}
 
-\section{Programming a BW4T Agent}
+\subsection{Programming a BW4T Agent}
 To program your own BW4T agent, use the same actions as specified in the demorobot. You can  choose to change the pre- and post conditions of each action.
 
 Percepts are retrieved automatically by GOAL, see the percept specifications for what percepts you can expect.
@@ -244,9 +275,9 @@ Percepts are retrieved automatically by GOAL, see the percept specifications for
 In order for messages received by other GOAL agents to appear on the GUI of your agent, you should add the following lines to your GOAL agent’s code:
 \begin{enumerate}
 \item Add the following line to your knowledge base:\\
-\#import “messageTranslation”.
+\#import "messageTranslation".
 \item Add the following line at the end of your goal file. \\
-\#import “message.mod2g”.
+\#import "message.mod2g".
 \item Add the following line to the start of your event module: \\
 if bel(true) then message. \\
 This will make sure that the message module that was just imported will be run first when entering the event module.
