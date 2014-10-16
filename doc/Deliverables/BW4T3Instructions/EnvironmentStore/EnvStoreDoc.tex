@@ -97,55 +97,66 @@ At the bottom of the map editor is the color palette. A larger picture is given 
 	\label{fig:ColorPalette}
 \end{figure}
 
-The color palette is used for adding blocks to rooms and the sequence to be completed in the map. When clicking on the box containing either the sequence of the map or the blocks in the room, the color palette is shown. It allows for the adding of colors by clicking on the respective colors on the palette, but colors can also be added by entering the respective numbers in the colors (pressing 1 adds a red block to the room or sequence, for example) and also by entering the first letter of the color (so pressing R adds a red block).
-\subsection{File menu}
-The file menu (Figure \ref{fig:DropDownFile}) contains not only the standard operations for exporting a created map to a file, so that it can be used later, but also a few other options.
 
-\begin{figure}[h!]
+
+The color palette is used for adding blocks to rooms and the sequence to be completed in the map. When clicking on the box containing either the sequence of the map or the blocks in the room, the color palette is shown. It allows for the adding of colors by clicking on the respective colors on the palette, but colors can also be added by entering the respective numbers in the colors (pressing 1 adds a red block to the room or sequence, for example) and also by entering the first letter of the color (so pressing R adds a red block).
+
+ \begin{figure}[h!]
+        \centering
+        \begin{subfigure}[b]{0.48\textwidth} % 0.5 may give 2 rows instead of 2 colums
 	\center
 	\includegraphics{EnvironmentStore/DropDownFile.png}
 	\caption{the drop down menu created when the 'File' menu item is clicked.}
 	\label{fig:DropDownFile}
+        \end{subfigure}
+        \begin{subfigure}[b]{0.48\textwidth}
+	\center
+	\includegraphics[width=0.9\textwidth]{EnvironmentStore/Preview.png}
+	\caption{The preview of a 5x5 non-edited map, with no blocks in the sequence.}
+	\label{fig:Preview}
+        \end{subfigure}
+        \caption{Drop Down menus}
 \end{figure}
+
+\subsection{File menu}
+The file menu (Figure \ref{fig:DropDownFile}) contains not only the standard operations for exporting a created map to a file, so that it can be used later, but also a few other options.
 
 The New-, Open...-, Save- and Save as...-options are the standard file operations and need no further explanation. However, as added functionality to the options, it is impossible to save a map not containing either a start- or drop zone, as well as a map not containing a block in its sequence, and saving an unsolvable map will give a warning describing what's wrong. The Exit-option also needs no further explanation. The Preview-option gives a preview of the created map, as how it would be rendered when used as an actual map for bots. For a non-edited 5x5 map, the preview looks as shown in Figure \ref{fig:Preview}.
 
-\begin{figure}[h!]
+ \begin{figure}[h!!!]
+        \centering
+        \begin{subfigure}[b]{0.32\textwidth} 
 	\center
-	\includegraphics[width=0.5\textwidth]{EnvironmentStore/Preview.png}
-	\caption{The preview of a 5x5 non-edited map, with no blocks in the sequence.}
-	\label{fig:Preview}
+	\includegraphics[width=0.9\textwidth]{EnvironmentStore/DropDownTools.png}
+	\caption{The drop down menu created when the 'Tools' menu item is clicked.}
+	\label{fig:DropDownTools}
+        \end{subfigure}
+        \begin{subfigure}[b]{0.32\textwidth}
+	\center
+	\includegraphics[width=0.9\textwidth]{EnvironmentStore/MenuBlocks.png}
+	\caption{The menu appearing when the randomize blocks option is clicked in the menu.}
+	\label{fig:MenuBlocks}
+        \end{subfigure}
+        \begin{subfigure}[b]{0.32\textwidth}
+	\center
+	\includegraphics[width=0.9\textwidth]{EnvironmentStore/MenuSeq.png}
+	\caption{The menu appearing when the randomize blocks option is clicked in the menu.}
+	\label{fig:MenuSeq}
+        \end{subfigure}
+
+        \caption{menus}\label{fig:whatever}
 \end{figure}
 
 \subsection{Tools menu}
 The other drop down menu at the top of the map editor is the tools menu (Figure \ref{fig:DropDownTools}). This menu contains options to use several tools.
 
-\begin{figure}[h!]
-	\center
-	\includegraphics{EnvironmentStore/DropDownTools.png}
-	\caption{The drop down menu created when the 'Tools' menu item is clicked.}
-	\label{fig:DropDownTools}
-\end{figure}
 
 
 Clicking on the 'Randomize Zones' option creates a random map, based off a vanilla map with reclassification of rooms to blockades, charge zones or corridors, and with reclassifications of existing corridors to charge zones. The map is always solvable, given that all the blocks in the sequence are present in the map and no further changes are made to the map. The 'Randomize Blocks' option randomizes the blocks contained in every room according to parameters that the user has to specify. Figure 	\ref{fig:MenuBlocks} shows the menu.
 
-\begin{figure}[h!]
-	\center
-	\includegraphics[width=0.25\textwidth]{EnvironmentStore/MenuBlocks.png}
-	\caption{The menu appearing when the randomize blocks option is clicked in the menu.}
-	\label{fig:MenuBlocks}
-\end{figure}
-
-
 This interface allows the user to specify which block colors they want to be spawned, and also the max. amount of blocks in a room. The interface for random sequence generation is slightly different (Figure ref{fig:MenuSeq}).
 
-\begin{figure}[h!]
-	\center
-	\includegraphics[width=0.25\textwidth]{EnvironmentStore/MenuSeq.png}
-	\caption{The menu appearing when the randomize blocks option is clicked in the menu.}
-	\label{fig:MenuSeq}
-\end{figure}
+
 
 The differences between this interface and the previous interface are the Randomize button and Result label, that  create and display resp. the random sequence, and the apply and cancel button which enter the sequence in the map or cancel the creation of the sequence, respectively.
 
