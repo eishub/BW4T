@@ -35,7 +35,7 @@
 \section{Introduction}
 Blocks World for Teams (BW4T) is a testbed for team coordination. BW4T allows for games with human-human, agent-agent and human-agent teams of variable sizes. The goal is to jointly deliver a sequence of colored blocks in a particular order as fast as possible. A complicating factor is that the players cannot see each other.
 
-This document describes how to install Blocks World For Teams (BW4T) for use with GOAL. We briefly comment where necessary how it would work with a different agent system. You can also use BT4T stand-alone but this is not described in this document. BW4T is a client-server system. The server is responsible for the administration, simulation and visualization of the virtual world: it keeps track of robots, rooms, blocks, connected GOAL agents, etc. The server uses Repast, software to simulate virtual environments, to do part of this administration. The client is GOAL, which runs a multi-agent system (MAS) and connects to the server. The agents in the GOAL client get percepts from the server, and send actions to the server. Client and server can run on a different computer. This document describes how to install the BW4T server, configure it, place the BW4T client in GOAL, configure the MAS file, and run the system.
+BW4T is a client-server system. The server is responsible for the administration, simulation and visualization of the virtual world: it keeps track of robots, rooms, blocks, connected GOAL agents, etc. The server uses Repast, software to simulate virtual environments, to do part of this administration. The client is GOAL, which runs a multi-agent system (MAS) and connects to the server. The agents in the GOAL client get percepts from the server, and send actions to the server. Client and server can run on a different computer. This document describes how to install the BW4T server, configure it, place the BW4T client in GOAL, configure the MAS file, and run the system.
 
 This chapter descibes how users can install and use the Blocks World for Teams environment. For developer information please go to the project page on github  https://github.com/eishub/BW4T and click on the Link to Developer Details.
 
@@ -50,9 +50,11 @@ We use the following names to refer to directories of BW4T:
 To use BW4T you need Java JDK 7 or higher. The BW4T3 environment has been tested on Windows 7, Windows 8 and OSX. Note that OSX may come with java 6 pre-installed. You need to install java 7. You can then keep java 6 installed as well, but ensure that java 7 is used as the default.
 
 \subsection{Installation}
+This document describes how to install Blocks World For Teams (BW4T) for use with GOAL. We briefly comment where necessary how it would work with a different agent system. You can also use BT4T stand-alone but this is not described in this document. 
+
 You need to install a number of items to run BW4T from GOAL. 
 \begin{enumerate}
- \item (if not yet done): Install Java 7 and made it the default Java (such that double clicking on a jar makes it open with Java 7).
+ \item (if not yet done): Install Java 7 (download from http://www.java.com) and made it the default Java (such that double clicking on a jar makes it open with Java 7).
  \item You can download GOAL from $http://ii.tudelft.nl/trac/goal$. You can choose for the plugin for Eclipse or the stand-alone SimpleIDE.
  \item GOAL provides a sample Multi-agent-system 'BW4T3' that is demonstrating the Blocks World for Teams system. \footnote{If you run in a different agent system, you can download the client-side environment from $https://github.com/eishub/BW4T/releases$. Select $bw4t-client-X.Y.Z.jar$. This is the environment that should be attached to your agent system. You then will have to write your own agents that can run in the BW4T world.}
  \item You can download the BW4T server from $https://github.com/eishub/BW4T/releases$ and save it in $<$SERVER$>$. Select the latest $bw4t-server-X.Y.Z.jar$.
@@ -88,7 +90,7 @@ The server will now start using the new values.
 
 
 \section{Running the client (Human Controlled Bot)}
-Before running the client, make sure you have already started the server. Start the client.jar in $<$CLIENT$>$. Figure \ref{fig:Client} will show up and the bot is automatically added to the server. You can now control the bot by clicking (left or right) at different spots in the Client. Please refer to Section  \ref{ch:usingHI} for details on using the this client.
+Before running the client, make sure you have already started the server. Start (e.g., double click) the client.jar in $<$CLIENT$>$. Figure \ref{fig:Client} will show up and the bot is automatically added to the server. You can now control the bot by clicking (left or right) at different spots in the Client. Please refer to Section  \ref{ch:usingHI} for details on using the this client.
 
 Notice: if you run both agents and human controlled bots, you should use the HUMANGUI option and launch the human GUIs in coordination with the agent platform. Please refer to the Advanced run settings below.
 
@@ -101,9 +103,10 @@ Notice: if you run both agents and human controlled bots, you should use the HUM
 
 
 \section{Running the client (Agent Controlled Bot)}
-Before running the client, make sure you have already started the server. Start your favourite Agent platform and load run the MAS. If you use GOAL, this means open the .mas2g file and press the run button. This time, no new windows will appear. The agent will control your bot and  agent behaviours can be seen only by introspecting the agents with your agent platform tools. In the server window you will see your bot(s) move according to the rules applied in the .goal file(s).
+Before running the client, make sure you have already started the server. Start your favourite Agent platform and load run the MAS. If you use GOAL, this means open the .mas2g file and press the run button. This time, no new windows will appear. The agent will control your bot,  and agent behaviours can be seen only by introspecting the agents with your agent platform tools. In the server window you will see your bot(s) move according to the rules applied in the .goal file(s).
 
 \subsection{Advanced run settings}
+\label{sec:clientadvancedrunsettings}
 The following MAS init parameters are available (the default values are shown inside the brackets). These init parameters should be placed inside the config.xml file. 
 
 The HUMANGUI option is needed if you have a human GUI connected with an agent (and the agent should receive percepts as well).
@@ -192,7 +195,7 @@ In this section we give some hints that are specific for using BW4T from the GOA
 
 \subsection{mas2g file}
 The number of agents is specified at two places in the mas2g file. First, the agentcount and humancount specify the number of entities of the corresponding type that should be created in the environment. Second, the launchpolicy specifies which and how many agents should be connected to these entities. Make sure that the agentcount and humancount in the initialization parameters are in line with the launch policy section in the mas2g file. 
-If you use BW4T from a batch runner, you may want to reset the server after each run. This is done by specifying a map in the mas file init parameters.
+If you use BW4T from a batch runner, you may want to reset the server after each run. This is done by specifying a map in the mas file init parameters. See also Section \ref{sec:clientadvancedrunsettings}.
 
 \subsection{Restarting, pausing and resuming the system}
 If you are running from SimpleIDE, you can pause and resume the system at any time by clicking the pause or step buttons. 

@@ -19,10 +19,11 @@ When the GUI is open (Figure \ref{fig:humanPlayerGUI}), two main parts can be se
 \subsection{General use}
 Figure \ref{fig:humanPlayerGUI} shows the human player GUI, with the map panel in the left half, and the message panel in the right half. To use the human player interface, the user clicks with the left (occasionally the right) mouse button in the GUI. Depending on where the user clicks, different menus appear. The user then picks the appropriate action from the menu to execute that action. In the following sections the possibilities are explained.
 
-On the left side of the interface, the bot can be directed by clicking on the map. Different pop-up menus will appear upon clicking on different entities on the map.
+With the map panel, the bot can be directed by clicking on the map. Different pop-up menus will appear upon clicking on different entities on the map.
 
-On the right side of the interface, the battery capacity of the bot that can be controlled can be found. Bots can be selected to which messages need to be sent and messages can be sent here. The bot chat session and the e-partner chat session are also displayed.
+With the message panel, the battery capacity of the bot that can be controlled can be found. Bots can be selected to which messages need to be sent and messages can be sent here. The bot chat session and the e-partner chat session are also displayed.
 
+The map panel shares the message target with the message panel. So all messages that are sent from the map panel are sent using the actual message target setting in the message panel. A message will be send to all bots by default. Please refer to the Message Panel section below to adjust the receiver(s) of messages.
 
 \subsection{Map Panel}
 A picture of the Map Panel is shown in \ref{fig:mapPanel}.
@@ -60,19 +61,19 @@ To command the controlled bot to go to a room or a certain place in the corridor
 
 
 \item \textbf{Send message: I am waiting outside $"room"$}:
-To send a message to a bot or to all bots, click in the corridor. The corridor menu (figure ~\ref{fig:corridorMenu}) will appear next to your mouse pointer with the options $I$ $am$ $waiting$ $outside$ $"room"$. A message will be send to all bots by default. To see how to change the receiver of the messages, go to the Message Panel section.
+To send a message to a bot or to all bots, click in the corridor. The corridor menu (figure ~\ref{fig:corridorMenu}) will appear next to your mouse pointer with the options $I$ $am$ $waiting$ $outside$ $"room"$. 
 
 \item \textbf{Send message: I am in $"room"$}:
-To send a message to a bot or to all bots, click in the room. The room menu (figure \ref{fig:roomMenu}) will appear next to your mouse pointer with the option: I am in $"room"$. A message will be send to all bots by default. To see how to change the receiver of the messages, go to the Message Panel section.
+To send a message to a bot or to all bots, click in the room. The room menu (figure \ref{fig:roomMenu}) will appear next to your mouse pointer with the option: I am in $"room"$. 
 
 \item \textbf{Send message: tell other bot(s) $"information"$}:
-To send a message to a bot or to all bots with certain information about a certain room, click on the room. The room menu (Figure \ref{fig:roomMenu}) will appear next to your mouse pointer with the messages you can send. A message will be send to all bots by default. To see how to change the receiver of the messages, go to the Message Panel section.
+To send a message to a bot or to all bots with certain information about a certain room, click on the room. The room menu (Figure \ref{fig:roomMenu}) will appear next to your mouse pointer with the messages you can send.
 
 \item \textbf{Send message: tell other bot(s) about blocks}:
 By clicking on a block (particularly, those below the drop zone), the user can tell a bot or all bots something about that block, or ask others for information about that block.
 
 \item \textbf{Send message: ask other bot(s) $"question"$ about certain room}:
-To ask a bot or all bots a question about a certain room, click on the room. The room menu (Figure \ref{fig:roomMenu}) will appear next to your mouse pointer with the possible questions that can we asked. A message will be send to all bots by default. To see how to change the receiver of the messages, go to the Message Panel section.
+To ask a bot or all bots a question about a certain room, click on the room. The room menu (Figure \ref{fig:roomMenu}) will appear next to your mouse pointer with the possible questions that can we asked.
 
 \item \textbf{Pick up block}:
 To pick up a $"block"$, click on the block that needs to be picked up. The block menu (Figure \ref{fig:blockMenu}) will appear next to your mouse pointer. Click on $Go$ $to$ $"color"$ $block$. When the controlled bot is standing on the block, click on the bot. The block menu when standing on block (Figure \ref{fig:blockMenu2}) will appear. Click on $Pick$ $up$ $"color"$ $block$.
@@ -131,11 +132,11 @@ To drop the e-partner which is currently being held, click on the e-partner. The
 
 
 \subsection{Message panel}
-Figure \ref{fig:humanPlayerGUI} and \ref{fig:mp2} show the Message Panel. The second choose message button will only be enabled when the bot is holding an e-partner. Below this button, the e-partner chat session will appear when the bot holds an e-partner for the first time. Figure \ref{fig:mp2} shows the Message Panel when the e-partner has been held and dropped.
+Figure \ref{fig:humanPlayerGUI} (right half) and \ref{fig:mp2} show the Message Panel. The second choose message button will only be enabled when the bot is holding an e-partner. Below this button, the e-partner chat session will appear when the bot holds an e-partner for the first time. Figure \ref{fig:mp2} shows the Message Panel when the e-partner has been held and dropped.
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=0.6\textwidth]{HumanPlayerGUI/hpg-right-epartner.png}
+\includegraphics[width=0.5\textwidth]{HumanPlayerGUI/hpg-right-epartner.png}
 \end{center}
 \caption{Message Panel with e-partner section. Refer to Figure \ref{fig:humanPlayerGUI} for the panel without e-partner section. }
 \label{fig:mp2}
@@ -171,7 +172,7 @@ To answer questions asked by other bots, click in the bot chat session box. A me
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=0.2\textwidth]{HumanPlayerGUI/hpg-bot-chat.png}
+\includegraphics[width=0.14\textwidth]{HumanPlayerGUI/hpg-bot-chat.png}
 \end{center}
 \caption{Bot answer menu}
 \label{fig:answerBot}
