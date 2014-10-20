@@ -2,7 +2,11 @@
 <projectDescription>
   <name>bw4t-integration-test</name>
   <comment>This module integration test the entire bw4t system, to ensure the working state of the client and server. NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
-  <projects/>
+  <projects>
+    <project>bw4t-server</project>
+    <project>bw4t-core</project>
+    <project>bw4t-client</project>
+  </projects>
   <buildSpec>
     <buildCommand>
       <name>org.eclipse.jdt.core.javabuilder</name>

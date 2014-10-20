@@ -4,7 +4,7 @@
     <parent>
         <groupId>eishub</groupId>
         <artifactId>bw4t</artifactId>
-        <version>3.6.6-SNAPSHOT</version>
+        <version>3.7.1-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
     <groupId>eishub.bw4t.core</groupId>
