@@ -17,7 +17,7 @@ When the GUI is open (Figure \ref{fig:humanPlayerGUI}), two main parts can be se
 \end{figure}
 
 \subsection{General use}
-To use the human player interface (Figure \ref{fig:humanPlayerGUI}), the user clicks with the left (occasionally the right) mouse button in the GUI. Depending on where the user clicks, different menus appear. The user then picks the appropriate action from the menu to execute that action. Below the possibilities are explained.
+Figure \ref{fig:humanPlayerGUI} shows the human player GUI, with the map panel in the left half, and the message panel in the right half. To use the human player interface, the user clicks with the left (occasionally the right) mouse button in the GUI. Depending on where the user clicks, different menus appear. The user then picks the appropriate action from the menu to execute that action. In the following sections the possibilities are explained.
 
 On the left side of the interface, the bot can be directed by clicking on the map. Different pop-up menus will appear upon clicking on different entities on the map.
 
@@ -29,7 +29,7 @@ A picture of the Map Panel is shown in \ref{fig:mapPanel}.
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width= 0.35\textwidth]{HumanPlayerGUI/hpg-left.png}
+\includegraphics[width= 0.3\textwidth]{HumanPlayerGUI/hpg-left.png}
 \end{center}
 \caption{Map Panel}
 \label{fig:mapPanel}
@@ -67,6 +67,9 @@ To send a message to a bot or to all bots, click in the room. The room menu (fig
 
 \item \textbf{Send message: tell other bot(s) $"information"$}:
 To send a message to a bot or to all bots with certain information about a certain room, click on the room. The room menu (Figure \ref{fig:roomMenu}) will appear next to your mouse pointer with the messages you can send. A message will be send to all bots by default. To see how to change the receiver of the messages, go to the Message Panel section.
+
+\item \textbf{Send message: tell other bot(s) about blocks}:
+By clicking on a block (particularly, those below the drop zone), the user can tell a bot or all bots something about that block, or ask others for information about that block.
 
 \item \textbf{Send message: ask other bot(s) $"question"$ about certain room}:
 To ask a bot or all bots a question about a certain room, click on the room. The room menu (Figure \ref{fig:roomMenu}) will appear next to your mouse pointer with the possible questions that can we asked. A message will be send to all bots by default. To see how to change the receiver of the messages, go to the Message Panel section.
@@ -127,72 +130,57 @@ To drop the e-partner which is currently being held, click on the e-partner. The
 \end{itemize}
 
 
-\subsection{Sending messages}
-By clicking on the drop-down menu, the user can choose to which bot he or she will send a request or question. "all" sends the message to all bots. Next to the drop-down menu, a button is placed with choose message. This button contains the messages that are most likely to be sent. Left clicking this button will create a list from which the user can choose a message. The "Bot Chat Session" menu ives a number of standard answers: yes, no, don't know, ok, etc. It is not possible to use free text because the non-human agents can only process these pre-specified messages. The specification document gives more details on how messages are processed by non-human agents.
-
-\subsection{Click on room or dropzone}
-By clicking on a room, the user can order his bot to go to that room, tell everybody something about that room or ask something about that room.
-\subsection{Click on blocks}
-By clicking on a block (particularly, those below the drop zone), the user can tell everybody something about that block, or ask others for information about that block.
-\subsection{Click on hallway}
-By clicking on a hallway, the user can point to an exact (X,Y) location to go to. Also it is possible to tell all others roughly where one is in the hallway.
-
-
-\subsection{The message panel}
-A picture of the Message Panel can be found in figure ~\ref{fig:mp1}. The second choose message button will only be enabled when the bot is holding an e-partner. Below this button, the e-partner chat session will appear when the bot holds an e-partner for the first time. Figure ~\ref{fig:mp2} shows the Message Panel when the e-partner has been held and dropped.
-\\
-\begin{figure}[h]
-\begin{center}
-\includegraphics{HumanPlayerGUI/hpg-right.png}
-\end{center}
-\caption{Message Panel}
-\label{fig:mp1}
-\end{figure}
+\subsection{Message panel}
+Figure \ref{fig:humanPlayerGUI} and \ref{fig:mp2} show the Message Panel. The second choose message button will only be enabled when the bot is holding an e-partner. Below this button, the e-partner chat session will appear when the bot holds an e-partner for the first time. Figure \ref{fig:mp2} shows the Message Panel when the e-partner has been held and dropped.
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics{HumanPlayerGUI/hpg-right-epartner.png}
+\includegraphics[width=0.6\textwidth]{HumanPlayerGUI/hpg-right-epartner.png}
 \end{center}
-\caption{Message Panel with e-partner section}
+\caption{Message Panel with e-partner section. Refer to Figure \ref{fig:humanPlayerGUI} for the panel without e-partner section. }
 \label{fig:mp2}
 \end{figure}
 
-\textbf{Select message receiver}
-To select who a message needs to be sent to, click on the dropdown box (Figure ~\ref{fig:receiverDropDown}) at $Send$ $message$ $to:$. The receiver is by default $all$.
+\begin{itemize}
+
+\item \textbf{Select message receiver}
+To select who a message needs to be sent to, click on the dropdown box (Figure \ref{fig:receiverDropDown}) at $Send$ $message$ $to:$. The receiver is by default $all$.
 When set to $all$, all other bots receive the message. When set to a specific bot, only that bot receives the message.
-\\
+
+\item \textbf{Send message to bot(s)}
+To send a message, click on the $Choose$ $message$ button. A menu (Figure \ref{fig:messageBot}) will appear next to your mouse pointer with the possible messages to be sent.
+
 \begin{figure}[h]
-\begin{center}
-\includegraphics{HumanPlayerGUI/hpg-bot-receiver.png}
-\end{center}
-\caption{Select receiver dropdown}
-\label{fig:receiverDropDown}
+\begin{minipage}{0.48\textwidth}
+  \centering
+  \includegraphics[width=0.6\textwidth]{HumanPlayerGUI/hpg-bot-receiver.png}
+  \caption{Select receiver dropdown}
+  \label{fig:receiverDropDown}
+\end{minipage}\hfill
+\begin{minipage}{0.48\textwidth}
+  \centering
+  \includegraphics[width=0.6\textwidth]{HumanPlayerGUI/hpg-bot-message.png}
+  \caption{Choose message button menu}
+  \label{fig:messageBot}
+\end{minipage}
 \end{figure}
 
-\textbf{Send message to bot(s)}
-To send a message, click on the $Choose$ $message$ button. A menu (figure ~\ref{fig:messageBot}) will appear next to your mouse pointer with the possible messages to be sent.
-\\
-\begin{figure}[h]
-\begin{center}
-\includegraphics{HumanPlayerGUI/hpg-bot-message.png}
-\end{center}
-\caption{Choose message button menu}
-\label{fig:messageBot}
-\end{figure}
 
-\textbf{Answer a question}
+\item \textbf{Answer a question}
 To answer questions asked by other bots, click in the bot chat session box. A menu (figure ~\ref{fig:answerBot}) will appear next to your mouse pointer with the possible answers to be sent.
-\\
+
 \begin{figure}[h]
 \begin{center}
-\includegraphics{HumanPlayerGUI/hpg-bot-chat.png}
+\includegraphics[width=0.2\textwidth]{HumanPlayerGUI/hpg-bot-chat.png}
 \end{center}
 \caption{Bot answer menu}
 \label{fig:answerBot}
 \end{figure}
 
-\textbf{Send message to e-partner}
-To send a message to the e-partner that is currently being held, click on the choose message button. A menu (figure  ~\ref{fig:epartnerMenu3}) will appear next to your mouse pointer. Click on $I$ $am$ $going$ $to$ $"room"$. This option will only appear if the e-partner has GPS enabled.
-\\
-\textbf{Drop e-partner}
+\item \textbf{Send message to e-partner}
+To send a message to the e-partner that is currently being held, click on the choose message button. A menu (Figure  \ref{fig:epartnerMenu3}) will appear next to your mouse pointer. Click on $I$ $am$ $going$ $to$ $"room"$. This option will only appear if the e-partner has GPS enabled.
+
+\item \textbf{Drop e-partner}
 To drop the e-partner that is currently being held, click on the choose message button. A menu (figure  ~\ref{fig:epartnerMenu3}) will appear next to your mouse pointer. Click on $Drop$ $e-partner$. The choose message button will be disabled after dropping the e-partner.
+
+\end{itemize}
