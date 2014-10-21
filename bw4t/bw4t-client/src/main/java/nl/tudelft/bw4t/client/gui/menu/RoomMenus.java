@@ -99,7 +99,7 @@ public class RoomMenus {
     public static void buildPopUpMenuRoom(Zone room, BW4TClientGUI gui) {
         RoomMenus.controller = gui.getController();
         ClientMapController cmc = controller.getMapController();
-        ViewBlock holding = cmc.getTheBot().getFirstHolding();
+        ViewBlock holding = cmc.getTheBot().getTopBlock();
         String label = room.getName();
         gui.getjPopupMenu().removeAll();
 

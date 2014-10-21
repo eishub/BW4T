@@ -9,15 +9,15 @@ import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Queue;
+import java.util.Stack;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
+import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
@@ -154,7 +154,7 @@ public class NavigatingRobotTest {
 	public void isHoldingTest() {
 		List<Block> emptyList = new ArrayList<Block>();
 		;
-		assertEquals(bot.isHolding().isEmpty(), emptyList.isEmpty());
+		assertEquals(bot.getHolding().isEmpty(), emptyList.isEmpty());
 	}
 
 	@Test
@@ -220,7 +220,7 @@ public class NavigatingRobotTest {
 	@Test
 	public void getViewTest() {
 		when(space.getLocation(bot)).thenReturn(new NdPoint(1, 1));
-		Collection<nl.tudelft.bw4t.map.view.ViewBlock> bs = new HashSet<>();
+		Stack<nl.tudelft.bw4t.map.view.ViewBlock> bs = new Stack<ViewBlock>();
 		bs.add(b.getView());
 
 		ViewEntity ent = new ViewEntity(bot.getId(), "Bot1", 1, 1, bs,

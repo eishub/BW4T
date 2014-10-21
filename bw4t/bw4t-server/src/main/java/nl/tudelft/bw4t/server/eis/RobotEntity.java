@@ -400,14 +400,14 @@ public class RobotEntity implements EntityInterface {
 
 	/**
 	 * Percept if the robot is holding something. Send if it becomes true, and
-	 * send negated if it becomes false again.
+	 * send negated if it becomes false again. 
 	 * 
 	 * @return holding block
 	 */
 	@AsPercept(name = "holding", multiplePercepts = true, filter = Filter.Type.ON_CHANGE_NEG)
 	public List<Long> getHolding() {
 		List<Long> holds = new ArrayList<>();
-		for (Block b : ourRobot.isHolding()) {
+		for (Block b : ourRobot.getHolding()) {
 			holds.add(b.getId());
 		}
 		return holds;
@@ -424,8 +424,8 @@ public class RobotEntity implements EntityInterface {
 		List<Long> holds = new ArrayList<>();
 		// stack.toArray gives stack with top=LAST element. Need to reverse.
 		// to reverse, we need to make copy first of the array.
-		// Notice that collections.reverse is hacking the provided array!
-		List<Block> blockstack = new ArrayList<Block>(ourRobot.isHolding());
+		// Notice that collections.reverse is modifying the provided array!
+		List<Block> blockstack = new ArrayList<Block>(ourRobot.getHolding());
 		Collections.reverse(blockstack);
 		for (Block b : blockstack) {
 			holds.add(b.getId());

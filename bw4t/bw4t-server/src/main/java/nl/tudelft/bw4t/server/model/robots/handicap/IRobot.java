@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.server.model.robots.handicap;
 
 import java.util.List;
+import java.util.Stack;
 
 import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.server.model.BoundedMoveableInterface;
@@ -40,9 +41,10 @@ public interface IRobot extends BoundedMoveableInterface {
 	void disconnect();
 
 	/**
-	 * @return The block the robot is holding, null if holding none
+	 * @return The stack of blocks the robot is holding. Notice that
+	 *         {@link Stack} has the top element last.
 	 */
-	List<Block> isHolding();
+	Stack<Block> getHolding();
 
 	/**
 	 * @return The targetlocation of the robot

@@ -10,6 +10,7 @@ import java.util.Set;
 import nl.tudelft.bw4t.client.controller.percept.processors.BumpedProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.ColorProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.EPartnerProcessor;
+import nl.tudelft.bw4t.client.controller.percept.processors.HoldingBlocksProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.HoldingProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.LocationProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.NegationProcessor;
@@ -104,6 +105,7 @@ public class ClientMapController extends AbstractMapController {
 		perceptProcessors.put("robot", new RobotProcessor());
 		perceptProcessors.put("occupied", new OccupiedProcessor());
 		perceptProcessors.put("holding", new HoldingProcessor());
+		perceptProcessors.put("holdingblocks", new HoldingBlocksProcessor());
 		perceptProcessors.put("position", new PositionProcessor());
 		perceptProcessors.put("color", new ColorProcessor());
 		perceptProcessors.put("epartner", new EPartnerProcessor());

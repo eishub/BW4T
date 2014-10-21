@@ -2,11 +2,11 @@ package nl.tudelft.bw4t.server.model.robots;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Stack;
 
+import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.logging.BotLog;
@@ -99,7 +99,11 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	 */
 	private List<String> handicapsList;
 
-	/** The list of blocks the robot is holding. */
+	/**
+	 * The stack of blocks the robot is holding. Notice: Stack has the last
+	 * element of the list as 'top'. This is the reverse from the way we
+	 * perceive stacks..
+	 */
 	private final Stack<Block> holding;
 	/**
 	 * set to true if we have to cancel a motion due to a collision. A collision
@@ -230,8 +234,10 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	}
 
 	@Override
-	public List<Block> isHolding() {
-		return new ArrayList<Block>(holding);
+	public Stack<Block> getHolding() {
+		Stack<Block> copy = new Stack<Block>();
+		copy.addAll(holding);
+		return copy;
 	}
 
 	@Override
@@ -639,7 +645,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 
 	@Override
 	public ViewEntity getView() {
-		Collection<nl.tudelft.bw4t.map.view.ViewBlock> bs = new HashSet<>();
+		Stack<ViewBlock> bs = new Stack<ViewBlock>();
 		for (Block block : holding) {
 			bs.add(block.getView());
 		}

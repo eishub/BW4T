@@ -26,7 +26,7 @@ public class BlockadeMenu {
         gui.getjPopupMenu().removeAll();
         ClientMapController cmc = gui.getController().getMapController();
 
-        ViewBlock holdingID = cmc.getTheBot().getFirstHolding();
+        ViewBlock holdingID = cmc.getTheBot().getTopBlock();
         Color entityColor = cmc.getTheBot().getColor();
 
         JMenuItem menuItem = new JMenuItem();

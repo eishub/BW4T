@@ -34,7 +34,7 @@ public final class MapOperations {
      */
     public static void buildPopUpMenuForGoalColor(BlockColor color, BW4TClientGUI gui) {
         ClientMapController cmc = gui.getController().getMapController();
-        ViewBlock holdingID = cmc.getTheBot().getFirstHolding();
+        ViewBlock holdingID = cmc.getTheBot().getTopBlock();
 
         gui.getjPopupMenu().removeAll();
 
