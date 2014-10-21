@@ -4,9 +4,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
+import java.util.Stack;
 
 import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
@@ -101,7 +100,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	private List<String> handicapsList;
 
 	/** The list of blocks the robot is holding. */
-	private final Queue<Block> holding;
+	private final Stack<Block> holding;
 	/**
 	 * set to true if we have to cancel a motion due to a collision. A collision
 	 * is caused by an attempt to move into or out of a room
@@ -171,7 +170,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 		 * Here the number of blocks a bot can hold is set.
 		 */
 		this.grippercap = cap;
-		this.holding = new LinkedList<Block>();
+		this.holding = new Stack<Block>();
 		this.handicapsList = new ArrayList<String>();
 		this.agentRecord = new AgentRecord(name);
 	}
@@ -259,15 +258,22 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 
 	@Override
 	public void pickUp(Block b) {
-		holding.add(b);
+		if (holding.size() >= grippercap) {
+			throw new IllegalStateException(
+					"block stack is full, failed to pick up another block");
+		}
+		holding.push(b);
 		b.setHeldBy(this);
 		b.removeFromContext();
 	}
 
 	@Override
 	public void drop() {
-		Block b = holding.poll();
-		if (null != b) {
+		if (holding.empty()) {
+			throw new IllegalStateException("bot is not holding any block");
+		}
+		if (!holding.empty()) {
+			Block b = holding.pop();
 			// First check if dropped in dropzone, then it won't need to be
 			// added to the context again
 			DropZone dropZone = (DropZone) getContext().getObjects(

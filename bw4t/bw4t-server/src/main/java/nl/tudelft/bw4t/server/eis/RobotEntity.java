@@ -3,6 +3,7 @@ package nl.tudelft.bw4t.server.eis;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -421,7 +422,12 @@ public class RobotEntity implements EntityInterface {
 	@AsPercept(name = "holdingblocks", filter = Filter.Type.ON_CHANGE)
 	public List<Long> getHoldingBlocks() {
 		List<Long> holds = new ArrayList<>();
-		for (Block b : ourRobot.isHolding()) {
+		// stack.toArray gives stack with top=LAST element. Need to reverse.
+		// to reverse, we need to make copy first of the array.
+		// Notice that collections.reverse is hacking the provided array!
+		List<Block> blockstack = new ArrayList<Block>(ourRobot.isHolding());
+		Collections.reverse(blockstack);
+		for (Block b : blockstack) {
 			holds.add(b.getId());
 		}
 		return holds;
