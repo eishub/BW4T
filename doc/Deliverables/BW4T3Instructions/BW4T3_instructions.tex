@@ -158,7 +158,7 @@ In GOAL these settings can be changed also from the mas2g file. The CONFIGFILE o
  
 \item
     CONFIGFILE(""):
-    The file from which the client reads the configuration.
+    The file from which the client reads the configuration. This is an xml file that can be generated with the scenario editor. The file is read relative to the directory containing the client environment jar file, unless you use an absolute path. It is recommended to place the xml relative to the client environment location, and not use an absolute path. WARNING: currently the scenario editor exports MAS files with absolute paths. You need to fix this manually.
  
 \item
     GOALHUMAN("false"):
