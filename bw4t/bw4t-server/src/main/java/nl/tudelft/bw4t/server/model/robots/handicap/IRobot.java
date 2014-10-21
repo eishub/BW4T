@@ -23,8 +23,8 @@ import repast.simphony.space.continuous.NdPoint;
  * This interface contains all the methods from the original Robot class.
  */
 public interface IRobot extends BoundedMoveableInterface {
-    
-    /**
+
+	/**
 	 * @return The name of the robot
 	 */
 	String getName();
@@ -79,7 +79,8 @@ public interface IRobot extends BoundedMoveableInterface {
 
 	/**
 	 * Drops the block the robot is holding on the current location. The block
-	 * is assigned a random position inside the room that it was dropped in.
+	 * is assigned a random position inside the room that it was dropped in. If
+	 * the bot is not holding any block, this fails silently.
 	 */
 	void drop();
 
@@ -87,8 +88,9 @@ public interface IRobot extends BoundedMoveableInterface {
 	 * A method for dropping multiple blocks at once.
 	 * 
 	 * @param amount
-	 *            The amount of blocks that have to be dropped, needs to be less
-	 *            than the amount of blocks in the list
+	 *            The amount of blocks that have to be dropped. If the amount is
+	 *            bigger than the actual number of blocks held by the bot, all
+	 *            blocks are dropped.
 	 */
 	void drop(int amount);
 

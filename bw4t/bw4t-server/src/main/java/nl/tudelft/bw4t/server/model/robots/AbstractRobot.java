@@ -4,7 +4,9 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
@@ -99,7 +101,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	private List<String> handicapsList;
 
 	/** The list of blocks the robot is holding. */
-	private final List<Block> holding;
+	private final Queue<Block> holding;
 	/**
 	 * set to true if we have to cancel a motion due to a collision. A collision
 	 * is caused by an attempt to move into or out of a room
@@ -169,7 +171,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 		 * Here the number of blocks a bot can hold is set.
 		 */
 		this.grippercap = cap;
-		this.holding = new ArrayList<Block>(grippercap);
+		this.holding = new LinkedList<Block>();
 		this.handicapsList = new ArrayList<String>();
 		this.agentRecord = new AgentRecord(name);
 	}
@@ -230,7 +232,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 
 	@Override
 	public List<Block> isHolding() {
-		return holding;
+		return new ArrayList<Block>(holding);
 	}
 
 	@Override
@@ -257,20 +259,19 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 
 	@Override
 	public void pickUp(Block b) {
-        holding.add(b);
+		holding.add(b);
 		b.setHeldBy(this);
 		b.removeFromContext();
 	}
 
 	@Override
 	public void drop() {
-		if (!holding.isEmpty()) {
+		Block b = holding.poll();
+		if (null != b) {
 			// First check if dropped in dropzone, then it won't need to be
 			// added to the context again
 			DropZone dropZone = (DropZone) getContext().getObjects(
 					DropZone.class).get(0);
-			int toDrop = holding.size() - 1;
-			Block b = holding.get(toDrop);
 			if (!dropZone.dropped(b, this)) {
 				// bot was not in the dropzone.. Are we in a room?
 				Zone ourzone = getZone();
@@ -279,20 +280,18 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 					b.setHeldBy(null);
 					b.addToContext();
 					// Slightly jitter the location where the box is
-					// dropped
+					// dropped.
 					double x = ourzone.getLocation().getX();
 					double y = ourzone.getLocation().getY();
 					b.moveTo(RandomHelper.nextDoubleFromTo(x - 5, x + 5),
 							RandomHelper.nextDoubleFromTo(y - 5, y + 5));
 				}
 			}
-			holding.remove(toDrop);
 		}
 	}
 
 	@Override
 	public void drop(int amount) {
-		assert amount <= holding.size();
 		for (int i = 0; i < amount; i++) {
 			drop();
 		}

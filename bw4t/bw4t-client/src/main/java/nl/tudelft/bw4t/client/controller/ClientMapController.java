@@ -38,305 +38,316 @@ import eis.exceptions.PerceiveException;
 import eis.iilang.Parameter;
 
 /**
- * The Client Map Controller. This processes incoming percepts and pushes them through
- * {@link PerceptProcessor}s that do the actual updating. If GOAL is connected, the percepts are retrieved only by GOAL getPercept calls.
- * If the controller is running standalone, it calls getPercepts itself. see also {@link #run()}
+ * The Client Map Controller. This processes incoming percepts and pushes them
+ * through {@link PerceptProcessor}s that do the actual updating. If GOAL is
+ * connected, the percepts are retrieved only by GOAL getPercept calls. If the
+ * controller is running standalone, it calls getPercepts itself. see also
+ * {@link #run()}
  */
 public class ClientMapController extends AbstractMapController {
-    /**
-     * The log4j logger which writes logs.
-     */
-    private static final Logger LOGGER = Logger.getLogger(ClientMapController.class);
+	/**
+	 * The log4j logger which writes logs.
+	 */
+	private static final Logger LOGGER = Logger
+			.getLogger(ClientMapController.class);
 
-    /** The exception string constant. */
-    private static final String COULDNOTPOLL = "Could not correctly poll the percepts from the environment.";
+	/** The exception string constant. */
+	private static final String COULDNOTPOLL = "Could not correctly poll the percepts from the environment.";
 
-    /**
-     * The Client Controller used by this Client Map Controller.
-     */
-    private final ClientController clientController;
+	/**
+	 * The Client Controller used by this Client Map Controller.
+	 */
+	private final ClientController clientController;
 
-    /** The occupied rooms. */
-    private final Set<Zone> occupiedRooms = new HashSet<Zone>();
+	/** The occupied rooms. */
+	private final Set<Zone> occupiedRooms = new HashSet<Zone>();
 
-    /** The rendered bot. */
-    private final ViewEntity myBot = new ViewEntity(0);
+	/** The rendered bot. */
+	private final ViewEntity myBot = new ViewEntity(0);
 
-    /** The color sequence index. */
-    private int colorSequenceIndex = 0;
+	/** The color sequence index. */
+	private int colorSequenceIndex = 0;
 
-    /** The visible blocks. */
-    private final Set<ViewBlock> visibleBlocks = new HashSet<>();
+	/** The visible blocks. */
+	private final Set<ViewBlock> visibleBlocks = new HashSet<>();
 
-    /** The (at one point) visible e-partners. */
-    private final Set<ViewEPartner> knownEPartners = new HashSet<>();
+	/** The (at one point) visible e-partners. */
+	private final Set<ViewEPartner> knownEPartners = new HashSet<>();
 
-    /** The visible robots. */
-    private final Set<ViewEntity> visibleRobots = new HashSet<>();
+	/** The visible robots. */
+	private final Set<ViewEntity> visibleRobots = new HashSet<>();
 
-    /** The visible robots. */
-    private final Set<ViewEntity> knownRobots = new HashSet<>();
+	/** The visible robots. */
+	private final Set<ViewEntity> knownRobots = new HashSet<>();
 
-    /** All the blocks. */
-    private final Map<Long, ViewBlock> allBlocks = new HashMap<>();
+	/** All the blocks. */
+	private final Map<Long, ViewBlock> allBlocks = new HashMap<>();
 
-    private final Map<String, PerceptProcessor> perceptProcessors;
+	private final Map<String, PerceptProcessor> perceptProcessors;
 
-    /** The color sequence. */
-    private final List<BlockColor> colorSequence = new LinkedList<>();
+	/** The color sequence. */
+	private final List<BlockColor> colorSequence = new LinkedList<>();
 
-    /**
-     * Instantiates a new client map controller.
-     * 
-     * @param map
-     *            the map
-     * @param controller
-     *            the controller
-     */
-    public ClientMapController(NewMap map, ClientController controller) {
-        super(map);
-        clientController = controller;
-        perceptProcessors = new HashMap<String, PerceptProcessor>();
-        perceptProcessors.put("not", new NegationProcessor());
-        perceptProcessors.put("robot", new RobotProcessor());
-        perceptProcessors.put("occupied", new OccupiedProcessor());
-        perceptProcessors.put("holding", new HoldingProcessor());
-        perceptProcessors.put("position", new PositionProcessor());
-        perceptProcessors.put("color", new ColorProcessor());
-        perceptProcessors.put("epartner", new EPartnerProcessor());
-        perceptProcessors.put("sequence", new SequenceProcessor());
-        perceptProcessors.put("sequenceIndex", new SequenceIndexProcessor());
-        perceptProcessors.put("location", new LocationProcessor());
-        perceptProcessors.put("robotSize", new RobotSizeProcessor());
-        perceptProcessors.put("bumped", new BumpedProcessor());
-        perceptProcessors.put("battery", new RobotBatteryProcessor());
-        perceptProcessors.put("oldTargetUnreachable", new RobotOldTargetUnreachableProcessor());
-    }
+	/**
+	 * Instantiates a new client map controller.
+	 * 
+	 * @param map
+	 *            the map
+	 * @param controller
+	 *            the controller
+	 */
+	public ClientMapController(NewMap map, ClientController controller) {
+		super(map);
+		clientController = controller;
+		perceptProcessors = new HashMap<String, PerceptProcessor>();
+		perceptProcessors.put("not", new NegationProcessor());
+		perceptProcessors.put("robot", new RobotProcessor());
+		perceptProcessors.put("occupied", new OccupiedProcessor());
+		perceptProcessors.put("holding", new HoldingProcessor());
+		perceptProcessors.put("position", new PositionProcessor());
+		perceptProcessors.put("color", new ColorProcessor());
+		perceptProcessors.put("epartner", new EPartnerProcessor());
+		perceptProcessors.put("sequence", new SequenceProcessor());
+		perceptProcessors.put("sequenceIndex", new SequenceIndexProcessor());
+		perceptProcessors.put("location", new LocationProcessor());
+		perceptProcessors.put("robotSize", new RobotSizeProcessor());
+		perceptProcessors.put("bumped", new BumpedProcessor());
+		perceptProcessors.put("battery", new RobotBatteryProcessor());
+		perceptProcessors.put("oldTargetUnreachable",
+				new RobotOldTargetUnreachableProcessor());
+	}
 
-    @Override
-    public List<BlockColor> getSequence() {
-        return colorSequence;
-    }
+	@Override
+	public List<BlockColor> getSequence() {
+		return colorSequence;
+	}
 
-    @Override
-    public int getSequenceIndex() {
-        return colorSequenceIndex;
-    }
+	@Override
+	public int getSequenceIndex() {
+		return colorSequenceIndex;
+	}
 
-    public void setSequenceIndex(int sequenceIndex) {
-        this.colorSequenceIndex = sequenceIndex;
-    }
+	public void setSequenceIndex(int sequenceIndex) {
+		this.colorSequenceIndex = sequenceIndex;
+	}
 
-    public Set<Zone> getOccupiedRooms() {
-        return occupiedRooms;
-    }
+	public Set<Zone> getOccupiedRooms() {
+		return occupiedRooms;
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see nl.tudelft.bw4t.map.renderer.MapController#isOccupied(nl.tudelft.bw4t.map.Zone)
-     */
-    @Override
-    public boolean isOccupied(Zone room) {
-        return getOccupiedRooms().contains(room);
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * nl.tudelft.bw4t.map.renderer.MapController#isOccupied(nl.tudelft.bw4t
+	 * .map.Zone)
+	 */
+	@Override
+	public boolean isOccupied(Zone room) {
+		return getOccupiedRooms().contains(room);
+	}
 
-    /**
-     * Adds an occupied room to the list of occupied rooms.
-     * 
-     * @param name
-     *            the name
-     */
-    public void addOccupiedRoom(String name) {
-        getOccupiedRooms().add(getMap().getZone(name));
-    }
+	/**
+	 * Adds an occupied room to the list of occupied rooms.
+	 * 
+	 * @param name
+	 *            the name
+	 */
+	public void addOccupiedRoom(String name) {
+		getOccupiedRooms().add(getMap().getZone(name));
+	}
 
-    /**
-     * Removes the occupied room from the list of occupied rooms.
-     * 
-     * @param name
-     *            the name
-     */
-    public void removeOccupiedRoom(String name) {
-        getOccupiedRooms().remove(getMap().getZone(name));
-    }
+	/**
+	 * Removes the occupied room from the list of occupied rooms.
+	 * 
+	 * @param name
+	 *            the name
+	 */
+	public void removeOccupiedRoom(String name) {
+		getOccupiedRooms().remove(getMap().getZone(name));
+	}
 
-    @Override
-    public Set<ViewBlock> getVisibleBlocks() {
-        return visibleBlocks;
-    }
+	@Override
+	public Set<ViewBlock> getVisibleBlocks() {
+		return visibleBlocks;
+	}
 
-    @Override
-    public Set<ViewEntity> getVisibleEntities() {
-        return visibleRobots;
-    }
+	@Override
+	public Set<ViewEntity> getVisibleEntities() {
+		return visibleRobots;
+	}
 
-    @Override
-    public Set<ViewEPartner> getVisibleEPartners() {
-        Set<ViewEPartner> visibleEPartners = new HashSet<ViewEPartner>();
-        for (ViewEPartner ep : knownEPartners) {
-            if (ep.isVisible()) {
-                visibleEPartners.add(ep);
-            }
-        }
-        return visibleEPartners;
-    }
+	@Override
+	public Set<ViewEPartner> getVisibleEPartners() {
+		Set<ViewEPartner> visibleEPartners = new HashSet<ViewEPartner>();
+		for (ViewEPartner ep : knownEPartners) {
+			if (ep.isVisible()) {
+				visibleEPartners.add(ep);
+			}
+		}
+		return visibleEPartners;
+	}
 
-    public void clearVisible() {
-    	getVisibleBlocks().clear();
-        for (ViewEPartner ep : knownEPartners) {
-            ep.setVisible(false);
-        }
-    }
-    
-    public void clearVisiblePositions() {
-        visibleRobots.clear();
-        visibleRobots.add(myBot);
-    }
+	public void clearVisible() {
+		visibleBlocks.clear();
+		for (ViewEPartner ep : knownEPartners) {
+			ep.setVisible(false);
+		}
+	}
 
-    /**
-     * Returns an e-partner with this id that is currently visible.
-     * 
-     * @param id
-     *            The id.
-     * @return The e-partner found.
-     */
-    public ViewEPartner getViewEPartner(long id) {
-        for (ViewEPartner ep : getVisibleEPartners()) {
-            if (ep.getId() == id) {
-                return ep;
-            }
-        }
-        return null;
-    }
+	public void clearVisiblePositions() {
+		visibleRobots.clear();
+		visibleRobots.add(myBot);
+	}
 
-    /**
-     * Returns an e-partner with this id that at one point has ever been visible.
-     * 
-     * @param id
-     *            The id.
-     * @return The e-partner found.
-     */
-    public ViewEPartner getKnownEPartner(long id) {
-        for (ViewEPartner ep : knownEPartners) {
-            if (ep.getId() == id) {
-                return ep;
-            }
-        }
-        return null;
-    }
+	/**
+	 * Returns an e-partner with this id that is currently visible.
+	 * 
+	 * @param id
+	 *            The id.
+	 * @return The e-partner found.
+	 */
+	public ViewEPartner getViewEPartner(long id) {
+		for (ViewEPartner ep : getVisibleEPartners()) {
+			if (ep.getId() == id) {
+				return ep;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Returns an e-partner with this id that at one point has ever been
+	 * visible.
+	 * 
+	 * @param id
+	 *            The id.
+	 * @return The e-partner found.
+	 */
+	public ViewEPartner getKnownEPartner(long id) {
+		for (ViewEPartner ep : knownEPartners) {
+			if (ep.getId() == id) {
+				return ep;
+			}
+		}
+		return null;
+	}
 
 	public void makeRobotVisible(long id) {
 		visibleRobots.add(getKnownRobot(id));
 	}
-    
-    public ViewEntity getKnownRobot(long id) {
-    	if(myBot.getId() == id)
-    		return myBot;
-    	for (ViewEntity robot : knownRobots) {
-            if (robot.getId() == id) {
-                return robot;
-            }
-        }
-    	return null;
-    }
-    
-    public ViewEntity getCreateRobot(long id) {
-    	ViewEntity bot = getKnownRobot(id);
-    	if(bot != null)
-    		return bot;
-    	bot = new ViewEntity(id);
-    	knownRobots.add(bot);
-    	return bot;
-    }
 
-    public ViewEntity getTheBot() {
-        return myBot;
-    }
+	public ViewEntity getKnownRobot(long id) {
+		if (myBot.getId() == id)
+			return myBot;
+		for (ViewEntity robot : knownRobots) {
+			if (robot.getId() == id) {
+				return robot;
+			}
+		}
+		return null;
+	}
 
-    public ViewBlock getBlock(Long id) {
-        ViewBlock b = allBlocks.get(id);
-        if (b == null) {
-            b = new ViewBlock();
-            allBlocks.put(id, b);
-        }
-        return b;
-    }
+	public ViewEntity getCreateRobot(long id) {
+		ViewEntity bot = getKnownRobot(id);
+		if (bot != null)
+			return bot;
+		bot = new ViewEntity(id);
+		knownRobots.add(bot);
+		return bot;
+	}
 
-    /**
-     * @param id
-     *            of the block to be checked
-     * @return true iff the block is in in the environment
-     */
-    public boolean containsBlock(Long id) {
-        return allBlocks.containsKey(id);
-    }
+	public ViewEntity getTheBot() {
+		return myBot;
+	}
 
-    /**
-     * Handle all the percepts.
-     * 
-     * @param name
-     *            the name of the percept
-     * @param perceptParameters
-     *            the percept parameters
-     */
+	public ViewBlock getBlock(Long id) {
+		ViewBlock b = allBlocks.get(id);
+		if (b == null) {
+			b = new ViewBlock();
+			allBlocks.put(id, b);
+		}
+		return b;
+	}
 
-    public void handlePercept(String name, List<Parameter> perceptParameters) {
-        StringBuilder sb = new StringBuilder("Handling percept: ");
-        sb.append(name);
-        sb.append(" => [");
-        for(Parameter p: perceptParameters) {
-            sb.append(p.toProlog());
-            sb.append(", ");
-        }
-        sb.append("]");
-        LOGGER.debug(sb.toString());
-        PerceptProcessor processor = perceptProcessors.get(name);
-        if (processor != null) {
-            processor.process(perceptParameters, this);
-        }
-    }
+	/**
+	 * @param id
+	 *            of the block to be checked
+	 * @return true iff the block is in in the environment
+	 */
+	public boolean containsBlock(Long id) {
+		return allBlocks.containsKey(id);
+	}
 
-    public ViewEPartner addEPartner(long id, long holderId) {
-        LOGGER.info("creating epartner(" + id + ", " + holderId + ")");
-        ViewEPartner epartner = new ViewEPartner();
-        epartner.setId(id);
-        knownEPartners.add(epartner);
-        return epartner;
-    }
+	/**
+	 * Handle all the percepts.
+	 * 
+	 * @param name
+	 *            the name of the percept
+	 * @param perceptParameters
+	 *            the percept parameters
+	 */
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see nl.tudelft.bw4t.map.renderer.AbstractMapController#run()
-     */
-    @Override
-    public void run() {
-    	/**
-    	 * If GOAL is not connected we need to fetch the percepts ourselves. Otherwise, GOAL will fetch them and we just reuse them.
-    	 */
-        if (clientController.isHuman() && !clientController.getEnvironment().isConnectedToGoal()) {
-            try {
-                clientController.getEnvironment().gatherPercepts(getTheBot().getName());
-            } catch (PerceiveException e) {
-                LOGGER.error(COULDNOTPOLL, e);
-            } catch (NoEnvironmentException | NullPointerException e) {
-                LOGGER.fatal(COULDNOTPOLL + " No connection could be made to the environment", e);
-                setRunning(false);
-            }
-        }
-        super.run();
-    }
+	public void handlePercept(String name, List<Parameter> perceptParameters) {
+		StringBuilder sb = new StringBuilder("Handling percept: ");
+		sb.append(name);
+		sb.append(" => [");
+		for (Parameter p : perceptParameters) {
+			sb.append(p.toProlog());
+			sb.append(", ");
+		}
+		sb.append("]");
+		LOGGER.debug(sb.toString());
+		PerceptProcessor processor = perceptProcessors.get(name);
+		if (processor != null) {
+			processor.process(perceptParameters, this);
+		}
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see nl.tudelft.bw4t.map.renderer.AbstractMapController#updateRenderer
-     * (nl.tudelft.bw4t.map.renderer.MapRendererInterface)
-     */
-    @Override
-    protected void updateRenderer(MapRendererInterface mri) {
-        mri.validate();
-        mri.repaint();
-    }
+	public ViewEPartner addEPartner(long id, long holderId) {
+		LOGGER.info("creating epartner(" + id + ", " + holderId + ")");
+		ViewEPartner epartner = new ViewEPartner();
+		epartner.setId(id);
+		knownEPartners.add(epartner);
+		return epartner;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see nl.tudelft.bw4t.map.renderer.AbstractMapController#run()
+	 */
+	@Override
+	public void run() {
+		/**
+		 * If GOAL is not connected we need to fetch the percepts ourselves.
+		 * Otherwise, GOAL will fetch them and we just reuse them.
+		 */
+		if (clientController.isHuman()
+				&& !clientController.getEnvironment().isConnectedToGoal()) {
+			try {
+				clientController.getEnvironment().gatherPercepts(
+						getTheBot().getName());
+			} catch (PerceiveException e) {
+				LOGGER.error(COULDNOTPOLL, e);
+			} catch (NoEnvironmentException | NullPointerException e) {
+				LOGGER.fatal(COULDNOTPOLL
+						+ " No connection could be made to the environment", e);
+				setRunning(false);
+			}
+		}
+		super.run();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see nl.tudelft.bw4t.map.renderer.AbstractMapController#updateRenderer
+	 * (nl.tudelft.bw4t.map.renderer.MapRendererInterface)
+	 */
+	@Override
+	protected void updateRenderer(MapRendererInterface mri) {
+		mri.validate();
+		mri.repaint();
+	}
 }
