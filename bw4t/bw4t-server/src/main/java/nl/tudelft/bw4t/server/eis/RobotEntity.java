@@ -400,7 +400,7 @@ public class RobotEntity implements EntityInterface {
 
 	/**
 	 * Percept if the robot is holding something. Send if it becomes true, and
-	 * send negated if it becomes false again. 
+	 * send negated if it becomes false again.
 	 * 
 	 * @return holding block
 	 */
@@ -431,6 +431,11 @@ public class RobotEntity implements EntityInterface {
 			holds.add(b.getId());
 		}
 		return holds;
+	}
+
+	@AsPercept(name = "gripperCapacity", filter = Filter.Type.ON_CHANGE)
+	public Integer gripperCapacity() {
+		return ourRobot.getGripperCapacity();
 	}
 
 	/**
