@@ -263,6 +263,13 @@ public class ClientMapController extends AbstractMapController {
 		return myBot;
 	}
 
+	/**
+	 * FIXME is this a hack? allBlocks is never loaded properly?
+	 * @param id
+	 *            block id
+	 * @return {@link ViewBlock} that has given id, or null if block does not
+	 *         exist
+	 */
 	public ViewBlock getBlock(Long id) {
 		ViewBlock b = allBlocks.get(id);
 		if (b == null) {

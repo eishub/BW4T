@@ -57,6 +57,35 @@ public class ClientMapControllerTest {
 		clientMapController = new ClientMapController(map, clientController);
 	}
 
+	/*********************************************************************************/
+	/************************* support functions *************************************/
+	/*********************************************************************************/
+	private ViewBlock getBlock(Long blockID) throws NoSuchMethodException,
+			IllegalAccessException, InvocationTargetException {
+		Method method = ClientMapController.class.getDeclaredMethod("getBlock",
+				Long.class);
+		method.setAccessible(true);
+		ViewBlock block = (ViewBlock) method.invoke(clientMapController,
+				blockID);
+		return block;
+	}
+
+	/**
+	 * Adds 3 blue blocks, having id 1, 2 and 3.
+	 */
+	private void add3Blocks() {
+		for (int blocknr = 1; blocknr <= 3; blocknr++) {
+			LinkedList<Parameter> parameters = new LinkedList<Parameter>();
+			parameters.add(new Numeral(blocknr));
+			parameters.add(new Identifier("blue"));
+			clientMapController.handlePercept("color", parameters);
+		}
+	}
+
+	/*********************************************************************************/
+	/******************************** tests ******************************************/
+	/*********************************************************************************/
+
 	@Ignore
 	@Test
 	public void testRun() {
@@ -81,6 +110,8 @@ public class ClientMapControllerTest {
 
 	@Test
 	public void testHandlePerceptHolding() {
+		add3Blocks();
+
 		ParameterList blocks = new ParameterList();
 		blocks.add(new Numeral(2));
 		blocks.add(new Numeral(3));
@@ -177,6 +208,16 @@ public class ClientMapControllerTest {
 		parameters.add(new Numeral(3));
 		parameters.add(new Identifier("blue"));
 		clientMapController.handlePercept("color", parameters);
+		ViewBlock block = getBlock(new Long(3));
+		assertEquals(BlockColor.BLUE, block.getColor());
+	}
+
+	@Test
+	public void testHandlePerceptColors() throws NoSuchMethodException,
+			IllegalAccessException, InvocationTargetException {
+		add3Blocks();
+
+		assertEquals(3, clientMapController.getVisibleBlocks().size());
 		ViewBlock block = getBlock(new Long(3));
 		assertEquals(BlockColor.BLUE, block.getColor());
 	}
@@ -316,13 +357,4 @@ public class ClientMapControllerTest {
 		clientMapController.handlePercept("tudelft", parameters);
 	}
 
-	private ViewBlock getBlock(Long blockID) throws NoSuchMethodException,
-			IllegalAccessException, InvocationTargetException {
-		Method method = ClientMapController.class.getDeclaredMethod("getBlock",
-				Long.class);
-		method.setAccessible(true);
-		ViewBlock block = (ViewBlock) method.invoke(clientMapController,
-				blockID);
-		return block;
-	}
 }
