@@ -257,7 +257,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 			return;
 		}
 
-		g2d.setColor(Color.DARK_GRAY);
+		g2d.setColor(Color.getHSBColor(0.0639f, 0.58f, 0.5f)); // brown
 		Rectangle2D rect = set.transformRectangle(dropZone.getBoundingbox()
 				.getRectangle());
 		g2d.fill(rect);
