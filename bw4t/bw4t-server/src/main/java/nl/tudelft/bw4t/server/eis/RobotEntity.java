@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.server.eis.translators.BlockWithColorTranslator;
 import nl.tudelft.bw4t.server.eis.translators.BoundedMovableObjectTranslator;
 import nl.tudelft.bw4t.server.eis.translators.ColorTranslator;
@@ -530,7 +531,11 @@ public class RobotEntity implements EntityInterface {
 	}
 
 	/**
-	 * The battery level of the robot.
+	 * The battery level of the robot. The battery can be re-charged by moving
+	 * through a charge zone. The battery use depends on the size and speed of
+	 * the robot as set in the configuration. By default this is off. See also
+	 * {@link BotConfig#calculateDischargeRate(int, int)}.
+	 * 
 	 * 
 	 * @return batterypercentage
 	 */
