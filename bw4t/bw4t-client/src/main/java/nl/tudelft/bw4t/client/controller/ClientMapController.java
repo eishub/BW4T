@@ -82,7 +82,14 @@ public class ClientMapController extends AbstractMapController {
 	/** The visible robots. */
 	private final Set<ViewEntity> knownRobots = new HashSet<>();
 
-	/** All the blocks. */
+	/**
+	 * All the blocks. This works in a bit of hacky way. We insert
+	 * partially-instantiated blocks in this set, waiting for other percepts to
+	 * give more information. So if we receive a color, we know the blocks color
+	 * but not the location. And when we receive a location, we do not yet know
+	 * the block color. In both cases, partially instantiated ViewBlocks end up
+	 * in the allBlocks list.
+	 */
 	private final Map<Long, ViewBlock> allBlocks = new HashMap<>();
 
 	private final Map<String, PerceptProcessor> perceptProcessors;
@@ -267,7 +274,6 @@ public class ClientMapController extends AbstractMapController {
 	}
 
 	/**
-	 * FIXME is this a hack? allBlocks is never loaded properly?
 	 * 
 	 * @param id
 	 *            block id
@@ -277,7 +283,7 @@ public class ClientMapController extends AbstractMapController {
 	public ViewBlock getBlock(Long id) {
 		ViewBlock b = allBlocks.get(id);
 		if (b == null) {
-			b = new ViewBlock();
+			b = new ViewBlock(id);
 			allBlocks.put(id, b);
 		}
 		return b;

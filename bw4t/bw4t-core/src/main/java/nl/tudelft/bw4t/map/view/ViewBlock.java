@@ -21,10 +21,16 @@ public class ViewBlock {
 	private Point2D position = new Point2D.Double();
 
 	/**
-	 * Empty constructor, initialize object.
+	 * Empty constructor, caller should init object later.
+	 * 
+	 * <h1>discussion</h1> This is needed to represent partial block information
+	 * received from the server, eg when we get a color percept for a block we
+	 * do not get the block position. Maybe we should also wonder about why we
+	 * do not just have a block(id,color,loc) percept.
 	 */
-	public ViewBlock() {
-		super();
+	public ViewBlock(long id) {
+		// super(); // Wouter: there is no super class but Object?
+		objectId = id;
 	}
 
 	/**
@@ -38,7 +44,7 @@ public class ViewBlock {
 	 *            Point2D
 	 */
 	public ViewBlock(long objectId, BlockColor color, Point2D position) {
-		super();
+		// super(); // Wouter: there is no super class but Object?
 		this.objectId = objectId;
 		this.color = color;
 		this.position = position;
