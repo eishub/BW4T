@@ -10,6 +10,7 @@ import java.util.Set;
 import nl.tudelft.bw4t.client.controller.percept.processors.BumpedProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.ColorProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.EPartnerProcessor;
+import nl.tudelft.bw4t.client.controller.percept.processors.GripperCapacityProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.HoldingBlocksProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.HoldingProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.LocationProcessor;
@@ -117,6 +118,8 @@ public class ClientMapController extends AbstractMapController {
 		perceptProcessors.put("battery", new RobotBatteryProcessor());
 		perceptProcessors.put("oldTargetUnreachable",
 				new RobotOldTargetUnreachableProcessor());
+		perceptProcessors
+				.put("gripperCapacity", new GripperCapacityProcessor());
 	}
 
 	@Override
@@ -265,6 +268,7 @@ public class ClientMapController extends AbstractMapController {
 
 	/**
 	 * FIXME is this a hack? allBlocks is never loaded properly?
+	 * 
 	 * @param id
 	 *            block id
 	 * @return {@link ViewBlock} that has given id, or null if block does not

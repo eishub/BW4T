@@ -8,12 +8,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
-
 import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.menu.EntityComboModelProvider;
+
+import org.apache.log4j.Logger;
+
 import eis.exceptions.EntityException;
 import eis.iilang.Identifier;
 import eis.iilang.Parameter;
@@ -21,230 +22,240 @@ import eis.iilang.ParameterList;
 import eis.iilang.Percept;
 
 /**
- * The Class ClientController.
+ * The Class ClientController. DOC What is this?
  */
 public class ClientController implements EntityComboModelProvider {
-    private static final Logger LOGGER = Logger.getLogger(ClientController.class);
-    /**
-     * The map controller used by this client controller.
-     */
-    private final ClientMapController mapController;
+	private static final Logger LOGGER = Logger
+			.getLogger(ClientController.class);
+	/**
+	 * The map controller used by this client controller.
+	 */
+	private final ClientMapController mapController;
 
-    /** The other players. */
-    private final Set<String> otherPlayers = new HashSet<>();
-    
-    /** The bot chat history. */
-    private final List<String> botChatHistory = new LinkedList<>();
-    /** The epartner chat history. */
-    private final List<String> epartnerChatHistory = new LinkedList<>();
+	/** The other players. */
+	private final Set<String> otherPlayers = new HashSet<>();
 
-    /** The human agent. */
-    private HumanAgent humanAgent;
+	/** The bot chat history. */
+	private final List<String> botChatHistory = new LinkedList<>();
+	/** The epartner chat history. */
+	private final List<String> epartnerChatHistory = new LinkedList<>();
 
-    /** The to be performed action. */
-    private List<Percept> toBePerformedAction = new LinkedList<>();
-    
-    /** The environment which should be read. */
-    private final RemoteEnvironment environment;
-    
-    /**
-     * A reference to the client gui attached to this controller.
-     */
-    private BW4TClientGUI gui = null;
+	/** The human agent. */
+	private HumanAgent humanAgent;
 
-    /**
-     * Instantiates a new client controller.
-     * 
-     * @param env
-     *            the environment
-     * @param entityId
-     *            the entity id
-     */
-    public ClientController(RemoteEnvironment env, String entityId) {
-        environment = env;
-        mapController = new ClientMapController(environment.getMap(), this);
-        getMapController().getTheBot().setName(entityId);
-        humanAgent = null;
-    }
+	/** The to be performed action. */
+	private List<Percept> toBePerformedAction = new LinkedList<>();
 
-    /**
-     * Instantiates a new client controller.
-     * 
-     * @param env
-     *            the environment
-     * @param entityId
-     *            the entity id
-     * @param humanAgent
-     *            the human agent
-     */
-    public ClientController(RemoteEnvironment env, String entityId, HumanAgent humanAgent) {
-        this(env, entityId);
-        this.humanAgent = humanAgent;
-    }
-    
-    /**
-     * Instantiate a default GUI.
-     */
-    public void startupGUI() {
-        this.setGui(new BW4TClientGUI(this));
-    }
+	/** The environment which should be read. */
+	private final RemoteEnvironment environment;
 
-    public ClientMapController getMapController() {
-        return mapController;
-    }
+	/**
+	 * A reference to the client gui attached to this controller.
+	 */
+	private BW4TClientGUI gui = null;
 
-    public Set<String> getOtherPlayers() {
-        return otherPlayers;
-    }
+	/**
+	 * Instantiates a new client controller.
+	 * 
+	 * @param env
+	 *            the environment
+	 * @param entityId
+	 *            the entity id
+	 */
+	public ClientController(RemoteEnvironment env, String entityId) {
+		environment = env;
+		mapController = new ClientMapController(environment.getMap(), this);
+		getMapController().getTheBot().setName(entityId);
+		humanAgent = null;
+	}
 
-    public List<String> getBotChatHistory() {
-        return botChatHistory;
-    }
-    
-    public List<String> getEpartnerChatHistory() {
-        return epartnerChatHistory;
-    }
+	/**
+	 * Instantiates a new client controller.
+	 * 
+	 * @param env
+	 *            the environment
+	 * @param entityId
+	 *            the entity id
+	 * @param humanAgent
+	 *            the human agent
+	 */
+	public ClientController(RemoteEnvironment env, String entityId,
+			HumanAgent humanAgent) {
+		this(env, entityId);
+		this.humanAgent = humanAgent;
+	}
 
-    public boolean isHuman() {
-        return humanAgent != null;
-    }
+	/**
+	 * Instantiate a default GUI.
+	 */
+	public void startupGUI() {
+		this.setGui(new BW4TClientGUI(this));
+	}
 
-    public HumanAgent getHumanAgent() {
-        return humanAgent;
-    }
+	public ClientMapController getMapController() {
+		return mapController;
+	}
 
-    public RemoteEnvironment getEnvironment() {
-        return environment;
-    }
+	public Set<String> getOtherPlayers() {
+		return otherPlayers;
+	}
 
-    /**
-     * Add a new percept (containing an user action) to the list of percepts to be returned in the next getPercept cycle
-     * @param toBePerformedAction
-     */
-    public void addToBePerformedAction(Percept toBePerformedAction) {
-        this.toBePerformedAction.add( toBePerformedAction);
-    }
-    
-    protected void setToBePerformedAction(List<Percept> toBePerformedAction) {
-        this.toBePerformedAction = toBePerformedAction;
-    }
+	public List<String> getBotChatHistory() {
+		return botChatHistory;
+	}
 
-    /**
-     * Method used for returning the next action that a human player wants the bot to perform. This is received by the
-     * GOAL human bot, and then forwarded to the entity on the server side.
-     * 
-     * @return a percept containing the next action to be performed
-     */
-    public List<Percept> getToBePerformedAction() {
-        List<Percept> toBePerformedActionClone = toBePerformedAction;
-        setToBePerformedAction(new LinkedList<Percept>());
-        return toBePerformedActionClone;
-    }
+	public List<String> getEpartnerChatHistory() {
+		return epartnerChatHistory;
+	}
 
-    public BW4TClientGUI getGui() {
-        return gui;
-    }
+	public boolean isHuman() {
+		return humanAgent != null;
+	}
 
-    public void setGui(BW4TClientGUI gui) {
-        this.gui = gui;
-    }
+	public HumanAgent getHumanAgent() {
+		return humanAgent;
+	}
 
-    /**
-     * Interprets the given list of {@link Percept}s and extracts the required information.
-     * 
-     * @param percepts
-     *            the list of percepts
-     */
-    public void handlePercepts(Collection<Percept> percepts) {
-        getMapController().clearVisible();
-        boolean clearedPositions = false;
-        for (Percept percept : percepts) {
-            String name = percept.getName();
-            List<Parameter> parameters = percept.getParameters();
+	public RemoteEnvironment getEnvironment() {
+		return environment;
+	}
 
-        	if(name.equals("position") && !clearedPositions) {
-        		getMapController().clearVisiblePositions();
-        		clearedPositions = true;
-        	}
-        	
-            mapController.handlePercept(name, parameters);
-            if ("player".equals(name)) {
-                getOtherPlayers().add(((Identifier) parameters.get(0)).getValue());
-            } else if ("message".equals(name)) {
-                handleMessagePercept(parameters);
-            }
-        }
-    }
+	/**
+	 * Add a new percept (containing an user action) to the list of percepts to
+	 * be returned in the next getPercept cycle
+	 * 
+	 * @param toBePerformedAction
+	 */
+	public void addToBePerformedAction(Percept toBePerformedAction) {
+		this.toBePerformedAction.add(toBePerformedAction);
+	}
 
-    /**
-     * Handles the message percept parameters.
-     * 
-     * @param parameters
-     *            the parameters given to the message percept
-     */
-    private void handleMessagePercept(List<Parameter> parameters) {
-        ParameterList parameterList = (ParameterList) parameters.get(0);
-        Iterator<Parameter> iterator = parameterList.iterator();
-        String sender = ((Identifier) iterator.next()).getValue();
-        String message = ((Identifier) iterator.next()).getValue();
+	protected void setToBePerformedAction(List<Percept> toBePerformedAction) {
+		this.toBePerformedAction = toBePerformedAction;
+	}
 
-        if (message.contains("I want to go") || message.contains("You forgot me")) {
-            getEpartnerChatHistory().add(sender + ": " + message);
-        } else {
-            getBotChatHistory().add(sender + ": " + message);
-        }
+	/**
+	 * Method used for returning the next action that a human player wants the
+	 * bot to perform. This is received by the GOAL human bot, and then
+	 * forwarded to the entity on the server side.
+	 * 
+	 * @return a percept containing the next action to be performed
+	 */
+	public List<Percept> getToBePerformedAction() {
+		List<Percept> toBePerformedActionClone = toBePerformedAction;
+		setToBePerformedAction(new LinkedList<Percept>());
+		return toBePerformedActionClone;
+	}
 
-        updateGUI();
-    }
-    
-    /**
-     * the update the client GUI.
-     */
-    protected void updateGUI() {
-        BW4TClientGUI currentGui = this.getGui();
-        if (currentGui != null) {
-            currentGui.update();
-        }
-    }
-    
-    /**
-     * stop the controller and dispose the GUI.
-     */
-    public void stop() {
-        mapController.setRunning(false);
-        if (this.getGui() != null) {
-            gui.dispose();
-        }
-        this.setGui(null);
-    }
+	public BW4TClientGUI getGui() {
+		return gui;
+	}
 
-    /**
-     * Send paramenters to the GUI to be displayed in the chat window
-     * @param parameters 
-     * @return a null percept as no real percept should be returned
-     */
-    public Percept sendToGUI(List<Parameter> parameters) {
-        if (this.getGui() != null) {
-            return this.getGui().sendToGUI(parameters);
-        }
-        return null;
-    }
+	public void setGui(BW4TClientGUI gui) {
+		this.gui = gui;
+	}
 
-    @Override
-    public Collection<String> getEntities() {
-        Collection<String> ents = getEnvironment().getEntities();
-        Collection<String> ret = new ArrayList<>(ents.size());
-        String me = getMapController().getTheBot().getName();
-        for (String entity : ents) {
-            try {
-                if (!me.equals(entity) && !"epartner".equals(getEnvironment().getType(entity))) {
-                    ret.add(entity);
-                }
-            } catch (EntityException e) {
-                LOGGER.warn("Unable to get the type of entity: " + entity, e);
-            }
-        }
-        
-        return ret;
-    }
+	/**
+	 * Interprets the given list of {@link Percept}s and extracts the required
+	 * information.
+	 * 
+	 * @param percepts
+	 *            the list of percepts
+	 */
+	public void handlePercepts(Collection<Percept> percepts) {
+		getMapController().clearVisible();
+		boolean clearedPositions = false;
+		for (Percept percept : percepts) {
+			String name = percept.getName();
+			List<Parameter> parameters = percept.getParameters();
+
+			if (name.equals("position") && !clearedPositions) {
+				getMapController().clearVisiblePositions();
+				clearedPositions = true;
+			}
+
+			mapController.handlePercept(name, parameters);
+			if ("player".equals(name)) {
+				getOtherPlayers().add(
+						((Identifier) parameters.get(0)).getValue());
+			} else if ("message".equals(name)) {
+				handleMessagePercept(parameters);
+			}
+		}
+	}
+
+	/**
+	 * Handles the message percept parameters.
+	 * 
+	 * @param parameters
+	 *            the parameters given to the message percept
+	 */
+	private void handleMessagePercept(List<Parameter> parameters) {
+		ParameterList parameterList = (ParameterList) parameters.get(0);
+		Iterator<Parameter> iterator = parameterList.iterator();
+		String sender = ((Identifier) iterator.next()).getValue();
+		String message = ((Identifier) iterator.next()).getValue();
+
+		if (message.contains("I want to go")
+				|| message.contains("You forgot me")) {
+			getEpartnerChatHistory().add(sender + ": " + message);
+		} else {
+			getBotChatHistory().add(sender + ": " + message);
+		}
+
+		updateGUI();
+	}
+
+	/**
+	 * the update the client GUI.
+	 */
+	protected void updateGUI() {
+		BW4TClientGUI currentGui = this.getGui();
+		if (currentGui != null) {
+			currentGui.update();
+		}
+	}
+
+	/**
+	 * stop the controller and dispose the GUI.
+	 */
+	public void stop() {
+		mapController.setRunning(false);
+		if (this.getGui() != null) {
+			gui.dispose();
+		}
+		this.setGui(null);
+	}
+
+	/**
+	 * Send paramenters to the GUI to be displayed in the chat window
+	 * 
+	 * @param parameters
+	 * @return a null percept as no real percept should be returned
+	 */
+	public Percept sendToGUI(List<Parameter> parameters) {
+		if (this.getGui() != null) {
+			return this.getGui().sendToGUI(parameters);
+		}
+		return null;
+	}
+
+	@Override
+	public Collection<String> getEntities() {
+		Collection<String> ents = getEnvironment().getEntities();
+		Collection<String> ret = new ArrayList<>(ents.size());
+		String me = getMapController().getTheBot().getName();
+		for (String entity : ents) {
+			try {
+				if (!me.equals(entity)
+						&& !"epartner".equals(getEnvironment().getType(entity))) {
+					ret.add(entity);
+				}
+			} catch (EntityException e) {
+				LOGGER.warn("Unable to get the type of entity: " + entity, e);
+			}
+		}
+
+		return ret;
+	}
 }
