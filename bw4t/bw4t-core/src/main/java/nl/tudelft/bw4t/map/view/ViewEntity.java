@@ -41,6 +41,9 @@ public class ViewEntity {
 	/** Initialize batteryLevel to 0. */
 	private double batteryLevel = 0.0;
 
+	/** the max number of blocks the gripper can hold */
+	private int gripperCapacity = 1;
+
 	/**
 	 * Empty constructor, initialize default object.
 	 */
@@ -182,5 +185,26 @@ public class ViewEntity {
 
 	public void setBatteryLevel(double batteryLevel) {
 		this.batteryLevel = batteryLevel;
+	}
+
+	/**
+	 * Sets the current capacity of the robot's gripper.
+	 * 
+	 * @param capacity
+	 *            the max number of blocks the gripper can hold.
+	 */
+	public void setGripperCapacity(int capacity) {
+		gripperCapacity = capacity;
+
+	}
+
+	/**
+	 * Get the current capacity of the robot's gripper.
+	 * 
+	 * @return the max number of blocks the gripper can hold
+	 */
+
+	public int getGripperCapacity() {
+		return gripperCapacity;
 	}
 }

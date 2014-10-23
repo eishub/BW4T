@@ -433,6 +433,12 @@ public class RobotEntity implements EntityInterface {
 		return holds;
 	}
 
+	/**
+	 * Actual gripper capacity
+	 * 
+	 * @return max number of blocks the bot can hold. 0 if bot has gripper
+	 *         handicap.
+	 */
 	@AsPercept(name = "gripperCapacity", filter = Filter.Type.ON_CHANGE)
 	public Integer gripperCapacity() {
 		return ourRobot.getGripperCapacity();
