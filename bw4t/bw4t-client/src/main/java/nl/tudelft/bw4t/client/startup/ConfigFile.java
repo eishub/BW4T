@@ -40,12 +40,12 @@ public class ConfigFile {
 
 		URL url = getClass().getProtectionDomain().getCodeSource()
 				.getLocation();
-		Path p = Paths.get(url.getFile());
-		file = p.getParent().resolve(filename).toFile();
+		Path p = Paths.get(url.getFile()).getParent();
+		file = p.resolve(filename).toFile();
 
 		if (file == null || !file.canRead())
 			throw new FileNotFoundException("could not read config file "
-					+ filename + " inside " + url);
+					+ filename + " inside " + p);
 		// Reads the configuration file and constructs a BW4TClientConfig from
 		// it:
 		config = (BW4TClientConfig) XMLManager.fromXML(file,
