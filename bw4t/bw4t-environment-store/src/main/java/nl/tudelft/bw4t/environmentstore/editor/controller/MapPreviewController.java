@@ -116,4 +116,9 @@ public class MapPreviewController extends AbstractMapController {
 		mri.validate();
 		mri.repaint();
 	}
+
+	@Override
+	public void addVisibleBlock(ViewBlock b) {
+		throw new UnsupportedOperationException();
+	}
 }

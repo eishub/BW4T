@@ -13,8 +13,9 @@ import nl.tudelft.bw4t.map.view.ViewEntity;
 /**
  * Interface that defines the MapController.
  * 
- * Currently ClientMapController is NOT threadsafe. This causes issues eg #3292.
- * It seems that MapControllers, or at least part of it, must be thread safe.
+ * MapControllers must be thread safe. Note, this was not taken into
+ * consideration at design time and we tried to patch this later.
+ * 
  * */
 public interface MapController extends Runnable {
 
@@ -87,11 +88,18 @@ public interface MapController extends Runnable {
 	boolean isOccupied(Zone room);
 
 	/**
-	 * Get the set of {@link ViewBlock}s currently visible.
+	 * Get (copy of ) the set of {@link ViewBlock}s currently visible.
 	 * 
 	 * @return the set of blocks
 	 */
 	Set<ViewBlock> getVisibleBlocks();
+
+	/**
+	 * Add a block to the visible blocks.
+	 * 
+	 * @param b
+	 */
+	void addVisibleBlock(ViewBlock b);
 
 	/**
 	 * Get the set of {@link ViewEntity}s currently visible.

@@ -199,13 +199,18 @@ public class ClientMapController extends AbstractMapController {
 	 * @param name
 	 *            the name
 	 */
-	public void removeOccupiedRoom(Zone zone) {
+	public synchronized void removeOccupiedRoom(Zone zone) {
 		occupiedRooms.remove(zone);
 	}
 
 	@Override
-	public Set<ViewBlock> getVisibleBlocks() {
-		return visibleBlocks;
+	public synchronized Set<ViewBlock> getVisibleBlocks() {
+		return new HashSet<ViewBlock>(visibleBlocks);
+	}
+
+	@Override
+	public synchronized void addVisibleBlock(ViewBlock b) {
+		visibleBlocks.add(b);
 	}
 
 	@Override
@@ -393,4 +398,5 @@ public class ClientMapController extends AbstractMapController {
 		mri.validate();
 		mri.repaint();
 	}
+
 }
