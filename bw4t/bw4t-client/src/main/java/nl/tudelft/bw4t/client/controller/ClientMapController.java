@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.client.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -44,7 +45,15 @@ import eis.iilang.Parameter;
  * through {@link PerceptProcessor}s that do the actual updating. If GOAL is
  * connected, the percepts are retrieved only by GOAL getPercept calls. If the
  * controller is running standalone, it calls getPercepts itself. see also
- * {@link #run()}
+ * {@link #run()}.
+ * 
+ * The incoming percepts, human GUI clicks and map rendering threads are all
+ * running independently. Therefore this class has to be thread safe and not
+ * return straight pointers to internal structures.
+ * 
+ * This class is thread safe. But this does not mean that the objects that are
+ * returned are thread safe. Please consult thread safety of the relevant
+ * objects as well.
  */
 public class ClientMapController extends AbstractMapController {
 	/**
@@ -130,21 +139,36 @@ public class ClientMapController extends AbstractMapController {
 	}
 
 	@Override
-	public List<BlockColor> getSequence() {
-		return colorSequence;
+	public synchronized List<BlockColor> getSequence() {
+		return new ArrayList<BlockColor>(colorSequence);
+	}
+
+	/**
+	 * Add an extra color at the end of the sequence.
+	 * 
+	 * @param col
+	 *            the {@link BlockColor} to add.
+	 */
+	public synchronized void addSequenceColor(BlockColor col) {
+		colorSequence.add(col);
 	}
 
 	@Override
-	public int getSequenceIndex() {
+	public synchronized int getSequenceIndex() {
 		return colorSequenceIndex;
 	}
 
-	public void setSequenceIndex(int sequenceIndex) {
+	public synchronized void setSequenceIndex(int sequenceIndex) {
 		this.colorSequenceIndex = sequenceIndex;
 	}
 
-	public Set<Zone> getOccupiedRooms() {
-		return occupiedRooms;
+	/**
+	 * returns (copy of) the set of occupied rooms.
+	 * 
+	 * @return
+	 */
+	public synchronized Set<Zone> getOccupiedRooms() {
+		return new HashSet<Zone>(occupiedRooms);
 	}
 
 	/*
@@ -155,8 +179,8 @@ public class ClientMapController extends AbstractMapController {
 	 * .map.Zone)
 	 */
 	@Override
-	public boolean isOccupied(Zone room) {
-		return getOccupiedRooms().contains(room);
+	public synchronized boolean isOccupied(Zone room) {
+		return occupiedRooms.contains(room);
 	}
 
 	/**
@@ -165,8 +189,8 @@ public class ClientMapController extends AbstractMapController {
 	 * @param name
 	 *            the name
 	 */
-	public void addOccupiedRoom(String name) {
-		getOccupiedRooms().add(getMap().getZone(name));
+	public synchronized void addOccupiedRoom(Zone zone) {
+		occupiedRooms.add(zone);
 	}
 
 	/**
@@ -175,8 +199,8 @@ public class ClientMapController extends AbstractMapController {
 	 * @param name
 	 *            the name
 	 */
-	public void removeOccupiedRoom(String name) {
-		getOccupiedRooms().remove(getMap().getZone(name));
+	public void removeOccupiedRoom(Zone zone) {
+		occupiedRooms.remove(zone);
 	}
 
 	@Override

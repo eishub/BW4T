@@ -1,17 +1,20 @@
 package nl.tudelft.bw4t.client.controller.percept.processors;
 
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
-
 import java.util.List;
 
 import nl.tudelft.bw4t.client.controller.ClientMapController;
+import nl.tudelft.bw4t.map.Zone;
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
 
 public class OccupiedProcessor implements PerceptProcessor {
 
-    @Override
-    public void process(List<Parameter> parameters, ClientMapController clientMapController) {
-        clientMapController.addOccupiedRoom(((Identifier) parameters.get(0)).getValue());
-    }
+	@Override
+	public void process(List<Parameter> parameters,
+			ClientMapController clientMapController) {
+		Zone zone = clientMapController.getMap().getZone(
+				((Identifier) parameters.get(0)).getValue());
+		clientMapController.addOccupiedRoom(zone);
+	}
 
 }

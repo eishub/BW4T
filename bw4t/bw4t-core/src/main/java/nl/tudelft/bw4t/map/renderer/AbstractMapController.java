@@ -14,253 +14,265 @@ import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.Zone.Type;
 
 /**
- * An abstract {@link MapController} implementation, taking over as much functionality as possible. Without using client
- * or server-specific code.
+ * An abstract {@link MapController} implementation, taking over as much
+ * functionality as possible. Without using client or server-specific code.
+ * 
+ * This class is thread safe. But this does not mean that the objects that are
+ * returned are thread safe. Please consult thread safety of the relevant
+ * objects as well.
  */
-public abstract class AbstractMapController extends MouseAdapter implements MapController, Runnable {
-    /**
-     * The map to be rendered.
-     */
-    private NewMap map;
-    /**
-     * Various rendering settings.
-     */
-    private MapRenderSettings renderSettings;
-    /**
-     * True while the thread to update the {@link MapRendererInterface} is running.
-     */
-    private boolean running = false;
-    
-    private boolean starting = false;
+public abstract class AbstractMapController extends MouseAdapter implements
+		MapController, Runnable {
+	/**
+	 * The map to be rendered.
+	 */
+	private NewMap map;
+	/**
+	 * Various rendering settings.
+	 */
+	private MapRenderSettings renderSettings;
+	/**
+	 * True while the thread to update the {@link MapRendererInterface} is
+	 * running.
+	 */
+	private boolean running = false;
 
-    /**
-     * The set of all connected {@link MapRendererInterface}s.
-     */
-    private final Set<MapRendererInterface> renderers = new HashSet<>();
-    
-    private boolean mouseOver = false;
+	private boolean starting = false;
 
-    /**
-     * Creates Default {@link MapRenderSettings}, sets the map and starts the updater.
-     * 
-     * @param theMap
-     *            the map to be used
-     */
-    public AbstractMapController(NewMap theMap) {
-        renderSettings = new MapRenderSettings();
-        this.setMap(theMap);
-        setRunning(true);
-    }
+	/**
+	 * The set of all connected {@link MapRendererInterface}s.
+	 */
+	private final Set<MapRendererInterface> renderers = new HashSet<>();
 
-    /**
-     * @return the map
-     */
-    public NewMap getMap() {
-        return map;
-    }
+	private boolean mouseOver = false;
 
-    /**
-     * Set the map and update the world dimensions in the renderer.
-     * 
-     * @param themap
-     *            the map to set
-     */
-    public void setMap(NewMap themap) {
-        this.map = themap;
+	/**
+	 * Creates Default {@link MapRenderSettings}, sets the map and starts the
+	 * updater.
+	 * 
+	 * @param theMap
+	 *            the map to be used
+	 */
+	public AbstractMapController(NewMap theMap) {
+		renderSettings = new MapRenderSettings();
+		this.setMap(theMap);
+		setRunning(true);
+	}
 
-        Point size = map.getArea();
-        renderSettings.setWorldDimensions((int) size.getX(), (int) size.getY());
-    }
+	/**
+	 * @return the map
+	 */
+	public NewMap getMap() {
+		return map;
+	}
 
-    /**
-     * @return the renderSettings
-     */
-    @Override
-    public MapRenderSettings getRenderSettings() {
-        return renderSettings;
-    }
+	/**
+	 * Set the map and update the world dimensions in the renderer.
+	 * 
+	 * @param themap
+	 *            the map to set
+	 */
+	public void setMap(NewMap themap) {
+		this.map = themap;
 
-    /**
-     * @param theRenderSettings
-     *            the renderSettings to set
-     */
-    public void setRenderSettings(MapRenderSettings theRenderSettings) {
-        this.renderSettings = theRenderSettings;
-    }
+		Point size = map.getArea();
+		renderSettings.setWorldDimensions((int) size.getX(), (int) size.getY());
+	}
 
-    /**
-     * Is the update thread running?
-     * 
-     * @return true iff the thread is running.
-     */
-    public boolean isRunning() {
-        return running;
-    }
+	/**
+	 * @return the renderSettings
+	 */
+	@Override
+	public MapRenderSettings getRenderSettings() {
+		return renderSettings;
+	}
 
-    /**
-     * Set the update thread running?
-     * 
-     * @param run
-     *            the value to be set
-     */
-    @Override
-    public void setRunning(boolean run) {
-        if (!run) {
-            setForceRunning(false);
-            starting = false;
-        } else if (!running && !starting) {
-            startupUpdateThread();
-        }
-    }
-    
-    protected boolean isStarting() {
-        return starting;
-    }
+	/**
+	 * @param theRenderSettings
+	 *            the renderSettings to set
+	 */
+	public void setRenderSettings(MapRenderSettings theRenderSettings) {
+		this.renderSettings = theRenderSettings;
+	}
 
-    /**
-     * Sets the actual variable doesn't start the thread.
-     * 
-     * @param run
-     *            the value to be set
-     */
-    protected void setForceRunning(boolean run) {
-        running = run;
-        if (run) {
-            starting = false;
-        }
-    }
+	/**
+	 * Is the update thread running?
+	 * 
+	 * @return true iff the thread is running.
+	 */
+	public boolean isRunning() {
+		return running;
+	}
 
-    /**
-     * @return the renderers
-     */
-    public Set<MapRendererInterface> getRenderers() {
-        return renderers;
-    }
+	/**
+	 * Set the update thread running?
+	 * 
+	 * @param run
+	 *            the value to be set
+	 */
+	public final void setRunning(boolean run) {
+		if (!run) {
+			setForceRunning(false);
+			starting = false;
+		} else if (!running && !starting) {
+			startupUpdateThread();
+		}
+	}
 
-    /**
-     * Start the update thread.(will fail if it's already running)
-     */
-    private void startupUpdateThread() {
-        starting = true;
-        Thread thread = new Thread(new Updater(this), "Updater->" + Integer.toHexString(this.hashCode()));
-        thread.start();
-    }
+	protected boolean isStarting() {
+		return starting;
+	}
 
-    @Override
-    public void addRenderer(MapRendererInterface mri) {
-        mri.addMouseListener(this);
-        mri.addMouseWheelListener(this);
-        getRenderers().add(mri);
-    }
+	/**
+	 * Sets the actual variable doesn't start the thread.
+	 * 
+	 * @param run
+	 *            the value to be set
+	 */
+	protected final void setForceRunning(boolean run) {
+		running = run;
+		if (run) {
+			starting = false;
+		}
+	}
 
-    @Override
-    public void removeRenderer(MapRendererInterface mri) {
-        mri.removeMouseListener(this);
-        mri.removeMouseWheelListener(this);
-        getRenderers().remove(mri);
-    }
+	/**
+	 * @return the renderers
+	 */
+	public Set<MapRendererInterface> getRenderers() {
+		return renderers;
+	}
 
-    @Override
-    public Set<Zone> getZones() {
-        return new HashSet<Zone>(map.getZones());
-    }
+	/**
+	 * Start the update thread.(will fail if it's already running)
+	 */
+	private void startupUpdateThread() {
+		starting = true;
+		Thread thread = new Thread(new Updater(this), "Updater->"
+				+ Integer.toHexString(this.hashCode()));
+		thread.start();
+	}
 
-    @Override
-    public Set<Zone> getRooms() {
-        Set<Zone> rooms = new HashSet<Zone>();
+	@Override
+	public void addRenderer(MapRendererInterface mri) {
+		mri.addMouseListener(this);
+		mri.addMouseWheelListener(this);
+		getRenderers().add(mri);
+	}
 
-        for (Zone zone : map.getZones()) {
-            if (zone.getType() == Type.ROOM) {
-                rooms.add(zone);
-            }
-        }
+	@Override
+	public void removeRenderer(MapRendererInterface mri) {
+		mri.removeMouseListener(this);
+		mri.removeMouseWheelListener(this);
+		getRenderers().remove(mri);
+	}
 
-        return rooms;
-    }
-    
-    @Override
-    public Set<Zone> getChargingZones() {
-        Set<Zone> chargingzones = new HashSet<Zone>();
-        
-        for (Zone zone : map.getZones()) {
-            if (zone.getType() == Type.CHARGINGZONE) {
-                chargingzones.add(zone);
-            }
-        }
-        
-        return chargingzones;
-    }
-    
-    @Override
-    public Set<Zone> getBlockades() {
-        Set<Zone> blockades = new HashSet<Zone>();
+	@Override
+	public Set<Zone> getZones() {
+		return new HashSet<Zone>(map.getZones());
+	}
 
-        for (Zone zone : map.getZones()) {
-            if (zone.getType() == Type.BLOCKADE) {
-                blockades.add(zone);
-            }
-        }
+	@Override
+	public Set<Zone> getRooms() {
+		Set<Zone> rooms = new HashSet<Zone>();
 
-        return blockades;       
-    }
+		for (Zone zone : map.getZones()) {
+			if (zone.getType() == Type.ROOM) {
+				rooms.add(zone);
+			}
+		}
 
-    @Override
-    public Zone getDropZone() {
-        for (Zone zone : map.getZones()) {
-            if (zone.getName().equals(Zone.DROP_ZONE_NAME)) {
-                return zone;
-            }
-        }
-        throw new MapFormatException("The map does not include a dropzone!");
-    }
+		return rooms;
+	}
 
-    /**
-     * Called every {@link MapRenderSettings#getUpdateDelay()}, to update the renderers.
-     */
-    @Override
-    public void run() {
-        for (MapRendererInterface mri : getRenderers()) {
-            updateRenderer(mri);
-        }
-    }
+	@Override
+	public Set<Zone> getChargingZones() {
+		Set<Zone> chargingzones = new HashSet<Zone>();
 
-    /**
-     * Called every {@link MapRenderSettings#getUpdateDelay()} for every associated {@link MapRendererInterface}.
-     * 
-     * @param mri
-     *            the current renderer
-     */
-    protected abstract void updateRenderer(MapRendererInterface mri);
+		for (Zone zone : map.getZones()) {
+			if (zone.getType() == Type.CHARGINGZONE) {
+				chargingzones.add(zone);
+			}
+		}
 
-    @Override
-    public Set<Path> getPaths() {
-        return new HashSet<>();
-    }
+		return chargingzones;
+	}
 
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        this.mouseOver = true;
-    }
-    
-    @Override
-    public void mouseExited(MouseEvent e) {
-        this.mouseOver = false;
-    }
+	@Override
+	public Set<Zone> getBlockades() {
+		Set<Zone> blockades = new HashSet<Zone>();
 
+		for (Zone zone : map.getZones()) {
+			if (zone.getType() == Type.BLOCKADE) {
+				blockades.add(zone);
+			}
+		}
 
-    /* (non-Javadoc)
-     * @see java.awt.event.MouseAdapter#mouseWheelMoved(java.awt.event.MouseWheelEvent)
-     */
-    @Override
-    public void mouseWheelMoved(MouseWheelEvent mwe) {
-        if (mouseOver && mwe.isControlDown()) {
-            MapRenderSettings settings = this.getRenderSettings();
-            if (mwe.getUnitsToScroll() >= 0) {
-                settings.setScale(settings.getScale() + 0.1);
-            } else {
-                settings.setScale(settings.getScale() - 0.1);
-            }
-            mwe.getComponent().revalidate();
-        }
-    }
+		return blockades;
+	}
+
+	@Override
+	public Zone getDropZone() {
+		for (Zone zone : map.getZones()) {
+			if (zone.getName().equals(Zone.DROP_ZONE_NAME)) {
+				return zone;
+			}
+		}
+		throw new MapFormatException("The map does not include a dropzone!");
+	}
+
+	/**
+	 * Called every {@link MapRenderSettings#getUpdateDelay()}, to update the
+	 * renderers.
+	 */
+	@Override
+	public void run() {
+		for (MapRendererInterface mri : getRenderers()) {
+			updateRenderer(mri);
+		}
+	}
+
+	/**
+	 * Called every {@link MapRenderSettings#getUpdateDelay()} for every
+	 * associated {@link MapRendererInterface}.
+	 * 
+	 * @param mri
+	 *            the current renderer
+	 */
+	protected abstract void updateRenderer(MapRendererInterface mri);
+
+	@Override
+	public Set<Path> getPaths() {
+		return new HashSet<>();
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		this.mouseOver = true;
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		this.mouseOver = false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * java.awt.event.MouseAdapter#mouseWheelMoved(java.awt.event.MouseWheelEvent
+	 * )
+	 */
+	@Override
+	public void mouseWheelMoved(MouseWheelEvent mwe) {
+		if (mouseOver && mwe.isControlDown()) {
+			MapRenderSettings settings = this.getRenderSettings();
+			if (mwe.getUnitsToScroll() >= 0) {
+				settings.setScale(settings.getScale() + 0.1);
+			} else {
+				settings.setScale(settings.getScale() - 0.1);
+			}
+			mwe.getComponent().revalidate();
+		}
+	}
 }

@@ -19,7 +19,7 @@ import nl.tudelft.bw4t.map.view.ViewEntity;
 public interface MapController extends Runnable {
 
 	/**
-	 * Get the sequence of {@link BlockColor}s required to finish the
+	 * Get (copy of) the sequence of {@link BlockColor}s required to finish the
 	 * simulation.
 	 * 
 	 * @return the sequence as list
