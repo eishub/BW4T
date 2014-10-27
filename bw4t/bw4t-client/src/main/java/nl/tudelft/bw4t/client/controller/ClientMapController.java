@@ -154,13 +154,14 @@ public class ClientMapController extends AbstractMapController {
 	}
 
 	/**
-	 * Add an extra color at the end of the sequence.
+	 * Sets the sequence to given list.
 	 * 
-	 * @param col
-	 *            the {@link BlockColor} to add.
+	 * @param sequence
+	 *            new sequence to use.
 	 */
-	public synchronized void addSequenceColor(BlockColor col) {
-		colorSequence.add(col);
+	public synchronized void setSequence(List<BlockColor> sequence) {
+		colorSequence.clear();
+		colorSequence.addAll(sequence);
 	}
 
 	@Override
@@ -373,45 +374,6 @@ public class ClientMapController extends AbstractMapController {
 		knownEPartners.add(epartner);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see nl.tudelft.bw4t.map.renderer.AbstractMapController#run()
-	 */
-	@Override
-	public void run() {
-		/**
-		 * If GOAL is not connected we need to fetch the percepts ourselves.
-		 * Otherwise, GOAL will fetch them and we just reuse them.
-		 */
-		if (clientController.isHuman()
-				&& !clientController.getEnvironment().isConnectedToGoal()) {
-			try {
-				clientController.getEnvironment().gatherPercepts(
-						getTheBot().getName());
-			} catch (PerceiveException e) {
-				LOGGER.error(COULDNOTPOLL, e);
-			} catch (NoEnvironmentException | NullPointerException e) {
-				LOGGER.fatal(COULDNOTPOLL
-						+ " No connection could be made to the environment", e);
-				setRunning(false);
-			}
-		}
-		super.run();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see nl.tudelft.bw4t.map.renderer.AbstractMapController#updateRenderer
-	 * (nl.tudelft.bw4t.map.renderer.MapRendererInterface)
-	 */
-	@Override
-	protected void updateRenderer(MapRendererInterface mri) {
-		mri.validate();
-		mri.repaint();
-	}
-
 	/******************************************************************************/
 	/**************** utility functions (may be not thread safe) ******************/
 	/******************************************************************************/
@@ -470,6 +432,45 @@ public class ClientMapController extends AbstractMapController {
 		if (processor != null) {
 			processor.process(perceptParameters, this);
 		}
+	}
+
+	/**
+	 * utility function. Probably not thread safe.
+	 * 
+	 * @see nl.tudelft.bw4t.map.renderer.AbstractMapController#updateRenderer
+	 *      (nl.tudelft.bw4t.map.renderer.MapRendererInterface)
+	 */
+	@Override
+	protected void updateRenderer(MapRendererInterface mri) {
+		mri.validate();
+		mri.repaint();
+	}
+
+	/*
+	 * (non-Javadoc) Utility function. Probably not thread safe.
+	 * 
+	 * @see nl.tudelft.bw4t.map.renderer.AbstractMapController#run()
+	 */
+	@Override
+	public void run() {
+		/**
+		 * If GOAL is not connected we need to fetch the percepts ourselves.
+		 * Otherwise, GOAL will fetch them and we just reuse them.
+		 */
+		if (clientController.isHuman()
+				&& !clientController.getEnvironment().isConnectedToGoal()) {
+			try {
+				clientController.getEnvironment().gatherPercepts(
+						getTheBot().getName());
+			} catch (PerceiveException e) {
+				LOGGER.error(COULDNOTPOLL, e);
+			} catch (NoEnvironmentException | NullPointerException e) {
+				LOGGER.fatal(COULDNOTPOLL
+						+ " No connection could be made to the environment", e);
+				setRunning(false);
+			}
+		}
+		super.run();
 	}
 
 }

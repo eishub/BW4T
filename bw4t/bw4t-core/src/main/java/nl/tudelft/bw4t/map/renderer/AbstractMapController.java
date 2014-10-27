@@ -226,7 +226,7 @@ public abstract class AbstractMapController extends MouseAdapter implements
 
 	/**
 	 * Called every {@link MapRenderSettings#getUpdateDelay()}, to update the
-	 * renderers.
+	 * renderers. Probably not thread safe.
 	 */
 	@Override
 	public void run() {
