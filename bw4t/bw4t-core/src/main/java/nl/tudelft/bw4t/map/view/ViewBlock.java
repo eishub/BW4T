@@ -5,7 +5,10 @@ import java.awt.geom.Point2D;
 import nl.tudelft.bw4t.map.BlockColor;
 
 /**
- * information about a block for the map renderer
+ * information about a block for the map renderer.
+ * 
+ * ViewBlock must have thread safe {@link #equals(Object)} because it is used in
+ * maps that should be thread safe (in ClientMapController).
  */
 public class ViewBlock {
 	/** The width and height of the blocks */
@@ -19,6 +22,31 @@ public class ViewBlock {
 
 	/** Initialize position. */
 	private Point2D position = new Point2D.Double();
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (objectId ^ (objectId >>> 32));
+		return result;
+	}
+
+	/**
+	 * Two ViewBlocks are equal if they have the same ID.
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ViewBlock other = (ViewBlock) obj;
+		if (objectId != other.objectId)
+			return false;
+		return true;
+	}
 
 	/**
 	 * Empty constructor, caller should init object later.

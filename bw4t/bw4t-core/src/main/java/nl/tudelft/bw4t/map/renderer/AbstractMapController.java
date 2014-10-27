@@ -17,9 +17,9 @@ import nl.tudelft.bw4t.map.Zone.Type;
  * An abstract {@link MapController} implementation, taking over as much
  * functionality as possible. Without using client or server-specific code.
  * 
- * This class is thread safe. But this does not mean that the objects that are
- * returned are thread safe. Please consult thread safety of the relevant
- * objects as well.
+ * This class has to be thread safe because ClientMapController has to be. But
+ * this does not mean that the objects that are returned are thread safe. Please
+ * consult thread safety of the relevant objects as well.
  */
 public abstract class AbstractMapController extends MouseAdapter implements
 		MapController, Runnable {

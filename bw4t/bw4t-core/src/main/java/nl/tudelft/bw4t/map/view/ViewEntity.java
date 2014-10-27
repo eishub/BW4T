@@ -2,12 +2,41 @@ package nl.tudelft.bw4t.map.view;
 
 import java.awt.Color;
 import java.awt.geom.Point2D;
+import java.util.Map;
 import java.util.Stack;
 
 /**
  * information about an robot for the map renderer.
+ * 
+ * This object is used in {@link Map}s that should be threadsafe and therefore
+ * must implement a thread safe {@link #equals(Object)}.
  */
 public class ViewEntity {
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	/**
+	 * Two ViewEntity objects are the same iff their ID is the same
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ViewEntity other = (ViewEntity) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
 
 	/** Initialize color for robot to black. */
 	public final static Color ROBOT_COLOR = Color.BLACK;

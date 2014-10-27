@@ -214,8 +214,8 @@ public class ClientMapController extends AbstractMapController {
 	}
 
 	@Override
-	public Set<ViewEntity> getVisibleEntities() {
-		return visibleRobots;
+	public synchronized Set<ViewEntity> getVisibleEntities() {
+		return new HashSet<ViewEntity>(visibleRobots);
 	}
 
 	@Override
@@ -229,14 +229,14 @@ public class ClientMapController extends AbstractMapController {
 		return visibleEPartners;
 	}
 
-	public void clearVisible() {
+	public synchronized void clearVisible() {
 		visibleBlocks.clear();
 		for (ViewEPartner ep : knownEPartners) {
 			ep.setVisible(false);
 		}
 	}
 
-	public void clearVisiblePositions() {
+	public synchronized void clearVisiblePositions() {
 		visibleRobots.clear();
 		visibleRobots.add(myBot);
 	}
