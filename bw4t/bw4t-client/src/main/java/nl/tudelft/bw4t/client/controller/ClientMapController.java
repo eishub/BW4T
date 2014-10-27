@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.client.controller;
 
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -116,6 +117,15 @@ public class ClientMapController extends AbstractMapController {
 	 */
 	public ClientMapController(NewMap map, ClientController controller) {
 		super(map);
+
+		if (controller == null) {
+			throw new NullPointerException("controller=null");
+		}
+
+		if (!myBot.isInitialized()) {
+			throw new IllegalStateException("myBot is not initialized properly");
+		}
+
 		clientController = controller;
 		perceptProcessors = new HashMap<String, PerceptProcessor>();
 		perceptProcessors.put("not", new NegationProcessor());
@@ -180,6 +190,9 @@ public class ClientMapController extends AbstractMapController {
 	 */
 	@Override
 	public synchronized boolean isOccupied(Zone room) {
+		if (!room.isInitialized()) {
+			return false;
+		}
 		return occupiedRooms.contains(room);
 	}
 
@@ -190,6 +203,9 @@ public class ClientMapController extends AbstractMapController {
 	 *            the name
 	 */
 	public synchronized void addOccupiedRoom(Zone zone) {
+		if (!zone.isInitialized()) {
+			throw new IllegalStateException("zone is not initialized:" + zone);
+		}
 		occupiedRooms.add(zone);
 	}
 
@@ -200,6 +216,9 @@ public class ClientMapController extends AbstractMapController {
 	 *            the name
 	 */
 	public synchronized void removeOccupiedRoom(Zone zone) {
+		if (!zone.isInitialized()) {
+			throw new IllegalStateException("zone is not initialized:" + zone);
+		}
 		occupiedRooms.remove(zone);
 	}
 
@@ -210,7 +229,14 @@ public class ClientMapController extends AbstractMapController {
 
 	@Override
 	public synchronized void addVisibleBlock(ViewBlock b) {
+		if (!b.isInitialized()) {
+			throw new IllegalStateException("block is not initialized:" + b);
+		}
 		visibleBlocks.add(b);
+	}
+
+	public synchronized void clearVisible() {
+		visibleBlocks.clear();
 	}
 
 	@Override
@@ -218,22 +244,13 @@ public class ClientMapController extends AbstractMapController {
 		return new HashSet<ViewEntity>(visibleRobots);
 	}
 
-	@Override
-	public Set<ViewEPartner> getVisibleEPartners() {
-		Set<ViewEPartner> visibleEPartners = new HashSet<ViewEPartner>();
-		for (ViewEPartner ep : knownEPartners) {
-			if (ep.isVisible()) {
-				visibleEPartners.add(ep);
-			}
-		}
-		return visibleEPartners;
-	}
-
-	public synchronized void clearVisible() {
-		visibleBlocks.clear();
-		for (ViewEPartner ep : knownEPartners) {
-			ep.setVisible(false);
-		}
+	/**
+	 * Get all the known e-partners.
+	 * 
+	 * @return (copy of) the set of known e-partners
+	 */
+	public synchronized Set<ViewEPartner> getEPartners() {
+		return new HashSet<ViewEPartner>(knownEPartners);
 	}
 
 	public synchronized void clearVisiblePositions() {
@@ -242,15 +259,19 @@ public class ClientMapController extends AbstractMapController {
 	}
 
 	/**
-	 * Returns an e-partner with this id that is currently visible.
+	 * Returns an e-partner with this id that at one point has ever been
+	 * visible.
 	 * 
 	 * @param id
 	 *            The id.
-	 * @return The e-partner found.
+	 * @return The e-partner found. null if not found.
 	 */
-	public ViewEPartner getViewEPartner(long id) {
-		for (ViewEPartner ep : getVisibleEPartners()) {
-			if (ep.getId() == id) {
+	public synchronized ViewEPartner getKnownEPartner(long id) {
+		// fake epartner, so that we can use equals (which is guaranteed stable
+		// after init).
+		ViewEPartner equalp = new ViewEPartner(id, new Point2D.Double(), false);
+		for (ViewEPartner ep : knownEPartners) {
+			if (ep.equals(equalp)) {
 				return ep;
 			}
 		}
@@ -258,41 +279,51 @@ public class ClientMapController extends AbstractMapController {
 	}
 
 	/**
-	 * Returns an e-partner with this id that at one point has ever been
-	 * visible.
+	 * Makes a robot visible. Maybe this should be changed into an attribute
+	 * attached to a Robot? We do not even check if given entity is a robot.
+	 * 
+	 * @param bot
+	 *            robot to be added. Actually any {@link ViewEntity}
+	 */
+	public synchronized void addVisibleRobot(ViewEntity bot) {
+		if (!bot.isInitialized()) {
+			throw new IllegalStateException("entity is not initialized: " + bot);
+		}
+		visibleRobots.add(bot);
+	}
+
+	/**
+	 * Utility function.
 	 * 
 	 * @param id
-	 *            The id.
-	 * @return The e-partner found.
+	 * @return
 	 */
-	public ViewEPartner getKnownEPartner(long id) {
-		for (ViewEPartner ep : knownEPartners) {
-			if (ep.getId() == id) {
-				return ep;
-			}
-		}
-		return null;
-	}
+	public synchronized ViewEntity getKnownRobot(long id) {
+		// entity so that we can use equals.
+		ViewEntity entity = new ViewEntity(id);
 
-	public void makeRobotVisible(long id) {
-		visibleRobots.add(getKnownRobot(id));
-	}
-
-	public ViewEntity getKnownRobot(long id) {
-		if (myBot.getId() == id)
+		if (myBot.equals(entity)) {
 			return myBot;
+		}
 		for (ViewEntity robot : knownRobots) {
-			if (robot.getId() == id) {
+			if (robot.equals(entity)) {
 				return robot;
 			}
 		}
 		return null;
 	}
 
-	public ViewEntity getCreateRobot(long id) {
+	/**
+	 * Get existing robot with given id, or return a new one with that id.
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public synchronized ViewEntity getCreateRobot(long id) {
 		ViewEntity bot = getKnownRobot(id);
-		if (bot != null)
+		if (bot != null) {
 			return bot;
+		}
 		bot = new ViewEntity(id);
 		knownRobots.add(bot);
 		return bot;
@@ -303,13 +334,13 @@ public class ClientMapController extends AbstractMapController {
 	}
 
 	/**
+	 * get block with given ID, or create it if it does not yet exist.
 	 * 
 	 * @param id
 	 *            block id
-	 * @return {@link ViewBlock} that has given id, or null if block does not
-	 *         exist
+	 * @return {@link ViewBlock} that has given id.
 	 */
-	public ViewBlock getBlock(Long id) {
+	public synchronized ViewBlock getBlock(Long id) {
 		ViewBlock b = allBlocks.get(id);
 		if (b == null) {
 			b = new ViewBlock(id);
@@ -323,41 +354,23 @@ public class ClientMapController extends AbstractMapController {
 	 *            of the block to be checked
 	 * @return true iff the block is in in the environment
 	 */
-	public boolean containsBlock(Long id) {
+	public synchronized boolean containsBlock(Long id) {
 		return allBlocks.containsKey(id);
 	}
 
 	/**
-	 * Handle all the percepts.
+	 * Add an e-partner.
 	 * 
-	 * @param name
-	 *            the name of the percept
-	 * @param perceptParameters
-	 *            the percept parameters
+	 * @param id
+	 * @param holderId
+	 * @return
 	 */
-
-	public void handlePercept(String name, List<Parameter> perceptParameters) {
-		StringBuilder sb = new StringBuilder("Handling percept: ");
-		sb.append(name);
-		sb.append(" => [");
-		for (Parameter p : perceptParameters) {
-			sb.append(p.toProlog());
-			sb.append(", ");
+	public synchronized void addEPartner(ViewEPartner epartner) {
+		if (!epartner.isInitialized()) {
+			throw new IllegalArgumentException("epartner not initialized:"
+					+ epartner);
 		}
-		sb.append("]");
-		LOGGER.debug(sb.toString());
-		PerceptProcessor processor = perceptProcessors.get(name);
-		if (processor != null) {
-			processor.process(perceptParameters, this);
-		}
-	}
-
-	public ViewEPartner addEPartner(long id, long holderId) {
-		LOGGER.info("creating epartner(" + id + ", " + holderId + ")");
-		ViewEPartner epartner = new ViewEPartner();
-		epartner.setId(id);
 		knownEPartners.add(epartner);
-		return epartner;
 	}
 
 	/*
@@ -397,6 +410,66 @@ public class ClientMapController extends AbstractMapController {
 	protected void updateRenderer(MapRendererInterface mri) {
 		mri.validate();
 		mri.repaint();
+	}
+
+	/******************************************************************************/
+	/**************** utility functions (may be not thread safe) ******************/
+	/******************************************************************************/
+	@Override
+	public Set<ViewEPartner> getVisibleEPartners() {
+		// notice, not synchronized, this is just a utility function that is not
+		// thread safe because it calls isVisible()
+		Set<ViewEPartner> visibleEPartners = new HashSet<ViewEPartner>();
+		for (ViewEPartner ep : getEPartners()) {
+			if (ep.isVisible()) {
+				visibleEPartners.add(ep);
+			}
+		}
+		return visibleEPartners;
+	}
+
+	/**
+	 * Returns an e-partner with this id that is currently visible. This is just
+	 * a utility function and may be not thread safe.
+	 * 
+	 * @param id
+	 *            The id.
+	 * @return The e-partner found. null if no such e-partner.
+	 */
+	public ViewEPartner getViewEPartner(long id) {
+		for (ViewEPartner ep : getVisibleEPartners()) {
+			if (ep.getId() == id) {
+				return ep;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Handle all the percepts. Utility function. May be not thread safe as we
+	 * can not guarantee thread safety of processors (they are poking into other
+	 * structures).
+	 * 
+	 * @param name
+	 *            the name of the percept
+	 * @param perceptParameters
+	 *            the percept parameters
+	 */
+
+	public void handlePercept(String name, List<Parameter> perceptParameters) {
+		StringBuilder sb = new StringBuilder("Handling percept: ");
+		sb.append(name);
+		sb.append(" => [");
+		for (Parameter p : perceptParameters) {
+			sb.append(p.toProlog());
+			sb.append(", ");
+		}
+		sb.append("]");
+		LOGGER.debug(sb.toString());
+		PerceptProcessor processor = perceptProcessors.get(name);
+		if (processor != null) {
+			processor.process(perceptParameters, this);
+		}
 	}
 
 }

@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import nl.tudelft.bw4t.map.Door.Orientation;
+import nl.tudelft.bw4t.util.OneTimeInitializing;
 
 import org.mockito.internal.matchers.Equals;
 
@@ -23,7 +24,7 @@ import org.mockito.internal.matchers.Equals;
  */
 @SuppressWarnings("serial")
 @XmlRootElement
-public class Zone implements Serializable {
+public class Zone implements Serializable, OneTimeInitializing {
 	/**
 	 * Type of the zone
 	 */
@@ -56,7 +57,7 @@ public class Zone implements Serializable {
 	/**
 	 * NAME MUST BE SET UNIQUE. Otherwise XML serialization will fail.
 	 */
-	private String name = "Default";
+	private String name = null;
 
 	private Type type = Type.ROOM;
 	private List<Door> doors = new ArrayList<Door>();
@@ -99,8 +100,11 @@ public class Zone implements Serializable {
 		return type;
 	}
 
-	public void setType(Type type) {
-		this.type = type;
+	public void setType(Type newType) {
+		if (type != null) {
+			throw new IllegalStateException("type has already been set.");
+		}
+		type = newType;
 	}
 
 	public Rectangle getBoundingbox() {
@@ -153,8 +157,11 @@ public class Zone implements Serializable {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String newName) {
+		if (name != null) {
+			throw new IllegalStateException("name has already been set.");
+		}
+		name = newName;
 	}
 
 	/**
@@ -276,7 +283,7 @@ public class Zone implements Serializable {
 	}
 
 	/**
-	 * equals only compares name and type, to make equals thread safe.
+	 * Two zones are equal if name and type are equal.
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -295,6 +302,11 @@ public class Zone implements Serializable {
 		if (type != other.type)
 			return false;
 		return true;
+	}
+
+	@Override
+	public boolean isInitialized() {
+		return null != type && null != name;
 	}
 
 }

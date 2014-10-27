@@ -20,6 +20,10 @@ public class NegationProcessor implements PerceptProcessor {
 			LinkedList<Parameter> paramOcc = function.getParameters();
 			Zone zone = clientMapController.getMap().getZone(
 					((Identifier) paramOcc.get(0)).getValue());
+			if (zone == null) {
+				throw new IllegalArgumentException("Unknown zone "
+						+ paramOcc.get(0));
+			}
 			clientMapController.removeOccupiedRoom(zone);
 		} else if ("holding".equals(function.getName())) {
 			clientMapController

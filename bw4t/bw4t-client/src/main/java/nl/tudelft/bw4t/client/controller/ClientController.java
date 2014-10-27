@@ -12,6 +12,7 @@ import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.menu.EntityComboModelProvider;
+import nl.tudelft.bw4t.map.view.ViewEPartner;
 
 import org.apache.log4j.Logger;
 
@@ -163,7 +164,11 @@ public class ClientController implements EntityComboModelProvider {
 	 *            the list of percepts
 	 */
 	public void handlePercepts(Collection<Percept> percepts) {
+		for (ViewEPartner ep : getMapController().getEPartners()) {
+			ep.setVisible(false);
+		}
 		getMapController().clearVisible();
+
 		boolean clearedPositions = false;
 		for (Percept percept : percepts) {
 			String name = percept.getName();

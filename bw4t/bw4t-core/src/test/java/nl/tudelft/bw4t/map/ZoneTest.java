@@ -32,9 +32,9 @@ public class ZoneTest {
 		// add additional test code here
 		assertNotNull(result);
 		assertEquals(
-				"Zone[Default,java.awt.geom.Rectangle2D$Double[x=0.0,y=0.0,w=0.0,h=0.0],ROOM,[],[],[]]",
+				"Zone[null,java.awt.geom.Rectangle2D$Double[x=0.0,y=0.0,w=0.0,h=0.0],ROOM,[],[],[]]",
 				result.toString());
-		assertEquals("Default", result.getName());
+		assertEquals(null, result.getName());
 		assertEquals(null, result.getRenderOptions());
 	}
 
@@ -198,7 +198,7 @@ public class ZoneTest {
 	public void testGetName_1() throws Exception {
 		Zone fixture = new Zone();
 
-		assertEquals("Default", fixture.getName());
+		assertEquals(null, fixture.getName());
 
 		String name = "HALO";
 		fixture.setName(name);
@@ -236,15 +236,13 @@ public class ZoneTest {
 	 * 
 	 * @generatedBy CodePro at 25.05.14 16:25
 	 */
-	@Test
+	@Test(expected = IllegalStateException.class)
 	public void testGetType_1() throws Exception {
 		Zone fixture = new Zone();
 
 		assertEquals(Zone.Type.ROOM, fixture.getType());
 
 		fixture.setType(Zone.Type.CORRIDOR);
-
-		assertEquals(Zone.Type.CORRIDOR, fixture.getType());
 	}
 
 	/**
@@ -337,7 +335,7 @@ public class ZoneTest {
 
 		// add additional test code here
 		assertEquals(
-				"Zone[Default,java.awt.geom.Rectangle2D$Double[x=0.0,y=0.0,w=0.0,h=0.0],ROOM,[],[],[RoomB]]",
+				"Zone[null,java.awt.geom.Rectangle2D$Double[x=0.0,y=0.0,w=0.0,h=0.0],ROOM,[],[],[RoomB]]",
 				result);
 	}
 

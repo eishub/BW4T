@@ -3,6 +3,7 @@ package nl.tudelft.bw4t.map.view;
 import java.awt.geom.Point2D;
 
 import nl.tudelft.bw4t.map.BlockColor;
+import nl.tudelft.bw4t.util.OneTimeInitializing;
 
 /**
  * information about a block for the map renderer.
@@ -10,12 +11,12 @@ import nl.tudelft.bw4t.map.BlockColor;
  * ViewBlock must have thread safe {@link #equals(Object)} because it is used in
  * maps that should be thread safe (in ClientMapController).
  */
-public class ViewBlock {
+public class ViewBlock implements OneTimeInitializing {
 	/** The width and height of the blocks */
 	public static final int BLOCK_SIZE = 1;
 
-	/** Initialize objectId, default 0. */
-	private long objectId = 0;
+	/** Initialize objectId. */
+	private Long objectId = null;
 
 	/** Initialize color, default null. */
 	private BlockColor color = null;
@@ -48,8 +49,14 @@ public class ViewBlock {
 		return true;
 	}
 
+	@Override
+	public boolean isInitialized() {
+		return objectId != null;
+	}
+
 	/**
-	 * Empty constructor, caller should init object later.
+	 * Empty constructor, caller should init object later. The equals function
+	 * works after this, because that only relies on the object ID.
 	 * 
 	 * <h1>discussion</h1> This is needed to represent partial block information
 	 * received from the server, eg when we get a color percept for a block we
@@ -57,7 +64,6 @@ public class ViewBlock {
 	 * do not just have a block(id,color,loc) percept.
 	 */
 	public ViewBlock(long id) {
-		// super(); // Wouter: there is no super class but Object?
 		objectId = id;
 	}
 
@@ -101,6 +107,9 @@ public class ViewBlock {
 	}
 
 	public void setObjectId(long id) {
+		if (objectId != null) {
+			throw new IllegalStateException("object ID already has been set.");
+		}
 		objectId = id;
 	}
 
@@ -115,4 +124,5 @@ public class ViewBlock {
 	public String toString() {
 		return "block[" + color + "]";
 	}
+
 }

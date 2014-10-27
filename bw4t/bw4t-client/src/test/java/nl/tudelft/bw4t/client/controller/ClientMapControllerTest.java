@@ -5,10 +5,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.Stack;
 
@@ -17,7 +15,6 @@ import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 
@@ -39,8 +36,8 @@ public class ClientMapControllerTest {
 
 	@Mock
 	private ClientController clientController;
-	@Mock
-	private NewMap map;
+
+	private NewMap map = new NewMap();
 	@Mock
 	private RemoteEnvironment remoteEnvironment;
 	@Mock
@@ -52,23 +49,23 @@ public class ClientMapControllerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		when(map.getArea()).thenReturn(new Point(1.0, 1.0));
-		when(clientController.getEnvironment()).thenReturn(remoteEnvironment);
+		// when(map.getArea()).thenReturn(new Point(1.0, 1.0));
+		// when(clientController.getEnvironment()).thenReturn(remoteEnvironment);
 		clientMapController = new ClientMapController(map, clientController);
 	}
 
 	/*********************************************************************************/
 	/************************* support functions *************************************/
 	/*********************************************************************************/
-	private ViewBlock getBlock(Long blockID) throws NoSuchMethodException,
-			IllegalAccessException, InvocationTargetException {
-		Method method = ClientMapController.class.getDeclaredMethod("getBlock",
-				Long.class);
-		method.setAccessible(true);
-		ViewBlock block = (ViewBlock) method.invoke(clientMapController,
-				blockID);
-		return block;
-	}
+	// private ViewBlock getBlock(Long blockID) throws NoSuchMethodException,
+	// IllegalAccessException, InvocationTargetException {
+	// Method method = ClientMapController.class.getDeclaredMethod("getBlock",
+	// Long.class);
+	// method.setAccessible(true);
+	// ViewBlock block = (ViewBlock) method.invoke(clientMapController,
+	// blockID);
+	// return block;
+	// }
 
 	/**
 	 * Adds 3 blue blocks, having id 1, 2 and 3.
@@ -80,6 +77,16 @@ public class ClientMapControllerTest {
 			parameters.add(new Identifier("blue"));
 			clientMapController.handlePercept("color", parameters);
 		}
+	}
+
+	private void addRooms() {
+		Zone zone = new Zone("Room1", null, Zone.Type.ROOM);
+		clientMapController.addOccupiedRoom(zone);
+		clientMapController.getMap().addZone(zone);
+
+		zone = new Zone(Zone.DROP_ZONE_NAME, null, Zone.Type.ROOM);
+		clientMapController.getMap().addZone(zone);
+
 	}
 
 	/*********************************************************************************/
@@ -102,6 +109,8 @@ public class ClientMapControllerTest {
 
 	@Test
 	public void testHandlePerceptNotOccupied() {
+		addRooms();
+
 		LinkedList<Parameter> parameters = new LinkedList<Parameter>();
 		parameters.add(new Function("occupied", new Identifier("Room1")));
 		clientMapController.handlePercept("not", parameters);
@@ -151,15 +160,20 @@ public class ClientMapControllerTest {
 		LinkedList<Parameter> parameters = new LinkedList<Parameter>();
 		parameters.add(new Numeral(2));
 		clientMapController.handlePercept("robot", parameters);
-		assertEquals(2, clientMapController.getTheBot().getId());
+		assertEquals(new Long(2), clientMapController.getTheBot().getId());
 	}
 
 	@Test
 	public void testHandlePerceptOccupied() {
+		addRooms();
 		LinkedList<Parameter> parameters = new LinkedList<Parameter>();
 		parameters.add(new Identifier(Zone.DROP_ZONE_NAME));
 		clientMapController.handlePercept("occupied", parameters);
-		verify(map, times(1)).getZone(Zone.DROP_ZONE_NAME);
+		Zone dropzone = clientMapController.getDropZone();
+		assertTrue(dropzone != null);
+		assertTrue(clientMapController.isOccupied(dropzone));
+		// can't check #calls, this is real object, not a mock.
+		// verify(map, times(1)).getZone(Zone.DROP_ZONE_NAME);
 	}
 
 	/** check if some id is in the stack of blocks. */
@@ -181,7 +195,7 @@ public class ClientMapControllerTest {
 		parameters.add(new Numeral(4));
 		clientMapController.handlePercept("position", parameters);
 		Long blockID = new Long(3);
-		ViewBlock block = getBlock(blockID);
+		ViewBlock block = clientMapController.getBlock(blockID);
 		assertEquals(3.0, block.getPosition().getX(), 0.001);
 		assertEquals(4.0, block.getPosition().getY(), 0.001);
 	}
@@ -208,7 +222,7 @@ public class ClientMapControllerTest {
 		parameters.add(new Numeral(3));
 		parameters.add(new Identifier("blue"));
 		clientMapController.handlePercept("color", parameters);
-		ViewBlock block = getBlock(new Long(3));
+		ViewBlock block = clientMapController.getBlock(new Long(3));
 		assertEquals(BlockColor.BLUE, block.getColor());
 	}
 
@@ -218,7 +232,7 @@ public class ClientMapControllerTest {
 		add3Blocks();
 
 		assertEquals(3, clientMapController.getVisibleBlocks().size());
-		ViewBlock block = getBlock(new Long(3));
+		ViewBlock block = clientMapController.getBlock(new Long(3));
 		assertEquals(BlockColor.BLUE, block.getColor());
 	}
 
@@ -230,7 +244,8 @@ public class ClientMapControllerTest {
 		parameters.add(new Numeral(3));
 		parameters.add(new ParameterList());
 		clientMapController.handlePercept("epartner", parameters);
-		assertEquals(3, clientMapController.getViewEPartner(3).getId());
+		assertEquals(new Long(3), clientMapController.getViewEPartner(3)
+				.getId());
 		assertEquals("NAAM", clientMapController.getViewEPartner(3).getName());
 	}
 
@@ -249,7 +264,8 @@ public class ClientMapControllerTest {
 		parameters.add(new Numeral(2));
 		parameters.add(new ParameterList());
 		clientMapController.handlePercept("epartner", parameters);
-		assertEquals(2, clientMapController.getViewEPartner(2).getId());
+		assertEquals(new Long(2), clientMapController.getViewEPartner(2)
+				.getId());
 		assertEquals("NAAM", clientMapController.getViewEPartner(2).getName());
 	}
 
@@ -263,7 +279,8 @@ public class ClientMapControllerTest {
 		parameters.add(new Numeral(2));
 		parameters.add(new ParameterList());
 		clientMapController.handlePercept("epartner", parameters);
-		assertEquals(2, clientMapController.getViewEPartner(2).getId());
+		assertEquals(new Long(2), clientMapController.getViewEPartner(2)
+				.getId());
 		assertEquals("NAAM", clientMapController.getViewEPartner(2).getName());
 	}
 
@@ -278,7 +295,8 @@ public class ClientMapControllerTest {
 		parameters.add(new Numeral(3));
 		parameters.add(new ParameterList());
 		clientMapController.handlePercept("epartner", parameters);
-		assertEquals(2, clientMapController.getViewEPartner(2).getId());
+		assertEquals(new Long(2), clientMapController.getViewEPartner(2)
+				.getId());
 		assertEquals("NAAM", clientMapController.getViewEPartner(2).getName());
 	}
 

@@ -109,7 +109,9 @@ public interface MapController extends Runnable {
 	Set<ViewEntity> getVisibleEntities();
 
 	/**
-	 * Get the set of e-Partners currently visible.
+	 * Get the set of e-Partners currently visible. This function may be not
+	 * thread safe because it relies on the function
+	 * {@link ViewEPartner#isVisible()}.
 	 * 
 	 * @return the set of visible e-Partners.
 	 */

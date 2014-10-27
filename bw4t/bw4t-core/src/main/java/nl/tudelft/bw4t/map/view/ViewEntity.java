@@ -5,44 +5,21 @@ import java.awt.geom.Point2D;
 import java.util.Map;
 import java.util.Stack;
 
+import nl.tudelft.bw4t.util.OneTimeInitializing;
+
 /**
  * information about an robot for the map renderer.
  * 
  * This object is used in {@link Map}s that should be threadsafe and therefore
  * must implement a thread safe {@link #equals(Object)}.
  */
-public class ViewEntity {
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
-		return result;
-	}
-
-	/**
-	 * Two ViewEntity objects are the same iff their ID is the same
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ViewEntity other = (ViewEntity) obj;
-		if (id != other.id)
-			return false;
-		return true;
-	}
+public class ViewEntity implements OneTimeInitializing {
 
 	/** Initialize color for robot to black. */
 	public final static Color ROBOT_COLOR = Color.BLACK;
 
-	/** Initialize id, default 0 */
-	private long id = 0;
+	/** Initialize id */
+	private Long id = null;
 
 	/** Initialize name, default empty. */
 	private String name = "";
@@ -105,7 +82,37 @@ public class ViewEntity {
 		this.setSize(robotsize);
 	}
 
-	public long getId() {
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	/**
+	 * Two ViewEntity objects are the same iff their ID is the same
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ViewEntity other = (ViewEntity) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
+	@Override
+	public boolean isInitialized() {
+		return id != null;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
@@ -236,4 +243,5 @@ public class ViewEntity {
 	public int getGripperCapacity() {
 		return gripperCapacity;
 	}
+
 }

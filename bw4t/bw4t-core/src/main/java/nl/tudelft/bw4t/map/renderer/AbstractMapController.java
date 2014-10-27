@@ -70,9 +70,12 @@ public abstract class AbstractMapController extends MouseAdapter implements
 	 * Set the map and update the world dimensions in the renderer.
 	 * 
 	 * @param themap
-	 *            the map to set
+	 *            the map to set. Should not be null.
 	 */
 	public void setMap(NewMap themap) {
+		if (themap == null) {
+			throw new NullPointerException("given map is null");
+		}
 		this.map = themap;
 
 		Point size = map.getArea();
