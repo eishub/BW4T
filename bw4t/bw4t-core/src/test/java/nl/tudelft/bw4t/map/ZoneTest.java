@@ -28,6 +28,7 @@ public class ZoneTest {
 	public void testZone() throws Exception {
 
 		Zone result = new Zone();
+		result.setType(Zone.Type.ROOM);
 
 		// add additional test code here
 		assertNotNull(result);
@@ -238,7 +239,7 @@ public class ZoneTest {
 	 */
 	@Test(expected = IllegalStateException.class)
 	public void testGetType_1() throws Exception {
-		Zone fixture = new Zone();
+		Zone fixture = new Zone("Room", null, Zone.Type.ROOM);
 
 		assertEquals(Zone.Type.ROOM, fixture.getType());
 
@@ -326,17 +327,13 @@ public class ZoneTest {
 	 */
 	@Test
 	public void testToString_2() throws Exception {
-		Zone fixture = new Zone();
-
-		fixture.addNeighbour(new Zone("RoomB", new Rectangle(),
-				Zone.Type.CORRIDOR));
+		Zone fixture = new Zone("Corridor", null, Zone.Type.CORRIDOR);
+		fixture.addNeighbour(new Zone("RoomB", new Rectangle(), Zone.Type.ROOM));
 
 		String result = fixture.toString();
 
 		// add additional test code here
-		assertEquals(
-				"Zone[null,java.awt.geom.Rectangle2D$Double[x=0.0,y=0.0,w=0.0,h=0.0],ROOM,[],[],[RoomB]]",
-				result);
+		assertEquals("Zone[Corridor,null,CORRIDOR,[],[],[RoomB]]", result);
 	}
 
 	/**

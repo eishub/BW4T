@@ -55,11 +55,15 @@ public class Zone implements Serializable, OneTimeInitializing {
 	public static final Color CHARGING_ZONE_COLOR = new Color(0f, 0.5f, 0f);
 
 	/**
-	 * NAME MUST BE SET UNIQUE. Otherwise XML serialization will fail.
+	 * NAME MUST BE SET UNIQUE. Default null otherwise XML serialization will
+	 * fail.
 	 */
 	private String name = null;
 
-	private Type type = Type.ROOM;
+	/**
+	 * defult type null otherwise XML serialization will fail.
+	 */
+	private Type type = null;
 	private List<Door> doors = new ArrayList<Door>();
 	private List<BlockColor> blocks = new ArrayList<BlockColor>();
 	private Rectangle boundingbox = new Rectangle();
