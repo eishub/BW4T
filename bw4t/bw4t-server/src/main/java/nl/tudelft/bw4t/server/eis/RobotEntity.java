@@ -134,9 +134,12 @@ public class RobotEntity implements EntityInterface {
 
 	/**
 	 * Reset the robot's location and should set it to its default spawn state.
+	 * We try to have the bot drop all the blocks before it exists.
 	 */
 	public void reset() {
-		ourRobot.drop();
+		while (!ourRobot.getHolding().isEmpty()) {
+			ourRobot.drop();
+		}
 		ourRobot.moveTo(this.spawnLocation.getX(), this.spawnLocation.getY());
 	}
 
