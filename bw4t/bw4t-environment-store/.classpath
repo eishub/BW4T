@@ -6,9 +6,9 @@
   <classpathentry kind="output" path="target/classes"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
   <classpathentry kind="src" path="/bw4t-core"/>
-  <classpathentry kind="var" path="M2_REPO/eishub/eis/0.4/eis-0.4.jar" sourcepath="M2_REPO/eishub/eis/0.4/eis-0.4-sources.jar">
+  <classpathentry kind="var" path="M2_REPO/eishub/eis/0.4.1/eis-0.4.1.jar" sourcepath="M2_REPO/eishub/eis/0.4.1/eis-0.4.1-sources.jar">
     <attributes>
-      <attribute value="jar:file:/Users/wouter/.m2/repository/eishub/eis/0.4/eis-0.4-javadoc.jar!/" name="javadoc_location"/>
+      <attribute value="jar:file:/Users/wouter/.m2/repository/eishub/eis/0.4.1/eis-0.4.1-javadoc.jar!/" name="javadoc_location"/>
     </attributes>
   </classpathentry>
   <classpathentry kind="var" path="M2_REPO/log4j/log4j/1.2.16/log4j-1.2.16.jar" sourcepath="M2_REPO/log4j/log4j/1.2.16/log4j-1.2.16-sources.jar">
