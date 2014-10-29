@@ -692,7 +692,8 @@ public class RobotEntity implements EntityInterface {
 
 	/**
 	 * Instructs the robot to receive a certain message, should only be used
-	 * internally in the server environment
+	 * internally in the server environment and therefore is not documented in
+	 * the manual.
 	 * 
 	 * @param message
 	 *            , the message to be received
