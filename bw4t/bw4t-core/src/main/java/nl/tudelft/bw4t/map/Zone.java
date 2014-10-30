@@ -12,8 +12,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import nl.tudelft.bw4t.map.Door.Orientation;
 import nl.tudelft.bw4t.util.OneTimeInitializing;
 
-import org.mockito.internal.matchers.Equals;
-
 /**
  * A zone is a square area in the map. The zone also functions as a 'navpoint'
  * in that the bot uses these zones for navigation. The navpoint is the middle
