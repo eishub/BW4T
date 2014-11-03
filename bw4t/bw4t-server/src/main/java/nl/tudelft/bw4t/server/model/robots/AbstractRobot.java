@@ -529,14 +529,15 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 			Rectangle2D.Double box = getBoundingBoxCenteredAt(destination, 1.0f);
 			for (GridCell<AbstractRobot> cell : getNeighbours()) {
 				for (AbstractRobot bot : cell.items()) {
-					throwDestination(destination, box, bot);
+					checkDestination(destination, box, bot);
 				}
 			}
 		}
 	}
 
 	/**
-	 * Actually throws the exception.
+	 * throw if bot!=this and box and bot overlap. Used to check if some other
+	 * bot is already occupying a box.
 	 * 
 	 * @param destination
 	 *            to check
@@ -547,7 +548,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	 * @throws DestinationOccupiedException
 	 *             already occupied
 	 */
-	private void throwDestination(NdPoint destination, Rectangle2D.Double box,
+	private void checkDestination(NdPoint destination, Rectangle2D.Double box,
 			AbstractRobot bot) throws DestinationOccupiedException {
 		if ((this != bot)
 				&& (box.intersects(bot.getBoundingBox())
