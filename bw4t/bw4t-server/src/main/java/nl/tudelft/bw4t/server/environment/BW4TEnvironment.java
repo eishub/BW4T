@@ -214,6 +214,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 			}
 		}
 		mapFullyLoaded = false;
+		nextBotSpawnIndex = 0;
 	}
 
 	@Override
@@ -729,10 +730,12 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 */
 	private Point2D getNextBotSpawnPoint() {
 		List<Entity> ents = getMap().getEntities();
-		Point2D p = ents.get(nextBotSpawnIndex++).getPosition().getPoint2D();
 		if (nextBotSpawnIndex >= ents.size()) {
-			nextBotSpawnIndex = 0;
+			throw new IllegalStateException(
+					"Spawn failed. There are no free entities available.");
 		}
+		Point2D p = ents.get(nextBotSpawnIndex++).getPosition().getPoint2D();
+
 		return p;
 	}
 

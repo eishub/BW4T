@@ -210,10 +210,25 @@ public class NewMap implements Serializable {
 		return area;
 	}
 
+	/**
+	 * Sets the available entities for this map to the given list.
+	 * 
+	 * @param entities
+	 *            list of entities for this map. Should not be null.
+	 */
 	public void setEntities(List<Entity> entities) {
+		if (entities == null) {
+			throw new NullPointerException("entities=null");
+		}
 		this.entities = entities;
 	}
 
+	/**
+	 * Gets the entities available for this map
+	 * 
+	 * @param entities
+	 *            list of entities. Should never be null.
+	 */
 	public List<Entity> getEntities() {
 		return entities;
 	}
