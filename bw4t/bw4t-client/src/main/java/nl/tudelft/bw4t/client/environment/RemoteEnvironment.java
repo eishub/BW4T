@@ -47,7 +47,7 @@ import eis.iilang.Percept;
  * A remote BW4TEnvironment that delegates all actions towards the central
  * BW4TEnvironment, through RMI. This is the "Client", the connector for goal.
  * This object lives on the client, and is a singleton (so one per JVM).
- * 
+ * <p>
  * You can launch a stand-alone BW4TRemoteEnvironment (via {@link #main}.
  * Typical args are: <code>
  *  -clientip localhost -serverip localhost -clientport 2000
@@ -56,6 +56,16 @@ import eis.iilang.Percept;
  * </code> to run 2 HumanGUIs. Note though that these agents will not be coupled
  * to GOAL, and will not appear to GOAL as entities. So you can not communicate
  * with them from GOAL by using the GOAL send action.
+ * <p>
+ * This RemoteEnvironment functions multiple roles
+ * <ul>
+ * <li>as stand-alone client. It just requests the entities as specified in the
+ * launch parameters and launches one HumanGUI connecting with the server that
+ * connects with this entity. The new-entity calls are just used to check if a
+ * humanGUI needs to be connected.
+ * <li>as plugin for GOAL. New-entity calls from the server are now also
+ * forwarded to GOAL.
+ * </ul>
  */
 public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 		EnvironmentListener {
@@ -280,6 +290,15 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 			localAgents.remove(agent);
 			removeRunningAgent(agent);
 			getClient().unregisterAgent(agent);
+
+			if (localAgents.isEmpty() && !isConnectedToGoal()) {
+				LOGGER.info("Last local agent was removed. Closing the client.");
+				try {
+					kill();
+				} catch (ManagementException e) {
+					LOGGER.error("failed to stop the RemoteEnvironment", e);
+				}
+			}
 		} catch (RemoteException e) {
 			throw environmentSuddenDeath(e);
 		}
@@ -761,7 +780,22 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 	 */
 	@Override
 	public void kill() throws ManagementException {
-		// copy list, the localAgents list is going to be changes by removing
+		disposeAllAgents();
+		try {
+			getClient().kill();
+			client = null;
+		} catch (Exception e) {
+			throw new ManagementException("problem while killing client", e);
+		}
+	}
+
+	/**
+	 * Remove all agents that are local to this RemoteEnvironment.
+	 * 
+	 * @throws ManagementException
+	 */
+	private void disposeAllAgents() throws ManagementException {
+		// copy list, the localAgents list is going to be changed by removing
 		// agents.
 
 		List<String> allAgents = new ArrayList<String>(localAgents);
@@ -776,12 +810,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 				throw new ManagementException(
 						"kill failed because agent could not be freed", e);
 			}
-		}
-		try {
-			getClient().kill();
-			client = null;
-		} catch (Exception e) {
-			throw new ManagementException("problem while killing client", e);
 		}
 	}
 
@@ -817,7 +845,9 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 	}
 
 	/**
-	 * Removes the given agent object from the running agents list
+	 * Removes the given agent object from the running agents list. If this was
+	 * the last running agent, and we are not connected with GOAL, then we close
+	 * this client
 	 * 
 	 * @param agent
 	 *            the name of the agent to remove
@@ -831,6 +861,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 			LOGGER.warn("Unable to get associated entities.", e);
 		}
 		runningAgents.remove(agent);
+
 	}
 
 	public void removeRunningAgent(BW4TAgent agent) {

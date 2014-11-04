@@ -195,19 +195,24 @@ public class BW4TClient extends UnicastRemoteObject implements
 	}
 
 	/**
-	 * kill the client interface. kill at this moment does not kill the server,
-	 * it just disconnects the client. Make sure all entities and agents have
-	 * been unbound before doing this.
+	 * kill the client interface. Does not kill the server, it just disconnects
+	 * the client. Make sure all entities and agents have been unbound before
+	 * doing this.
 	 * 
 	 * @throws RemoteException
+	 *             when we can't unregister from the server
 	 * @throws NotBoundException
+	 *             when we can't stop RMI
 	 * @throws MalformedURLException
+	 *             when there is internal error with bindAddress (should never
+	 *             happen)
 	 */
 	public void kill() throws RemoteException, MalformedURLException,
 			NotBoundException {
 		server.unregisterClient(this);
 		Naming.unbind(bindAddress);
 		UnicastRemoteObject.unexportObject(this, true);
+		LOGGER.warn("Client has been disconnected from server");
 	}
 
 	/**
