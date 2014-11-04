@@ -526,6 +526,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	private void checkIfDestinationVacant(NdPoint destination)
 			throws DestinationOccupiedException {
 		if (BW4TEnvironment.getInstance().isCollisionEnabled()) {
+			// DOC/CHECK why a box of size 1?
 			Rectangle2D.Double box = getBoundingBoxCenteredAt(destination, 1.0f);
 			for (GridCell<AbstractRobot> cell : getNeighbours()) {
 				for (AbstractRobot bot : cell.items()) {
@@ -536,8 +537,8 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	}
 
 	/**
-	 * throw if bot!=this and box and bot overlap. Used to check if some other
-	 * bot is already occupying a box.
+	 * throw if bot!=this and box and bot overlap (collide). Used to check if
+	 * some other bot is already occupying a box.
 	 * 
 	 * @param destination
 	 *            to check
@@ -583,7 +584,8 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	}
 
 	/**
-	 * Retrieve all neighbouring robots.
+	 * Retrieve all neighbouring robots with an extent of 10. DOC why is this
+	 * extent 10? Is this a bug?
 	 * 
 	 * @return neighbours
 	 */
