@@ -674,6 +674,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	@Override
 	public void freeEntity(String entity) throws RelationException,
 			EntityException {
+		((EntityInterface) getEntity(entity)).disconnect();
 		super.freeEntity(entity);
 		this.deleteEntity(entity);
 	}

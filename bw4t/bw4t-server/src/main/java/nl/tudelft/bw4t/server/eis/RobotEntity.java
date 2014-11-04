@@ -130,6 +130,7 @@ public class RobotEntity implements EntityInterface {
 	public void disconnect() {
 		ourRobot.disconnect();
 		reset();
+		ourRobot.removeFromContext();
 	}
 
 	/**
