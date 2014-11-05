@@ -16,87 +16,95 @@ import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 
 public class BlockadeMenu {
-    /**
-     * Builds a pop up menu for when the player clicked on a hallway
-     * 
-     * @param gui
-     *      gui on which the popUpMenu will be build
-     */
-    public static void buildPopUpMenuForBlockade(BW4TClientGUI gui) {
-        gui.getjPopupMenu().removeAll();
-        ClientMapController cmc = gui.getController().getMapController();
+	/**
+	 * Builds a pop up menu for when the player clicked on a hallway
+	 * 
+	 * @param gui
+	 *            gui on which the popUpMenu will be build
+	 */
+	public static void buildPopUpMenuForBlockade(BW4TClientGUI gui) {
+		gui.getjPopupMenu().removeAll();
+		ClientMapController cmc = gui.getController().getMapController();
 
-        ViewBlock holdingID = cmc.getTheBot().getTopBlock();
-        Color entityColor = cmc.getTheBot().getColor();
+		ViewBlock holdingID = cmc.getTheBot().getTopBlock();
+		Color entityColor = cmc.getTheBot().getColor();
 
-        JMenuItem menuItem = new JMenuItem();
+		JMenuItem menuItem = new JMenuItem();
 
-        if (holdingID != null) {
-            menuItem = new JMenuItem("Put down box");
-            menuItem.addActionListener(new PutdownActionListener(gui.getController()));
-            gui.getjPopupMenu().add(menuItem);
-        }
+		if (holdingID != null) {
+			menuItem = new JMenuItem("Put down box");
+			menuItem.addActionListener(new PutdownActionListener(gui
+					.getController()));
+			gui.getjPopupMenu().add(menuItem);
+		}
 
-        buildTellMenu(gui, cmc, holdingID, entityColor);
-    }
-    
-    /**
-     * 
-     * @param gui
-     *      gui on which the popUpMenu will be build
-     * @param cmc
-     *      ClientMapController used to get all rooms.
-     * @param holdingID
-     *      ID of the currently holding block (if any).
-     * @param entityColor
-     *      Color of the robot.
-     */
-    public static void buildTellMenu(BW4TClientGUI gui, ClientMapController cmc, ViewBlock holdingID, Color entityColor) {
-        JMenuItem menuItem;
-        BasicMenuOperations.addSectionTitleToPopupMenu("Tell: ", gui.getjPopupMenu());
+		buildTellMenu(gui, cmc, holdingID, entityColor);
+	}
 
-        for (Zone roomInfo : cmc.getRooms()) {
-            BasicMenuOperations.addMenuItemToPopupMenu(
-                    new BW4TMessage(MessageType.AMWAITINGOUTSIDEROOM, roomInfo.getName(), null, null), gui);
-        }
+	/**
+	 * 
+	 * @param gui
+	 *            gui on which the popUpMenu will be build
+	 * @param cmc
+	 *            ClientMapController used to get all rooms.
+	 * @param holdingID
+	 *            ID of the currently holding block (if any).
+	 * @param entityColor
+	 *            Color of the robot.
+	 */
+	public static void buildTellMenu(BW4TClientGUI gui,
+			ClientMapController cmc, ViewBlock holdingID, Color entityColor) {
+		JMenuItem menuItem;
+		BasicMenuOperations.addSectionTitleToPopupMenu("Tell: ",
+				gui.getjPopupMenu());
 
-        tellMenuHolding(gui, cmc, holdingID, entityColor);
+		for (Zone roomInfo : cmc.getRooms()) {
+			BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
+					MessageType.AMWAITINGOUTSIDEROOM, roomInfo.getName(), null,
+					null), gui);
+		}
 
-        gui.getjPopupMenu().addSeparator();
-        menuItem = new JMenuItem("Close menu");
-        gui.getjPopupMenu().add(menuItem);
-    }
+		tellMenuHolding(gui, cmc, holdingID, entityColor);
 
-    /**
-     * 
-     * @param gui
-     *      gui on which the popUpMenu will be build
-     * @param cmc
-     *      ClientMapController used to get all rooms.
-     * @param holdingID
-     *      ID of the currently holding block (if any).
-     * @param entityColor
-     *      Color of the robot.
-     */
-    private static void tellMenuHolding(BW4TClientGUI gui, ClientMapController cmc, ViewBlock holdingID,
-            Color entityColor) {
-        JMenuItem menuItem;
-        if (holdingID != null) {
-            String colorAsString = BasicMenuOperations.getColor(ColorTranslator.translate2ColorString(entityColor), gui
-                    .getController().getHumanAgent());
-            BasicMenuOperations.addMenuItemToPopupMenu(
-                    new BW4TMessage(MessageType.HASCOLOR, null, colorAsString, null), gui);
+		gui.getjPopupMenu().addSeparator();
+		menuItem = new JMenuItem("Close menu");
+		gui.getjPopupMenu().add(menuItem);
+	}
 
-            JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu("I have a " + colorAsString + " block from ",
-                    gui.getjPopupMenu());
+	/**
+	 * 
+	 * @param gui
+	 *            gui on which the popUpMenu will be build
+	 * @param cmc
+	 *            ClientMapController used to get all rooms.
+	 * @param holdingID
+	 *            ID of the currently holding block (if any).
+	 * @param entityColor
+	 *            Color of the robot.
+	 */
+	private static void tellMenuHolding(BW4TClientGUI gui,
+			ClientMapController cmc, ViewBlock holdingID, Color entityColor) {
+		JMenuItem menuItem;
+		if (holdingID != null) {
+			String colorAsString = BasicMenuOperations.getColor(ColorTranslator
+					.translate2ColorString(entityColor), gui.getController()
+					.getHumanAgent());
+			BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
+					MessageType.HASCOLOR, null, colorAsString, null), gui);
 
-            for (Zone roomInfo : cmc.getRooms()) {
-                menuItem = new JMenuItem(roomInfo.getName());
-                menuItem.addActionListener(new MessageSenderActionListener(new BW4TMessage(MessageType.HASCOLOR,
-                        roomInfo.getName(), colorAsString, null), gui.getController()));
-                submenu.add(menuItem);
-            }
-        }
-    }
+			JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu(
+					"I have a " + colorAsString + " block from ",
+					gui.getjPopupMenu());
+
+			for (Zone roomInfo : cmc.getRooms()) {
+				menuItem = new JMenuItem(roomInfo.getName());
+				menuItem.addActionListener(new MessageSenderActionListener(
+						new BW4TMessage(MessageType.HASCOLOR, roomInfo
+								.getName(), colorAsString, null), gui
+								.getController()));
+				submenu.add(menuItem);
+			}
+		}
+	}
 
 }
