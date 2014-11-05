@@ -824,15 +824,21 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 	public void killHumanEntity(String entity) throws ManagementException {
 
 		try {
-			for (String agent : getAssociatedAgents(entity)) {
-				if (agent.isEmpty()) {
-					freeEntity(entity);
-				} else {
-					freePair(agent, entity);
-					unregisterAgent(agent);
-				}
-			}
-		} catch (AgentException | RelationException | EntityException e) {
+			freeEntity(entity);
+			// for (String agent : getAssociatedAgents(entity)) {
+			//
+			// // #3335 if GOAL is attached, we have an agent
+			// // but even then, it seems not clear why the entity would
+			// // persist
+			// // It only will leave a dead entity in the maps.
+			// // if (agent.isEmpty()) {
+			// // freeEntity(entity); // Why free multiple times?
+			// // } else {
+			// // freePair(agent, entity);
+			// // unregisterAgent(agent);
+			// // }
+			// }
+		} catch (RelationException | EntityException e) {
 			throw new ManagementException(
 					"kill failed because agent could not be freed", e);
 		}
