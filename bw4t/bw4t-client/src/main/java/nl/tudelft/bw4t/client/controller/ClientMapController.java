@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import nl.tudelft.bw4t.client.controller.percept.processors.BumpedProcessor;
+import nl.tudelft.bw4t.client.controller.percept.processors.ColorBlindProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.ColorProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.EPartnerProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.GripperCapacityProcessor;
@@ -146,6 +147,7 @@ public class ClientMapController extends AbstractMapController {
 				new RobotOldTargetUnreachableProcessor());
 		perceptProcessors
 				.put("gripperCapacity", new GripperCapacityProcessor());
+		perceptProcessors.put("colorblind", new ColorBlindProcessor());
 	}
 
 	@Override
