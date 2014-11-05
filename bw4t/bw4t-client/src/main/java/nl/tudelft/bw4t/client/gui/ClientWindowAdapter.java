@@ -48,7 +48,7 @@ public final class ClientWindowAdapter extends WindowAdapter {
 		try {
 			controller.getEnvironment().killHumanEntity(entity);
 		} catch (ManagementException e1) {
-			LOGGER.error("Could not correctly kill the environment.", e1);
+			LOGGER.error("Could not correctly kill the entity " + entity, e1);
 		}
 	}
 }
