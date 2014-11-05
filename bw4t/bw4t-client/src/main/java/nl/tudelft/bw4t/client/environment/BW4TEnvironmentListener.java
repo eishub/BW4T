@@ -101,7 +101,6 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
 				agent = newAgent(InitParam.AGENTCLASS.getValue(), entity);
 			}
 
-			agent.setBotConfig(findCorrespondingBotConfig(entity, false));
 			agent.registerEntity(entity);
 			environment.addRunningAgent(agent);
 			environment.associateEntity(agent.getAgentId(), entity);
@@ -133,10 +132,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
 			// we use the entityId as name for the agent as well. #2761
 			BW4TAgent agent = cons.newInstance(entity, environment);
 
-			if ("epartner".equals(environment.getType(entity))) {
-				agent.setEpartnerConfig(findCorrespondingEpartnerConfig(entity,
-						false));
-			}
+			agent.setType(environment.getType(entity));
 
 			return agent;
 		} catch (InstantiationException | ClassNotFoundException

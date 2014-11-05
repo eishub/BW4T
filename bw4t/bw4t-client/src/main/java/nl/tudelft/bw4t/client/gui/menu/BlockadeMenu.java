@@ -14,6 +14,7 @@ import nl.tudelft.bw4t.client.message.MessageType;
 import nl.tudelft.bw4t.map.ColorTranslator;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
+import nl.tudelft.bw4t.map.view.ViewEntity;
 
 public class BlockadeMenu {
 	/**
@@ -86,9 +87,12 @@ public class BlockadeMenu {
 			ClientMapController cmc, ViewBlock holdingID, Color entityColor) {
 		JMenuItem menuItem;
 		if (holdingID != null) {
-			String colorAsString = BasicMenuOperations.getColor(ColorTranslator
-					.translate2ColorString(entityColor), gui.getController()
-					.getHumanAgent());
+			ViewEntity ourEntity = gui.getController().getMapController()
+					.getTheBot();
+
+			String colorAsString = BasicMenuOperations.getColor(
+					ColorTranslator.translate2ColorString(entityColor),
+					ourEntity);
 			BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
 					MessageType.HASCOLOR, null, colorAsString, null), gui);
 

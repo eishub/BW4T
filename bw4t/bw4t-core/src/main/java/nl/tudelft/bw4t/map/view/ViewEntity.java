@@ -8,7 +8,9 @@ import java.util.Stack;
 import nl.tudelft.bw4t.util.OneTimeInitializing;
 
 /**
- * information about an robot for the map renderer.
+ * information about an robot for the map renderer. Here information gathered
+ * from incoming percepts is stored. FIXME maybe this should be stored in
+ * separate object?
  * 
  * This object is used in {@link Map}s that should be threadsafe and therefore
  * must implement a thread safe {@link #equals(Object)}.
@@ -49,6 +51,9 @@ public class ViewEntity implements OneTimeInitializing {
 
 	/** the max number of blocks the gripper can hold */
 	private int gripperCapacity = 1;
+
+	/** true if agent is color blind */
+	private boolean isColorBlind = false;
 
 	/**
 	 * Empty constructor, initialize default object.
@@ -244,4 +249,16 @@ public class ViewEntity implements OneTimeInitializing {
 		return gripperCapacity;
 	}
 
+	/**
+	 * check if entity is color blind
+	 * 
+	 * @return true if entity is color blind.
+	 */
+	public boolean isColorBlind() {
+		return isColorBlind;
+	}
+
+	public void setColorBlind(boolean isblind) {
+		isColorBlind = isblind;
+	}
 }

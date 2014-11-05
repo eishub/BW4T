@@ -6,12 +6,8 @@ import java.util.List;
 
 import nl.tudelft.bw4t.client.environment.PerceptsHandler;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.message.BW4TMessage;
 import nl.tudelft.bw4t.client.message.MessageTranslator;
-import nl.tudelft.bw4t.map.view.ViewEntity;
-import nl.tudelft.bw4t.scenariogui.BotConfig;
-import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Translator;
 import eis.exceptions.ActException;
@@ -22,7 +18,9 @@ import eis.iilang.Parameter;
 import eis.iilang.Percept;
 
 /**
- * Java agent that can control an entity.
+ * Java agent that can control an entity. This is a 'dumb' agent, it does not
+ * look along with the results from calls to {@link #getPercepts()} and it has
+ * no idea about the agent's capabilities, configuration and handicaps.
  */
 public class BW4TAgent extends Thread implements ActionInterface {
 
@@ -37,8 +35,7 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	/** The bw4tenv. */
 	private final RemoteEnvironment bw4tenv;
 
-	private BotConfig botConfig;
-	private EPartnerConfig epartnerConfig;
+	private String entityType;
 
 	/**
 	 * Create a new BW4TAgent that can be registered to an entity.
@@ -203,7 +200,8 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	}
 
 	/**
-	 * Sends a message to certain other agents.
+	 * Sends a message to certain other agents. Uses the BW4T internal messaging
+	 * system.
 	 *
 	 * @param receiver
 	 *            , a receiver (can be either all or the id of another agent)
@@ -243,7 +241,7 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	}
 
 	/**
-	 * Sets the killed.
+	 * Sets the killed flag.
 	 */
 	public void setKilled() {
 		environmentKilled = true;
@@ -277,63 +275,17 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	}
 
 	/**
-	 * Whether this agent can pick up another box based on their gripper
-	 * capacity and the amount of boxes they're already holding.
+	 * Stores the entity type of this agent.
 	 * 
-	 * @param sameEntity
-	 *            The {@link ViewEntity} type of this agent.
-	 * @return Whether this agent can pick up another object.
+	 * @param type
+	 *            "epartner" or "human" (MORE??)
+	 *
 	 */
-	public boolean canPickupAnotherObject(ViewEntity sameEntity) {
-		// CHECK why do we have a bot config here? Config is on the server,
-		// at this side we can only handle percepts.
-		// if (getBotConfig() == null) {
-		// return true;
-		// }
-		// if (getBotConfig().getGripperHandicap()) {
-		// return false;
-		// }
-		// int grippersTotal = getBotConfig().getGrippers();
-		// int grippersInUse = sameEntity.getHolding().size();
-		// return grippersInUse < grippersTotal;
-
-		return sameEntity.getHolding().size() < sameEntity.getGripperCapacity();
+	public void setType(String type) {
+		entityType = type;
 	}
 
-	/**
-	 * Checks if the bot controlled by the GUI can pick up another object
-	 * 
-	 * @param gui
-	 *            The GUI controlling the bot that needs to be checked
-	 * @return Returns true if the bot can pick up another object
-	 */
-	public boolean canPickupAnotherObject(BW4TClientGUI gui) {
-		return canPickupAnotherObject(gui.getController().getMapController()
-				.getTheBot());
+	public String getType() {
+		return entityType;
 	}
-
-	public boolean isColorBlind() {
-		return getBotConfig() != null && getBotConfig().getColorBlindHandicap();
-	}
-
-	public BotConfig getBotConfig() {
-		return botConfig;
-	}
-
-	public void setBotConfig(BotConfig botConfig) {
-		this.botConfig = botConfig;
-	}
-
-	public boolean isGps() {
-		return getEpartnerConfig() != null && getEpartnerConfig().isGps();
-	}
-
-	public EPartnerConfig getEpartnerConfig() {
-		return epartnerConfig;
-	}
-
-	public void setEpartnerConfig(EPartnerConfig epartnerConfig) {
-		this.epartnerConfig = epartnerConfig;
-	}
-
 }
