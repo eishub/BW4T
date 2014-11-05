@@ -392,8 +392,7 @@ public class RobotEntity implements EntityInterface {
 	@AsPercept(name = "color", multiplePercepts = true, filter = Filter.Type.ALWAYS)
 	public List<BlockColor> getColor() {
 		Set<Block> blocks = getVisible(Block.class);
-		boolean isColorBlind = ourRobot.getHandicapsList().contains(
-				"ColorBlind");
+		boolean isColorBlind = isColorBlind();
 
 		List<BlockColor> colors = new ArrayList<BlockColor>();
 		for (Block block : blocks) {
@@ -546,6 +545,20 @@ public class RobotEntity implements EntityInterface {
 	@AsPercept(name = "battery", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
 	public double getBatteryPercentage() {
 		return ourRobot.getBattery().getPercentage();
+	}
+
+	/**
+	 * The battery level of the robot. The battery can be re-charged by moving
+	 * through a charge zone. The battery use depends on the size and speed of
+	 * the robot as set in the configuration. By default this is off. See also
+	 * {@link BotConfig#calculateDischargeRate(int, int)}.
+	 * 
+	 * 
+	 * @return batterypercentage
+	 */
+	@AsPercept(name = "colorblind", multiplePercepts = false, filter = Filter.Type.ONCE)
+	public boolean isColorBlind() {
+		return ourRobot.getHandicapsList().contains("ColorBlind");
 	}
 
 	/**
