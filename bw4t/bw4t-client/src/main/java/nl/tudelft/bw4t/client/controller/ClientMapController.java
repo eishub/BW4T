@@ -76,7 +76,7 @@ public class ClientMapController extends AbstractMapController {
 	private final Set<Zone> occupiedRooms = new HashSet<Zone>();
 
 	/** The rendered bot. */
-	private final ViewEntity myBot = new ViewEntity(0);
+	private ViewEntity myBot = new ViewEntity(0);
 
 	/** The color sequence index. */
 	private int colorSequenceIndex = 0;
@@ -91,7 +91,7 @@ public class ClientMapController extends AbstractMapController {
 	private final Set<ViewEntity> visibleRobots = new HashSet<>();
 
 	/** The visible robots. */
-	private final Set<ViewEntity> knownRobots = new HashSet<>();
+	private final Map<Long, ViewEntity> knownRobots = new HashMap<>();
 
 	/**
 	 * All the blocks. This works in a bit of hacky way. We insert
@@ -302,18 +302,7 @@ public class ClientMapController extends AbstractMapController {
 	 * @return
 	 */
 	public synchronized ViewEntity getKnownRobot(long id) {
-		// entity so that we can use equals.
-		ViewEntity entity = new ViewEntity(id);
-
-		if (myBot.equals(entity)) {
-			return myBot;
-		}
-		for (ViewEntity robot : knownRobots) {
-			if (robot.equals(entity)) {
-				return robot;
-			}
-		}
-		return null;
+		return knownRobots.get(id);
 	}
 
 	/**
@@ -328,10 +317,19 @@ public class ClientMapController extends AbstractMapController {
 			return bot;
 		}
 		bot = new ViewEntity(id);
-		knownRobots.add(bot);
+		knownRobots.put(id, bot);
 		return bot;
 	}
 
+	/**
+	 * get our own robot. Initially this returns a FAKE {@link ViewEntity},
+	 * because we need to store incoming percepts about it until we receive the
+	 * real robot ID.
+	 * 
+	 * @return ViewEntity that represents our robot. This ViewEntity may have
+	 *         the incorrect ID and settings as long as we did not receive a
+	 *         robot percept from the server.
+	 */
 	public ViewEntity getTheBot() {
 		return myBot;
 	}
@@ -473,6 +471,23 @@ public class ClientMapController extends AbstractMapController {
 			}
 		}
 		super.run();
+	}
+
+	/**
+	 * This is called when we hear our own bot ID from the server. This needs
+	 * special treatment because we already may have received info about this
+	 * bot, which was stored so far in a fake {@link #myBot}. Also there may
+	 * already exist a bot with the real ID (if there was a robotSize percept ).
+	 * 
+	 * FIXME we do not check here if this is called twice. It really should not
+	 * happen but some unit tests do this wrong.
+	 * 
+	 * @param longValue
+	 */
+	public void setTheBotId(long id) {
+		ViewEntity fakeBot = myBot;
+		myBot = getCreateRobot(id);
+		myBot.merge(fakeBot);
 	}
 
 }

@@ -20,6 +20,16 @@ public class ViewEntity implements OneTimeInitializing {
 	/** Initialize color for robot to black. */
 	public final static Color ROBOT_COLOR = Color.BLACK;
 
+	private static final int DEFAULT_ROBOT_SIZE = 2;
+
+	private static final int DEFAULT_GRIPPER_CAPACITY = 1;
+
+	private static final double DEFAULT_BATTERY_LEVEL = 0.0;
+
+	private static final boolean DEFAULT_COLORBLINDNESS = false;
+
+	private static final long DEFAULT_HOLDING_EPARTNER = -1;
+
 	/** Initialize id */
 	private Long id = null;
 
@@ -38,22 +48,22 @@ public class ViewEntity implements OneTimeInitializing {
 	private Point2D location = new Point2D.Double();
 
 	/** Initialize size of robot */
-	private int robotsize = 2;
+	private int robotsize = DEFAULT_ROBOT_SIZE;
 
-	/** Initialize holdingEpartner, default -1 */
-	private long holdingEpartner = -1;
+	/** Initialize holdingEpartner */
+	private long holdingEpartner = DEFAULT_HOLDING_EPARTNER;
 
 	/** Initialize collided to false. */
 	private boolean collided = false;
 
 	/** Initialize batteryLevel to 0. */
-	private double batteryLevel = 0.0;
+	private double batteryLevel = DEFAULT_BATTERY_LEVEL;
 
 	/** the max number of blocks the gripper can hold */
-	private int gripperCapacity = 1;
+	private int gripperCapacity = DEFAULT_GRIPPER_CAPACITY;
 
 	/** true if agent is color blind */
-	private boolean isColorBlind = false;
+	private boolean isColorBlind = DEFAULT_COLORBLINDNESS;
 
 	/**
 	 * Empty constructor, initialize default object.
@@ -80,7 +90,7 @@ public class ViewEntity implements OneTimeInitializing {
 	 */
 	public ViewEntity(long id, String name, double x, double y,
 			Stack<ViewBlock> newstack, int robotsize) {
-		this.setId(id);
+		this.id = id;
 		this.setName(name);
 		this.setLocation(x, y);
 		this.setHoldingStack(newstack);
@@ -119,10 +129,6 @@ public class ViewEntity implements OneTimeInitializing {
 
 	public Long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getName() {
@@ -260,5 +266,57 @@ public class ViewEntity implements OneTimeInitializing {
 
 	public void setColorBlind(boolean isblind) {
 		isColorBlind = isblind;
+	}
+
+	/**
+	 * Copy all field values (except ID) from given {@link ViewEntity}.
+	 */
+	public void duplicate(ViewEntity ent) {
+		setName(ent.getName());
+		setLocation(ent.getLocation());
+		setHoldingStack(ent.getHolding());
+		setSize(ent.getRobotSize());
+		setGripperCapacity(ent.getGripperCapacity());
+		setBatteryLevel(ent.getBatteryLevel());
+		setCollided(ent.isCollided());
+		setColorBlind(ent.isColorBlind());
+		setHoldingEpartner(ent.getHoldingEpartner());
+	}
+
+	/**
+	 * Copies all non-default values from given {@link ViewEntity} into our
+	 * fields.
+	 * 
+	 * @param ent
+	 */
+	public void merge(ViewEntity ent) {
+		if (!ent.getName().isEmpty()) {
+			setName(ent.getName());
+		}
+		if (!ent.getLocation().equals(new Point2D.Double())) {
+			setLocation(ent.getLocation());
+		}
+		if (!ent.getHolding().isEmpty()) {
+			setHoldingStack(ent.getHolding());
+		}
+		if (ent.getRobotSize() != DEFAULT_ROBOT_SIZE) {
+			setSize(ent.getRobotSize());
+		}
+		if (ent.getGripperCapacity() != DEFAULT_GRIPPER_CAPACITY) {
+			setGripperCapacity(ent.getGripperCapacity());
+		}
+		if (ent.getBatteryLevel() != DEFAULT_BATTERY_LEVEL) {
+			setBatteryLevel(ent.getBatteryLevel());
+		}
+		if (ent.isCollided()) {
+			setCollided(ent.isCollided());
+		}
+		if (ent.isColorBlind == DEFAULT_COLORBLINDNESS) {
+			setColorBlind(ent.isColorBlind());
+		}
+		if (ent.getHoldingEpartner() != DEFAULT_HOLDING_EPARTNER) {
+			setHoldingEpartner(ent.getHoldingEpartner());
+		}
+
 	}
 }
