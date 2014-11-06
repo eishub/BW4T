@@ -232,7 +232,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 			return;
 		}
 		Set<AgentListener> listeners = agentsToAgentListeners.get(agent);
-		if ((listeners == null) || !listeners.contains(agent)) {
+		if (listeners == null) {
 			return;
 		}
 		listeners.remove(listener);
