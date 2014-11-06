@@ -339,6 +339,17 @@ public class RobotEntity implements EntityInterface {
 	}
 
 	/**
+	 * how much the speed of the robot is multiplied by. Default is 0.5, which
+	 * means the bot normally runs at 50% of the maximum speed.
+	 * 
+	 * @return id
+	 */
+	@AsPercept(name = "speed", filter = Filter.Type.ON_CHANGE)
+	public double getSpeed() {
+		return ourRobot.getSpeedMod();
+	}
+
+	/**
 	 * Percept of the id of the robot Send at the beginning
 	 * 
 	 * @return id
