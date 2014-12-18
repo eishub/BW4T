@@ -683,7 +683,11 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	public void freePair(String agent, String entity) throws RelationException {
 		EntityInterface robot = (EntityInterface) getEntity(entity);
 		robot.disconnect();
-		super.freePair(agent, entity);
+		try {
+			super.freePair(agent, entity);
+		} catch (EntityException e) {
+			throw new RelationException("can't free pair", e);
+		}
 	}
 
 	/**

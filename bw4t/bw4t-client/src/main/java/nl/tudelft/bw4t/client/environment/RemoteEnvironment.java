@@ -576,7 +576,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 	 */
 	@Override
 	public String requiredVersion() {
-		return "0.4";
+		return "0.5";
 	}
 
 	/**
@@ -603,8 +603,8 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 		if (state == EnvironmentState.KILLED) {
 			throw new NoEnvironmentException("Environment is dead.");
 		}
-		if (state != EnvironmentState.RUNNING) {
-			throw new PerceiveException("Environment does not run");
+		if (!(state == EnvironmentState.RUNNING || state == EnvironmentState.PAUSED)) {
+			throw new PerceiveException("Environment is not running/paused");
 		}
 		/** fail if the agent is not registered */
 		if (!getAgents().contains(agent)) {
