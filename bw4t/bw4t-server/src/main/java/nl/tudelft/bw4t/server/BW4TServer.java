@@ -7,6 +7,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.ServerNotActiveException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Collection;
 import java.util.HashMap;
@@ -63,6 +64,13 @@ public class BW4TServer extends UnicastRemoteObject implements
 	private Registry registry;
 
 	/**
+	 * A map of <agent-client> pairs. Every entity that we have can be claimed
+	 * by a server. If that server disappears, we have to free the agents and
+	 * entities associated with that server.
+	 */
+	private Map<String, BW4TClientActions> agentLocations = new HashMap<String, BW4TClientActions>();
+
+	/**
 	 * Create a new instance of the server
 	 * 
 	 * @param serverIp
@@ -103,13 +111,25 @@ public class BW4TServer extends UnicastRemoteObject implements
 	@Override
 	public void registerClient(BW4TClientActions client, int agentCount,
 			int humanCount) throws RemoteException {
-		registerClient(client, new ClientInfo(agentCount, humanCount));
+		try {
+			registerClient(client, new ClientInfo(getClientHost(), agentCount,
+					humanCount));
+		} catch (ServerNotActiveException e) {
+			throw new RuntimeException(
+					"call to associateEntity comes from non-active server", e);
+		}
 	}
 
 	@Override
 	public void registerClient(BW4TClientActions client,
 			BW4TClientConfig clientConfig) throws RemoteException {
-		registerClient(client, new ClientInfo(clientConfig));
+		try {
+			registerClient(client,
+					new ClientInfo(clientConfig, getClientHost()));
+		} catch (ServerNotActiveException e) {
+			throw new RuntimeException(
+					"call to associateEntity comes from non-active server", e);
+		}
 	}
 
 	private void registerClient(BW4TClientActions client, ClientInfo cInfo)
@@ -134,8 +154,34 @@ public class BW4TServer extends UnicastRemoteObject implements
 	}
 
 	@Override
-	public void unregisterClient(BW4TClientActions client) {
+	public void unregisterClient(BW4TClientActions client)
+			throws ServerNotActiveException {
+		Set<String> agents = getAssociatedAgents(client);
+		for (String agent : agents) {
+			try {
+				freeAgent(agent);
+			} catch (RemoteException | RelationException e) {
+				e.printStackTrace();
+			}
+		}
 		clients.remove(client);
+	}
+
+	/**
+	 * Get all agents associated with the server that calls us.
+	 * 
+	 * @return
+	 * @throws ServerNotActiveException
+	 */
+	private Set<String> getAssociatedAgents(BW4TClientActions client)
+			throws ServerNotActiveException {
+		Set<String> agents = new HashSet<String>();
+		for (String agent : agentLocations.keySet()) {
+			if (agentLocations.get(agent).equals(client)) {
+				agents.add(agent);
+			}
+		}
+		return agents;
 	}
 
 	/**
@@ -231,8 +277,12 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void registerAgent(String agentId) throws RemoteException,
-			AgentException {
+	public void registerAgent(String agentId, BW4TClientActions client)
+			throws RemoteException, AgentException {
+		if (!clients.containsKey(client)) {
+			throw new AgentException("client " + client + " has not registered");
+		}
+		agentLocations.put(agentId, client);
 		BW4TEnvironment.getInstance().registerAgent(agentId);
 	}
 
@@ -285,10 +335,16 @@ public class BW4TServer extends UnicastRemoteObject implements
 	@Override
 	public void freeAgent(String agent) throws RemoteException,
 			RelationException {
+
+		if (!agentLocations.containsKey(agent)) {
+			throw new RelationException("agent " + agent + " is not registered");
+		}
+
+		agentLocations.remove(agent);
+
 		try {
 			BW4TEnvironment.getInstance().freeAgent(agent);
 		} catch (EntityException e) {
-			// TODO Auto-generated catch block
 			throw new RelationException("can't free agent", e);
 		}
 	}
@@ -406,7 +462,11 @@ public class BW4TServer extends UnicastRemoteObject implements
 				client.handleStateChange(newState);
 			} catch (RemoteException e) {
 				reportClientProblem(client, e);
-				unregisterClient(client);
+				try {
+					unregisterClient(client);
+				} catch (ServerNotActiveException e1) {
+					e1.printStackTrace();
+				}
 			}
 
 		}

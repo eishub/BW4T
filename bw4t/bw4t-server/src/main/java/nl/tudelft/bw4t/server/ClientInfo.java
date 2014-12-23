@@ -1,5 +1,6 @@
 package nl.tudelft.bw4t.server;
 
+import java.rmi.server.RemoteServer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +18,12 @@ class ClientInfo {
 	private BW4TClientConfig clientConfig;
 	private List<BotConfig> requestedBots = new ArrayList<>();
 	private List<EPartnerConfig> requestedEPartners = new ArrayList<>();
+	private final String name;
 
-	public ClientInfo(int reqAgent, int reqHuman) {
+	public ClientInfo(String uniqueName, int reqAgent, int reqHuman) {
 		assert reqHuman >= 0;
 		assert reqAgent >= 0;
+		name = uniqueName;
 		this.clientConfig = new BW4TClientConfig();
 		if (reqAgent > 0) {
 			BotConfig bot = BotConfig.createDefaultRobot();
@@ -36,8 +39,16 @@ class ClientInfo {
 		}
 	}
 
-	public ClientInfo(BW4TClientConfig clientConfig) {
+	/**
+	 * 
+	 * @param clientConfig
+	 * @param uniqueName
+	 *            the {@link RemoteServer#getClientHost() value}
+	 */
+	public ClientInfo(BW4TClientConfig clientConfig, String uniqueName) {
 		assert clientConfig != null;
+
+		name = uniqueName;
 		if (clientConfig.getBots() != null) {
 			this.requestedBots = clientConfig.getBots();
 		}
@@ -65,5 +76,9 @@ class ClientInfo {
 
 	public boolean isVisualizePaths() {
 		return clientConfig.isVisualizePaths();
+	}
+
+	public Object getName() {
+		return name;
 	}
 }

@@ -6,6 +6,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.ServerNotActiveException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Collection;
 import java.util.List;
@@ -206,9 +207,11 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 * @throws MalformedURLException
 	 *             when there is internal error with bindAddress (should never
 	 *             happen)
+	 * @throws ServerNotActiveException
+	 *             if server can't contact us.
 	 */
 	public void kill() throws RemoteException, MalformedURLException,
-			NotBoundException {
+			NotBoundException, ServerNotActiveException {
 		server.unregisterClient(this);
 		Naming.unbind(bindAddress);
 		UnicastRemoteObject.unexportObject(this, true);
@@ -270,7 +273,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 */
 	public void registerAgent(String agentId) throws RemoteException,
 			AgentException {
-		server.registerAgent(agentId);
+		server.registerAgent(agentId, this);
 		LOGGER.debug("Register agent: " + agentId);
 	}
 
