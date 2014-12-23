@@ -128,9 +128,12 @@ public class RobotEntity implements EntityInterface {
 	 * Disconnects the robot from repast.
 	 */
 	public void disconnect() {
-		ourRobot.disconnect();
-		reset();
-		ourRobot.removeFromContext();
+		if (ourRobot.isConnected()) {
+			// reset before disconnect: reset moves bot to init position.
+			reset();
+			ourRobot.disconnect();
+			ourRobot.removeFromContext();
+		}
 	}
 
 	/**

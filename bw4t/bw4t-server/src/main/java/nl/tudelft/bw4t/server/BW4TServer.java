@@ -64,13 +64,6 @@ public class BW4TServer extends UnicastRemoteObject implements
 	private Registry registry;
 
 	/**
-	 * A map of <agent-client> pairs. Every entity that we have can be claimed
-	 * by a server. If that server disappears, we have to free the agents and
-	 * entities associated with that server.
-	 */
-	private Map<String, BW4TClientActions> agentLocations = new HashMap<String, BW4TClientActions>();
-
-	/**
 	 * Create a new instance of the server
 	 * 
 	 * @param serverIp
@@ -156,32 +149,15 @@ public class BW4TServer extends UnicastRemoteObject implements
 	@Override
 	public synchronized void unregisterClient(BW4TClientActions client)
 			throws ServerNotActiveException {
-		Set<String> agents = getAssociatedAgents(client);
-		for (String agent : agents) {
+
+		if (clients.containsKey(client)) {
 			try {
-				freeAgent(agent);
-			} catch (RemoteException | RelationException e) {
+				BW4TEnvironment.getInstance().freeClient(client);
+			} catch (EntityException | RelationException e) {
 				e.printStackTrace();
 			}
+			clients.remove(client);
 		}
-		clients.remove(client);
-	}
-
-	/**
-	 * Get all agents associated with the server that calls us.
-	 * 
-	 * @return
-	 * @throws ServerNotActiveException
-	 */
-	private Set<String> getAssociatedAgents(BW4TClientActions client)
-			throws ServerNotActiveException {
-		Set<String> agents = new HashSet<String>();
-		for (String agent : agentLocations.keySet()) {
-			if (agentLocations.get(agent).equals(client)) {
-				agents.add(agent);
-			}
-		}
-		return agents;
 	}
 
 	/**
@@ -235,23 +211,8 @@ public class BW4TServer extends UnicastRemoteObject implements
 	public synchronized void unregisterAgent(String agent)
 			throws AgentException {
 
-		if (!agentLocations.containsKey(agent)) {
-			throw new AgentException("agent " + agent + " is not registered");
-		}
+		BW4TEnvironment.getInstance().unregisterAgent(agent);
 
-		// CHECK why do we delete the entities here, and not just free them?
-		BW4TEnvironment env = BW4TEnvironment.getInstance();
-		Set<String> ents = env.getAssociatedEntities(agent);
-		for (String entity : ents) {
-			try {
-				BW4TEnvironment.getInstance().deleteEntity(entity);
-			} catch (EntityException | RelationException e) {
-				throw new AgentException("failed to delete entity", e);
-			}
-		}
-
-		agentLocations.remove(agent);
-		env.unregisterAgent(agent);
 	}
 
 	/**
@@ -291,8 +252,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 		if (!clients.containsKey(client)) {
 			throw new AgentException("client " + client + " has not registered");
 		}
-		agentLocations.put(agentId, client);
-		BW4TEnvironment.getInstance().registerAgent(agentId);
+		BW4TEnvironment.getInstance().registerAgent(agentId, client);
 	}
 
 	/**

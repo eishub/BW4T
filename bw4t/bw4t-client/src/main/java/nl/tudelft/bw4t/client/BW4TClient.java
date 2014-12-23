@@ -216,6 +216,11 @@ public class BW4TClient extends UnicastRemoteObject implements
 		Naming.unbind(bindAddress);
 		UnicastRemoteObject.unexportObject(this, true);
 		LOGGER.warn("Client has been disconnected from server");
+
+		// bit of a hack. The server won't change to KILLED state just for one
+		// killed client.
+		// But this connector is dead and we have to notify our parent.
+		handleStateChange(EnvironmentState.KILLED);
 	}
 
 	/**
