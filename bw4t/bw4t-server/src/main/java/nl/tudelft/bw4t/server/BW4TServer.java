@@ -233,6 +233,12 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 */
 	@Override
 	public void unregisterAgent(String agent) throws AgentException {
+
+		if (!agentLocations.containsKey(agent)) {
+			throw new AgentException("agent " + agent + " is not registered");
+		}
+
+		// CHECK why do we delete the entities here, and not just free them?
 		BW4TEnvironment env = BW4TEnvironment.getInstance();
 		Set<String> ents = env.getAssociatedEntities(agent);
 		for (String entity : ents) {
@@ -242,6 +248,8 @@ public class BW4TServer extends UnicastRemoteObject implements
 				throw new AgentException("failed to delete entity", e);
 			}
 		}
+
+		agentLocations.remove(agent);
 		env.unregisterAgent(agent);
 	}
 
@@ -335,12 +343,6 @@ public class BW4TServer extends UnicastRemoteObject implements
 	@Override
 	public void freeAgent(String agent) throws RemoteException,
 			RelationException {
-
-		if (!agentLocations.containsKey(agent)) {
-			throw new RelationException("agent " + agent + " is not registered");
-		}
-
-		agentLocations.remove(agent);
 
 		try {
 			BW4TEnvironment.getInstance().freeAgent(agent);
