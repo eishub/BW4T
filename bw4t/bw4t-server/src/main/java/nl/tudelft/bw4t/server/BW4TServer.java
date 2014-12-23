@@ -109,8 +109,8 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void registerClient(BW4TClientActions client, int agentCount,
-			int humanCount) throws RemoteException {
+	public synchronized void registerClient(BW4TClientActions client,
+			int agentCount, int humanCount) throws RemoteException {
 		try {
 			registerClient(client, new ClientInfo(getClientHost(), agentCount,
 					humanCount));
@@ -121,7 +121,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 	}
 
 	@Override
-	public void registerClient(BW4TClientActions client,
+	public synchronized void registerClient(BW4TClientActions client,
 			BW4TClientConfig clientConfig) throws RemoteException {
 		try {
 			registerClient(client,
@@ -132,8 +132,8 @@ public class BW4TServer extends UnicastRemoteObject implements
 		}
 	}
 
-	private void registerClient(BW4TClientActions client, ClientInfo cInfo)
-			throws RemoteException {
+	private synchronized void registerClient(BW4TClientActions client,
+			ClientInfo cInfo) throws RemoteException {
 		BW4TEnvironment env = Launcher.getInstance().getEnvironment();
 		LOGGER.info("Registering client: " + client);
 		clients.put(client, cInfo);
@@ -154,7 +154,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 	}
 
 	@Override
-	public void unregisterClient(BW4TClientActions client)
+	public synchronized void unregisterClient(BW4TClientActions client)
 			throws ServerNotActiveException {
 		Set<String> agents = getAssociatedAgents(client);
 		for (String agent : agents) {
@@ -232,7 +232,8 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void unregisterAgent(String agent) throws AgentException {
+	public synchronized void unregisterAgent(String agent)
+			throws AgentException {
 
 		if (!agentLocations.containsKey(agent)) {
 			throw new AgentException("agent " + agent + " is not registered");
@@ -285,8 +286,8 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void registerAgent(String agentId, BW4TClientActions client)
-			throws RemoteException, AgentException {
+	public synchronized void registerAgent(String agentId,
+			BW4TClientActions client) throws RemoteException, AgentException {
 		if (!clients.containsKey(client)) {
 			throw new AgentException("client " + client + " has not registered");
 		}
