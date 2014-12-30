@@ -372,7 +372,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 		try {
 			return getClient().getEntities();
 		} catch (RemoteException e) {
-			throw new NoEnvironmentException("can't access environment", e);
+			throw environmentSuddenDeath(e);
 		}
 	}
 
@@ -554,8 +554,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 		try {
 			return getClient().isSupportedByEnvironment(arg0);
 		} catch (RemoteException e) {
-			throw new ActException(ActException.FAILURE,
-					"failed to reach remote env", e);
+			throw environmentSuddenDeath(e);
 		}
 	}
 
@@ -885,6 +884,9 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 	 */
 	@Override
 	public Collection<String> getFreeEntities() {
+		if (client == null) {
+			return new HashSet<String>();
+		}
 		try {
 			return getClient().getFreeEntities();
 		} catch (RemoteException e) {
@@ -939,9 +941,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 				}
 				return state;
 			} catch (RemoteException e) {
-				LOGGER.warn(
-						"getState detected non-responsive environment. Assuming it's killed.",
-						e);
+				throw environmentSuddenDeath(e);
 			}
 		}
 		return EnvironmentState.KILLED;
@@ -993,8 +993,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 		try {
 			return getClient().queryProperty(property);
 		} catch (RemoteException e) {
-			LOGGER.error("Failed to read property from server.", e);
-			return "";
+			throw environmentSuddenDeath(e);
 		}
 	}
 
