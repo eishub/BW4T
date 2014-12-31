@@ -55,6 +55,7 @@ public final class BotConfig implements Serializable, Cloneable {
 
 	/**
 	 * Calculate the discharge rate given the size and speed of the bot.
+	 * discharge rate is 0.0002 * size + 0.0004 * speed.
 	 *
 	 * @param size
 	 *            the size of the bot

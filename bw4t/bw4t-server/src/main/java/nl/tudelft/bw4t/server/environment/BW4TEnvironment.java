@@ -9,11 +9,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
+import java.rmi.server.ServerNotActiveException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.xml.bind.JAXBException;
 
@@ -103,6 +107,13 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	private MapLoader mapLoader;
 
 	private List<PropertyChangeListener> listeners = new ArrayList<PropertyChangeListener>();
+
+	/**
+	 * A map of <agent-client> pairs. Every entity that we have can be claimed
+	 * by a server. If that server disappears, we have to free the agents and
+	 * entities associated with that server.
+	 */
+	private Map<String, BW4TClientActions> agentLocations = new HashMap<String, BW4TClientActions>();
 
 	/**
 	 * Create a new instance of this environment
@@ -214,6 +225,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 			}
 		}
 		mapFullyLoaded = false;
+		nextBotSpawnIndex = 0;
 	}
 
 	@Override
@@ -673,6 +685,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	@Override
 	public void freeEntity(String entity) throws RelationException,
 			EntityException {
+		((EntityInterface) getEntity(entity)).disconnect();
 		super.freeEntity(entity);
 		this.deleteEntity(entity);
 	}
@@ -681,7 +694,11 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	public void freePair(String agent, String entity) throws RelationException {
 		EntityInterface robot = (EntityInterface) getEntity(entity);
 		robot.disconnect();
-		super.freePair(agent, entity);
+		try {
+			super.freePair(agent, entity);
+		} catch (EntityException e) {
+			throw new RelationException("can't free pair", e);
+		}
 	}
 
 	/**
@@ -729,10 +746,12 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 */
 	private Point2D getNextBotSpawnPoint() {
 		List<Entity> ents = getMap().getEntities();
-		Point2D p = ents.get(nextBotSpawnIndex++).getPosition().getPoint2D();
 		if (nextBotSpawnIndex >= ents.size()) {
-			nextBotSpawnIndex = 0;
+			throw new IllegalStateException(
+					"Spawn failed. There are no free entities available.");
 		}
+		Point2D p = ents.get(nextBotSpawnIndex++).getPosition().getPoint2D();
+
 		return p;
 	}
 
@@ -881,6 +900,81 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		this.registerEntity(epartner.getName(), ee);
 		// Place the EPartner
 		epartner.moveTo(point.getX(), point.getY());
+	}
+
+	/**
+	 * Get all agents associated with the server that calls us.
+	 * 
+	 * @return
+	 * @throws ServerNotActiveException
+	 */
+	private Set<String> getAssociatedAgents(BW4TClientActions client)
+			throws ServerNotActiveException {
+		Set<String> agents = new HashSet<String>();
+		for (String agent : agentLocations.keySet()) {
+			if (agentLocations.get(agent).equals(client)) {
+				agents.add(agent);
+			}
+		}
+		return agents;
+	}
+
+	/**
+	 * Frees all agents associated with the client
+	 * 
+	 * @param client
+	 * @throws ServerNotActiveException
+	 * @throws EntityException
+	 * @throws RelationException
+	 */
+	public void freeClient(BW4TClientActions client)
+			throws ServerNotActiveException, EntityException, RelationException {
+		Set<String> agents = getAssociatedAgents(client);
+		for (String agent : agents) {
+			freeAgent(agent);
+		}
+	}
+
+	public void registerAgent(String agent, BW4TClientActions client)
+			throws AgentException {
+		super.registerAgent(agent);
+		agentLocations.put(agent, client);
+	}
+
+	@Override
+	public void unregisterAgent(String agent) throws AgentException {
+		if (!agentLocations.containsKey(agent)) {
+			throw new AgentException("agent " + agent + " is not registered");
+		}
+
+		agentLocations.remove(agent);
+		super.unregisterAgent(agent);
+
+	}
+
+	@Override
+	public void freeAgent(String agent) throws RelationException,
+			EntityException {
+		if (!agentLocations.containsKey(agent)) {
+			throw new RelationException("agent " + agent + " is not registered");
+		}
+
+		// we first handle the entities, to avoid freeAgent notifying listeners
+		// which is hard to override
+		// CHECK why do we delete the entities here, and not just free them?
+		Set<String> ents;
+		try {
+			ents = getAssociatedEntities(agent);
+		} catch (AgentException e1) {
+			throw new EntityException(
+					"failed to get associated entities of agent", e1);
+		}
+		for (String entity : ents) {
+			deleteEntity(entity);
+		}
+
+		super.freeAgent(agent);
+
 	}
 
 }

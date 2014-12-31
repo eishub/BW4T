@@ -34,7 +34,7 @@ public final class HallwayMenu {
         ClientMapController cmc = gui.getController().getMapController();
         MapRenderSettings set = cmc.getRenderSettings();
 
-        ViewBlock holdingID = cmc.getTheBot().getFirstHolding();
+        ViewBlock holdingID = cmc.getTheBot().getTopBlock();
         Color entityColor = cmc.getTheBot().getColor();
 
         // Robot commands

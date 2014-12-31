@@ -2,10 +2,11 @@ package nl.tudelft.bw4t.server.model.robots;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Stack;
 
+import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.logging.BotLog;
@@ -98,8 +99,12 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	 */
 	private List<String> handicapsList;
 
-	/** The list of blocks the robot is holding. */
-	private final List<Block> holding;
+	/**
+	 * The stack of blocks the robot is holding. Notice: Stack has the last
+	 * element of the list as 'top'. This is the reverse from the way we
+	 * perceive stacks..
+	 */
+	private final Stack<Block> holding;
 	/**
 	 * set to true if we have to cancel a motion due to a collision. A collision
 	 * is caused by an attempt to move into or out of a room
@@ -169,7 +174,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 		 * Here the number of blocks a bot can hold is set.
 		 */
 		this.grippercap = cap;
-		this.holding = new ArrayList<Block>(grippercap);
+		this.holding = new Stack<Block>();
 		this.handicapsList = new ArrayList<String>();
 		this.agentRecord = new AgentRecord(name);
 	}
@@ -229,8 +234,10 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	}
 
 	@Override
-	public List<Block> isHolding() {
-		return holding;
+	public Stack<Block> getHolding() {
+		Stack<Block> copy = new Stack<Block>();
+		copy.addAll(holding);
+		return copy;
 	}
 
 	@Override
@@ -257,20 +264,26 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 
 	@Override
 	public void pickUp(Block b) {
-        holding.add(b);
+		if (holding.size() >= grippercap) {
+			throw new IllegalStateException(
+					"block stack is full, failed to pick up another block");
+		}
+		holding.push(b);
 		b.setHeldBy(this);
 		b.removeFromContext();
 	}
 
 	@Override
 	public void drop() {
-		if (!holding.isEmpty()) {
+		if (holding.empty()) {
+			throw new IllegalStateException("bot is not holding any block");
+		}
+		if (!holding.empty()) {
+			Block b = holding.pop();
 			// First check if dropped in dropzone, then it won't need to be
 			// added to the context again
 			DropZone dropZone = (DropZone) getContext().getObjects(
 					DropZone.class).get(0);
-			int toDrop = holding.size() - 1;
-			Block b = holding.get(toDrop);
 			if (!dropZone.dropped(b, this)) {
 				// bot was not in the dropzone.. Are we in a room?
 				Zone ourzone = getZone();
@@ -279,20 +292,18 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 					b.setHeldBy(null);
 					b.addToContext();
 					// Slightly jitter the location where the box is
-					// dropped
+					// dropped.
 					double x = ourzone.getLocation().getX();
 					double y = ourzone.getLocation().getY();
 					b.moveTo(RandomHelper.nextDoubleFromTo(x - 5, x + 5),
 							RandomHelper.nextDoubleFromTo(y - 5, y + 5));
 				}
 			}
-			holding.remove(toDrop);
 		}
 	}
 
 	@Override
 	public void drop(int amount) {
-		assert amount <= holding.size();
 		for (int i = 0; i < amount; i++) {
 			drop();
 		}
@@ -515,17 +526,19 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	private void checkIfDestinationVacant(NdPoint destination)
 			throws DestinationOccupiedException {
 		if (BW4TEnvironment.getInstance().isCollisionEnabled()) {
+			// DOC/CHECK why a box of size 1?
 			Rectangle2D.Double box = getBoundingBoxCenteredAt(destination, 1.0f);
 			for (GridCell<AbstractRobot> cell : getNeighbours()) {
 				for (AbstractRobot bot : cell.items()) {
-					throwDestination(destination, box, bot);
+					checkDestination(destination, box, bot);
 				}
 			}
 		}
 	}
 
 	/**
-	 * Actually throws the exception.
+	 * throw if bot!=this and box and bot overlap (collide). Used to check if
+	 * some other bot is already occupying a box.
 	 * 
 	 * @param destination
 	 *            to check
@@ -536,7 +549,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	 * @throws DestinationOccupiedException
 	 *             already occupied
 	 */
-	private void throwDestination(NdPoint destination, Rectangle2D.Double box,
+	private void checkDestination(NdPoint destination, Rectangle2D.Double box,
 			AbstractRobot bot) throws DestinationOccupiedException {
 		if ((this != bot)
 				&& (box.intersects(bot.getBoundingBox())
@@ -571,7 +584,8 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	}
 
 	/**
-	 * Retrieve all neighbouring robots.
+	 * Retrieve all neighbouring robots with an extent of 10. DOC why is this
+	 * extent 10? Is this a bug?
 	 * 
 	 * @return neighbours
 	 */
@@ -634,7 +648,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 
 	@Override
 	public ViewEntity getView() {
-		Collection<nl.tudelft.bw4t.map.view.ViewBlock> bs = new HashSet<>();
+		Stack<ViewBlock> bs = new Stack<ViewBlock>();
 		for (Block block : holding) {
 			bs.add(block.getView());
 		}

@@ -7,18 +7,19 @@ import eis.iilang.Numeral;
 import eis.iilang.Parameter;
 
 /**
- * process a robot(id) percept.
+ * Processes incoming gripperCapacity percepts.
  * 
- * @modified W.Pasman nov'14 #3342
+ * @author W.Pasman 22oct14
  *
  */
-public class RobotProcessor implements PerceptProcessor {
+public class GripperCapacityProcessor implements PerceptProcessor {
 
 	@Override
 	public void process(List<Parameter> parameters,
 			ClientMapController clientMapController) {
-		clientMapController.setTheBotId(((Numeral) parameters.get(0))
-				.getValue().longValue());
+		int capacity = ((Numeral) parameters.get(0)).getValue().intValue();
+
+		clientMapController.getTheBot().setGripperCapacity(capacity);
 	}
 
 }

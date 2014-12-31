@@ -80,14 +80,26 @@ Run the server before running the client, as otherwise the client cannot connect
 
 
 \subsection{Advanced server settings}
-The default settings for the server can be changed in the command line of your OS. To change the server ip and/or server port execute the following:
+The default settings for the server can be changed in the command line of your OS. 
 
-java -jar bw4t-server.jar -servip $<$server ip here$>$ (default: localhost) -serverport $<$serverport here$>$ (default: 8000)
+For example, to change the server ip and/or server port  999 execute the following:
 
-If you change the serverip and/or serverport, change the client settings correspondingly (see below).
+java -jar bw4t-server.jar -servip $<$server ip here$>$ (default: localhost) -serverport 999
+
 The server will now start using the new values.
 
-
+These are all the  options for the server:
+\begin{itemize}
+\item -scenario The path to the scenario folder required by repast. Default is BW4T.rs. We recommend to not change this.  
+\item -map the name of the map file in the /maps/ folder (which is created at startup if it does not yet exist). Default is 'Random'. These are really xml files that you can create and edit with the map editor.
+\item -serverip The ip to bind this server to. Default is 'localhost'. If you change the serverip and/or serverport, change the client settings correspondingly (see below). 
+\item -serverport  The port to bind this server to. Default is 8000. You can change this if there already is another service on your machine using the default port. Make sure that you also set up the client accordingly if you change this.
+\item -msg the message to be made available to the clients.
+\item -gui true if GUI should be enabled, false if server should run without GUI. Defaults to true. Setting this to false  may be useful particularly for batch runs.
+\item -key The key necessary to remotely kill the server
+\item -collision whether the environment should check the collisions. Defaults to false. Note that collision checking still has some issues.
+\item -paths True if draw paths is enabled. This allows you to see planned paths for entities.
+\end{itemize}
 
 \section{Running the client (Human Controlled Bot)}
 Before running the client, make sure you have already started the server. Start (e.g., double click) the client.jar in $<$CLIENT$>$. Figure \ref{fig:Client} will show up and the bot is automatically added to the server. You can now control the bot by clicking (left or right) at different spots in the Client. Please refer to Section  \ref{ch:usingHI} for details on using the this client.
@@ -158,7 +170,7 @@ In GOAL these settings can be changed also from the mas2g file. The CONFIGFILE o
  
 \item
     CONFIGFILE(""):
-    The file from which the client reads the configuration.
+    The file from which the client reads the configuration. This is an xml file that can be generated with the scenario editor. The file is read relative to the directory containing the client environment jar file, unless you use an absolute path. It is recommended to place the xml relative to the client environment location, and not use an absolute path. WARNING: currently the scenario editor exports MAS files with absolute paths. You need to fix this manually.
  
 \item
     GOALHUMAN("false"):
