@@ -76,6 +76,39 @@
 					</execution>
 				</executions>
 			</plugin>
+			
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>0.10</version>
+				<configuration>
+					<server>github</server>
+					<!-- git commit message -->
+					<message>Maven artifacts for ${project.name} version
+						${project.version}</message>
+					<!-- matches distribution management repository url above -->
+					<outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
+					<!-- remote branch name -->
+					<branch>refs/heads/master</branch>
+					<merge>true</merge>
+					<includes>
+						<include>**/*</include>
+					</includes>
+					<!-- github repo name -->
+					<repositoryName>mvn-repo</repositoryName>
+					<!-- github organization -->
+					<repositoryOwner>eishub</repositoryOwner>
+				</configuration>
+				<executions>
+					<!-- run site-maven-plugin as part of the build's 'deploy' phase -->
+					<execution>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<phase>deploy</phase>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 		<resources>
 			<resource>
@@ -84,6 +117,7 @@
 			</resource>
 		</resources>
 	</build>
+	
 	<dependencies>
 		<dependency>
 			<groupId>eishub.bw4t.core</groupId>
