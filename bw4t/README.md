@@ -19,3 +19,35 @@ The scenario-editor allows you to configure connections options, epartners and t
 ### bw4t-server
 The bw4t-server basically runs the bw4t environment with a given configuration to which clients can connect.
 
+Dependency information 
+=====================
+
+
+```
+<repository>
+ <id>eishub-mvn-repo</id>
+ <url>https://raw.github.com/eishub/mvn-repo/master</url>
+</repository>
+```
+
+The client artefact:
+
+```	
+<dependency>
+	<groupId>eishub</groupId>
+	<artifactId>bw4t</artifactId>
+	<version>3.8.1-SNAPSHOT</version>
+</dependency>
+```
+
+The server artefact:
+
+```	
+<dependency>
+	<groupId>eishub.bw4t</groupId>
+	<artifactId>bw4t-server</artifactId>
+	<version>3.8.1-SNAPSHOT</version>
+</dependency>
+```
+
+
