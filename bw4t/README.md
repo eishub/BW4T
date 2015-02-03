@@ -34,8 +34,8 @@ The client artefact:
 
 ```	
 <dependency>
-	<groupId>eishub</groupId>
-	<artifactId>bw4t</artifactId>
+	<groupId>eishub.bw4t</groupId>
+	<artifactId>bw4t-client</artifactId>
 	<version>3.8.1-SNAPSHOT</version>
 </dependency>
 ```
