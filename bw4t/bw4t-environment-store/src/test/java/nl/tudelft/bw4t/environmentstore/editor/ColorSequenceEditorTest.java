@@ -25,118 +25,120 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class ColorSequenceEditorTest {
 
-    private static final int DELAY = 500;
-    private JFrame frame;
-    private ColorSequenceController csc;
-    private ColorSequenceEditor cse1;
-    private ColorSequenceEditor cse2;
-    private ColorSequenceEditor cse3;
-    private JTextField jTextField;
-    private static Robot robot;
+	private static final int DELAY = 500;
+	private JFrame frame;
+	private ColorSequenceController csc;
+	private ColorSequenceEditor cse1;
+	private ColorSequenceEditor cse2;
+	private ColorSequenceEditor cse3;
+	private JTextField jTextField;
+	private static Robot robot;
 
-    @BeforeClass
-    public static void setupGeneral() throws Exception {
-        robot = new Robot();
-    }
+	@BeforeClass
+	public static void setupGeneral() throws Exception {
+		robot = new Robot();
+	}
 
-    @Before
-    public void setup() throws Exception {
-        frame = new JFrame("ColorSequenceTest");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setLayout(new GridLayout(4, 1));
+	@Before
+	public void setup() throws Exception {
+		frame = new JFrame("ColorSequenceTest");
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setLayout(new GridLayout(4, 1));
 
-        jTextField = new JTextField();
-        frame.add(jTextField);
+		jTextField = new JTextField();
+		frame.add(jTextField);
 
-        csc = new ColorSequenceController();
-        cse1 = new ColorSequenceEditor();
-        csc.addColorSequenceEditor(cse1);
-        frame.add(cse1);
-        cse2 = new ColorSequenceEditor(4);
-        csc.addColorSequenceEditor(cse2);
-        frame.add(cse2);
-        cse3 = new ColorSequenceEditor();
-        csc.addColorSequenceEditor(cse3);
-        frame.add(cse3);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-    }
-    
-    @After
-    public void reset() {
-        frame.dispose();
-    }
-    @Test
-    public void testTabOrder() throws Exception {
-        robot.delay(DELAY);
-        assertTrue(jTextField.isFocusOwner());
+		csc = new ColorSequenceController();
+		cse1 = new ColorSequenceEditor();
+		csc.addColorSequenceEditor(cse1);
+		frame.add(cse1);
+		cse2 = new ColorSequenceEditor(4);
+		csc.addColorSequenceEditor(cse2);
+		frame.add(cse2);
+		cse3 = new ColorSequenceEditor();
+		csc.addColorSequenceEditor(cse3);
+		frame.add(cse3);
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+	}
 
-        tapKey(KeyEvent.VK_TAB);
-        assertTrue(cse1.isFocusOwner());
+	@After
+	public void reset() {
+		frame.dispose();
+	}
 
-        tapKey(KeyEvent.VK_TAB);
-        assertTrue(cse2.isFocusOwner());
+	@Test
+	public void testTabOrder() throws Exception {
+		robot.delay(DELAY);
+		assertTrue(jTextField.isFocusOwner());
 
-        tapKey(KeyEvent.VK_TAB);
-        assertTrue(cse3.isFocusOwner());
-    }
+		tapKey(KeyEvent.VK_TAB);
+		assertTrue(cse1.isFocusOwner());
 
-    @Test
-    public void testColorNumbers() {
-        robot.delay(DELAY);
-        cse1.requestFocus();
-        robot.delay(DELAY);
+		tapKey(KeyEvent.VK_TAB);
+		assertTrue(cse2.isFocusOwner());
 
-        assertEquals(0, cse1.getSequenceSize());
+		tapKey(KeyEvent.VK_TAB);
+		assertTrue(cse3.isFocusOwner());
+	}
 
-        for (int i = 0; i < BlockColor.getAvailableColors().size(); i++) {
-            tapKey(KeyEvent.VK_1 + i);
-            assertEquals(i+1, cse1.getSequenceSize());
-        }
-        
-        List<BlockColor> expected = BlockColor.getAvailableColors();
-        List<BlockColor> actual = cse1.getSequence();
-        for (int i = 0; i < expected.size(); i++) {
-            assertEquals(expected.get(i),actual.get(i));
-        }
-    }
+	@Test
+	public void testColorNumbers() {
+		robot.delay(DELAY);
+		cse1.requestFocus();
+		robot.delay(DELAY);
 
-    @Test
-    public void testColorLetters() {
-        robot.delay(DELAY);
-        cse1.requestFocus();
-        robot.delay(DELAY);
+		assertEquals(0, cse1.getSequenceSize());
 
-        assertEquals(0, cse1.getSequenceSize());
-        
-        List<BlockColor> expected = BlockColor.getAvailableColors();
-        for (int i = 0; i < expected.size(); i++) {
-            tapKey(expected.get(i).getLetter());
-            assertEquals(i+1, cse1.getSequenceSize());
-        }
-        
-        List<BlockColor> actual = cse1.getSequence();
-        for (int i = 0; i < expected.size(); i++) {
-            assertEquals(expected.get(i),actual.get(i));
-        }
-        
-        cse1.setSequence(null);
+		for (int i = 0; i < BlockColor.getAvailableColors().size(); i++) {
+			tapKey(KeyEvent.VK_1 + i);
+			robot.delay(DELAY);
+			assertEquals(i + 1, cse1.getSequenceSize());
+		}
 
-        assertEquals(0, cse1.getSequenceSize());
-    }
+		List<BlockColor> expected = BlockColor.getAvailableColors();
+		List<BlockColor> actual = cse1.getSequence();
+		for (int i = 0; i < expected.size(); i++) {
+			assertEquals(expected.get(i), actual.get(i));
+		}
+	}
 
-    private void tapKey(int key) {
-        robot.keyPress(key);
-        robot.delay(DELAY);
-        robot.keyRelease(key);
-        robot.delay(DELAY);
-    }
-    
-    public static void main(String[]args) throws Exception{
-        ColorSequenceEditorTest test = new ColorSequenceEditorTest();
-      
-        test.setup();
-        test.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
+	@Test
+	public void testColorLetters() {
+		robot.delay(DELAY);
+		cse1.requestFocus();
+		robot.delay(DELAY);
+
+		assertEquals(0, cse1.getSequenceSize());
+
+		List<BlockColor> expected = BlockColor.getAvailableColors();
+		for (int i = 0; i < expected.size(); i++) {
+			tapKey(expected.get(i).getLetter());
+			assertEquals(i + 1, cse1.getSequenceSize());
+		}
+
+		List<BlockColor> actual = cse1.getSequence();
+		for (int i = 0; i < expected.size(); i++) {
+			assertEquals(expected.get(i), actual.get(i));
+		}
+
+		cse1.setSequence(null);
+
+		assertEquals(0, cse1.getSequenceSize());
+	}
+
+	private void tapKey(int key) {
+		robot.keyPress(key);
+		robot.delay(DELAY);
+		robot.keyRelease(key);
+		robot.delay(DELAY);
+	}
+
+	public static void main(String[] args) throws Exception {
+		ColorSequenceEditorTest test = new ColorSequenceEditorTest();
+
+		test.setup();
+		test.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
 }
