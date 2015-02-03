@@ -18,6 +18,8 @@ import nl.tudelft.bw4t.server.model.zone.Room;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import repast.simphony.context.Context;
 import repast.simphony.context.DefaultContext;
@@ -43,6 +45,16 @@ public class RobotEntityTest {
 		robot = new RobotEntity(mockRobot);
 		when(mockRobot.getLocation()).thenReturn(new NdPoint(1, 1));
 		when(mockRobot.getHolding()).thenReturn(new Stack<Block>());
+
+		when(mockRobot.isConnected()).then(new Answer<Boolean>() {
+			@Override
+			public Boolean answer(InvocationOnMock invocation) throws Throwable {
+				// HACK but I don't know how to check the actual counts.
+				// so we just check that connected was called and return true.
+				Mockito.verify(mockRobot).connect();
+				return true;
+			}
+		});
 
 		method = robot.getClass().getDeclaredMethod("getVisible", Class.class);
 		method.setAccessible(true);
@@ -80,7 +92,6 @@ public class RobotEntityTest {
 		robot.connect();
 		robot.disconnect();
 		Mockito.verify(mockRobot).disconnect();
-		// Mockito.verify(mockRobot).
 	}
 
 	@Test
