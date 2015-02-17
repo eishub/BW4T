@@ -176,7 +176,9 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 	 * @return {@link NoEnvironmentException}
 	 */
 	public NoEnvironmentException environmentSuddenDeath(Exception e) {
-		LOGGER.error("The BW4T Server disconnected unexpectedly.");
+		client = null;
+		LOGGER.error("The BW4T Server disconnected unexpectedly. Client set to null:"
+				+ client);
 		handleStateChange(EnvironmentState.KILLED);
 		if (e instanceof NoEnvironmentException) {
 			return (NoEnvironmentException) e;

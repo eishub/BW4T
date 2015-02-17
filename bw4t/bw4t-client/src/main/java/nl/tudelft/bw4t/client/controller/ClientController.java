@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.SwingUtilities;
+
 import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
@@ -227,9 +229,15 @@ public class ClientController implements EntityComboModelProvider {
 	public void stop() {
 		mapController.setRunning(false);
 		if (this.getGui() != null) {
-			gui.dispose();
+			final BW4TClientGUI theGUI = gui; // copy for in Runnable
+			setGui(null);
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					theGUI.dispose();
+				}
+			});
 		}
-		this.setGui(null);
 	}
 
 	/**
