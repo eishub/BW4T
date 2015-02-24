@@ -1,0 +1,105 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<environmentname>bw4t</environmentname>
+	</properties>
+	
+	<groupId>eishub.bw4t</groupId>
+	<artifactId>doc</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>BW4T documentation</name>
+	<description>Documentation about the BW4T environment..</description>
+	<url>http://www.github.com/eishub/${environmentname}</url>
+
+	
+	<licenses>
+		<license>
+			<name>The GNU General Public License, Version 3.0</name>
+			<url>http://www.gnu.org/licenses/gpl-3.0.txt</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Koen Hindriks</name>
+			<email>k.v.hindriks@gmail.com</email>
+			<organization>eishub</organization>
+			<organizationUrl>https://github.com/koenhindriks</organizationUrl>
+		</developer>
+	</developers>
+
+	<organization>
+		<name>eishub</name>
+		<url>https://github.com/eishub</url>
+	</organization>
+
+	<issueManagement>
+		<url>https://github.com/eishub/${environmentname}/issues</url>
+		<system>Github ${environmentname} Issues</system>
+	</issueManagement>
+
+	<scm>
+		<connection>scm:git:git@github.com:eishub/${environmentname}.git</connection>
+		<developerConnection>scm:git:git@github.com:eishub/${environmentname}.git</developerConnection>
+		<url>https://github.com:eishub/${environmentname}</url>
+	</scm>
+
+	<repositories>
+		<repository>
+			<id>eishub-mvn-repo</id>
+			<url>https://raw.github.com/eishub/mvn-repo/master</url>
+		</repository>
+	</repositories>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.8.2</version>
+				<configuration>
+					<altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>0.10</version>
+				<configuration>
+					<server>github</server>
+					<!-- git commit message -->
+					<message>Maven artifacts for ${project.name} version ${project.version}</message>
+					<!-- matches distribution management repository url above -->
+					<outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
+					<!-- remote branch name -->
+					<branch>refs/heads/master</branch>
+					<merge>true</merge>
+					<includes>
+						<include>**/*</include>
+					</includes>
+					<!-- github repo name -->
+					<repositoryName>mvn-repo</repositoryName>
+					<!-- github organization -->
+					<repositoryOwner>eishub</repositoryOwner>
+				</configuration>
+				<executions>
+					<!-- run site-maven-plugin as part of the build's 'deploy' phase -->
+					<execution>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<phase>deploy</phase>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
