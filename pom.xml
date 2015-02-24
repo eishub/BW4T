@@ -13,7 +13,9 @@
 		<module>bw4t-integration-test</module>
 		<module>bw4t-scenario-editor</module>
 		<module>bw4t-environment-store</module>
+		<module>doc</module>
 	</modules>
+	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<sonar.projectKey>nl.tudelft.bw4t</sonar.projectKey>
