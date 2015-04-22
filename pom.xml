@@ -4,7 +4,7 @@
 
 	<groupId>eishub</groupId>
 	<artifactId>bw4t</artifactId>
-	<version>3.8.1-SNAPSHOT</version>
+	<version>3.8.1</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>bw4t-server</module>
