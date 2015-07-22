@@ -2,15 +2,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
-	<parent>
-		<groupId>eishub</groupId>
-		<artifactId>bw4t</artifactId>
-		<version>3.8.2-SNAPSHOT</version>
-		<relativePath>..</relativePath>
-	</parent>
-	
 	<groupId>eishub.bw4t</groupId>
 	<artifactId>bw4t-environment-store</artifactId>
+	<version>3.8.2-SNAPSHOT</version>
 	<name>bw4t-environment-store</name>
 	<url>http://www.github.com/eishub/bw4t</url>
 	
@@ -47,12 +41,25 @@
 		<dependency>
 			<groupId>eishub.bw4t.core</groupId>
 			<artifactId>bw4t-core</artifactId>
-			<version>3.8.1</version>
+			<version>3.8.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.miglayout</groupId>
 			<artifactId>miglayout</artifactId>
 			<version>3.6.3</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>2.0.28-beta</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -61,7 +68,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.4</version>
+				<version>2.6</version>
 				<configuration>
 					<archive>
 						<index>true</index>
@@ -72,6 +79,17 @@
 					</archive>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+	
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
@@ -123,7 +141,7 @@
 			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>site-maven-plugin</artifactId>
-				<version>0.10</version>
+				<version>0.11</version>
 				<configuration>
 					<server>github</server>
 					<!-- git commit message -->

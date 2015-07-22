@@ -2,15 +2,9 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     
-    <parent>
-        <groupId>eishub</groupId>
-        <artifactId>bw4t</artifactId>
-        <version>3.8.2-SNAPSHOT</version>
-        <relativePath>..</relativePath>
-    </parent>
-    
     <groupId>eishub.bw4t</groupId>
     <artifactId>bw4t-integration-test</artifactId>
+    <version>3.8.2-SNAPSHOT</version>
     <description>This module integration test the entire bw4t system, to ensure the working state of the client and server.</description>
     <url>http://www.github.com/eishub/bw4t</url>
     
@@ -39,24 +33,56 @@
 			<id>eishub-mvn-repo</id>
 			<url>https://raw.github.com/eishub/mvn-repo/master</url>
 		</repository>
+		<repository>
+			<id>git-bw4t-dependency-repository</id>
+			<name>Git BW4T Dependency Repository</name>
+			<url>https://eishub.github.io/BW4T/repo/bw4t/dep/</url>
+		</repository>
 	</repositories>
 
     <dependencies>
         <dependency>
+			<groupId>eishub.bw4t.core</groupId>
+			<artifactId>bw4t-core</artifactId>
+			<version>3.8.2-SNAPSHOT</version>
+		</dependency>
+        <dependency>
             <groupId>eishub.bw4t</groupId>
             <artifactId>bw4t-server</artifactId>
-            <version>3.8.1</version>
+            <version>3.8.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>eishub.bw4t</groupId>
             <artifactId>bw4t-client</artifactId>
-            <version>3.8.1</version>
+            <version>3.8.2-SNAPSHOT</version>
         </dependency>
+		<dependency>
+			<groupId>repast.simphony</groupId>
+			<artifactId>scenario</artifactId>
+			<version>2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>repast.simphony</groupId>
+			<artifactId>bin_and_src</artifactId>
+			<version>2.1</version>
+		</dependency>
+        
+        <dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>2.0.28-beta</version>
+			<scope>test</scope>
+		</dependency>
     </dependencies>
 
     <build>
         <plugins>
-
             <!-- *** failsafe plugin: run server and test the integration *** -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -135,6 +161,16 @@
             
             <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+            
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
 				<version>2.8.2</version>
 				<configuration>
@@ -145,7 +181,7 @@
             <plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>site-maven-plugin</artifactId>
-				<version>0.10</version>
+				<version>0.11</version>
 				<configuration>
 					<server>github</server>
 					<!-- git commit message -->
