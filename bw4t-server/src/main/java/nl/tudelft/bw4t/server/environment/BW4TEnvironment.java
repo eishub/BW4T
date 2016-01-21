@@ -21,6 +21,21 @@ import java.util.Set;
 
 import javax.xml.bind.JAXBException;
 
+import org.apache.log4j.Logger;
+
+import eis.eis2java.environment.AbstractEnvironment;
+import eis.exceptions.ActException;
+import eis.exceptions.AgentException;
+import eis.exceptions.EntityException;
+import eis.exceptions.ManagementException;
+import eis.exceptions.NoEnvironmentException;
+import eis.exceptions.PerceiveException;
+import eis.exceptions.RelationException;
+import eis.iilang.Action;
+import eis.iilang.EnvironmentState;
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
+import eis.iilang.Percept;
 import nl.tudelft.bw4t.eis.MapParameter;
 import nl.tudelft.bw4t.map.Entity;
 import nl.tudelft.bw4t.map.NewMap;
@@ -41,25 +56,9 @@ import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.server.repast.BW4TBuilder;
 import nl.tudelft.bw4t.server.repast.MapLoader;
 import nl.tudelft.bw4t.server.view.ServerContextDisplay;
-
-import org.apache.log4j.Logger;
-
 import repast.simphony.context.Context;
 import repast.simphony.scenario.ScenarioLoadException;
 import repast.simphony.space.continuous.NdPoint;
-import eis.eis2java.environment.AbstractEnvironment;
-import eis.exceptions.ActException;
-import eis.exceptions.AgentException;
-import eis.exceptions.EntityException;
-import eis.exceptions.ManagementException;
-import eis.exceptions.NoEnvironmentException;
-import eis.exceptions.PerceiveException;
-import eis.exceptions.RelationException;
-import eis.iilang.Action;
-import eis.iilang.EnvironmentState;
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
 
 /**
  * The central environment which runs the data model and performs actions
@@ -81,8 +80,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * The log4j logger, logs to the console and file
 	 */
-	private static final Logger LOGGER = Logger
-			.getLogger(BW4TEnvironment.class);
+	private static final Logger LOGGER = Logger.getLogger(BW4TEnvironment.class);
 
 	private String mapName;
 
@@ -127,17 +125,14 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @throws ScenarioLoadException
 	 * @throws JAXBException
 	 */
-	BW4TEnvironment(BW4TServer server2, String scenarioLocation,
-			String mapLocation, boolean guiEnabled, String shutdownKey,
-			boolean collisionEnabled, boolean drawPathsEnabled)
-			throws IOException, ManagementException, ScenarioLoadException,
-			JAXBException {
+	BW4TEnvironment(BW4TServer server2, String scenarioLocation, String mapLocation, boolean guiEnabled,
+			String shutdownKey, boolean collisionEnabled, boolean drawPathsEnabled)
+					throws IOException, ManagementException, ScenarioLoadException, JAXBException {
 		super();
 		setInstance(this);
 		this.server = server2;
 		mapName = mapLocation;
-		this.scenarioLocation = System.getProperty("user.dir") + "/"
-				+ scenarioLocation;
+		this.scenarioLocation = System.getProperty("user.dir") + "/" + scenarioLocation;
 		this.guiEnabled = guiEnabled;
 		this.shutdownKey = shutdownKey;
 		this.collisionEnabled = collisionEnabled;
@@ -202,8 +197,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 */
 	public void removeAllEntities() throws ManagementException {
 
-		BW4TFileAppender
-				.logFinish(System.currentTimeMillis(), "total time is ");
+		BW4TFileAppender.logFinish(System.currentTimeMillis(), "total time is ");
 
 		setState(EnvironmentState.KILLED);
 
@@ -247,8 +241,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @throws ManagementException
 	 */
 	@Override
-	public void init(Map<String, Parameter> parameters)
-			throws ManagementException {
+	public void init(Map<String, Parameter> parameters) throws ManagementException {
 		final Parameter param = parameters.get("map");
 		String mapname = prepareMapParameter(param);
 		if (mapname == null) {
@@ -288,14 +281,10 @@ public class BW4TEnvironment extends AbstractEnvironment {
 					mapname = map.hashCode() + ".map";
 
 					try {
-						NewMap.toXML(map, new FileOutputStream(
-								getFullMapPath(mapname)));
-						LOGGER.info("Successfully stored the map transfered from the server at: maps/"
-								+ mapname);
+						NewMap.toXML(map, new FileOutputStream(getFullMapPath(mapname)));
+						LOGGER.info("Successfully stored the map transfered from the server at: maps/" + mapname);
 					} catch (FileNotFoundException | JAXBException e) {
-						LOGGER.error(
-								"failed to save the map received from the client",
-								e);
+						LOGGER.error("failed to save the map received from the client", e);
 						mapname = null;
 					}
 				}
@@ -315,8 +304,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @throws ScenarioLoadException
 	 * @throws JAXBException
 	 */
-	void launchAll() throws IOException, ManagementException,
-			ScenarioLoadException, JAXBException {
+	void launchAll() throws IOException, ManagementException, ScenarioLoadException, JAXBException {
 		launchServer();
 		setState(EnvironmentState.RUNNING);
 		launchRepast();
@@ -329,8 +317,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @throws ManagementException
 	 * @throws MalformedURLException
 	 */
-	private void launchServer() throws RemoteException, ManagementException,
-			MalformedURLException {
+	private void launchServer() throws RemoteException, ManagementException, MalformedURLException {
 		if (server == null) {
 			server = Launcher.getInstance().setupRemoteServer();
 		}
@@ -347,10 +334,8 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @throws ScenarioLoadException
 	 * @throws JAXBException
 	 */
-	private void launchRepast() throws IOException, ScenarioLoadException,
-			JAXBException {
-		NewMap theMap = NewMap.create(new FileInputStream(new File(
-				getFullMapPath(this.getMapName()))));
+	private void launchRepast() throws IOException, ScenarioLoadException, JAXBException {
+		NewMap theMap = NewMap.create(new FileInputStream(new File(getFullMapPath(this.getMapName()))));
 		serverMap = new BW4TServerMap(theMap);
 		serverMap.attachChangeListener(getMapLoader());
 		Launcher.getInstance().getEntityFactory().setServerMap(serverMap);
@@ -365,8 +350,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 */
 	public static BW4TEnvironment getInstance() {
 		if (instance == null) {
-			throw new IllegalStateException(
-					"BW4TEnvironment has not been initialized");
+			throw new IllegalStateException("BW4TEnvironment has not been initialized");
 		}
 		return instance;
 	}
@@ -461,8 +445,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @return the result
 	 */
 	@Override
-	public boolean isStateTransitionValid(EnvironmentState oldState,
-			EnvironmentState newState) {
+	public boolean isStateTransitionValid(EnvironmentState oldState, EnvironmentState newState) {
 		return true;
 	}
 
@@ -477,11 +460,9 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @return the percept received after performing the action
 	 * @throws ActException
 	 */
-	public Percept performClientAction(String entity, Action action)
-			throws ActException {
+	public Percept performClientAction(String entity, Action action) throws ActException {
 		Long time = System.currentTimeMillis();
-		LOGGER.log(BotLog.BOTLOG,
-				String.format("action %s %s", entity, action.toProlog()));
+		LOGGER.log(BotLog.BOTLOG, String.format("action %s %s", entity, action.toProlog()));
 
 		if (starttime == 0) {
 			starttime = time;
@@ -512,13 +493,11 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	public synchronized List<Percept> getAllPerceptsFrom(String entity) {
 		try {
 			if (this.isMapFullyLoaded()) {
-				((EntityInterface) getEntity(entity))
-						.initializePerceptionCycle();
+				((EntityInterface) getEntity(entity)).initializePerceptionCycle();
 				return getAllPerceptsFromEntity(entity);
 			}
 		} catch (PerceiveException | NoEnvironmentException e) {
-			LOGGER.error("failed to get percepts for entity: '" + entity + "'",
-					e);
+			LOGGER.error("failed to get percepts for entity: '" + entity + "'", e);
 		}
 		return new LinkedList<Percept>();
 	}
@@ -597,8 +576,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @throws ManagementException
 	 */
 	@Override
-	public void reset(Map<String, Parameter> parameters)
-			throws ManagementException {
+	public void reset(Map<String, Parameter> parameters) throws ManagementException {
 		String mapname = prepareMapParameter(parameters.get("map"));
 		if (mapname == null) {
 			setMapName("Random");
@@ -626,8 +604,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 			BW4TFileAppender.resetNewFile();
 			launchAll();
-		} catch (ManagementException | IOException | ScenarioLoadException
-				| JAXBException e) {
+		} catch (ManagementException | IOException | ScenarioLoadException | JAXBException e) {
 			throw new ManagementException("Failed to reset the environment", e);
 		}
 	}
@@ -671,9 +648,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 			try {
 				contextDisplay = new ServerContextDisplay(getServerMap());
 			} catch (Exception e) {
-				LOGGER.error(
-						"BW4T Server started ok but failed to launch display.",
-						e);
+				LOGGER.error("BW4T Server started ok but failed to launch display.", e);
 			}
 		} else {
 			LOGGER.info("Launching the BW4T Server without a graphical user interface.");
@@ -681,8 +656,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	}
 
 	@Override
-	public void freeEntity(String entity) throws RelationException,
-			EntityException {
+	public void freeEntity(String entity) throws RelationException, EntityException {
 		((EntityInterface) getEntity(entity)).disconnect();
 		super.freeEntity(entity);
 		this.deleteEntity(entity);
@@ -712,9 +686,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 				takeDownSimulation();
 				this.setState(EnvironmentState.KILLED);
 			} catch (ManagementException e) {
-				LOGGER.warn(
-						"failed to notify clients that the server is going down...",
-						e);
+				LOGGER.warn("failed to notify clients that the server is going down...", e);
 			}
 			server.takeDown();
 			server = null;
@@ -745,8 +717,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	private Point2D getNextBotSpawnPoint() {
 		List<Entity> ents = getMap().getEntities();
 		if (nextBotSpawnIndex >= ents.size()) {
-			throw new IllegalStateException(
-					"Spawn failed. There are no free entities available.");
+			throw new IllegalStateException("Spawn failed. There are no free entities available.");
 		}
 		Point2D p = ents.get(nextBotSpawnIndex++).getPosition().getPoint2D();
 
@@ -787,8 +758,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 			String name = c.getBotName();
 
 			while (created < c.getBotAmount()) {
-				c.setBotName(String.format(ENTITY_NAME_FORMAT, name, created
-						+ skip + 1));
+				c.setBotName(String.format(ENTITY_NAME_FORMAT, name, created + skip + 1));
 				try {
 					if (this.getEntities().contains(c.getBotName())) {
 						if (!this.getAssociatedAgents(c.getBotName()).isEmpty()) {
@@ -802,10 +772,48 @@ public class BW4TEnvironment extends AbstractEnvironment {
 					// assign robot to client
 					server.notifyFreeRobot(client, c);
 				} catch (EntityException e) {
-					LOGGER.error(
-							"Failed to register new Robot in the environment.",
-							e);
+					LOGGER.error("Failed to register new Robot in the environment.", e);
 				}
+				created++;
+			}
+		}
+	}
+
+	/**
+	 * Spawns a new e-Partner according to the given specifications and notifies
+	 * the given client.
+	 * 
+	 * @param epartners
+	 *            list of epartners to spawn
+	 * @param client
+	 *            the client to notify
+	 */
+	public void spawnEPartners(List<EPartnerConfig> epartners, BW4TClientActions client) {
+
+		List<Point2D> points = getHumanWithoutEPartners();
+		int index = 0;
+
+		for (EPartnerConfig c : epartners) {
+
+			int created = 0;
+			String name = c.getEpartnerName();
+
+			while (created < c.getEpartnerAmount()) {
+				c.setEpartnerName(String.format(ENTITY_NAME_FORMAT, name, created + 1));
+				try {
+					// if we run out of humans who don't have an e-Partner.
+					if (index >= points.size()) {
+						spawn(c, getNextBotSpawnPoint());
+					} else {
+						spawn(c, points.get(index));
+					}
+
+					// assign e-Partner to client
+					server.notifyFreeEpartner(client, c);
+				} catch (EntityException e) {
+					LOGGER.error("Failed to register new Robot in the environment.", e);
+				}
+				index++;
 				created++;
 			}
 		}
@@ -821,6 +829,9 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 *             when we are unable to register Robot
 	 */
 	private void spawn(BotConfig c) throws EntityException {
+		// acquire spawn point first, as this may fail
+		Point2D p = getNextBotSpawnPoint();
+
 		EntityFactory entityFactory = Launcher.getInstance().getEntityFactory();
 		// create robot from request
 		IRobot bot = entityFactory.makeRobot(c);
@@ -829,52 +840,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		// register the entity in the environment
 		this.registerEntity(c.getBotName(), be);
 		// Place the Robot
-		Point2D p = getNextBotSpawnPoint();
 		bot.moveTo(p.getX(), p.getY());
-	}
-
-	/**
-	 * Spawns a new e-Partner according to the given specifications and notifies
-	 * the given client.
-	 * 
-	 * @param epartners
-	 *            list of epartners to spawn
-	 * @param client
-	 *            the client to notify
-	 */
-	public void spawnEPartners(List<EPartnerConfig> epartners,
-			BW4TClientActions client) {
-
-		List<Point2D> points = getHumanWithoutEPartners();
-		int index = 0;
-
-		for (EPartnerConfig c : epartners) {
-
-			int created = 0;
-			String name = c.getEpartnerName();
-
-			while (created < c.getEpartnerAmount()) {
-				c.setEpartnerName(String.format(ENTITY_NAME_FORMAT, name,
-						created + 1));
-				try {
-					// if we run out of humans who don't have an e-Partner.
-					if (index >= points.size()) {
-						spawn(c, getNextBotSpawnPoint());
-					} else {
-						spawn(c, points.get(index));
-					}
-
-					// assign e-Partner to client
-					server.notifyFreeEpartner(client, c);
-				} catch (EntityException e) {
-					LOGGER.error(
-							"Failed to register new Robot in the environment.",
-							e);
-				}
-				index++;
-				created++;
-			}
-		}
 	}
 
 	/**
@@ -906,8 +872,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @return
 	 * @throws ServerNotActiveException
 	 */
-	private Set<String> getAssociatedAgents(BW4TClientActions client)
-			throws ServerNotActiveException {
+	private Set<String> getAssociatedAgents(BW4TClientActions client) throws ServerNotActiveException {
 		Set<String> agents = new HashSet<String>();
 		for (String agent : agentLocations.keySet()) {
 			if (agentLocations.get(agent).equals(client)) {
@@ -933,8 +898,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		}
 	}
 
-	public void registerAgent(String agent, BW4TClientActions client)
-			throws AgentException {
+	public void registerAgent(String agent, BW4TClientActions client) throws AgentException {
 		super.registerAgent(agent);
 		agentLocations.put(agent, client);
 	}
@@ -951,8 +915,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	}
 
 	@Override
-	public void freeAgent(String agent) throws RelationException,
-			EntityException {
+	public void freeAgent(String agent) throws RelationException, EntityException {
 		if (!agentLocations.containsKey(agent)) {
 			throw new RelationException("agent " + agent + " is not registered");
 		}
@@ -964,8 +927,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		try {
 			ents = getAssociatedEntities(agent);
 		} catch (AgentException e1) {
-			throw new EntityException(
-					"failed to get associated entities of agent", e1);
+			throw new EntityException("failed to get associated entities of agent", e1);
 		}
 		for (String entity : ents) {
 			deleteEntity(entity);
