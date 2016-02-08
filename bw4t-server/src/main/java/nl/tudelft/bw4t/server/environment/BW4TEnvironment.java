@@ -717,7 +717,8 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	private Point2D getNextBotSpawnPoint() {
 		List<Entity> ents = getMap().getEntities();
 		if (nextBotSpawnIndex >= ents.size()) {
-			throw new IllegalStateException("Spawn failed. There are no free entities available.");
+			throw new IllegalStateException("Spawn failed. There are no free entities available. All " + ents.size()
+					+ " entities are already in use.");
 		}
 		Point2D p = ents.get(nextBotSpawnIndex++).getPosition().getPoint2D();
 

@@ -16,14 +16,6 @@ import java.util.Set;
 
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.client.BW4TClient;
-import nl.tudelft.bw4t.client.agent.BW4TAgent;
-import nl.tudelft.bw4t.client.agent.HumanAgent;
-import nl.tudelft.bw4t.client.controller.ClientController;
-import nl.tudelft.bw4t.client.startup.InitParam;
-import nl.tudelft.bw4t.eis.MapParameter;
-import nl.tudelft.bw4t.map.NewMap;
-
 import org.apache.log4j.Logger;
 
 import eis.AgentListener;
@@ -42,11 +34,20 @@ import eis.iilang.EnvironmentState;
 import eis.iilang.Identifier;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
+import nl.tudelft.bw4t.client.BW4TClient;
+import nl.tudelft.bw4t.client.agent.BW4TAgent;
+import nl.tudelft.bw4t.client.agent.HumanAgent;
+import nl.tudelft.bw4t.client.controller.ClientController;
+import nl.tudelft.bw4t.client.startup.InitParam;
+import nl.tudelft.bw4t.eis.MapParameter;
+import nl.tudelft.bw4t.map.NewMap;
 
 /**
- * A remote BW4TEnvironment that delegates all actions towards the central
- * BW4TEnvironment, through RMI. This is the "Client", the connector for goal.
- * This object lives on the client, and is a singleton (so one per JVM).
+ * A remote BW4TEnvironment is an EIS environment
+ * {@link EnvironmentInterfaceStandard}. Instead of executing actions directly,
+ * it delegates all actions towards the central BW4TEnvironment, through RMI.
+ * This is the "Client", the connector for goal. This object lives on the
+ * client, and is a singleton (so one per JVM).
  * <p>
  * You can launch a stand-alone BW4TRemoteEnvironment (via {@link #main}.
  * Typical args are: <code>
@@ -67,13 +68,11 @@ import eis.iilang.Percept;
  * forwarded to GOAL.
  * </ul>
  */
-public class RemoteEnvironment implements EnvironmentInterfaceStandard,
-		EnvironmentListener {
+public class RemoteEnvironment implements EnvironmentInterfaceStandard, EnvironmentListener {
 	/**
 	 * The log4j Logger which displays logs on console
 	 */
-	private static final Logger LOGGER = Logger
-			.getLogger(RemoteEnvironment.class);
+	private static final Logger LOGGER = Logger.getLogger(RemoteEnvironment.class);
 	private BW4TClient client = null;
 	private final List<EnvironmentListener> environmentListeners = new LinkedList<EnvironmentListener>();
 	private final Map<String, ClientController> entityToGUI = new HashMap<>();
@@ -99,8 +98,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void init(Map<String, Parameter> parameters)
-			throws ManagementException {
+	public void init(Map<String, Parameter> parameters) throws ManagementException {
 		InitParam.setParameters(parameters);
 		try {
 			LOGGER.info("Connecting to BW4T Server.");
@@ -134,22 +132,17 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 		Map<String, Parameter> serverparams = InitParam.getServerParameters();
 		final boolean mapPresent = !InitParam.MAP.getValue().isEmpty();
 		if (!serverparams.isEmpty() || mapPresent) {
-			LOGGER.info(String.format("Sending extra parameters to server: %s",
-					serverparams));
+			LOGGER.info(String.format("Sending extra parameters to server: %s", serverparams));
 			if (mapPresent) {
 				File mapfile = new File(InitParam.MAP.getValue());
 				if (mapfile.exists() && !mapfile.isDirectory()) {
 					try {
-						serverparams.put(InitParam.MAP.nameLower(),
-								new MapParameter(mapfile));
+						serverparams.put(InitParam.MAP.nameLower(), new MapParameter(mapfile));
 					} catch (FileNotFoundException | JAXBException e) {
-						throw new ManagementException(
-								"Could not load local Map to send to the server.",
-								e);
+						throw new ManagementException("Could not load local Map to send to the server.", e);
 					}
 				} else {
-					serverparams.put(InitParam.MAP.nameLower(), new Identifier(
-							mapfile.getName()));
+					serverparams.put(InitParam.MAP.nameLower(), new Identifier(mapfile.getName()));
 				}
 			}
 			getClient().initServer(serverparams);
@@ -177,8 +170,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 	 */
 	public NoEnvironmentException environmentSuddenDeath(Exception e) {
 		client = null;
-		LOGGER.error("The BW4T Server disconnected unexpectedly. Client set to null:"
-				+ client);
+		LOGGER.error("The BW4T Server disconnected unexpectedly. Client set to null:" + client);
 		handleStateChange(EnvironmentState.KILLED);
 		if (e instanceof NoEnvironmentException) {
 			return (NoEnvironmentException) e;
@@ -345,8 +337,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 	 *             remove an entity.
 	 */
 	@Override
-	public Collection<String> getAssociatedAgents(String entity)
-			throws EntityException {
+	public Collection<String> getAssociatedAgents(String entity) throws EntityException {
 		try {
 			return getClient().getAssociatedAgents(entity);
 		} catch (RemoteException e) {
@@ -355,8 +346,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 	}
 
 	@Override
-	public Set<String> getAssociatedEntities(String agent)
-			throws AgentException {
+	public Set<String> getAssociatedEntities(String agent) throws AgentException {
 		try {
 			return getClient().getAssociatedEntities(agent);
 		} catch (RemoteException e) {
@@ -382,10 +372,8 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void associateEntity(String agentId, String entityId)
-			throws RelationException {
-		LOGGER.debug("Associating Agent " + agentId + " with Entity "
-				+ entityId + ".");
+	public void associateEntity(String agentId, String entityId) throws RelationException {
+		LOGGER.debug("Associating Agent " + agentId + " with Entity " + entityId + ".");
 		try {
 			getClient().associateEntity(agentId, entityId);
 			startEntityGUI(agentId, entityId);
@@ -446,8 +434,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 	 *             remove an entity.
 	 */
 	@Override
-	public void freeEntity(String entity) throws RelationException,
-			EntityException {
+	public void freeEntity(String entity) throws RelationException, EntityException {
 		try {
 			getClient().freeEntity(entity);
 		} catch (RemoteException e) {
@@ -485,8 +472,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 	 * @return true iff the entity can have a gui
 	 */
 	public boolean hasEntityGUI(String entity) {
-		if (entityToGUI.containsKey(entity)
-				|| storedPercepts.containsKey(entity)) {
+		if (entityToGUI.containsKey(entity) || storedPercepts.containsKey(entity)) {
 			return true;
 		}
 		try {
@@ -494,12 +480,10 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 			if ("human".equals(type)) {
 				return true;
 			} else if ("bot".equals(type)) {
-				return !isConnectedToGoal()
-						|| InitParam.LAUNCHGUI.getBoolValue();
+				return !isConnectedToGoal() || InitParam.LAUNCHGUI.getBoolValue();
 			}
 		} catch (EntityException e) {
-			LOGGER.error(String.format(
-					"Could not retrieve the type of entity %s!", entity), e);
+			LOGGER.error(String.format("Could not retrieve the type of entity %s!", entity), e);
 		}
 		return false;
 	}
@@ -515,13 +499,11 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 	 * @throws ActException
 	 * @throws RemoteException
 	 */
-	public Percept performEntityAction(String entity, Action action)
-			throws RemoteException, ActException {
+	public Percept performEntityAction(String entity, Action action) throws RemoteException, ActException {
 		if (isConnectedToGoal() && "sendToGUI".equals(action.getName())) {
 			final ClientController entityGUI = getEntityController(entity);
 			if (entityGUI == null) {
-				ActException e = new ActException("sendToGUI failed:" + entity
-						+ " is not connected to a GUI.");
+				ActException e = new ActException("sendToGUI failed:" + entity + " is not connected to a GUI.");
 				e.setType(ActException.FAILURE);
 				throw e;
 			}
@@ -596,9 +578,8 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 	 *             has failed.
 	 */
 	@Override
-	public Map<String, Collection<Percept>> getAllPercepts(String agent,
-			String... entities) throws PerceiveException,
-			NoEnvironmentException {
+	public Map<String, Collection<Percept>> getAllPercepts(String agent, String... entities)
+			throws PerceiveException, NoEnvironmentException {
 		/** fail if the environment does not run */
 		EnvironmentState state = getState();
 		if (state == EnvironmentState.KILLED) {
@@ -609,24 +590,20 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 		}
 		/** fail if the agent is not registered */
 		if (!getAgents().contains(agent)) {
-			throw new PerceiveException("Agent \"" + agent
-					+ "\" is not registered.");
+			throw new PerceiveException("Agent \"" + agent + "\" is not registered.");
 		}
 		/** get the associated entities */
 		Set<String> associatedEntities;
 		try {
 			associatedEntities = getAssociatedEntities(agent);
 		} catch (AgentException e) {
-			throw new PerceiveException(
-					"can't get associated entities of agent " + agent, e);
+			throw new PerceiveException("can't get associated entities of agent " + agent, e);
 		}
 		// fail if there are no associated entities */
 		if ((associatedEntities == null) || associatedEntities.isEmpty()) {
-			throw new PerceiveException("Agent \"" + agent
-					+ "\" has no associated entities.");
+			throw new PerceiveException("Agent \"" + agent + "\" has no associated entities.");
 		}
-		final Map<String, Collection<Percept>> percepts = gatherPercepts(agent,
-				associatedEntities, entities);
+		final Map<String, Collection<Percept>> percepts = gatherPercepts(agent, associatedEntities, entities);
 		try {
 			// allow other threads to be processed
 			Thread.sleep(2);
@@ -650,20 +627,17 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 	 *             unable to get percepts because the entity does not belong to
 	 *             this agent
 	 */
-	Map<String, Collection<Percept>> gatherPercepts(String agent,
-			Set<String> associatedEntities, String... entities)
+	Map<String, Collection<Percept>> gatherPercepts(String agent, Set<String> associatedEntities, String... entities)
 			throws PerceiveException {
 		Map<String, Collection<Percept>> perceptsMap = new HashMap<String, Collection<Percept>>();
 		if (entities.length == 0) {
 			// No entities selected, get percepts for all associated entities
-			entities = associatedEntities.toArray(new String[associatedEntities
-					.size()]);
+			entities = associatedEntities.toArray(new String[associatedEntities.size()]);
 		}
 		for (String entity : entities) {
 			if (!associatedEntities.contains(entity)) {
-				throw new PerceiveException("Entity \"" + entity
-						+ "\" has not been associated with the agent \""
-						+ agent + "\".");
+				throw new PerceiveException(
+						"Entity \"" + entity + "\" has not been associated with the agent \"" + agent + "\".");
 			}
 			perceptsMap.put(entity, gatherPercepts(entity));
 		}
@@ -680,8 +654,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 	 *             if we failed to get the entity
 	 */
 	public List<Percept> gatherPercepts(String name) throws PerceiveException {
-		List<Percept> all = PerceptsHandler
-				.getAllPerceptsFromEntity(name, this);
+		List<Percept> all = PerceptsHandler.getAllPerceptsFromEntity(name, this);
 		for (Percept p : all) {
 			p.setSource(name);
 		}
@@ -698,8 +671,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 	 * @param percepts
 	 *            the percepts for the entity
 	 */
-	protected void saveAndSendPercepts(String entity,
-			Collection<Percept> percepts) {
+	protected void saveAndSendPercepts(String entity, Collection<Percept> percepts) {
 		if (!hasEntityGUI(entity)) {
 			return;
 		}
@@ -755,8 +727,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 	 *            , the new state of the environment
 	 */
 	@Override
-	public boolean isStateTransitionValid(EnvironmentState oldState,
-			EnvironmentState newState) {
+	public boolean isStateTransitionValid(EnvironmentState oldState, EnvironmentState newState) {
 		return true;
 	}
 
@@ -808,8 +779,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 				unregisterAgent(agentname);
 
 			} catch (AgentException | RelationException e) {
-				throw new ManagementException(
-						"kill failed because agent could not be freed", e);
+				throw new ManagementException("kill failed because agent could not be freed", e);
 			}
 		}
 	}
@@ -840,8 +810,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 			// // }
 			// }
 		} catch (RelationException | EntityException e) {
-			throw new ManagementException(
-					"kill failed because agent could not be freed", e);
+			throw new ManagementException("kill failed because agent could not be freed", e);
 		}
 
 	}
@@ -910,16 +879,13 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 	 *             , if an attempt to perform an action has failed.
 	 */
 	@Override
-	public Map<String, Percept> performAction(String agent, Action action,
-			String... entities) throws ActException {
+	public Map<String, Percept> performAction(String agent, Action action, String... entities) throws ActException {
 		try {
-			return ActionHandler.performActionDelegated(agent, action, this,
-					entities);
+			return ActionHandler.performActionDelegated(agent, action, this, entities);
 		} catch (ActException e) {
 			throw e;
 		} catch (Exception e) {
-			ActException e1 = new ActException("failed to perform action",
-					ActException.FAILURE);
+			ActException e1 = new ActException("failed to perform action", ActException.FAILURE);
 			e1.initCause(e);
 			throw e1;
 		}
@@ -1011,8 +977,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard,
 	 *             when the query fails
 	 */
 	@Override
-	public String queryEntityProperty(String entity, String property)
-			throws QueryException {
+	public String queryEntityProperty(String entity, String property) throws QueryException {
 		try {
 			return getClient().queryEntityProperty(entity, property);
 		} catch (RemoteException e) {
