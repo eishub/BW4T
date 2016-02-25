@@ -4,7 +4,7 @@
 	
 	<groupId>eishub.bw4t</groupId>
 	<artifactId>bw4t-environment-store</artifactId>
-	<version>3.8.3</version>
+	<version>3.8.4</version>
 	<name>bw4t-environment-store</name>
 	<url>http://www.github.com/eishub/bw4t</url>
 	
@@ -41,7 +41,7 @@
 		<dependency>
 			<groupId>eishub.bw4t.core</groupId>
 			<artifactId>bw4t-core</artifactId>
-			<version>3.8.3</version>
+			<version>3.8.4</version>
 		</dependency>
 		<dependency>
 			<groupId>com.miglayout</groupId>
