@@ -135,7 +135,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 		env.setCollisionEnabled(cInfo.isCollisionEnabled());
 		env.setDrawPathsEnabled(cInfo.isVisualizePaths());
 		if (cInfo.getSpeed() != null) {
-			env.setTps(cInfo.getSpeed());
+			env.setDelay((int) (1000. / cInfo.getSpeed()));
 		}
 	}
 

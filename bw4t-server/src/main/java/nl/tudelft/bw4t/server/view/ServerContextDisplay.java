@@ -30,18 +30,17 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.apache.log4j.Logger;
+
+import eis.exceptions.ManagementException;
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
 import nl.tudelft.bw4t.map.renderer.MapRenderer;
 import nl.tudelft.bw4t.server.controller.ServerMapController;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.Stepper;
 import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.repast.BW4TBuilder;
-
-import org.apache.log4j.Logger;
-
-import eis.exceptions.ManagementException;
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
 
 /**
  * Used for directly displaying the simulation from the context, unlike
@@ -60,8 +59,7 @@ public class ServerContextDisplay extends JFrame {
 	/**
 	 * The log4j logger, logs to the console.
 	 */
-	private static final Logger LOGGER = Logger
-			.getLogger(ServerContextDisplay.class);
+	private static final Logger LOGGER = Logger.getLogger(ServerContextDisplay.class);
 
 	/** The map renderer. */
 	private final MapRenderer myRenderer;
@@ -77,12 +75,11 @@ public class ServerContextDisplay extends JFrame {
 	 * @throws VisualizationsException
 	 *             the visualizations exception
 	 */
-	public ServerContextDisplay(BW4TServerMap serverMap)
-			throws VisualizationsException {
+	public ServerContextDisplay(BW4TServerMap serverMap) throws VisualizationsException {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException
-				| IllegalAccessException | UnsupportedLookAndFeelException e) {
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
 			LOGGER.warn("failed to setup java look and feel", e);
 		}
 		setTitle("BW4T");
@@ -149,7 +146,7 @@ class ControlPanel extends JPanel {
 		setLayout(new BorderLayout());
 		add(new JLabel("Speed"), BorderLayout.WEST);
 		// slider goes in percentage, 100 is fastest
-		slider = new JSlider(0, 100, 0);
+		slider = new JSlider(Stepper.MIN_DELAY, Stepper.MAX_DELAY, 20);
 		slider.setEnabled(false);
 		final JButton resetbutton = new JButton("Reset");
 		add(tpsDisplay, BorderLayout.WEST);
@@ -157,15 +154,13 @@ class ControlPanel extends JPanel {
 		add(resetbutton, BorderLayout.EAST);
 		add(new MapSelector(displayer), BorderLayout.NORTH);
 
-		collisionCheckbox = new JCheckBox("Enable Collisions", BW4TEnvironment
-				.getInstance().isCollisionEnabled());
+		collisionCheckbox = new JCheckBox("Enable Collisions", BW4TEnvironment.getInstance().isCollisionEnabled());
 		add(collisionCheckbox, BorderLayout.SOUTH);
 
 		collisionCheckbox.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				BW4TEnvironment.getInstance().setCollisionEnabled(
-						e.getStateChange() == ItemEvent.SELECTED);
+				BW4TEnvironment.getInstance().setCollisionEnabled(e.getStateChange() == ItemEvent.SELECTED);
 			}
 		});
 
@@ -175,7 +170,7 @@ class ControlPanel extends JPanel {
 			public void stateChanged(ChangeEvent arg0) {
 				// now we have speed (on Hz axis) and we need delay (s axis).
 				// first get interpolated speed.
-				BW4TEnvironment.getInstance().setTps(calculateTpsFromSlider());
+				BW4TEnvironment.getInstance().setDelay(slider.getValue());
 				updateTpsDisplay();
 			}
 		});
@@ -201,59 +196,32 @@ class ControlPanel extends JPanel {
 					@Override
 					public void run() {
 						slider.setEnabled(true);
-						slider.setValue(calculateSliderValueFromDelay());
-						updateTpsDisplay();
+						updateDelay();
 					}
 				});
 			}
 		}, 1000);
 		updateTpsDisplay();
 
-		BW4TEnvironment.getInstance().addChangeListener(
-				new PropertyChangeListener() {
-					@Override
-					public void propertyChange(PropertyChangeEvent evt) {
-						collisionCheckbox.setSelected(BW4TEnvironment
-								.getInstance().isCollisionEnabled());
-					}
-				});
+		BW4TEnvironment.getInstance().addChangeListener(new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				collisionCheckbox.setSelected(BW4TEnvironment.getInstance().isCollisionEnabled());
+				updateDelay();
+			}
+		});
 	}
 
-	/**
-	 * Calculate tps from slider.
-	 * 
-	 * @return the double
-	 */
-	public double calculateTpsFromSlider() {
-		double percent = (slider.getValue() - slider.getMinimum())
-				/ (double) (slider.getMaximum() - slider.getMinimum());
-		int value = (int) (Stepper.MIN_TPS + (Stepper.MAX_TPS - Stepper.MIN_TPS)
-				* percent);
-		LOGGER.trace("Delay Calculated from the slider: " + value);
-		return value;
-	}
-
-	/**
-	 * Calculate slider value from delay.
-	 * 
-	 * @return the int
-	 */
-	public int calculateSliderValueFromDelay() {
-		double delay = BW4TEnvironment.getInstance().getTps();
-		double percent = (delay - Stepper.MIN_TPS)
-				/ (Stepper.MAX_TPS - Stepper.MIN_TPS);
-		int value = (int) (slider.getMinimum() + (slider.getMaximum() - slider
-				.getMinimum()) * percent);
-		LOGGER.trace("Slider value from delay: " + value);
-		return value;
+	private void updateDelay() {
+		updateTpsDisplay();
+		slider.setValue((int) BW4TEnvironment.getInstance().getDelay());
 	}
 
 	/**
 	 * Update the tps display.
 	 */
 	public void updateTpsDisplay() {
-		tpsDisplay.setText(String.format("%3.1f tps", BW4TEnvironment
-				.getInstance().getTps()));
+		tpsDisplay.setText(String.format("%3.1f fps", 1000.f / BW4TEnvironment.getInstance().getDelay()));
 	}
 }
 
@@ -280,8 +248,7 @@ class MapSelector extends JPanel {
 	 * @throws FileNotFoundException
 	 *             the file not found exception
 	 */
-	public MapSelector(final ServerContextDisplay displayer)
-			throws FileNotFoundException {
+	public MapSelector(final ServerContextDisplay displayer) throws FileNotFoundException {
 		setLayout(new BorderLayout());
 		add(new JLabel("Change Map"), BorderLayout.WEST);
 		Vector<String> maps = getMaps();
@@ -296,8 +263,7 @@ class MapSelector extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Map<String, Parameter> parameters = new HashMap<String, Parameter>();
-				parameters.put("map",
-						new Identifier((String) mapselector.getSelectedItem()));
+				parameters.put("map", new Identifier((String) mapselector.getSelectedItem()));
 				try {
 					BW4TEnvironment.getInstance().reset(parameters);
 				} catch (ManagementException e) {
