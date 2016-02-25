@@ -16,16 +16,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import nl.tudelft.bw4t.map.EntityType;
-import nl.tudelft.bw4t.network.BW4TClientActions;
-import nl.tudelft.bw4t.network.BW4TServerHiddenActions;
-import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.BotConfig;
-import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
-import nl.tudelft.bw4t.server.eis.EntityInterface;
-import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
-import nl.tudelft.bw4t.server.environment.Launcher;
-
 import org.apache.log4j.Logger;
 
 import eis.exceptions.ActException;
@@ -38,14 +28,22 @@ import eis.iilang.Action;
 import eis.iilang.EnvironmentState;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
+import nl.tudelft.bw4t.map.EntityType;
+import nl.tudelft.bw4t.network.BW4TClientActions;
+import nl.tudelft.bw4t.network.BW4TServerHiddenActions;
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
+import nl.tudelft.bw4t.scenariogui.BotConfig;
+import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
+import nl.tudelft.bw4t.server.eis.EntityInterface;
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.environment.Launcher;
 
 /**
  * Server that allows connected client to perform actions and receive percepts
  * from the central {@link BW4TEnvironment} and notifies clients of new entities
  * at the central {@link BW4TEnvironment}, all using RMI
  */
-public class BW4TServer extends UnicastRemoteObject implements
-		BW4TServerHiddenActions {
+public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenActions {
 
 	/**
 	 * The log4j logger, logs to the console.
@@ -76,13 +74,11 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 *             object call
 	 * @throws MalformedURLException
 	 */
-	public BW4TServer(String serverIp, String serverPort)
-			throws RemoteException, MalformedURLException {
+	public BW4TServer(String serverIp, String serverPort) throws RemoteException, MalformedURLException {
 		super();
 		reset();
 		try {
-			registry = LocateRegistry.createRegistry(Integer
-					.parseInt(serverPort));
+			registry = LocateRegistry.createRegistry(Integer.parseInt(serverPort));
 		} catch (RemoteException e) {
 			LOGGER.warn("Registry is already running. Getting running registry instead.");
 			registry = LocateRegistry.getRegistry(Integer.parseInt(serverPort));
@@ -92,8 +88,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 		LOGGER.debug("Server bound to: " + servername);
 	}
 
-	public BW4TServer(String serverIp, int serverPort, String motd)
-			throws RemoteException, MalformedURLException {
+	public BW4TServer(String serverIp, int serverPort, String motd) throws RemoteException, MalformedURLException {
 		this(serverIp, Integer.toString(serverPort));
 		messageOfTheDay = motd;
 	}
@@ -102,31 +97,26 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public synchronized void registerClient(BW4TClientActions client,
-			int agentCount, int humanCount) throws RemoteException {
+	public synchronized void registerClient(BW4TClientActions client, int agentCount, int humanCount, Double speed)
+			throws RemoteException {
 		try {
-			registerClient(client, new ClientInfo(getClientHost(), agentCount,
-					humanCount));
+			registerClient(client, new ClientInfo(getClientHost(), agentCount, humanCount, speed));
 		} catch (ServerNotActiveException e) {
-			throw new RuntimeException(
-					"call to associateEntity comes from non-active server", e);
+			throw new RuntimeException("call to associateEntity comes from non-active server", e);
 		}
 	}
 
 	@Override
-	public synchronized void registerClient(BW4TClientActions client,
-			BW4TClientConfig clientConfig) throws RemoteException {
+	public synchronized void registerClient(BW4TClientActions client, BW4TClientConfig clientConfig)
+			throws RemoteException {
 		try {
-			registerClient(client,
-					new ClientInfo(clientConfig, getClientHost()));
+			registerClient(client, new ClientInfo(clientConfig, getClientHost()));
 		} catch (ServerNotActiveException e) {
-			throw new RuntimeException(
-					"call to associateEntity comes from non-active server", e);
+			throw new RuntimeException("call to associateEntity comes from non-active server", e);
 		}
 	}
 
-	private synchronized void registerClient(BW4TClientActions client,
-			ClientInfo cInfo) throws RemoteException {
+	private synchronized void registerClient(BW4TClientActions client, ClientInfo cInfo) throws RemoteException {
 		BW4TEnvironment env = Launcher.getInstance().getEnvironment();
 		LOGGER.info("Registering client: " + client);
 		clients.put(client, cInfo);
@@ -144,11 +134,13 @@ public class BW4TServer extends UnicastRemoteObject implements
 		// set the path finding and collision arguments.
 		env.setCollisionEnabled(cInfo.isCollisionEnabled());
 		env.setDrawPathsEnabled(cInfo.isVisualizePaths());
+		if (cInfo.getSpeed() != null) {
+			env.setTps(cInfo.getSpeed());
+		}
 	}
 
 	@Override
-	public synchronized void unregisterClient(BW4TClientActions client)
-			throws ServerNotActiveException {
+	public synchronized void unregisterClient(BW4TClientActions client) throws ServerNotActiveException {
 
 		if (clients.containsKey(client)) {
 			try {
@@ -169,14 +161,11 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * @param ci
 	 * @throws EntityException
 	 */
-	public void notifyFreeEpartner(BW4TClientActions client, EPartnerConfig ci)
-			throws EntityException {
+	public void notifyFreeEpartner(BW4TClientActions client, EPartnerConfig ci) throws EntityException {
 		try {
 			String entity = ci.getEpartnerName();
-			if ("unknown".equals(Launcher.getInstance().getEnvironment()
-					.getType(entity))) {
-				BW4TEnvironment.getInstance().setType(entity,
-						EntityType.EPARTNER.nameLower());
+			if ("unknown".equals(Launcher.getInstance().getEnvironment().getType(entity))) {
+				BW4TEnvironment.getInstance().setType(entity, EntityType.EPARTNER.nameLower());
 			}
 			client.handleNewEntity(entity);
 			return;
@@ -185,12 +174,10 @@ public class BW4TServer extends UnicastRemoteObject implements
 		}
 	}
 
-	public void notifyFreeRobot(BW4TClientActions client, BotConfig ci)
-			throws EntityException {
+	public void notifyFreeRobot(BW4TClientActions client, BotConfig ci) throws EntityException {
 		try {
 			String entity = ci.getBotName();
-			if ("unknown".equals(Launcher.getInstance().getEnvironment()
-					.getType(entity))) {
+			if ("unknown".equals(Launcher.getInstance().getEnvironment().getType(entity))) {
 				String type = "bot";
 				if (EntityType.HUMAN == ci.getBotController()) {
 					type = "human";
@@ -208,8 +195,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public synchronized void unregisterAgent(String agent)
-			throws AgentException {
+	public synchronized void unregisterAgent(String agent) throws AgentException {
 
 		BW4TEnvironment.getInstance().unregisterAgent(agent);
 
@@ -219,12 +205,10 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Percept performEntityAction(String entity, Action action)
-			throws RemoteException {
+	public Percept performEntityAction(String entity, Action action) throws RemoteException {
 
 		try {
-			return BW4TEnvironment.getInstance().performClientAction(entity,
-					action);
+			return BW4TEnvironment.getInstance().performClientAction(entity, action);
 		} catch (ActException e) {
 			throw new RemoteException("action failed", e);
 		}
@@ -234,12 +218,10 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void associateEntity(final String agentId, final String entityId)
-			throws RelationException {
+	public void associateEntity(final String agentId, final String entityId) throws RelationException {
 		BW4TEnvironment.getInstance().associateEntity(agentId, entityId);
 
-		((EntityInterface) BW4TEnvironment.getInstance().getEntity(entityId))
-				.connect();
+		((EntityInterface) BW4TEnvironment.getInstance().getEntity(entityId)).connect();
 
 	}
 
@@ -247,8 +229,8 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public synchronized void registerAgent(String agentId,
-			BW4TClientActions client) throws RemoteException, AgentException {
+	public synchronized void registerAgent(String agentId, BW4TClientActions client)
+			throws RemoteException, AgentException {
 		if (!clients.containsKey(client)) {
 			throw new AgentException("client " + client + " has not registered");
 		}
@@ -259,8 +241,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Percept> getAllPerceptsFromEntity(String entity)
-			throws RemoteException {
+	public List<Percept> getAllPerceptsFromEntity(String entity) throws RemoteException {
 		return BW4TEnvironment.getInstance().getAllPerceptsFrom(entity);
 	}
 
@@ -276,8 +257,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Set<String> getAssociatedEntities(String agent)
-			throws RemoteException, AgentException {
+	public Set<String> getAssociatedEntities(String agent) throws RemoteException, AgentException {
 		return BW4TEnvironment.getInstance().getAssociatedEntities(agent);
 	}
 
@@ -293,8 +273,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void freeEntity(String entity) throws RemoteException,
-			RelationException, EntityException {
+	public void freeEntity(String entity) throws RemoteException, RelationException, EntityException {
 		BW4TEnvironment.getInstance().freeEntity(entity);
 	}
 
@@ -302,8 +281,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void freeAgent(String agent) throws RemoteException,
-			RelationException {
+	public void freeAgent(String agent) throws RemoteException, RelationException {
 
 		try {
 			BW4TEnvironment.getInstance().freeAgent(agent);
@@ -316,8 +294,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void freePair(String agent, String entity) throws RemoteException,
-			RelationException {
+	public void freePair(String agent, String entity) throws RemoteException, RelationException {
 		BW4TEnvironment.getInstance().freePair(agent, entity);
 	}
 
@@ -325,8 +302,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Collection<String> getAssociatedAgents(String entity)
-			throws RemoteException, EntityException {
+	public Collection<String> getAssociatedAgents(String entity) throws RemoteException, EntityException {
 		return BW4TEnvironment.getInstance().getAssociatedAgents(entity);
 	}
 
@@ -350,8 +326,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getType(String entity) throws RemoteException,
-			EntityException {
+	public String getType(String entity) throws RemoteException, EntityException {
 		return BW4TEnvironment.getInstance().getType(entity);
 	}
 
@@ -367,8 +342,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String queryProperty(String property) throws RemoteException,
-			QueryException {
+	public String queryProperty(String property) throws RemoteException, QueryException {
 		return BW4TEnvironment.getInstance().queryProperty(property);
 	}
 
@@ -376,10 +350,8 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String queryEntityProperty(String entity, String property)
-			throws RemoteException {
-		return BW4TEnvironment.getInstance().queryEntityProperty(entity,
-				property);
+	public String queryEntityProperty(String entity, String property) throws RemoteException {
+		return BW4TEnvironment.getInstance().queryEntityProperty(entity, property);
 	}
 
 	public void reset() {
@@ -418,8 +390,7 @@ public class BW4TServer extends UnicastRemoteObject implements
 	public void notifyStateChange(EnvironmentState newState) {
 		// duplicate the set before iteration, since we may call
 		// unregisterClient.
-		Set<BW4TClientActions> clientset = new HashSet<BW4TClientActions>(
-				this.clients.keySet());
+		Set<BW4TClientActions> clientset = new HashSet<BW4TClientActions>(this.clients.keySet());
 		for (BW4TClientActions client : clientset) {
 			try {
 				client.handleStateChange(newState);
@@ -449,14 +420,12 @@ public class BW4TServer extends UnicastRemoteObject implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void requestInit(java.util.Map<String, Parameter> parameters)
-			throws RemoteException, ManagementException {
+	public void requestInit(java.util.Map<String, Parameter> parameters) throws RemoteException, ManagementException {
 		BW4TEnvironment.getInstance().init(parameters);
 	}
 
 	@Override
-	public void requestReset(Map<String, Parameter> parameters)
-			throws RemoteException, ManagementException {
+	public void requestReset(Map<String, Parameter> parameters) throws RemoteException, ManagementException {
 		throw new ManagementException("not implemented.");
 	}
 

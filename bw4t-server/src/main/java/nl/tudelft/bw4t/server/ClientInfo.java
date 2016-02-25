@@ -19,8 +19,21 @@ class ClientInfo {
 	private List<BotConfig> requestedBots = new ArrayList<>();
 	private List<EPartnerConfig> requestedEPartners = new ArrayList<>();
 	private final String name;
+	private Double speed = null; // environment rate, in steps per second.
+									// null=not set (server keep as it is).
 
-	public ClientInfo(String uniqueName, int reqAgent, int reqHuman) {
+	/**
+	 * The usual call when used from GOAL.
+	 * 
+	 * @param uniqueName
+	 * @param reqAgent
+	 *            #bots that the client needs
+	 * @param reqHuman
+	 *            #humans that the client needs
+	 * @param sp
+	 *            the speed (fps). Can be null to ignore
+	 */
+	public ClientInfo(String uniqueName, int reqAgent, int reqHuman, Double sp) {
 		assert reqHuman >= 0;
 		assert reqAgent >= 0;
 		name = uniqueName;
@@ -37,6 +50,7 @@ class ClientInfo {
 			clientConfig.addBot(bot);
 			requestedBots.add(bot);
 		}
+		speed = sp;
 	}
 
 	/**
@@ -80,5 +94,25 @@ class ClientInfo {
 
 	public Object getName() {
 		return name;
+	}
+
+	/**
+	 * 
+	 * @return environment rate, in steps per second. null=not set (server keep
+	 *         as it is).
+	 * 
+	 */
+	public Double getSpeed() {
+		return speed;
+	}
+
+	/**
+	 * @param speed
+	 *            environment rate, in steps per second. null=not set (server
+	 *            keep as it is).
+	 */
+
+	public void setSpeed(Double speed) {
+		this.speed = speed;
 	}
 }
