@@ -552,19 +552,14 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		}
 	}
 
-	public double getTps() {
-		if (stepper == null) {
-			return Stepper.MIN_TPS;
-		}
-		return stepper.getTps();
-	}
-
-	public void setTps(double tps) {
+	public void setDelay(int delay) {
 		if (stepper == null) {
 			return;
 		}
-		stepper.setTps(tps);
-		notifyChange();
+		if (delay != stepper.getDelay()) {
+			stepper.setDelay(delay);
+			notifyChange();
+		}
 	}
 
 	/**
@@ -936,6 +931,12 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 		super.freeAgent(agent);
 
+	}
+
+	public int getDelay() {
+		if (stepper == null)
+			return 20;
+		return (int) stepper.getDelay();
 	}
 
 }

@@ -6,8 +6,6 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
@@ -15,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import eis.iilang.Identifier;
 import eis.iilang.Parameter;
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 
 /**
  * Available init parameters and default values for {@link BW4TEnvironment}.
@@ -60,19 +59,23 @@ public enum InitParam {
 	MAP(""),
 
 	/**
-	 * The log4j log level to be used. Default to ERROR so that naive users at
-	 * least see critical messages #3204. available values: OFF, FATAL, ERROR,
-	 * WARN, INFODEBUG and ALL.
+	 * Preferred speed. Empty -> null -> not set.
+	 */
+	SPEED(""),
+	/*
+	 * /** The log4j log level to be used. Default to ERROR so that naive users
+	 * at least see critical messages #3204. available values: OFF, FATAL,
+	 * ERROR, WARN, INFODEBUG and ALL.
 	 */
 	LOG("ERROR");
 
 	private static final Logger LOGGER = Logger.getLogger(InitParam.class);
 
 	private String defaultvalue;
-	
-	
+
 	/**
-	 * Store a referenc to the object that manages the parameters from the config file
+	 * Store a referenc to the object that manages the parameters from the
+	 * config file
 	 */
 	private static ConfigFile config;
 
@@ -112,9 +115,9 @@ public enum InitParam {
 		if (param != null) {
 			return ((Identifier) param).getValue();
 		}
-		if(config != null) {
+		if (config != null) {
 			String result = config.getValue(this);
-			if(result != null) {
+			if (result != null) {
 				return result;
 			}
 		}
@@ -152,8 +155,7 @@ public enum InitParam {
 		config = null;
 
 		// set the global log level as indicated in params (or use default).
-		LogManager.getRootLogger().setLevel(
-				Level.toLevel(InitParam.LOG.getValue()));
+		LogManager.getRootLogger().setLevel(Level.toLevel(InitParam.LOG.getValue()));
 
 		if (InitParam.GOAL.getBoolValue()) {
 			BasicConfigurator.configure();
@@ -165,8 +167,7 @@ public enum InitParam {
 			try {
 				config = new ConfigFile(cfile);
 			} catch (JAXBException | FileNotFoundException e) {
-				LOGGER.error(String.format(
-						"Unable to load configuration file: '%s'", cfile), e);
+				LOGGER.error(String.format("Unable to load configuration file: '%s'", cfile), e);
 			}
 		}
 	}

@@ -4,7 +4,7 @@
 	
 	<groupId>eishub.bw4t</groupId>
 	<artifactId>bw4t-scenario-editor</artifactId>
-	<version>3.8.4-SNAPSHOT</version>
+	<version>3.8.4</version>
 	<name>bw4t-scenario-editor</name>
 	<url>http://www.github.com/eishub/bw4t</url>
 	
@@ -189,7 +189,7 @@
 		<dependency>
 			<groupId>eishub.bw4t.core</groupId>
 			<artifactId>bw4t-core</artifactId>
-			<version>3.8.4-SNAPSHOT</version>
+			<version>3.8.4</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>

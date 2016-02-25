@@ -12,15 +12,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-import nl.tudelft.bw4t.client.startup.ConfigFile;
-import nl.tudelft.bw4t.client.startup.InitParam;
-import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.network.BW4TClientActions;
-import nl.tudelft.bw4t.network.BW4TServerActions;
-import nl.tudelft.bw4t.network.BW4TServerHiddenActions;
-import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
-
 import org.apache.log4j.Logger;
 
 import eis.EnvironmentInterfaceStandard;
@@ -35,14 +26,21 @@ import eis.iilang.Action;
 import eis.iilang.EnvironmentState;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.client.startup.ConfigFile;
+import nl.tudelft.bw4t.client.startup.InitParam;
+import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.network.BW4TClientActions;
+import nl.tudelft.bw4t.network.BW4TServerActions;
+import nl.tudelft.bw4t.network.BW4TServerHiddenActions;
+import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 
 /**
  * A client remote object that can be registered to a BW4TServer. This object
  * lives at the client side. This object is a listener for server events, and
  * forwards them to the owner: the {@link RemoteEnvironment}.
  */
-public class BW4TClient extends UnicastRemoteObject implements
-		BW4TClientActions {
+public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions {
 	private static final long serialVersionUID = -7174958200299731682L;
 
 	/**
@@ -72,8 +70,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 * @throws MalformedURLException
 	 * @throws NotBoundException
 	 */
-	public BW4TClient(EnvironmentListener parent) throws RemoteException,
-			MalformedURLException, NotBoundException {
+	public BW4TClient(EnvironmentListener parent) throws RemoteException, MalformedURLException, NotBoundException {
 		this.parent = parent;
 	}
 
@@ -102,8 +99,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 * @throws RemoteException
 	 * @throws NotBoundException
 	 */
-	public void connectServer() throws RemoteException, MalformedURLException,
-			NotBoundException {
+	public void connectServer() throws RemoteException, MalformedURLException, NotBoundException {
 
 		int portNumber = Integer.parseInt(InitParam.CLIENTPORT.getValue());
 
@@ -111,13 +107,10 @@ public class BW4TClient extends UnicastRemoteObject implements
 		Registry register = null;
 		while (register == null) {
 			try {
-				bindAddress = "rmi://" + InitParam.CLIENTIP.getValue() + ":"
-						+ portNumber + "/BW4TClient";
+				bindAddress = "rmi://" + InitParam.CLIENTIP.getValue() + ":" + portNumber + "/BW4TClient";
 				register = LocateRegistry.createRegistry(portNumber);
 			} catch (Exception e) {
-				LOGGER.warn(
-						"Registry was already created, trying the next port number.",
-						e);
+				LOGGER.warn("Registry was already created, trying the next port number.", e);
 				portNumber++;
 			}
 		}
@@ -125,13 +118,11 @@ public class BW4TClient extends UnicastRemoteObject implements
 		LOGGER.info("The BW4T Client is bound to: " + bindAddress);
 
 		// Register the client to the server
-		String address = "//" + InitParam.SERVERIP.getValue() + ":"
-				+ InitParam.SERVERPORT.getValue() + "/BW4TServer";
+		String address = "//" + InitParam.SERVERIP.getValue() + ":" + InitParam.SERVERPORT.getValue() + "/BW4TServer";
 		try {
 			server = (BW4TServerActions) Naming.lookup(address);
 		} catch (Exception e) {
-			LOGGER.error("The BW4T Client failed to connect to the server: "
-					+ address);
+			LOGGER.error("The BW4T Client failed to connect to the server: " + address);
 			throw new NoEnvironmentException("Failed to connect " + address, e);
 		}
 
@@ -147,8 +138,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 		String killKey = InitParam.KILL.getValue();
 
 		// Register the client to the server
-		String address = "//" + InitParam.SERVERIP.getValue() + ":"
-				+ InitParam.SERVERPORT.getValue() + "/BW4TServer";
+		String address = "//" + InitParam.SERVERIP.getValue() + ":" + InitParam.SERVERPORT.getValue() + "/BW4TServer";
 		try {
 			server = (BW4TServerActions) Naming.lookup(address);
 		} catch (NotBoundException | MalformedURLException | RemoteException e) {
@@ -178,20 +168,21 @@ public class BW4TClient extends UnicastRemoteObject implements
 		if (file != null) {
 			BW4TClientConfig conf = file.getConfig();
 
-			LOGGER.info(String.format(
-					"Requesting %d robots and %d e-partners.",
-					conf.getAmountBot(), conf.getAmountEPartner()));
+			LOGGER.info(String.format("Requesting %d robots and %d e-partners.", conf.getAmountBot(),
+					conf.getAmountEPartner()));
 			server.registerClient(this, conf);
 		} else {
-			int agentCountInt = Integer.parseInt(InitParam.AGENTCOUNT
-					.getValue());
-			int humanCountInt = Integer.parseInt(InitParam.HUMANCOUNT
-					.getValue());
+			int agentCountInt = Integer.parseInt(InitParam.AGENTCOUNT.getValue());
+			int humanCountInt = Integer.parseInt(InitParam.HUMANCOUNT.getValue());
+			Double speed = null;
+			String speedstr = InitParam.SPEED.getValue();
+			if (!speedstr.isEmpty()) {
+				speed = Double.parseDouble(speedstr);
+			}
 
-			LOGGER.info("Requesting " + agentCountInt
-					+ " automated agent(s) and " + humanCountInt
-					+ " human agent(s)");
-			server.registerClient(this, agentCountInt, humanCountInt);
+			LOGGER.info("Requesting " + agentCountInt + " automated agent(s) , " + humanCountInt
+					+ " human agent(s) and speed=" + speed);
+			server.registerClient(this, agentCountInt, humanCountInt, speed);
 		}
 	}
 
@@ -210,8 +201,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 * @throws ServerNotActiveException
 	 *             if server can't contact us.
 	 */
-	public void kill() throws RemoteException, MalformedURLException,
-			NotBoundException, ServerNotActiveException {
+	public void kill() throws RemoteException, MalformedURLException, NotBoundException, ServerNotActiveException {
 		server.unregisterClient(this);
 		Naming.unbind(bindAddress);
 		UnicastRemoteObject.unexportObject(this, true);
@@ -235,10 +225,8 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 */
-	public Percept performEntityAction(String entity, Action action)
-			throws RemoteException {
-		LOGGER.debug("Entity " + entity + " performing action: "
-				+ action.toProlog());
+	public Percept performEntityAction(String entity, Action action) throws RemoteException {
+		LOGGER.debug("Entity " + entity + " performing action: " + action.toProlog());
 		return server.performEntityAction(entity, action);
 	}
 
@@ -257,10 +245,8 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 */
-	public void associateEntity(String agentId, String entityId)
-			throws RelationException, RemoteException {
-		LOGGER.debug("Agent " + agentId + " associated with entity: "
-				+ entityId);
+	public void associateEntity(String agentId, String entityId) throws RelationException, RemoteException {
+		LOGGER.debug("Agent " + agentId + " associated with entity: " + entityId);
 		server.associateEntity(agentId, entityId);
 	}
 
@@ -276,8 +262,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 * @throws AgentException
 	 *             if the attempt to register or unregister an agent has failed.
 	 */
-	public void registerAgent(String agentId) throws RemoteException,
-			AgentException {
+	public void registerAgent(String agentId) throws RemoteException, AgentException {
 		server.registerAgent(agentId, this);
 		LOGGER.debug("Register agent: " + agentId);
 	}
@@ -292,8 +277,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 */
-	public List<Percept> getAllPerceptsFromEntity(String entity)
-			throws RemoteException {
+	public List<Percept> getAllPerceptsFromEntity(String entity) throws RemoteException {
 		return server.getAllPerceptsFromEntity(entity);
 	}
 
@@ -322,8 +306,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 *             , if an attempt to register or unregister an agent has
 	 *             failed.
 	 */
-	public Set<String> getAssociatedEntities(String agent)
-			throws RemoteException, AgentException {
+	public Set<String> getAssociatedEntities(String agent) throws RemoteException, AgentException {
 		return server.getAssociatedEntities(agent);
 	}
 
@@ -339,8 +322,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 *             , if an exception occurs during the execution of a remote
 	 *             object call
 	 */
-	public void unregisterAgent(String agentId) throws AgentException,
-			RemoteException {
+	public void unregisterAgent(String agentId) throws AgentException, RemoteException {
 		server.unregisterAgent(agentId);
 		LOGGER.debug("Unregistered agent: " + agentId);
 	}
@@ -372,8 +354,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 *             , if something unexpected happens when attempting to add or
 	 *             remove an entity.
 	 */
-	public void freeEntity(String entity) throws RemoteException,
-			RelationException, EntityException {
+	public void freeEntity(String entity) throws RemoteException, RelationException, EntityException {
 		server.freeEntity(entity);
 	}
 
@@ -389,8 +370,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 *             , if an attempt to manipulate the agents-entities-relation
 	 *             has failed.
 	 */
-	public void freeAgent(String agent) throws RemoteException,
-			RelationException {
+	public void freeAgent(String agent) throws RemoteException, RelationException {
 		server.freeAgent(agent);
 	}
 
@@ -408,8 +388,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 *             , if an attempt to manipulate the agents-entities-relation
 	 *             has failed.
 	 */
-	public void freePair(String agent, String entity) throws RemoteException,
-			RelationException {
+	public void freePair(String agent, String entity) throws RemoteException, RelationException {
 		server.freePair(agent, entity);
 	}
 
@@ -426,8 +405,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 *             , if something unexpected happens when attempting to add or
 	 *             remove an entity.
 	 */
-	public Collection<String> getAssociatedAgents(String entity)
-			throws RemoteException, EntityException {
+	public Collection<String> getAssociatedAgents(String entity) throws RemoteException, EntityException {
 		return server.getAssociatedAgents(entity);
 	}
 
@@ -456,8 +434,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 *             , if something unexpected happens when attempting to add or
 	 *             remove an entity.
 	 */
-	public String getType(String entity) throws RemoteException,
-			EntityException {
+	public String getType(String entity) throws RemoteException, EntityException {
 		return server.getType(entity);
 	}
 
@@ -485,8 +462,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 */
-	public String queryProperty(String property) throws QueryException,
-			RemoteException {
+	public String queryProperty(String property) throws QueryException, RemoteException {
 		return server.queryProperty(property);
 	}
 
@@ -502,8 +478,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 *             , if an exception occurs during the execution of a remote
 	 *             object call
 	 */
-	public String queryEntityProperty(String entity, String property)
-			throws RemoteException {
+	public String queryEntityProperty(String entity, String property) throws RemoteException {
 		return server.queryEntityProperty(entity, property);
 	}
 
@@ -558,8 +533,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 *             Throws a ManagementException when the server fails to
 	 *             initialize
 	 */
-	public void initServer(java.util.Map<String, Parameter> parameters)
-			throws ManagementException {
+	public void initServer(java.util.Map<String, Parameter> parameters) throws ManagementException {
 		try {
 			server.requestInit(parameters);
 		} catch (RemoteException e) {
@@ -578,8 +552,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 * @throws ManagementException
 	 *             Throws a ManagementException when the server fails to reset
 	 */
-	public void resetServer(java.util.Map<String, Parameter> parameters)
-			throws ManagementException {
+	public void resetServer(java.util.Map<String, Parameter> parameters) throws ManagementException {
 		try {
 			server.requestInit(parameters);
 			LOGGER.info("BW4T Server was reset.");
@@ -590,13 +563,13 @@ public class BW4TClient extends UnicastRemoteObject implements
 
 	/**********************************************************************/
 	/******************** Implements BW4TClientActions ********************/
+
 	/**********************************************************************/
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void handleNewEntity(String entity) throws RemoteException,
-			EntityException {
+	public void handleNewEntity(String entity) throws RemoteException, EntityException {
 		parent.handleNewEntity(entity);
 	}
 
@@ -604,8 +577,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void handleFreeEntity(String entity, Collection<String> agents)
-			throws RemoteException {
+	public void handleFreeEntity(String entity, Collection<String> agents) throws RemoteException {
 		parent.handleFreeEntity(entity, agents);
 	}
 
@@ -613,8 +585,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void handleDeletedEntity(String entity, Collection<String> agents)
-			throws RemoteException {
+	public void handleDeletedEntity(String entity, Collection<String> agents) throws RemoteException {
 		parent.handleDeletedEntity(entity, agents);
 	}
 
@@ -622,8 +593,7 @@ public class BW4TClient extends UnicastRemoteObject implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void handleStateChange(EnvironmentState newState)
-			throws RemoteException {
+	public void handleStateChange(EnvironmentState newState) throws RemoteException {
 		parent.handleStateChange(newState);
 	}
 

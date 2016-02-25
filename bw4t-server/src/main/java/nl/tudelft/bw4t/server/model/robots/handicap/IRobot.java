@@ -66,8 +66,8 @@ public interface IRobot extends BoundedMoveableInterface {
 	 * @param b
 	 *            the block to check
 	 * 
-	 * @return true if the block is within reach and if the bot isn't holding a
-	 *         block already
+	 * @return true if the block is within reach and if the bot has gripper
+	 *         space available.
 	 */
 	boolean canPickUp(BoundedMoveableObject b);
 
