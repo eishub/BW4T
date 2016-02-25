@@ -8,6 +8,20 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+import org.omg.CORBA.Environment;
+
+import eis.eis2java.annotation.AsAction;
+import eis.eis2java.annotation.AsPercept;
+import eis.eis2java.exception.TranslationException;
+import eis.eis2java.translation.Filter;
+import eis.eis2java.translation.Filter.Type;
+import eis.eis2java.translation.Translator;
+import eis.exceptions.ActException;
+import eis.exceptions.AgentException;
+import eis.exceptions.PerceiveException;
+import eis.iilang.Action;
+import eis.iilang.Parameter;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.server.eis.translators.BlockWithColorTranslator;
 import nl.tudelft.bw4t.server.eis.translators.BoundedMovableObjectTranslator;
@@ -33,24 +47,9 @@ import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
 import nl.tudelft.bw4t.server.util.RoomLocator;
 import nl.tudelft.bw4t.server.util.ZoneLocator;
-
-import org.apache.log4j.Logger;
-import org.omg.CORBA.Environment;
-
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.util.collections.IndexedIterable;
-import eis.eis2java.annotation.AsAction;
-import eis.eis2java.annotation.AsPercept;
-import eis.eis2java.exception.TranslationException;
-import eis.eis2java.translation.Filter;
-import eis.eis2java.translation.Filter.Type;
-import eis.eis2java.translation.Translator;
-import eis.exceptions.ActException;
-import eis.exceptions.AgentException;
-import eis.exceptions.PerceiveException;
-import eis.iilang.Action;
-import eis.iilang.Parameter;
 
 /**
  * EIS entity for a {@link AbstractRobot}.
@@ -60,18 +59,14 @@ public class RobotEntity implements EntityInterface {
 	static {
 		// Register our translators.
 		Translator translator = Translator.getInstance();
-		translator
-				.registerJava2ParameterTranslator(new BlockWithColorTranslator());
-		translator
-				.registerJava2ParameterTranslator(new BoundedMovableObjectTranslator());
+		translator.registerJava2ParameterTranslator(new BlockWithColorTranslator());
+		translator.registerJava2ParameterTranslator(new BoundedMovableObjectTranslator());
 		translator.registerJava2ParameterTranslator(new ZoneTranslator());
 		translator.registerJava2ParameterTranslator(new PointTranslator());
-		translator
-				.registerJava2ParameterTranslator(new ObjectInformationTranslator());
+		translator.registerJava2ParameterTranslator(new ObjectInformationTranslator());
 		translator.registerJava2ParameterTranslator(new ColorTranslator());
 		translator.registerJava2ParameterTranslator(new EPartnerTranslator());
-		translator
-				.registerJava2ParameterTranslator(new IdAndBooleanTranslator());
+		translator.registerJava2ParameterTranslator(new IdAndBooleanTranslator());
 	}
 
 	/**
@@ -119,8 +114,7 @@ public class RobotEntity implements EntityInterface {
 	 */
 	@Override
 	public void connect() {
-		spawnLocation = new Point2D.Double(ourRobot.getLocation().getX(),
-				ourRobot.getLocation().getY());
+		spawnLocation = new Point2D.Double(ourRobot.getLocation().getX(), ourRobot.getLocation().getY());
 		ourRobot.connect();
 	}
 
@@ -153,10 +147,8 @@ public class RobotEntity implements EntityInterface {
 	 */
 	@Override
 	public void initializePerceptionCycle() {
-		ourRobotLocation = new Point2D.Double(ourRobot.getLocation().getX(),
-				ourRobot.getLocation().getY());
-		ourRobotRoom = RoomLocator.getRoomAt(ourRobotLocation.getX(),
-				ourRobotLocation.getY());
+		ourRobotLocation = new Point2D.Double(ourRobot.getLocation().getX(), ourRobot.getLocation().getY());
+		ourRobotRoom = RoomLocator.getRoomAt(ourRobotLocation.getX(), ourRobotLocation.getY());
 	}
 
 	/**
@@ -174,12 +166,10 @@ public class RobotEntity implements EntityInterface {
 
 		// Add all objects in the same room as the robot.
 		Iterable<Object> allObjects = context.getObjects(type);
-		Zone zone = ZoneLocator.getZoneAt(ourRobotLocation.getX(),
-				ourRobotLocation.getY());
+		Zone zone = ZoneLocator.getZoneAt(ourRobotLocation.getX(), ourRobotLocation.getY());
 		for (Object b : allObjects) {
 			T aObject = (T) b;
-			Double p = new Point2D.Double(aObject.getLocation().getX(), aObject
-					.getLocation().getY());
+			Double p = new Point2D.Double(aObject.getLocation().getX(), aObject.getLocation().getY());
 			if (zone != null && zone.getBoundingBox().contains(p)) {
 				set.add(aObject);
 			}
@@ -201,8 +191,7 @@ public class RobotEntity implements EntityInterface {
 
 		for (Object obj : allRobots) {
 			IRobot robot = (IRobot) obj;
-			sizes.add(new ObjectInformation(robot.getSize(), robot.getSize(),
-					robot.getId()));
+			sizes.add(new ObjectInformation(robot.getSize(), robot.getSize(), robot.getId()));
 		}
 
 		return sizes;
@@ -219,8 +208,7 @@ public class RobotEntity implements EntityInterface {
 		List<ObjectInformation> objects = new ArrayList<ObjectInformation>();
 
 		// Add the dropzone
-		DropZone dropZone = (DropZone) context.getObjects(DropZone.class)
-				.get(0);
+		DropZone dropZone = (DropZone) context.getObjects(DropZone.class).get(0);
 		objects.add(new ObjectInformation(dropZone));
 
 		// Add rooms
@@ -246,8 +234,7 @@ public class RobotEntity implements EntityInterface {
 		}
 
 		// #2830 add robots own position
-		objects.add(new ObjectInformation(ourRobotLocation.getX(),
-				ourRobotLocation.getY(), ourRobot.getId()));
+		objects.add(new ObjectInformation(ourRobotLocation.getX(), ourRobotLocation.getY(), ourRobot.getId()));
 
 		return objects;
 	}
@@ -275,28 +262,18 @@ public class RobotEntity implements EntityInterface {
 	/**
 	 * Percept for blocks the robot is at Send on change
 	 * 
-	 * @return a list of blockID
+	 * @return a list of blockID of blocks within reach.
 	 */
 	@AsPercept(name = "atBlock", multiplePercepts = true, filter = Filter.Type.ON_CHANGE_NEG)
 	public List<Long> getAtBlock() {
-		List<Long> ret = new ArrayList<Long>();
-		Block closest = null;
-		double cdist = Integer.MAX_VALUE;
-		IndexedIterable<Object> allBlocks = context.getObjects(Block.class);
-		for (Object object : allBlocks) {
+		List<Long> blocksInReach = new ArrayList<Long>();
+		for (Object object : context.getObjects(Block.class)) {
 			Block b = (Block) object;
 			if (ourRobot.canPickUp(b)) {
-				double dist = ourRobot.distanceTo(b);
-				if (dist < cdist) {
-					cdist = dist;
-					closest = b;
-				}
+				blocksInReach.add(b.getId());
 			}
 		}
-		if (closest != null) {
-			ret.add(closest.getId());
-		}
-		return ret;
+		return blocksInReach;
 	}
 
 	/**
@@ -321,8 +298,7 @@ public class RobotEntity implements EntityInterface {
 	 */
 	@AsPercept(name = "location", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
 	public Point2D getLocation() {
-		return new Point2D.Double(ourRobotLocation.getX(),
-				ourRobotLocation.getY());
+		return new Point2D.Double(ourRobotLocation.getX(), ourRobotLocation.getY());
 	}
 
 	/**
@@ -470,8 +446,7 @@ public class RobotEntity implements EntityInterface {
 	 */
 	@AsPercept(name = "sequence", filter = Filter.Type.ONCE)
 	public List<nl.tudelft.bw4t.map.BlockColor> getSequence() {
-		DropZone dropZone = (DropZone) context.getObjects(DropZone.class)
-				.get(0);
+		DropZone dropZone = (DropZone) context.getObjects(DropZone.class).get(0);
 		return dropZone.getSequence();
 	}
 
@@ -482,8 +457,7 @@ public class RobotEntity implements EntityInterface {
 	 */
 	@AsPercept(name = "sequenceIndex", filter = Filter.Type.ON_CHANGE)
 	public Integer getSequenceIndex() {
-		DropZone dropZone = (DropZone) context.getObjects(DropZone.class)
-				.get(0);
+		DropZone dropZone = (DropZone) context.getObjects(DropZone.class).get(0);
 		return dropZone.getSequenceIndex();
 	}
 
@@ -598,23 +572,24 @@ public class RobotEntity implements EntityInterface {
 	 */
 	@AsAction(name = "goToBlock")
 	public void goTo(long targetid) {
-		BoundedMoveableObject target = null;
-		for (Block b : getVisible(Block.class)) {
-			if (b.getId() == targetid) {
-				target = b;
-			}
-		}
-		for (EPartner ep : getVisible(EPartner.class)) {
-			if (targetid == ep.getId()) {
-				target = ep;
-			}
-		}
-		if (target == null) {
-			throw new IllegalArgumentException("there is no block with id="
-					+ targetid + " in the room");
-		}
+		BoundedMoveableObject target = getBlock(targetid);
 
 		ourRobot.setTarget(target);
+	}
+
+	/**
+	 * @param targetid
+	 * @return block that has given target ID
+	 * @throws IllegalArgumentException
+	 *             if no such block.
+	 */
+	private Block getBlock(long targetid) {
+		for (Block b : getVisible(Block.class)) {
+			if (b.getId() == targetid) {
+				return b;
+			}
+		}
+		throw new IllegalArgumentException("there is no block with id=" + targetid);
 	}
 
 	/**
@@ -636,20 +611,14 @@ public class RobotEntity implements EntityInterface {
 	 * Instructs the robot to pick up a block.
 	 */
 	@AsAction(name = "pickUp")
-	public void pickUp() {
-		LOGGER.debug(String.format("%s is trying to pick up a block.",
-				ourRobot.getName()));
+	public void pickUp(long blockId) {
+		LOGGER.debug(String.format("%s is trying to pick up a block.", ourRobot.getName()));
+		Block block = getBlock(blockId);
 
-		Block nearest = getClosest(Block.class);
-		// Pick up closest block in canPickUp list
-		if (nearest == null) {
-			LOGGER.debug(String.format("%s can not pickup any blocks.",
-					ourRobot.getName()));
+		LOGGER.debug(String.format("%s will pickup block %d.", ourRobot.getName(), block.getId()));
+		if (!ourRobot.canPickUp(block))
 			return;
-		}
-		LOGGER.debug(String.format("%s will pickup block %d.",
-				ourRobot.getName(), nearest.getId()));
-		ourRobot.pickUp(nearest);
+		ourRobot.pickUp(block);
 	}
 
 	/**
@@ -657,9 +626,7 @@ public class RobotEntity implements EntityInterface {
 	 */
 	@AsAction(name = "navigateObstacles")
 	public void navigateObstacles() {
-		LOGGER.debug(String.format(
-				"%s is trying to navigate the following obstacles: ",
-				ourRobot.getName()));
+		LOGGER.debug(String.format("%s is trying to navigate the following obstacles: ", ourRobot.getName()));
 		for (BoundedMoveableObject obj : ourRobot.getObstacles()) {
 			LOGGER.debug(obj + " at " + obj.getBoundingBox());
 		}
@@ -669,8 +636,7 @@ public class RobotEntity implements EntityInterface {
 			navbot.navigateObstacles();
 		} else if (ourRobot instanceof AbstractRobotDecorator) {
 			IRobot robotEarliestParent = ourRobot.getEarliestParent();
-			if (robotEarliestParent != null
-					&& robotEarliestParent instanceof NavigatingRobot) {
+			if (robotEarliestParent != null && robotEarliestParent instanceof NavigatingRobot) {
 				NavigatingRobot navbot = (NavigatingRobot) robotEarliestParent;
 				navbot.navigateObstacles();
 			}
@@ -689,32 +655,26 @@ public class RobotEntity implements EntityInterface {
 	 *             if the action fails
 	 */
 	@AsAction(name = "sendMessage")
-	public void sendMessage(String receiver, String message)
-			throws ActException {
+	public void sendMessage(String receiver, String message) throws ActException {
 		ourRobot.getAgentRecord().addSentMessage();
 
 		// Translate the message into parameters
 		Parameter[] parameters = new Parameter[2];
 		try {
-			parameters[0] = Translator.getInstance().translate2Parameter(
-					ourRobot.getName())[0];
-			parameters[1] = Translator.getInstance().translate2Parameter(
-					message)[0];
+			parameters[0] = Translator.getInstance().translate2Parameter(ourRobot.getName())[0];
+			parameters[1] = Translator.getInstance().translate2Parameter(message)[0];
 		} catch (TranslationException e) {
-			throw new ActException("translating of message failed:" + message,
-					e);
+			throw new ActException("translating of message failed:" + message, e);
 		}
 
 		// Send to all other entities (except self)
 		if ("all".equals(receiver)) {
 			for (String entity : BW4TEnvironment.getInstance().getEntities()) {
-				BW4TEnvironment.getInstance().performClientAction(entity,
-						new Action("receiveMessage", parameters));
+				BW4TEnvironment.getInstance().performClientAction(entity, new Action("receiveMessage", parameters));
 			}
 			// Send to a single entity
 		} else {
-			BW4TEnvironment.getInstance().performClientAction(receiver,
-					new Action("receiveMessage", parameters));
+			BW4TEnvironment.getInstance().performClientAction(receiver, new Action("receiveMessage", parameters));
 		}
 	}
 
@@ -753,8 +713,7 @@ public class RobotEntity implements EntityInterface {
 	 */
 	@AsAction(name = "checkSequenceDone")
 	public boolean checkSequenceDone() {
-		DropZone dropzone = (DropZone) context.getObjects(DropZone.class)
-				.get(0);
+		DropZone dropzone = (DropZone) context.getObjects(DropZone.class).get(0);
 		if (dropzone == null) {
 			return false;
 		}
@@ -784,17 +743,14 @@ public class RobotEntity implements EntityInterface {
 	 */
 	@AsAction(name = "pickUpEPartner")
 	public void pickUpEPartner() {
-		LOGGER.debug(String.format("%s is trying to pick up an e-partner.",
-				ourRobot.getName()));
+		LOGGER.debug(String.format("%s is trying to pick up an e-partner.", ourRobot.getName()));
 
 		EPartner nearest = getClosest(EPartner.class);
 		if (nearest == null) {
-			LOGGER.debug(String.format("%s can not pickup any e-partners.",
-					ourRobot.getName()));
+			LOGGER.debug(String.format("%s can not pickup any e-partners.", ourRobot.getName()));
 			return;
 		}
-		LOGGER.debug(String.format("%s will pickup e-partner %d.",
-				ourRobot.getName(), nearest.getId()));
+		LOGGER.debug(String.format("%s will pickup e-partner %d.", ourRobot.getName(), nearest.getId()));
 		ourRobot.pickUpEPartner(nearest);
 	}
 
@@ -846,12 +802,9 @@ public class RobotEntity implements EntityInterface {
 			T aBlock = (T) o;
 			double distance = ourRobot.distanceTo(aBlock);
 
-			LOGGER.trace(String.format("%s is %f units away from %d.",
-					ourRobot.getName(), distance, aBlock.getId()));
+			LOGGER.trace(String.format("%s is %f units away from %d.", ourRobot.getName(), distance, aBlock.getId()));
 			if (ourRobot.canPickUp(aBlock)) {
-				LOGGER.trace(String.format(
-						"%s can pick up %d checking distance.",
-						ourRobot.getName(), aBlock.getId()));
+				LOGGER.trace(String.format("%s can pick up %d checking distance.", ourRobot.getName(), aBlock.getId()));
 				if (nearest == null || distance < nearestDistance) {
 					nearest = aBlock;
 					nearestDistance = distance;
@@ -870,8 +823,7 @@ public class RobotEntity implements EntityInterface {
 	 */
 	@AsPercept(name = "oldTargetUnreachable", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
 	public IdAndBoolean getOldTargetUnreachable() {
-		return new IdAndBoolean(ourRobot.getId(),
-				ourRobot.isDestinationUnreachable());
+		return new IdAndBoolean(ourRobot.getId(), ourRobot.isDestinationUnreachable());
 	}
 
 }

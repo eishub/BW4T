@@ -33,12 +33,9 @@ public final class BasicMenuOperations {
 	 * @param gui
 	 *            - The {@link BW4TClientGUI} to create the pop-up menu on.
 	 */
-	public static void addMenuItemToPopupMenu(BW4TMessage message,
-			BW4TClientGUI gui) {
-		JMenuItem menuItem = new JMenuItem(
-				MessageTranslator.translateMessage(message));
-		menuItem.addActionListener(new MessageSenderActionListener(message, gui
-				.getController()));
+	public static void addMenuItemToPopupMenu(BW4TMessage message, BW4TClientGUI gui) {
+		JMenuItem menuItem = new JMenuItem(MessageTranslator.translateMessage(message));
+		menuItem.addActionListener(new MessageSenderActionListener(message, gui.getController()));
 		gui.getjPopupMenu().add(menuItem);
 	}
 
@@ -50,8 +47,7 @@ public final class BasicMenuOperations {
 	 * @param jPopupMenu
 	 *            - The {@link JPopupMenu} to add the section to.
 	 */
-	public static void addSectionTitleToPopupMenu(String title,
-			JPopupMenu jPopupMenu) {
+	public static void addSectionTitleToPopupMenu(String title, JPopupMenu jPopupMenu) {
 		JMenuItem menuItem = new JMenuItem(title);
 		menuItem.setEnabled(false);
 		jPopupMenu.add(menuItem);
@@ -83,8 +79,7 @@ public final class BasicMenuOperations {
 		ViewEntity theBot = gui.getController().getMapController().getTheBot();
 		if (theBot.isCollided()) {
 			JMenuItem menuItem = new JMenuItem("Navigate past obstacle");
-			menuItem.addActionListener(new NavigateObstaclesActionListener(gui
-					.getController()));
+			menuItem.addActionListener(new NavigateObstaclesActionListener(gui.getController()));
 
 			gui.getjPopupMenu().add(menuItem);
 		}
@@ -99,17 +94,13 @@ public final class BasicMenuOperations {
 	 *            The box to be picked up.
 	 */
 	public static void addBlockPickUpMenuItem(BW4TClientGUI gui, ViewBlock box) {
-		ViewEntity ourEntity = gui.getController().getMapController()
-				.getTheBot();
-		Boolean canPickUpMore = ourEntity.getHolding().size() < ourEntity
-				.getGripperCapacity();
+		ViewEntity ourEntity = gui.getController().getMapController().getTheBot();
+		Boolean canPickUpMore = ourEntity.getHolding().size() < ourEntity.getGripperCapacity();
 
 		if (canPickUpMore) {
 			String colorAsString = getColor(box.getColor().getName(), ourEntity);
-			JMenuItem menuItem = new JMenuItem("Pick up " + colorAsString
-					+ " block");
-			menuItem.addActionListener(new PickUpActionListener(gui
-					.getController()));
+			JMenuItem menuItem = new JMenuItem("Pick up " + colorAsString + " block");
+			menuItem.addActionListener(new PickUpActionListener(box.getObjectId(), gui.getController()));
 			gui.getjPopupMenu().add(menuItem);
 		}
 	}
@@ -120,14 +111,10 @@ public final class BasicMenuOperations {
 	 * @param gui
 	 *            The gui holding the menu.
 	 */
-	public static void addEPartnerPickUpMenuItem(BW4TClientGUI gui,
-			ViewEPartner ep) {
-		if (gui.getController().getMapController().getTheBot()
-				.getHoldingEpartner() == -1
-				&& !ep.isPickedUp()) {
+	public static void addEPartnerPickUpMenuItem(BW4TClientGUI gui, ViewEPartner ep) {
+		if (gui.getController().getMapController().getTheBot().getHoldingEpartner() == -1 && !ep.isPickedUp()) {
 			JMenuItem menuItem = new JMenuItem("Pick up e-partner");
-			menuItem.addActionListener(new PickUpEPartnerActionListener(gui
-					.getController(), gui));
+			menuItem.addActionListener(new PickUpEPartnerActionListener(gui.getController(), gui));
 			gui.getjPopupMenu().add(menuItem);
 		}
 	}
