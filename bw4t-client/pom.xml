@@ -4,7 +4,7 @@
 	
 	<groupId>eishub.bw4t</groupId>
 	<artifactId>bw4t-client</artifactId>
-	<version>3.8.4</version>
+	<version>3.8.5-SNAPSHOT</version>
 	<url>http://www.github.com/eishub/bw4t</url>
 	
 	<properties>
@@ -32,7 +32,7 @@
 		<dependency>
 			<groupId>eishub.bw4t.core</groupId>
 			<artifactId>bw4t-core</artifactId>
-			<version>3.8.4</version>
+			<version>3.8.5-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency>
