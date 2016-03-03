@@ -60,6 +60,11 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
 	private NewMap map;
 
 	/**
+	 * Registry. Null while not yet connected.
+	 */
+	private Registry register = null;
+
+	/**
 	 * Create a listener for the server.
 	 * 
 	 * @param parent
@@ -104,7 +109,6 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
 		int portNumber = Integer.parseInt(InitParam.CLIENTPORT.getValue());
 
 		// Launch the client and bind it
-		Registry register = null;
 		while (register == null) {
 			try {
 				bindAddress = "rmi://" + InitParam.CLIENTIP.getValue() + ":" + portNumber + "/BW4TClient";
@@ -204,7 +208,7 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
 	public void kill() throws RemoteException, MalformedURLException, NotBoundException, ServerNotActiveException {
 		server.unregisterClient(this);
 		Naming.unbind(bindAddress);
-		UnicastRemoteObject.unexportObject(this, true);
+		UnicastRemoteObject.unexportObject(register, true);
 		LOGGER.warn("Client has been disconnected from server");
 
 		// bit of a hack. The server won't change to KILLED state just for one

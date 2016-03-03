@@ -770,8 +770,15 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 		// copy list, the localAgents list is going to be changed by removing
 		// agents.
 
-		List<String> allAgents = new ArrayList<String>(localAgents);
-		for (String agentname : allAgents) {
+		/*
+		 * GOAL may already have deleted agents and our list of localAgents may
+		 * contain non-existing agents at this point. May be an issue with
+		 * EIDefaultImp or even the spec of EnvironmentInterfaceStandard
+		 */
+		List<String> remainingLocalAgents = getAgents();
+		remainingLocalAgents.retainAll(localAgents);
+
+		for (String agentname : remainingLocalAgents) {
 			try {
 				for (String entity : getAssociatedEntities(agentname)) {
 					freePair(agentname, entity);
