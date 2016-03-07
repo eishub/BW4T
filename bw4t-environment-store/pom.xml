@@ -1,19 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<groupId>eishub.bw4t</groupId>
 	<artifactId>bw4t-environment-store</artifactId>
-	<version>3.8.5</version>
+	<version>3.8.6-SNAPSHOT</version>
 	<name>bw4t-environment-store</name>
 	<url>http://www.github.com/eishub/bw4t</url>
-	
+
 	<properties>
 		<checkstyle.config.location>../checkstyle.xml</checkstyle.config.location>
 		<java.main.class>nl.tudelft.bw4t.environmentstore.main.view.EnvironmentStore</java.main.class>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
-	<packaging>jar</packaging>
 	
+	<packaging>jar</packaging>
+
 	<organization>
 		<name>eishub</name>
 		<url>https://github.com/eishub</url>
@@ -29,7 +33,7 @@
 		<developerConnection>scm:git:git@github.com:eishub/bw4t.git</developerConnection>
 		<url>https://github.com:eishub/bw4t</url>
 	</scm>
-	
+
 	<repositories>
 		<repository>
 			<id>eishub-mvn-repo</id>
@@ -41,14 +45,14 @@
 		<dependency>
 			<groupId>eishub.bw4t.core</groupId>
 			<artifactId>bw4t-core</artifactId>
-			<version>3.8.5</version>
+			<version>3.8.6-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.miglayout</groupId>
 			<artifactId>miglayout</artifactId>
 			<version>3.6.3</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -79,7 +83,7 @@
 					</archive>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -89,7 +93,7 @@
 					<target>1.7</target>
 				</configuration>
 			</plugin>
-	
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
@@ -128,7 +132,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
@@ -137,7 +141,7 @@
 					<altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>site-maven-plugin</artifactId>
@@ -145,7 +149,8 @@
 				<configuration>
 					<server>github</server>
 					<!-- git commit message -->
-					<message>Maven artifacts for ${project.name} version ${project.version}</message>
+					<message>Maven artifacts for ${project.name} version
+						${project.version}</message>
 					<!-- matches distribution management repository url above -->
 					<outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
 					<!-- remote branch name -->

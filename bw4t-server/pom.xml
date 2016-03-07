@@ -1,18 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<groupId>eishub.bw4t</groupId>
 	<artifactId>bw4t-server</artifactId>
-	<version>3.8.5</version>
+	<version>3.8.6-SNAPSHOT</version>
 	<url>http://www.github.com/eishub/bw4t</url>
-	
+
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<checkstyle.config.location>../checkstyle.xml</checkstyle.config.location>
 		<java.main.class>nl.tudelft.bw4t.server.environment.Launcher</java.main.class>
 	</properties>
+
 	<packaging>jar</packaging>
-	
+
 	<organization>
 		<name>eishub</name>
 		<url>https://github.com/eishub</url>
@@ -28,7 +32,7 @@
 		<developerConnection>scm:git:git@github.com:eishub/bw4t.git</developerConnection>
 		<url>https://github.com:eishub/bw4t</url>
 	</scm>
-	
+
 	<repositories>
 		<repository>
 			<id>git-bw4t-dependency-repository</id>
@@ -47,7 +51,7 @@
 					<includeEmptyDirs>true</includeEmptyDirs>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -57,7 +61,7 @@
 					<target>1.7</target>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -110,7 +114,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
@@ -119,7 +123,7 @@
 					<altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>site-maven-plugin</artifactId>
@@ -127,7 +131,8 @@
 				<configuration>
 					<server>github</server>
 					<!-- git commit message -->
-					<message>Maven artifacts for ${project.name} version ${project.version}</message>
+					<message>Maven artifacts for ${project.name} version
+						${project.version}</message>
 					<!-- matches distribution management repository url above -->
 					<outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
 					<!-- remote branch name -->
@@ -152,7 +157,7 @@
 				</executions>
 			</plugin>
 		</plugins>
-		
+
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -160,12 +165,12 @@
 			</resource>
 		</resources>
 	</build>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>eishub.bw4t.core</groupId>
 			<artifactId>bw4t-core</artifactId>
-			<version>3.8.5</version>
+			<version>3.8.6-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>repast.simphony</groupId>
@@ -237,7 +242,7 @@
 			<artifactId>collections-generic</artifactId>
 			<version>4.01</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
