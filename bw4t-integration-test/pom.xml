@@ -4,7 +4,7 @@
     
     <groupId>eishub.bw4t</groupId>
     <artifactId>bw4t-integration-test</artifactId>
-    <version>3.8.5-SNAPSHOT</version>
+    <version>3.8.5</version>
     <description>This module integration test the entire bw4t system, to ensure the working state of the client and server.</description>
     <url>http://www.github.com/eishub/bw4t</url>
     
@@ -44,17 +44,17 @@
         <dependency>
 			<groupId>eishub.bw4t.core</groupId>
 			<artifactId>bw4t-core</artifactId>
-			<version>3.8.5-SNAPSHOT</version>
+			<version>3.8.5</version>
 		</dependency>
         <dependency>
             <groupId>eishub.bw4t</groupId>
             <artifactId>bw4t-server</artifactId>
-            <version>3.8.5-SNAPSHOT</version>
+            <version>3.8.5</version>
         </dependency>
         <dependency>
             <groupId>eishub.bw4t</groupId>
             <artifactId>bw4t-client</artifactId>
-            <version>3.8.5-SNAPSHOT</version>
+            <version>3.8.5</version>
         </dependency>
 		<dependency>
 			<groupId>repast.simphony</groupId>
