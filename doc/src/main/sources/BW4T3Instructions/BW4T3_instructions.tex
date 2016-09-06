@@ -8,6 +8,7 @@
 \usepackage{color}
 \usepackage{a4wide}
 \usepackage{subcaption}
+\usepackage{url}
 
 \title{BW4T3 Instructions}
 \date{\today}
@@ -39,7 +40,7 @@ Blocks World for Teams (BW4T) is a testbed for team coordination. BW4T allows fo
 
 BW4T is a client-server system. The server is responsible for the administration, simulation and visualization of the virtual world: it keeps track of robots, rooms, blocks, connected GOAL agents, etc. The server uses Repast, software to simulate virtual environments, to do part of this administration. The client is GOAL, which runs a multi-agent system (MAS) and connects to the server. The agents in the GOAL client get percepts from the server, and send actions to the server. Client and server can run on a different computer. This document describes how to install the BW4T server, configure it, place the BW4T client in GOAL, configure the MAS file, and run the system.
 
-This chapter descibes how users can install and use the Blocks World for Teams environment. For developer information please go to the project page on github  https://github.com/eishub/BW4T and click on the Link to Developer Details.
+This chapter descibes how users can install and use the Blocks World for Teams environment. For developer information please go to the project page on github  \url{https://github.com/eishub/BW4T} and click on the Link to Developer Details.
 
 We use the following names to refer to directories of BW4T:
 \begin{itemize}
@@ -56,12 +57,12 @@ This document describes how to install Blocks World For Teams (BW4T) for use wit
 
 You need to install a number of items to run BW4T from GOAL. 
 \begin{enumerate}
- \item (if not yet done): Install Java 7 (download from http://www.java.com) and made it the default Java (such that double clicking on a jar makes it open with Java 7).
- \item You can download GOAL from $http://ii.tudelft.nl/trac/goal$. You can choose for the plugin for Eclipse or the stand-alone SimpleIDE.
- \item GOAL provides a sample Multi-agent-system 'BW4T3' that is demonstrating the Blocks World for Teams system. \footnote{If you run in a different agent system, you can download the client-side environment from $https://github.com/eishub/BW4T/releases$. Select $bw4t-client-X.Y.Z.jar$. This is the environment that should be attached to your agent system. You then will have to write your own agents that can run in the BW4T world.}
- \item You can download the BW4T server from $https://github.com/eishub/BW4T/releases$ and save it in $<$SERVER$>$. Select the latest $bw4t-server-X.Y.Z.jar$.
- \item You can optionally download the BW4T map editor from $https://github.com/eishub/BW4T/releases$ and save it in $<$SERVER$>$. Select the latest $bw4t-environment-store-X.Y.Z.jar$.
- \item You can optionally download the BW4T scenario editor from $https://github.com/eishub/BW4T/releases$ and save it in $<$SERVER$>$. Select the latest $bw4t-scenario-editor-X.Y.Z.jar$.
+ \item (if not yet done): Install Java 7 (download from \url{http://www.java.com}) and made it the default Java (such that double clicking on a jar makes it open with Java 7).
+ \item You can download GOAL from \url{http://ii.tudelft.nl/trac/goal}. You can choose for the plugin for Eclipse or the stand-alone SimpleIDE.
+ \item GOAL provides a sample Multi-agent-system 'BW4T3' that is demonstrating the Blocks World for Teams system. \footnote{If you run in a different agent system, you can download the client-side environment from \url{https://github.com/eishub/BW4T/releases}. Select $bw4t-client-X.Y.Z.jar$. This is the environment that should be attached to your agent system. You then will have to write your own agents that can run in the BW4T world.}
+ \item You can download the BW4T server from \url{https://github.com/eishub/BW4T/releases} and save it in $<$SERVER$>$. Select the latest $bw4t-server-X.Y.Z.jar$.
+ \item You can optionally download the BW4T map editor from \url{https://github.com/eishub/BW4T/releases} and save it in $<$SERVER$>$. Select the latest $bw4t-environment-store-X.Y.Z.jar$.
+ \item You can optionally download the BW4T scenario editor from \url{https://github.com/eishub/BW4T/releases} and save it in $<$SERVER$>$. Select the latest $bw4t-scenario-editor-X.Y.Z.jar$.
 \end{enumerate}
   
 
