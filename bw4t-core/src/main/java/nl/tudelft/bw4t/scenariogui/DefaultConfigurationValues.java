@@ -2,7 +2,8 @@ package nl.tudelft.bw4t.scenariogui;
 
 /**
  * The default values. Both for the core (which calls
- * nl.tudelft.bw4t.server.ClientInfo which uses this default) and for in the GUI
+ * nl.tudelft.bw4t.server.ClientInfo which uses this default) and for in the
+ * GUI.
  */
 public enum DefaultConfigurationValues {
 	DEFAULT_SERVER_IP("localhost"), // (// are here to guide the auto
