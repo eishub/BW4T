@@ -179,10 +179,11 @@ The following environment init parameters are available to the clients (the defa
 \item
     GOALHUMAN("false"):
     Determines the behaviour of all GUIs that are connected with 'human' type entities (see the HUMANCOUNT option above).
-    \begin{itemise}
+    \begin{itemize}
     \item false: the GUI translates commands given in the GUI directly to entity actions and sends them to the server. Entities of type 'human' are never reported as free entities to the agent platform. 
     \item true: entities of the type 'human' are reported to the agent platform. The GUI translates the commands given in the GUI to percepts and are sent to the agent. These special percepts are only available from the GUI and are marked as such in the BW4T specification document. The agent receives these percepts and now must translate them (at its own discretion) to actions. The actions taken by the agent are sent to the server. 
-  You should turn on this option if you have a human GUI but still want the agent to receive the percepts. The bw4thuman example shows how this works with GOAL.
+  You should turn on this option if you have a human GUI but want an agent to receive and process the human actions, for example so that the bot-agents can also communicate with the human-agent and thus get in contact with the human GUI. The bw4thuman example shows how this works with GOAL.
+  \end{itemize}
 
 \item
     MAP(""):
