@@ -29,7 +29,10 @@ public enum InitParam {
 	SERVERPORT("8000"),
 	/** Number of agents that we have. */
 	AGENTCOUNT("0"),
-	/** Launch GUI for entities? (check is this only for humans?) */
+	/**
+	 * Launch GUI for agent controlled entities showing their behaviour and
+	 * percepts
+	 */
 	LAUNCHGUI("true"),
 	/** Number of human bots (is this to connect GUIs?) */
 	HUMANCOUNT("1"),
