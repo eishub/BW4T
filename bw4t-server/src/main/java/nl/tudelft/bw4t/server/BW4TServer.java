@@ -125,18 +125,42 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 		client.useMap(BW4TEnvironment.getInstance().getMap());
 		client.handleStateChange(getState());
 
-		// for every request and attach them
-		env.spawnBots(cInfo.getRequestedBots(), client);
-
-		// for every request and attach them
-		env.spawnEPartners(cInfo.getRequestedEPartners(), client);
-
 		// set the path finding and collision arguments.
 		env.setCollisionEnabled(cInfo.isCollisionEnabled());
 		env.setDrawPathsEnabled(cInfo.isVisualizePaths());
 		if (cInfo.getSpeed() != null) {
 			env.setDelay((int) (1000. / cInfo.getSpeed()));
 		}
+
+		/*
+		 * proceed the entity launching in separate thread. not in main thread:
+		 * client registration is complete and we must now return to free up the
+		 * RMI port.
+		 */
+		launchEntities(client, cInfo, env);
+	}
+
+	/**
+	 * Launch entities and e-partners as a background job. This call returns
+	 * immediately.
+	 * 
+	 * @param client
+	 * @param cInfo
+	 * @param env
+	 */
+	private void launchEntities(final BW4TClientActions client, final ClientInfo cInfo, final BW4TEnvironment env) {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				// for every request and attach them
+				env.spawnBots(cInfo.getRequestedBots(), client);
+
+				// for every request and attach them
+				env.spawnEPartners(cInfo.getRequestedEPartners(), client);
+
+			}
+		}).start();
 	}
 
 	@Override
@@ -355,7 +379,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	}
 
 	public void reset() {
-		clients = new HashMap<BW4TClientActions, ClientInfo>();
+		clients = new HashMap<>();
 	}
 
 	public void notifyDeletedEntity(String entity, Collection<String> agents) {
@@ -390,7 +414,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	public void notifyStateChange(EnvironmentState newState) {
 		// duplicate the set before iteration, since we may call
 		// unregisterClient.
-		Set<BW4TClientActions> clientset = new HashSet<BW4TClientActions>(this.clients.keySet());
+		Set<BW4TClientActions> clientset = new HashSet<>(this.clients.keySet());
 		for (BW4TClientActions client : clientset) {
 			try {
 				client.handleStateChange(newState);
