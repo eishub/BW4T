@@ -38,9 +38,11 @@
 \section{Introduction}
 Blocks World for Teams (BW4T) is a testbed for team coordination. BW4T allows for games with human-human, agent-agent and human-agent teams of variable sizes. The goal is to jointly deliver a sequence of colored blocks in a particular order as fast as possible. A complicating factor is that the players cannot see each other.
 
-BW4T is a client-server system. The server is responsible for the administration, simulation and visualization of the virtual world: it keeps track of robots, rooms, blocks, connected GOAL agents, etc. The server uses Repast, software to simulate virtual environments, to do part of this administration. The client is GOAL, which runs a multi-agent system (MAS) and connects to the server. The agents in the GOAL client get percepts from the server, and send actions to the server. Client and server can run on a different computer. This document describes how to install the BW4T server, configure it, place the BW4T client in GOAL, configure the MAS file, and run the system.
+BW4T is a client-server system. Client and server can run on a different computer, but in most cases it's convenient to run server and client on the same computer. The server is responsible for the administration, simulation and visualization of the virtual world: it keeps track of robots, rooms, blocks, connected clients, etc. The client can be a stand-alone client, a custom java client or a multi-agent system. In this manual, we assume you are using the GOAL agent programming language. However, BW4T is EIS compatible and can be used from other agent programming languages.
 
-This chapter descibes how users can install and use the Blocks World for Teams environment. For developer information please go to the project page on github  \url{https://github.com/eishub/BW4T} and click on the Link to Developer Details.
+This document describes how to install the BW4T server, configure it, place the BW4T client in GOAL, configure the MAS file, and run a BW4T multi-agent system in GOAL.
+
+For developer information please go to the project page on github  \url{https://github.com/eishub/BW4T} and click on the Link to Developer Details.
 
 We use the following names to refer to directories of BW4T:
 \begin{itemize}
@@ -57,10 +59,10 @@ This document describes how to install Blocks World For Teams (BW4T) for use wit
 
 You need to install a number of items to run BW4T from GOAL. 
 \begin{enumerate}
- \item (if not yet done): Install Java 7 (download from \url{http://www.java.com}) and made it the default Java (such that double clicking on a jar makes it open with Java 7).
- \item You can download GOAL from \url{http://ii.tudelft.nl/trac/goal}. You can choose for the plugin for Eclipse or the stand-alone SimpleIDE.
+ \item (if not yet done): Install Java 7 or higher (download from \url{http://www.java.com}) and made it the default Java (such that double clicking on a jar makes it open with Java 7 or higher).
+ \item You can download GOAL from \url{http://ii.tudelft.nl/trac/goal}. Here we assume you choose the GOAL plugin for Eclipse.
  \item GOAL provides a sample Multi-agent-system 'BW4T3' that is demonstrating the Blocks World for Teams system. \footnote{If you run in a different agent system, you can download the client-side environment from \url{https://github.com/eishub/BW4T/releases}. Select $bw4t-client-X.Y.Z.jar$. This is the environment that should be attached to your agent system. You then will have to write your own agents that can run in the BW4T world.}
- \item You can download the BW4T server from \url{https://github.com/eishub/BW4T/releases} and save it in $<$SERVER$>$. Select the latest $bw4t-server-X.Y.Z.jar$.
+ \item You should download the BW4T server from \url{https://github.com/eishub/BW4T/releases} and save it in $<$SERVER$>$. Select the latest $bw4t-server-X.Y.Z.jar$.
  \item You can optionally download the BW4T map editor from \url{https://github.com/eishub/BW4T/releases} and save it in $<$SERVER$>$. Select the latest $bw4t-environment-store-X.Y.Z.jar$.
  \item You can optionally download the BW4T scenario editor from \url{https://github.com/eishub/BW4T/releases} and save it in $<$SERVER$>$. Select the latest $bw4t-scenario-editor-X.Y.Z.jar$.
 \end{enumerate}
@@ -85,22 +87,22 @@ Run the server before running the client, as otherwise the client cannot connect
 \subsection{Advanced server settings}
 The default settings for the server can be changed in the command line of your OS. 
 
-For example, to change the server ip and/or server port  999 execute the following:
+For example, to change the server server port 999 execute the following:
 
-java -jar bw4t-server.jar -servip $<$server ip here$>$ (default: localhost) -serverport 999
+java -jar bw4t-server.jar -serverport 999
 
 The server will now start using the new values.
 
 These are all the  options for the server:
 \begin{itemize}
 \item -scenario The path to the scenario folder required by repast. Default is BW4T.rs. We recommend to not change this.  
-\item -map the name of the map file in the /maps/ folder (which is created at startup if it does not yet exist). Default is 'Random'. These are really xml files that you can create and edit with the map editor.
+\item -map the name of the map file in the /maps/ folder (which is created at startup if it does not yet exist). Default is 'Random'. These are xml files that you can create and edit with the map editor.
 \item -serverip The ip to bind this server to. Default is 'localhost'. If you change the serverip and/or serverport, change the client settings correspondingly (see below). 
-\item -serverport  The port to bind this server to. Default is 8000. You can change this if there already is another service on your machine using the default port. Make sure that you also set up the client accordingly if you change this.
+\item -serverport  The port to bind this server to. Default is 8000. You can change this if there already is another service on your machine using the default port. Make sure that you also set up the client accordingly if you change this. Notice that usually ports below 1023 require admin rights.
 \item -msg the message to be made available to the clients.
 \item -gui true if GUI should be enabled, false if server should run without GUI. Defaults to true. Setting this to false  may be useful particularly for batch runs.
 \item -key The key necessary to remotely kill the server
-\item -collision whether the environment should check the collisions. Defaults to false. Note that collision checking still has some issues.
+\item -collision tue enables collision checking between bots in the environment. Defaults to false. Note that collision checking still has some issues.
 \item -paths True if draw paths is enabled. This allows you to see planned paths for entities.
 \end{itemize}
 
