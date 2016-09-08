@@ -74,18 +74,18 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	 */
 	private static final Logger LOGGER = Logger.getLogger(RemoteEnvironment.class);
 	private BW4TClient client = null;
-	private final List<EnvironmentListener> environmentListeners = new LinkedList<EnvironmentListener>();
+	private final List<EnvironmentListener> environmentListeners = new LinkedList<>();
 	private final Map<String, ClientController> entityToGUI = new HashMap<>();
 	/**
 	 * This is a list of locally registered agents.
 	 * 
 	 * Only locally registered agents can act and be associated with entities.
 	 */
-	private final List<String> localAgents = new LinkedList<String>();
+	private final List<String> localAgents = new LinkedList<>();
 	/**
 	 * Stores for each agent (represented by a string) a set of listeners.
 	 */
-	private final Map<String, HashSet<AgentListener>> agentsToAgentListeners = new HashMap<String, HashSet<AgentListener>>();
+	private final Map<String, HashSet<AgentListener>> agentsToAgentListeners = new HashMap<>();
 
 	/**
 	 * List of all active agents.
@@ -103,10 +103,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 		try {
 			LOGGER.info("Connecting to BW4T Server.");
 			client = new BW4TClient(this);
-			if (!InitParam.KILL.getValue().isEmpty()) {
-				getClient().shutdownServer();
-				System.exit(0);
-			}
 			getClient().connectServer();
 
 			sendServerParams();
@@ -211,7 +207,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 		}
 		Set<AgentListener> listeners = agentsToAgentListeners.get(agent);
 		if (listeners == null) {
-			listeners = new HashSet<AgentListener>();
+			listeners = new HashSet<>();
 		}
 		listeners.add(listener);
 		agentsToAgentListeners.put(agent, (HashSet<AgentListener>) listeners);
@@ -629,7 +625,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	 */
 	Map<String, Collection<Percept>> gatherPercepts(String agent, Set<String> associatedEntities, String... entities)
 			throws PerceiveException {
-		Map<String, Collection<Percept>> perceptsMap = new HashMap<String, Collection<Percept>>();
+		Map<String, Collection<Percept>> perceptsMap = new HashMap<>();
 		if (entities.length == 0) {
 			// No entities selected, get percepts for all associated entities
 			entities = associatedEntities.toArray(new String[associatedEntities.size()]);
@@ -697,7 +693,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	 *            the percepts to be used
 	 */
 	public void storePercepts(String entity, Collection<Percept> percepts) {
-		List<Percept> tpercepts = new ArrayList<Percept>();
+		List<Percept> tpercepts = new ArrayList<>();
 		if (storedPercepts.containsKey(entity)) {
 			tpercepts.addAll(storedPercepts.get(entity));
 		}
@@ -863,7 +859,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	@Override
 	public Collection<String> getFreeEntities() {
 		if (client == null) {
-			return new HashSet<String>();
+			return new HashSet<>();
 		}
 		try {
 			return getClient().getFreeEntities();
