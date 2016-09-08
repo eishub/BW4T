@@ -106,14 +106,14 @@ These are all the  options for the server:
 \item $-paths$ True if draw paths is enabled. This allows you to see planned paths for entities.
 \end{itemize}
 
-\section{Running the client (Human Controlled Bot)}
+\section{Running standalone client (Human Controlled Bot)}\label{ch:runclient}
+It is possible to run a client stand-alone (without a multi-agent system), having just a GUI where a human can control a single bot.
+
 Before running the client, make sure you have already started the server. 
 
-To manually start a human GUI without an agent platform, start (e.g., double click) the client.jar in $<$CLIENT$>$. Figure \ref{fig:Client} will show up and the bot is automatically added to the server. You can now control the bot by clicking (left or right) at different spots in the Client. 
+To manually start a human GUI, double click \texttt{bw4t-client.jar} in $<$CLIENT$>$. A GUI as in Figure \ref{fig:Client} will show up and the bot is automatically added to the server. Chapter \ref{ch:usingHI} explains how to use this GUI. You can also start the client from the command line/console, by executing \texttt{java -jar bw4t-client.jar}.
 
-To run both agents and human controlled bots, you should use the HUMANGUI option and launch the human GUIs in coordination with the agent platform. Please refer to the Advanced run settings below.
-
-Please refer to Section  \ref{ch:usingHI} for details on using this client.
+To run both agents and human controlled bots, please refer to Chapter \ref{ch:runbots}.
 
 \begin{figure}[!h]
 \begin{center}
@@ -123,10 +123,10 @@ Please refer to Section  \ref{ch:usingHI} for details on using this client.
 \end{figure}
 
 
-\section{Running the client (Agent Controlled Bot)}
-Before running the client, make sure you have already started the server. Start your favourite Agent platform, load and run the MAS. If you use GOAL, this means open the agent program (e.g., the bw4t.mas2g example) and press the run button. This time, no new windows will appear. The agent will control your bot,  and agent behaviours can be seen only by introspecting the agents with your agent platform tools. In the server window you will see your bot(s) move according to the programs.
+\section{Running Agent Controlled Bots}\label{ch:runbots}
+Before running the client, make sure you have already started the server. Start your favourite Agent platform, load and run the MAS. If you use GOAL, this means open the agent program (e.g., the bw4t.mas2g example) and press the run button. The agent(s) in the agent platform will control the bots. In the server window you will see your bot(s) move according to the actions taken by your agents.
 
-\subsection{Advanced client settings}
+\subsection{Advanced client settings}\label{sec:clientsettings}
 \label{sec:clientadvancedrunsettings}
 The following environment init parameters are available to the clients (the default values are shown inside the brackets). These init parameters can be used inside your agent program (e.g., in your GOAL mas2g file), or used inside the config.xml file. 
 
@@ -166,11 +166,11 @@ The following environment init parameters are available to the clients (the defa
 
 \item
     GOAL("true"):
-    are we connected with GOAL? This param should be auto detected, it will be set to false if the program is started from commandline.
+    true if the client is connected to GOAL. This parameter should be auto detected, it will be set to false if the client is started stand-alone (Chapter \ref{ch:runclient}).
 
 \item
     KILL(""):
-  The key we should try to use to kill the remote server.
+  The key that authorizes the client to kill the remote server. Usually clients do not kill the server, so this key normally is not needed.
  
 \item
     CONFIGFILE(""):
@@ -195,7 +195,7 @@ The following environment init parameters are available to the clients (the defa
 
 \item    
     LOG("ERROR"):
-    The log4j log level to be used. Available values: OFF, FATAL, ERROR, WARN, INFODEBUG and ALL.
+    The log4j log level to be used. The log level determines the verbosity of the client. Available values: OFF, FATAL, ERROR, WARN, INFODEBUG and ALL.
 
 \end{itemize}
 
@@ -203,9 +203,9 @@ The following environment init parameters are available to the clients (the defa
 \section{Using the Server Interface}
 The server interface (Figure \ref{fig:ServerWindow}) offers very limited controls, as the main control is running through software (the agents, management system, buttons and settings in the agent platform). There are only 3 controls available:
 \begin{itemize}
-\item{Reset}: By pressing this button, the environment is completely killed and restarted, all entities are killed (which kicks out all agents), the map is reloaded from scratch. We recommend killing from your agent platform as that offers the agent platform the opportunity to handle this take-down in a nice way.
+\item{Reset}: By pressing this button, the environment is completely killed and restarted, all entities are killed (which kicks out all agents), the map is reloaded from scratch. The environment should always be reset after running a session, to ensure clients start with a proper initial state on the server. But the reset can also be done by the client, e.g. by specifying a map (see section \ref{sec:clientsettings}).
 \item{Enable Collisions}: When enabled, bots can collide with each other. When disabled, they can run over each other without any interference. We recommend to keep this \emph{disabled} as this option is not yet fully supported (you may have problems with path planning).
-\item{Change Map}: By selecting a map, you effectively \emph{Reset} the system, to restart it with a different map.
+\item{Change Map}: By selecting a map, you effectively \emph{Reset} the server, to restart it with a different map.
 \end{itemize}
 
 
@@ -220,6 +220,7 @@ In this section we give some hints that are specific for using BW4T from the GOA
 
 \subsection{mas2g file}
 The number of agents is specified at two places in the mas2g file. First, the agentcount and humancount specify the number of entities of the corresponding type that should be created in the environment. Second, the launchpolicy specifies which and how many agents should be connected to these entities. Make sure that the agentcount and humancount in the initialization parameters are in line with the launch policy section in the mas2g file. 
+
 If you use BW4T from a batch runner, you may want to reset the server after each run. This is done by specifying a map in the mas file init parameters. See also Section \ref{sec:clientadvancedrunsettings}.
 
 \subsection{Restarting, pausing and resuming the system}
@@ -243,49 +244,47 @@ To restart the system, do the following
 \item Run the MAS in Eclipse as described above.
 \end{enumerate}
 
-\begin{figure}
+\begin{figure}[!h]
   \begin{center}
     \includegraphics[width=0.8\textwidth]{debugmode.png}
     \caption{Debug mode}\label{fig:Eclipse}
   \end{center}
 \end{figure}
 
-
-
-\subsection{Running on multiple computers}
-BW4T server can handle multiple clients out of the box. However, if you run multiple agent systems separately, agents in these separate platforms will not see each others' agents. 
-
-To make a real distributed agent system where all agents can see each other, the agent system itself has to be run distributed. 
-
-For GOAL, this is done as follows. You should designate one of these computer as the server. On this computer you can start the server as described in the first section of this guide. You must use RMI messaging (check the GOAL Run menu) to allow other GOAL runtimes to connect with the main GOAL instance that runs on the server.
-You need to check a few things in the MAS that you use here:
-\begin{itemize}
-\item specify a map such that the environment resets when you start up the MAS
-\item make sure that the map that is used has enough entities to accommodate all agents in all computers that want to connect
-\item make sure that the entities get the proper type, by specifying the proper agentcount and humancount.
-\end{itemize}
-The other computers will then function as client. Create a MAS file for each of these, and configure this MAS as follows (see also bw4thuman.mas2g in the GOALagents directory of GOAL):
-\begin{itemize}
-\item set the serverip and serverport initialization parameters to the ones that the server is listening on (default for the server is localhost and port 8000).
-\item Set the humancount and agentcount parameter on each client to reflect how many human or agent players that client should load.
-\item Use humanbot.goal for human agents
-\item use env = $<$CLIENT$>/$client.jar". in the environment section. Do not connect to an already running environment in another MAS. This is because BW4TClient creates GUIs for humanbots, on the machine where it is running.
-\item Check that the launchpolicy picks up the proper entity type, so use 'human' if you want to attach to human entities etc.
-\end{itemize} 
-
-\subsection{Distributed Human GUIs}
-This section describes how to run a set of distributed human GUIs such that they all communicate through GOAL. Before running a set of distributed Human GUIs with Eclipse, make sure that the server is installed on one machine. Furthermore, make sure that the server map can contain a sufficient number of entities.
-To run a set of distributed Human GUIs with GOAL, do the following:
-\begin{itemize}
-\item Start the server
-\item For each machine where you want to have a human GUI:
-    \begin{enumerate}
-    \item Start your agent platform (SimpleIDE or  Eclipse IDE)
-    \item Open the MAS file of the bw4thuman.mas2g
-    \item adjust the serverip to correctly point to the machine ip number where the server runs
-    \item Start the MAS
-    \end{enumerate}
-\end{itemize}
+%\subsection{Running on multiple computers}
+%BW4T server can handle multiple clients out of the box. However, if you run multiple agent systems separately, agents in these separate platforms will not see each others' agents. 
+%
+%To make a real distributed agent system where all agents can see each other, the agent system itself has to be run distributed. 
+%
+%For GOAL, this is done as follows. You should designate one of these computer as the server. On this computer you can start the server as described in the first section of this guide. You must use RMI messaging (check the GOAL Run menu) to allow other GOAL runtimes to connect with the main GOAL instance that runs on the server.
+%You need to check a few things in the MAS that you use here:
+%\begin{itemize}
+%\item specify a map such that the environment resets when you start up the MAS
+%\item make sure that the map that is used has enough entities to accommodate all agents in all computers that want to connect
+%\item make sure that the entities get the proper type, by specifying the proper agentcount and humancount.
+%\end{itemize}
+%The other computers will then function as client. Create a MAS file for each of these, and configure this MAS as follows (see also bw4thuman.mas2g in the GOALagents directory of GOAL):
+%\begin{itemize}
+%\item set the serverip and serverport initialization parameters to the ones that the server is listening on (default for the server is localhost and port 8000).
+%\item Set the humancount and agentcount parameter on each client to reflect how many human or agent players that client should load.
+%\item Use humanbot.goal for human agents
+%\item use env = $<$CLIENT$>/$client.jar". in the environment section. Do not connect to an already running environment in another MAS. This is because BW4TClient creates GUIs for humanbots, on the machine where it is running.
+%\item Check that the launchpolicy picks up the proper entity type, so use 'human' if you want to attach to human entities etc.
+%\end{itemize} 
+%
+%\subsection{Distributed Human GUIs}
+%This section describes how to run a set of distributed human GUIs such that they all communicate through GOAL. Before running a set of distributed Human GUIs with Eclipse, make sure that the server is installed on one machine. Furthermore, make sure that the server map can contain a sufficient number of entities.
+%To run a set of distributed Human GUIs with GOAL, do the following:
+%\begin{itemize}
+%\item Start the server
+%\item For each machine where you want to have a human GUI:
+%    \begin{enumerate}
+%    \item Start your agent platform (SimpleIDE or  Eclipse IDE)
+%    \item Open the MAS file of the bw4thuman.mas2g
+%    \item adjust the serverip to correctly point to the machine ip number where the server runs
+%    \item Start the MAS
+%    \end{enumerate}
+%\end{itemize}
 
 \subsection{Programming a BW4T Agent}
 To program your own BW4T agent, use the same actions as specified in the demorobot. You can  choose to change the pre- and post conditions of each action.
@@ -317,7 +316,7 @@ Note that besides in the bw4t.mas2g file, the number of agents is also specified
 
 
 \section{Log file}
-Repast logs the following for each run into a file. The filename is “BW4TXXXX.log” where XXX is the date and time to make the filename unique. The file is saved in the $<$SERVER$>/$log directory. It contains:
+The server logs the following for each run into a file. The filename is $W4TXXXX.log$ where $XXX$ is the date and time to make the filename unique. The file is saved in the $<$SERVER$>/$log directory. It contains:
 \begin{enumerate}
 \item sequence: goal sequence (which block colors are to be dropped)
 \item room: initial blocks per room
