@@ -198,7 +198,7 @@ public class RobotEntity implements EntityInterface {
 	}
 
 	/**
-	 * Percepts for the location of rooms and the dropzone and the blocks Send
+	 * Percepts for the location of rooms (incl. dropzone), robots, epartners, and the blocks. Send
 	 * on change
 	 * 
 	 * @return postitions
