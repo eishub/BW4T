@@ -52,7 +52,8 @@ import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.util.collections.IndexedIterable;
 
 /**
- * EIS entity for a {@link AbstractRobot}.
+ * EIS entity for a {@link AbstractRobot}. This lays EIS functionality on top of
+ * the repast rpbot.
  */
 public class RobotEntity implements EntityInterface {
 
@@ -89,7 +90,7 @@ public class RobotEntity implements EntityInterface {
 	 * each item in messages is a list with two items: the sender and the
 	 * messagetext.
 	 */
-	private List<ArrayList<String>> messages = new ArrayList<ArrayList<String>>();
+	private List<ArrayList<String>> messages = new ArrayList<>();
 
 	/**
 	 * Creates a new {@link RobotEntity} that can be launched by an EIS
@@ -121,6 +122,7 @@ public class RobotEntity implements EntityInterface {
 	/**
 	 * Disconnects the robot from repast.
 	 */
+	@Override
 	public void disconnect() {
 		if (ourRobot.isConnected()) {
 			// reset before disconnect: reset moves bot to init position.
@@ -158,7 +160,7 @@ public class RobotEntity implements EntityInterface {
 	 * @param type
 	 */
 	private <T extends BoundedMoveableInterface> Set<T> getVisible(Class<T> type) {
-		Set<T> set = new HashSet<T>();
+		Set<T> set = new HashSet<>();
 
 		if (context == null) {
 			return set;
@@ -185,7 +187,7 @@ public class RobotEntity implements EntityInterface {
 	 */
 	@AsPercept(name = "robotSize", multiplePercepts = true, filter = Filter.Type.ON_CHANGE)
 	public List<ObjectInformation> getSizes() {
-		List<ObjectInformation> sizes = new ArrayList<ObjectInformation>();
+		List<ObjectInformation> sizes = new ArrayList<>();
 
 		IndexedIterable<Object> allRobots = context.getObjects(IRobot.class);
 
@@ -198,14 +200,14 @@ public class RobotEntity implements EntityInterface {
 	}
 
 	/**
-	 * Percepts for the location of rooms (incl. dropzone), robots, epartners, and the blocks. Send
-	 * on change
+	 * Percepts for the location of rooms (incl. dropzone), robots, epartners,
+	 * and the blocks. Send on change
 	 * 
 	 * @return postitions
 	 */
 	@AsPercept(name = "position", multiplePercepts = true, filter = Filter.Type.ON_CHANGE)
 	public List<ObjectInformation> getLocations() {
-		List<ObjectInformation> objects = new ArrayList<ObjectInformation>();
+		List<ObjectInformation> objects = new ArrayList<>();
 
 		// Add the dropzone
 		DropZone dropZone = (DropZone) context.getObjects(DropZone.class).get(0);
@@ -266,7 +268,7 @@ public class RobotEntity implements EntityInterface {
 	 */
 	@AsPercept(name = "atBlock", multiplePercepts = true, filter = Filter.Type.ON_CHANGE_NEG)
 	public List<Long> getAtBlock() {
-		List<Long> blocksInReach = new ArrayList<Long>();
+		List<Long> blocksInReach = new ArrayList<>();
 		for (Object object : context.getObjects(Block.class)) {
 			Block b = (Block) object;
 			if (ourRobot.canPickUp(b)) {
@@ -308,7 +310,7 @@ public class RobotEntity implements EntityInterface {
 	 */
 	@AsPercept(name = "place", multiplePercepts = true, filter = Filter.Type.ONCE)
 	public List<String> getRooms() {
-		List<String> places = new ArrayList<String>();
+		List<String> places = new ArrayList<>();
 		for (Object o : context.getObjects(Zone.class)) {
 			Zone zone = (Zone) o;
 			places.add(zone.getName());
@@ -348,7 +350,7 @@ public class RobotEntity implements EntityInterface {
 	public List<String> getPlayers() {
 		BW4TEnvironment env = BW4TEnvironment.getInstance();
 		List<String> agents = env.getAgents();
-		List<String> result = new ArrayList<String>();
+		List<String> result = new ArrayList<>();
 
 		for (String agt : agents) {
 			try {
@@ -384,7 +386,7 @@ public class RobotEntity implements EntityInterface {
 		Set<Block> blocks = getVisible(Block.class);
 		boolean isColorBlind = isColorBlind();
 
-		List<BlockColor> colors = new ArrayList<BlockColor>();
+		List<BlockColor> colors = new ArrayList<>();
 		for (Block block : blocks) {
 			colors.add(new BlockColor(block, isColorBlind));
 		}
@@ -419,7 +421,7 @@ public class RobotEntity implements EntityInterface {
 		// stack.toArray gives stack with top=LAST element. Need to reverse.
 		// to reverse, we need to make copy first of the array.
 		// Notice that collections.reverse is modifying the provided array!
-		List<Block> blockstack = new ArrayList<Block>(ourRobot.getHolding());
+		List<Block> blockstack = new ArrayList<>(ourRobot.getHolding());
 		Collections.reverse(blockstack);
 		for (Block b : blockstack) {
 			holds.add(b.getId());
@@ -469,7 +471,7 @@ public class RobotEntity implements EntityInterface {
 	 */
 	@AsPercept(name = "occupied", multiplePercepts = true, filter = Filter.Type.ON_CHANGE_NEG)
 	public List<String> getOccupied() {
-		List<String> rooms = new ArrayList<String>();
+		List<String> rooms = new ArrayList<>();
 		for (Object r : context.getObjects(Room.class)) {
 			Room room = (Room) r;
 			if (room.getOccupier() != null) {
@@ -489,7 +491,7 @@ public class RobotEntity implements EntityInterface {
 	 */
 	@AsPercept(name = "zone", multiplePercepts = true, filter = Filter.Type.ONCE)
 	public List<Zone> getNavPoints() {
-		List<Zone> zones = new ArrayList<Zone>();
+		List<Zone> zones = new ArrayList<>();
 		for (Object o : context.getObjects(Zone.class)) {
 			Zone zone = (Zone) o;
 			zones.add(zone);
@@ -506,7 +508,7 @@ public class RobotEntity implements EntityInterface {
 	@AsPercept(name = "message", multiplePercepts = true, filter = Filter.Type.ALWAYS)
 	public List<ArrayList<String>> getMessages() {
 		List<ArrayList<String>> msg = messages;
-		messages = new ArrayList<ArrayList<String>>();
+		messages = new ArrayList<>();
 		return msg;
 	}
 
@@ -691,7 +693,7 @@ public class RobotEntity implements EntityInterface {
 	@AsAction(name = "receiveMessage")
 	public void receiveMessage(String sender, String message) {
 		// Add message to messageArray
-		List<String> messageArray = new ArrayList<String>();
+		List<String> messageArray = new ArrayList<>();
 		messageArray.add(sender);
 		messageArray.add(message);
 
@@ -773,7 +775,7 @@ public class RobotEntity implements EntityInterface {
 	 */
 	@AsPercept(name = "bumped", multiplePercepts = true, filter = Type.ON_CHANGE_NEG)
 	public List<String> getBumped() {
-		List<String> bumpedList = new ArrayList<String>();
+		List<String> bumpedList = new ArrayList<>();
 		if (ourRobot.isCollided() && !ourRobot.getObstacles().isEmpty()) {
 			for (BoundedMoveableObject obj : ourRobot.getObstacles()) {
 				if (obj instanceof IRobot) {

@@ -30,7 +30,7 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	/**
 	 * The server context this object is attached to.
 	 */
-	private BW4TServerMap serverMap;
+	private final BW4TServerMap serverMap;
 
 	/**
 	 * The box for the BMO.
@@ -51,7 +51,7 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 		assert smap != null;
 		assert smap.hasMap();
 		assert smap.hasContext();
-		setServerMap(smap);
+		this.serverMap = smap;
 		if (getContext().isEmpty()) {
 			COUNTER.set(0);
 		}
@@ -63,16 +63,14 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	/**
 	 * @return The unique id of the object.
 	 */
+	@Override
 	public long getId() {
 		return id;
 	}
 
+	@Override
 	public BW4TServerMap getServerMap() {
 		return serverMap;
-	}
-
-	private void setServerMap(BW4TServerMap serverMap) {
-		this.serverMap = serverMap;
 	}
 
 	/**
@@ -85,6 +83,7 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	/**
 	 * @return The location of the object, if currently in a space.
 	 */
+	@Override
 	public NdPoint getLocation() {
 		NdPoint location = getSpace().getLocation(this);
 		if (location == null) {
@@ -98,6 +97,7 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	 * 
 	 * @return The location of the object, if currently in the grid space.
 	 */
+	@Override
 	public GridPoint getGridLocation() {
 		GridPoint location = getGrid().getLocation(this);
 
@@ -124,6 +124,7 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	/**
 	 * @return The bounding box of this object.
 	 */
+	@Override
 	public Rectangle2D getBoundingBox() {
 		return boundingBox;
 	}
@@ -136,6 +137,7 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	 * @param height
 	 *            the height the object in unit size.
 	 */
+	@Override
 	public void setSize(double width, double height) {
 		boundingBox.width = width;
 		boundingBox.height = height;
@@ -150,6 +152,7 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	 * @param y
 	 *            The y coordinate of the location.
 	 */
+	@Override
 	public void moveTo(double x, double y) {
 		boundingBox.x = x - boundingBox.width / 2;
 		boundingBox.y = y - boundingBox.height / 2;
@@ -204,6 +207,7 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	/**
 	 * Removes this object from the context given at construction.
 	 */
+	@Override
 	public void removeFromContext() {
 		getContext().remove(this);
 	}
@@ -215,10 +219,10 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	 *            the point to calculate the distance to.
 	 * @return the distance to the given point.
 	 */
+	@Override
 	public double distanceTo(NdPoint there) {
 		NdPoint here = getLocation();
-		return Math.sqrt(Math.pow(there.getX() - here.getX(), 2)
-				+ Math.pow(there.getY() - here.getY(), 2));
+		return Math.sqrt(Math.pow(there.getX() - here.getX(), 2) + Math.pow(there.getY() - here.getY(), 2));
 	}
 
 	/**
@@ -229,6 +233,7 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	 * @return distance to center of o. Note that the distance to the bounding
 	 *         box of o may be smaller than this.
 	 */
+	@Override
 	public double distanceTo(BoundedMoveableObject o) {
 		return distanceTo(o.getLocation());
 	}
@@ -248,8 +253,9 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	 *            The padding to add around the box.
 	 * @return A list of all points occupied by the box.
 	 */
+	@Override
 	public List<NdPoint> getPointsOccupiedByObject(double padding) {
-		List<NdPoint> points = new ArrayList<NdPoint>();
+		List<NdPoint> points = new ArrayList<>();
 
 		double halfPad = Math.ceil(padding / 2);
 
@@ -285,6 +291,7 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	 *            The type of objects that this object should be free of.
 	 * @return Whether this bounded moveable object is free of object.
 	 */
+	@Override
 	public boolean isFree(Class<? extends BoundedMoveableObject> freeOfType) {
 		for (NdPoint point : getPointsOccupiedByObject(0)) {
 			for (Object o : getSpace().getObjectsAt(point.getX(), point.getY())) {
