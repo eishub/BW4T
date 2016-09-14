@@ -52,7 +52,7 @@ import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.util.collections.IndexedIterable;
 
 /**
- * EIS entity for a {@link AbstractRobot}. This lays EIS functionality on top of
+ * EIS entity for a {@link AbstractRobot}. This puts EIS functionality on top of
  * the repast rpbot.
  */
 public class RobotEntity implements EntityInterface {
@@ -105,6 +105,11 @@ public class RobotEntity implements EntityInterface {
 		this.context = ourRobot.getContext();
 	}
 
+	/**
+	 * used for logging and testing. Bit hacky, our robot should not be exposed.
+	 * 
+	 * @return our repast robot object
+	 */
 	public IRobot getRobotObject() {
 		return ourRobot;
 	}
@@ -133,17 +138,6 @@ public class RobotEntity implements EntityInterface {
 	}
 
 	/**
-	 * Reset the robot's location and should set it to its default spawn state.
-	 * We try to have the bot drop all the blocks before it exists.
-	 */
-	public void reset() {
-		while (!ourRobot.getHolding().isEmpty()) {
-			ourRobot.drop();
-		}
-		ourRobot.moveTo(this.spawnLocation.getX(), this.spawnLocation.getY());
-	}
-
-	/**
 	 * This function should be called before perception cycle is started, so
 	 * that we can lock the relevant data from the environment.
 	 */
@@ -151,33 +145,6 @@ public class RobotEntity implements EntityInterface {
 	public void initializePerceptionCycle() {
 		ourRobotLocation = new Point2D.Double(ourRobot.getLocation().getX(), ourRobot.getLocation().getY());
 		ourRobotRoom = RoomLocator.getRoomAt(ourRobotLocation.getX(), ourRobotLocation.getY());
-	}
-
-	/**
-	 * @return All bounded moveable objects of class T that are visible to the
-	 *         robot. Excluding the one the robot is holding.
-	 * @param <T>
-	 * @param type
-	 */
-	private <T extends BoundedMoveableInterface> Set<T> getVisible(Class<T> type) {
-		Set<T> set = new HashSet<>();
-
-		if (context == null) {
-			return set;
-		}
-
-		// Add all objects in the same room as the robot.
-		Iterable<Object> allObjects = context.getObjects(type);
-		Zone zone = ZoneLocator.getZoneAt(ourRobotLocation.getX(), ourRobotLocation.getY());
-		for (Object b : allObjects) {
-			T aObject = (T) b;
-			Double p = new Point2D.Double(aObject.getLocation().getX(), aObject.getLocation().getY());
-			if (zone != null && zone.getBoundingBox().contains(p)) {
-				set.add(aObject);
-			}
-		}
-
-		return set;
 	}
 
 	/**
@@ -580,21 +547,6 @@ public class RobotEntity implements EntityInterface {
 	}
 
 	/**
-	 * @param targetid
-	 * @return block that has given target ID
-	 * @throws IllegalArgumentException
-	 *             if no such block.
-	 */
-	private Block getBlock(long targetid) {
-		for (Block b : getVisible(Block.class)) {
-			if (b.getId() == targetid) {
-				return b;
-			}
-		}
-		throw new IllegalArgumentException("there is no block with id=" + targetid);
-	}
-
-	/**
 	 * Instructs the robot to move to the given navpoint
 	 * 
 	 * @param navPoint
@@ -788,6 +740,74 @@ public class RobotEntity implements EntityInterface {
 	}
 
 	/**
+	 * Percepts for when this robot has a target that is unreachable/reachable
+	 * (on change).
+	 * 
+	 * @return The percept in the form of an object with an id (long) and a
+	 *         boolean.
+	 */
+	@AsPercept(name = "oldTargetUnreachable", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
+	public IdAndBoolean getOldTargetUnreachable() {
+		return new IdAndBoolean(ourRobot.getId(), ourRobot.isDestinationUnreachable());
+	}
+
+	/********************* support funcs *********************/
+
+	/**
+	 * @return All bounded moveable objects of class T that are visible to the
+	 *         robot. Excluding the one the robot is holding.
+	 * @param <T>
+	 * @param type
+	 */
+	private <T extends BoundedMoveableInterface> Set<T> getVisible(Class<T> type) {
+		Set<T> set = new HashSet<>();
+
+		if (context == null) {
+			return set;
+		}
+
+		// Add all objects in the same room as the robot.
+		Iterable<Object> allObjects = context.getObjects(type);
+		Zone zone = ZoneLocator.getZoneAt(ourRobotLocation.getX(), ourRobotLocation.getY());
+		for (Object b : allObjects) {
+			@SuppressWarnings("unchecked")
+			T aObject = (T) b;
+			Double p = new Point2D.Double(aObject.getLocation().getX(), aObject.getLocation().getY());
+			if (zone != null && zone.getBoundingBox().contains(p)) {
+				set.add(aObject);
+			}
+		}
+
+		return set;
+	}
+
+	/**
+	 * @param targetid
+	 * @return block that has given target ID
+	 * @throws IllegalArgumentException
+	 *             if no such block.
+	 */
+	private Block getBlock(long targetid) {
+		for (Block b : getVisible(Block.class)) {
+			if (b.getId() == targetid) {
+				return b;
+			}
+		}
+		throw new IllegalArgumentException("there is no block with id=" + targetid);
+	}
+
+	/**
+	 * Reset the robot's location and should set it to its default spawn state.
+	 * We try to have the bot drop all the blocks before it exists.
+	 */
+	protected void reset() {
+		while (!ourRobot.getHolding().isEmpty()) {
+			ourRobot.drop();
+		}
+		ourRobot.moveTo(this.spawnLocation.getX(), this.spawnLocation.getY());
+	}
+
+	/**
 	 * Find the closest {@link BoundedMoveableObject} that can be picked up by
 	 * the Robot.
 	 * 
@@ -801,6 +821,7 @@ public class RobotEntity implements EntityInterface {
 		T nearest = null;
 		double nearestDistance = Integer.MAX_VALUE;
 		for (Object o : allBlocks) {
+			@SuppressWarnings("unchecked")
 			T aBlock = (T) o;
 			double distance = ourRobot.distanceTo(aBlock);
 
@@ -814,18 +835,6 @@ public class RobotEntity implements EntityInterface {
 			}
 		}
 		return nearest;
-	}
-
-	/**
-	 * Percepts for when this robot has a target that is unreachable/reachable
-	 * (on change).
-	 * 
-	 * @return The percept in the form of an object with an id (long) and a
-	 *         boolean.
-	 */
-	@AsPercept(name = "oldTargetUnreachable", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
-	public IdAndBoolean getOldTargetUnreachable() {
-		return new IdAndBoolean(ourRobot.getId(), ourRobot.isDestinationUnreachable());
 	}
 
 }

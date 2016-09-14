@@ -12,8 +12,9 @@ import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
 
 /**
- * Represents an object in the world that can be moved around if needed. It
- * forms the basis for all kinds of objects like robots, blocks and rooms.
+ * Represents an object in the world that can be moved around as needed. It
+ * forms the basis for all kinds of objects like robots, blocks and rooms. The
+ * object can also be removed from the world and moved back into the world.
  */
 public abstract class BoundedMoveableObject implements BoundedMoveableInterface {
 
