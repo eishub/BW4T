@@ -4,18 +4,19 @@ import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
 
-import nl.tudelft.bw4t.client.environment.PerceptsHandler;
-import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-import nl.tudelft.bw4t.client.message.BW4TMessage;
-import nl.tudelft.bw4t.client.message.MessageTranslator;
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Translator;
 import eis.exceptions.ActException;
 import eis.exceptions.EntityException;
 import eis.exceptions.PerceiveException;
 import eis.iilang.Action;
+import eis.iilang.Numeral;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
+import nl.tudelft.bw4t.client.environment.PerceptsHandler;
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.client.message.BW4TMessage;
+import nl.tudelft.bw4t.client.message.MessageTranslator;
 
 /**
  * Java agent that can control an entity. This is a 'dumb' agent, it does not
@@ -78,7 +79,7 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	 * @return A list with the agents.
 	 */
 	public List<BW4TAgent> getAgentsWithType(String type) {
-		List<BW4TAgent> res = new LinkedList<BW4TAgent>();
+		List<BW4TAgent> res = new LinkedList<>();
 		for (String agentName : bw4tenv.getAgents()) {
 			try {
 				BW4TAgent agent = bw4tenv.getRunningAgent(agentName);
@@ -98,15 +99,12 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	@Override
 	public void goTo(double x, double y) throws ActException {
 		try {
-			Parameter[] xParam = Translator.getInstance()
-					.translate2Parameter(x);
-			Parameter[] yParam = Translator.getInstance()
-					.translate2Parameter(y);
+			Parameter[] xParam = Translator.getInstance().translate2Parameter(x);
+			Parameter[] yParam = Translator.getInstance().translate2Parameter(y);
 			Parameter[] parameters = new Parameter[2];
 			parameters[0] = xParam[0];
 			parameters[1] = yParam[0];
-			bw4tenv.performEntityAction(entityId,
-					new Action("goTo", parameters));
+			bw4tenv.performEntityAction(entityId, new Action("goTo", parameters));
 		} catch (RemoteException | TranslationException e) {
 			ActException ex = new ActException("goTo", e);
 			ex.setType(ActException.FAILURE);
@@ -120,10 +118,8 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	@Override
 	public void goToBlock(long id) throws ActException {
 		try {
-			Parameter[] idParam = Translator.getInstance().translate2Parameter(
-					id);
-			bw4tenv.performEntityAction(entityId, new Action("goToBlock",
-					idParam));
+			Parameter[] idParam = Translator.getInstance().translate2Parameter(id);
+			bw4tenv.performEntityAction(entityId, new Action("goToBlock", idParam));
 		} catch (TranslationException | RemoteException e) {
 			ActException ex = new ActException("goToBlock failed", e);
 			ex.setType(ActException.FAILURE);
@@ -137,8 +133,7 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	@Override
 	public void goTo(String navPoint) throws ActException {
 		try {
-			Parameter[] idParam = Translator.getInstance().translate2Parameter(
-					navPoint);
+			Parameter[] idParam = Translator.getInstance().translate2Parameter(navPoint);
 			bw4tenv.performEntityAction(entityId, new Action("goTo", idParam));
 		} catch (TranslationException | RemoteException e) {
 			ActException ex = new ActException("goTo failed", e);
@@ -153,8 +148,7 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	@Override
 	public void navigateObstacles() throws ActException {
 		try {
-			bw4tenv.performEntityAction(entityId, new Action(
-					"navigateObstacles"));
+			bw4tenv.performEntityAction(entityId, new Action("navigateObstacles"));
 		} catch (RemoteException e) {
 			ActException ex = new ActException("navigateObstacles failed", e);
 			ex.setType(ActException.FAILURE);
@@ -164,11 +158,14 @@ public class BW4TAgent extends Thread implements ActionInterface {
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @param boxID
+	 *            the box id to pick up
 	 */
 	@Override
-	public void pickUp() throws ActException {
+	public void pickUp(long boxID) throws ActException {
 		try {
-			bw4tenv.performEntityAction(entityId, new Action("pickUp"));
+			bw4tenv.performEntityAction(entityId, new Action("pickUp", new Parameter[] { new Numeral(boxID) }));
 		} catch (RemoteException e) {
 			ActException ex = new ActException("pickUp failed", e);
 			ex.setType(ActException.FAILURE);
@@ -194,8 +191,7 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void sendMessage(String receiver, BW4TMessage message)
-			throws ActException {
+	public void sendMessage(String receiver, BW4TMessage message) throws ActException {
 		this.sendMessage(receiver, MessageTranslator.translateMessage(message));
 	}
 
@@ -210,18 +206,14 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	 * @throws ActException
 	 *             , if an attempt to perform an action has failed.
 	 */
-	private void sendMessage(String receiver, String message)
-			throws ActException {
+	private void sendMessage(String receiver, String message) throws ActException {
 		try {
-			Parameter[] messageParam = Translator.getInstance()
-					.translate2Parameter(message);
-			Parameter[] receiverParam = Translator.getInstance()
-					.translate2Parameter(receiver);
+			Parameter[] messageParam = Translator.getInstance().translate2Parameter(message);
+			Parameter[] receiverParam = Translator.getInstance().translate2Parameter(receiver);
 			Parameter[] parameters = new Parameter[2];
 			parameters[0] = receiverParam[0];
 			parameters[1] = messageParam[0];
-			bw4tenv.performEntityAction(entityId, new Action("sendMessage",
-					parameters));
+			bw4tenv.performEntityAction(entityId, new Action("sendMessage", parameters));
 		} catch (RemoteException | TranslationException e) {
 			ActException ex = new ActException("putDown failed", e);
 			ex.setType(ActException.FAILURE);

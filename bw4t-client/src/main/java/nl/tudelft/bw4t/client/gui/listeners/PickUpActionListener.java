@@ -33,7 +33,7 @@ public class PickUpActionListener extends AbstractClientActionListener {
 	@Override
 	protected void actionWithHumanAgent(ActionEvent arg0) {
 		try {
-			getController().getHumanAgent().pickUp();
+			getController().getHumanAgent().pickUp(boxID);
 		} catch (ActException e1) {
 			LOGGER.error("Could tell the agent to perform a pickUp action.", e1);
 		}
