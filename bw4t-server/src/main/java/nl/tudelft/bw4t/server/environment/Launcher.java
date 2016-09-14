@@ -58,10 +58,6 @@ public class Launcher {
 	 */
 	private int paramServerPort;
 	/**
-	 * the message to be made available to the clients.
-	 */
-	private String paramServerMsg;
-	/**
 	 * true if GUI should be enabled, false if server should run without GUI.
 	 */
 	private boolean paramGUI;
@@ -118,8 +114,6 @@ public class Launcher {
 		paramMap = findArgument(args, "-map", "Random");
 		paramServerIp = findArgument(args, "-serverip", "localhost");
 		paramServerPort = Integer.parseInt(findArgument(args, "-serverport", "8000"));
-		paramServerMsg = findArgument(args, "-msg",
-				"Hello I am an BW4T Server version " + BW4TEnvironment.VERSION + ".");
 		paramGUI = Boolean.parseBoolean(findArgument(args, "-gui", "true"));
 		paramKey = findArgument(args, "-key", "GuVC7TZ38NN49X8utMspV3Z5");
 		paramCollision = Boolean.parseBoolean(findArgument(args, "-collision", "false"));
@@ -228,7 +222,7 @@ public class Launcher {
 	 */
 	public final BW4TServer setupRemoteServer() {
 		try {
-			return new BW4TServer(paramServerIp, paramServerPort, paramServerMsg);
+			return new BW4TServer(paramServerIp, paramServerPort);
 		} catch (RemoteException | MalformedURLException e) {
 			LOGGER.fatal("Failed to start the RPC Server.");
 			throw new LauncherException("failed to start the rpc server", e);

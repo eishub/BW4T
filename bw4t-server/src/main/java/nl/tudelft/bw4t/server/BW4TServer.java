@@ -58,7 +58,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	private transient Map<BW4TClientActions, ClientInfo> clients;
 
 	private String servername;
-	private String messageOfTheDay = "";
+
 	private Registry registry;
 
 	/**
@@ -88,9 +88,8 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 		LOGGER.debug("Server bound to: " + servername);
 	}
 
-	public BW4TServer(String serverIp, int serverPort, String motd) throws RemoteException, MalformedURLException {
+	public BW4TServer(String serverIp, int serverPort) throws RemoteException, MalformedURLException {
 		this(serverIp, Integer.toString(serverPort));
-		messageOfTheDay = motd;
 	}
 
 	/**
