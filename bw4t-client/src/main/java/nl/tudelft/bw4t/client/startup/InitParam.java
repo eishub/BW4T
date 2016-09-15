@@ -1,6 +1,7 @@
 package nl.tudelft.bw4t.client.startup;
 
 import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -169,7 +170,7 @@ public enum InitParam {
 			LOGGER.info(String.format("Reading configuration file '%s'", cfile));
 			try {
 				config = new ConfigFile(cfile);
-			} catch (JAXBException | FileNotFoundException e) {
+			} catch (JAXBException | FileNotFoundException | URISyntaxException e) {
 				LOGGER.error(String.format("Unable to load configuration file: '%s'", cfile), e);
 			}
 		}

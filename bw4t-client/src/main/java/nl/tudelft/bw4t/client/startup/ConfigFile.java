@@ -2,16 +2,14 @@ package nl.tudelft.bw4t.client.startup;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.net.URISyntaxException;
 
 import javax.xml.bind.JAXBException;
 
+import org.apache.log4j.Logger;
+
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.util.XMLManager;
-
-import org.apache.log4j.Logger;
 
 /**
  * Reads the config file that can be passed to the client to overwrite the
@@ -34,22 +32,18 @@ public class ConfigFile {
 	 *             If an error occurs while reading the xml config
 	 * @throws FileNotFoundException
 	 *             if the param is null or the file can not be read
+	 * @throws URISyntaxException
 	 */
-	public ConfigFile(String filename) throws JAXBException,
-			FileNotFoundException {
+	public ConfigFile(String filename) throws JAXBException, FileNotFoundException, URISyntaxException {
 
-		URL url = getClass().getProtectionDomain().getCodeSource()
-				.getLocation();
-		Path p = Paths.get(url.getFile()).getParent();
-		file = p.resolve(filename).toFile();
+		File url = new File(getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+		file = url.toPath().getParent().resolve(filename).toFile();
 
 		if (file == null || !file.canRead())
-			throw new FileNotFoundException("could not read config file "
-					+ filename + " inside " + p);
+			throw new FileNotFoundException("could not read config file " + filename + " inside " + url.getParent());
 		// Reads the configuration file and constructs a BW4TClientConfig from
 		// it:
-		config = (BW4TClientConfig) XMLManager.fromXML(file,
-				BW4TClientConfig.class);
+		config = (BW4TClientConfig) XMLManager.fromXML(file, BW4TClientConfig.class);
 	}
 
 	/**
