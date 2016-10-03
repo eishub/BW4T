@@ -55,6 +55,7 @@ import nl.tudelft.bw4t.server.model.robots.EntityFactory;
 import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.server.repast.BW4TBuilder;
 import nl.tudelft.bw4t.server.repast.MapLoader;
+import nl.tudelft.bw4t.server.util.MapUtils;
 import nl.tudelft.bw4t.server.view.ServerContextDisplay;
 import repast.simphony.context.Context;
 import repast.simphony.scenario.ScenarioLoadException;
@@ -104,14 +105,14 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	private MapLoader mapLoader;
 
-	private List<PropertyChangeListener> listeners = new ArrayList<PropertyChangeListener>();
+	private List<PropertyChangeListener> listeners = new ArrayList<>();
 
 	/**
 	 * A map of <agent-client> pairs. Every entity that we have can be claimed
 	 * by a server. If that server disappears, we have to free the agents and
 	 * entities associated with that server.
 	 */
-	private Map<String, BW4TClientActions> agentLocations = new HashMap<String, BW4TClientActions>();
+	private Map<String, BW4TClientActions> agentLocations = new HashMap<>();
 
 	/**
 	 * Create a new instance of this environment
@@ -127,7 +128,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 */
 	BW4TEnvironment(BW4TServer server2, String scenarioLocation, String mapLocation, boolean guiEnabled,
 			String shutdownKey, boolean collisionEnabled, boolean drawPathsEnabled)
-					throws IOException, ManagementException, ScenarioLoadException, JAXBException {
+			throws IOException, ManagementException, ScenarioLoadException, JAXBException {
 		super();
 		setInstance(this);
 		this.server = server2;
@@ -499,7 +500,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		} catch (PerceiveException | NoEnvironmentException e) {
 			LOGGER.error("failed to get percepts for entity: '" + entity + "'", e);
 		}
-		return new LinkedList<Percept>();
+		return new LinkedList<>();
 	}
 
 	/**
@@ -590,7 +591,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	public void reset(boolean resetNetwork) throws ManagementException {
 		setState(EnvironmentState.INITIALIZING);
 		try {
-			listeners = new ArrayList<PropertyChangeListener>();
+			listeners = new ArrayList<>();
 			takeDownSimulation();
 			if (resetNetwork && server != null) {
 				server.takeDown();
@@ -724,7 +725,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @return The list of points the humans are right now.
 	 */
 	private List<Point2D> getHumanWithoutEPartners() {
-		List<Point2D> points = new ArrayList<Point2D>();
+		List<Point2D> points = new ArrayList<>();
 
 		for (Object robot : serverMap.getContext().getObjects(IRobot.class)) {
 			IRobot robotTemp = (IRobot) robot;
@@ -869,7 +870,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @throws ServerNotActiveException
 	 */
 	private Set<String> getAssociatedAgents(BW4TClientActions client) throws ServerNotActiveException {
-		Set<String> agents = new HashSet<String>();
+		Set<String> agents = new HashSet<>();
 		for (String agent : agentLocations.keySet()) {
 			if (agentLocations.get(agent).equals(client)) {
 				agents.add(agent);
@@ -937,6 +938,15 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		if (stepper == null)
 			return 20;
 		return (int) stepper.getDelay();
+	}
+
+	/**
+	 * @param client
+	 * @return Get list of all agents associated with given client
+	 * 
+	 */
+	public Set<String> getClientAgents(BW4TClientActions client) {
+		return MapUtils.getKeys(agentLocations, client);
 	}
 
 }

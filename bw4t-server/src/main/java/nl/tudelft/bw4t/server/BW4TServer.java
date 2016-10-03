@@ -257,49 +257,36 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 		BW4TEnvironment.getInstance().registerAgent(agentId, client);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public List<Percept> getAllPerceptsFromEntity(String entity) throws RemoteException {
 		return BW4TEnvironment.getInstance().getAllPerceptsFrom(entity);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public List<String> getAgents() throws RemoteException {
 		return BW4TEnvironment.getInstance().getAgents();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+	@Override
+	public Set<String> getClientAgents(BW4TClientActions client) {
+		return BW4TEnvironment.getInstance().getClientAgents(client);
+	}
+
 	@Override
 	public Set<String> getAssociatedEntities(String agent) throws RemoteException, AgentException {
 		return BW4TEnvironment.getInstance().getAssociatedEntities(agent);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public Collection<String> getEntities() throws RemoteException {
 		return BW4TEnvironment.getInstance().getEntities();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void freeEntity(String entity) throws RemoteException, RelationException, EntityException {
 		BW4TEnvironment.getInstance().freeEntity(entity);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void freeAgent(String agent) throws RemoteException, RelationException {
 
@@ -310,9 +297,6 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void freePair(String agent, String entity) throws RemoteException, RelationException {
 		BW4TEnvironment.getInstance().freePair(agent, entity);

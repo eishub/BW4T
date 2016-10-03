@@ -298,6 +298,13 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
 	}
 
 	/**
+	 * @return all agents running on this client
+	 */
+	public Set<String> getLocalAgents() throws RemoteException {
+		return server.getClientAgents(this);
+	}
+
+	/**
 	 * Get all associated entities for a certain agent from the server
 	 * 
 	 * @param agent

@@ -76,12 +76,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	private BW4TClient client = null;
 	private final List<EnvironmentListener> environmentListeners = new LinkedList<>();
 	private final Map<String, ClientController> entityToGUI = new HashMap<>();
-	/**
-	 * This is a list of locally registered agents.
-	 * 
-	 * Only locally registered agents can act and be associated with entities.
-	 */
-	private final List<String> localAgents = new LinkedList<>();
+
 	/**
 	 * Stores for each agent (represented by a string) a set of listeners.
 	 */
@@ -202,7 +197,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	 */
 	@Override
 	public void attachAgentListener(String agent, AgentListener listener) {
-		if (!localAgents.contains(agent)) {
+		if (!getLocalAgents().contains(agent)) {
 			return;
 		}
 		Set<AgentListener> listeners = agentsToAgentListeners.get(agent);
@@ -218,7 +213,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	 */
 	@Override
 	public void detachAgentListener(String agent, AgentListener listener) {
-		if (!localAgents.contains(agent)) {
+		if (!getLocalAgents().contains(agent)) {
 			return;
 		}
 		Set<AgentListener> listeners = agentsToAgentListeners.get(agent);
@@ -259,7 +254,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 		LOGGER.debug("Registering new agent:" + agentId + ".");
 		try {
 			getClient().registerAgent(agentId);
-			localAgents.add(agentId);
 		} catch (RemoteException e) {
 			throw environmentSuddenDeath(e);
 		}
@@ -277,11 +271,10 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	public void unregisterAgent(String agent) throws AgentException {
 		try {
 			LOGGER.debug("Unregistering agent: " + agent);
-			localAgents.remove(agent);
 			removeRunningAgent(agent);
 			getClient().unregisterAgent(agent);
 
-			if (localAgents.isEmpty() && !isConnectedToGoal()) {
+			if (getLocalAgents().isEmpty() && !isConnectedToGoal()) {
 				LOGGER.info("Last local agent was removed. Closing the client.");
 				try {
 					kill();
@@ -757,22 +750,21 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 		}
 	}
 
+	private Set<String> getLocalAgents() {
+		try {
+			return getClient().getLocalAgents();
+		} catch (RemoteException e) {
+			throw environmentSuddenDeath(e);
+		}
+	}
+
 	/**
 	 * Remove all agents that are local to this RemoteEnvironment.
 	 * 
 	 * @throws ManagementException
 	 */
 	private void disposeAllAgents() throws ManagementException {
-		// copy list, the localAgents list is going to be changed by removing
-		// agents.
-
-		/*
-		 * GOAL may already have deleted agents and our list of localAgents may
-		 * contain non-existing agents at this point. May be an issue with
-		 * EIDefaultImp or even the spec of EnvironmentInterfaceStandard
-		 */
-		List<String> remainingLocalAgents = getAgents();
-		remainingLocalAgents.retainAll(localAgents);
+		Set<String> remainingLocalAgents = getLocalAgents();
 
 		for (String agentname : remainingLocalAgents) {
 			try {

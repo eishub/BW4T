@@ -153,6 +153,13 @@ public interface BW4TServerActions extends Remote {
 	List<String> getAgents() throws RemoteException;
 
 	/**
+	 * @param client
+	 *            the registered client that registers this agent
+	 * @return the names of the agents running on the client that calls this.
+	 */
+	Set<String> getClientAgents(BW4TClientActions client) throws RemoteException;
+
+	/**
 	 * Get all associated entities for a certain agent from the server
 	 * 
 	 * @param agent
