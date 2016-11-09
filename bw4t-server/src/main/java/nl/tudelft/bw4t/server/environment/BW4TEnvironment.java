@@ -617,8 +617,10 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		removeAllEntities();
 
 		stepper.terminate();
-		contextDisplay.close();
-		contextDisplay = null;
+		if (contextDisplay != null) {
+			contextDisplay.close();
+			contextDisplay = null;
+		}
 		serverMap.setContext(null);
 	}
 
