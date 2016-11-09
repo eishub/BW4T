@@ -43,6 +43,11 @@ public class NewMap implements Serializable {
 	 * map.
 	 */
 	private Integer randomSequence = 0;
+	
+	/**
+	 * Seed for random stuff
+	 */
+	private Integer seed = null;
 
 	/**
 	 * Initial point for an area.
@@ -190,7 +195,7 @@ public class NewMap implements Serializable {
 	@Override
 	public String toString() {
 		return "Map[onebotperzone=" + oneBotPerCorridorZone + ", randomblocks="
-				+ randomBlocks + ",size=" + 0 + ",sequence=" + sequence
+				+ randomBlocks + ",seed=" + seed + ",sequence=" + sequence
 				+ ",zones=" + zones + "]";
 	}
 
@@ -208,6 +213,14 @@ public class NewMap implements Serializable {
 
 	public Point getArea() {
 		return area;
+	}
+	
+	public void setSeed(Integer seed) {
+		this.seed = seed;
+	}
+	
+	public Integer getSeed() {
+		return this.seed;
 	}
 
 	/**
@@ -305,6 +318,11 @@ public class NewMap implements Serializable {
 			if (other.randomSequence != null)
 				return false;
 		} else if (!randomSequence.equals(other.randomSequence))
+			return false;
+		if (seed == null) {
+			if (other.seed != null)
+				return false;
+		} else if (!seed.equals(other.seed))
 			return false;
 		if (sequence == null) {
 			if (other.sequence != null)

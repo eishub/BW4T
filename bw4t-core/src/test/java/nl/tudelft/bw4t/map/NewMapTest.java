@@ -11,11 +11,11 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.tudelft.bw4t.map.Zone.Type;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import nl.tudelft.bw4t.map.Zone.Type;
 
 /**
  * The class <code>NewMapTest</code> contains tests for the class
@@ -37,7 +37,7 @@ public class NewMapTest {
 		// add additional test code here
 		assertNotNull(result);
 		assertEquals(
-				"Map[onebotperzone=false, randomblocks=0,size=0,sequence=[],zones=[]]",
+				"Map[onebotperzone=false, randomblocks=0,seed=null,sequence=[],zones=[]]",
 				result.toString());
 		assertEquals(Boolean.FALSE, result.getOneBotPerCorridorZone());
 		assertEquals(new Integer(0), result.getRandomSequence());
@@ -114,7 +114,7 @@ public class NewMapTest {
 		// add additional test code here
 		assertNotNull(result);
 		assertEquals(
-				"Map[onebotperzone=false, randomblocks=0,size=0,sequence=[],zones=[]]",
+				"Map[onebotperzone=false, randomblocks=0,seed=null,sequence=[],zones=[]]",
 				result.toString());
 		assertEquals(Boolean.FALSE, result.getOneBotPerCorridorZone());
 		assertEquals(new Integer(0), result.getRandomSequence());
@@ -427,7 +427,7 @@ public class NewMapTest {
 
 		// upper or lower case seems irrelevant
 		assertEquals(
-				"Map[onebotperzone=true, randomblocks=1,size=0,sequence=[BLUE, GREEN, ORANGE, PINK, RED, WHITE, YELLOW],zones=[]]"
+				"Map[onebotperzone=true, randomblocks=1,seed=null,sequence=[BLUE, GREEN, ORANGE, PINK, RED, WHITE, YELLOW],zones=[]]"
 						.toLowerCase(), result.toLowerCase());
 	}
 
