@@ -175,7 +175,7 @@ public class NewMapTest {
 
 		assertEquals(0, fixture.getEntities().size());
 
-		List<Entity> entities = new ArrayList<Entity>();
+		List<Entity> entities = new ArrayList<>(0);
 
 		fixture.setEntities(entities);
 
@@ -248,7 +248,7 @@ public class NewMapTest {
 	@Test
 	public void testGetSequence_1() throws Exception {
 		NewMap fixture = new NewMap();
-		ArrayList<BlockColor> list = new ArrayList<BlockColor>();
+		List<BlockColor> list = new ArrayList<>(7);
 		list.add(BlockColor.BLUE);
 		list.add(BlockColor.GREEN);
 		list.add(BlockColor.ORANGE);
@@ -341,7 +341,7 @@ public class NewMapTest {
 
 		assertEquals(0, fixture.getZones().size());
 
-		List<Zone> zones = new ArrayList<Zone>();
+		List<Zone> zones = new ArrayList<>(0);
 
 		fixture.setZones(zones);
 
@@ -411,7 +411,7 @@ public class NewMapTest {
 		fixture.setOneBotPerCorridorZone(new Boolean(true));
 		fixture.setArea(new Point());
 		fixture.setRandomSequence(new Integer(1));
-		ArrayList<BlockColor> list = new ArrayList<BlockColor>();
+		List<BlockColor> list = new ArrayList<>(7);
 		list.add(BlockColor.BLUE);
 		list.add(BlockColor.GREEN);
 		list.add(BlockColor.ORANGE);

@@ -2,7 +2,7 @@ package nl.tudelft.bw4t.map;
 
 import java.awt.Color;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -20,7 +20,7 @@ public class Path implements Serializable {
     /**
      * List of point wich form a path.
      */
-    private List<Point> path;
+    private List<Point> path = new LinkedList<>();
     
     /**
      * {@link Color} of path.
@@ -31,7 +31,6 @@ public class Path implements Serializable {
      * Initialize Path.
      */
     public Path() {
-        path = new ArrayList<Point>();
     }
 
     /**
@@ -50,7 +49,7 @@ public class Path implements Serializable {
 
     public Color getColor() { 
         return color; 
-        }
+    }
 
     @Override
     public int hashCode() {

@@ -172,12 +172,12 @@ public abstract class AbstractMapController extends MouseAdapter implements
 
 	@Override
 	public Set<Zone> getZones() {
-		return new HashSet<Zone>(map.getZones());
+		return new HashSet<>(map.getZones());
 	}
 
 	@Override
 	public Set<Zone> getRooms() {
-		Set<Zone> rooms = new HashSet<Zone>();
+		Set<Zone> rooms = new HashSet<>();
 
 		for (Zone zone : map.getZones()) {
 			if (zone.getType() == Type.ROOM) {
@@ -190,7 +190,7 @@ public abstract class AbstractMapController extends MouseAdapter implements
 
 	@Override
 	public Set<Zone> getChargingZones() {
-		Set<Zone> chargingzones = new HashSet<Zone>();
+		Set<Zone> chargingzones = new HashSet<>();
 
 		for (Zone zone : map.getZones()) {
 			if (zone.getType() == Type.CHARGINGZONE) {
@@ -203,7 +203,7 @@ public abstract class AbstractMapController extends MouseAdapter implements
 
 	@Override
 	public Set<Zone> getBlockades() {
-		Set<Zone> blockades = new HashSet<Zone>();
+		Set<Zone> blockades = new HashSet<>();
 
 		for (Zone zone : map.getZones()) {
 			if (zone.getType() == Type.BLOCKADE) {
@@ -246,7 +246,7 @@ public abstract class AbstractMapController extends MouseAdapter implements
 
 	@Override
 	public Set<Path> getPaths() {
-		return new HashSet<>();
+		return new HashSet<>(0);
 	}
 
 	@Override

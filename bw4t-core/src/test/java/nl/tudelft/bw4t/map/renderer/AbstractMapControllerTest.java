@@ -16,11 +16,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import nl.tudelft.bw4t.map.MapFormatException;
-import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.map.Point;
-import nl.tudelft.bw4t.map.Zone;
-
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.junit.After;
@@ -31,6 +26,11 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import nl.tudelft.bw4t.map.MapFormatException;
+import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.map.Point;
+import nl.tudelft.bw4t.map.Zone;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AbstractMapControllerTest {
@@ -76,7 +76,7 @@ public class AbstractMapControllerTest {
     }
     
     public void setupMapZones() {
-        List<Zone> zones = new ArrayList<>();
+        List<Zone> zones = new ArrayList<>(4);
         Zone z = mock(Zone.class);
         when(z.getType()).thenReturn(Zone.Type.CORRIDOR);
         when(z.getName()).thenReturn("C");
@@ -142,13 +142,12 @@ public class AbstractMapControllerTest {
     @Test(expected=MapFormatException.class)
     public void getDropZoneFailTest() {
         setMap();
-        
-        Zone res = mc.getDropZone();
+        mc.getDropZone();
     }
     
     @Test
     public void setRunningTest() throws Exception{
-        when(mc.getRenderers()).thenReturn(new HashSet<MapRendererInterface>());
+        when(mc.getRenderers()).thenReturn(new HashSet<MapRendererInterface>(0));
         assertFalse("The thread is already running.", mc.isRunning());
         
         mc.setRunning(true);

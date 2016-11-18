@@ -4,7 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
@@ -57,18 +57,18 @@ public class NewMap implements Serializable {
 	/**
 	 * List containing all zones at the map.
 	 */
-	private List<Zone> zones = new ArrayList<Zone>();
+	private List<Zone> zones = new LinkedList<>();
 
 	/**
 	 * Sequence, a list of BlockColor. This sequence defines what kind of blocks
 	 * the bot needs to pick up.
 	 */
-	private List<BlockColor> sequence = new ArrayList<BlockColor>();
+	private List<BlockColor> sequence = new LinkedList<>();
 
 	/**
 	 * Initial entities.
 	 */
-	private List<Entity> entities = new ArrayList<Entity>();
+	private List<Entity> entities = new LinkedList<>();
 
 	/**
 	 * Empty Constructor, initialize newMap.
@@ -174,7 +174,7 @@ public class NewMap implements Serializable {
 	 * @return List of {@Link Zone} of given type
 	 */
 	public List<Zone> getZones(Zone.Type type) {
-		List<Zone> list = new ArrayList<Zone>();
+		List<Zone> list = new LinkedList<>();
 		for (Zone z : zones) {
 			if (z.getType() == type) {
 				list.add(z);

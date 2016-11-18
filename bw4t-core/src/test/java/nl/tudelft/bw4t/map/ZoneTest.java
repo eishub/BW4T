@@ -74,7 +74,7 @@ public class ZoneTest {
 
 		assertEquals(0, fixture.getBlocks().size());
 
-		ArrayList<BlockColor> list = new ArrayList<BlockColor>();
+		List<BlockColor> list = new ArrayList<>(7);
 		list.add(BlockColor.BLUE);
 		list.add(BlockColor.GREEN);
 		list.add(BlockColor.ORANGE);
@@ -106,7 +106,7 @@ public class ZoneTest {
 
 		assertEquals(0, fixture.getDoors().size());
 
-		fixture.setDoors(new ArrayList<Door>());
+		fixture.setDoors(new ArrayList<Door>(1));
 
 		assertEquals(0, fixture.getDoors().size());
 
@@ -131,7 +131,7 @@ public class ZoneTest {
 
 		assertEquals(0, fixture.getNeighbours().size());
 
-		fixture.setNeighbours(new ArrayList<Zone>());
+		fixture.setNeighbours(new ArrayList<Zone>(1));
 
 		assertEquals(0, fixture.getNeighbours().size());
 
@@ -179,7 +179,7 @@ public class ZoneTest {
 	@Test
 	public void testGetDoors() throws Exception {
 		Zone fixture = new Zone();
-		fixture.setDoors(new ArrayList<Door>());
+		fixture.setDoors(new ArrayList<Door>(0));
 
 		List<Door> result = fixture.getDoors();
 
@@ -259,7 +259,7 @@ public class ZoneTest {
 
 		assertEquals(0, fixture.getBlocks().size());
 
-		ArrayList<BlockColor> list = new ArrayList<BlockColor>();
+		List<BlockColor> list = new ArrayList<>(7);
 		list.add(BlockColor.BLUE);
 		list.add(BlockColor.GREEN);
 		list.add(BlockColor.ORANGE);
@@ -272,7 +272,7 @@ public class ZoneTest {
 		assertEquals(7, fixture.getBlocks().size());
 		assertEquals(list, fixture.getBlocks());
 
-		ArrayList<BlockColor> blocks = new ArrayList<BlockColor>();
+		List<BlockColor> blocks = new ArrayList<>(7);
 		blocks.add(BlockColor.BLUE);
 		blocks.add(BlockColor.GREEN);
 		blocks.add(BlockColor.ORANGE);
@@ -297,8 +297,8 @@ public class ZoneTest {
 	@Test
 	public void testToString_1() throws Exception {
 		Zone fixture = new Zone("", new Rectangle(), Zone.Type.CORRIDOR);
-		fixture.setDoors(new ArrayList<Door>());
-		ArrayList<BlockColor> list = new ArrayList<BlockColor>();
+		fixture.setDoors(new ArrayList<Door>(0));
+		List<BlockColor> list = new ArrayList<>(7);
 		list.add(BlockColor.BLUE);
 		list.add(BlockColor.GREEN);
 		list.add(BlockColor.ORANGE);
@@ -308,7 +308,7 @@ public class ZoneTest {
 		list.add(BlockColor.YELLOW);
 		fixture.setBlocks(list);
 		fixture.setRenderOptions(new RenderOptions());
-		fixture.setNeighbours(new ArrayList<Zone>());
+		fixture.setNeighbours(new ArrayList<Zone>(0));
 
 		String result = fixture.toString();
 

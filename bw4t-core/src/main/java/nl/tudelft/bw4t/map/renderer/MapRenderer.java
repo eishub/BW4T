@@ -280,8 +280,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 	public void drawBlocks(Graphics2D g2d) {
 		MapRenderSettings set = getController().getRenderSettings();
 		// HACK to alleviate #3292. controller is not thread safe!
-		Set<ViewBlock> blocks = new HashSet<ViewBlock>(getController()
-				.getVisibleBlocks());
+		Set<ViewBlock> blocks = new HashSet<>(getController().getVisibleBlocks());
 
 		for (ViewBlock box : blocks) {
 			g2d.setColor(box.getColor().getColor());

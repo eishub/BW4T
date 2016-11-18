@@ -2,7 +2,7 @@ package nl.tudelft.bw4t.map.view;
 
 import java.awt.Color;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import nl.tudelft.bw4t.util.OneTimeInitializing;
@@ -44,7 +44,7 @@ public class ViewEPartner implements OneTimeInitializing {
 	private boolean visible;
 
 	/** ParameterList containing the functionalities. **/
-	private List<String> types = new ArrayList<String>();
+	private List<String> types = new LinkedList<>();
 
 	/** Empty constructor, initialize default ViewEPartner. */
 	public ViewEPartner() {

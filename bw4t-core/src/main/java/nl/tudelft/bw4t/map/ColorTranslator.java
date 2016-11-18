@@ -56,8 +56,9 @@ public final class ColorTranslator {
      * @return char list of colors
      */
     public static List<String> getAllColors() {
-        List<String> allColors = new ArrayList<String>();
-        for (BlockColor c : BlockColor.values()) {
+    	BlockColor[] values = BlockColor.values();
+        List<String> allColors = new ArrayList<>(values.length);
+        for (BlockColor c : values) {
             allColors.add(c.getName());
         }
         return allColors;
