@@ -1,7 +1,7 @@
 package nl.tudelft.bw4t.server.util;
 
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
@@ -49,7 +49,7 @@ public final class ZoneLocator {
      */
     public static List<Zone> getZonesAt(double x, double y) {
         Point2D location = new Point2D.Double(x, y);
-        List<Zone> zones = new ArrayList<Zone>();
+        List<Zone> zones = new LinkedList<Zone>();
         Iterable<Object> zoneit = BW4TEnvironment.getInstance().getContext().getObjects(Zone.class);
         for (Object r : zoneit) {
             Zone zone = (Zone) r;
@@ -114,22 +114,22 @@ public final class ZoneLocator {
      * @return The nearest Zone to the given point. {@code null} if there are no Zones whatsoever.
      */
     private static Zone getNearestZoneNotNullNotRoom(NdPoint location) {
-        Iterable<Zone> zones = BW4TEnvironment.getInstance().getContext().getObjects(Zone.class);
-        Zone nearest = null;
+        Iterable<Object> zones = BW4TEnvironment.getInstance().getContext().getObjects(Zone.class);
+        Object nearest = null;
         double nearestdist = Double.MAX_VALUE;
 
-        for (Zone zone : zones) {
+        for (Object zone : zones) {
             if (zone instanceof Room) {
                 continue;
             }
-            double dist = zone.distanceTo(location);
+            double dist = ((Zone)zone).distanceTo(location);
 
             if (dist < nearestdist) {
                 nearest = zone;
                 nearestdist = dist;
             }
         }
-        return nearest;
+        return (Zone)nearest;
     }
 
 }

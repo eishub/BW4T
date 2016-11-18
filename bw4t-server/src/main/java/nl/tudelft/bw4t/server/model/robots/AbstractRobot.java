@@ -1,11 +1,14 @@
 package nl.tudelft.bw4t.server.model.robots;
 
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
+import org.apache.log4j.Logger;
+
+import eis.exceptions.EntityException;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
@@ -22,9 +25,6 @@ import nl.tudelft.bw4t.server.model.zone.DropZone;
 import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
 import nl.tudelft.bw4t.server.util.ZoneLocator;
-
-import org.apache.log4j.Logger;
-
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.query.space.grid.GridCell;
 import repast.simphony.query.space.grid.GridCellNgh;
@@ -34,7 +34,6 @@ import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
-import eis.exceptions.EntityException;
 
 /**
  * Represents a robot in the BW4T environment.
@@ -138,7 +137,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	/**
 	 * Obstacles on the path of the robot
 	 */
-	private List<BoundedMoveableObject> obstacles = new ArrayList<BoundedMoveableObject>();
+	private List<BoundedMoveableObject> obstacles = new LinkedList<>();
 
 	/**
 	 * Creates a new robot.
@@ -174,8 +173,8 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 		 * Here the number of blocks a bot can hold is set.
 		 */
 		this.grippercap = cap;
-		this.holding = new Stack<Block>();
-		this.handicapsList = new ArrayList<String>();
+		this.holding = new Stack<>();
+		this.handicapsList = new LinkedList<>();
 		this.agentRecord = new AgentRecord(name);
 	}
 

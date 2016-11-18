@@ -6,7 +6,6 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.rmi.server.ServerNotActiveException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Collection;
@@ -59,8 +58,6 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 
 	private String servername;
 
-	private Registry registry;
-
 	/**
 	 * Create a new instance of the server
 	 * 
@@ -78,10 +75,10 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 		super();
 		reset();
 		try {
-			registry = LocateRegistry.createRegistry(Integer.parseInt(serverPort));
+			LocateRegistry.createRegistry(Integer.parseInt(serverPort));
 		} catch (RemoteException e) {
 			LOGGER.warn("Registry is already running. Getting running registry instead.");
-			registry = LocateRegistry.getRegistry(Integer.parseInt(serverPort));
+			LocateRegistry.getRegistry(Integer.parseInt(serverPort));
 		}
 		servername = "rmi://" + serverIp + ":" + serverPort + "/BW4TServer";
 		Naming.rebind(servername, this);
@@ -424,7 +421,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void requestInit(java.util.Map<String, Parameter> parameters) throws RemoteException, ManagementException {
+	public void requestInit(Map<String, Parameter> parameters) throws RemoteException, ManagementException {
 		BW4TEnvironment.getInstance().init(parameters);
 	}
 

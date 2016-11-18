@@ -3,7 +3,6 @@ package nl.tudelft.bw4t.server.model.zone;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import repast.simphony.context.Context;
-import repast.simphony.space.grid.Grid;
 
 /**
  * Constructs a blockade for a room.

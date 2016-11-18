@@ -31,21 +31,20 @@ import repast.simphony.space.continuous.ContinuousSpace;
 @RunWith(MockitoJUnitRunner.class)
 public class MapLoaderTest {
     
-    @Mock private ContinuousSpace space;
-    @Mock private Context context;
+    @Mock private ContinuousSpace<Object> space;
+    @Mock private Context<Object> context;
     
     @Rule public ExpectedException exception = ExpectedException.none();
 
     /** Tests whether it correctly returns a random sequence of colors when called. */
-    @Test
+    @SuppressWarnings("unchecked")
+	@Test
     public void makeRandomSequenceTest() throws NoSuchMethodException, SecurityException, 
             IllegalAccessException, IllegalArgumentException, InvocationTargetException{
         Method method = MapLoader.class.getDeclaredMethod("makeRandomSequence", BW4TServerMap.class, int.class);
         method.setAccessible(true);
         List<BlockColor> result;
 
-        result = (List<BlockColor>) method.invoke(null, null, -1);
-        assertTrue(result.size() == 0);
         result = (List<BlockColor>) method.invoke(null, null, 0);
         assertTrue(result.size() == 0);
         result = (List<BlockColor>) method.invoke(null, null, 1);

@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 import java.rmi.server.ServerNotActiveException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -105,7 +104,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	private MapLoader mapLoader;
 
-	private List<PropertyChangeListener> listeners = new ArrayList<>();
+	private List<PropertyChangeListener> listeners = new LinkedList<>();
 
 	/**
 	 * A map of <agent-client> pairs. Every entity that we have can be claimed
@@ -591,7 +590,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	public void reset(boolean resetNetwork) throws ManagementException {
 		setState(EnvironmentState.INITIALIZING);
 		try {
-			listeners = new ArrayList<>();
+			listeners = new LinkedList<>();
 			takeDownSimulation();
 			if (resetNetwork && server != null) {
 				server.takeDown();
@@ -629,7 +628,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * 
 	 * @return Repast {@link Context}.
 	 */
-	public Context getContext() {
+	public Context<Object> getContext() {
 		return serverMap.getContext();
 	}
 
@@ -727,11 +726,10 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @return The list of points the humans are right now.
 	 */
 	private List<Point2D> getHumanWithoutEPartners() {
-		List<Point2D> points = new ArrayList<>();
+		List<Point2D> points = new LinkedList<>();
 
 		for (Object robot : serverMap.getContext().getObjects(IRobot.class)) {
 			IRobot robotTemp = (IRobot) robot;
-
 			if (robotTemp.isHuman() && !robotTemp.isHoldingEPartner()) {
 				NdPoint location = robotTemp.getLocation();
 				points.add(new Point2D.Double(location.getX(), location.getY()));

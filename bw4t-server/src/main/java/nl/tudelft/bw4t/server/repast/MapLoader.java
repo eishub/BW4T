@@ -105,13 +105,13 @@ public class MapLoader implements BW4TServerMapListerner {
         if (context == null || !context.hasContext() || !context.hasMap()) {
             throw new IllegalArgumentException("Cannot load a map that does not have a repast Context and a BW4TMap.");
         }
-        Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones = new HashMap<String, nl.tudelft.bw4t.server.model.zone.Zone>();
-        Map<String, List<BlockColor>> roomBlocks = new HashMap<String, List<BlockColor>>();
+        Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones = new HashMap<>();
+        Map<String, List<BlockColor>> roomBlocks = new HashMap<>();
 
         createSpace(context);
         createGridSpace(context);
 
-        List<BlockColor> sequence = new ArrayList<BlockColor>(context.getMap().getSequence());
+        List<BlockColor> sequence = new ArrayList<>(context.getMap().getSequence());
         createZones(context, zones, roomBlocks, sequence);
         makeBlocks(context, roomBlocks, sequence);
         placeBlocks(context, zones, roomBlocks);
@@ -162,7 +162,7 @@ public class MapLoader implements BW4TServerMapListerner {
         int height = (int) area.getY() + 1;
     
         GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
-        GridBuilderParameters params = new GridBuilderParameters(new StrictBorders(), new SimpleGridAdder<Object>(),
+        GridBuilderParameters<Object> params = new GridBuilderParameters<>(new StrictBorders(), new SimpleGridAdder<Object>(),
                 true, width, height);
     
         return gridFactory.createGrid(GRID_PROJECTION_ID, context, params);
@@ -237,7 +237,7 @@ public class MapLoader implements BW4TServerMapListerner {
                 room = new DropZone(roomzone, sequence, context);
             } else {
                 room = new BlocksRoom(roomzone, context);
-                roomblocks.put(room.getName(), new ArrayList<BlockColor>(roomzone.getBlocks()));
+                roomblocks.put(room.getName(), new ArrayList<>(roomzone.getBlocks()));
             }
 
             for (nl.tudelft.bw4t.map.Door door : roomzone.getDoors()) {
@@ -318,7 +318,7 @@ public class MapLoader implements BW4TServerMapListerner {
         List<BlockColor> extraSequenceBlocks = makeRandomSequence(smap, smap.getMap().getRandomSequence());
         sequence.addAll(extraSequenceBlocks);
 
-        List<BlockColor> extraBlocks = new ArrayList<BlockColor>(extraSequenceBlocks);
+        List<BlockColor> extraBlocks = new ArrayList<>(extraSequenceBlocks);
         extraBlocks.addAll(makeRandomSequence(smap, smap.getMap().getRandomBlocks()));
         addExtraBlocks(roomblocks, random, extraBlocks);
     }
@@ -332,7 +332,7 @@ public class MapLoader implements BW4TServerMapListerner {
      */
     private static List<BlockColor> makeRandomSequence(BW4TServerMap smap, int num) {
         List<BlockColor> colors = BlockColor.getAvailableColors();
-        List<BlockColor> sequence = new ArrayList<BlockColor>();
+        List<BlockColor> sequence = new ArrayList<>(num);
         Random random = getRandom(smap);
         for (int n = 0; n < num; n++) {
             sequence.add(colors.get(random.nextInt(colors.size())));
@@ -354,7 +354,7 @@ public class MapLoader implements BW4TServerMapListerner {
      */
     private static void addExtraBlocks(Map<String, List<BlockColor>> roomblocks, Random random,
             List<BlockColor> extraBlocks) {
-        List<String> rooms = new ArrayList<String>(roomblocks.keySet());
+        List<String> rooms = new ArrayList<>(roomblocks.keySet());
         for (BlockColor extraBlock : extraBlocks) {
             // find the blocks of a room where it can be added.
             List<BlockColor> blocks;
@@ -424,7 +424,7 @@ public class MapLoader implements BW4TServerMapListerner {
         LOGGER.log(BotLog.BOTLOG, String.format("room %s contains blocks: %s", room.getName(), toString(args)));
 
         Rectangle2D roomBox = room.getBoundingBox();
-        List<Rectangle2D> newblocks = new ArrayList<Rectangle2D>();
+        List<Rectangle2D> newblocks = new ArrayList<>(args.size());
         Random random = getRandom(context);
 
         for (BlockColor color : args) {

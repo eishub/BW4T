@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import eis.iilang.EnvironmentState;
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Path;
 import nl.tudelft.bw4t.map.Zone;
@@ -22,7 +23,7 @@ import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.server.model.zone.DropZone;
 import nl.tudelft.bw4t.server.model.zone.Room;
 import repast.simphony.space.Dimensions;
-import eis.iilang.EnvironmentState;
+import repast.simphony.util.collections.IndexedIterable;
 
 /**
  * the {@link MapController} used by the server.
@@ -58,7 +59,7 @@ public class ServerMapController extends AbstractMapController {
 		Set<DropZone> dropZone = serverMap
 				.getObjectsFromContext(DropZone.class);
 		if (dropZone.size() <= 0) {
-			return new ArrayList<>();
+			return new ArrayList<>(0);
 		}
 		return dropZone.iterator().next().getSequence();
 	}
@@ -86,8 +87,9 @@ public class ServerMapController extends AbstractMapController {
 
 	@Override
 	public Set<ViewBlock> getVisibleBlocks() {
-		Set<ViewBlock> blocks = new HashSet<>();
-		for (Object block : serverMap.getContext().getObjects(Block.class)) {
+		IndexedIterable<Object> objects = serverMap.getContext().getObjects(Block.class);
+		Set<ViewBlock> blocks = new HashSet<>(objects.size());
+		for (Object block : objects) {
 			blocks.add(((Block) block).getView());
 		}
 		return blocks;
@@ -112,9 +114,9 @@ public class ServerMapController extends AbstractMapController {
 
 	@Override
 	public Set<ViewEPartner> getVisibleEPartners() {
-		Set<ViewEPartner> epartners = new HashSet<>();
-		for (Object epartner : serverMap.getContext()
-				.getObjects(EPartner.class)) {
+		IndexedIterable<Object> objects = serverMap.getContext().getObjects(EPartner.class);
+		Set<ViewEPartner> epartners = new HashSet<>(objects.size());
+		for (Object epartner : objects) {
 			EPartner epartnerTemp = (EPartner) epartner;
 			epartners.add(epartnerTemp.getView());
 		}
@@ -135,8 +137,9 @@ public class ServerMapController extends AbstractMapController {
 
 	@Override
 	public Set<Path> getPaths() {
-		Set<Path> paths = new HashSet<Path>();
-		for (Object pathTemp : serverMap.getContext().getObjects(Path.class)) {
+		IndexedIterable<Object> objects = serverMap.getContext().getObjects(Path.class); 
+		Set<Path> paths = new HashSet<>(objects.size());
+		for (Object pathTemp : objects) {
 			Path path = (Path) pathTemp;
 			paths.add(path);
 		}

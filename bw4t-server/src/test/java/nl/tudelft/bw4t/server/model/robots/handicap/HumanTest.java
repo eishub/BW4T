@@ -7,11 +7,6 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.server.model.BW4TServerMap;
-import nl.tudelft.bw4t.server.model.epartners.EPartner;
-import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
-import nl.tudelft.bw4t.server.model.robots.NavigatingRobot;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,11 +14,15 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
+import nl.tudelft.bw4t.server.model.epartners.EPartner;
+import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
+import nl.tudelft.bw4t.server.model.robots.NavigatingRobot;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
-import repast.simphony.space.grid.GridPoint;
 
 /**
  * This test tests the Human bot. It currently tests whether a human bot can pick up and drop an epartner.

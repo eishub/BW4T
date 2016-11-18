@@ -3,18 +3,18 @@ package nl.tudelft.bw4t.server.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jgrapht.WeightedGraph;
+import org.jgrapht.graph.DefaultWeightedEdge;
+
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.server.model.zone.Zone;
 import nl.tudelft.bw4t.server.repast.MapLoader;
 import nl.tudelft.bw4t.server.util.GraphHelper;
-
-import org.jgrapht.WeightedGraph;
-import org.jgrapht.graph.DefaultWeightedEdge;
-
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
+import repast.simphony.util.collections.IndexedIterable;
 
 /**
  * A data structure containing both the map and the repast context that is active within the current server.
@@ -116,7 +116,8 @@ public class BW4TServerMap {
      * 
      * @return the {@link ContinuousSpace}
      */
-    public ContinuousSpace<Object> getContinuousSpace() {
+    @SuppressWarnings("unchecked")
+	public ContinuousSpace<Object> getContinuousSpace() {
         if (continuousSpace == null && hasContext()) {
             continuousSpace = (ContinuousSpace<Object>) getContext().getProjection(MapLoader.PROJECTION_ID);
         }
@@ -128,7 +129,8 @@ public class BW4TServerMap {
      * 
      * @return the {@link Grid}
      */
-    public Grid<Object> getGridSpace() {
+    @SuppressWarnings("unchecked")
+	public Grid<Object> getGridSpace() {
         if (gridSpace == null && hasContext()) {
             gridSpace = (Grid<Object>) getContext().getProjection(MapLoader.GRID_PROJECTION_ID);
         }
@@ -159,11 +161,12 @@ public class BW4TServerMap {
      */
     @SuppressWarnings("unchecked")
     public <T> Set<T> getObjectsFromContext(Class<T> clazz) {
-        Set<T> elements = new HashSet<>();
         if (!hasContext()) {
-            return elements;
+            return new HashSet<T>(0);
         }
-        for (Object t : getContext().getObjects(clazz)) {
+        IndexedIterable<Object> objects = getContext().getObjects(clazz);
+        Set<T> elements = new HashSet<>(objects.size());
+        for (Object t : objects) {
             elements.add((T) t);
         }
         return elements;

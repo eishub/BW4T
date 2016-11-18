@@ -12,6 +12,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import org.apache.log4j.Logger;
+
 import nl.tudelft.bw4t.map.Path;
 import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
@@ -23,13 +25,8 @@ import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
 import nl.tudelft.bw4t.server.util.PathPlanner;
 import nl.tudelft.bw4t.server.util.ZoneLocator;
-
-import org.apache.log4j.Logger;
-
-import repast.simphony.context.Context;
-import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
-import repast.simphony.space.grid.Grid;
+import repast.simphony.util.collections.IndexedIterable;
 
 /**
  * Represents a self navigating robot in the BW4T environment. The self navigation means that you can go to a Zone which
@@ -223,7 +220,7 @@ public class NavigatingRobot extends AbstractRobot {
      */
     private void updateDrawPath() {
         if (BW4TEnvironment.getInstance().isDrawPathsEnabled()) {
-            final ArrayList<Point> path = new ArrayList<Point>();
+            final List<Point> path = new LinkedList<>();
             for (NdPoint p : plannedMoves) {
                 path.add(new Point(p.getX(), p.getY()));
             }
@@ -268,7 +265,7 @@ public class NavigatingRobot extends AbstractRobot {
         plannedMoves.clear();
         Zone startpt = ZoneLocator.getNearestZone(this.getLocation());
         Zone targetpt = ZoneLocator.getNearestZone(target.getLocation());
-        List<Zone> allnavs = new ArrayList<Zone>(getServerMap().getObjectsFromContext(Zone.class));
+        List<Zone> allnavs = new ArrayList<>(getServerMap().getObjectsFromContext(Zone.class));
 
         // plan the path between the Zones
         List<NdPoint> path = PathPlanner.findPath(allnavs, startpt, targetpt);
@@ -314,11 +311,11 @@ public class NavigatingRobot extends AbstractRobot {
 
         NdPoint target = currentMoveHistory;
         if (plannedMovesHistory.size() > 0) {
-            target = (NdPoint) ((LinkedList) plannedMovesHistory).getLast();
+            target = ((LinkedList<NdPoint>) plannedMovesHistory).getLast();
         }
         zones.add(ZoneLocator.getNearestZone(target));
         
-        List<Zone> navZones = new ArrayList<Zone>(zones);
+        List<Zone> navZones = new ArrayList<>(zones);
         List<NdPoint> path = PathPlanner.findPath(navZones, getObstacles(), getLocation(), target, getSize());
         if (path.isEmpty()) {
             LOGGER.debug("No alternative path found.");
@@ -355,21 +352,9 @@ public class NavigatingRobot extends AbstractRobot {
     }
 
     private Set<Zone> getAllCorridorsInMap() {
-        Set<Zone> zones = new HashSet<Zone>();
-        for (Object o : getServerMap().getContext().getObjects(Corridor.class)) {
-            zones.add((Zone) o);
-        }
-        return zones;
-    }
-
-    /**
-     * gets all zones in the map.
-     *
-     * @return all zones
-     */
-    private Set<Zone> getAllZonesInMap() {
-        Set<Zone> zones = new HashSet<Zone>();
-        for (Object o : getServerMap().getContext().getObjects(Zone.class)) {
+    	IndexedIterable<Object> objects = getServerMap().getContext().getObjects(Corridor.class);
+        Set<Zone> zones = new HashSet<>(objects.size());
+        for (Object o : objects) {
             zones.add((Zone) o);
         }
         return zones;

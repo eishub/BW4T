@@ -1,7 +1,7 @@
 package nl.tudelft.bw4t.server;
 
 import java.rmi.server.RemoteServer;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
@@ -16,8 +16,8 @@ import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 class ClientInfo {
 
 	private BW4TClientConfig clientConfig;
-	private List<BotConfig> requestedBots = new ArrayList<>();
-	private List<EPartnerConfig> requestedEPartners = new ArrayList<>();
+	private List<BotConfig> requestedBots = new LinkedList<>();
+	private List<EPartnerConfig> requestedEPartners = new LinkedList<>();
 	private final String name;
 	private Double speed = null; // environment rate, in steps per second.
 									// null=not set (server keep as it is).

@@ -10,11 +10,6 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
 
-import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
-import nl.tudelft.bw4t.server.model.zone.BlocksRoom;
-import nl.tudelft.bw4t.server.model.zone.DropZone;
-import nl.tudelft.bw4t.server.model.zone.Room;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +17,10 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.mockito.Mock;
 
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.model.zone.BlocksRoom;
+import nl.tudelft.bw4t.server.model.zone.DropZone;
+import nl.tudelft.bw4t.server.model.zone.Room;
 import repast.simphony.context.Context;
 import repast.simphony.context.DefaultContext;
 
@@ -35,7 +34,7 @@ public class RoomLocatorTest {
     
     /** A minor offset is done on certain elements in order to fulfill requirements of the definition of insideness. */
     private static double OFFSET = 1E-5;
-    private static Context<Room> context = new DefaultContext<Room>();
+    private static Context<Object> context = new DefaultContext<>();
     
     private double x;
     private double y;

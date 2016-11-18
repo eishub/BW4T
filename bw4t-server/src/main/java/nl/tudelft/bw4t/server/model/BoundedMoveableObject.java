@@ -1,7 +1,7 @@
 package nl.tudelft.bw4t.server.model;
 
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -256,7 +256,7 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	 */
 	@Override
 	public List<NdPoint> getPointsOccupiedByObject(double padding) {
-		List<NdPoint> points = new ArrayList<>();
+		List<NdPoint> points = new LinkedList<>();
 
 		double halfPad = Math.ceil(padding / 2);
 

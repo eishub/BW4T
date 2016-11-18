@@ -10,25 +10,7 @@ import static org.mockito.Mockito.when;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 import java.util.Stack;
-import java.util.concurrent.ConcurrentLinkedQueue;
-
-import nl.tudelft.bw4t.map.BlockColor;
-import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.view.ViewBlock;
-import nl.tudelft.bw4t.map.view.ViewEntity;
-import nl.tudelft.bw4t.server.model.BW4TServerMap;
-import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
-import nl.tudelft.bw4t.server.model.blocks.Block;
-import nl.tudelft.bw4t.server.model.doors.Door;
-import nl.tudelft.bw4t.server.model.robots.NavigatingRobot.State;
-import nl.tudelft.bw4t.server.model.robots.handicap.GripperHandicap;
-import nl.tudelft.bw4t.server.model.robots.handicap.Human;
-import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
-import nl.tudelft.bw4t.server.model.zone.Corridor;
-import nl.tudelft.bw4t.server.model.zone.Room;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,6 +19,20 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import nl.tudelft.bw4t.map.BlockColor;
+import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.map.Zone;
+import nl.tudelft.bw4t.map.view.ViewBlock;
+import nl.tudelft.bw4t.map.view.ViewEntity;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
+import nl.tudelft.bw4t.server.model.blocks.Block;
+import nl.tudelft.bw4t.server.model.doors.Door;
+import nl.tudelft.bw4t.server.model.robots.NavigatingRobot.State;
+import nl.tudelft.bw4t.server.model.robots.handicap.GripperHandicap;
+import nl.tudelft.bw4t.server.model.robots.handicap.Human;
+import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
+import nl.tudelft.bw4t.server.model.zone.Corridor;
+import nl.tudelft.bw4t.server.model.zone.Room;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
@@ -59,10 +55,6 @@ public class NavigatingRobotTest {
 	private nl.tudelft.bw4t.server.model.zone.Zone mockedOtherZone = Mockito
 			.mock(nl.tudelft.bw4t.server.model.zone.Zone.class);
 
-	private Queue<NdPoint> mockedQueue = Mockito
-			.mock(ConcurrentLinkedQueue.class);
-	private BoundedMoveableObject mockedMovableObject = Mockito
-			.mock(BoundedMoveableObject.class);
 	private Door mockedDoor = Mockito.mock(Door.class);
 	private Room mockedRoom = Mockito.mock(Room.class);
 	private Corridor mockedCorridor = Mockito.mock(Corridor.class);

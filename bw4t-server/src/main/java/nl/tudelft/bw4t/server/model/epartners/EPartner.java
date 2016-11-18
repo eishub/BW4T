@@ -1,7 +1,7 @@
 package nl.tudelft.bw4t.server.model.epartners;
 
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import nl.tudelft.bw4t.map.view.ViewEPartner;
@@ -45,7 +45,7 @@ public class EPartner extends BoundedMoveableObject {
         
         view.setId(getId());
         this.setName(n);
-        setTypeList(new ArrayList<String>());
+        setTypeList(new LinkedList<String>());
     }
 
     public IRobot getHolder() {
@@ -74,7 +74,7 @@ public class EPartner extends BoundedMoveableObject {
         return this.funcList;
     }
 
-    public void setTypeList(ArrayList<String> fList) {
+    public void setTypeList(List<String> fList) {
         this.funcList = fList;
     }
     
