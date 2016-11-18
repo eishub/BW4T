@@ -1,7 +1,7 @@
 package nl.tudelft.bw4t.client.gui.menu;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
@@ -12,7 +12,7 @@ public class ComboEntityModel extends AbstractListModel<String> implements Combo
 
     private final EntityComboModelProvider gui;
 
-    private List<String> entities = new ArrayList<>();
+    private List<String> entities = new LinkedList<>();
 
     private static final String[] DEFAULT_OPTIONS = new String[] { "all" };
     private String selection = DEFAULT_OPTIONS[0];

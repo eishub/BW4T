@@ -1,13 +1,13 @@
 package nl.tudelft.bw4t.client.environment;
 
 import java.rmi.RemoteException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
-import nl.tudelft.bw4t.client.BW4TClient;
-import nl.tudelft.bw4t.client.controller.ClientController;
 import eis.exceptions.PerceiveException;
 import eis.iilang.Percept;
+import nl.tudelft.bw4t.client.BW4TClient;
+import nl.tudelft.bw4t.client.controller.ClientController;
 
 /**
  * The Percepts Handler, which should retrieve the percepts from the environment.
@@ -28,7 +28,7 @@ public class PerceptsHandler {
     public static List<Percept> getAllPerceptsFromEntity(String entity, RemoteEnvironment env) throws PerceiveException {
         final BW4TClient client = env.getClient();
         if (client == null) {
-            return new LinkedList<>();
+            return new ArrayList<>(0);
         }
         try {
             if (entity.endsWith("gui")) {

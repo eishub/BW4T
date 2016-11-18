@@ -1,16 +1,12 @@
 package nl.tudelft.bw4t.client.gui.listeners;
 
-import eis.iilang.Percept;
-
 import java.awt.event.ActionEvent;
-import java.util.LinkedList;
-import java.util.List;
-
-import nl.tudelft.bw4t.client.controller.ClientController;
-import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
-import nl.tudelft.bw4t.client.startup.InitParam;
 
 import org.apache.log4j.Logger;
+
+import eis.iilang.Percept;
+import nl.tudelft.bw4t.client.controller.ClientController;
+import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 
 public class DropEPartnerActionListener extends AbstractClientActionListener {
     private static final Logger LOGGER = Logger.getLogger(DropEPartnerActionListener.class);

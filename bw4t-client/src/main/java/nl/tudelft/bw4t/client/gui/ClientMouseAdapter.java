@@ -2,11 +2,8 @@ package nl.tudelft.bw4t.client.gui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
 
-import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.gui.menu.ActionPopUpMenu;
-import nl.tudelft.bw4t.map.renderer.MapRenderSettings;
 
 /**
  * The Class ClientMouseAdapter.

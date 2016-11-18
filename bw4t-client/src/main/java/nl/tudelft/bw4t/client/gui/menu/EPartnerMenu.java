@@ -6,7 +6,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
-import nl.tudelft.bw4t.client.agent.BW4TAgent;
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.DropEPartnerActionListener;
@@ -17,7 +16,6 @@ import nl.tudelft.bw4t.client.message.MessageType;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
-import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 
 public class EPartnerMenu {
 

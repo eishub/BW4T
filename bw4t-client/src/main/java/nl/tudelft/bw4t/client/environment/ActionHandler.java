@@ -1,16 +1,16 @@
 package nl.tudelft.bw4t.client.environment;
 
-import eis.exceptions.ActException;
-import eis.exceptions.AgentException;
-import eis.exceptions.EntityException;
-import eis.iilang.Action;
-import eis.iilang.Percept;
-
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import eis.exceptions.ActException;
+import eis.exceptions.AgentException;
+import eis.exceptions.EntityException;
+import eis.iilang.Action;
+import eis.iilang.Percept;
 
 /** The ActionHandler Class handles the performAction function of the RemoteEnvironment. */
 public final class ActionHandler {
@@ -98,7 +98,7 @@ public final class ActionHandler {
         if (entities.length == 0) {
             return associatedEntities;
         }
-        Set<String> targetEntities = new HashSet<String>();
+        Set<String> targetEntities = new HashSet<String>(entities.length);
         for (String entity : entities) {
             if (!associatedEntities.contains(entity)) {
                 throw new ActException(ActException.WRONGENTITY);
@@ -152,7 +152,7 @@ public final class ActionHandler {
      */
     private static Map<String, Percept> getActionPercept(Set<String> targetEntities,
             RemoteEnvironment remoteEnvironment, Action action) throws ActException {
-        Map<String, Percept> actionPercepts = new HashMap<String, Percept>();
+        Map<String, Percept> actionPercepts = new HashMap<>();
         for (String entity : targetEntities) {
             try {
                 Percept percept = remoteEnvironment.performEntityAction(entity, action);

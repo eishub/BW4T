@@ -9,13 +9,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
+import eis.exceptions.NoEnvironmentException;
+import eis.exceptions.PerceiveException;
+import eis.iilang.Parameter;
 import nl.tudelft.bw4t.client.controller.percept.processors.BumpedProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.ColorBlindProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.ColorProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.EPartnerProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.GripperCapacityProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.HoldingBlocksProcessor;
-import nl.tudelft.bw4t.client.controller.percept.processors.HoldingProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.LocationProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.NegationProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.OccupiedProcessor;
@@ -35,12 +39,6 @@ import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
-
-import org.apache.log4j.Logger;
-
-import eis.exceptions.NoEnvironmentException;
-import eis.exceptions.PerceiveException;
-import eis.iilang.Parameter;
 
 /**
  * The Client Map Controller. This processes incoming percepts and pushes them
@@ -128,11 +126,10 @@ public class ClientMapController extends AbstractMapController {
 		}
 
 		clientController = controller;
-		perceptProcessors = new HashMap<String, PerceptProcessor>();
+		perceptProcessors = new HashMap<>(16);
 		perceptProcessors.put("not", new NegationProcessor());
 		perceptProcessors.put("robot", new RobotProcessor());
 		perceptProcessors.put("occupied", new OccupiedProcessor());
-		perceptProcessors.put("holding", new HoldingProcessor());
 		perceptProcessors.put("holdingblocks", new HoldingBlocksProcessor());
 		perceptProcessors.put("position", new PositionProcessor());
 		perceptProcessors.put("color", new ColorProcessor());
@@ -417,7 +414,7 @@ public class ClientMapController extends AbstractMapController {
 	 * @param perceptParameters
 	 *            the percept parameters
 	 */
-
+	@SuppressWarnings("deprecation")
 	public void handlePercept(String name, List<Parameter> perceptParameters) {
 		StringBuilder sb = new StringBuilder("Handling percept: ");
 		sb.append(name);

@@ -3,15 +3,10 @@ package nl.tudelft.bw4t.client.environment.handlers;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
-import eis.exceptions.ActException;
-import eis.exceptions.AgentException;
-import eis.iilang.Action;
-
 import java.util.HashSet;
 import java.util.LinkedList;
-
-import nl.tudelft.bw4t.client.environment.ActionHandler;
-import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import java.util.List;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Before;
@@ -19,6 +14,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import eis.exceptions.ActException;
+import eis.exceptions.AgentException;
+import eis.iilang.Action;
+import nl.tudelft.bw4t.client.environment.ActionHandler;
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 
 //@Ignore("Not yet implemented.")
 @RunWith(MockitoJUnitRunner.class)
@@ -37,9 +38,9 @@ public class ActionHandlerTest {
 
     @Test
     public void testPerformActionDelegated() throws ActException, AgentException {
-        LinkedList<String> agentsList = new LinkedList<String>();
+        List<String> agentsList = new LinkedList<>();
         agentsList.add("testAgent");
-        HashSet<String> entitySet = new HashSet<String>();
+        Set<String> entitySet = new HashSet<>(1);
         entitySet.add("testEntity");
         String agent = "testAgent";
         

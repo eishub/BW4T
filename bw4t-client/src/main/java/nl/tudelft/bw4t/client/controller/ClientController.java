@@ -10,12 +10,6 @@ import java.util.Set;
 
 import javax.swing.SwingUtilities;
 
-import nl.tudelft.bw4t.client.agent.HumanAgent;
-import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
-import nl.tudelft.bw4t.client.gui.menu.EntityComboModelProvider;
-import nl.tudelft.bw4t.map.view.ViewEPartner;
-
 import org.apache.log4j.Logger;
 
 import eis.exceptions.EntityException;
@@ -23,6 +17,11 @@ import eis.iilang.Identifier;
 import eis.iilang.Parameter;
 import eis.iilang.ParameterList;
 import eis.iilang.Percept;
+import nl.tudelft.bw4t.client.agent.HumanAgent;
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
+import nl.tudelft.bw4t.client.gui.menu.EntityComboModelProvider;
+import nl.tudelft.bw4t.map.view.ViewEPartner;
 
 /**
  * The Class ClientController. DOC What is this?

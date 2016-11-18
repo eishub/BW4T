@@ -3,16 +3,15 @@ package nl.tudelft.bw4t.client.controller.percept.processors;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.tudelft.bw4t.client.controller.ClientMapController;
-import nl.tudelft.bw4t.map.view.ViewEPartner;
-import nl.tudelft.bw4t.map.view.ViewEntity;
-
 import org.apache.log4j.Logger;
 
 import eis.iilang.Identifier;
 import eis.iilang.Numeral;
 import eis.iilang.Parameter;
 import eis.iilang.ParameterList;
+import nl.tudelft.bw4t.client.controller.ClientMapController;
+import nl.tudelft.bw4t.map.view.ViewEPartner;
+import nl.tudelft.bw4t.map.view.ViewEntity;
 
 /**
  * The Class EPartnerProcessor.
@@ -90,7 +89,7 @@ public class EPartnerProcessor implements PerceptProcessor {
 	 * @return Returns the String representation of the parameters list.
 	 */
 	private List<String> getStringTypes(ParameterList types) {
-		List<String> res = new ArrayList<String>();
+		List<String> res = new ArrayList<>(types.size());
 		for (Parameter t : types) {
 			res.add(((Identifier) t).getValue());
 		}

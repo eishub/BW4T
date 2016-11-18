@@ -1,12 +1,11 @@
 package nl.tudelft.bw4t.client.message;
 
-import eis.iilang.Parameter;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.StringTokenizer;
 
+import eis.iilang.Parameter;
 import nl.tudelft.bw4t.map.ColorTranslator;
 
 /**
@@ -21,10 +20,10 @@ public class MessageTranslator {
     private MessageTranslator(){
         
     }
-    private static final Map<String, StringToMessageCommand> stringToMessage = new HashMap<String, StringToMessageCommand>();
-    private static final Map<String, StringToMessageCommand> stringToMessageEquals = new HashMap<String, StringToMessageCommand>();
+    private static final Map<String, StringToMessageCommand> stringToMessage = new HashMap<>();
+    private static final Map<String, StringToMessageCommand> stringToMessageEquals = new HashMap<>();
     
-    private static final Map<MessageType, MessageCommand> messageCommands = new HashMap<MessageType, MessageCommand>();
+    private static final Map<MessageType, MessageCommand> messageCommands = new HashMap<>();
     
     static {
         

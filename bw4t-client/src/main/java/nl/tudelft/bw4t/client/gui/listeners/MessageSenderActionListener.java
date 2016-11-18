@@ -1,21 +1,17 @@
 package nl.tudelft.bw4t.client.gui.listeners;
 
+import java.awt.event.ActionEvent;
+
+import org.apache.log4j.Logger;
+
 import eis.exceptions.ActException;
 import eis.iilang.Identifier;
 import eis.iilang.Percept;
-
-import java.awt.event.ActionEvent;
-import java.util.LinkedList;
-import java.util.List;
-
 import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.message.BW4TMessage;
 import nl.tudelft.bw4t.client.message.MessageTranslator;
-import nl.tudelft.bw4t.map.renderer.MapController;
 import nl.tudelft.bw4t.map.view.ViewEntity;
-
-import org.apache.log4j.Logger;
 /**
  * ActionListener that sends a message when the connected menu item is pressed.
  */
