@@ -10,8 +10,6 @@ import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.mockito.internal.matchers.Equals;
-
 import nl.tudelft.bw4t.map.Door.Orientation;
 import nl.tudelft.bw4t.util.OneTimeInitializing;
 
@@ -21,7 +19,7 @@ import nl.tudelft.bw4t.util.OneTimeInitializing;
  * of the area. Zones can be rooms or corridor areas.
  * 
  * This class is not thread safe. However it is required that
- * {@link #hashCode()} and {@link Equals} are thread safe.
+ * {@link #hashCode()} and {@link #equals(Object)} are thread safe.
  */
 @SuppressWarnings("serial")
 @XmlRootElement
