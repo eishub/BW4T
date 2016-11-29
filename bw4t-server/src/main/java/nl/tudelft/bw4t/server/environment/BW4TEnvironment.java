@@ -93,7 +93,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	private ServerContextDisplay contextDisplay;
 	private final boolean guiEnabled;
 	private final String shutdownKey;
-	private boolean collisionEnabled;
 	private boolean drawPathsEnabled;
 
 	private int nextBotSpawnIndex = 0;
@@ -122,7 +121,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @throws JAXBException
 	 */
 	BW4TEnvironment(BW4TServer server2, String scenarioLocation, String mapLocation, boolean guiEnabled,
-			String shutdownKey, boolean collisionEnabled, boolean drawPathsEnabled)
+			String shutdownKey, boolean drawPathsEnabled)
 			throws IOException, ManagementException, ScenarioLoadException, JAXBException {
 		super();
 		setInstance(this);
@@ -131,7 +130,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		this.scenarioLocation = System.getProperty("user.dir") + "/" + scenarioLocation;
 		this.guiEnabled = guiEnabled;
 		this.shutdownKey = shutdownKey;
-		this.collisionEnabled = collisionEnabled;
 		this.drawPathsEnabled = drawPathsEnabled;
 	}
 
@@ -520,22 +518,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		startGUI();
 	}
 
-	public final boolean isCollisionEnabled() {
-		return collisionEnabled;
-	}
-
-	/**
-	 * Enable collision detection between bots.
-	 * 
-	 * @param state
-	 *            True if collision detection has to be enabled.
-	 */
-	public void setCollisionEnabled(boolean state) {
-		if (collisionEnabled != state) {
-			collisionEnabled = state;
-			notifyChange();
-		}
-	}
 
 	public final boolean isDrawPathsEnabled() {
 		return drawPathsEnabled;

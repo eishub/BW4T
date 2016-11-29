@@ -1,6 +1,5 @@
 package nl.tudelft.bw4t.server.model.robots;
 
-import java.awt.geom.Rectangle2D;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Stack;
@@ -23,14 +22,10 @@ import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
 import nl.tudelft.bw4t.server.util.ZoneLocator;
 import repast.simphony.engine.schedule.ScheduledMethod;
-import repast.simphony.query.space.grid.GridCell;
-import repast.simphony.query.space.grid.GridCellNgh;
 import repast.simphony.random.RandomHelper;
 import repast.simphony.space.SpatialException;
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.NdPoint;
-import repast.simphony.space.grid.Grid;
-import repast.simphony.space.grid.GridPoint;
 
 /**
  * Represents a robot in the BW4T environment.
@@ -379,14 +374,9 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 				movingDistance, angle);
 
 		try {
-			NdPoint destination = new NdPoint(getLocation().getX()
-					+ displacement[0], getLocation().getY() + displacement[1]);
-
 			// Check if the robot is alone on its map point
 			if (!hasBeenFree) {
 				hasBeenFree = isFree(AbstractRobot.class);
-			} else {
-				checkIfDestinationVacant(destination);
 			}
 
 			// Move the robot to the new position using the displacement
@@ -395,94 +385,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 		} catch (SpatialException e) {
 			LOGGER.log(BotLog.BOTLOG, "Bot " + this.name + " collided.");
 			stopRobot();
-		} catch (DestinationOccupiedException e) {
-			LOGGER.debug(e);
-			stopRobot();
 		}
-	}
-
-	/**
-	 * Check if the destination location is vacant, if not throw an exception.
-	 * Only relevant if collisions are enabled.
-	 * 
-	 * @param destination
-	 *            the destination
-	 * @throws DestinationOccupiedException
-	 *             exceoption thrown
-	 */
-	private void checkIfDestinationVacant(NdPoint destination)
-			throws DestinationOccupiedException {
-		if (BW4TEnvironment.getInstance().isCollisionEnabled()) {
-			// DOC/CHECK why a box of size 1?
-			Rectangle2D.Double box = getBoundingBoxCenteredAt(destination, 1.0f);
-			for (GridCell<AbstractRobot> cell : getNeighbours()) {
-				for (AbstractRobot bot : cell.items()) {
-					checkDestination(destination, box, bot);
-				}
-			}
-		}
-	}
-
-	/**
-	 * throw if bot!=this and box and bot overlap (collide). Used to check if
-	 * some other bot is already occupying a box.
-	 * 
-	 * @param destination
-	 *            to check
-	 * @param box
-	 *            in which the destination is.
-	 * @param bot
-	 *            to check.
-	 * @throws DestinationOccupiedException
-	 *             already occupied
-	 */
-	private void checkDestination(NdPoint destination, Rectangle2D.Double box,
-			AbstractRobot bot) throws DestinationOccupiedException {
-		if ((this != bot)
-				&& (box.intersects(bot.getBoundingBox())
-						|| bot.getBoundingBox().intersects(box)
-						|| box.contains(bot.getBoundingBox()) || bot
-						.getBoundingBox().contains(box))) {
-			throw new DestinationOccupiedException("Grid ["
-					+ destination.getX() + "," + destination.getY()
-					+ "] is occupied by " + bot, bot);
-		}
-	}
-
-	/**
-	 * Function that creates a rectangle the same size as the bot centered at
-	 * the destination locations.
-	 * 
-	 * @param destination
-	 *            The destination its centered at.
-	 * @return the box
-	 */
-	private Rectangle2D.Double getBoundingBoxCenteredAt(NdPoint destination,
-			double padding) {
-		Rectangle2D.Double box = new Rectangle2D.Double();
-		box.x = destination.getX();
-		box.y = destination.getY();
-		box.width = getBoundingBox().getWidth() + padding;
-		box.height = getBoundingBox().getHeight() + padding;
-
-		box.x = box.x - (box.width / 2);
-		box.y = box.y - (box.height / 2);
-		return box;
-	}
-
-	/**
-	 * Retrieve all neighbouring robots with an extent of 10. DOC why is this
-	 * extent 10? Is this a bug?
-	 * 
-	 * @return neighbours
-	 */
-	private List<GridCell<AbstractRobot>> getNeighbours() {
-		Grid<Object> grid = getGrid();
-		GridPoint location = getGridLocation();
-
-		GridCellNgh<AbstractRobot> nghCreator = new GridCellNgh<AbstractRobot>(
-				grid, location, AbstractRobot.class, 10, 10);
-		return nghCreator.getNeighborhood(true);
 	}
 
 	@Override

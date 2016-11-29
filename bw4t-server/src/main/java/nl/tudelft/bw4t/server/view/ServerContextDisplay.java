@@ -3,8 +3,6 @@ package nl.tudelft.bw4t.server.view;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -17,7 +15,6 @@ import java.util.TimerTask;
 import java.util.Vector;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -116,7 +113,6 @@ public class ServerContextDisplay extends JFrame {
  */
 @SuppressWarnings("serial")
 class ControlPanel extends JPanel {
-
 	/**
 	 * The log4j logger, logs to the console.
 	 */
@@ -132,9 +128,6 @@ class ControlPanel extends JPanel {
 
 	/** The slider for the tps. */
 	private final JSlider slider;
-
-	/** The collision checkbox. */
-	private final JCheckBox collisionCheckbox;
 
 	/**
 	 * @param disp
@@ -154,18 +147,7 @@ class ControlPanel extends JPanel {
 		add(resetbutton, BorderLayout.EAST);
 		add(new MapSelector(displayer), BorderLayout.NORTH);
 
-		collisionCheckbox = new JCheckBox("Enable Collisions", BW4TEnvironment.getInstance().isCollisionEnabled());
-		add(collisionCheckbox, BorderLayout.SOUTH);
-
-		collisionCheckbox.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				BW4TEnvironment.getInstance().setCollisionEnabled(e.getStateChange() == ItemEvent.SELECTED);
-			}
-		});
-
 		slider.addChangeListener(new ChangeListener() {
-
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				// now we have speed (on Hz axis) and we need delay (s axis).
@@ -188,11 +170,9 @@ class ControlPanel extends JPanel {
 
 		// 3196 FIXME delay startup of de UI till the stepper is ready.
 		new Timer().schedule(new TimerTask() {
-
 			@Override
 			public void run() {
 				SwingUtilities.invokeLater(new Runnable() {
-
 					@Override
 					public void run() {
 						slider.setEnabled(true);
@@ -206,7 +186,6 @@ class ControlPanel extends JPanel {
 		BW4TEnvironment.getInstance().addChangeListener(new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
-				collisionCheckbox.setSelected(BW4TEnvironment.getInstance().isCollisionEnabled());
 				updateDelay();
 			}
 		});
