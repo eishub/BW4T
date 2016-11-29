@@ -22,7 +22,6 @@ import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
 import nl.tudelft.bw4t.server.util.ZoneLocator;
 import repast.simphony.engine.schedule.ScheduledMethod;
-import repast.simphony.random.RandomHelper;
 import repast.simphony.space.SpatialException;
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.NdPoint;
@@ -223,12 +222,9 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 					// We are in a room so can drop the block
 					b.setHeldBy(null);
 					b.addToContext();
-					// Slightly jitter the location where the box is
-					// dropped.
 					double x = ourzone.getLocation().getX();
 					double y = ourzone.getLocation().getY();
-					b.moveTo(RandomHelper.nextDoubleFromTo(x - 5, x + 5),
-							RandomHelper.nextDoubleFromTo(y - 5, y + 5));
+					b.moveTo(x, y);
 				}
 			}
 		}
