@@ -75,7 +75,7 @@ public class MapLoaderTest {
         for (int i = 0; i < 100; i++) {
             Rectangle2D block = (Rectangle2D) method.invoke(null, room, blockList, random);
             assertTrue(block.getMinY() >= 1);
-            assertTrue(block.getMaxY() <= 9);
+            assertTrue(block.getMaxY() <= 10);
         }
     }
 
@@ -98,7 +98,7 @@ public class MapLoaderTest {
         for (int i = 0; i < 100; i++) {
             Rectangle2D block = (Rectangle2D) method.invoke(null, room, blockList, random);
             assertTrue(block.getMinX() >= 1);
-            assertTrue(block.getMaxX() <= 9);
+            assertTrue(block.getMaxX() <= 10);
         }
     }
 
