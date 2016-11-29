@@ -41,7 +41,6 @@ import repast.simphony.space.grid.StrictBorders;
  * The MapLoader class loads the map from a given map location.
  */
 public class MapLoader implements BW4TServerMapListerner {
-
     /**
      * Identifier used for the space projections, matched in context.xml
      */
@@ -239,7 +238,6 @@ public class MapLoader implements BW4TServerMapListerner {
             }
             zones.put(roomzone.getName(), room);
         }
-
     }
 
     /**
@@ -299,7 +297,6 @@ public class MapLoader implements BW4TServerMapListerner {
         }
 
         return sequence;
-
     }
 
     /**
@@ -440,8 +437,8 @@ public class MapLoader implements BW4TServerMapListerner {
      * @return check if the block is placed correctly
      */
     private static boolean checkPlacement(boolean blockPlacedOK, double x, double y, Rectangle2D bl) {
-        boolean noXoverlap = Math.abs(bl.getCenterX() - x) >= 2;
-        boolean noYoverlap = Math.abs(bl.getCenterY() - y) >= 2;
+        boolean noXoverlap = Math.abs(bl.getCenterX() - x) >= 1;
+        boolean noYoverlap = Math.abs(bl.getCenterY() - y) >= 1;
         boolean noOverlap = noXoverlap || noYoverlap;
         blockPlacedOK = blockPlacedOK && noOverlap;
         return blockPlacedOK;
@@ -455,5 +452,4 @@ public class MapLoader implements BW4TServerMapListerner {
         }
         return builder.toString();
     }
-
 }
