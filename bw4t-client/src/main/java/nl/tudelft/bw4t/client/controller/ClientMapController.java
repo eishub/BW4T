@@ -13,11 +13,9 @@ import org.apache.log4j.Logger;
 import eis.iilang.Parameter;
 import nl.tudelft.bw4t.client.controller.percept.processors.ColorProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.HoldingBlocksProcessor;
-import nl.tudelft.bw4t.client.controller.percept.processors.LocationProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.NegationProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.OccupiedProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.PerceptProcessor;
-import nl.tudelft.bw4t.client.controller.percept.processors.PositionProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.RobotProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.SequenceIndexProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.SequenceProcessor;
@@ -99,16 +97,14 @@ public class ClientMapController extends AbstractMapController {
 			throw new IllegalStateException("myBot is not initialized properly");
 		}
 
-		perceptProcessors = new HashMap<>(8);
+		perceptProcessors = new HashMap<>(7);
 		perceptProcessors.put("not", new NegationProcessor());
 		perceptProcessors.put("robot", new RobotProcessor());
 		perceptProcessors.put("occupied", new OccupiedProcessor());
 		perceptProcessors.put("holdingblocks", new HoldingBlocksProcessor());
-		perceptProcessors.put("position", new PositionProcessor());
 		perceptProcessors.put("color", new ColorProcessor());
 		perceptProcessors.put("sequence", new SequenceProcessor());
 		perceptProcessors.put("sequenceIndex", new SequenceIndexProcessor());
-		perceptProcessors.put("location", new LocationProcessor());
 	}
 
 	@Override
