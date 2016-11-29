@@ -119,7 +119,6 @@ public class ClientMapControllerTest {
 				3));
 		assertTrue(stackContains(clientMapController.getTheBot().getHolding(),
 				1));
-
 	}
 
 	@Test
@@ -158,20 +157,6 @@ public class ClientMapControllerTest {
 			}
 		}
 		return false;
-	}
-
-	@Test
-	public void testHandlePerceptPosition() throws IllegalAccessException,
-			InvocationTargetException, NoSuchMethodException {
-		LinkedList<Parameter> parameters = new LinkedList<Parameter>();
-		parameters.add(new Numeral(3));
-		parameters.add(new Numeral(3));
-		parameters.add(new Numeral(4));
-		clientMapController.handlePercept("position", parameters);
-		Long blockID = new Long(3);
-		ViewBlock block = clientMapController.getBlock(blockID);
-		assertEquals(3.0, block.getPosition().getX(), 0.001);
-		assertEquals(4.0, block.getPosition().getY(), 0.001);
 	}
 
 	@Test
@@ -257,5 +242,4 @@ public class ClientMapControllerTest {
 		testHandlePerceptRobot();
 		clientMapController.handlePercept("tudelft", parameters);
 	}
-
 }
