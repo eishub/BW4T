@@ -3,23 +3,12 @@ package nl.tudelft.bw4t.client.controller;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.Stack;
 
-import nl.tudelft.bw4t.client.BW4TClient;
-import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
-import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
-import nl.tudelft.bw4t.map.BlockColor;
-import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.map.Zone;
-import nl.tudelft.bw4t.map.view.ViewBlock;
-
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -30,18 +19,18 @@ import eis.iilang.Identifier;
 import eis.iilang.Numeral;
 import eis.iilang.Parameter;
 import eis.iilang.ParameterList;
+import nl.tudelft.bw4t.client.BW4TClient;
+import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
+import nl.tudelft.bw4t.map.BlockColor;
+import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.map.Zone;
+import nl.tudelft.bw4t.map.view.ViewBlock;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ClientMapControllerTest {
-
-	@Mock
-	private ClientController clientController;
-
 	private NewMap map = new NewMap();
 	@Mock
 	private RemoteEnvironment remoteEnvironment;
-	@Mock
-	private BW4TClientGUI clientGUI;
 	@Mock
 	private BW4TClient client;
 
@@ -51,7 +40,7 @@ public class ClientMapControllerTest {
 	public void setUp() throws Exception {
 		// when(map.getArea()).thenReturn(new Point(1.0, 1.0));
 		// when(clientController.getEnvironment()).thenReturn(remoteEnvironment);
-		clientMapController = new ClientMapController(map, clientController);
+		clientMapController = new ClientMapController(map);
 	}
 
 	/*********************************************************************************/
@@ -92,21 +81,6 @@ public class ClientMapControllerTest {
 	/*********************************************************************************/
 	/******************************** tests ******************************************/
 	/*********************************************************************************/
-
-	@Ignore
-	@Test
-	public void testRun() {
-		clientMapController.run();
-		verify(clientController, times(1)).getEnvironment();
-	}
-
-	@Test
-	public void testUpdateRenderer() {
-		clientMapController.updateRenderer(clientGUI);
-		verify(clientGUI, times(1)).validate();
-		verify(clientGUI, times(1)).repaint();
-	}
-
 	@Test
 	public void testHandlePerceptNotOccupied() {
 		addRooms();
@@ -201,21 +175,6 @@ public class ClientMapControllerTest {
 	}
 
 	@Test
-	public void testHandlePerceptPositionEPartner() {
-		LinkedList<Parameter> parameters = new LinkedList<Parameter>();
-		parameters.add(new Numeral(3));
-		parameters.add(new Numeral(3));
-		parameters.add(new Numeral(3));
-		parameters.add(new ParameterList());
-		testHandlePerceptEPartner();
-		clientMapController.handlePercept("position", parameters);
-		assertEquals(3, clientMapController.getViewEPartner(3).getLocation()
-				.getX(), 0.001);
-		assertEquals(3, clientMapController.getViewEPartner(3).getLocation()
-				.getX(), 0.001);
-	}
-
-	@Test
 	public void testHandlePerceptColor() throws NoSuchMethodException,
 			IllegalAccessException, InvocationTargetException {
 		LinkedList<Parameter> parameters = new LinkedList<Parameter>();
@@ -234,82 +193,6 @@ public class ClientMapControllerTest {
 		assertEquals(3, clientMapController.getVisibleBlocks().size());
 		ViewBlock block = clientMapController.getBlock(new Long(3));
 		assertEquals(BlockColor.BLUE, block.getColor());
-	}
-
-	@Test
-	public void testHandlePerceptEPartner() {
-		LinkedList<Parameter> parameters = new LinkedList<Parameter>();
-		parameters.add(new Numeral(3));
-		parameters.add(new Identifier("NAAM"));
-		parameters.add(new Numeral(3));
-		parameters.add(new ParameterList());
-		clientMapController.handlePercept("epartner", parameters);
-		assertEquals(new Long(3), clientMapController.getViewEPartner(3)
-				.getId());
-		assertEquals("NAAM", clientMapController.getViewEPartner(3).getName());
-	}
-
-	@Test
-	public void testHandlePerceptEPartnerNull() {
-		testHandlePerceptEPartner();
-		testHandlePerceptEPartner();
-	}
-
-	@Test
-	public void testHandlePerceptEPartnerHolderID() {
-		testHandlePerceptRobot();
-		LinkedList<Parameter> parameters = new LinkedList<Parameter>();
-		parameters.add(new Numeral(2));
-		parameters.add(new Identifier("NAAM"));
-		parameters.add(new Numeral(2));
-		parameters.add(new ParameterList());
-		clientMapController.handlePercept("epartner", parameters);
-		assertEquals(new Long(2), clientMapController.getViewEPartner(2)
-				.getId());
-		assertEquals("NAAM", clientMapController.getViewEPartner(2).getName());
-	}
-
-	@Test
-	public void testHandlePerceptEPartnerHolderIDSameID() {
-		testHandlePerceptRobot();
-		testHandlePerceptEPartnerHolderID();
-		LinkedList<Parameter> parameters = new LinkedList<Parameter>();
-		parameters.add(new Numeral(2));
-		parameters.add(new Identifier("NAAM"));
-		parameters.add(new Numeral(2));
-		parameters.add(new ParameterList());
-		clientMapController.handlePercept("epartner", parameters);
-		assertEquals(new Long(2), clientMapController.getViewEPartner(2)
-				.getId());
-		assertEquals("NAAM", clientMapController.getViewEPartner(2).getName());
-	}
-
-	@Test
-	public void testHandlePerceptEPartnerSameIDHoldingPartner() {
-		testHandlePerceptRobot();
-		testHandlePerceptEPartnerHolderID();
-		// testHandlePerceptHolding(); // Why is this called separately??????
-		LinkedList<Parameter> parameters = new LinkedList<Parameter>();
-		parameters.add(new Numeral(2));
-		parameters.add(new Identifier("NAAM"));
-		parameters.add(new Numeral(3));
-		parameters.add(new ParameterList());
-		clientMapController.handlePercept("epartner", parameters);
-		assertEquals(new Long(2), clientMapController.getViewEPartner(2)
-				.getId());
-		assertEquals("NAAM", clientMapController.getViewEPartner(2).getName());
-	}
-
-	@Test
-	public void testHandlePerceptEPartnerSameIDHoldingPartnerNegative() {
-		LinkedList<Parameter> parameters = new LinkedList<Parameter>();
-		parameters.add(new Numeral(1));
-		parameters.add(new Identifier("NAAM"));
-		parameters.add(new Numeral(-2));
-		parameters.add(new ParameterList());
-		clientMapController.handlePercept("epartner", parameters);
-		assertEquals(-1, clientMapController.getTheBot().getHoldingEpartner());
-		assertEquals("NAAM", clientMapController.getViewEPartner(1).getName());
 	}
 
 	@Test

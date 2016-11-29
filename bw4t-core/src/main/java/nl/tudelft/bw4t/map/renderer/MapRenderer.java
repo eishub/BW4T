@@ -19,7 +19,6 @@ import nl.tudelft.bw4t.map.Path;
 import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
-import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 
 /** Implementation of the {@link MapRenderInterface} */
@@ -92,15 +91,12 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 		super.paintComponent(g);
 		updateMinimumSize();
 		Graphics2D g2d = (Graphics2D) g;
-		drawChargingZones(g2d);
 		drawRooms(g2d);
-		drawBlockades(g2d);
 		drawLabels(g2d);
 		drawDropZone(g2d);
 		drawBlocks(g2d);
 		drawEntity(g2d);
 		drawSequence(g2d);
-		drawEPartners(g2d);
 		drawPaths(g2d);
 	}
 
@@ -156,44 +152,6 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 			g2d.setColor(Color.BLACK);
 			g2d.draw(roomDisplayCoordinates);
 
-		}
-	}
-
-	/**
-	 * Draw charging zones in transpart green (color predefined in Zone).
-	 * 
-	 * @param g2d
-	 *            Graphics2D where will be drawn
-	 */
-	public void drawChargingZones(Graphics2D g2d) {
-		MapRenderSettings set = getController().getRenderSettings();
-
-		for (Zone chargingzone : getController().getChargingZones()) {
-			// paint the charging zone in transparent green
-			g2d.setColor(Zone.CHARGING_ZONE_COLOR);
-			Shape roomDisplayCoordinates = set.transformRectangle(chargingzone
-					.getBoundingbox().getRectangle());
-			g2d.fill(roomDisplayCoordinates);
-		}
-	}
-
-	/**
-	 * Draw blockades in transparent green (color predefined in Zone).
-	 * 
-	 * @param g2d
-	 *            Graphics2D where will be drawn
-	 */
-	public void drawBlockades(Graphics2D g2d) {
-		MapRenderSettings set = getController().getRenderSettings();
-
-		for (Zone blockade : getController().getBlockades()) {
-			// paint the blockades in transparent green
-			g2d.setColor(Zone.BLOCKADE_COLOR);
-			Shape roomDisplayCoordinates = set.transformRectangle(blockade
-					.getBoundingbox().getRectangle());
-			g2d.fill(roomDisplayCoordinates);
-			g2d.setColor(Color.BLACK);
-			g2d.draw(roomDisplayCoordinates);
 		}
 	}
 
@@ -315,29 +273,6 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 								/ 2, (int) set.scale(e.getLocation().getY())
 								+ set.getEntityNameOffset());
 			}
-		}
-	}
-
-	/**
-	 * Display the EPartners in black.
-	 * 
-	 * @param g2d
-	 *            Graphics2D where will be drawn
-	 */
-	public void drawEPartners(Graphics2D g2d) {
-		MapRenderSettings set = getController().getRenderSettings();
-
-		for (ViewEPartner eP : getController().getVisibleEPartners()) {
-			g2d.setColor(eP.getColor());
-			Point2D loc = eP.getLocation();
-			int x = (int) set.scale(loc.getX());
-			int y = (int) set.scale(loc.getY());
-			final int size = set.scale(eP.getSize());
-			int[] xpoints = new int[] { x, x - size, x + size };
-			int[] ypoints = new int[] { y + size, y - size, y - size };
-			g2d.fillPolygon(xpoints, ypoints, 3);
-			g2d.setColor(Color.BLACK);
-			g2d.drawPolygon(xpoints, ypoints, 3);
 		}
 	}
 

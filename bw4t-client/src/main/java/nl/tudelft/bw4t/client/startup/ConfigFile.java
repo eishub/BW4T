@@ -62,8 +62,6 @@ public class ConfigFile {
 			return Integer.toString(config.getClientPort());
 		case GOAL:
 			return Boolean.toString(config.isUseGoal());
-		case LAUNCHGUI:
-			return Boolean.toString(config.isLaunchGui());
 		case SERVERIP:
 			return config.getServerIp();
 		case SERVERPORT:

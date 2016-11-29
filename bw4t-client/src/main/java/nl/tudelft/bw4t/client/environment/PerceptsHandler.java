@@ -7,7 +7,6 @@ import java.util.List;
 import eis.exceptions.PerceiveException;
 import eis.iilang.Percept;
 import nl.tudelft.bw4t.client.BW4TClient;
-import nl.tudelft.bw4t.client.controller.ClientController;
 
 /**
  * The Percepts Handler, which should retrieve the percepts from the environment.
@@ -34,12 +33,7 @@ public class PerceptsHandler {
             if (entity.endsWith("gui")) {
                 entity = entity.substring(0, entity.length() - 4);
             }
-            final List<Percept> percepts = client.getAllPerceptsFromEntity(entity);
-            ClientController cc = env.getEntityController(entity);
-            if (cc != null) {
-                percepts.addAll(cc.getToBePerformedAction());
-            }
-            return percepts;
+            return client.getAllPerceptsFromEntity(entity);
         } catch (RemoteException e) {
             throw env.environmentSuddenDeath(e);
         }

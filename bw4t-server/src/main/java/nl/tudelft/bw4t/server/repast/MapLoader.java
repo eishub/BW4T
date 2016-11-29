@@ -20,9 +20,7 @@ import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.BW4TServerMapListerner;
 import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.doors.Door;
-import nl.tudelft.bw4t.server.model.zone.Blockade;
 import nl.tudelft.bw4t.server.model.zone.BlocksRoom;
-import nl.tudelft.bw4t.server.model.zone.ChargingZone;
 import nl.tudelft.bw4t.server.model.zone.Corridor;
 import nl.tudelft.bw4t.server.model.zone.DropZone;
 import nl.tudelft.bw4t.server.model.zone.Room;
@@ -190,10 +188,6 @@ public class MapLoader implements BW4TServerMapListerner {
 
         createRooms(smap, zones, roomblocks, sequence);
 
-        createBlockades(smap, zones);
-
-        createChargingZones(smap, zones);
-
         connectAllZones(smap, zones);
     }
 
@@ -268,40 +262,6 @@ public class MapLoader implements BW4TServerMapListerner {
         door.setPos(x, y, ori);
 
         door.connectTo(room);
-    }
-
-    /**
-     * Creates the blockades.
-     * 
-     * @param context
-     *            the context
-     * @param zones
-     *            the zones
-     */
-    private static void createBlockades(BW4TServerMap context, Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones) {
-        for (Zone blockzone : context.getMap().getZones(Zone.Type.BLOCKADE)) {
-            zones.put(blockzone.getName(), new Blockade(blockzone, context));
-        }
-    }
-
-    /**
-     * Creates the charging zones.
-     * 
-     * @param context
-     *            the context
-     * @param zones
-     *            the zones
-     * @param space
-     *            the space
-     * @param grid
-     *            the grid
-     */
-    private static void createChargingZones(BW4TServerMap context,
-            Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones) {
-        for (Zone chargezone : context.getMap().getZones(Zone.Type.CHARGINGZONE)) {
-            ChargingZone czone = new ChargingZone(chargezone, context);
-            zones.put(chargezone.getName(), czone);
-        }
     }
 
     /**

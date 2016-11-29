@@ -27,12 +27,10 @@ import eis.iilang.Action;
 import eis.iilang.EnvironmentState;
 import eis.iilang.Parameter;
 import eis.iilang.Percept;
-import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.network.BW4TClientActions;
 import nl.tudelft.bw4t.network.BW4TServerHiddenActions;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
-import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.server.eis.EntityInterface;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.Launcher;
@@ -93,10 +91,10 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	 * {@inheritDoc}
 	 */
 	@Override
-	public synchronized void registerClient(BW4TClientActions client, int agentCount, int humanCount, Double speed)
+	public synchronized void registerClient(BW4TClientActions client, int agentCount, Double speed)
 			throws RemoteException {
 		try {
-			registerClient(client, new ClientInfo(getClientHost(), agentCount, humanCount, speed));
+			registerClient(client, new ClientInfo(getClientHost(), agentCount, speed));
 		} catch (ServerNotActiveException e) {
 			throw new RuntimeException("call to associateEntity comes from non-active server", e);
 		}
@@ -143,15 +141,10 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	 */
 	private void launchEntities(final BW4TClientActions client, final ClientInfo cInfo, final BW4TEnvironment env) {
 		new Thread(new Runnable() {
-
 			@Override
 			public void run() {
 				// for every request and attach them
 				env.spawnBots(cInfo.getRequestedBots(), client);
-
-				// for every request and attach them
-				env.spawnEPartners(cInfo.getRequestedEPartners(), client);
-
 			}
 		}).start();
 	}
@@ -169,36 +162,11 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 		}
 	}
 
-	/**
-	 * Notify given client of a new free entity, if the new entity is of
-	 * interest for that client. Note, we use this both when an entity is new
-	 * and when an entity became free after use.
-	 * 
-	 * @param client
-	 * @param ci
-	 * @throws EntityException
-	 */
-	public void notifyFreeEpartner(BW4TClientActions client, EPartnerConfig ci) throws EntityException {
-		try {
-			String entity = ci.getEpartnerName();
-			if ("unknown".equals(Launcher.getInstance().getEnvironment().getType(entity))) {
-				BW4TEnvironment.getInstance().setType(entity, EntityType.EPARTNER.nameLower());
-			}
-			client.handleNewEntity(entity);
-			return;
-		} catch (RemoteException e) {
-			reportClientProblem(client, e);
-		}
-	}
-
 	public void notifyFreeRobot(BW4TClientActions client, BotConfig ci) throws EntityException {
 		try {
 			String entity = ci.getBotName();
 			if ("unknown".equals(Launcher.getInstance().getEnvironment().getType(entity))) {
 				String type = "bot";
-				if (EntityType.HUMAN == ci.getBotController()) {
-					type = "human";
-				}
 				BW4TEnvironment.getInstance().setType(entity, type);
 			}
 			client.handleNewEntity(entity);

@@ -32,7 +32,7 @@ public class RobotEntityTest {
 	private Context<Object> context = new DefaultContext<>();
 	private Method method;
 	private Method method2;
-	private Method method3;
+	//private Method method3;
 	private Field field;
 	private Room mockRoom = Mockito.mock(Room.class);
 
@@ -58,8 +58,8 @@ public class RobotEntityTest {
 		method = robot.getClass().getDeclaredMethod("getVisible", Class.class);
 		method.setAccessible(true);
 
-		method3 = robot.getClass().getDeclaredMethod("getSizes");
-		method3.setAccessible(true);
+		//method3 = robot.getClass().getDeclaredMethod("getSizes");
+		//method3.setAccessible(true);
 
 		method2 = BW4TEnvironment.class.getDeclaredMethod("setInstance",
 				BW4TEnvironment.class);
@@ -104,8 +104,4 @@ public class RobotEntityTest {
 		assertNotNull(robot.getRoom());
 
 	}
-
-	// getSize is not testable
-	// getAt is not testable
-
 }

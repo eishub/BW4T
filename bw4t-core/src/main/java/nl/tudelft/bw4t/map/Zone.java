@@ -1,6 +1,5 @@
 package nl.tudelft.bw4t.map;
 
-import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -31,11 +30,7 @@ public class Zone implements Serializable, OneTimeInitializing {
 		/** Room. Only 1 bot allowed */
 		ROOM,
 		/** Corridor. Adjustable 1 bot or multiple bots allowed */
-		CORRIDOR,
-		/** Charging zone. Where robots charge */
-		CHARGINGZONE,
-		/** Blockade. Obstacle in the path of robots */
-		BLOCKADE
+		CORRIDOR
 	}
 
 	/**
@@ -44,14 +39,8 @@ public class Zone implements Serializable, OneTimeInitializing {
 	 */
 	public static final String DROP_ZONE_NAME = "DropZone";
 	public static final String START_ZONE_NAME = "StartZone";
-	public static final String BLOCKADE_NAME = "Blockade";
 	public static final String CORRIDOR_NAME = "Corridor";
-	public static final String CHARGING_ZONE_NAME = "ChargeZone";
 	public static final String ROOM_NAME = "Room";
-
-	/** Set color of blockade and chargingzone. */
-	public static final Color BLOCKADE_COLOR = new Color(0.6f, 0f, 0f);
-	public static final Color CHARGING_ZONE_COLOR = new Color(0f, 0.5f, 0f);
 
 	/**
 	 * NAME MUST BE SET UNIQUE. Default null otherwise XML serialization will
@@ -217,7 +206,7 @@ public class Zone implements Serializable, OneTimeInitializing {
 	}
 
 	public boolean isOpenSpace() {
-		return getType() == Type.CORRIDOR || getType() == Type.CHARGINGZONE;
+		return getType() == Type.CORRIDOR;
 	}
 
 	/**

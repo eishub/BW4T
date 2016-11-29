@@ -35,9 +35,8 @@ public class AbstractRobotTest {
         when(smap.getContinuousSpace()).thenReturn(space);
         when(smap.getGridSpace()).thenReturn(grid);
 
-        int cap = 2;
         String name = "Bot1";
-        bot = new NavigatingRobot(name, smap, true, cap);
+        bot = new NavigatingRobot(name, smap);
     }
 
     // can no do because no such field in navigatingrobot

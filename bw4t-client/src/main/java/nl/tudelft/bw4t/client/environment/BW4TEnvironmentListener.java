@@ -12,7 +12,6 @@ import eis.exceptions.EntityException;
 import eis.exceptions.RelationException;
 import eis.iilang.EnvironmentState;
 import nl.tudelft.bw4t.client.agent.BW4TAgent;
-import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.startup.InitParam;
 
 /**
@@ -54,10 +53,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
 				agent.setKilled();
 				environment.removeRunningAgent(agent);
 			}
-
 		}
-
-		environment.removeEntityController(entity);
 	}
 
 	/**
@@ -87,15 +83,7 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
 		LOGGER.debug("Handeling new entity of the environment: " + entity);
 
 		try {
-			final int agentCount = environment.getAgents().size();
-			final boolean isHuman = "human".equals(environment.getType(entity));
-			BW4TAgent agent = null;
-
-			if (isHuman) {
-				agent = new HumanAgent("Human" + agentCount, environment);
-			} else {
-				agent = newAgent(InitParam.AGENTCLASS.getValue(), entity);
-			}
+			BW4TAgent agent = newAgent(InitParam.AGENTCLASS.getValue(), entity);
 
 			agent.registerEntity(entity);
 			environment.addRunningAgent(agent);

@@ -1,9 +1,7 @@
 package nl.tudelft.bw4t.server.model.robots;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
@@ -28,9 +26,6 @@ import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.doors.Door;
 import nl.tudelft.bw4t.server.model.robots.NavigatingRobot.State;
-import nl.tudelft.bw4t.server.model.robots.handicap.GripperHandicap;
-import nl.tudelft.bw4t.server.model.robots.handicap.Human;
-import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.server.model.zone.Corridor;
 import nl.tudelft.bw4t.server.model.zone.Room;
 import repast.simphony.context.Context;
@@ -79,22 +74,14 @@ public class NavigatingRobotTest {
 		when(smap.getContinuousSpace()).thenReturn(space);
 		when(smap.getGridSpace()).thenReturn(grid);
 
-		int cap = 2;
-		int cap2 = 1;
-		bot = new NavigatingRobot("Bot1", smap, true, cap);
-		bot2 = new NavigatingRobot("Bot2", smap, false, cap2);
-		bot3 = new NavigatingRobot("Bot3", smap, true, cap2);
+		bot = new NavigatingRobot("Bot1", smap);
+		bot2 = new NavigatingRobot("Bot2", smap);
+		bot3 = new NavigatingRobot("Bot3", smap);
 		bot4 = null;
-		bot5 = new NavigatingRobot("Bot5", smap, true, cap2);
-		bot6 = new NavigatingRobot("Bot5", smap, true, cap2);
+		bot5 = new NavigatingRobot("Bot5", smap);
+		bot6 = new NavigatingRobot("Bot5", smap);
 
 		b = new Block(BlockColor.BLUE, smap);
-	}
-
-	@Test
-	public void getStateCollidedTest() {
-		bot.setCollided(true);
-		assertEquals(bot.getState(), State.COLLIDED);
 	}
 
 	@Test
@@ -180,27 +167,12 @@ public class NavigatingRobotTest {
 		type = bot.checkZoneAccess(mockedZone, mockedRoom, mockedDoor);
 		assertEquals(type, MoveType.ENTERING_ROOM);
 
-		type = bot.checkZoneAccess(mockedZone, mockedCorridor, mockedDoor);
-		assertEquals(type, MoveType.HIT_OCCUPIED_ZONE);
+		//type = bot.checkZoneAccess(mockedZone, mockedCorridor, mockedDoor);
+		//assertEquals(type, MoveType.HIT_OCCUPIED_ZONE);
 
 		when(mockedCorridor.containsMeOrNothing(bot)).thenReturn(true);
 		type = bot.checkZoneAccess(mockedZone, mockedCorridor, mockedDoor);
 		assertEquals(type, MoveType.ENTER_CORRIDOR);
-	}
-
-	@Test
-	public void clearCollidedTest() {
-		bot.setCollided(true);
-		assertEquals(bot.isCollided(), true);
-
-		bot.clearCollided();
-		assertEquals(bot.isCollided(), false);
-	}
-
-	@Test
-	public void isOneBotPerZoneTest() {
-		assertEquals(true, bot.isOneBotPerZone());
-		assertEquals(false, bot2.isOneBotPerZone());
 	}
 
 	@Test
@@ -241,53 +213,14 @@ public class NavigatingRobotTest {
 	}
 
 	@Test
-	public void getBatteryTest() {
-		Battery testBattery = new Battery(100, 100, 0);
-		bot.setBattery(testBattery);
-		assertEquals(bot.getBattery(), testBattery);
-	}
-
-	@Test
 	public void getParentTest() {
 		assertNull(bot.getParent());
-	}
-
-	@Test
-	public void getHandicapsListTest() {
-		assertEquals(bot.getHandicapsList().size(), 0);
-		IRobot r = new GripperHandicap(bot);
-		assertTrue(r.getHandicapsList().contains("Gripper"));
-		assertEquals(bot.getHandicapsList().size(), 1);
-	}
-
-	@Test
-	public void getGripperCapacityTest() {
-		bot.setGripperCapacity(5);
-		assertEquals(bot.getGripperCapacity(), 5);
 	}
 
 	@Test
 	public void getSpeedModTest() {
 		bot.setSpeedMod(0.821);
 		assertEquals(0.821, bot.getSpeedMod(), 0.01);
-	}
-
-	@Test
-	public void isHumanTest() {
-		assertFalse(bot.isHuman());
-		IRobot r = new Human(bot);
-		assertTrue(r.getHandicapsList().contains("Human"));
-		assertTrue(bot.isHuman());
-	}
-
-	@Test
-	public void getEPartnerTest() {
-		assertNull(bot.getEPartner());
-	}
-
-	@Test
-	public void isHoldingEPartnerTest() {
-		assertFalse(bot.isHoldingEPartner());
 	}
 
 	@Test

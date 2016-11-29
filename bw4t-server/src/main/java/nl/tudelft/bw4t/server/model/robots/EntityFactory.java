@@ -1,9 +1,7 @@
 package nl.tudelft.bw4t.server.model.robots;
 
 import nl.tudelft.bw4t.scenariogui.BotConfig;
-import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.server.model.BW4TServerMap;
-import nl.tudelft.bw4t.server.model.epartners.EPartner;
 import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 
 /**
@@ -29,18 +27,4 @@ public interface EntityFactory {
      * @return the created robot
      */
     IRobot makeRobot(BotConfig config);
-    
-    /**
-     * Make a new Epartner with the default configuration.
-     * @param name the entity name for this e-partner
-     * @return the e-partner object
-     */
-    EPartner makeDefaultEPartner(String name);
-    
-    /**
-     * Make a EPartner according to the given specifications.
-     * @param c the configuration
-     * @return the new e-partner
-     */
-    EPartner makeEPartner(EPartnerConfig c);
 }

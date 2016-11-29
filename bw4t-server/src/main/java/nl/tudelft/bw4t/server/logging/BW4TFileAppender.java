@@ -6,7 +6,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.List;
 
 import org.apache.log4j.Appender;
 import org.apache.log4j.Layout;
@@ -121,38 +120,15 @@ public class BW4TFileAppender extends RollingFileAppender {
      */
      private static void logBot() {
         BW4TEnvironment env = BW4TEnvironment.getInstance();
-        
         for (String entity : env.getEntities()) {
             if (env.getEntity(entity) instanceof RobotEntity) {
                 RobotEntity rEntity = (RobotEntity) env.getEntity(entity);
                 if (!env.getFreeEntities().contains(entity)) {
-                    LOGGER.log(BotLog.BOTLOG, "agentsummary " + stringHandicap(rEntity));
                     logSummary(rEntity.getRobotObject().getAgentRecord());
                 }
             }
         }
     }
-     
-     /**
-      * Gets all handicaps and make a String of it, which can be used for the logfile.
-      * 
-      * @param bot RobotEntity
-      * @return String
-      */
-     private static String stringHandicap(RobotEntity bot) {
-         List<String> handicap = bot.getRobotObject().getHandicapsList();
-         StringBuffer buf = new StringBuffer(); 
-         buf.append(bot.getRobotObject().getName() + " handicaps ");
-         if (handicap.isEmpty()) {
-             buf.append("none");
-         } else {
-            
-             for (int i = 0; i < handicap.size(); i++) {
-             buf.append(handicap.get(i));
-             }
-         }
-         return buf.toString();
-     }
      
      /**
       * Write summary in logfile.

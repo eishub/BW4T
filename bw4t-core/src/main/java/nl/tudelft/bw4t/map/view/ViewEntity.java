@@ -22,14 +22,6 @@ public class ViewEntity implements OneTimeInitializing {
 
 	private static final int DEFAULT_ROBOT_SIZE = 2;
 
-	private static final int DEFAULT_GRIPPER_CAPACITY = 1;
-
-	private static final double DEFAULT_BATTERY_LEVEL = 0.0;
-
-	private static final boolean DEFAULT_COLORBLINDNESS = false;
-
-	private static final long DEFAULT_HOLDING_EPARTNER = -1;
-
 	/** Initialize id */
 	private Long id = null;
 
@@ -49,21 +41,6 @@ public class ViewEntity implements OneTimeInitializing {
 
 	/** Initialize size of robot */
 	private int robotsize = DEFAULT_ROBOT_SIZE;
-
-	/** Initialize holdingEpartner */
-	private long holdingEpartner = DEFAULT_HOLDING_EPARTNER;
-
-	/** Initialize collided to false. */
-	private boolean collided = false;
-
-	/** Initialize batteryLevel to 0. */
-	private double batteryLevel = DEFAULT_BATTERY_LEVEL;
-
-	/** the max number of blocks the gripper can hold */
-	private int gripperCapacity = DEFAULT_GRIPPER_CAPACITY;
-
-	/** true if agent is color blind */
-	private boolean isColorBlind = DEFAULT_COLORBLINDNESS;
 
 	/**
 	 * Empty constructor, initialize default object.
@@ -210,64 +187,6 @@ public class ViewEntity implements OneTimeInitializing {
 		this.robotsize = robotsize;
 	}
 
-	public long getHoldingEpartner() {
-		return holdingEpartner;
-	}
-
-	public void setHoldingEpartner(long holdingEpartner) {
-		this.holdingEpartner = holdingEpartner;
-	}
-
-	public boolean isCollided() {
-		return collided;
-	}
-
-	public void setCollided(boolean collided) {
-		this.collided = collided;
-	}
-
-	public double getBatteryLevel() {
-		return batteryLevel;
-	}
-
-	public void setBatteryLevel(double batteryLevel) {
-		this.batteryLevel = batteryLevel;
-	}
-
-	/**
-	 * Sets the current capacity of the robot's gripper.
-	 * 
-	 * @param capacity
-	 *            the max number of blocks the gripper can hold.
-	 */
-	public void setGripperCapacity(int capacity) {
-		gripperCapacity = capacity;
-
-	}
-
-	/**
-	 * Get the current capacity of the robot's gripper.
-	 * 
-	 * @return the max number of blocks the gripper can hold
-	 */
-
-	public int getGripperCapacity() {
-		return gripperCapacity;
-	}
-
-	/**
-	 * check if entity is color blind
-	 * 
-	 * @return true if entity is color blind.
-	 */
-	public boolean isColorBlind() {
-		return isColorBlind;
-	}
-
-	public void setColorBlind(boolean isblind) {
-		isColorBlind = isblind;
-	}
-
 	/**
 	 * Copy all field values (except ID) from given {@link ViewEntity}.
 	 */
@@ -276,11 +195,6 @@ public class ViewEntity implements OneTimeInitializing {
 		setLocation(ent.getLocation());
 		setHoldingStack(ent.getHolding());
 		setSize(ent.getRobotSize());
-		setGripperCapacity(ent.getGripperCapacity());
-		setBatteryLevel(ent.getBatteryLevel());
-		setCollided(ent.isCollided());
-		setColorBlind(ent.isColorBlind());
-		setHoldingEpartner(ent.getHoldingEpartner());
 	}
 
 	/**
@@ -302,21 +216,5 @@ public class ViewEntity implements OneTimeInitializing {
 		if (ent.getRobotSize() != DEFAULT_ROBOT_SIZE) {
 			setSize(ent.getRobotSize());
 		}
-		if (ent.getGripperCapacity() != DEFAULT_GRIPPER_CAPACITY) {
-			setGripperCapacity(ent.getGripperCapacity());
-		}
-		if (ent.getBatteryLevel() != DEFAULT_BATTERY_LEVEL) {
-			setBatteryLevel(ent.getBatteryLevel());
-		}
-		if (ent.isCollided()) {
-			setCollided(ent.isCollided());
-		}
-		if (ent.isColorBlind == DEFAULT_COLORBLINDNESS) {
-			setColorBlind(ent.isColorBlind());
-		}
-		if (ent.getHoldingEpartner() != DEFAULT_HOLDING_EPARTNER) {
-			setHoldingEpartner(ent.getHoldingEpartner());
-		}
-
 	}
 }

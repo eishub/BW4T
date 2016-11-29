@@ -31,13 +31,6 @@ public enum InitParam {
 	/** Number of agents that we have. */
 	AGENTCOUNT("0"),
 	/**
-	 * Launch GUI for agent controlled entities showing their behaviour and
-	 * percepts
-	 */
-	LAUNCHGUI("true"),
-	/** Number of human bots (is this to connect GUIs?) */
-	HUMANCOUNT("1"),
-	/**
 	 * The java agent class to load when new entities appear.
 	 */
 	AGENTCLASS("nl.tudelft.bw4t.client.agent.BW4TAgent"),
@@ -54,14 +47,8 @@ public enum InitParam {
 	 * The file from which the client reads the configuration.
 	 */
 	CONFIGFILE(""),
-	/**
-	 * Forces the use of the human GUI with an GOAL agent to translate the
-	 * commands
-	 */
-	GOALHUMAN("false"),
 	/** Name or filename of the map to use */
 	MAP(""),
-
 	/**
 	 * Preferred speed. Empty -> null -> not set.
 	 */

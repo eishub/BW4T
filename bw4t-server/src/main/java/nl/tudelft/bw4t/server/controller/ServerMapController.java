@@ -13,12 +13,10 @@ import nl.tudelft.bw4t.map.renderer.AbstractMapController;
 import nl.tudelft.bw4t.map.renderer.MapController;
 import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
 import nl.tudelft.bw4t.map.view.ViewBlock;
-import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.blocks.Block;
-import nl.tudelft.bw4t.server.model.epartners.EPartner;
 import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.server.model.zone.DropZone;
 import nl.tudelft.bw4t.server.model.zone.Room;
@@ -110,17 +108,6 @@ public class ServerMapController extends AbstractMapController {
 			}
 		}
 		return entities;
-	}
-
-	@Override
-	public Set<ViewEPartner> getVisibleEPartners() {
-		IndexedIterable<Object> objects = serverMap.getContext().getObjects(EPartner.class);
-		Set<ViewEPartner> epartners = new HashSet<>(objects.size());
-		for (Object epartner : objects) {
-			EPartner epartnerTemp = (EPartner) epartner;
-			epartners.add(epartnerTemp.getView());
-		}
-		return epartners;
 	}
 
 	@Override

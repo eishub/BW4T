@@ -6,7 +6,6 @@ import java.util.List;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
-import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 
 /**
  * This stores the entities and their type that a client requests when
@@ -17,7 +16,6 @@ class ClientInfo {
 
 	private BW4TClientConfig clientConfig;
 	private List<BotConfig> requestedBots = new LinkedList<>();
-	private List<EPartnerConfig> requestedEPartners = new LinkedList<>();
 	private final String name;
 	private Double speed = null; // environment rate, in steps per second.
 									// null=not set (server keep as it is).
@@ -28,25 +26,16 @@ class ClientInfo {
 	 * @param uniqueName
 	 * @param reqAgent
 	 *            #bots that the client needs
-	 * @param reqHuman
-	 *            #humans that the client needs
 	 * @param sp
 	 *            the speed (fps). Can be null to ignore
 	 */
-	public ClientInfo(String uniqueName, int reqAgent, int reqHuman, Double sp) {
-		assert reqHuman >= 0;
+	public ClientInfo(String uniqueName, int reqAgent, Double sp) {
 		assert reqAgent >= 0;
 		name = uniqueName;
 		this.clientConfig = new BW4TClientConfig();
 		if (reqAgent > 0) {
 			BotConfig bot = BotConfig.createDefaultRobot();
 			bot.setBotAmount(reqAgent);
-			clientConfig.addBot(bot);
-			requestedBots.add(bot);
-		}
-		if (reqHuman > 0) {
-			BotConfig bot = BotConfig.createDefaultHumans();
-			bot.setBotAmount(reqHuman);
 			clientConfig.addBot(bot);
 			requestedBots.add(bot);
 		}
@@ -66,18 +55,11 @@ class ClientInfo {
 		if (clientConfig.getBots() != null) {
 			this.requestedBots = clientConfig.getBots();
 		}
-		if (clientConfig.getEpartners() != null) {
-			this.requestedEPartners = clientConfig.getEpartners();
-		}
 		this.clientConfig = clientConfig;
 	}
 
 	public List<BotConfig> getRequestedBots() {
 		return requestedBots;
-	}
-
-	public List<EPartnerConfig> getRequestedEPartners() {
-		return requestedEPartners;
 	}
 
 	public String getMapFile() {

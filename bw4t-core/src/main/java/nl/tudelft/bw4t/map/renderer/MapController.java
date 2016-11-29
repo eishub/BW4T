@@ -7,7 +7,6 @@ import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Path;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
-import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 
 /**
@@ -56,22 +55,6 @@ public interface MapController extends Runnable {
 	Set<Zone> getRooms();
 
 	/**
-	 * Get all the {@link Zone}s that are Charging Zones, that can recharge
-	 * robots.
-	 * 
-	 * @return the set of zones
-	 */
-	Set<Zone> getChargingZones();
-
-	/**
-	 * Get all the {@link Zone} that are blockades, that block the way of
-	 * robots.
-	 * 
-	 * @return the set of blockades
-	 */
-	Set<Zone> getBlockades();
-
-	/**
 	 * Get all the {@link Zone}s.
 	 * 
 	 * @return the set of zones
@@ -107,15 +90,6 @@ public interface MapController extends Runnable {
 	 * @return the set of visible entities
 	 */
 	Set<ViewEntity> getVisibleEntities();
-
-	/**
-	 * Get the set of e-Partners currently visible. This function may be not
-	 * thread safe because it relies on the function
-	 * {@link ViewEPartner#isVisible()}.
-	 * 
-	 * @return the set of visible e-Partners.
-	 */
-	Set<ViewEPartner> getVisibleEPartners();
 
 	/**
 	 * Get the set of paths currently visible.

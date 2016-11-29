@@ -40,16 +40,13 @@ import nl.tudelft.bw4t.map.Entity;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.network.BW4TClientActions;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
-import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.server.BW4TServer;
-import nl.tudelft.bw4t.server.eis.EPartnerEntity;
 import nl.tudelft.bw4t.server.eis.EntityInterface;
 import nl.tudelft.bw4t.server.eis.RobotEntity;
 import nl.tudelft.bw4t.server.logging.BW4TFileAppender;
 import nl.tudelft.bw4t.server.logging.BotLog;
 import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.BW4TServerMapListerner;
-import nl.tudelft.bw4t.server.model.epartners.EPartner;
 import nl.tudelft.bw4t.server.model.robots.EntityFactory;
 import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 import nl.tudelft.bw4t.server.repast.BW4TBuilder;
@@ -58,7 +55,6 @@ import nl.tudelft.bw4t.server.util.MapUtils;
 import nl.tudelft.bw4t.server.view.ServerContextDisplay;
 import repast.simphony.context.Context;
 import repast.simphony.scenario.ScenarioLoadException;
-import repast.simphony.space.continuous.NdPoint;
 
 /**
  * The central environment which runs the data model and performs actions
@@ -723,23 +719,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	}
 
 	/**
-	 * @return The list of points the humans are right now.
-	 */
-	private List<Point2D> getHumanWithoutEPartners() {
-		List<Point2D> points = new LinkedList<>();
-
-		for (Object robot : serverMap.getContext().getObjects(IRobot.class)) {
-			IRobot robotTemp = (IRobot) robot;
-			if (robotTemp.isHuman() && !robotTemp.isHoldingEPartner()) {
-				NdPoint location = robotTemp.getLocation();
-				points.add(new Point2D.Double(location.getX(), location.getY()));
-			}
-		}
-
-		return points;
-	}
-
-	/**
 	 * Spawns a new Robot according to the given specifications and notifies the
 	 * given client.
 	 * 
@@ -777,46 +756,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	}
 
 	/**
-	 * Spawns a new e-Partner according to the given specifications and notifies
-	 * the given client.
-	 * 
-	 * @param epartners
-	 *            list of epartners to spawn
-	 * @param client
-	 *            the client to notify
-	 */
-	public void spawnEPartners(List<EPartnerConfig> epartners, BW4TClientActions client) {
-
-		List<Point2D> points = getHumanWithoutEPartners();
-		int index = 0;
-
-		for (EPartnerConfig c : epartners) {
-
-			int created = 0;
-			String name = c.getEpartnerName();
-
-			while (created < c.getEpartnerAmount()) {
-				c.setEpartnerName(String.format(ENTITY_NAME_FORMAT, name, created + 1));
-				try {
-					// if we run out of humans who don't have an e-Partner.
-					if (index >= points.size()) {
-						spawn(c, getNextBotSpawnPoint());
-					} else {
-						spawn(c, points.get(index));
-					}
-
-					// assign e-Partner to client
-					server.notifyFreeEpartner(client, c);
-				} catch (EntityException e) {
-					LOGGER.error("Failed to register new Robot in the environment.", e);
-				}
-				index++;
-				created++;
-			}
-		}
-	}
-
-	/**
 	 * Spawns a new Robot according to the given specifications and notifies the
 	 * given client.
 	 * 
@@ -838,29 +777,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		this.registerEntity(c.getBotName(), be);
 		// Place the Robot
 		bot.moveTo(p.getX(), p.getY());
-	}
-
-	/**
-	 * Spawns a new EPartner according to the given specifications and notifies
-	 * the given client.
-	 * 
-	 * @param c
-	 *            the configuration to use
-	 * @param point
-	 *            the point the e-Partner should spawn at
-	 * @throws EntityException
-	 *             when we are unable to register EPartner
-	 */
-	private void spawn(EPartnerConfig c, Point2D point) throws EntityException {
-		EntityFactory entityFactory = Launcher.getInstance().getEntityFactory();
-		// create robot from request
-		EPartner epartner = entityFactory.makeEPartner(c);
-		// create the entity for the environment
-		EPartnerEntity ee = new EPartnerEntity(epartner);
-		// register the entity in the environment
-		this.registerEntity(epartner.getName(), ee);
-		// Place the EPartner
-		epartner.moveTo(point.getX(), point.getY());
 	}
 
 	/**

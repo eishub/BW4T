@@ -6,7 +6,7 @@ package nl.tudelft.bw4t.map;
 public enum EntityType {
     
     /** Possible types */
-    HUMAN, AGENT, EPARTNER;
+    AGENT;
 
     /**
      * @return {@link #name()} in lower case
@@ -41,12 +41,8 @@ public enum EntityType {
      */
     public static EntityType getType(String name) throws RuntimeException {
         switch (name.toLowerCase()) {
-        case "human":
-            return HUMAN;
         case "agent":
             return AGENT;
-        case "epartner":
-            return EPARTNER;
         default:
             throw new RuntimeException("Unsupported type of entity found.");
         }

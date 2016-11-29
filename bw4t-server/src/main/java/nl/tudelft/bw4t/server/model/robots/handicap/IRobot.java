@@ -1,6 +1,5 @@
 package nl.tudelft.bw4t.server.model.robots.handicap;
 
-import java.util.List;
 import java.util.Stack;
 
 import nl.tudelft.bw4t.map.view.ViewEntity;
@@ -8,10 +7,8 @@ import nl.tudelft.bw4t.server.model.BoundedMoveableInterface;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.doors.Door;
-import nl.tudelft.bw4t.server.model.epartners.EPartner;
 import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.model.robots.AgentRecord;
-import nl.tudelft.bw4t.server.model.robots.Battery;
 import nl.tudelft.bw4t.server.model.robots.MoveType;
 import nl.tudelft.bw4t.server.model.robots.NavigatingRobot;
 import nl.tudelft.bw4t.server.model.robots.NavigatingRobot.State;
@@ -168,18 +165,6 @@ public interface IRobot extends BoundedMoveableInterface {
 	Zone getZone();
 
 	/**
-	 * Moves the robot by displacing it for the given amount. If the robot
-	 * collides with something, the movement target is cancelled to avoid
-	 * continuous bumping.
-	 * 
-	 * @param x
-	 *            the displacement in the x-dimension
-	 * @param y
-	 *            the displacement in the y-dimension
-	 */
-	void moveByDisplacement(double x, double y);
-
-	/**
 	 * makes the robot moves in the environment.
 	 */
 	void move();
@@ -191,31 +176,9 @@ public interface IRobot extends BoundedMoveableInterface {
 	void stopRobot();
 
 	/**
-	 * @return whether the robot has collided with something
-	 */
-	boolean isCollided();
-
-	/**
-	 * @param collided
-	 *            the value "collided" should be set to
-	 */
-	void setCollided(boolean collided);
-
-	/**
-	 * clear the collision flag. You can use this to reset the flag after you
-	 * took notice of the collision.
-	 */
-	void clearCollided();
-
-	/**
 	 * @return True if an agent is connected to the robot
 	 */
 	boolean isConnected();
-
-	/**
-	 * @return True if there is only one robot per zone
-	 */
-	boolean isOneBotPerZone();
 
 	/**
 	 * @return The size of the robot
@@ -241,22 +204,6 @@ public interface IRobot extends BoundedMoveableInterface {
 	AgentRecord getAgentRecord();
 
 	/**
-	 * @return the robot's battery
-	 */
-	Battery getBattery();
-
-	/**
-	 * @param battery
-	 *            gives a new battery to a robot
-	 */
-	void setBattery(Battery battery);
-
-	/**
-	 * The robot is in a charging zone. The robot charges.
-	 */
-	void recharge();
-
-	/**
 	 * get the parent, returns null because Robot is the super parent
 	 * 
 	 * @return null
@@ -278,22 +225,6 @@ public interface IRobot extends BoundedMoveableInterface {
 	void setParent(IRobot hI);
 
 	/**
-	 * @return returns which handicaps are attached to the robot
-	 */
-	List<String> getHandicapsList();
-
-	/**
-	 * @return the number of grippers a robot has
-	 */
-	int getGripperCapacity();
-
-	/**
-	 * @param newcap
-	 *            changes the number of grippers to a new variable
-	 */
-	void setGripperCapacity(int newcap);
-
-	/**
 	 * @return how much the speed of the robot is multiplied by
 	 */
 	double getSpeedMod();
@@ -305,35 +236,6 @@ public interface IRobot extends BoundedMoveableInterface {
 	 *            must be rate between 0 and 1. Default is 0.5.
 	 */
 	void setSpeedMod(double speedMod);
-
-	/**
-	 * @return whether the robot is controlled by a human agent (is human,
-	 *         essentially)
-	 */
-	boolean isHuman();
-
-	/**
-	 * @return the e-Partner held by a human only used if the robot has a Human
-	 *         wrapped around it
-	 */
-	EPartner getEPartner();
-
-	/**
-	 * @return whether the human is holding a e-Partner only used if the robot
-	 *         has a Human wrapped around it
-	 */
-	boolean isHoldingEPartner();
-
-	/**
-	 * @param eP
-	 *            only used if the robot has a Human wrapped around it
-	 */
-	void pickUpEPartner(EPartner eP);
-
-	/**
-	 * only used if the robot has a Human wrapped around it
-	 */
-	void dropEPartner();
 
 	/**
 	 * Get the current state of the robot.
@@ -382,23 +284,5 @@ public interface IRobot extends BoundedMoveableInterface {
 	 * @return the Robot
 	 */
 	AbstractRobot getSuperParent();
-
-	/**
-	 * Retrieve all obstacles in the path of the robot.
-	 * 
-	 * @return the obstacles
-	 */
-	List<BoundedMoveableObject> getObstacles();
-
-	/**
-	 * Clears the obstacles.
-	 */
-	public void clearObstacles();
-
-	/**
-	 * @return Whether the old target from before the navigateObstacles action
-	 *         has become unreachable.
-	 */
-	boolean isDestinationUnreachable();
 
 }

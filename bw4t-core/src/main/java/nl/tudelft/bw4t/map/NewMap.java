@@ -28,11 +28,6 @@ public class NewMap implements Serializable {
 	private static final long serialVersionUID = -1346330091943903326L;
 
 	/**
-	 * Boolean, true when there is one Bot per Corridor Zone default false
-	 */
-	private Boolean oneBotPerCorridorZone = false;
-
-	/**
 	 * The number of random colored blocks to be added to the map (not to the
 	 * sequence)
 	 */
@@ -144,14 +139,6 @@ public class NewMap implements Serializable {
 		this.zones = zones;
 	}
 
-	public Boolean getOneBotPerCorridorZone() {
-		return oneBotPerCorridorZone;
-	}
-
-	public void setOneBotPerCorridorZone(Boolean oneBotPerCorridorZone) {
-		this.oneBotPerCorridorZone = oneBotPerCorridorZone;
-	}
-
 	/**
 	 * Add new zone
 	 * 
@@ -194,7 +181,7 @@ public class NewMap implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Map[onebotperzone=" + oneBotPerCorridorZone + ", randomblocks="
+		return "Map[randomblocks="
 				+ randomBlocks + ",seed=" + seed + ",sequence=" + sequence
 				+ ",zones=" + zones + "]";
 	}

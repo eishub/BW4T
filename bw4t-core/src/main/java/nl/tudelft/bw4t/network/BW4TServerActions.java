@@ -34,16 +34,13 @@ public interface BW4TServerActions extends Remote {
 	 *            the client that wants to register
 	 * @param agentCount
 	 *            the amount of agent entities that the client is waiting for
-	 * @param humanCount
-	 *            the amount of human GUI entities that the client is waiting
-	 *            for
 	 * @param speed
 	 *            the speed (fps) requested by client. If null, can be ignored.
 	 * @throws RemoteException
 	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 */
-	void registerClient(BW4TClientActions client, int agentCount, int humanCount, Double speed) throws RemoteException;
+	void registerClient(BW4TClientActions client, int agentCount, Double speed) throws RemoteException;
 
 	/**
 	 * Called when a client wants to register itself to this server

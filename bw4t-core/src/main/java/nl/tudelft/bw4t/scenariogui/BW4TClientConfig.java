@@ -42,17 +42,8 @@ public class BW4TClientConfig implements Serializable {
 	@XmlElementWrapper(name = "bots")
 	@XmlElement(name = "bot")
 	private List<BotConfig> bots = new LinkedList<>();
-
+	
 	private transient List<BotConfig> oldBots = new LinkedList<>();
-
-	/**
-	 * The XML element wrapper for the list of epartners.
-	 */
-	@XmlElementWrapper(name = "epartners")
-	@XmlElement(name = "epartner")
-	private List<EPartnerConfig> epartners = new LinkedList<>();
-
-	private transient List<EPartnerConfig> oldEpartners = new LinkedList<>();
 
 	/**
 	 * An empty <code>BW4TClientConfig</code> object.
@@ -249,88 +240,13 @@ public class BW4TClientConfig implements Serializable {
 	}
 
 	/**
-	 * Add an epartner to the configuration file.
-	 *
-	 * @param theEpartner
-	 *            The epartner that is to be added.
+	 * Clears the bot list and the history that came with it.
 	 */
-	public void addEpartner(EPartnerConfig theEpartner) {
-		epartners.add(theEpartner);
-	}
-
-	/**
-	 * Remove an epartner from the configuration file.
-	 *
-	 * @param theEpartner
-	 *            The epartner that is to be removed.
-	 */
-	public void removeEpartner(EPartnerConfig theEpartner) {
-		epartners.remove(theEpartner);
-	}
-
-	public List<EPartnerConfig> getEpartners() {
-		return epartners;
-	}
-
-	public List<EPartnerConfig> getOldEpartners() {
-		return oldEpartners;
-	}
-
-	public EPartnerConfig getEpartner(int index) {
-		return epartners.get(index);
-	}
-
-	/**
-	 * Updates the EpartnerConfig list.
-	 */
-	public void updateOldEpartnerConfigs() {
-		oldEpartners = new ArrayList<>(epartners);
-	}
-
-	/**
-	 * Returns the amount of epartners in the epartner list.
-	 *
-	 * @return The amount of epartners in the epartner list.
-	 */
-	public int getAmountEPartner() {
-		int epartnerCount = 0;
-		for (int i = 0; i < epartners.size(); i++) {
-			epartnerCount = epartnerCount + epartners.get(i).getEpartnerAmount();
-		}
-		return epartnerCount;
-	}
-
-	/**
-	 * Compares the EpartnerConfig lists.
-	 *
-	 * @param config
-	 *            The EpartnerConfig list to be compared.
-	 * @return If the EpartnerConfigs lists are equal.
-	 */
-	public boolean compareEpartnerConfigs(List<EPartnerConfig> config) {
-		if (epartners.size() != config.size()) {
-			return false;
-		}
-
-		for (int i = 0; i < epartners.size(); i++) {
-			if (!epartners.get(i).ecToString().equals(config.get(i).ecToString())) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Clears the bot and e-partner list and the history that came with it.
-	 */
-	public void clearBotsAndEpartners() {
+	public void clearBots() {
 		getBots().clear();
-		getEpartners().clear();
 
 		// Delete the history as well.
 		updateOldBotConfigs();
-		updateOldEpartnerConfigs();
 	}
 
 	@Override

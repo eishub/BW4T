@@ -21,10 +21,6 @@ public enum MoveType {
      */
     HIT_CLOSED_DOOR,
     /**
-     * bumped into an occupied zone
-     */
-    HIT_OCCUPIED_ZONE,
-    /**
      * Going from a Zone into free unzoned space.
      */
     ENTERING_FREESPACE,
@@ -51,7 +47,6 @@ public enum MoveType {
     }
 
     public boolean isHit() {
-        return this == HIT_CLOSED_DOOR || this == HIT_WALL
-                || this == HIT_OCCUPIED_ZONE;
+        return this == HIT_CLOSED_DOOR || this == HIT_WALL;
     }
 }

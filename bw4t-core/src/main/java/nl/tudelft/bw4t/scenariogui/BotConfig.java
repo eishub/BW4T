@@ -24,25 +24,8 @@ public final class BotConfig implements Serializable, Cloneable {
 	private int amount = 1;
 	private int botSize = 2;
 	private int botSpeed = 50;
-	private int botBatteryCapacity = 10;
-	private int numberOfGrippers = 1;
-	private boolean batteryEnabled = false;
-	private boolean hasColorBlindHandicap = false;
-	private boolean hasGripperHandicap = false;
-	private boolean hasMoveSpeedHandicap = false;
-	private boolean hasSizeOverloadHandicap = false;
 	private String fileName = "*.goal";
 	private String referenceName = "";
-
-	/**
-	 * @return the default configuration of a Human
-	 */
-	public static BotConfig createDefaultHumans() {
-		BotConfig bot = new BotConfig();
-		bot.setBotName("Human");
-		bot.setBotController(EntityType.HUMAN);
-		return bot;
-	}
 
 	/**
 	 * @return the default configuration of a robot
@@ -112,84 +95,13 @@ public final class BotConfig implements Serializable, Cloneable {
 		botSpeed = newSpeed;
 	}
 
-	public boolean isBatteryEnabled() {
-		return this.batteryEnabled;
-	}
-
-	@XmlElement
-	public void setBatteryEnabled(boolean batteryEnabled) {
-		this.batteryEnabled = batteryEnabled;
-	}
-
-	public int getBotBatteryCapacity() {
-		return botBatteryCapacity;
-	}
-
-	@XmlElement
-	public void setBotBatteryCapacity(int newBatteryCapacity) {
-		botBatteryCapacity = newBatteryCapacity;
-	}
-
-	public double getBotBatteryDischargeRate() {
-		return calculateDischargeRate(botSize, botSpeed);
-	}
-
-	public boolean getColorBlindHandicap() {
-		return hasColorBlindHandicap;
-	}
-
-	@XmlElement
-	public void setColorBlindHandicap(boolean bool) {
-		hasColorBlindHandicap = bool;
-	}
-
-	public boolean getGripperHandicap() {
-		return hasGripperHandicap;
-	}
-
-	@XmlElement
-	public void setGripperHandicap(boolean bool) {
-		hasGripperHandicap = bool;
-	}
-
-	public boolean getMoveSpeedHandicap() {
-		return hasMoveSpeedHandicap;
-	}
-
-	@XmlElement
-	public void setMoveSpeedHandicap(boolean bool) {
-		hasMoveSpeedHandicap = bool;
-	}
-
-	public boolean getSizeOverloadHandicap() {
-		return hasSizeOverloadHandicap;
-	}
-
-	@XmlElement
-	public void setSizeOverloadHandicap(boolean bool) {
-		hasSizeOverloadHandicap = bool;
-	}
-
-	public int getGrippers() {
-		return this.numberOfGrippers;
-	}
-
-	@XmlElement
-	public void setGrippers(int grippers) {
-		this.numberOfGrippers = grippers;
-	}
-
 	/**
 	 * Returns all the properties as a String.
 	 *
 	 * @return All the BotConfig properties.
 	 */
 	public String bcToString() {
-		return name + controller + amount + botSize + botSpeed
-				+ botBatteryCapacity + numberOfGrippers + batteryEnabled
-				+ hasColorBlindHandicap + hasGripperHandicap
-				+ hasMoveSpeedHandicap + hasSizeOverloadHandicap + fileName
-				+ referenceName;
+		return name + controller + amount + botSize + botSpeed + fileName + referenceName;
 	}
 
 	public String getReferenceName() {

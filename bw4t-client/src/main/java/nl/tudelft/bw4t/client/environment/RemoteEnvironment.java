@@ -35,8 +35,6 @@ import eis.iilang.Parameter;
 import eis.iilang.Percept;
 import nl.tudelft.bw4t.client.BW4TClient;
 import nl.tudelft.bw4t.client.agent.BW4TAgent;
-import nl.tudelft.bw4t.client.agent.HumanAgent;
-import nl.tudelft.bw4t.client.controller.ClientController;
 import nl.tudelft.bw4t.client.startup.InitParam;
 import nl.tudelft.bw4t.eis.MapParameter;
 import nl.tudelft.bw4t.map.NewMap;
@@ -74,7 +72,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	private static final Logger LOGGER = Logger.getLogger(RemoteEnvironment.class);
 	private BW4TClient client = null;
 	private final List<EnvironmentListener> environmentListeners = new LinkedList<>();
-	private final Map<String, ClientController> entityToGUI = new HashMap<>();
 
 	/**
 	 * Stores for each agent (represented by a string) a set of listeners.
@@ -364,48 +361,10 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 		LOGGER.debug("Associating Agent " + agentId + " with Entity " + entityId + ".");
 		try {
 			getClient().associateEntity(agentId, entityId);
-			startEntityGUI(agentId, entityId);
 		} catch (RemoteException e) {
 			throw environmentSuddenDeath(e);
 		} catch (Exception e) {
 			throw new RelationException("failed to associate entity", e);
-		}
-	}
-
-	/**
-	 * Startup the GUI by instantiating a {@link ClientController}.
-	 * 
-	 * @param agentId
-	 *            the agent to attach the controller to
-	 * @param entityId
-	 *            the entity displayed by the controller
-	 * @throws EntityException
-	 *             if we fail to create the controller or agent
-	 * @throws AgentException
-	 *             if we fail to register the new human agent
-	 * @throws RelationException
-	 *             if we fail to associate the new human agent
-	 */
-	private void startEntityGUI(String agentId, String entityId)
-			throws EntityException, AgentException, RelationException {
-		if (hasEntityGUI(entityId)) {
-			ClientController control = null;
-			if ("human".equals(getType(entityId))) {
-				HumanAgent agent = (HumanAgent) getRunningAgent(agentId);
-				if (agent == null) {
-					agent = new HumanAgent("Human" + getAgents().size(), this);
-					agent.registerEntity(entityId);
-					addRunningAgent(agent);
-					associateEntity(agent.getAgentId(), entityId);
-					agent.start();
-					return;
-				}
-				control = new ClientController(this, entityId, agent);
-			} else {
-				control = new ClientController(this, entityId);
-			}
-			control.startupGUI();
-			putEntityController(entityId, control);
 		}
 	}
 
@@ -444,36 +403,10 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	@Override
 	public void freePair(String agent, String entity) throws RelationException {
 		try {
-			removeEntityController(entity);
 			getClient().freePair(agent, entity);
 		} catch (RemoteException e) {
 			throw environmentSuddenDeath(e);
 		}
-	}
-
-	/**
-	 * Check whether the given entity has a gui attached or will have one
-	 * attached.
-	 * 
-	 * @param entity
-	 *            the entity to check
-	 * @return true iff the entity can have a gui
-	 */
-	public boolean hasEntityGUI(String entity) {
-		if (entityToGUI.containsKey(entity) || storedPercepts.containsKey(entity)) {
-			return true;
-		}
-		try {
-			String type = getType(entity);
-			if ("human".equals(type)) {
-				return true;
-			} else if ("bot".equals(type)) {
-				return !isConnectedToGoal() || InitParam.LAUNCHGUI.getBoolValue();
-			}
-		} catch (EntityException e) {
-			LOGGER.error(String.format("Could not retrieve the type of entity %s!", entity), e);
-		}
-		return false;
 	}
 
 	/**
@@ -488,17 +421,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	 * @throws RemoteException
 	 */
 	public Percept performEntityAction(String entity, Action action) throws RemoteException, ActException {
-		if (isConnectedToGoal() && "sendToGUI".equals(action.getName())) {
-			final ClientController entityGUI = getEntityController(entity);
-			if (entityGUI == null) {
-				ActException e = new ActException("sendToGUI failed:" + entity + " is not connected to a GUI.");
-				e.setType(ActException.FAILURE);
-				throw e;
-			}
-			return entityGUI.sendToGUI(action.getParameters());
-		} else {
-			return getClient().performEntityAction(entity, action);
-		}
+		return getClient().performEntityAction(entity, action);
 	}
 
 	/**
@@ -646,33 +569,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 		for (Percept p : all) {
 			p.setSource(name);
 		}
-		saveAndSendPercepts(name, all);
 		return all;
-	}
-
-	/**
-	 * Tries to send the percepts to the given entity, if it is not yet present
-	 * we will store the percepts in a map.
-	 * 
-	 * @param entity
-	 *            the entity name
-	 * @param percepts
-	 *            the percepts for the entity
-	 */
-	protected void saveAndSendPercepts(String entity, Collection<Percept> percepts) {
-		if (!hasEntityGUI(entity)) {
-			return;
-		}
-		ClientController cc = this.getEntityController(entity);
-		if (cc != null) {
-			if (isConnectedToGoal() && storedPercepts.containsKey(entity)) {
-				cc.handlePercepts(storedPercepts.get(entity));
-				storedPercepts.remove(entity);
-			}
-			cc.handlePercepts(percepts);
-		} else {
-			storePercepts(entity, percepts);
-		}
 	}
 
 	/**
@@ -823,13 +720,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	 *            the name of the agent to remove
 	 */
 	public void removeRunningAgent(String agent) {
-		try {
-			for (String entity : getAssociatedEntities(agent)) {
-				removeEntityController(entity);
-			}
-		} catch (AgentException e) {
-			LOGGER.warn("Unable to get associated entities.", e);
-		}
 		runningAgents.remove(agent);
 
 	}
@@ -1012,53 +902,6 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	public void handleStateChange(EnvironmentState newState) {
 		for (EnvironmentListener listener : getEnvironmentListeners()) {
 			listener.handleStateChange(newState);
-		}
-	}
-
-	/**
-	 * Get the gui controller associated with the given entity.
-	 * 
-	 * @param entity
-	 *            the name of the entity
-	 * @return the gui controller
-	 */
-	public ClientController getEntityController(String entity) {
-		return entityToGUI.get(entity);
-	}
-
-	/**
-	 * Add or remove a gui controller to/from the system.
-	 * 
-	 * @param entity
-	 *            the name of the entity
-	 * @param control
-	 *            the gui controller
-	 */
-	public void putEntityController(String entity, ClientController control) {
-		if (control == null) {
-			entityToGUI.remove(entity);
-		} else {
-			entityToGUI.put(entity, control);
-		}
-	}
-
-	/**
-	 * Stops any associated gui from this client connected to the given entity.
-	 * 
-	 * @param entity
-	 *            the name of the entity to be disconnected
-	 */
-	public void removeEntityController(String entity) {
-		ClientController control = getEntityController(entity);
-		if (control != null) {
-			control.stop();
-			putEntityController(entity, null);
-			try {
-				// Take some time to let the thread stop itself
-				Thread.sleep(50);
-			} catch (InterruptedException e) {
-				// ignore interruptions
-			}
 		}
 	}
 

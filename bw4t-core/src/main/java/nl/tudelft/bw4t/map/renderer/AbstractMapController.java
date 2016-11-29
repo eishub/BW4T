@@ -189,32 +189,6 @@ public abstract class AbstractMapController extends MouseAdapter implements
 	}
 
 	@Override
-	public Set<Zone> getChargingZones() {
-		Set<Zone> chargingzones = new HashSet<>();
-
-		for (Zone zone : map.getZones()) {
-			if (zone.getType() == Type.CHARGINGZONE) {
-				chargingzones.add(zone);
-			}
-		}
-
-		return chargingzones;
-	}
-
-	@Override
-	public Set<Zone> getBlockades() {
-		Set<Zone> blockades = new HashSet<>();
-
-		for (Zone zone : map.getZones()) {
-			if (zone.getType() == Type.BLOCKADE) {
-				blockades.add(zone);
-			}
-		}
-
-		return blockades;
-	}
-
-	@Override
 	public Zone getDropZone() {
 		for (Zone zone : map.getZones()) {
 			if (zone.getName().equals(Zone.DROP_ZONE_NAME)) {

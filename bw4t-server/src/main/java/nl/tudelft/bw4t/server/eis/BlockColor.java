@@ -6,11 +6,7 @@ import nl.tudelft.bw4t.server.model.blocks.Block;
  * Wraps around a block to pass along the color percept
  */
 public class BlockColor {
-
     private final Block block;
-    
-    /** Boolean for when the robot is colorBlind */
-    private final boolean isColorBlind;
 
     /**
      * Create a new {@link BlockColor} for the given block.
@@ -20,9 +16,8 @@ public class BlockColor {
      * @param isCB
      *            the concerned robot is color blind or not. 
      */
-    public BlockColor(Block b, boolean isCB) {
+    public BlockColor(Block b) {
         this.block = b;
-        this.isColorBlind = isCB;
     }
 
     /**
@@ -32,10 +27,6 @@ public class BlockColor {
         return block;
     }
     
-    public boolean isColorBlind() {
-        return isColorBlind;
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;

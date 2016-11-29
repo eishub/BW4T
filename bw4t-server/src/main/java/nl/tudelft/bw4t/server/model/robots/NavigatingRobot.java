@@ -4,60 +4,37 @@ import static nl.tudelft.bw4t.server.util.SpatialMath.distance;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-
-import org.apache.log4j.Logger;
 
 import nl.tudelft.bw4t.map.Path;
 import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
-import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
-import nl.tudelft.bw4t.server.model.zone.Corridor;
 import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
 import nl.tudelft.bw4t.server.util.PathPlanner;
 import nl.tudelft.bw4t.server.util.ZoneLocator;
 import repast.simphony.space.continuous.NdPoint;
-import repast.simphony.util.collections.IndexedIterable;
 
 /**
  * Represents a self navigating robot in the BW4T environment. The self navigation means that you can go to a Zone which
  * then does path planning and keeps driving till destination reached.
  */
 public class NavigatingRobot extends AbstractRobot {
-
-    /**
-     * The log4j logger, logs to the console.
-     */
-    private static final Logger LOGGER = Logger.getLogger(NavigatingRobot.class);
-
     /**
      * We keep a stack of planned motions. We may need to extend this if rotations and waiting for doors also needs to
      * be planned. For now we keep it simple.
      */
     private Queue<NdPoint> plannedMoves = new ConcurrentLinkedQueue<NdPoint>();
-
-    /**
-     * The history of the planned moves.
-     */
-    private Queue<NdPoint> plannedMovesHistory = plannedMoves;
-
     /**
      * When a move is started, it moves from the stack to currentMove. When currentMove is null, it's done.
      */
     private NdPoint currentMove = null;
-    /**
-     * The history of the current moves
-     */
-    private NdPoint currentMoveHistory = currentMove;
 
     /**
      * The path as displayed on the map.
@@ -68,15 +45,10 @@ public class NavigatingRobot extends AbstractRobot {
      * Makes a new navigating robot.
      *
      * @param name          of the bot
-     * @param space         space in which bot is placed
-     * @param grid          in which the bot is placed
      * @param context       the context in which bot is placed
-     * @param oneBotPerZone true if max 1 bot in a zone
-     * @param cap           capacity of the bot
      */
-    public NavigatingRobot(String name, BW4TServerMap context,
-            boolean oneBotPerZone, int cap) {
-        super(name, context, oneBotPerZone, cap);
+    public NavigatingRobot(String name, BW4TServerMap context) {
+        super(name, context);
         getContext().add(displayedPath);
     }
 
@@ -178,23 +150,6 @@ public class NavigatingRobot extends AbstractRobot {
      * be called whenever the robots stops.
      */
     private void robotStopped() {
-        if (isCollided()) {
-            /**
-             * Save the current move in case the bot wishes to navigate around the obstacle.
-             */
-            if (getZone() != null && currentMove == getZone().getLocation()) {
-                // If we're already at the location, get the next one.
-                currentMoveHistory = plannedMoves.poll();
-            }
-            else {
-                currentMoveHistory = currentMove;
-            }
-
-            LOGGER.warn("Motion planning failed. Canceling planned path. Collision flag is " + super.isCollided());
-            plannedMovesHistory = new LinkedList<NdPoint>(plannedMoves);
-            plannedMoves.clear();
-            return;
-        }
         currentMove = null;
         useNextTarget();
     }
@@ -239,10 +194,6 @@ public class NavigatingRobot extends AbstractRobot {
      */
     @Override
     public void setTargetLocation(NdPoint p) {
-        clearCollided();
-        clearObstacles();
-        setDestinationUnreachable(false);
-
         // clear old path.
         plannedMoves.clear();
         Zone startpt = ZoneLocator.getNearestZone(this.getLocation());
@@ -258,9 +209,6 @@ public class NavigatingRobot extends AbstractRobot {
 
     @Override
     public void setTarget(BoundedMoveableObject target) {
-        clearCollided();
-        clearObstacles();
-        setDestinationUnreachable(false);
         // clear old path.
         plannedMoves.clear();
         Zone startpt = ZoneLocator.getNearestZone(this.getLocation());
@@ -286,78 +234,10 @@ public class NavigatingRobot extends AbstractRobot {
 
     @Override
     public State getState() {
-        if (isCollided()) {
-            return State.COLLIDED;
-        }
         if (currentMove == null && plannedMoves.isEmpty()) {
             return State.ARRIVED;
         }
         return State.TRAVELING;
-    }
-
-    /**
-     * State: The path has failed, the bot has collided.
-     * <p/>
-     * Find a new path, going around the obstacles. Strategy: Calculate path over grid as opposed to the zones. Find a
-     * path from current location to the location of the next zone (currentMove)
-     * <p/>
-     * Continue with normal path after this.
-     */
-    public void navigateObstacles() {
-        Set<Zone> zones = getAllCorridorsInMap();
-
-        // Add the start and end zones.
-        zones.add(getZone());
-
-        NdPoint target = currentMoveHistory;
-        if (plannedMovesHistory.size() > 0) {
-            target = ((LinkedList<NdPoint>) plannedMovesHistory).getLast();
-        }
-        zones.add(ZoneLocator.getNearestZone(target));
-        
-        List<Zone> navZones = new ArrayList<>(zones);
-        List<NdPoint> path = PathPlanner.findPath(navZones, getObstacles(), getLocation(), target, getSize());
-        if (path.isEmpty()) {
-            LOGGER.debug("No alternative path found.");
-            setDestinationUnreachable(true);
-            return;
-        }
-        else {
-            createPathObstacle(path);
-        }
-    }
-
-    /**
-     * Creates a path around an obstacle
-     *
-     * @param path to create
-     */
-    private void createPathObstacle(List<NdPoint> path) {
-        // Now we just push the new points to the plannedMoved queue and sit back and relax!.
-        for (NdPoint p : path) {
-            plannedMoves.add(p);
-        }
-
-        for (NdPoint p : plannedMovesHistory) {
-            plannedMoves.add(p);
-        }
-
-        clearCollisionFlagOnObstacles();
-        clearCollided();
-        clearObstacles();
-
-        // Let's roll.
-        updateDrawPath();
-        useNextTarget();
-    }
-
-    private Set<Zone> getAllCorridorsInMap() {
-    	IndexedIterable<Object> objects = getServerMap().getContext().getObjects(Corridor.class);
-        Set<Zone> zones = new HashSet<>(objects.size());
-        for (Object o : objects) {
-            zones.add((Zone) o);
-        }
-        return zones;
     }
 
     /**
@@ -369,23 +249,8 @@ public class NavigatingRobot extends AbstractRobot {
          */
         ARRIVED,
         /**
-         * Collided state
-         */
-        COLLIDED,
-        /**
          * Traveling state
          */
         TRAVELING
-
-    }
-
-    private void clearCollisionFlagOnObstacles() {
-        for(BoundedMoveableObject obj : getObstacles()) {
-            if(obj instanceof IRobot) {
-                IRobot bot = (IRobot) obj;
-                bot.clearCollided();
-                bot.clearObstacles();
-            }
-        }
     }
 }

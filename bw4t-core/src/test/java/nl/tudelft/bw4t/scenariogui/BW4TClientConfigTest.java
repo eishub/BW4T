@@ -86,8 +86,6 @@ public class BW4TClientConfigTest {
 
             config.addBot(new BotConfig());
             config.addBot(new BotConfig());
-            config.addEpartner(new EPartnerConfig());
-            config.addEpartner(new EPartnerConfig());
             config.setFileLocation(TEST_XML_OUTPUT);
             config.toXML();
             BW4TClientConfig config2 = BW4TClientConfig.fromXML(TEST_XML_OUTPUT);
@@ -100,7 +98,6 @@ public class BW4TClientConfigTest {
             assertEquals(mapFile, config2.getMapFile());
             assertEquals(useGoal, config2.isUseGoal());
             assertTrue(config.compareBotConfigs(config2.getBots()));
-            assertTrue(config.compareEpartnerConfigs(config2.getEpartners()));
         } catch (FileNotFoundException e) {
             fail("File not found exception: " + e + ". Failed to save/open to file.");
         } catch (JAXBException e) {
@@ -122,19 +119,6 @@ public class BW4TClientConfigTest {
     }
 
     /**
-     * Tests whether the update config for epartners works.
-     */
-    @Test
-    public void updateOldEpartnerConfigsTest() {
-        config = new BW4TClientConfig();
-        assertEquals(config.getOldEpartners().size(), 0);
-        config.addEpartner(new EPartnerConfig());
-        assertEquals(config.getOldEpartners().size(), 0);
-        config.updateOldEpartnerConfigs();
-        assertEquals(config.getOldEpartners().size(), 1);
-    }
-
-    /**
      * Tests whether the bot amount is calculated correctly.
      */
     @Test
@@ -148,26 +132,13 @@ public class BW4TClientConfigTest {
     }
 
     /**
-     * Tests whether the epartner amount is calculated correctly.
-     */
-    @Test
-    public void getAmountEPartnerTest() {
-        config = new BW4TClientConfig();
-        EPartnerConfig epartner = new EPartnerConfig();
-        epartner.setEpartnerAmount(10);
-        config.addEpartner(epartner);
-        config.addEpartner(new EPartnerConfig());
-        assertEquals(config.getAmountEPartner(), 11);
-    }
-
-    /**
      * Tests whether two bot configs are not equal when they have different sizes.
      */
     @Test
     public void compareBotConfigsDifSizeTest() {
         config = new BW4TClientConfig();
         config2 = new BW4TClientConfig();
-        BotConfig humanBot = BotConfig.createDefaultHumans();
+        BotConfig humanBot = BotConfig.createDefaultRobot();
         config.addBot(humanBot);
         config2.addBot(humanBot);
         config.addBot(new BotConfig());
@@ -181,8 +152,8 @@ public class BW4TClientConfigTest {
     public void compareBotConfigsTestTrue() {
         config = new BW4TClientConfig();
         config2 = new BW4TClientConfig();
-        BotConfig humanBot = BotConfig.createDefaultHumans();
-        BotConfig differentObjectBot = BotConfig.createDefaultHumans();
+        BotConfig humanBot = BotConfig.createDefaultRobot();
+        BotConfig differentObjectBot = BotConfig.createDefaultRobot();
         config.addBot(humanBot);
         config2.addBot(differentObjectBot);
         assertTrue(config.compareBotConfigs(config2.getBots()));
@@ -195,8 +166,8 @@ public class BW4TClientConfigTest {
     public void compareBotConfigsTestFalse() {
         config = new BW4TClientConfig();
         config2 = new BW4TClientConfig();
-        BotConfig humanBot = BotConfig.createDefaultHumans();
-        BotConfig humanBot2 = BotConfig.createDefaultHumans();
+        BotConfig humanBot = BotConfig.createDefaultRobot();
+        BotConfig humanBot2 = BotConfig.createDefaultRobot();
         humanBot2.setBotAmount(10);
         config.addBot(humanBot);
         config2.addBot(humanBot2);
@@ -204,65 +175,17 @@ public class BW4TClientConfigTest {
     }
 
     /**
-     * Tests when two epartner configs are not equal when they have different sizes.
+     * Checks whether the bot list is cleared correctly.
      */
     @Test
-    public void compareEpartnerConfigsDifSizeTest() {
+    public void clearBotsTest() {
         config = new BW4TClientConfig();
-        config2 = new BW4TClientConfig();
-        EPartnerConfig epartner = new EPartnerConfig();
-        config.addEpartner(epartner);
-        config2.addEpartner(epartner);
-        config.addEpartner(new EPartnerConfig());
-        assertFalse(config.compareEpartnerConfigs(config2.getEpartners()));
-    }
-
-    /**
-     * Tests when two epartner configs are equal.
-     */
-    @Test
-    public void compareEpartnerConfigsTestTrue() {
-        config = new BW4TClientConfig();
-        config2 = new BW4TClientConfig();
-        EPartnerConfig epartner = new EPartnerConfig();
-        EPartnerConfig differentObjectEpartner = new EPartnerConfig();
-        config.addEpartner(epartner);
-        config2.addEpartner(differentObjectEpartner);
-        assertTrue(config.compareEpartnerConfigs(config2.getEpartners()));
-    }
-
-    /**
-     * Tests whether two epartner configs not equal.
-     */
-    @Test
-    public void compareEpartnerConfigsTestFalse() {
-        config = new BW4TClientConfig();
-        config2 = new BW4TClientConfig();
-        EPartnerConfig epartner = new EPartnerConfig();
-        EPartnerConfig epartner2 = new EPartnerConfig();
-        epartner2.setEpartnerAmount(10);
-        config.addEpartner(epartner);
-        config2.addEpartner(epartner2);
-        assertFalse(config.compareEpartnerConfigs(config2.getEpartners()));
-    }
-
-
-    /**
-     * Checks whether the bot and epartner list are cleared correctly.
-     */
-    @Test
-    public void clearBotsAndEpartnersTest() {
-        config = new BW4TClientConfig();
-        BotConfig humanBot = BotConfig.createDefaultHumans();
-        EPartnerConfig epartner = new EPartnerConfig();
+        BotConfig humanBot = BotConfig.createDefaultRobot();
         config.addBot(humanBot);
-        config.addEpartner(epartner);
 
         assertFalse(config.getBots().isEmpty());
-        assertFalse(config.getEpartners().isEmpty());
-        config.clearBotsAndEpartners();
+        config.clearBots();
         assertTrue(config.getBots().isEmpty());
-        assertTrue(config.getEpartners().isEmpty());
     }
 
 

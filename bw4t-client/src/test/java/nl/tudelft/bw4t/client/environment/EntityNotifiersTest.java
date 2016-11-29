@@ -13,7 +13,6 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import eis.EnvironmentListener;
-import nl.tudelft.bw4t.client.controller.ClientController;
 
 /**
  * This class tests the EntityNotifiers class from the Environment package in the client.
@@ -22,13 +21,11 @@ import nl.tudelft.bw4t.client.controller.ClientController;
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("unchecked")
 public class EntityNotifiersTest {
-    
     private EnvironmentListener mockedEnvListener = Mockito.mock(eis.EnvironmentListener.class);
     private EnvironmentListener mockedEnvListener2 = Mockito.mock(eis.EnvironmentListener.class);
     private EnvironmentListener mockedEnvListener3 = Mockito.mock(eis.EnvironmentListener.class);
     private RemoteEnvironment mockedRemEnv = Mockito.mock(RemoteEnvironment.class);
 	private Collection<String> mockedCollection = Mockito.mock(Collection.class);
-    private ClientController mockedGUI = Mockito.mock(ClientController.class);
     
     @Before
     public void createRemotes() {
@@ -59,13 +56,7 @@ public class EntityNotifiersTest {
     
 	@Test
     public void notifyDeletedEntityTest() {
-
-        when(mockedRemEnv.getEntityController("Bot1")).thenReturn(mockedGUI);
         EntityNotifiers.notifyDeletedEntity("Bot1", mockedCollection, mockedRemEnv);
-        
-        //if(mockedRemEnv.getEntityToGUI().get("Bot1") != null) {
-            Mockito.verify(mockedGUI).stop();
-        //}
         
         Mockito.verify(mockedEnvListener).handleDeletedEntity(any(String.class), any(Collection.class));
         Mockito.verify(mockedEnvListener2).handleDeletedEntity(any(String.class), any(Collection.class));

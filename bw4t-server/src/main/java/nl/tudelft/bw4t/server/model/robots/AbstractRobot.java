@@ -2,7 +2,6 @@ package nl.tudelft.bw4t.server.model.robots;
 
 import java.awt.geom.Rectangle2D;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
@@ -17,9 +16,7 @@ import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.doors.Door;
-import nl.tudelft.bw4t.server.model.epartners.EPartner;
 import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
-import nl.tudelft.bw4t.server.model.zone.ChargingZone;
 import nl.tudelft.bw4t.server.model.zone.Corridor;
 import nl.tudelft.bw4t.server.model.zone.DropZone;
 import nl.tudelft.bw4t.server.model.zone.Room;
@@ -83,34 +80,12 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	 */
 	private double speedMod = 0.5;
 
-	/** The max. amount of blocks a robot can hold, default is 1. */
-	private int grippercap = 1;
-
-	/**
-	 * a robot has a battery a battery has a power value of how much the
-	 * capacity should increment or decrement.
-	 */
-	private Battery battery;
-
-	/**
-	 * 
-	 * Saves the robots handicap.
-	 */
-	private List<String> handicapsList;
-
 	/**
 	 * The stack of blocks the robot is holding. Notice: Stack has the last
 	 * element of the list as 'top'. This is the reverse from the way we
 	 * perceive stacks..
 	 */
 	private final Stack<Block> holding;
-	/**
-	 * set to true if we have to cancel a motion due to a collision. A collision
-	 * is caused by an attempt to move into or out of a room
-	 */
-	private boolean collided = false;
-
-	private boolean destinationUnreachable = false;
 
 	/** The location to which the robot wants to travel. */
 	private NdPoint targetLocation;
@@ -119,25 +94,8 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	 * set to true when {@link #connect()} is called.
 	 */
 	private boolean connected = false;
-
-	/**
-	 * true if max 1 bot in a zone.
-	 */
-	private boolean oneBotPerZone;
-
-	/** Returns the top most handicap a robot has. */
-	private IRobot topMostHandicap = this;
-
-	/**
-	 * Returns whether or not the bot has ever stood free from other obstacles.
-	 * Used for collision allowance during the start.
-	 */
+	
 	private boolean hasBeenFree = false;
-
-	/**
-	 * Obstacles on the path of the robot
-	 */
-	private List<BoundedMoveableObject> obstacles = new LinkedList<>();
 
 	/**
 	 * Creates a new robot.
@@ -150,36 +108,18 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	 *            The grid in which the robot operates.
 	 * @param context
 	 *            The context in which the robot operates.
-	 * @param poneBotPerZone
-	 *            true if max 1 bot in a zone
-	 * @param cap
-	 *            The holding capacity of the robot.
 	 */
-	public AbstractRobot(String pname, BW4TServerMap context,
-			boolean poneBotPerZone, int cap) {
+	public AbstractRobot(String pname, BW4TServerMap context) {
 		super(context);
 
 		this.name = pname;
-		this.oneBotPerZone = poneBotPerZone;
 		setSize(size, size);
-
-		/**
-		 * This is where the battery value will be fetched from the Bot Store
-		 * GUI.
-		 */
-		this.battery = new Battery(Integer.MAX_VALUE, Integer.MAX_VALUE, 0);
 
 		/**
 		 * Here the number of blocks a bot can hold is set.
 		 */
-		this.grippercap = cap;
 		this.holding = new Stack<>();
-		this.handicapsList = new LinkedList<>();
 		this.agentRecord = new AgentRecord(name);
-	}
-
-	public void setTopMostHandicap(IRobot topMostHandicap) {
-		this.topMostHandicap = topMostHandicap;
 	}
 
 	@Override
@@ -247,23 +187,21 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	@Override
 	public synchronized void setTargetLocation(NdPoint ptargetLocation) {
 		this.targetLocation = ptargetLocation;
-		collided = false;
 	}
 
 	@Override
 	public boolean canPickUp(BoundedMoveableObject obj) {
 		if (obj instanceof Block) {
 			Block b = (Block) obj;
-			return (distanceTo(obj.getLocation()) <= topMostHandicap.getSize()
-					+ ARM_DISTANCE)
-					&& b.isFree() && (holding.size() < grippercap);
+			return (distanceTo(obj.getLocation()) <= ARM_DISTANCE)
+					&& b.isFree() && (holding.size() < 1);
 		}
 		return false;
 	}
 
 	@Override
 	public void pickUp(Block b) {
-		if (holding.size() >= grippercap) {
+		if (holding.size() >= 1) {
 			throw new IllegalStateException(
 					"block stack is full, failed to pick up another block");
 		}
@@ -322,7 +260,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 				break;
 			case HIT_CLOSED_DOOR:
 			case HIT_WALL:
-			case HIT_OCCUPIED_ZONE:
 				throw new SpatialException("robot bumped: " + getMoveType(x, y));
 			default:
 				throw new IllegalStateException();
@@ -349,13 +286,10 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 		 * a free space is always ok.
 		 */
 		MoveType result = MoveType.ENTERING_FREESPACE;
-
 		for (Zone endzone : endzones) {
-			result = result.merge(topMostHandicap.checkZoneAccess(startzone,
-					endzone, door));
+			result = result.merge(checkZoneAccess(startzone, endzone, door));
 		}
 		return result;
-
 	}
 
 	@Override
@@ -379,10 +313,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 			return MoveType.HIT_CLOSED_DOOR;
 			// Both sides are not a room. Check if target accesible
 		} else if (endzone instanceof Corridor) {
-			if (!oneBotPerZone || endzone.containsMeOrNothing(this)) {
-				return MoveType.ENTER_CORRIDOR;
-			}
-			return MoveType.HIT_OCCUPIED_ZONE;
+			return MoveType.ENTER_CORRIDOR;
 		}
 		return MoveType.ENTERING_FREESPACE;
 	}
@@ -415,32 +346,17 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	}
 
 	@Override
-	public void moveByDisplacement(double x, double y) {
-		moveTo(getLocation().getX() + x, getLocation().getY() + y);
-	}
-
-	@Override
 	@ScheduledMethod(start = 0, duration = 0, interval = 1)
 	public synchronized void move() {
-		// When the robot is in a charging zone, the battery recharges.
-		if (getZone() instanceof ChargingZone) {
-			getBattery().recharge();
-		}
-		if (battery.getCurrentCapacity() > 0) {
-			if (targetLocation != null && obstacles.isEmpty()) {
-				// Calculate the distance that the robot is allowed to move.
-				double distance = distanceTo(targetLocation);
-				if (distance < MIN_MOVE_DISTANCE) {
-					// we're there
-					stopRobot();
-				} else {
-					moveBot(distance);
-				}
+		if (targetLocation != null) {
+			// Calculate the distance that the robot is allowed to move.
+			double distance = distanceTo(targetLocation);
+			if (distance < MIN_MOVE_DISTANCE) {
+				// we're there
+				stopRobot();
+			} else {
+				moveBot(distance);
 			}
-		} else {
-			LOGGER.log(BotLog.BOTLOG, "Bot " + this.name
-					+ " could not move because of empty battery.");
-			stopRobot();
 		}
 	}
 
@@ -474,42 +390,14 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 			}
 
 			// Move the robot to the new position using the displacement
-			moveByDisplacement(displacement[0], displacement[1]);
+			moveTo(getLocation().getX() + displacement[0], getLocation().getY() + displacement[1]);
 			agentRecord.setStartedMoving();
-
-			/**
-			 * The robot's battery discharges when it moves.
-			 */
-			this.battery.discharge();
-			LOGGER.trace(this.name + "'s current battery level is: "
-					+ this.battery.getCurrentCapacity());
-
-			handicapMove();
 		} catch (SpatialException e) {
-			collided = true;
 			LOGGER.log(BotLog.BOTLOG, "Bot " + this.name + " collided.");
 			stopRobot();
 		} catch (DestinationOccupiedException e) {
 			LOGGER.debug(e);
-			collided = true;
-			obstacles.add(e.getTileOccupiedBy());
-
-			// Add the obstacle to the other bot.
-			e.getTileOccupiedBy().setCollided(true);
-			e.getTileOccupiedBy().addObstacle(this);
-
 			stopRobot();
-		}
-	}
-
-	/**
-	 * gets the location of the bot and moves it.
-	 */
-	private void handicapMove() {
-		if (topMostHandicap.isHuman() && topMostHandicap.isHoldingEPartner()) {
-			NdPoint location = topMostHandicap.getLocation();
-			topMostHandicap.getEPartner().moveTo(location.getX() + 1,
-					location.getY() + 1);
 		}
 	}
 
@@ -604,28 +492,8 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	}
 
 	@Override
-	public boolean isCollided() {
-		return this.collided;
-	}
-
-	@Override
-	public void setCollided(boolean collided) {
-		this.collided = collided;
-	}
-
-	@Override
-	public void clearCollided() {
-		collided = false;
-	}
-
-	@Override
 	public boolean isConnected() {
 		return this.connected;
-	}
-
-	@Override
-	public boolean isOneBotPerZone() {
-		return this.oneBotPerZone;
 	}
 
 	@Override
@@ -663,23 +531,6 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	}
 
 	@Override
-	public Battery getBattery() {
-		return this.battery;
-	}
-
-	@Override
-	public void setBattery(Battery battery) {
-		this.battery = battery;
-	}
-
-	@Override
-	public void recharge() {
-		if ("chargingzone".equals(this.getZone().getName())) {
-			this.battery.recharge();
-		}
-	}
-
-	@Override
 	public IRobot getParent() {
 		return null;
 	}
@@ -693,22 +544,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	public void setParent(IRobot hI) {
 		// does not do anything because Robot is the super parent
 	}
-
-	@Override
-	public List<String> getHandicapsList() {
-		return this.handicapsList;
-	}
-
-	@Override
-	public int getGripperCapacity() {
-		return grippercap;
-	}
-
-	@Override
-	public void setGripperCapacity(int newcap) {
-		this.grippercap = newcap;
-	}
-
+	
 	@Override
 	public double getSpeedMod() {
 		return speedMod;
@@ -724,61 +560,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	}
 
 	@Override
-	public boolean isHuman() {
-		return handicapsList.contains("Human");
-	}
-
-	@Override
-	public EPartner getEPartner() {
-		return null;
-	}
-
-	@Override
-	public boolean isHoldingEPartner() {
-		return false;
-	}
-
-	@Override
-	public void pickUpEPartner(EPartner eP) {
-
-	}
-
-	@Override
-	public void dropEPartner() {
-
-	}
-
-	@Override
 	public AbstractRobot getSuperParent() {
 		return this;
-	}
-
-	/**
-	 * Adds obstacles.
-	 * 
-	 * @param obstacle
-	 *            to be added
-	 */
-	public void addObstacle(BoundedMoveableObject obstacle) {
-		obstacles.add(obstacle);
-	}
-
-	public List<BoundedMoveableObject> getObstacles() {
-		return obstacles;
-	}
-
-	/**
-	 * Clears the obstacles
-	 */
-	public void clearObstacles() {
-		obstacles.clear();
-	}
-
-	public boolean isDestinationUnreachable() {
-		return destinationUnreachable;
-	}
-
-	public void setDestinationUnreachable(boolean destinationUnreachable) {
-		this.destinationUnreachable = destinationUnreachable;
 	}
 }

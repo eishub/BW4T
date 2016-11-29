@@ -9,10 +9,8 @@ import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.doors.Door;
-import nl.tudelft.bw4t.server.model.epartners.EPartner;
 import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.model.robots.AgentRecord;
-import nl.tudelft.bw4t.server.model.robots.Battery;
 import nl.tudelft.bw4t.server.model.robots.MoveType;
 import nl.tudelft.bw4t.server.model.robots.NavigatingRobot.State;
 import nl.tudelft.bw4t.server.model.zone.Room;
@@ -44,7 +42,6 @@ public abstract class AbstractRobotDecorator implements IRobot {
 	public AbstractRobotDecorator(IRobot p) {
 		parent = p;
 		robot = getSuperParent();
-		robot.setTopMostHandicap(this);
 	}
 
 	@Override
@@ -128,11 +125,6 @@ public abstract class AbstractRobotDecorator implements IRobot {
 	}
 
 	@Override
-	public void moveByDisplacement(double x, double y) {
-		parent.moveByDisplacement(x, y);
-	}
-
-	@Override
 	public void move() {
 		parent.move();
 	}
@@ -143,28 +135,8 @@ public abstract class AbstractRobotDecorator implements IRobot {
 	}
 
 	@Override
-	public boolean isCollided() {
-		return parent.isCollided();
-	}
-
-	@Override
-	public void setCollided(boolean collided) {
-		parent.setCollided(collided);
-	}
-
-	@Override
-	public void clearCollided() {
-		parent.clearCollided();
-	}
-
-	@Override
 	public boolean isConnected() {
 		return parent.isConnected();
-	}
-
-	@Override
-	public boolean isOneBotPerZone() {
-		return parent.isOneBotPerZone();
 	}
 
 	@Override
@@ -188,21 +160,6 @@ public abstract class AbstractRobotDecorator implements IRobot {
 	}
 
 	@Override
-	public Battery getBattery() {
-		return parent.getBattery();
-	}
-
-	@Override
-	public void setBattery(Battery battery) {
-		parent.setBattery(battery);
-	}
-
-	@Override
-	public void recharge() {
-		parent.recharge();
-	}
-
-	@Override
 	public IRobot getParent() {
 		return parent;
 	}
@@ -222,21 +179,6 @@ public abstract class AbstractRobotDecorator implements IRobot {
 	}
 
 	@Override
-	public List<String> getHandicapsList() {
-		return parent.getHandicapsList();
-	}
-
-	@Override
-	public int getGripperCapacity() {
-		return parent.getGripperCapacity();
-	}
-
-	@Override
-	public void setGripperCapacity(int newcap) {
-		parent.setGripperCapacity(newcap);
-	}
-
-	@Override
 	public double getSpeedMod() {
 		return parent.getSpeedMod();
 	}
@@ -244,31 +186,6 @@ public abstract class AbstractRobotDecorator implements IRobot {
 	@Override
 	public void setSpeedMod(double speedMod) {
 		parent.setSpeedMod(speedMod);
-	}
-
-	@Override
-	public boolean isHuman() {
-		return parent.isHuman();
-	}
-
-	@Override
-	public EPartner getEPartner() {
-		return parent.getEPartner();
-	}
-
-	@Override
-	public boolean isHoldingEPartner() {
-		return parent.isHoldingEPartner();
-	}
-
-	@Override
-	public void pickUpEPartner(EPartner eP) {
-		parent.pickUpEPartner(eP);
-	}
-
-	@Override
-	public void dropEPartner() {
-		parent.dropEPartner();
 	}
 
 	@Override
@@ -308,21 +225,6 @@ public abstract class AbstractRobotDecorator implements IRobot {
 		}
 
 		return robot;
-	}
-
-	@Override
-	public List<BoundedMoveableObject> getObstacles() {
-		return parent.getObstacles();
-	}
-
-	@Override
-	public void clearObstacles() {
-		parent.clearObstacles();
-	}
-
-	@Override
-	public boolean isDestinationUnreachable() {
-		return parent.isDestinationUnreachable();
 	}
 
 	@Override

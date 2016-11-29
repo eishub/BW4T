@@ -1,6 +1,5 @@
 package nl.tudelft.bw4t.client.controller;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,24 +10,15 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
-import eis.exceptions.NoEnvironmentException;
-import eis.exceptions.PerceiveException;
 import eis.iilang.Parameter;
-import nl.tudelft.bw4t.client.controller.percept.processors.BumpedProcessor;
-import nl.tudelft.bw4t.client.controller.percept.processors.ColorBlindProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.ColorProcessor;
-import nl.tudelft.bw4t.client.controller.percept.processors.EPartnerProcessor;
-import nl.tudelft.bw4t.client.controller.percept.processors.GripperCapacityProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.HoldingBlocksProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.LocationProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.NegationProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.OccupiedProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.PerceptProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.PositionProcessor;
-import nl.tudelft.bw4t.client.controller.percept.processors.RobotBatteryProcessor;
-import nl.tudelft.bw4t.client.controller.percept.processors.RobotOldTargetUnreachableProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.RobotProcessor;
-import nl.tudelft.bw4t.client.controller.percept.processors.RobotSizeProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.SequenceIndexProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.SequenceProcessor;
 import nl.tudelft.bw4t.map.BlockColor;
@@ -37,7 +27,6 @@ import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.renderer.AbstractMapController;
 import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
 import nl.tudelft.bw4t.map.view.ViewBlock;
-import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 
 /**
@@ -62,14 +51,6 @@ public class ClientMapController extends AbstractMapController {
 	private static final Logger LOGGER = Logger
 			.getLogger(ClientMapController.class);
 
-	/** The exception string constant. */
-	private static final String COULDNOTPOLL = "Could not correctly poll the percepts from the environment.";
-
-	/**
-	 * The Client Controller used by this Client Map Controller.
-	 */
-	private final ClientController clientController;
-
 	/** The occupied rooms. */
 	private final Set<Zone> occupiedRooms = new HashSet<Zone>();
 
@@ -81,9 +62,6 @@ public class ClientMapController extends AbstractMapController {
 
 	/** The visible blocks. */
 	private final Set<ViewBlock> visibleBlocks = new HashSet<>();
-
-	/** The (at one point) visible e-partners. */
-	private final Set<ViewEPartner> knownEPartners = new HashSet<>();
 
 	/** The visible robots. */
 	private final Set<ViewEntity> visibleRobots = new HashSet<>();
@@ -114,37 +92,23 @@ public class ClientMapController extends AbstractMapController {
 	 * @param controller
 	 *            the controller
 	 */
-	public ClientMapController(NewMap map, ClientController controller) {
+	public ClientMapController(NewMap map) {
 		super(map);
-
-		if (controller == null) {
-			throw new NullPointerException("controller=null");
-		}
 
 		if (!myBot.isInitialized()) {
 			throw new IllegalStateException("myBot is not initialized properly");
 		}
 
-		clientController = controller;
-		perceptProcessors = new HashMap<>(16);
+		perceptProcessors = new HashMap<>(8);
 		perceptProcessors.put("not", new NegationProcessor());
 		perceptProcessors.put("robot", new RobotProcessor());
 		perceptProcessors.put("occupied", new OccupiedProcessor());
 		perceptProcessors.put("holdingblocks", new HoldingBlocksProcessor());
 		perceptProcessors.put("position", new PositionProcessor());
 		perceptProcessors.put("color", new ColorProcessor());
-		perceptProcessors.put("epartner", new EPartnerProcessor());
 		perceptProcessors.put("sequence", new SequenceProcessor());
 		perceptProcessors.put("sequenceIndex", new SequenceIndexProcessor());
 		perceptProcessors.put("location", new LocationProcessor());
-		perceptProcessors.put("robotSize", new RobotSizeProcessor());
-		perceptProcessors.put("bumped", new BumpedProcessor());
-		perceptProcessors.put("battery", new RobotBatteryProcessor());
-		perceptProcessors.put("oldTargetUnreachable",
-				new RobotOldTargetUnreachableProcessor());
-		perceptProcessors
-				.put("gripperCapacity", new GripperCapacityProcessor());
-		perceptProcessors.put("colorblind", new ColorBlindProcessor());
 	}
 
 	@Override
@@ -244,38 +208,9 @@ public class ClientMapController extends AbstractMapController {
 		return new HashSet<ViewEntity>(visibleRobots);
 	}
 
-	/**
-	 * Get all the known e-partners.
-	 * 
-	 * @return (copy of) the set of known e-partners
-	 */
-	public synchronized Set<ViewEPartner> getEPartners() {
-		return new HashSet<ViewEPartner>(knownEPartners);
-	}
-
 	public synchronized void clearVisiblePositions() {
 		visibleRobots.clear();
 		visibleRobots.add(myBot);
-	}
-
-	/**
-	 * Returns an e-partner with this id that at one point has ever been
-	 * visible.
-	 * 
-	 * @param id
-	 *            The id.
-	 * @return The e-partner found. null if not found.
-	 */
-	public synchronized ViewEPartner getKnownEPartner(long id) {
-		// fake epartner, so that we can use equals (which is guaranteed stable
-		// after init).
-		ViewEPartner equalp = new ViewEPartner(id, new Point2D.Double(), false);
-		for (ViewEPartner ep : knownEPartners) {
-			if (ep.equals(equalp)) {
-				return ep;
-			}
-		}
-		return null;
 	}
 
 	/**
@@ -356,53 +291,9 @@ public class ClientMapController extends AbstractMapController {
 		return allBlocks.containsKey(id);
 	}
 
-	/**
-	 * Add an e-partner.
-	 * 
-	 * @param id
-	 * @param holderId
-	 * @return
-	 */
-	public synchronized void addEPartner(ViewEPartner epartner) {
-		if (!epartner.isInitialized()) {
-			throw new IllegalArgumentException("epartner not initialized:"
-					+ epartner);
-		}
-		knownEPartners.add(epartner);
-	}
-
 	/******************************************************************************/
 	/**************** utility functions (may be not thread safe) ******************/
 	/******************************************************************************/
-	@Override
-	public Set<ViewEPartner> getVisibleEPartners() {
-		// notice, not synchronized, this is just a utility function that is not
-		// thread safe because it calls isVisible()
-		Set<ViewEPartner> visibleEPartners = new HashSet<ViewEPartner>();
-		for (ViewEPartner ep : getEPartners()) {
-			if (ep.isVisible()) {
-				visibleEPartners.add(ep);
-			}
-		}
-		return visibleEPartners;
-	}
-
-	/**
-	 * Returns an e-partner with this id that is currently visible. This is just
-	 * a utility function and may be not thread safe.
-	 * 
-	 * @param id
-	 *            The id.
-	 * @return The e-partner found. null if no such e-partner.
-	 */
-	public ViewEPartner getViewEPartner(long id) {
-		for (ViewEPartner ep : getVisibleEPartners()) {
-			if (ep.getId() == id) {
-				return ep;
-			}
-		}
-		return null;
-	}
 
 	/**
 	 * Handle all the percepts. Utility function. May be not thread safe as we
@@ -441,33 +332,6 @@ public class ClientMapController extends AbstractMapController {
 	protected void updateRenderer(MapRendererInterface mri) {
 		mri.validate();
 		mri.repaint();
-	}
-
-	/*
-	 * (non-Javadoc) Utility function. Probably not thread safe.
-	 * 
-	 * @see nl.tudelft.bw4t.map.renderer.AbstractMapController#run()
-	 */
-	@Override
-	public void run() {
-		/**
-		 * If GOAL is not connected we need to fetch the percepts ourselves.
-		 * Otherwise, GOAL will fetch them and we just reuse them.
-		 */
-		if (clientController.isHuman()
-				&& !clientController.getEnvironment().isConnectedToGoal()) {
-			try {
-				clientController.getEnvironment().gatherPercepts(
-						getTheBot().getName());
-			} catch (PerceiveException e) {
-				LOGGER.error(COULDNOTPOLL, e);
-			} catch (NoEnvironmentException | NullPointerException e) {
-				LOGGER.fatal(COULDNOTPOLL
-						+ " No connection could be made to the environment", e);
-				setRunning(false);
-			}
-		}
-		super.run();
 	}
 
 	/**

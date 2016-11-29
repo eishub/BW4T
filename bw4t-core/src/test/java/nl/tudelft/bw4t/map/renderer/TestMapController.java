@@ -15,7 +15,6 @@ import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Zone;
 import nl.tudelft.bw4t.map.view.ViewBlock;
-import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 
 public class TestMapController extends AbstractMapController {
@@ -61,15 +60,6 @@ public class TestMapController extends AbstractMapController {
 		set.add(BlockColor.RED);
 		set.add(BlockColor.BLUE);
 		set.add(BlockColor.BLUE);
-		return set;
-	}
-
-	@Override
-	public Set<ViewEPartner> getVisibleEPartners() {
-		Set<ViewEPartner> set = new HashSet<>(2);
-		set.add(new ViewEPartner(0, new Point2D.Double(5.0, 4.0), false));
-		set.add(new ViewEPartner(1, new Point2D.Double(10.0, 8.0), true));
-
 		return set;
 	}
 
