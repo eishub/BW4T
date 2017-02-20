@@ -3,6 +3,7 @@ package nl.tudelft.bw4t.scenariogui;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.bind.JAXBException;
@@ -40,18 +41,18 @@ public class BW4TClientConfig implements Serializable {
 	 */
 	@XmlElementWrapper(name = "bots")
 	@XmlElement(name = "bot")
-	private List<BotConfig> bots = new ArrayList<>();
+	private List<BotConfig> bots = new LinkedList<>();
 
-	private transient List<BotConfig> oldBots = new ArrayList<>();
+	private transient List<BotConfig> oldBots = new LinkedList<>();
 
 	/**
 	 * The XML element wrapper for the list of epartners.
 	 */
 	@XmlElementWrapper(name = "epartners")
 	@XmlElement(name = "epartner")
-	private List<EPartnerConfig> epartners = new ArrayList<>();
+	private List<EPartnerConfig> epartners = new LinkedList<>();
 
-	private transient List<EPartnerConfig> oldEpartners = new ArrayList<>();
+	private transient List<EPartnerConfig> oldEpartners = new LinkedList<>();
 
 	/**
 	 * An empty <code>BW4TClientConfig</code> object.

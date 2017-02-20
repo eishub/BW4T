@@ -11,11 +11,11 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.tudelft.bw4t.map.Zone.Type;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import nl.tudelft.bw4t.map.Zone.Type;
 
 /**
  * The class <code>NewMapTest</code> contains tests for the class
@@ -37,7 +37,7 @@ public class NewMapTest {
 		// add additional test code here
 		assertNotNull(result);
 		assertEquals(
-				"Map[onebotperzone=false, randomblocks=0,size=0,sequence=[],zones=[]]",
+				"Map[onebotperzone=false, randomblocks=0,seed=null,sequence=[],zones=[]]",
 				result.toString());
 		assertEquals(Boolean.FALSE, result.getOneBotPerCorridorZone());
 		assertEquals(new Integer(0), result.getRandomSequence());
@@ -114,7 +114,7 @@ public class NewMapTest {
 		// add additional test code here
 		assertNotNull(result);
 		assertEquals(
-				"Map[onebotperzone=false, randomblocks=0,size=0,sequence=[],zones=[]]",
+				"Map[onebotperzone=false, randomblocks=0,seed=null,sequence=[],zones=[]]",
 				result.toString());
 		assertEquals(Boolean.FALSE, result.getOneBotPerCorridorZone());
 		assertEquals(new Integer(0), result.getRandomSequence());
@@ -175,7 +175,7 @@ public class NewMapTest {
 
 		assertEquals(0, fixture.getEntities().size());
 
-		List<Entity> entities = new ArrayList<Entity>();
+		List<Entity> entities = new ArrayList<>(0);
 
 		fixture.setEntities(entities);
 
@@ -248,7 +248,7 @@ public class NewMapTest {
 	@Test
 	public void testGetSequence_1() throws Exception {
 		NewMap fixture = new NewMap();
-		ArrayList<BlockColor> list = new ArrayList<BlockColor>();
+		List<BlockColor> list = new ArrayList<>(7);
 		list.add(BlockColor.BLUE);
 		list.add(BlockColor.GREEN);
 		list.add(BlockColor.ORANGE);
@@ -341,7 +341,7 @@ public class NewMapTest {
 
 		assertEquals(0, fixture.getZones().size());
 
-		List<Zone> zones = new ArrayList<Zone>();
+		List<Zone> zones = new ArrayList<>(0);
 
 		fixture.setZones(zones);
 
@@ -411,7 +411,7 @@ public class NewMapTest {
 		fixture.setOneBotPerCorridorZone(new Boolean(true));
 		fixture.setArea(new Point());
 		fixture.setRandomSequence(new Integer(1));
-		ArrayList<BlockColor> list = new ArrayList<BlockColor>();
+		List<BlockColor> list = new ArrayList<>(7);
 		list.add(BlockColor.BLUE);
 		list.add(BlockColor.GREEN);
 		list.add(BlockColor.ORANGE);
@@ -427,7 +427,7 @@ public class NewMapTest {
 
 		// upper or lower case seems irrelevant
 		assertEquals(
-				"Map[onebotperzone=true, randomblocks=1,size=0,sequence=[BLUE, GREEN, ORANGE, PINK, RED, WHITE, YELLOW],zones=[]]"
+				"Map[onebotperzone=true, randomblocks=1,seed=null,sequence=[BLUE, GREEN, ORANGE, PINK, RED, WHITE, YELLOW],zones=[]]"
 						.toLowerCase(), result.toLowerCase());
 	}
 

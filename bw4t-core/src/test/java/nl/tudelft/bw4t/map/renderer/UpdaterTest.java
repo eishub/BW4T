@@ -25,7 +25,7 @@ public class UpdaterTest {
 	@Test
 	public void failToStart() {
 		when(mc.isRunning()).thenReturn(true);
-		when(mc.getRenderers()).thenReturn(new HashSet<MapRendererInterface>());
+		when(mc.getRenderers()).thenReturn(new HashSet<MapRendererInterface>(0));
 		Updater upd = new Updater(mc);
 
 		upd.run();

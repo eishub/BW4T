@@ -11,14 +11,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import nl.tudelft.bw4t.map.BlockColor;
-import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.map.Rectangle;
-import nl.tudelft.bw4t.server.model.BW4TServerMap;
-import nl.tudelft.bw4t.server.model.blocks.Block;
-import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
-import nl.tudelft.bw4t.server.model.robots.AgentRecord;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,15 +18,23 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import nl.tudelft.bw4t.map.BlockColor;
+import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.map.Rectangle;
+import nl.tudelft.bw4t.server.model.BW4TServerMap;
+import nl.tudelft.bw4t.server.model.blocks.Block;
+import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
+import nl.tudelft.bw4t.server.model.robots.AgentRecord;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.grid.Grid;
 
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("unchecked")
 public class DropZoneTest {
 
     private nl.tudelft.bw4t.map.Zone zone = Mockito.mock(nl.tudelft.bw4t.map.Zone.class);
-    private Context<Object> context = Mockito.mock(Context.class);
+	private Context<Object> context = Mockito.mock(Context.class);
     private ContinuousSpace<Object> space = Mockito.mock(ContinuousSpace.class);
     private Grid<Object> grid = Mockito.mock(Grid.class);
     private List<BlockColor> colors = new ArrayList<BlockColor>();

@@ -1,16 +1,16 @@
 package nl.tudelft.bw4t.server.eis.translators;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
-import nl.tudelft.bw4t.server.model.epartners.EPartner;
-import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Java2Parameter;
 import eis.iilang.Identifier;
 import eis.iilang.Numeral;
 import eis.iilang.Parameter;
 import eis.iilang.ParameterList;
+import nl.tudelft.bw4t.server.model.epartners.EPartner;
+import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
 
 /**
  * Translates {@link EPartner} objects into parameters that can be used in eis.
@@ -28,7 +28,7 @@ public class EPartnerTranslator implements Java2Parameter<EPartner> {
         } else {
             params[2] = new Numeral(holder.getId());
         }
-        Collection<Parameter> types = new ArrayList<Parameter>();
+        List<Parameter> types = new ArrayList<>(o.getTypeList().size());
         for (String type : o.getTypeList()) {
             types.add(new Identifier(type));
         }

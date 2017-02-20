@@ -1,7 +1,6 @@
 package nl.tudelft.bw4t.server.model.robots;
 
 import nl.tudelft.bw4t.map.EntityType;
-import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.EPartnerConfig;

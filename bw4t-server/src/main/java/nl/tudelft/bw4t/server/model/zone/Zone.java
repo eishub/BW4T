@@ -6,10 +6,7 @@ import java.util.Set;
 import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
 import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
-import repast.simphony.context.Context;
-import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
-import repast.simphony.space.grid.Grid;
 
 /**
  * A zone is a square area on the map with a name, neighbours and access restrictions. This mirrors the
@@ -30,7 +27,7 @@ public abstract class Zone extends BoundedMoveableObject {
     /**
      * Neighbours of this Zone.
      */
-    private Set<Zone> neighbours = new HashSet<Zone>();
+    private Set<Zone> neighbours = new HashSet<>();
 
     /**
      * Creates a zone

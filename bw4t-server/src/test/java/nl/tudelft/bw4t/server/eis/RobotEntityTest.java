@@ -10,17 +10,16 @@ import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Stack;
 
-import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
-import nl.tudelft.bw4t.server.model.blocks.Block;
-import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
-import nl.tudelft.bw4t.server.model.zone.Room;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.model.blocks.Block;
+import nl.tudelft.bw4t.server.model.robots.handicap.IRobot;
+import nl.tudelft.bw4t.server.model.zone.Room;
 import repast.simphony.context.Context;
 import repast.simphony.context.DefaultContext;
 import repast.simphony.space.continuous.NdPoint;
@@ -30,7 +29,7 @@ public class RobotEntityTest {
 	private IRobot mockRobot = Mockito.mock(IRobot.class);
 	private RobotEntity robot;
 	private BW4TEnvironment env = Mockito.mock(BW4TEnvironment.class);
-	private Context<Room> context = new DefaultContext<Room>();
+	private Context<Object> context = new DefaultContext<>();
 	private Method method;
 	private Method method2;
 	private Method method3;
@@ -59,7 +58,7 @@ public class RobotEntityTest {
 		method = robot.getClass().getDeclaredMethod("getVisible", Class.class);
 		method.setAccessible(true);
 
-		method3 = robot.getClass().getDeclaredMethod("getSizes", null);
+		method3 = robot.getClass().getDeclaredMethod("getSizes");
 		method3.setAccessible(true);
 
 		method2 = BW4TEnvironment.class.getDeclaredMethod("setInstance",

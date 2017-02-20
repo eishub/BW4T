@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -618,11 +617,11 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	 */
 	Map<String, Collection<Percept>> gatherPercepts(String agent, Set<String> associatedEntities, String... entities)
 			throws PerceiveException {
-		Map<String, Collection<Percept>> perceptsMap = new HashMap<>();
 		if (entities.length == 0) {
 			// No entities selected, get percepts for all associated entities
 			entities = associatedEntities.toArray(new String[associatedEntities.size()]);
 		}
+		Map<String, Collection<Percept>> perceptsMap = new HashMap<>(entities.length);
 		for (String entity : entities) {
 			if (!associatedEntities.contains(entity)) {
 				throw new PerceiveException(
@@ -686,7 +685,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	 *            the percepts to be used
 	 */
 	public void storePercepts(String entity, Collection<Percept> percepts) {
-		List<Percept> tpercepts = new ArrayList<>();
+		List<Percept> tpercepts = new LinkedList<>();
 		if (storedPercepts.containsKey(entity)) {
 			tpercepts.addAll(storedPercepts.get(entity));
 		}
@@ -851,7 +850,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	@Override
 	public Collection<String> getFreeEntities() {
 		if (client == null) {
-			return new HashSet<>();
+			return new HashSet<>(0);
 		}
 		try {
 			return getClient().getFreeEntities();

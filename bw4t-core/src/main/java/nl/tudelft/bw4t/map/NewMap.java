@@ -4,7 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
@@ -43,6 +43,11 @@ public class NewMap implements Serializable {
 	 * map.
 	 */
 	private Integer randomSequence = 0;
+	
+	/**
+	 * Seed for random stuff
+	 */
+	private Integer seed = null;
 
 	/**
 	 * Initial point for an area.
@@ -52,18 +57,18 @@ public class NewMap implements Serializable {
 	/**
 	 * List containing all zones at the map.
 	 */
-	private List<Zone> zones = new ArrayList<Zone>();
+	private List<Zone> zones = new LinkedList<>();
 
 	/**
 	 * Sequence, a list of BlockColor. This sequence defines what kind of blocks
 	 * the bot needs to pick up.
 	 */
-	private List<BlockColor> sequence = new ArrayList<BlockColor>();
+	private List<BlockColor> sequence = new LinkedList<>();
 
 	/**
 	 * Initial entities.
 	 */
-	private List<Entity> entities = new ArrayList<Entity>();
+	private List<Entity> entities = new LinkedList<>();
 
 	/**
 	 * Empty Constructor, initialize newMap.
@@ -169,7 +174,7 @@ public class NewMap implements Serializable {
 	 * @return List of {@Link Zone} of given type
 	 */
 	public List<Zone> getZones(Zone.Type type) {
-		List<Zone> list = new ArrayList<Zone>();
+		List<Zone> list = new LinkedList<>();
 		for (Zone z : zones) {
 			if (z.getType() == type) {
 				list.add(z);
@@ -190,7 +195,7 @@ public class NewMap implements Serializable {
 	@Override
 	public String toString() {
 		return "Map[onebotperzone=" + oneBotPerCorridorZone + ", randomblocks="
-				+ randomBlocks + ",size=" + 0 + ",sequence=" + sequence
+				+ randomBlocks + ",seed=" + seed + ",sequence=" + sequence
 				+ ",zones=" + zones + "]";
 	}
 
@@ -208,6 +213,14 @@ public class NewMap implements Serializable {
 
 	public Point getArea() {
 		return area;
+	}
+	
+	public void setSeed(Integer seed) {
+		this.seed = seed;
+	}
+	
+	public Integer getSeed() {
+		return this.seed;
 	}
 
 	/**
@@ -305,6 +318,11 @@ public class NewMap implements Serializable {
 			if (other.randomSequence != null)
 				return false;
 		} else if (!randomSequence.equals(other.randomSequence))
+			return false;
+		if (seed == null) {
+			if (other.seed != null)
+				return false;
+		} else if (!seed.equals(other.seed))
 			return false;
 		if (sequence == null) {
 			if (other.sequence != null)

@@ -1,18 +1,17 @@
 package nl.tudelft.bw4t.client.environment;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
+
 import eis.exceptions.ManagementException;
 import eis.exceptions.NoEnvironmentException;
 import eis.iilang.Identifier;
 import eis.iilang.Parameter;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import nl.tudelft.bw4t.client.startup.InitParam;
 import nl.tudelft.bw4t.util.LauncherException;
-
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
 
 /**
  * This class is used to startup the remote environment to interact with the
@@ -44,7 +43,7 @@ public final class Launcher {
         /**
          * Load all known parameters into the init array, convert it to EIS format.
          */
-        Map<String, Parameter> init = new HashMap<String, Parameter>();
+        Map<String, Parameter> init = new HashMap<>();
         for (InitParam param : InitParam.values()) {
             if (param == InitParam.GOAL) {
                 LOGGER.info("Setting parameter 'GOAL' with 'false' because we started from commandline.");

@@ -3,8 +3,14 @@ package nl.tudelft.bw4t.server.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+
+import org.jgrapht.WeightedGraph;
+import org.jgrapht.alg.DijkstraShortestPath;
+import org.jgrapht.graph.DefaultWeightedEdge;
+import org.jgrapht.graph.SimpleWeightedGraph;
 
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.model.BoundedMoveableObject;
@@ -12,12 +18,6 @@ import nl.tudelft.bw4t.server.model.zone.DropZone;
 import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
 import nl.tudelft.bw4t.server.repast.MapLoader;
-
-import org.jgrapht.WeightedGraph;
-import org.jgrapht.alg.DijkstraShortestPath;
-import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.graph.SimpleWeightedGraph;
-
 import repast.simphony.context.Context;
 import repast.simphony.space.SpatialException;
 import repast.simphony.space.continuous.ContinuousSpace;
@@ -63,7 +63,7 @@ public final class PathPlanner {
 
             return findPath(graph, start, end);
         } catch (SpatialException ex) {
-            return new ArrayList<NdPoint>();
+            return new ArrayList<>(0);
         }
 
     }
@@ -124,10 +124,10 @@ public final class PathPlanner {
             NdPoint end) {
         List<DefaultWeightedEdge> edgeList = DijkstraShortestPath.findPathBetween(graph, start, end);
         if (edgeList == null) {
-            return new ArrayList<NdPoint>();
+            return new ArrayList<>(0);
         }
 
-        List<NdPoint> path = new ArrayList<NdPoint>();
+        List<NdPoint> path = new LinkedList<>();
         NdPoint current = start;
         path.add(current);
         // Add each path node, but also check for the order of the edges so that
@@ -144,7 +144,7 @@ public final class PathPlanner {
     private static List<NdPoint> returnVacantPoints(Collection<Zone> zones, Collection<BoundedMoveableObject> obstacles,
                                                     int botSize) {
         // First generate the points occupied by the obstacles.
-        List<NdPoint> obstaclePoints = new ArrayList<NdPoint>();
+        List<NdPoint> obstaclePoints = new LinkedList<>();
 
         for (BoundedMoveableObject obstacle : obstacles) {
             // Navigate around obstacles with a margin of 1 unit.
@@ -152,7 +152,7 @@ public final class PathPlanner {
         }
 
         // Now for the zone points.
-        List<NdPoint> zonePoints = new ArrayList<NdPoint>();
+        List<NdPoint> zonePoints = new LinkedList<>();
         for (Zone zone : zones) {
             // -botSize to allow the bot to move alone walls, etc.
             zonePoints.addAll(zone.getPointsOccupiedByObject(0));
@@ -164,7 +164,7 @@ public final class PathPlanner {
         // Remove duplicates by copying the collection to a set, then recreating the list from
         // the duplicate-less set.
 
-        zonePoints = new ArrayList<NdPoint>(new HashSet<NdPoint>(zonePoints));
+        zonePoints = new ArrayList<>(new HashSet<>(zonePoints));
 
         return zonePoints;
     }
@@ -213,7 +213,8 @@ public final class PathPlanner {
         return graph;
     }
 
-    private static void sanitizeVertices(Collection<Zone> zones, Collection<NdPoint> vertices,
+    @SuppressWarnings("unchecked")
+	private static void sanitizeVertices(Collection<Zone> zones, Collection<NdPoint> vertices,
                                          Collection<BoundedMoveableObject> obstacles, int margin) {
         Context<Object> context = BW4TEnvironment.getInstance().getContext();
 
@@ -221,7 +222,7 @@ public final class PathPlanner {
         double width = space.getDimensions().getWidth();
         double height = space.getDimensions().getHeight();
 
-        Set<NdPoint> invalidPoints = new HashSet<NdPoint>();
+        Set<NdPoint> invalidPoints = new HashSet<>();
 
         for(Zone zone : zones) {
             if(zone instanceof Room || zone instanceof DropZone) {
@@ -274,7 +275,7 @@ public final class PathPlanner {
     }
 
     private static Set<NdPoint> generateBlock(double x1, double y1, double x2, double y2) {
-        Set<NdPoint> points = new HashSet<NdPoint>();
+        Set<NdPoint> points = new HashSet<>();
         for(double i = x1; i <= x2; i++) {
             for(double j = y1; j >= y2; j--) {
                 points.add(new NdPoint(i, j));

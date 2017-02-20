@@ -6,13 +6,12 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.awt.geom.Rectangle2D;
-
-import nl.tudelft.bw4t.map.NewMap;
-import nl.tudelft.bw4t.server.model.doors.Door;
-import nl.tudelft.bw4t.server.repast.MapLoader;
 
 import org.junit.After;
 import org.junit.Before;
@@ -21,11 +20,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import nl.tudelft.bw4t.map.NewMap;
+import nl.tudelft.bw4t.server.model.doors.Door;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
-import repast.simphony.space.projection.Projection;
 
 /**
  * The class <code>BoundedMoveableObjectTest</code> contains tests for the class

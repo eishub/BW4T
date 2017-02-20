@@ -1,5 +1,12 @@
 package nl.tudelft.bw4t.server.eis;
 
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.omg.CORBA.Environment;
+
 import eis.eis2java.annotation.AsAction;
 import eis.eis2java.annotation.AsPercept;
 import eis.eis2java.exception.TranslationException;
@@ -9,11 +16,6 @@ import eis.exceptions.ActException;
 import eis.exceptions.PerceiveException;
 import eis.iilang.Action;
 import eis.iilang.Parameter;
-
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.List;
-
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.server.eis.translators.BlockWithColorTranslator;
 import nl.tudelft.bw4t.server.eis.translators.BoundedMovableObjectTranslator;
@@ -29,9 +31,6 @@ import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
 import nl.tudelft.bw4t.server.util.RoomLocator;
 import nl.tudelft.bw4t.server.util.ZoneLocator;
-
-import org.omg.CORBA.Environment;
-
 import repast.simphony.context.Context;
 
 /**
@@ -76,7 +75,7 @@ public class EPartnerEntity implements EntityInterface {
     public EPartnerEntity(EPartner eP) {
         this.ourEPartner = eP;
         this.context = eP.getContext();
-        messages = new ArrayList<ArrayList<String>>();
+        messages = new LinkedList<>();
     }
 
     /**
@@ -208,7 +207,7 @@ public class EPartnerEntity implements EntityInterface {
      */
     @AsPercept(name = "place", multiplePercepts = true, filter = Filter.Type.ONCE)
     public List<String> getRooms() throws PerceiveException {
-        List<String> places = new ArrayList<String>();
+        List<String> places = new LinkedList<>();
         if (ourEPartner.getTypeList().contains(ViewEPartner.GPS)) {
             for (Object o : context.getObjects(Zone.class)) {
                 Zone zone = (Zone) o;
@@ -227,7 +226,7 @@ public class EPartnerEntity implements EntityInterface {
     @AsPercept(name = "message", multiplePercepts = true, filter = Filter.Type.ALWAYS)
     public List<ArrayList<String>> getMessages() {
         List<ArrayList<String>> msg = messages;
-        messages = new ArrayList<ArrayList<String>>();
+        messages = new LinkedList<>();
         return msg;
     }
 
@@ -274,10 +273,10 @@ public class EPartnerEntity implements EntityInterface {
     @AsAction(name = "receiveMessage")
     public void receiveMessage(String sender, String message) {
         // Add message to messageArray
-        List<String> messageArray = new ArrayList<String>();
+    	ArrayList<String> messageArray = new ArrayList<>(2);
         messageArray.add(sender);
         messageArray.add(message);
 
-        messages.add((ArrayList<String>) messageArray);
+        messages.add(messageArray);
     }
 }

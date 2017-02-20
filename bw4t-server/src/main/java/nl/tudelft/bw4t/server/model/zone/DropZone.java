@@ -1,8 +1,10 @@
 package nl.tudelft.bw4t.server.model.zone;
 
 import java.awt.Color;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+
+import org.apache.log4j.Logger;
 
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone;
@@ -11,8 +13,6 @@ import nl.tudelft.bw4t.server.logging.BotLog;
 import nl.tudelft.bw4t.server.model.BW4TServerMap;
 import nl.tudelft.bw4t.server.model.blocks.Block;
 import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
-
-import org.apache.log4j.Logger;
 
 /**
  * Representation of a room where blocks can be dropped into.
@@ -25,7 +25,7 @@ public class DropZone extends Room {
     private static final Logger LOGGER = Logger.getLogger(DropZone.class);
 
     /** The sequence of blocks that are to be dropped in here */
-    private List<BlockColor> sequence = new ArrayList<BlockColor>();
+    private List<BlockColor> sequence = new LinkedList<>();
 
     /**
      * The current index of the to-be-dropped block.

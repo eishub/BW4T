@@ -3,6 +3,7 @@ package nl.tudelft.bw4t.map;
 import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlID;
@@ -18,7 +19,7 @@ import nl.tudelft.bw4t.util.OneTimeInitializing;
  * of the area. Zones can be rooms or corridor areas.
  * 
  * This class is not thread safe. However it is required that
- * {@link #hashCode()} and {@link Equals} are thread safe.
+ * {@link #hashCode()} and {@link #equals(Object)} are thread safe.
  */
 @SuppressWarnings("serial")
 @XmlRootElement
@@ -62,14 +63,14 @@ public class Zone implements Serializable, OneTimeInitializing {
 	 * defult type null otherwise XML serialization will fail.
 	 */
 	private Type type = null;
-	private List<Door> doors = new ArrayList<Door>();
-	private List<BlockColor> blocks = new ArrayList<BlockColor>();
+	private List<Door> doors = new LinkedList<>();
+	private List<BlockColor> blocks = new LinkedList<>();
 	private Rectangle boundingbox = new Rectangle();
 
 	/**
 	 * In the XML file, we refer to the name as unique ID.
 	 */
-	private List<Zone> neighbours = new ArrayList<Zone>();
+	private List<Zone> neighbours = new LinkedList<>();
 
 	/**
 	 * Default render options: null.
@@ -196,7 +197,7 @@ public class Zone implements Serializable, OneTimeInitializing {
 
 	@Override
 	public String toString() {
-		List<String> neighbournames = new ArrayList<String>();
+		List<String> neighbournames = new ArrayList<>(neighbours.size());
 		for (Zone neighbour : neighbours) {
 			neighbournames.add(neighbour.getName());
 		}

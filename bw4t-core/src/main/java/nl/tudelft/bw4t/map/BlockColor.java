@@ -117,8 +117,7 @@ public enum BlockColor implements Serializable {
 	 */
 	public static List<BlockColor> getAvailableColors() {
 		if (colors == null) {
-			List<BlockColor> cs = new ArrayList<>(Arrays.asList(BlockColor
-					.values()));
+			List<BlockColor> cs = new ArrayList<>(Arrays.asList(BlockColor.values()));
 			cs.remove(BlockColor.DARK_GRAY);
 			colors = cs;
 		}

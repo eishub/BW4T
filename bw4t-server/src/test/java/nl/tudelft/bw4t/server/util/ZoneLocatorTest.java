@@ -10,13 +10,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
-import nl.tudelft.bw4t.server.model.zone.Zone;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.model.zone.Zone;
 import repast.simphony.context.Context;
 import repast.simphony.context.DefaultContext;
 import repast.simphony.space.continuous.NdPoint;
@@ -30,12 +29,11 @@ public class ZoneLocatorTest {
     @Mock private static Zone ZONE3 = mock(Zone.class);
 
     /** A minor offset is done on certain elements in order to fulfill requirements of the definition of insideness. */
-    private static double OFFSET = 1E-5;
     private static String ZONE1_NAME = "Zone1";
     private static String ZONE2_NAME = "Zone2";
     private static String ZONE3_NAME = "Zone3";
     
-    private static Context<Zone> context = new DefaultContext<Zone>();
+    private static Context<Object> context = new DefaultContext<>();
     
     @BeforeClass
     public static void setUp() throws NoSuchMethodException, SecurityException,

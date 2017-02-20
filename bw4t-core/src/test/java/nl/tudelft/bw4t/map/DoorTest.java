@@ -2,11 +2,10 @@ package nl.tudelft.bw4t.map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import nl.tudelft.bw4t.map.Door.Orientation;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
+
+import nl.tudelft.bw4t.map.Door.Orientation;
 
 /**
  * The class <code>DoorTest</code> contains tests for the class
@@ -100,47 +99,6 @@ public class DoorTest {
         assertNotNull(result);
         assertEquals(1.0, result.getX(), 0.1);
         assertEquals(1.0, result.getY(), 0.1);
-    }
-
-    /**
-     * Run the void setPosition(Point) method test.
-     * 
-     * @throws Exception
-     * 
-     * @generatedBy CodePro at 25.05.14 13:12
-     */
-    @Test
-    public void testSetPosition_1() throws Exception {
-        Door fixture = new Door(new Point(), Door.Orientation.HORIZONTAL);
-        Point position = new Point();
-
-        // add additional test code here
-    }
-
-    /**
-     * Perform pre-test initialization.
-     * 
-     * @throws Exception
-     *             if the initialization fails for some reason
-     * 
-     * @generatedBy CodePro at 25.05.14 13:12
-     */
-    @Before
-    public void setUp() throws Exception {
-        // add additional set up code here
-    }
-
-    /**
-     * Perform post-test clean-up.
-     * 
-     * @throws Exception
-     *             if the clean-up fails for some reason
-     * 
-     * @generatedBy CodePro at 25.05.14 13:12
-     */
-    @After
-    public void tearDown() throws Exception {
-        // Add additional tear down code here
     }
 
     /**

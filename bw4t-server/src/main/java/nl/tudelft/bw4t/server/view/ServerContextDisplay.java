@@ -252,7 +252,7 @@ class MapSelector extends JPanel {
 		setLayout(new BorderLayout());
 		add(new JLabel("Change Map"), BorderLayout.WEST);
 		Vector<String> maps = getMaps();
-		final JComboBox mapselector = new JComboBox(maps);
+		final JComboBox<String> mapselector = new JComboBox<>(maps);
 
 		// find the current map in the list and highlight it
 		String mapname = BW4TEnvironment.getInstance().getMapName();
@@ -262,7 +262,7 @@ class MapSelector extends JPanel {
 		mapselector.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Map<String, Parameter> parameters = new HashMap<String, Parameter>();
+				Map<String, Parameter> parameters = new HashMap<>(1);
 				parameters.put("map", new Identifier((String) mapselector.getSelectedItem()));
 				try {
 					BW4TEnvironment.getInstance().reset(parameters);

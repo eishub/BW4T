@@ -1,14 +1,13 @@
 package nl.tudelft.bw4t.client.controller.percept.processors;
 
-import java.util.LinkedList;
 import java.util.List;
 
-import nl.tudelft.bw4t.client.controller.ClientMapController;
-import nl.tudelft.bw4t.map.Zone;
 import eis.iilang.Function;
 import eis.iilang.Identifier;
 import eis.iilang.Numeral;
 import eis.iilang.Parameter;
+import nl.tudelft.bw4t.client.controller.ClientMapController;
+import nl.tudelft.bw4t.map.Zone;
 
 public class NegationProcessor implements PerceptProcessor {
 
@@ -17,7 +16,7 @@ public class NegationProcessor implements PerceptProcessor {
 			ClientMapController clientMapController) {
 		Function function = (Function) parameters.get(0);
 		if ("occupied".equals(function.getName())) {
-			LinkedList<Parameter> paramOcc = function.getParameters();
+			List<Parameter> paramOcc = function.getParameters();
 			Zone zone = clientMapController.getMap().getZone(
 					((Identifier) paramOcc.get(0)).getValue());
 			if (zone == null) {

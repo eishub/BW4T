@@ -8,15 +8,15 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 
-import nl.tudelft.bw4t.server.eis.RobotEntity;
-import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
-import nl.tudelft.bw4t.server.model.robots.AgentRecord;
-
 import org.apache.log4j.Appender;
 import org.apache.log4j.Layout;
 import org.apache.log4j.Logger;
 import org.apache.log4j.RollingFileAppender;
 import org.apache.log4j.spi.ErrorCode;
+
+import nl.tudelft.bw4t.server.eis.RobotEntity;
+import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
+import nl.tudelft.bw4t.server.model.robots.AgentRecord;
 
 public class BW4TFileAppender extends RollingFileAppender {
 
@@ -182,7 +182,8 @@ public class BW4TFileAppender extends RollingFileAppender {
      /**
       * when the reset button is presed; the logging goes on in new file.
       */
-     public static void resetNewFile() {
+     @SuppressWarnings("unchecked")
+	public static void resetNewFile() {
          for (Enumeration<Appender> e = Logger.getRootLogger().getAllAppenders(); e.hasMoreElements();) {
              Appender a = e.nextElement();
              if (a instanceof RollingFileAppender) {

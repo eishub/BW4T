@@ -3,13 +3,8 @@ package nl.tudelft.bw4t.client.environment;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
-import eis.EnvironmentListener;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
-
-import nl.tudelft.bw4t.client.controller.ClientController;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,20 +12,23 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import eis.EnvironmentListener;
+import nl.tudelft.bw4t.client.controller.ClientController;
+
 /**
  * This class tests the EntityNotifiers class from the Environment package in the client.
  * It tests whether entities are correctly notified when free, deleted or new.
  */
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("unchecked")
 public class EntityNotifiersTest {
     
     private EnvironmentListener mockedEnvListener = Mockito.mock(eis.EnvironmentListener.class);
     private EnvironmentListener mockedEnvListener2 = Mockito.mock(eis.EnvironmentListener.class);
     private EnvironmentListener mockedEnvListener3 = Mockito.mock(eis.EnvironmentListener.class);
     private RemoteEnvironment mockedRemEnv = Mockito.mock(RemoteEnvironment.class);
-    private Collection<String> mockedCollection = Mockito.mock(Collection.class);
+	private Collection<String> mockedCollection = Mockito.mock(Collection.class);
     private ClientController mockedGUI = Mockito.mock(ClientController.class);
-    private Map mockedMap = Mockito.mock(Map.class);
     
     @Before
     public void createRemotes() {
@@ -41,7 +39,7 @@ public class EntityNotifiersTest {
         when(mockedRemEnv.getEnvironmentListeners()).thenReturn(listenerList);
     }
     
-    @Test
+	@Test
     public void notifyFreeEntityTest() {
         EntityNotifiers.notifyFreeEntity("Bot1", mockedCollection, mockedRemEnv);
         
@@ -59,7 +57,7 @@ public class EntityNotifiersTest {
         Mockito.verify(mockedEnvListener3).handleNewEntity(any(String.class));
     }
     
-    @Test
+	@Test
     public void notifyDeletedEntityTest() {
 
         when(mockedRemEnv.getEntityController("Bot1")).thenReturn(mockedGUI);

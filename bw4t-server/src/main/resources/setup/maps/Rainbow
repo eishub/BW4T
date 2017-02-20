@@ -31,6 +31,7 @@
     <oneBotPerCorridorZone>false</oneBotPerCorridorZone>
     <randomBlocks>0</randomBlocks>
     <randomSequence>0</randomSequence>
+    <seed>1</seed>
     <sequence>BLUE</sequence>
     <sequence>GREEN</sequence>
     <sequence>YELLOW</sequence>

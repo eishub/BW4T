@@ -18,13 +18,14 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
+import eis.iilang.Percept;
 import nl.tudelft.bw4t.client.gui.menu.ComboEntityModel;
 import nl.tudelft.bw4t.client.gui.menu.EntityComboModelProvider;
-import eis.iilang.Percept;
 
 public class PerceptDebugScreen extends JFrame implements Runnable, ActionListener, EntityComboModelProvider {
+	private static final long serialVersionUID = -7329333876656307218L;
 
-    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     private RemoteEnvironment env;
 

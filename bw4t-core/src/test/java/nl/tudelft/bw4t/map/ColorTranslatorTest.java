@@ -92,7 +92,8 @@ public class ColorTranslatorTest {
      *
      * @generatedBy CodePro at 25.05.14 12:54
      */
-    @Test
+    @SuppressWarnings("unchecked")
+	@Test
     public void testTranslate2ColorString_unkown()
             throws Exception {
     	//temporarily disable output:

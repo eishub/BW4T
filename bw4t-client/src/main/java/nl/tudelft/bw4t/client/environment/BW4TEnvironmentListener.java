@@ -4,13 +4,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
-import nl.tudelft.bw4t.client.agent.BW4TAgent;
-import nl.tudelft.bw4t.client.agent.HumanAgent;
-import nl.tudelft.bw4t.client.startup.ConfigFile;
-import nl.tudelft.bw4t.client.startup.InitParam;
-import nl.tudelft.bw4t.scenariogui.BotConfig;
-import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
-
 import org.apache.log4j.Logger;
 
 import eis.EnvironmentListener;
@@ -18,6 +11,9 @@ import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
 import eis.exceptions.RelationException;
 import eis.iilang.EnvironmentState;
+import nl.tudelft.bw4t.client.agent.BW4TAgent;
+import nl.tudelft.bw4t.client.agent.HumanAgent;
+import nl.tudelft.bw4t.client.startup.InitParam;
 
 /**
  * Class that can be registered to BW4TRemoteEnvironment as EnvironmentListener
@@ -141,64 +137,6 @@ public class BW4TEnvironmentListener implements EnvironmentListener {
 				| InvocationTargetException e) {
 			throw new InstantiationException(e.getMessage());
 		}
-	}
-
-	/**
-	 * Finds the bot config corresponding to the entity id.
-	 * 
-	 * @param entityId
-	 *            The entity id.
-	 * @param recursiveCall
-	 *            Boolean weather this is a recursive call or not
-	 * @return The bot config belonging to this entity.
-	 */
-	private BotConfig findCorrespondingBotConfig(String entityId,
-			boolean recursiveCall) {
-		ConfigFile file = InitParam.getConfigFile();
-		if (file == null) {
-			return null;
-		}
-		for (BotConfig bConfig : file.getConfig().getBots()) {
-			if (entityId.equals(bConfig.getBotName())) {
-				return bConfig;
-			}
-		}
-
-		/** Removes the last '_Nr' part and tries again: */
-		if (!recursiveCall) {
-			return findCorrespondingBotConfig(entityId.split("_")[0], true);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Finds the epartner config corresponding to the entity id.
-	 * 
-	 * @param entityId
-	 *            The entity id.
-	 * @param recursiveCall
-	 *            Boolean weather this is a recursive call or not
-	 * @return The epartner config belonging to this entity.
-	 */
-	private EPartnerConfig findCorrespondingEpartnerConfig(String entityId,
-			boolean recursiveCall) {
-		ConfigFile file = InitParam.getConfigFile();
-		if (file != null) {
-			return null;
-		}
-		for (EPartnerConfig epConfig : file.getConfig().getEpartners()) {
-			if (entityId.equals(epConfig.getEpartnerName())) {
-				return epConfig;
-			}
-		}
-
-		/** Removes the last '_Nr' part and tries again: */
-		if (!recursiveCall) {
-			return findCorrespondingEpartnerConfig(entityId.split("_")[0], true);
-		}
-
-		return null;
 	}
 
 	/**

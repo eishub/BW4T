@@ -29,6 +29,7 @@ import nl.tudelft.bw4t.client.message.MessageType;
 import nl.tudelft.bw4t.map.Zone;
 
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("deprecation")
 public class BW4TAgentTest {
 
 	@Mock

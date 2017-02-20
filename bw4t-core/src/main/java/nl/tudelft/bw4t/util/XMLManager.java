@@ -57,7 +57,6 @@ public final class XMLManager {
 	 */
 	public static Object fromXML(final String filePath,
 			final Class<?> generatedObjectClass) throws JAXBException {
-		File file = new File(filePath);
 		return fromXML(new File(filePath), generatedObjectClass);
 	}
 
