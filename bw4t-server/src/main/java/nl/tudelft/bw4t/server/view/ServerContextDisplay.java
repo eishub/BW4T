@@ -1,6 +1,6 @@
 package nl.tudelft.bw4t.server.view;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -133,6 +133,12 @@ class ControlPanel extends JPanel {
 	/** The slider for the tps. */
 	private final JSlider slider;
 
+	/** The steps per frame display. */
+	final private JLabel stepsPerFrameDisplay = new JLabel("1 steps/frame");
+
+	/** The slider for the steps per frame. */
+	private final JSlider stepsPerFramelider;
+
 	/** The collision checkbox. */
 	private final JCheckBox collisionCheckbox;
 
@@ -146,11 +152,27 @@ class ControlPanel extends JPanel {
 		setLayout(new BorderLayout());
 		add(new JLabel("Speed"), BorderLayout.WEST);
 		// slider goes in percentage, 100 is fastest
-		slider = new JSlider(Stepper.MIN_DELAY, Stepper.MAX_DELAY, 20);
+		slider = new JSlider(Stepper.MIN_DELAY, Stepper.MAX_DELAY, Stepper.DEFAULT_DELAY);
 		slider.setEnabled(false);
 		final JButton resetbutton = new JButton("Reset");
-		add(tpsDisplay, BorderLayout.WEST);
-		add(slider, BorderLayout.CENTER);
+
+		JPanel sliderPanel = new JPanel();
+		GridLayout sliderGrid = new GridLayout(2, 2, 5, 10);
+		sliderPanel.setLayout(sliderGrid);
+
+
+		sliderPanel.add(slider);
+		sliderPanel.add(tpsDisplay);
+
+		stepsPerFramelider = new JSlider(Stepper.MIN_STEPS_AT_ONCE, Stepper.MAX_STEPS_AT_ONCE, Stepper.DEFAULT_STEPS_AT_ONCE);
+		stepsPerFramelider.setEnabled(false);
+		stepsPerFramelider.setInverted(true);
+
+		sliderPanel.add(stepsPerFramelider);
+		sliderPanel.add(stepsPerFrameDisplay);
+
+		add(sliderPanel, BorderLayout.CENTER);
+
 		add(resetbutton, BorderLayout.EAST);
 		add(new MapSelector(displayer), BorderLayout.NORTH);
 
@@ -172,6 +194,15 @@ class ControlPanel extends JPanel {
 				// first get interpolated speed.
 				BW4TEnvironment.getInstance().setDelay(slider.getValue());
 				updateTpsDisplay();
+			}
+		});
+
+		stepsPerFramelider.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				BW4TEnvironment.getInstance().setStepsAtOnce(stepsPerFramelider.getValue());
+				updateStepsPerFrameDisplay();
 			}
 		});
 
@@ -197,11 +228,15 @@ class ControlPanel extends JPanel {
 					public void run() {
 						slider.setEnabled(true);
 						updateDelay();
+						stepsPerFramelider.setEnabled(true);
+						updateStepsPerFrame();
 					}
 				});
 			}
 		}, 1000);
+
 		updateTpsDisplay();
+		updateStepsPerFrameDisplay();
 
 		BW4TEnvironment.getInstance().addChangeListener(new PropertyChangeListener() {
 			@Override
@@ -217,11 +252,23 @@ class ControlPanel extends JPanel {
 		slider.setValue((int) BW4TEnvironment.getInstance().getDelay());
 	}
 
+	private void updateStepsPerFrame() {
+		updateStepsPerFrameDisplay();
+		stepsPerFramelider.setValue(BW4TEnvironment.getInstance().getStepsAtOnce());
+	}
+
 	/**
 	 * Update the tps display.
 	 */
 	public void updateTpsDisplay() {
 		tpsDisplay.setText(String.format("%3.1f fps", 1000.f / BW4TEnvironment.getInstance().getDelay()));
+	}
+
+	/**
+	 * Update the steps per frame display.
+	 */
+	public void updateStepsPerFrameDisplay() {
+		stepsPerFrameDisplay.setText(String.format("%d steps/frame", BW4TEnvironment.getInstance().getStepsAtOnce()));
 	}
 }
 

@@ -562,6 +562,16 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		}
 	}
 
+	public void setStepsAtOnce(int stepsAtOnce) {
+		if (stepper == null) {
+			return;
+		}
+		if (stepsAtOnce != stepper.getStepsAtOnce()) {
+			stepper.setStepsAtOnce(stepsAtOnce);
+			notifyChange();
+		}
+	}
+
 	/**
 	 * reset using parameters for initial situation. Does not kill the server.
 	 * Returns after reset is complete.
@@ -936,8 +946,14 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	public int getDelay() {
 		if (stepper == null)
-			return 20;
+			return Stepper.DEFAULT_DELAY;
 		return (int) stepper.getDelay();
+	}
+
+	public int getStepsAtOnce() {
+		if (stepper == null)
+			return Stepper.DEFAULT_STEPS_AT_ONCE;
+		return (int) stepper.getStepsAtOnce();
 	}
 
 	/**

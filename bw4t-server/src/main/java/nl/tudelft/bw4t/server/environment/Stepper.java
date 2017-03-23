@@ -19,6 +19,11 @@ public class Stepper implements Runnable {
 	 */
 	public static final int MIN_DELAY = 10;
 	public static final int MAX_DELAY = 200;
+	public static final int DEFAULT_DELAY = 10;
+
+	public static final int MIN_STEPS_AT_ONCE = 1;
+	public static final int MAX_STEPS_AT_ONCE = 500;
+	public static final int DEFAULT_STEPS_AT_ONCE = 100;
 
 	private static final Logger LOGGER = Logger.getLogger(Stepper.class);
 	/**
@@ -30,7 +35,15 @@ public class Stepper implements Runnable {
 	/**
 	 * default 10ms between steps
 	 */
-	private long loopDelay = 20;
+	private long loopDelay = DEFAULT_DELAY;
+
+
+	/**
+	 * Steps executed each loop
+	 */
+	private int stepsAtOnce = DEFAULT_STEPS_AT_ONCE;
+
+
 	private boolean running = true;
 
 	public Stepper(String scenario, AbstractEnvironment envi) throws ScenarioLoadException {
@@ -40,6 +53,7 @@ public class Stepper implements Runnable {
 		runner.load(new File(scenarioLocation));
 		runner.runInitialize();
 	}
+
 
 	@Override
 	public void run() {
@@ -55,7 +69,11 @@ public class Stepper implements Runnable {
 						if (runner.getModelActionCount() == 0) {
 							runner.setFinishing(true);
 						}
-						runner.step();
+
+						//Run multiple steps per frame, if the user wants to.
+						for(int i = 0; i < stepsAtOnce; i++) {
+							runner.step();
+						}
 					}
 					try {
 						Thread.sleep(loopDelay);
@@ -72,6 +90,27 @@ public class Stepper implements Runnable {
 		running = false;
 		runner = null;
 	}
+
+	public long getStepsAtOnce() {
+		return stepsAtOnce;
+	}
+
+	/**
+	 * set new delay value. Lower is faster animation speed.
+	 *
+	 * @param value
+	 *            the value for the delay. Should be at least {@link #MIN_DELAY}
+	 *            .
+	 */
+	public void setStepsAtOnce(int value) {
+		if (value < MIN_STEPS_AT_ONCE || value > MAX_STEPS_AT_ONCE) {
+			throw new IllegalArgumentException(
+					"speed should be >=" + MIN_DELAY + " and <= " + MAX_DELAY + " but got " + value);
+		}
+		stepsAtOnce = value;
+
+	}
+
 
 	public long getDelay() {
 		return loopDelay;
