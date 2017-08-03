@@ -22,7 +22,6 @@ import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 
-/** Implementation of the {@link MapRenderInterface} */
 public class MapRenderer extends JPanel implements MapRendererInterface {
 
 	/**
@@ -118,12 +117,10 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 
 		for (BlockColor color : getController().getSequence()) {
 			g2d.setColor(color.getColor());
-			g2d.fill(new Rectangle2D.Double(startPosX, set.scale(set
-					.getWorldHeight()), size, size));
+			g2d.fill(new Rectangle2D.Double(startPosX, set.scale(set.getWorldHeight()), size, size));
 			if (getController().getSequenceIndex() > (startPosX / size)) {
 				g2d.setColor(Color.BLACK);
-				int[] xpoints = new int[] { startPosX, startPosX,
-						startPosX + size };
+				int[] xpoints = new int[] { startPosX, startPosX, startPosX + size };
 				int[] ypoints = new int[] { wh, wh + size, wh + (size / 2) };
 				g2d.fillPolygon(xpoints, ypoints, 3);
 			}
@@ -150,8 +147,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 
 			// paint the room
 			g2d.setColor(Color.GRAY);
-			Shape roomDisplayCoordinates = set.transformRectangle(room
-					.getBoundingbox().getRectangle());
+			Shape roomDisplayCoordinates = set.transformRectangle(room.getBoundingbox().getRectangle());
 			g2d.fill(roomDisplayCoordinates);
 			g2d.setColor(Color.BLACK);
 			g2d.draw(roomDisplayCoordinates);
@@ -171,8 +167,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 		for (Zone chargingzone : getController().getChargingZones()) {
 			// paint the charging zone in transparent green
 			g2d.setColor(Zone.CHARGING_ZONE_COLOR);
-			Shape roomDisplayCoordinates = set.transformRectangle(chargingzone
-					.getBoundingbox().getRectangle());
+			Shape roomDisplayCoordinates = set.transformRectangle(chargingzone.getBoundingbox().getRectangle());
 			g2d.fill(roomDisplayCoordinates);
 		}
 	}
@@ -189,8 +184,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 		for (Zone blockade : getController().getBlockades()) {
 			// paint the blockades in transparent green
 			g2d.setColor(Zone.BLOCKADE_COLOR);
-			Shape roomDisplayCoordinates = set.transformRectangle(blockade
-					.getBoundingbox().getRectangle());
+			Shape roomDisplayCoordinates = set.transformRectangle(blockade.getBoundingbox().getRectangle());
 			g2d.fill(roomDisplayCoordinates);
 			g2d.setColor(Color.BLACK);
 			g2d.draw(roomDisplayCoordinates);
@@ -217,9 +211,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 			g2d.setColor(Door.COLOR_OPEN);
 		}
 
-		g2d.fill(set.transformCenterRectangle(new Rectangle2D.Double(door
-				.getPosition().getX(), door.getPosition().getY(), door
-				.getWidth(), door.getHeight())));
+		g2d.fill(set.transformCenterRectangle(new Rectangle2D.Double(door.getPosition().getX(),
+				door.getPosition().getY(), door.getWidth(), door.getHeight())));
 	}
 
 	/**
@@ -237,9 +230,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 		for (Zone zone : getController().getZones()) {
 			Rectangle2D bbox = zone.getBoundingbox().getRectangle();
 			g2d.drawString(zone.getName(),
-					(int) (set.scale(bbox.getCenterX()) - (g2d.getFontMetrics()
-							.stringWidth(zone.getName()) / 2.0)), (int) set
-							.scale(bbox.getCenterY()));
+					(int) (set.scale(bbox.getCenterX()) - (g2d.getFontMetrics().stringWidth(zone.getName()) / 2.0)),
+					(int) set.scale(bbox.getCenterY()));
 		}
 	}
 
@@ -258,8 +250,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 		}
 
 		g2d.setColor(Color.getHSBColor(0.0639f, 0.58f, 0.5f)); // brown
-		Rectangle2D rect = set.transformRectangle(dropZone.getBoundingbox()
-				.getRectangle());
+		Rectangle2D rect = set.transformRectangle(dropZone.getBoundingbox().getRectangle());
 		g2d.fill(rect);
 		g2d.setColor(Color.BLACK);
 		g2d.draw(rect);
@@ -284,9 +275,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 
 		for (ViewBlock box : blocks) {
 			g2d.setColor(box.getColor().getColor());
-			g2d.fill(set.transformCenterRectangle(new Rectangle2D.Double(box
-					.getPosition().getX(), box.getPosition().getY(),
-					ViewBlock.BLOCK_SIZE, ViewBlock.BLOCK_SIZE)));
+			g2d.fill(set.transformCenterRectangle(new Rectangle2D.Double(box.getPosition().getX(),
+					box.getPosition().getY(), ViewBlock.BLOCK_SIZE, ViewBlock.BLOCK_SIZE)));
 		}
 	}
 
@@ -303,17 +293,15 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 		for (ViewEntity e : getController().getVisibleEntities()) {
 			g2d.setColor(e.getColor());
 			Point2D loc = e.getLocation();
-			g2d.fill(set.transformCenterRectangle(new Rectangle2D.Double(loc
-					.getX(), loc.getY(), e.getRobotSize(), e.getRobotSize())));
+			g2d.fill(set.transformCenterRectangle(
+					new Rectangle2D.Double(loc.getX(), loc.getY(), e.getRobotSize(), e.getRobotSize())));
 
 			if (set.isRenderEntityName()) {
 				g2d.setColor(Color.RED);
 				g2d.setFont(new Font("Arial", Font.BOLD, 16));
 				g2d.drawString(e.getName(),
-						(int) set.scale(e.getLocation().getX())
-								- g2d.getFontMetrics().stringWidth(e.getName())
-								/ 2, (int) set.scale(e.getLocation().getY())
-								+ set.getEntityNameOffset());
+						(int) set.scale(e.getLocation().getX()) - g2d.getFontMetrics().stringWidth(e.getName()) / 2,
+						(int) set.scale(e.getLocation().getY()) + set.getEntityNameOffset());
 			}
 		}
 	}
