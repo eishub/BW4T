@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -72,12 +73,34 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 	 * Update minimum size based on controller.
 	 */
 	private void updateMinimumSize() {
-		MapRenderSettings set = getController().getRenderSettings();
-		Dimension size = new Dimension(set.scale(set.getWorldWidth()),
-				set.scale(set.getWorldHeight()) + set.getSequenceBlockSize());
+		Dimension size = getMapSize();
 		this.setMinimumSize(size);
 		this.setPreferredSize(size);
 		this.setMaximumSize(size);
+	}
+
+	/**
+	 * @return the size of the map view area.
+	 */
+	private Dimension getMapSize() {
+		MapRenderSettings set = getController().getRenderSettings();
+		return new Dimension(set.scale(set.getWorldWidth()),
+				set.scale(set.getWorldHeight()) + set.getSequenceBlockSize());
+	}
+
+	/**
+	 * 
+	 * @param g
+	 *            a {@link Graphics2D} containing the area on which to draw the
+	 *            map.
+	 * @return a scale factor that will nicely fit the whole map onto the given
+	 *         graphics.
+	 */
+	private Double getPossibleScale(Graphics2D g) {
+		Dimension mapsize = getMapSize();
+		Rectangle viewsize = g.getClipBounds();
+		return viewsize.getWidth() / mapsize.getWidth();
+
 	}
 
 	/**
@@ -91,6 +114,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 		super.paintComponent(g);
 		updateMinimumSize();
 		Graphics2D g2d = (Graphics2D) g;
+		Double scale = getPossibleScale(g2d);
+		g2d.scale(scale, scale);
 		drawChargingZones(g2d);
 		drawRooms(g2d);
 		drawBlockades(g2d);
