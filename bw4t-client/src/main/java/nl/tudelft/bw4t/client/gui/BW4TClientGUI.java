@@ -2,10 +2,9 @@ package nl.tudelft.bw4t.client.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
+import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.List;
 
@@ -24,6 +23,11 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
 
+import org.apache.log4j.Logger;
+
+import eis.iilang.Identifier;
+import eis.iilang.Parameter;
+import eis.iilang.Percept;
 import nl.tudelft.bw4t.client.BW4TClientSettings;
 import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.controller.ClientController;
@@ -35,15 +39,8 @@ import nl.tudelft.bw4t.client.gui.listeners.EPartnerListMouseListener;
 import nl.tudelft.bw4t.client.gui.listeners.TeamListMouseListener;
 import nl.tudelft.bw4t.client.gui.menu.ActionPopUpMenu;
 import nl.tudelft.bw4t.client.gui.menu.ComboEntityModel;
-import nl.tudelft.bw4t.map.renderer.MapRenderSettings;
 import nl.tudelft.bw4t.map.renderer.MapRenderer;
 import nl.tudelft.bw4t.map.renderer.MapRendererInterface;
-
-import org.apache.log4j.Logger;
-
-import eis.iilang.Identifier;
-import eis.iilang.Parameter;
-import eis.iilang.Percept;
 
 /**
  * Render the current state of the world at a fixed rate (10 times per second,
@@ -109,8 +106,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 	private JTextArea epartnerChatSession = new JTextArea(8, 1);
 
 	private final JScrollPane botChatPane = new JScrollPane(getBotChatSession());
-	private final JScrollPane epartnerChatPane = new JScrollPane(
-			getEpartnerChatSession());
+	private final JScrollPane epartnerChatPane = new JScrollPane(getEpartnerChatSession());
 
 	private JScrollPane mapRenderer;
 
@@ -120,8 +116,11 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 	/** The jpopup menu. */
 	private JPopupMenu jPopupMenu;
 
-	/** The selected location. */
-	private Point selectedLocation;
+	/**
+	 * The selected location in actual map coordinates (1 on the map means 1
+	 * pixel on screen)
+	 */
+	private Point2D selectedLocation;
 
 	/**
 	 * Instantiates a new bw4t client gui.
@@ -154,8 +153,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 	 * @throws IOException
 	 *             Thrown if map can't be loaded.
 	 */
-	public BW4TClientGUI(RemoteEnvironment env, String entityId,
-			HumanAgent humanAgent) throws IOException {
+	public BW4TClientGUI(RemoteEnvironment env, String entityId, HumanAgent humanAgent) throws IOException {
 		this(new ClientController(env, entityId, humanAgent));
 	}
 
@@ -190,33 +188,32 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 
 				@Override
 				public void mousePressed(MouseEvent e) {
-					// Get coordinates of mouse click
-					int mouseX = e.getX();
-					int mouseY = e.getY();
-					setSelectedLocation(mouseX, mouseY);
+					// Get coordinates of mouse click and scale back to original
+					// map size.
+					double scale = controller.getMapController().getRenderSettings().getScale();
+					setSelectedLocation(e.getX() / scale, e.getY() / scale);
 					ActionPopUpMenu.buildPopUpMenu(that);
 				}
 
-				@Override
-				public void mouseWheelMoved(MouseWheelEvent mwe) {
-					if (mouseOver && mwe.isControlDown()) {
-						MapRenderSettings settings = that.getController()
-								.getMapController().getRenderSettings();
-						if (mwe.getUnitsToScroll() >= 0) {
-							settings.setScale(settings.getScale() + 0.1);
-						} else {
-							settings.setScale(settings.getScale() - 0.1);
-						}
-					} else {
-						super.mouseWheelMoved(mwe);
-					}
-				}
+				// @Override
+				// public void mouseWheelMoved(MouseWheelEvent mwe) {
+				// if (mouseOver && mwe.isControlDown()) {
+				// MapRenderSettings settings =
+				// that.getController().getMapController().getRenderSettings();
+				// if (mwe.getUnitsToScroll() >= 0) {
+				// settings.setScale(settings.getScale() + 0.1);
+				// } else {
+				// settings.setScale(settings.getScale() - 0.1);
+				// }
+				// } else {
+				// super.mouseWheelMoved(mwe);
+				// }
+				// }
 			};
 			renderer.addMouseListener(ma);
 			renderer.addMouseWheelListener(ma);
 
-			getBotChatSession().addMouseListener(
-					new ChatListMouseListener(this));
+			getBotChatSession().addMouseListener(new ChatListMouseListener(this));
 		}
 		LOGGER.debug("Attaching to ClientController");
 		final ClientMapController mapController = controller.getMapController();
@@ -289,8 +286,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 	}
 
 	private void createBotOptionsBar() {
-		botButtonPanel
-				.setLayout(new BoxLayout(botButtonPanel, BoxLayout.X_AXIS));
+		botButtonPanel.setLayout(new BoxLayout(botButtonPanel, BoxLayout.X_AXIS));
 		botButtonPanel.setFocusable(false);
 
 		batteryProgressBar.setForeground(Color.green);
@@ -300,8 +296,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 
 		new BatteryProgressBarListener(batteryProgressBar, this);
 
-		agentSelector = new JComboBox<String>(new ComboEntityModel(
-				getController()));
+		agentSelector = new JComboBox<String>(new ComboEntityModel(getController()));
 
 		botButtonPanel.add(batteryLabel);
 		botButtonPanel.add(batteryProgressBar);
@@ -309,34 +304,28 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 		botButtonPanel.add(agentSelector);
 		botButtonPanel.add(botMessageButton);
 
-		botMessageButton
-				.addMouseListener(new TeamListMouseListener(controller));
+		botMessageButton.addMouseListener(new TeamListMouseListener(controller));
 	}
 
 	private void createEpartnerOptionsBar() {
-		epartnerButtonPanel.setLayout(new BoxLayout(epartnerButtonPanel,
-				BoxLayout.X_AXIS));
+		epartnerButtonPanel.setLayout(new BoxLayout(epartnerButtonPanel, BoxLayout.X_AXIS));
 		epartnerButtonPanel.setFocusable(false);
 
 		epartnerButtonPanel.add(epartnerMessageButton);
 
 		epartnerMessageButton.setEnabled(false);
-		epartnerMessageButton.addMouseListener(new EPartnerListMouseListener(
-				this));
+		epartnerMessageButton.addMouseListener(new EPartnerListMouseListener(this));
 	}
 
 	private void createBotChatSection() {
 		botChatPanel.setLayout(new BoxLayout(botChatPanel, BoxLayout.Y_AXIS));
-		botChatPanel.setBorder(BorderFactory
-				.createBevelBorder(BevelBorder.RAISED));
+		botChatPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		botChatPanel.setFocusable(false);
 
 		getBotChatSession().setFocusable(false);
 
-		botChatPane
-				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		botChatPane
-				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		botChatPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		botChatPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		botChatPane.setEnabled(true);
 		botChatPane.setFocusable(false);
 		botChatPane.setColumnHeaderView(new JLabel("Bot Chat Session:"));
@@ -345,23 +334,18 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 	}
 
 	private void createEpartnerChatSection() {
-		epartnerChatPanel.setLayout(new BoxLayout(epartnerChatPanel,
-				BoxLayout.Y_AXIS));
-		epartnerChatPanel.setBorder(BorderFactory
-				.createBevelBorder(BevelBorder.RAISED));
+		epartnerChatPanel.setLayout(new BoxLayout(epartnerChatPanel, BoxLayout.Y_AXIS));
+		epartnerChatPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		epartnerChatPanel.setFocusable(false);
 
 		getEpartnerChatSession().setFocusable(false);
 
-		epartnerChatPane
-				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		epartnerChatPane
-				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		epartnerChatPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		epartnerChatPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		epartnerChatPane.setEnabled(true);
 		epartnerChatPane.setVisible(false);
 		epartnerChatPane.setFocusable(false);
-		epartnerChatPane.setColumnHeaderView(new JLabel(
-				"E-partner Chat Session:"));
+		epartnerChatPane.setColumnHeaderView(new JLabel("E-partner Chat Session:"));
 
 		epartnerChatPanel.add(epartnerChatPane);
 	}
@@ -382,15 +366,11 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 	 * Update the chat session.
 	 */
 	public void update() {
-		getBotChatSession().setText(
-				join(getController().getBotChatHistory(), "\n"));
-		getBotChatSession().setCaretPosition(
-				getBotChatSession().getDocument().getLength());
+		getBotChatSession().setText(join(getController().getBotChatHistory(), "\n"));
+		getBotChatSession().setCaretPosition(getBotChatSession().getDocument().getLength());
 
-		getEpartnerChatSession().setText(
-				join(getController().getEpartnerChatHistory(), "\n"));
-		getEpartnerChatSession().setCaretPosition(
-				getEpartnerChatSession().getDocument().getLength());
+		getEpartnerChatSession().setText(join(getController().getEpartnerChatHistory(), "\n"));
+		getEpartnerChatSession().setCaretPosition(getEpartnerChatSession().getDocument().getLength());
 
 		repaint();
 	}
@@ -429,18 +409,24 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 		String message = ((Identifier) parameters.get(1)).getValue();
 
 		getBotChatSession().append(sender + " : " + message + "\n");
-		getBotChatSession().setCaretPosition(
-				getBotChatSession().getDocument().getLength());
+		getBotChatSession().setCaretPosition(getBotChatSession().getDocument().getLength());
 
 		getEpartnerChatSession().append(sender + " : " + message + "\n");
-		getEpartnerChatSession().setCaretPosition(
-				getEpartnerChatSession().getDocument().getLength());
+		getEpartnerChatSession().setCaretPosition(getEpartnerChatSession().getDocument().getLength());
 
 		return null;
 	}
 
-	public void setSelectedLocation(int x, int y) {
-		this.selectedLocation = new Point(x, y);
+	/**
+	 * Sets the last clicked location on the map. The given coordinates must
+	 * already scaled down such that the coordinates are as if the map is scale
+	 * 1:1.
+	 * 
+	 * @param x
+	 * @param y
+	 */
+	public void setSelectedLocation(double x, double y) {
+		this.selectedLocation = new Point2D.Double(x, y);
 	}
 
 	public JButton getBotMessageButton() {
@@ -467,7 +453,12 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 		this.epartnerChatSession = chatSession;
 	}
 
-	public Point getSelectedLocation() {
+	/**
+	 * @return the last location selected by user, un-scaled as if this is 1:1
+	 *         map. That means, sizes in the map are actual pixels on the
+	 *         screen.
+	 */
+	public Point2D getSelectedLocation() {
 		return selectedLocation;
 	}
 

@@ -23,6 +23,12 @@ import nl.tudelft.bw4t.map.view.ViewBlock;
 import nl.tudelft.bw4t.map.view.ViewEPartner;
 import nl.tudelft.bw4t.map.view.ViewEntity;
 
+/**
+ * Renders map on the screen. The size is 1 means 1 pixel. However, the renderer
+ * scales up the map to the viewing width by adjusting controller's
+ * rendersettings scale
+ *
+ */
 public class MapRenderer extends JPanel implements MapRendererInterface {
 
 	/**
@@ -77,6 +83,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 		this.setMinimumSize(size);
 		this.setPreferredSize(size);
 		this.setMaximumSize(size);
+
 	}
 
 	/**
@@ -84,8 +91,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 	 */
 	private Dimension getMapSize() {
 		MapRenderSettings set = getController().getRenderSettings();
-		return new Dimension(set.scale(set.getWorldWidth()),
-				set.scale(set.getWorldHeight()) + set.getSequenceBlockSize());
+		return new Dimension(set.getWorldWidth(), set.getWorldHeight());
 	}
 
 	/**
@@ -100,7 +106,6 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 		Dimension mapsize = getMapSize();
 		Rectangle viewsize = g.getClipBounds();
 		return viewsize.getWidth() / mapsize.getWidth();
-
 	}
 
 	/**
@@ -115,7 +120,12 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 		updateMinimumSize();
 		Graphics2D g2d = (Graphics2D) g;
 		Double scale = getPossibleScale(g2d);
-		g2d.scale(scale, scale);
+
+		// all scaling is already in the drawing routines.
+		// but this would have been much cleaner and easier:
+		// g2d.scale(scale, scale);
+		getController().getRenderSettings().setScale(scale);
+
 		drawChargingZones(g2d);
 		drawRooms(g2d);
 		drawBlockades(g2d);
@@ -136,20 +146,21 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 	 */
 	public void drawSequence(Graphics2D g2d) {
 		MapRenderSettings set = getController().getRenderSettings();
-		final int size = set.getSequenceBlockSize();
+		final double size = set.scale(set.getSequenceBlockSize());
 		final int wh = set.scale(set.getWorldHeight());
-		int startPosX = 0;
 
-		for (BlockColor color : getController().getSequence()) {
+		for (int n = 0; n < getController().getSequence().size(); n++) {
+			BlockColor color = getController().getSequence().get(n);
+			int xpos = (int) Math.round(n * size);
 			g2d.setColor(color.getColor());
-			g2d.fill(new Rectangle2D.Double(startPosX, set.scale(set.getWorldHeight()), size, size));
-			if (getController().getSequenceIndex() > (startPosX / size)) {
+			g2d.fill(new Rectangle2D.Double(n * size, set.scale(set.getWorldHeight()), size, size));
+			// mark the block as delivered.
+			if (getController().getSequenceIndex() > n) {
 				g2d.setColor(Color.BLACK);
-				int[] xpoints = new int[] { startPosX, startPosX, startPosX + size };
-				int[] ypoints = new int[] { wh, wh + size, wh + (size / 2) };
+				int[] xpoints = new int[] { xpos, xpos, (int) Math.round((n + 1) * size) };
+				int[] ypoints = new int[] { wh, (int) Math.round(wh + size), (int) Math.round(wh + (size / 2)) };
 				g2d.fillPolygon(xpoints, ypoints, 3);
 			}
-			startPosX += size;
 		}
 	}
 
@@ -250,7 +261,7 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 		MapRenderSettings set = getController().getRenderSettings();
 
 		g2d.setColor(Color.DARK_GRAY);
-		g2d.setFont(new Font("Arial", Font.PLAIN, 10));
+		g2d.setFont(new Font("Arial", Font.PLAIN, (int) (1.5 * set.getScale())));
 
 		for (Zone zone : getController().getZones()) {
 			Rectangle2D bbox = zone.getBoundingbox().getRectangle();
