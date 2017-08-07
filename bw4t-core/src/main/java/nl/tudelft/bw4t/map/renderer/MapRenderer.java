@@ -47,6 +47,13 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 	private static final int PATH_SIZE = 1;
 
 	/**
+	 * default: 7 pixels per map unit.
+	 */
+	private static final int DEFAULT_SCALE = 7;
+
+	private static final int SEQUENCE_HEIGHT = 6;
+
+	/**
 	 * Constructor.
 	 * 
 	 * @param controller
@@ -79,7 +86,8 @@ public class MapRenderer extends JPanel implements MapRendererInterface {
 	 * Update minimum size based on controller.
 	 */
 	private void updateMinimumSize() {
-		Dimension size = getMapSize();
+		Dimension size = new Dimension(DEFAULT_SCALE * (int) getMapSize().getWidth(),
+				DEFAULT_SCALE * (SEQUENCE_HEIGHT + (int) getMapSize().getHeight()));
 		this.setMinimumSize(size);
 		this.setPreferredSize(size);
 		this.setMaximumSize(size);
