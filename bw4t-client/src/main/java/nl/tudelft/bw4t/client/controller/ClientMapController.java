@@ -21,7 +21,6 @@ import nl.tudelft.bw4t.client.controller.percept.processors.EPartnerProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.GripperCapacityProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.HoldingBlocksProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.LocationProcessor;
-import nl.tudelft.bw4t.client.controller.percept.processors.NegationProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.OccupiedProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.PerceptProcessor;
 import nl.tudelft.bw4t.client.controller.percept.processors.PositionProcessor;
@@ -59,8 +58,7 @@ public class ClientMapController extends AbstractMapController {
 	/**
 	 * The log4j logger which writes logs.
 	 */
-	private static final Logger LOGGER = Logger
-			.getLogger(ClientMapController.class);
+	private static final Logger LOGGER = Logger.getLogger(ClientMapController.class);
 
 	/** The exception string constant. */
 	private static final String COULDNOTPOLL = "Could not correctly poll the percepts from the environment.";
@@ -127,7 +125,6 @@ public class ClientMapController extends AbstractMapController {
 
 		clientController = controller;
 		perceptProcessors = new HashMap<>(16);
-		perceptProcessors.put("not", new NegationProcessor());
 		perceptProcessors.put("robot", new RobotProcessor());
 		perceptProcessors.put("occupied", new OccupiedProcessor());
 		perceptProcessors.put("holdingblocks", new HoldingBlocksProcessor());
@@ -140,10 +137,8 @@ public class ClientMapController extends AbstractMapController {
 		perceptProcessors.put("robotSize", new RobotSizeProcessor());
 		perceptProcessors.put("bumped", new BumpedProcessor());
 		perceptProcessors.put("battery", new RobotBatteryProcessor());
-		perceptProcessors.put("oldTargetUnreachable",
-				new RobotOldTargetUnreachableProcessor());
-		perceptProcessors
-				.put("gripperCapacity", new GripperCapacityProcessor());
+		perceptProcessors.put("oldTargetUnreachable", new RobotOldTargetUnreachableProcessor());
+		perceptProcessors.put("gripperCapacity", new GripperCapacityProcessor());
 		perceptProcessors.put("colorblind", new ColorBlindProcessor());
 	}
 
@@ -209,17 +204,8 @@ public class ClientMapController extends AbstractMapController {
 		occupiedRooms.add(zone);
 	}
 
-	/**
-	 * Removes the occupied room from the list of occupied rooms.
-	 * 
-	 * @param name
-	 *            the name
-	 */
-	public synchronized void removeOccupiedRoom(Zone zone) {
-		if (!zone.isInitialized()) {
-			throw new IllegalStateException("zone is not initialized:" + zone);
-		}
-		occupiedRooms.remove(zone);
+	public synchronized void clearOccupiedRooms() {
+		occupiedRooms.clear();
 	}
 
 	@Override
@@ -237,6 +223,11 @@ public class ClientMapController extends AbstractMapController {
 
 	public synchronized void clearVisible() {
 		visibleBlocks.clear();
+	}
+
+	public void clearBumped() {
+		myBot.setCollided(false);
+
 	}
 
 	@Override
@@ -365,14 +356,15 @@ public class ClientMapController extends AbstractMapController {
 	 */
 	public synchronized void addEPartner(ViewEPartner epartner) {
 		if (!epartner.isInitialized()) {
-			throw new IllegalArgumentException("epartner not initialized:"
-					+ epartner);
+			throw new IllegalArgumentException("epartner not initialized:" + epartner);
 		}
 		knownEPartners.add(epartner);
 	}
 
 	/******************************************************************************/
-	/**************** utility functions (may be not thread safe) ******************/
+	/****************
+	 * utility functions (may be not thread safe)
+	 ******************/
 	/******************************************************************************/
 	@Override
 	public Set<ViewEPartner> getVisibleEPartners() {
@@ -454,16 +446,13 @@ public class ClientMapController extends AbstractMapController {
 		 * If GOAL is not connected we need to fetch the percepts ourselves.
 		 * Otherwise, GOAL will fetch them and we just reuse them.
 		 */
-		if (clientController.isHuman()
-				&& !clientController.getEnvironment().isConnectedToGoal()) {
+		if (clientController.isHuman() && !clientController.getEnvironment().isConnectedToGoal()) {
 			try {
-				clientController.getEnvironment().gatherPercepts(
-						getTheBot().getName());
+				clientController.getEnvironment().gatherPercepts(getTheBot().getName());
 			} catch (PerceiveException e) {
 				LOGGER.error(COULDNOTPOLL, e);
 			} catch (NoEnvironmentException | NullPointerException e) {
-				LOGGER.fatal(COULDNOTPOLL
-						+ " No connection could be made to the environment", e);
+				LOGGER.fatal(COULDNOTPOLL + " No connection could be made to the environment", e);
 				setRunning(false);
 			}
 		}
