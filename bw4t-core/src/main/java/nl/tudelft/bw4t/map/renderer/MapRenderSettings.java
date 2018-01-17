@@ -4,189 +4,201 @@ import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 
 /**
- * Saves values used by the {@link MapRenderer} configuring the way the map is drawn. Also has an option to change the
- * delay between consecutive updates.
+ * Saves values used by the {@link MapRenderer} configuring the way the map is
+ * drawn. Also has an option to change the delay between consecutive updates.
  */
 public class MapRenderSettings {
-    
-    /** Initialization of final int's, all default values */
-    public static final int BLOCK_SEQUENCE_SIZE_MAXIMUM = 100;
-    public static final int BLOCK_SEQUENCE_SIZE_MINIMUM = 1;
-    public static final int DELAY_MAXIMUM = 1000;
-    public static final int DELAY_MINIMUM = 10;
-    public static final int SCALE_MINIMUM = 3;
-    public static final int SCALE_MAXIMUM = 15;
-    
-    /** Initialize default settings. */
-    private int sequenceBlockSize = 20;
-    private int worldWidth = 7;
-    private int worldHeight = 7;
-    private double scale = 7;
-    private int roomTextOffset = 25;
-    private boolean renderEntityName = false;
-    private int entityNameOffset = 20;
-    
-    /**
-     * We want to achieve roughly 24fps = 1000/24 = 41.6666
-     */
-    private int updateDelay = 41;
 
-    /**
-     * Initialize with default values.
-     */
-    public MapRenderSettings() {
-    }
+	/** Initialization of final int's, all default values */
+	public static final int BLOCK_SEQUENCE_SIZE_MAXIMUM = 100;
+	public static final int BLOCK_SEQUENCE_SIZE_MINIMUM = 1;
+	public static final int DELAY_MAXIMUM = 1000;
+	public static final int DELAY_MINIMUM = 10;
+	public static final int SCALE_MINIMUM = 3;
+	public static final int SCALE_MAXIMUM = 15;
 
-    public int getWorldWidth() {
-        return worldWidth;
-    }
+	/** Initialize default settings. */
+	private int sequenceBlockSize = 4; /* map units */
+	private int worldWidth = 7;
+	private int worldHeight = 7;
+	private double scale = 7;
+	private int roomTextOffset = 25;
+	private boolean renderEntityName = false;
+	private int entityNameOffset = 20;
 
-    public int getWorldHeight() {
-        return worldHeight;
-    }
+	/**
+	 * We want to achieve roughly 24fps = 1000/24 = 41.6666
+	 */
+	private int updateDelay = 41;
 
-    /**
-     * Change the size of the world.
-     * 
-     * @param x
-     *            size in horizontal direction
-     * @param y
-     *            size in vertical direction
-     */
-    public void setWorldDimensions(int x, int y) {
-        this.worldWidth = x;
-        this.worldHeight = y;
-    }
+	/**
+	 * Initialize with default values.
+	 */
+	public MapRenderSettings() {
+	}
 
-    public int getRoomTextOffset() {
-        return roomTextOffset;
-    }
+	public int getWorldWidth() {
+		return worldWidth;
+	}
 
-    public void setRoomTextOffset(int roomTextOffset) {
-        this.roomTextOffset = roomTextOffset;
-    }
+	public int getWorldHeight() {
+		return worldHeight;
+	}
 
-    public double getScale() {
-        return scale;
-    }
+	/**
+	 * Change the size of the world.
+	 * 
+	 * @param x
+	 *            size in horizontal direction
+	 * @param y
+	 *            size in vertical direction
+	 */
+	public void setWorldDimensions(int x, int y) {
+		this.worldWidth = x;
+		this.worldHeight = y;
+	}
 
-    /**
-     * Set the scale of the map in the renderer. The scale has an upper and lower limit.
-     * 
-     * @see #SCALE_MINIMUM
-     * @see #SCALE_MAXIMUM
-     * @param scale
-     *            the new scale
-     */
-    public void setScale(double scale) {
-        if (scale < SCALE_MINIMUM || scale > SCALE_MAXIMUM) {
-            return;
-        }
-        this.scale = scale;
-    }
+	public int getRoomTextOffset() {
+		return roomTextOffset;
+	}
 
-    public int getSequenceBlockSize() {
-        return sequenceBlockSize;
-    }
+	public void setRoomTextOffset(int roomTextOffset) {
+		this.roomTextOffset = roomTextOffset;
+	}
 
-    /**
-     * Set the size of the blocks when drawing the sequence. The size has an upper and lower limit.
-     * 
-     * @see #BLOCK_SEQUENCE_SIZE_MINIMUM
-     * @see #BLOCK_SEQUENCE_SIZE_MAXIMUM
-     * @param sequenceBlockSize
-     *            the new size
-     */
-    public void setSequenceBlockSize(int sequenceBlockSize) {
-        if (sequenceBlockSize < BLOCK_SEQUENCE_SIZE_MINIMUM || sequenceBlockSize > BLOCK_SEQUENCE_SIZE_MAXIMUM) {
-            return;
-        }
-        this.sequenceBlockSize = sequenceBlockSize;
-    }
+	/**
+	 * 
+	 * @return the scale of the map in the renderer. The scale has an upper and
+	 *         lower limit. 1 means that a map value of 1 corresponds to 1 pixel
+	 *         on the screen. This is usually set automatically by the
+	 *         MapRenderer to make sure the map fills the width of the panel
+	 */
+	public double getScale() {
+		return scale;
+	}
 
-    public int getEntityNameOffset() {
-        return entityNameOffset;
-    }
+	/**
+	 * Set the scale of the map in the renderer. The scale has an upper and
+	 * lower limit. 1 means that a map value of 1 corresponds to 1 pixel on the
+	 * screen.
+	 * 
+	 * @see #SCALE_MINIMUM
+	 * @see #SCALE_MAXIMUM
+	 * @param scale
+	 *            the new scale
+	 */
+	public void setScale(double scale) {
+		// if (scale < SCALE_MINIMUM || scale > SCALE_MAXIMUM) {
+		// System.out.println("ignoring scale " + scale);
+		// return;
+		// }
+		this.scale = scale;
+	}
 
-    public void setEntityNameOffset(int entityNameOffset) {
-        this.entityNameOffset = entityNameOffset;
-    }
+	public int getSequenceBlockSize() {
+		return sequenceBlockSize;
+	}
 
-    public boolean isRenderEntityName() {
-        return renderEntityName;
-    }
+	/**
+	 * Set the size of the blocks when drawing the sequence. The size has an
+	 * upper and lower limit.
+	 * 
+	 * @see #BLOCK_SEQUENCE_SIZE_MINIMUM
+	 * @see #BLOCK_SEQUENCE_SIZE_MAXIMUM
+	 * @param sequenceBlockSize
+	 *            the new size
+	 */
+	public void setSequenceBlockSize(int sequenceBlockSize) {
+		if (sequenceBlockSize < BLOCK_SEQUENCE_SIZE_MINIMUM || sequenceBlockSize > BLOCK_SEQUENCE_SIZE_MAXIMUM) {
+			return;
+		}
+		this.sequenceBlockSize = sequenceBlockSize;
+	}
 
-    public void setRenderEntityName(boolean renderEntityName) {
-        this.renderEntityName = renderEntityName;
-    }
+	public int getEntityNameOffset() {
+		return entityNameOffset;
+	}
 
-    public int getUpdateDelay() {
-        return updateDelay;
-    }
+	public void setEntityNameOffset(int entityNameOffset) {
+		this.entityNameOffset = entityNameOffset;
+	}
 
-    /**
-     * Set the updateDelay, enforced a limit.
-     * 
-     * @see #DELAY_MINIMUM
-     * @see #DELAY_MAXIMUM
-     * @param updateDelay
-     *            the new update delay
-     */
-    public void setUpdateDelay(int updateDelay) {
-        if (updateDelay < DELAY_MINIMUM || updateDelay > DELAY_MAXIMUM) {
-            return;
-        }
-        this.updateDelay = updateDelay;
-    }
+	public boolean isRenderEntityName() {
+		return renderEntityName;
+	}
 
-    /**
-     * Scales the given value with the scaling factor.
-     * 
-     * @param value
-     *            to be scaled value
-     * @return the scaled value
-     */
-    public int scale(int value) {
-        return (int) (value * getScale());
-    }
+	public void setRenderEntityName(boolean renderEntityName) {
+		this.renderEntityName = renderEntityName;
+	}
 
-    /**
-     * Scales the given value with the scaling factor.
-     * 
-     * @param value
-     *            to be scaled value
-     * @return the scaled value
-     */
-    public double scale(double value) {
-        return value * getScale();
-    }
+	public int getUpdateDelay() {
+		return updateDelay;
+	}
 
-    /**
-     * Scales the given Rectangle.
-     * 
-     * @param rect
-     *            the bounding box
-     * @return the scaled rectangle
-     */
-    public Rectangle2D transformRectangle(Rectangle2D rect) {
-        return new Rectangle.Double(scale(rect.getX()), scale(rect.getY()), scale(rect.getWidth()),
-                scale(rect.getHeight()));
+	/**
+	 * Set the updateDelay, enforced a limit.
+	 * 
+	 * @see #DELAY_MINIMUM
+	 * @see #DELAY_MAXIMUM
+	 * @param updateDelay
+	 *            the new update delay
+	 */
+	public void setUpdateDelay(int updateDelay) {
+		if (updateDelay < DELAY_MINIMUM || updateDelay > DELAY_MAXIMUM) {
+			return;
+		}
+		this.updateDelay = updateDelay;
+	}
 
-    }
+	/**
+	 * Scales the given value with the scaling factor.
+	 * 
+	 * @param value
+	 *            to be scaled value
+	 * @return the scaled value
+	 */
+	public int scale(int value) {
+		return (int) (value * getScale());
+	}
 
-    /**
-     * Scales and centers(moves it by half it width to the left and half its size to the top) the given Rectangle.
-     * 
-     * @param rect
-     *            the position and size
-     * @return the centered and scaled rectangle
-     */
-    public Rectangle2D transformCenterRectangle(Rectangle2D rect) {
-        Rectangle2D ret = transformRectangle(rect);
-        double xPos = ret.getX() - ret.getWidth() / 2.;
-        double yPos = ret.getY() - ret.getHeight() / 2.;
+	/**
+	 * Scales the given value with the scaling factor.
+	 * 
+	 * @param value
+	 *            to be scaled value
+	 * @return the scaled value
+	 */
+	public double scale(double value) {
+		return value * getScale();
+	}
 
-        return new Rectangle.Double(xPos, yPos, ret.getWidth(), ret.getHeight());
+	/**
+	 * Scales the given Rectangle.
+	 * 
+	 * @param rect
+	 *            the bounding box
+	 * @return the scaled rectangle
+	 */
+	public Rectangle2D transformRectangle(Rectangle2D rect) {
+		return new Rectangle.Double(scale(rect.getX()), scale(rect.getY()), scale(rect.getWidth()),
+				scale(rect.getHeight()));
 
-    }
+	}
+
+	/**
+	 * Scales and centers(moves it by half it width to the left and half its
+	 * size to the top) the given Rectangle.
+	 * 
+	 * @param rect
+	 *            the position and size
+	 * @return the centered and scaled rectangle
+	 */
+	public Rectangle2D transformCenterRectangle(Rectangle2D rect) {
+		Rectangle2D ret = transformRectangle(rect);
+		double xPos = ret.getX() - ret.getWidth() / 2.;
+		double yPos = ret.getY() - ret.getHeight() / 2.;
+
+		return new Rectangle.Double(xPos, yPos, ret.getWidth(), ret.getHeight());
+
+	}
 }

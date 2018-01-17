@@ -28,13 +28,11 @@ public class ActionPopUpMenu {
 		int startPosX = 0;
 		ClientMapController cmc = gui.getController().getMapController();
 		MapRenderSettings settings = cmc.getRenderSettings();
-		boolean buildBlockadeMenu_ChargingZoneMenu = !buildBlockadeMenu(gui,
-				cmc, settings) && !buildChargingZoneMenu(gui, cmc, settings);
+		boolean buildBlockadeMenu_ChargingZoneMenu = !buildBlockadeMenu(gui, cmc, settings)
+				&& !buildChargingZoneMenu(gui, cmc, settings);
 
-		if (!buildSequenceBlockMenu(gui, startPosX, cmc, settings)
-				&& !buildEPartnerMenu(gui, cmc, settings)
-				&& !buildRoomMenu(gui, cmc, settings)
-				&& buildBlockadeMenu_ChargingZoneMenu) {
+		if (!buildSequenceBlockMenu(gui, startPosX, cmc, settings) && !buildEPartnerMenu(gui, cmc, settings)
+				&& !buildRoomMenu(gui, cmc, settings) && buildBlockadeMenu_ChargingZoneMenu) {
 			buildHallwayMenu(gui);
 		}
 	}
@@ -61,11 +59,10 @@ public class ActionPopUpMenu {
 	 *            the map renderer settings
 	 * @return Whether the menu was built.
 	 */
-	private static boolean buildChargingZoneMenu(BW4TClientGUI gui,
-			ClientMapController cmc, MapRenderSettings settings) {
+	private static boolean buildChargingZoneMenu(BW4TClientGUI gui, ClientMapController cmc,
+			MapRenderSettings settings) {
 		for (Zone chargingzone : cmc.getChargingZones()) {
-			Shape chargeBoundaries = settings.transformRectangle(chargingzone
-					.getBoundingbox().getRectangle());
+			Shape chargeBoundaries = chargingzone.getBoundingbox().getRectangle();
 			if (chargeBoundaries.contains(gui.getSelectedLocation())) {
 				HallwayMenu.buildPopUpMenuForHallway(gui, "go recharge");
 				showJPopupMenu(gui);
@@ -86,11 +83,9 @@ public class ActionPopUpMenu {
 	 *            the map renderer settings
 	 * @return Whether the menu was built.
 	 */
-	private static boolean buildBlockadeMenu(BW4TClientGUI gui,
-			ClientMapController cmc, MapRenderSettings settings) {
+	private static boolean buildBlockadeMenu(BW4TClientGUI gui, ClientMapController cmc, MapRenderSettings settings) {
 		for (Zone blockade : cmc.getBlockades()) {
-			Shape blockBoundaries = settings.transformRectangle(blockade
-					.getBoundingbox().getRectangle());
+			Shape blockBoundaries = blockade.getBoundingbox().getRectangle();
 			if (blockBoundaries.contains(gui.getSelectedLocation())) {
 				BlockadeMenu.buildPopUpMenuForBlockade(gui);
 				showJPopupMenu(gui);
@@ -114,11 +109,9 @@ public class ActionPopUpMenu {
 	 *            the map renderer settings
 	 * @return true when the menu was built and is shown to the user.
 	 */
-	private static boolean buildRoomMenu(BW4TClientGUI gui,
-			ClientMapController cmc, MapRenderSettings settings) {
+	private static boolean buildRoomMenu(BW4TClientGUI gui, ClientMapController cmc, MapRenderSettings settings) {
 		for (Zone room : cmc.getRooms()) {
-			Shape roomBoundaries = settings.transformRectangle(room
-					.getBoundingbox().getRectangle());
+			Shape roomBoundaries = room.getBoundingbox().getRectangle();
 			if (roomBoundaries.contains(gui.getSelectedLocation())) {
 
 				/**
@@ -151,19 +144,21 @@ public class ActionPopUpMenu {
 	 *            the room
 	 * @return true iff the menu was built.
 	 */
-	private static boolean buildVisibleBlockMenu(BW4TClientGUI gui,
-			ClientMapController cmc, MapRenderSettings settings, Zone room) {
+	private static boolean buildVisibleBlockMenu(BW4TClientGUI gui, ClientMapController cmc, MapRenderSettings settings,
+			Zone room) {
 		for (ViewBlock box : cmc.getVisibleBlocks()) {
-			Shape boxBoundaries = settings
-					.transformCenterRectangle(new Rectangle2D.Double(box
-							.getPosition().getX(), box.getPosition().getY(),
-							ViewBlock.BLOCK_SIZE, ViewBlock.BLOCK_SIZE));
+			// Shape boxBoundaries = settings.transformCenterRectangle(new
+			// Rectangle2D.Double(box.getPosition().getX(),
+			// box.getPosition().getY(), ViewBlock.BLOCK_SIZE,
+			// ViewBlock.BLOCK_SIZE));
+			Shape boxBoundaries = new Rectangle2D.Double(box.getPosition().getX() - ViewBlock.BLOCK_SIZE / 2.0,
+					box.getPosition().getY() - ViewBlock.BLOCK_SIZE / 2.0, ViewBlock.BLOCK_SIZE, ViewBlock.BLOCK_SIZE);
+
 			if (boxBoundaries.contains(gui.getSelectedLocation())) {
 				if (MapOperations.closeToBox(box, gui.getController())) {
 					RoomMenus.buildPopUpMenuForBeingAtBlock(box, room, gui);
 				} else {
-					RoomMenus.buildPopUpMenuForBlock(box, room,
-							gui.getController());
+					RoomMenus.buildPopUpMenuForBlock(box, room, gui.getController());
 				}
 				showJPopupMenu(gui);
 				return true;
@@ -183,8 +178,7 @@ public class ActionPopUpMenu {
 	 *            the map renderer settings
 	 * @return Whether the menu was built.
 	 */
-	private static boolean buildEPartnerMenu(BW4TClientGUI gui,
-			ClientMapController cmc, MapRenderSettings settings) {
+	private static boolean buildEPartnerMenu(BW4TClientGUI gui, ClientMapController cmc, MapRenderSettings settings) {
 		if (cmc.getTheBot().getHoldingEpartner() >= 0) {
 			return buildEPartnerHoldingMenu(gui, cmc, settings);
 		} else {
@@ -203,14 +197,16 @@ public class ActionPopUpMenu {
 	 *            the map renderer settings
 	 * @return Whether the menu was built.
 	 */
-	private static boolean buildEPartnerVisibleMenu(BW4TClientGUI gui,
-			ClientMapController cmc, MapRenderSettings settings) {
+	private static boolean buildEPartnerVisibleMenu(BW4TClientGUI gui, ClientMapController cmc,
+			MapRenderSettings settings) {
 		for (ViewEPartner ep : cmc.getVisibleEPartners()) {
-			Shape ePartnerBox = settings
-					.transformCenterRectangle(new Rectangle2D.Double(ep
-							.getLocation().getX(), ep.getLocation().getY(),
-							ViewEPartner.EPARTNER_SIZE,
-							ViewEPartner.EPARTNER_SIZE));
+			// Shape ePartnerBox = settings.transformCenterRectangle(new
+			// Rectangle2D.Double(ep.getLocation().getX(),
+			// ep.getLocation().getY(), ViewEPartner.EPARTNER_SIZE,
+			// ViewEPartner.EPARTNER_SIZE));
+			Shape ePartnerBox = new Rectangle2D.Double(ep.getLocation().getX() - ViewEPartner.EPARTNER_SIZE / 2.0,
+					ep.getLocation().getY() - ViewEPartner.EPARTNER_SIZE / 2.0, ViewEPartner.EPARTNER_SIZE,
+					ViewEPartner.EPARTNER_SIZE);
 			if (ePartnerBox.contains(gui.getSelectedLocation())) {
 				if (MapOperations.closeToBox(ep, gui.getController())) {
 					EPartnerMenu.buildPopUpMenuPickUpEPartner(ep, gui);
@@ -235,16 +231,18 @@ public class ActionPopUpMenu {
 	 *            the map renderer settings
 	 * @return Whether the menu was built.
 	 */
-	private static boolean buildEPartnerHoldingMenu(BW4TClientGUI gui,
-			ClientMapController cmc, MapRenderSettings settings) {
-		ViewEPartner ep = cmc.getViewEPartner(cmc.getTheBot()
-				.getHoldingEpartner());
+	private static boolean buildEPartnerHoldingMenu(BW4TClientGUI gui, ClientMapController cmc,
+			MapRenderSettings settings) {
+		ViewEPartner ep = cmc.getViewEPartner(cmc.getTheBot().getHoldingEpartner());
 		if (ep != null) {
 			final Point2D location = ep.getLocation();
+			// Shape ePartnerBox = settings.transformCenterRectangle(new
+			// Rectangle2D.Double(location.getX(),
+			// location.getY(), ViewEPartner.EPARTNER_SIZE,
+			// ViewEPartner.EPARTNER_SIZE));
 			Shape ePartnerBox = settings
-					.transformCenterRectangle(new Rectangle2D.Double(location
-							.getX(), location.getY(),
-							ViewEPartner.EPARTNER_SIZE,
+					.transformCenterRectangle(new Rectangle2D.Double(location.getX() - ViewEPartner.EPARTNER_SIZE / 2.0,
+							location.getY() - ViewEPartner.EPARTNER_SIZE / 2.0, ViewEPartner.EPARTNER_SIZE,
 							ViewEPartner.EPARTNER_SIZE));
 			if (ePartnerBox.contains(gui.getSelectedLocation())) {
 				EPartnerMenu.buildPopUpMenuForEPartner(ep, gui);
@@ -262,8 +260,7 @@ public class ActionPopUpMenu {
 	 *            the gui
 	 */
 	public static void showJPopupMenu(BW4TClientGUI gui) {
-		gui.getjPopupMenu().show(gui, (int) gui.getSelectedLocation().getX(),
-				(int) gui.getSelectedLocation().getY());
+		gui.getjPopupMenu().show(gui, (int) gui.getSelectedLocation().getX(), (int) gui.getSelectedLocation().getY());
 	}
 
 	/**
@@ -279,11 +276,10 @@ public class ActionPopUpMenu {
 	 *            the set
 	 * @return Whether the menu was built.
 	 */
-	private static boolean buildSequenceBlockMenu(BW4TClientGUI gui,
-			int startPosX, ClientMapController cmc, MapRenderSettings set) {
+	private static boolean buildSequenceBlockMenu(BW4TClientGUI gui, int startPosX, ClientMapController cmc,
+			MapRenderSettings set) {
 		for (BlockColor color : cmc.getSequence()) {
-			Shape colorBounds = new Rectangle2D.Double(startPosX, set.scale(set
-					.getWorldHeight()), set.getSequenceBlockSize(),
+			Shape colorBounds = new Rectangle2D.Double(startPosX, set.getWorldHeight(), set.getSequenceBlockSize(),
 					set.getSequenceBlockSize());
 			if (colorBounds.contains(gui.getSelectedLocation())) {
 				MapOperations.buildPopUpMenuForGoalColor(color, gui);

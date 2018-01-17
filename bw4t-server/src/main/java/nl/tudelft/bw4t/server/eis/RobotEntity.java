@@ -233,7 +233,7 @@ public class RobotEntity implements EntityInterface {
 	 * 
 	 * @return a list of blockID of blocks within reach.
 	 */
-	@AsPercept(name = "atBlock", multiplePercepts = true, filter = Filter.Type.ON_CHANGE_NEG)
+	@AsPercept(name = "atBlock", multiplePercepts = true, filter = Filter.Type.ALWAYS)
 	public List<Long> getAtBlock() {
 		List<Long> blocksInReach = new LinkedList<>();
 		for (Object object : context.getObjects(Block.class)) {
@@ -251,7 +251,7 @@ public class RobotEntity implements EntityInterface {
 	 * 
 	 * @return room name
 	 */
-	@AsPercept(name = "in", multiplePercepts = false, filter = Filter.Type.ON_CHANGE_NEG)
+	@AsPercept(name = "in", multiplePercepts = false, filter = Filter.Type.ALWAYS)
 	public String getRoom() {
 
 		if (ourRobotRoom == null) {
@@ -314,7 +314,7 @@ public class RobotEntity implements EntityInterface {
 	 * 
 	 * @return the names of the other players
 	 */
-	@AsPercept(name = "player", multiplePercepts = true, filter = Filter.Type.ON_CHANGE_NEG)
+	@AsPercept(name = "player", multiplePercepts = true, filter = Filter.Type.ALWAYS)
 	public List<String> getPlayers() {
 		BW4TEnvironment env = BW4TEnvironment.getInstance();
 		List<String> agents = env.getAgents();
@@ -368,7 +368,7 @@ public class RobotEntity implements EntityInterface {
 	 * 
 	 * @return holding block
 	 */
-	@AsPercept(name = "holding", multiplePercepts = true, filter = Filter.Type.ON_CHANGE_NEG)
+	@AsPercept(name = "holding", multiplePercepts = true, filter = Filter.Type.ALWAYS)
 	public List<Long> getHolding() {
 		Stack<Block> holding = ourRobot.getHolding();
 		List<Long> holds = new ArrayList<>(holding.size());
@@ -438,7 +438,7 @@ public class RobotEntity implements EntityInterface {
 	 * 
 	 * @return list of occupied room IDs
 	 */
-	@AsPercept(name = "occupied", multiplePercepts = true, filter = Filter.Type.ON_CHANGE_NEG)
+	@AsPercept(name = "occupied", multiplePercepts = true, filter = Filter.Type.ALWAYS)
 	public List<String> getOccupied() {
 		List<String> rooms = new LinkedList<>();
 		for (Object r : context.getObjects(Room.class)) {
@@ -728,7 +728,7 @@ public class RobotEntity implements EntityInterface {
 	 * 
 	 * @return Bump percept with the name of the robot in the way, if any.
 	 */
-	@AsPercept(name = "bumped", multiplePercepts = true, filter = Type.ON_CHANGE_NEG)
+	@AsPercept(name = "bumped", multiplePercepts = true, filter = Type.ALWAYS)
 	public List<String> getBumped() {
 		List<String> bumpedList = new LinkedList<>();
 		if (ourRobot.isCollided() && !ourRobot.getObstacles().isEmpty()) {

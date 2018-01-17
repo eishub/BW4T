@@ -17,6 +17,8 @@ To install BW4T and for all details on how to use the environment and related to
 
 **WARNING** The collisions and e-partner options are not completely ready for use.
 
+**WARNING** To do mvn install, use "mvn install -DskipTests". Test with "mvn package".
+
 #BW4T Main Maven Module
 This is the directory contains the main maven module. BW4T is split up in six submodules which are explained below. Each submodule is compiled and tested separately by Maven. A good overview of exactly how Maven module organization works can be found at [Sonatype](http://books.sonatype.com/mvnex-book/reference/multimodule.html).
 

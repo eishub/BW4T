@@ -117,7 +117,7 @@ public class EPartnerEntity implements EntityInterface {
      * @return id of holder
      * @throws PerceiveException
      */
-    @AsPercept(name = "heldBy", multiplePercepts = false, filter = Filter.Type.ON_CHANGE_NEG)
+    @AsPercept(name = "heldBy", multiplePercepts = false, filter = Filter.Type.ALWAYS)
     public long heldBy() throws PerceiveException {
         if (ourEPartner.getTypeList().contains(ViewEPartner.FORGET_ME_NOT) && ourEPartner.getHolder() != null) {
             return ourEPartner.getHolder().getId();
@@ -131,7 +131,7 @@ public class EPartnerEntity implements EntityInterface {
      * @return The epartner id.
      * @throws PerceiveException
      */
-    @AsPercept(name = "isTaken", multiplePercepts = false, filter = Filter.Type.ON_CHANGE_NEG)
+    @AsPercept(name = "isTaken", multiplePercepts = false, filter = Filter.Type.ALWAYS)
     public long isTaken() throws PerceiveException {
         if (ourEPartner.getTypeList().contains(ViewEPartner.FORGET_ME_NOT) && ourEPartner.getHolder() != null) {
             return ourEPartner.getId();
@@ -190,7 +190,7 @@ public class EPartnerEntity implements EntityInterface {
      * 
      * @return room name
      */
-    @AsPercept(name = "in", multiplePercepts = false, filter = Filter.Type.ON_CHANGE_NEG)
+    @AsPercept(name = "in", multiplePercepts = false, filter = Filter.Type.ALWAYS)
     public String getRoom() {
 
         if (ourEPartnerRoom == null) {

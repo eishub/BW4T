@@ -27,8 +27,7 @@ import nl.tudelft.bw4t.map.view.ViewEPartner;
  * The Class ClientController. DOC What is this?
  */
 public class ClientController implements EntityComboModelProvider {
-	private static final Logger LOGGER = Logger
-			.getLogger(ClientController.class);
+	private static final Logger LOGGER = Logger.getLogger(ClientController.class);
 	/**
 	 * The map controller used by this client controller.
 	 */
@@ -81,8 +80,7 @@ public class ClientController implements EntityComboModelProvider {
 	 * @param humanAgent
 	 *            the human agent
 	 */
-	public ClientController(RemoteEnvironment env, String entityId,
-			HumanAgent humanAgent) {
+	public ClientController(RemoteEnvironment env, String entityId, HumanAgent humanAgent) {
 		this(env, entityId);
 		this.humanAgent = humanAgent;
 	}
@@ -168,7 +166,10 @@ public class ClientController implements EntityComboModelProvider {
 		for (ViewEPartner ep : getMapController().getEPartners()) {
 			ep.setVisible(false);
 		}
-		getMapController().clearVisible();
+		ClientMapController controller = getMapController();
+		controller.clearVisible();
+		controller.clearOccupiedRooms();
+		controller.clearBumped();
 
 		boolean clearedPositions = false;
 		for (Percept percept : percepts) {
@@ -182,8 +183,7 @@ public class ClientController implements EntityComboModelProvider {
 
 			mapController.handlePercept(name, parameters);
 			if ("player".equals(name)) {
-				getOtherPlayers().add(
-						((Identifier) parameters.get(0)).getValue());
+				getOtherPlayers().add(((Identifier) parameters.get(0)).getValue());
 			} else if ("message".equals(name)) {
 				handleMessagePercept(parameters);
 			}
@@ -202,8 +202,7 @@ public class ClientController implements EntityComboModelProvider {
 		String sender = ((Identifier) iterator.next()).getValue();
 		String message = ((Identifier) iterator.next()).getValue();
 
-		if (message.contains("I want to go")
-				|| message.contains("You forgot me")) {
+		if (message.contains("I want to go") || message.contains("You forgot me")) {
 			getEpartnerChatHistory().add(sender + ": " + message);
 		} else {
 			getBotChatHistory().add(sender + ": " + message);
@@ -259,8 +258,7 @@ public class ClientController implements EntityComboModelProvider {
 		String me = getMapController().getTheBot().getName();
 		for (String entity : ents) {
 			try {
-				if (!me.equals(entity)
-						&& !"epartner".equals(getEnvironment().getType(entity))) {
+				if (!me.equals(entity) && !"epartner".equals(getEnvironment().getType(entity))) {
 					ret.add(entity);
 				}
 			} catch (EntityException e) {
