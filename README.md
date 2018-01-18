@@ -57,7 +57,7 @@ The client artefact:
 <dependency>
 	<groupId>eishub.bw4t</groupId>
 	<artifactId>bw4t-client</artifactId>
-	<version>3.8.1-SNAPSHOT</version>
+	<version>3.9.0</version>
 </dependency>
 ```
 
@@ -67,7 +67,7 @@ The server artefact:
 <dependency>
 	<groupId>eishub.bw4t</groupId>
 	<artifactId>bw4t-server</artifactId>
-	<version>3.8.1-SNAPSHOT</version>
+	<version>3.9.0</version>
 </dependency>
 ```
 
