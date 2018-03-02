@@ -5,7 +5,7 @@
 
 	<groupId>eishub.bw4t</groupId>
 	<artifactId>bw4t-server</artifactId>
-	<version>3.9.0</version>
+	<version>3.9.1-SNAPSHOT</version>
 	<url>http://www.github.com/eishub/bw4t</url>
 
 	<properties>
@@ -168,9 +168,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>eishub.bw4t.core</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>bw4t-core</artifactId>
-			<version>3.9.0</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>repast.simphony</groupId>
