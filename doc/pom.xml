@@ -1,9 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
-
-
+	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<environmentname>bw4t</environmentname>
@@ -11,11 +9,10 @@
 	
 	<groupId>eishub.bw4t</groupId>
 	<artifactId>doc</artifactId>
-	<version>1.0.6</version>
+	<version>1.0.7</version>
 	<name>BW4T documentation</name>
-	<description>Documentation about the BW4T environment..</description>
+	<description>Documentation about the BW4T environment.</description>
 	<url>http://www.github.com/eishub/${environmentname}</url>
-
 	
 	<licenses>
 		<license>
@@ -55,7 +52,6 @@
 			<url>https://raw.github.com/eishub/mvn-repo/master</url>
 		</repository>
 	</repositories>
-
 
 	<build>
 		<plugins>
@@ -101,5 +97,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

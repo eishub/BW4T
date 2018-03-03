@@ -172,41 +172,41 @@ public class RobotEntity implements EntityInterface {
 	 * 
 	 * @return postitions
 	 */
-	@AsPercept(name = "position", multiplePercepts = true, filter = Filter.Type.ON_CHANGE)
-	public List<ObjectInformation> getLocations() {
-		List<ObjectInformation> objects = new LinkedList<>();
-
-		// Add the dropzone
-		DropZone dropZone = (DropZone) context.getObjects(DropZone.class).get(0);
-		objects.add(new ObjectInformation(dropZone));
-
-		// Add rooms
-		IndexedIterable<Object> allRooms = context.getObjects(BlocksRoom.class);
-		for (Object object : allRooms) {
-			Room r = (Room) object;
-			objects.add(new ObjectInformation(r));
-		}
-
-		// Add blocks
-		for (Block block : getVisible(Block.class)) {
-			objects.add(new ObjectInformation(block));
-		}
-
-		// Add EPartners
-		for (EPartner ep : getVisible(EPartner.class)) {
-			objects.add(new ObjectInformation(ep));
-		}
-
-		// Add Robots
-		for (IRobot ep : getVisible(IRobot.class)) {
-			objects.add(new ObjectInformation(ep.getSuperParent()));
-		}
-
-		// #2830 add robots own position
-		objects.add(new ObjectInformation(ourRobotLocation.getX(), ourRobotLocation.getY(), ourRobot.getId()));
-
-		return objects;
-	}
+//	@AsPercept(name = "position", multiplePercepts = true, filter = Filter.Type.ON_CHANGE)
+//	public List<ObjectInformation> getLocations() {
+//		List<ObjectInformation> objects = new LinkedList<>();
+//
+//		// Add the dropzone
+//		DropZone dropZone = (DropZone) context.getObjects(DropZone.class).get(0);
+//		objects.add(new ObjectInformation(dropZone));
+//
+//		// Add rooms
+//		IndexedIterable<Object> allRooms = context.getObjects(BlocksRoom.class);
+//		for (Object object : allRooms) {
+//			Room r = (Room) object;
+//			objects.add(new ObjectInformation(r));
+//		}
+//
+//		// Add blocks
+//		for (Block block : getVisible(Block.class)) {
+//			objects.add(new ObjectInformation(block));
+//		}
+//
+//		// Add EPartners
+//		for (EPartner ep : getVisible(EPartner.class)) {
+//			objects.add(new ObjectInformation(ep));
+//		}
+//
+//		// Add Robots
+//		for (IRobot ep : getVisible(IRobot.class)) {
+//			objects.add(new ObjectInformation(ep.getSuperParent()));
+//		}
+//
+//		// #2830 add robots own position
+//		objects.add(new ObjectInformation(ourRobotLocation.getX(), ourRobotLocation.getY(), ourRobot.getId()));
+//
+//		return objects;
+//	}
 
 	/**
 	 * Percept for navpoints the robot is at. Send on change. If robot is in a
@@ -265,10 +265,10 @@ public class RobotEntity implements EntityInterface {
 	 * 
 	 * @return location
 	 */
-	@AsPercept(name = "location", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
-	public Point2D getLocation() {
-		return new Point2D.Double(ourRobotLocation.getX(), ourRobotLocation.getY());
-	}
+//	@AsPercept(name = "location", multiplePercepts = false, filter = Filter.Type.ON_CHANGE)
+//	public Point2D getLocation() {
+//		return new Point2D.Double(ourRobotLocation.getX(), ourRobotLocation.getY());
+//	}
 
 	/**
 	 * Percept for the places in the world. Send at the beginning
@@ -384,19 +384,19 @@ public class RobotEntity implements EntityInterface {
 	 * 
 	 * @return holding block
 	 */
-	@AsPercept(name = "holdingblocks", filter = Filter.Type.ON_CHANGE)
-	public List<Long> getHoldingBlocks() {
-		// stack.toArray gives stack with top=LAST element. Need to reverse.
-		// to reverse, we need to make copy first of the array.
-		// Notice that collections.reverse is modifying the provided array!
-		List<Block> blockstack = new ArrayList<>(ourRobot.getHolding());
-		Collections.reverse(blockstack);
-		List<Long> holds = new ArrayList<>(blockstack.size());
-		for (Block b : blockstack) {
-			holds.add(b.getId());
-		}
-		return holds;
-	}
+//	@AsPercept(name = "holdingblocks", filter = Filter.Type.ON_CHANGE)
+//	public List<Long> getHoldingBlocks() {
+//		// stack.toArray gives stack with top=LAST element. Need to reverse.
+//		// to reverse, we need to make copy first of the array.
+//		// Notice that collections.reverse is modifying the provided array!
+//		List<Block> blockstack = new ArrayList<>(ourRobot.getHolding());
+//		Collections.reverse(blockstack);
+//		List<Long> holds = new ArrayList<>(blockstack.size());
+//		for (Block b : blockstack) {
+//			holds.add(b.getId());
+//		}
+//		return holds;
+//	}
 
 	/**
 	 * Actual gripper capacity

@@ -3,9 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>eishub.bw4t.core</groupId>
+	<groupId>eishub.bw4t</groupId>
 	<artifactId>bw4t-core</artifactId>
-	<version>3.9.0</version>
+	<version>3.9.1</version>
 	<name>bw4t-core</name>
 	<url>http://www.github.com/eishub/bw4t</url>
 
