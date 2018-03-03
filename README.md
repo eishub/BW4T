@@ -1,4 +1,4 @@
-#Blocks World for Teams
+# Blocks World for Teams
 Blocks World for Teams (**BW4T**) is a testbed EIS environment for team coordination. BW4T allows for games with human-human, agent-agent and human-agent teams of variable sizes. The goal is to jointly deliver a sequence of colored blocks in a particular order as fast as possible. A complicating factor is that the players cannot see each other.
 
 This page descibes how users can install and use the Blocks World for Teams environment. 
@@ -19,7 +19,7 @@ To install BW4T and for all details on how to use the environment and related to
 
 **WARNING** To do mvn install, use "mvn install -DskipTests". Test with "mvn package".
 
-#BW4T Main Maven Module
+# BW4T Main Maven Module
 This is the directory contains the main maven module. BW4T is split up in six submodules which are explained below. Each submodule is compiled and tested separately by Maven. A good overview of exactly how Maven module organization works can be found at [Sonatype](http://books.sonatype.com/mvnex-book/reference/multimodule.html).
 
 ### bw4t-client 
@@ -57,7 +57,7 @@ The client artefact:
 <dependency>
 	<groupId>eishub.bw4t</groupId>
 	<artifactId>bw4t-client</artifactId>
-	<version>3.9.0</version>
+	<version>3.9.1</version>
 </dependency>
 ```
 
@@ -67,7 +67,7 @@ The server artefact:
 <dependency>
 	<groupId>eishub.bw4t</groupId>
 	<artifactId>bw4t-server</artifactId>
-	<version>3.9.0</version>
+	<version>3.9.1</version>
 </dependency>
 ```
 
