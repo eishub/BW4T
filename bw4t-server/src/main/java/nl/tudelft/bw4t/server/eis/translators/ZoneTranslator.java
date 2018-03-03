@@ -1,8 +1,5 @@
 package nl.tudelft.bw4t.server.eis.translators;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Java2Parameter;
 import eis.iilang.Identifier;
@@ -19,18 +16,18 @@ public class ZoneTranslator implements Java2Parameter<Zone> {
 
     @Override
     public Parameter[] translate(Zone zone) throws TranslationException {
-        List<Parameter> params = new ArrayList<>(5);
-        params.add(new Numeral(zone.getId()));
-        params.add(new Identifier(zone.getName()));
-        params.add(new Numeral(zone.getLocation().getX()));
-        params.add(new Numeral(zone.getLocation().getY()));
+        Parameter[] params = new Parameter[3]; //new Parameter[5];
+        params[0] = new Numeral(zone.getId());
+        params[1] = new Identifier(zone.getName());
+        //params[2] = new Numeral(zone.getLocation().getX());
+        //params[3] = new Numeral(zone.getLocation().getY());
         ParameterList neighbours = new ParameterList();
         for (Zone neighbour : zone.getNeighbours()) {
             neighbours.add(new Identifier(neighbour.getName()));
         }
-        params.add(neighbours);
-
-        return params.toArray(new Parameter[params.size()]);
+        params[2] = neighbours; //params[4] = neighbours;
+       
+        return params;
     }
 
     @Override
