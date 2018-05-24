@@ -37,6 +37,7 @@ import eis.iilang.Parameter;
 import eis.iilang.Percept;
 import nl.tudelft.bw4t.eis.MapParameter;
 import nl.tudelft.bw4t.map.Entity;
+import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.network.BW4TClientActions;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
@@ -833,7 +834,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		// create robot from request
 		IRobot bot = entityFactory.makeRobot(c);
 		// create the entity for the environment
-		RobotEntity be = new RobotEntity(bot);
+		RobotEntity be = new RobotEntity(bot, c.getBotController() == EntityType.HUMAN);
 		// register the entity in the environment
 		this.registerEntity(c.getBotName(), be);
 		// Place the Robot
