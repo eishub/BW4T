@@ -94,7 +94,7 @@ public class ColorSequenceEditorTest {
 		for (int i = 0; i < BlockColor.getAvailableColors().size(); i++) {
 			tapKey(KeyEvent.VK_1 + i);
 			robot.delay(DELAY);
-			//assertEquals(i + 1, cse1.getSequenceSize()); FIXME
+			assertEquals(i + 1, cse1.getSequenceSize()); 
 		}
 
 		List<BlockColor> expected = BlockColor.getAvailableColors();
@@ -115,7 +115,7 @@ public class ColorSequenceEditorTest {
 		List<BlockColor> expected = BlockColor.getAvailableColors();
 		for (int i = 0; i < expected.size(); i++) {
 			tapKey(expected.get(i).getLetter());
-			//assertEquals(i + 1, cse1.getSequenceSize()); FIXME
+			assertEquals(i + 1, cse1.getSequenceSize()); 
 		}
 
 		List<BlockColor> actual = cse1.getSequence();

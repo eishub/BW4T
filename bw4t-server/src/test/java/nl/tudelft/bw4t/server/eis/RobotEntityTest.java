@@ -37,11 +37,9 @@ public class RobotEntityTest {
 	private Room mockRoom = Mockito.mock(Room.class);
 
 	@Before
-	public void createRobotEntity() throws NoSuchMethodException,
-			SecurityException, IllegalAccessException,
-			IllegalArgumentException, InvocationTargetException,
-			NoSuchFieldException {
-		robot = new RobotEntity(mockRobot);
+	public void createRobotEntity() throws NoSuchMethodException, SecurityException, IllegalAccessException,
+			IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
+		robot = new RobotEntity(mockRobot, true);
 		when(mockRobot.getLocation()).thenReturn(new NdPoint(1, 1));
 		when(mockRobot.getHolding()).thenReturn(new Stack<Block>());
 
@@ -61,8 +59,7 @@ public class RobotEntityTest {
 		method3 = robot.getClass().getDeclaredMethod("getSizes");
 		method3.setAccessible(true);
 
-		method2 = BW4TEnvironment.class.getDeclaredMethod("setInstance",
-				BW4TEnvironment.class);
+		method2 = BW4TEnvironment.class.getDeclaredMethod("setInstance", BW4TEnvironment.class);
 		method2.setAccessible(true);
 		method2.invoke(null, env);
 		when(env.getContext()).thenReturn(context);
@@ -94,8 +91,8 @@ public class RobotEntityTest {
 	}
 
 	@Test
-	public void getVisibleBlocksTest() throws IllegalAccessException,
-			IllegalArgumentException, InvocationTargetException {
+	public void getVisibleBlocksTest()
+			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		assertEquals(new HashSet<Block>(), method.invoke(robot, Block.class));
 		robot.initializePerceptionCycle();
 		field.set(robot, mockRoom);
