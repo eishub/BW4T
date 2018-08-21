@@ -611,12 +611,15 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		// this should set state->KILLED which stops stepper.
 		removeAllEntities();
 
-		this.stepper.terminate();
+		if (this.stepper != null) {
+			this.stepper.terminate();
+		}
 		if (this.contextDisplay != null) {
 			this.contextDisplay.close();
-			this.contextDisplay = null;
 		}
-		this.serverMap.setContext(null);
+		if (this.serverMap != null) {
+			this.serverMap.setContext(null);
+		}
 	}
 
 	/**
@@ -682,7 +685,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
 				LOGGER.warn("failed to notify clients that the server is going down...", e);
 			}
 			this.server.takeDown();
-			this.server = null;
 			System.exit(0);
 		} else {
 			LOGGER.warn("Server shutdown attempted with wrong key: " + key);
