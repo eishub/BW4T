@@ -25,7 +25,6 @@ import repast.simphony.context.DefaultContext;
 import repast.simphony.space.continuous.NdPoint;
 
 public class RobotEntityTest {
-
 	private IRobot mockRobot = Mockito.mock(IRobot.class);
 	private RobotEntity robot;
 	private BW4TEnvironment env = Mockito.mock(BW4TEnvironment.class);
@@ -39,70 +38,69 @@ public class RobotEntityTest {
 	@Before
 	public void createRobotEntity() throws NoSuchMethodException, SecurityException, IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
-		robot = new RobotEntity(mockRobot, true);
-		when(mockRobot.getLocation()).thenReturn(new NdPoint(1, 1));
-		when(mockRobot.getHolding()).thenReturn(new Stack<Block>());
+		this.robot = new RobotEntity(this.mockRobot, true);
+		when(this.mockRobot.getLocation()).thenReturn(new NdPoint(1, 1));
+		when(this.mockRobot.getHolding()).thenReturn(new Stack<Block>());
 
-		when(mockRobot.isConnected()).then(new Answer<Boolean>() {
+		when(this.mockRobot.isConnected()).then(new Answer<Boolean>() {
 			@Override
 			public Boolean answer(InvocationOnMock invocation) throws Throwable {
 				// HACK but I don't know how to check the actual counts.
 				// so we just check that connected was called and return true.
-				Mockito.verify(mockRobot).connect();
+				Mockito.verify(RobotEntityTest.this.mockRobot).connect();
 				return true;
 			}
 		});
 
-		method = robot.getClass().getDeclaredMethod("getVisible", Class.class);
-		method.setAccessible(true);
+		this.method = this.robot.getClass().getDeclaredMethod("getVisible", Class.class);
+		this.method.setAccessible(true);
 
-		method3 = robot.getClass().getDeclaredMethod("getSizes");
-		method3.setAccessible(true);
+		this.method3 = this.robot.getClass().getDeclaredMethod("getSizes");
+		this.method3.setAccessible(true);
 
-		method2 = BW4TEnvironment.class.getDeclaredMethod("setInstance", BW4TEnvironment.class);
-		method2.setAccessible(true);
-		method2.invoke(null, env);
-		when(env.getContext()).thenReturn(context);
+		this.method2 = BW4TEnvironment.class.getDeclaredMethod("setInstance", BW4TEnvironment.class);
+		this.method2.setAccessible(true);
+		this.method2.invoke(null, this.env);
+		when(this.env.getContext()).thenReturn(this.context);
+		when(this.env.hasContext()).thenReturn(true);
 
-		field = RobotEntity.class.getDeclaredField("ourRobotRoom");
-		field.setAccessible(true);
-
+		this.field = RobotEntity.class.getDeclaredField("ourRobotRoom");
+		this.field.setAccessible(true);
 	}
 
 	@Test
 	public void getRobotTest() {
-		assertEquals(mockRobot, robot.getRobotObject());
+		assertEquals(this.mockRobot, this.robot.getRobotObject());
 	}
 
 	@Test
 	public void connectTest() {
-		robot.connect();
-		Mockito.verify(mockRobot).connect();
-		robot.reset();
-		Mockito.verify(mockRobot).getHolding();
-		Mockito.verify(mockRobot).moveTo(1, 1);
+		this.robot.connect();
+		Mockito.verify(this.mockRobot).connect();
+		this.robot.reset();
+		Mockito.verify(this.mockRobot).getHolding();
+		Mockito.verify(this.mockRobot).moveTo(1, 1);
 	}
 
 	@Test
 	public void disconnectTest() {
-		robot.connect();
-		robot.disconnect();
-		Mockito.verify(mockRobot).disconnect();
+		this.robot.connect();
+		this.robot.disconnect();
+		Mockito.verify(this.mockRobot).disconnect();
 	}
 
 	@Test
 	public void getVisibleBlocksTest()
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		assertEquals(new HashSet<Block>(), method.invoke(robot, Block.class));
-		robot.initializePerceptionCycle();
-		field.set(robot, mockRoom);
-		assertNotNull(mockRoom);
-		when(robot.getRoom()).thenReturn("in");
-		assertNotNull(robot.getRoom());
+		assertEquals(new HashSet<Block>(), this.method.invoke(this.robot, Block.class));
+		this.robot.initializePerceptionCycle();
+		this.field.set(this.robot, this.mockRoom);
+		assertNotNull(this.mockRoom);
+		when(this.robot.getRoom()).thenReturn("in");
+		assertNotNull(this.robot.getRoom());
 
 	}
 
 	// getSize is not testable
 	// getAt is not testable
-
 }
