@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 import java.rmi.server.ServerNotActiveException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -622,6 +623,10 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		}
 	}
 
+	public boolean hasContext() {
+		return this.serverMap.hasContext();
+	}
+
 	/**
 	 * get the repast current context. May be null if Repast not running now.
 	 *
@@ -724,9 +729,11 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * @return The list of points the humans are right now.
 	 */
 	private List<Point2D> getHumanWithoutEPartners() {
+		if (!hasContext()) {
+			return new ArrayList<>(0);
+		}
 		List<Point2D> points = new LinkedList<>();
-
-		for (Object robot : this.serverMap.getContext().getObjects(IRobot.class)) {
+		for (Object robot : getContext().getObjects(IRobot.class)) {
 			IRobot robotTemp = (IRobot) robot;
 			if (robotTemp.isHuman() && !robotTemp.isHoldingEPartner()) {
 				NdPoint location = robotTemp.getLocation();

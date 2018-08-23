@@ -24,7 +24,6 @@ import repast.simphony.space.continuous.NdPoint;
  * This interface contains all the methods from the original Robot class.
  */
 public interface IRobot extends BoundedMoveableInterface {
-
 	/**
 	 * @return The name of the robot
 	 */
@@ -41,8 +40,8 @@ public interface IRobot extends BoundedMoveableInterface {
 	void disconnect();
 
 	/**
-	 * @return The stack of blocks the robot is holding. Notice that
-	 *         {@link Stack} has the top element last.
+	 * @return The stack of blocks the robot is holding. Notice that {@link Stack}
+	 *         has the top element last.
 	 */
 	Stack<Block> getHolding();
 
@@ -54,7 +53,7 @@ public interface IRobot extends BoundedMoveableInterface {
 	/**
 	 * Sets the location to which the robot should move. This also clears the
 	 * {@link #collided} flag.
-	 * 
+	 *
 	 * @param ptargetLocation
 	 *            the location to move to
 	 */
@@ -62,33 +61,33 @@ public interface IRobot extends BoundedMoveableInterface {
 
 	/**
 	 * Check if robot can pick up a block.
-	 * 
+	 *
 	 * @param b
 	 *            the block to check
-	 * 
-	 * @return true if the block is within reach and if the bot has gripper
-	 *         space available.
+	 *
+	 * @return true if the block is within reach and if the bot has gripper space
+	 *         available.
 	 */
 	boolean canPickUp(BoundedMoveableObject b);
 
 	/**
 	 * Pick up a block
-	 * 
+	 *
 	 * @param b
 	 *            the block to pick up
 	 */
 	void pickUp(Block b);
 
 	/**
-	 * Drops the block the robot is holding on the current location. The block
-	 * is assigned a random position inside the room that it was dropped in. If
-	 * the bot is not holding any block, this fails silently.
+	 * Drops the block the robot is holding on the current location. The block is
+	 * assigned a random position inside the room that it was dropped in. If the bot
+	 * is not holding any block, this fails silently.
 	 */
 	void drop();
 
 	/**
 	 * A method for dropping multiple blocks at once.
-	 * 
+	 *
 	 * @param amount
 	 *            The amount of blocks that have to be dropped. If the amount is
 	 *            bigger than the actual number of blocks held by the bot, all
@@ -98,80 +97,79 @@ public interface IRobot extends BoundedMoveableInterface {
 
 	/**
 	 * This method moves the robot to a location (x, y).
-	 * 
+	 *
 	 * @param x
 	 *            the coord of location
 	 * @param y
 	 *            the coord of location
 	 */
+	@Override
 	void moveTo(double x, double y);
 
 	/**
-	 * Check motion type for robot to move to <endx, endy>. The
-	 * {@link #MoveType} gives the actual type / possibility of the move, plus
-	 * the details why it is (not) possible.
-	 * 
+	 * Check motion type for robot to move to <endx, endy>. The {@link #MoveType}
+	 * gives the actual type / possibility of the move, plus the details why it is
+	 * (not) possible.
+	 *
 	 * @param endx
 	 *            is x position of target
 	 * @param endy
 	 *            is y position of target
-	 * 
+	 *
 	 * @return Type of move to access the point (x, y)
 	 */
 	MoveType getMoveType(double endx, double endy);
 
 	/**
 	 * check if we can access endzone from startzone.
-	 * 
+	 *
 	 * @param startzone
 	 *            the zone where the robot is
 	 * @param endzone
 	 *            the zone the robot is going to
 	 * @param door
 	 *            the door leading to the zone
-	 * 
+	 *
 	 * @return Type of move to access the zone.
 	 */
 	MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door);
 
 	/**
-	 * get door at a given position. Note that you can be in a door and at the
-	 * same time in a room. This is because rooms and doors partially overlap
-	 * usually.
-	 * 
+	 * get door at a given position. Note that you can be in a door and at the same
+	 * time in a room. This is because rooms and doors partially overlap usually.
+	 *
 	 * @param x
 	 *            is x coord of position
 	 * @param y
 	 *            is y coord of position
-	 * 
+	 *
 	 * @return Door or null if not on a door
 	 */
 	Door getCurrentDoor(double x, double y);
 
 	/**
 	 * get room at a given position. CHECK maybe move this to RoomLocator?
-	 * 
+	 *
 	 * @param x
 	 *            is x coord of position
 	 * @param y
 	 *            is y coord of position
-	 * 
+	 *
 	 * @return Room or null if not inside a room
 	 */
 	Room getCurrentRoom(double x, double y);
 
 	/**
 	 * Get current zone that the robot is in.
-	 * 
+	 *
 	 * @return zone the bot is in
 	 */
 	Zone getZone();
 
 	/**
-	 * Moves the robot by displacing it for the given amount. If the robot
-	 * collides with something, the movement target is cancelled to avoid
-	 * continuous bumping.
-	 * 
+	 * Moves the robot by displacing it for the given amount. If the robot collides
+	 * with something, the movement target is cancelled to avoid continuous bumping.
+	 *
 	 * @param x
 	 *            the displacement in the x-dimension
 	 * @param y
@@ -185,8 +183,8 @@ public interface IRobot extends BoundedMoveableInterface {
 	void move();
 
 	/**
-	 * Stop the motion of the robot. Effectively sets the target location to
-	 * null. You can override this to catch this event.
+	 * Stop the motion of the robot. Effectively sets the target location to null.
+	 * You can override this to catch this event.
 	 */
 	void stopRobot();
 
@@ -202,8 +200,8 @@ public interface IRobot extends BoundedMoveableInterface {
 	void setCollided(boolean collided);
 
 	/**
-	 * clear the collision flag. You can use this to reset the flag after you
-	 * took notice of the collision.
+	 * clear the collision flag. You can use this to reset the flag after you took
+	 * notice of the collision.
 	 */
 	void clearCollided();
 
@@ -229,14 +227,14 @@ public interface IRobot extends BoundedMoveableInterface {
 	void setSize(int s);
 
 	/**
-	 * @return translates the robot object to a map entity which can be drawn by
-	 *         the map renderer
+	 * @return translates the robot object to a map entity which can be drawn by the
+	 *         map renderer
 	 */
 	ViewEntity getView();
 
 	/**
-	 * @return the agent record containing statistics about actions performed by
-	 *         the robot
+	 * @return the agent record containing statistics about actions performed by the
+	 *         robot
 	 */
 	AgentRecord getAgentRecord();
 
@@ -258,7 +256,7 @@ public interface IRobot extends BoundedMoveableInterface {
 
 	/**
 	 * get the parent, returns null because Robot is the super parent
-	 * 
+	 *
 	 * @return null
 	 */
 	IRobot getParent();
@@ -266,7 +264,7 @@ public interface IRobot extends BoundedMoveableInterface {
 	/**
 	 * Gets the top most parent, 'the Adam / oldest ancestor / founding father'
 	 * robot.
-	 * 
+	 *
 	 * @return The founding father, null if this robot is the founding father.
 	 */
 	IRobot getEarliestParent();
@@ -300,7 +298,7 @@ public interface IRobot extends BoundedMoveableInterface {
 
 	/**
 	 * change the speed multiplier of the robot.
-	 * 
+	 *
 	 * @param speedMod
 	 *            must be rate between 0 and 1. Default is 0.5.
 	 */
@@ -319,8 +317,8 @@ public interface IRobot extends BoundedMoveableInterface {
 	EPartner getEPartner();
 
 	/**
-	 * @return whether the human is holding a e-Partner only used if the robot
-	 *         has a Human wrapped around it
+	 * @return whether the human is holding a e-Partner only used if the robot has a
+	 *         Human wrapped around it
 	 */
 	boolean isHoldingEPartner();
 
@@ -337,7 +335,7 @@ public interface IRobot extends BoundedMoveableInterface {
 
 	/**
 	 * Get the current state of the robot.
-	 * 
+	 *
 	 * @return the state
 	 */
 	State getState();
@@ -345,7 +343,7 @@ public interface IRobot extends BoundedMoveableInterface {
 	/**
 	 * Set a target for the navigating robot. If your start and/or target is not
 	 * near a Zone, we go through the nearest Zone.
-	 * 
+	 *
 	 * @param target
 	 *            the object i will move to
 	 */
@@ -354,17 +352,21 @@ public interface IRobot extends BoundedMoveableInterface {
 	/**
 	 * @return the location of the robot
 	 */
+	@Override
 	NdPoint getLocation();
 
 	/**
 	 * @return the ID of the robot
 	 */
+	@Override
 	long getId();
+
+	boolean hasContext();
 
 	/**
 	 * Repast stores all objects in a context, this is the context in which this
 	 * IRobot is.
-	 * 
+	 *
 	 * @return a giant HashMap handled by Repast containing a bunch of objects
 	 */
 	Context<Object> getContext();
@@ -374,18 +376,19 @@ public interface IRobot extends BoundedMoveableInterface {
 	 *            the block we want to calculate the distance to
 	 * @return the distance in question
 	 */
+	@Override
 	double distanceTo(BoundedMoveableObject b);
 
 	/**
 	 * get the {@link NavigatingRobot} at the head of the chain.
-	 * 
+	 *
 	 * @return the Robot
 	 */
 	AbstractRobot getSuperParent();
 
 	/**
 	 * Retrieve all obstacles in the path of the robot.
-	 * 
+	 *
 	 * @return the obstacles
 	 */
 	List<BoundedMoveableObject> getObstacles();
@@ -396,9 +399,8 @@ public interface IRobot extends BoundedMoveableInterface {
 	public void clearObstacles();
 
 	/**
-	 * @return Whether the old target from before the navigateObstacles action
-	 *         has become unreachable.
+	 * @return Whether the old target from before the navigateObstacles action has
+	 *         become unreachable.
 	 */
 	boolean isDestinationUnreachable();
-
 }

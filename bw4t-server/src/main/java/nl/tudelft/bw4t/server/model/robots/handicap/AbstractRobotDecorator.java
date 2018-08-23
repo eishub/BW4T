@@ -25,10 +25,9 @@ import repast.simphony.space.grid.GridPoint;
  * The robot decorator.
  */
 public abstract class AbstractRobotDecorator implements IRobot {
-
 	/**
-	 * This is the parent of the component. It can be the robot itself, or
-	 * another handicap.
+	 * This is the parent of the component. It can be the robot itself, or another
+	 * handicap.
 	 */
 	private IRobot parent;
 
@@ -42,169 +41,169 @@ public abstract class AbstractRobotDecorator implements IRobot {
 	 *            The interface the handicap wraps around.
 	 */
 	public AbstractRobotDecorator(IRobot p) {
-		parent = p;
-		robot = getSuperParent();
-		robot.setTopMostHandicap(this);
+		this.parent = p;
+		this.robot = getSuperParent();
+		this.robot.setTopMostHandicap(this);
 	}
 
 	@Override
 	public String getName() {
-		return parent.getName();
+		return this.parent.getName();
 	}
 
 	@Override
 	public void connect() {
-		parent.connect();
+		this.parent.connect();
 	}
 
 	@Override
 	public void disconnect() {
-		parent.disconnect();
+		this.parent.disconnect();
 	}
 
 	@Override
 	public Stack<Block> getHolding() {
-		return parent.getHolding();
+		return this.parent.getHolding();
 	}
 
 	@Override
 	public NdPoint getTargetLocation() {
-		return parent.getTargetLocation();
+		return this.parent.getTargetLocation();
 	}
 
 	@Override
 	public void setTargetLocation(NdPoint ptargetLocation) {
-		parent.setTargetLocation(ptargetLocation);
+		this.parent.setTargetLocation(ptargetLocation);
 	}
 
 	@Override
 	public boolean canPickUp(BoundedMoveableObject b) {
-		return parent.canPickUp(b);
+		return this.parent.canPickUp(b);
 	}
 
 	@Override
 	public void pickUp(Block b) {
-		parent.pickUp(b);
+		this.parent.pickUp(b);
 	}
 
 	@Override
 	public void drop() {
-		parent.drop();
+		this.parent.drop();
 	}
 
 	@Override
 	public void drop(int amount) {
-		parent.drop(amount);
+		this.parent.drop(amount);
 	}
 
 	@Override
 	public void moveTo(double x, double y) {
-		parent.moveTo(x, y);
+		this.parent.moveTo(x, y);
 	}
 
 	@Override
 	public MoveType getMoveType(double endx, double endy) {
-		return parent.getMoveType(endx, endy);
+		return this.parent.getMoveType(endx, endy);
 	}
 
 	@Override
 	public MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door) {
-		return parent.checkZoneAccess(startzone, endzone, door);
+		return this.parent.checkZoneAccess(startzone, endzone, door);
 	}
 
 	@Override
 	public Door getCurrentDoor(double x, double y) {
-		return parent.getCurrentDoor(x, y);
+		return this.parent.getCurrentDoor(x, y);
 	}
 
 	@Override
 	public Room getCurrentRoom(double x, double y) {
-		return parent.getCurrentRoom(x, y);
+		return this.parent.getCurrentRoom(x, y);
 	}
 
 	@Override
 	public Zone getZone() {
-		return parent.getZone();
+		return this.parent.getZone();
 	}
 
 	@Override
 	public void moveByDisplacement(double x, double y) {
-		parent.moveByDisplacement(x, y);
+		this.parent.moveByDisplacement(x, y);
 	}
 
 	@Override
 	public void move() {
-		parent.move();
+		this.parent.move();
 	}
 
 	@Override
 	public void stopRobot() {
-		parent.stopRobot();
+		this.parent.stopRobot();
 	}
 
 	@Override
 	public boolean isCollided() {
-		return parent.isCollided();
+		return this.parent.isCollided();
 	}
 
 	@Override
 	public void setCollided(boolean collided) {
-		parent.setCollided(collided);
+		this.parent.setCollided(collided);
 	}
 
 	@Override
 	public void clearCollided() {
-		parent.clearCollided();
+		this.parent.clearCollided();
 	}
 
 	@Override
 	public boolean isConnected() {
-		return parent.isConnected();
+		return this.parent.isConnected();
 	}
 
 	@Override
 	public boolean isOneBotPerZone() {
-		return parent.isOneBotPerZone();
+		return this.parent.isOneBotPerZone();
 	}
 
 	@Override
 	public int getSize() {
-		return parent.getSize();
+		return this.parent.getSize();
 	}
 
 	@Override
 	public void setSize(int s) {
-		parent.setSize(s);
+		this.parent.setSize(s);
 	}
 
 	@Override
 	public ViewEntity getView() {
-		return parent.getView();
+		return this.parent.getView();
 	}
 
 	@Override
 	public AgentRecord getAgentRecord() {
-		return parent.getAgentRecord();
+		return this.parent.getAgentRecord();
 	}
 
 	@Override
 	public Battery getBattery() {
-		return parent.getBattery();
+		return this.parent.getBattery();
 	}
 
 	@Override
 	public void setBattery(Battery battery) {
-		parent.setBattery(battery);
+		this.parent.setBattery(battery);
 	}
 
 	@Override
 	public void recharge() {
-		parent.recharge();
+		this.parent.recharge();
 	}
 
 	@Override
 	public IRobot getParent() {
-		return parent;
+		return this.parent;
 	}
 
 	@Override
@@ -218,150 +217,155 @@ public abstract class AbstractRobotDecorator implements IRobot {
 
 	@Override
 	public void setParent(IRobot hI) {
-		parent.setParent(hI);
+		this.parent.setParent(hI);
 	}
 
 	@Override
 	public List<String> getHandicapsList() {
-		return parent.getHandicapsList();
+		return this.parent.getHandicapsList();
 	}
 
 	@Override
 	public int getGripperCapacity() {
-		return parent.getGripperCapacity();
+		return this.parent.getGripperCapacity();
 	}
 
 	@Override
 	public void setGripperCapacity(int newcap) {
-		parent.setGripperCapacity(newcap);
+		this.parent.setGripperCapacity(newcap);
 	}
 
 	@Override
 	public double getSpeedMod() {
-		return parent.getSpeedMod();
+		return this.parent.getSpeedMod();
 	}
 
 	@Override
 	public void setSpeedMod(double speedMod) {
-		parent.setSpeedMod(speedMod);
+		this.parent.setSpeedMod(speedMod);
 	}
 
 	@Override
 	public boolean isHuman() {
-		return parent.isHuman();
+		return this.parent.isHuman();
 	}
 
 	@Override
 	public EPartner getEPartner() {
-		return parent.getEPartner();
+		return this.parent.getEPartner();
 	}
 
 	@Override
 	public boolean isHoldingEPartner() {
-		return parent.isHoldingEPartner();
+		return this.parent.isHoldingEPartner();
 	}
 
 	@Override
 	public void pickUpEPartner(EPartner eP) {
-		parent.pickUpEPartner(eP);
+		this.parent.pickUpEPartner(eP);
 	}
 
 	@Override
 	public void dropEPartner() {
-		parent.dropEPartner();
+		this.parent.dropEPartner();
 	}
 
 	@Override
 	public State getState() {
-		return parent.getState();
+		return this.parent.getState();
 	}
 
 	@Override
 	public void setTarget(BoundedMoveableObject target) {
-		parent.setTarget(target);
+		this.parent.setTarget(target);
 	}
 
 	@Override
 	public NdPoint getLocation() {
-		return parent.getLocation();
+		return this.parent.getLocation();
 	}
 
 	@Override
 	public long getId() {
-		return parent.getId();
+		return this.parent.getId();
+	}
+
+	@Override
+	public boolean hasContext() {
+		return this.parent.hasContext();
 	}
 
 	@Override
 	public Context<Object> getContext() {
-		return parent.getContext();
+		return this.parent.getContext();
 	}
 
 	@Override
 	public double distanceTo(BoundedMoveableObject b) {
-		return parent.distanceTo(b);
+		return this.parent.distanceTo(b);
 	}
 
 	@Override
 	public AbstractRobot getSuperParent() {
-		if (robot == null && parent != null) {
-			robot = parent.getSuperParent();
+		if (this.robot == null && this.parent != null) {
+			this.robot = this.parent.getSuperParent();
 		}
 
-		return robot;
+		return this.robot;
 	}
 
 	@Override
 	public List<BoundedMoveableObject> getObstacles() {
-		return parent.getObstacles();
+		return this.parent.getObstacles();
 	}
 
 	@Override
 	public void clearObstacles() {
-		parent.clearObstacles();
+		this.parent.clearObstacles();
 	}
 
 	@Override
 	public boolean isDestinationUnreachable() {
-		return parent.isDestinationUnreachable();
+		return this.parent.isDestinationUnreachable();
 	}
 
 	@Override
 	public BW4TServerMap getServerMap() {
-		return parent.getServerMap();
+		return this.parent.getServerMap();
 	}
 
 	@Override
 	public GridPoint getGridLocation() {
-		return parent.getGridLocation();
+		return this.parent.getGridLocation();
 	}
 
 	@Override
 	public Rectangle2D getBoundingBox() {
-		return parent.getBoundingBox();
+		return this.parent.getBoundingBox();
 	}
 
 	@Override
 	public void setSize(double width, double height) {
-		parent.setSize(width, height);
+		this.parent.setSize(width, height);
 	}
 
 	@Override
 	public void removeFromContext() {
-		parent.removeFromContext();
+		this.parent.removeFromContext();
 	}
 
 	@Override
 	public double distanceTo(NdPoint there) {
-		return parent.distanceTo(there);
+		return this.parent.distanceTo(there);
 	}
 
 	@Override
 	public List<NdPoint> getPointsOccupiedByObject(double padding) {
-		return parent.getPointsOccupiedByObject(padding);
+		return this.parent.getPointsOccupiedByObject(padding);
 	}
 
 	@Override
 	public boolean isFree(Class<? extends BoundedMoveableObject> freeOfType) {
-		return parent.isFree(freeOfType);
+		return this.parent.isFree(freeOfType);
 	}
 }

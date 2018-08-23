@@ -38,30 +38,27 @@ import repast.simphony.space.grid.GridPoint;
 /**
  * Represents a robot in the BW4T environment.
  */
-public abstract class AbstractRobot extends BoundedMoveableObject implements
-		IRobot {
+public abstract class AbstractRobot extends BoundedMoveableObject implements IRobot {
 	/**
 	 * The logger which will be used.
 	 */
 	private static final Logger LOGGER = Logger.getLogger(AbstractRobot.class);
 
 	/**
-	 * AgentRecord object for this Robot, needed for logging. It needs to be set
-	 * up at the initialization of the object, because we otherwise get an
-	 * Exception when adding Robots after we have added the rooms to the
-	 * environment.
+	 * AgentRecord object for this Robot, needed for logging. It needs to be set up
+	 * at the initialization of the object, because we otherwise get an Exception
+	 * when adding Robots after we have added the rooms to the environment.
 	 */
 	private AgentRecord agentRecord = new AgentRecord("");
 
 	/**
-	 * The distance which it can move per tick. This should never be larger than
-	 * the door width because that might cause the bot to attempt to jump over a
-	 * door (which will fail).
+	 * The distance which it can move per tick. This should never be larger than the
+	 * door width because that might cause the bot to attempt to jump over a door
+	 * (which will fail).
 	 */
 	public static final double MAX_MOVE_DISTANCE = .5;
 	/**
-	 * When we are this close or closer, we are effectively at the target
-	 * position.
+	 * When we are this close or closer, we are effectively at the target position.
 	 */
 	public static final double MIN_MOVE_DISTANCE = .001;
 	/** The distance which it can reach with its arm to pick up a block. */
@@ -87,26 +84,25 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	private int grippercap = 1;
 
 	/**
-	 * a robot has a battery a battery has a power value of how much the
-	 * capacity should increment or decrement.
+	 * a robot has a battery a battery has a power value of how much the capacity
+	 * should increment or decrement.
 	 */
 	private Battery battery;
 
 	/**
-	 * 
+	 *
 	 * Saves the robots handicap.
 	 */
 	private List<String> handicapsList;
 
 	/**
-	 * The stack of blocks the robot is holding. Notice: Stack has the last
-	 * element of the list as 'top'. This is the reverse from the way we
-	 * perceive stacks..
+	 * The stack of blocks the robot is holding. Notice: Stack has the last element
+	 * of the list as 'top'. This is the reverse from the way we perceive stacks..
 	 */
 	private final Stack<Block> holding;
 	/**
-	 * set to true if we have to cancel a motion due to a collision. A collision
-	 * is caused by an attempt to move into or out of a room
+	 * set to true if we have to cancel a motion due to a collision. A collision is
+	 * caused by an attempt to move into or out of a room
 	 */
 	private boolean collided = false;
 
@@ -129,8 +125,8 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	private IRobot topMostHandicap = this;
 
 	/**
-	 * Returns whether or not the bot has ever stood free from other obstacles.
-	 * Used for collision allowance during the start.
+	 * Returns whether or not the bot has ever stood free from other obstacles. Used
+	 * for collision allowance during the start.
 	 */
 	private boolean hasBeenFree = false;
 
@@ -141,7 +137,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 
 	/**
 	 * Creates a new robot.
-	 * 
+	 *
 	 * @param pname
 	 *            The "human-friendly" name of the robot.
 	 * @param space
@@ -155,17 +151,15 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	 * @param cap
 	 *            The holding capacity of the robot.
 	 */
-	public AbstractRobot(String pname, BW4TServerMap context,
-			boolean poneBotPerZone, int cap) {
+	public AbstractRobot(String pname, BW4TServerMap context, boolean poneBotPerZone, int cap) {
 		super(context);
 
 		this.name = pname;
 		this.oneBotPerZone = poneBotPerZone;
-		setSize(size, size);
+		setSize(this.size, this.size);
 
 		/**
-		 * This is where the battery value will be fetched from the Bot Store
-		 * GUI.
+		 * This is where the battery value will be fetched from the Bot Store GUI.
 		 */
 		this.battery = new Battery(Integer.MAX_VALUE, Integer.MAX_VALUE, 0);
 
@@ -175,7 +169,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 		this.grippercap = cap;
 		this.holding = new Stack<>();
 		this.handicapsList = new LinkedList<>();
-		this.agentRecord = new AgentRecord(name);
+		this.agentRecord = new AgentRecord(this.name);
 	}
 
 	public void setTopMostHandicap(IRobot topMostHandicap) {
@@ -184,7 +178,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 
 	@Override
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	@Override
@@ -192,23 +186,22 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 		BW4TEnvironment env = BW4TEnvironment.getInstance();
 		HashSet<String> associatedAgents = null;
 		try {
-			associatedAgents = env.getAssociatedAgents(this.getName());
+			associatedAgents = env.getAssociatedAgents(getName());
 		} catch (EntityException e) {
-			LOGGER.error("Unable to get the associated agent for this entity",
-					e);
+			LOGGER.error("Unable to get the associated agent for this entity", e);
 		}
-		connected = true;
+		this.connected = true;
 		String agent = "no agents";
 		if (associatedAgents != null && !associatedAgents.isEmpty()) {
 			agent = associatedAgents.iterator().next();
 		}
-		agentRecord = new AgentRecord(agent);
+		this.agentRecord = new AgentRecord(agent);
 
 	}
 
 	@Override
 	public void disconnect() {
-		connected = false;
+		this.connected = false;
 	}
 
 	@Override
@@ -234,55 +227,51 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 
 	@Override
 	public Stack<Block> getHolding() {
-		Stack<Block> copy = new Stack<Block>();
-		copy.addAll(holding);
+		Stack<Block> copy = new Stack<>();
+		copy.addAll(this.holding);
 		return copy;
 	}
 
 	@Override
 	public synchronized NdPoint getTargetLocation() {
-		return targetLocation;
+		return this.targetLocation;
 	}
 
 	@Override
 	public synchronized void setTargetLocation(NdPoint ptargetLocation) {
 		this.targetLocation = ptargetLocation;
-		collided = false;
+		this.collided = false;
 	}
 
 	@Override
 	public boolean canPickUp(BoundedMoveableObject obj) {
 		if (obj instanceof Block) {
 			Block b = (Block) obj;
-			return (distanceTo(obj.getLocation()) <= topMostHandicap.getSize()
-					+ ARM_DISTANCE)
-					&& b.isFree() && (holding.size() < grippercap);
+			return (distanceTo(obj.getLocation()) <= this.topMostHandicap.getSize() + ARM_DISTANCE) && b.isFree()
+					&& (this.holding.size() < this.grippercap);
 		}
 		return false;
 	}
 
 	@Override
 	public void pickUp(Block b) {
-		if (holding.size() >= grippercap) {
-			throw new IllegalStateException(
-					"block stack is full, failed to pick up another block");
+		if (this.holding.size() >= this.grippercap) {
+			throw new IllegalStateException("block stack is full, failed to pick up another block");
 		}
-		holding.push(b);
+		this.holding.push(b);
 		b.setHeldBy(this);
 		b.removeFromContext();
 	}
 
 	@Override
 	public void drop() {
-		if (holding.empty()) {
+		if (this.holding.empty()) {
 			throw new IllegalStateException("bot is not holding any block");
-		}
-		if (!holding.empty()) {
-			Block b = holding.pop();
+		} else if (hasContext()) {
+			Block b = this.holding.pop();
 			// First check if dropped in dropzone, then it won't need to be
 			// added to the context again
-			DropZone dropZone = (DropZone) getContext().getObjects(
-					DropZone.class).get(0);
+			DropZone dropZone = (DropZone) getContext().getObjects(DropZone.class).get(0);
 			if (!dropZone.dropped(b, this)) {
 				// bot was not in the dropzone.. Are we in a room?
 				Zone ourzone = getZone();
@@ -294,8 +283,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 					// dropped.
 					double x = ourzone.getLocation().getX();
 					double y = ourzone.getLocation().getY();
-					b.moveTo(RandomHelper.nextDoubleFromTo(x - 5, x + 5),
-							RandomHelper.nextDoubleFromTo(y - 5, y + 5));
+					b.moveTo(RandomHelper.nextDoubleFromTo(x - 5, x + 5), RandomHelper.nextDoubleFromTo(y - 5, y + 5));
 				}
 			}
 		}
@@ -314,7 +302,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 		if (getLocation() != null) {
 			switch (getMoveType(x, y)) {
 			case ENTERING_ROOM:
-				agentRecord.addEnteredRoom(ZoneLocator.getZoneAt(x, y));
+				this.agentRecord.addEnteredRoom(ZoneLocator.getZoneAt(x, y));
 				break;
 			case ENTER_CORRIDOR:
 			case ENTERING_FREESPACE:
@@ -338,21 +326,20 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 		Door door = getCurrentDoor(startx, starty);
 
 		/**
-		 * if start and end are both in the same 'room' (outside is the 'null'
-		 * room). Then free walk always possible.
+		 * if start and end are both in the same 'room' (outside is the 'null' room).
+		 * Then free walk always possible.
 		 */
 		List<Zone> endzones = ZoneLocator.getZonesAt(endx, endy);
 		Zone startzone = ZoneLocator.getZoneAt(startx, starty);
 
 		/**
-		 * If there is overlap in zones, ALL zones must be clear. Note, entering
-		 * a free space is always ok.
+		 * If there is overlap in zones, ALL zones must be clear. Note, entering a free
+		 * space is always ok.
 		 */
 		MoveType result = MoveType.ENTERING_FREESPACE;
 
 		for (Zone endzone : endzones) {
-			result = result.merge(topMostHandicap.checkZoneAccess(startzone,
-					endzone, door));
+			result = result.merge(this.topMostHandicap.checkZoneAccess(startzone, endzone, door));
 		}
 		return result;
 
@@ -379,7 +366,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 			return MoveType.HIT_CLOSED_DOOR;
 			// Both sides are not a room. Check if target accesible
 		} else if (endzone instanceof Corridor) {
-			if (!oneBotPerZone || endzone.containsMeOrNothing(this)) {
+			if (!this.oneBotPerZone || endzone.containsMeOrNothing(this)) {
 				return MoveType.ENTER_CORRIDOR;
 			}
 			return MoveType.HIT_OCCUPIED_ZONE;
@@ -389,6 +376,9 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 
 	@Override
 	public Door getCurrentDoor(double x, double y) {
+		if (!hasContext()) {
+			return null;
+		}
 		for (Object o : getContext().getObjects(Door.class)) {
 			Door door = (Door) o;
 			if (door.getBoundingBox().contains(x, y)) {
@@ -400,6 +390,9 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 
 	@Override
 	public Room getCurrentRoom(double x, double y) {
+		if (!hasContext()) {
+			return null;
+		}
 		for (Object o : getContext().getObjects(Room.class)) {
 			Room room = (Room) o;
 			if (room.getBoundingBox().contains(x, y)) {
@@ -426,10 +419,10 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 		if (getZone() instanceof ChargingZone) {
 			getBattery().recharge();
 		}
-		if (battery.getCurrentCapacity() > 0) {
-			if (targetLocation != null && obstacles.isEmpty()) {
+		if (this.battery.getCurrentCapacity() > 0) {
+			if (this.targetLocation != null && this.obstacles.isEmpty()) {
 				// Calculate the distance that the robot is allowed to move.
-				double distance = distanceTo(targetLocation);
+				double distance = distanceTo(this.targetLocation);
 				if (distance < MIN_MOVE_DISTANCE) {
 					// we're there
 					stopRobot();
@@ -438,61 +431,56 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 				}
 			}
 		} else {
-			LOGGER.log(BotLog.BOTLOG, "Bot " + this.name
-					+ " could not move because of empty battery.");
+			LOGGER.log(BotLog.BOTLOG, "Bot " + this.name + " could not move because of empty battery.");
 			stopRobot();
 		}
 	}
 
 	/**
 	 * Actually moves the bot.
-	 * 
+	 *
 	 * @param distance
 	 *            distance over which it must move.
 	 */
 	private void moveBot(double distance) {
-		double movingDistance = Math
-				.min(distance, MAX_MOVE_DISTANCE * speedMod);
+		double movingDistance = Math.min(distance, MAX_MOVE_DISTANCE * this.speedMod);
 
 		// Angle at which to move
-		double angle = SpatialMath.calcAngleFor2DMovement(getSpace(),
-				getLocation(), targetLocation);
+		double angle = SpatialMath.calcAngleFor2DMovement(getSpace(), getLocation(), this.targetLocation);
 
 		// The displacement of the robot
-		double[] displacement = SpatialMath.getDisplacement(2, 0,
-				movingDistance, angle);
+		double[] displacement = SpatialMath.getDisplacement(2, 0, movingDistance, angle);
 
 		try {
-			NdPoint destination = new NdPoint(getLocation().getX()
-					+ displacement[0], getLocation().getY() + displacement[1]);
+			NdPoint destination = new NdPoint(getLocation().getX() + displacement[0],
+					getLocation().getY() + displacement[1]);
 
 			// Check if the robot is alone on its map point
-			if (!hasBeenFree) {
-				hasBeenFree = isFree(AbstractRobot.class);
+			if (!this.hasBeenFree) {
+				this.hasBeenFree = isFree(AbstractRobot.class);
 			} else {
 				checkIfDestinationVacant(destination);
 			}
 
 			// Move the robot to the new position using the displacement
 			moveByDisplacement(displacement[0], displacement[1]);
-			agentRecord.setStartedMoving();
+			this.agentRecord.setStartedMoving();
 
 			/**
 			 * The robot's battery discharges when it moves.
 			 */
 			this.battery.discharge();
-			LOGGER.trace(this.name + "'s current battery level is: "
-					+ this.battery.getCurrentCapacity());
+			LOGGER.trace(this.name + "'s current battery level is: " + this.battery.getCurrentCapacity());
 
 			handicapMove();
 		} catch (SpatialException e) {
-			collided = true;
+			this.collided = true;
 			LOGGER.log(BotLog.BOTLOG, "Bot " + this.name + " collided.");
 			stopRobot();
 		} catch (DestinationOccupiedException e) {
 			LOGGER.debug(e);
-			collided = true;
-			obstacles.add(e.getTileOccupiedBy());
+			this.collided = true;
+			this.obstacles.add(e.getTileOccupiedBy());
 
 			// Add the obstacle to the other bot.
 			e.getTileOccupiedBy().setCollided(true);
@@ -506,24 +494,22 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	 * gets the location of the bot and moves it.
 	 */
 	private void handicapMove() {
-		if (topMostHandicap.isHuman() && topMostHandicap.isHoldingEPartner()) {
-			NdPoint location = topMostHandicap.getLocation();
-			topMostHandicap.getEPartner().moveTo(location.getX() + 1,
-					location.getY() + 1);
+		if (this.topMostHandicap.isHuman() && this.topMostHandicap.isHoldingEPartner()) {
+			NdPoint location = this.topMostHandicap.getLocation();
+			this.topMostHandicap.getEPartner().moveTo(location.getX() + 1, location.getY() + 1);
 		}
 	}
 
 	/**
-	 * Check if the destination location is vacant, if not throw an exception.
-	 * Only relevant if collisions are enabled.
-	 * 
+	 * Check if the destination location is vacant, if not throw an exception. Only
+	 * relevant if collisions are enabled.
+	 *
 	 * @param destination
 	 *            the destination
 	 * @throws DestinationOccupiedException
 	 *             exceoption thrown
 	 */
-	private void checkIfDestinationVacant(NdPoint destination)
-			throws DestinationOccupiedException {
+	private void checkIfDestinationVacant(NdPoint destination) throws DestinationOccupiedException {
 		if (BW4TEnvironment.getInstance().isCollisionEnabled()) {
 			// DOC/CHECK why a box of size 1?
 			Rectangle2D.Double box = getBoundingBoxCenteredAt(destination, 1.0f);
@@ -536,9 +522,9 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	}
 
 	/**
-	 * throw if bot!=this and box and bot overlap (collide). Used to check if
-	 * some other bot is already occupying a box.
-	 * 
+	 * throw if bot!=this and box and bot overlap (collide). Used to check if some
+	 * other bot is already occupying a box.
+	 *
 	 * @param destination
 	 *            to check
 	 * @param box
@@ -548,29 +534,24 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	 * @throws DestinationOccupiedException
 	 *             already occupied
 	 */
-	private void checkDestination(NdPoint destination, Rectangle2D.Double box,
-			AbstractRobot bot) throws DestinationOccupiedException {
-		if ((this != bot)
-				&& (box.intersects(bot.getBoundingBox())
-						|| bot.getBoundingBox().intersects(box)
-						|| box.contains(bot.getBoundingBox()) || bot
-						.getBoundingBox().contains(box))) {
-			throw new DestinationOccupiedException("Grid ["
-					+ destination.getX() + "," + destination.getY()
-					+ "] is occupied by " + bot, bot);
+	private void checkDestination(NdPoint destination, Rectangle2D.Double box, AbstractRobot bot)
+			throws DestinationOccupiedException {
+		if ((this != bot) && (box.intersects(bot.getBoundingBox()) || bot.getBoundingBox().intersects(box)
+				|| box.contains(bot.getBoundingBox()) || bot.getBoundingBox().contains(box))) {
+			throw new DestinationOccupiedException(
+					"Grid [" + destination.getX() + "," + destination.getY() + "] is occupied by " + bot, bot);
 		}
 	}
 
 	/**
-	 * Function that creates a rectangle the same size as the bot centered at
-	 * the destination locations.
-	 * 
+	 * Function that creates a rectangle the same size as the bot centered at the
+	 * destination locations.
+	 *
 	 * @param destination
 	 *            The destination its centered at.
 	 * @return the box
 	 */
-	private Rectangle2D.Double getBoundingBoxCenteredAt(NdPoint destination,
-			double padding) {
+	private Rectangle2D.Double getBoundingBoxCenteredAt(NdPoint destination, double padding) {
 		Rectangle2D.Double box = new Rectangle2D.Double();
 		box.x = destination.getX();
 		box.y = destination.getY();
@@ -583,24 +564,23 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 	}
 
 	/**
-	 * Retrieve all neighbouring robots with an extent of 10. DOC why is this
-	 * extent 10? Is this a bug?
-	 * 
+	 * Retrieve all neighbouring robots with an extent of 10. DOC why is this extent
+	 * 10? Is this a bug?
+	 *
 	 * @return neighbours
 	 */
 	private List<GridCell<AbstractRobot>> getNeighbours() {
 		Grid<Object> grid = getGrid();
 		GridPoint location = getGridLocation();
 
-		GridCellNgh<AbstractRobot> nghCreator = new GridCellNgh<AbstractRobot>(
-				grid, location, AbstractRobot.class, 10, 10);
+		GridCellNgh<AbstractRobot> nghCreator = new GridCellNgh<>(grid, location, AbstractRobot.class, 10, 10);
 		return nghCreator.getNeighborhood(true);
 	}
 
 	@Override
 	public synchronized void stopRobot() {
 		this.targetLocation = null;
-		agentRecord.setStoppedMoving();
+		this.agentRecord.setStoppedMoving();
 	}
 
 	@Override
@@ -615,7 +595,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 
 	@Override
 	public void clearCollided() {
-		collided = false;
+		this.collided = false;
 	}
 
 	@Override
@@ -635,7 +615,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 
 	/**
 	 * Sets the size of a robot to a certain integer
-	 * 
+	 *
 	 * @param s
 	 *            int
 	 */
@@ -647,18 +627,17 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 
 	@Override
 	public ViewEntity getView() {
-		Stack<ViewBlock> bs = new Stack<ViewBlock>();
-		for (Block block : holding) {
+		Stack<ViewBlock> bs = new Stack<>();
+		for (Block block : this.holding) {
 			bs.add(block.getView());
 		}
 		NdPoint loc = getSpace().getLocation(this);
-		return new ViewEntity(getId(), getName(), loc.getX(), loc.getY(), bs,
-				getSize());
+		return new ViewEntity(getId(), getName(), loc.getX(), loc.getY(), bs, getSize());
 	}
 
 	@Override
 	public AgentRecord getAgentRecord() {
-		return agentRecord;
+		return this.agentRecord;
 
 	}
 
@@ -674,7 +653,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 
 	@Override
 	public void recharge() {
-		if ("chargingzone".equals(this.getZone().getName())) {
+		if ("chargingzone".equals(getZone().getName())) {
 			this.battery.recharge();
 		}
 	}
@@ -701,7 +680,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 
 	@Override
 	public int getGripperCapacity() {
-		return grippercap;
+		return this.grippercap;
 	}
 
 	@Override
@@ -711,21 +690,20 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 
 	@Override
 	public double getSpeedMod() {
-		return speedMod;
+		return this.speedMod;
 	}
 
 	@Override
 	public void setSpeedMod(double speedMod) {
 		if (speedMod > 1.0 || speedMod < 0) {
-			throw new IllegalArgumentException(
-					"speedMod must be in [0,1] but is " + speedMod);
+			throw new IllegalArgumentException("speedMod must be in [0,1] but is " + speedMod);
 		}
 		this.speedMod = speedMod;
 	}
 
 	@Override
 	public boolean isHuman() {
-		return handicapsList.contains("Human");
+		return this.handicapsList.contains("Human");
 	}
 
 	@Override
@@ -755,27 +733,30 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements
 
 	/**
 	 * Adds obstacles.
-	 * 
+	 *
 	 * @param obstacle
 	 *            to be added
 	 */
 	public void addObstacle(BoundedMoveableObject obstacle) {
-		obstacles.add(obstacle);
+		this.obstacles.add(obstacle);
 	}
 
+	@Override
 	public List<BoundedMoveableObject> getObstacles() {
-		return obstacles;
+		return this.obstacles;
 	}
 
 	/**
 	 * Clears the obstacles
 	 */
+	@Override
 	public void clearObstacles() {
-		obstacles.clear();
+		this.obstacles.clear();
 	}
 
+	@Override
 	public boolean isDestinationUnreachable() {
-		return destinationUnreachable;
+		return this.destinationUnreachable;
 	}
 
 	public void setDestinationUnreachable(boolean destinationUnreachable) {

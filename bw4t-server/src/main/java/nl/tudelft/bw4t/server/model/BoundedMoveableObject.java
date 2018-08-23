@@ -40,7 +40,7 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 
 	/**
 	 * Creates a new object bounded by a box at (0,0) with size (0,0).
-	 * 
+	 *
 	 * @param space
 	 *            the space in which the object should be placed.
 	 * @param grid
@@ -53,7 +53,7 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 		assert smap.hasMap();
 		assert smap.hasContext();
 		this.serverMap = smap;
-		if (getContext().isEmpty()) {
+		if (hasContext() && getContext().isEmpty()) {
 			COUNTER.set(0);
 		}
 		this.id = COUNTER.getAndIncrement();
@@ -66,12 +66,16 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	 */
 	@Override
 	public long getId() {
-		return id;
+		return this.id;
 	}
 
 	@Override
 	public BW4TServerMap getServerMap() {
-		return serverMap;
+		return this.serverMap;
+	}
+
+	public boolean hasContext() {
+		return getServerMap().hasContext();
 	}
 
 	/**
@@ -95,7 +99,7 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 
 	/**
 	 * Returns the location on the grid space.
-	 * 
+	 *
 	 * @return The location of the object, if currently in the grid space.
 	 */
 	@Override
@@ -127,12 +131,12 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	 */
 	@Override
 	public Rectangle2D getBoundingBox() {
-		return boundingBox;
+		return this.boundingBox;
 	}
 
 	/**
 	 * Sets the size of this object.
-	 * 
+	 *
 	 * @param width
 	 *            the width of the object in unit size.
 	 * @param height
@@ -140,14 +144,14 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	 */
 	@Override
 	public void setSize(double width, double height) {
-		boundingBox.width = width;
-		boundingBox.height = height;
+		this.boundingBox.width = width;
+		this.boundingBox.height = height;
 	}
 
 	/**
-	 * Moves this object to a new location. The given location will be the
-	 * center of the object.
-	 * 
+	 * Moves this object to a new location. The given location will be the center of
+	 * the object.
+	 *
 	 * @param x
 	 *            The x coordinate of the location.
 	 * @param y
@@ -155,15 +159,15 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	 */
 	@Override
 	public void moveTo(double x, double y) {
-		boundingBox.x = x - boundingBox.width / 2;
-		boundingBox.y = y - boundingBox.height / 2;
+		this.boundingBox.x = x - this.boundingBox.width / 2;
+		this.boundingBox.y = y - this.boundingBox.height / 2;
 		getSpace().moveTo(this, x, y);
 		getGrid().moveTo(this, (int) x, (int) y);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -173,7 +177,7 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -188,18 +192,18 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 			return false;
 		}
 		BoundedMoveableObject other = (BoundedMoveableObject) obj;
-		if (boundingBox == null) {
+		if (this.boundingBox == null) {
 			if (other.boundingBox != null) {
 				return false;
 			}
-		} else if (!boundingBox.equals(other.boundingBox)) {
+		} else if (!this.boundingBox.equals(other.boundingBox)) {
 			return false;
 		}
-		if (serverMap == null) {
+		if (this.serverMap == null) {
 			if (other.serverMap != null) {
 				return false;
 			}
-		} else if (!serverMap.equals(other.serverMap)) {
+		} else if (!this.serverMap.equals(other.serverMap)) {
 			return false;
 		}
 		return true;
@@ -210,12 +214,14 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	 */
 	@Override
 	public void removeFromContext() {
-		getContext().remove(this);
+		if (hasContext()) {
+			getContext().remove(this);
+		}
 	}
 
 	/**
 	 * Calculates the distance between our center point and the given point.
-	 * 
+	 *
 	 * @param there
 	 *            the point to calculate the distance to.
 	 * @return the distance to the given point.
@@ -228,11 +234,11 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 
 	/**
 	 * As {@link #distanceTo(NdPoint)} n
-	 * 
+	 *
 	 * @param o
 	 *            is the object to compute the distance to
-	 * @return distance to center of o. Note that the distance to the bounding
-	 *         box of o may be smaller than this.
+	 * @return distance to center of o. Note that the distance to the bounding box
+	 *         of o may be smaller than this.
 	 */
 	@Override
 	public double distanceTo(BoundedMoveableObject o) {
@@ -243,13 +249,15 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	 * set the object to visible
 	 */
 	public void addToContext() {
-		getContext().add(this);
+		if (hasContext()) {
+			getContext().add(this);
+		}
 	}
 
 	/**
-	 * Returns all the points rounded to an integer occupied by the Bounded
-	 * Moveable Object, including the given padding.
-	 * 
+	 * Returns all the points rounded to an integer occupied by the Bounded Moveable
+	 * Object, including the given padding.
+	 *
 	 * @param padding
 	 *            The padding to add around the box.
 	 * @return A list of all points occupied by the box.
@@ -287,7 +295,7 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	/**
 	 * Whether this bounded moveable object is free of objects that are of the
 	 * specified type.
-	 * 
+	 *
 	 * @param freeOfType
 	 *            The type of objects that this object should be free of.
 	 * @return Whether this bounded moveable object is free of object.

@@ -29,7 +29,6 @@ import repast.simphony.util.collections.IndexedIterable;
  * the {@link MapController} used by the server.
  */
 public class ServerMapController extends AbstractMapController {
-
 	/**
 	 * the repast context containing block and entities.
 	 */
@@ -41,7 +40,7 @@ public class ServerMapController extends AbstractMapController {
 
 	/**
 	 * Instantiate the MapController with the given server map used.
-	 * 
+	 *
 	 * @param serverMap
 	 *            the server map containing the context and map
 	 */
@@ -50,14 +49,12 @@ public class ServerMapController extends AbstractMapController {
 		this.serverMap = serverMap;
 		getRenderSettings().setRenderEntityName(true);
 		Dimensions size = serverMap.getContinuousSpace().getDimensions();
-		getRenderSettings().setWorldDimensions((int) size.getWidth(),
-				(int) size.getHeight());
+		getRenderSettings().setWorldDimensions((int) size.getWidth(), (int) size.getHeight());
 	}
 
 	@Override
 	public List<BlockColor> getSequence() {
-		Set<DropZone> dropZone = serverMap
-				.getObjectsFromContext(DropZone.class);
+		Set<DropZone> dropZone = this.serverMap.getObjectsFromContext(DropZone.class);
 		if (dropZone.size() <= 0) {
 			return new ArrayList<>(0);
 		}
@@ -66,8 +63,7 @@ public class ServerMapController extends AbstractMapController {
 
 	@Override
 	public int getSequenceIndex() {
-		Set<DropZone> dropZone = serverMap
-				.getObjectsFromContext(DropZone.class);
+		Set<DropZone> dropZone = this.serverMap.getObjectsFromContext(DropZone.class);
 		if (dropZone.size() <= 0) {
 			return 0;
 		}
@@ -76,7 +72,10 @@ public class ServerMapController extends AbstractMapController {
 
 	@Override
 	public boolean isOccupied(Zone room) {
-		for (Object roomObj : serverMap.getContext().getObjects(Room.class)) {
+		if (!this.serverMap.hasContext()) {
+			return false;
+		}
+		for (Object roomObj : this.serverMap.getContext().getObjects(Room.class)) {
 			Room sroom = (Room) roomObj;
 			if (sroom.getName().equals(room.getName())) {
 				return sroom.getOccupier() != null;
@@ -87,7 +86,10 @@ public class ServerMapController extends AbstractMapController {
 
 	@Override
 	public Set<ViewBlock> getVisibleBlocks() {
-		IndexedIterable<Object> objects = serverMap.getContext().getObjects(Block.class);
+		if (!this.serverMap.hasContext()) {
+			return new HashSet<>(0);
+		}
+		IndexedIterable<Object> objects = this.serverMap.getContext().getObjects(Block.class);
 		Set<ViewBlock> blocks = new HashSet<>(objects.size());
 		for (Object block : objects) {
 			blocks.add(((Block) block).getView());
@@ -102,8 +104,11 @@ public class ServerMapController extends AbstractMapController {
 
 	@Override
 	public Set<ViewEntity> getVisibleEntities() {
+		if (!this.serverMap.hasContext()) {
+			return new HashSet<>(0);
+		}
 		Set<ViewEntity> entities = new HashSet<>();
-		for (Object robot : serverMap.getContext().getObjects(IRobot.class)) {
+		for (Object robot : this.serverMap.getContext().getObjects(IRobot.class)) {
 			IRobot robotTemp = (IRobot) robot;
 			if (robotTemp.isConnected()) {
 				entities.add(robotTemp.getView());
@@ -114,7 +119,10 @@ public class ServerMapController extends AbstractMapController {
 
 	@Override
 	public Set<ViewEPartner> getVisibleEPartners() {
-		IndexedIterable<Object> objects = serverMap.getContext().getObjects(EPartner.class);
+		if (!this.serverMap.hasContext()) {
+			return new HashSet<>(0);
+		}
+		IndexedIterable<Object> objects = this.serverMap.getContext().getObjects(EPartner.class);
 		Set<ViewEPartner> epartners = new HashSet<>(objects.size());
 		for (Object epartner : objects) {
 			EPartner epartnerTemp = (EPartner) epartner;
@@ -125,11 +133,10 @@ public class ServerMapController extends AbstractMapController {
 
 	@Override
 	protected void updateRenderer(MapRendererInterface mri) {
-		if (BW4TEnvironment.getInstance().getState()
-				.equals(EnvironmentState.RUNNING)
-				&& !haveRequestedFocusAlready) {
+		if (BW4TEnvironment.getInstance().getState().equals(EnvironmentState.RUNNING)
+				&& !this.haveRequestedFocusAlready) {
 			mri.requestFocus();
-			haveRequestedFocusAlready = true;
+			this.haveRequestedFocusAlready = true;
 		}
 		mri.validate();
 		mri.repaint();
@@ -137,7 +144,10 @@ public class ServerMapController extends AbstractMapController {
 
 	@Override
 	public Set<Path> getPaths() {
-		IndexedIterable<Object> objects = serverMap.getContext().getObjects(Path.class); 
+		if (!this.serverMap.hasContext()) {
+			return new HashSet<>(0);
+		}
+		IndexedIterable<Object> objects = this.serverMap.getContext().getObjects(Path.class);
 		Set<Path> paths = new HashSet<>(objects.size());
 		for (Object pathTemp : objects) {
 			Path path = (Path) pathTemp;
@@ -145,5 +155,4 @@ public class ServerMapController extends AbstractMapController {
 		}
 		return paths;
 	}
-
 }
