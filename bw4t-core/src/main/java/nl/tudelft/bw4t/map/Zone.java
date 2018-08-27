@@ -16,7 +16,7 @@ import nl.tudelft.bw4t.util.OneTimeInitializing;
 /**
  * A zone is a square area in the map. The zone also functions as a 'navpoint'
  * in that the bot uses these zones for navigation. The navpoint is the middle
- * of the area. Zones can be rooms or corridor areas.
+ * of the area. Zones can be rooms or corridor areas. Zones should not overlap.
  * 
  * This class is not thread safe. However it is required that
  * {@link #hashCode()} and {@link #equals(Object)} are thread safe.
@@ -201,8 +201,8 @@ public class Zone implements Serializable, OneTimeInitializing {
 		for (Zone neighbour : neighbours) {
 			neighbournames.add(neighbour.getName());
 		}
-		return "Zone[" + name + "," + boundingbox + "," + type + "," + doors
-				+ "," + blocks + "," + neighbournames + "]";
+		return "Zone[" + name + "," + boundingbox + "," + type + "," + doors + "," + blocks + "," + neighbournames
+				+ "]";
 	}
 
 	/**
