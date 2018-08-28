@@ -125,11 +125,10 @@ public class MapLoaderTest {
 	}
 
 	/**
-	 * Checks if the right exception is thrown when it tries to add a block to a
-	 * full room. We check for InvocationTargetException because that is thrown
-	 * before IllegalStateException
+	 * Checks we get a block placed in overlap with other blocks if we place new
+	 * block in full room.
 	 */
-	@Test(expected = InvocationTargetException.class)
+	@Test
 	public void createBlocksForRoomFullRoomTest() throws NoSuchMethodException, SecurityException,
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		Method method = MapLoader.class.getDeclaredMethod("findFreePlace", Rectangle2D.class, List.class, Random.class);
@@ -141,6 +140,19 @@ public class MapLoaderTest {
 		blockList.add(new Rectangle(1, 0, Block.SIZE, Block.SIZE));
 		blockList.add(new Rectangle(1, 1, Block.SIZE, Block.SIZE));
 
-		method.invoke(null, room, blockList, new Random());
+		// Check block is placed not dead on some other block (must be to work
+		// around ENV-1341) As there is a random element in placement, we test
+		// multiple times to
+		// be sure.
+		Random random = new Random();
+		for (int i = 0; i < 100; i++) {
+			Rectangle2D block = (Rectangle2D) method.invoke(null, room, blockList, random);
+			assertTrue(room.contains(block));
+			for (Rectangle2D b : blockList) {
+				assertTrue(Math.abs(b.getCenterX() - block.getCenterX()) > 0.0000000001);
+				assertTrue(Math.abs(b.getCenterY() - block.getCenterY()) > 0.0000000001);
+			}
+		}
+
 	}
 }

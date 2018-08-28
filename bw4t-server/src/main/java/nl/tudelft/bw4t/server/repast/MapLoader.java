@@ -60,6 +60,13 @@ public class MapLoader implements BW4TServerMapListerner {
 	private boolean loaded = false;
 
 	/**
+	 * Distances between blocks. Either non-occluding or virtually none. We need
+	 * marginal distance because of ENV-1341
+	 */
+	private static final double DOUBLE_BLOCK_SIZE = 2 * Block.SIZE;
+	private static final double MARGINAL = 0.00001;
+
+	/**
 	 * Instantiates a new map loader.
 	 */
 	public MapLoader() {
@@ -444,34 +451,43 @@ public class MapLoader implements BW4TServerMapListerner {
 	}
 
 	/**
-	 * find an unoccupied position for a new block in the given room, where the
-	 * given list of blocks are already in that room. Basically this algorithm
-	 * picks random points till a free position is found.
+	 * Tries to find an unoccupied position for a new block in the given room,
+	 * where the given list of blocks are already in that room. Basically this
+	 * algorithm picks random points till a free position is found. If no such
+	 * place can found, a place is returned that overlaps with other blocks but
+	 * at least 0.00001 away from it (to work around ENV-1342).
 	 * 
 	 * @param room
 	 *            the room
 	 * @param blocks
-	 *            the blocks
-	 * @return the rectangle2 d
+	 *            the blocks already in the room.
+	 * @param Random
+	 *            a properly seeded instance of {@link Random} for random number
+	 *            generation.
+	 * @return the rectangle2d with a suitable block.
 	 */
 
 	private static Rectangle2D findFreePlace(Rectangle2D room, List<Rectangle2D> blocks, Random random) {
+		if (room.getWidth() <= Block.SIZE || room.getHeight() <= 0) {
+			throw new IllegalArgumentException("Room " + room + " must have width and height >0");
+		}
 		Rectangle2D block = null;
-		// max number of retries
-		int retryCounter = 100;
+		int retryCounter = 100; // regular trying while positive,
+								// minimum-displacement when negative.
 		boolean blockPlacedOK = false;
+
 		while (!blockPlacedOK) {
-			double x = room.getMinX() + room.getWidth() * random.nextDouble();
-			double y = room.getMinY() + room.getHeight() * random.nextDouble();
+			// choose random position such that room.contains(block);
+			double x = room.getMinX() + (room.getWidth() - Block.SIZE) * random.nextDouble();
+			double y = room.getMinY() + (room.getHeight() - Block.SIZE) * random.nextDouble();
 			block = new Rectangle2D.Double(x, y, Block.SIZE, Block.SIZE);
 
-			blockPlacedOK = room.contains(block);
+			blockPlacedOK = true;
 			for (Rectangle2D bl : blocks) {
-				blockPlacedOK = checkPlacement(blockPlacedOK, x, y, bl);
+				blockPlacedOK = blockPlacedOK
+						&& checkPlacement(x, y, bl, retryCounter > 0 ? DOUBLE_BLOCK_SIZE : MARGINAL);
 			}
-			if (retryCounter-- == 0 && !blockPlacedOK) {
-				throw new IllegalStateException("room is too small to fit more blocks");
-			}
+			retryCounter--;
 		}
 		return block;
 	}
@@ -484,15 +500,15 @@ public class MapLoader implements BW4TServerMapListerner {
 	 *            the y-coordinate
 	 * @param bl
 	 *            the block
-	 * @return true iff blockPlacedOK=true and the bl.x and bl.y are at least 2
-	 *         away from x and y. It is assumed that all blocks have size 1.
+	 * @param minDelta
+	 *            the minimum distance (both in x and y) between the new block
+	 *            and existing blocks. Use {@link Block#SIZE} to ensure no
+	 *            overlap, or smaller if overlap is ok.
+	 * @return true iff the distance between bl and x is &ge; minDelta (both in
+	 *         x and y direction)
 	 */
-	private static boolean checkPlacement(boolean blockPlacedOK, double x, double y, Rectangle2D bl) {
-		boolean noXoverlap = Math.abs(bl.getCenterX() - x) >= 2;
-		boolean noYoverlap = Math.abs(bl.getCenterY() - y) >= 2;
-		boolean noOverlap = noXoverlap || noYoverlap;
-		blockPlacedOK = blockPlacedOK && noOverlap;
-		return blockPlacedOK;
+	private static boolean checkPlacement(double x, double y, Rectangle2D bl, double minDelta) {
+		return Math.abs(bl.getCenterX() - x) >= minDelta || Math.abs(bl.getCenterY() - y) >= minDelta;
 	}
 
 	public static String toString(Collection<BlockColor> colors) {
