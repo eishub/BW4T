@@ -1,14 +1,19 @@
 package nl.tudelft.bw4t.server.util;
 
+import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
 import java.awt.geom.Rectangle2D;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import nl.tudelft.bw4t.server.model.BoundedMoveableInterface;
 import nl.tudelft.bw4t.server.model.blocks.Block;
 
+/**
+ * Generic utilities for manipulating maps and selecting objects from a set.
+ */
 public class MapUtils {
 
 	/**
@@ -53,7 +58,7 @@ public class MapUtils {
 	 * @return the rectangle2d with a suitable block.
 	 */
 
-	public static Rectangle2D findFreePlace(Rectangle2D room, List<Rectangle2D> blocks, Random random) {
+	public static Rectangle2D findFreePlace(Rectangle2D room, Iterable<Rectangle2D> blocks, Random random) {
 		if (room.getWidth() <= Block.SIZE || room.getHeight() <= 0) {
 			throw new IllegalArgumentException("Room " + room + " must have width and height >0");
 		}
@@ -95,5 +100,24 @@ public class MapUtils {
 	 */
 	public static boolean checkPlacement(double x, double y, Rectangle2D bl, double minDelta) {
 		return Math.abs(bl.getCenterX() - x) >= minDelta || Math.abs(bl.getCenterY() - y) >= minDelta;
+	}
+
+	/**
+	 * Select those objects from allObjects that are inside given zone.
+	 * 
+	 * @param allObjects
+	 * @param zone
+	 * @return Set containing objects inside zone
+	 */
+	public static <T extends BoundedMoveableInterface> Set<T> selectInside(Iterable<T> allObjects, Rectangle2D zone) {
+		Set<T> selected = new HashSet<>();
+		for (T obj : allObjects) {
+			Double p = new Point2D.Double(obj.getLocation().getX(), obj.getLocation().getY());
+			if (zone != null && zone.contains(p)) {
+				selected.add(obj);
+			}
+		}
+		return selected;
+
 	}
 }

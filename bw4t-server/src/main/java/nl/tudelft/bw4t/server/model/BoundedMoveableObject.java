@@ -86,7 +86,7 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	}
 
 	/**
-	 * @return The location of the object, if currently in a space.
+	 * @return The (center of)location of the object, if currently in a space.
 	 */
 	@Override
 	public NdPoint getLocation() {
@@ -149,8 +149,8 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	}
 
 	/**
-	 * Moves this object to a new location. The given location will be the center of
-	 * the object.
+	 * Moves this object to a new location. The given location will be the
+	 * center of the object.
 	 *
 	 * @param x
 	 *            The x coordinate of the location.
@@ -237,8 +237,8 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	 *
 	 * @param o
 	 *            is the object to compute the distance to
-	 * @return distance to center of o. Note that the distance to the bounding box
-	 *         of o may be smaller than this.
+	 * @return distance to center of o. Note that the distance to the bounding
+	 *         box of o may be smaller than this.
 	 */
 	@Override
 	public double distanceTo(BoundedMoveableObject o) {
@@ -255,8 +255,8 @@ public abstract class BoundedMoveableObject implements BoundedMoveableInterface 
 	}
 
 	/**
-	 * Returns all the points rounded to an integer occupied by the Bounded Moveable
-	 * Object, including the given padding.
+	 * Returns all the points rounded to an integer occupied by the Bounded
+	 * Moveable Object, including the given padding.
 	 *
 	 * @param padding
 	 *            The padding to add around the box.
