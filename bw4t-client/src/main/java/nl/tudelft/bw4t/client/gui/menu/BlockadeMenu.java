@@ -19,7 +19,7 @@ import nl.tudelft.bw4t.map.view.ViewEntity;
 public class BlockadeMenu {
 	/**
 	 * Builds a pop up menu for when the player clicked on a hallway
-	 * 
+	 *
 	 * @param gui
 	 *            gui on which the popUpMenu will be build
 	 */
@@ -43,7 +43,7 @@ public class BlockadeMenu {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param gui
 	 *            gui on which the popUpMenu will be build
 	 * @param cmc
@@ -73,7 +73,7 @@ public class BlockadeMenu {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param gui
 	 *            gui on which the popUpMenu will be build
 	 * @param cmc
@@ -105,7 +105,7 @@ public class BlockadeMenu {
 				menuItem.addActionListener(new MessageSenderActionListener(
 						new BW4TMessage(MessageType.HASCOLOR, roomInfo
 								.getName(), colorAsString, null), gui
-								.getController()));
+						.getController()));
 				submenu.add(menuItem);
 			}
 		}

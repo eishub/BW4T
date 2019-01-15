@@ -8,6 +8,8 @@ import org.apache.log4j.Logger;
 
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.map.Zone;
+import nl.tudelft.bw4t.server.BW4TServer;
+import nl.tudelft.bw4t.server.environment.Stepper;
 import nl.tudelft.bw4t.server.logging.BW4TFileAppender;
 import nl.tudelft.bw4t.server.logging.BotLog;
 import nl.tudelft.bw4t.server.model.BW4TServerMap;
@@ -105,7 +107,8 @@ public class DropZone extends Room {
                 robot.getAgentRecord().addGoodDrop();
                 
                 if (sequenceIndex == sequence.size()) {
-                     BW4TFileAppender.logFinish(System.currentTimeMillis(), "Time to finish sequence is ");
+                     BW4TFileAppender.logFinish(System.currentTimeMillis(), "Time to finish sequence is ", Stepper.getNrSteps());
+                     BW4TServer.transferReward(Stepper.getNrSteps()); // Transfer the time into a reward
                 }
             } else {
                 robot.getAgentRecord().addWrongDrop();

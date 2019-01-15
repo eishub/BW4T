@@ -146,6 +146,8 @@ public class RoomMenus {
 
 		BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
 				MessageType.INROOM, label, null, null), gui);
+		BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
+				MessageType.GOINGTOROOM, label, null, null), gui);
 
 		JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu(label
 				+ " contains ", gui.getjPopupMenu());

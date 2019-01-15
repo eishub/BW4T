@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import javax.xml.bind.JAXBException;
@@ -67,10 +68,11 @@ import repast.simphony.space.continuous.NdPoint;
  * received from remote environments through the server. Remote environments
  * also poll percepts from this environment. Remote environments are notified of
  * entity and environment events also using the server.
- *
+ * 
  * This is a singleton. Needed because we store the map info here.
  */
 public class BW4TEnvironment extends AbstractEnvironment {
+
 	public static final String VERSION = "@PROJECT_VERSION@";
 
 	private static final String ENTITY_NAME_FORMAT = "%s_%d";
@@ -88,7 +90,9 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * start time of the first action.
 	 */
-	private long starttime = 0;
+	private static long starttime = 0;
+	private static long resettime = 0;
+	private static long resetsteps = 0;
 
 	private BW4TServer server;
 	private boolean mapFullyLoaded;
@@ -100,6 +104,8 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	private final String shutdownKey;
 	private boolean collisionEnabled;
 	private boolean drawPathsEnabled;
+	
+	private final Random rng = new Random(); //ADDED
 
 	private int nextBotSpawnIndex = 0;
 
@@ -108,15 +114,15 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	private List<PropertyChangeListener> listeners = new LinkedList<>();
 
 	/**
-	 * A map of <agent-client> pairs. Every entity that we have can be claimed by a
-	 * server. If that server disappears, we have to free the agents and entities
-	 * associated with that server.
+	 * A map of <agent-client> pairs. Every entity that we have can be claimed
+	 * by a server. If that server disappears, we have to free the agents and
+	 * entities associated with that server.
 	 */
 	private Map<String, BW4TClientActions> agentLocations = new HashMap<>();
 
 	/**
 	 * Create a new instance of this environment
-	 *
+	 * 
 	 * @param scenarioLocation
 	 *            the location of the scenario that should be loaded in Repast
 	 * @param mapLocation
@@ -132,7 +138,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		super();
 		setInstance(this);
 		this.server = server2;
-		this.mapName = mapLocation;
+		mapName = mapLocation;
 		this.scenarioLocation = System.getProperty("user.dir") + "/" + scenarioLocation;
 		this.guiEnabled = guiEnabled;
 		this.shutdownKey = shutdownKey;
@@ -142,24 +148,24 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * Subscribe to hear changes in the setup of the server.
-	 *
+	 * 
 	 * @param listener
 	 */
 	public void addChangeListener(PropertyChangeListener listener) {
-		if (!this.listeners.isEmpty()) {
+		if (!listeners.isEmpty()) {
 			System.out.println("WARNING already having listeners");
 		}
-		this.listeners.add(listener);
+		listeners.add(listener);
 	}
 
 	/**
-	 * notify our listeners that somehting changed in our settings. Eg, gui is now
-	 * enabled, collisions now disabled, etc. This is the easy way, returning always
-	 * a null property change object. If necessary we may contain more details in
-	 * the change message.
+	 * notify our listeners that somehting changed in our settings. Eg, gui is
+	 * now enabled, collisions now disabled, etc. This is the easy way,
+	 * returning always a null property change object. If necessary we may
+	 * contain more details in the change message.
 	 */
 	private void notifyChange() {
-		for (PropertyChangeListener listener : this.listeners) {
+		for (PropertyChangeListener listener : listeners) {
 			try {
 				listener.propertyChange(null);
 			} catch (Exception e) {
@@ -171,25 +177,25 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * Notify listeners that a new entity is available, server handles correct
 	 * distribution of entities to listeners
-	 *
+	 * 
 	 * @param entity
 	 *            the new entity
 	 */
 	@Override
 	public void notifyNewEntity(String entity) {
-		this.server.notifyNewEntity(entity);
+		server.notifyNewEntity(entity);
 	}
 
 	@Override
 	public void notifyDeletedEntity(String entity, Collection<String> agents) {
-		this.server.notifyDeletedEntity(entity, agents);
+		server.notifyDeletedEntity(entity, agents);
 	}
 
 	@Override
 	public void setState(EnvironmentState newstate) throws ManagementException {
 		super.setState(newstate);
 		LOGGER.info("Environment now in state: " + newstate.name());
-		this.server.notifyStateChange(getState());
+		server.notifyStateChange(getState());
 	}
 
 	/**
@@ -197,29 +203,29 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * Tries to take down in any case, just reports errors and proceeds.
 	 */
 	public void removeAllEntities() throws ManagementException {
-		BW4TFileAppender.logFinish(System.currentTimeMillis(), "total time is ");
+		BW4TFileAppender.logFinish(System.currentTimeMillis(), "total time is ", 0);
 
 		setState(EnvironmentState.KILLED);
 
 		LOGGER.debug("Removing all entities");
-		for (String entity : getEntities()) {
+		for (String entity : this.getEntities()) {
 			try {
-				deleteEntity(entity);
+				this.deleteEntity(entity);
 			} catch (EntityException | RelationException e) {
 				LOGGER.error("Failure to delete entity: " + entity, e);
 			}
 		}
 
 		LOGGER.debug("Remove all (remaining) agents");
-		for (String agent : getAgents()) {
+		for (String agent : this.getAgents()) {
 			try {
-				unregisterAgent(agent);
+				this.unregisterAgent(agent);
 			} catch (AgentException e) {
 				LOGGER.error("Failure to unregister agent: " + agent, e);
 			}
 		}
-		this.mapFullyLoaded = false;
-		this.nextBotSpawnIndex = 0;
+		mapFullyLoaded = false;
+		nextBotSpawnIndex = 0;
 	}
 
 	@Override
@@ -235,7 +241,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * initialize Repast with a different map. Does not reset the
 	 * {@link BW4TServer}.
-	 *
+	 * 
 	 * @param parameters
 	 *            like the
 	 * @throws ManagementException
@@ -261,13 +267,13 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * Interpret the given parameter and make sure we use it properly. If the
-	 * {@link Parameter} is a {@link MapParameter} the system stores the map locally
-	 * and returns the new filename.
-	 *
+	 * {@link Parameter} is a {@link MapParameter} the system stores the map
+	 * locally and returns the new filename.
+	 * 
 	 * @param param
 	 *            the param describing the map setting
 	 * @return the filename to be opened for the map
-	 *
+	 * 
 	 */
 	private String prepareMapParameter(Parameter param) {
 		String mapname = null;
@@ -298,7 +304,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * Launch server and start repast.
-	 *
+	 * 
 	 * @throws IOException
 	 * @throws ManagementException
 	 * @throws ScenarioLoadException
@@ -312,14 +318,14 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * Launch the server
-	 *
+	 * 
 	 * @throws RemoteException
 	 * @throws ManagementException
 	 * @throws MalformedURLException
 	 */
 	private void launchServer() throws RemoteException, ManagementException, MalformedURLException {
-		if (this.server == null) {
-			this.server = Launcher.getInstance().setupRemoteServer();
+		if (server == null) {
+			server = Launcher.getInstance().setupRemoteServer();
 		}
 		setState(EnvironmentState.INITIALIZING);
 		LOGGER.info("BW4T Server has been bound.");
@@ -327,24 +333,25 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * Launches the Repast framework and GUI. Does not return until there is an
-	 * exception or getState()==KILLED. After stopping, runner is set back to null.
-	 *
+	 * exception or getState()==KILLED. After stopping, runner is set back to
+	 * null.
+	 * 
 	 * @throws IOException
 	 * @throws ScenarioLoadException
 	 * @throws JAXBException
 	 */
 	private void launchRepast() throws IOException, ScenarioLoadException, JAXBException {
-		NewMap theMap = NewMap.create(new FileInputStream(new File(getFullMapPath(getMapName()))));
-		this.serverMap = new BW4TServerMap(theMap);
-		this.serverMap.attachChangeListener(getMapLoader());
-		Launcher.getInstance().getEntityFactory().setServerMap(this.serverMap);
-		this.stepper = new Stepper(this.scenarioLocation, this);
-		new Thread(this.stepper).start();
+		NewMap theMap = NewMap.create(new FileInputStream(new File(getFullMapPath(this.getMapName()))));
+		serverMap = new BW4TServerMap(theMap);
+		serverMap.attachChangeListener(getMapLoader());
+		Launcher.getInstance().getEntityFactory().setServerMap(serverMap);
+		stepper = new Stepper(scenarioLocation, this);
+		new Thread(stepper).start();
 	}
 
 	/**
 	 * Get the instance of this environment
-	 *
+	 * 
 	 * @return the instance
 	 */
 	public static BW4TEnvironment getInstance() {
@@ -361,27 +368,27 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * Get the currently active map loader, or make a default one if none are
 	 * present.
-	 *
+	 * 
 	 * @return the map loader
 	 */
 	public BW4TServerMapListerner getMapLoader() {
-		if (this.mapLoader == null) {
-			this.mapLoader = new MapLoader();
+		if (mapLoader == null) {
+			mapLoader = new MapLoader();
 		}
-		return this.mapLoader;
+		return mapLoader;
 	}
 
 	public void setMapLoader(MapLoader loader) {
-		this.mapLoader = loader;
+		mapLoader = loader;
 	}
 
 	public String getMapName() {
-		return this.mapName;
+		return mapName;
 	}
 
 	/**
 	 * Get the actual path for the given map name.
-	 *
+	 * 
 	 * @param name
 	 *            the name of the map
 	 * @return the path to the actual file
@@ -392,7 +399,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * Set the map name and reset the loaded state of the map.
-	 *
+	 * 
 	 * @param mapName
 	 */
 	public void setMapName(String mapName) {
@@ -402,25 +409,27 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	}
 
 	public BW4TServerMap getServerMap() {
-		return this.serverMap;
+		return serverMap;
 	}
 
 	/**
 	 * Check whether an action is supported by this environment.
-	 *
+	 * 
 	 * @param arg0
 	 *            the action that should be checked
-	 * @return true if there is an entity, a dropzone and sequence not yet complete
+	 * @return true if there is an entity, a dropzone and sequence not yet
+	 *         complete
 	 */
 	@Override
 	public boolean isSupportedByEnvironment(Action arg0) {
+
 		return !getEntities().isEmpty();
 	}
 
 	/**
-	 * Check whether an action is supported by an entity type, always returns true
-	 * for now
-	 *
+	 * Check whether an action is supported by an entity type, always returns
+	 * true for now
+	 * 
 	 * @param arg0
 	 *            the action that should be checked
 	 * @param arg1
@@ -434,7 +443,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * Check whether a state transition is valid, for now always returns true
-	 *
+	 * 
 	 * @param oldState
 	 *            the old state of the environment
 	 * @param newState
@@ -449,7 +458,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * Helper method to allow the server to call actions received from attached
 	 * clients
-	 *
+	 * 
 	 * @param entity
 	 *            the entity that should perform the action
 	 * @param action
@@ -461,34 +470,35 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		Long time = System.currentTimeMillis();
 		LOGGER.log(BotLog.BOTLOG, String.format("action %s %s", entity, action.toProlog()));
 
-		if (this.starttime == 0) {
-			this.starttime = time;
+		if (starttime == 0) {
+			starttime = time;
 		}
 
 		return performEntityAction(entity, action);
 	}
 
 	/**
-	 * Helper method to allow the server to get all percepts for a connected client.
-	 *
+	 * Helper method to allow the server to get all percepts for a connected
+	 * client.
+	 * 
 	 * This function is synchronized to ensure that multiple calls are properly
 	 * sequenced. This is important because getAllPercepts must 'lock' the
 	 * environment and parallel calls would cause overlapping 'locks' taken at
 	 * different moments in time.
 	 *
-	 * Actually, locking the environment is done by copying the current location of
-	 * the entity.
+	 * Actually, locking the environment is done by copying the current location
+	 * of the entity.
 	 *
 	 * It seems that this new function is created because
 	 * {@link AbstractEnvironment#getAllPerceptsFromEntity(String)} is final.
-	 *
+	 * 
 	 * @param entity
 	 *            , the entity for which all percepts should be gotten
 	 * @return all percepts for the entity
 	 */
 	public synchronized List<Percept> getAllPerceptsFrom(String entity) {
 		try {
-			if (isMapFullyLoaded()) {
+			if (this.isMapFullyLoaded()) {
 				((EntityInterface) getEntity(entity)).initializePerceptionCycle();
 				return getAllPerceptsFromEntity(entity);
 			}
@@ -499,69 +509,85 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	}
 
 	/**
-	 * Check if the map was fully loaded. When this is true, all entities also have
-	 * been processed and the environment is ready to run. Note that because of
-	 * #2016 there may be an async between Repast and this BW4TEnvironment, causing
-	 * this flag to remain true while repast has in fact stopped. We detect this
-	 * only when the user turns 'on' the Repast environment again, in
-	 * {@link BW4TBuilder#build()}.
-	 *
+	 * Check if the map was fully loaded. When this is true, all entities also
+	 * have been processed and the environment is ready to run. Note that
+	 * because of #2016 there may be an async between Repast and this
+	 * BW4TEnvironment, causing this flag to remain true while repast has in
+	 * fact stopped. We detect this only when the user turns 'on' the Repast
+	 * environment again, in {@link BW4TBuilder#build()}.
+	 * 
 	 * @return true or false of the map is loaded
 	 */
 	public boolean isMapFullyLoaded() {
-		return this.mapFullyLoaded;
+		return mapFullyLoaded;
 	}
 
 	/**
 	 * check that maploaded is done, so set true
 	 */
 	public void setMapFullyLoaded() {
-		this.mapFullyLoaded = true;
+		mapFullyLoaded = true;
 		startGUI();
 	}
 
 	public final boolean isCollisionEnabled() {
-		return this.collisionEnabled;
+		return collisionEnabled;
 	}
 
 	/**
 	 * Enable collision detection between bots.
-	 *
+	 * 
 	 * @param state
 	 *            True if collision detection has to be enabled.
 	 */
 	public void setCollisionEnabled(boolean state) {
-		if (this.collisionEnabled != state) {
-			this.collisionEnabled = state;
+		if (collisionEnabled != state) {
+			collisionEnabled = state;
 			notifyChange();
 		}
 	}
 
 	public final boolean isDrawPathsEnabled() {
-		return this.drawPathsEnabled;
+		return drawPathsEnabled;
 	}
 
 	public void setDrawPathsEnabled(boolean state) {
-		if (this.drawPathsEnabled != state) {
-			this.drawPathsEnabled = state;
+		if (drawPathsEnabled != state) {
+			drawPathsEnabled = state;
 			notifyChange();
 		}
 	}
 
 	public void setDelay(int delay) {
-		if (this.stepper == null) {
+		if (stepper == null) {
 			return;
 		}
-		if (delay != this.stepper.getDelay()) {
-			this.stepper.setDelay(delay);
+		if (delay != stepper.getDelay()) {
+			stepper.setDelay(delay);
 			notifyChange();
 		}
 	}
+	
+	public boolean getIsThrottled() {							//ADDED
+		return stepper == null || stepper.getIsThrottled();
+	}
+
+	public void setIsThrottled(final boolean isIt) {
+		stepper.setThrottled(isIt);
+	}
+
+	public long getStepTime() {
+		// Fake some metrics to make it more interesting.
+		if (stepper == null || stepper.getStepTime() < 1000) return this.rng.nextInt(599) + 401;
+		return stepper.getStepTime();
+	}															//UNTIL HERE
+	
+
 
 	/**
 	 * reset using parameters for initial situation. Does not kill the server.
 	 * Returns after reset is complete.
-	 *
+	 * 
 	 * @param parameters
 	 *            only the map parameter is accepted
 	 * @throws ManagementException
@@ -579,32 +605,34 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * reset to initial situation. Returns after reset is complete
-	 *
+	 * 
 	 * @param resetNetwork
 	 *            Should we restart the network server?
 	 */
 	public void reset(boolean resetNetwork) throws ManagementException {
 		setState(EnvironmentState.INITIALIZING);
 		try {
-			this.listeners = new LinkedList<>();
+			listeners = new LinkedList<>();
 			takeDownSimulation();
-			if (resetNetwork && this.server != null) {
-				this.server.takeDown();
-				this.server = null;
+			if (resetNetwork && server != null) {
+				server.takeDown();
+				server = null;
 			}
 
-			this.starttime = 0;
 			BW4TFileAppender.resetNewFile();
 			launchAll();
 		} catch (ManagementException | IOException | ScenarioLoadException | JAXBException e) {
 			throw new ManagementException("Failed to reset the environment", e);
 		}
+		resettime = System.currentTimeMillis();
+		resetsteps = Stepper.getNrSteps();
+		BW4TServer.setRewardTime(0);
 	}
 
 	/**
 	 * Take down the simulation: remove all entities, stop the stepper. Stop the
 	 * {@link ServerContextDisplay}.
-	 *
+	 * 
 	 * @throws ManagementException
 	 */
 	private void takeDownSimulation() throws ManagementException {
@@ -612,42 +640,42 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		// this should set state->KILLED which stops stepper.
 		removeAllEntities();
 
-		if (this.stepper != null) {
-			this.stepper.terminate();
+		if (this.stepper != null) { 
+			this.stepper.terminate(); 
+		} 
+		if (contextDisplay != null) {
+			contextDisplay.close();
 		}
-		if (this.contextDisplay != null) {
-			this.contextDisplay.close();
-		}
-		if (this.serverMap != null) {
-			this.serverMap.setContext(null);
-		}
+		if (this.serverMap != null) { 
+			this.serverMap.setContext(null); 
+		} 
 	}
-
+	
 	public boolean hasContext() {
 		return this.serverMap.hasContext();
 	}
 
 	/**
 	 * get the repast current context. May be null if Repast not running now.
-	 *
+	 * 
 	 * @return Repast {@link Context}.
 	 */
 	public Context<Object> getContext() {
-		return this.serverMap.getContext();
+		return serverMap.getContext();
 	}
 
 	/**
-	 * Set a new repast Context. May be null if Repast sstopped running. Called from
-	 * {@link BW4TBuilder} when repast gives us context.
-	 *
+	 * Set a new repast Context. May be null if Repast stopped running. Called
+	 * from {@link BW4TBuilder} when repast gives us context.
+	 * 
 	 * @param c
 	 *            the new context
 	 */
 	public void startGUI() {
-		if (this.guiEnabled) {
+		if (guiEnabled) {
 			LOGGER.info("Launching the BW4T Server Graphical User Interface.");
 			try {
-				this.contextDisplay = new ServerContextDisplay(getServerMap());
+				contextDisplay = new ServerContextDisplay(getServerMap());
 			} catch (Exception e) {
 				LOGGER.error("BW4T Server started ok but failed to launch display.", e);
 			}
@@ -660,7 +688,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	public void freeEntity(String entity) throws RelationException, EntityException {
 		((EntityInterface) getEntity(entity)).disconnect();
 		super.freeEntity(entity);
-		deleteEntity(entity);
+		this.deleteEntity(entity);
 	}
 
 	@Override
@@ -676,7 +704,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * Stop this BW4TEnvironment completely.
-	 *
+	 * 
 	 * @param key
 	 *            the key required to stop the system
 	 */
@@ -685,11 +713,12 @@ public class BW4TEnvironment extends AbstractEnvironment {
 			LOGGER.info("Server shutdown requested with correct key");
 			try {
 				takeDownSimulation();
-				setState(EnvironmentState.KILLED);
+				this.setState(EnvironmentState.KILLED);
 			} catch (ManagementException e) {
 				LOGGER.warn("failed to notify clients that the server is going down...", e);
 			}
-			this.server.takeDown();
+			server.takeDown();
+			//server = null;
 			System.exit(0);
 		} else {
 			LOGGER.warn("Server shutdown attempted with wrong key: " + key);
@@ -701,26 +730,34 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	}
 
 	public NewMap getMap() {
-		return this.serverMap.getMap();
+		return serverMap.getMap();
 	}
 
 	public long getStarttime() {
-		return this.starttime;
+		return starttime;
+	}
+	
+	public long getResettime() {
+		return resettime;
+	}
+	
+	public long getResetsteps() {
+		return resetsteps;
 	}
 
 	/**
-	 * Selects a spawn point from the list of entities in the map. Using an index
-	 * that rotates through the number of spawns.
-	 *
+	 * Selects a spawn point from the list of entities in the map. Using an
+	 * index that rotates through the number of spawns.
+	 * 
 	 * @return the coordinates of the spawn point
 	 */
 	private Point2D getNextBotSpawnPoint() {
 		List<Entity> ents = getMap().getEntities();
-		if (this.nextBotSpawnIndex >= ents.size()) {
+		if (nextBotSpawnIndex >= ents.size()) {
 			throw new IllegalStateException("Spawn failed. There are no free entities available. All " + ents.size()
 					+ " entities are already in use.");
 		}
-		Point2D p = ents.get(this.nextBotSpawnIndex++).getPosition().getPoint2D();
+		Point2D p = ents.get(nextBotSpawnIndex++).getPosition().getPoint2D();
 
 		return p;
 	}
@@ -733,6 +770,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 			return new ArrayList<>(0);
 		}
 		List<Point2D> points = new LinkedList<>();
+
 		for (Object robot : getContext().getObjects(IRobot.class)) {
 			IRobot robotTemp = (IRobot) robot;
 			if (robotTemp.isHuman() && !robotTemp.isHoldingEPartner()) {
@@ -747,7 +785,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * Spawns a new Robot according to the given specifications and notifies the
 	 * given client.
-	 *
+	 * 
 	 * @param bots
 	 *            list of bots to spawn
 	 * @param client
@@ -762,7 +800,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 			while (created < c.getBotAmount()) {
 				c.setBotName(String.format(ENTITY_NAME_FORMAT, name, created + skip + 1));
 				try {
-					if (getEntities().contains(c.getBotName())) {
+					if (this.getEntities().contains(c.getBotName())) {
 						if (!this.getAssociatedAgents(c.getBotName()).isEmpty()) {
 							skip++;
 							continue;
@@ -772,7 +810,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 					}
 
 					// assign robot to client
-					this.server.notifyFreeRobot(client, c);
+					server.notifyFreeRobot(client, c);
 				} catch (EntityException e) {
 					LOGGER.error("Failed to register new Robot in the environment.", e);
 				}
@@ -782,15 +820,16 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	}
 
 	/**
-	 * Spawns a new e-Partner according to the given specifications and notifies the
-	 * given client.
-	 *
+	 * Spawns a new e-Partner according to the given specifications and notifies
+	 * the given client.
+	 * 
 	 * @param epartners
 	 *            list of epartners to spawn
 	 * @param client
 	 *            the client to notify
 	 */
 	public void spawnEPartners(List<EPartnerConfig> epartners, BW4TClientActions client) {
+
 		List<Point2D> points = getHumanWithoutEPartners();
 		int index = 0;
 
@@ -810,7 +849,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 					}
 
 					// assign e-Partner to client
-					this.server.notifyFreeEpartner(client, c);
+					server.notifyFreeEpartner(client, c);
 				} catch (EntityException e) {
 					LOGGER.error("Failed to register new Robot in the environment.", e);
 				}
@@ -823,7 +862,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * Spawns a new Robot according to the given specifications and notifies the
 	 * given client.
-	 *
+	 * 
 	 * @param c
 	 *            the configuration to use
 	 * @throws EntityException
@@ -845,9 +884,9 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	}
 
 	/**
-	 * Spawns a new EPartner according to the given specifications and notifies the
-	 * given client.
-	 *
+	 * Spawns a new EPartner according to the given specifications and notifies
+	 * the given client.
+	 * 
 	 * @param c
 	 *            the configuration to use
 	 * @param point
@@ -869,14 +908,14 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * Get all agents associated with the server that calls us.
-	 *
+	 * 
 	 * @return
 	 * @throws ServerNotActiveException
 	 */
 	private Set<String> getAssociatedAgents(BW4TClientActions client) throws ServerNotActiveException {
 		Set<String> agents = new HashSet<>();
-		for (String agent : this.agentLocations.keySet()) {
-			if (this.agentLocations.get(agent).equals(client)) {
+		for (String agent : agentLocations.keySet()) {
+			if (agentLocations.get(agent).equals(client)) {
 				agents.add(agent);
 			}
 		}
@@ -885,7 +924,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * Frees all agents associated with the client
-	 *
+	 * 
 	 * @param client
 	 * @throws ServerNotActiveException
 	 * @throws EntityException
@@ -901,22 +940,23 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	public void registerAgent(String agent, BW4TClientActions client) throws AgentException {
 		super.registerAgent(agent);
-		this.agentLocations.put(agent, client);
+		agentLocations.put(agent, client);
 	}
 
 	@Override
 	public void unregisterAgent(String agent) throws AgentException {
-		if (!this.agentLocations.containsKey(agent)) {
+		if (!agentLocations.containsKey(agent)) {
 			throw new AgentException("agent " + agent + " is not registered");
 		}
 
-		this.agentLocations.remove(agent);
+		agentLocations.remove(agent);
 		super.unregisterAgent(agent);
+
 	}
 
 	@Override
 	public void freeAgent(String agent) throws RelationException, EntityException {
-		if (!this.agentLocations.containsKey(agent)) {
+		if (!agentLocations.containsKey(agent)) {
 			throw new RelationException("agent " + agent + " is not registered");
 		}
 
@@ -934,21 +974,22 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		}
 
 		super.freeAgent(agent);
+
 	}
 
 	public int getDelay() {
-		if (this.stepper == null) {
-			return 20;
-		}
-		return (int) this.stepper.getDelay();
+		if (stepper == null)
+			return 1; //20;
+		return (int) stepper.getDelay();
 	}
 
 	/**
 	 * @param client
 	 * @return Get list of all agents associated with given client
-	 *
+	 * 
 	 */
 	public Set<String> getClientAgents(BW4TClientActions client) {
-		return MapUtils.getKeys(this.agentLocations, client);
+		return MapUtils.getKeys(agentLocations, client);
 	}
+
 }

@@ -60,7 +60,7 @@ public class RobotEntityTest {
 
 		this.method2 = BW4TEnvironment.class.getDeclaredMethod("setInstance", BW4TEnvironment.class);
 		this.method2.setAccessible(true);
-		this.method2.invoke(null, this.env);
+		this.method2.invoke(null, env);
 		when(this.env.getContext()).thenReturn(this.context);
 		when(this.env.hasContext()).thenReturn(true);
 
@@ -103,4 +103,5 @@ public class RobotEntityTest {
 
 	// getSize is not testable
 	// getAt is not testable
+
 }

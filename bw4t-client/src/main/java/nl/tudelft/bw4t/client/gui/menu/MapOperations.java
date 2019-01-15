@@ -27,7 +27,7 @@ public final class MapOperations {
 	/**
 	 * Used for building the pop-up menu that displays the actions a user can
 	 * perform when clicking on a group goal color.
-	 * 
+	 *
 	 * @param color
 	 *            - The color that was clicked.
 	 * @param gui
@@ -113,7 +113,7 @@ public final class MapOperations {
 				menuItem.addActionListener(new MessageSenderActionListener(
 						new BW4TMessage(MessageType.HASCOLORFROMROOM, room
 								.getName(), color.getName(), null), gui
-								.getController()));
+						.getController()));
 				submenu.add(menuItem);
 			}
 		}
@@ -122,7 +122,7 @@ public final class MapOperations {
 	/**
 	 * Method to determine if the player is close to a box (which means at most
 	 * bot size +1, this matches server requirement for picking up)
-	 * 
+	 *
 	 * @param boxID
 	 *            The box that should be checked.
 	 * @param data

@@ -90,8 +90,9 @@ public class BW4TFileAppender extends RollingFileAppender {
      * @param timeOfCall 
      * @param typeTime 
      */
-    public static void logFinish(long timeOfCall, String typeTime) {
+    public static void logFinish(long timeOfCall, String typeTime, long nrSteps) {
         logTime(timeOfCall, typeTime);
+        logSteps(nrSteps);
         logBot();
     }
     
@@ -105,7 +106,8 @@ public class BW4TFileAppender extends RollingFileAppender {
         BW4TEnvironment env = BW4TEnvironment.getInstance();
         
         //totalTime is in miliseconds
-        double totalTime = timeOfCall - env.getStarttime();
+        //double totalTime = timeOfCall - env.getStarttime();
+        double totalTime = timeOfCall - env.getResettime();
         
         if (totalTime > 60000) {
             int totalMin = (int) totalTime / 60000;
@@ -114,6 +116,13 @@ public class BW4TFileAppender extends RollingFileAppender {
         } else {
             LOGGER.log(BotLog.BOTLOG, typeTime + totalTime / 1000 + " seconds");
         }
+    }
+    
+    private static void logSteps(long nrSteps) {
+    	BW4TEnvironment env = BW4TEnvironment.getInstance();
+    	
+    	double totalSteps = nrSteps - env.getResetsteps();
+    	LOGGER.log(BotLog.BOTLOG, "Number of Steps taken: " + totalSteps);
     }
     
     /**
