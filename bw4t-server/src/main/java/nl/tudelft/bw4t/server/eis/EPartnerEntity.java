@@ -36,6 +36,7 @@ import nl.tudelft.bw4t.server.util.ZoneLocator;
  * Interface to create an Entity that can be used for Robot or EPartner
  */
 public class EPartnerEntity implements EntityInterface {
+
 	static {
 		// Register our translators.
 		Translator translator = Translator.getInstance();
@@ -45,7 +46,6 @@ public class EPartnerEntity implements EntityInterface {
 		translator.registerJava2ParameterTranslator(new PointTranslator());
 		translator.registerJava2ParameterTranslator(new ObjectInformationTranslator());
 		translator.registerJava2ParameterTranslator(new ColorTranslator());
-
 	}
 
 	private final EPartner ourEPartner;
@@ -74,7 +74,7 @@ public class EPartnerEntity implements EntityInterface {
 	 */
 	public EPartnerEntity(EPartner eP) {
 		this.ourEPartner = eP;
-		this.messages = new LinkedList<>();
+        messages = new LinkedList<>();
 	}
 
 	/**
@@ -173,7 +173,7 @@ public class EPartnerEntity implements EntityInterface {
 	public String getAt() throws PerceiveException {
 		if (this.ourEPartner.getTypeList().contains(ViewEPartner.GPS)) {
 
-			Zone navpt = ZoneLocator.getNearestZone(this.ourEPartner.getLocation());
+            Zone navpt = ZoneLocator.getNearestZone(ourEPartner.getLocation());
 			if (navpt == null) {
 				throw new PerceiveException(
 						"perceiving 'at' percept failed, because map has no suitable navpoint for position "

@@ -25,7 +25,7 @@ public class ChatListMouseListener implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        ChatMenu.buildPopUpMenuForChat(bw4tClientGUI);
+        //ChatMenu.buildPopUpMenuForChat(bw4tClientGUI);
         bw4tClientGUI.getjPopupMenu().show(bw4tClientGUI.getBotChatSession(), e.getX(), e.getY());
     }
 

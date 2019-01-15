@@ -27,7 +27,7 @@ public class TeamListMouseListener implements MouseListener {
     public void mousePressed(MouseEvent e) {
         BW4TClientGUI gui = controller.getGui();
         String playerId = gui.getAgentSelector().getSelectedItem().toString();
-        PlayerMenu.buildPopUpMenuForRequests(playerId, controller);
+        //PlayerMenu.buildPopUpMenuForRequests(playerId, controller);
         gui.getjPopupMenu().show((JButton) e.getSource(), e.getX(), e.getY());
     }
 

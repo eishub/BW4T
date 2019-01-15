@@ -134,7 +134,7 @@ public class ServerMapController extends AbstractMapController {
 	@Override
 	protected void updateRenderer(MapRendererInterface mri) {
 		if (BW4TEnvironment.getInstance().getState().equals(EnvironmentState.RUNNING)
-				&& !this.haveRequestedFocusAlready) {
+				&& !haveRequestedFocusAlready) {
 			mri.requestFocus();
 			this.haveRequestedFocusAlready = true;
 		}

@@ -26,7 +26,6 @@ import nl.tudelft.bw4t.server.model.zone.ChargingZone;
 import nl.tudelft.bw4t.server.model.zone.Corridor;
 import nl.tudelft.bw4t.server.model.zone.DropZone;
 import nl.tudelft.bw4t.server.model.zone.Room;
-import nl.tudelft.bw4t.server.util.MapUtils;
 import repast.simphony.context.Context;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactory;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
@@ -92,11 +91,9 @@ public class MapLoader implements BW4TServerMapListerner {
 	}
 
 	/**
-	 * Loads a file containing a map into the context. extends the sequence
-	 * color list and the room color lists.
+     * Loads a file containing a map into the context. extends the sequence color list and the room color lists.
 	 * <ul>
-	 * <li>The sequence is extended with N random blocks (where N is the number
-	 * of rooms in the map)
+     * <li>The sequence is extended with N random blocks (where N is the number of rooms in the map)
 	 * <li>These N random blocks are random placed in the rooms
 	 * <li>An additional 1.5*N random blocks are random placed in the rooms.
 	 * </ul>
@@ -147,9 +144,8 @@ public class MapLoader implements BW4TServerMapListerner {
 	}
 
 	/**
-	 * Creates the {@link Grid} in which all objects will be placed, in
-	 * conjuction with the continuous space. The grid space allows for querying
-	 * for Von Neumann and Moore neighborhoods.
+     * Creates the {@link Grid} in which all objects will be placed, in conjuction with the continuous space. The grid
+     * space allows for querying for Von Neumann and Moore neighborhoods.
 	 * 
 	 * @param context
 	 *            the context in which this space operates.
@@ -166,8 +162,8 @@ public class MapLoader implements BW4TServerMapListerner {
 		int height = (int) area.getY() + 1;
 
 		GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
-		GridBuilderParameters<Object> params = new GridBuilderParameters<>(new StrictBorders(),
-				new SimpleGridAdder<Object>(), true, width, height);
+        GridBuilderParameters<Object> params = new GridBuilderParameters<>(new StrictBorders(), new SimpleGridAdder<Object>(),
+                true, width, height);
 
 		return gridFactory.createGrid(GRID_PROJECTION_ID, context, params);
 	}
@@ -253,8 +249,7 @@ public class MapLoader implements BW4TServerMapListerner {
 	}
 
 	/**
-	 * Creates a new {@link Door} in the context according to the
-	 * {@link nl.tudelft.bw4t.map.Door}.
+     * Creates a new {@link Door} in the context according to the {@link nl.tudelft.bw4t.map.Door}.
 	 * 
 	 * @param smap
 	 *            The context in which the room should be placed.
@@ -283,8 +278,7 @@ public class MapLoader implements BW4TServerMapListerner {
 	 * @param zones
 	 *            the zones
 	 */
-	private static void createBlockades(BW4TServerMap context,
-			Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones) {
+    private static void createBlockades(BW4TServerMap context, Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones) {
 		for (Zone blockzone : context.getMap().getZones(Zone.Type.BLOCKADE)) {
 			zones.put(blockzone.getName(), new Blockade(blockzone, context));
 		}
@@ -378,8 +372,8 @@ public class MapLoader implements BW4TServerMapListerner {
 	 * @param smap
 	 * 
 	 * @param zones
-	 *            the map of all zones in repast. We can't yet access the BW4T
-	 *            context, therefore we need to pass this explicitly..
+     *            the map of all zones in repast. We can't yet access the BW4T context, therefore we need to pass this
+     *            explicitly..
 	 */
 	private static void connectAllZones(BW4TServerMap smap, Map<String, nl.tudelft.bw4t.server.model.zone.Zone> zones) {
 		for (Zone zone : smap.getMap().getZones()) {
@@ -397,8 +391,7 @@ public class MapLoader implements BW4TServerMapListerner {
 	 * @param smap
 	 *            the context on which the actions should have effect
 	 * @param zones
-	 *            the zones including the rooms in which the blocks should be
-	 *            created
+     *            the zones including the rooms in which the blocks should be created
 	 * @param roomblocks
 	 *            the rooms which should contain blocks
 	 * @param space
@@ -435,7 +428,7 @@ public class MapLoader implements BW4TServerMapListerner {
 		Random random = getRandom(context);
 
 		for (BlockColor color : args) {
-			Rectangle2D newpos = MapUtils.findFreePlace(roomBox, newblocks, random);
+            Rectangle2D newpos = findFreePlace(roomBox, newblocks, random);
 
 			Block block = new Block(color, context);
 
@@ -444,6 +437,56 @@ public class MapLoader implements BW4TServerMapListerner {
 		}
 	}
 
+    /**
+     * find an unoccupied position for a new block in the given room, where the given list of blocks are already in that
+     * room. Basically this algorithm picks random points till a free position is found.
+     * 
+     * @param room
+     *            the room
+     * @param blocks
+     *            the blocks
+     * @return the rectangle2 d
+     */
+
+    private static Rectangle2D findFreePlace(Rectangle2D room, List<Rectangle2D> blocks, Random random) {
+        Rectangle2D block = null;
+        // max number of retries
+        int retryCounter = 100;
+        boolean blockPlacedOK = false;
+        while (!blockPlacedOK) {
+            double x = room.getMinX() + room.getWidth() * random.nextDouble();
+            double y = room.getMinY() + room.getHeight() * random.nextDouble();
+            block = new Rectangle2D.Double(x, y, Block.SIZE, Block.SIZE);
+
+            blockPlacedOK = room.contains(block);
+            for (Rectangle2D bl : blocks) {
+                blockPlacedOK = checkPlacement(blockPlacedOK, x, y, bl);
+            }
+            if (retryCounter-- == 0 && !blockPlacedOK) {
+                throw new IllegalStateException("room is too small to fit more blocks");
+            }
+        }
+        return block;
+    }
+
+    /**
+     * @param blockPlacedOK
+     * @param x
+     *            the x-coordinate
+     * @param y
+     *            the y-coordinate
+     * @param bl
+     *            the block
+     * @return check if the block is placed correctly
+     */
+    private static boolean checkPlacement(boolean blockPlacedOK, double x, double y, Rectangle2D bl) {
+        boolean noXoverlap = Math.abs(bl.getCenterX() - x) >= 2;
+        boolean noYoverlap = Math.abs(bl.getCenterY() - y) >= 2;
+        boolean noOverlap = noXoverlap || noYoverlap;
+        blockPlacedOK = blockPlacedOK && noOverlap;
+        return blockPlacedOK;
+    }
+    
 	public static String toString(Collection<BlockColor> colors) {
 		StringBuilder builder = new StringBuilder();
 		for (BlockColor c : colors) {

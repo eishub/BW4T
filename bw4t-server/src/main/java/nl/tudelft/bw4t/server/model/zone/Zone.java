@@ -112,4 +112,5 @@ public abstract class Zone extends BoundedMoveableObject {
 	public boolean isLabelVisible() {
 		return this.isLabelVisible;
 	}
+
 }

@@ -36,6 +36,7 @@ import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.server.eis.EntityInterface;
 import nl.tudelft.bw4t.server.environment.BW4TEnvironment;
 import nl.tudelft.bw4t.server.environment.Launcher;
+import nl.tudelft.bw4t.server.logging.BotLog;
 
 /**
  * Server that allows connected client to perform actions and receive percepts
@@ -57,6 +58,8 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	private transient Map<BW4TClientActions, ClientInfo> clients;
 
 	private String servername;
+	private static double rewardTime = 0;
+	private static double messReward = 0;
 
 	/**
 	 * Create a new instance of the server
@@ -339,12 +342,82 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 		return BW4TEnvironment.getInstance().getState();
 	}
 
+	
+	private static String REWARD = "REWARD ";
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public String queryProperty(String property) throws RemoteException, QueryException {
-		return BW4TEnvironment.getInstance().queryProperty(property);
+		if (property.startsWith("REWARD ")) {
+			Set<String> entities;
+			String agentName = property.substring(REWARD.length());
+			try {
+				entities = getAssociatedEntities(agentName);
+			} catch (AgentException e) {
+				throw new QueryException("can't get entities associated with " + agentName, e);
+			}
+			if (entities.size() != 1) {
+				throw new QueryException("agent " + agentName + " has not exactly 1 associated entity: " + entities);
+			}
+			
+			// Code for generating negative reward for communication
+			if (messReward == 0) {
+				return "0";
+			}
+			if (messReward == -1.0) {
+				setMessReward(0);
+				LOGGER.log(BotLog.BOTLOG, "Reward returned: " + messReward);
+				if (rewardTime == 0) {
+					return "-1";
+				}
+				else {
+					double finalReward = 1200 - rewardTime * 20;
+					return String.valueOf(finalReward - 1);
+				}
+			} 
+			
+			/*/ Code for generating reward out of time taken to finish task
+			if (rewardTime == 0){
+				return "0"; // game still running or ended in draw
+			}
+			if (rewardTime > 0) {
+				double finalReward = 1200 - rewardTime * 20;
+				return String.valueOf(finalReward);
+			}*/
+		}
+		return null;
+		//return BW4TEnvironment.getInstance().queryProperty(property);
+	}
+	
+	
+	// Function that is called when final block is dropped; it gives the time at which this happens 
+	// and translates it to seconds
+	public static void transferReward(long timeOfCall) {
+		setRewardTime(calcTime(timeOfCall));
+	}
+	
+	// Function that is called for every sent message; it triggers the inherent cost of communication
+	public static void messCost() {
+		setMessReward(-1);
+		LOGGER.log(BotLog.BOTLOG, "Costfunction triggered: " + messReward);
+
+	}
+	
+	public static void messPos() {
+		setMessReward(1);
+	}
+	
+	private static double calcTime(long nrSteps) {
+		BW4TEnvironment env = BW4TEnvironment.getInstance();
+        
+        //totalTime is in milliseconds
+        //double totalTime = timeOfCall - env.getResettime();
+    	
+    	double totalSteps = nrSteps - env.getResetsteps();
+        
+        return totalSteps/100; //totalTime/1000;
 	}
 
 	/**
@@ -475,6 +548,22 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	public void stopServer(String key) throws RemoteException {
 		Launcher.getInstance().getEnvironment().shutdownServer(key);
 
+	}
+
+	public static double getRewardTime() {
+		return rewardTime;
+	}
+
+	public static void setRewardTime(double rewardTime) {
+		BW4TServer.rewardTime = rewardTime;
+	}
+
+	public static double getMessReward() {
+		return messReward;
+	}
+
+	public static void setMessReward(double messReward) {
+		BW4TServer.messReward = messReward;
 	}
 
 }

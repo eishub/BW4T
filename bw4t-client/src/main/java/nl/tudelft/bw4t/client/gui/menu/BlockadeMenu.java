@@ -56,14 +56,14 @@ public class BlockadeMenu {
 	public static void buildTellMenu(BW4TClientGUI gui,
 			ClientMapController cmc, ViewBlock holdingID, Color entityColor) {
 		JMenuItem menuItem;
-		BasicMenuOperations.addSectionTitleToPopupMenu("Tell: ",
+		/*BasicMenuOperations.addSectionTitleToPopupMenu("Tell: ",
 				gui.getjPopupMenu());
 
 		for (Zone roomInfo : cmc.getRooms()) {
 			BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
 					MessageType.AMWAITINGOUTSIDEROOM, roomInfo.getName(), null,
 					null), gui);
-		}
+		}*/
 
 		tellMenuHolding(gui, cmc, holdingID, entityColor);
 
@@ -93,7 +93,7 @@ public class BlockadeMenu {
 			String colorAsString = BasicMenuOperations.getColor(
 					ColorTranslator.translate2ColorString(entityColor),
 					ourEntity);
-			BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
+			/*BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
 					MessageType.HASCOLOR, null, colorAsString, null), gui);
 
 			JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu(
@@ -107,7 +107,7 @@ public class BlockadeMenu {
 								.getName(), colorAsString, null), gui
 								.getController()));
 				submenu.add(menuItem);
-			}
+			}*/
 		}
 	}
 

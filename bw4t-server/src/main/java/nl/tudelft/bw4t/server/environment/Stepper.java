@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 
 import eis.eis2java.environment.AbstractEnvironment;
 import eis.iilang.EnvironmentState;
+import nl.tudelft.bw4t.server.logging.BotLog;
 import repast.simphony.scenario.ScenarioLoadException;
 
 /**
@@ -17,8 +18,8 @@ public class Stepper implements Runnable {
 	/**
 	 * The log4j logger, logs to the console.
 	 */
-	public static final int MIN_DELAY = 10;
-	public static final int MAX_DELAY = 200;
+	public static final int MIN_DELAY = 1; //10;
+	public static final int MAX_DELAY = 50; //200;
 
 	private static final Logger LOGGER = Logger.getLogger(Stepper.class);
 	/**
@@ -30,8 +31,17 @@ public class Stepper implements Runnable {
 	/**
 	 * default 10ms between steps
 	 */
-	private long loopDelay = 20;
+	private static long loopDelay = 10; //20;
+	/**
+	 * Whether to throttle the stepping loop.
+	 * If true then each iteration will be interjected with a timeout of {@link #loopDelay} ms.
+	 */
+	private static boolean throttle = true;
 	private boolean running = true;
+
+	private long stepTime = 0;
+	
+	private static long nrSteps = 0;
 
 	public Stepper(String scenario, AbstractEnvironment envi) throws ScenarioLoadException {
 		scenarioLocation = scenario;
@@ -46,6 +56,8 @@ public class Stepper implements Runnable {
 		try {
 			while (running) {
 				while (runner.getActionCount() > 0 && running) {
+					long stepStart = System.nanoTime();
+
 					/*
 					 * note: busy-wait since we have to be prepared to be killed
 					 * also if env is in pause mode. The sleep avoid sucking
@@ -56,13 +68,22 @@ public class Stepper implements Runnable {
 							runner.setFinishing(true);
 						}
 						runner.step();
+						nrSteps = nrSteps + 1;
 					}
 					try {
+						//Thread.sleep(loopDelay);
+						if (throttle) {
 						Thread.sleep(loopDelay);
+						}
+
 					} catch (InterruptedException e) {
 						LOGGER.warn("The main loop was interrupted.", e);
 					}
+					long stepEnd = System.nanoTime();
+					this.stepTime = stepEnd - stepStart;
+					//this.nrSteps = nrStepEnd - nrStepStart;
 				}
+				nrSteps = 0;
 				runner.stop();
 				runner.cleanUpRun();
 			}
@@ -93,6 +114,27 @@ public class Stepper implements Runnable {
 
 	}
 
+	public boolean getIsThrottled() {
+		return throttle;
+	}
+
+	public void setThrottled(final boolean isIt) {
+		throttle = isIt;
+	}
+
+	public long getStepTime() {
+		return this.stepTime;
+	}
+	
+	public static long getNrSteps() {
+		return nrSteps;
+	}
+	
+	public static void setNrSteps(long steps) {
+		nrSteps = steps;
+	}
+
+
 	/**
 	 * Call this only after EnvironmentState=KILLED. This function returns only
 	 * after the stepper thread stopped.
@@ -102,7 +144,7 @@ public class Stepper implements Runnable {
 		while (runner != null) {
 			LOGGER.info("Stepper is running... waiting for requests.");
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				LOGGER.warn("Ignoring interrupt from wait.", e);
 			}

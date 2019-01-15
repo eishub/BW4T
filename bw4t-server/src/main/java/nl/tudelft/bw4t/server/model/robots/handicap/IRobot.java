@@ -403,4 +403,5 @@ public interface IRobot extends BoundedMoveableInterface {
 	 *         become unreachable.
 	 */
 	boolean isDestinationUnreachable();
+
 }

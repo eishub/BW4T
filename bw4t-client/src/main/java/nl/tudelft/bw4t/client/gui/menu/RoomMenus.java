@@ -55,8 +55,8 @@ public class RoomMenus {
 				MessageType.ROOMCONTAINS, label, colorAsString, null), gui);
 		BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
 				MessageType.AMGETTINGCOLOR, label, colorAsString, null), gui);
-		BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-				MessageType.ATBOX, null, colorAsString, null), gui);
+		//BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
+		//		MessageType.ATBOX, null, colorAsString, null), gui);
 
 		gui.getjPopupMenu().addSeparator();
 		JMenuItem menuItem = new JMenuItem("Close menu");
@@ -144,8 +144,10 @@ public class RoomMenus {
 		BasicMenuOperations.addSectionTitleToPopupMenu("Tell: ",
 				gui.getjPopupMenu());
 
+		//BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
+		//		MessageType.INROOM, label, null, null), gui);
 		BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-				MessageType.INROOM, label, null, null), gui);
+				MessageType.GOINGTOROOM, label, null, null), gui);
 
 		JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu(label
 				+ " contains ", gui.getjPopupMenu());
@@ -162,11 +164,11 @@ public class RoomMenus {
 			}
 		}
 
-		submenu = BasicMenuOperations.addSubMenuToPopupMenu(label
-				+ " contains ", gui.getjPopupMenu());
+		//submenu = BasicMenuOperations.addSubMenuToPopupMenu(label
+		//		+ " contains ", gui.getjPopupMenu());
 
 		// option for each amount of blocks (e.g.: Room X contains -> 3 -> Pink)
-		for (int i = 0; i < 6; i++) {
+		/*for (int i = 0; i < 6; i++) {
 			JMenu submenuColor = new JMenu("" + i);
 			submenu.add(submenuColor);
 
@@ -181,28 +183,28 @@ public class RoomMenus {
 					break;
 				}
 			}
-		}
+		}*/
 
-		BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-				MessageType.CHECKED, label, null, null), gui);
+		//BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
+		//		MessageType.CHECKED, label, null, null), gui);
 
-		submenu = BasicMenuOperations.addSubMenuToPopupMenu(label
-				+ " has been checked by ", gui.getjPopupMenu());
+		//submenu = BasicMenuOperations.addSubMenuToPopupMenu(label
+		//		+ " has been checked by ", gui.getjPopupMenu());
 
-		for (String p : controller.getOtherPlayers()) {
+		/*for (String p : controller.getOtherPlayers()) {
 			menuItem = new JMenuItem("" + p);
 			menuItem.addActionListener(new MessageSenderActionListener(
 					new BW4TMessage(MessageType.CHECKED, label, null, p),
 					controller));
 			submenu.add(menuItem);
-		}
+		}*/
 
-		BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-				MessageType.ROOMISEMPTY, label, null, null), gui);
+		//BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
+		//		MessageType.ROOMISEMPTY, label, null, null), gui);
 
 		String holdingColor = holding != null ? BasicMenuOperations.getColor(
 				holding.getColor().getName(), ourEntity) : "";
-		if (holding != null) {
+		/*if (holding != null) {
 			BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
 					MessageType.ABOUTTODROPOFFBLOCK, null, holdingColor, null),
 					gui);
@@ -225,9 +227,9 @@ public class RoomMenus {
 								.getName(), holdingColor, null), controller));
 				submenu.add(menuItem);
 			}
-		}
+		}*/
 
-		BasicMenuOperations.addSectionTitleToPopupMenu("Ask:",
+		/*BasicMenuOperations.addSectionTitleToPopupMenu("Ask:",
 				gui.getjPopupMenu());
 		BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
 				MessageType.ISANYBODYGOINGTOROOM, label, null, null), gui);
@@ -236,7 +238,7 @@ public class RoomMenus {
 		BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
 				MessageType.HASANYBODYCHECKEDROOM, label, null, null), gui);
 		BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-				MessageType.WHOISINROOM, label, null, null), gui);
+				MessageType.WHOISINROOM, label, null, null), gui);*/
 
 		gui.getjPopupMenu().addSeparator();
 		menuItem = new JMenuItem("Close menu");
