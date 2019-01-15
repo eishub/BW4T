@@ -57,22 +57,22 @@ public class ClientController implements EntityComboModelProvider {
 
 	/**
 	 * Instantiates a new client controller.
-	 * 
+	 *
 	 * @param env
 	 *            the environment
 	 * @param entityId
 	 *            the entity id
 	 */
 	public ClientController(RemoteEnvironment env, String entityId) {
-		environment = env;
-		mapController = new ClientMapController(environment.getMap(), this);
+		this.environment = env;
+		this.mapController = new ClientMapController(this.environment.getMap(), this);
 		getMapController().getTheBot().setName(entityId);
-		humanAgent = null;
+		this.humanAgent = null;
 	}
 
 	/**
 	 * Instantiates a new client controller.
-	 * 
+	 *
 	 * @param env
 	 *            the environment
 	 * @param entityId
@@ -89,41 +89,41 @@ public class ClientController implements EntityComboModelProvider {
 	 * Instantiate a default GUI.
 	 */
 	public void startupGUI() {
-		this.setGui(new BW4TClientGUI(this));
+		setGui(new BW4TClientGUI(this));
 	}
 
 	public ClientMapController getMapController() {
-		return mapController;
+		return this.mapController;
 	}
 
 	public Set<String> getOtherPlayers() {
-		return otherPlayers;
+		return this.otherPlayers;
 	}
 
 	public List<String> getBotChatHistory() {
-		return botChatHistory;
+		return this.botChatHistory;
 	}
 
 	public List<String> getEpartnerChatHistory() {
-		return epartnerChatHistory;
+		return this.epartnerChatHistory;
 	}
 
 	public boolean isHuman() {
-		return humanAgent != null;
+		return this.humanAgent != null;
 	}
 
 	public HumanAgent getHumanAgent() {
-		return humanAgent;
+		return this.humanAgent;
 	}
 
 	public RemoteEnvironment getEnvironment() {
-		return environment;
+		return this.environment;
 	}
 
 	/**
 	 * Add a new percept (containing an user action) to the list of percepts to
 	 * be returned in the next getPercept cycle
-	 * 
+	 *
 	 * @param toBePerformedAction
 	 */
 	public void addToBePerformedAction(Percept toBePerformedAction) {
@@ -138,17 +138,17 @@ public class ClientController implements EntityComboModelProvider {
 	 * Method used for returning the next action that a human player wants the
 	 * bot to perform. This is received by the GOAL human bot, and then
 	 * forwarded to the entity on the server side.
-	 * 
+	 *
 	 * @return a percept containing the next action to be performed
 	 */
 	public List<Percept> getToBePerformedAction() {
-		List<Percept> toBePerformedActionClone = toBePerformedAction;
+		List<Percept> toBePerformedActionClone = this.toBePerformedAction;
 		setToBePerformedAction(new LinkedList<Percept>());
 		return toBePerformedActionClone;
 	}
 
 	public BW4TClientGUI getGui() {
-		return gui;
+		return this.gui;
 	}
 
 	public void setGui(BW4TClientGUI gui) {
@@ -158,7 +158,7 @@ public class ClientController implements EntityComboModelProvider {
 	/**
 	 * Interprets the given list of {@link Percept}s and extracts the required
 	 * information.
-	 * 
+	 *
 	 * @param percepts
 	 *            the list of percepts
 	 */
@@ -181,7 +181,7 @@ public class ClientController implements EntityComboModelProvider {
 				clearedPositions = true;
 			}
 
-			mapController.handlePercept(name, parameters);
+			this.mapController.handlePercept(name, parameters);
 			if ("player".equals(name)) {
 				getOtherPlayers().add(((Identifier) parameters.get(0)).getValue());
 			} else if ("message".equals(name)) {
@@ -192,7 +192,7 @@ public class ClientController implements EntityComboModelProvider {
 
 	/**
 	 * Handles the message percept parameters.
-	 * 
+	 *
 	 * @param parameters
 	 *            the parameters given to the message percept
 	 */
@@ -204,11 +204,7 @@ public class ClientController implements EntityComboModelProvider {
 
 		if (message.contains("I want to go") || message.contains("You forgot me")) {
 			getEpartnerChatHistory().add(sender + ": " + message);
-		} 
-		if (message.contains("ok")) {
-			//Do nothing
-		}
-		else {
+		} else if (!message.equalsIgnoreCase("ok")) {
 			getBotChatHistory().add(sender + ": " + message);
 		}
 
@@ -219,7 +215,7 @@ public class ClientController implements EntityComboModelProvider {
 	 * the update the client GUI.
 	 */
 	protected void updateGUI() {
-		BW4TClientGUI currentGui = this.getGui();
+		BW4TClientGUI currentGui = getGui();
 		if (currentGui != null) {
 			currentGui.update();
 		}
@@ -229,9 +225,9 @@ public class ClientController implements EntityComboModelProvider {
 	 * stop the controller and dispose the GUI.
 	 */
 	public void stop() {
-		mapController.setRunning(false);
-		if (this.getGui() != null) {
-			final BW4TClientGUI theGUI = gui; // copy for in Runnable
+		this.mapController.setRunning(false);
+		if (getGui() != null) {
+			final BW4TClientGUI theGUI = this.gui; // copy for in Runnable
 			setGui(null);
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
@@ -244,13 +240,13 @@ public class ClientController implements EntityComboModelProvider {
 
 	/**
 	 * Send paramenters to the GUI to be displayed in the chat window
-	 * 
+	 *
 	 * @param parameters
 	 * @return a null percept as no real percept should be returned
 	 */
 	public Percept sendToGUI(List<Parameter> parameters) {
-		if (this.getGui() != null) {
-			return this.getGui().sendToGUI(parameters);
+		if (getGui() != null) {
+			return getGui().sendToGUI(parameters);
 		}
 		return null;
 	}
