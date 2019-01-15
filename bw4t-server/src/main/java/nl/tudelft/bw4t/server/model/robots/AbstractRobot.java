@@ -4,6 +4,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Stack;
 
 import org.apache.log4j.Logger;
@@ -24,11 +25,11 @@ import nl.tudelft.bw4t.server.model.zone.Corridor;
 import nl.tudelft.bw4t.server.model.zone.DropZone;
 import nl.tudelft.bw4t.server.model.zone.Room;
 import nl.tudelft.bw4t.server.model.zone.Zone;
+import nl.tudelft.bw4t.server.util.MapUtils;
 import nl.tudelft.bw4t.server.util.ZoneLocator;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.query.space.grid.GridCell;
 import repast.simphony.query.space.grid.GridCellNgh;
-import repast.simphony.random.RandomHelper;
 import repast.simphony.space.SpatialException;
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.NdPoint;
@@ -90,7 +91,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	private Battery battery;
 
 	/**
-	 *
+	 * 
 	 * Saves the robots handicap.
 	 */
 	private List<String> handicapsList;
@@ -134,10 +135,13 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	 * Obstacles on the path of the robot
 	 */
 	private List<BoundedMoveableObject> obstacles = new LinkedList<>();
+	
+	// used for placing dropped blocks	
+	private Random random = new Random();
 
 	/**
 	 * Creates a new robot.
-	 *
+	 * 
 	 * @param pname
 	 *            The "human-friendly" name of the robot.
 	 * @param space
@@ -247,7 +251,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	public boolean canPickUp(BoundedMoveableObject obj) {
 		if (obj instanceof Block) {
 			Block b = (Block) obj;
-			return (distanceTo(obj.getLocation()) <= this.topMostHandicap.getSize() + ARM_DISTANCE) && b.isFree()
+			return (distanceTo(obj.getLocation()) <= this.topMostHandicap.getSize() + ARM_DISTANCE) && b.isFree() 
 					&& (this.holding.size() < this.grippercap);
 		}
 		return false;
@@ -276,14 +280,17 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 				// bot was not in the dropzone.. Are we in a room?
 				Zone ourzone = getZone();
 				if (ourzone instanceof Room) {
-					// We are in a room so can drop the block
+					Room room = (Room) ourzone;	
+					@SuppressWarnings({ "unchecked", "rawtypes" })	
+					Iterable<Block> allBlocks = (Iterable) this.getContext().getObjects(Block.class);	
+					List<Rectangle2D> blocks = new LinkedList<>();	
+					for (Block block : MapUtils.selectInside(allBlocks, ourzone.getBoundingBox())) {	
+						blocks.add(block.getBoundingBox());	
+					}
 					b.setHeldBy(null);
 					b.addToContext();
-					// Slightly jitter the location where the box is
-					// dropped.
-					double x = ourzone.getLocation().getX();
-					double y = ourzone.getLocation().getY();
-					b.moveTo(RandomHelper.nextDoubleFromTo(x - 5, x + 5), RandomHelper.nextDoubleFromTo(y - 5, y + 5));
+					Rectangle2D newpos = MapUtils.findFreePlace(room.getBoundingBox(), blocks, random);						// dropped.
+					b.moveTo(newpos.getCenterX(), newpos.getCenterY());
 				}
 			}
 		}
@@ -438,7 +445,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 
 	/**
 	 * Actually moves the bot.
-	 *
+	 * 
 	 * @param distance
 	 *            distance over which it must move.
 	 */
@@ -452,7 +459,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		double[] displacement = SpatialMath.getDisplacement(2, 0, movingDistance, angle);
 
 		try {
-			NdPoint destination = new NdPoint(getLocation().getX() + displacement[0],
+			NdPoint destination = new NdPoint(getLocation().getX() + displacement[0], 
 					getLocation().getY() + displacement[1]);
 
 			// Check if the robot is alone on its map point
@@ -503,7 +510,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	/**
 	 * Check if the destination location is vacant, if not throw an exception. Only
 	 * relevant if collisions are enabled.
-	 *
+	 * 
 	 * @param destination
 	 *            the destination
 	 * @throws DestinationOccupiedException
@@ -524,7 +531,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	/**
 	 * throw if bot!=this and box and bot overlap (collide). Used to check if some
 	 * other bot is already occupying a box.
-	 *
+	 * 
 	 * @param destination
 	 *            to check
 	 * @param box
@@ -534,10 +541,10 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	 * @throws DestinationOccupiedException
 	 *             already occupied
 	 */
-	private void checkDestination(NdPoint destination, Rectangle2D.Double box, AbstractRobot bot)
+	private void checkDestination(NdPoint destination, Rectangle2D.Double box, AbstractRobot bot) 
 			throws DestinationOccupiedException {
 		if ((this != bot) && (box.intersects(bot.getBoundingBox()) || bot.getBoundingBox().intersects(box)
-				|| box.contains(bot.getBoundingBox()) || bot.getBoundingBox().contains(box))) {
+						|| box.contains(bot.getBoundingBox()) || bot.getBoundingBox().contains(box))) {
 			throw new DestinationOccupiedException(
 					"Grid [" + destination.getX() + "," + destination.getY() + "] is occupied by " + bot, bot);
 		}
@@ -546,7 +553,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	/**
 	 * Function that creates a rectangle the same size as the bot centered at the
 	 * destination locations.
-	 *
+	 * 
 	 * @param destination
 	 *            The destination its centered at.
 	 * @return the box
@@ -566,7 +573,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	/**
 	 * Retrieve all neighbouring robots with an extent of 10. DOC why is this extent
 	 * 10? Is this a bug?
-	 *
+	 * 
 	 * @return neighbours
 	 */
 	private List<GridCell<AbstractRobot>> getNeighbours() {
@@ -615,7 +622,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 
 	/**
 	 * Sets the size of a robot to a certain integer
-	 *
+	 * 
 	 * @param s
 	 *            int
 	 */
@@ -733,7 +740,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 
 	/**
 	 * Adds obstacles.
-	 *
+	 * 
 	 * @param obstacle
 	 *            to be added
 	 */

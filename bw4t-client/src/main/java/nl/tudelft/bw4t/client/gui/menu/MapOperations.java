@@ -27,7 +27,7 @@ public final class MapOperations {
 	/**
 	 * Used for building the pop-up menu that displays the actions a user can
 	 * perform when clicking on a group goal color.
-	 * 
+	 *
 	 * @param color
 	 *            - The color that was clicked.
 	 * @param gui
@@ -72,7 +72,7 @@ public final class MapOperations {
 	}
 
 	private static void buildAskMenu(BlockColor color, BW4TClientGUI gui) {
-		/*BasicMenuOperations.addSectionTitleToPopupMenu("Ask: ",
+		BasicMenuOperations.addSectionTitleToPopupMenu("Ask: ",
 				gui.getjPopupMenu());
 
 		BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
@@ -82,7 +82,7 @@ public final class MapOperations {
 		BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
 				MessageType.WHERESHOULDIGO), gui);
 		BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-				MessageType.WHATCOLORSHOULDIGET), gui);*/
+				MessageType.WHATCOLORSHOULDIGET), gui);
 	}
 
 	private static void buildTellMenu(BlockColor color, BW4TClientGUI gui,
@@ -91,16 +91,16 @@ public final class MapOperations {
 		BasicMenuOperations.addSectionTitleToPopupMenu("Tell: ",
 				gui.getjPopupMenu());
 
-		//BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-		//		MessageType.LOOKINGFOR, null, color.getName(), null), gui);
+		BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
+				MessageType.LOOKINGFOR, null, color.getName(), null), gui);
 		BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
 				MessageType.WILLGETCOLOR, null, color.getName(), null), gui);
-		//BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-		//		MessageType.DROPPEDOFFBLOCK, null, color.getName(), null), gui);
-		//BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
-		//		MessageType.WENEED, null, color.getName(), null), gui);
+		BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
+				MessageType.DROPPEDOFFBLOCK, null, color.getName(), null), gui);
+		BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
+				MessageType.WENEED, null, color.getName(), null), gui);
 
-		/*if (holdingID != null) {
+		if (holdingID != null) {
 			BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
 					MessageType.HASCOLOR, null, color.getName(), null), gui);
 
@@ -113,16 +113,16 @@ public final class MapOperations {
 				menuItem.addActionListener(new MessageSenderActionListener(
 						new BW4TMessage(MessageType.HASCOLORFROMROOM, room
 								.getName(), color.getName(), null), gui
-								.getController()));
+						.getController()));
 				submenu.add(menuItem);
 			}
-		}*/
+		}
 	}
 
 	/**
 	 * Method to determine if the player is close to a box (which means at most
 	 * bot size +1, this matches server requirement for picking up)
-	 * 
+	 *
 	 * @param boxID
 	 *            The box that should be checked.
 	 * @param data

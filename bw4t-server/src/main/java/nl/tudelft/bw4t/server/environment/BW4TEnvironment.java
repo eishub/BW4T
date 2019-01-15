@@ -68,7 +68,7 @@ import repast.simphony.space.continuous.NdPoint;
  * received from remote environments through the server. Remote environments
  * also poll percepts from this environment. Remote environments are notified of
  * entity and environment events also using the server.
- *
+ * 
  * This is a singleton. Needed because we store the map info here.
  */
 public class BW4TEnvironment extends AbstractEnvironment {
@@ -104,7 +104,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	private final String shutdownKey;
 	private boolean collisionEnabled;
 	private boolean drawPathsEnabled;
-
+	
 	private final Random rng = new Random(); //ADDED
 
 	private int nextBotSpawnIndex = 0;
@@ -122,7 +122,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * Create a new instance of this environment
-	 *
+	 * 
 	 * @param scenarioLocation
 	 *            the location of the scenario that should be loaded in Repast
 	 * @param mapLocation
@@ -140,7 +140,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		this.server = server2;
 		mapName = mapLocation;
 		this.scenarioLocation = System.getProperty("user.dir") + "/" + scenarioLocation;
-		this.guiEnabled = false; //guiEnabled;
+		this.guiEnabled = guiEnabled;
 		this.shutdownKey = shutdownKey;
 		this.collisionEnabled = collisionEnabled;
 		this.drawPathsEnabled = drawPathsEnabled;
@@ -148,7 +148,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * Subscribe to hear changes in the setup of the server.
-	 *
+	 * 
 	 * @param listener
 	 */
 	public void addChangeListener(PropertyChangeListener listener) {
@@ -177,7 +177,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * Notify listeners that a new entity is available, server handles correct
 	 * distribution of entities to listeners
-	 *
+	 * 
 	 * @param entity
 	 *            the new entity
 	 */
@@ -241,7 +241,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * initialize Repast with a different map. Does not reset the
 	 * {@link BW4TServer}.
-	 *
+	 * 
 	 * @param parameters
 	 *            like the
 	 * @throws ManagementException
@@ -269,11 +269,11 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * Interpret the given parameter and make sure we use it properly. If the
 	 * {@link Parameter} is a {@link MapParameter} the system stores the map
 	 * locally and returns the new filename.
-	 *
+	 * 
 	 * @param param
 	 *            the param describing the map setting
 	 * @return the filename to be opened for the map
-	 *
+	 * 
 	 */
 	private String prepareMapParameter(Parameter param) {
 		String mapname = null;
@@ -304,7 +304,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * Launch server and start repast.
-	 *
+	 * 
 	 * @throws IOException
 	 * @throws ManagementException
 	 * @throws ScenarioLoadException
@@ -318,7 +318,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * Launch the server
-	 *
+	 * 
 	 * @throws RemoteException
 	 * @throws ManagementException
 	 * @throws MalformedURLException
@@ -335,7 +335,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * Launches the Repast framework and GUI. Does not return until there is an
 	 * exception or getState()==KILLED. After stopping, runner is set back to
 	 * null.
-	 *
+	 * 
 	 * @throws IOException
 	 * @throws ScenarioLoadException
 	 * @throws JAXBException
@@ -351,7 +351,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * Get the instance of this environment
-	 *
+	 * 
 	 * @return the instance
 	 */
 	public static BW4TEnvironment getInstance() {
@@ -368,7 +368,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * Get the currently active map loader, or make a default one if none are
 	 * present.
-	 *
+	 * 
 	 * @return the map loader
 	 */
 	public BW4TServerMapListerner getMapLoader() {
@@ -388,7 +388,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * Get the actual path for the given map name.
-	 *
+	 * 
 	 * @param name
 	 *            the name of the map
 	 * @return the path to the actual file
@@ -399,7 +399,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * Set the map name and reset the loaded state of the map.
-	 *
+	 * 
 	 * @param mapName
 	 */
 	public void setMapName(String mapName) {
@@ -414,7 +414,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * Check whether an action is supported by this environment.
-	 *
+	 * 
 	 * @param arg0
 	 *            the action that should be checked
 	 * @return true if there is an entity, a dropzone and sequence not yet
@@ -429,7 +429,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * Check whether an action is supported by an entity type, always returns
 	 * true for now
-	 *
+	 * 
 	 * @param arg0
 	 *            the action that should be checked
 	 * @param arg1
@@ -443,7 +443,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * Check whether a state transition is valid, for now always returns true
-	 *
+	 * 
 	 * @param oldState
 	 *            the old state of the environment
 	 * @param newState
@@ -458,7 +458,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * Helper method to allow the server to call actions received from attached
 	 * clients
-	 *
+	 * 
 	 * @param entity
 	 *            the entity that should perform the action
 	 * @param action
@@ -480,7 +480,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * Helper method to allow the server to get all percepts for a connected
 	 * client.
-	 *
+	 * 
 	 * This function is synchronized to ensure that multiple calls are properly
 	 * sequenced. This is important because getAllPercepts must 'lock' the
 	 * environment and parallel calls would cause overlapping 'locks' taken at
@@ -491,7 +491,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 *
 	 * It seems that this new function is created because
 	 * {@link AbstractEnvironment#getAllPerceptsFromEntity(String)} is final.
-	 *
+	 * 
 	 * @param entity
 	 *            , the entity for which all percepts should be gotten
 	 * @return all percepts for the entity
@@ -515,7 +515,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * BW4TEnvironment, causing this flag to remain true while repast has in
 	 * fact stopped. We detect this only when the user turns 'on' the Repast
 	 * environment again, in {@link BW4TBuilder#build()}.
-	 *
+	 * 
 	 * @return true or false of the map is loaded
 	 */
 	public boolean isMapFullyLoaded() {
@@ -536,7 +536,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * Enable collision detection between bots.
-	 *
+	 * 
 	 * @param state
 	 *            True if collision detection has to be enabled.
 	 */
@@ -567,7 +567,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 			notifyChange();
 		}
 	}
-
+	
 	public boolean getIsThrottled() {							//ADDED
 		return stepper == null || stepper.getIsThrottled();
 	}
@@ -587,7 +587,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * reset using parameters for initial situation. Does not kill the server.
 	 * Returns after reset is complete.
-	 *
+	 * 
 	 * @param parameters
 	 *            only the map parameter is accepted
 	 * @throws ManagementException
@@ -605,7 +605,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * reset to initial situation. Returns after reset is complete
-	 *
+	 * 
 	 * @param resetNetwork
 	 *            Should we restart the network server?
 	 */
@@ -632,7 +632,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * Take down the simulation: remove all entities, stop the stepper. Stop the
 	 * {@link ServerContextDisplay}.
-	 *
+	 * 
 	 * @throws ManagementException
 	 */
 	private void takeDownSimulation() throws ManagementException {
@@ -640,27 +640,24 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		// this should set state->KILLED which stops stepper.
 		removeAllEntities();
 
-		//stepper.terminate();
-		if (this.stepper != null) {
-			this.stepper.terminate();
-		}
+		if (this.stepper != null) { 
+			this.stepper.terminate(); 
+		} 
 		if (contextDisplay != null) {
 			contextDisplay.close();
-			//contextDisplay = null;
 		}
-		//serverMap.setContext(null);
-		if (this.serverMap != null) {
-			this.serverMap.setContext(null);
-		}
+		if (this.serverMap != null) { 
+			this.serverMap.setContext(null); 
+		} 
 	}
-
+	
 	public boolean hasContext() {
 		return this.serverMap.hasContext();
 	}
 
 	/**
 	 * get the repast current context. May be null if Repast not running now.
-	 *
+	 * 
 	 * @return Repast {@link Context}.
 	 */
 	public Context<Object> getContext() {
@@ -670,7 +667,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * Set a new repast Context. May be null if Repast stopped running. Called
 	 * from {@link BW4TBuilder} when repast gives us context.
-	 *
+	 * 
 	 * @param c
 	 *            the new context
 	 */
@@ -707,7 +704,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * Stop this BW4TEnvironment completely.
-	 *
+	 * 
 	 * @param key
 	 *            the key required to stop the system
 	 */
@@ -751,7 +748,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * Selects a spawn point from the list of entities in the map. Using an
 	 * index that rotates through the number of spawns.
-	 *
+	 * 
 	 * @return the coordinates of the spawn point
 	 */
 	private Point2D getNextBotSpawnPoint() {
@@ -788,7 +785,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * Spawns a new Robot according to the given specifications and notifies the
 	 * given client.
-	 *
+	 * 
 	 * @param bots
 	 *            list of bots to spawn
 	 * @param client
@@ -825,7 +822,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * Spawns a new e-Partner according to the given specifications and notifies
 	 * the given client.
-	 *
+	 * 
 	 * @param epartners
 	 *            list of epartners to spawn
 	 * @param client
@@ -865,7 +862,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * Spawns a new Robot according to the given specifications and notifies the
 	 * given client.
-	 *
+	 * 
 	 * @param c
 	 *            the configuration to use
 	 * @throws EntityException
@@ -889,7 +886,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * Spawns a new EPartner according to the given specifications and notifies
 	 * the given client.
-	 *
+	 * 
 	 * @param c
 	 *            the configuration to use
 	 * @param point
@@ -911,7 +908,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * Get all agents associated with the server that calls us.
-	 *
+	 * 
 	 * @return
 	 * @throws ServerNotActiveException
 	 */
@@ -927,7 +924,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 
 	/**
 	 * Frees all agents associated with the client
-	 *
+	 * 
 	 * @param client
 	 * @throws ServerNotActiveException
 	 * @throws EntityException
@@ -989,7 +986,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	/**
 	 * @param client
 	 * @return Get list of all agents associated with given client
-	 *
+	 * 
 	 */
 	public Set<String> getClientAgents(BW4TClientActions client) {
 		return MapUtils.getKeys(agentLocations, client);

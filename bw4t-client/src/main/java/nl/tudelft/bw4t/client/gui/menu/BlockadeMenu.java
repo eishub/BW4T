@@ -19,7 +19,7 @@ import nl.tudelft.bw4t.map.view.ViewEntity;
 public class BlockadeMenu {
 	/**
 	 * Builds a pop up menu for when the player clicked on a hallway
-	 * 
+	 *
 	 * @param gui
 	 *            gui on which the popUpMenu will be build
 	 */
@@ -43,7 +43,7 @@ public class BlockadeMenu {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param gui
 	 *            gui on which the popUpMenu will be build
 	 * @param cmc
@@ -56,14 +56,14 @@ public class BlockadeMenu {
 	public static void buildTellMenu(BW4TClientGUI gui,
 			ClientMapController cmc, ViewBlock holdingID, Color entityColor) {
 		JMenuItem menuItem;
-		/*BasicMenuOperations.addSectionTitleToPopupMenu("Tell: ",
+		BasicMenuOperations.addSectionTitleToPopupMenu("Tell: ",
 				gui.getjPopupMenu());
 
 		for (Zone roomInfo : cmc.getRooms()) {
 			BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
 					MessageType.AMWAITINGOUTSIDEROOM, roomInfo.getName(), null,
 					null), gui);
-		}*/
+		}
 
 		tellMenuHolding(gui, cmc, holdingID, entityColor);
 
@@ -73,7 +73,7 @@ public class BlockadeMenu {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param gui
 	 *            gui on which the popUpMenu will be build
 	 * @param cmc
@@ -93,7 +93,7 @@ public class BlockadeMenu {
 			String colorAsString = BasicMenuOperations.getColor(
 					ColorTranslator.translate2ColorString(entityColor),
 					ourEntity);
-			/*BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
+			BasicMenuOperations.addMenuItemToPopupMenu(new BW4TMessage(
 					MessageType.HASCOLOR, null, colorAsString, null), gui);
 
 			JMenu submenu = BasicMenuOperations.addSubMenuToPopupMenu(
@@ -105,9 +105,9 @@ public class BlockadeMenu {
 				menuItem.addActionListener(new MessageSenderActionListener(
 						new BW4TMessage(MessageType.HASCOLOR, roomInfo
 								.getName(), colorAsString, null), gui
-								.getController()));
+						.getController()));
 				submenu.add(menuItem);
-			}*/
+			}
 		}
 	}
 

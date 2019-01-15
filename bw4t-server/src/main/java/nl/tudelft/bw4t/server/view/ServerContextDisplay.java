@@ -1,12 +1,12 @@
 package nl.tudelft.bw4t.server.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.Container;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -18,6 +18,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -31,8 +32,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.BorderFactory;
-import java.awt.Color;
 
 import org.apache.log4j.Logger;
 
@@ -139,7 +138,7 @@ class ControlPanel extends JPanel {
 
 	/** The collision checkbox. */
 	private final JCheckBox collisionCheckbox;
-
+	
 	/** The warning label for high FPSes. */
 	private final JLabel fpsWarningLabel;
 
@@ -156,7 +155,7 @@ class ControlPanel extends JPanel {
 		slider = new JSlider(Stepper.MIN_DELAY, Stepper.MAX_DELAY, BW4TEnvironment.getInstance().getDelay());
 		slider.setEnabled(false);
 		
-		this.fpsWarningLabel = new JLabel("High FPS settings may cause bugs.");
+		this.fpsWarningLabel = new JLabel("High FPS settings may cause unexpected behaviour.");
 		this.fpsWarningLabel.setForeground(Color.RED);
 		this.fpsWarningLabel.setVisible(BW4TEnvironment.getInstance().getDelay() < 10);
 
@@ -167,9 +166,9 @@ class ControlPanel extends JPanel {
 		add(new MapSelector(displayer), BorderLayout.NORTH);
 
 		collisionCheckbox = new JCheckBox("Enable Collisions", BW4TEnvironment.getInstance().isCollisionEnabled());
-		//add(collisionCheckbox, BorderLayout.SOUTH);
+		add(collisionCheckbox, BorderLayout.SOUTH);
 		
-		final JCheckBox noBrakesCheckbox = new JCheckBox("NO BRAKES", !BW4TEnvironment.getInstance().getIsThrottled());
+		final JCheckBox noBrakesCheckbox = new JCheckBox("No Max on FPS", !BW4TEnvironment.getInstance().getIsThrottled());
 		
 		JPanel labelContainer = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -184,7 +183,7 @@ class ControlPanel extends JPanel {
 				BW4TEnvironment.getInstance().setCollisionEnabled(e.getStateChange() == ItemEvent.SELECTED);
 			}
 		});
-
+		
 		noBrakesCheckbox.addItemListener(new ItemListener() {
 			@Override
 			 public void itemStateChanged(ItemEvent e) {
@@ -219,11 +218,9 @@ class ControlPanel extends JPanel {
 
 		// 3196 FIXME delay startup of de UI till the stepper is ready.
 		new Timer().schedule(new TimerTask() {
-
 			@Override
 			public void run() {
 				SwingUtilities.invokeLater(new Runnable() {
-
 					@Override
 					public void run() {
 						slider.setEnabled(BW4TEnvironment.getInstance().getIsThrottled());
@@ -232,13 +229,12 @@ class ControlPanel extends JPanel {
 				});
 			}
 		}, 1000);
-		//updateTpsDisplay();
 		
 		// Continuously update the fps counter.
 				new Timer().schedule(new TimerTask() {
 					@Override
 					public void run() {
-		updateTpsDisplay();
+						updateTpsDisplay();
 					}
 				}, 1000, 10);
 
@@ -260,7 +256,6 @@ class ControlPanel extends JPanel {
 	 * Update the tps display.
 	 */
 	public void updateTpsDisplay() {
-		//tpsDisplay.setText(String.format("%03.1f fps", 1000.f / BW4TEnvironment.getInstance().getDelay()));
 		if (BW4TEnvironment.getInstance().getIsThrottled()) {
 			tpsDisplay.setText(String.format("%03.1f fps", 1000.f / BW4TEnvironment.getInstance().getDelay()));
 		} else {

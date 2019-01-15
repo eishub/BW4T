@@ -100,24 +100,12 @@ public class RoomLocatorTest {
 	/** @return The list of parameters to use for testing */
 	@Parameters(name = "{index} - {0},{1}")
 	public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{
-                {0,             0,              BLOCKSROOM, BLOCKSROOM},
-                {0,             1 - OFFSET,     BLOCKSROOM, BLOCKSROOM},
-                {1 - OFFSET,    0,              BLOCKSROOM, BLOCKSROOM},
-                {1 - OFFSET,    1 - OFFSET,     BLOCKSROOM, BLOCKSROOM},
-                {0.5,           0.5,            BLOCKSROOM, BLOCKSROOM},
-                {10,            10,             DROPZONE,   null},
-                {10,            11 - OFFSET,    DROPZONE,   null},
-                {11 - OFFSET,   10,             DROPZONE,   null},
-                {11 - OFFSET,   11 - OFFSET,    DROPZONE,   null},
-                {10.5,          10.5,           DROPZONE,   null},
-                {0,             0 - OFFSET,     null,       null},
-                {0 - OFFSET,    0,              null,       null},
-                {0 - OFFSET,    0 - OFFSET,     null,       null},
-                {0,             1,              null,       null},
-                {1,             0,              null,       null},
-                {1,             1,              null,       null}
-        });
+		return Arrays.asList(new Object[][] { { 0, 0, BLOCKSROOM, BLOCKSROOM },
+				{ 0, 1 - OFFSET, BLOCKSROOM, BLOCKSROOM }, { 1 - OFFSET, 0, BLOCKSROOM, BLOCKSROOM },
+				{ 1 - OFFSET, 1 - OFFSET, BLOCKSROOM, BLOCKSROOM }, { 0.5, 0.5, BLOCKSROOM, BLOCKSROOM },
+				{ 10, 10, DROPZONE, null }, { 10, 11 - OFFSET, DROPZONE, null }, { 11 - OFFSET, 10, DROPZONE, null },
+				{ 11 - OFFSET, 11 - OFFSET, DROPZONE, null }, { 10.5, 10.5, DROPZONE, null },
+				{ 0, 0 - OFFSET, null, null }, { 0 - OFFSET, 0, null, null }, { 0 - OFFSET, 0 - OFFSET, null, null },
+				{ 0, 1, null, null }, { 1, 0, null, null }, { 1, 1, null, null } });
 	}
-
 }
