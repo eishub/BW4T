@@ -8,7 +8,6 @@ import nl.tudelft.bw4t.client.controller.ClientMapController;
 import nl.tudelft.bw4t.client.gui.BW4TClientGUI;
 import nl.tudelft.bw4t.client.gui.listeners.GotoPositionActionListener;
 import nl.tudelft.bw4t.client.gui.listeners.PutdownActionListener;
-import nl.tudelft.bw4t.map.renderer.MapRenderSettings;
 import nl.tudelft.bw4t.map.view.ViewBlock;
 
 /**
@@ -25,7 +24,7 @@ public final class HallwayMenu {
 	 * indicates what the first menu item will say. In normal circumstances, it
 	 * says "go to here". When dealing with a charging zone, it says "go
 	 * charge".
-	 * 
+	 *
 	 * @param gui
 	 *            gui on which the popUpMenu will be build.
 	 * @param gotohall
@@ -34,7 +33,6 @@ public final class HallwayMenu {
 	public static void buildPopUpMenuForHallway(BW4TClientGUI gui, String gotohall) {
 		gui.getjPopupMenu().removeAll();
 		ClientMapController cmc = gui.getController().getMapController();
-		MapRenderSettings set = cmc.getRenderSettings();
 
 		ViewBlock holdingID = cmc.getTheBot().getTopBlock();
 		Color entityColor = cmc.getTheBot().getColor();

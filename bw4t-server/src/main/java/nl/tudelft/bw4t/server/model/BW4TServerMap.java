@@ -30,7 +30,7 @@ public class BW4TServerMap {
 	 *            the map
 	 */
 	public BW4TServerMap(NewMap map) {
-        this.setMap(map);
+		setMap(map);
 	}
 
 	/**
@@ -166,7 +166,7 @@ public class BW4TServerMap {
 	@SuppressWarnings("unchecked")
 	public <T> Set<T> getObjectsFromContext(Class<T> clazz) {
 		if (!hasContext()) {
-            return new HashSet<T>(0);
+			return new HashSet<>(0);
 		}
 		IndexedIterable<Object> objects = getContext().getObjects(clazz);
 		Set<T> elements = new HashSet<>(objects.size());
