@@ -168,7 +168,7 @@ class ControlPanel extends JPanel {
 		collisionCheckbox = new JCheckBox("Enable Collisions", BW4TEnvironment.getInstance().isCollisionEnabled());
 		add(collisionCheckbox, BorderLayout.SOUTH);
 		
-		final JCheckBox noBrakesCheckbox = new JCheckBox("No Max on FPS", !BW4TEnvironment.getInstance().getIsThrottled());
+		final JCheckBox noBrakesCheckbox = new JCheckBox("Uncap FPS", !BW4TEnvironment.getInstance().getIsThrottled());
 		
 		JPanel labelContainer = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));

@@ -204,7 +204,7 @@ public class ClientController implements EntityComboModelProvider {
 
 		if (message.contains("I want to go") || message.contains("You forgot me")) {
 			getEpartnerChatHistory().add(sender + ": " + message);
-		} else if (!message.equalsIgnoreCase("ok")) {
+		} else if (!message.equalsIgnoreCase("ok")) { // ignore stub messages
 			getBotChatHistory().add(sender + ": " + message);
 		}
 
