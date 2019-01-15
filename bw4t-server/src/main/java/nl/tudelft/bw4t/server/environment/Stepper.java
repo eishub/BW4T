@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 
 import eis.eis2java.environment.AbstractEnvironment;
 import eis.iilang.EnvironmentState;
-import nl.tudelft.bw4t.server.logging.BotLog;
 import repast.simphony.scenario.ScenarioLoadException;
 
 /**
@@ -14,7 +13,6 @@ import repast.simphony.scenario.ScenarioLoadException;
  * environment run mode and the loopDelay setting.
  */
 public class Stepper implements Runnable {
-
 	/**
 	 * The log4j logger, logs to the console.
 	 */
@@ -38,7 +36,7 @@ public class Stepper implements Runnable {
 	 */
 	private static boolean throttle = true;
 	private boolean running = true;
-
+	
 	private long stepTime = 0;
 	
 	private static long nrSteps = 0;
@@ -60,8 +58,7 @@ public class Stepper implements Runnable {
 
 					/*
 					 * note: busy-wait since we have to be prepared to be killed
-					 * also if env is in pause mode. The sleep avoid sucking
-					 * CPU.
+					 * also if env is in pause mode. The sleep avoid CPU use.
 					 */
 					if (environment.getState() == EnvironmentState.RUNNING) {
 						if (runner.getModelActionCount() == 0) {
@@ -71,11 +68,9 @@ public class Stepper implements Runnable {
 						nrSteps = nrSteps + 1;
 					}
 					try {
-						//Thread.sleep(loopDelay);
 						if (throttle) {
-						Thread.sleep(loopDelay);
+							Thread.sleep(loopDelay);
 						}
-
 					} catch (InterruptedException e) {
 						LOGGER.warn("The main loop was interrupted.", e);
 					}
@@ -111,9 +106,8 @@ public class Stepper implements Runnable {
 					"speed should be >=" + MIN_DELAY + " and <= " + MAX_DELAY + " but got " + value);
 		}
 		loopDelay = value;
-
 	}
-
+	
 	public boolean getIsThrottled() {
 		return throttle;
 	}

@@ -46,20 +46,22 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	private static final Logger LOGGER = Logger.getLogger(AbstractRobot.class);
 
 	/**
-	 * AgentRecord object for this Robot, needed for logging. It needs to be set up 
-	 * at the initialization of the object, because we otherwise get an Exception 
-	 * when adding Robots after we have added the rooms to the environment.
+	 * AgentRecord object for this Robot, needed for logging. It needs to be set
+	 * up at the initialization of the object, because we otherwise get an
+	 * Exception when adding Robots after we have added the rooms to the
+	 * environment.
 	 */
 	private AgentRecord agentRecord = new AgentRecord("");
 
 	/**
-	 * The distance which it can move per tick. This should never be larger than the
-	 * door width because that might cause the bot to attempt to jump over a door
-	 * (which will fail).
+	 * The distance which it can move per tick. This should never be larger than
+	 * the door width because that might cause the bot to attempt to jump over a
+	 * door (which will fail).
 	 */
 	public static final double MAX_MOVE_DISTANCE = .5;
 	/**
-	 * When we are this close or closer, we are effectively at the target position.
+	 * When we are this close or closer, we are effectively at the target
+	 * position.
 	 */
 	public static final double MIN_MOVE_DISTANCE = .001;
 	/** The distance which it can reach with its arm to pick up a block. */
@@ -85,25 +87,26 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	private int grippercap = 1;
 
 	/**
-	 * a robot has a battery a battery has a power value of how much the capacity
-	 * should increment or decrement.
+	 * a robot has a battery a battery has a power value of how much the
+	 * capacity should increment or decrement.
 	 */
 	private Battery battery;
 
 	/**
-	 * 
+	 *
 	 * Saves the robots handicap.
 	 */
 	private List<String> handicapsList;
 
 	/**
-	 * The stack of blocks the robot is holding. Notice: Stack has the last element 
-	 * of the list as 'top'. This is the reverse from the way we perceive stacks..
+	 * The stack of blocks the robot is holding. Notice: Stack has the last
+	 * element of the list as 'top'. This is the reverse from the way we
+	 * perceive stacks..
 	 */
 	private final Stack<Block> holding;
 	/**
-	 * set to true if we have to cancel a motion due to a collision. A collision is
-	 * caused by an attempt to move into or out of a room
+	 * set to true if we have to cancel a motion due to a collision. A collision
+	 * is caused by an attempt to move into or out of a room
 	 */
 	private boolean collided = false;
 
@@ -126,8 +129,8 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	private IRobot topMostHandicap = this;
 
 	/**
-	 * Returns whether or not the bot has ever stood free from other obstacles. Used
-	 * for collision allowance during the start.
+	 * Returns whether or not the bot has ever stood free from other obstacles.
+	 * Used for collision allowance during the start.
 	 */
 	private boolean hasBeenFree = false;
 
@@ -135,13 +138,13 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	 * Obstacles on the path of the robot
 	 */
 	private List<BoundedMoveableObject> obstacles = new LinkedList<>();
-	
-	// used for placing dropped blocks	
+
+	// used for placing dropped blocks
 	private Random random = new Random();
 
 	/**
 	 * Creates a new robot.
-	 * 
+	 *
 	 * @param pname
 	 *            The "human-friendly" name of the robot.
 	 * @param space
@@ -163,7 +166,8 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		setSize(this.size, this.size);
 
 		/**
-		 * This is where the battery value will be fetched from the Bot Store GUI.
+		 * This is where the battery value will be fetched from the Bot Store
+		 * GUI.
 		 */
 		this.battery = new Battery(Integer.MAX_VALUE, Integer.MAX_VALUE, 0);
 
@@ -251,7 +255,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	public boolean canPickUp(BoundedMoveableObject obj) {
 		if (obj instanceof Block) {
 			Block b = (Block) obj;
-			return (distanceTo(obj.getLocation()) <= this.topMostHandicap.getSize() + ARM_DISTANCE) && b.isFree() 
+			return (distanceTo(obj.getLocation()) <= this.topMostHandicap.getSize() + ARM_DISTANCE) && b.isFree()
 					&& (this.holding.size() < this.grippercap);
 		}
 		return false;
@@ -280,16 +284,19 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 				// bot was not in the dropzone.. Are we in a room?
 				Zone ourzone = getZone();
 				if (ourzone instanceof Room) {
-					Room room = (Room) ourzone;	
-					@SuppressWarnings({ "unchecked", "rawtypes" })	
-					Iterable<Block> allBlocks = (Iterable) this.getContext().getObjects(Block.class);	
-					List<Rectangle2D> blocks = new LinkedList<>();	
-					for (Block block : MapUtils.selectInside(allBlocks, ourzone.getBoundingBox())) {	
-						blocks.add(block.getBoundingBox());	
+					Room room = (Room) ourzone;
+					@SuppressWarnings({ "unchecked", "rawtypes" })
+					Iterable<Block> allBlocks = (Iterable) this.getContext().getObjects(Block.class);
+					List<Rectangle2D> blocks = new LinkedList<>();
+					for (Block block : MapUtils.selectInside(allBlocks, ourzone.getBoundingBox())) {
+						blocks.add(block.getBoundingBox());
 					}
+
+					// We are in a room so can drop the block
 					b.setHeldBy(null);
 					b.addToContext();
-					Rectangle2D newpos = MapUtils.findFreePlace(room.getBoundingBox(), blocks, random);						// dropped.
+
+					Rectangle2D newpos = MapUtils.findFreePlace(room.getBoundingBox(), blocks, random);
 					b.moveTo(newpos.getCenterX(), newpos.getCenterY());
 				}
 			}
@@ -333,15 +340,15 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		Door door = getCurrentDoor(startx, starty);
 
 		/**
-		 * if start and end are both in the same 'room' (outside is the 'null' room).
-		 * Then free walk always possible.
+		 * if start and end are both in the same 'room' (outside is the 'null'
+		 * room). Then free walk always possible.
 		 */
 		List<Zone> endzones = ZoneLocator.getZonesAt(endx, endy);
 		Zone startzone = ZoneLocator.getZoneAt(startx, starty);
 
 		/**
-		 * If there is overlap in zones, ALL zones must be clear. Note, entering a free
-		 * space is always ok.
+		 * If there is overlap in zones, ALL zones must be clear. Note, entering
+		 * a free space is always ok.
 		 */
 		MoveType result = MoveType.ENTERING_FREESPACE;
 
@@ -445,7 +452,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 
 	/**
 	 * Actually moves the bot.
-	 * 
+	 *
 	 * @param distance
 	 *            distance over which it must move.
 	 */
@@ -459,7 +466,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		double[] displacement = SpatialMath.getDisplacement(2, 0, movingDistance, angle);
 
 		try {
-			NdPoint destination = new NdPoint(getLocation().getX() + displacement[0], 
+			NdPoint destination = new NdPoint(getLocation().getX() + displacement[0],
 					getLocation().getY() + displacement[1]);
 
 			// Check if the robot is alone on its map point
@@ -508,9 +515,9 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	}
 
 	/**
-	 * Check if the destination location is vacant, if not throw an exception. Only
-	 * relevant if collisions are enabled.
-	 * 
+	 * Check if the destination location is vacant, if not throw an exception.
+	 * Only relevant if collisions are enabled.
+	 *
 	 * @param destination
 	 *            the destination
 	 * @throws DestinationOccupiedException
@@ -529,9 +536,9 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	}
 
 	/**
-	 * throw if bot!=this and box and bot overlap (collide). Used to check if some
-	 * other bot is already occupying a box.
-	 * 
+	 * throw if bot!=this and box and bot overlap (collide). Used to check if
+	 * some other bot is already occupying a box.
+	 *
 	 * @param destination
 	 *            to check
 	 * @param box
@@ -541,19 +548,19 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	 * @throws DestinationOccupiedException
 	 *             already occupied
 	 */
-	private void checkDestination(NdPoint destination, Rectangle2D.Double box, AbstractRobot bot) 
+	private void checkDestination(NdPoint destination, Rectangle2D.Double box, AbstractRobot bot)
 			throws DestinationOccupiedException {
 		if ((this != bot) && (box.intersects(bot.getBoundingBox()) || bot.getBoundingBox().intersects(box)
-						|| box.contains(bot.getBoundingBox()) || bot.getBoundingBox().contains(box))) {
+				|| box.contains(bot.getBoundingBox()) || bot.getBoundingBox().contains(box))) {
 			throw new DestinationOccupiedException(
 					"Grid [" + destination.getX() + "," + destination.getY() + "] is occupied by " + bot, bot);
 		}
 	}
 
 	/**
-	 * Function that creates a rectangle the same size as the bot centered at the
-	 * destination locations.
-	 * 
+	 * Function that creates a rectangle the same size as the bot centered at
+	 * the destination locations.
+	 *
 	 * @param destination
 	 *            The destination its centered at.
 	 * @return the box
@@ -571,9 +578,9 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	}
 
 	/**
-	 * Retrieve all neighbouring robots with an extent of 10. DOC why is this extent
-	 * 10? Is this a bug?
-	 * 
+	 * Retrieve all neighbouring robots with an extent of 10. DOC why is this
+	 * extent 10? Is this a bug?
+	 *
 	 * @return neighbours
 	 */
 	private List<GridCell<AbstractRobot>> getNeighbours() {
@@ -622,7 +629,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 
 	/**
 	 * Sets the size of a robot to a certain integer
-	 * 
+	 *
 	 * @param s
 	 *            int
 	 */
@@ -740,7 +747,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 
 	/**
 	 * Adds obstacles.
-	 * 
+	 *
 	 * @param obstacle
 	 *            to be added
 	 */
@@ -761,6 +768,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		this.obstacles.clear();
 	}
 
+	@Override
 	public boolean isDestinationUnreachable() {
 		return this.destinationUnreachable;
 	}

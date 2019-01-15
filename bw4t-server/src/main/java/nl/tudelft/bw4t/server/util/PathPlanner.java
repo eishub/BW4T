@@ -192,8 +192,8 @@ public final class PathPlanner {
 		}
 
 		/*
-            Create the edges Each vertex can have 4 edges in GRID space. Since we won't 
-            be considering diagonal travel.
+		 * Create the edges Each vertex can have 4 edges in GRID space. Since we won't
+		 * be considering diagonal travel.
 		 */
 		for (NdPoint vertex : vertices) {
 			NdPoint[] neighbours = { new NdPoint(vertex.getX(), vertex.getY() + 1),
@@ -270,5 +270,4 @@ public final class PathPlanner {
 		}
 		return points;
 	}
-
 }

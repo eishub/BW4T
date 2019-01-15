@@ -53,7 +53,7 @@ public interface IRobot extends BoundedMoveableInterface {
 	/**
 	 * Sets the location to which the robot should move. This also clears the
 	 * {@link #collided} flag.
-	 *
+	 * 
 	 * @param ptargetLocation
 	 *            the location to move to
 	 */
@@ -61,10 +61,10 @@ public interface IRobot extends BoundedMoveableInterface {
 
 	/**
 	 * Check if robot can pick up a block.
-	 *
+	 * 
 	 * @param b
 	 *            the block to check
-	 *
+	 * 
 	 * @return true if the block is within reach and if the bot has gripper space
 	 *         available.
 	 */
@@ -72,7 +72,7 @@ public interface IRobot extends BoundedMoveableInterface {
 
 	/**
 	 * Pick up a block
-	 *
+	 * 
 	 * @param b
 	 *            the block to pick up
 	 */
@@ -87,7 +87,7 @@ public interface IRobot extends BoundedMoveableInterface {
 
 	/**
 	 * A method for dropping multiple blocks at once.
-	 *
+	 * 
 	 * @param amount
 	 *            The amount of blocks that have to be dropped. If the amount is
 	 *            bigger than the actual number of blocks held by the bot, all
@@ -97,7 +97,7 @@ public interface IRobot extends BoundedMoveableInterface {
 
 	/**
 	 * This method moves the robot to a location (x, y).
-	 *
+	 * 
 	 * @param x
 	 *            the coord of location
 	 * @param y
@@ -107,29 +107,29 @@ public interface IRobot extends BoundedMoveableInterface {
 	void moveTo(double x, double y);
 
 	/**
-	 * Check motion type for robot to move to <endx, endy>. The {@link #MoveType}
-	 * gives the actual type / possibility of the move, plus the details why it is
+	 * Check motion type for robot to move to <endx, endy>. The {@link #MoveType} 
+	 * gives the actual type / possibility of the move, plus the details why it is 
 	 * (not) possible.
-	 *
+	 * 
 	 * @param endx
 	 *            is x position of target
 	 * @param endy
 	 *            is y position of target
-	 *
+	 * 
 	 * @return Type of move to access the point (x, y)
 	 */
 	MoveType getMoveType(double endx, double endy);
 
 	/**
 	 * check if we can access endzone from startzone.
-	 *
+	 * 
 	 * @param startzone
 	 *            the zone where the robot is
 	 * @param endzone
 	 *            the zone the robot is going to
 	 * @param door
 	 *            the door leading to the zone
-	 *
+	 * 
 	 * @return Type of move to access the zone.
 	 */
 	MoveType checkZoneAccess(Zone startzone, Zone endzone, Door door);
@@ -137,31 +137,31 @@ public interface IRobot extends BoundedMoveableInterface {
 	/**
 	 * get door at a given position. Note that you can be in a door and at the same
 	 * time in a room. This is because rooms and doors partially overlap usually.
-	 *
+	 * 
 	 * @param x
 	 *            is x coord of position
 	 * @param y
 	 *            is y coord of position
-	 *
+	 * 
 	 * @return Door or null if not on a door
 	 */
 	Door getCurrentDoor(double x, double y);
 
 	/**
 	 * get room at a given position. CHECK maybe move this to RoomLocator?
-	 *
+	 * 
 	 * @param x
 	 *            is x coord of position
 	 * @param y
 	 *            is y coord of position
-	 *
+	 * 
 	 * @return Room or null if not inside a room
 	 */
 	Room getCurrentRoom(double x, double y);
 
 	/**
 	 * Get current zone that the robot is in.
-	 *
+	 * 
 	 * @return zone the bot is in
 	 */
 	Zone getZone();
@@ -169,7 +169,7 @@ public interface IRobot extends BoundedMoveableInterface {
 	/**
 	 * Moves the robot by displacing it for the given amount. If the robot collides
 	 * with something, the movement target is cancelled to avoid continuous bumping.
-	 *
+	 * 
 	 * @param x
 	 *            the displacement in the x-dimension
 	 * @param y
@@ -256,7 +256,7 @@ public interface IRobot extends BoundedMoveableInterface {
 
 	/**
 	 * get the parent, returns null because Robot is the super parent
-	 *
+	 * 
 	 * @return null
 	 */
 	IRobot getParent();
@@ -264,7 +264,7 @@ public interface IRobot extends BoundedMoveableInterface {
 	/**
 	 * Gets the top most parent, 'the Adam / oldest ancestor / founding father'
 	 * robot.
-	 *
+	 * 
 	 * @return The founding father, null if this robot is the founding father.
 	 */
 	IRobot getEarliestParent();
@@ -298,7 +298,7 @@ public interface IRobot extends BoundedMoveableInterface {
 
 	/**
 	 * change the speed multiplier of the robot.
-	 *
+	 * 
 	 * @param speedMod
 	 *            must be rate between 0 and 1. Default is 0.5.
 	 */
@@ -335,7 +335,7 @@ public interface IRobot extends BoundedMoveableInterface {
 
 	/**
 	 * Get the current state of the robot.
-	 *
+	 * 
 	 * @return the state
 	 */
 	State getState();
@@ -343,7 +343,7 @@ public interface IRobot extends BoundedMoveableInterface {
 	/**
 	 * Set a target for the navigating robot. If your start and/or target is not
 	 * near a Zone, we go through the nearest Zone.
-	 *
+	 * 
 	 * @param target
 	 *            the object i will move to
 	 */
@@ -362,11 +362,11 @@ public interface IRobot extends BoundedMoveableInterface {
 	long getId();
 
 	boolean hasContext();
-
+	
 	/**
 	 * Repast stores all objects in a context, this is the context in which this
 	 * IRobot is.
-	 *
+	 * 
 	 * @return a giant HashMap handled by Repast containing a bunch of objects
 	 */
 	Context<Object> getContext();
@@ -381,14 +381,14 @@ public interface IRobot extends BoundedMoveableInterface {
 
 	/**
 	 * get the {@link NavigatingRobot} at the head of the chain.
-	 *
+	 * 
 	 * @return the Robot
 	 */
 	AbstractRobot getSuperParent();
 
 	/**
 	 * Retrieve all obstacles in the path of the robot.
-	 *
+	 * 
 	 * @return the obstacles
 	 */
 	List<BoundedMoveableObject> getObstacles();
@@ -403,5 +403,4 @@ public interface IRobot extends BoundedMoveableInterface {
 	 *         become unreachable.
 	 */
 	boolean isDestinationUnreachable();
-
 }

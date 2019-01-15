@@ -231,12 +231,12 @@ class ControlPanel extends JPanel {
 		}, 1000);
 		
 		// Continuously update the fps counter.
-				new Timer().schedule(new TimerTask() {
-					@Override
-					public void run() {
-						updateTpsDisplay();
-					}
-				}, 1000, 10);
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				updateTpsDisplay();
+			}
+		}, 1000, 10);
 
 		BW4TEnvironment.getInstance().addChangeListener(new PropertyChangeListener() {
 			@Override
@@ -262,7 +262,6 @@ class ControlPanel extends JPanel {
 			final long stepTime = BW4TEnvironment.getInstance().getStepTime();
 			tpsDisplay.setText(String.format("%.1f fps", 1000000000.f / stepTime));
 		}
-
 	}
 }
 

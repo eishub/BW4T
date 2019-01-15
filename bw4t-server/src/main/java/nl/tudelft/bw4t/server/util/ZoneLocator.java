@@ -90,8 +90,8 @@ public final class ZoneLocator {
 	}
 
 	/**
-     * Get zone at given point. If there are multiple zones at the given point, 
-     * the result is one of these.
+	 * Get zone at given point. If there are multiple zones at the given point, the
+	 * result is one of these.
 	 *
 	 * @param location
 	 *            - A {@link NdPoint} containing the {@code x} and {@code y}
@@ -149,5 +149,4 @@ public final class ZoneLocator {
 		}
 		return (Zone) nearest;
 	}
-
 }

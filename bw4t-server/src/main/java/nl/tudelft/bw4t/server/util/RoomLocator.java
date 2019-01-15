@@ -59,7 +59,5 @@ public final class RoomLocator {
 			}
 		}
 		return null;
-
 	}
-
 }
