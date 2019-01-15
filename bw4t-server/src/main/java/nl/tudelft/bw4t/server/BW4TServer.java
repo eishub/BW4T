@@ -125,7 +125,11 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 		client.handleStateChange(getState());
 
 		if (cInfo.getSpeed() != null) {
-			env.setDelay((int) (1000. / cInfo.getSpeed()));
+			if(cInfo.getSpeed() <= 0) { // zero (or negative) speed = uncapped
+				BW4TEnvironment.getInstance().setIsThrottled(false);
+			} else {
+				env.setDelay((int) (1000. / cInfo.getSpeed()));
+			}
 		}
 
 		/*
