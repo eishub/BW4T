@@ -6,14 +6,14 @@ For developer information please follow this [Link to Developer details](DEVELOP
 
 Blocks World for Teams has a client-server architecture. This means that you need to install and run two parts to use it: a client and a server. The server is the Blocks World for Team Server where the real simulation takes place. The client is the agent programming environment, which communicates with the server to run the simulation. This architecture was chosen to allow multi-machine configurations, where multiple users can interact in the same Blocks World. 
 
-This environment is a general EIS environment, you can use it from GOAL but also from other EIS-compatible systems or even stand alone. To install GOAL, please refer to [GOAL](http://ii.tudelft.nl/trac/goal)
+This environment is a general EIS environment, you can use it from GOAL but also from other EIS-compatible systems or even stand alone. To install GOAL, please refer to [GOAL](https://goalapl.atlassian.net/wiki/spaces/GOAL/pages/33041/Download+and+Install+GOAL)
 
 We deliver a number of components to work with this environment:
- * The [BW4T user manual](https://github.com/eishub/BW4T/blob/master/doc/Manuals/BW4T3_instructions.pdf?raw=true).
- * The [BW4T specification manual](https://github.com/eishub/BW4T/blob/master/doc/Manuals/BW4T3%20Specification.pdf?raw=true). explaining all percepts and actions that the BW4T environment provides.
+ * The [BW4T user manual](https://github.com/eishub/BW4T/blob/master/doc/src/main/resources/BW4T3%20Instructions.pdf).
+ * The [BW4T specification manual](https://github.com/eishub/BW4T/blob/master/doc/src/main/resources/BW4T3%20Specification.pdf). explaining all percepts and actions that the BW4T environment provides.
  * client, server, mapeditor, scenarioeditor. All available at the [BW4T release page](https://github.com/eishub/BW4T/releases).
 
-To install BW4T and for all details on how to use the environment and related tools, please consult the [BW4T user manual](https://github.com/eishub/BW4T/blob/master/doc/Manuals/BW4T3_instructions.pdf?raw=true).
+To install BW4T and for all details on how to use the environment and related tools, please consult the [BW4T user manual](https://github.com/eishub/BW4T/blob/master/doc/src/main/resources/BW4T3%20Instructions.pdf).
 
 **WARNING** The collisions and e-partner options are not completely ready for use.
 
