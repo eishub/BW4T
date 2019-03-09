@@ -9,7 +9,7 @@
 	
 	<groupId>eishub.bw4t</groupId>
 	<artifactId>doc</artifactId>
-	<version>1.0.9-SNAPSHOT</version>
+	<version>1.0.9</version>
 	<name>BW4T documentation</name>
 	<description>Documentation about the BW4T environment.</description>
 	<url>http://www.github.com/eishub/${environmentname}</url>
