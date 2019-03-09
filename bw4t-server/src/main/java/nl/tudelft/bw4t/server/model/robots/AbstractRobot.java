@@ -1,10 +1,10 @@
 package nl.tudelft.bw4t.server.model.robots;
 
 import java.awt.geom.Rectangle2D;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.Stack;
 
 import org.apache.log4j.Logger;
@@ -46,22 +46,20 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	private static final Logger LOGGER = Logger.getLogger(AbstractRobot.class);
 
 	/**
-	 * AgentRecord object for this Robot, needed for logging. It needs to be set
-	 * up at the initialization of the object, because we otherwise get an
-	 * Exception when adding Robots after we have added the rooms to the
-	 * environment.
+	 * AgentRecord object for this Robot, needed for logging. It needs to be set up
+	 * at the initialization of the object, because we otherwise get an Exception
+	 * when adding Robots after we have added the rooms to the environment.
 	 */
 	private AgentRecord agentRecord = new AgentRecord("");
 
 	/**
-	 * The distance which it can move per tick. This should never be larger than
-	 * the door width because that might cause the bot to attempt to jump over a
-	 * door (which will fail).
+	 * The distance which it can move per tick. This should never be larger than the
+	 * door width because that might cause the bot to attempt to jump over a door
+	 * (which will fail).
 	 */
 	public static final double MAX_MOVE_DISTANCE = .5;
 	/**
-	 * When we are this close or closer, we are effectively at the target
-	 * position.
+	 * When we are this close or closer, we are effectively at the target position.
 	 */
 	public static final double MIN_MOVE_DISTANCE = .001;
 	/** The distance which it can reach with its arm to pick up a block. */
@@ -87,8 +85,8 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	private int grippercap = 1;
 
 	/**
-	 * a robot has a battery a battery has a power value of how much the
-	 * capacity should increment or decrement.
+	 * a robot has a battery a battery has a power value of how much the capacity
+	 * should increment or decrement.
 	 */
 	private Battery battery;
 
@@ -99,14 +97,13 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	private List<String> handicapsList;
 
 	/**
-	 * The stack of blocks the robot is holding. Notice: Stack has the last
-	 * element of the list as 'top'. This is the reverse from the way we
-	 * perceive stacks..
+	 * The stack of blocks the robot is holding. Notice: Stack has the last element
+	 * of the list as 'top'. This is the reverse from the way we perceive stacks..
 	 */
 	private final Stack<Block> holding;
 	/**
-	 * set to true if we have to cancel a motion due to a collision. A collision
-	 * is caused by an attempt to move into or out of a room
+	 * set to true if we have to cancel a motion due to a collision. A collision is
+	 * caused by an attempt to move into or out of a room
 	 */
 	private boolean collided = false;
 
@@ -129,8 +126,8 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	private IRobot topMostHandicap = this;
 
 	/**
-	 * Returns whether or not the bot has ever stood free from other obstacles.
-	 * Used for collision allowance during the start.
+	 * Returns whether or not the bot has ever stood free from other obstacles. Used
+	 * for collision allowance during the start.
 	 */
 	private boolean hasBeenFree = false;
 
@@ -145,18 +142,12 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	/**
 	 * Creates a new robot.
 	 *
-	 * @param pname
-	 *            The "human-friendly" name of the robot.
-	 * @param space
-	 *            The space in which the robot operates.
-	 * @param grid
-	 *            The grid in which the robot operates.
-	 * @param context
-	 *            The context in which the robot operates.
-	 * @param poneBotPerZone
-	 *            true if max 1 bot in a zone
-	 * @param cap
-	 *            The holding capacity of the robot.
+	 * @param pname          The "human-friendly" name of the robot.
+	 * @param space          The space in which the robot operates.
+	 * @param grid           The grid in which the robot operates.
+	 * @param context        The context in which the robot operates.
+	 * @param poneBotPerZone true if max 1 bot in a zone
+	 * @param cap            The holding capacity of the robot.
 	 */
 	public AbstractRobot(String pname, BW4TServerMap context, boolean poneBotPerZone, int cap) {
 		super(context);
@@ -166,8 +157,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		setSize(this.size, this.size);
 
 		/**
-		 * This is where the battery value will be fetched from the Bot Store
-		 * GUI.
+		 * This is where the battery value will be fetched from the Bot Store GUI.
 		 */
 		this.battery = new Battery(Integer.MAX_VALUE, Integer.MAX_VALUE, 0);
 
@@ -192,7 +182,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	@Override
 	public void connect() {
 		BW4TEnvironment env = BW4TEnvironment.getInstance();
-		HashSet<String> associatedAgents = null;
+		Set<String> associatedAgents = null;
 		try {
 			associatedAgents = env.getAssociatedAgents(getName());
 		} catch (EntityException e) {
@@ -286,7 +276,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 				if (ourzone instanceof Room) {
 					Room room = (Room) ourzone;
 					@SuppressWarnings({ "unchecked", "rawtypes" })
-					Iterable<Block> allBlocks = (Iterable) this.getContext().getObjects(Block.class);
+					Iterable<Block> allBlocks = (Iterable) getContext().getObjects(Block.class);
 					List<Rectangle2D> blocks = new LinkedList<>();
 					for (Block block : MapUtils.selectInside(allBlocks, ourzone.getBoundingBox())) {
 						blocks.add(block.getBoundingBox());
@@ -296,7 +286,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 					b.setHeldBy(null);
 					b.addToContext();
 
-					Rectangle2D newpos = MapUtils.findFreePlace(room.getBoundingBox(), blocks, random);
+					Rectangle2D newpos = MapUtils.findFreePlace(room.getBoundingBox(), blocks, this.random);
 					b.moveTo(newpos.getCenterX(), newpos.getCenterY());
 				}
 			}
@@ -340,15 +330,15 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 		Door door = getCurrentDoor(startx, starty);
 
 		/**
-		 * if start and end are both in the same 'room' (outside is the 'null'
-		 * room). Then free walk always possible.
+		 * if start and end are both in the same 'room' (outside is the 'null' room).
+		 * Then free walk always possible.
 		 */
 		List<Zone> endzones = ZoneLocator.getZonesAt(endx, endy);
 		Zone startzone = ZoneLocator.getZoneAt(startx, starty);
 
 		/**
-		 * If there is overlap in zones, ALL zones must be clear. Note, entering
-		 * a free space is always ok.
+		 * If there is overlap in zones, ALL zones must be clear. Note, entering a free
+		 * space is always ok.
 		 */
 		MoveType result = MoveType.ENTERING_FREESPACE;
 
@@ -453,8 +443,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	/**
 	 * Actually moves the bot.
 	 *
-	 * @param distance
-	 *            distance over which it must move.
+	 * @param distance distance over which it must move.
 	 */
 	private void moveBot(double distance) {
 		double movingDistance = Math.min(distance, MAX_MOVE_DISTANCE * this.speedMod);
@@ -515,13 +504,11 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	}
 
 	/**
-	 * Check if the destination location is vacant, if not throw an exception.
-	 * Only relevant if collisions are enabled.
+	 * Check if the destination location is vacant, if not throw an exception. Only
+	 * relevant if collisions are enabled.
 	 *
-	 * @param destination
-	 *            the destination
-	 * @throws DestinationOccupiedException
-	 *             exceoption thrown
+	 * @param destination the destination
+	 * @throws DestinationOccupiedException exceoption thrown
 	 */
 	private void checkIfDestinationVacant(NdPoint destination) throws DestinationOccupiedException {
 		if (BW4TEnvironment.getInstance().isCollisionEnabled()) {
@@ -536,17 +523,13 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	}
 
 	/**
-	 * throw if bot!=this and box and bot overlap (collide). Used to check if
-	 * some other bot is already occupying a box.
+	 * throw if bot!=this and box and bot overlap (collide). Used to check if some
+	 * other bot is already occupying a box.
 	 *
-	 * @param destination
-	 *            to check
-	 * @param box
-	 *            in which the destination is.
-	 * @param bot
-	 *            to check.
-	 * @throws DestinationOccupiedException
-	 *             already occupied
+	 * @param destination to check
+	 * @param box         in which the destination is.
+	 * @param bot         to check.
+	 * @throws DestinationOccupiedException already occupied
 	 */
 	private void checkDestination(NdPoint destination, Rectangle2D.Double box, AbstractRobot bot)
 			throws DestinationOccupiedException {
@@ -558,11 +541,10 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	}
 
 	/**
-	 * Function that creates a rectangle the same size as the bot centered at
-	 * the destination locations.
+	 * Function that creates a rectangle the same size as the bot centered at the
+	 * destination locations.
 	 *
-	 * @param destination
-	 *            The destination its centered at.
+	 * @param destination The destination its centered at.
 	 * @return the box
 	 */
 	private Rectangle2D.Double getBoundingBoxCenteredAt(NdPoint destination, double padding) {
@@ -578,8 +560,8 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	}
 
 	/**
-	 * Retrieve all neighbouring robots with an extent of 10. DOC why is this
-	 * extent 10? Is this a bug?
+	 * Retrieve all neighbouring robots with an extent of 10. DOC why is this extent
+	 * 10? Is this a bug?
 	 *
 	 * @return neighbours
 	 */
@@ -630,8 +612,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	/**
 	 * Sets the size of a robot to a certain integer
 	 *
-	 * @param s
-	 *            int
+	 * @param s int
 	 */
 	@Override
 	public void setSize(int s) {
@@ -748,8 +729,7 @@ public abstract class AbstractRobot extends BoundedMoveableObject implements IRo
 	/**
 	 * Adds obstacles.
 	 *
-	 * @param obstacle
-	 *            to be added
+	 * @param obstacle to be added
 	 */
 	public void addObstacle(BoundedMoveableObject obstacle) {
 		this.obstacles.add(obstacle);
