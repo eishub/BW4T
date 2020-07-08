@@ -1,0 +1,27 @@
+#
+# Configuration file for Travis CI
+# https://travis-ci.org
+#
+
+language: java
+
+os: linux
+
+dist: bionic
+
+jdk:
+  - openjdk8
+
+addons:
+  apt:
+    packages:
+      - xvfb
+
+before_install:
+  - export DISPLAY=':10.0'
+  - Xvfb :10 -screen 0 1024x768x24 > /dev/null 2>&1 &
+
+install:
+  - mvn install -DskipTests=true -B -V
+
+
