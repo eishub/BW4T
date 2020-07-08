@@ -47,7 +47,7 @@ import nl.tudelft.bw4t.scenariogui.util.OptionPromptHelper;
 public class MenuBarTest {
 
 	private static final String BASE = System.getProperty("user.dir") + "/src/test/resources/";
-	private static final String TMPBASE = System.getProperty("java.io.tmpdir");
+	private static final String TMPBASE = System.getProperty("java.io.tmpdir") + File.separator;
 	private static final String FILE_OPEN_PATH = BASE + "open.xml";
 	private static final String FILE_EXPORT_PATH = TMPBASE + "export/";
 	private static final String FILE_SAVE_PATH = TMPBASE + "dummy.xml";
@@ -435,7 +435,7 @@ public class MenuBarTest {
 		assertEquals(configurationPanel.getServerPort(), temp.getServerPort());
 
 		// Finally make sure the confirmation dialog was called.
-		verify(noMockOption, times(1)).showConfirmDialog((Component) any(), anyObject(), anyString(), anyInt(),
+		verify(noMockOption, times(2)).showConfirmDialog((Component) any(), anyObject(), anyString(), anyInt(),
 				anyInt());
 
 		// File chooser should not have been called for the actual opening
@@ -588,7 +588,7 @@ public class MenuBarTest {
 		editor.getTopMenuBar().getMenuItemFileNew().doClick();
 
 		/* Verify that it asked to save */
-		verify(option, times(1)).showConfirmDialog(null, ScenarioEditorController.CONFIRM_SAVE_TXT, "",
+		verify(option, times(2)).showConfirmDialog(null, ScenarioEditorController.CONFIRM_SAVE_TXT, "",
 				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 		assertTrue(editor.getMainPanel().getConfigurationPanel().isDefault());
