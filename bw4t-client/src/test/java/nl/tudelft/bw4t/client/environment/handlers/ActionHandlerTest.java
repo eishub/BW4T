@@ -22,7 +22,7 @@ import nl.tudelft.bw4t.client.environment.ActionHandler;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 
 //@Ignore("Not yet implemented.")
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 public class ActionHandlerTest {
     
     @Mock

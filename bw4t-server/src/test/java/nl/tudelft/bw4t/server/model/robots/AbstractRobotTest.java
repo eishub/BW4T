@@ -17,7 +17,7 @@ import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.grid.Grid;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 @SuppressWarnings("unchecked")
 public class AbstractRobotTest {
 	private ContinuousSpace<Object> space = Mockito.mock(ContinuousSpace.class);

@@ -30,7 +30,7 @@ import repast.simphony.space.grid.Grid;
  * The class <code>BlockTest</code> contains tests for the class
  * <code>{@link Block}</code>.
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 public class BlockTest {
 
 	@Mock

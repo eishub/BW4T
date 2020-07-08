@@ -27,7 +27,7 @@ import repast.simphony.space.grid.Grid;
 /**
  * This test tests the Human bot. It currently tests whether a human bot can pick up and drop an epartner.
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 public class HumanTest {
 
     /**

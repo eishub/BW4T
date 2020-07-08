@@ -32,7 +32,7 @@ import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.Point;
 import nl.tudelft.bw4t.map.Zone;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 public class AbstractMapControllerTest {
     private static final Logger LOGGER = Logger.getLogger(AbstractMapControllerTest.class);
     

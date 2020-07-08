@@ -31,7 +31,7 @@ import repast.simphony.space.grid.Grid;
  * The class <code>BoundedMoveableObjectTest</code> contains tests for the class
  * <code>{@link BoundedMoveableObject}</code>.
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 public class BoundedMoveableObjectTest {
     private static final double DELTA = 1e-15;
     @Mock
