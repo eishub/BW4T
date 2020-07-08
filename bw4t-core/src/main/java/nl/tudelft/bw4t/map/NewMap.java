@@ -171,7 +171,7 @@ public class NewMap implements Serializable {
 	/**
 	 * @param type
 	 *            {@link EntityType}.
-	 * @return List of {@Link Zone} of given type
+	 * @return List of {@link Zone} of given type
 	 */
 	public List<Zone> getZones(Zone.Type type) {
 		List<Zone> list = new LinkedList<>();
@@ -239,8 +239,6 @@ public class NewMap implements Serializable {
 	/**
 	 * Gets the entities available for this map
 	 * 
-	 * @param entities
-	 *            list of entities. Should never be null.
 	 */
 	public List<Entity> getEntities() {
 		return entities;

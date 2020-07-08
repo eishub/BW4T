@@ -17,6 +17,7 @@ import repast.simphony.engine.schedule.ISchedule;
 import repast.simphony.engine.schedule.Schedule;
 import repast.simphony.parameter.SweeperProducer;
 import repast.simphony.scenario.ScenarioLoadException;
+import repast.simphony.engine.environment.Runner;
 
 /**
  * This class implements the repast {@link Runner}. This handles the calls to

@@ -359,7 +359,7 @@ public interface BW4TServerActions extends Remote {
 	void requestInit(Map<String, Parameter> parameters) throws RemoteException, ManagementException;
 
 	/**
-	 * * reset the server, following the requirements for {@link BatchRunner}.
+	 * reset the server, following the requirements for <code>BatchRunner</code>.
 	 * This means that no new entities are created, but the old ones are left
 	 * connected.
 	 * 

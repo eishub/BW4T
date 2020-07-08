@@ -54,8 +54,7 @@ public enum BlockColor implements Serializable {
 	}
 
 	/**
-	 * Calculate the luminosity value using the CIE 1931({@link http
-	 * ://en.wikipedia.org/wiki/CIE_1931_color_space}).
+	 * Calculate the luminosity value using the CIE 1931(<a href="http://en.wikipedia.org/wiki/CIE_1931_color_space">CIE 1931 color space</a>).
 	 * 
 	 * @return the luminosity value
 	 */
@@ -69,7 +68,7 @@ public enum BlockColor implements Serializable {
 	 * convert given letter to its color equivalent
 	 * 
 	 * @param letter
-	 *            is the first letter from the {@link #availableColors} list
+	 *            is the first letter from the {@link #getAvailableColors()} list
 	 * @return Color of given letter
 	 * @throws IllegalArgumentException
 	 *             if unknown color letter is given.

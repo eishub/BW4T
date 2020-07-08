@@ -53,7 +53,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	private static final long serialVersionUID = -3459272460308988888L;
 	/**
 	 * Stores references to all connected clients plus information about them.
-	 * Is not transfered to the clients as it is only used by the server.
+	 * Is not transferred to the clients as it is only used by the server.
 	 */
 	private transient Map<BW4TClientActions, ClientInfo> clients;
 

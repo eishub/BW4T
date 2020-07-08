@@ -18,8 +18,8 @@ public interface OneTimeInitializing {
 	 * object may change to initialized state. After that point, the object must
 	 * stay in initialized state.
 	 * 
-	 * By returnign true, the object indicates that the result from calls to
-	 * {@link #equals(Object)} will be stable and thread safe. This usually
+	 * By returning true, the object indicates that the result from calls to
+	 * <code>equals(Object)</code> will be stable and thread safe. This usually
 	 * means that the fields in the object that are relevant for the equals
 	 * function are frozen.
 	 * 
