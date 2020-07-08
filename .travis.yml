@@ -11,6 +11,7 @@ dist: bionic
 
 jdk:
   - openjdk8
+  - openjdk11
 
 addons:
   apt:
@@ -22,6 +23,6 @@ before_install:
   - Xvfb :10 -screen 0 1024x768x24 > /dev/null 2>&1 &
 
 install:
-  - mvn install -DskipTests=true -B -V
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=false -B -V
 
 
