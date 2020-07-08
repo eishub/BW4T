@@ -10,7 +10,6 @@ import java.util.Set;
 import java.util.Stack;
 
 import org.apache.log4j.Logger;
-import org.omg.CORBA.Environment;
 
 import eis.eis2java.annotation.AsAction;
 import eis.eis2java.annotation.AsPercept;

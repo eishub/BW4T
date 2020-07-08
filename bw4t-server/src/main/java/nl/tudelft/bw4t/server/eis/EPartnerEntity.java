@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.omg.CORBA.Environment;
 
 import eis.eis2java.annotation.AsAction;
 import eis.eis2java.annotation.AsPercept;
