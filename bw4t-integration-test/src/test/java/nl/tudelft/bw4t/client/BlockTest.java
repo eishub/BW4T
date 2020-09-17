@@ -85,7 +85,7 @@ public class BlockTest {
         // Check if the yellow block is present and move to it
         // It should always be present on the Banana map
         TestFunctions.retrievePercepts(bot);
-        Iterator<Percept> percepts = TestFunctions.getPercepts().iterator();
+        Iterator<Percept> percepts = TestFunctions.getPercepts().getAddList().iterator();
         long blockNumber = -1;
         while (percepts.hasNext()) {
             Percept percept = percepts.next();

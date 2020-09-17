@@ -6,16 +6,8 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
-import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
-import nl.tudelft.bw4t.environmentstore.editor.randomizer.controller.RandomizeBlocksController;
-
 /** Create a little menu allowing the user to randomise blocks in the rooms. */
 public class RandomizeBlockFrame extends RandomizeFrame {
-    
-    /** The controller for this view class. */
-    private RandomizeBlocksController controller;
-    
-    /** Serial version UID. */
     private static final long serialVersionUID = 1L;
     
     /** If the user clicks this button the changes will be saved. */
@@ -42,9 +34,8 @@ public class RandomizeBlockFrame extends RandomizeFrame {
      * @param mpc
      *            The controller to be linked to this frame. 
      */
-    public RandomizeBlockFrame(String title, MapPanelController mpc) {
-        super(title, mpc);
-        this.controller = new RandomizeBlocksController(this, mpc);
+    public RandomizeBlockFrame(String title) {
+        super(title);
         
         super.getContentPane().add(numberOfBlocksSpinner, "cell 0 3,growx,aligny top");    
         super.getContentPane().add(applyButton, "flowx,cell 0 15,alignx left,aligny top");

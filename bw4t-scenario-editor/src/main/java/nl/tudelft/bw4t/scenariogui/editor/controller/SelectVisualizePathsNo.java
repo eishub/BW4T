@@ -11,8 +11,7 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
  * in the checkbox.
  */
 public class SelectVisualizePathsNo implements ItemListener {
-
-	private MainPanel view;
+	// private MainPanel view;
 
 	/**
 	 * Create a new listener to the select visualize paths checkboxes.
@@ -21,7 +20,7 @@ public class SelectVisualizePathsNo implements ItemListener {
 	 *            The parent view.
 	 */
 	public SelectVisualizePathsNo(final MainPanel newView) {
-		this.view = newView;
+		// this.view = newView;
 	}
 
 	@Override
@@ -29,5 +28,4 @@ public class SelectVisualizePathsNo implements ItemListener {
 		// It's not there anymore. Quick hack to get this compiling
 		// view.getClientConfig().setVisualizePaths(false);
 	}
-
 }

@@ -36,7 +36,7 @@ public class EGoalFileButton implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         jfc = new JFileChooser();
         jfc.setFileFilter(FileFilters.goalFilter());
-        if (jfc.showOpenDialog(view) == jfc.APPROVE_OPTION) {
+        if (jfc.showOpenDialog(view) == JFileChooser.APPROVE_OPTION) {
             File f = jfc.getSelectedFile();
             String path = f.getAbsolutePath();
             view.getEpartnerGoalFileField().setText(path);

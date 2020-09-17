@@ -16,8 +16,7 @@ public class MenuOptionRandomizeBlocks extends AbstractMenuOption {
      * @param newView the menu the option is on
      * @param controller environment controller
      */
-    public MenuOptionRandomizeBlocks(MenuBar newView,
-            EnvironmentStoreController controller) {
+    public MenuOptionRandomizeBlocks(MenuBar newView, EnvironmentStoreController controller) {
         super(newView, controller);
     }
     
@@ -27,7 +26,7 @@ public class MenuOptionRandomizeBlocks extends AbstractMenuOption {
      * @param e The action event.
      */
     public void actionPerformed(final ActionEvent e) {
-        RandomizeBlockFrame frame = new RandomizeBlockFrame("Blocks", super.getMapController());
+        RandomizeBlockFrame frame = new RandomizeBlockFrame("Blocks");
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }

@@ -9,16 +9,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
-import nl.tudelft.bw4t.environmentstore.editor.controller.MapPanelController;
 
 /** Create a little menu allowing the user to randomise blocks and sequence. */
 public class RandomizeFrame extends JFrame {
-
-    /** Random generated serial version UID. */
     private static final long serialVersionUID = 1993091627565106917L;
-    
-    /** The controller for the map panel liked to this frame. */
-    private MapPanelController mapController;
     
     /** The content panel of this frame. */
     private JPanel contentPane = new JPanel();
@@ -41,9 +35,7 @@ public class RandomizeFrame extends JFrame {
     /**
      * Create the frame.
      */
-    public RandomizeFrame(String title, MapPanelController mpc) {
-        mapController = mpc;
-        
+    public RandomizeFrame(String title) {        
         lblTitle = new JLabel(title);
         setTitle("Randomize " + title);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

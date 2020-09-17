@@ -57,7 +57,7 @@ public class RandomizerBlockFrameTest {
         setUpRoom();
         setUpColors();
 
-        frame = new RandomizeBlockFrame("Sequence", map);
+        frame = new RandomizeBlockFrame("Sequence");
     }
     
     /** Sets up the room we work in. */

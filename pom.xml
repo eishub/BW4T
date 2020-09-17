@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
@@ -6,7 +7,7 @@
 	<artifactId>bw4t</artifactId>
 	<version>-</version>
 	<packaging>pom</packaging>
-	
+
 	<modules>
 		<module>bw4t-server</module>
 		<module>bw4t-client</module>
@@ -17,9 +18,9 @@
 		<module>doc</module>
 	</modules>
 
- <name>The BW4T environment</name>
-<url>https://github.com/eishub/BW4T</url>
-<description>A team of robots searches and brings blocks into the proper order into the dropzone</description>
+	<name>The BW4T environment</name>
+	<url>https://github.com/eishub/BW4T</url>
+	<description>A team of robots searches and brings blocks into the proper order into the dropzone</description>
 
 
 	<properties>
@@ -38,5 +39,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
