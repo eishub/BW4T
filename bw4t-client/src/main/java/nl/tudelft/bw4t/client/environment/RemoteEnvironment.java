@@ -547,7 +547,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	 */
 	@Override
 	public String requiredVersion() {
-		return "0.6.2";
+		return "0.7.0";
 	}
 
 	/**
