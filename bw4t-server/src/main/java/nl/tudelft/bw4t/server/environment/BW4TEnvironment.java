@@ -119,6 +119,8 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * entities associated with that server.
 	 */
 	private Map<String, BW4TClientActions> agentLocations = new HashMap<>();
+	
+	private boolean first = true;
 
 	/**
 	 * Create a new instance of this environment
@@ -208,18 +210,20 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		setState(EnvironmentState.KILLED);
 
 		LOGGER.debug("Removing all entities");
-		for (String entity : this.getEntities()) {
+		List<String> entities = getEntities();
+		for (String entity : entities.toArray(new String[entities.size()])) {
 			try {
-				this.deleteEntity(entity);
+				deleteEntity(entity);
 			} catch (EntityException | RelationException e) {
 				LOGGER.error("Failure to delete entity: " + entity, e);
 			}
 		}
 
 		LOGGER.debug("Remove all (remaining) agents");
-		for (String agent : this.getAgents()) {
+		List<String> agents = getAgents();
+		for (String agent : agents.toArray(new String[agents.size()])) {
 			try {
-				this.unregisterAgent(agent);
+				unregisterAgent(agent);
 			} catch (AgentException e) {
 				LOGGER.error("Failure to unregister agent: " + agent, e);
 			}
@@ -255,7 +259,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
 			return;
 		}
 		setMapName(mapname);
-		reset(false);
 		try {
 			while (!isMapFullyLoaded()) {
 				Thread.sleep(50);
@@ -314,6 +317,10 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		launchServer();
 		setState(EnvironmentState.RUNNING);
 		launchRepast();
+		if (first) {
+			first = false;
+			reset(true);
+		}
 	}
 
 	/**

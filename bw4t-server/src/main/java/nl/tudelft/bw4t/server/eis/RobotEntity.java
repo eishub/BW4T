@@ -811,7 +811,7 @@ public class RobotEntity implements EntityInterface {
 		}
 
 		Zone zone = ZoneLocator.getZoneAt(this.ourRobotLocation.getX(), this.ourRobotLocation.getY());
-		return MapUtils.selectInside(getObjects(type), zone.getBoundingBox());
+		return (zone == null) ? new HashSet<T>(0) : MapUtils.selectInside(getObjects(type), zone.getBoundingBox());
 	}
 	
 	/**	
