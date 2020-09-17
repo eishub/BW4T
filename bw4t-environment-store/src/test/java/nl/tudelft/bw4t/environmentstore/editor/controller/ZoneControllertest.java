@@ -9,20 +9,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ZoneControllertest {
-
     private ZoneModel model;
     
     private MapPanelController mpc;
     
     private ZoneController controller;
-    
-    private UpdateableEditorInterface uei = new UpdateableEditorInterface() {
-        @Override
-        public void update() {
-            // For testing purposes only
-            
-        }
-    };
     
     @Before
     public void setUp() {

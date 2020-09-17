@@ -13,10 +13,7 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 /**
  * This class serves as frame for the BotEditorPanel
  */
-public class BotEditor extends JFrame {
-    
-    private BW4TClientConfig model;
-    
+public class BotEditor extends JFrame {    
     private static final long serialVersionUID = 8114982191029560097L;
 
     private String windowName = "Bot Editor";

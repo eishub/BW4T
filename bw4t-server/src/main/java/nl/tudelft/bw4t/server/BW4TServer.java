@@ -17,6 +17,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+import eis.PerceptUpdate;
 import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
@@ -26,7 +27,6 @@ import eis.exceptions.RelationException;
 import eis.iilang.Action;
 import eis.iilang.EnvironmentState;
 import eis.iilang.Parameter;
-import eis.iilang.Percept;
 import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.network.BW4TClientActions;
 import nl.tudelft.bw4t.network.BW4TServerHiddenActions;
@@ -229,10 +229,9 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Percept performEntityAction(String entity, Action action) throws RemoteException {
-
+	public void performEntityAction(String entity, Action action) throws RemoteException {
 		try {
-			return BW4TEnvironment.getInstance().performClientAction(entity, action);
+			BW4TEnvironment.getInstance().performClientAction(entity, action);
 		} catch (ActException e) {
 			throw new RemoteException("action failed", e);
 		}
@@ -262,8 +261,8 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	}
 
 	@Override
-	public List<Percept> getAllPerceptsFromEntity(String entity) throws RemoteException {
-		return BW4TEnvironment.getInstance().getAllPerceptsFrom(entity);
+	public PerceptUpdate getPerceptsFor(String entity) throws RemoteException {
+		return BW4TEnvironment.getInstance().getPerceptsFor(entity);
 	}
 
 	@Override

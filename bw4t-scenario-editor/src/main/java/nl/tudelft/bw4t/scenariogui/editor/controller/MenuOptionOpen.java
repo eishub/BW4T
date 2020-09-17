@@ -8,7 +8,6 @@ import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.bind.JAXBException;
 
-import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
@@ -150,12 +149,7 @@ class MenuOptionOpen extends AbstractMenuOption {
 	private void fillPanelWithBots(EntityPanel entityPanel, BW4TClientConfig configuration) {
 		// Fill the bot panel
 		int botRows = configuration.getBots().size();
-
 		for (int i = 0; i < botRows; i++) {
-			String botName = configuration.getBot(i).getBotName();
-			EntityType botController = configuration.getBot(i).getBotController();
-			String agentFileName = configuration.getBot(i).getFileName();
-			String botAmount = Integer.toString(configuration.getBot(i).getBotAmount());
 			entityPanel.getBotTableModel().update();
 			getModel().getBots().add(configuration.getBot(i));
 		}

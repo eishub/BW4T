@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 import eis.AgentListener;
 import eis.EnvironmentInterfaceStandard;
 import eis.EnvironmentListener;
+import eis.PerceptUpdate;
 import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
@@ -480,14 +481,13 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	 * Perform an entity action, is passed towards the server
 	 * 
 	 * @param entity
-	 *            , the entity that should perform the action
+	 *            the entity that should perform the action
 	 * @param action
-	 *            , the action that should be performed
-	 * @return the percept resulting from the action, null if an error occurred.
+	 *            the action that should be performed
 	 * @throws ActException
 	 * @throws RemoteException
 	 */
-	public Percept performEntityAction(String entity, Action action) throws RemoteException, ActException {
+	public void performEntityAction(String entity, Action action) throws RemoteException, ActException {
 		if (isConnectedToGoal() && "sendToGUI".equals(action.getName())) {
 			final ClientController entityGUI = getEntityController(entity);
 			if (entityGUI == null) {
@@ -495,9 +495,9 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 				e.setType(ActException.FAILURE);
 				throw e;
 			}
-			return entityGUI.sendToGUI(action.getParameters());
+			entityGUI.sendToGUI(action.getParameters());
 		} else {
-			return getClient().performEntityAction(entity, action);
+			getClient().performEntityAction(entity, action);
 		}
 	}
 
@@ -566,7 +566,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	 *             has failed.
 	 */
 	@Override
-	public Map<String, Collection<Percept>> getAllPercepts(String agent, String... entities)
+	public Map<String, PerceptUpdate> getPercepts(String agent, String... entities)
 			throws PerceiveException, NoEnvironmentException {
 		/** fail if the environment does not run */
 		EnvironmentState state = getState();
@@ -591,7 +591,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 		if ((associatedEntities == null) || associatedEntities.isEmpty()) {
 			throw new PerceiveException("Agent \"" + agent + "\" has no associated entities.");
 		}
-		final Map<String, Collection<Percept>> percepts = gatherPercepts(agent, associatedEntities, entities);
+		final Map<String, PerceptUpdate> percepts = gatherPercepts(agent, associatedEntities, entities);
 		try {
 			// allow other threads to be processed
 			Thread.sleep(2);
@@ -615,13 +615,13 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	 *             unable to get percepts because the entity does not belong to
 	 *             this agent
 	 */
-	Map<String, Collection<Percept>> gatherPercepts(String agent, Set<String> associatedEntities, String... entities)
+	Map<String, PerceptUpdate> gatherPercepts(String agent, Set<String> associatedEntities, String... entities)
 			throws PerceiveException {
 		if (entities.length == 0) {
 			// No entities selected, get percepts for all associated entities
 			entities = associatedEntities.toArray(new String[associatedEntities.size()]);
 		}
-		Map<String, Collection<Percept>> perceptsMap = new HashMap<>(entities.length);
+		Map<String, PerceptUpdate> perceptsMap = new HashMap<>(entities.length);
 		for (String entity : entities) {
 			if (!associatedEntities.contains(entity)) {
 				throw new PerceiveException(
@@ -641,13 +641,11 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	 * @throws PerceiveException
 	 *             if we failed to get the entity
 	 */
-	public List<Percept> gatherPercepts(String name) throws PerceiveException {
-		List<Percept> all = PerceptsHandler.getAllPerceptsFromEntity(name, this);
-		for (Percept p : all) {
-			p.setSource(name);
-		}
-		saveAndSendPercepts(name, all);
-		return all;
+	public PerceptUpdate gatherPercepts(String name) throws PerceiveException {
+		PerceptUpdate percepts = PerceptsHandler.getPerceptsForEntity(name, this);
+		saveAndSendPercepts(name, percepts.getAddList());
+		
+		return percepts;
 	}
 
 	/**
@@ -663,7 +661,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 		if (!hasEntityGUI(entity)) {
 			return;
 		}
-		ClientController cc = this.getEntityController(entity);
+		ClientController cc = getEntityController(entity);
 		if (cc != null) {
 			if (isConnectedToGoal() && storedPercepts.containsKey(entity)) {
 				cc.handlePercepts(storedPercepts.get(entity));
@@ -863,19 +861,18 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	 * Used to let one or more entities perform an action
 	 * 
 	 * @param agent
-	 *            , the agent that should be connected to the entity
+	 *            the agent that should be connected to the entity
 	 * @param action
-	 *            , the action that should be performed
+	 *            the action that should be performed
 	 * @param entities
-	 *            , the entities that should perform the action
-	 * @return a map of entityname->percept that was the result of the action
+	 *            the entities that should perform the action
 	 * @throws ActException
-	 *             , if an attempt to perform an action has failed.
+	 *            if an attempt to perform an action has failed.
 	 */
 	@Override
-	public Map<String, Percept> performAction(String agent, Action action, String... entities) throws ActException {
+	public void performAction(String agent, Action action, String... entities) throws ActException {
 		try {
-			return ActionHandler.performActionDelegated(agent, action, this, entities);
+			ActionHandler.performActionDelegated(agent, action, this, entities);
 		} catch (ActException e) {
 			throw e;
 		} catch (Exception e) {

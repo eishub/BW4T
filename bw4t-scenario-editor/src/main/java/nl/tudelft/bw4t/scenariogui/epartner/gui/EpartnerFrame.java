@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import nl.tudelft.bw4t.scenariogui.EPartnerConfig;
 import nl.tudelft.bw4t.scenariogui.epartner.controller.EpartnerController;
 
 /**
@@ -28,8 +27,6 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
     private JPanel buttonPane = new JPanel();
 
     private JPanel optionPane = new JPanel();
-
-    private JPanel goalPane = new JPanel();
 
     private JTextField epartnerNameField = new JTextField();
 
@@ -50,8 +47,6 @@ public class EpartnerFrame extends JFrame implements EPartnerViewInterface {
     private JButton fileButton = new JButton("Use existing GOAL file");
 
     private JCheckBox gpsCheckBox = new JCheckBox("GPS");
-
-    private EPartnerConfig dataObject = new EPartnerConfig();
 
     private EpartnerController controller;
 

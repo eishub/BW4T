@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 
 import eis.EnvironmentInterfaceStandard;
 import eis.EnvironmentListener;
+import eis.PerceptUpdate;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
 import eis.exceptions.ManagementException;
@@ -25,7 +26,6 @@ import eis.exceptions.RelationException;
 import eis.iilang.Action;
 import eis.iilang.EnvironmentState;
 import eis.iilang.Parameter;
-import eis.iilang.Percept;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.startup.ConfigFile;
 import nl.tudelft.bw4t.client.startup.InitParam;
@@ -221,27 +221,26 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
 	 * Perform an entity action on the server
 	 * 
 	 * @param entity
-	 *            , the entity that should perform the action
+	 *            the entity that should perform the action
 	 * @param action
-	 *            , the action to be performed
-	 * @return the resulting percept of the action
+	 *            the action to be performed
 	 * @throws RemoteException
 	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 */
-	public Percept performEntityAction(String entity, Action action) throws RemoteException {
+	public void performEntityAction(String entity, Action action) throws RemoteException {
 		LOGGER.debug("Entity " + entity + " performing action: " + action.toProlog());
-		return server.performEntityAction(entity, action);
+		server.performEntityAction(entity, action);
 	}
 
 	/**
 	 * Associate an agent to an entity on the server
 	 * 
 	 * @param agentId
-	 *            , an already registered agent that should be associated to the
+	 *            an already registered agent that should be associated to the
 	 *            entity
 	 * @param entityId
-	 *            , the entity that the agent should be associated to
+	 *            the entity that the agent should be associated to
 	 * @throws RelationException
 	 *             if the attempt to manipulate the agents-entities-relation has
 	 *             failed.
@@ -281,8 +280,8 @@ public class BW4TClient extends UnicastRemoteObject implements BW4TClientActions
 	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 */
-	public List<Percept> getAllPerceptsFromEntity(String entity) throws RemoteException {
-		return server.getAllPerceptsFromEntity(entity);
+	public PerceptUpdate getPerceptsFor(String entity) throws RemoteException {
+		return server.getPerceptsFor(entity);
 	}
 
 	/**

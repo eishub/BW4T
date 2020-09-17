@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import eis.PerceptUpdate;
 import eis.exceptions.ActException;
 import eis.exceptions.NoEnvironmentException;
 import eis.exceptions.PerceiveException;
@@ -63,9 +64,9 @@ public class TestAgent extends BW4TAgent {
      */
     private void percepts() {
         try {
-            List<Percept> percepts = PerceptsHandler.getAllPerceptsFromEntity(entityId, getEnvironment());
+            PerceptUpdate percepts = PerceptsHandler.getPerceptsForEntity(entityId, getEnvironment());
             if (percepts != null) {
-                processPercepts(percepts);
+                processPercepts(percepts.getAddList());
             }
         } catch (NoEnvironmentException | PerceiveException | NullPointerException e) {
             LOGGER.error("Could not poll the percepts from the environment. No environment was found.", e);

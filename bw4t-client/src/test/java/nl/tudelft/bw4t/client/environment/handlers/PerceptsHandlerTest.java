@@ -48,6 +48,6 @@ public class PerceptsHandlerTest {
 
         String entity = "test";
         when(remoteEnvironment.getEntityController(entity)).thenReturn(bw4tClientGUI.getController());
-        PerceptsHandler.getAllPerceptsFromEntity(entity, remoteEnvironment);
+        PerceptsHandler.getPerceptsForEntity(entity, remoteEnvironment);
     }
 }
