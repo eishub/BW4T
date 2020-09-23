@@ -6,7 +6,7 @@
 
 	<groupId>eishub.bw4t</groupId>
 	<artifactId>bw4t-scenario-editor</artifactId>
-	<version>3.9.4-SNAPSHOT</version>
+	<version>3.10.0</version>
 	<name>bw4t-scenario-editor</name>
 	<url>http://www.github.com/eishub/bw4t</url>
 
