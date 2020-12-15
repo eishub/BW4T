@@ -6,7 +6,7 @@
 
 	<groupId>eishub.bw4t</groupId>
 	<artifactId>bw4t-core</artifactId>
-	<version>3.10.0</version>
+	<version>3.10.1-SNAPSHOT</version>
 	<name>bw4t-core</name>
 	<url>http://www.github.com/eishub/bw4t</url>
 
