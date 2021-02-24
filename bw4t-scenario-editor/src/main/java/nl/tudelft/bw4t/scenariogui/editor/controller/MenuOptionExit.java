@@ -3,7 +3,6 @@ package nl.tudelft.bw4t.scenariogui.editor.controller;
 import java.awt.event.ActionEvent;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
-import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MenuBar;
 
 /**
@@ -33,14 +32,10 @@ class MenuOptionExit extends AbstractMenuOption {
      * @param e The action event.
      */
     public void actionPerformed(final ActionEvent e) {
-        ConfigurationPanel configPanel = super.getController().getMainView()
-                .getMainPanel().getConfigurationPanel();
-
         // Check if current config is different from last saved config
         if (getController().hasConfigBeenModified()) {
             // Check if user wants to save current configuration
             boolean doSave = getController().promptUserToSave();
-
             if (doSave) {
                 saveFile();
                 getController().getMainView().closeScenarioEditor();

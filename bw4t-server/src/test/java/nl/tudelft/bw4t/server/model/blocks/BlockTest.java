@@ -89,7 +89,7 @@ public class BlockTest {
 		// add additional test code here
 		assertNotNull(result);
 		assertEquals("Blue", result.getName());
-		assertEquals(new Character('B'), result.getLetter());
+		assertEquals(Character.valueOf('B'), result.getLetter());
 		assertEquals("BLUE", result.name());
 		assertEquals("Blue", result.toString());
 	}

@@ -239,16 +239,14 @@ public class ClientController implements EntityComboModelProvider {
 	}
 
 	/**
-	 * Send paramenters to the GUI to be displayed in the chat window
+	 * Send parameters to the GUI to be displayed in the chat window
 	 *
 	 * @param parameters
-	 * @return a null percept as no real percept should be returned
 	 */
-	public Percept sendToGUI(List<Parameter> parameters) {
+	public void sendToGUI(List<Parameter> parameters) {
 		if (getGui() != null) {
-			return getGui().sendToGUI(parameters);
+			getGui().sendToGUI(parameters);
 		}
-		return null;
 	}
 
 	@Override

@@ -2,14 +2,12 @@ package nl.tudelft.bw4t.scenariogui.util;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
 import java.awt.Color;
 import java.awt.Component;
 import java.io.File;
 
-import javax.swing.JFileChooser;
 import javax.swing.table.TableCellRenderer;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
@@ -23,9 +21,7 @@ import org.junit.Test;
 
 
 public class EntityTableCellRendererTest {
-
     private static final String BASE = System.getProperty("user.dir") + "/src/test/resources/";
-
     private static final String FILE_TEST_ROBOT_GOAL = BASE + "robot.goal";
 
     private EntityPanel entityPanel;
@@ -33,9 +29,6 @@ public class EntityTableCellRendererTest {
     private EntityJTable botJTable;
     
     private EntityJTable ePartnerTable;
-    
-    private JFileChooser filechooser;
-
     private EntityPanel spyEntityPanel;
 
     private ScenarioEditor editor;
@@ -45,7 +38,6 @@ public class EntityTableCellRendererTest {
      */
     @Before
     public final void setUp() {
-        filechooser = mock(JFileChooser.class);
         entityPanel = new EntityPanel();
         spyEntityPanel = spy(entityPanel);
         editor = new ScenarioEditor(new ConfigurationPanel(),

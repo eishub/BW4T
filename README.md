@@ -1,7 +1,7 @@
 # Blocks World for Teams
 Blocks World for Teams (**BW4T**) is a testbed EIS environment for team coordination. BW4T allows for games with human-human, agent-agent and human-agent teams of variable sizes. The goal is to jointly deliver a sequence of colored blocks in a particular order as fast as possible. A complicating factor is that the players cannot see each other.
 
-This page descibes how users can install and use the Blocks World for Teams environment. 
+This page describes how users can install and use the Blocks World for Teams environment. 
 For developer information please follow this [Link to Developer details](DEVELOPER.md)
 
 Blocks World for Teams has a client-server architecture. This means that you need to install and run two parts to use it: a client and a server. The server is the Blocks World for Team Server where the real simulation takes place. The client is the agent programming environment, which communicates with the server to run the simulation. This architecture was chosen to allow multi-machine configurations, where multiple users can interact in the same Blocks World. 
@@ -16,8 +16,6 @@ We deliver a number of components to work with this environment:
 To install BW4T and for all details on how to use the environment and related tools, please consult the [BW4T user manual](https://github.com/eishub/BW4T/blob/master/doc/src/main/resources/BW4T3%20Instructions.pdf).
 
 **WARNING** The collisions and e-partner options are not completely ready for use.
-
-**WARNING** To do mvn install, use "mvn install -DskipTests". Test with "mvn package".
 
 # BW4T Main Maven Module
 This is the directory contains the main maven module. BW4T is split up in six submodules which are explained below. Each submodule is compiled and tested separately by Maven. A good overview of exactly how Maven module organization works can be found at [Sonatype](http://books.sonatype.com/mvnex-book/reference/multimodule.html).
@@ -43,32 +41,29 @@ The bw4t-server basically runs the bw4t environment with a given configuration t
 Dependency information 
 =====================
 
-
 ```
 <repository>
- <id>eishub-mvn-repo</id>
- <url>https://raw.github.com/eishub/mvn-repo/master</url>
+  <id>eishub-mvn-repo</id>
+  <url>https://raw.github.com/eishub/mvn-repo/master</url>
 </repository>
 ```
 
-The client artefact:
+The client artifact:
 
 ```	
 <dependency>
-	<groupId>eishub.bw4t</groupId>
-	<artifactId>bw4t-client</artifactId>
-	<version>3.9.1</version>
+  <groupId>eishub.bw4t</groupId>
+  <artifactId>bw4t-client</artifactId>
+  <version>3.10.0</version>
 </dependency>
 ```
 
-The server artefact:
+The server artifact:
 
 ```	
 <dependency>
-	<groupId>eishub.bw4t</groupId>
-	<artifactId>bw4t-server</artifactId>
-	<version>3.9.1</version>
+  <groupId>eishub.bw4t</groupId>
+  <artifactId>bw4t-server</artifactId>
+  <version>3.9.1</version>
 </dependency>
 ```
-
-

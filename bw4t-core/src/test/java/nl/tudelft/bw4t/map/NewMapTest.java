@@ -40,8 +40,8 @@ public class NewMapTest {
 				"Map[onebotperzone=false, randomblocks=0,seed=null,sequence=[],zones=[]]",
 				result.toString());
 		assertEquals(Boolean.FALSE, result.getOneBotPerCorridorZone());
-		assertEquals(new Integer(0), result.getRandomSequence());
-		assertEquals(new Integer(0), result.getRandomBlocks());
+		assertEquals(Integer.valueOf(0), result.getRandomSequence());
+		assertEquals(Integer.valueOf(0), result.getRandomBlocks());
 	}
 
 	/**
@@ -117,8 +117,8 @@ public class NewMapTest {
 				"Map[onebotperzone=false, randomblocks=0,seed=null,sequence=[],zones=[]]",
 				result.toString());
 		assertEquals(Boolean.FALSE, result.getOneBotPerCorridorZone());
-		assertEquals(new Integer(0), result.getRandomSequence());
-		assertEquals(new Integer(0), result.getRandomBlocks());
+		assertEquals(Integer.valueOf(0), result.getRandomSequence());
+		assertEquals(Integer.valueOf(0), result.getRandomBlocks());
 	}
 
 	/**
@@ -192,7 +192,7 @@ public class NewMapTest {
 	@Test
 	public void testGetOneBotPerCorridorZone_1() throws Exception {
 		NewMap fixture = new NewMap();
-		fixture.setOneBotPerCorridorZone(new Boolean(true));
+		fixture.setOneBotPerCorridorZone(true);
 
 		Boolean result = fixture.getOneBotPerCorridorZone();
 
@@ -211,7 +211,7 @@ public class NewMapTest {
 	@Test
 	public void testGetRandomBlocks_1() throws Exception {
 		NewMap fixture = new NewMap();
-		fixture.setRandomBlocks(new Integer(1));
+		fixture.setRandomBlocks(1);
 
 		Integer result = fixture.getRandomBlocks();
 
@@ -233,7 +233,7 @@ public class NewMapTest {
 
 		assertEquals(0, fixture.getRandomSequence().intValue());
 
-		fixture.setRandomSequence(new Integer(1));
+		fixture.setRandomSequence(1);
 
 		assertEquals(1, fixture.getRandomSequence().intValue());
 	}
@@ -407,10 +407,10 @@ public class NewMapTest {
 	@Test
 	public void testToString_1() throws Exception {
 		NewMap fixture = new NewMap();
-		fixture.setRandomBlocks(new Integer(1));
-		fixture.setOneBotPerCorridorZone(new Boolean(true));
+		fixture.setRandomBlocks(1);
+		fixture.setOneBotPerCorridorZone(true);
 		fixture.setArea(new Point());
-		fixture.setRandomSequence(new Integer(1));
+		fixture.setRandomSequence(1);
 		List<BlockColor> list = new ArrayList<>(7);
 		list.add(BlockColor.BLUE);
 		list.add(BlockColor.GREEN);

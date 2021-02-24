@@ -3,7 +3,6 @@ package nl.tudelft.bw4t.scenariogui.editor.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.ScenarioEditor;
 import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
 import nl.tudelft.bw4t.scenariogui.epartner.controller.EpartnerController;
@@ -16,20 +15,15 @@ import nl.tudelft.bw4t.scenariogui.epartner.gui.EpartnerFrame;
  * @since       12-05-2014        
  */
 class ModifyEPartner implements ActionListener {
-
     private MainPanel view;
-    
-    private BW4TClientConfig model;
 
     /**
      * Create an ModifyEPartner event handler.
      *
      * @param newView The parent view.
-     * @param model The model.
      */
-    public ModifyEPartner(final MainPanel newView, BW4TClientConfig model) {
+    public ModifyEPartner(final MainPanel newView) {
         this.view = newView;
-        this.model = model;
     }
 
     /**

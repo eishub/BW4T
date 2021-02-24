@@ -1,16 +1,13 @@
 package nl.tudelft.bw4t.client.environment;
 
 import java.rmi.RemoteException;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
 import eis.iilang.Action;
-import eis.iilang.Percept;
 
 /** The ActionHandler Class handles the performAction function of the RemoteEnvironment. */
 public final class ActionHandler {
@@ -32,20 +29,19 @@ public final class ActionHandler {
      *            - The RemoteEnvironment which should be acted upon.
      * @param entities
      *            - The entities that should perform the action
-     * @return A map of entity names -> {@link Percept} that have resulted by Execution of the action.
      * @throws ActException
      *             The act exception is thrown if the action cannot be performed.
      * @throws AgentException
      *             The agent exception is thrown if the agent is not registered
      *             or does not have any entities assigned.
      */
-    public static Map<String, Percept> performActionDelegated(String agent, Action action,
+    public static void performActionDelegated(String agent, Action action,
             RemoteEnvironment remoteEnvironment, String... entities) throws ActException, AgentException {
         Set<String> associatedEntities = getAssociatedEntities(remoteEnvironment, action, agent);
         Set<String> targetEntities     = getTargetEntities(associatedEntities, entities);
         
         checkSupportedEntities(entities, remoteEnvironment, action);
-        return getActionPercept(targetEntities, remoteEnvironment, action);
+        executeAction(targetEntities, remoteEnvironment, action);
     }
     
     /**
@@ -138,7 +134,7 @@ public final class ActionHandler {
     }
 
     /**
-     * Perform the action on the server and get the resulting {@link Percept}{@code s}.
+     * Perform the action on the server.
      * 
      * @param targetEntities
      *            - The entities which should perform the action.
@@ -146,23 +142,17 @@ public final class ActionHandler {
      *            - The {@link RemoteEnvironment} which is acted upon.
      * @param action
      *            - The {@link Action} to be performed.
-     * @return The map of resulting percepts.
      * @throws ActException
      *             Thrown if the server could not perform the action.
      */
-    private static Map<String, Percept> getActionPercept(Set<String> targetEntities,
+    private static void executeAction(Set<String> targetEntities,
             RemoteEnvironment remoteEnvironment, Action action) throws ActException {
-        Map<String, Percept> actionPercepts = new HashMap<>();
         for (String entity : targetEntities) {
             try {
-                Percept percept = remoteEnvironment.performEntityAction(entity, action);
-                if (percept != null) {
-                    actionPercepts.put(entity, percept);
-                }
+                remoteEnvironment.performEntityAction(entity, action);
             } catch (RemoteException e) {
                 throw new ActException(ActException.FAILURE, "performAction failed:", e);
             }
         }
-        return actionPercepts;
     }
 }

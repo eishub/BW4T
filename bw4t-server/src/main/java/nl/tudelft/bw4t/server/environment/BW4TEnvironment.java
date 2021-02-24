@@ -24,6 +24,7 @@ import javax.xml.bind.JAXBException;
 
 import org.apache.log4j.Logger;
 
+import eis.PerceptUpdate;
 import eis.eis2java.environment.AbstractEnvironment;
 import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
@@ -36,7 +37,6 @@ import eis.iilang.Action;
 import eis.iilang.EnvironmentState;
 import eis.iilang.Identifier;
 import eis.iilang.Parameter;
-import eis.iilang.Percept;
 import nl.tudelft.bw4t.eis.MapParameter;
 import nl.tudelft.bw4t.map.Entity;
 import nl.tudelft.bw4t.map.EntityType;
@@ -119,6 +119,8 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * entities associated with that server.
 	 */
 	private Map<String, BW4TClientActions> agentLocations = new HashMap<>();
+	
+	private boolean first = true;
 
 	/**
 	 * Create a new instance of this environment
@@ -208,18 +210,20 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		setState(EnvironmentState.KILLED);
 
 		LOGGER.debug("Removing all entities");
-		for (String entity : this.getEntities()) {
+		List<String> entities = getEntities();
+		for (String entity : entities.toArray(new String[entities.size()])) {
 			try {
-				this.deleteEntity(entity);
+				deleteEntity(entity);
 			} catch (EntityException | RelationException e) {
 				LOGGER.error("Failure to delete entity: " + entity, e);
 			}
 		}
 
 		LOGGER.debug("Remove all (remaining) agents");
-		for (String agent : this.getAgents()) {
+		List<String> agents = getAgents();
+		for (String agent : agents.toArray(new String[agents.size()])) {
 			try {
-				this.unregisterAgent(agent);
+				unregisterAgent(agent);
 			} catch (AgentException e) {
 				LOGGER.error("Failure to unregister agent: " + agent, e);
 			}
@@ -255,7 +259,6 @@ public class BW4TEnvironment extends AbstractEnvironment {
 			return;
 		}
 		setMapName(mapname);
-		reset(false);
 		try {
 			while (!isMapFullyLoaded()) {
 				Thread.sleep(50);
@@ -314,6 +317,10 @@ public class BW4TEnvironment extends AbstractEnvironment {
 		launchServer();
 		setState(EnvironmentState.RUNNING);
 		launchRepast();
+		if (first) {
+			first = false;
+			reset(true);
+		}
 	}
 
 	/**
@@ -463,10 +470,9 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 *            the entity that should perform the action
 	 * @param action
 	 *            the action that should be performed
-	 * @return the percept received after performing the action
 	 * @throws ActException
 	 */
-	public Percept performClientAction(String entity, Action action) throws ActException {
+	public void performClientAction(String entity, Action action) throws ActException {
 		Long time = System.currentTimeMillis();
 		LOGGER.log(BotLog.BOTLOG, String.format("action %s %s", entity, action.toProlog()));
 
@@ -474,7 +480,7 @@ public class BW4TEnvironment extends AbstractEnvironment {
 			starttime = time;
 		}
 
-		return performEntityAction(entity, action);
+		performEntityAction(action, entity);
 	}
 
 	/**
@@ -493,19 +499,19 @@ public class BW4TEnvironment extends AbstractEnvironment {
 	 * {@link AbstractEnvironment#getAllPerceptsFromEntity(String)} is final.
 	 * 
 	 * @param entity
-	 *            , the entity for which all percepts should be gotten
+	 *            the entity for which all percepts should be gotten
 	 * @return all percepts for the entity
 	 */
-	public synchronized List<Percept> getAllPerceptsFrom(String entity) {
+	public synchronized PerceptUpdate getPerceptsFor(String entity) {
 		try {
-			if (this.isMapFullyLoaded()) {
+			if (isMapFullyLoaded()) {
 				((EntityInterface) getEntity(entity)).initializePerceptionCycle();
-				return getAllPerceptsFromEntity(entity);
+				return getPerceptsForEntity(entity);
 			}
 		} catch (PerceiveException | NoEnvironmentException e) {
 			LOGGER.error("failed to get percepts for entity: '" + entity + "'", e);
 		}
-		return new LinkedList<>();
+		return new PerceptUpdate();
 	}
 
 	/**

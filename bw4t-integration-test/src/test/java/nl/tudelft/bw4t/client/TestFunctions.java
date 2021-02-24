@@ -1,10 +1,10 @@
 package nl.tudelft.bw4t.client;
 
+import eis.PerceptUpdate;
 import eis.exceptions.NoEnvironmentException;
 import eis.exceptions.PerceiveException;
 import eis.iilang.Percept;
 
-import java.util.Collection;
 import java.util.Iterator;
 
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
@@ -21,7 +21,7 @@ public final class TestFunctions {
     /**
      * The currently stored percepts.
      */
-    private static Collection<Percept> percepts;
+    private static PerceptUpdate percepts;
     
     /**
      * Should never be instantiated.
@@ -38,7 +38,7 @@ public final class TestFunctions {
             return false;
         }
         String perceptName = prologPercept.substring(0, prologPercept.indexOf("("));
-        Iterator<Percept> iterator = percepts.iterator();
+        Iterator<Percept> iterator = percepts.getAddList().iterator();
         while (iterator.hasNext()) {
             Percept percept = iterator.next();
             if (percept.getName().equals(perceptName) && percept.toProlog().equals(prologPercept)) {
@@ -54,7 +54,7 @@ public final class TestFunctions {
      */
     public static void retrievePercepts(String entityId) {
         try {
-            percepts = client.getAllPercepts(entityId).get(entityId);
+            percepts = client.getPercepts(entityId).get(entityId);
         } catch (PerceiveException e) {
             e.printStackTrace();
         } catch (NoEnvironmentException e) {
@@ -65,7 +65,7 @@ public final class TestFunctions {
     /**
      * @return The current collection of percepts
      */
-    public static Collection<Percept> getPercepts() {
+    public static PerceptUpdate getPercepts() {
         return percepts;
     }
     

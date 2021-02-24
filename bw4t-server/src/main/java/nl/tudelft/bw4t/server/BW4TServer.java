@@ -17,6 +17,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+import eis.PerceptUpdate;
 import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
@@ -26,7 +27,6 @@ import eis.exceptions.RelationException;
 import eis.iilang.Action;
 import eis.iilang.EnvironmentState;
 import eis.iilang.Parameter;
-import eis.iilang.Percept;
 import nl.tudelft.bw4t.map.EntityType;
 import nl.tudelft.bw4t.network.BW4TClientActions;
 import nl.tudelft.bw4t.network.BW4TServerHiddenActions;
@@ -150,29 +150,25 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	 */
 	private void launchEntities(final BW4TClientActions client, final ClientInfo cInfo, final BW4TEnvironment env) {
 		new Thread(new Runnable() {
-
 			@Override
 			public void run() {
 				// for every request and attach them
 				env.spawnBots(cInfo.getRequestedBots(), client);
-
 				// for every request and attach them
 				env.spawnEPartners(cInfo.getRequestedEPartners(), client);
-
 			}
 		}).start();
 	}
 
 	@Override
 	public synchronized void unregisterClient(BW4TClientActions client) throws ServerNotActiveException {
-
 		if (clients.containsKey(client)) {
+			clients.remove(client);
 			try {
 				BW4TEnvironment.getInstance().freeClient(client);
 			} catch (EntityException | RelationException e) {
 				e.printStackTrace();
 			}
-			clients.remove(client);
 		}
 	}
 
@@ -192,8 +188,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 				BW4TEnvironment.getInstance().setType(entity, EntityType.EPARTNER.nameLower());
 			}
 			client.handleNewEntity(entity);
-			return;
-		} catch (RemoteException e) {
+		} catch (Exception e) {
 			reportClientProblem(client, e);
 		}
 	}
@@ -209,8 +204,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 				BW4TEnvironment.getInstance().setType(entity, type);
 			}
 			client.handleNewEntity(entity);
-			return;
-		} catch (RemoteException e) {
+		} catch (Exception e) {
 			reportClientProblem(client, e);
 		}
 	}
@@ -220,19 +214,16 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	 */
 	@Override
 	public synchronized void unregisterAgent(String agent) throws AgentException {
-
 		BW4TEnvironment.getInstance().unregisterAgent(agent);
-
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Percept performEntityAction(String entity, Action action) throws RemoteException {
-
+	public void performEntityAction(String entity, Action action) throws RemoteException {
 		try {
-			return BW4TEnvironment.getInstance().performClientAction(entity, action);
+			BW4TEnvironment.getInstance().performClientAction(entity, action);
 		} catch (ActException e) {
 			throw new RemoteException("action failed", e);
 		}
@@ -244,9 +235,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	@Override
 	public void associateEntity(final String agentId, final String entityId) throws RelationException {
 		BW4TEnvironment.getInstance().associateEntity(agentId, entityId);
-
 		((EntityInterface) BW4TEnvironment.getInstance().getEntity(entityId)).connect();
-
 	}
 
 	/**
@@ -262,8 +251,8 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	}
 
 	@Override
-	public List<Percept> getAllPerceptsFromEntity(String entity) throws RemoteException {
-		return BW4TEnvironment.getInstance().getAllPerceptsFrom(entity);
+	public PerceptUpdate getPerceptsFor(String entity) throws RemoteException {
+		return BW4TEnvironment.getInstance().getPerceptsFor(entity);
 	}
 
 	@Override
@@ -293,7 +282,6 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 
 	@Override
 	public void freeAgent(String agent) throws RemoteException, RelationException {
-
 		try {
 			BW4TEnvironment.getInstance().freeAgent(agent);
 		} catch (EntityException e) {
@@ -345,7 +333,6 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	public EnvironmentState getState() throws RemoteException {
 		return BW4TEnvironment.getInstance().getState();
 	}
-
 	
 	private static String REWARD = "REWARD ";
 
@@ -406,7 +393,6 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	public static void messCost() {
 		setMessReward(-1);
 		LOGGER.log(BotLog.BOTLOG, "Costfunction triggered: " + messReward);
-
 	}
 	
 	public static void messPos() {
@@ -440,7 +426,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 		for (BW4TClientActions client : clients.keySet()) {
 			try {
 				client.handleDeletedEntity(entity, agents);
-			} catch (RemoteException e) {
+			} catch (Exception e) {
 				reportClientProblem(client, e);
 			}
 		}
@@ -472,7 +458,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 		for (BW4TClientActions client : clientset) {
 			try {
 				client.handleStateChange(newState);
-			} catch (RemoteException e) {
+			} catch (Exception e) {
 				reportClientProblem(client, e);
 				try {
 					unregisterClient(client);
@@ -480,7 +466,6 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 					e1.printStackTrace();
 				}
 			}
-
 		}
 	}
 
@@ -539,8 +524,7 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 
 			// Unexport; this will also remove us from the RMI runtime
 			UnicastRemoteObject.unexportObject(this, true);
-
-		} catch (RemoteException e) {
+		} catch (Exception e) {
 			LOGGER.error("server disconnect RMI failed", e);
 		}
 	}
@@ -551,7 +535,6 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	@Override
 	public void stopServer(String key) throws RemoteException {
 		Launcher.getInstance().getEnvironment().shutdownServer(key);
-
 	}
 
 	public static double getRewardTime() {
@@ -569,5 +552,4 @@ public class BW4TServer extends UnicastRemoteObject implements BW4TServerHiddenA
 	public static void setMessReward(double messReward) {
 		BW4TServer.messReward = messReward;
 	}
-
 }

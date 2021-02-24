@@ -83,8 +83,7 @@ public class ClientControllerTest {
     @Test
     public void testHandlePerceptsPlayer() {
         Parameter parameter = new Identifier("TestPlayer");
-        Percept percept = new Percept("player");
-        percept.addParameter(parameter);
+        Percept percept = new Percept("player", parameter);
         listOfPercepts.add(percept);
         clientController.setToBePerformedAction(listOfPercepts);
         clientController.handlePercepts(listOfPercepts);
@@ -98,8 +97,7 @@ public class ClientControllerTest {
         ParameterList parameterList = new ParameterList();
         parameterList.add(parameter1);
         parameterList.add(parameter2);
-        Percept percept = new Percept("message");
-        percept.addParameter(parameterList);
+        Percept percept = new Percept("message", parameterList);
         listOfPercepts.add(percept);
         clientController.setToBePerformedAction(listOfPercepts);
         clientController.handlePercepts(listOfPercepts);

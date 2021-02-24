@@ -54,7 +54,7 @@ public class RandomizeSequenceFrame extends RandomizeFrame {
      *           Controller of the map panel linked to this frame. 
      */
     public RandomizeSequenceFrame(String title, MapPanelController mpc) {
-        super(title, mpc);
+        super(title);
         this.randomController = new RandomizeSequenceController(this, mpc);
     
         super.getContentPane().add(lblNumberOfBlocks, "cell 0 2,growx,aligny top");

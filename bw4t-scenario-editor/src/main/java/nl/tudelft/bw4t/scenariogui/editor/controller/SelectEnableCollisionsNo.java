@@ -11,8 +11,7 @@ import nl.tudelft.bw4t.scenariogui.editor.gui.MainPanel;
  * in the checkbox.
  */
 public class SelectEnableCollisionsNo implements ItemListener {
-
-	private MainPanel view;
+	// private MainPanel view;
 
 	/**
 	 * Create a new listener to the select enable collisions checkboxes.
@@ -21,7 +20,7 @@ public class SelectEnableCollisionsNo implements ItemListener {
 	 *            The parent view.
 	 */
 	public SelectEnableCollisionsNo(final MainPanel newView) {
-		this.view = newView;
+		// this.view = newView;
 	}
 
 	@Override
@@ -29,5 +28,4 @@ public class SelectEnableCollisionsNo implements ItemListener {
 		// It's not there anymore. Quik hack to get this compiling ENV-1322.
 		// view.getClientConfig().setCollisionEnabled(false);
 	}
-
 }

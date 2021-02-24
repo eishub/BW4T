@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import eis.EnvironmentInterfaceStandard;
+import eis.PerceptUpdate;
 import eis.exceptions.AgentException;
 import eis.exceptions.EntityException;
 import eis.exceptions.ManagementException;
@@ -17,7 +18,6 @@ import eis.exceptions.RelationException;
 import eis.iilang.Action;
 import eis.iilang.EnvironmentState;
 import eis.iilang.Parameter;
-import eis.iilang.Percept;
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 
 /**
@@ -76,23 +76,22 @@ public interface BW4TServerActions extends Remote {
 	 * Called when a client wants to perform an entity action
 	 * 
 	 * @param entity
-	 *            , the entity that should perform the action
+	 *            the entity that should perform the action
 	 * @param action
-	 *            , the action that should be performed
-	 * @return Percept
+	 *            the action that should be performed
 	 * @throws RemoteException
 	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 */
-	Percept performEntityAction(String entity, Action action) throws RemoteException;
+	void performEntityAction(String entity, Action action) throws RemoteException;
 
 	/**
 	 * Called when a client wants to associate an agent to an entity
 	 * 
 	 * @param agentId
-	 *            , the agent that should be associated to the entity
+	 *            the agent that should be associated to the entity
 	 * @param entityId
-	 *            , the entity that the agent should be associated to
+	 *            the entity that the agent should be associated to
 	 * @throws RelationException
 	 *             if the attempt to manipulate the agents-entities-relation has
 	 *             failed.
@@ -106,7 +105,7 @@ public interface BW4TServerActions extends Remote {
 	 * Called when a client wants to register an agent
 	 * 
 	 * @param agentId
-	 *            , the agent that should be registered
+	 *            the agent that should be registered
 	 * @param client
 	 *            the registered client that registers this agent
 	 * @throws RemoteException
@@ -121,7 +120,7 @@ public interface BW4TServerActions extends Remote {
 	 * Called when a client wants to unregister an agent
 	 * 
 	 * @param agent
-	 *            , the agent that should be unregistered
+	 *             the agent that should be unregistered
 	 * @throws AgentException
 	 *             if the attempt to register or unregister an agent has failed.
 	 * @throws RemoteException
@@ -134,20 +133,20 @@ public interface BW4TServerActions extends Remote {
 	 * Called when a client wants to get all percepts from an entity
 	 * 
 	 * @param entity
-	 *            , the entity for which all percepts should be gotten
-	 * @return a list of all gotten percepts
+	 *            the entity for which all percepts should be gotten
+	 * @return the percepts
 	 * @throws RemoteException
 	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 */
-	List<Percept> getAllPerceptsFromEntity(String entity) throws RemoteException;
+	PerceptUpdate getPerceptsFor(String entity) throws RemoteException;
 
 	/**
 	 * Get all agents registered on the server
 	 * 
 	 * @return a list of agent names
 	 * @throws RemoteException
-	 *             , if an exception occurs during the execution of a remote
+	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 */
 	List<String> getAgents() throws RemoteException;
@@ -163,13 +162,13 @@ public interface BW4TServerActions extends Remote {
 	 * Get all associated entities for a certain agent from the server
 	 * 
 	 * @param agent
-	 *            , the agent
+	 *            the agent
 	 * @return a list of entity names
 	 * @throws RemoteException
-	 *             , if an exception occurs during the execution of a remote
+	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 * @throws AgentException
-	 *             , if an attempt to register or unregister an agent has
+	 *             if an attempt to register or unregister an agent has
 	 *             failed.
 	 */
 	Set<String> getAssociatedEntities(String agent) throws RemoteException, AgentException;
@@ -179,7 +178,7 @@ public interface BW4TServerActions extends Remote {
 	 * 
 	 * @return the list of entities
 	 * @throws RemoteException
-	 *             , if an exception occurs during the execution of a remote
+	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 */
 	Collection<String> getEntities() throws RemoteException;
@@ -188,15 +187,15 @@ public interface BW4TServerActions extends Remote {
 	 * Free an entity on the server
 	 * 
 	 * @param entity
-	 *            , the entity to free
+	 *            the entity to free
 	 * @throws RemoteException
-	 *             , if an exception occurs during the execution of a remote
+	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 * @throws RelationException
-	 *             , if an attempt to manipulate the agents-entities-relation
+	 *             if an attempt to manipulate the agents-entities-relation
 	 *             has failed.
-	 * @throws EntityException
-	 *             , if something unexpected happens when attempting to add or
+	 * @throws EntiyException
+	 *             if something unexpected happens when attempting to add or
 	 *             remove an entity.
 	 */
 	void freeEntity(String entity) throws RemoteException, RelationException, EntityException;
@@ -205,12 +204,12 @@ public interface BW4TServerActions extends Remote {
 	 * Free an agent on the server
 	 * 
 	 * @param agent
-	 *            , the agent to free
+	 *            the agent to free
 	 * @throws RemoteException
-	 *             , if an exception occurs during the execution of a remote
+	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 * @throws RelationException
-	 *             , if an attempt to manipulate the agents-entities-relation
+	 *             if an attempt to manipulate the agents-entities-relation
 	 *             has failed.
 	 */
 	void freeAgent(String agent) throws RemoteException, RelationException;
@@ -260,13 +259,13 @@ public interface BW4TServerActions extends Remote {
 	 * Get the type of an entity
 	 * 
 	 * @param entity
-	 *            , the entity for which to get its type
+	 *            the entity for which to get its type
 	 * @return the type of the entity
 	 * @throws RemoteException
-	 *             , if an exception occurs during the execution of a remote
+	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 * @throws EntityException
-	 *             , if something unexpected happens when attempting to add or
+	 *             if something unexpected happens when attempting to add or
 	 *             remove an entity.
 	 */
 	String getType(String entity) throws RemoteException, EntityException;
@@ -276,7 +275,7 @@ public interface BW4TServerActions extends Remote {
 	 * 
 	 * @return the state of the environment
 	 * @throws RemoteException
-	 *             , if an exception occurs during the execution of a remote
+	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 */
 	EnvironmentState getState() throws RemoteException;
@@ -285,10 +284,10 @@ public interface BW4TServerActions extends Remote {
 	 * Query a property of the server environment
 	 * 
 	 * @param property
-	 *            , the property to query
+	 *            the property to query
 	 * @return the property's value
 	 * @throws QueryException
-	 *             , if an exception occurs during the execution of a remote
+	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 * @throws RemoteException
 	 *             communication-related exception may occur during the
@@ -300,12 +299,12 @@ public interface BW4TServerActions extends Remote {
 	 * Query a property of an entity on the server
 	 * 
 	 * @param entity
-	 *            , the entity for which to query the property
+	 *            the entity for which to query the property
 	 * @param property
-	 *            , the property to query
+	 *            the property to query
 	 * @return the value of the property
 	 * @throws RemoteException
-	 *             , if an exception occurs during the execution of a remote
+	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 */
 	String queryEntityProperty(String entity, String property) throws RemoteException;
@@ -315,7 +314,7 @@ public interface BW4TServerActions extends Remote {
 	 * @param action
 	 * @return true iff action is supported by the environment.
 	 * @throws RemoteException
-	 *             , if an exception occurs during the execution of a remote
+	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 */
 	boolean isSupportedByEnvironment(Action action) throws RemoteException;
@@ -324,10 +323,10 @@ public interface BW4TServerActions extends Remote {
 	 * request the server to start environment.
 	 *
 	 * @throws RemoteException
-	 *             , if an exception occurs during the execution of a remote
+	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 * @throws ManagementException
-	 *             , if an attempt to manage an environment did not succeed.
+	 *             if an attempt to manage an environment did not succeed.
 	 */
 	void requestStart() throws RemoteException, ManagementException;
 
@@ -335,10 +334,10 @@ public interface BW4TServerActions extends Remote {
 	 * request the server to pause environment.
 	 * 
 	 * @throws RemoteException
-	 *             , if an exception occurs during the execution of a remote
+	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 * @throws ManagementException
-	 *             , if an attempt to manage an environment did not succeed.
+	 *             if an attempt to manage an environment did not succeed.
 	 */
 	void requestPause() throws RemoteException, ManagementException;
 
@@ -351,10 +350,10 @@ public interface BW4TServerActions extends Remote {
 	 *            {@link EnvironmentInterfaceStandard#init(java.util.Map)}
 	 *
 	 * @throws RemoteException
-	 *             , if an exception occurs during the execution of a remote
+	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 * @throws ManagementException
-	 *             , if an attempt to manage an environment did not succeed.
+	 *             if an attempt to manage an environment did not succeed.
 	 */
 	void requestInit(Map<String, Parameter> parameters) throws RemoteException, ManagementException;
 
@@ -367,10 +366,10 @@ public interface BW4TServerActions extends Remote {
 	 *            init parameters for eis. see
 	 *            {@link EnvironmentInterfaceStandard#init(java.util.Map)}
 	 * @throws RemoteException
-	 *             , if an exception occurs during the execution of a remote
+	 *             if an exception occurs during the execution of a remote
 	 *             object call
 	 * @throws ManagementException
-	 *             , if an attempt to manage an environment did not succeed.
+	 *             if an attempt to manage an environment did not succeed.
 	 */
 	void requestReset(Map<String, Parameter> parameters) throws RemoteException, ManagementException;
 

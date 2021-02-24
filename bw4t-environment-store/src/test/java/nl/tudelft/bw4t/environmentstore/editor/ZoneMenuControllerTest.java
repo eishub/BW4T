@@ -38,7 +38,8 @@ public class ZoneMenuControllerTest {
         }
     };
     
-    @Before
+	@Before
+    @SuppressWarnings("serial")
     public void setUp() {
         zoneController = mock(ZoneController.class);
         mapController = spy(new MapPanelController(5,5));

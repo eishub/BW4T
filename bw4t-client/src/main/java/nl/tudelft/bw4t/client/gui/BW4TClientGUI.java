@@ -27,7 +27,6 @@ import org.apache.log4j.Logger;
 
 import eis.iilang.Identifier;
 import eis.iilang.Parameter;
-import eis.iilang.Percept;
 import nl.tudelft.bw4t.client.BW4TClientSettings;
 import nl.tudelft.bw4t.client.agent.HumanAgent;
 import nl.tudelft.bw4t.client.controller.ClientController;
@@ -172,20 +171,6 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 		if (controller.isHuman()) {
 			this.jPopupMenu = new JPopupMenu();
 			MouseAdapter ma = new MouseAdapter() {
-				private boolean mouseOver = false;
-
-				@Override
-				public void mouseEntered(MouseEvent arg0) {
-					super.mouseEntered(arg0);
-					mouseOver = true;
-				}
-
-				@Override
-				public void mouseExited(MouseEvent arg0) {
-					super.mouseExited(arg0);
-					mouseOver = false;
-				}
-
 				@Override
 				public void mousePressed(MouseEvent e) {
 					// Get coordinates of mouse click and scale back to original
@@ -194,21 +179,6 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 					setSelectedLocation(e.getX() / scale, e.getY() / scale);
 					ActionPopUpMenu.buildPopUpMenu(that);
 				}
-
-				// @Override
-				// public void mouseWheelMoved(MouseWheelEvent mwe) {
-				// if (mouseOver && mwe.isControlDown()) {
-				// MapRenderSettings settings =
-				// that.getController().getMapController().getRenderSettings();
-				// if (mwe.getUnitsToScroll() >= 0) {
-				// settings.setScale(settings.getScale() + 0.1);
-				// } else {
-				// settings.setScale(settings.getScale() - 0.1);
-				// }
-				// } else {
-				// super.mouseWheelMoved(mwe);
-				// }
-				// }
 			};
 			renderer.addMouseListener(ma);
 			renderer.addMouseWheelListener(ma);
@@ -404,7 +374,7 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 	 *            message itself.
 	 * @return a null percept as no real percept should be returned
 	 */
-	public Percept sendToGUI(List<Parameter> parameters) {
+	public void sendToGUI(List<Parameter> parameters) {
 		String sender = ((Identifier) parameters.get(0)).getValue();
 		String message = ((Identifier) parameters.get(1)).getValue();
 
@@ -413,8 +383,6 @@ public class BW4TClientGUI extends JFrame implements MapRendererInterface {
 
 		getEpartnerChatSession().append(sender + " : " + message + "\n");
 		getEpartnerChatSession().setCaretPosition(getEpartnerChatSession().getDocument().getLength());
-
-		return null;
 	}
 
 	/**

@@ -82,7 +82,7 @@ public class ScenarioEditorController {
         entityPanel.addModifyBotController(new ModifyBot(mainPanel, getModel()));
         entityPanel.addDeleteBotController(new DeleteBot(mainPanel, getModel()));        
         entityPanel.addNewEpartnerController(new AddNewEPartner(mainPanel, getModel()));
-        entityPanel.addModifyEpartnerController(new ModifyEPartner(mainPanel, getModel()));
+        entityPanel.addModifyEpartnerController(new ModifyEPartner(mainPanel));
         entityPanel.addDeleteEpartnerController(new DeleteEPartner(mainPanel, getModel()));
         entityPanel.addDropDownController(new BotDropDownButton(mainPanel));
 

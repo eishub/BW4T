@@ -17,7 +17,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import nl.tudelft.bw4t.map.EntityType;
-import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;
 import nl.tudelft.bw4t.scenariogui.botstore.controller.BatteryDischargeUpdater;
 import nl.tudelft.bw4t.scenariogui.botstore.controller.BotController;
@@ -91,8 +90,6 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 
 	private BotController controller;
 
-	private BW4TClientConfig model;
-
 	/**
 	 * Create the botEditorPanel.
 	 * 
@@ -102,9 +99,8 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 	public BotEditorPanel(BotController controller) {
 		setLayout(new BorderLayout(20, 20));
 
-		this.setController(controller);
+		setController(controller);
 		mainPanel = controller.getMainPanel();
-		model = controller.getBW4TClientConfig();
 
 		createBotInfoPanel();
 		createBotCheckablesPanel();
@@ -408,7 +404,7 @@ public class BotEditorPanel extends JPanel implements BotStoreViewInterface {
 		return customSizeCheckbox;
 	}
 
-	public JComboBox getBotControllerSelector() {
+	public JComboBox<String> getBotControllerSelector() {
 		return botControllerSelector;
 	}
 

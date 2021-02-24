@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
 
+import eis.PerceptUpdate;
 import eis.eis2java.exception.TranslationException;
 import eis.eis2java.translation.Translator;
 import eis.exceptions.ActException;
@@ -12,7 +13,6 @@ import eis.exceptions.PerceiveException;
 import eis.iilang.Action;
 import eis.iilang.Numeral;
 import eis.iilang.Parameter;
-import eis.iilang.Percept;
 import nl.tudelft.bw4t.client.environment.PerceptsHandler;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import nl.tudelft.bw4t.client.message.BW4TMessage;
@@ -224,12 +224,12 @@ public class BW4TAgent extends Thread implements ActionInterface {
 	/**
 	 * Get all percepts for the associated entity.
 	 *
-	 * @return a list of percepts
+	 * @return the percepts
 	 * @throws PerceiveException
 	 *             if there was a problem retrieving the percepts.
 	 */
-	public List<Percept> getPercepts() throws PerceiveException {
-		return PerceptsHandler.getAllPerceptsFromEntity(entityId, bw4tenv);
+	public PerceptUpdate getPercepts() throws PerceiveException {
+		return PerceptsHandler.getPerceptsForEntity(entityId, bw4tenv);
 	}
 
 	/**

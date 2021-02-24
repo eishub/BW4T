@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doThrow;
 
 import java.rmi.RemoteException;
 
@@ -120,49 +120,43 @@ public class BW4TAgentTest {
 
 	@Test(expected = ActException.class)
 	public void testPickUpThrowsAct() throws ActException, RemoteException {
-		when(remoteEnvironment.performEntityAction(eq("Entity1"), any(Action.class))).thenThrow(new ActException(""));
+		doThrow(new ActException("")).when(remoteEnvironment).performEntityAction(eq("Entity1"), any(Action.class));
 		testAgent.pickUp(123);
 	}
 
 	@Test(expected = ActException.class)
 	public void testPickUpRemThrowsRemote() throws ActException, RemoteException {
-		when(remoteEnvironment.performEntityAction(eq("Entity1"), any(Action.class)))
-				.thenThrow(new RemoteException(""));
+		doThrow(new RemoteException("")).when(remoteEnvironment).performEntityAction(eq("Entity1"), any(Action.class));
 		testAgent.pickUp(123);
 	}
 
 	@Test(expected = ActException.class)
 	public void testGoToEnvThrows() throws RemoteException, ActException {
-		when(remoteEnvironment.performEntityAction(any(String.class), any(Action.class)))
-				.thenThrow(new RemoteException());
+		doThrow(new RemoteException("")).when(remoteEnvironment).performEntityAction(any(String.class), any(Action.class));
 		testAgent.goTo(2.0, 3.0);
 	}
 
 	@Test(expected = ActException.class)
 	public void testGoToBlockEnvThrows() throws RemoteException, ActException {
-		when(remoteEnvironment.performEntityAction(any(String.class), any(Action.class)))
-				.thenThrow(new RemoteException());
+		doThrow(new RemoteException("")).when(remoteEnvironment).performEntityAction(any(String.class), any(Action.class));
 		testAgent.goToBlock(123);
 	}
 
 	@Test(expected = ActException.class)
 	public void testSendMessageEnvThrows() throws RemoteException, ActException {
-		when(remoteEnvironment.performEntityAction(any(String.class), any(Action.class)))
-				.thenThrow(new RemoteException());
+		doThrow(new RemoteException("")).when(remoteEnvironment).performEntityAction(any(String.class), any(Action.class));
 		testAgent.sendMessage("receiver", new BW4TMessage(MessageType.AREYOUCLOSE));
 	}
 
 	@Test(expected = ActException.class)
 	public void testGoToNavPointEnvThrows() throws RemoteException, ActException {
-		when(remoteEnvironment.performEntityAction(any(String.class), any(Action.class)))
-				.thenThrow(new RemoteException());
+		doThrow(new RemoteException("")).when(remoteEnvironment).performEntityAction(any(String.class), any(Action.class));
 		testAgent.goTo(Zone.DROP_ZONE_NAME);
 	}
 
 	@Test(expected = ActException.class)
 	public void testputDownEnvThrows() throws RemoteException, ActException {
-		when(remoteEnvironment.performEntityAction(any(String.class), any(Action.class)))
-				.thenThrow(new RemoteException());
+		doThrow(new RemoteException("")).when(remoteEnvironment).performEntityAction(any(String.class), any(Action.class));
 		testAgent.putDown();
 	}
 
