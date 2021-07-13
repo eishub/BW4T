@@ -108,7 +108,7 @@
 			<artifactId>jpf-boot</artifactId>
 			<version>1.5</version>
 		</dependency>
-		<dependency>
+		<dependency> <!-- Repast depency that does not work with Java 16 or up (illegal reflection) -->
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
 			<version>3.3.0</version>
