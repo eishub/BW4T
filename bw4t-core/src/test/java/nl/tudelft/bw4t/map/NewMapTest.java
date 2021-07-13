@@ -86,7 +86,7 @@ public class NewMapTest {
 	 * 
 	 * @generatedBy CodePro at 25.05.14 10:59
 	 */
-	@Test(expected = javax.xml.bind.UnmarshalException.class)
+	@Test(expected = jakarta.xml.bind.UnmarshalException.class)
 	public void testCreate_1() throws Exception {
 		InputStream instream = new ByteArrayInputStream("".getBytes());
 

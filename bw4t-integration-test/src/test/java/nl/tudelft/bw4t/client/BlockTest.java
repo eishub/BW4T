@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.util.Iterator;
 
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.client.environment.Launcher;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;

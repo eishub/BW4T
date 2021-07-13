@@ -7,7 +7,8 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 import javax.swing.JFileChooser;
-import javax.xml.bind.JAXBException;
+
+import jakarta.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.BW4TClientConfig;
 import nl.tudelft.bw4t.scenariogui.BotConfig;

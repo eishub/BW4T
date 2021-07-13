@@ -5,7 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -18,7 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.server.model.doors.Door;
@@ -178,7 +178,6 @@ public class BoundedMoveableObjectTest {
 
     @Test
     public void testEquals_6() throws Exception {
-        when(context.size()).thenReturn(1);
         BoundedMoveableObject boundedMoveableObject = new Door(smap);
         Object obj = new Door(smap);
         assertTrue(boundedMoveableObject.equals(obj));
@@ -248,7 +247,6 @@ public class BoundedMoveableObjectTest {
      */
     @Test
     public void testGetId_1() throws Exception {
-        when(context.size()).thenReturn(1);
         BoundedMoveableObject fixture = new Door(smap);
         BoundedMoveableObject fixture2 = new Door(smap);
 

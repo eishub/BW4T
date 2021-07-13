@@ -1,6 +1,6 @@
 package nl.tudelft.bw4t.client.environment.handlers;
 
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.HashSet;
@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
@@ -21,7 +21,6 @@ import eis.iilang.Action;
 import nl.tudelft.bw4t.client.environment.ActionHandler;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 
-//@Ignore("Not yet implemented.")
 @RunWith(MockitoJUnitRunner.class)
 public class ActionHandlerTest {
     
@@ -45,10 +44,10 @@ public class ActionHandlerTest {
         String agent = "testAgent";
         
         when(remoteEnvironment.getAgents()).thenReturn(agentsList);
-        when(remoteEnvironment.isSupportedByEnvironment(any(Action.class))).thenReturn(true);
+        when(remoteEnvironment.isSupportedByEnvironment(any())).thenReturn(true);
         when(remoteEnvironment.getAssociatedEntities(agent)).thenReturn(entitySet);
-        when(remoteEnvironment.isSupportedByType(any(Action.class), any(String.class))).thenReturn(true);
-        when(remoteEnvironment.isSupportedByEntity(any(Action.class), any(String.class))).thenReturn(true);
+        when(remoteEnvironment.isSupportedByType(any(), any())).thenReturn(true);
+        when(remoteEnvironment.isSupportedByEntity(any(), any())).thenReturn(true);
         
         String entities = "testEntity";
         ActionHandler.performActionDelegated(agent, new Action("test"), remoteEnvironment, entities);

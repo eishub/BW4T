@@ -3,10 +3,10 @@ package nl.tudelft.bw4t.util;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.Unmarshaller;
 
 /**
  * Used for storing classes in XML format and constructing Java objects from the

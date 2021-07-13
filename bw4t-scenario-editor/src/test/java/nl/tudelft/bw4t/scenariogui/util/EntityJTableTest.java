@@ -2,8 +2,7 @@ package nl.tudelft.bw4t.scenariogui.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyObject;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -65,7 +64,7 @@ public class EntityJTableTest {
         EntityJTable errorTable = new EntityJTable();
         errorTable.getAgentFileColumn();
 
-        verify(yesMockOption, times(1)).showMessageDialog((Component) any(), anyObject());
+        verify(yesMockOption, times(1)).showMessageDialog((Component) any(), any());
     }
 
     @Test
@@ -77,6 +76,6 @@ public class EntityJTableTest {
         errorTable.setName("InvalidName");
         errorTable.getAgentFileColumn();
 
-        verify(yesMockOption, times(1)).showMessageDialog((Component) any(), anyObject());
+        verify(yesMockOption, times(1)).showMessageDialog((Component) any(), any());
     }
 }

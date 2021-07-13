@@ -3,7 +3,6 @@ package nl.tudelft.bw4t.server.model.robots.handicap;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 import nl.tudelft.bw4t.server.model.doors.Door;
 import nl.tudelft.bw4t.server.model.robots.AbstractRobot;
 import nl.tudelft.bw4t.server.model.robots.MoveType;
@@ -13,6 +12,7 @@ import nl.tudelft.bw4t.server.model.zone.Zone;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 /**
  * Testing functionalities of the handicaps.
@@ -65,7 +65,7 @@ public class SizeOverloadTest {
      */
     @Before
     public void setUp() {
-        initMocks(this);
+    	MockitoAnnotations.openMocks(this);
         when(bigRobotMock.getSuperParent()).thenReturn(bigAbstractMock);
         when(bigRobotMock2.getSuperParent()).thenReturn(bigAbstractMock2);
         when(bigAbstractMock.getSize()).thenReturn(5);

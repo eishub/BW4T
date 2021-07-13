@@ -45,7 +45,7 @@ public class RobotDecoratorTest {
 	 */
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
+		MockitoAnnotations.openMocks(this);
 		when(bot.getSuperParent()).thenReturn(returnRobot);
 		when(returnRobot.getHandicapsList())
 				.thenReturn(new ArrayList<String>());

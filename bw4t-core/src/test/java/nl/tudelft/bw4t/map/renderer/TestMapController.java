@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Set;
 
 import javax.swing.JFrame;
-import javax.xml.bind.JAXBException;
+
+import jakarta.xml.bind.JAXBException;
 
 import org.apache.log4j.BasicConfigurator;
 

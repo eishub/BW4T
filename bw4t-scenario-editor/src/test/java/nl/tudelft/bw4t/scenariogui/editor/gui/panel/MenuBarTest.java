@@ -3,10 +3,9 @@ package nl.tudelft.bw4t.scenariogui.editor.gui.panel;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
@@ -26,7 +25,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.xml.bind.JAXBException;
+
+import jakarta.xml.bind.JAXBException;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
@@ -271,7 +271,7 @@ public class MenuBarTest {
 		editor.getTopMenuBar().getMenuItemFileSave().doClick();
 
 		// verify if the confirmation dialog opened once
-		verify(noMockOption, times(1)).showConfirmDialog((Component) any(), anyObject(), anyString(), anyInt(),
+		verify(noMockOption, times(1)).showConfirmDialog((Component) any(), any(), anyString(), anyInt(),
 				anyInt());
 		// verify if the filechooser doesn't open its dialog
 		verify(filechooser, never()).showDialog((Component) any(), (String) any());
@@ -324,7 +324,7 @@ public class MenuBarTest {
 
 		// Finally make sure the confirmation dialog was called twice, once
 		// complaining about the map.
-		verify(yesMockOption, times(2)).showConfirmDialog((Component) any(), anyObject(), anyString(), anyInt(),
+		verify(yesMockOption, times(2)).showConfirmDialog((Component) any(), any(), anyString(), anyInt(),
 				anyInt());
 		// And the file dialog for saving and opening
 		verify(filechooser, times(1)).showOpenDialog((Component) any());
@@ -376,7 +376,7 @@ public class MenuBarTest {
 		assertEquals(configurationPanel.getServerPort(), temp.getServerPort());
 
 		// Finally make sure the confirmation dialog was called once.
-		verify(yesMockOption, times(1)).showConfirmDialog((Component) any(), anyObject(), anyString(), anyInt(),
+		verify(yesMockOption, times(1)).showConfirmDialog((Component) any(), any(), anyString(), anyInt(),
 				anyInt());
 		// And the file dialog for saving and opening
 		verify(filechooser, times(1)).showOpenDialog((Component) any());
@@ -435,7 +435,7 @@ public class MenuBarTest {
 		assertEquals(configurationPanel.getServerPort(), temp.getServerPort());
 
 		// Finally make sure the confirmation dialog was called.
-		verify(noMockOption, times(1)).showConfirmDialog((Component) any(), anyObject(), anyString(), anyInt(),
+		verify(noMockOption, times(1)).showConfirmDialog((Component) any(), any(), anyString(), anyInt(),
 				anyInt());
 
 		// File chooser should not have been called for the actual opening

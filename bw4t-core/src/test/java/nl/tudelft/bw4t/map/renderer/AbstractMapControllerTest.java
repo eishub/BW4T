@@ -12,7 +12,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -25,7 +24,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import nl.tudelft.bw4t.map.MapFormatException;
 import nl.tudelft.bw4t.map.NewMap;
@@ -147,7 +146,6 @@ public class AbstractMapControllerTest {
     
     @Test
     public void setRunningTest() throws Exception{
-        when(mc.getRenderers()).thenReturn(new HashSet<MapRendererInterface>(0));
         assertFalse("The thread is already running.", mc.isRunning());
         
         mc.setRunning(true);

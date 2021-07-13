@@ -2,7 +2,7 @@ package nl.tudelft.bw4t.scenariogui;
 
 import java.io.Serializable;
 
-import javax.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElement;
 
 import nl.tudelft.bw4t.map.EntityType;
 

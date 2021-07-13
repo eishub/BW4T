@@ -3,7 +3,7 @@ package nl.tudelft.bw4t.map;
 import java.awt.Color;
 import java.io.Serializable;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 /**
  * A door that can be placed in a {@link Zone} in a {@link NewMap}

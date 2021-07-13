@@ -19,12 +19,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
-import repast.simphony.space.grid.Grid;
 
 /**
  * The class <code>BlockTest</code> contains tests for the class
@@ -35,8 +34,6 @@ public class BlockTest {
 
 	@Mock
 	private ContinuousSpace<Object> space;
-	@Mock
-	private Grid<Object> grid;
 	@Mock
 	private Context<Object> context;
 	@Mock
@@ -49,7 +46,6 @@ public class BlockTest {
 	public void setup() {
 		smap = spy(new BW4TServerMap(map, context));
 		when(smap.getContinuousSpace()).thenReturn(space);
-		when(smap.getGridSpace()).thenReturn(grid);
 	}
 
 	/**

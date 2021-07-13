@@ -7,7 +7,7 @@ import eis.exceptions.ManagementException;
 import eis.iilang.Action;
 import eis.iilang.Parameter;
 import java.io.IOException;
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBException;
 import nl.tudelft.bw4t.client.environment.Launcher;
 import nl.tudelft.bw4t.client.environment.RemoteEnvironment;
 import org.junit.After;

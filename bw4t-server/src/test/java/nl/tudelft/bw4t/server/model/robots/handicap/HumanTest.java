@@ -3,7 +3,7 @@ package nl.tudelft.bw4t.server.model.robots.handicap;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.server.model.BW4TServerMap;
@@ -22,7 +22,6 @@ import nl.tudelft.bw4t.server.model.robots.NavigatingRobot;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
-import repast.simphony.space.grid.Grid;
 
 /**
  * This test tests the Human bot. It currently tests whether a human bot can pick up and drop an epartner.
@@ -35,8 +34,6 @@ public class HumanTest {
      */
     @Mock
     private ContinuousSpace<Object> space;
-    @Mock
-    private Grid<Object> grid;
 
     /**
      * context Mock
@@ -83,7 +80,6 @@ public class HumanTest {
         when(ePartner.getLocation()).thenReturn(point);
         smap = spy(new BW4TServerMap(map, context));
         when(smap.getContinuousSpace()).thenReturn(space);
-        when(smap.getGridSpace()).thenReturn(grid);
         when(inBot.getSuperParent()).thenReturn(inBot);
         when(outBot.getSuperParent()).thenReturn(outBot);
     }

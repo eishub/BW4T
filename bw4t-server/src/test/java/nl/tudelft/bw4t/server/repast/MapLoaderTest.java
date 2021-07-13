@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import nl.tudelft.bw4t.map.BlockColor;
 import nl.tudelft.bw4t.server.model.BW4TServerMap;

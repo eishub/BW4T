@@ -4,7 +4,8 @@ import java.io.InputStream;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
-import javax.xml.bind.JAXBException;
+
+import jakarta.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.map.NewMap;
 import nl.tudelft.bw4t.map.renderer.MapController;

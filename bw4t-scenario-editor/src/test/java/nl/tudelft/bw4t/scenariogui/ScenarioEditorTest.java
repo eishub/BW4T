@@ -1,8 +1,8 @@
 package nl.tudelft.bw4t.scenariogui;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
@@ -15,7 +15,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import javax.swing.JFileChooser;
-import javax.xml.bind.JAXBException;
+
+import jakarta.xml.bind.JAXBException;
 
 import nl.tudelft.bw4t.scenariogui.editor.controller.AbstractMenuOption;
 import nl.tudelft.bw4t.scenariogui.editor.gui.ConfigurationPanel;

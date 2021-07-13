@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBException;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -156,13 +156,13 @@ public class Launcher {
 		if (!mapsFolder.exists()) {
 			LOGGER.debug("exporting maps to: " + mapsFolder.getPath());
 			success &= mapsFolder.mkdir();
-			success &= FileUtils.copyResourcesRecursively(this.getClass().getResource("/setup/maps"), userDir);
+			success &= FileUtils.copyResourcesRecursively(this.getClass().getResource("/setup/maps"), mapsFolder);
 		}
 		File scenarioFolder = new File(userDir.getAbsolutePath() + "/BW4T.rs");
 		if (!scenarioFolder.exists()) {
 			LOGGER.debug("exporting scenario to: " + scenarioFolder.getPath());
 			success &= scenarioFolder.mkdir();
-			success &= FileUtils.copyResourcesRecursively(this.getClass().getResource("/setup/BW4T.rs"), userDir);
+			success &= FileUtils.copyResourcesRecursively(this.getClass().getResource("/setup/BW4T.rs"), scenarioFolder);
 		}
 		File logFolder = new File(userDir.getAbsolutePath() + "/log");
 		if (!logFolder.exists()) {

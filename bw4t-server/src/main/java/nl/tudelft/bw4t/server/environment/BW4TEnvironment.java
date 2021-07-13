@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBException;
 
 import org.apache.log4j.Logger;
 
