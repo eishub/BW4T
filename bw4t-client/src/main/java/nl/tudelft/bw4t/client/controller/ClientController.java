@@ -162,7 +162,7 @@ public class ClientController implements EntityComboModelProvider {
 	 * @param percepts
 	 *            the list of percepts
 	 */
-	public void handlePercepts(Collection<Percept> percepts) {
+	public void handlePercepts(List<Percept> percepts) {
 		for (ViewEPartner ep : getMapController().getEPartners()) {
 			ep.setVisible(false);
 		}
@@ -182,6 +182,7 @@ public class ClientController implements EntityComboModelProvider {
 			}
 
 			this.mapController.handlePercept(name, parameters);
+			
 			if ("player".equals(name)) {
 				getOtherPlayers().add(((Identifier) parameters.get(0)).getValue());
 			} else if ("message".equals(name)) {

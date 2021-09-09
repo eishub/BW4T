@@ -643,7 +643,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	 */
 	public PerceptUpdate gatherPercepts(String name) throws PerceiveException {
 		PerceptUpdate percepts = PerceptsHandler.getPerceptsForEntity(name, this);
-		saveAndSendPercepts(name, percepts.getAddList());
+		saveAndSendPercepts(name, percepts);
 		
 		return percepts;
 	}
@@ -657,19 +657,14 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	 * @param percepts
 	 *            the percepts for the entity
 	 */
-	protected void saveAndSendPercepts(String entity, Collection<Percept> percepts) {
+	protected void saveAndSendPercepts(String entity, PerceptUpdate percepts) {
 		if (!hasEntityGUI(entity)) {
 			return;
 		}
+		List<Percept> currentPercepts = storePercepts(entity, percepts);
 		ClientController cc = getEntityController(entity);
 		if (cc != null) {
-			if (isConnectedToGoal() && storedPercepts.containsKey(entity)) {
-				cc.handlePercepts(storedPercepts.get(entity));
-				storedPercepts.remove(entity);
-			}
-			cc.handlePercepts(percepts);
-		} else {
-			storePercepts(entity, percepts);
+			cc.handlePercepts(currentPercepts);
 		}
 	}
 
@@ -682,13 +677,16 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	 * @param percepts
 	 *            the percepts to be used
 	 */
-	public void storePercepts(String entity, Collection<Percept> percepts) {
-		List<Percept> tpercepts = new LinkedList<>();
-		if (storedPercepts.containsKey(entity)) {
-			tpercepts.addAll(storedPercepts.get(entity));
+	public List<Percept> storePercepts(String entity, PerceptUpdate percepts) {
+		List<Percept> currentPercepts = storedPercepts.get(entity);
+		if(currentPercepts == null) {
+			currentPercepts = new LinkedList<>();
+			storedPercepts.put(entity, currentPercepts);
 		}
-		tpercepts.addAll(percepts);
-		storedPercepts.put(entity, tpercepts);
+		currentPercepts.removeAll(percepts.getDeleteList());
+		currentPercepts.addAll(percepts.getAddList());
+		
+		return currentPercepts;
 	}
 
 	/**
