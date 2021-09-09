@@ -80,7 +80,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	/**
 	 * Stores for each agent (represented by a string) a set of listeners.
 	 */
-	private final Map<String, HashSet<AgentListener>> agentsToAgentListeners = new HashMap<>();
+	private final Map<String, Set<AgentListener>> agentsToAgentListeners = new HashMap<>();
 
 	/**
 	 * List of all active agents.
@@ -205,7 +205,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 			listeners = new HashSet<>();
 		}
 		listeners.add(listener);
-		agentsToAgentListeners.put(agent, (HashSet<AgentListener>) listeners);
+		agentsToAgentListeners.put(agent, listeners);
 	}
 
 	/**
@@ -425,6 +425,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	@Override
 	public void freeEntity(String entity) throws RelationException, EntityException {
 		try {
+			removeEntityController(entity);
 			getClient().freeEntity(entity);
 		} catch (RemoteException e) {
 			throw environmentSuddenDeath(e);
@@ -1044,7 +1045,7 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 	 *            the name of the entity to be disconnected
 	 */
 	public void removeEntityController(String entity) {
-		ClientController control = getEntityController(entity);
+		ClientController control = entityToGUI.get(entity);
 		if (control != null) {
 			control.stop();
 			putEntityController(entity, null);
@@ -1054,7 +1055,9 @@ public class RemoteEnvironment implements EnvironmentInterfaceStandard, Environm
 			} catch (InterruptedException e) {
 				// ignore interruptions
 			}
+			entityToGUI.remove(entity);
 		}
+		storedPercepts.remove(entity);
 	}
 
 	List<EnvironmentListener> getEnvironmentListeners() {
