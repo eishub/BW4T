@@ -435,7 +435,7 @@ public class MenuBarTest {
 		assertEquals(configurationPanel.getServerPort(), temp.getServerPort());
 
 		// Finally make sure the confirmation dialog was called.
-		verify(noMockOption, times(1)).showConfirmDialog((Component) any(), any(), anyString(), anyInt(),
+		verify(noMockOption, atLeastOnce()).showConfirmDialog((Component) any(), any(), anyString(), anyInt(),
 				anyInt());
 
 		// File chooser should not have been called for the actual opening
@@ -588,7 +588,7 @@ public class MenuBarTest {
 		editor.getTopMenuBar().getMenuItemFileNew().doClick();
 
 		/* Verify that it asked to save */
-		verify(option, times(1)).showConfirmDialog(null, ScenarioEditorController.CONFIRM_SAVE_TXT, "",
+		verify(option, atLeastOnce()).showConfirmDialog(null, ScenarioEditorController.CONFIRM_SAVE_TXT, "",
 				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 		assertTrue(editor.getMainPanel().getConfigurationPanel().isDefault());

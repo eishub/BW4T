@@ -2,11 +2,8 @@ package nl.tudelft.bw4t.scenariogui;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.awt.Component;
@@ -67,7 +64,7 @@ public class ScenarioEditorTest {
         assertEquals(panel, editor.getActivePane());
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testJAXBException() throws FileNotFoundException, JAXBException {
         OptionPrompt yesMockOption = OptionPromptHelper.getYesOptionPrompt();
 
@@ -78,10 +75,6 @@ public class ScenarioEditorTest {
         ScenarioEditor.setOptionPrompt(yesMockOption);
 
         editor.getTopMenuBar().getMenuItemFileOpen().doClick();
-
-        // Finally make sure the confirmation dialog was called.
-        verify(yesMockOption, times(1))
-                .showMessageDialog((Component) any(), anyString());
     }
 
     @Test
