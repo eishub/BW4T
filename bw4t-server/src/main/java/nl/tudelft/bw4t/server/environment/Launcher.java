@@ -156,13 +156,13 @@ public class Launcher {
 		if (!mapsFolder.exists()) {
 			LOGGER.debug("exporting maps to: " + mapsFolder.getPath());
 			success &= mapsFolder.mkdir();
-			success &= FileUtils.copyResourcesRecursively(this.getClass().getResource("/setup/maps"), mapsFolder);
+			success &= FileUtils.copyResourcesRecursively(this.getClass().getResource("/setup/maps"), userDir);
 		}
 		File scenarioFolder = new File(userDir.getAbsolutePath() + "/BW4T.rs");
 		if (!scenarioFolder.exists()) {
 			LOGGER.debug("exporting scenario to: " + scenarioFolder.getPath());
 			success &= scenarioFolder.mkdir();
-			success &= FileUtils.copyResourcesRecursively(this.getClass().getResource("/setup/BW4T.rs"), scenarioFolder);
+			success &= FileUtils.copyResourcesRecursively(this.getClass().getResource("/setup/BW4T.rs"), userDir);
 		}
 		File logFolder = new File(userDir.getAbsolutePath() + "/log");
 		if (!logFolder.exists()) {
