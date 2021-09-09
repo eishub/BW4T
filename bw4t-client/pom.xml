@@ -6,7 +6,7 @@
 
 	<groupId>eishub.bw4t</groupId>
 	<artifactId>bw4t-client</artifactId>
-	<version>3.10.1-SNAPSHOT</version>
+	<version>3.10.1</version>
 	<url>http://www.github.com/eishub/bw4t</url>
 
 	<properties>

@@ -6,7 +6,7 @@
 
 	<groupId>eishub.bw4t</groupId>
 	<artifactId>bw4t-integration-test</artifactId>
-	<version>3.10.1-SNAPSHOT</version>
+	<version>3.10.1</version>
 	<description>This module integration test the entire bw4t system, to ensure the working state of the client and server.</description>
 	<url>http://www.github.com/eishub/bw4t</url>
 
